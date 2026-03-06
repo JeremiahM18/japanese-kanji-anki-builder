@@ -230,9 +230,9 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
     assert.equal(cols.length, 6);
 
     assert.equal(cols[0], "日");
-    assert.match(cols[1], /日本 （にほん） \/ day/);
+    assert.equal(cols[1], "日本 （にほん） ／ day");
     assert.equal(cols[2], "オン:ニチ、 ジツ ／ くん:ひ、 び、 か");
     assert.equal(cols[3], "");
     assert.equal(cols[4], "日");
-    assert.match(cols[5], /日本 （にほん） - Japan/);
+    assert.equal(cols[5], "日本 （にほん） - Japan ／ 日よう日 （にちようび） - Sunday");
 });

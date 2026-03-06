@@ -11,160 +11,278 @@ function labelReading(onArr, kunArr) {
     return [on, kun].filter(Boolean).join(" ／ ");
 }
 
-function isProbablyName(glosses) {
-    const g = (glosses || []).join(" ").toLowerCase();
-    return (
-        g.includes("surname") || 
-        g.includes("given name") || 
-        g.includes("place name") || 
-        g.includes("person name")
-    );
-}
+const INVALID_SCORE = -999;
 
-function countKanjiChars(text){
-    return Array.from(String(text || "")).filter((ch) => /\p{Script=Han}/u.test(ch)).length;
+const SCORE = {
+    CONTAINS_TARGET_KANJI: 20,
+    MISSING_TARGET_KANJI: -25,
+
+    LENGTH_1: 8,
+    LENGTH_2: 18,
+    LENGTH_3: 12,
+    LENGTH_4: 6,
+    LENGTH_OVER_4_CAP: -12,
+
+    PRIORITY_MARKER: 5,
+
+    SHORT_GLOSS: 6,
+    LONG_GLOSS: -6,
+
+    NAME_PENALTY: -20,
+    OBSCURE_PENALTY: -25,
+
+    ASCII_WRITTEN_PENALTY: -20,
+    PARENS_NOISE_PENALTY: -8,
+
+    GOOD_KANJI_FOOTPRINT: 5,
+    TOO_MANY_KANJI_PENALTY: -6,
+
+    KANA_ONLY_PENALTY: -10,
+    CORE_MEANING_BONUS: 12,
+
+    SEXAGENARY_PENALTY: -40,
+    SPECIES_PENALTY: -30,
+
+    LONG_PRONUNCIATION_PENALTY: -4,
+
+    EXACT_MATCH_BONUS: 10,
+    EXACT_MATCH_CORE_MEANING_BONUS: 14,
+    EXACT_MATCH_OBSCURE_PENALTY: -20,
+
+    SINGLE_KANJI_KATAKANA_PENALTY: -25,
+};
+
+const KATAKANA_ONLY_RE = /^[\p{Script=Katakana}ー]+$/u;
+const KANA_ONLY_RE = /^[\p{Script=Hiragana}\p{Script=Katakana}ー]+$/u;
+const HAN_CHAR_RE = /\p{Script=Han}/u;
+const ASCII_ALNUM_RE = /^[A-Za-z0-9]+$/;
+const JAPANESE_PARENS_NOISE_RE = /[(（].+[)）]/;
+
+function countKanjiChars(text) {
+    return Array.from(String(text ?? "")).filter((ch) => HAN_CHAR_RE.test(ch)).length;
 }
 
 function glossText(entry) {
     return (entry?.meanings || [])
         .flatMap((m) => Array.isArray(m?.glosses) ? m.glosses : [])
-        .join(" ")
-        .toLowerCase();
+        .map((g) => normalizeText(g))
+        .filter(Boolean)
+        .join(" ");
 }
 
 function hasKanaOnly(text) {
-    return /^[\p{Script=Hiragana}\p{Script=Katakana}ー]+$/u.test(String(text || ""));
+    return KANA_ONLY_RE.test(String(text ?? ""));
 }
 
 function hasJapaneseParensNoise(text) {
-    return /[(（].+[)）]/.test(String(text || ""));
+    return JAPANESE_PARENS_NOISE_RE.test(String(text ?? ""));
 }
 
-function isObscureGloss(glosses) {
-    const g = (glosses || []).join(" ").toLowerCase();
+function glossMatchesCoreMeaning(gloss, meanings) {
+    const normalizedGloss = normalizeText(gloss);
+    const normalizedMeanings = Array.isArray(meanings) 
+        ? meanings.map((m) => normalizeText(m)).filter(Boolean)
+        : [];
 
-    return (
+    return normalizedMeanings.some(
+        (meaning) => normalizedGloss.includes(meaning) || meaning.includes(normalizedGloss)
+    );
+}
+
+function normalizeText(value) {
+    return String(value ?? "").trim().toLowerCase();
+}
+
+function normalizeGlosses(glosses) {
+    return (Array.isArray(glosses) ? glosses : [])
+        .map((g) => normalizeText(g))
+        .filter(Boolean);
+}
+
+function classifyGloss(glosses) {
+    const g = normalizeGlosses(glosses).join(" ");
+
+    const isName =
+        g.includes("surname") ||
+        g.includes("given name") ||
+        g.includes("place name") ||
+        g.includes("person name");
+
+    const isObscure =
         g.includes("chinese zodiac") ||
         g.includes("sexagenary cycle") ||
         g.includes("era name") ||
         g.includes("species of") ||
-        g.includes("surname") ||
-        g.includes("given name") ||
-        g.includes("place name") ||
-        g.includes("person name") ||
         g.includes("ancient china") ||
         g.includes("classical") ||
-        g.includes("archaism")
-    );
+        g.includes("archaism");
+
+    return {
+        isName,
+        isObscure
+    };
 }
 
-function glossMatchesCoreMeaning(gloss, meanings) {
-    const g = String(gloss || "").toLowerCase();
-    const roots = Array.isArray(meanings) ? meanings.map((m) => String(m || "").toLocaleLowerCase()) : [];
-    return roots.some((m) => m && (g.includes(m) || m.includes(g)));
+function pickPrimaryVariant(variants) {
+    if (!Array.isArray(variants) || variants.length === 0) {
+        return null;
+    }
+
+    const ranked = variants
+        .filter((variant) => variant?.written && variant?.pronounced)
+        .map((variant) => ({
+            variant,
+            priorityCount: Array.isArray(variant?.priorities) ? variant.priorities.length : 0,
+            writtenLength: String(variant.written).length,
+            pronouncedLength: String(variant.pronounced).length,
+        }));
+    
+    ranked.sort((a, b) => {
+        if (b.priorityCount !== a.priorityCount) {
+            return b.priorityCount - a.priorityCount;
+        }
+        if (a.writtenLength !== b.writtenLength) {
+            return a.writtenLength - b.writtenLength;
+        }
+        if (a.pronouncedLength !== b.pronouncedLength) {
+            return a.pronouncedLength - b.pronouncedLength;
+        }
+        return String(a.variant.written).localeCompare(String(b.variant.written));
+    });
+
+    return ranked[0]?.variant || null;
+}
+
+function pickPrimaryMeaning(meanings) {
+    if (!Array.isArray(meanings) || meanings.length === 0) {
+        return null;
+    }
+
+    const candidates = meanings.filter(
+        (meaning) => Array.isArray(meaning?.glosses) && meaning.glosses.length > 0
+    );
+    
+    return candidates[0] || null;
+}
+
+function compareCandidates(a, b) {
+    if (b.score !== a.score) {
+        return b.score - a.score;
+    }
+    if (a.written.length !== b.written.length) {
+        return a.written.length - b.written.length;
+    }
+    if (a.pron.length !== b.pron.length) {
+        return a.pron.length - b.pron.length;
+    }
+    return a.text.localeCompare(b.text);
 }
 
 function scoreEntry(entry, targetKanji, kanjiMeanings) {
-    const v = entry?.variants?.[0];
-    const m = entry?.meanings?.[0];
+    const variant = pickPrimaryVariant(entry?.variants);
+    const meaning = pickPrimaryMeaning(entry?.meanings);
 
-    if (!v?.written || !v?.pronounced || !m?.glosses?.length) {
-        return -999;
+    if (!variant?.written || !variant?.pronounced || !meaning?.glosses?.length) {
+        return INVALID_SCORE;
     }
 
-    const written = String(v.written);
-    const pron = String(v.pronounced);
-    const firstGloss = String(m.glosses[0] || "");
+    const written = String(variant.written);
+    const pron = String(variant.pronounced);
+    const firstGloss = String(meaning.glosses[0] || "");
     const allGlossText = glossText(entry);
+    const { isName, isObscure } = classifyGloss(meaning.glosses);
 
     let score = 0;
 
-    // Prefer words that actually contain the target kanji
     if (written.includes(targetKanji)) {
-        score += 20;
+        score += SCORE.CONTAINS_TARGET_KANJI;
     } else {
-        score -= 25;
+        score += SCORE.MISSING_TARGET_KANJI;
     }
 
-    // Prefer short, common-learning vocabulary
     const len = written.length;
     if (len === 1) {
-        score += 8;
+        score += SCORE.LENGTH_1;
     } else if (len === 2) {
-        score += 18;
+        score += SCORE.LENGTH_2;
     } else if (len === 3) {
-        score += 12;
+        score += SCORE.LENGTH_3;
     } else if (len === 4) {
-        score += 6;
+        score += SCORE.LENGTH_4;
     } else {
-        score -= Math.min(12, len - 4);
-    }
-    
-    // Prefer entries with priority markers (JLPT, common, etc)
-    if (Array.isArray(v?.priorities)) {
-        score += v.priorities.length * 5;
+        score += Math.max(SCORE.LENGTH_OVER_4_CAP, -(len - 4));
     }
 
-    // Prefer simpler glosses
+    if (Array.isArray(variant.priorities)) {
+        score += variant.priorities.length * SCORE.PRIORITY_MARKER;
+    }
+
     if (firstGloss.length <= 18) {
-        score += 6;
+        score += SCORE.SHORT_GLOSS;
     } else if (firstGloss.length > 40) {
-        score -= 6;
-    }
-    
-    // Penalize noisy / obsecure dictionary entries
-    if (isProbablyName(m?.glosses)) {
-        score -= 20;
+        score += SCORE.LONG_GLOSS;
     }
 
-    if (isObscureGloss(m.glosses)) {
-        score -= 25;
+    if (isName) {
+        score += SCORE.NAME_PENALTY;
     }
 
-    // Avoid romaji/number junk entries
-    if (/^[A-Za-z0-9]+$/.test(v.written)) {
-        score -= 20;
+    if (isObscure) {
+        score += SCORE.OBSCURE_PENALTY;
+    }
+
+    if (ASCII_ALNUM_RE.test(written)) {
+        score += SCORE.ASCII_WRITTEN_PENALTY;
     }
 
     if (hasJapaneseParensNoise(firstGloss)) {
-        score -= 8;
+        score += SCORE.PARENS_NOISE_PENALTY;
     }
 
-    // Prefer words with a reasonable kanji footprint
     const kanjiCount = countKanjiChars(written);
     if (kanjiCount >= 1 && kanjiCount <= 2) {
-        score += 5;
+        score += SCORE.GOOD_KANJI_FOOTPRINT;
     } else if (kanjiCount >= 4) {
-        score -= 6;
+        score += SCORE.TOO_MANY_KANJI_PENALTY;
     }
 
-    // Penalize kana-only items for the "main" anchor word
     if (hasKanaOnly(written)) {
-        score -= 10;
+        score += SCORE.KANA_ONLY_PENALTY;
     }
 
-    // Bonus if the gloss feels close to the core kanji meaning
     if (glossMatchesCoreMeaning(firstGloss, kanjiMeanings)) {
-        score += 12;
+        score += SCORE.CORE_MEANING_BONUS;
     }
 
-    // Penalize very obsecure-looking long compounds
     if (allGlossText.includes("term of the sexagenary cycle")) {
-        score -= 40;
+        score += SCORE.SEXAGENARY_PENALTY;
     }
 
     if (allGlossText.includes("species of")) {
-        score -= 30;
+        score += SCORE.SPECIES_PENALTY;
     }
 
-    // Prefer entries where pronunciation is not absurdly long
     if (pron.length >= 8) {
-        score -= 4;
+        score += SCORE.LONG_PRONUNCIATION_PENALTY;
     }
 
-    // Bonus
     if (written === targetKanji) {
-        score += 18;
+        score += SCORE.EXACT_MATCH_BONUS;
+
+        if (glossMatchesCoreMeaning(firstGloss, kanjiMeanings)) {
+            score += SCORE.EXACT_MATCH_CORE_MEANING_BONUS;
+        }
+
+        if (isObscure) {
+            score += SCORE.EXACT_MATCH_OBSCURE_PENALTY;
+        }
+    }
+
+    const isSingleKanji = written === targetKanji;
+    const isKatakanaPron = KATAKANA_ONLY_RE.test(pron);
+
+    if (isSingleKanji && isKatakanaPron) {
+        score += SCORE.SINGLE_KANJI_KATAKANA_PENALTY;
     }
 
     return score;
@@ -178,12 +296,12 @@ function pickBestWordEntry(wordsJson, targetKanji, kanjiMeanings) {
     const candidates = [];
 
     for (const entry of wordsJson) {
-        const v = entry?.variants?.[0];
-        const m = entry?.meanings?.[0];
+        const variant = pickPrimaryVariant(entry?.variants);
+        const meaning = pickPrimaryMeaning(entry?.meanings);
 
-        const written = v?.written;
-        const pron = v?.pronounced;
-        const gloss = m?.glosses?.[0];
+        const written = variant?.written;
+        const pron = variant?.pronounced;
+        const gloss = meaning?.glosses?.[0];
 
         if (!written || !pron || !gloss) {
             continue;
@@ -191,14 +309,14 @@ function pickBestWordEntry(wordsJson, targetKanji, kanjiMeanings) {
 
         candidates.push({
             score: scoreEntry(entry, targetKanji, kanjiMeanings),
-            written,
-            pron,
-            gloss,
-            text: `${written} (${pron}) - ${gloss}`,
+            written: String(written),
+            pron: String(pron),
+            gloss: String(gloss),
+            text: `${written} （${pron}） - ${gloss}`,
         });
     }
 
-    candidates.sort((a, b) => b.score - a.score);
+    candidates.sort(compareCandidates);
     return candidates[0] || null;
 }
 
@@ -210,12 +328,12 @@ function buildNotesFromWords(wordsJson, targetKanji, kanjiMeanings, max = 3) {
     const candidates = [];
 
     for (const entry of wordsJson) {
-        const v = entry?.variants?.[0];
-        const m = entry?.meanings?.[0];
+        const variant = pickPrimaryVariant(entry?.variants);
+        const meaning = pickPrimaryMeaning(entry?.meanings);
 
-        const written = v?.written;
-        const pron = v?.pronounced;
-        const gloss = m?.glosses?.[0];
+        const written = variant?.written;
+        const pron = variant?.pronounced;
+        const gloss = meaning?.glosses?.[0];
 
         if (!written || !pron || !gloss) {
             continue;
@@ -223,11 +341,14 @@ function buildNotesFromWords(wordsJson, targetKanji, kanjiMeanings, max = 3) {
 
         candidates.push({ 
             score: scoreEntry(entry, targetKanji, kanjiMeanings),
+            written: String(written),
+            pron: String(pron),
+            gloss: String(gloss),
             text: `${written} （${pron}） - ${gloss}`,
          });
     }
 
-    candidates.sort((a, b) => b.score - a.score);
+    candidates.sort(compareCandidates);
 
     const out = [];
     const seen = new Set();
@@ -236,15 +357,17 @@ function buildNotesFromWords(wordsJson, targetKanji, kanjiMeanings, max = 3) {
         if (out.length >= max) {
             break;
         }
-        if (seen.has(c.text)) {
+
+        const dedupeKey = `${c.written}|${c.pron}`;
+        if (seen.has(dedupeKey)) {
             continue;
         }
 
-        seen.add(c.text);
+        seen.add(dedupeKey);
         out.push(c.text);
     }
 
-    return out.join(" / ");
+    return out.join(" ／ ");
 }
 
 function pickBestEnglishMeaning(meanings) {
@@ -253,20 +376,21 @@ function pickBestEnglishMeaning(meanings) {
     }
 
     const filtered = meanings
-        .map((m) => String(m || "").trim())
+        .map((m) => String(m ?? "").trim())
         .filter(Boolean)
         .filter((m) => !/[0-9]/.test(m))
-        .filter((m) => m.length <= 30);
+        .filter((m) => m.length <= 30)
+        .filter((m) => !/[()]/.test(m));
 
-    return filtered[0] || String(meanings[0] || "").trim();
+    return filtered[0] || String(meanings[0] ?? "").trim();
 }
 
 function buildMeaningJP(bestWord, englishMeaning) {
     const jpHint = bestWord ? `${bestWord.written} （${bestWord.pron}）` : "";
-    const en = englishMeaning || "";
+    const en = String(englishMeaning ?? "").trim();
 
     if (jpHint && en) {
-        return `${jpHint} / ${en}`;
+        return `${jpHint} ／ ${en}`;
     }
 
     return jpHint || en;
@@ -278,18 +402,19 @@ async function mapWithConcurrency(items, concurrency, mapper) {
 
     async function worker() {
         while (true) {
-            const currentIndex = nextIndex;
-            nextIndex++;
+            const currentIndex = nextIndex++;
 
             if (currentIndex >= items.length) {
-                return
+                return;
             }
 
             results[currentIndex] = await mapper(items[currentIndex], currentIndex);
         }
     }
 
-    const workerCount = Math.max(1, Math.min(concurrency, items.length));
+    const safeConcurrency = Math.max(1, Number(concurrency) || 1);
+    const workerCount = Math.min(safeConcurrency, Math.max(1, items.length));
+
     await Promise.all(
         Array.from({ length: workerCount }, () => worker())
     );
@@ -303,29 +428,40 @@ async function buildRowForKanji({
     pickMainComponent, 
     kanjiApiClient
 }) {
-    const [kInfo, words] = await Promise.all([
-        kanjiApiClient.getKanji(kanji),
-        kanjiApiClient.getWords(kanji),
-    ]);
+    try {
+        const [kInfo, words] = await Promise.all([
+            kanjiApiClient.getKanji(kanji),
+            kanjiApiClient.getWords(kanji),
+        ]);
 
-    const kanjiMeanings = Array.isArray(kInfo?.meanings) ? kInfo.meanings : [];
-    const bestWord = pickBestWordEntry(words, kanji, kanjiMeanings);
-    const notes = buildNotesFromWords(words, kanji, kanjiMeanings, 3);
-    const englishMeaning = pickBestEnglishMeaning(kInfo?.meanings);
-    const meaningJP = buildMeaningJP(bestWord, englishMeaning);
-    const reading = labelReading(kInfo?.on_readings, kInfo?.kun_readings);
+        const kanjiMeanings = Array.isArray(kInfo?.meanings) ? kInfo.meanings : [];
+        const bestWord = pickBestWordEntry(words, kanji, kanjiMeanings);
+        const notes = buildNotesFromWords(words, kanji, kanjiMeanings, 3);
+        const englishMeaning = pickBestEnglishMeaning(kInfo?.meanings);
+        const meaningJP = buildMeaningJP(bestWord, englishMeaning);
+        const reading = labelReading(kInfo?.on_readings, kInfo?.kun_readings);
 
-    const comps = kradMap.get(kanji) || [];
-    const radical = pickMainComponent(comps);
+        const comps = kradMap.get(kanji) || [];
+        const radical = pickMainComponent(comps);
 
-    return [
-        kanji,
-        meaningJP,
-        reading,
-        "", // StrokeOrder blank
-        radical,
-        notes,
-    ].map(tsvEscape).join("\t");
+        return [
+            kanji,
+            meaningJP,
+            reading,
+            "", // StrokeOrder blank
+            radical,
+            notes,
+        ].map(tsvEscape).join("\t");
+    } catch (error) {
+        return [
+            kanji,
+            "",
+            "",
+            "",
+            "",
+            `ERROR: ${error instanceof Error ? error.message : String(error)}`,
+        ].map(tsvEscape).join("\t");
+    }
 }
 
 async function buildTsvForJlptLevel({
@@ -350,7 +486,7 @@ async function buildTsvForJlptLevel({
         .filter(([, obj]) => obj?.jlpt === levelNumber)
         .map(([k]) => k);
 
-    const list = (limit && Number.isFinite(limit)) ? 
+    const list = (Number.isFinite(limit)) ? 
         kanjiList.slice(0, limit) : kanjiList;
 
     const rows = await mapWithConcurrency(
@@ -369,4 +505,21 @@ async function buildTsvForJlptLevel({
 
 module.exports = {
     buildTsvForJlptLevel,
+    buildRowForKanji,
+    buildNotesFromWords,
+    buildMeaningJP,
+    classifyGloss,
+    compareCandidates,
+    countKanjiChars,
+    glossMatchesCoreMeaning,
+    labelReading,
+    mapWithConcurrency,
+    normalizeGlosses,
+    normalizeText,
+    pickBestEnglishMeaning,
+    pickBestWordEntry,
+    pickPrimaryMeaning,
+    pickPrimaryVariant,
+    scoreEntry,
+    tsvEscape,
 };

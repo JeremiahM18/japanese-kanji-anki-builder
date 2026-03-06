@@ -45,6 +45,38 @@ function scoreEntry(entry) {
     return lenScore + priorScore + namePenalty + junkPenalty;
 }
 
+function pickBestWordEntry(wordsJson) {
+    if (!Array.isArray(wordsJson)) {
+        return null;
+    }
+
+    const candidates = [];
+
+    for (const entry of wordsJson) {
+        const v = entry?.variants?.[0];
+        const m = entry?.meanings?.[0];
+
+        const written = v?.written;
+        const pron = v?.pronounced;
+        const gloss = m?.glosses?.[0];
+
+        if (!written || !pron || !gloss) {
+            continue;
+        }
+
+        candidates.push({
+            score: scoreEntry(entry),
+            written,
+            pron,
+            gloss,
+            text: `${written} (${pron}) - ${gloss}`,
+        });
+    }
+
+    candidates.sort((a, b) => b.score - a.score);
+    return candidates[0] || null;
+}
+
 function buildNotesFromWords(wordsJson, max = 3) {
     if (!Array.isArray(wordsJson)) {
         return "";
@@ -90,9 +122,24 @@ function buildNotesFromWords(wordsJson, max = 3) {
     return out.join(" / ");
 }
 
-function buildMeaningJP(firstExampleNotes, englishMeaning) {
-    const jpHint = firstExampleNotes ? firstExampleNotes.split(" - ")[0] : "";
+function pickBestEnglishMeaning(meanings) {
+    if (!Array.isArray(meanings) || meanings.length === 0) {
+        return "";
+    }
+
+    const filtered = meanings
+        .map((m) => String(m || "").trim())
+        .filter(Boolean)
+        .filter((m) => !/[0-9]/.test(m))
+        .filter((m) => m.length <= 30);
+
+    return filtered[0] || String(meanings[0] || "").trim();
+}
+
+function buildMeaningJP(bestWord, englishMeaning) {
+    const jpHint = bestWord ? `${bestWord.written} （${bestWord.pron}）` : "";
     const en = englishMeaning || "";
+
     if (jpHint && en) {
         return `${jpHint} / ${en}`;
     }
@@ -136,10 +183,14 @@ async function buildRowForKanji({
         kanjiApiClient.getWords(kanji),
     ]);
 
+    // const notes = buildNotesFromWords(words, 3);
+    // const firstExample = notes ? notes.split(" / ")[0] : "";
+    // const englishMeaning = Array.isArray(kInfo?.meanings) ? kInfo.meanings[0] : "";
+    // const meaningJP = buildMeaningJP(firstExample, englishMeaning);
+    const bestWord = pickBestWordEntry(words);
     const notes = buildNotesFromWords(words, 3);
-    const firstExample = notes ? notes.split(" / ")[0] : "";
-    const englishMeaning = Array.isArray(kInfo?.meanings) ? kInfo.meanings[0] : "";
-    const meaningJP = buildMeaningJP(firstExample, englishMeaning);
+    const englishMeaning = pickBestEnglishMeaning(kInfo?.meanings);
+    const meaningJP = buildMeaningJP(bestWord, englishMeaning);
     const reading = labelReading(kInfo?.on_readings, kInfo?.kun_readings);
 
     const comps = kradMap.get(kanji) || [];

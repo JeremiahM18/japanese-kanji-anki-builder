@@ -11,7 +11,7 @@ const schema = z.object({
     exportConcurrency: z.coerce.number().int().positive().default(8),
 
     // Timout for outbound API requests in milliseconds
-    apiRequestTimeout: z.coerce.number().int().positive().default(10000),
+    fetchTimeoutMs: z.coerce.number().int().positive().default(10000),
 });
 
 function loadConfig() {
@@ -22,7 +22,7 @@ function loadConfig() {
         kradfilePath: process.env.KRADFILE_PATH,
         kanjiApiBaseUrl: process.env.KANJI_API_BASE_URL,
         exportConcurrency: process.env.EXPORT_CONCURRENCY,
-        apiRequestTimeout: process.env.API_REQUEST_TIMEOUT,
+        fetchTimeoutMs: process.env.API_REQUEST_TIMEOUT,
     };
     
     return schema.parse(raw);

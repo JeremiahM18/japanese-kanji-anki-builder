@@ -21,7 +21,50 @@ function isProbablyName(glosses) {
     );
 }
 
-function scoreEntry(entry) {
+function countKanjiChars(text){
+    return Array.from(String(text || "")).filter((ch) => /\p{Script=Han}/u.test(ch)).length;
+}
+
+function glossText(entry) {
+    return (entry?.meanings || [])
+        .flatMap((m) => Array.isArray(m?.glosses) ? m.glosses : [])
+        .join(" ")
+        .toLowerCase();
+}
+
+function hasKanaOnly(text) {
+    return /^[\p{Script=Hiragana}\p{Script=Katakana}ー]+$/u.test(String(text || ""));
+}
+
+function hasJapaneseParensNoise(text) {
+    return /[(（].+[)）]/.test(String(text || ""));
+}
+
+function isObscureGloss(glosses) {
+    const g = (glosses || []).join(" ").toLowerCase();
+
+    return (
+        g.includes("chinese zodiac") ||
+        g.includes("sexagenary cycle") ||
+        g.includes("era name") ||
+        g.includes("species of") ||
+        g.includes("surname") ||
+        g.includes("given name") ||
+        g.includes("place name") ||
+        g.includes("person name") ||
+        g.includes("ancient china") ||
+        g.includes("classical") ||
+        g.includes("archaism")
+    );
+}
+
+function glossMatchesCoreMeaning(gloss, meanings) {
+    const g = String(gloss || "").toLowerCase();
+    const roots = Array.isArray(meanings) ? meanings.map((m) => String(m || "").toLocaleLowerCase()) : [];
+    return roots.some((m) => m && (g.includes(m) || m.includes(g)));
+}
+
+function scoreEntry(entry, targetKanji, kanjiMeanings) {
     const v = entry?.variants?.[0];
     const m = entry?.meanings?.[0];
 
@@ -29,23 +72,105 @@ function scoreEntry(entry) {
         return -999;
     }
 
-    // Prefer 2-4 character words, which are more likely to be common vocabulary
-    const len = v.written.length;
-    const lenScore = (len >= 2 && len <= 4) ? 7 : (len === 1 ? 2 : Math.max(0, 6 - (len - 4)));
+    const written = String(v.written);
+    const pron = String(v.pronounced);
+    const firstGloss = String(m.glosses[0] || "");
+    const allGlossText = glossText(entry);
 
-    // Prefer entries with "priorities" (JLPT, common, etc)
-    const priorScore = Array.isArray(v?.priorities) ? v.priorities.length * 4 : 0;
+    let score = 0;
+
+    // Prefer words that actually contain the target kanji
+    if (written.includes(targetKanji)) {
+        score += 20;
+    } else {
+        score -= 25;
+    }
+
+    // Prefer short, common-learning vocabulary
+    const len = written.length;
+    if (len === 1) {
+        score += 8;
+    } else if (len === 2) {
+        score += 18;
+    } else if (len === 3) {
+        score += 12;
+    } else if (len === 4) {
+        score += 6;
+    } else {
+        score -= Math.min(12, len - 4);
+    }
     
-    // Avoid names
-    const namePenalty = isProbablyName(m?.glosses) ? -12 : 0;
+    // Prefer entries with priority markers (JLPT, common, etc)
+    if (Array.isArray(v?.priorities)) {
+        score += v.priorities.length * 5;
+    }
+
+    // Prefer simpler glosses
+    if (firstGloss.length <= 18) {
+        score += 6;
+    } else if (firstGloss.length > 40) {
+        score -= 6;
+    }
+    
+    // Penalize noisy / obsecure dictionary entries
+    if (isProbablyName(m?.glosses)) {
+        score -= 20;
+    }
+
+    if (isObscureGloss(m.glosses)) {
+        score -= 25;
+    }
 
     // Avoid romaji/number junk entries
-    const junkPenalty = /^[A-Za-z0-9]+$/.test(v.written) ? -12 : 0;
+    if (/^[A-Za-z0-9]+$/.test(v.written)) {
+        score -= 20;
+    }
 
-    return lenScore + priorScore + namePenalty + junkPenalty;
+    if (hasJapaneseParensNoise(firstGloss)) {
+        score -= 8;
+    }
+
+    // Prefer words with a reasonable kanji footprint
+    const kanjiCount = countKanjiChars(written);
+    if (kanjiCount >= 1 && kanjiCount <= 2) {
+        score += 5;
+    } else if (kanjiCount >= 4) {
+        score -= 6;
+    }
+
+    // Penalize kana-only items for the "main" anchor word
+    if (hasKanaOnly(written)) {
+        score -= 10;
+    }
+
+    // Bonus if the gloss feels close to the core kanji meaning
+    if (glossMatchesCoreMeaning(firstGloss, kanjiMeanings)) {
+        score += 12;
+    }
+
+    // Penalize very obsecure-looking long compounds
+    if (allGlossText.includes("term of the sexagenary cycle")) {
+        score -= 40;
+    }
+
+    if (allGlossText.includes("species of")) {
+        score -= 30;
+    }
+
+    // Prefer entries where pronunciation is not absurdly long
+    if (pron.length >= 8) {
+        score -= 4;
+    }
+
+    // Bonus
+    if (written === targetKanji) {
+        score += 18;
+    }
+
+    return score;
 }
 
-function pickBestWordEntry(wordsJson) {
+function pickBestWordEntry(wordsJson, targetKanji, kanjiMeanings) {
     if (!Array.isArray(wordsJson)) {
         return null;
     }
@@ -65,7 +190,7 @@ function pickBestWordEntry(wordsJson) {
         }
 
         candidates.push({
-            score: scoreEntry(entry),
+            score: scoreEntry(entry, targetKanji, kanjiMeanings),
             written,
             pron,
             gloss,
@@ -77,7 +202,7 @@ function pickBestWordEntry(wordsJson) {
     return candidates[0] || null;
 }
 
-function buildNotesFromWords(wordsJson, max = 3) {
+function buildNotesFromWords(wordsJson, targetKanji, kanjiMeanings, max = 3) {
     if (!Array.isArray(wordsJson)) {
         return "";
     }
@@ -97,7 +222,7 @@ function buildNotesFromWords(wordsJson, max = 3) {
         }
 
         candidates.push({ 
-            score: scoreEntry(entry),
+            score: scoreEntry(entry, targetKanji, kanjiMeanings),
             text: `${written} （${pron}） - ${gloss}`,
          });
     }
@@ -183,12 +308,9 @@ async function buildRowForKanji({
         kanjiApiClient.getWords(kanji),
     ]);
 
-    // const notes = buildNotesFromWords(words, 3);
-    // const firstExample = notes ? notes.split(" / ")[0] : "";
-    // const englishMeaning = Array.isArray(kInfo?.meanings) ? kInfo.meanings[0] : "";
-    // const meaningJP = buildMeaningJP(firstExample, englishMeaning);
-    const bestWord = pickBestWordEntry(words);
-    const notes = buildNotesFromWords(words, 3);
+    const kanjiMeanings = Array.isArray(kInfo?.meanings) ? kInfo.meanings : [];
+    const bestWord = pickBestWordEntry(words, kanji, kanjiMeanings);
+    const notes = buildNotesFromWords(words, kanji, kanjiMeanings, 3);
     const englishMeaning = pickBestEnglishMeaning(kInfo?.meanings);
     const meaningJP = buildMeaningJP(bestWord, englishMeaning);
     const reading = labelReading(kInfo?.on_readings, kInfo?.kun_readings);

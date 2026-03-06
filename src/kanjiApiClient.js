@@ -1,20 +1,34 @@
-const fs = require('fs');
-const path = require('path');
-const { encode } = require('punycode');
+const fs = require("node:fs");
+const fsp = require("node:fs/promises");
+const path = require("node:path");
 
-function ensureDir(p) {
-    if (!fs.existsSync(p)) {
-        fs.mkdirSync(p, { recursive: true });
+function ensureDir(dirPath) {
+    if (!fs.existsSync(dirPath)) {
+        fs.mkdirSync(dirPath, { recursive: true });
     }
 }
 
-function safeKey(s) {
-    return encodeURIComponent(s).replace(/%/g, '_');
+function safeKey(value) {
+    return encodeURIComponent(value).replace(/%/g, '_');
+}
+
+function validateKanjiInput(value, fieldName) {
+    if (typeof value !== "string") {
+        throw new TypeError(`${fieldName} must be a string`);
+    }
+
+    const trimmed = value.trim();
+
+    if (!trimmed) {
+        throw new Error(`${fieldName} cannot be empty`);
+    }
+
+    return trimmed;
 }
 
 async function readJsonIfExists(filePath) {
     try {
-        const text = await fs.readFile(filePath, 'utf-8');
+        const text = await fsp.readFile(filePath, 'utf-8');
         return JSON.parse(text);
     } catch (err) {
         if (err && err.code === 'ENOENT') {
@@ -24,11 +38,25 @@ async function readJsonIfExists(filePath) {
     }
 }
 
-async function writeJson(filePath, data) {
-    await fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf-8");
+async function deleteFileIfExists(filePath) {
+    try {
+        await fsp.unlink(filePath);
+    } catch (err) {
+        if (!err || err.code !== "ENOENT") {
+            throw err;
+        }
+    }
 }
 
-async function fetchJsonWithTimeout(url, timeout) {
+async function writeJsonAtomic(filePath, data) {
+    const tempPath = `${filePath}.tmp`;
+    const text = JSON.stringify(data, null, 2);
+
+    await fsp.writeFile(tempPath, text, "utf-8");
+    await fsp.rename(tempPath, filePath);
+}
+
+async function fetchJsonWithTimeout(url, timeoutMs) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -43,7 +71,7 @@ async function fetchJsonWithTimeout(url, timeout) {
         return await res.json();
     } catch (err) {
         if (err && err.name === 'AbortError') {
-            throw new Error(`Request timed out after ${timeout} ms: ${url}`);
+            throw new Error(`Request timed out after ${timeoutMs} ms: ${url}`);
         }
         throw err;
     } finally {
@@ -51,16 +79,34 @@ async function fetchJsonWithTimeout(url, timeout) {
     }
 }
 
-function createKanjiApiClient({ baseUrl, cacheDir, timeoutMs = 10000 }) {
+function createKanjiApiClient({ baseUrl, cacheDir, fetchTimeoutMs = 10000 }) {
+    if (typeof baseUrl !== "string" || !baseUrl.trim()) {
+        throw new Error("baseUrl is required");
+    }
+
+    if (typeof cacheDir !== "string" || !cacheDir.trim()) {
+        throw new Error("cacheDir is required");
+    }
+
+    const normalizeBaseUrl = baseUrl.replace(/\/+$/, "");
     const inFlight = new Map();
 
     async function fetchCachedJson({ cacheKey, url }) {
-        await ensureDir(cacheDir);
+        ensureDir(cacheDir);
+
         const filePath = path.join(cacheDir, `${cacheKey}.json`);
 
-        const cached = await readJsonIfExists(filePath);
-        if (cached !== null) {
-            return cached;
+        try {
+            const cached = await readJsonIfExists(filePath);
+            if (cached !== null) {
+                return cached;
+            }
+        } catch (err) {
+            if (err instanceof SyntaxError) {
+                await deleteFileIfExists(filePath);
+            } else {
+                throw err;
+            }
         }
 
         if (inFlight.has(cacheKey)) {
@@ -69,7 +115,7 @@ function createKanjiApiClient({ baseUrl, cacheDir, timeoutMs = 10000 }) {
 
         const promise = (async () => {
             const data = await fetchJsonWithTimeout(url, fetchTimeoutMs);
-            await writeJson(filePath, data);
+            await writeJsonAtomic(filePath, data);
             return data;
         })();
 
@@ -80,21 +126,26 @@ function createKanjiApiClient({ baseUrl, cacheDir, timeoutMs = 10000 }) {
         } finally {
             inFlight.delete(cacheKey);
         }
-    }
 
+    }
+    
     return {
         async getKanji(kanji) {
-            const url = `${baseUrl}/v1/kanji/${encodeURIComponent(kanji)}`;
+            const value = validateKanjiInput(kanji, "kanji");
+            const url = `${normalizeBaseUrl}/v1/kanji/${encodeURIComponent(value)}`;
+
             return fetchCachedJson({
-                cacheKey: `kanji_${safeKey(kanji)}`,
+                cacheKey: `kanji_${safeKey(value)}`,
                 url,
             });
         },
 
         async getWords(kanji) {
-            const url = `${baseUrl}/v1/words/${encodeURIComponent(kanji)}`;
+            const value = validateKanjiInput(kanji, "kanji");
+            const url = `${normalizeBaseUrl}/v1/words/${encodeURIComponent(value)}`;
+
             return fetchCachedJson({
-                cacheKey: `words_${safeKey(kanji)}`,
+                cacheKey: `words_${safeKey(value)}`,
                 url,
             });
         },

@@ -1,5 +1,4 @@
 const pino = require('pino');
-const { tr } = require('zod/locales');
 
 const logger = pino({
     level: process.env.LOG_LEVEL || 'info',

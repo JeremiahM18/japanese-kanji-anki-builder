@@ -118,7 +118,9 @@ async function mapWithConcurrency(items, concurrency, mapper) {
     }
 
     const workerCount = Math.max(1, Math.min(concurrency, items.length));
-    await Promise.all(Array.from({ length: workerCount }, () => worker));
+    await Promise.all(
+        Array.from({ length: workerCount }, () => worker())
+    );
 
     return results;
 }
@@ -180,7 +182,8 @@ async function buildTsvForJlptLevel({
 
     const rows = await mapWithConcurrency(
         list, 
-        concurrency, async (kanji) => buildRowForKanji({
+        concurrency, 
+        async (kanji) => buildRowForKanji({
             kanji,
             kradMap,
             pickMainComponent,

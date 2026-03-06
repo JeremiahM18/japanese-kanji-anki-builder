@@ -1,5 +1,4 @@
 const fs = require("fs");
-const path = require("path");
 const express = require("express");
 
 const { loadConfig } = require('./config');
@@ -11,18 +10,25 @@ const { buildTsvForJlptLevel } = require('./exportService');
 function parseLevel(param) {
     const s = String(param).toUpperCase().replace("N", "").trim();
     const n = Number(s);
+
     if (![1, 2, 3, 4, 5].includes(n)) {
         return null;
     }
+
     return n;
 }
 
 function parseLimit(value) {
-    if (value == null) return null;
+    if (value == null) {
+        return null;
+    }
+
     const n = Number(value);
+
     if (!Number.isFinite(n) || n <= 0) {
         return null;
     }
+    
     return Math.floor(n);
 }
 
@@ -43,6 +49,7 @@ function parseLimit(value) {
     const kanjiApiClient = createKanjiApiClient({
         baseUrl: config.kanjiApiBaseUrl,
         cacheDir: config.cacheDir,
+        fetchTimeoutMs: config.fetchTimeoutMs,
     });
 
     const app = express();
@@ -55,6 +62,8 @@ function parseLimit(value) {
     // Optional: ?limit=50 
     // Optional: ?download=1 to trigger download with Content-Disposition
     app.get("/export/:level", async (req, res, next) => {
+        const startedAt = Date.now();
+
         try {
             const lvl = parseLevel(req.params.level);
             if (!lvl) {
@@ -66,7 +75,14 @@ function parseLimit(value) {
                 return res.status(400).type("text").send("Invalid limit parameter. Must be a positive integer.");
             }
 
-            logger.info({ level: lvl, limit: limit ?? "all" }, "Generating TSV for JLPT level");
+            logger.info(
+                { 
+                    level: lvl, 
+                    limit: limit ?? "all",
+                    concurrency: config.exportConcurrency,
+                }, 
+                "Generating TSV for JLPT level"
+            );
 
             const tsv = await buildTsvForJlptLevel({
                 levelNumber: lvl,
@@ -75,7 +91,17 @@ function parseLimit(value) {
                 pickMainComponent,
                 kanjiApiClient,
                 limit,
+                concurrency: config.exportConcurrency,
             });
+
+            logger.info(
+                {
+                    level: lvl,
+                    limit: limit ?? "all",
+                    durationMs: Date.now() - startedAt,
+                },
+                "Generated TSV for JLPT level"
+            );
 
             res.status(200)
             .type("text/tab-separated-values; charset=utf-8")
@@ -86,6 +112,8 @@ function parseLimit(value) {
     });
 
     app.get("/export/:level/download", async (req, res, next) => {
+        const startedAt = Date.now();
+
         try {
             const lvl = parseLevel(req.params.level);
             if (!lvl) {
@@ -97,6 +125,15 @@ function parseLimit(value) {
                 return res.status(400).type("text").send("Invalid limit parameter. Must be a positive integer.");
             }
 
+            logger.info(
+                {
+                    level: lvl,
+                    limit: limit ?? "all",
+                    concurrency: config.exportConcurrency,
+                }, 
+                "Generating TSV for JLPT level with download"
+            );
+
             const tsv = await buildTsvForJlptLevel({
                 levelNumber: lvl,
                 jlptOnlyJson,
@@ -104,7 +141,17 @@ function parseLimit(value) {
                 pickMainComponent,
                 kanjiApiClient,
                 limit,
+                concurrency: config.exportConcurrency,
             });
+
+            logger.info(
+                {
+                    level: lvl,
+                    limit: limit ?? "all",
+                    durationMs: Date.now() - startedAt,
+                },
+                "Generated TSV for JLPT level with download"
+            );
 
             // Force browser download
             res.setHeader("Content-Disposition", `attachment; filename="jlpt_n${lvl}_kanji.tsv"`);
@@ -131,7 +178,15 @@ function parseLimit(value) {
     });
 
     app.listen(config.port, () => {
-        logger.info({ port: config.port }, "Server started");
+        logger.info(
+            {
+                 port: config.port,
+                 exportConcurrency: config.exportConcurrency,
+                 fetchTimeoutMs: config.fetchTimeoutMs,
+            }, 
+            "Server started"
+        );
+
         logger.info(`Try: http://127.0.0.1:${config.port}/export/N5`);
         logger.info(`Download: http://127.0.0.1:${config.port}/export/N5/download`);
         logger.info(`Limit test: http://127.0.0.1:${config.port}/export/N5?limit=10`);

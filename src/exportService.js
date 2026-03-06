@@ -86,6 +86,7 @@ async function buildTsvForJlptLevel({
     kradMap,           // Map of kanji to components
     pickMainComponent, // function to pick main component from list
     kanjiApiClient,    // client with getKanji and getWords methods
+    limit = null,             // optional limit on number of kanji to process
 }) {
     const header = [
         "Kanji",
@@ -100,9 +101,11 @@ async function buildTsvForJlptLevel({
         .filter(([, obj]) => obj?.jlpt === levelNumber)
         .map(([k]) => k);
 
+    const list = (limit && Number.isFinite(limit)) ? kanjiList.slice(0, limit) : kanjiList;
+
     const lines = [header];
 
-    for (const kanji of kanjiList) {
+    for (const kanji of list) {
         const kInfo = await kanjiApiClient.getKanji(kanji);
         const words = await kanjiApiClient.getWords(kanji);
 

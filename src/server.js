@@ -1,5 +1,6 @@
-const fs = require('fs');
-const express = require('express');
+const fs = require("fs");
+const path = require("path");
+const express = require("express");
 
 const { loadConfig } = require('./config');
 const { logger } = require('./logger');
@@ -14,6 +15,15 @@ function parseLevel(param) {
         return null;
     }
     return n;
+}
+
+function parseLimit(value) {
+    if (value == null) return null;
+    const n = Number(value);
+    if (!Number.isFinite(n) || n <= 0) {
+        return null;
+    }
+    return Math.floor(n);
 }
 
 (async function main() {
@@ -42,6 +52,8 @@ function parseLevel(param) {
     });
 
     // GET /export/N5 or /export/5
+    // Optional: ?limit=50 
+    // Optional: ?download=1 to trigger download with Content-Disposition
     app.get("/export/:level", async (req, res, next) => {
         try {
             const lvl = parseLevel(req.params.level);
@@ -49,7 +61,12 @@ function parseLevel(param) {
                 return res.status(400).type("text").send("Invalid level parameter. Use N1-N5 or 1-5.");
             }
 
-            logger.info({ level: lvl }, "Generating TSV for JLPT level");
+            const limit = parseLimit(req.query.limit);
+            if (req.query.limit != null && limit == null) {
+                return res.status(400).type("text").send("Invalid limit parameter. Must be a positive integer.");
+            }
+
+            logger.info({ level: lvl, limit: limit ?? "all" }, "Generating TSV for JLPT level");
 
             const tsv = await buildTsvForJlptLevel({
                 levelNumber: lvl,
@@ -57,6 +74,7 @@ function parseLevel(param) {
                 kradMap,
                 pickMainComponent,
                 kanjiApiClient,
+                limit,
             });
 
             res.status(200)
@@ -67,15 +85,56 @@ function parseLevel(param) {
         }
     });
 
+    app.get("/export/:level/download", async (req, res, next) => {
+        try {
+            const lvl = parseLevel(req.params.level);
+            if (!lvl) {
+                return res.status(400).type("text").send("Invalid level parameter. Use N1-N5 or 1-5.");
+            }
+
+            const limit = parseLimit(req.query.limit);
+            if (req.query.limit != null && limit == null) {
+                return res.status(400).type("text").send("Invalid limit parameter. Must be a positive integer.");
+            }
+
+            const tsv = await buildTsvForJlptLevel({
+                levelNumber: lvl,
+                jlptOnlyJson,
+                kradMap,
+                pickMainComponent,
+                kanjiApiClient,
+                limit,
+            });
+
+            // Force browser download
+            res.setHeader("Content-Disposition", `attachment; filename="jlpt_n${lvl}_kanji.tsv"`);
+
+            res.status(200)
+            .type("text/tab-separated-values; charset=utf-8")
+            .send(tsv);
+        } catch (err) {
+            next(err);
+        }    
+    });
+
+
     // Central error handler
     app.use((err, req, res, next) => {
         logger.error({ err }, "Error handling request");
+
+        const isDev = process.env.NODE_ENV !== 'production';
+        if (isDev) {
+            return res.status(500).type("text").send(`Internal Server Error:\n\n${err?.stack || err}`);
+        }
+
         res.status(500).type("text").send("Internal Server Error");
     });
 
     app.listen(config.port, () => {
         logger.info({ port: config.port }, "Server started");
-        logger.info(`Try: http://localhost:${config.port}/export/N5`);
+        logger.info(`Try: http://127.0.0.1:${config.port}/export/N5`);
+        logger.info(`Download: http://127.0.0.1:${config.port}/export/N5/download`);
+        logger.info(`Limit test: http://127.0.0.1:${config.port}/export/N5?limit=10`);
     });
 })().catch(err => {
     logger.error({ err }, "Fatal error during startup");

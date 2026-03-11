@@ -31,6 +31,7 @@ The engineering direction for this repository is deliberate: treat even a person
 - Populates the `StrokeOrder` TSV field with the best available media asset path when one exists
 - Recovers from corrupted cache files automatically
 - Exposes health, readiness, inference, media lookup, and media sync endpoints for operational visibility
+- Keeps local-only runtime artifacts, caches, datasets, and virtual environments out of source control with explicit ignore rules
 - Runs CI on every push to `main`, every pull request, and on manual dispatch
 - Includes automated tests for caching, concurrency, validation, inference, export formatting, HTTP behavior, stroke-order sync, and media manifests
 
@@ -230,6 +231,16 @@ npm start
 npm run lint
 npm test
 ```
+
+### Repository hygiene
+
+Tracked source intentionally excludes local-only artifacts such as:
+
+- caches and generated deck output
+- local datasets under `data/` except `data/README.md`
+- `.env` secrets while keeping `.env.example` tracked
+- local virtual environments like `.venv/`
+- common OS and log noise files
 
 ### Benchmark export throughput
 

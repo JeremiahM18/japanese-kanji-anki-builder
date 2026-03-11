@@ -30,11 +30,26 @@ function buildFixtureApp() {
         {
             kanji: "日",
             written: "日本",
+            japanese: "日本に参る。",
+            reading: "にほんにまいる。",
+            english: "I go to Japan.",
+            source: "dictionary-import",
+            tags: ["rare", "archaic"],
+            register: "literary",
+            frequencyRank: 4000,
+            jlpt: 1,
+        },
+        {
+            kanji: "日",
+            written: "日本",
             japanese: "日本へ行きます。",
             reading: "にほんへいきます。",
             english: "I will go to Japan.",
-            source: "fixture-corpus",
-            tags: ["core"],
+            source: "manual-curated",
+            tags: ["core", "common", "beginner"],
+            register: "neutral",
+            frequencyRank: 120,
+            jlpt: 5,
         },
     ];
 
@@ -189,7 +204,7 @@ test("health and readiness endpoints expose operational state", async () => {
         assert.equal(readyJson.status, "ready");
         assert.equal(readyJson.datasets.jlptKanjiCount, 2);
         assert.equal(readyJson.datasets.kradEntries, 2);
-        assert.equal(readyJson.datasets.sentenceCorpusEntries, 1);
+        assert.equal(readyJson.datasets.sentenceCorpusEntries, 2);
         assert.equal(readyJson.config.exportConcurrency, 4);
         assert.equal(readyJson.config.sentenceCorpusPath, "C:\\repo\\data\\sentence_corpus.json");
         assert.equal(readyJson.cache.cacheHits, 7);
@@ -197,7 +212,7 @@ test("health and readiness endpoints expose operational state", async () => {
     });
 });
 
-test("inference route exposes corpus-backed study output and sentence candidates", async () => {
+test("inference route exposes weighted corpus-backed study output and sentence candidates", async () => {
     const app = buildFixtureApp();
 
     await withServer(app, async (baseUrl) => {
@@ -209,7 +224,9 @@ test("inference route exposes corpus-backed study output and sentence candidates
         assert.equal(json.inference.bestWord.written, "日本");
         assert.equal(json.inference.strokeOrderPath, "animations/stroke-order.gif");
         assert.equal(json.inference.sentenceCandidates[0].type, "corpus");
-        assert.equal(json.inference.sentenceCandidates[0].source, "fixture-corpus");
+        assert.equal(json.inference.sentenceCandidates[0].source, "manual-curated");
+        assert.equal(json.inference.sentenceCandidates[0].register, "neutral");
+        assert.equal(json.inference.sentenceCandidates[0].frequencyRank, 120);
         assert.match(json.inference.sentenceCandidates[0].japanese, /日本へ行きます/);
     });
 });

@@ -2,6 +2,42 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const { createInferenceEngine } = require("../../src/inference/inferenceEngine");
+const { scoreCorpusSentence } = require("../../src/inference/sentenceInference");
+
+test("corpus sentence scoring rewards quality metadata", () => {
+    const candidate = {
+        written: "日本",
+        pron: "にほん",
+        gloss: "Japan",
+        score: 100,
+    };
+
+    const strong = scoreCorpusSentence({
+        kanji: "日",
+        written: "日本",
+        japanese: "日本へ行きます。",
+        english: "I will go to Japan.",
+        source: "manual-curated",
+        tags: ["core", "common", "beginner"],
+        register: "neutral",
+        frequencyRank: 120,
+        jlpt: 5,
+    }, candidate, "日");
+
+    const weak = scoreCorpusSentence({
+        kanji: "日",
+        written: "日本",
+        japanese: "日本に参る。",
+        english: "I go to Japan.",
+        source: "dictionary-import",
+        tags: ["rare", "archaic"],
+        register: "literary",
+        frequencyRank: 4000,
+        jlpt: 1,
+    }, candidate, "日");
+
+    assert.equal(strong > weak, true);
+});
 
 test("inference engine ranks candidates and returns learner-friendly output", () => {
     const inferenceEngine = createInferenceEngine({
@@ -9,11 +45,26 @@ test("inference engine ranks candidates and returns learner-friendly output", ()
             {
                 kanji: "日",
                 written: "日本",
+                japanese: "日本に参る。",
+                reading: "にほんにまいる。",
+                english: "I go to Japan.",
+                source: "dictionary-import",
+                tags: ["rare", "archaic"],
+                register: "literary",
+                frequencyRank: 4000,
+                jlpt: 1,
+            },
+            {
+                kanji: "日",
+                written: "日本",
                 japanese: "日本へ行きます。",
                 reading: "にほんへいきます。",
                 english: "I will go to Japan.",
-                source: "fixture-corpus",
-                tags: ["core"],
+                source: "manual-curated",
+                tags: ["core", "common", "beginner"],
+                register: "neutral",
+                frequencyRank: 120,
+                jlpt: 5,
             },
         ],
     });
@@ -63,7 +114,9 @@ test("inference engine ranks candidates and returns learner-friendly output", ()
     assert.equal(result.candidates[0].score > result.candidates[1].score, true);
     assert.equal(result.sentenceCandidates.length >= 2, true);
     assert.equal(result.sentenceCandidates[0].type, "corpus");
-    assert.equal(result.sentenceCandidates[0].source, "fixture-corpus");
+    assert.equal(result.sentenceCandidates[0].source, "manual-curated");
+    assert.equal(result.sentenceCandidates[0].register, "neutral");
+    assert.equal(result.sentenceCandidates[0].frequencyRank, 120);
     assert.match(result.sentenceCandidates[0].japanese, /日本へ行きます/);
     assert.match(result.sentenceCandidates[0].english, /go to Japan/);
 });

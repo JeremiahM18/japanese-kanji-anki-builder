@@ -9,6 +9,9 @@ const sentenceEntrySchema = z.object({
     english: z.string().min(1),
     source: z.string().default("local-corpus"),
     tags: z.array(z.string()).default([]),
+    frequencyRank: z.number().int().positive().optional(),
+    register: z.enum(["neutral", "spoken", "formal", "literary"]).default("neutral"),
+    jlpt: z.number().int().min(1).max(5).optional(),
 });
 
 const sentenceCorpusSchema = z.array(sentenceEntrySchema);

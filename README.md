@@ -17,6 +17,7 @@ The engineering direction for this repository is deliberate: treat even a person
 - Separates raw data fetching, inference, export orchestration, and media management into distinct modules
 - Uses a deterministic inference engine to rank example words and derive learner-friendly `MeaningJP` and `Notes` output
 - Prefers corpus-backed sentence candidates when a local sentence corpus is available, with deterministic template fallback otherwise
+- Weights corpus sentence selection by source quality, learner-friendly tags, register, and optional frequency metadata
 - Caches kanji and word API responses separately
 - Validates upstream API payloads before they are cached or consumed
 - Tracks cache and fetch metrics for readiness checks and benchmarks
@@ -137,6 +138,13 @@ Current inference layers:
 
 This keeps the system inspectable and testable while improving quality incrementally. The corpus-backed layer is the first major step away from generic sentence templates without giving up deterministic behavior.
 
+Corpus sentence ranking currently favors:
+
+- manually curated or trusted local sources over generic imports
+- `core`, `common`, and `beginner` tags over `rare` or `archaic`
+- neutral and spoken register over literary phrasing
+- better optional frequency metadata when available
+
 ## Output Fields
 
 The exported TSV includes these columns:
@@ -218,6 +226,35 @@ The benchmark reports duration, rows per second, cache hit ratio, network fetche
 5. Re-run tests and the export benchmark after meaningful inference changes.
 
 This route is the safest place to iterate on quality because it shows the intermediate reasoning results before the final deck export is generated.
+
+### Sentence Corpus Shape
+
+The optional local corpus accepts entries like:
+
+```json
+[
+  {
+    "kanji": "日",
+    "written": "日本",
+    "japanese": "日本へ行きます。",
+    "reading": "にほんへいきます。",
+    "english": "I will go to Japan.",
+    "source": "manual-curated",
+    "tags": ["core", "common", "beginner"],
+    "frequencyRank": 120,
+    "register": "neutral",
+    "jlpt": 5
+  }
+]
+```
+
+Field notes:
+
+- `source` helps prefer manually curated material over weaker imports
+- `tags` can include signals like `core`, `common`, `beginner`, `rare`, or `archaic`
+- `frequencyRank` is optional and rewards more common examples when present
+- `register` should be one of `neutral`, `spoken`, `formal`, or `literary`
+- `jlpt` is optional metadata for future learner-level filtering
 
 ## Stroke-Order Workflow
 
@@ -313,7 +350,7 @@ The current test suite covers:
 - export formatting and row construction
 - deterministic inference output
 - sentence candidate generation
-- corpus-backed sentence preference
+- corpus-backed sentence preference and weighting
 - word-ranking behavior
 - cache creation and reuse
 - in-flight request deduplication
@@ -344,7 +381,6 @@ The working expectation for future changes is:
 
 - add request IDs and structured access logging
 - support resumable offline export workflows
-- introduce corpus scoring with frequency/source weighting
 - add remote/provider adapters for stroke-order image and animation sources
 - add media acquisition jobs with checksum verification
 - add audio source adapters or synthesis jobs on top of the existing media manifest

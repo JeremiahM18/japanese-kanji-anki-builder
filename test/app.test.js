@@ -9,6 +9,8 @@ function buildFixtureApp() {
         jlptJsonPath: "C:\\repo\\data\\kanji_jlpt_only.json",
         kradfilePath: "C:\\repo\\data\\KRADFILE",
         mediaRootDir: "C:\\repo\\data\\media",
+        strokeOrderImageSourceDir: "C:\\repo\\data\\media_sources\\stroke-order\\images",
+        strokeOrderAnimationSourceDir: "C:\\repo\\data\\media_sources\\stroke-order\\animations",
         exportConcurrency: 4,
         fetchTimeoutMs: 2500,
     };
@@ -30,6 +32,29 @@ function buildFixtureApp() {
         cacheWrites: 2,
         payloadValidationFailures: 0,
     };
+
+    const manifests = new Map([
+        ["日", {
+            kanji: "日",
+            version: 1,
+            updatedAt: new Date().toISOString(),
+            assets: {
+                strokeOrderImage: {
+                    kind: "image",
+                    path: "images/stroke-order.svg",
+                    mimeType: "image/svg+xml",
+                    source: "fixture",
+                },
+                strokeOrderAnimation: {
+                    kind: "animation",
+                    path: "animations/stroke-order.gif",
+                    mimeType: "image/gif",
+                    source: "fixture",
+                },
+                audio: [],
+            },
+        }],
+    ]);
 
     const kanjiApiClient = {
         async getKanji(kanji) {
@@ -62,12 +87,46 @@ function buildFixtureApp() {
         },
     };
 
+    const strokeOrderService = {
+        async getManifest(kanji) {
+            return manifests.get(kanji) || null;
+        },
+        async getBestStrokeOrderPath(kanji) {
+            const manifest = manifests.get(kanji);
+            return manifest?.assets.strokeOrderAnimation?.path || manifest?.assets.strokeOrderImage?.path || "";
+        },
+        async syncKanji(kanji) {
+            const manifest = manifests.get(kanji) || {
+                kanji,
+                version: 1,
+                updatedAt: new Date().toISOString(),
+                assets: {
+                    strokeOrderImage: null,
+                    strokeOrderAnimation: null,
+                    audio: [],
+                },
+            };
+
+            manifests.set(kanji, manifest);
+
+            return {
+                kanji,
+                manifest,
+                found: {
+                    image: Boolean(manifest.assets.strokeOrderImage),
+                    animation: Boolean(manifest.assets.strokeOrderAnimation),
+                },
+            };
+        },
+    };
+
     return createApp({
         config,
         jlptOnlyJson,
         kradMap,
         pickMainComponent: (components) => components[0] || "",
         kanjiApiClient,
+        strokeOrderService,
     });
 }
 
@@ -118,8 +177,32 @@ test("health and readiness endpoints expose operational state", async () => {
         assert.equal(readyJson.datasets.kradEntries, 2);
         assert.equal(readyJson.config.exportConcurrency, 4);
         assert.equal(readyJson.config.mediaRootDir, "C:\\repo\\data\\media");
+        assert.equal(readyJson.config.strokeOrderImageSourceDir, "C:\\repo\\data\\media_sources\\stroke-order\\images");
         assert.equal(readyJson.cache.cacheHits, 7);
         assert.equal(readyJson.cache.cacheMisses, 2);
+    });
+});
+
+test("media routes expose manifests and sync results", async () => {
+    const app = buildFixtureApp();
+
+    await withServer(app, async (baseUrl) => {
+        const manifestRes = await fetch(`${baseUrl}/media/日`);
+        assert.equal(manifestRes.status, 200);
+
+        const manifestJson = await manifestRes.json();
+        assert.equal(manifestJson.status, "ok");
+        assert.equal(manifestJson.bestStrokeOrderPath, "animations/stroke-order.gif");
+
+        const missingRes = await fetch(`${baseUrl}/media/山`);
+        assert.equal(missingRes.status, 404);
+
+        const syncRes = await fetch(`${baseUrl}/media/日/sync`, { method: "POST" });
+        assert.equal(syncRes.status, 200);
+
+        const syncJson = await syncRes.json();
+        assert.equal(syncJson.found.image, true);
+        assert.equal(syncJson.found.animation, true);
     });
 });
 
@@ -136,6 +219,7 @@ test("download export sets attachment headers", async () => {
 
         assert.equal(lines.length, 2);
         assert.match(lines[0], /^Kanji\tMeaningJP\tReading/);
+        assert.match(lines[1], /animations\/stroke-order\.gif/);
     });
 });
 

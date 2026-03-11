@@ -8,6 +8,8 @@ const schema = z.object({
     kradfilePath: z.string().default("data/KRADFILE"),
     kanjiApiBaseUrl: z.string().url().default("https://kanjiapi.dev"),
     mediaRootDir: z.string().default("data/media"),
+    strokeOrderImageSourceDir: z.string().default("data/media_sources/stroke-order/images"),
+    strokeOrderAnimationSourceDir: z.string().default("data/media_sources/stroke-order/animations"),
 
     // How many kanji to process at once during export generation
     exportConcurrency: z.coerce.number().int().positive().default(8),
@@ -28,6 +30,8 @@ function loadConfig() {
         kradfilePath: process.env.KRADFILE_PATH,
         kanjiApiBaseUrl: process.env.KANJI_API_BASE_URL,
         mediaRootDir: process.env.MEDIA_ROOT_DIR,
+        strokeOrderImageSourceDir: process.env.STROKE_ORDER_IMAGE_SOURCE_DIR,
+        strokeOrderAnimationSourceDir: process.env.STROKE_ORDER_ANIMATION_SOURCE_DIR,
         exportConcurrency: process.env.EXPORT_CONCURRENCY,
         fetchTimeoutMs: process.env.API_REQUEST_TIMEOUT,
     };
@@ -40,6 +44,8 @@ function loadConfig() {
         jlptJsonPath: resolveFromCwd(parsed.jlptJsonPath),
         kradfilePath: resolveFromCwd(parsed.kradfilePath),
         mediaRootDir: resolveFromCwd(parsed.mediaRootDir),
+        strokeOrderImageSourceDir: resolveFromCwd(parsed.strokeOrderImageSourceDir),
+        strokeOrderAnimationSourceDir: resolveFromCwd(parsed.strokeOrderAnimationSourceDir),
     };
 }
 

@@ -5,6 +5,7 @@ const { logger } = require("./logger");
 const { createKanjiApiClient } = require("./kanjiApiClient");
 const { loadKradMap, pickMainComponent } = require("./kradfile");
 const { ensureMediaRoot } = require("./mediaStore");
+const { createStrokeOrderService } = require("./strokeOrderService");
 const { createApp } = require("./app");
 
 async function main() {
@@ -30,12 +31,19 @@ async function main() {
     // Create the media root eagerly so future stroke-order and audio assets have a stable home.
     ensureMediaRoot(config.mediaRootDir);
 
+    const strokeOrderService = createStrokeOrderService({
+        mediaRootDir: config.mediaRootDir,
+        imageSourceDir: config.strokeOrderImageSourceDir,
+        animationSourceDir: config.strokeOrderAnimationSourceDir,
+    });
+
     const app = createApp({
         config,
         jlptOnlyJson,
         kradMap,
         pickMainComponent,
         kanjiApiClient,
+        strokeOrderService,
     });
 
     app.listen(config.port, () => {
@@ -46,6 +54,8 @@ async function main() {
                 fetchTimeoutMs: config.fetchTimeoutMs,
                 cacheDir: config.cacheDir,
                 mediaRootDir: config.mediaRootDir,
+                strokeOrderImageSourceDir: config.strokeOrderImageSourceDir,
+                strokeOrderAnimationSourceDir: config.strokeOrderAnimationSourceDir,
             },
             "Server started"
         );
@@ -54,6 +64,7 @@ async function main() {
         logger.info(`Download: http://127.0.0.1:${config.port}/export/N5/download`);
         logger.info(`Health: http://127.0.0.1:${config.port}/healthz`);
         logger.info(`Readiness: http://127.0.0.1:${config.port}/readyz`);
+        logger.info(`Media lookup: http://127.0.0.1:${config.port}/media/日`);
     });
 }
 

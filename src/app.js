@@ -28,9 +28,11 @@ function parseLimit(value) {
     return Math.floor(n);
 }
 
-function createApp({ config, jlptOnlyJson, kradMap, pickMainComponent, kanjiApiClient }) {
+function createApp({ config, jlptOnlyJson, kradMap, pickMainComponent, kanjiApiClient, strokeOrderService }) {
     const app = express();
     const jlptKanjiCount = Object.keys(jlptOnlyJson).length;
+
+    app.use(express.json());
 
     app.get("/", (_req, res) => {
         res.type("text").send("OK - Japanese Kanji TSV Exporter");
@@ -60,11 +62,47 @@ function createApp({ config, jlptOnlyJson, kradMap, pickMainComponent, kanjiApiC
                 jlptJsonPath: config.jlptJsonPath,
                 kradfilePath: config.kradfilePath,
                 mediaRootDir: config.mediaRootDir,
+                strokeOrderImageSourceDir: config.strokeOrderImageSourceDir,
+                strokeOrderAnimationSourceDir: config.strokeOrderAnimationSourceDir,
                 exportConcurrency: config.exportConcurrency,
                 fetchTimeoutMs: config.fetchTimeoutMs,
             },
             cache: metrics,
         });
+    });
+
+    app.get("/media/:kanji", async (req, res, next) => {
+        try {
+            const manifest = await strokeOrderService.getManifest(req.params.kanji);
+
+            if (!manifest) {
+                return res.status(404).json({
+                    status: "missing",
+                    kanji: req.params.kanji,
+                });
+            }
+
+            return res.status(200).json({
+                status: "ok",
+                manifest,
+                bestStrokeOrderPath: await strokeOrderService.getBestStrokeOrderPath(req.params.kanji),
+            });
+        } catch (err) {
+            return next(err);
+        }
+    });
+
+    app.post("/media/:kanji/sync", async (req, res, next) => {
+        try {
+            const result = await strokeOrderService.syncKanji(req.params.kanji);
+            return res.status(200).json({
+                status: "ok",
+                ...result,
+                bestStrokeOrderPath: await strokeOrderService.getBestStrokeOrderPath(req.params.kanji),
+            });
+        } catch (err) {
+            return next(err);
+        }
     });
 
     async function handleExportRequest(req, res, next, options = {}) {
@@ -97,6 +135,7 @@ function createApp({ config, jlptOnlyJson, kradMap, pickMainComponent, kanjiApiC
                 kradMap,
                 pickMainComponent,
                 kanjiApiClient,
+                strokeOrderService,
                 limit,
                 concurrency: config.exportConcurrency,
             });

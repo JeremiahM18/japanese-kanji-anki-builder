@@ -87,7 +87,7 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
                         ],
                         meanings: [
                             {
-                                glosses: ["Japan"]
+                                glosses: ["Japan"],
                             },
                         ],
                     },
@@ -101,7 +101,7 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
                         ],
                         meanings: [
                             {
-                                glosses: ["Sunday"]
+                                glosses: ["Sunday"],
                             },
                         ],
                     },
@@ -119,7 +119,7 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
                         ],
                         meanings: [
                             {
-                                glosses: ["book", "origin"]
+                                glosses: ["book", "origin"],
                             },
                         ],
                     },
@@ -135,10 +135,10 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
                                 priorities: ["ichi1"],
                             },
                         ],
-                            meanings: [
-                                {
-                                    glosses: ["person"]
-                                },
+                        meanings: [
+                            {
+                                glosses: ["person"],
+                            },
                         ],
                     },
                 ];
@@ -156,7 +156,7 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
                         ],
                         meanings: [
                             {
-                                glosses: ["study", "learning"]
+                                glosses: ["study", "learning"],
                             },
                         ],
                     },
@@ -175,7 +175,7 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
                         ],
                         meanings: [
                             {
-                                glosses: ["school"]
+                                glosses: ["school"],
                             },
                         ],
                     },
@@ -193,14 +193,20 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
                         ],
                         meanings: [
                             {
-                                glosses: ["difficult", "hard"]
+                                glosses: ["difficult", "hard"],
                             },
                         ],
                     },
                 ];
             }
-            
+
             throw new Error(`Unexpected kanji in getWords: ${kanji}`);
+        },
+    };
+
+    const strokeOrderService = {
+        async getBestStrokeOrderPath(kanji) {
+            return kanji === "日" ? "animations/stroke-order.gif" : "";
         },
     };
 
@@ -212,16 +218,16 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
         kradMap,
         pickMainComponent,
         kanjiApiClient,
+        strokeOrderService,
         limit: 1,
     });
 
-
     const lines = tsv.trim().split("\n");
-    
+
     assert.equal(lines.length, 2, "Should return header + one data row because of limit");
 
     assert.equal(
-        lines[0], 
+        lines[0],
         "Kanji\tMeaningJP\tReading\tStrokeOrder\tRadical\tNotes"
     );
 
@@ -231,7 +237,7 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
     assert.equal(cols[0], "日");
     assert.equal(cols[1], "日本 （にほん） ／ day");
     assert.equal(cols[2], "オン:ニチ、 ジツ ／ くん:ひ、 び、 か");
-    assert.equal(cols[3], "");
+    assert.equal(cols[3], "animations/stroke-order.gif");
     assert.equal(cols[4], "日");
     assert.equal(cols[5], "日本 （にほん） - Japan ／ 日よう日 （にちようび） - Sunday");
 });

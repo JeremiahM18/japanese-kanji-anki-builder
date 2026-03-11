@@ -1,6 +1,6 @@
 # Japanese Kanji Anki Builder
 
-A Node.js service for generating structured JLPT kanji TSV exports for Anki using `kanjiapi.dev`, KRADFILE radicals, deterministic export formatting, and cache-backed upstream retrieval.
+A Node.js service for generating structured JLPT kanji TSV exports for Anki using `kanjiapi.dev`, KRADFILE radicals, deterministic export formatting, cache-backed upstream retrieval, and a provider-ready stroke-order media pipeline.
 
 ## Why This Project Exists
 
@@ -19,33 +19,37 @@ The engineering direction for this repository is deliberate: treat even a person
 - Tracks cache and fetch metrics for readiness checks and benchmarks
 - Deduplicates concurrent in-flight API requests
 - Stores cache entries in sharded subdirectories to avoid a single oversized cache folder
-- Provides a structured media root and per-kanji manifest contract for future stroke-order and audio assets
+- Supports local stroke-order image and animation ingestion through a provider-based service
+- Writes per-kanji media manifests that can later expand to audio without changing storage contracts
+- Populates the `StrokeOrder` TSV field with the best available media asset path when one exists
 - Recovers from corrupted cache files automatically
-- Exposes health and readiness endpoints for operational visibility
+- Exposes health, readiness, media lookup, and media sync endpoints for operational visibility
 - Runs CI on every push to `main`, every pull request, and on manual dispatch
-- Includes automated tests for caching, concurrency, validation, export formatting, HTTP behavior, and media manifests
+- Includes automated tests for caching, concurrency, validation, export formatting, HTTP behavior, stroke-order sync, and media manifests
 
 ## Architecture
 
 ```text
 src/
-  app.js             Express app factory and route wiring
-  config.js          Environment parsing and path resolution
-  exportService.js   TSV row generation, ranking, concurrency control
-  kanjiApiClient.js  Upstream API client, caching, atomic file writes, metrics
-  kradfile.js        KRADFILE parsing and component selection
-  logger.js          Structured logging
-  mediaStore.js      Media filesystem layout and manifest persistence
-  server.js          Bootstrap and process startup
+  app.js                 Express app factory and route wiring
+  config.js              Environment parsing and path resolution
+  exportService.js       TSV row generation, ranking, concurrency control
+  kanjiApiClient.js      Upstream API client, caching, atomic file writes, metrics
+  kradfile.js            KRADFILE parsing and component selection
+  logger.js              Structured logging
+  mediaStore.js          Media filesystem layout and manifest persistence
+  strokeOrderService.js  Stroke-order source discovery and local ingestion
+  server.js              Bootstrap and process startup
 
 scripts/
-  benchmarkExport.js Export throughput and cache-efficiency benchmark
+  benchmarkExport.js     Export throughput and cache-efficiency benchmark
 
 test/
   app.test.js
   exportService.test.js
   kanjiApiClient.test.js
   mediaStore.test.js
+  strokeOrderService.test.js
 ```
 
 ### Runtime Flow
@@ -54,9 +58,10 @@ test/
 2. KRADFILE and JLPT JSON are loaded into memory once.
 3. `src/app.js` builds the Express application from injected dependencies.
 4. Export requests call `buildTsvForJlptLevel()` with bounded concurrency.
-5. Each kanji fetches kanji metadata and word candidates concurrently.
+5. Each kanji fetches kanji metadata, word candidates, and best known stroke-order path concurrently.
 6. Upstream responses are validated, cached atomically on disk, and counted in client metrics.
-7. Media assets will live under a stable per-kanji manifest so stroke-order images, animations, and audio can evolve without changing export fundamentals.
+7. Stroke-order sync scans local source directories, imports matching assets into the managed media tree, and updates the kanji manifest.
+8. Audio can be added later to the same media manifest contract without redesigning the filesystem layout.
 
 ## Output Fields
 
@@ -69,7 +74,7 @@ The exported TSV includes these columns:
 - `Radical`
 - `Notes`
 
-`StrokeOrder` is intentionally blank right now because stroke-order assets are expected to be managed separately in Anki media.
+`StrokeOrder` now contains the best available managed media path for the kanji when a synced stroke-order asset exists. The current preference order is animation first, then static image.
 
 ## Configuration
 
@@ -82,7 +87,9 @@ All paths are resolved from the repository root so local development and deploym
 | `JLPT_JSON_PATH` | `data/kanji_jlpt_only.json` | JLPT dataset |
 | `KRADFILE_PATH` | `data/KRADFILE` | Radical/component dataset |
 | `KANJI_API_BASE_URL` | `https://kanjiapi.dev` | Upstream kanji API base URL |
-| `MEDIA_ROOT_DIR` | `data/media` | Root directory for stroke-order and audio media assets |
+| `MEDIA_ROOT_DIR` | `data/media` | Root directory for managed stroke-order and audio media assets |
+| `STROKE_ORDER_IMAGE_SOURCE_DIR` | `data/media_sources/stroke-order/images` | Local source directory for stroke-order images |
+| `STROKE_ORDER_ANIMATION_SOURCE_DIR` | `data/media_sources/stroke-order/animations` | Local source directory for stroke-order animations |
 | `EXPORT_CONCURRENCY` | `8` | Max kanji rows processed concurrently |
 | `API_REQUEST_TIMEOUT` | `10000` | Upstream request timeout in milliseconds |
 | `LOG_LEVEL` | `info` | Pino log level |
@@ -127,9 +134,26 @@ Optional flags:
 
 The benchmark reports duration, rows per second, cache hit ratio, network fetches, and validation failures so you can measure changes before and after optimization work.
 
+## Stroke-Order Workflow
+
+1. Place source assets into the configured local source directories.
+2. Name them by kanji or codepoint, for example `日.svg`, `65E5.svg`, or `U+65E5.gif`.
+3. Sync a kanji with `POST /media/日/sync`.
+4. Inspect the managed manifest with `GET /media/日`.
+5. Export a JLPT level and the `StrokeOrder` field will reference the best available synced asset.
+
+Current provider behavior:
+
+- scans only local source directories
+- accepts common image formats such as `svg`, `png`, and `webp`
+- accepts common animation formats such as `gif`, `webp`, `apng`, and `svg`
+- copies assets into the managed media tree with deterministic filenames
+- records checksum and source metadata in the manifest
+- prefers animation over image when exporting the `StrokeOrder` field
+
 ## CI Policy
 
-The repository now includes [ci.yml](/C:/japanese_kanji_builder/.github/workflows/ci.yml), which enforces the baseline verification path in GitHub Actions.
+The repository includes [ci.yml](/C:/japanese_kanji_builder/.github/workflows/ci.yml), which enforces the baseline verification path in GitHub Actions.
 
 Current CI guarantees:
 
@@ -156,6 +180,11 @@ Recommended GitHub branch settings:
 - `GET /healthz` lightweight health check
 - `GET /readyz` readiness details including dataset counts, active config, and cache metrics
 
+### Media endpoints
+
+- `GET /media/:kanji` returns the managed media manifest if one exists
+- `POST /media/:kanji/sync` imports available local stroke-order assets for the kanji into managed storage
+
 ### Export endpoints
 
 - `GET /export/N5`
@@ -166,7 +195,7 @@ Recommended GitHub branch settings:
 
 ## Filesystem Strategy
 
-The cache and media layers now follow a more production-friendly model:
+The cache and media layers follow a more production-friendly model:
 
 - Cache writes are atomic via temp-file rename.
 - Kanji and word responses remain isolated by cache key.
@@ -174,8 +203,9 @@ The cache and media layers now follow a more production-friendly model:
 - Corrupted cache entries are discarded and refetched automatically.
 - Media assets have a dedicated root directory independent of export output.
 - Each kanji gets a manifest with reserved slots for a stroke-order image, stroke-order animation, and audio assets.
+- Stroke-order source files are copied into managed storage instead of being referenced in place.
 
-This matters because media generation is about to add more files, more formats, and more lifecycle decisions. The repository needs a stable contract before that growth starts.
+This matters because media generation adds more files, more formats, and more lifecycle decisions. The repository needs a stable contract before that growth starts.
 
 ## Media Manifest Contract
 
@@ -194,7 +224,7 @@ The manifest currently tracks:
 - `strokeOrderAnimation`
 - `audio[]`
 
-This means the next phase can add stroke-order images and animations without inventing storage rules later, and audio can be added to the same contract when you are ready.
+This means the next phase can improve stroke-order providers or add audio synthesis/acquisition without changing how assets are organized on disk.
 
 ## Testing Strategy
 
@@ -210,6 +240,7 @@ The current test suite covers:
 - health/readiness endpoint behavior
 - export download headers and request validation
 - media layout and manifest persistence
+- stroke-order source discovery and sync behavior
 
 ## Engineering Standard For This Repo
 
@@ -229,6 +260,7 @@ The working expectation for future changes is:
 
 - add request IDs and structured access logging
 - support resumable offline export workflows
-- add source adapters for stroke-order image and animation providers
+- add remote/provider adapters for stroke-order image and animation sources
 - add media acquisition jobs with checksum verification
+- add audio source adapters or synthesis jobs on top of the existing media manifest
 - introduce typed contracts via JSDoc or TypeScript when the surface area grows further

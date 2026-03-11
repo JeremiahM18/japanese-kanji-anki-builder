@@ -80,7 +80,7 @@ function hasJapaneseParensNoise(text) {
 
 function glossMatchesCoreMeaning(gloss, meanings) {
     const normalizedGloss = normalizeText(gloss);
-    const normalizedMeanings = Array.isArray(meanings) 
+    const normalizedMeanings = Array.isArray(meanings)
         ? meanings.map((m) => normalizeText(m)).filter(Boolean)
         : [];
 
@@ -119,7 +119,7 @@ function classifyGloss(glosses) {
 
     return {
         isName,
-        isObscure
+        isObscure,
     };
 }
 
@@ -136,7 +136,7 @@ function pickPrimaryVariant(variants) {
             writtenLength: String(variant.written).length,
             pronouncedLength: String(variant.pronounced).length,
         }));
-    
+
     ranked.sort((a, b) => {
         if (b.priorityCount !== a.priorityCount) {
             return b.priorityCount - a.priorityCount;
@@ -161,7 +161,7 @@ function pickPrimaryMeaning(meanings) {
     const candidates = meanings.filter(
         (meaning) => Array.isArray(meaning?.glosses) && meaning.glosses.length > 0
     );
-    
+
     return candidates[0] || null;
 }
 
@@ -339,13 +339,13 @@ function buildNotesFromWords(wordsJson, targetKanji, kanjiMeanings, max = 3) {
             continue;
         }
 
-        candidates.push({ 
+        candidates.push({
             score: scoreEntry(entry, targetKanji, kanjiMeanings),
             written: String(written),
             pron: String(pron),
             gloss: String(gloss),
             text: `${written} （${pron}） - ${gloss}`,
-         });
+        });
     }
 
     candidates.sort(compareCandidates);
@@ -424,14 +424,18 @@ async function mapWithConcurrency(items, concurrency, mapper) {
 
 async function buildRowForKanji({
     kanji,
-    kradMap, 
-    pickMainComponent, 
-    kanjiApiClient
+    kradMap,
+    pickMainComponent,
+    kanjiApiClient,
+    strokeOrderService,
 }) {
     try {
-        const [kInfo, words] = await Promise.all([
+        const [kInfo, words, strokeOrderPath] = await Promise.all([
             kanjiApiClient.getKanji(kanji),
             kanjiApiClient.getWords(kanji),
+            typeof strokeOrderService?.getBestStrokeOrderPath === "function"
+                ? strokeOrderService.getBestStrokeOrderPath(kanji)
+                : Promise.resolve(""),
         ]);
 
         const kanjiMeanings = Array.isArray(kInfo?.meanings) ? kInfo.meanings : [];
@@ -448,7 +452,7 @@ async function buildRowForKanji({
             kanji,
             meaningJP,
             reading,
-            "", // StrokeOrder blank
+            strokeOrderPath,
             radical,
             notes,
         ].map(tsvEscape).join("\t");
@@ -465,13 +469,14 @@ async function buildRowForKanji({
 }
 
 async function buildTsvForJlptLevel({
-    levelNumber,        // 1-5
-    jlptOnlyJson,       // object keyed by kanji
-    kradMap,           // Map of kanji to components
-    pickMainComponent, // function to pick main component from list
-    kanjiApiClient,    // client with getKanji and getWords methods
-    limit = null,             // optional limit on number of kanji to process
-    concurrency = 8,          // how many kanji to process at once
+    levelNumber,
+    jlptOnlyJson,
+    kradMap,
+    pickMainComponent,
+    kanjiApiClient,
+    strokeOrderService = null,
+    limit = null,
+    concurrency = 8,
 }) {
     const header = [
         "Kanji",
@@ -486,17 +491,19 @@ async function buildTsvForJlptLevel({
         .filter(([, obj]) => obj?.jlpt === levelNumber)
         .map(([k]) => k);
 
-    const list = (Number.isFinite(limit)) ? 
-        kanjiList.slice(0, limit) : kanjiList;
+    const list = Number.isFinite(limit)
+        ? kanjiList.slice(0, limit)
+        : kanjiList;
 
     const rows = await mapWithConcurrency(
-        list, 
-        concurrency, 
+        list,
+        concurrency,
         async (kanji) => buildRowForKanji({
             kanji,
             kradMap,
             pickMainComponent,
             kanjiApiClient,
+            strokeOrderService,
         })
     );
 

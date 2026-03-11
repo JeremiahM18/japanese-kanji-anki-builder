@@ -2,6 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const { createInferenceEngine } = require("../../src/inference/inferenceEngine");
+const { scoreCandidate } = require("../../src/inference/ranking");
 const { scoreCorpusSentence } = require("../../src/inference/sentenceInference");
 
 test("corpus sentence scoring rewards quality metadata", () => {
@@ -37,6 +38,43 @@ test("corpus sentence scoring rewards quality metadata", () => {
     }, candidate, "日");
 
     assert.equal(strong > weak, true);
+});
+
+test("scoreCandidate returns a structured score breakdown", () => {
+    const scored = scoreCandidate({
+        written: "日本",
+        pron: "にほん",
+        gloss: "Japan",
+        allGlossText: "japan",
+        text: "日本 （にほん） - Japan",
+        variant: {
+            priorities: ["ichi1", "news1"],
+        },
+        meaning: {
+            glosses: ["Japan"],
+        },
+    }, "日", ["day", "sun"], [
+        {
+            kanji: "日",
+            written: "日本",
+            japanese: "日本へ行きます。",
+            english: "I will go to Japan.",
+            source: "manual-curated",
+            tags: ["core", "common"],
+            register: "neutral",
+            frequencyRank: 120,
+            jlpt: 5,
+        },
+    ]);
+
+    assert.equal(Array.isArray(scored.scoreBreakdown.heuristic), true);
+    assert.equal(Array.isArray(scored.scoreBreakdown.corpusSupport), true);
+    assert.equal(scored.scoreBreakdown.heuristic.some((item) => item.key === "contains_target_kanji"), true);
+    assert.equal(scored.scoreBreakdown.corpusSupport.some((item) => item.key === "corpus_exact_written_bonus"), true);
+    assert.equal(
+        scored.scoreBreakdown.totals.finalScore,
+        scored.scoreBreakdown.totals.heuristicScore + scored.scoreBreakdown.totals.corpusSupportScore
+    );
 });
 
 test("curated study data overrides meaning notes and top sentence", () => {
@@ -268,6 +306,9 @@ test("inference engine ranks candidates and returns learner-friendly output", ()
     assert.equal(result.candidates.length, 2);
     assert.equal(result.candidates[0].score > result.candidates[1].score, true);
     assert.equal(result.candidates[0].corpusSupportScore > 0, true);
+    assert.equal(Array.isArray(result.candidates[0].scoreBreakdown.heuristic), true);
+    assert.equal(Array.isArray(result.candidates[0].scoreBreakdown.corpusSupport), true);
+    assert.equal(result.candidates[0].scoreBreakdown.totals.finalScore, result.candidates[0].score);
     assert.equal(result.sentenceCandidates.length >= 2, true);
     assert.equal(result.sentenceCandidates[0].type, "corpus");
     assert.equal(result.sentenceCandidates[0].source, "manual-curated");
@@ -307,4 +348,5 @@ test("inference engine falls back to templates when no corpus sentence exists", 
     assert.equal(result.sentenceCandidates[0].type, "definition");
     assert.equal(result.sentenceCandidates[0].source, "template");
     assert.equal(result.curated.hasOverride, false);
+    assert.equal(result.candidates[0].scoreBreakdown.totals.finalScore, result.candidates[0].score);
 });

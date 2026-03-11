@@ -87,34 +87,88 @@ function compareRankedCandidates(a, b) {
     return a.text.localeCompare(b.text);
 }
 
+function createBreakdown() {
+    return {
+        heuristic: [],
+        corpusSupport: [],
+        totals: {
+            heuristicScore: 0,
+            corpusSupportScore: 0,
+            finalScore: 0,
+        },
+    };
+}
+
+function addContribution(section, breakdown, key, value) {
+    breakdown[section].push({ key, value });
+    if (section === "heuristic") {
+        breakdown.totals.heuristicScore += value;
+    }
+    if (section === "corpusSupport") {
+        breakdown.totals.corpusSupportScore += value;
+    }
+}
+
+function finalizeBreakdown(breakdown) {
+    breakdown.totals.finalScore = breakdown.totals.heuristicScore + breakdown.totals.corpusSupportScore;
+    return breakdown;
+}
+
 function scoreCorpusSupportEntry(entry, candidate, targetKanji) {
     let score = 0;
+    const breakdown = [];
 
     if (entry.written === candidate.written) {
         score += SCORE.CORPUS_EXACT_WRITTEN_BONUS;
+        breakdown.push({ key: "corpus_exact_written_bonus", value: SCORE.CORPUS_EXACT_WRITTEN_BONUS });
     }
     if (entry.kanji === targetKanji) {
         score += SCORE.CORPUS_TARGET_KANJI_BONUS;
+        breakdown.push({ key: "corpus_target_kanji_bonus", value: SCORE.CORPUS_TARGET_KANJI_BONUS });
     }
     if (String(entry.japanese || "").includes(candidate.written)) {
         score += SCORE.CORPUS_JAPANESE_MATCH_BONUS;
+        breakdown.push({ key: "corpus_japanese_match_bonus", value: SCORE.CORPUS_JAPANESE_MATCH_BONUS });
     }
 
-    score += scoreSource(entry);
-    score += scoreTags(entry.tags);
-    score += scoreRegister(entry.register);
-    score += scoreFrequencyRank(entry.frequencyRank);
-    score += scoreJlpt(entry.jlpt, targetKanji);
+    const sourceScore = scoreSource(entry);
+    score += sourceScore;
+    breakdown.push({ key: "corpus_source_score", value: sourceScore });
 
-    return score;
+    const tagScore = scoreTags(entry.tags);
+    score += tagScore;
+    breakdown.push({ key: "corpus_tag_score", value: tagScore });
+
+    const registerScore = scoreRegister(entry.register);
+    score += registerScore;
+    breakdown.push({ key: "corpus_register_score", value: registerScore });
+
+    const frequencyScore = scoreFrequencyRank(entry.frequencyRank);
+    score += frequencyScore;
+    breakdown.push({ key: "corpus_frequency_score", value: frequencyScore });
+
+    const jlptScore = scoreJlpt(entry.jlpt, targetKanji);
+    score += jlptScore;
+    breakdown.push({ key: "corpus_jlpt_score", value: jlptScore });
+
+    return {
+        score,
+        breakdown,
+    };
 }
 
 function scoreCorpusSupport(candidate, targetKanji, sentenceCorpus = []) {
     if (!Array.isArray(sentenceCorpus) || sentenceCorpus.length === 0) {
-        return 0;
+        return {
+            score: 0,
+            breakdown: [],
+        };
     }
 
-    let bestScore = 0;
+    let best = {
+        score: 0,
+        breakdown: [],
+    };
 
     for (const entry of sentenceCorpus) {
         const exactWrittenMatch = entry?.written === candidate.written;
@@ -124,10 +178,26 @@ function scoreCorpusSupport(candidate, targetKanji, sentenceCorpus = []) {
             continue;
         }
 
-        bestScore = Math.max(bestScore, scoreCorpusSupportEntry(entry, candidate, targetKanji));
+        const scored = scoreCorpusSupportEntry(entry, candidate, targetKanji);
+        if (scored.score > best.score) {
+            best = scored;
+        }
     }
 
-    return Math.min(SCORE.CORPUS_SUPPORT_CAP, bestScore);
+    if (best.score > SCORE.CORPUS_SUPPORT_CAP) {
+        return {
+            score: SCORE.CORPUS_SUPPORT_CAP,
+            breakdown: [
+                ...best.breakdown,
+                {
+                    key: "corpus_support_cap",
+                    value: SCORE.CORPUS_SUPPORT_CAP - best.score,
+                },
+            ],
+        };
+    }
+
+    return best;
 }
 
 function scoreCandidate(candidate, targetKanji, kanjiMeanings, sentenceCorpus = []) {
@@ -135,110 +205,129 @@ function scoreCandidate(candidate, targetKanji, kanjiMeanings, sentenceCorpus = 
         return {
             score: INVALID_SCORE,
             corpusSupportScore: 0,
+            scoreBreakdown: {
+                heuristic: [{ key: "invalid_candidate", value: INVALID_SCORE }],
+                corpusSupport: [],
+                totals: {
+                    heuristicScore: INVALID_SCORE,
+                    corpusSupportScore: 0,
+                    finalScore: INVALID_SCORE,
+                },
+            },
         };
     }
 
+    const breakdown = createBreakdown();
     const { isName, isObscure } = classifyGloss(candidate.meaning?.glosses);
     const written = candidate.written;
     const pron = candidate.pron;
     const firstGloss = candidate.gloss;
     const allGlossText = candidate.allGlossText || "";
 
-    let score = 0;
-
     if (written.includes(targetKanji)) {
-        score += SCORE.CONTAINS_TARGET_KANJI;
+        addContribution("heuristic", breakdown, "contains_target_kanji", SCORE.CONTAINS_TARGET_KANJI);
     } else {
-        score += SCORE.MISSING_TARGET_KANJI;
+        addContribution("heuristic", breakdown, "missing_target_kanji", SCORE.MISSING_TARGET_KANJI);
     }
 
     const len = written.length;
     if (len === 1) {
-        score += SCORE.LENGTH_1;
+        addContribution("heuristic", breakdown, "length_1", SCORE.LENGTH_1);
     } else if (len === 2) {
-        score += SCORE.LENGTH_2;
+        addContribution("heuristic", breakdown, "length_2", SCORE.LENGTH_2);
     } else if (len === 3) {
-        score += SCORE.LENGTH_3;
+        addContribution("heuristic", breakdown, "length_3", SCORE.LENGTH_3);
     } else if (len === 4) {
-        score += SCORE.LENGTH_4;
+        addContribution("heuristic", breakdown, "length_4", SCORE.LENGTH_4);
     } else {
-        score += Math.max(SCORE.LENGTH_OVER_4_CAP, -(len - 4));
+        addContribution("heuristic", breakdown, "length_over_4", Math.max(SCORE.LENGTH_OVER_4_CAP, -(len - 4)));
     }
 
     if (Array.isArray(candidate.variant?.priorities)) {
-        score += candidate.variant.priorities.length * SCORE.PRIORITY_MARKER;
+        addContribution(
+            "heuristic",
+            breakdown,
+            "priority_markers",
+            candidate.variant.priorities.length * SCORE.PRIORITY_MARKER
+        );
     }
 
     if (firstGloss.length <= 18) {
-        score += SCORE.SHORT_GLOSS;
+        addContribution("heuristic", breakdown, "short_gloss", SCORE.SHORT_GLOSS);
     } else if (firstGloss.length > 40) {
-        score += SCORE.LONG_GLOSS;
+        addContribution("heuristic", breakdown, "long_gloss", SCORE.LONG_GLOSS);
     }
 
     if (isName) {
-        score += SCORE.NAME_PENALTY;
+        addContribution("heuristic", breakdown, "name_penalty", SCORE.NAME_PENALTY);
     }
 
     if (isObscure) {
-        score += SCORE.OBSCURE_PENALTY;
+        addContribution("heuristic", breakdown, "obscure_penalty", SCORE.OBSCURE_PENALTY);
     }
 
     if (ASCII_ALNUM_RE.test(written)) {
-        score += SCORE.ASCII_WRITTEN_PENALTY;
+        addContribution("heuristic", breakdown, "ascii_written_penalty", SCORE.ASCII_WRITTEN_PENALTY);
     }
 
     if (hasJapaneseParensNoise(firstGloss)) {
-        score += SCORE.PARENS_NOISE_PENALTY;
+        addContribution("heuristic", breakdown, "parens_noise_penalty", SCORE.PARENS_NOISE_PENALTY);
     }
 
     const kanjiCount = countKanjiChars(written);
     if (kanjiCount >= 1 && kanjiCount <= 2) {
-        score += SCORE.GOOD_KANJI_FOOTPRINT;
+        addContribution("heuristic", breakdown, "good_kanji_footprint", SCORE.GOOD_KANJI_FOOTPRINT);
     } else if (kanjiCount >= 4) {
-        score += SCORE.TOO_MANY_KANJI_PENALTY;
+        addContribution("heuristic", breakdown, "too_many_kanji_penalty", SCORE.TOO_MANY_KANJI_PENALTY);
     }
 
     if (hasKanaOnly(written)) {
-        score += SCORE.KANA_ONLY_PENALTY;
+        addContribution("heuristic", breakdown, "kana_only_penalty", SCORE.KANA_ONLY_PENALTY);
     }
 
     if (glossMatchesCoreMeaning(firstGloss, kanjiMeanings)) {
-        score += SCORE.CORE_MEANING_BONUS;
+        addContribution("heuristic", breakdown, "core_meaning_bonus", SCORE.CORE_MEANING_BONUS);
     }
 
     if (allGlossText.includes("term of the sexagenary cycle")) {
-        score += SCORE.SEXAGENARY_PENALTY;
+        addContribution("heuristic", breakdown, "sexagenary_penalty", SCORE.SEXAGENARY_PENALTY);
     }
 
     if (allGlossText.includes("species of")) {
-        score += SCORE.SPECIES_PENALTY;
+        addContribution("heuristic", breakdown, "species_penalty", SCORE.SPECIES_PENALTY);
     }
 
     if (pron.length >= 8) {
-        score += SCORE.LONG_PRONUNCIATION_PENALTY;
+        addContribution("heuristic", breakdown, "long_pronunciation_penalty", SCORE.LONG_PRONUNCIATION_PENALTY);
     }
 
     if (written === targetKanji) {
-        score += SCORE.EXACT_MATCH_BONUS;
+        addContribution("heuristic", breakdown, "exact_match_bonus", SCORE.EXACT_MATCH_BONUS);
 
         if (glossMatchesCoreMeaning(firstGloss, kanjiMeanings)) {
-            score += SCORE.EXACT_MATCH_CORE_MEANING_BONUS;
+            addContribution("heuristic", breakdown, "exact_match_core_meaning_bonus", SCORE.EXACT_MATCH_CORE_MEANING_BONUS);
         }
 
         if (isObscure) {
-            score += SCORE.EXACT_MATCH_OBSCURE_PENALTY;
+            addContribution("heuristic", breakdown, "exact_match_obscure_penalty", SCORE.EXACT_MATCH_OBSCURE_PENALTY);
         }
     }
 
     if (written === targetKanji && KATAKANA_ONLY_RE.test(pron)) {
-        score += SCORE.SINGLE_KANJI_KATAKANA_PENALTY;
+        addContribution("heuristic", breakdown, "single_kanji_katakana_penalty", SCORE.SINGLE_KANJI_KATAKANA_PENALTY);
     }
 
-    const corpusSupportScore = scoreCorpusSupport(candidate, targetKanji, sentenceCorpus);
+    const corpusSupport = scoreCorpusSupport(candidate, targetKanji, sentenceCorpus);
+    for (const contribution of corpusSupport.breakdown) {
+        addContribution("corpusSupport", breakdown, contribution.key, contribution.value);
+    }
+
+    finalizeBreakdown(breakdown);
 
     return {
-        score: score + corpusSupportScore,
-        corpusSupportScore,
+        score: breakdown.totals.finalScore,
+        corpusSupportScore: breakdown.totals.corpusSupportScore,
+        scoreBreakdown: breakdown,
     };
 }
 
@@ -251,6 +340,7 @@ function rankWordCandidates(candidates, targetKanji, kanjiMeanings, sentenceCorp
                 ...candidate,
                 score: scored.score,
                 corpusSupportScore: scored.corpusSupportScore,
+                scoreBreakdown: scored.scoreBreakdown,
             };
         })
         .sort(compareRankedCandidates);

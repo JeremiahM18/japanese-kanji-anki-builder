@@ -21,6 +21,7 @@ The engineering direction for this repository is deliberate: treat even a person
 - Supports curated study data overrides for preferred words, blocked words, meanings, notes, and top example sentences
 - Supports sentence corpus normalization tooling for deterministic imports and clean dataset diffs
 - Supports coverage reporting to show which JLPT kanji still lack sentence support
+- Exposes candidate score breakdowns so inference ranking decisions are inspectable and tunable
 - Prefers corpus-backed sentence candidates when a local sentence corpus is available, with deterministic template fallback otherwise
 - Weights corpus sentence selection by source quality, learner-friendly tags, register, and optional frequency metadata
 - Caches kanji and word API responses separately
@@ -132,7 +133,7 @@ C:\japanese_kanji_builder
 3. `src/app.js` builds the Express application from injected dependencies.
 4. Export requests call `buildTsvForJlptLevel()` with bounded concurrency.
 5. Each kanji fetches kanji metadata, word candidates, and best known stroke-order path concurrently.
-6. The inference engine extracts candidates, ranks them deterministically, and returns learner-facing meaning, notes, and sentence candidates.
+6. The inference engine extracts candidates, ranks them deterministically, and returns learner-facing meaning, notes, sentence candidates, and score breakdowns.
 7. Word ranking incorporates bounded corpus-support evidence so `bestWord` and `Notes` can prefer candidates with better supporting examples.
 8. Curated study data can remove blocked words, reorder preferred words, override meanings and notes, and inject a top example sentence.
 9. The export service promotes the top-ranked sentence candidate into the TSV as `ExampleSentence`.
@@ -150,7 +151,7 @@ Current inference layers:
 - `candidateExtractor.js`
   normalizes word entries into comparable candidates
 - `ranking.js`
-  scores candidates using explicit heuristics and bounded corpus-support signals
+  scores candidates using explicit heuristics, bounded corpus-support signals, and structured score breakdowns
 - `meaningInference.js`
   derives `bestWord`, `englishMeaning`, and `MeaningJP`
 - `notesInference.js`
@@ -177,6 +178,14 @@ Curated study data can explicitly control:
 - English meaning overrides
 - `Notes` overrides
 - top example sentence overrides
+
+Ranking explainability now exposes:
+
+- heuristic bonuses and penalties
+- corpus-support contributions
+- per-candidate heuristic subtotal
+- per-candidate corpus subtotal
+- final score total
 
 ## Output Fields
 
@@ -307,7 +316,7 @@ The coverage report:
 3. Normalize imported sentence data before relying on it in inference.
 4. Run a corpus coverage report to see which kanji still need support.
 5. Call `GET /inference/:kanji` to inspect the current deterministic inference output.
-6. Review the ranked candidates, inferred meaning, notes, curated flags, and sentence candidates.
+6. Review the ranked candidates, inferred meaning, notes, curated flags, sentence candidates, and score breakdowns.
 7. Tune scoring and selection rules in `src/inference/` rather than changing export formatting directly.
 8. Re-run tests and the export benchmark after meaningful inference changes.
 
@@ -469,6 +478,7 @@ The current test suite covers:
 - sentence candidate generation
 - corpus-backed sentence preference and weighting
 - word-ranking behavior
+- ranking explainability breakdowns
 - cache creation and reuse
 - in-flight request deduplication
 - retry safety after failures

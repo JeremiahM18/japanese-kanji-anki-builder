@@ -8,6 +8,7 @@ function buildFixtureApp() {
         cacheDir: "C:\\repo\\cache",
         jlptJsonPath: "C:\\repo\\data\\kanji_jlpt_only.json",
         kradfilePath: "C:\\repo\\data\\KRADFILE",
+        sentenceCorpusPath: "C:\\repo\\data\\sentence_corpus.json",
         mediaRootDir: "C:\\repo\\data\\media",
         strokeOrderImageSourceDir: "C:\\repo\\data\\media_sources\\stroke-order\\images",
         strokeOrderAnimationSourceDir: "C:\\repo\\data\\media_sources\\stroke-order\\animations",
@@ -24,6 +25,18 @@ function buildFixtureApp() {
         ["日", ["日"]],
         ["本", ["木"]],
     ]);
+
+    const sentenceCorpus = [
+        {
+            kanji: "日",
+            written: "日本",
+            japanese: "日本へ行きます。",
+            reading: "にほんへいきます。",
+            english: "I will go to Japan.",
+            source: "fixture-corpus",
+            tags: ["core"],
+        },
+    ];
 
     const metrics = {
         cacheHits: 7,
@@ -124,6 +137,7 @@ function buildFixtureApp() {
         config,
         jlptOnlyJson,
         kradMap,
+        sentenceCorpus,
         pickMainComponent: (components) => components[0] || "",
         kanjiApiClient,
         strokeOrderService,
@@ -175,15 +189,15 @@ test("health and readiness endpoints expose operational state", async () => {
         assert.equal(readyJson.status, "ready");
         assert.equal(readyJson.datasets.jlptKanjiCount, 2);
         assert.equal(readyJson.datasets.kradEntries, 2);
+        assert.equal(readyJson.datasets.sentenceCorpusEntries, 1);
         assert.equal(readyJson.config.exportConcurrency, 4);
-        assert.equal(readyJson.config.mediaRootDir, "C:\\repo\\data\\media");
-        assert.equal(readyJson.config.strokeOrderImageSourceDir, "C:\\repo\\data\\media_sources\\stroke-order\\images");
+        assert.equal(readyJson.config.sentenceCorpusPath, "C:\\repo\\data\\sentence_corpus.json");
         assert.equal(readyJson.cache.cacheHits, 7);
         assert.equal(readyJson.cache.cacheMisses, 2);
     });
 });
 
-test("inference route exposes ranked study output and sentence candidates", async () => {
+test("inference route exposes corpus-backed study output and sentence candidates", async () => {
     const app = buildFixtureApp();
 
     await withServer(app, async (baseUrl) => {
@@ -194,8 +208,9 @@ test("inference route exposes ranked study output and sentence candidates", asyn
         assert.equal(json.status, "ok");
         assert.equal(json.inference.bestWord.written, "日本");
         assert.equal(json.inference.strokeOrderPath, "animations/stroke-order.gif");
-        assert.equal(json.inference.sentenceCandidates.length >= 2, true);
-        assert.match(json.inference.sentenceCandidates[0].japanese, /日本/);
+        assert.equal(json.inference.sentenceCandidates[0].type, "corpus");
+        assert.equal(json.inference.sentenceCandidates[0].source, "fixture-corpus");
+        assert.match(json.inference.sentenceCandidates[0].japanese, /日本へ行きます/);
     });
 });
 

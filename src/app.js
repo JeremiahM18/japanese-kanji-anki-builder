@@ -36,7 +36,8 @@ function createApp({
     pickMainComponent,
     kanjiApiClient,
     strokeOrderService,
-    inferenceEngine = createInferenceEngine(),
+    sentenceCorpus = [],
+    inferenceEngine = createInferenceEngine({ sentenceCorpus }),
     exportService = createExportService({ inferenceEngine }),
 }) {
     const app = express();
@@ -66,11 +67,13 @@ function createApp({
             datasets: {
                 jlptKanjiCount,
                 kradEntries: kradMap.size,
+                sentenceCorpusEntries: sentenceCorpus.length,
             },
             config: {
                 cacheDir: config.cacheDir,
                 jlptJsonPath: config.jlptJsonPath,
                 kradfilePath: config.kradfilePath,
+                sentenceCorpusPath: config.sentenceCorpusPath,
                 mediaRootDir: config.mediaRootDir,
                 strokeOrderImageSourceDir: config.strokeOrderImageSourceDir,
                 strokeOrderAnimationSourceDir: config.strokeOrderAnimationSourceDir,

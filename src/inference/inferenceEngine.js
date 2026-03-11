@@ -4,14 +4,19 @@ const { inferNotes } = require("./notesInference");
 const { rankWordCandidates } = require("./ranking");
 const { inferSentenceCandidates } = require("./sentenceInference");
 
-function createInferenceEngine() {
+function createInferenceEngine({ sentenceCorpus = [] } = {}) {
     function inferKanjiStudyData({ kanji, kanjiInfo, words, maxExamples = 3, maxSentences = 3 }) {
         const kanjiMeanings = Array.isArray(kanjiInfo?.meanings) ? kanjiInfo.meanings : [];
         const extractedCandidates = extractWordCandidates(words);
         const rankedCandidates = rankWordCandidates(extractedCandidates, kanji, kanjiMeanings);
         const meaning = inferMeaning({ kanjiMeanings, rankedCandidates });
         const notes = inferNotes({ rankedCandidates, maxExamples });
-        const sentenceCandidates = inferSentenceCandidates({ rankedCandidates, maxSentences });
+        const sentenceCandidates = inferSentenceCandidates({
+            rankedCandidates,
+            kanji,
+            sentenceCorpus,
+            maxSentences,
+        });
 
         return {
             kanji,

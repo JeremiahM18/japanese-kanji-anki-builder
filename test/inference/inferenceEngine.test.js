@@ -4,7 +4,19 @@ const assert = require("node:assert/strict");
 const { createInferenceEngine } = require("../../src/inference/inferenceEngine");
 
 test("inference engine ranks candidates and returns learner-friendly output", () => {
-    const inferenceEngine = createInferenceEngine();
+    const inferenceEngine = createInferenceEngine({
+        sentenceCorpus: [
+            {
+                kanji: "日",
+                written: "日本",
+                japanese: "日本へ行きます。",
+                reading: "にほんへいきます。",
+                english: "I will go to Japan.",
+                source: "fixture-corpus",
+                tags: ["core"],
+            },
+        ],
+    });
 
     const result = inferenceEngine.inferKanjiStudyData({
         kanji: "日",
@@ -50,7 +62,38 @@ test("inference engine ranks candidates and returns learner-friendly output", ()
     assert.equal(result.candidates.length, 2);
     assert.equal(result.candidates[0].score > result.candidates[1].score, true);
     assert.equal(result.sentenceCandidates.length >= 2, true);
+    assert.equal(result.sentenceCandidates[0].type, "corpus");
+    assert.equal(result.sentenceCandidates[0].source, "fixture-corpus");
+    assert.match(result.sentenceCandidates[0].japanese, /日本へ行きます/);
+    assert.match(result.sentenceCandidates[0].english, /go to Japan/);
+});
+
+test("inference engine falls back to templates when no corpus sentence exists", () => {
+    const inferenceEngine = createInferenceEngine();
+
+    const result = inferenceEngine.inferKanjiStudyData({
+        kanji: "本",
+        kanjiInfo: {
+            meanings: ["book", "origin"],
+        },
+        words: [
+            {
+                variants: [
+                    {
+                        written: "本",
+                        pronounced: "ほん",
+                        priorities: ["ichi1"],
+                    },
+                ],
+                meanings: [
+                    {
+                        glosses: ["book"],
+                    },
+                ],
+            },
+        ],
+    });
+
     assert.equal(result.sentenceCandidates[0].type, "definition");
-    assert.match(result.sentenceCandidates[0].japanese, /日本/);
-    assert.match(result.sentenceCandidates[0].english, /Japan/);
+    assert.equal(result.sentenceCandidates[0].source, "template");
 });

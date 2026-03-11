@@ -16,7 +16,7 @@ The engineering direction for this repository is deliberate: treat even a person
 - Adds example vocabulary with furigana-style readings
 - Separates raw data fetching, inference, export orchestration, and media management into distinct modules
 - Uses a deterministic inference engine to rank example words and derive learner-friendly `MeaningJP` and `Notes` output
-- Generates sentence candidates from ranked study words so kanji inference is inspectable before future model-based work
+- Prefers corpus-backed sentence candidates when a local sentence corpus is available, with deterministic template fallback otherwise
 - Caches kanji and word API responses separately
 - Validates upstream API payloads before they are cached or consumed
 - Tracks cache and fetch metrics for readiness checks and benchmarks
@@ -32,7 +32,7 @@ The engineering direction for this repository is deliberate: treat even a person
 
 ## File Tree
 
-This is the meaningful project tree after the Phase 2 sentence inference pass:
+This is the meaningful project tree after the corpus-backed sentence inference pass:
 
 ```text
 C:\japanese_kanji_builder
@@ -51,7 +51,8 @@ C:\japanese_kanji_builder
 │  ├─ clients/
 │  │  └─ kanjiApiClient.js
 │  ├─ datasets/
-│  │  └─ kradfile.js
+│  │  ├─ kradfile.js
+│  │  └─ sentenceCorpus.js
 │  ├─ inference/
 │  │  ├─ candidateExtractor.js
 │  │  ├─ inferenceEngine.js
@@ -87,6 +88,8 @@ C:\japanese_kanji_builder
   Fetches and validates raw upstream kanji and word payloads.
 - `src/datasets/kradfile.js`
   Loads KRADFILE radicals/components.
+- `src/datasets/sentenceCorpus.js`
+  Loads an optional local sentence corpus for deterministic sentence selection.
 - `src/inference/`
   Extracts word candidates, ranks them, and infers learner-facing meaning, notes, and sentence output.
 - `src/services/exportService.js`
@@ -103,14 +106,15 @@ C:\japanese_kanji_builder
 ### Runtime Flow
 
 1. `src/server.js` loads config and validates required datasets at startup.
-2. KRADFILE and JLPT JSON are loaded into memory once.
+2. KRADFILE, JLPT JSON, and the optional sentence corpus are loaded into memory once.
 3. `src/app.js` builds the Express application from injected dependencies.
 4. Export requests call `buildTsvForJlptLevel()` with bounded concurrency.
 5. Each kanji fetches kanji metadata, word candidates, and best known stroke-order path concurrently.
 6. The inference engine extracts candidates, ranks them deterministically, and returns learner-facing meaning, notes, and sentence candidates.
-7. Upstream responses are validated, cached atomically on disk, and counted in client metrics.
-8. Stroke-order sync scans local source directories, imports matching assets into the managed media tree, and updates the kanji manifest.
-9. Audio can be added later to the same media manifest contract without redesigning the filesystem layout.
+7. Sentence inference prefers corpus-backed matches and only falls back to templates when the corpus has no suitable example.
+8. Upstream responses are validated, cached atomically on disk, and counted in client metrics.
+9. Stroke-order sync scans local source directories, imports matching assets into the managed media tree, and updates the kanji manifest.
+10. Audio can be added later to the same media manifest contract without redesigning the filesystem layout.
 
 ## Deterministic Inference Engine
 
@@ -127,11 +131,11 @@ Current inference layers:
 - `notesInference.js`
   derives the `Notes` field from top-ranked examples
 - `sentenceInference.js`
-  derives study-oriented sentence candidates from top-ranked words
+  selects sentence candidates, preferring the local corpus before template fallback
 - `inferenceEngine.js`
   composes the full learner-facing inference result
 
-Phase 2 sentence inference is still heuristic and intentionally conservative. It creates deterministic study sentences from ranked word candidates so we can inspect the inference layer directly before introducing more advanced sentence generation.
+This keeps the system inspectable and testable while improving quality incrementally. The corpus-backed layer is the first major step away from generic sentence templates without giving up deterministic behavior.
 
 ## Output Fields
 
@@ -156,6 +160,7 @@ All paths are resolved from the repository root so local development and deploym
 | `CACHE_DIR` | `cache` | Root directory for local API cache |
 | `JLPT_JSON_PATH` | `data/kanji_jlpt_only.json` | JLPT dataset |
 | `KRADFILE_PATH` | `data/KRADFILE` | Radical/component dataset |
+| `SENTENCE_CORPUS_PATH` | `data/sentence_corpus.json` | Optional local sentence corpus used to improve sentence inference |
 | `KANJI_API_BASE_URL` | `https://kanjiapi.dev` | Upstream kanji API base URL |
 | `MEDIA_ROOT_DIR` | `data/media` | Root directory for managed stroke-order and audio media assets |
 | `STROKE_ORDER_IMAGE_SOURCE_DIR` | `data/media_sources/stroke-order/images` | Local source directory for stroke-order images |
@@ -206,10 +211,11 @@ The benchmark reports duration, rows per second, cache hit ratio, network fetche
 
 ## Inference Workflow
 
-1. Call `GET /inference/:kanji` to inspect the current deterministic inference output.
-2. Review the ranked candidates, inferred meaning, notes, and sentence candidates.
-3. Tune scoring and selection rules in `src/inference/` rather than changing export formatting directly.
-4. Re-run tests and the export benchmark after meaningful inference changes.
+1. Add sentence examples to `data/sentence_corpus.json` when you have better corpus material.
+2. Call `GET /inference/:kanji` to inspect the current deterministic inference output.
+3. Review the ranked candidates, inferred meaning, notes, and sentence candidates.
+4. Tune scoring and selection rules in `src/inference/` rather than changing export formatting directly.
+5. Re-run tests and the export benchmark after meaningful inference changes.
 
 This route is the safest place to iterate on quality because it shows the intermediate reasoning results before the final deck export is generated.
 
@@ -307,6 +313,7 @@ The current test suite covers:
 - export formatting and row construction
 - deterministic inference output
 - sentence candidate generation
+- corpus-backed sentence preference
 - word-ranking behavior
 - cache creation and reuse
 - in-flight request deduplication
@@ -337,7 +344,7 @@ The working expectation for future changes is:
 
 - add request IDs and structured access logging
 - support resumable offline export workflows
-- introduce richer sentence templates or corpus-backed sentence selection
+- introduce corpus scoring with frequency/source weighting
 - add remote/provider adapters for stroke-order image and animation sources
 - add media acquisition jobs with checksum verification
 - add audio source adapters or synthesis jobs on top of the existing media manifest

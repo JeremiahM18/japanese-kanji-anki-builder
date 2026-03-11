@@ -4,8 +4,10 @@ const { loadConfig } = require("./config");
 const { logger } = require("./logger");
 const { createKanjiApiClient } = require("./clients/kanjiApiClient");
 const { loadKradMap, pickMainComponent } = require("./datasets/kradfile");
+const { loadSentenceCorpus } = require("./datasets/sentenceCorpus");
 const { ensureMediaRoot } = require("./services/mediaStore");
 const { createStrokeOrderService } = require("./services/strokeOrderService");
+const { createInferenceEngine } = require("./inference/inferenceEngine");
 const { createApp } = require("./app");
 
 async function main() {
@@ -20,6 +22,7 @@ async function main() {
 
     const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
     const kradMap = loadKradMap(config.kradfilePath);
+    const sentenceCorpus = loadSentenceCorpus(config.sentenceCorpusPath);
 
     const kanjiApiClient = createKanjiApiClient({
         baseUrl: config.kanjiApiBaseUrl,
@@ -35,6 +38,8 @@ async function main() {
         animationSourceDir: config.strokeOrderAnimationSourceDir,
     });
 
+    const inferenceEngine = createInferenceEngine({ sentenceCorpus });
+
     const app = createApp({
         config,
         jlptOnlyJson,
@@ -42,6 +47,8 @@ async function main() {
         pickMainComponent,
         kanjiApiClient,
         strokeOrderService,
+        inferenceEngine,
+        sentenceCorpus,
     });
 
     app.listen(config.port, () => {
@@ -51,6 +58,8 @@ async function main() {
                 exportConcurrency: config.exportConcurrency,
                 fetchTimeoutMs: config.fetchTimeoutMs,
                 cacheDir: config.cacheDir,
+                sentenceCorpusPath: config.sentenceCorpusPath,
+                sentenceCorpusEntries: sentenceCorpus.length,
                 mediaRootDir: config.mediaRootDir,
                 strokeOrderImageSourceDir: config.strokeOrderImageSourceDir,
                 strokeOrderAnimationSourceDir: config.strokeOrderAnimationSourceDir,
@@ -62,6 +71,7 @@ async function main() {
         logger.info(`Download: http://127.0.0.1:${config.port}/export/N5/download`);
         logger.info(`Health: http://127.0.0.1:${config.port}/healthz`);
         logger.info(`Readiness: http://127.0.0.1:${config.port}/readyz`);
+        logger.info(`Inference: http://127.0.0.1:${config.port}/inference/日`);
         logger.info(`Media lookup: http://127.0.0.1:${config.port}/media/日`);
     });
 }

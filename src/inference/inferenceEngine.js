@@ -8,7 +8,7 @@ function createInferenceEngine({ sentenceCorpus = [] } = {}) {
     function inferKanjiStudyData({ kanji, kanjiInfo, words, maxExamples = 3, maxSentences = 3 }) {
         const kanjiMeanings = Array.isArray(kanjiInfo?.meanings) ? kanjiInfo.meanings : [];
         const extractedCandidates = extractWordCandidates(words);
-        const rankedCandidates = rankWordCandidates(extractedCandidates, kanji, kanjiMeanings);
+        const rankedCandidates = rankWordCandidates(extractedCandidates, kanji, kanjiMeanings, sentenceCorpus);
         const meaning = inferMeaning({ kanjiMeanings, rankedCandidates });
         const notes = inferNotes({ rankedCandidates, maxExamples });
         const sentenceCandidates = inferSentenceCandidates({

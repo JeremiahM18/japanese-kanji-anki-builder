@@ -193,4 +193,9 @@ function inferSentenceCandidates({ rankedCandidates, kanji, sentenceCorpus = [],
 module.exports = {
     inferSentenceCandidates,
     scoreCorpusSentence,
+    scoreFrequencyRank,
+    scoreJlpt,
+    scoreRegister,
+    scoreSource,
+    scoreTags,
 };

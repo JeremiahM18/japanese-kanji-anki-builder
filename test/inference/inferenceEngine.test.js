@@ -39,6 +39,79 @@ test("corpus sentence scoring rewards quality metadata", () => {
     assert.equal(strong > weak, true);
 });
 
+test("corpus support can rerank bestWord and notes", () => {
+    const words = [
+        {
+            variants: [
+                {
+                    written: "日中",
+                    pronounced: "にっちゅう",
+                    priorities: ["ichi1", "news1"],
+                },
+            ],
+            meanings: [
+                {
+                    glosses: ["daytime"],
+                },
+            ],
+        },
+        {
+            variants: [
+                {
+                    written: "日本",
+                    pronounced: "にほん",
+                    priorities: ["ichi1"],
+                },
+            ],
+            meanings: [
+                {
+                    glosses: ["Japan"],
+                },
+            ],
+        },
+    ];
+
+    const plainInference = createInferenceEngine();
+    const corpusBackedInference = createInferenceEngine({
+        sentenceCorpus: [
+            {
+                kanji: "日",
+                written: "日本",
+                japanese: "日本へ行きます。",
+                reading: "にほんへいきます。",
+                english: "I will go to Japan.",
+                source: "manual-curated",
+                tags: ["core", "common", "beginner"],
+                register: "neutral",
+                frequencyRank: 120,
+                jlpt: 5,
+            },
+        ],
+    });
+
+    const plainResult = plainInference.inferKanjiStudyData({
+        kanji: "日",
+        kanjiInfo: {
+            meanings: ["day", "sun"],
+        },
+        words,
+    });
+
+    const corpusResult = corpusBackedInference.inferKanjiStudyData({
+        kanji: "日",
+        kanjiInfo: {
+            meanings: ["day", "sun"],
+        },
+        words,
+    });
+
+    assert.equal(plainResult.bestWord.written, "日中");
+    assert.equal(corpusResult.bestWord.written, "日本");
+    assert.equal(corpusResult.candidates[0].corpusSupportScore > 0, true);
+    assert.equal(corpusResult.candidates[0].written, "日本");
+    assert.match(corpusResult.notes, /^日本/);
+});
+
 test("inference engine ranks candidates and returns learner-friendly output", () => {
     const inferenceEngine = createInferenceEngine({
         sentenceCorpus: [
@@ -112,6 +185,7 @@ test("inference engine ranks candidates and returns learner-friendly output", ()
     assert.match(result.notes, /日本/);
     assert.equal(result.candidates.length, 2);
     assert.equal(result.candidates[0].score > result.candidates[1].score, true);
+    assert.equal(result.candidates[0].corpusSupportScore > 0, true);
     assert.equal(result.sentenceCandidates.length >= 2, true);
     assert.equal(result.sentenceCandidates[0].type, "corpus");
     assert.equal(result.sentenceCandidates[0].source, "manual-curated");

@@ -17,6 +17,7 @@ The engineering direction for this repository is deliberate: treat even a person
 - Exports the strongest inferred example sentence directly into the TSV
 - Separates raw data fetching, inference, export orchestration, and media management into distinct modules
 - Uses a deterministic inference engine to rank example words and derive learner-friendly `MeaningJP`, `Notes`, and `ExampleSentence` output
+- Uses corpus metadata to improve both word ranking and sentence selection when stronger supporting examples exist
 - Prefers corpus-backed sentence candidates when a local sentence corpus is available, with deterministic template fallback otherwise
 - Weights corpus sentence selection by source quality, learner-friendly tags, register, and optional frequency metadata
 - Caches kanji and word API responses separately
@@ -113,11 +114,12 @@ C:\japanese_kanji_builder
 4. Export requests call `buildTsvForJlptLevel()` with bounded concurrency.
 5. Each kanji fetches kanji metadata, word candidates, and best known stroke-order path concurrently.
 6. The inference engine extracts candidates, ranks them deterministically, and returns learner-facing meaning, notes, and sentence candidates.
-7. The export service promotes the top-ranked sentence candidate into the TSV as `ExampleSentence`.
-8. Sentence inference prefers corpus-backed matches and only falls back to templates when the corpus has no suitable example.
-9. Upstream responses are validated, cached atomically on disk, and counted in client metrics.
-10. Stroke-order sync scans local source directories, imports matching assets into the managed media tree, and updates the kanji manifest.
-11. Audio can be added later to the same media manifest contract without redesigning the filesystem layout.
+7. Word ranking now incorporates bounded corpus-support evidence so `bestWord` and `Notes` can prefer candidates with better supporting examples.
+8. The export service promotes the top-ranked sentence candidate into the TSV as `ExampleSentence`.
+9. Sentence inference prefers corpus-backed matches and only falls back to templates when the corpus has no suitable example.
+10. Upstream responses are validated, cached atomically on disk, and counted in client metrics.
+11. Stroke-order sync scans local source directories, imports matching assets into the managed media tree, and updates the kanji manifest.
+12. Audio can be added later to the same media manifest contract without redesigning the filesystem layout.
 
 ## Deterministic Inference Engine
 
@@ -128,7 +130,7 @@ Current inference layers:
 - `candidateExtractor.js`
   normalizes word entries into comparable candidates
 - `ranking.js`
-  scores candidates using explicit heuristics
+  scores candidates using explicit heuristics and bounded corpus-support signals
 - `meaningInference.js`
   derives `bestWord`, `englishMeaning`, and `MeaningJP`
 - `notesInference.js`
@@ -140,12 +142,13 @@ Current inference layers:
 
 This keeps the system inspectable and testable while improving quality incrementally. The corpus-backed layer is the first major step away from generic sentence templates without giving up deterministic behavior.
 
-Corpus sentence ranking currently favors:
+Corpus-backed inference currently favors:
 
 - manually curated or trusted local sources over generic imports
 - `core`, `common`, and `beginner` tags over `rare` or `archaic`
 - neutral and spoken register over literary phrasing
 - better optional frequency metadata when available
+- candidates that already have stronger supporting sentence evidence in the local corpus
 
 ## Output Fields
 

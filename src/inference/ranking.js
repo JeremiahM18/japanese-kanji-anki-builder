@@ -1,4 +1,11 @@
 const { classifyGloss } = require("./candidateExtractor");
+const {
+    scoreFrequencyRank,
+    scoreJlpt,
+    scoreRegister,
+    scoreSource,
+    scoreTags,
+} = require("./sentenceInference");
 const { normalizeText } = require("../utils/text");
 
 const INVALID_SCORE = -999;
@@ -29,6 +36,10 @@ const SCORE = {
     EXACT_MATCH_CORE_MEANING_BONUS: 14,
     EXACT_MATCH_OBSCURE_PENALTY: -20,
     SINGLE_KANJI_KATAKANA_PENALTY: -25,
+    CORPUS_EXACT_WRITTEN_BONUS: 16,
+    CORPUS_TARGET_KANJI_BONUS: 8,
+    CORPUS_JAPANESE_MATCH_BONUS: 6,
+    CORPUS_SUPPORT_CAP: 45,
 };
 
 const KATAKANA_ONLY_RE = /^[\p{Script=Katakana}ー]+$/u;
@@ -64,6 +75,9 @@ function compareRankedCandidates(a, b) {
     if (b.score !== a.score) {
         return b.score - a.score;
     }
+    if ((b.corpusSupportScore || 0) !== (a.corpusSupportScore || 0)) {
+        return (b.corpusSupportScore || 0) - (a.corpusSupportScore || 0);
+    }
     if (a.written.length !== b.written.length) {
         return a.written.length - b.written.length;
     }
@@ -73,9 +87,55 @@ function compareRankedCandidates(a, b) {
     return a.text.localeCompare(b.text);
 }
 
-function scoreCandidate(candidate, targetKanji, kanjiMeanings) {
+function scoreCorpusSupportEntry(entry, candidate, targetKanji) {
+    let score = 0;
+
+    if (entry.written === candidate.written) {
+        score += SCORE.CORPUS_EXACT_WRITTEN_BONUS;
+    }
+    if (entry.kanji === targetKanji) {
+        score += SCORE.CORPUS_TARGET_KANJI_BONUS;
+    }
+    if (String(entry.japanese || "").includes(candidate.written)) {
+        score += SCORE.CORPUS_JAPANESE_MATCH_BONUS;
+    }
+
+    score += scoreSource(entry);
+    score += scoreTags(entry.tags);
+    score += scoreRegister(entry.register);
+    score += scoreFrequencyRank(entry.frequencyRank);
+    score += scoreJlpt(entry.jlpt, targetKanji);
+
+    return score;
+}
+
+function scoreCorpusSupport(candidate, targetKanji, sentenceCorpus = []) {
+    if (!Array.isArray(sentenceCorpus) || sentenceCorpus.length === 0) {
+        return 0;
+    }
+
+    let bestScore = 0;
+
+    for (const entry of sentenceCorpus) {
+        const exactWrittenMatch = entry?.written === candidate.written;
+        const sentenceContainsWord = String(entry?.japanese || "").includes(candidate.written);
+
+        if (!exactWrittenMatch && !sentenceContainsWord) {
+            continue;
+        }
+
+        bestScore = Math.max(bestScore, scoreCorpusSupportEntry(entry, candidate, targetKanji));
+    }
+
+    return Math.min(SCORE.CORPUS_SUPPORT_CAP, bestScore);
+}
+
+function scoreCandidate(candidate, targetKanji, kanjiMeanings, sentenceCorpus = []) {
     if (!candidate?.written || !candidate?.pron || !candidate?.gloss) {
-        return INVALID_SCORE;
+        return {
+            score: INVALID_SCORE,
+            corpusSupportScore: 0,
+        };
     }
 
     const { isName, isObscure } = classifyGloss(candidate.meaning?.glosses);
@@ -174,15 +234,25 @@ function scoreCandidate(candidate, targetKanji, kanjiMeanings) {
         score += SCORE.SINGLE_KANJI_KATAKANA_PENALTY;
     }
 
-    return score;
+    const corpusSupportScore = scoreCorpusSupport(candidate, targetKanji, sentenceCorpus);
+
+    return {
+        score: score + corpusSupportScore,
+        corpusSupportScore,
+    };
 }
 
-function rankWordCandidates(candidates, targetKanji, kanjiMeanings) {
+function rankWordCandidates(candidates, targetKanji, kanjiMeanings, sentenceCorpus = []) {
     return [...candidates]
-        .map((candidate) => ({
-            ...candidate,
-            score: scoreCandidate(candidate, targetKanji, kanjiMeanings),
-        }))
+        .map((candidate) => {
+            const scored = scoreCandidate(candidate, targetKanji, kanjiMeanings, sentenceCorpus);
+
+            return {
+                ...candidate,
+                score: scored.score,
+                corpusSupportScore: scored.corpusSupportScore,
+            };
+        })
         .sort(compareRankedCandidates);
 }
 
@@ -194,4 +264,6 @@ module.exports = {
     glossMatchesCoreMeaning,
     rankWordCandidates,
     scoreCandidate,
+    scoreCorpusSupport,
+    scoreCorpusSupportEntry,
 };

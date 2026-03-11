@@ -3,6 +3,11 @@ const fsp = require("node:fs/promises");
 const path = require("node:path");
 const crypto = require("node:crypto");
 
+/** @typedef {import("../types/contracts").ProviderAsset} ProviderAsset */
+/** @typedef {import("../types/contracts").ProviderAttempt} ProviderAttempt */
+/** @typedef {import("../types/contracts").ProviderLookupResult} ProviderLookupResult */
+/** @typedef {import("../types/contracts").ProviderMetric} ProviderMetric */
+
 function computeChecksum(buffer) {
     return crypto.createHash("sha256").update(buffer).digest("hex");
 }
@@ -40,6 +45,10 @@ async function fetchWithTimeout(fetchImpl, url, fetchTimeoutMs) {
     }
 }
 
+/**
+ * @param {Array<{name?: string}|null|undefined>} [providers=[]]
+ * @returns {Record<string, ProviderMetric>}
+ */
 function createProviderMetrics(providers = []) {
     return Object.fromEntries(
         providers
@@ -56,6 +65,11 @@ function createProviderMetrics(providers = []) {
     );
 }
 
+/**
+ * @param {Record<string, ProviderMetric>} metrics
+ * @param {string} providerName
+ * @param {Partial<ProviderMetric>} update
+ */
 function updateProviderMetric(metrics, providerName, update) {
     const name = providerName || "unknown-provider";
 
@@ -77,6 +91,10 @@ function updateProviderMetric(metrics, providerName, update) {
     };
 }
 
+/**
+ * @param {Record<string, ProviderMetric>} metrics
+ * @returns {Record<string, ProviderMetric>}
+ */
 function snapshotProviderMetrics(metrics) {
     return JSON.parse(JSON.stringify(metrics || {}));
 }
@@ -84,6 +102,10 @@ function snapshotProviderMetrics(metrics) {
 function createLocalDirectoryProvider({ name = "local-filesystem", sourceDir, extensionMap, buildCandidates }) {
     return {
         name,
+        /**
+         * @param {unknown} input
+         * @returns {Promise<ProviderAsset|null>}
+         */
         async findAsset(input) {
             const candidates = Array.isArray(buildCandidates(input)) ? buildCandidates(input) : [];
             const entries = await readDirectoryEntries(sourceDir);
@@ -135,6 +157,10 @@ function createRemoteHttpProvider({
 }) {
     return {
         name,
+        /**
+         * @param {unknown} input
+         * @returns {Promise<ProviderAsset|null>}
+         */
         async findAsset(input) {
             if (!baseUrl) {
                 return null;
@@ -183,7 +209,14 @@ function createRemoteHttpProvider({
     };
 }
 
+/**
+ * @param {Array<{name?: string, findAsset?: Function}>} providers
+ * @param {unknown} input
+ * @param {Record<string, ProviderMetric>|null} [metrics=null]
+ * @returns {Promise<ProviderLookupResult>}
+ */
 async function findAssetFromProvidersWithReport(providers, input, metrics = null) {
+    /** @type {ProviderAttempt[]} */
     const attempts = [];
 
     for (const provider of Array.isArray(providers) ? providers : []) {
@@ -244,6 +277,11 @@ async function findAssetFromProvidersWithReport(providers, input, metrics = null
     };
 }
 
+/**
+ * @param {Array<{name?: string, findAsset?: Function}>} providers
+ * @param {unknown} input
+ * @returns {Promise<ProviderAsset|null>}
+ */
 async function findAssetFromProviders(providers, input) {
     const result = await findAssetFromProvidersWithReport(providers, input, null);
     return result.asset;

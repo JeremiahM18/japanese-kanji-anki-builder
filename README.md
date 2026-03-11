@@ -15,6 +15,7 @@ This repository is intentionally built with production-style standards even thou
 - Uses curated study overrides for meanings, notes, preferred words, blocked words, blocked sentence phrases, and top example sentences
 - Uses sentence-corpus metadata to improve both word ranking and sentence selection
 - Exposes score breakdowns so ranking decisions are inspectable and tunable
+- Documents core media, inference, and build-artifact contracts with shared JSDoc typedefs
 - Caches kanji and word API responses separately with validation, atomic writes, and in-flight deduplication
 - Supports provider-based media acquisition for both stroke order and audio
 - Supports configurable remote HTTP fallback providers for stroke-order images, stroke-order animations, and audio
@@ -80,6 +81,8 @@ C:\japanese_kanji_builder
 │  │  ├─ mediaStore.js
 │  │  ├─ mediaSync.js
 │  │  └─ strokeOrderService.js
+│  ├─ types/
+│  │  └─ contracts.js
 │  └─ utils/
 │     └─ text.js
 ├─ test/
@@ -142,6 +145,8 @@ C:\japanese_kanji_builder
   Runs the deterministic artifact pipeline for normalization, reporting, media sync, and export generation.
 - `src/services/mediaStore.js`
   Owns the managed media tree and manifest persistence.
+- `src/types/contracts.js`
+  Defines shared JSDoc contracts for media, inference, provider, and build-artifact payloads.
 - `src/app.js`
   Exposes HTTP routes and operational endpoints.
 - `src/server.js`
@@ -169,6 +174,24 @@ C:\japanese_kanji_builder
 | `EXPORT_CONCURRENCY` | `8` | Max kanji rows processed concurrently |
 | `API_REQUEST_TIMEOUT` | `10000` | Upstream request timeout in milliseconds |
 | `LOG_LEVEL` | `info` | Pino log level |
+
+## Contract Strategy
+
+This repo now uses shared JSDoc contracts for the most important cross-module payloads instead of a full TypeScript migration.
+
+Why this choice:
+
+- it strengthens the highest-value boundaries immediately
+- it keeps runtime and build tooling stable while the architecture is still evolving
+- it improves editor help and onboarding without forcing a repo-wide rename/refactor pass
+- it gives us a clear stepping stone to TypeScript later if the codebase stabilizes further
+
+The current contract layer focuses on:
+
+- media assets and manifests
+- provider assets, attempts, and metrics
+- ranked inference output and sentence candidates
+- build normalization and artifact summaries
 
 ## Build Pipeline
 

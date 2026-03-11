@@ -3,6 +3,9 @@ const fsp = require("node:fs/promises");
 const path = require("node:path");
 const { z } = require("zod");
 
+/** @typedef {import("../types/contracts").MediaAsset} MediaAsset */
+/** @typedef {import("../types/contracts").MediaManifest} MediaManifest */
+
 const mediaAssetSchema = z.object({
     kind: z.enum(["image", "animation", "audio"]),
     path: z.string().min(1),
@@ -57,6 +60,10 @@ function buildManifestPath(mediaRootDir, kanji) {
     return path.join(buildMediaBasePath(mediaRootDir, kanji), "manifest.json");
 }
 
+/**
+ * @param {string} kanji
+ * @returns {MediaManifest}
+ */
 function createEmptyMediaManifest(kanji) {
     return {
         kanji,
@@ -89,6 +96,11 @@ function ensureMediaLayout(mediaRootDir, kanji) {
     };
 }
 
+/**
+ * @param {string} mediaRootDir
+ * @param {string} kanji
+ * @returns {Promise<MediaManifest|null>}
+ */
 async function readManifestIfExists(mediaRootDir, kanji) {
     const manifestPath = buildManifestPath(mediaRootDir, kanji);
 
@@ -103,6 +115,11 @@ async function readManifestIfExists(mediaRootDir, kanji) {
     }
 }
 
+/**
+ * @param {string} mediaRootDir
+ * @param {MediaManifest} manifest
+ * @returns {Promise<MediaManifest>}
+ */
 async function writeManifest(mediaRootDir, manifest) {
     const parsed = mediaManifestSchema.parse({
         ...manifest,

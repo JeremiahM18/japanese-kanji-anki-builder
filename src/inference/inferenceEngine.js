@@ -4,6 +4,11 @@ const { inferNotes } = require("./notesInference");
 const { rankWordCandidates } = require("./ranking");
 const { inferSentenceCandidates } = require("./sentenceInference");
 
+/** @typedef {import("../types/contracts").InferenceResult} InferenceResult */
+/** @typedef {import("../types/contracts").RankedCandidate} RankedCandidate */
+/** @typedef {import("../types/contracts").SentenceCandidate} SentenceCandidate */
+/** @typedef {import("../types/contracts").CuratedInferenceInfo} CuratedInferenceInfo */
+
 function getCuratedEntry(curatedStudyData, kanji) {
     if (!curatedStudyData || typeof curatedStudyData !== "object") {
         return null;
@@ -12,6 +17,11 @@ function getCuratedEntry(curatedStudyData, kanji) {
     return curatedStudyData[kanji] || null;
 }
 
+/**
+ * @param {RankedCandidate[]} rankedCandidates
+ * @param {any} curatedEntry
+ * @returns {RankedCandidate[]}
+ */
 function applyBlockedWords(rankedCandidates, curatedEntry) {
     const blockedWords = new Set(Array.isArray(curatedEntry?.blockedWords) ? curatedEntry.blockedWords : []);
 
@@ -22,6 +32,11 @@ function applyBlockedWords(rankedCandidates, curatedEntry) {
     return rankedCandidates.filter((candidate) => !blockedWords.has(candidate.written));
 }
 
+/**
+ * @param {RankedCandidate[]} rankedCandidates
+ * @param {any} curatedEntry
+ * @returns {RankedCandidate[]}
+ */
 function applyPreferredWords(rankedCandidates, curatedEntry) {
     const preferredWords = Array.isArray(curatedEntry?.preferredWords) ? curatedEntry.preferredWords : [];
 
@@ -45,6 +60,11 @@ function applyPreferredWords(rankedCandidates, curatedEntry) {
     return [...preferred, ...remaining];
 }
 
+/**
+ * @param {any} curatedEntry
+ * @param {RankedCandidate|null} bestWord
+ * @returns {SentenceCandidate|null}
+ */
 function buildCuratedSentence(curatedEntry, bestWord) {
     if (!curatedEntry?.exampleSentence) {
         return null;
@@ -62,6 +82,11 @@ function buildCuratedSentence(curatedEntry, bestWord) {
     };
 }
 
+/**
+ * @param {SentenceCandidate[]} sentenceCandidates
+ * @param {any} curatedEntry
+ * @returns {SentenceCandidate[]}
+ */
 function filterBlockedSentenceCandidates(sentenceCandidates, curatedEntry) {
     const blockedPhrases = Array.isArray(curatedEntry?.blockedSentencePhrases)
         ? curatedEntry.blockedSentencePhrases.filter(Boolean)
@@ -72,12 +97,18 @@ function filterBlockedSentenceCandidates(sentenceCandidates, curatedEntry) {
     }
 
     return sentenceCandidates.filter((sentence) => {
-        const haystack = `${sentence?.japanese || ""}
-${sentence?.english || ""}`;
+        const haystack = `${sentence?.japanese || ""}\n${sentence?.english || ""}`;
         return !blockedPhrases.some((phrase) => haystack.includes(phrase));
     });
 }
 
+/**
+ * @param {SentenceCandidate[]} sentenceCandidates
+ * @param {any} curatedEntry
+ * @param {RankedCandidate|null} bestWord
+ * @param {number} maxSentences
+ * @returns {SentenceCandidate[]}
+ */
 function prependCuratedSentence(sentenceCandidates, curatedEntry, bestWord, maxSentences) {
     const curatedSentence = buildCuratedSentence(curatedEntry, bestWord);
 
@@ -105,6 +136,11 @@ function prependCuratedSentence(sentenceCandidates, curatedEntry, bestWord, maxS
     return out;
 }
 
+/**
+ * @param {{englishMeaning: string, meaningJP: string}} meaning
+ * @param {any} curatedEntry
+ * @param {RankedCandidate[]} rankedCandidates
+ */
 function applyCuratedMeaning(meaning, curatedEntry, rankedCandidates) {
     const bestWord = rankedCandidates[0] || null;
     const englishMeaning = curatedEntry?.englishMeaning || meaning.englishMeaning;
@@ -130,44 +166,41 @@ function applyCuratedNotes(notes, curatedEntry) {
 }
 
 function createInferenceEngine({ sentenceCorpus = [], curatedStudyData = {} } = {}) {
-    function inferKanjiStudyData({ kanji, kanjiInfo, words, maxExamples = 3, maxSentences = 3 }) {
-        const kanjiMeanings = Array.isArray(kanjiInfo?.meanings) ? kanjiInfo.meanings : [];
-        const extractedCandidates = extractWordCandidates(words);
-        const curatedEntry = getCuratedEntry(curatedStudyData, kanji);
-        const rankedCandidates = applyPreferredWords(
-            applyBlockedWords(
-                rankWordCandidates(extractedCandidates, kanji, kanjiMeanings, sentenceCorpus),
+    return {
+        /**
+         * @param {{kanji: string, kanjiInfo: any, words: any[], maxExamples?: number, maxSentences?: number}} input
+         * @returns {InferenceResult}
+         */
+        inferKanjiStudyData({ kanji, kanjiInfo, words, maxExamples = 3, maxSentences = 3 }) {
+            const kanjiMeanings = Array.isArray(kanjiInfo?.meanings) ? kanjiInfo.meanings : [];
+            const extractedCandidates = extractWordCandidates(words);
+            const curatedEntry = getCuratedEntry(curatedStudyData, kanji);
+            const rankedCandidates = applyPreferredWords(
+                applyBlockedWords(
+                    rankWordCandidates(extractedCandidates, kanji, kanjiMeanings, sentenceCorpus),
+                    curatedEntry
+                ),
                 curatedEntry
-            ),
-            curatedEntry
-        );
-        const meaning = applyCuratedMeaning(inferMeaning({ kanjiMeanings, rankedCandidates }), curatedEntry, rankedCandidates);
-        const notes = applyCuratedNotes(inferNotes({ rankedCandidates, maxExamples }), curatedEntry);
-        const sentenceCandidates = prependCuratedSentence(
-            filterBlockedSentenceCandidates(
-                inferSentenceCandidates({
-                    rankedCandidates,
-                    kanji,
-                    sentenceCorpus,
-                    maxSentences,
-                }),
-                curatedEntry
-            ),
-            curatedEntry,
-            meaning.bestWord,
-            maxSentences
-        );
+            );
+            const meaning = applyCuratedMeaning(inferMeaning({ kanjiMeanings, rankedCandidates }), curatedEntry, rankedCandidates);
+            const notes = applyCuratedNotes(inferNotes({ rankedCandidates, maxExamples }), curatedEntry);
+            const sentenceCandidates = prependCuratedSentence(
+                filterBlockedSentenceCandidates(
+                    inferSentenceCandidates({
+                        rankedCandidates,
+                        kanji,
+                        sentenceCorpus,
+                        maxSentences,
+                    }),
+                    curatedEntry
+                ),
+                curatedEntry,
+                meaning.bestWord,
+                maxSentences
+            );
 
-        return {
-            kanji,
-            kanjiMeanings,
-            candidates: rankedCandidates,
-            bestWord: meaning.bestWord,
-            englishMeaning: meaning.englishMeaning,
-            meaningJP: meaning.meaningJP,
-            notes: notes.notes,
-            sentenceCandidates,
-            curated: curatedEntry ? {
+            /** @type {CuratedInferenceInfo} */
+            const curated = curatedEntry ? {
                 hasOverride: true,
                 source: curatedEntry.source,
                 tags: curatedEntry.tags,
@@ -181,12 +214,20 @@ function createInferenceEngine({ sentenceCorpus = [], curatedStudyData = {} } = 
                 hasCustomMeaning: Boolean(curatedEntry.englishMeaning),
             } : {
                 hasOverride: false,
-            },
-        };
-    }
+            };
 
-    return {
-        inferKanjiStudyData,
+            return {
+                kanji,
+                kanjiMeanings,
+                candidates: rankedCandidates,
+                bestWord: meaning.bestWord,
+                englishMeaning: meaning.englishMeaning,
+                meaningJP: meaning.meaningJP,
+                notes: notes.notes,
+                sentenceCandidates,
+                curated,
+            };
+        },
     };
 }
 

@@ -8,6 +8,7 @@ This repository is maintained with production-style standards even though it is 
 
 - Keep behavior deterministic whenever possible.
 - Prefer explicit validation at integration boundaries.
+- Treat JSDoc contracts as part of the public engineering surface for shared modules.
 - Update `README.md` whenever architecture, workflow, configuration, or operational behavior changes.
 - Add or update tests for behavioral changes.
 - Keep commits focused and professionally titled.
@@ -18,8 +19,9 @@ This repository is maintained with production-style standards even though it is 
 1. Create a focused branch.
 2. Make the smallest correct change that fully solves the problem.
 3. Update documentation in the same change when behavior or repo process changes.
-4. Run validation locally before opening a pull request.
-5. Open a pull request with a clear summary, risks, and verification notes.
+4. Update JSDoc contracts when shared shapes or return values change.
+5. Run validation locally before opening a pull request.
+6. Open a pull request with a clear summary, risks, and verification notes.
 
 ## Local Validation
 
@@ -82,6 +84,7 @@ Reviews should prioritize:
 - regressions
 - missing validation
 - missing tests
+- contract drift between runtime behavior and JSDoc-defined shared shapes
 - operational/documentation gaps
 
 Style-only feedback is secondary to behavior, safety, and maintainability.

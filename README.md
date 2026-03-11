@@ -30,8 +30,15 @@ This repository is intentionally built with production-style standards even thou
 ```text
 C:\japanese_kanji_builder
 ├─ .github/
-│  └─ workflows/
-│     └─ ci.yml
+│  ├─ ISSUE_TEMPLATE/
+│  │  ├─ bug_report.yml
+│  │  ├─ config.yml
+│  │  └─ feature_request.yml
+│  ├─ PULL_REQUEST_TEMPLATE/
+│  │  └─ pull_request_template.md
+│  ├─ workflows/
+│  │  └─ ci.yml
+│  └─ CODEOWNERS
 ├─ data/
 │  └─ README.md
 ├─ scripts/
@@ -83,6 +90,7 @@ C:\japanese_kanji_builder
 │  ├─ curatedStudyData.test.js
 │  ├─ exportService.test.js
 │  ├─ kanjiApiClient.test.js
+│  ├─ mediaCoverage.test.js
 │  ├─ mediaProviders.test.js
 │  ├─ mediaStore.test.js
 │  ├─ mediaSync.test.js
@@ -92,6 +100,7 @@ C:\japanese_kanji_builder
 │  ├─ strokeOrderService.test.js
 │  └─ inference/
 │     └─ inferenceEngine.test.js
+├─ CONTRIBUTING.md
 ├─ README.md
 ├─ package.json
 └─ package-lock.json
@@ -188,6 +197,24 @@ The pipeline:
 - exports JLPT TSV artifacts into `out/build/exports`
 - writes JSON reports into `out/build/reports`
 - writes an overall `out/build/build-summary.json`
+
+## Repository Governance
+
+Community health files now define the expected contribution and review flow:
+
+- `CONTRIBUTING.md` documents contribution standards and validation expectations
+- `.github/CODEOWNERS` defines default review ownership
+- `.github/PULL_REQUEST_TEMPLATE/pull_request_template.md` standardizes change summaries, risks, and verification
+- `.github/ISSUE_TEMPLATE/` provides structured bug and feature intake
+
+Recommended GitHub branch protection for `main`:
+
+- require pull requests before merging
+- require at least one approval
+- require status checks to pass before merging
+- require branches to be up to date before merging
+- block force pushes
+- block branch deletion
 
 ## Provider Observability
 

@@ -1,0 +1,30 @@
+name: Feature request
+description: Propose a product, inference, media, or operations improvement.
+title: "feat: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: What user or engineering problem are we solving?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed approach
+      description: Describe the expected behavior or design direction.
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Expected impact
+      description: Note deck quality, performance, operations, or maintainability impact.
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks or tradeoffs
+      description: Call out complexity, data quality, or operational concerns.

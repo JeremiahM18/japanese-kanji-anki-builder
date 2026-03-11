@@ -37,7 +37,8 @@ function createApp({
     kanjiApiClient,
     strokeOrderService,
     sentenceCorpus = [],
-    inferenceEngine = createInferenceEngine({ sentenceCorpus }),
+    curatedStudyData = {},
+    inferenceEngine = createInferenceEngine({ sentenceCorpus, curatedStudyData }),
     exportService = createExportService({ inferenceEngine }),
 }) {
     const app = express();
@@ -68,12 +69,14 @@ function createApp({
                 jlptKanjiCount,
                 kradEntries: kradMap.size,
                 sentenceCorpusEntries: sentenceCorpus.length,
+                curatedStudyEntries: Object.keys(curatedStudyData).length,
             },
             config: {
                 cacheDir: config.cacheDir,
                 jlptJsonPath: config.jlptJsonPath,
                 kradfilePath: config.kradfilePath,
                 sentenceCorpusPath: config.sentenceCorpusPath,
+                curatedStudyDataPath: config.curatedStudyDataPath,
                 mediaRootDir: config.mediaRootDir,
                 strokeOrderImageSourceDir: config.strokeOrderImageSourceDir,
                 strokeOrderAnimationSourceDir: config.strokeOrderAnimationSourceDir,

@@ -39,6 +39,88 @@ test("corpus sentence scoring rewards quality metadata", () => {
     assert.equal(strong > weak, true);
 });
 
+test("curated study data overrides meaning notes and top sentence", () => {
+    const inferenceEngine = createInferenceEngine({
+        sentenceCorpus: [
+            {
+                kanji: "日",
+                written: "日本",
+                japanese: "日本へ行きます。",
+                reading: "にほんへいきます。",
+                english: "I will go to Japan.",
+                source: "manual-curated",
+                tags: ["core", "common", "beginner"],
+                register: "neutral",
+                frequencyRank: 120,
+                jlpt: 5,
+            },
+        ],
+        curatedStudyData: {
+            日: {
+                englishMeaning: "sun / day marker",
+                preferredWords: ["日本"],
+                blockedWords: ["日中"],
+                notes: "日本 （にほん） - Japan ／ curated-note",
+                exampleSentence: {
+                    japanese: "日本は島国です。",
+                    reading: "にほんはしまぐにです。",
+                    english: "Japan is an island nation.",
+                },
+            },
+        },
+    });
+
+    const result = inferenceEngine.inferKanjiStudyData({
+        kanji: "日",
+        kanjiInfo: {
+            meanings: ["day", "sun"],
+        },
+        words: [
+            {
+                variants: [
+                    {
+                        written: "日中",
+                        pronounced: "にっちゅう",
+                        priorities: ["ichi1", "news1"],
+                    },
+                ],
+                meanings: [
+                    {
+                        glosses: ["daytime"],
+                    },
+                ],
+            },
+            {
+                variants: [
+                    {
+                        written: "日本",
+                        pronounced: "にほん",
+                        priorities: ["ichi1"],
+                    },
+                ],
+                meanings: [
+                    {
+                        glosses: ["Japan"],
+                    },
+                ],
+            },
+        ],
+    });
+
+    assert.equal(result.bestWord.written, "日本");
+    assert.equal(result.englishMeaning, "sun / day marker");
+    assert.equal(result.meaningJP, "日本 （にほん） ／ sun / day marker");
+    assert.equal(result.notes, "日本 （にほん） - Japan ／ curated-note");
+    assert.equal(result.candidates.some((candidate) => candidate.written === "日中"), false);
+    assert.equal(result.sentenceCandidates[0].type, "curated");
+    assert.equal(result.sentenceCandidates[0].source, "curated-study-data");
+    assert.match(result.sentenceCandidates[0].japanese, /日本は島国です/);
+    assert.equal(result.curated.hasOverride, true);
+    assert.equal(result.curated.hasCustomMeaning, true);
+    assert.equal(result.curated.hasCustomNotes, true);
+    assert.equal(result.curated.hasCustomExampleSentence, true);
+});
+
 test("corpus support can rerank bestWord and notes", () => {
     const words = [
         {
@@ -193,6 +275,7 @@ test("inference engine ranks candidates and returns learner-friendly output", ()
     assert.equal(result.sentenceCandidates[0].frequencyRank, 120);
     assert.match(result.sentenceCandidates[0].japanese, /日本へ行きます/);
     assert.match(result.sentenceCandidates[0].english, /go to Japan/);
+    assert.equal(result.curated.hasOverride, false);
 });
 
 test("inference engine falls back to templates when no corpus sentence exists", () => {
@@ -223,4 +306,5 @@ test("inference engine falls back to templates when no corpus sentence exists", 
 
     assert.equal(result.sentenceCandidates[0].type, "definition");
     assert.equal(result.sentenceCandidates[0].source, "template");
+    assert.equal(result.curated.hasOverride, false);
 });

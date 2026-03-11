@@ -18,6 +18,7 @@ The engineering direction for this repository is deliberate: treat even a person
 - Separates raw data fetching, inference, export orchestration, and media management into distinct modules
 - Uses a deterministic inference engine to rank example words and derive learner-friendly `MeaningJP`, `Notes`, and `ExampleSentence` output
 - Uses corpus metadata to improve both word ranking and sentence selection when stronger supporting examples exist
+- Supports curated study data overrides for preferred words, blocked words, meanings, notes, and top example sentences
 - Prefers corpus-backed sentence candidates when a local sentence corpus is available, with deterministic template fallback otherwise
 - Weights corpus sentence selection by source quality, learner-friendly tags, register, and optional frequency metadata
 - Caches kanji and word API responses separately
@@ -35,7 +36,7 @@ The engineering direction for this repository is deliberate: treat even a person
 
 ## File Tree
 
-This is the meaningful project tree after the corpus-backed sentence inference pass:
+This is the meaningful project tree after the curated study data pass:
 
 ```text
 C:\japanese_kanji_builder
@@ -54,6 +55,7 @@ C:\japanese_kanji_builder
 │  ├─ clients/
 │  │  └─ kanjiApiClient.js
 │  ├─ datasets/
+│  │  ├─ curatedStudyData.js
 │  │  ├─ kradfile.js
 │  │  └─ sentenceCorpus.js
 │  ├─ inference/
@@ -71,6 +73,7 @@ C:\japanese_kanji_builder
 │     └─ text.js
 ├─ test/
 │  ├─ app.test.js
+│  ├─ curatedStudyData.test.js
 │  ├─ exportService.test.js
 │  ├─ kanjiApiClient.test.js
 │  ├─ mediaStore.test.js
@@ -93,6 +96,8 @@ C:\japanese_kanji_builder
   Loads KRADFILE radicals/components.
 - `src/datasets/sentenceCorpus.js`
   Loads an optional local sentence corpus for deterministic sentence selection.
+- `src/datasets/curatedStudyData.js`
+  Loads optional curated overrides for kanji-specific teaching decisions.
 - `src/inference/`
   Extracts word candidates, ranks them, and infers learner-facing meaning, notes, and sentence output.
 - `src/services/exportService.js`
@@ -109,17 +114,18 @@ C:\japanese_kanji_builder
 ### Runtime Flow
 
 1. `src/server.js` loads config and validates required datasets at startup.
-2. KRADFILE, JLPT JSON, and the optional sentence corpus are loaded into memory once.
+2. KRADFILE, JLPT JSON, the optional sentence corpus, and optional curated study data are loaded into memory once.
 3. `src/app.js` builds the Express application from injected dependencies.
 4. Export requests call `buildTsvForJlptLevel()` with bounded concurrency.
 5. Each kanji fetches kanji metadata, word candidates, and best known stroke-order path concurrently.
 6. The inference engine extracts candidates, ranks them deterministically, and returns learner-facing meaning, notes, and sentence candidates.
-7. Word ranking now incorporates bounded corpus-support evidence so `bestWord` and `Notes` can prefer candidates with better supporting examples.
-8. The export service promotes the top-ranked sentence candidate into the TSV as `ExampleSentence`.
-9. Sentence inference prefers corpus-backed matches and only falls back to templates when the corpus has no suitable example.
-10. Upstream responses are validated, cached atomically on disk, and counted in client metrics.
-11. Stroke-order sync scans local source directories, imports matching assets into the managed media tree, and updates the kanji manifest.
-12. Audio can be added later to the same media manifest contract without redesigning the filesystem layout.
+7. Word ranking incorporates bounded corpus-support evidence so `bestWord` and `Notes` can prefer candidates with better supporting examples.
+8. Curated study data can remove blocked words, reorder preferred words, override meanings and notes, and inject a top example sentence.
+9. The export service promotes the top-ranked sentence candidate into the TSV as `ExampleSentence`.
+10. Sentence inference prefers corpus-backed matches and only falls back to templates when the corpus has no suitable example.
+11. Upstream responses are validated, cached atomically on disk, and counted in client metrics.
+12. Stroke-order sync scans local source directories, imports matching assets into the managed media tree, and updates the kanji manifest.
+13. Audio can be added later to the same media manifest contract without redesigning the filesystem layout.
 
 ## Deterministic Inference Engine
 
@@ -138,9 +144,9 @@ Current inference layers:
 - `sentenceInference.js`
   selects sentence candidates, preferring the local corpus before template fallback
 - `inferenceEngine.js`
-  composes the full learner-facing inference result
+  composes the full learner-facing inference result and merges curated overrides
 
-This keeps the system inspectable and testable while improving quality incrementally. The corpus-backed layer is the first major step away from generic sentence templates without giving up deterministic behavior.
+This keeps the system inspectable and testable while improving quality incrementally. The corpus-backed layer is the first major step away from generic sentence templates without giving up deterministic behavior, and curated study data gives you a deterministic escape hatch when you already know the right teaching choice.
 
 Corpus-backed inference currently favors:
 
@@ -149,6 +155,14 @@ Corpus-backed inference currently favors:
 - neutral and spoken register over literary phrasing
 - better optional frequency metadata when available
 - candidates that already have stronger supporting sentence evidence in the local corpus
+
+Curated study data can explicitly control:
+
+- preferred learner-facing words
+- blocked learner-facing words
+- English meaning overrides
+- `Notes` overrides
+- top example sentence overrides
 
 ## Output Fields
 
@@ -181,6 +195,7 @@ All paths are resolved from the repository root so local development and deploym
 | `JLPT_JSON_PATH` | `data/kanji_jlpt_only.json` | JLPT dataset |
 | `KRADFILE_PATH` | `data/KRADFILE` | Radical/component dataset |
 | `SENTENCE_CORPUS_PATH` | `data/sentence_corpus.json` | Optional local sentence corpus used to improve sentence inference |
+| `CURATED_STUDY_DATA_PATH` | `data/curated_study_data.json` | Optional curated overrides for kanji-specific meanings, words, notes, and example sentences |
 | `KANJI_API_BASE_URL` | `https://kanjiapi.dev` | Upstream kanji API base URL |
 | `MEDIA_ROOT_DIR` | `data/media` | Root directory for managed stroke-order and audio media assets |
 | `STROKE_ORDER_IMAGE_SOURCE_DIR` | `data/media_sources/stroke-order/images` | Local source directory for stroke-order images |
@@ -232,10 +247,11 @@ The benchmark reports duration, rows per second, cache hit ratio, network fetche
 ## Inference Workflow
 
 1. Add sentence examples to `data/sentence_corpus.json` when you have better corpus material.
-2. Call `GET /inference/:kanji` to inspect the current deterministic inference output.
-3. Review the ranked candidates, inferred meaning, notes, and sentence candidates.
-4. Tune scoring and selection rules in `src/inference/` rather than changing export formatting directly.
-5. Re-run tests and the export benchmark after meaningful inference changes.
+2. Add deterministic overrides to `data/curated_study_data.json` when you know the best teaching choice already.
+3. Call `GET /inference/:kanji` to inspect the current deterministic inference output.
+4. Review the ranked candidates, inferred meaning, notes, curated flags, and sentence candidates.
+5. Tune scoring and selection rules in `src/inference/` rather than changing export formatting directly.
+6. Re-run tests and the export benchmark after meaningful inference changes.
 
 This route is the safest place to iterate on quality because it shows the intermediate reasoning results before the final deck export is generated.
 
@@ -267,6 +283,34 @@ Field notes:
 - `frequencyRank` is optional and rewards more common examples when present
 - `register` should be one of `neutral`, `spoken`, `formal`, or `literary`
 - `jlpt` is optional metadata for future learner-level filtering
+
+### Curated Study Data Shape
+
+The optional curated study dataset accepts entries like:
+
+```json
+{
+  "日": {
+    "englishMeaning": "sun / day marker",
+    "preferredWords": ["日本"],
+    "blockedWords": ["日中"],
+    "notes": "日本 （にほん） - Japan ／ curated-note",
+    "exampleSentence": {
+      "japanese": "日本は島国です。",
+      "reading": "にほんはしまぐにです。",
+      "english": "Japan is an island nation."
+    }
+  }
+}
+```
+
+Field notes:
+
+- `englishMeaning` overrides the inferred English meaning for a kanji
+- `preferredWords` reorders ranked candidates using the listed order
+- `blockedWords` removes known-bad learner-facing words from the inference result
+- `notes` overrides the inferred `Notes` field directly
+- `exampleSentence` becomes the first sentence candidate and exported `ExampleSentence`
 
 ## Stroke-Order Workflow
 
@@ -309,7 +353,7 @@ Current CI guarantees:
 
 ### Inference endpoints
 
-- `GET /inference/:kanji` returns deterministic inference output for one kanji, including sentence candidates
+- `GET /inference/:kanji` returns deterministic inference output for one kanji, including sentence candidates and curated override state
 
 ### Media endpoints
 
@@ -361,6 +405,7 @@ The current test suite covers:
 
 - export formatting and row construction
 - deterministic inference output
+- curated study data loading and overrides
 - sentence candidate generation
 - corpus-backed sentence preference and weighting
 - word-ranking behavior
@@ -393,6 +438,7 @@ The working expectation for future changes is:
 
 - add request IDs and structured access logging
 - support resumable offline export workflows
+- add corpus import and normalization tooling
 - add remote/provider adapters for stroke-order image and animation sources
 - add media acquisition jobs with checksum verification
 - add audio source adapters or synthesis jobs on top of the existing media manifest

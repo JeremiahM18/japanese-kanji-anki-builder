@@ -3,6 +3,7 @@ const fs = require("node:fs");
 const { loadConfig } = require("./config");
 const { logger } = require("./logger");
 const { createKanjiApiClient } = require("./clients/kanjiApiClient");
+const { loadCuratedStudyData } = require("./datasets/curatedStudyData");
 const { loadKradMap, pickMainComponent } = require("./datasets/kradfile");
 const { loadSentenceCorpus } = require("./datasets/sentenceCorpus");
 const { ensureMediaRoot } = require("./services/mediaStore");
@@ -23,6 +24,7 @@ async function main() {
     const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
     const kradMap = loadKradMap(config.kradfilePath);
     const sentenceCorpus = loadSentenceCorpus(config.sentenceCorpusPath);
+    const curatedStudyData = loadCuratedStudyData(config.curatedStudyDataPath);
 
     const kanjiApiClient = createKanjiApiClient({
         baseUrl: config.kanjiApiBaseUrl,
@@ -38,7 +40,7 @@ async function main() {
         animationSourceDir: config.strokeOrderAnimationSourceDir,
     });
 
-    const inferenceEngine = createInferenceEngine({ sentenceCorpus });
+    const inferenceEngine = createInferenceEngine({ sentenceCorpus, curatedStudyData });
 
     const app = createApp({
         config,
@@ -49,6 +51,7 @@ async function main() {
         strokeOrderService,
         inferenceEngine,
         sentenceCorpus,
+        curatedStudyData,
     });
 
     app.listen(config.port, () => {
@@ -60,6 +63,8 @@ async function main() {
                 cacheDir: config.cacheDir,
                 sentenceCorpusPath: config.sentenceCorpusPath,
                 sentenceCorpusEntries: sentenceCorpus.length,
+                curatedStudyDataPath: config.curatedStudyDataPath,
+                curatedStudyDataEntries: Object.keys(curatedStudyData).length,
                 mediaRootDir: config.mediaRootDir,
                 strokeOrderImageSourceDir: config.strokeOrderImageSourceDir,
                 strokeOrderAnimationSourceDir: config.strokeOrderAnimationSourceDir,

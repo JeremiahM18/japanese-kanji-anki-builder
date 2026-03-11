@@ -9,6 +9,7 @@ function buildFixtureApp() {
         jlptJsonPath: "C:\\repo\\data\\kanji_jlpt_only.json",
         kradfilePath: "C:\\repo\\data\\KRADFILE",
         sentenceCorpusPath: "C:\\repo\\data\\sentence_corpus.json",
+        curatedStudyDataPath: "C:\\repo\\data\\curated_study_data.json",
         mediaRootDir: "C:\\repo\\data\\media",
         strokeOrderImageSourceDir: "C:\\repo\\data\\media_sources\\stroke-order\\images",
         strokeOrderAnimationSourceDir: "C:\\repo\\data\\media_sources\\stroke-order\\animations",
@@ -53,6 +54,20 @@ function buildFixtureApp() {
         },
     ];
 
+    const curatedStudyData = {
+        日: {
+            englishMeaning: "sun / day marker",
+            preferredWords: ["日本"],
+            blockedWords: ["日中"],
+            notes: "日本 （にほん） - Japan ／ curated-note",
+            exampleSentence: {
+                japanese: "日本は島国です。",
+                reading: "にほんはしまぐにです。",
+                english: "Japan is an island nation.",
+            },
+        },
+    };
+
     const metrics = {
         cacheHits: 7,
         cacheMisses: 2,
@@ -93,18 +108,51 @@ function buildFixtureApp() {
             };
         },
         async getWords(kanji) {
+            if (kanji === "日") {
+                return [
+                    {
+                        variants: [
+                            {
+                                written: "日中",
+                                pronounced: "にっちゅう",
+                                priorities: ["ichi1", "news1"],
+                            },
+                        ],
+                        meanings: [
+                            {
+                                glosses: ["daytime"],
+                            },
+                        ],
+                    },
+                    {
+                        variants: [
+                            {
+                                written: "日本",
+                                pronounced: "にほん",
+                                priorities: ["ichi1"],
+                            },
+                        ],
+                        meanings: [
+                            {
+                                glosses: ["Japan"],
+                            },
+                        ],
+                    },
+                ];
+            }
+
             return [
                 {
                     variants: [
                         {
-                            written: kanji === "日" ? "日本" : "本",
-                            pronounced: kanji === "日" ? "にほん" : "ほん",
+                            written: "本",
+                            pronounced: "ほん",
                             priorities: ["ichi1"],
                         },
                     ],
                     meanings: [
                         {
-                            glosses: [kanji === "日" ? "Japan" : "book"],
+                            glosses: ["book"],
                         },
                     ],
                 },
@@ -153,6 +201,7 @@ function buildFixtureApp() {
         jlptOnlyJson,
         kradMap,
         sentenceCorpus,
+        curatedStudyData,
         pickMainComponent: (components) => components[0] || "",
         kanjiApiClient,
         strokeOrderService,
@@ -205,14 +254,16 @@ test("health and readiness endpoints expose operational state", async () => {
         assert.equal(readyJson.datasets.jlptKanjiCount, 2);
         assert.equal(readyJson.datasets.kradEntries, 2);
         assert.equal(readyJson.datasets.sentenceCorpusEntries, 2);
+        assert.equal(readyJson.datasets.curatedStudyEntries, 1);
         assert.equal(readyJson.config.exportConcurrency, 4);
         assert.equal(readyJson.config.sentenceCorpusPath, "C:\\repo\\data\\sentence_corpus.json");
+        assert.equal(readyJson.config.curatedStudyDataPath, "C:\\repo\\data\\curated_study_data.json");
         assert.equal(readyJson.cache.cacheHits, 7);
         assert.equal(readyJson.cache.cacheMisses, 2);
     });
 });
 
-test("inference route exposes weighted corpus-backed study output and sentence candidates", async () => {
+test("inference route exposes curated and corpus-backed study output", async () => {
     const app = buildFixtureApp();
 
     await withServer(app, async (baseUrl) => {
@@ -222,12 +273,14 @@ test("inference route exposes weighted corpus-backed study output and sentence c
         const json = await response.json();
         assert.equal(json.status, "ok");
         assert.equal(json.inference.bestWord.written, "日本");
+        assert.equal(json.inference.englishMeaning, "sun / day marker");
+        assert.equal(json.inference.notes, "日本 （にほん） - Japan ／ curated-note");
         assert.equal(json.inference.strokeOrderPath, "animations/stroke-order.gif");
-        assert.equal(json.inference.sentenceCandidates[0].type, "corpus");
-        assert.equal(json.inference.sentenceCandidates[0].source, "manual-curated");
-        assert.equal(json.inference.sentenceCandidates[0].register, "neutral");
-        assert.equal(json.inference.sentenceCandidates[0].frequencyRank, 120);
-        assert.match(json.inference.sentenceCandidates[0].japanese, /日本へ行きます/);
+        assert.equal(json.inference.sentenceCandidates[0].type, "curated");
+        assert.equal(json.inference.sentenceCandidates[0].source, "curated-study-data");
+        assert.match(json.inference.sentenceCandidates[0].japanese, /日本は島国です/);
+        assert.equal(json.inference.curated.hasOverride, true);
+        assert.equal(json.inference.curated.hasCustomMeaning, true);
     });
 });
 
@@ -270,8 +323,9 @@ test("download export sets attachment headers and includes the top sentence", as
         assert.equal(lines[0], "Kanji\tMeaningJP\tReading\tStrokeOrder\tRadical\tNotes\tExampleSentence");
         assert.equal(cols.length, 7);
         assert.match(cols[3], /animations\/stroke-order\.gif/);
-        assert.match(cols[6], /日本へ行きます/);
-        assert.match(cols[6], /I will go to Japan/);
+        assert.match(cols[5], /curated-note/);
+        assert.match(cols[6], /日本は島国です/);
+        assert.match(cols[6], /Japan is an island nation/);
     });
 });
 

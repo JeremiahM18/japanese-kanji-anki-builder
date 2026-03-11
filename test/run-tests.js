@@ -1,14 +1,15 @@
 require("./app.test");
 require("./audioService.test");
+require("./buildPipeline.test");
 require("./curatedStudyCoverage.test");
 require("./curatedStudyData.test");
 require("./exportService.test");
 require("./kanjiApiClient.test");
+require("./mediaCoverage.test");
 require("./mediaProviders.test");
 require("./mediaStore.test");
+require("./mediaSync.test");
 require("./sentenceCorpus.test");
 require("./sentenceCorpusCoverage.test");
 require("./strokeOrderService.test");
 require("./inference/inferenceEngine.test");
-
-

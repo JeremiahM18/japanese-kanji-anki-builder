@@ -21,6 +21,7 @@ This repository is intentionally built with production-style standards even thou
 - Tracks provider hits, misses, errors, and last-success state for operational visibility
 - Returns per-sync acquisition reports that show which providers were tried and which one won
 - Persists per-kanji media manifests that can grow into richer provider and synthesis flows later
+- Runs a deterministic build pipeline that normalizes datasets, syncs media, exports decks, and writes machine-readable reports into `out/build`
 - Exposes health, readiness, inference, media lookup, stroke-order sync, and audio sync endpoints
 - Runs CI on pushes, pull requests, and manual dispatch
 
@@ -35,10 +36,13 @@ C:\japanese_kanji_builder
 │  └─ README.md
 ├─ scripts/
 │  ├─ benchmarkExport.js
+│  ├─ buildArtifacts.js
 │  ├─ normalizeCuratedStudyData.js
 │  ├─ normalizeSentenceCorpus.js
 │  ├─ reportCuratedStudyCoverage.js
-│  └─ reportSentenceCorpusCoverage.js
+│  ├─ reportMediaCoverage.js
+│  ├─ reportSentenceCorpusCoverage.js
+│  └─ syncMedia.js
 ├─ src/
 │  ├─ app.js
 │  ├─ config.js
@@ -50,6 +54,7 @@ C:\japanese_kanji_builder
 │  │  ├─ curatedStudyCoverage.js
 │  │  ├─ curatedStudyData.js
 │  │  ├─ kradfile.js
+│  │  ├─ mediaCoverage.js
 │  │  ├─ sentenceCorpus.js
 │  │  └─ sentenceCorpusCoverage.js
 │  ├─ inference/
@@ -61,21 +66,26 @@ C:\japanese_kanji_builder
 │  │  └─ sentenceInference.js
 │  ├─ services/
 │  │  ├─ audioService.js
+│  │  ├─ buildPipeline.js
 │  │  ├─ exportService.js
 │  │  ├─ mediaProviders.js
+│  │  ├─ mediaServiceFactory.js
 │  │  ├─ mediaStore.js
+│  │  ├─ mediaSync.js
 │  │  └─ strokeOrderService.js
 │  └─ utils/
 │     └─ text.js
 ├─ test/
 │  ├─ app.test.js
 │  ├─ audioService.test.js
+│  ├─ buildPipeline.test.js
 │  ├─ curatedStudyCoverage.test.js
 │  ├─ curatedStudyData.test.js
 │  ├─ exportService.test.js
 │  ├─ kanjiApiClient.test.js
 │  ├─ mediaProviders.test.js
 │  ├─ mediaStore.test.js
+│  ├─ mediaSync.test.js
 │  ├─ run-tests.js
 │  ├─ sentenceCorpus.test.js
 │  ├─ sentenceCorpusCoverage.test.js
@@ -103,16 +113,24 @@ C:\japanese_kanji_builder
   Loads and normalizes curated overrides for kanji-specific teaching decisions.
 - `src/datasets/curatedStudyCoverage.js`
   Computes curated override coverage and override-type summaries against JLPT kanji data.
+- `src/datasets/mediaCoverage.js`
+  Computes media coverage summaries from managed manifests.
 - `src/inference/`
   Extracts candidates, ranks them, and derives learner-facing meaning, notes, and sentence output.
 - `src/services/mediaProviders.js`
   Provides reusable local and remote media provider adapters plus provider metrics tracking.
+- `src/services/mediaServiceFactory.js`
+  Centralizes media-provider construction so the server, bulk sync job, and build pipeline all use the same wiring.
 - `src/services/strokeOrderService.js`
   Resolves stroke-order assets through providers, tracks provider outcomes, and imports winning assets into managed storage.
 - `src/services/audioService.js`
   Resolves audio assets through providers, tracks provider outcomes, and imports winning assets into managed storage.
+- `src/services/mediaSync.js`
+  Coordinates bounded-concurrency bulk media synchronization.
 - `src/services/exportService.js`
   Orchestrates kanji fetches, inference, media lookup, and Anki-ready TSV generation.
+- `src/services/buildPipeline.js`
+  Runs the deterministic artifact pipeline for normalization, reporting, media sync, and export generation.
 - `src/services/mediaStore.js`
   Owns the managed media tree and manifest persistence.
 - `src/app.js`
@@ -138,9 +156,38 @@ C:\japanese_kanji_builder
 | `REMOTE_STROKE_ORDER_IMAGE_BASE_URL` | unset | Optional remote HTTP base URL for stroke-order images |
 | `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` | unset | Optional remote HTTP base URL for stroke-order animations |
 | `REMOTE_AUDIO_BASE_URL` | unset | Optional remote HTTP base URL for audio assets |
+| `BUILD_OUT_DIR` | `out/build` | Root directory for deterministic build artifacts |
 | `EXPORT_CONCURRENCY` | `8` | Max kanji rows processed concurrently |
 | `API_REQUEST_TIMEOUT` | `10000` | Upstream request timeout in milliseconds |
 | `LOG_LEVEL` | `info` | Pino log level |
+
+## Build Pipeline
+
+Run the full deterministic artifact pipeline with:
+
+```bash
+npm run build:artifacts
+```
+
+Useful options:
+
+- `--levels=5,4,3`
+- `--limit=25`
+- `--concurrency=8`
+- `--out-dir=out/build`
+- `--skip-media-sync`
+- `--audio-reading=にち`
+- `--audio-voice=ja-JP-Neural2`
+- `--audio-locale=ja-JP`
+
+The pipeline:
+
+- normalizes `sentence_corpus.json` when present
+- normalizes `curated_study_data.json` when present
+- optionally syncs stroke-order and audio media for the selected kanji set
+- exports JLPT TSV artifacts into `out/build/exports`
+- writes JSON reports into `out/build/reports`
+- writes an overall `out/build/build-summary.json`
 
 ## Provider Observability
 
@@ -202,6 +249,7 @@ The current test suite covers:
 - provider metrics and acquisition reporting
 - stroke-order source discovery and sync behavior
 - audio source discovery, import, and selection behavior
+- build-pipeline artifact generation
 - media layout and manifest persistence
 - health/readiness endpoint behavior
 - inference endpoint behavior
@@ -216,5 +264,3 @@ The current test suite covers:
 - preserve professional commit hygiene with focused, descriptive commits
 - add tests when changing behavior or infrastructure
 - keep CI green before merging
-
-

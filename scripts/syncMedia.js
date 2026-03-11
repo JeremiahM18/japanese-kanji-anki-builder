@@ -1,10 +1,8 @@
 const fs = require("node:fs");
 
 const { loadConfig } = require("../src/config");
-const { createRemoteHttpProvider } = require("../src/services/mediaProviders");
-const { AUDIO_EXTENSIONS, buildAudioFileCandidates, createAudioService } = require("../src/services/audioService");
-const { ANIMATION_EXTENSIONS, IMAGE_EXTENSIONS, buildKanjiFileCandidates, createStrokeOrderService } = require("../src/services/strokeOrderService");
 const { ensureMediaRoot } = require("../src/services/mediaStore");
+const { createMediaServices } = require("../src/services/mediaServiceFactory");
 const { parseLevelArgument, selectKanjiForSync, syncMediaForKanjiList } = require("../src/services/mediaSync");
 
 function parseArgs(argv) {
@@ -57,46 +55,7 @@ async function main() {
 
     ensureMediaRoot(config.mediaRootDir);
 
-    const imageProviders = [
-        ...(config.remoteStrokeOrderImageBaseUrl ? [createRemoteHttpProvider({
-            name: "remote-stroke-order-image",
-            baseUrl: config.remoteStrokeOrderImageBaseUrl,
-            extensionMap: IMAGE_EXTENSIONS,
-            buildCandidates: (input) => buildKanjiFileCandidates(input),
-            fetchTimeoutMs: config.fetchTimeoutMs,
-        })] : []),
-    ];
-    const animationProviders = [
-        ...(config.remoteStrokeOrderAnimationBaseUrl ? [createRemoteHttpProvider({
-            name: "remote-stroke-order-animation",
-            baseUrl: config.remoteStrokeOrderAnimationBaseUrl,
-            extensionMap: ANIMATION_EXTENSIONS,
-            buildCandidates: (input) => buildKanjiFileCandidates(input),
-            fetchTimeoutMs: config.fetchTimeoutMs,
-        })] : []),
-    ];
-    const audioProviders = [
-        ...(config.remoteAudioBaseUrl ? [createRemoteHttpProvider({
-            name: "remote-audio",
-            baseUrl: config.remoteAudioBaseUrl,
-            extensionMap: AUDIO_EXTENSIONS,
-            buildCandidates: buildAudioFileCandidates,
-            fetchTimeoutMs: config.fetchTimeoutMs,
-        })] : []),
-    ];
-
-    const strokeOrderService = createStrokeOrderService({
-        mediaRootDir: config.mediaRootDir,
-        imageSourceDir: config.strokeOrderImageSourceDir,
-        animationSourceDir: config.strokeOrderAnimationSourceDir,
-        imageProviders,
-        animationProviders,
-    });
-    const audioService = createAudioService({
-        mediaRootDir: config.mediaRootDir,
-        audioSourceDir: config.audioSourceDir,
-        providers: audioProviders,
-    });
+    const { strokeOrderService, audioService } = createMediaServices(config);
 
     const concurrency = options.concurrency || config.exportConcurrency;
     const { results, summary } = await syncMediaForKanjiList({

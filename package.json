@@ -17,6 +17,7 @@
     "corpus:report": "node scripts/reportSentenceCorpusCoverage.js",
     "curated:normalize": "node scripts/normalizeCuratedStudyData.js",
     "curated:report": "node scripts/reportCuratedStudyCoverage.js",
+    "build:artifacts": "node scripts/buildArtifacts.js",
     "media:report": "node scripts/reportMediaCoverage.js",
     "media:sync": "node scripts/syncMedia.js"
   },

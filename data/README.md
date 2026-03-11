@@ -72,15 +72,28 @@ These datasets are ignored by git and must be downloaded or curated locally.
 
 Managed media coverage report:
 
-`ash
+```bash
 npm run media:report -- --limit=50
-` 
-
+```
 
 Bulk media sync:
 
-`ash
+```bash
 npm run media:sync -- --level=5 --limit=25
 npm run media:sync -- --kanji=日,本,学
-` 
+```
 
+Deterministic build pipeline:
+
+```bash
+npm run build:artifacts -- --levels=5,4 --limit=25
+```
+
+Artifacts are written to `out/build` by default:
+
+- `exports/jlpt-n5.tsv`
+- `reports/sentence-corpus-coverage.json`
+- `reports/curated-study-coverage.json`
+- `reports/media-coverage.json`
+- `reports/media-sync.json`
+- `build-summary.json`

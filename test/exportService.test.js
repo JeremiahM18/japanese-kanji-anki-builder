@@ -221,7 +221,7 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
     const lines = tsv.trim().split("\n");
 
     assert.equal(lines.length, 2);
-    assert.equal(lines[0], "Kanji\tMeaningJP\tReading\tStrokeOrder\tRadical\tNotes");
+    assert.equal(lines[0], "Kanji\tMeaningJP\tReading\tStrokeOrder\tRadical\tNotes\tExampleSentence");
 
     const cols = lines[1].split("\t");
     assert.equal(cols[0], "日");
@@ -230,4 +230,5 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
     assert.equal(cols[3], "animations/stroke-order.gif");
     assert.equal(cols[4], "日");
     assert.equal(cols[5], "日本 （にほん） - Japan ／ 日よう日 （にちようび） - Sunday");
+    assert.equal(cols[6], '「日本」は「Japan」です。 ／ 「にほん」は「Japan」です。 ／ "日本" means "Japan."');
 });

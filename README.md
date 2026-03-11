@@ -14,8 +14,9 @@ The engineering direction for this repository is deliberate: treat even a person
 - Generates deterministic TSV output for Anki import
 - Extracts radicals/components from KRADFILE
 - Adds example vocabulary with furigana-style readings
+- Exports the strongest inferred example sentence directly into the TSV
 - Separates raw data fetching, inference, export orchestration, and media management into distinct modules
-- Uses a deterministic inference engine to rank example words and derive learner-friendly `MeaningJP` and `Notes` output
+- Uses a deterministic inference engine to rank example words and derive learner-friendly `MeaningJP`, `Notes`, and `ExampleSentence` output
 - Prefers corpus-backed sentence candidates when a local sentence corpus is available, with deterministic template fallback otherwise
 - Weights corpus sentence selection by source quality, learner-friendly tags, register, and optional frequency metadata
 - Caches kanji and word API responses separately
@@ -112,10 +113,11 @@ C:\japanese_kanji_builder
 4. Export requests call `buildTsvForJlptLevel()` with bounded concurrency.
 5. Each kanji fetches kanji metadata, word candidates, and best known stroke-order path concurrently.
 6. The inference engine extracts candidates, ranks them deterministically, and returns learner-facing meaning, notes, and sentence candidates.
-7. Sentence inference prefers corpus-backed matches and only falls back to templates when the corpus has no suitable example.
-8. Upstream responses are validated, cached atomically on disk, and counted in client metrics.
-9. Stroke-order sync scans local source directories, imports matching assets into the managed media tree, and updates the kanji manifest.
-10. Audio can be added later to the same media manifest contract without redesigning the filesystem layout.
+7. The export service promotes the top-ranked sentence candidate into the TSV as `ExampleSentence`.
+8. Sentence inference prefers corpus-backed matches and only falls back to templates when the corpus has no suitable example.
+9. Upstream responses are validated, cached atomically on disk, and counted in client metrics.
+10. Stroke-order sync scans local source directories, imports matching assets into the managed media tree, and updates the kanji manifest.
+11. Audio can be added later to the same media manifest contract without redesigning the filesystem layout.
 
 ## Deterministic Inference Engine
 
@@ -155,8 +157,15 @@ The exported TSV includes these columns:
 - `StrokeOrder`
 - `Radical`
 - `Notes`
+- `ExampleSentence`
 
 `StrokeOrder` contains the best available managed media path for the kanji when a synced stroke-order asset exists. The current preference order is animation first, then static image.
+
+`ExampleSentence` contains the highest-ranked sentence candidate in compact TSV form:
+
+- `Japanese ／ Reading ／ English`
+
+This gives the deck a sentence-level teaching signal even when you are not inspecting the full inference payload over HTTP.
 
 ## Configuration
 

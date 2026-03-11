@@ -254,7 +254,7 @@ test("media routes expose manifests and sync results", async () => {
     });
 });
 
-test("download export sets attachment headers", async () => {
+test("download export sets attachment headers and includes the top sentence", async () => {
     const app = buildFixtureApp();
 
     await withServer(app, async (baseUrl) => {
@@ -264,10 +264,14 @@ test("download export sets attachment headers", async () => {
 
         const text = await response.text();
         const lines = text.trim().split("\n");
+        const cols = lines[1].split("\t");
 
         assert.equal(lines.length, 2);
-        assert.match(lines[0], /^Kanji\tMeaningJP\tReading/);
-        assert.match(lines[1], /animations\/stroke-order\.gif/);
+        assert.equal(lines[0], "Kanji\tMeaningJP\tReading\tStrokeOrder\tRadical\tNotes\tExampleSentence");
+        assert.equal(cols.length, 7);
+        assert.match(cols[3], /animations\/stroke-order\.gif/);
+        assert.match(cols[6], /日本へ行きます/);
+        assert.match(cols[6], /I will go to Japan/);
     });
 });
 

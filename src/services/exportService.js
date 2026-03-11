@@ -1,6 +1,17 @@
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { labelReading, tsvEscape } = require("../utils/text");
 
+function formatExampleSentence(sentence) {
+    if (!sentence) {
+        return "";
+    }
+
+    return [sentence.japanese, sentence.reading, sentence.english]
+        .map((value) => String(value ?? "").trim())
+        .filter(Boolean)
+        .join(" ／ ");
+}
+
 function createExportService({ inferenceEngine = createInferenceEngine() } = {}) {
     async function mapWithConcurrency(items, concurrency, mapper) {
         const results = new Array(items.length);
@@ -54,6 +65,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
             const reading = labelReading(kanjiInfo?.on_readings, kanjiInfo?.kun_readings);
             const components = kradMap.get(kanji) || [];
             const radical = pickMainComponent(components);
+            const exampleSentence = formatExampleSentence(inferred.sentenceCandidates[0]);
 
             return [
                 kanji,
@@ -62,6 +74,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
                 strokeOrderPath,
                 radical,
                 inferred.notes,
+                exampleSentence,
             ].map(tsvEscape).join("\t");
         } catch (error) {
             return [
@@ -71,6 +84,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
                 "",
                 "",
                 `ERROR: ${error instanceof Error ? error.message : String(error)}`,
+                "",
             ].map(tsvEscape).join("\t");
         }
     }
@@ -114,6 +128,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
             "StrokeOrder",
             "Radical",
             "Notes",
+            "ExampleSentence",
         ].join("\t");
 
         const kanjiList = Object.entries(jlptOnlyJson)
@@ -143,6 +158,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
         buildInferenceForKanji,
         buildRowForKanji,
         buildTsvForJlptLevel,
+        formatExampleSentence,
         mapWithConcurrency,
     };
 }
@@ -154,5 +170,6 @@ module.exports = {
     buildInferenceForKanji: defaultExportService.buildInferenceForKanji,
     buildRowForKanji: defaultExportService.buildRowForKanji,
     buildTsvForJlptLevel: defaultExportService.buildTsvForJlptLevel,
+    formatExampleSentence: defaultExportService.formatExampleSentence,
     mapWithConcurrency: defaultExportService.mapWithConcurrency,
 };

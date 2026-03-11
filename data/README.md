@@ -51,6 +51,23 @@ Sentence corpus field notes:
 - `register` should be `neutral`, `spoken`, `formal`, or `literary`
 - `jlpt` is optional metadata for future learner-level filtering
 
+Sentence corpus normalization tooling:
+
+```bash
+npm run corpus:normalize
+npm run corpus:normalize -- --check
+npm run corpus:normalize -- --input=data/imports/sentences.json --output=data/sentence_corpus.json
+```
+
+Tooling behavior:
+
+- trims and validates every entry
+- lowercases and deduplicates tags
+- normalizes register values
+- removes duplicate entries by `kanji + written + japanese`
+- keeps the richer duplicate when two entries collide
+- writes deterministically sorted JSON for cleaner diffs
+
 Recommended curated study data format:
 
 ```json

@@ -12,7 +12,8 @@
     "start": "node src/server.js",
     "lint": "eslint .",
     "test": "node test/run-tests.js",
-    "bench:export": "node scripts/benchmarkExport.js"
+    "bench:export": "node scripts/benchmarkExport.js",
+    "corpus:normalize": "node scripts/normalizeSentenceCorpus.js"
   },
   "keywords": [
     "japanese",

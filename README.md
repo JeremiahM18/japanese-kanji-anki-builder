@@ -19,6 +19,7 @@ The engineering direction for this repository is deliberate: treat even a person
 - Uses a deterministic inference engine to rank example words and derive learner-friendly `MeaningJP`, `Notes`, and `ExampleSentence` output
 - Uses corpus metadata to improve both word ranking and sentence selection when stronger supporting examples exist
 - Supports curated study data overrides for preferred words, blocked words, meanings, notes, and top example sentences
+- Supports sentence corpus normalization tooling for deterministic imports and clean dataset diffs
 - Prefers corpus-backed sentence candidates when a local sentence corpus is available, with deterministic template fallback otherwise
 - Weights corpus sentence selection by source quality, learner-friendly tags, register, and optional frequency metadata
 - Caches kanji and word API responses separately
@@ -37,7 +38,7 @@ The engineering direction for this repository is deliberate: treat even a person
 
 ## File Tree
 
-This is the meaningful project tree after the curated study data pass:
+This is the meaningful project tree after the sentence corpus tooling pass:
 
 ```text
 C:\japanese_kanji_builder
@@ -47,7 +48,8 @@ C:\japanese_kanji_builder
 ├─ data/
 │  └─ README.md
 ├─ scripts/
-│  └─ benchmarkExport.js
+│  ├─ benchmarkExport.js
+│  └─ normalizeSentenceCorpus.js
 ├─ src/
 │  ├─ app.js
 │  ├─ config.js
@@ -79,6 +81,7 @@ C:\japanese_kanji_builder
 │  ├─ kanjiApiClient.test.js
 │  ├─ mediaStore.test.js
 │  ├─ run-tests.js
+│  ├─ sentenceCorpus.test.js
 │  ├─ strokeOrderService.test.js
 │  └─ inference/
 │     └─ inferenceEngine.test.js
@@ -96,7 +99,7 @@ C:\japanese_kanji_builder
 - `src/datasets/kradfile.js`
   Loads KRADFILE radicals/components.
 - `src/datasets/sentenceCorpus.js`
-  Loads an optional local sentence corpus for deterministic sentence selection.
+  Loads, normalizes, deduplicates, and sorts an optional local sentence corpus.
 - `src/datasets/curatedStudyData.js`
   Loads optional curated overrides for kanji-specific teaching decisions.
 - `src/inference/`
@@ -111,6 +114,8 @@ C:\japanese_kanji_builder
   Exposes HTTP routes and operational endpoints.
 - `src/server.js`
   Performs process startup and dependency wiring.
+- `scripts/normalizeSentenceCorpus.js`
+  Normalizes imported sentence corpus files into a deterministic on-disk format.
 
 ### Runtime Flow
 
@@ -255,14 +260,32 @@ Optional flags:
 
 The benchmark reports duration, rows per second, cache hit ratio, network fetches, and validation failures so you can measure changes before and after optimization work.
 
+### Normalize sentence corpus data
+
+```bash
+npm run corpus:normalize
+npm run corpus:normalize -- --check
+npm run corpus:normalize -- --input=data/imports/sentences.json --output=data/sentence_corpus.json
+```
+
+The normalization tool:
+
+- trims and validates entries
+- lowercases and deduplicates tags
+- normalizes register values
+- removes duplicate entries by `kanji + written + japanese`
+- keeps the richer duplicate when duplicates collide
+- writes deterministically sorted JSON for cleaner diffs
+
 ## Inference Workflow
 
 1. Add sentence examples to `data/sentence_corpus.json` when you have better corpus material.
 2. Add deterministic overrides to `data/curated_study_data.json` when you know the best teaching choice already.
-3. Call `GET /inference/:kanji` to inspect the current deterministic inference output.
-4. Review the ranked candidates, inferred meaning, notes, curated flags, and sentence candidates.
-5. Tune scoring and selection rules in `src/inference/` rather than changing export formatting directly.
-6. Re-run tests and the export benchmark after meaningful inference changes.
+3. Normalize imported sentence data before relying on it in inference.
+4. Call `GET /inference/:kanji` to inspect the current deterministic inference output.
+5. Review the ranked candidates, inferred meaning, notes, curated flags, and sentence candidates.
+6. Tune scoring and selection rules in `src/inference/` rather than changing export formatting directly.
+7. Re-run tests and the export benchmark after meaningful inference changes.
 
 This route is the safest place to iterate on quality because it shows the intermediate reasoning results before the final deck export is generated.
 
@@ -417,6 +440,7 @@ The current test suite covers:
 - export formatting and row construction
 - deterministic inference output
 - curated study data loading and overrides
+- sentence corpus normalization and loading
 - sentence candidate generation
 - corpus-backed sentence preference and weighting
 - word-ranking behavior
@@ -449,7 +473,6 @@ The working expectation for future changes is:
 
 - add request IDs and structured access logging
 - support resumable offline export workflows
-- add corpus import and normalization tooling
 - add remote/provider adapters for stroke-order image and animation sources
 - add media acquisition jobs with checksum verification
 - add audio source adapters or synthesis jobs on top of the existing media manifest

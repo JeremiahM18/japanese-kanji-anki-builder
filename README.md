@@ -1,6 +1,6 @@
 # Japanese Kanji Anki Builder
 
-A Node.js service for generating structured JLPT kanji TSV exports for Anki using `kanjiapi.dev`, KRADFILE radicals, deterministic export formatting, cache-backed upstream retrieval, and a provider-ready stroke-order media pipeline.
+A Node.js service for generating structured JLPT kanji TSV exports for Anki using `kanjiapi.dev`, KRADFILE radicals, deterministic export formatting, cache-backed upstream retrieval, a provider-ready stroke-order media pipeline, and a deterministic Phase 1 inference engine.
 
 ## Why This Project Exists
 
@@ -14,6 +14,8 @@ The engineering direction for this repository is deliberate: treat even a person
 - Generates deterministic TSV output for Anki import
 - Extracts radicals/components from KRADFILE
 - Adds example vocabulary with furigana-style readings
+- Separates raw data fetching, inference, export orchestration, and media management into distinct modules
+- Uses a deterministic inference engine to rank example words and derive learner-friendly `MeaningJP` and `Notes` output
 - Caches kanji and word API responses separately
 - Validates upstream API payloads before they are cached or consumed
 - Tracks cache and fetch metrics for readiness checks and benchmarks
@@ -25,32 +27,76 @@ The engineering direction for this repository is deliberate: treat even a person
 - Recovers from corrupted cache files automatically
 - Exposes health, readiness, media lookup, and media sync endpoints for operational visibility
 - Runs CI on every push to `main`, every pull request, and on manual dispatch
-- Includes automated tests for caching, concurrency, validation, export formatting, HTTP behavior, stroke-order sync, and media manifests
+- Includes automated tests for caching, concurrency, validation, inference, export formatting, HTTP behavior, stroke-order sync, and media manifests
+
+## File Tree
+
+This is the meaningful project tree after the Phase 1 inference refactor:
+
+```text
+C:\japanese_kanji_builder
+├─ .github/
+│  └─ workflows/
+│     └─ ci.yml
+├─ data/
+│  └─ README.md
+├─ scripts/
+│  └─ benchmarkExport.js
+├─ src/
+│  ├─ app.js
+│  ├─ config.js
+│  ├─ logger.js
+│  ├─ server.js
+│  ├─ clients/
+│  │  └─ kanjiApiClient.js
+│  ├─ datasets/
+│  │  └─ kradfile.js
+│  ├─ inference/
+│  │  ├─ candidateExtractor.js
+│  │  ├─ inferenceEngine.js
+│  │  ├─ meaningInference.js
+│  │  ├─ notesInference.js
+│  │  └─ ranking.js
+│  ├─ services/
+│  │  ├─ exportService.js
+│  │  ├─ mediaStore.js
+│  │  └─ strokeOrderService.js
+│  └─ utils/
+│     └─ text.js
+├─ test/
+│  ├─ app.test.js
+│  ├─ exportService.test.js
+│  ├─ kanjiApiClient.test.js
+│  ├─ mediaStore.test.js
+│  ├─ run-tests.js
+│  ├─ strokeOrderService.test.js
+│  └─ inference/
+│     └─ inferenceEngine.test.js
+├─ README.md
+├─ package.json
+└─ package-lock.json
+```
 
 ## Architecture
 
-```text
-src/
-  app.js                 Express app factory and route wiring
-  config.js              Environment parsing and path resolution
-  exportService.js       TSV row generation, ranking, concurrency control
-  kanjiApiClient.js      Upstream API client, caching, atomic file writes, metrics
-  kradfile.js            KRADFILE parsing and component selection
-  logger.js              Structured logging
-  mediaStore.js          Media filesystem layout and manifest persistence
-  strokeOrderService.js  Stroke-order source discovery and local ingestion
-  server.js              Bootstrap and process startup
+### Module responsibilities
 
-scripts/
-  benchmarkExport.js     Export throughput and cache-efficiency benchmark
-
-test/
-  app.test.js
-  exportService.test.js
-  kanjiApiClient.test.js
-  mediaStore.test.js
-  strokeOrderService.test.js
-```
+- `src/clients/kanjiApiClient.js`
+  Fetches and validates raw upstream kanji and word payloads.
+- `src/datasets/kradfile.js`
+  Loads KRADFILE radicals/components.
+- `src/inference/`
+  Extracts word candidates, ranks them, and infers learner-facing meaning/notes output.
+- `src/services/exportService.js`
+  Orchestrates kanji fetches, inference, stroke-order lookup, and TSV row generation.
+- `src/services/mediaStore.js`
+  Owns the managed media tree and manifest persistence.
+- `src/services/strokeOrderService.js`
+  Discovers local stroke-order assets and imports them into managed storage.
+- `src/app.js`
+  Exposes HTTP routes and operational endpoints.
+- `src/server.js`
+  Performs process startup and dependency wiring.
 
 ### Runtime Flow
 
@@ -59,9 +105,29 @@ test/
 3. `src/app.js` builds the Express application from injected dependencies.
 4. Export requests call `buildTsvForJlptLevel()` with bounded concurrency.
 5. Each kanji fetches kanji metadata, word candidates, and best known stroke-order path concurrently.
-6. Upstream responses are validated, cached atomically on disk, and counted in client metrics.
-7. Stroke-order sync scans local source directories, imports matching assets into the managed media tree, and updates the kanji manifest.
-8. Audio can be added later to the same media manifest contract without redesigning the filesystem layout.
+6. The inference engine extracts candidates, ranks them deterministically, and returns learner-facing fields.
+7. Upstream responses are validated, cached atomically on disk, and counted in client metrics.
+8. Stroke-order sync scans local source directories, imports matching assets into the managed media tree, and updates the kanji manifest.
+9. Audio can be added later to the same media manifest contract without redesigning the filesystem layout.
+
+## Phase 1 Inference Engine
+
+Phase 1 is intentionally deterministic rather than model-based.
+
+Current inference layers:
+
+- `candidateExtractor.js`
+  normalizes word entries into comparable candidates
+- `ranking.js`
+  scores candidates using explicit heuristics
+- `meaningInference.js`
+  derives `bestWord`, `englishMeaning`, and `MeaningJP`
+- `notesInference.js`
+  derives the `Notes` field from top-ranked examples
+- `inferenceEngine.js`
+  composes the full learner-facing inference result
+
+This gives the project a stable, testable inference contract before sentence generation or more advanced model-assisted logic is added.
 
 ## Output Fields
 
@@ -74,7 +140,7 @@ The exported TSV includes these columns:
 - `Radical`
 - `Notes`
 
-`StrokeOrder` now contains the best available managed media path for the kanji when a synced stroke-order asset exists. The current preference order is animation first, then static image.
+`StrokeOrder` contains the best available managed media path for the kanji when a synced stroke-order asset exists. The current preference order is animation first, then static image.
 
 ## Configuration
 
@@ -165,13 +231,6 @@ Current CI guarantees:
 - fails fast on lint or test regressions inside each job
 - cancels outdated in-progress runs for the same ref
 
-Recommended GitHub branch settings:
-
-- require pull requests before merging to `main`
-- require the `CI / Verify Node 20` and `CI / Verify Node 22` checks to pass
-- disable force pushes to `main`
-- disable branch deletion for `main`
-
 ## HTTP Endpoints
 
 ### Service endpoints
@@ -205,8 +264,6 @@ The cache and media layers follow a more production-friendly model:
 - Each kanji gets a manifest with reserved slots for a stroke-order image, stroke-order animation, and audio assets.
 - Stroke-order source files are copied into managed storage instead of being referenced in place.
 
-This matters because media generation adds more files, more formats, and more lifecycle decisions. The repository needs a stable contract before that growth starts.
-
 ## Media Manifest Contract
 
 Each kanji is assigned a directory under `data/media/kanji/<shard>/<codepoint>_<kanji>/`.
@@ -231,6 +288,7 @@ This means the next phase can improve stroke-order providers or add audio synthe
 The current test suite covers:
 
 - export formatting and row construction
+- deterministic inference output
 - word-ranking behavior
 - cache creation and reuse
 - in-flight request deduplication
@@ -260,6 +318,7 @@ The working expectation for future changes is:
 
 - add request IDs and structured access logging
 - support resumable offline export workflows
+- add sentence-level inference on top of the deterministic engine
 - add remote/provider adapters for stroke-order image and animation sources
 - add media acquisition jobs with checksum verification
 - add audio source adapters or synthesis jobs on top of the existing media manifest

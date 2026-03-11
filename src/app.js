@@ -1,7 +1,7 @@
 const express = require("express");
 
 const { logger } = require("./logger");
-const { buildTsvForJlptLevel } = require("./exportService");
+const { buildTsvForJlptLevel } = require("./services/exportService");
 
 function parseLevel(param) {
     const s = String(param).toUpperCase().replace("N", "").trim();
@@ -109,8 +109,8 @@ function createApp({ config, jlptOnlyJson, kradMap, pickMainComponent, kanjiApiC
         const startedAt = Date.now();
 
         try {
-            const lvl = parseLevel(req.params.level);
-            if (!lvl) {
+            const level = parseLevel(req.params.level);
+            if (!level) {
                 return res.status(400).type("text").send("Invalid level parameter. Use N1-N5 or 1-5.");
             }
 
@@ -121,7 +121,7 @@ function createApp({ config, jlptOnlyJson, kradMap, pickMainComponent, kanjiApiC
 
             logger.info(
                 {
-                    level: lvl,
+                    level,
                     limit: limit ?? "all",
                     concurrency: config.exportConcurrency,
                     download: Boolean(options.download),
@@ -130,7 +130,7 @@ function createApp({ config, jlptOnlyJson, kradMap, pickMainComponent, kanjiApiC
             );
 
             const tsv = await buildTsvForJlptLevel({
-                levelNumber: lvl,
+                levelNumber: level,
                 jlptOnlyJson,
                 kradMap,
                 pickMainComponent,
@@ -142,7 +142,7 @@ function createApp({ config, jlptOnlyJson, kradMap, pickMainComponent, kanjiApiC
 
             logger.info(
                 {
-                    level: lvl,
+                    level,
                     limit: limit ?? "all",
                     durationMs: Date.now() - startedAt,
                     rowCount: tsv.split("\n").length - 1,
@@ -153,7 +153,7 @@ function createApp({ config, jlptOnlyJson, kradMap, pickMainComponent, kanjiApiC
             );
 
             if (options.download) {
-                res.setHeader("Content-Disposition", `attachment; filename="jlpt_n${lvl}_kanji.tsv"`);
+                res.setHeader("Content-Disposition", `attachment; filename="jlpt_n${level}_kanji.tsv"`);
             }
 
             return res
@@ -171,8 +171,7 @@ function createApp({ config, jlptOnlyJson, kradMap, pickMainComponent, kanjiApiC
     app.use((err, _req, res, _next) => {
         logger.error({ err }, "Error handling request");
 
-        const isDev = process.env.NODE_ENV !== "production";
-        if (isDev) {
+        if (process.env.NODE_ENV !== "production") {
             return res.status(500).type("text").send(`Internal Server Error:\n\n${err?.stack || err}`);
         }
 

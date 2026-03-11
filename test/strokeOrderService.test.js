@@ -4,13 +4,13 @@ const fs = require("node:fs");
 const os = require("node:os");
 const path = require("node:path");
 
-const { readManifestIfExists } = require("../src/mediaStore");
+const { readManifestIfExists } = require("../src/services/mediaStore");
 const {
     buildKanjiFileCandidates,
     createStrokeOrderService,
     findMatchingAsset,
     normalizeKanji,
-} = require("../src/strokeOrderService");
+} = require("../src/services/strokeOrderService");
 
 function makeTempDir() {
     return fs.mkdtempSync(path.join(os.tmpdir(), "stroke-order-service-test-"));

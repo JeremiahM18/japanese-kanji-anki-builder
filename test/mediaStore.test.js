@@ -13,7 +13,7 @@ const {
     ensureMediaRoot,
     readManifestIfExists,
     writeManifest,
-} = require("../src/mediaStore");
+} = require("../src/services/mediaStore");
 
 function makeTempDir() {
     return fs.mkdtempSync(path.join(os.tmpdir(), "media-store-test-"));

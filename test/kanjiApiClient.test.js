@@ -10,7 +10,7 @@ const {
     createEmptyClientMetrics,
     createKanjiApiClient,
     validatePayload,
-} = require("../src/kanjiApiClient");
+} = require("../src/clients/kanjiApiClient");
 
 function makeTempDir() {
     return fs.mkdtempSync(path.join(os.tmpdir(), "kanji-api-client-test-"));
@@ -244,18 +244,16 @@ test("non-ok fetch response throws an error", async () => {
     const cacheDir = makeTempDir();
     const originalFetch = global.fetch;
 
-    global.fetch = async () => {
-        return {
-            ok: false,
-            status: 500,
-            async json() {
-                return {};
-            },
-            async text() {
-                return "server exploded";
-            },
-        };
-    };
+    global.fetch = async () => ({
+        ok: false,
+        status: 500,
+        async json() {
+            return {};
+        },
+        async text() {
+            return "server exploded";
+        },
+    });
 
     try {
         const client = createKanjiApiClient({

@@ -2,16 +2,15 @@ const fs = require("node:fs");
 
 const { loadConfig } = require("./config");
 const { logger } = require("./logger");
-const { createKanjiApiClient } = require("./kanjiApiClient");
-const { loadKradMap, pickMainComponent } = require("./kradfile");
-const { ensureMediaRoot } = require("./mediaStore");
-const { createStrokeOrderService } = require("./strokeOrderService");
+const { createKanjiApiClient } = require("./clients/kanjiApiClient");
+const { loadKradMap, pickMainComponent } = require("./datasets/kradfile");
+const { ensureMediaRoot } = require("./services/mediaStore");
+const { createStrokeOrderService } = require("./services/strokeOrderService");
 const { createApp } = require("./app");
 
 async function main() {
     const config = loadConfig();
 
-    // Load local datasets at startup so the process fails fast when data is missing.
     if (!fs.existsSync(config.jlptJsonPath)) {
         throw new Error(`Missing JLPT JSON file at ${config.jlptJsonPath}`);
     }
@@ -28,7 +27,6 @@ async function main() {
         fetchTimeoutMs: config.fetchTimeoutMs,
     });
 
-    // Create the media root eagerly so future stroke-order and audio assets have a stable home.
     ensureMediaRoot(config.mediaRootDir);
 
     const strokeOrderService = createStrokeOrderService({

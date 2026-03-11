@@ -1,7 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { buildTsvForJlptLevel } = require("../src/exportService");
+const { buildTsvForJlptLevel } = require("../src/services/exportService");
 
 test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async () => {
     const jlptOnlyJson = {
@@ -143,7 +143,6 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
                     },
                 ];
             }
-
             if (kanji === "学") {
                 return [
                     {
@@ -162,7 +161,6 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
                     },
                 ];
             }
-
             if (kanji === "校") {
                 return [
                     {
@@ -210,8 +208,6 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
         },
     };
 
-    assert.equal(jlptOnlyJson["日"].jlpt, 5);
-
     const tsv = await buildTsvForJlptLevel({
         levelNumber: 5,
         jlptOnlyJson,
@@ -224,16 +220,10 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
 
     const lines = tsv.trim().split("\n");
 
-    assert.equal(lines.length, 2, "Should return header + one data row because of limit");
-
-    assert.equal(
-        lines[0],
-        "Kanji\tMeaningJP\tReading\tStrokeOrder\tRadical\tNotes"
-    );
+    assert.equal(lines.length, 2);
+    assert.equal(lines[0], "Kanji\tMeaningJP\tReading\tStrokeOrder\tRadical\tNotes");
 
     const cols = lines[1].split("\t");
-    assert.equal(cols.length, 6);
-
     assert.equal(cols[0], "日");
     assert.equal(cols[1], "日本 （にほん） ／ day");
     assert.equal(cols[2], "オン:ニチ、 ジツ ／ くん:ひ、 び、 か");

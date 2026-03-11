@@ -2,9 +2,9 @@ const fs = require("node:fs");
 const { performance } = require("node:perf_hooks");
 
 const { loadConfig } = require("../src/config");
-const { loadKradMap, pickMainComponent } = require("../src/kradfile");
-const { buildTsvForJlptLevel } = require("../src/exportService");
-const { createKanjiApiClient, createEmptyClientMetrics } = require("../src/kanjiApiClient");
+const { loadKradMap, pickMainComponent } = require("../src/datasets/kradfile");
+const { buildTsvForJlptLevel } = require("../src/services/exportService");
+const { createKanjiApiClient, createEmptyClientMetrics } = require("../src/clients/kanjiApiClient");
 
 function parseArgs(argv) {
     const options = {
@@ -99,7 +99,6 @@ async function main() {
 
     if (options.warmup) {
         const warmup = await runExportOnce({
-            config,
             jlptOnlyJson,
             kradMap,
             kanjiApiClient,
@@ -113,7 +112,6 @@ async function main() {
     }
 
     const measured = await runExportOnce({
-        config,
         jlptOnlyJson,
         kradMap,
         kanjiApiClient,

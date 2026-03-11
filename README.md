@@ -216,3 +216,4 @@ The current test suite covers:
 - preserve professional commit hygiene with focused, descriptive commits
 - add tests when changing behavior or infrastructure
 - keep CI green before merging
+

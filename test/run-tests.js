@@ -10,3 +10,4 @@ require("./sentenceCorpus.test");
 require("./sentenceCorpusCoverage.test");
 require("./strokeOrderService.test");
 require("./inference/inferenceEngine.test");
+

@@ -69,3 +69,10 @@ Optional JSON body fields:
 - `locale` to record locale metadata in the manifest
 
 These datasets are ignored by git and must be downloaded or curated locally.
+
+Managed media coverage report:
+
+`ash
+npm run media:report -- --limit=50
+` 
+

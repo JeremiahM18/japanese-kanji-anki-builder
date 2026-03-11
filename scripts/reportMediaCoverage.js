@@ -1,0 +1,43 @@
+const fs = require("node:fs");
+
+const { loadConfig } = require("../src/config");
+const { buildMediaCoverageSummary } = require("../src/datasets/mediaCoverage");
+
+function parseArgs(argv) {
+    const options = {
+        limit: 25,
+    };
+
+    for (const arg of argv) {
+        if (arg.startsWith("--limit=")) {
+            options.limit = Number(arg.split("=")[1]);
+        }
+    }
+
+    return options;
+}
+
+async function main() {
+    const config = loadConfig();
+    const options = parseArgs(process.argv.slice(2));
+
+    if (!fs.existsSync(config.jlptJsonPath)) {
+        throw new Error(`Missing JLPT JSON file at ${config.jlptJsonPath}`);
+    }
+
+    const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
+    const summary = await buildMediaCoverageSummary({
+        jlptOnlyJson,
+        mediaRootDir: config.mediaRootDir,
+    });
+
+    console.log(JSON.stringify({
+        ...summary,
+        missingByPriority: summary.missingByPriority.slice(0, Math.max(1, options.limit || 25)),
+    }, null, 2));
+}
+
+main().catch((err) => {
+    console.error(err.stack || err);
+    process.exit(1);
+});

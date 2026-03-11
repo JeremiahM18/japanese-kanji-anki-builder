@@ -45,6 +45,10 @@ function createApp({ config, jlptOnlyJson, kradMap, pickMainComponent, kanjiApiC
     });
 
     app.get("/readyz", (_req, res) => {
+        const metrics = typeof kanjiApiClient.getMetrics === "function"
+            ? kanjiApiClient.getMetrics()
+            : null;
+
         res.status(200).json({
             status: "ready",
             datasets: {
@@ -55,9 +59,11 @@ function createApp({ config, jlptOnlyJson, kradMap, pickMainComponent, kanjiApiC
                 cacheDir: config.cacheDir,
                 jlptJsonPath: config.jlptJsonPath,
                 kradfilePath: config.kradfilePath,
+                mediaRootDir: config.mediaRootDir,
                 exportConcurrency: config.exportConcurrency,
                 fetchTimeoutMs: config.fetchTimeoutMs,
             },
+            cache: metrics,
         });
     });
 
@@ -102,6 +108,7 @@ function createApp({ config, jlptOnlyJson, kradMap, pickMainComponent, kanjiApiC
                     durationMs: Date.now() - startedAt,
                     rowCount: tsv.split("\n").length - 1,
                     download: Boolean(options.download),
+                    cache: typeof kanjiApiClient.getMetrics === "function" ? kanjiApiClient.getMetrics() : undefined,
                 },
                 "Generated TSV for JLPT level"
             );

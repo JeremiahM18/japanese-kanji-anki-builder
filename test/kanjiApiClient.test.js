@@ -3,8 +3,14 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const os = require("node:os");
 const path = require("node:path");
+const { z } = require("zod");
 
-const { buildCacheFilePath, createKanjiApiClient } = require("../src/kanjiApiClient");
+const {
+    buildCacheFilePath,
+    createEmptyClientMetrics,
+    createKanjiApiClient,
+    validatePayload,
+} = require("../src/kanjiApiClient");
 
 function makeTempDir() {
     return fs.mkdtempSync(path.join(os.tmpdir(), "kanji-api-client-test-"));
@@ -18,6 +24,27 @@ test("buildCacheFilePath shards cache entries into subdirectories", () => {
     const cachePath = buildCacheFilePath("cache-root", "kanji__E6_97_A5");
 
     assert.equal(cachePath, path.join("cache-root", "ka", "kanji__E6_97_A5.json"));
+});
+
+test("createEmptyClientMetrics starts all counters at zero", () => {
+    assert.deepEqual(createEmptyClientMetrics(), {
+        cacheHits: 0,
+        cacheMisses: 0,
+        networkFetches: 0,
+        cacheWrites: 0,
+        payloadValidationFailures: 0,
+    });
+});
+
+test("validatePayload throws a descriptive error when the payload is malformed", () => {
+    const metrics = createEmptyClientMetrics();
+
+    assert.throws(
+        () => validatePayload(z.object({ required: z.string() }), {}, "fixture", metrics),
+        /Invalid fixture payload/
+    );
+
+    assert.equal(metrics.payloadValidationFailures, 1);
 });
 
 test("getKanji fetches once, writes cache, and reuses cached response", async () => {
@@ -55,11 +82,16 @@ test("getKanji fetches once, writes cache, and reuses cached response", async ()
 
         const first = await client.getKanji("日");
         const second = await client.getKanji("日");
+        const metrics = client.getMetrics();
 
         assert.equal(fetchCalls, 1, "expected only one network fetch");
         assert.equal(first.kanji, "日");
         assert.equal(second.kanji, "日");
         assert.deepEqual(second.meanings, ["day", "sun"]);
+        assert.equal(metrics.cacheHits, 1);
+        assert.equal(metrics.cacheMisses, 1);
+        assert.equal(metrics.networkFetches, 1);
+        assert.equal(metrics.cacheWrites, 1);
 
         const expectedFile = buildCacheFilePath(cacheDir, "kanji__E6_97_A5");
         assert.equal(fs.existsSync(expectedFile), true, "expected kanji cache file to exist");
@@ -346,6 +378,43 @@ test("failed in-flight fetch does not poison later retries", async () => {
 
         assert.equal(fetchCalls, 2);
         assert.equal(result.kanji, "火");
+    } finally {
+        global.fetch = originalFetch;
+        cleanupTempDir(cacheDir);
+    }
+});
+
+test("invalid upstream kanji payload is rejected before caching", async () => {
+    const cacheDir = makeTempDir();
+    const originalFetch = global.fetch;
+
+    try {
+        global.fetch = async () => ({
+            ok: true,
+            async json() {
+                return {
+                    kanji: "水",
+                    meanings: "water",
+                    on_readings: ["スイ"],
+                    kun_readings: ["みず"],
+                };
+            },
+            async text() {
+                return "";
+            },
+        });
+
+        const client = createKanjiApiClient({
+            baseUrl: "https://example.test",
+            cacheDir,
+            fetchTimeoutMs: 1000,
+        });
+
+        await assert.rejects(client.getKanji("水"), /Invalid kanji payload/);
+        assert.equal(client.getMetrics().payloadValidationFailures, 1);
+
+        const cacheFile = buildCacheFilePath(cacheDir, "kanji__E6_B0_B4");
+        assert.equal(fs.existsSync(cacheFile), false);
     } finally {
         global.fetch = originalFetch;
         cleanupTempDir(cacheDir);

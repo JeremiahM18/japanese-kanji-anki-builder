@@ -8,6 +8,7 @@ function buildFixtureApp() {
         cacheDir: "C:\\repo\\cache",
         jlptJsonPath: "C:\\repo\\data\\kanji_jlpt_only.json",
         kradfilePath: "C:\\repo\\data\\KRADFILE",
+        mediaRootDir: "C:\\repo\\data\\media",
         exportConcurrency: 4,
         fetchTimeoutMs: 2500,
     };
@@ -21,6 +22,14 @@ function buildFixtureApp() {
         ["日", ["日"]],
         ["本", ["木"]],
     ]);
+
+    const metrics = {
+        cacheHits: 7,
+        cacheMisses: 2,
+        networkFetches: 2,
+        cacheWrites: 2,
+        payloadValidationFailures: 0,
+    };
 
     const kanjiApiClient = {
         async getKanji(kanji) {
@@ -47,6 +56,9 @@ function buildFixtureApp() {
                     ],
                 },
             ];
+        },
+        getMetrics() {
+            return { ...metrics };
         },
     };
 
@@ -105,6 +117,9 @@ test("health and readiness endpoints expose operational state", async () => {
         assert.equal(readyJson.datasets.jlptKanjiCount, 2);
         assert.equal(readyJson.datasets.kradEntries, 2);
         assert.equal(readyJson.config.exportConcurrency, 4);
+        assert.equal(readyJson.config.mediaRootDir, "C:\\repo\\data\\media");
+        assert.equal(readyJson.cache.cacheHits, 7);
+        assert.equal(readyJson.cache.cacheMisses, 2);
     });
 });
 

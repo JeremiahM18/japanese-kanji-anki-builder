@@ -11,7 +11,8 @@
     "dev": "nodemon",
     "start": "node src/server.js",
     "lint": "eslint .",
-    "test": "node test/run-tests.js"
+    "test": "node test/run-tests.js",
+    "bench:export": "node scripts/benchmarkExport.js"
   },
   "keywords": [
     "japanese",

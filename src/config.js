@@ -7,6 +7,7 @@ const schema = z.object({
     jlptJsonPath: z.string().default("data/kanji_jlpt_only.json"),
     kradfilePath: z.string().default("data/KRADFILE"),
     kanjiApiBaseUrl: z.string().url().default("https://kanjiapi.dev"),
+    mediaRootDir: z.string().default("data/media"),
 
     // How many kanji to process at once during export generation
     exportConcurrency: z.coerce.number().int().positive().default(8),
@@ -26,6 +27,7 @@ function loadConfig() {
         jlptJsonPath: process.env.JLPT_JSON_PATH,
         kradfilePath: process.env.KRADFILE_PATH,
         kanjiApiBaseUrl: process.env.KANJI_API_BASE_URL,
+        mediaRootDir: process.env.MEDIA_ROOT_DIR,
         exportConcurrency: process.env.EXPORT_CONCURRENCY,
         fetchTimeoutMs: process.env.API_REQUEST_TIMEOUT,
     };
@@ -37,6 +39,7 @@ function loadConfig() {
         cacheDir: resolveFromCwd(parsed.cacheDir),
         jlptJsonPath: resolveFromCwd(parsed.jlptJsonPath),
         kradfilePath: resolveFromCwd(parsed.kradfilePath),
+        mediaRootDir: resolveFromCwd(parsed.mediaRootDir),
     };
 }
 

@@ -4,6 +4,7 @@ const { loadConfig } = require("./config");
 const { logger } = require("./logger");
 const { createKanjiApiClient } = require("./kanjiApiClient");
 const { loadKradMap, pickMainComponent } = require("./kradfile");
+const { ensureMediaRoot } = require("./mediaStore");
 const { createApp } = require("./app");
 
 async function main() {
@@ -26,6 +27,9 @@ async function main() {
         fetchTimeoutMs: config.fetchTimeoutMs,
     });
 
+    // Create the media root eagerly so future stroke-order and audio assets have a stable home.
+    ensureMediaRoot(config.mediaRootDir);
+
     const app = createApp({
         config,
         jlptOnlyJson,
@@ -41,6 +45,7 @@ async function main() {
                 exportConcurrency: config.exportConcurrency,
                 fetchTimeoutMs: config.fetchTimeoutMs,
                 cacheDir: config.cacheDir,
+                mediaRootDir: config.mediaRootDir,
             },
             "Server started"
         );

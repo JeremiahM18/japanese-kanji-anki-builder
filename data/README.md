@@ -42,66 +42,9 @@ Example for `日`:
 - `日_にち.mp3`
 - `65E5.m4a`
 
-## Sentence corpus format
+## Provider notes
 
-```json
-[
-  {
-    "kanji": "日",
-    "written": "日本",
-    "japanese": "日本へ行きます。",
-    "reading": "にほんへいきます。",
-    "english": "I will go to Japan.",
-    "source": "manual-curated",
-    "tags": ["core", "common", "beginner"],
-    "frequencyRank": 120,
-    "register": "neutral",
-    "jlpt": 5
-  }
-]
-```
-
-## Curated study format
-
-```json
-{
-  "日": {
-    "englishMeaning": "sun / day marker",
-    "source": "manual-curated",
-    "tags": ["core", "curated"],
-    "jlpt": 5,
-    "preferredWords": ["日本"],
-    "blockedWords": ["日中"],
-    "blockedSentencePhrases": ["daytime"],
-    "notes": "日本 （にほん） - Japan ／ curated-note",
-    "alternativeNotes": ["alt-note-a", "alt-note-b"],
-    "exampleSentence": {
-      "japanese": "日本は島国です。",
-      "reading": "にほんはしまぐにです。",
-      "english": "Japan is an island nation.",
-      "tags": ["curated", "example"]
-    }
-  }
-}
-```
-
-## Tooling
-
-Sentence corpus:
-
-```bash
-npm run corpus:normalize
-npm run corpus:normalize -- --check
-npm run corpus:report -- --limit=50
-```
-
-Curated study data:
-
-```bash
-npm run curated:normalize
-npm run curated:normalize -- --check
-npm run curated:report -- --limit=50
-```
+The current repository ships with deterministic local-directory providers for stroke order and audio. The provider layer is shared so remote adapters can be added later without redesigning the services.
 
 ## Audio sync endpoint
 

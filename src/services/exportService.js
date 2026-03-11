@@ -1,3 +1,5 @@
+const path = require("node:path");
+
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { labelReading, tsvEscape } = require("../utils/text");
 
@@ -10,6 +12,22 @@ function formatExampleSentence(sentence) {
         .map((value) => String(value ?? "").trim())
         .filter(Boolean)
         .join(" ／ ");
+}
+
+function formatAnkiAudioField(audioPath) {
+    if (!audioPath) {
+        return "";
+    }
+
+    return `[sound:${path.posix.basename(audioPath)}]`;
+}
+
+function formatAnkiStrokeOrderField(strokeOrderPath) {
+    if (!strokeOrderPath) {
+        return "";
+    }
+
+    return `<img src="${path.posix.basename(strokeOrderPath)}" />`;
 }
 
 function createExportService({ inferenceEngine = createInferenceEngine() } = {}) {
@@ -75,8 +93,8 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
                 kanji,
                 inferred.meaningJP,
                 reading,
-                strokeOrderPath,
-                audioPath,
+                formatAnkiStrokeOrderField(strokeOrderPath),
+                formatAnkiAudioField(audioPath),
                 radical,
                 inferred.notes,
                 exampleSentence,
@@ -117,7 +135,9 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
             }),
             reading: labelReading(kanjiInfo?.on_readings, kanjiInfo?.kun_readings),
             strokeOrderPath,
+            strokeOrderField: formatAnkiStrokeOrderField(strokeOrderPath),
             audioPath,
+            audioField: formatAnkiAudioField(audioPath),
         };
     }
 
@@ -171,6 +191,8 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
         buildInferenceForKanji,
         buildRowForKanji,
         buildTsvForJlptLevel,
+        formatAnkiAudioField,
+        formatAnkiStrokeOrderField,
         formatExampleSentence,
         mapWithConcurrency,
     };
@@ -183,6 +205,8 @@ module.exports = {
     buildInferenceForKanji: defaultExportService.buildInferenceForKanji,
     buildRowForKanji: defaultExportService.buildRowForKanji,
     buildTsvForJlptLevel: defaultExportService.buildTsvForJlptLevel,
+    formatAnkiAudioField: defaultExportService.formatAnkiAudioField,
+    formatAnkiStrokeOrderField: defaultExportService.formatAnkiStrokeOrderField,
     formatExampleSentence: defaultExportService.formatExampleSentence,
     mapWithConcurrency: defaultExportService.mapWithConcurrency,
 };

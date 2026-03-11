@@ -1,14 +1,14 @@
-const fs = require("node:fs");
 const fsp = require("node:fs/promises");
 const path = require("node:path");
-const crypto = require("node:crypto");
 
 const {
     createEmptyMediaManifest,
     ensureMediaLayout,
     readManifestIfExists,
     writeManifest,
+    buildKanjiMediaId,
 } = require("./mediaStore");
+const { computeChecksum, createLocalDirectoryProvider, findAssetFromProviders } = require("./mediaProviders");
 
 const IMAGE_EXTENSIONS = new Map([
     [".svg", "image/svg+xml"],
@@ -49,50 +49,14 @@ function buildKanjiFileCandidates(kanji) {
     ];
 }
 
-function computeChecksum(buffer) {
-    return crypto.createHash("sha256").update(buffer).digest("hex");
-}
-
 async function findMatchingAsset(sourceDir, kanji, extensionMap) {
-    if (!sourceDir || !fs.existsSync(sourceDir)) {
-        return null;
-    }
+    const provider = createLocalDirectoryProvider({
+        sourceDir,
+        extensionMap,
+        buildCandidates: (input) => buildKanjiFileCandidates(input),
+    });
 
-    const candidates = buildKanjiFileCandidates(kanji);
-    const entries = await fsp.readdir(sourceDir, { withFileTypes: true });
-
-    for (const candidate of candidates) {
-        for (const entry of entries) {
-            if (!entry.isFile()) {
-                continue;
-            }
-
-            const extension = path.extname(entry.name).toLowerCase();
-            if (!extensionMap.has(extension)) {
-                continue;
-            }
-
-            if (path.basename(entry.name, extension) !== candidate) {
-                continue;
-            }
-
-            const absolutePath = path.join(sourceDir, entry.name);
-            const buffer = await fsp.readFile(absolutePath);
-            const stats = await fsp.stat(absolutePath);
-
-            return {
-                absolutePath,
-                fileName: entry.name,
-                mimeType: extensionMap.get(extension),
-                checksum: computeChecksum(buffer),
-                sizeBytes: stats.size,
-                content: buffer,
-                extension,
-            };
-        }
-    }
-
-    return null;
+    return provider.findAsset(kanji);
 }
 
 async function copyAssetIfChanged(sourceAsset, destinationPath) {
@@ -115,36 +79,60 @@ async function copyAssetIfChanged(sourceAsset, destinationPath) {
     return true;
 }
 
-function createStrokeOrderService({ mediaRootDir, imageSourceDir, animationSourceDir }) {
+function createStrokeOrderService({
+    mediaRootDir,
+    imageSourceDir,
+    animationSourceDir,
+    imageProviders,
+    animationProviders,
+}) {
+    const resolvedImageProviders = imageProviders || [
+        createLocalDirectoryProvider({
+            name: "local-filesystem",
+            sourceDir: imageSourceDir,
+            extensionMap: IMAGE_EXTENSIONS,
+            buildCandidates: (input) => buildKanjiFileCandidates(input),
+        }),
+    ];
+    const resolvedAnimationProviders = animationProviders || [
+        createLocalDirectoryProvider({
+            name: "local-filesystem",
+            sourceDir: animationSourceDir,
+            extensionMap: ANIMATION_EXTENSIONS,
+            buildCandidates: (input) => buildKanjiFileCandidates(input),
+        }),
+    ];
+
     async function syncKanji(kanji) {
         const normalizedKanji = normalizeKanji(kanji);
         const layout = ensureMediaLayout(mediaRootDir, normalizedKanji);
         const manifest = (await readManifestIfExists(mediaRootDir, normalizedKanji)) || createEmptyMediaManifest(normalizedKanji);
+        const mediaId = buildKanjiMediaId(normalizedKanji);
 
-        const imageAsset = await findMatchingAsset(imageSourceDir, normalizedKanji, IMAGE_EXTENSIONS);
-        const animationAsset = await findMatchingAsset(animationSourceDir, normalizedKanji, ANIMATION_EXTENSIONS);
+        const imageAsset = await findAssetFromProviders(resolvedImageProviders, normalizedKanji);
+        const animationAsset = await findAssetFromProviders(resolvedAnimationProviders, normalizedKanji);
 
         if (imageAsset) {
-            const destinationPath = path.join(layout.imagesDir, `stroke-order${imageAsset.extension}`);
+            const destinationPath = path.join(layout.imagesDir, `${mediaId}-stroke-order${imageAsset.extension}`);
             await copyAssetIfChanged(imageAsset, destinationPath);
             manifest.assets.strokeOrderImage = {
                 kind: "image",
                 path: path.relative(layout.basePath, destinationPath).replace(/\\/g, "/"),
                 mimeType: imageAsset.mimeType,
-                source: "local-filesystem",
+                source: imageAsset.source || "local-filesystem",
                 checksum: imageAsset.checksum,
                 notes: `Imported from ${imageAsset.fileName}`,
             };
         }
 
         if (animationAsset) {
-            const destinationPath = path.join(layout.animationsDir, `stroke-order${animationAsset.extension}`);
+            const destinationPath = path.join(layout.animationsDir, `${mediaId}-stroke-order${animationAsset.extension}`);
             await copyAssetIfChanged(animationAsset, destinationPath);
             manifest.assets.strokeOrderAnimation = {
                 kind: "animation",
                 path: path.relative(layout.basePath, destinationPath).replace(/\\/g, "/"),
                 mimeType: animationAsset.mimeType,
-                source: "local-filesystem",
+                source: animationAsset.source || "local-filesystem",
                 checksum: animationAsset.checksum,
                 notes: `Imported from ${animationAsset.fileName}`,
             };
@@ -191,3 +179,4 @@ module.exports = {
     findMatchingAsset,
     normalizeKanji,
 };
+

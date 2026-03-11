@@ -1,7 +1,21 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { buildTsvForJlptLevel } = require("../src/services/exportService");
+const {
+    buildTsvForJlptLevel,
+    formatAnkiAudioField,
+    formatAnkiStrokeOrderField,
+} = require("../src/services/exportService");
+
+test("formatAnkiAudioField emits sound markup from the managed asset name", () => {
+    assert.equal(formatAnkiAudioField("audio/65E5_日-kanji-reading-日.mp3"), "[sound:65E5_日-kanji-reading-日.mp3]");
+    assert.equal(formatAnkiAudioField(""), "");
+});
+
+test("formatAnkiStrokeOrderField emits image markup from the managed asset name", () => {
+    assert.equal(formatAnkiStrokeOrderField("animations/65E5_日-stroke-order.gif"), '<img src="65E5_日-stroke-order.gif" />');
+    assert.equal(formatAnkiStrokeOrderField(""), "");
+});
 
 test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async () => {
     const jlptOnlyJson = {
@@ -204,13 +218,13 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
 
     const strokeOrderService = {
         async getBestStrokeOrderPath(kanji) {
-            return kanji === "日" ? "animations/stroke-order.gif" : "";
+            return kanji === "日" ? "animations/65E5_日-stroke-order.gif" : "";
         },
     };
 
     const audioService = {
         async getBestAudioPath(kanji) {
-            return kanji === "日" ? "audio/kanji-reading-日.mp3" : "";
+            return kanji === "日" ? "audio/65E5_日-kanji-reading-日.mp3" : "";
         },
     };
 
@@ -234,8 +248,8 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
     assert.equal(cols[0], "日");
     assert.equal(cols[1], "日本 （にほん） ／ day");
     assert.equal(cols[2], "オン:ニチ、 ジツ ／ くん:ひ、 び、 か");
-    assert.equal(cols[3], "animations/stroke-order.gif");
-    assert.equal(cols[4], "audio/kanji-reading-日.mp3");
+    assert.equal(cols[3], '<img src="65E5_日-stroke-order.gif" />');
+    assert.equal(cols[4], "[sound:65E5_日-kanji-reading-日.mp3]");
     assert.equal(cols[5], "日");
     assert.equal(cols[6], "日本 （にほん） - Japan ／ 日よう日 （にちようび） - Sunday");
     assert.equal(cols[7], '「日本」は「Japan」です。 ／ 「にほん」は「Japan」です。 ／ "日本" means "Japan."');

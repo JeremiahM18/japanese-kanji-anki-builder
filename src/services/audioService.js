@@ -5,7 +5,9 @@ const {
     ensureMediaLayout,
     readManifestIfExists,
     writeManifest,
+    buildKanjiMediaId,
 } = require("./mediaStore");
+const { createLocalDirectoryProvider, findAssetFromProviders } = require("./mediaProviders");
 const {
     buildKanjiFileCandidates,
     copyAssetIfChanged,
@@ -139,17 +141,26 @@ async function findMatchingAudioAsset(sourceDir, { kanji, reading, text }) {
     return null;
 }
 
-function buildDestinationStem({ category, text, reading }) {
-    const parts = [normalizeTokenForFileName(category || "kanji-reading")];
+function buildDestinationStem({ mediaId, category, text, reading }) {
+    const parts = [mediaId, normalizeTokenForFileName(category || "kanji-reading")];
 
     for (const token of [text, reading].map(normalizeTokenForFileName).filter(Boolean)) {
         parts.push(token);
     }
 
-    return parts.join("-") || "kanji-reading";
+    return parts.join("-") || `${mediaId}-kanji-reading`;
 }
 
-function createAudioService({ mediaRootDir, audioSourceDir }) {
+function createAudioService({ mediaRootDir, audioSourceDir, providers }) {
+    const resolvedProviders = providers || [
+        createLocalDirectoryProvider({
+            name: "local-filesystem",
+            sourceDir: audioSourceDir,
+            extensionMap: AUDIO_EXTENSIONS,
+            buildCandidates: buildAudioFileCandidates,
+        }),
+    ];
+
     async function getManifest(kanji) {
         const normalizedKanji = normalizeKanji(kanji);
         return readManifestIfExists(mediaRootDir, normalizedKanji);
@@ -159,6 +170,7 @@ function createAudioService({ mediaRootDir, audioSourceDir }) {
         const normalizedKanji = normalizeKanji(kanji);
         const layout = ensureMediaLayout(mediaRootDir, normalizedKanji);
         const manifest = (await readManifestIfExists(mediaRootDir, normalizedKanji)) || createEmptyMediaManifest(normalizedKanji);
+        const mediaId = buildKanjiMediaId(normalizedKanji);
         const normalizedMetadata = {
             category: metadata.category || "kanji-reading",
             text: cleanToken(metadata.text) || normalizedKanji,
@@ -167,7 +179,7 @@ function createAudioService({ mediaRootDir, audioSourceDir }) {
             locale: cleanToken(metadata.locale) || "ja-JP",
         };
 
-        const audioAsset = await findMatchingAudioAsset(audioSourceDir, {
+        const audioAsset = await findAssetFromProviders(resolvedProviders, {
             kanji: normalizedKanji,
             text: normalizedMetadata.text,
             reading: normalizedMetadata.reading,
@@ -187,7 +199,7 @@ function createAudioService({ mediaRootDir, audioSourceDir }) {
 
         const destinationPath = path.join(
             layout.audioDir,
-            `${buildDestinationStem(normalizedMetadata)}${audioAsset.extension}`
+            `${buildDestinationStem({ mediaId, ...normalizedMetadata })}${audioAsset.extension}`
         );
         await copyAssetIfChanged(audioAsset, destinationPath);
 
@@ -195,7 +207,7 @@ function createAudioService({ mediaRootDir, audioSourceDir }) {
             kind: "audio",
             path: path.relative(layout.basePath, destinationPath).replace(/\\/g, "/"),
             mimeType: audioAsset.mimeType,
-            source: "local-filesystem",
+            source: audioAsset.source || "local-filesystem",
             checksum: audioAsset.checksum,
             category: normalizedMetadata.category,
             text: normalizedMetadata.text,

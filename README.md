@@ -10,17 +10,13 @@ This repository is intentionally built with production-style standards even thou
 
 - Builds JLPT kanji decks for N5-N1
 - Generates deterministic TSV output for Anki import
-- Extracts radicals/components from KRADFILE
 - Infers learner-friendly `MeaningJP`, `Notes`, and `ExampleSentence` output
-- Exports the top inferred sentence directly into the TSV
-- Exports the best managed kanji-audio asset directly into the TSV when one is available
+- Exports Anki-ready `StrokeOrder` and `Audio` fields
 - Uses curated study overrides for meanings, notes, preferred words, blocked words, blocked sentence phrases, and top example sentences
 - Uses sentence-corpus metadata to improve both word ranking and sentence selection
 - Exposes score breakdowns so ranking decisions are inspectable and tunable
 - Caches kanji and word API responses separately with validation, atomic writes, and in-flight deduplication
-- Stores cache entries in sharded subdirectories to avoid oversized flat folders
-- Supports local stroke-order image and animation ingestion into managed media storage
-- Supports local kanji-audio ingestion into the same managed media tree
+- Supports provider-based media acquisition for both stroke order and audio
 - Persists per-kanji media manifests that can grow into richer provider and synthesis flows later
 - Exposes health, readiness, inference, media lookup, stroke-order sync, and audio sync endpoints
 - Runs CI on pushes, pull requests, and manual dispatch
@@ -63,6 +59,7 @@ C:\japanese_kanji_builder
 │  ├─ services/
 │  │  ├─ audioService.js
 │  │  ├─ exportService.js
+│  │  ├─ mediaProviders.js
 │  │  ├─ mediaStore.js
 │  │  └─ strokeOrderService.js
 │  └─ utils/
@@ -74,6 +71,7 @@ C:\japanese_kanji_builder
 │  ├─ curatedStudyData.test.js
 │  ├─ exportService.test.js
 │  ├─ kanjiApiClient.test.js
+│  ├─ mediaProviders.test.js
 │  ├─ mediaStore.test.js
 │  ├─ run-tests.js
 │  ├─ sentenceCorpus.test.js
@@ -104,14 +102,16 @@ C:\japanese_kanji_builder
   Computes curated override coverage and override-type summaries against JLPT kanji data.
 - `src/inference/`
   Extracts candidates, ranks them, and derives learner-facing meaning, notes, and sentence output.
+- `src/services/mediaProviders.js`
+  Provides reusable provider adapters for local and future remote media acquisition.
+- `src/services/strokeOrderService.js`
+  Resolves stroke-order assets through providers and imports them into managed storage.
+- `src/services/audioService.js`
+  Resolves audio assets through providers and imports them into managed storage.
 - `src/services/exportService.js`
-  Orchestrates kanji fetches, inference, stroke-order lookup, audio lookup, and TSV generation.
+  Orchestrates kanji fetches, inference, media lookup, and Anki-ready TSV generation.
 - `src/services/mediaStore.js`
   Owns the managed media tree and manifest persistence.
-- `src/services/strokeOrderService.js`
-  Discovers local stroke-order assets and imports them into managed storage.
-- `src/services/audioService.js`
-  Discovers local kanji-audio assets, imports them into managed storage, and selects the best audio path.
 - `src/app.js`
   Exposes HTTP routes and operational endpoints.
 - `src/server.js`
@@ -125,10 +125,8 @@ C:\japanese_kanji_builder
 4. Export requests call `buildTsvForJlptLevel()` with bounded concurrency.
 5. Each kanji fetches kanji metadata, word candidates, and best known stroke-order and audio paths concurrently.
 6. The inference engine returns ranked candidates, `bestWord`, meaning output, notes, sentence candidates, and score breakdowns.
-7. Curated data can remove blocked words, filter bad sentence phrasing, reorder preferred words, override meaning/notes, and inject a top example sentence.
-8. Upstream responses are validated, cached atomically on disk, and counted in client metrics.
-9. Stroke-order and audio sync import matching local media into the managed per-kanji manifest.
-10. The export service writes `StrokeOrder`, `Audio`, and `ExampleSentence` directly into the TSV.
+7. Media services query their configured providers, import matching assets into managed storage, and update the per-kanji manifest.
+8. The export service formats stroke order as `<img ...>` and audio as `[sound:...]` so the TSV is Anki-ready.
 
 ## Output Fields
 
@@ -143,13 +141,9 @@ The exported TSV includes these columns:
 - `Notes`
 - `ExampleSentence`
 
-`StrokeOrder` contains the best available managed stroke-order asset path, preferring animation over image.
+`StrokeOrder` is exported as Anki-ready image markup using the managed asset filename, for example `<img src="65E5_日-stroke-order.gif" />`.
 
-`Audio` contains the best available managed kanji-audio path.
-
-`ExampleSentence` contains the highest-ranked sentence candidate in compact TSV form:
-
-- `Japanese ／ Reading ／ English`
+`Audio` is exported as Anki-ready sound markup using the managed asset filename, for example `[sound:65E5_日-kanji-reading-日.mp3]`.
 
 ## Configuration
 
@@ -170,58 +164,20 @@ The exported TSV includes these columns:
 | `API_REQUEST_TIMEOUT` | `10000` | Upstream request timeout in milliseconds |
 | `LOG_LEVEL` | `info` | Pino log level |
 
-## Local Development
+## Provider Model
 
-### Install
+Both stroke order and audio now use the same provider pattern.
 
-```bash
-npm install
-```
+Current provider support:
 
-### Run the service
+- local-directory provider for deterministic local ingestion
 
-```bash
-npm run dev
-```
+Designed next steps:
 
-or
-
-```bash
-npm start
-```
-
-### Quality checks
-
-```bash
-npm run lint
-npm test
-npm run curated:normalize -- --check
-npm run curated:report -- --limit=10
-```
-
-### Benchmark export throughput
-
-```bash
-npm run bench:export -- --level=5 --limit=25
-```
-
-## Inference Workflow
-
-1. Add sentence examples to `data/sentence_corpus.json` when you have better corpus material.
-2. Add deterministic overrides to `data/curated_study_data.json` when you know the best teaching choice already.
-3. Normalize imported sentence data before relying on it in inference.
-4. Normalize curated overrides before relying on them in inference.
-5. Run corpus and curated coverage reports to see which kanji still need support.
-6. Call `GET /inference/:kanji` to inspect ranked candidates, notes, curated flags, sentence candidates, and score breakdowns.
-7. Tune logic in `src/inference/` rather than patching export formatting directly.
-
-## Stroke-Order Workflow
-
-1. Place source assets into the configured local source directories.
-2. Name them by kanji or codepoint, for example `日.svg`, `65E5.svg`, or `U+65E5.gif`.
-3. Sync a kanji with `POST /media/日/sync`.
-4. Inspect the managed manifest with `GET /media/日`.
-5. Export a JLPT level and the `StrokeOrder` field will reference the best available synced asset.
+- remote provider adapters
+- checksum-verified acquisition jobs
+- source ranking and fallback rules
+- provider provenance in manifests and reports
 
 ## Audio Workflow
 
@@ -229,8 +185,14 @@ npm run bench:export -- --level=5 --limit=25
 2. Name them by kanji, codepoint, or kanji-plus-reading, for example `日.mp3`, `日_にち.mp3`, or `65E5.m4a`.
 3. Sync a kanji with `POST /media/日/audio/sync`.
 4. Optionally send JSON metadata such as `category`, `text`, `reading`, `voice`, and `locale`.
-5. Inspect the managed manifest with `GET /media/日`.
-6. Export a JLPT level and the `Audio` field will reference the best available synced asset.
+5. Export a JLPT level and the `Audio` field will reference the managed Anki filename.
+
+## Stroke-Order Workflow
+
+1. Place source assets into the configured local source directories.
+2. Name them by kanji or codepoint, for example `日.svg`, `65E5.svg`, or `U+65E5.gif`.
+3. Sync a kanji with `POST /media/日/sync`.
+4. Export a JLPT level and the `StrokeOrder` field will reference the managed Anki filename.
 
 ## HTTP Endpoints
 
@@ -265,18 +227,12 @@ npm run bench:export -- --level=5 --limit=25
 - Corrupted cache entries are discarded and refetched automatically.
 - Media assets have a dedicated root directory independent of export output.
 - Each kanji gets a manifest with reserved slots for a stroke-order image, stroke-order animation, and audio assets.
-- Stroke-order and audio source files are copied into managed storage instead of being referenced in place.
+- Managed asset filenames are unique per kanji so they can be referenced safely from Anki media fields.
+- Source files are copied into managed storage instead of being referenced in place.
 
 ## Media Manifest Contract
 
 Each kanji is assigned a directory under `data/media/kanji/<shard>/<codepoint>_<kanji>/`.
-
-That directory is designed to hold:
-
-- `images/`
-- `animations/`
-- `audio/`
-- `manifest.json`
 
 The manifest currently tracks:
 
@@ -297,11 +253,12 @@ The current test suite covers:
 - in-flight request deduplication
 - corrupted cache recovery
 - upstream payload validation
-- health/readiness endpoint behavior
-- inference endpoint behavior
+- provider fallback behavior
 - stroke-order source discovery and sync behavior
 - audio source discovery, import, and selection behavior
 - media layout and manifest persistence
+- health/readiness endpoint behavior
+- inference endpoint behavior
 
 ## Engineering Standard For This Repo
 

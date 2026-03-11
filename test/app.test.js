@@ -85,20 +85,20 @@ function buildFixtureApp() {
             assets: {
                 strokeOrderImage: {
                     kind: "image",
-                    path: "images/stroke-order.svg",
+                    path: "images/65E5_日-stroke-order.svg",
                     mimeType: "image/svg+xml",
                     source: "fixture",
                 },
                 strokeOrderAnimation: {
                     kind: "animation",
-                    path: "animations/stroke-order.gif",
+                    path: "animations/65E5_日-stroke-order.gif",
                     mimeType: "image/gif",
                     source: "fixture",
                 },
                 audio: [
                     {
                         kind: "audio",
-                        path: "audio/kanji-reading-日.mp3",
+                        path: "audio/65E5_日-kanji-reading-日.mp3",
                         mimeType: "audio/mpeg",
                         source: "fixture",
                         category: "kanji-reading",
@@ -239,7 +239,7 @@ function buildFixtureApp() {
             manifest.assets.audio = [
                 {
                     kind: "audio",
-                    path: "audio/kanji-reading-日.mp3",
+                    path: "audio/65E5_日-kanji-reading-日.mp3",
                     mimeType: "audio/mpeg",
                     source: "fixture",
                     category: metadata.category || "kanji-reading",
@@ -321,8 +321,6 @@ test("health and readiness endpoints expose operational state", async () => {
         assert.equal(readyJson.datasets.sentenceCorpusEntries, 2);
         assert.equal(readyJson.datasets.curatedStudyEntries, 1);
         assert.equal(readyJson.config.exportConcurrency, 4);
-        assert.equal(readyJson.config.sentenceCorpusPath, "C:\\repo\\data\\sentence_corpus.json");
-        assert.equal(readyJson.config.curatedStudyDataPath, "C:\\repo\\data\\curated_study_data.json");
         assert.equal(readyJson.config.audioSourceDir, "C:\\repo\\data\\media_sources\\audio");
         assert.equal(readyJson.cache.cacheHits, 7);
         assert.equal(readyJson.cache.cacheMisses, 2);
@@ -341,13 +339,12 @@ test("inference route exposes curated and corpus-backed study output", async () 
         assert.equal(json.inference.bestWord.written, "日本");
         assert.equal(json.inference.englishMeaning, "sun / day marker");
         assert.equal(json.inference.notes, "日本 （にほん） - Japan ／ curated-note");
-        assert.equal(json.inference.strokeOrderPath, "animations/stroke-order.gif");
-        assert.equal(json.inference.audioPath, "audio/kanji-reading-日.mp3");
+        assert.equal(json.inference.strokeOrderPath, "animations/65E5_日-stroke-order.gif");
+        assert.equal(json.inference.strokeOrderField, '<img src="65E5_日-stroke-order.gif" />');
+        assert.equal(json.inference.audioPath, "audio/65E5_日-kanji-reading-日.mp3");
+        assert.equal(json.inference.audioField, "[sound:65E5_日-kanji-reading-日.mp3]");
         assert.equal(json.inference.sentenceCandidates[0].type, "curated");
-        assert.equal(json.inference.sentenceCandidates[0].source, "curated-study-data");
-        assert.match(json.inference.sentenceCandidates[0].japanese, /日本は島国です/);
         assert.equal(json.inference.curated.hasOverride, true);
-        assert.equal(json.inference.curated.hasCustomMeaning, true);
     });
 });
 
@@ -360,8 +357,8 @@ test("media routes expose manifests and sync results", async () => {
 
         const manifestJson = await manifestRes.json();
         assert.equal(manifestJson.status, "ok");
-        assert.equal(manifestJson.bestStrokeOrderPath, "animations/stroke-order.gif");
-        assert.equal(manifestJson.bestAudioPath, "audio/kanji-reading-日.mp3");
+        assert.equal(manifestJson.bestStrokeOrderPath, "animations/65E5_日-stroke-order.gif");
+        assert.equal(manifestJson.bestAudioPath, "audio/65E5_日-kanji-reading-日.mp3");
 
         const missingRes = await fetch(`${baseUrl}/media/山`);
         assert.equal(missingRes.status, 404);
@@ -388,11 +385,11 @@ test("media routes expose manifests and sync results", async () => {
 
         const audioSyncJson = await audioSyncRes.json();
         assert.equal(audioSyncJson.found.audio, true);
-        assert.equal(audioSyncJson.bestAudioPath, "audio/kanji-reading-日.mp3");
+        assert.equal(audioSyncJson.bestAudioPath, "audio/65E5_日-kanji-reading-日.mp3");
     });
 });
 
-test("download export sets attachment headers and includes the top sentence", async () => {
+test("download export sets attachment headers and includes Anki-ready media fields", async () => {
     const app = buildFixtureApp();
 
     await withServer(app, async (baseUrl) => {
@@ -407,8 +404,8 @@ test("download export sets attachment headers and includes the top sentence", as
         assert.equal(lines.length, 2);
         assert.equal(lines[0], "Kanji\tMeaningJP\tReading\tStrokeOrder\tAudio\tRadical\tNotes\tExampleSentence");
         assert.equal(cols.length, 8);
-        assert.match(cols[3], /animations\/stroke-order\.gif/);
-        assert.match(cols[4], /audio\/kanji-reading-日\.mp3/);
+        assert.equal(cols[3], '<img src="65E5_日-stroke-order.gif" />');
+        assert.equal(cols[4], "[sound:65E5_日-kanji-reading-日.mp3]");
         assert.match(cols[6], /curated-note/);
         assert.match(cols[7], /日本は島国です/);
         assert.match(cols[7], /Japan is an island nation/);

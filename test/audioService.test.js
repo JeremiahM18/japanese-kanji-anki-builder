@@ -81,11 +81,45 @@ test("syncKanji imports audio into managed media storage", async () => {
         assert.equal(result.manifest.assets.audio[0].voice, "study-voice-a");
         assert.equal(result.manifest.assets.audio[0].locale, "ja-JP");
         assert.equal(result.manifest.assets.audio[0].mimeType, "audio/mpeg");
+        assert.match(result.manifest.assets.audio[0].path, /^audio\/65E5_日-kanji-reading-日/);
         assert.equal(fs.existsSync(path.join(rootDir, "media", "kanji", "65", "65E5_日", result.manifest.assets.audio[0].path)), true);
         assert.equal(await audioService.getBestAudioPath("日", { category: "kanji-reading", text: "日" }), result.manifest.assets.audio[0].path);
     } finally {
         cleanupTempDir(rootDir);
     }
+});
+
+test("audio providers fall back when the first provider misses", async () => {
+    const audioService = createAudioService({
+        mediaRootDir: makeTempDir(),
+        providers: [
+            {
+                name: "missing-provider",
+                async findAsset() {
+                    return null;
+                },
+            },
+            {
+                name: "fixture-provider",
+                async findAsset() {
+                    return {
+                        absolutePath: "C:/fixture/日.mp3",
+                        fileName: "日.mp3",
+                        mimeType: "audio/mpeg",
+                        checksum: "fixture-checksum",
+                        content: Buffer.from("fixture-audio"),
+                        extension: ".mp3",
+                        source: "fixture-provider",
+                    };
+                },
+            },
+        ],
+    });
+
+    const result = await audioService.syncKanji("日", { text: "日" });
+
+    assert.equal(result.found.audio, true);
+    assert.equal(result.manifest.assets.audio[0].source, "fixture-provider");
 });
 
 test("syncKanji preserves an empty manifest when no audio source exists", async () => {

@@ -62,6 +62,22 @@ function buildCuratedSentence(curatedEntry, bestWord) {
     };
 }
 
+function filterBlockedSentenceCandidates(sentenceCandidates, curatedEntry) {
+    const blockedPhrases = Array.isArray(curatedEntry?.blockedSentencePhrases)
+        ? curatedEntry.blockedSentencePhrases.filter(Boolean)
+        : [];
+
+    if (blockedPhrases.length === 0) {
+        return sentenceCandidates;
+    }
+
+    return sentenceCandidates.filter((sentence) => {
+        const haystack = `${sentence?.japanese || ""}
+${sentence?.english || ""}`;
+        return !blockedPhrases.some((phrase) => haystack.includes(phrase));
+    });
+}
+
 function prependCuratedSentence(sentenceCandidates, curatedEntry, bestWord, maxSentences) {
     const curatedSentence = buildCuratedSentence(curatedEntry, bestWord);
 
@@ -128,12 +144,15 @@ function createInferenceEngine({ sentenceCorpus = [], curatedStudyData = {} } = 
         const meaning = applyCuratedMeaning(inferMeaning({ kanjiMeanings, rankedCandidates }), curatedEntry, rankedCandidates);
         const notes = applyCuratedNotes(inferNotes({ rankedCandidates, maxExamples }), curatedEntry);
         const sentenceCandidates = prependCuratedSentence(
-            inferSentenceCandidates({
-                rankedCandidates,
-                kanji,
-                sentenceCorpus,
-                maxSentences,
-            }),
+            filterBlockedSentenceCandidates(
+                inferSentenceCandidates({
+                    rankedCandidates,
+                    kanji,
+                    sentenceCorpus,
+                    maxSentences,
+                }),
+                curatedEntry
+            ),
             curatedEntry,
             meaning.bestWord,
             maxSentences
@@ -150,8 +169,13 @@ function createInferenceEngine({ sentenceCorpus = [], curatedStudyData = {} } = 
             sentenceCandidates,
             curated: curatedEntry ? {
                 hasOverride: true,
+                source: curatedEntry.source,
+                tags: curatedEntry.tags,
+                jlpt: curatedEntry.jlpt ?? null,
                 preferredWords: curatedEntry.preferredWords,
                 blockedWords: curatedEntry.blockedWords,
+                blockedSentencePhrases: curatedEntry.blockedSentencePhrases,
+                alternativeNotes: curatedEntry.alternativeNotes,
                 hasCustomNotes: Boolean(curatedEntry.notes),
                 hasCustomExampleSentence: Boolean(curatedEntry.exampleSentence),
                 hasCustomMeaning: Boolean(curatedEntry.englishMeaning),
@@ -172,6 +196,7 @@ module.exports = {
     applyCuratedNotes,
     applyPreferredWords,
     createInferenceEngine,
+    filterBlockedSentenceCandidates,
     getCuratedEntry,
     prependCuratedSentence,
 };

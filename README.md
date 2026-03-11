@@ -18,9 +18,10 @@ The engineering direction for this repository is deliberate: treat even a person
 - Separates raw data fetching, inference, export orchestration, and media management into distinct modules
 - Uses a deterministic inference engine to rank example words and derive learner-friendly `MeaningJP`, `Notes`, and `ExampleSentence` output
 - Uses corpus metadata to improve both word ranking and sentence selection when stronger supporting examples exist
-- Supports curated study data overrides for preferred words, blocked words, meanings, notes, and top example sentences
+- Supports curated study data overrides for preferred words, blocked words, blocked sentence phrases, meanings, notes, alternative notes, and top example sentences
 - Supports sentence corpus normalization tooling for deterministic imports and clean dataset diffs
 - Supports coverage reporting to show which JLPT kanji still lack sentence support
+- Supports curated study normalization and coverage reporting for manual override quality
 - Exposes candidate score breakdowns so inference ranking decisions are inspectable and tunable
 - Prefers corpus-backed sentence candidates when a local sentence corpus is available, with deterministic template fallback otherwise
 - Weights corpus sentence selection by source quality, learner-friendly tags, register, and optional frequency metadata
@@ -40,7 +41,7 @@ The engineering direction for this repository is deliberate: treat even a person
 
 ## File Tree
 
-This is the meaningful project tree after the sentence corpus coverage tooling pass:
+This is the meaningful project tree after the completed inference-data tooling pass:
 
 ```text
 C:\japanese_kanji_builder
@@ -51,7 +52,9 @@ C:\japanese_kanji_builder
 │  └─ README.md
 ├─ scripts/
 │  ├─ benchmarkExport.js
+│  ├─ normalizeCuratedStudyData.js
 │  ├─ normalizeSentenceCorpus.js
+│  ├─ reportCuratedStudyCoverage.js
 │  └─ reportSentenceCorpusCoverage.js
 ├─ src/
 │  ├─ app.js
@@ -61,6 +64,7 @@ C:\japanese_kanji_builder
 │  ├─ clients/
 │  │  └─ kanjiApiClient.js
 │  ├─ datasets/
+│  │  ├─ curatedStudyCoverage.js
 │  │  ├─ curatedStudyData.js
 │  │  ├─ kradfile.js
 │  │  ├─ sentenceCorpus.js
@@ -80,6 +84,7 @@ C:\japanese_kanji_builder
 │     └─ text.js
 ├─ test/
 │  ├─ app.test.js
+│  ├─ curatedStudyCoverage.test.js
 │  ├─ curatedStudyData.test.js
 │  ├─ exportService.test.js
 │  ├─ kanjiApiClient.test.js
@@ -106,9 +111,11 @@ C:\japanese_kanji_builder
 - `src/datasets/sentenceCorpus.js`
   Loads, normalizes, deduplicates, and sorts an optional local sentence corpus.
 - `src/datasets/sentenceCorpusCoverage.js`
-  Computes corpus coverage summaries against JLPT kanji data.
+  Computes sentence corpus coverage summaries against JLPT kanji data.
 - `src/datasets/curatedStudyData.js`
-  Loads optional curated overrides for kanji-specific teaching decisions.
+  Loads and normalizes curated overrides for kanji-specific teaching decisions.
+- `src/datasets/curatedStudyCoverage.js`
+  Computes curated override coverage and override-type summaries against JLPT kanji data.
 - `src/inference/`
   Extracts word candidates, ranks them, and infers learner-facing meaning, notes, and sentence output.
 - `src/services/exportService.js`
@@ -125,6 +132,10 @@ C:\japanese_kanji_builder
   Normalizes imported sentence corpus files into a deterministic on-disk format.
 - `scripts/reportSentenceCorpusCoverage.js`
   Reports sentence-support coverage by JLPT level and missing-kanji priority.
+- `scripts/normalizeCuratedStudyData.js`
+  Normalizes curated override files into a deterministic on-disk format.
+- `scripts/reportCuratedStudyCoverage.js`
+  Reports curated override coverage and override-type counts by JLPT level.
 
 ### Runtime Flow
 
@@ -135,7 +146,7 @@ C:\japanese_kanji_builder
 5. Each kanji fetches kanji metadata, word candidates, and best known stroke-order path concurrently.
 6. The inference engine extracts candidates, ranks them deterministically, and returns learner-facing meaning, notes, sentence candidates, and score breakdowns.
 7. Word ranking incorporates bounded corpus-support evidence so `bestWord` and `Notes` can prefer candidates with better supporting examples.
-8. Curated study data can remove blocked words, reorder preferred words, override meanings and notes, and inject a top example sentence.
+8. Curated study data can remove blocked words, filter known-bad sentence phrasing, reorder preferred words, override meanings and notes, and inject a top example sentence.
 9. The export service promotes the top-ranked sentence candidate into the TSV as `ExampleSentence`.
 10. Sentence inference prefers corpus-backed matches and only falls back to templates when the corpus has no suitable example.
 11. Upstream responses are validated, cached atomically on disk, and counted in client metrics.
@@ -175,9 +186,12 @@ Curated study data can explicitly control:
 
 - preferred learner-facing words
 - blocked learner-facing words
+- blocked sentence phrases
 - English meaning overrides
 - `Notes` overrides
+- alternative approved notes
 - top example sentence overrides
+- source, tag, and JLPT metadata for manual curation provenance
 
 Ranking explainability now exposes:
 
@@ -309,16 +323,46 @@ The coverage report:
 - reports total and per-level coverage ratios
 - shows a prioritized sample of missing kanji to guide corpus growth
 
+### Normalize curated study data
+
+```bash
+npm run curated:normalize
+npm run curated:normalize -- --check
+npm run curated:normalize -- --input=data/imports/curated.json --output=data/curated_study_data.json
+```
+
+The curated normalizer:
+
+- treats a missing optional curated file as clean in `--check` mode
+- trims and validates fields
+- deduplicates and sorts string arrays
+- lowercases and deduplicates tags
+- writes deterministic object-key order for cleaner diffs
+
+### Report curated coverage
+
+```bash
+npm run curated:report
+npm run curated:report -- --limit=50
+```
+
+The curated coverage report:
+
+- measures curated override coverage against the JLPT kanji dataset
+- reports counts for custom meanings, notes, example sentences, blocked-word entries, and preferred-word entries
+- shows a prioritized sample of missing kanji where manual curation may matter most
+
 ## Inference Workflow
 
 1. Add sentence examples to `data/sentence_corpus.json` when you have better corpus material.
 2. Add deterministic overrides to `data/curated_study_data.json` when you know the best teaching choice already.
 3. Normalize imported sentence data before relying on it in inference.
-4. Run a corpus coverage report to see which kanji still need support.
-5. Call `GET /inference/:kanji` to inspect the current deterministic inference output.
-6. Review the ranked candidates, inferred meaning, notes, curated flags, sentence candidates, and score breakdowns.
-7. Tune scoring and selection rules in `src/inference/` rather than changing export formatting directly.
-8. Re-run tests and the export benchmark after meaningful inference changes.
+4. Normalize curated overrides before relying on them in inference.
+5. Run corpus and curated coverage reports to see which kanji still need support.
+6. Call `GET /inference/:kanji` to inspect the current deterministic inference output.
+7. Review the ranked candidates, inferred meaning, notes, curated flags, sentence candidates, and score breakdowns.
+8. Tune scoring and selection rules in `src/inference/` rather than changing export formatting directly.
+9. Re-run tests and the export benchmark after meaningful inference changes.
 
 This route is the safest place to iterate on quality because it shows the intermediate reasoning results before the final deck export is generated.
 
@@ -359,13 +403,19 @@ The optional curated study dataset accepts entries like:
 {
   "日": {
     "englishMeaning": "sun / day marker",
+    "source": "manual-curated",
+    "tags": ["core", "curated"],
+    "jlpt": 5,
     "preferredWords": ["日本"],
     "blockedWords": ["日中"],
+    "blockedSentencePhrases": ["daytime"],
     "notes": "日本 （にほん） - Japan ／ curated-note",
+    "alternativeNotes": ["alt-note-a", "alt-note-b"],
     "exampleSentence": {
       "japanese": "日本は島国です。",
       "reading": "にほんはしまぐにです。",
-      "english": "Japan is an island nation."
+      "english": "Japan is an island nation.",
+      "tags": ["curated", "example"]
     }
   }
 }
@@ -374,9 +424,12 @@ The optional curated study dataset accepts entries like:
 Field notes:
 
 - `englishMeaning` overrides the inferred English meaning for a kanji
+- `source`, `tags`, and `jlpt` store provenance and learner-level metadata for the override
 - `preferredWords` reorders ranked candidates using the listed order
 - `blockedWords` removes known-bad learner-facing words from the inference result
+- `blockedSentencePhrases` filters sentence candidates that contain known-bad phrasing
 - `notes` overrides the inferred `Notes` field directly
+- `alternativeNotes` stores additional approved notes for future manual or automated selection
 - `exampleSentence` becomes the first sentence candidate and exported `ExampleSentence`
 
 ## Stroke-Order Workflow
@@ -472,9 +525,8 @@ The current test suite covers:
 
 - export formatting and row construction
 - deterministic inference output
-- curated study data loading and overrides
-- sentence corpus normalization and loading
-- sentence corpus coverage reporting
+- curated study data loading, normalization, reporting, and overrides
+- sentence corpus normalization, reporting, and loading
 - sentence candidate generation
 - corpus-backed sentence preference and weighting
 - word-ranking behavior

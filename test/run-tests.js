@@ -1,4 +1,5 @@
 require("./app.test");
+require("./curatedStudyCoverage.test");
 require("./curatedStudyData.test");
 require("./exportService.test");
 require("./kanjiApiClient.test");

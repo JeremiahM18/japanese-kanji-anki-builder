@@ -89,13 +89,19 @@ Recommended curated study data format:
 {
   "日": {
     "englishMeaning": "sun / day marker",
+    "source": "manual-curated",
+    "tags": ["core", "curated"],
+    "jlpt": 5,
     "preferredWords": ["日本"],
     "blockedWords": ["日中"],
+    "blockedSentencePhrases": ["daytime"],
     "notes": "日本 （にほん） - Japan ／ curated-note",
+    "alternativeNotes": ["alt-note-a", "alt-note-b"],
     "exampleSentence": {
       "japanese": "日本は島国です。",
       "reading": "にほんはしまぐにです。",
-      "english": "Japan is an island nation."
+      "english": "Japan is an island nation.",
+      "tags": ["curated", "example"]
     }
   }
 }
@@ -104,9 +110,33 @@ Recommended curated study data format:
 Curated study field notes:
 
 - `englishMeaning` overrides the inferred English meaning for that kanji
+- `source`, `tags`, and `jlpt` provide provenance and learner-level metadata for the override
 - `preferredWords` lifts specific words to the front of ranking in the listed order
 - `blockedWords` removes known-bad words from learner-facing output
+- `blockedSentencePhrases` filters sentence candidates that contain known-bad phrasing
 - `notes` overrides the inferred `Notes` field directly
+- `alternativeNotes` stores additional approved notes for future tooling or manual selection
 - `exampleSentence` becomes the top `ExampleSentence` and first sentence candidate in inference output
+
+Curated study normalization tooling:
+
+```bash
+npm run curated:normalize
+npm run curated:normalize -- --check
+npm run curated:normalize -- --input=data/imports/curated.json --output=data/curated_study_data.json
+```
+
+Curated study coverage reporting:
+
+```bash
+npm run curated:report
+npm run curated:report -- --limit=50
+```
+
+Curated reporting behavior:
+
+- measures override coverage against the JLPT kanji dataset
+- reports counts for custom meanings, notes, example sentences, blocked-word entries, and preferred-word entries
+- shows prioritized missing kanji so you can decide where manual curation is most valuable
 
 These datasets are ignored by git and must be downloaded or curated locally.

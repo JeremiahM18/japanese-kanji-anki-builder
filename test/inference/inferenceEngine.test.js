@@ -92,12 +92,28 @@ test("curated study data overrides meaning notes and top sentence", () => {
                 frequencyRank: 120,
                 jlpt: 5,
             },
+            {
+                kanji: "日",
+                written: "日中",
+                japanese: "日中は暑いです。",
+                reading: "にっちゅうはあついです。",
+                english: "It is hot in the daytime.",
+                source: "dictionary-import",
+                tags: ["rare"],
+                register: "neutral",
+                frequencyRank: 800,
+            },
         ],
         curatedStudyData: {
             日: {
                 englishMeaning: "sun / day marker",
+                source: "manual-curated",
+                tags: ["curated", "core"],
+                jlpt: 5,
                 preferredWords: ["日本"],
                 blockedWords: ["日中"],
+                blockedSentencePhrases: ["daytime"],
+                alternativeNotes: ["alt-a", "alt-b"],
                 notes: "日本 （にほん） - Japan ／ curated-note",
                 exampleSentence: {
                     japanese: "日本は島国です。",
@@ -154,9 +170,15 @@ test("curated study data overrides meaning notes and top sentence", () => {
     assert.equal(result.sentenceCandidates[0].source, "curated-study-data");
     assert.match(result.sentenceCandidates[0].japanese, /日本は島国です/);
     assert.equal(result.curated.hasOverride, true);
+    assert.equal(result.curated.source, "manual-curated");
+    assert.deepEqual(result.curated.tags, ["curated", "core"]);
+    assert.equal(result.curated.jlpt, 5);
+    assert.deepEqual(result.curated.blockedSentencePhrases, ["daytime"]);
+    assert.deepEqual(result.curated.alternativeNotes, ["alt-a", "alt-b"]);
     assert.equal(result.curated.hasCustomMeaning, true);
     assert.equal(result.curated.hasCustomNotes, true);
     assert.equal(result.curated.hasCustomExampleSentence, true);
+    assert.equal(result.sentenceCandidates.some((sentence) => /daytime/i.test(sentence.english)), false);
 });
 
 test("corpus support can rerank bestWord and notes", () => {
@@ -350,3 +372,4 @@ test("inference engine falls back to templates when no corpus sentence exists", 
     assert.equal(result.curated.hasOverride, false);
     assert.equal(result.candidates[0].scoreBreakdown.totals.finalScore, result.candidates[0].score);
 });
+

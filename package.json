@@ -17,7 +17,8 @@
     "corpus:report": "node scripts/reportSentenceCorpusCoverage.js",
     "curated:normalize": "node scripts/normalizeCuratedStudyData.js",
     "curated:report": "node scripts/reportCuratedStudyCoverage.js",
-    "media:report": "node scripts/reportMediaCoverage.js"
+    "media:report": "node scripts/reportMediaCoverage.js",
+    "media:sync": "node scripts/syncMedia.js"
   },
   "keywords": [
     "japanese",

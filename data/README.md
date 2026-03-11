@@ -76,3 +76,11 @@ Managed media coverage report:
 npm run media:report -- --limit=50
 ` 
 
+
+Bulk media sync:
+
+`ash
+npm run media:sync -- --level=5 --limit=25
+npm run media:sync -- --kanji=日,本,学
+` 
+

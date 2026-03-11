@@ -3,7 +3,7 @@
 Place these files in this folder:
 
 - `kanji_jlpt_only.json` - JLPT kanji list by level
-- `KRADFILE` - kanji -> component/radical list
+- `KRADFILE` - kanji to component/radical mapping
 - `sentence_corpus.json` - optional sentence corpus for deterministic sentence selection
 - `curated_study_data.json` - optional curated overrides for meaning, notes, preferred words, blocked words, and top example sentences
 
@@ -11,8 +11,11 @@ Optional local media source folders:
 
 - `media_sources/stroke-order/images/`
 - `media_sources/stroke-order/animations/`
+- `media_sources/audio/`
 
-Recommended stroke-order source naming conventions:
+## Stroke-order source naming
+
+Recommended names:
 
 - `<kanji>.svg`
 - `<KANJI_CODEPOINT>.svg`
@@ -24,7 +27,22 @@ Example for `日`:
 - `65E5.svg`
 - `U+65E5.gif`
 
-Recommended sentence corpus format:
+## Audio source naming
+
+Recommended names:
+
+- `<kanji>.mp3`
+- `<kanji>_<reading>.mp3`
+- `<kanji>-<reading>.wav`
+- `<KANJI_CODEPOINT>.m4a`
+
+Example for `日`:
+
+- `日.mp3`
+- `日_にち.mp3`
+- `65E5.m4a`
+
+## Sentence corpus format
 
 ```json
 [
@@ -43,47 +61,7 @@ Recommended sentence corpus format:
 ]
 ```
 
-Sentence corpus field notes:
-
-- `source` helps the inference engine prefer curated material
-- `tags` can include `core`, `common`, `beginner`, `rare`, or `archaic`
-- `frequencyRank` is optional and rewards more common examples
-- `register` should be `neutral`, `spoken`, `formal`, or `literary`
-- `jlpt` is optional metadata for future learner-level filtering
-
-Sentence corpus normalization tooling:
-
-```bash
-npm run corpus:normalize
-npm run corpus:normalize -- --check
-npm run corpus:normalize -- --input=data/imports/sentences.json --output=data/sentence_corpus.json
-```
-
-Tooling behavior:
-
-- treats a missing optional corpus file as clean in `--check` mode
-- trims and validates every entry
-- lowercases and deduplicates tags
-- normalizes register values
-- removes duplicate entries by `kanji + written + japanese`
-- keeps the richer duplicate when two entries collide
-- writes deterministically sorted JSON for cleaner diffs
-
-Sentence corpus coverage reporting:
-
-```bash
-npm run corpus:report
-npm run corpus:report -- --limit=50
-```
-
-Report behavior:
-
-- measures coverage against the JLPT kanji dataset
-- counts coverage from both sentence corpus entries and curated study overrides
-- reports per-level totals, covered kanji, and missing kanji counts
-- shows a prioritized sample of missing kanji to guide corpus growth
-
-Recommended curated study data format:
+## Curated study format
 
 ```json
 {
@@ -107,36 +85,36 @@ Recommended curated study data format:
 }
 ```
 
-Curated study field notes:
+## Tooling
 
-- `englishMeaning` overrides the inferred English meaning for that kanji
-- `source`, `tags`, and `jlpt` provide provenance and learner-level metadata for the override
-- `preferredWords` lifts specific words to the front of ranking in the listed order
-- `blockedWords` removes known-bad words from learner-facing output
-- `blockedSentencePhrases` filters sentence candidates that contain known-bad phrasing
-- `notes` overrides the inferred `Notes` field directly
-- `alternativeNotes` stores additional approved notes for future tooling or manual selection
-- `exampleSentence` becomes the top `ExampleSentence` and first sentence candidate in inference output
+Sentence corpus:
 
-Curated study normalization tooling:
+```bash
+npm run corpus:normalize
+npm run corpus:normalize -- --check
+npm run corpus:report -- --limit=50
+```
+
+Curated study data:
 
 ```bash
 npm run curated:normalize
 npm run curated:normalize -- --check
-npm run curated:normalize -- --input=data/imports/curated.json --output=data/curated_study_data.json
-```
-
-Curated study coverage reporting:
-
-```bash
-npm run curated:report
 npm run curated:report -- --limit=50
 ```
 
-Curated reporting behavior:
+## Audio sync endpoint
 
-- measures override coverage against the JLPT kanji dataset
-- reports counts for custom meanings, notes, example sentences, blocked-word entries, and preferred-word entries
-- shows prioritized missing kanji so you can decide where manual curation is most valuable
+```bash
+POST /media/日/audio/sync
+```
+
+Optional JSON body fields:
+
+- `category` such as `kanji-reading`, `word-reading`, or `sentence`
+- `text` to prefer a specific written form
+- `reading` to prefer a specific spoken form
+- `voice` to record voice provenance in the manifest
+- `locale` to record locale metadata in the manifest
 
 These datasets are ignored by git and must be downloaded or curated locally.

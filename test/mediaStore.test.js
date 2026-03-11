@@ -80,13 +80,25 @@ test("writeManifest persists a validated manifest that can be read back", async 
             width: 512,
             height: 512,
         };
+        manifest.assets.audio.push({
+            kind: "audio",
+            path: "audio/kanji-reading.mp3",
+            mimeType: "audio/mpeg",
+            source: "fixture",
+            category: "kanji-reading",
+            text: "日",
+            reading: "にち",
+            locale: "ja-JP",
+        });
 
         await writeManifest(rootDir, manifest);
 
         const loaded = await readManifestIfExists(rootDir, "日");
         assert.equal(loaded.kanji, "日");
         assert.equal(loaded.assets.strokeOrderImage.path, "images/stroke-order.png");
-        assert.equal(loaded.assets.audio.length, 0);
+        assert.equal(loaded.assets.audio.length, 1);
+        assert.equal(loaded.assets.audio[0].category, "kanji-reading");
+        assert.equal(loaded.assets.audio[0].text, "日");
     } finally {
         cleanupTempDir(rootDir);
     }

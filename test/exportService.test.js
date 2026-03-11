@@ -208,6 +208,12 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
         },
     };
 
+    const audioService = {
+        async getBestAudioPath(kanji) {
+            return kanji === "日" ? "audio/kanji-reading-日.mp3" : "";
+        },
+    };
+
     const tsv = await buildTsvForJlptLevel({
         levelNumber: 5,
         jlptOnlyJson,
@@ -215,20 +221,22 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
         pickMainComponent,
         kanjiApiClient,
         strokeOrderService,
+        audioService,
         limit: 1,
     });
 
     const lines = tsv.trim().split("\n");
 
     assert.equal(lines.length, 2);
-    assert.equal(lines[0], "Kanji\tMeaningJP\tReading\tStrokeOrder\tRadical\tNotes\tExampleSentence");
+    assert.equal(lines[0], "Kanji\tMeaningJP\tReading\tStrokeOrder\tAudio\tRadical\tNotes\tExampleSentence");
 
     const cols = lines[1].split("\t");
     assert.equal(cols[0], "日");
     assert.equal(cols[1], "日本 （にほん） ／ day");
     assert.equal(cols[2], "オン:ニチ、 ジツ ／ くん:ひ、 び、 か");
     assert.equal(cols[3], "animations/stroke-order.gif");
-    assert.equal(cols[4], "日");
-    assert.equal(cols[5], "日本 （にほん） - Japan ／ 日よう日 （にちようび） - Sunday");
-    assert.equal(cols[6], '「日本」は「Japan」です。 ／ 「にほん」は「Japan」です。 ／ "日本" means "Japan."');
+    assert.equal(cols[4], "audio/kanji-reading-日.mp3");
+    assert.equal(cols[5], "日");
+    assert.equal(cols[6], "日本 （にほん） - Japan ／ 日よう日 （にちようび） - Sunday");
+    assert.equal(cols[7], '「日本」は「Japan」です。 ／ 「にほん」は「Japan」です。 ／ "日本" means "Japan."');
 });

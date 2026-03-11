@@ -7,6 +7,7 @@ const { loadCuratedStudyData } = require("./datasets/curatedStudyData");
 const { loadKradMap, pickMainComponent } = require("./datasets/kradfile");
 const { loadSentenceCorpus } = require("./datasets/sentenceCorpus");
 const { ensureMediaRoot } = require("./services/mediaStore");
+const { createAudioService } = require("./services/audioService");
 const { createStrokeOrderService } = require("./services/strokeOrderService");
 const { createInferenceEngine } = require("./inference/inferenceEngine");
 const { createApp } = require("./app");
@@ -39,6 +40,10 @@ async function main() {
         imageSourceDir: config.strokeOrderImageSourceDir,
         animationSourceDir: config.strokeOrderAnimationSourceDir,
     });
+    const audioService = createAudioService({
+        mediaRootDir: config.mediaRootDir,
+        audioSourceDir: config.audioSourceDir,
+    });
 
     const inferenceEngine = createInferenceEngine({ sentenceCorpus, curatedStudyData });
 
@@ -49,6 +54,7 @@ async function main() {
         pickMainComponent,
         kanjiApiClient,
         strokeOrderService,
+        audioService,
         inferenceEngine,
         sentenceCorpus,
         curatedStudyData,
@@ -68,6 +74,7 @@ async function main() {
                 mediaRootDir: config.mediaRootDir,
                 strokeOrderImageSourceDir: config.strokeOrderImageSourceDir,
                 strokeOrderAnimationSourceDir: config.strokeOrderAnimationSourceDir,
+                audioSourceDir: config.audioSourceDir,
             },
             "Server started"
         );
@@ -78,6 +85,7 @@ async function main() {
         logger.info(`Readiness: http://127.0.0.1:${config.port}/readyz`);
         logger.info(`Inference: http://127.0.0.1:${config.port}/inference/日`);
         logger.info(`Media lookup: http://127.0.0.1:${config.port}/media/日`);
+        logger.info(`Audio sync: http://127.0.0.1:${config.port}/media/日/audio/sync`);
     });
 }
 

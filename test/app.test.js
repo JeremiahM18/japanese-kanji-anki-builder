@@ -13,6 +13,7 @@ function buildFixtureApp() {
         mediaRootDir: "C:\\repo\\data\\media",
         strokeOrderImageSourceDir: "C:\\repo\\data\\media_sources\\stroke-order\\images",
         strokeOrderAnimationSourceDir: "C:\\repo\\data\\media_sources\\stroke-order\\animations",
+        audioSourceDir: "C:\\repo\\data\\media_sources\\audio",
         exportConcurrency: 4,
         fetchTimeoutMs: 2500,
     };
@@ -94,7 +95,18 @@ function buildFixtureApp() {
                     mimeType: "image/gif",
                     source: "fixture",
                 },
-                audio: [],
+                audio: [
+                    {
+                        kind: "audio",
+                        path: "audio/kanji-reading-日.mp3",
+                        mimeType: "audio/mpeg",
+                        source: "fixture",
+                        category: "kanji-reading",
+                        text: "日",
+                        reading: "にち",
+                        locale: "ja-JP",
+                    },
+                ],
             },
         }],
     ]);
@@ -196,6 +208,58 @@ function buildFixtureApp() {
         },
     };
 
+    const audioService = {
+        async getBestAudioPath(kanji, preferences = {}) {
+            const manifest = manifests.get(kanji);
+            const audio = manifest?.assets.audio || [];
+            return audio.find((asset) => {
+                if (preferences.category && asset.category !== preferences.category) {
+                    return false;
+                }
+
+                if (preferences.text && asset.text !== preferences.text) {
+                    return false;
+                }
+
+                return true;
+            })?.path || audio[0]?.path || "";
+        },
+        async syncKanji(kanji, metadata = {}) {
+            const manifest = manifests.get(kanji) || {
+                kanji,
+                version: 1,
+                updatedAt: new Date().toISOString(),
+                assets: {
+                    strokeOrderImage: null,
+                    strokeOrderAnimation: null,
+                    audio: [],
+                },
+            };
+
+            manifest.assets.audio = [
+                {
+                    kind: "audio",
+                    path: "audio/kanji-reading-日.mp3",
+                    mimeType: "audio/mpeg",
+                    source: "fixture",
+                    category: metadata.category || "kanji-reading",
+                    text: metadata.text || kanji,
+                    reading: metadata.reading || "にち",
+                    locale: metadata.locale || "ja-JP",
+                },
+            ];
+            manifests.set(kanji, manifest);
+
+            return {
+                kanji,
+                manifest,
+                found: {
+                    audio: true,
+                },
+            };
+        },
+    };
+
     return createApp({
         config,
         jlptOnlyJson,
@@ -205,6 +269,7 @@ function buildFixtureApp() {
         pickMainComponent: (components) => components[0] || "",
         kanjiApiClient,
         strokeOrderService,
+        audioService,
     });
 }
 
@@ -258,6 +323,7 @@ test("health and readiness endpoints expose operational state", async () => {
         assert.equal(readyJson.config.exportConcurrency, 4);
         assert.equal(readyJson.config.sentenceCorpusPath, "C:\\repo\\data\\sentence_corpus.json");
         assert.equal(readyJson.config.curatedStudyDataPath, "C:\\repo\\data\\curated_study_data.json");
+        assert.equal(readyJson.config.audioSourceDir, "C:\\repo\\data\\media_sources\\audio");
         assert.equal(readyJson.cache.cacheHits, 7);
         assert.equal(readyJson.cache.cacheMisses, 2);
     });
@@ -276,6 +342,7 @@ test("inference route exposes curated and corpus-backed study output", async () 
         assert.equal(json.inference.englishMeaning, "sun / day marker");
         assert.equal(json.inference.notes, "日本 （にほん） - Japan ／ curated-note");
         assert.equal(json.inference.strokeOrderPath, "animations/stroke-order.gif");
+        assert.equal(json.inference.audioPath, "audio/kanji-reading-日.mp3");
         assert.equal(json.inference.sentenceCandidates[0].type, "curated");
         assert.equal(json.inference.sentenceCandidates[0].source, "curated-study-data");
         assert.match(json.inference.sentenceCandidates[0].japanese, /日本は島国です/);
@@ -294,6 +361,7 @@ test("media routes expose manifests and sync results", async () => {
         const manifestJson = await manifestRes.json();
         assert.equal(manifestJson.status, "ok");
         assert.equal(manifestJson.bestStrokeOrderPath, "animations/stroke-order.gif");
+        assert.equal(manifestJson.bestAudioPath, "audio/kanji-reading-日.mp3");
 
         const missingRes = await fetch(`${baseUrl}/media/山`);
         assert.equal(missingRes.status, 404);
@@ -304,6 +372,23 @@ test("media routes expose manifests and sync results", async () => {
         const syncJson = await syncRes.json();
         assert.equal(syncJson.found.image, true);
         assert.equal(syncJson.found.animation, true);
+
+        const audioSyncRes = await fetch(`${baseUrl}/media/日/audio/sync`, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({
+                category: "kanji-reading",
+                text: "日",
+                reading: "にち",
+            }),
+        });
+        assert.equal(audioSyncRes.status, 200);
+
+        const audioSyncJson = await audioSyncRes.json();
+        assert.equal(audioSyncJson.found.audio, true);
+        assert.equal(audioSyncJson.bestAudioPath, "audio/kanji-reading-日.mp3");
     });
 });
 
@@ -320,12 +405,13 @@ test("download export sets attachment headers and includes the top sentence", as
         const cols = lines[1].split("\t");
 
         assert.equal(lines.length, 2);
-        assert.equal(lines[0], "Kanji\tMeaningJP\tReading\tStrokeOrder\tRadical\tNotes\tExampleSentence");
-        assert.equal(cols.length, 7);
+        assert.equal(lines[0], "Kanji\tMeaningJP\tReading\tStrokeOrder\tAudio\tRadical\tNotes\tExampleSentence");
+        assert.equal(cols.length, 8);
         assert.match(cols[3], /animations\/stroke-order\.gif/);
-        assert.match(cols[5], /curated-note/);
-        assert.match(cols[6], /日本は島国です/);
-        assert.match(cols[6], /Japan is an island nation/);
+        assert.match(cols[4], /audio\/kanji-reading-日\.mp3/);
+        assert.match(cols[6], /curated-note/);
+        assert.match(cols[7], /日本は島国です/);
+        assert.match(cols[7], /Japan is an island nation/);
     });
 });
 

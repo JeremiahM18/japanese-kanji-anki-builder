@@ -1,4 +1,5 @@
 require("./app.test");
+require("./audioService.test");
 require("./curatedStudyCoverage.test");
 require("./curatedStudyData.test");
 require("./exportService.test");

@@ -186,6 +186,7 @@ function createStrokeOrderService({ mediaRootDir, imageSourceDir, animationSourc
 
 module.exports = {
     buildKanjiFileCandidates,
+    copyAssetIfChanged,
     createStrokeOrderService,
     findMatchingAsset,
     normalizeKanji,

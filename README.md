@@ -1,47 +1,31 @@
 # Japanese Kanji Anki Builder
 
-A Node.js service for generating structured JLPT kanji TSV exports for Anki using `kanjiapi.dev`, KRADFILE radicals, deterministic export formatting, cache-backed upstream retrieval, a provider-ready stroke-order media pipeline, and a deterministic inference engine.
+A Node.js service for generating structured JLPT kanji TSV exports for Anki using `kanjiapi.dev`, KRADFILE radicals, deterministic inference, cache-backed upstream retrieval, and managed media pipelines for stroke order and audio.
 
 ## Why This Project Exists
 
-This project exists to generate clean, reusable, and customizable kanji study decks that can be imported directly into Anki and improved over time without rebuilding the entire pipeline from scratch.
-
-The engineering direction for this repository is deliberate: treat even a personal project with production-style standards. That means clear structure, deterministic output, explicit configuration, operational endpoints, bounded concurrency, safe filesystem behavior, validation at system boundaries, and tests around the behavior that matters.
+This repository is intentionally built with production-style standards even though it is a personal project. The goal is a kanji deck pipeline that stays correct, inspectable, and extensible as media, inference quality, and dataset coverage improve over time.
 
 ## Current Capabilities
 
 - Builds JLPT kanji decks for N5-N1
 - Generates deterministic TSV output for Anki import
 - Extracts radicals/components from KRADFILE
-- Adds example vocabulary with furigana-style readings
-- Exports the strongest inferred example sentence directly into the TSV
-- Separates raw data fetching, inference, export orchestration, and media management into distinct modules
-- Uses a deterministic inference engine to rank example words and derive learner-friendly `MeaningJP`, `Notes`, and `ExampleSentence` output
-- Uses corpus metadata to improve both word ranking and sentence selection when stronger supporting examples exist
-- Supports curated study data overrides for preferred words, blocked words, blocked sentence phrases, meanings, notes, alternative notes, and top example sentences
-- Supports sentence corpus normalization tooling for deterministic imports and clean dataset diffs
-- Supports coverage reporting to show which JLPT kanji still lack sentence support
-- Supports curated study normalization and coverage reporting for manual override quality
-- Exposes candidate score breakdowns so inference ranking decisions are inspectable and tunable
-- Prefers corpus-backed sentence candidates when a local sentence corpus is available, with deterministic template fallback otherwise
-- Weights corpus sentence selection by source quality, learner-friendly tags, register, and optional frequency metadata
-- Caches kanji and word API responses separately
-- Validates upstream API payloads before they are cached or consumed
-- Tracks cache and fetch metrics for readiness checks and benchmarks
-- Deduplicates concurrent in-flight API requests
-- Stores cache entries in sharded subdirectories to avoid a single oversized cache folder
-- Supports local stroke-order image and animation ingestion through a provider-based service
-- Writes per-kanji media manifests that can later expand to audio without changing storage contracts
-- Populates the `StrokeOrder` TSV field with the best available media asset path when one exists
-- Recovers from corrupted cache files automatically
-- Exposes health, readiness, inference, media lookup, and media sync endpoints for operational visibility
-- Keeps local-only runtime artifacts, caches, datasets, and virtual environments out of source control with explicit ignore rules
-- Runs CI on every push to `main`, every pull request, and on manual dispatch
-- Includes automated tests for caching, concurrency, validation, inference, export formatting, HTTP behavior, stroke-order sync, and media manifests
+- Infers learner-friendly `MeaningJP`, `Notes`, and `ExampleSentence` output
+- Exports the top inferred sentence directly into the TSV
+- Exports the best managed kanji-audio asset directly into the TSV when one is available
+- Uses curated study overrides for meanings, notes, preferred words, blocked words, blocked sentence phrases, and top example sentences
+- Uses sentence-corpus metadata to improve both word ranking and sentence selection
+- Exposes score breakdowns so ranking decisions are inspectable and tunable
+- Caches kanji and word API responses separately with validation, atomic writes, and in-flight deduplication
+- Stores cache entries in sharded subdirectories to avoid oversized flat folders
+- Supports local stroke-order image and animation ingestion into managed media storage
+- Supports local kanji-audio ingestion into the same managed media tree
+- Persists per-kanji media manifests that can grow into richer provider and synthesis flows later
+- Exposes health, readiness, inference, media lookup, stroke-order sync, and audio sync endpoints
+- Runs CI on pushes, pull requests, and manual dispatch
 
 ## File Tree
-
-This is the meaningful project tree after the completed inference-data tooling pass:
 
 ```text
 C:\japanese_kanji_builder
@@ -77,6 +61,7 @@ C:\japanese_kanji_builder
 │  │  ├─ ranking.js
 │  │  └─ sentenceInference.js
 │  ├─ services/
+│  │  ├─ audioService.js
 │  │  ├─ exportService.js
 │  │  ├─ mediaStore.js
 │  │  └─ strokeOrderService.js
@@ -84,6 +69,7 @@ C:\japanese_kanji_builder
 │     └─ text.js
 ├─ test/
 │  ├─ app.test.js
+│  ├─ audioService.test.js
 │  ├─ curatedStudyCoverage.test.js
 │  ├─ curatedStudyData.test.js
 │  ├─ exportService.test.js
@@ -117,89 +103,32 @@ C:\japanese_kanji_builder
 - `src/datasets/curatedStudyCoverage.js`
   Computes curated override coverage and override-type summaries against JLPT kanji data.
 - `src/inference/`
-  Extracts word candidates, ranks them, and infers learner-facing meaning, notes, and sentence output.
+  Extracts candidates, ranks them, and derives learner-facing meaning, notes, and sentence output.
 - `src/services/exportService.js`
-  Orchestrates kanji fetches, inference, stroke-order lookup, and TSV row generation.
+  Orchestrates kanji fetches, inference, stroke-order lookup, audio lookup, and TSV generation.
 - `src/services/mediaStore.js`
   Owns the managed media tree and manifest persistence.
 - `src/services/strokeOrderService.js`
   Discovers local stroke-order assets and imports them into managed storage.
+- `src/services/audioService.js`
+  Discovers local kanji-audio assets, imports them into managed storage, and selects the best audio path.
 - `src/app.js`
   Exposes HTTP routes and operational endpoints.
 - `src/server.js`
   Performs process startup and dependency wiring.
-- `scripts/normalizeSentenceCorpus.js`
-  Normalizes imported sentence corpus files into a deterministic on-disk format.
-- `scripts/reportSentenceCorpusCoverage.js`
-  Reports sentence-support coverage by JLPT level and missing-kanji priority.
-- `scripts/normalizeCuratedStudyData.js`
-  Normalizes curated override files into a deterministic on-disk format.
-- `scripts/reportCuratedStudyCoverage.js`
-  Reports curated override coverage and override-type counts by JLPT level.
 
-### Runtime Flow
+### Runtime flow
 
 1. `src/server.js` loads config and validates required datasets at startup.
-2. KRADFILE, JLPT JSON, the optional sentence corpus, and optional curated study data are loaded into memory once.
-3. `src/app.js` builds the Express application from injected dependencies.
+2. JLPT JSON, KRADFILE, the optional sentence corpus, and optional curated study data are loaded once.
+3. `src/app.js` builds the Express app from injected dependencies.
 4. Export requests call `buildTsvForJlptLevel()` with bounded concurrency.
-5. Each kanji fetches kanji metadata, word candidates, and best known stroke-order path concurrently.
-6. The inference engine extracts candidates, ranks them deterministically, and returns learner-facing meaning, notes, sentence candidates, and score breakdowns.
-7. Word ranking incorporates bounded corpus-support evidence so `bestWord` and `Notes` can prefer candidates with better supporting examples.
-8. Curated study data can remove blocked words, filter known-bad sentence phrasing, reorder preferred words, override meanings and notes, and inject a top example sentence.
-9. The export service promotes the top-ranked sentence candidate into the TSV as `ExampleSentence`.
-10. Sentence inference prefers corpus-backed matches and only falls back to templates when the corpus has no suitable example.
-11. Upstream responses are validated, cached atomically on disk, and counted in client metrics.
-12. Stroke-order sync scans local source directories, imports matching assets into the managed media tree, and updates the kanji manifest.
-13. Audio can be added later to the same media manifest contract without redesigning the filesystem layout.
-
-## Deterministic Inference Engine
-
-The inference engine is intentionally deterministic rather than model-based.
-
-Current inference layers:
-
-- `candidateExtractor.js`
-  normalizes word entries into comparable candidates
-- `ranking.js`
-  scores candidates using explicit heuristics, bounded corpus-support signals, and structured score breakdowns
-- `meaningInference.js`
-  derives `bestWord`, `englishMeaning`, and `MeaningJP`
-- `notesInference.js`
-  derives the `Notes` field from top-ranked examples
-- `sentenceInference.js`
-  selects sentence candidates, preferring the local corpus before template fallback
-- `inferenceEngine.js`
-  composes the full learner-facing inference result and merges curated overrides
-
-This keeps the system inspectable and testable while improving quality incrementally. The corpus-backed layer is the first major step away from generic sentence templates without giving up deterministic behavior, and curated study data gives you a deterministic escape hatch when you already know the right teaching choice.
-
-Corpus-backed inference currently favors:
-
-- manually curated or trusted local sources over generic imports
-- `core`, `common`, and `beginner` tags over `rare` or `archaic`
-- neutral and spoken register over literary phrasing
-- better optional frequency metadata when available
-- candidates that already have stronger supporting sentence evidence in the local corpus
-
-Curated study data can explicitly control:
-
-- preferred learner-facing words
-- blocked learner-facing words
-- blocked sentence phrases
-- English meaning overrides
-- `Notes` overrides
-- alternative approved notes
-- top example sentence overrides
-- source, tag, and JLPT metadata for manual curation provenance
-
-Ranking explainability now exposes:
-
-- heuristic bonuses and penalties
-- corpus-support contributions
-- per-candidate heuristic subtotal
-- per-candidate corpus subtotal
-- final score total
+5. Each kanji fetches kanji metadata, word candidates, and best known stroke-order and audio paths concurrently.
+6. The inference engine returns ranked candidates, `bestWord`, meaning output, notes, sentence candidates, and score breakdowns.
+7. Curated data can remove blocked words, filter bad sentence phrasing, reorder preferred words, override meaning/notes, and inject a top example sentence.
+8. Upstream responses are validated, cached atomically on disk, and counted in client metrics.
+9. Stroke-order and audio sync import matching local media into the managed per-kanji manifest.
+10. The export service writes `StrokeOrder`, `Audio`, and `ExampleSentence` directly into the TSV.
 
 ## Output Fields
 
@@ -209,21 +138,20 @@ The exported TSV includes these columns:
 - `MeaningJP`
 - `Reading`
 - `StrokeOrder`
+- `Audio`
 - `Radical`
 - `Notes`
 - `ExampleSentence`
 
-`StrokeOrder` contains the best available managed media path for the kanji when a synced stroke-order asset exists. The current preference order is animation first, then static image.
+`StrokeOrder` contains the best available managed stroke-order asset path, preferring animation over image.
+
+`Audio` contains the best available managed kanji-audio path.
 
 `ExampleSentence` contains the highest-ranked sentence candidate in compact TSV form:
 
 - `Japanese ／ Reading ／ English`
 
-This gives the deck a sentence-level teaching signal even when you are not inspecting the full inference payload over HTTP.
-
 ## Configuration
-
-All paths are resolved from the repository root so local development and deployment are consistent.
 
 | Variable | Default | Description |
 | --- | --- | --- |
@@ -231,12 +159,13 @@ All paths are resolved from the repository root so local development and deploym
 | `CACHE_DIR` | `cache` | Root directory for local API cache |
 | `JLPT_JSON_PATH` | `data/kanji_jlpt_only.json` | JLPT dataset |
 | `KRADFILE_PATH` | `data/KRADFILE` | Radical/component dataset |
-| `SENTENCE_CORPUS_PATH` | `data/sentence_corpus.json` | Optional local sentence corpus used to improve sentence inference |
-| `CURATED_STUDY_DATA_PATH` | `data/curated_study_data.json` | Optional curated overrides for kanji-specific meanings, words, notes, and example sentences |
+| `SENTENCE_CORPUS_PATH` | `data/sentence_corpus.json` | Optional local sentence corpus |
+| `CURATED_STUDY_DATA_PATH` | `data/curated_study_data.json` | Optional curated overrides |
 | `KANJI_API_BASE_URL` | `https://kanjiapi.dev` | Upstream kanji API base URL |
-| `MEDIA_ROOT_DIR` | `data/media` | Root directory for managed stroke-order and audio media assets |
-| `STROKE_ORDER_IMAGE_SOURCE_DIR` | `data/media_sources/stroke-order/images` | Local source directory for stroke-order images |
-| `STROKE_ORDER_ANIMATION_SOURCE_DIR` | `data/media_sources/stroke-order/animations` | Local source directory for stroke-order animations |
+| `MEDIA_ROOT_DIR` | `data/media` | Root directory for managed media assets |
+| `STROKE_ORDER_IMAGE_SOURCE_DIR` | `data/media_sources/stroke-order/images` | Local stroke-order image source directory |
+| `STROKE_ORDER_ANIMATION_SOURCE_DIR` | `data/media_sources/stroke-order/animations` | Local stroke-order animation source directory |
+| `AUDIO_SOURCE_DIR` | `data/media_sources/audio` | Local kanji-audio source directory |
 | `EXPORT_CONCURRENCY` | `8` | Max kanji rows processed concurrently |
 | `API_REQUEST_TIMEOUT` | `10000` | Upstream request timeout in milliseconds |
 | `LOG_LEVEL` | `info` | Pino log level |
@@ -266,91 +195,15 @@ npm start
 ```bash
 npm run lint
 npm test
+npm run curated:normalize -- --check
+npm run curated:report -- --limit=10
 ```
-
-### Repository hygiene
-
-Tracked source intentionally excludes local-only artifacts such as:
-
-- caches and generated deck output
-- local datasets under `data/` except `data/README.md`
-- `.env` secrets while keeping `.env.example` tracked
-- local virtual environments like `.venv/`
-- common OS and log noise files
 
 ### Benchmark export throughput
 
 ```bash
 npm run bench:export -- --level=5 --limit=25
 ```
-
-Optional flags:
-
-- `--concurrency=12`
-- `--no-warmup`
-
-The benchmark reports duration, rows per second, cache hit ratio, network fetches, and validation failures so you can measure changes before and after optimization work.
-
-### Normalize sentence corpus data
-
-```bash
-npm run corpus:normalize
-npm run corpus:normalize -- --check
-npm run corpus:normalize -- --input=data/imports/sentences.json --output=data/sentence_corpus.json
-```
-
-The normalization tool:
-
-- treats a missing optional corpus file as clean in `--check` mode
-- trims and validates entries
-- lowercases and deduplicates tags
-- normalizes register values
-- removes duplicate entries by `kanji + written + japanese`
-- keeps the richer duplicate when duplicates collide
-- writes deterministically sorted JSON for cleaner diffs
-
-### Report sentence coverage
-
-```bash
-npm run corpus:report
-npm run corpus:report -- --limit=50
-```
-
-The coverage report:
-
-- measures coverage against the JLPT kanji dataset
-- counts support from both sentence corpus entries and curated study overrides
-- reports total and per-level coverage ratios
-- shows a prioritized sample of missing kanji to guide corpus growth
-
-### Normalize curated study data
-
-```bash
-npm run curated:normalize
-npm run curated:normalize -- --check
-npm run curated:normalize -- --input=data/imports/curated.json --output=data/curated_study_data.json
-```
-
-The curated normalizer:
-
-- treats a missing optional curated file as clean in `--check` mode
-- trims and validates fields
-- deduplicates and sorts string arrays
-- lowercases and deduplicates tags
-- writes deterministic object-key order for cleaner diffs
-
-### Report curated coverage
-
-```bash
-npm run curated:report
-npm run curated:report -- --limit=50
-```
-
-The curated coverage report:
-
-- measures curated override coverage against the JLPT kanji dataset
-- reports counts for custom meanings, notes, example sentences, blocked-word entries, and preferred-word entries
-- shows a prioritized sample of missing kanji where manual curation may matter most
 
 ## Inference Workflow
 
@@ -359,78 +212,8 @@ The curated coverage report:
 3. Normalize imported sentence data before relying on it in inference.
 4. Normalize curated overrides before relying on them in inference.
 5. Run corpus and curated coverage reports to see which kanji still need support.
-6. Call `GET /inference/:kanji` to inspect the current deterministic inference output.
-7. Review the ranked candidates, inferred meaning, notes, curated flags, sentence candidates, and score breakdowns.
-8. Tune scoring and selection rules in `src/inference/` rather than changing export formatting directly.
-9. Re-run tests and the export benchmark after meaningful inference changes.
-
-This route is the safest place to iterate on quality because it shows the intermediate reasoning results before the final deck export is generated.
-
-### Sentence Corpus Shape
-
-The optional local corpus accepts entries like:
-
-```json
-[
-  {
-    "kanji": "日",
-    "written": "日本",
-    "japanese": "日本へ行きます。",
-    "reading": "にほんへいきます。",
-    "english": "I will go to Japan.",
-    "source": "manual-curated",
-    "tags": ["core", "common", "beginner"],
-    "frequencyRank": 120,
-    "register": "neutral",
-    "jlpt": 5
-  }
-]
-```
-
-Field notes:
-
-- `source` helps prefer manually curated material over weaker imports
-- `tags` can include signals like `core`, `common`, `beginner`, `rare`, or `archaic`
-- `frequencyRank` is optional and rewards more common examples when present
-- `register` should be one of `neutral`, `spoken`, `formal`, or `literary`
-- `jlpt` is optional metadata for future learner-level filtering
-
-### Curated Study Data Shape
-
-The optional curated study dataset accepts entries like:
-
-```json
-{
-  "日": {
-    "englishMeaning": "sun / day marker",
-    "source": "manual-curated",
-    "tags": ["core", "curated"],
-    "jlpt": 5,
-    "preferredWords": ["日本"],
-    "blockedWords": ["日中"],
-    "blockedSentencePhrases": ["daytime"],
-    "notes": "日本 （にほん） - Japan ／ curated-note",
-    "alternativeNotes": ["alt-note-a", "alt-note-b"],
-    "exampleSentence": {
-      "japanese": "日本は島国です。",
-      "reading": "にほんはしまぐにです。",
-      "english": "Japan is an island nation.",
-      "tags": ["curated", "example"]
-    }
-  }
-}
-```
-
-Field notes:
-
-- `englishMeaning` overrides the inferred English meaning for a kanji
-- `source`, `tags`, and `jlpt` store provenance and learner-level metadata for the override
-- `preferredWords` reorders ranked candidates using the listed order
-- `blockedWords` removes known-bad learner-facing words from the inference result
-- `blockedSentencePhrases` filters sentence candidates that contain known-bad phrasing
-- `notes` overrides the inferred `Notes` field directly
-- `alternativeNotes` stores additional approved notes for future manual or automated selection
-- `exampleSentence` becomes the first sentence candidate and exported `ExampleSentence`
+6. Call `GET /inference/:kanji` to inspect ranked candidates, notes, curated flags, sentence candidates, and score breakdowns.
+7. Tune logic in `src/inference/` rather than patching export formatting directly.
 
 ## Stroke-Order Workflow
 
@@ -440,45 +223,32 @@ Field notes:
 4. Inspect the managed manifest with `GET /media/日`.
 5. Export a JLPT level and the `StrokeOrder` field will reference the best available synced asset.
 
-Current provider behavior:
+## Audio Workflow
 
-- scans only local source directories
-- accepts common image formats such as `svg`, `png`, and `webp`
-- accepts common animation formats such as `gif`, `webp`, `apng`, and `svg`
-- copies assets into the managed media tree with deterministic filenames
-- records checksum and source metadata in the manifest
-- prefers animation over image when exporting the `StrokeOrder` field
-
-## CI Policy
-
-The repository includes [ci.yml](/C:/japanese_kanji_builder/.github/workflows/ci.yml), which enforces the baseline verification path in GitHub Actions.
-
-Current CI guarantees:
-
-- runs on pushes to `main`
-- runs on every pull request
-- supports manual `workflow_dispatch`
-- verifies against Node.js 20 and 22
-- uses `npm ci` for reproducible installs
-- fails fast on lint or test regressions inside each job
-- cancels outdated in-progress runs for the same ref
+1. Place source assets into `data/media_sources/audio/`.
+2. Name them by kanji, codepoint, or kanji-plus-reading, for example `日.mp3`, `日_にち.mp3`, or `65E5.m4a`.
+3. Sync a kanji with `POST /media/日/audio/sync`.
+4. Optionally send JSON metadata such as `category`, `text`, `reading`, `voice`, and `locale`.
+5. Inspect the managed manifest with `GET /media/日`.
+6. Export a JLPT level and the `Audio` field will reference the best available synced asset.
 
 ## HTTP Endpoints
 
 ### Service endpoints
 
-- `GET /` basic liveness response
-- `GET /healthz` lightweight health check
-- `GET /readyz` readiness details including dataset counts, active config, and cache metrics
+- `GET /`
+- `GET /healthz`
+- `GET /readyz`
 
 ### Inference endpoints
 
-- `GET /inference/:kanji` returns deterministic inference output for one kanji, including sentence candidates and curated override state
+- `GET /inference/:kanji`
 
 ### Media endpoints
 
-- `GET /media/:kanji` returns the managed media manifest if one exists
-- `POST /media/:kanji/sync` imports available local stroke-order assets for the kanji into managed storage
+- `GET /media/:kanji` returns the managed media manifest plus best stroke-order and audio paths
+- `POST /media/:kanji/sync` imports local stroke-order assets
+- `POST /media/:kanji/audio/sync` imports local audio assets
 
 ### Export endpoints
 
@@ -490,15 +260,12 @@ Current CI guarantees:
 
 ## Filesystem Strategy
 
-The cache and media layers follow a more production-friendly model:
-
 - Cache writes are atomic via temp-file rename.
-- Kanji and word responses remain isolated by cache key.
 - Cache files are stored in sharded subdirectories instead of a single flat folder.
 - Corrupted cache entries are discarded and refetched automatically.
 - Media assets have a dedicated root directory independent of export output.
 - Each kanji gets a manifest with reserved slots for a stroke-order image, stroke-order animation, and audio assets.
-- Stroke-order source files are copied into managed storage instead of being referenced in place.
+- Stroke-order and audio source files are copied into managed storage instead of being referenced in place.
 
 ## Media Manifest Contract
 
@@ -515,9 +282,7 @@ The manifest currently tracks:
 
 - `strokeOrderImage`
 - `strokeOrderAnimation`
-- `audio[]`
-
-This means the next phase can improve stroke-order providers or add audio synthesis/acquisition without changing how assets are organized on disk.
+- `audio[]` with category, text, reading, voice, and locale metadata
 
 ## Testing Strategy
 
@@ -527,24 +292,18 @@ The current test suite covers:
 - deterministic inference output
 - curated study data loading, normalization, reporting, and overrides
 - sentence corpus normalization, reporting, and loading
-- sentence candidate generation
-- corpus-backed sentence preference and weighting
-- word-ranking behavior
 - ranking explainability breakdowns
 - cache creation and reuse
 - in-flight request deduplication
-- retry safety after failures
 - corrupted cache recovery
 - upstream payload validation
 - health/readiness endpoint behavior
 - inference endpoint behavior
-- export download headers and request validation
-- media layout and manifest persistence
 - stroke-order source discovery and sync behavior
+- audio source discovery, import, and selection behavior
+- media layout and manifest persistence
 
 ## Engineering Standard For This Repo
-
-The working expectation for future changes is:
 
 - no silent shortcuts when correctness can be made explicit
 - prefer deterministic behavior over convenience
@@ -554,13 +313,3 @@ The working expectation for future changes is:
 - preserve professional commit hygiene with focused, descriptive commits
 - add tests when changing behavior or infrastructure
 - keep CI green before merging
-- benchmark meaningful performance changes instead of guessing
-
-## Near-Term Improvement Ideas
-
-- add request IDs and structured access logging
-- support resumable offline export workflows
-- add remote/provider adapters for stroke-order image and animation sources
-- add media acquisition jobs with checksum verification
-- add audio source adapters or synthesis jobs on top of the existing media manifest
-- introduce typed contracts via JSDoc or TypeScript when the surface area grows further

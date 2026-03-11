@@ -12,6 +12,7 @@ const schema = z.object({
     mediaRootDir: z.string().default("data/media"),
     strokeOrderImageSourceDir: z.string().default("data/media_sources/stroke-order/images"),
     strokeOrderAnimationSourceDir: z.string().default("data/media_sources/stroke-order/animations"),
+    audioSourceDir: z.string().default("data/media_sources/audio"),
     exportConcurrency: z.coerce.number().int().positive().default(8),
     fetchTimeoutMs: z.coerce.number().int().positive().default(10000),
 });
@@ -32,6 +33,7 @@ function loadConfig() {
         mediaRootDir: process.env.MEDIA_ROOT_DIR,
         strokeOrderImageSourceDir: process.env.STROKE_ORDER_IMAGE_SOURCE_DIR,
         strokeOrderAnimationSourceDir: process.env.STROKE_ORDER_ANIMATION_SOURCE_DIR,
+        audioSourceDir: process.env.AUDIO_SOURCE_DIR,
         exportConcurrency: process.env.EXPORT_CONCURRENCY,
         fetchTimeoutMs: process.env.API_REQUEST_TIMEOUT,
     };
@@ -48,6 +50,7 @@ function loadConfig() {
         mediaRootDir: resolveFromCwd(parsed.mediaRootDir),
         strokeOrderImageSourceDir: resolveFromCwd(parsed.strokeOrderImageSourceDir),
         strokeOrderAnimationSourceDir: resolveFromCwd(parsed.strokeOrderAnimationSourceDir),
+        audioSourceDir: resolveFromCwd(parsed.audioSourceDir),
     };
 }
 

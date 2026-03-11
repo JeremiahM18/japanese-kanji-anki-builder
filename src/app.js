@@ -36,6 +36,7 @@ function createApp({
     pickMainComponent,
     kanjiApiClient,
     strokeOrderService,
+    audioService,
     sentenceCorpus = [],
     curatedStudyData = {},
     inferenceEngine = createInferenceEngine({ sentenceCorpus, curatedStudyData }),
@@ -80,6 +81,7 @@ function createApp({
                 mediaRootDir: config.mediaRootDir,
                 strokeOrderImageSourceDir: config.strokeOrderImageSourceDir,
                 strokeOrderAnimationSourceDir: config.strokeOrderAnimationSourceDir,
+                audioSourceDir: config.audioSourceDir,
                 exportConcurrency: config.exportConcurrency,
                 fetchTimeoutMs: config.fetchTimeoutMs,
             },
@@ -93,6 +95,7 @@ function createApp({
                 kanji: req.params.kanji,
                 kanjiApiClient,
                 strokeOrderService,
+                audioService,
             });
 
             return res.status(200).json({
@@ -119,6 +122,9 @@ function createApp({
                 status: "ok",
                 manifest,
                 bestStrokeOrderPath: await strokeOrderService.getBestStrokeOrderPath(req.params.kanji),
+                bestAudioPath: typeof audioService?.getBestAudioPath === "function"
+                    ? await audioService.getBestAudioPath(req.params.kanji, { category: "kanji-reading", text: req.params.kanji })
+                    : "",
             });
         } catch (err) {
             return next(err);
@@ -132,6 +138,23 @@ function createApp({
                 status: "ok",
                 ...result,
                 bestStrokeOrderPath: await strokeOrderService.getBestStrokeOrderPath(req.params.kanji),
+            });
+        } catch (err) {
+            return next(err);
+        }
+    });
+
+    app.post("/media/:kanji/audio/sync", async (req, res, next) => {
+        try {
+            const result = await audioService.syncKanji(req.params.kanji, req.body || {});
+            return res.status(200).json({
+                status: "ok",
+                ...result,
+                bestAudioPath: await audioService.getBestAudioPath(req.params.kanji, {
+                    category: req.body?.category || "kanji-reading",
+                    text: req.body?.text || req.params.kanji,
+                    reading: req.body?.reading,
+                }),
             });
         } catch (err) {
             return next(err);
@@ -169,6 +192,7 @@ function createApp({
                 pickMainComponent,
                 kanjiApiClient,
                 strokeOrderService,
+                audioService,
                 limit,
                 concurrency: config.exportConcurrency,
             });

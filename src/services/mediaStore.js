@@ -12,6 +12,11 @@ const mediaAssetSchema = z.object({
     width: z.number().int().positive().optional(),
     height: z.number().int().positive().optional(),
     durationMs: z.number().int().positive().optional(),
+    category: z.enum(["kanji-reading", "word-reading", "sentence"]).optional(),
+    text: z.string().min(1).optional(),
+    reading: z.string().min(1).optional(),
+    voice: z.string().min(1).optional(),
+    locale: z.string().min(1).optional(),
     notes: z.string().optional(),
 });
 

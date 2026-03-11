@@ -45,13 +45,17 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
         pickMainComponent,
         kanjiApiClient,
         strokeOrderService,
+        audioService,
     }) {
         try {
-            const [kanjiInfo, words, strokeOrderPath] = await Promise.all([
+            const [kanjiInfo, words, strokeOrderPath, audioPath] = await Promise.all([
                 kanjiApiClient.getKanji(kanji),
                 kanjiApiClient.getWords(kanji),
                 typeof strokeOrderService?.getBestStrokeOrderPath === "function"
                     ? strokeOrderService.getBestStrokeOrderPath(kanji)
+                    : Promise.resolve(""),
+                typeof audioService?.getBestAudioPath === "function"
+                    ? audioService.getBestAudioPath(kanji, { category: "kanji-reading", text: kanji })
                     : Promise.resolve(""),
             ]);
 
@@ -72,6 +76,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
                 inferred.meaningJP,
                 reading,
                 strokeOrderPath,
+                audioPath,
                 radical,
                 inferred.notes,
                 exampleSentence,
@@ -83,18 +88,22 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
                 "",
                 "",
                 "",
+                "",
                 `ERROR: ${error instanceof Error ? error.message : String(error)}`,
                 "",
             ].map(tsvEscape).join("\t");
         }
     }
 
-    async function buildInferenceForKanji({ kanji, kanjiApiClient, strokeOrderService }) {
-        const [kanjiInfo, words, strokeOrderPath] = await Promise.all([
+    async function buildInferenceForKanji({ kanji, kanjiApiClient, strokeOrderService, audioService }) {
+        const [kanjiInfo, words, strokeOrderPath, audioPath] = await Promise.all([
             kanjiApiClient.getKanji(kanji),
             kanjiApiClient.getWords(kanji),
             typeof strokeOrderService?.getBestStrokeOrderPath === "function"
                 ? strokeOrderService.getBestStrokeOrderPath(kanji)
+                : Promise.resolve(""),
+            typeof audioService?.getBestAudioPath === "function"
+                ? audioService.getBestAudioPath(kanji, { category: "kanji-reading", text: kanji })
                 : Promise.resolve(""),
         ]);
 
@@ -108,6 +117,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
             }),
             reading: labelReading(kanjiInfo?.on_readings, kanjiInfo?.kun_readings),
             strokeOrderPath,
+            audioPath,
         };
     }
 
@@ -118,6 +128,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
         pickMainComponent,
         kanjiApiClient,
         strokeOrderService = null,
+        audioService = null,
         limit = null,
         concurrency = 8,
     }) {
@@ -126,6 +137,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
             "MeaningJP",
             "Reading",
             "StrokeOrder",
+            "Audio",
             "Radical",
             "Notes",
             "ExampleSentence",
@@ -148,6 +160,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
                 pickMainComponent,
                 kanjiApiClient,
                 strokeOrderService,
+                audioService,
             })
         );
 

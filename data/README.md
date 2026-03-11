@@ -61,12 +61,27 @@ npm run corpus:normalize -- --input=data/imports/sentences.json --output=data/se
 
 Tooling behavior:
 
+- treats a missing optional corpus file as clean in `--check` mode
 - trims and validates every entry
 - lowercases and deduplicates tags
 - normalizes register values
 - removes duplicate entries by `kanji + written + japanese`
 - keeps the richer duplicate when two entries collide
 - writes deterministically sorted JSON for cleaner diffs
+
+Sentence corpus coverage reporting:
+
+```bash
+npm run corpus:report
+npm run corpus:report -- --limit=50
+```
+
+Report behavior:
+
+- measures coverage against the JLPT kanji dataset
+- counts coverage from both sentence corpus entries and curated study overrides
+- reports per-level totals, covered kanji, and missing kanji counts
+- shows a prioritized sample of missing kanji to guide corpus growth
 
 Recommended curated study data format:
 

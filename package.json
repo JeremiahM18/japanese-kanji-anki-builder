@@ -13,7 +13,8 @@
     "lint": "eslint .",
     "test": "node test/run-tests.js",
     "bench:export": "node scripts/benchmarkExport.js",
-    "corpus:normalize": "node scripts/normalizeSentenceCorpus.js"
+    "corpus:normalize": "node scripts/normalizeSentenceCorpus.js",
+    "corpus:report": "node scripts/reportSentenceCorpusCoverage.js"
   },
   "keywords": [
     "japanese",

@@ -20,6 +20,7 @@ The engineering direction for this repository is deliberate: treat even a person
 - Uses corpus metadata to improve both word ranking and sentence selection when stronger supporting examples exist
 - Supports curated study data overrides for preferred words, blocked words, meanings, notes, and top example sentences
 - Supports sentence corpus normalization tooling for deterministic imports and clean dataset diffs
+- Supports coverage reporting to show which JLPT kanji still lack sentence support
 - Prefers corpus-backed sentence candidates when a local sentence corpus is available, with deterministic template fallback otherwise
 - Weights corpus sentence selection by source quality, learner-friendly tags, register, and optional frequency metadata
 - Caches kanji and word API responses separately
@@ -38,7 +39,7 @@ The engineering direction for this repository is deliberate: treat even a person
 
 ## File Tree
 
-This is the meaningful project tree after the sentence corpus tooling pass:
+This is the meaningful project tree after the sentence corpus coverage tooling pass:
 
 ```text
 C:\japanese_kanji_builder
@@ -49,7 +50,8 @@ C:\japanese_kanji_builder
 │  └─ README.md
 ├─ scripts/
 │  ├─ benchmarkExport.js
-│  └─ normalizeSentenceCorpus.js
+│  ├─ normalizeSentenceCorpus.js
+│  └─ reportSentenceCorpusCoverage.js
 ├─ src/
 │  ├─ app.js
 │  ├─ config.js
@@ -60,7 +62,8 @@ C:\japanese_kanji_builder
 │  ├─ datasets/
 │  │  ├─ curatedStudyData.js
 │  │  ├─ kradfile.js
-│  │  └─ sentenceCorpus.js
+│  │  ├─ sentenceCorpus.js
+│  │  └─ sentenceCorpusCoverage.js
 │  ├─ inference/
 │  │  ├─ candidateExtractor.js
 │  │  ├─ inferenceEngine.js
@@ -82,6 +85,7 @@ C:\japanese_kanji_builder
 │  ├─ mediaStore.test.js
 │  ├─ run-tests.js
 │  ├─ sentenceCorpus.test.js
+│  ├─ sentenceCorpusCoverage.test.js
 │  ├─ strokeOrderService.test.js
 │  └─ inference/
 │     └─ inferenceEngine.test.js
@@ -100,6 +104,8 @@ C:\japanese_kanji_builder
   Loads KRADFILE radicals/components.
 - `src/datasets/sentenceCorpus.js`
   Loads, normalizes, deduplicates, and sorts an optional local sentence corpus.
+- `src/datasets/sentenceCorpusCoverage.js`
+  Computes corpus coverage summaries against JLPT kanji data.
 - `src/datasets/curatedStudyData.js`
   Loads optional curated overrides for kanji-specific teaching decisions.
 - `src/inference/`
@@ -116,6 +122,8 @@ C:\japanese_kanji_builder
   Performs process startup and dependency wiring.
 - `scripts/normalizeSentenceCorpus.js`
   Normalizes imported sentence corpus files into a deterministic on-disk format.
+- `scripts/reportSentenceCorpusCoverage.js`
+  Reports sentence-support coverage by JLPT level and missing-kanji priority.
 
 ### Runtime Flow
 
@@ -270,6 +278,7 @@ npm run corpus:normalize -- --input=data/imports/sentences.json --output=data/se
 
 The normalization tool:
 
+- treats a missing optional corpus file as clean in `--check` mode
 - trims and validates entries
 - lowercases and deduplicates tags
 - normalizes register values
@@ -277,15 +286,30 @@ The normalization tool:
 - keeps the richer duplicate when duplicates collide
 - writes deterministically sorted JSON for cleaner diffs
 
+### Report sentence coverage
+
+```bash
+npm run corpus:report
+npm run corpus:report -- --limit=50
+```
+
+The coverage report:
+
+- measures coverage against the JLPT kanji dataset
+- counts support from both sentence corpus entries and curated study overrides
+- reports total and per-level coverage ratios
+- shows a prioritized sample of missing kanji to guide corpus growth
+
 ## Inference Workflow
 
 1. Add sentence examples to `data/sentence_corpus.json` when you have better corpus material.
 2. Add deterministic overrides to `data/curated_study_data.json` when you know the best teaching choice already.
 3. Normalize imported sentence data before relying on it in inference.
-4. Call `GET /inference/:kanji` to inspect the current deterministic inference output.
-5. Review the ranked candidates, inferred meaning, notes, curated flags, and sentence candidates.
-6. Tune scoring and selection rules in `src/inference/` rather than changing export formatting directly.
-7. Re-run tests and the export benchmark after meaningful inference changes.
+4. Run a corpus coverage report to see which kanji still need support.
+5. Call `GET /inference/:kanji` to inspect the current deterministic inference output.
+6. Review the ranked candidates, inferred meaning, notes, curated flags, and sentence candidates.
+7. Tune scoring and selection rules in `src/inference/` rather than changing export formatting directly.
+8. Re-run tests and the export benchmark after meaningful inference changes.
 
 This route is the safest place to iterate on quality because it shows the intermediate reasoning results before the final deck export is generated.
 
@@ -441,6 +465,7 @@ The current test suite covers:
 - deterministic inference output
 - curated study data loading and overrides
 - sentence corpus normalization and loading
+- sentence corpus coverage reporting
 - sentence candidate generation
 - corpus-backed sentence preference and weighting
 - word-ranking behavior

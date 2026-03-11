@@ -9,7 +9,12 @@ function ensureDir(dirPath) {
 }
 
 function safeKey(value) {
-    return encodeURIComponent(value).replace(/%/g, '_');
+    return encodeURIComponent(value).replace(/%/g, "_");
+}
+
+function buildCacheFilePath(cacheDir, cacheKey) {
+    const shard = cacheKey.slice(0, 2) || "__";
+    return path.join(cacheDir, shard, `${cacheKey}.json`);
 }
 
 function validateKanjiInput(value, fieldName) {
@@ -28,10 +33,10 @@ function validateKanjiInput(value, fieldName) {
 
 async function readJsonIfExists(filePath) {
     try {
-        const text = await fsp.readFile(filePath, 'utf-8');
+        const text = await fsp.readFile(filePath, "utf-8");
         return JSON.parse(text);
     } catch (err) {
-        if (err && err.code === 'ENOENT') {
+        if (err && err.code === "ENOENT") {
             return null;
         }
         throw err;
@@ -52,6 +57,7 @@ async function writeJsonAtomic(filePath, data) {
     const tempPath = `${filePath}.tmp`;
     const text = JSON.stringify(data, null, 2);
 
+    ensureDir(path.dirname(filePath));
     await fsp.writeFile(tempPath, text, "utf-8");
     await fsp.rename(tempPath, filePath);
 }
@@ -70,7 +76,7 @@ async function fetchJsonWithTimeout(url, timeoutMs) {
 
         return await res.json();
     } catch (err) {
-        if (err && err.name === 'AbortError') {
+        if (err && err.name === "AbortError") {
             throw new Error(`Request timed out after ${timeoutMs} ms: ${url}`);
         }
         throw err;
@@ -88,13 +94,13 @@ function createKanjiApiClient({ baseUrl, cacheDir, fetchTimeoutMs = 10000 }) {
         throw new Error("cacheDir is required");
     }
 
-    const normalizeBaseUrl = baseUrl.replace(/\/+$/, "");
+    const normalizedBaseUrl = baseUrl.replace(/\/+$/, "");
     const inFlight = new Map();
 
     async function fetchCachedJson({ cacheKey, url }) {
         ensureDir(cacheDir);
 
-        const filePath = path.join(cacheDir, `${cacheKey}.json`);
+        const filePath = buildCacheFilePath(cacheDir, cacheKey);
 
         try {
             const cached = await readJsonIfExists(filePath);
@@ -126,13 +132,12 @@ function createKanjiApiClient({ baseUrl, cacheDir, fetchTimeoutMs = 10000 }) {
         } finally {
             inFlight.delete(cacheKey);
         }
-
     }
-    
+
     return {
         async getKanji(kanji) {
             const value = validateKanjiInput(kanji, "kanji");
-            const url = `${normalizeBaseUrl}/v1/kanji/${encodeURIComponent(value)}`;
+            const url = `${normalizedBaseUrl}/v1/kanji/${encodeURIComponent(value)}`;
 
             return fetchCachedJson({
                 cacheKey: `kanji_${safeKey(value)}`,
@@ -142,7 +147,7 @@ function createKanjiApiClient({ baseUrl, cacheDir, fetchTimeoutMs = 10000 }) {
 
         async getWords(kanji) {
             const value = validateKanjiInput(kanji, "kanji");
-            const url = `${normalizeBaseUrl}/v1/words/${encodeURIComponent(value)}`;
+            const url = `${normalizedBaseUrl}/v1/words/${encodeURIComponent(value)}`;
 
             return fetchCachedJson({
                 cacheKey: `words_${safeKey(value)}`,
@@ -153,5 +158,6 @@ function createKanjiApiClient({ baseUrl, cacheDir, fetchTimeoutMs = 10000 }) {
 }
 
 module.exports = {
+    buildCacheFilePath,
     createKanjiApiClient,
 };

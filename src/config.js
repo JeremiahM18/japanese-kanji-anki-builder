@@ -1,18 +1,23 @@
-const { z } = require('zod');
+const path = require("node:path");
+const { z } = require("zod");
 
 const schema = z.object({
     port: z.coerce.number().int().positive().default(3719),
-    cacheDir: z.string().default('cache'),
-    jlptJsonPath: z.string().default('data/kanji_jlpt_only.json'),
-    kradfilePath: z.string().default('data/KRADFILE'),
-    kanjiApiBaseUrl: z.string().url().default('https://kanjiapi.dev'),
+    cacheDir: z.string().default("cache"),
+    jlptJsonPath: z.string().default("data/kanji_jlpt_only.json"),
+    kradfilePath: z.string().default("data/KRADFILE"),
+    kanjiApiBaseUrl: z.string().url().default("https://kanjiapi.dev"),
 
     // How many kanji to process at once during export generation
     exportConcurrency: z.coerce.number().int().positive().default(8),
 
-    // Timout for outbound API requests in milliseconds
+    // Timeout for outbound API requests in milliseconds
     fetchTimeoutMs: z.coerce.number().int().positive().default(10000),
 });
+
+function resolveFromCwd(value) {
+    return path.resolve(process.cwd(), value);
+}
 
 function loadConfig() {
     const raw = {
@@ -24,8 +29,15 @@ function loadConfig() {
         exportConcurrency: process.env.EXPORT_CONCURRENCY,
         fetchTimeoutMs: process.env.API_REQUEST_TIMEOUT,
     };
-    
-    return schema.parse(raw);
+
+    const parsed = schema.parse(raw);
+
+    return {
+        ...parsed,
+        cacheDir: resolveFromCwd(parsed.cacheDir),
+        jlptJsonPath: resolveFromCwd(parsed.jlptJsonPath),
+        kradfilePath: resolveFromCwd(parsed.kradfilePath),
+    };
 }
 
 module.exports = {

@@ -4,7 +4,7 @@ const fs = require("node:fs");
 const os = require("node:os");
 const path = require("node:path");
 
-const { createKanjiApiClient } = require("../src/kanjiApiClient");
+const { buildCacheFilePath, createKanjiApiClient } = require("../src/kanjiApiClient");
 
 function makeTempDir() {
     return fs.mkdtempSync(path.join(os.tmpdir(), "kanji-api-client-test-"));
@@ -13,6 +13,12 @@ function makeTempDir() {
 function cleanupTempDir(dir) {
     fs.rmSync(dir, { recursive: true, force: true });
 }
+
+test("buildCacheFilePath shards cache entries into subdirectories", () => {
+    const cachePath = buildCacheFilePath("cache-root", "kanji__E6_97_A5");
+
+    assert.equal(cachePath, path.join("cache-root", "ka", "kanji__E6_97_A5.json"));
+});
 
 test("getKanji fetches once, writes cache, and reuses cached response", async () => {
     const cacheDir = makeTempDir();
@@ -55,7 +61,7 @@ test("getKanji fetches once, writes cache, and reuses cached response", async ()
         assert.equal(second.kanji, "日");
         assert.deepEqual(second.meanings, ["day", "sun"]);
 
-        const expectedFile = path.join(cacheDir, "kanji__E6_97_A5.json");
+        const expectedFile = buildCacheFilePath(cacheDir, "kanji__E6_97_A5");
         assert.equal(fs.existsSync(expectedFile), true, "expected kanji cache file to exist");
 
         const cachedText = fs.readFileSync(expectedFile, "utf-8");
@@ -141,8 +147,8 @@ test("getWords uses a separate cache entry from getKanji", async () => {
         assert.match(seenUrls[0], /\/kanji\//);
         assert.match(seenUrls[1], /\/words\//);
 
-        const kanjiCacheFile = path.join(cacheDir, "kanji__E6_97_A5.json");
-        const wordsCacheFile = path.join(cacheDir, "words__E6_97_A5.json");
+        const kanjiCacheFile = buildCacheFilePath(cacheDir, "kanji__E6_97_A5");
+        const wordsCacheFile = buildCacheFilePath(cacheDir, "words__E6_97_A5");
 
         assert.equal(fs.existsSync(kanjiCacheFile), true);
         assert.equal(fs.existsSync(wordsCacheFile), true);
@@ -226,10 +232,7 @@ test("non-ok fetch response throws an error", async () => {
             fetchTimeoutMs: 1000,
         });
 
-        await assert.rejects(
-            client.getKanji("水"),
-            /Failed to fetch 500/
-        );
+        await assert.rejects(client.getKanji("水"), /Failed to fetch 500/);
     } finally {
         global.fetch = originalFetch;
         cleanupTempDir(cacheDir);
@@ -243,7 +246,8 @@ test("corrupted cache is discarded and refetched", async () => {
     let fetchCalls = 0;
 
     try {
-        const cacheFile = path.join(cacheDir, "kanji__E6_B0_B4.json");
+        const cacheFile = buildCacheFilePath(cacheDir, "kanji__E6_B0_B4");
+        fs.mkdirSync(path.dirname(cacheFile), { recursive: true });
         fs.writeFileSync(cacheFile, "{ not valid json", "utf-8");
 
         global.fetch = async () => {

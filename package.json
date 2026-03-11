@@ -10,7 +10,8 @@
   "scripts": {
     "dev": "nodemon",
     "start": "node src/server.js",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "node test/run-tests.js"
   },
   "keywords": [
     "japanese",

@@ -215,7 +215,6 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
         limit: 1,
     });
 
-    console.log("TSV OUTPUT:\n", tsv);
 
     const lines = tsv.trim().split("\n");
     

@@ -1,4 +1,4 @@
-module.export = [
+module.exports = [
     {
         files: ["**/*.js"],
         ignores: ["node_modules/**", "cache/**"],
@@ -7,9 +7,9 @@ module.export = [
             sourceType: "commonjs",
         },
         rules: {
-            "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+            "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
             "no-constant-condition": "error",
-            "no-console": "off"
-        }
-    }
+            "no-console": "off",
+        },
+    },
 ];

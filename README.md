@@ -18,6 +18,8 @@ This repository is intentionally built with production-style standards even thou
 - Caches kanji and word API responses separately with validation, atomic writes, and in-flight deduplication
 - Supports provider-based media acquisition for both stroke order and audio
 - Supports configurable remote HTTP fallback providers for stroke-order images, stroke-order animations, and audio
+- Tracks provider hits, misses, errors, and last-success state for operational visibility
+- Returns per-sync acquisition reports that show which providers were tried and which one won
 - Persists per-kanji media manifests that can grow into richer provider and synthesis flows later
 - Exposes health, readiness, inference, media lookup, stroke-order sync, and audio sync endpoints
 - Runs CI on pushes, pull requests, and manual dispatch
@@ -104,11 +106,11 @@ C:\japanese_kanji_builder
 - `src/inference/`
   Extracts candidates, ranks them, and derives learner-facing meaning, notes, and sentence output.
 - `src/services/mediaProviders.js`
-  Provides reusable local and remote media provider adapters.
+  Provides reusable local and remote media provider adapters plus provider metrics tracking.
 - `src/services/strokeOrderService.js`
-  Resolves stroke-order assets through providers and imports them into managed storage.
+  Resolves stroke-order assets through providers, tracks provider outcomes, and imports winning assets into managed storage.
 - `src/services/audioService.js`
-  Resolves audio assets through providers and imports them into managed storage.
+  Resolves audio assets through providers, tracks provider outcomes, and imports winning assets into managed storage.
 - `src/services/exportService.js`
   Orchestrates kanji fetches, inference, media lookup, and Anki-ready TSV generation.
 - `src/services/mediaStore.js`
@@ -117,34 +119,6 @@ C:\japanese_kanji_builder
   Exposes HTTP routes and operational endpoints.
 - `src/server.js`
   Performs process startup and dependency wiring.
-
-### Runtime flow
-
-1. `src/server.js` loads config and validates required datasets at startup.
-2. JLPT JSON, KRADFILE, the optional sentence corpus, and optional curated study data are loaded once.
-3. `src/app.js` builds the Express app from injected dependencies.
-4. Export requests call `buildTsvForJlptLevel()` with bounded concurrency.
-5. Each kanji fetches kanji metadata, word candidates, and best known stroke-order and audio paths concurrently.
-6. The inference engine returns ranked candidates, `bestWord`, meaning output, notes, sentence candidates, and score breakdowns.
-7. Media services query their configured local providers first, then remote HTTP providers when configured, import matching assets into managed storage, and update the per-kanji manifest.
-8. The export service formats stroke order as `<img ...>` and audio as `[sound:...]` so the TSV is Anki-ready.
-
-## Output Fields
-
-The exported TSV includes these columns:
-
-- `Kanji`
-- `MeaningJP`
-- `Reading`
-- `StrokeOrder`
-- `Audio`
-- `Radical`
-- `Notes`
-- `ExampleSentence`
-
-`StrokeOrder` is exported as Anki-ready image markup using the managed asset filename, for example `<img src="65E5_日-stroke-order.gif" />`.
-
-`Audio` is exported as Anki-ready sound markup using the managed asset filename, for example `[sound:65E5_日-kanji-reading-日.mp3]`.
 
 ## Configuration
 
@@ -168,38 +142,30 @@ The exported TSV includes these columns:
 | `API_REQUEST_TIMEOUT` | `10000` | Upstream request timeout in milliseconds |
 | `LOG_LEVEL` | `info` | Pino log level |
 
-## Provider Model
+## Provider Observability
 
-Both stroke order and audio use the same provider pattern.
+Provider metrics now track:
 
-Current provider support:
+- total requests per provider
+- hits per provider
+- misses per provider
+- errors per provider
+- `lastSuccessAt`
+- `lastErrorAt`
+- `lastErrorMessage`
 
-- local-directory provider for deterministic local ingestion
-- remote HTTP directory provider for base-URL-driven fallback acquisition
+These metrics are exposed through `GET /readyz` under `mediaProviders`.
 
-Designed next steps:
+Media sync responses now also include an `acquisition` object that shows the ordered provider attempts for the current sync call, for example:
 
-- source ranking beyond simple local-then-remote fallback
-- checksum-verified background acquisition jobs
-- provider-specific retry policies and observability
-- richer provenance and coverage reporting
-
-## Audio Workflow
-
-1. Place source assets into `data/media_sources/audio/`.
-2. Name them by kanji, codepoint, or kanji-plus-reading, for example `日.mp3`, `日_にち.mp3`, or `65E5.m4a`.
-3. Optionally configure `REMOTE_AUDIO_BASE_URL` for remote fallback.
-4. Sync a kanji with `POST /media/日/audio/sync`.
-5. Optionally send JSON metadata such as `category`, `text`, `reading`, `voice`, and `locale`.
-6. Export a JLPT level and the `Audio` field will reference the managed Anki filename.
-
-## Stroke-Order Workflow
-
-1. Place source assets into the configured local source directories.
-2. Name them by kanji or codepoint, for example `日.svg`, `65E5.svg`, or `U+65E5.gif`.
-3. Optionally configure `REMOTE_STROKE_ORDER_IMAGE_BASE_URL` and `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` for remote fallback.
-4. Sync a kanji with `POST /media/日/sync`.
-5. Export a JLPT level and the `StrokeOrder` field will reference the managed Anki filename.
+```json
+{
+  "image": [
+    { "provider": "local-filesystem", "status": "miss" },
+    { "provider": "remote-stroke-order-image", "status": "hit" }
+  ]
+}
+```
 
 ## HTTP Endpoints
 
@@ -207,7 +173,7 @@ Designed next steps:
 
 - `GET /`
 - `GET /healthz`
-- `GET /readyz`
+- `GET /readyz` including cache metrics and media-provider metrics
 
 ### Inference endpoints
 
@@ -216,36 +182,8 @@ Designed next steps:
 ### Media endpoints
 
 - `GET /media/:kanji` returns the managed media manifest plus best stroke-order and audio paths
-- `POST /media/:kanji/sync` imports local or remote stroke-order assets
-- `POST /media/:kanji/audio/sync` imports local or remote audio assets
-
-### Export endpoints
-
-- `GET /export/N5`
-- `GET /export/5`
-- `GET /export/N5?limit=10`
-- `GET /export/N5/download`
-- `GET /export/N5/download?limit=10`
-
-## Filesystem Strategy
-
-- Cache writes are atomic via temp-file rename.
-- Cache files are stored in sharded subdirectories instead of a single flat folder.
-- Corrupted cache entries are discarded and refetched automatically.
-- Media assets have a dedicated root directory independent of export output.
-- Each kanji gets a manifest with reserved slots for a stroke-order image, stroke-order animation, and audio assets.
-- Managed asset filenames are unique per kanji so they can be referenced safely from Anki media fields.
-- Source files are copied into managed storage instead of being referenced in place.
-
-## Media Manifest Contract
-
-Each kanji is assigned a directory under `data/media/kanji/<shard>/<codepoint>_<kanji>/`.
-
-The manifest currently tracks:
-
-- `strokeOrderImage`
-- `strokeOrderAnimation`
-- `audio[]` with category, text, reading, voice, and locale metadata
+- `POST /media/:kanji/sync` imports local or remote stroke-order assets and returns acquisition details
+- `POST /media/:kanji/audio/sync` imports local or remote audio assets and returns acquisition details
 
 ## Testing Strategy
 
@@ -261,6 +199,7 @@ The current test suite covers:
 - corrupted cache recovery
 - upstream payload validation
 - local and remote provider behavior
+- provider metrics and acquisition reporting
 - stroke-order source discovery and sync behavior
 - audio source discovery, import, and selection behavior
 - media layout and manifest persistence

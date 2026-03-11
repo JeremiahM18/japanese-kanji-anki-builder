@@ -40,6 +40,47 @@ async function fetchWithTimeout(fetchImpl, url, fetchTimeoutMs) {
     }
 }
 
+function createProviderMetrics(providers = []) {
+    return Object.fromEntries(
+        providers
+            .filter(Boolean)
+            .map((provider) => [provider.name || "unknown-provider", {
+                requests: 0,
+                hits: 0,
+                misses: 0,
+                errors: 0,
+                lastSuccessAt: null,
+                lastErrorAt: null,
+                lastErrorMessage: null,
+            }])
+    );
+}
+
+function updateProviderMetric(metrics, providerName, update) {
+    const name = providerName || "unknown-provider";
+
+    if (!metrics[name]) {
+        metrics[name] = {
+            requests: 0,
+            hits: 0,
+            misses: 0,
+            errors: 0,
+            lastSuccessAt: null,
+            lastErrorAt: null,
+            lastErrorMessage: null,
+        };
+    }
+
+    metrics[name] = {
+        ...metrics[name],
+        ...update,
+    };
+}
+
+function snapshotProviderMetrics(metrics) {
+    return JSON.parse(JSON.stringify(metrics || {}));
+}
+
 function createLocalDirectoryProvider({ name = "local-filesystem", sourceDir, extensionMap, buildCandidates }) {
     return {
         name,
@@ -142,28 +183,79 @@ function createRemoteHttpProvider({
     };
 }
 
-async function findAssetFromProviders(providers, input) {
+async function findAssetFromProvidersWithReport(providers, input, metrics = null) {
+    const attempts = [];
+
     for (const provider of Array.isArray(providers) ? providers : []) {
         if (!provider || typeof provider.findAsset !== "function") {
             continue;
         }
 
-        const asset = await provider.findAsset(input);
-        if (asset) {
-            return {
-                ...asset,
-                source: asset.source || provider.name || "unknown-provider",
-            };
+        const providerName = provider.name || "unknown-provider";
+
+        try {
+            updateProviderMetric(metrics || {}, providerName, {
+                requests: (metrics?.[providerName]?.requests || 0) + 1,
+            });
+
+            const asset = await provider.findAsset(input);
+
+            if (asset) {
+                updateProviderMetric(metrics || {}, providerName, {
+                    requests: metrics?.[providerName]?.requests || 1,
+                    hits: (metrics?.[providerName]?.hits || 0) + 1,
+                    lastSuccessAt: new Date().toISOString(),
+                    lastErrorMessage: null,
+                });
+                attempts.push({ provider: providerName, status: "hit" });
+
+                return {
+                    asset: {
+                        ...asset,
+                        source: asset.source || providerName,
+                    },
+                    attempts,
+                };
+            }
+
+            updateProviderMetric(metrics || {}, providerName, {
+                requests: metrics?.[providerName]?.requests || 1,
+                misses: (metrics?.[providerName]?.misses || 0) + 1,
+            });
+            attempts.push({ provider: providerName, status: "miss" });
+        } catch (err) {
+            updateProviderMetric(metrics || {}, providerName, {
+                requests: metrics?.[providerName]?.requests || 1,
+                errors: (metrics?.[providerName]?.errors || 0) + 1,
+                lastErrorAt: new Date().toISOString(),
+                lastErrorMessage: err instanceof Error ? err.message : String(err),
+            });
+            attempts.push({
+                provider: providerName,
+                status: "error",
+                error: err instanceof Error ? err.message : String(err),
+            });
         }
     }
 
-    return null;
+    return {
+        asset: null,
+        attempts,
+    };
+}
+
+async function findAssetFromProviders(providers, input) {
+    const result = await findAssetFromProvidersWithReport(providers, input, null);
+    return result.asset;
 }
 
 module.exports = {
     buildRemoteAssetUrl,
     computeChecksum,
     createLocalDirectoryProvider,
+    createProviderMetrics,
     createRemoteHttpProvider,
     findAssetFromProviders,
+    findAssetFromProvidersWithReport,
+    snapshotProviderMetrics,
 };

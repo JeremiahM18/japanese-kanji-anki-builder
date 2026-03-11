@@ -8,8 +8,10 @@ const path = require("node:path");
 const {
     buildRemoteAssetUrl,
     createLocalDirectoryProvider,
+    createProviderMetrics,
     createRemoteHttpProvider,
     findAssetFromProviders,
+    findAssetFromProvidersWithReport,
 } = require("../src/services/mediaProviders");
 const { buildKanjiFileCandidates } = require("../src/services/strokeOrderService");
 
@@ -86,6 +88,43 @@ test("createRemoteHttpProvider downloads an asset from a remote base URL", async
         assert.equal(asset.mimeType, "image/svg+xml");
         assert.equal(asset.url, `${baseUrl}%E6%97%A5.svg`);
     });
+});
+
+test("findAssetFromProvidersWithReport records hit and miss metrics", async () => {
+    const providers = [
+        {
+            name: "first",
+            async findAsset() {
+                return null;
+            },
+        },
+        {
+            name: "second",
+            async findAsset() {
+                return {
+                    fileName: "fallback.gif",
+                    extension: ".gif",
+                    source: "second",
+                    mimeType: "image/gif",
+                    checksum: "abc",
+                    content: Buffer.from("gif"),
+                };
+            },
+        },
+    ];
+    const metrics = createProviderMetrics(providers);
+    const result = await findAssetFromProvidersWithReport(providers, "日", metrics);
+
+    assert.equal(result.asset.fileName, "fallback.gif");
+    assert.deepEqual(result.attempts, [
+        { provider: "first", status: "miss" },
+        { provider: "second", status: "hit" },
+    ]);
+    assert.equal(metrics.first.requests, 1);
+    assert.equal(metrics.first.misses, 1);
+    assert.equal(metrics.second.requests, 1);
+    assert.equal(metrics.second.hits, 1);
+    assert.equal(typeof metrics.second.lastSuccessAt, "string");
 });
 
 test("findAssetFromProviders falls through until a provider returns an asset", async () => {

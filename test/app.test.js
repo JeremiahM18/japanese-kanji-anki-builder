@@ -14,6 +14,9 @@ function buildFixtureApp() {
         strokeOrderImageSourceDir: "C:\\repo\\data\\media_sources\\stroke-order\\images",
         strokeOrderAnimationSourceDir: "C:\\repo\\data\\media_sources\\stroke-order\\animations",
         audioSourceDir: "C:\\repo\\data\\media_sources\\audio",
+        remoteStrokeOrderImageBaseUrl: "https://media.example.com/stroke/images/",
+        remoteStrokeOrderAnimationBaseUrl: "https://media.example.com/stroke/animations/",
+        remoteAudioBaseUrl: "https://media.example.com/audio/",
         exportConcurrency: 4,
         fetchTimeoutMs: 2500,
     };
@@ -183,6 +186,17 @@ function buildFixtureApp() {
             const manifest = manifests.get(kanji);
             return manifest?.assets.strokeOrderAnimation?.path || manifest?.assets.strokeOrderImage?.path || "";
         },
+        getProviderMetrics() {
+            return {
+                image: {
+                    "local-filesystem": { requests: 1, hits: 0, misses: 1, errors: 0, lastSuccessAt: null, lastErrorAt: null, lastErrorMessage: null },
+                    "remote-stroke-order-image": { requests: 1, hits: 1, misses: 0, errors: 0, lastSuccessAt: "2026-03-11T00:00:00.000Z", lastErrorAt: null, lastErrorMessage: null },
+                },
+                animation: {
+                    "local-filesystem": { requests: 1, hits: 1, misses: 0, errors: 0, lastSuccessAt: "2026-03-11T00:00:00.000Z", lastErrorAt: null, lastErrorMessage: null },
+                },
+            };
+        },
         async syncKanji(kanji) {
             const manifest = manifests.get(kanji) || {
                 kanji,
@@ -204,6 +218,15 @@ function buildFixtureApp() {
                     image: Boolean(manifest.assets.strokeOrderImage),
                     animation: Boolean(manifest.assets.strokeOrderAnimation),
                 },
+                acquisition: {
+                    image: [
+                        { provider: "local-filesystem", status: "miss" },
+                        { provider: "remote-stroke-order-image", status: "hit" },
+                    ],
+                    animation: [
+                        { provider: "local-filesystem", status: "hit" },
+                    ],
+                },
             };
         },
     };
@@ -223,6 +246,12 @@ function buildFixtureApp() {
 
                 return true;
             })?.path || audio[0]?.path || "";
+        },
+        getProviderMetrics() {
+            return {
+                "local-filesystem": { requests: 1, hits: 0, misses: 1, errors: 0, lastSuccessAt: null, lastErrorAt: null, lastErrorMessage: null },
+                "remote-audio": { requests: 1, hits: 1, misses: 0, errors: 0, lastSuccessAt: "2026-03-11T00:00:00.000Z", lastErrorAt: null, lastErrorMessage: null },
+            };
         },
         async syncKanji(kanji, metadata = {}) {
             const manifest = manifests.get(kanji) || {
@@ -255,6 +284,12 @@ function buildFixtureApp() {
                 manifest,
                 found: {
                     audio: true,
+                },
+                acquisition: {
+                    audio: [
+                        { provider: "local-filesystem", status: "miss" },
+                        { provider: "remote-audio", status: "hit" },
+                    ],
                 },
             };
         },
@@ -322,8 +357,10 @@ test("health and readiness endpoints expose operational state", async () => {
         assert.equal(readyJson.datasets.curatedStudyEntries, 1);
         assert.equal(readyJson.config.exportConcurrency, 4);
         assert.equal(readyJson.config.audioSourceDir, "C:\\repo\\data\\media_sources\\audio");
+        assert.equal(readyJson.config.remoteAudioBaseUrl, "https://media.example.com/audio/");
         assert.equal(readyJson.cache.cacheHits, 7);
-        assert.equal(readyJson.cache.cacheMisses, 2);
+        assert.equal(readyJson.mediaProviders.strokeOrder.image["remote-stroke-order-image"].hits, 1);
+        assert.equal(readyJson.mediaProviders.audio["remote-audio"].hits, 1);
     });
 });
 
@@ -348,7 +385,7 @@ test("inference route exposes curated and corpus-backed study output", async () 
     });
 });
 
-test("media routes expose manifests and sync results", async () => {
+test("media routes expose manifests sync results and acquisition reports", async () => {
     const app = buildFixtureApp();
 
     await withServer(app, async (baseUrl) => {
@@ -369,6 +406,10 @@ test("media routes expose manifests and sync results", async () => {
         const syncJson = await syncRes.json();
         assert.equal(syncJson.found.image, true);
         assert.equal(syncJson.found.animation, true);
+        assert.deepEqual(syncJson.acquisition.image, [
+            { provider: "local-filesystem", status: "miss" },
+            { provider: "remote-stroke-order-image", status: "hit" },
+        ]);
 
         const audioSyncRes = await fetch(`${baseUrl}/media/日/audio/sync`, {
             method: "POST",
@@ -386,6 +427,10 @@ test("media routes expose manifests and sync results", async () => {
         const audioSyncJson = await audioSyncRes.json();
         assert.equal(audioSyncJson.found.audio, true);
         assert.equal(audioSyncJson.bestAudioPath, "audio/65E5_日-kanji-reading-日.mp3");
+        assert.deepEqual(audioSyncJson.acquisition.audio, [
+            { provider: "local-filesystem", status: "miss" },
+            { provider: "remote-audio", status: "hit" },
+        ]);
     });
 });
 

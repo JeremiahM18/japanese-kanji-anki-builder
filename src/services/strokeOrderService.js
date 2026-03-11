@@ -8,7 +8,13 @@ const {
     writeManifest,
     buildKanjiMediaId,
 } = require("./mediaStore");
-const { computeChecksum, createLocalDirectoryProvider, findAssetFromProviders } = require("./mediaProviders");
+const {
+    computeChecksum,
+    createLocalDirectoryProvider,
+    createProviderMetrics,
+    findAssetFromProvidersWithReport,
+    snapshotProviderMetrics,
+} = require("./mediaProviders");
 
 const IMAGE_EXTENSIONS = new Map([
     [".svg", "image/svg+xml"],
@@ -104,6 +110,10 @@ function createStrokeOrderService({
         }),
         ...animationProviders,
     ];
+    const providerMetrics = {
+        image: createProviderMetrics(resolvedImageProviders),
+        animation: createProviderMetrics(resolvedAnimationProviders),
+    };
 
     async function syncKanji(kanji) {
         const normalizedKanji = normalizeKanji(kanji);
@@ -111,8 +121,10 @@ function createStrokeOrderService({
         const manifest = (await readManifestIfExists(mediaRootDir, normalizedKanji)) || createEmptyMediaManifest(normalizedKanji);
         const mediaId = buildKanjiMediaId(normalizedKanji);
 
-        const imageAsset = await findAssetFromProviders(resolvedImageProviders, normalizedKanji);
-        const animationAsset = await findAssetFromProviders(resolvedAnimationProviders, normalizedKanji);
+        const imageLookup = await findAssetFromProvidersWithReport(resolvedImageProviders, normalizedKanji, providerMetrics.image);
+        const animationLookup = await findAssetFromProvidersWithReport(resolvedAnimationProviders, normalizedKanji, providerMetrics.animation);
+        const imageAsset = imageLookup.asset;
+        const animationAsset = animationLookup.asset;
 
         if (imageAsset) {
             const destinationPath = path.join(layout.imagesDir, `${mediaId}-stroke-order${imageAsset.extension}`);
@@ -149,6 +161,10 @@ function createStrokeOrderService({
                 image: Boolean(imageAsset),
                 animation: Boolean(animationAsset),
             },
+            acquisition: {
+                image: imageLookup.attempts,
+                animation: animationLookup.attempts,
+            },
         };
     }
 
@@ -167,9 +183,14 @@ function createStrokeOrderService({
         return manifest.assets.strokeOrderAnimation?.path || manifest.assets.strokeOrderImage?.path || "";
     }
 
+    function getProviderMetrics() {
+        return snapshotProviderMetrics(providerMetrics);
+    }
+
     return {
         getBestStrokeOrderPath,
         getManifest,
+        getProviderMetrics,
         syncKanji,
     };
 }

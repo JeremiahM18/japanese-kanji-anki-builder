@@ -63,6 +63,12 @@ function createApp({
         const metrics = typeof kanjiApiClient.getMetrics === "function"
             ? kanjiApiClient.getMetrics()
             : null;
+        const strokeOrderProviderMetrics = typeof strokeOrderService?.getProviderMetrics === "function"
+            ? strokeOrderService.getProviderMetrics()
+            : null;
+        const audioProviderMetrics = typeof audioService?.getProviderMetrics === "function"
+            ? audioService.getProviderMetrics()
+            : null;
 
         res.status(200).json({
             status: "ready",
@@ -82,10 +88,17 @@ function createApp({
                 strokeOrderImageSourceDir: config.strokeOrderImageSourceDir,
                 strokeOrderAnimationSourceDir: config.strokeOrderAnimationSourceDir,
                 audioSourceDir: config.audioSourceDir,
+                remoteStrokeOrderImageBaseUrl: config.remoteStrokeOrderImageBaseUrl || null,
+                remoteStrokeOrderAnimationBaseUrl: config.remoteStrokeOrderAnimationBaseUrl || null,
+                remoteAudioBaseUrl: config.remoteAudioBaseUrl || null,
                 exportConcurrency: config.exportConcurrency,
                 fetchTimeoutMs: config.fetchTimeoutMs,
             },
             cache: metrics,
+            mediaProviders: {
+                strokeOrder: strokeOrderProviderMetrics,
+                audio: audioProviderMetrics,
+            },
         });
     });
 
@@ -243,4 +256,3 @@ module.exports = {
     parseLevel,
     parseLimit,
 };
-

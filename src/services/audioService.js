@@ -7,7 +7,12 @@ const {
     writeManifest,
     buildKanjiMediaId,
 } = require("./mediaStore");
-const { createLocalDirectoryProvider, findAssetFromProviders } = require("./mediaProviders");
+const {
+    createLocalDirectoryProvider,
+    createProviderMetrics,
+    findAssetFromProvidersWithReport,
+    snapshotProviderMetrics,
+} = require("./mediaProviders");
 const {
     buildKanjiFileCandidates,
     copyAssetIfChanged,
@@ -161,6 +166,7 @@ function createAudioService({ mediaRootDir, audioSourceDir, providers = [] }) {
         }),
         ...providers,
     ];
+    const providerMetrics = createProviderMetrics(resolvedProviders);
 
     async function getManifest(kanji) {
         const normalizedKanji = normalizeKanji(kanji);
@@ -180,11 +186,12 @@ function createAudioService({ mediaRootDir, audioSourceDir, providers = [] }) {
             locale: cleanToken(metadata.locale) || "ja-JP",
         };
 
-        const audioAsset = await findAssetFromProviders(resolvedProviders, {
+        const audioLookup = await findAssetFromProvidersWithReport(resolvedProviders, {
             kanji: normalizedKanji,
             text: normalizedMetadata.text,
             reading: normalizedMetadata.reading,
-        });
+        }, providerMetrics);
+        const audioAsset = audioLookup.asset;
 
         if (!audioAsset) {
             const writtenManifest = await writeManifest(mediaRootDir, manifest);
@@ -194,6 +201,9 @@ function createAudioService({ mediaRootDir, audioSourceDir, providers = [] }) {
                 manifest: writtenManifest,
                 found: {
                     audio: false,
+                },
+                acquisition: {
+                    audio: audioLookup.attempts,
                 },
             };
         }
@@ -226,6 +236,9 @@ function createAudioService({ mediaRootDir, audioSourceDir, providers = [] }) {
             found: {
                 audio: true,
             },
+            acquisition: {
+                audio: audioLookup.attempts,
+            },
         };
     }
 
@@ -239,9 +252,14 @@ function createAudioService({ mediaRootDir, audioSourceDir, providers = [] }) {
         return selectBestAudioAsset(manifest.assets.audio, preferences)?.path || "";
     }
 
+    function getProviderMetrics() {
+        return snapshotProviderMetrics(providerMetrics);
+    }
+
     return {
         getBestAudioPath,
         getManifest,
+        getProviderMetrics,
         syncKanji,
     };
 }

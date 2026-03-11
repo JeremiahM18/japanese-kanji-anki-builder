@@ -49,6 +49,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
                 kanjiInfo,
                 words,
                 maxExamples: 3,
+                maxSentences: 3,
             });
             const reading = labelReading(kanjiInfo?.on_readings, kanjiInfo?.kun_readings);
             const components = kradMap.get(kanji) || [];
@@ -72,6 +73,28 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
                 `ERROR: ${error instanceof Error ? error.message : String(error)}`,
             ].map(tsvEscape).join("\t");
         }
+    }
+
+    async function buildInferenceForKanji({ kanji, kanjiApiClient, strokeOrderService }) {
+        const [kanjiInfo, words, strokeOrderPath] = await Promise.all([
+            kanjiApiClient.getKanji(kanji),
+            kanjiApiClient.getWords(kanji),
+            typeof strokeOrderService?.getBestStrokeOrderPath === "function"
+                ? strokeOrderService.getBestStrokeOrderPath(kanji)
+                : Promise.resolve(""),
+        ]);
+
+        return {
+            ...inferenceEngine.inferKanjiStudyData({
+                kanji,
+                kanjiInfo,
+                words,
+                maxExamples: 3,
+                maxSentences: 4,
+            }),
+            reading: labelReading(kanjiInfo?.on_readings, kanjiInfo?.kun_readings),
+            strokeOrderPath,
+        };
     }
 
     async function buildTsvForJlptLevel({
@@ -117,6 +140,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
     }
 
     return {
+        buildInferenceForKanji,
         buildRowForKanji,
         buildTsvForJlptLevel,
         mapWithConcurrency,
@@ -127,6 +151,7 @@ const defaultExportService = createExportService();
 
 module.exports = {
     createExportService,
+    buildInferenceForKanji: defaultExportService.buildInferenceForKanji,
     buildRowForKanji: defaultExportService.buildRowForKanji,
     buildTsvForJlptLevel: defaultExportService.buildTsvForJlptLevel,
     mapWithConcurrency: defaultExportService.mapWithConcurrency,

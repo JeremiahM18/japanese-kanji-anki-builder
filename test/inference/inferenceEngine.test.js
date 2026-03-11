@@ -49,4 +49,8 @@ test("inference engine ranks candidates and returns learner-friendly output", ()
     assert.match(result.notes, /日本/);
     assert.equal(result.candidates.length, 2);
     assert.equal(result.candidates[0].score > result.candidates[1].score, true);
+    assert.equal(result.sentenceCandidates.length >= 2, true);
+    assert.equal(result.sentenceCandidates[0].type, "definition");
+    assert.match(result.sentenceCandidates[0].japanese, /日本/);
+    assert.match(result.sentenceCandidates[0].english, /Japan/);
 });

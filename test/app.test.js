@@ -183,6 +183,22 @@ test("health and readiness endpoints expose operational state", async () => {
     });
 });
 
+test("inference route exposes ranked study output and sentence candidates", async () => {
+    const app = buildFixtureApp();
+
+    await withServer(app, async (baseUrl) => {
+        const response = await fetch(`${baseUrl}/inference/日`);
+        assert.equal(response.status, 200);
+
+        const json = await response.json();
+        assert.equal(json.status, "ok");
+        assert.equal(json.inference.bestWord.written, "日本");
+        assert.equal(json.inference.strokeOrderPath, "animations/stroke-order.gif");
+        assert.equal(json.inference.sentenceCandidates.length >= 2, true);
+        assert.match(json.inference.sentenceCandidates[0].japanese, /日本/);
+    });
+});
+
 test("media routes expose manifests and sync results", async () => {
     const app = buildFixtureApp();
 

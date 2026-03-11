@@ -1,6 +1,6 @@
 # Japanese Kanji Anki Builder
 
-A Node.js service for generating structured JLPT kanji TSV exports for Anki using `kanjiapi.dev`, KRADFILE radicals, deterministic export formatting, cache-backed upstream retrieval, a provider-ready stroke-order media pipeline, and a deterministic Phase 1 inference engine.
+A Node.js service for generating structured JLPT kanji TSV exports for Anki using `kanjiapi.dev`, KRADFILE radicals, deterministic export formatting, cache-backed upstream retrieval, a provider-ready stroke-order media pipeline, and a deterministic inference engine.
 
 ## Why This Project Exists
 
@@ -16,6 +16,7 @@ The engineering direction for this repository is deliberate: treat even a person
 - Adds example vocabulary with furigana-style readings
 - Separates raw data fetching, inference, export orchestration, and media management into distinct modules
 - Uses a deterministic inference engine to rank example words and derive learner-friendly `MeaningJP` and `Notes` output
+- Generates sentence candidates from ranked study words so kanji inference is inspectable before future model-based work
 - Caches kanji and word API responses separately
 - Validates upstream API payloads before they are cached or consumed
 - Tracks cache and fetch metrics for readiness checks and benchmarks
@@ -25,13 +26,13 @@ The engineering direction for this repository is deliberate: treat even a person
 - Writes per-kanji media manifests that can later expand to audio without changing storage contracts
 - Populates the `StrokeOrder` TSV field with the best available media asset path when one exists
 - Recovers from corrupted cache files automatically
-- Exposes health, readiness, media lookup, and media sync endpoints for operational visibility
+- Exposes health, readiness, inference, media lookup, and media sync endpoints for operational visibility
 - Runs CI on every push to `main`, every pull request, and on manual dispatch
 - Includes automated tests for caching, concurrency, validation, inference, export formatting, HTTP behavior, stroke-order sync, and media manifests
 
 ## File Tree
 
-This is the meaningful project tree after the Phase 1 inference refactor:
+This is the meaningful project tree after the Phase 2 sentence inference pass:
 
 ```text
 C:\japanese_kanji_builder
@@ -56,7 +57,8 @@ C:\japanese_kanji_builder
 │  │  ├─ inferenceEngine.js
 │  │  ├─ meaningInference.js
 │  │  ├─ notesInference.js
-│  │  └─ ranking.js
+│  │  ├─ ranking.js
+│  │  └─ sentenceInference.js
 │  ├─ services/
 │  │  ├─ exportService.js
 │  │  ├─ mediaStore.js
@@ -86,7 +88,7 @@ C:\japanese_kanji_builder
 - `src/datasets/kradfile.js`
   Loads KRADFILE radicals/components.
 - `src/inference/`
-  Extracts word candidates, ranks them, and infers learner-facing meaning/notes output.
+  Extracts word candidates, ranks them, and infers learner-facing meaning, notes, and sentence output.
 - `src/services/exportService.js`
   Orchestrates kanji fetches, inference, stroke-order lookup, and TSV row generation.
 - `src/services/mediaStore.js`
@@ -105,14 +107,14 @@ C:\japanese_kanji_builder
 3. `src/app.js` builds the Express application from injected dependencies.
 4. Export requests call `buildTsvForJlptLevel()` with bounded concurrency.
 5. Each kanji fetches kanji metadata, word candidates, and best known stroke-order path concurrently.
-6. The inference engine extracts candidates, ranks them deterministically, and returns learner-facing fields.
+6. The inference engine extracts candidates, ranks them deterministically, and returns learner-facing meaning, notes, and sentence candidates.
 7. Upstream responses are validated, cached atomically on disk, and counted in client metrics.
 8. Stroke-order sync scans local source directories, imports matching assets into the managed media tree, and updates the kanji manifest.
 9. Audio can be added later to the same media manifest contract without redesigning the filesystem layout.
 
-## Phase 1 Inference Engine
+## Deterministic Inference Engine
 
-Phase 1 is intentionally deterministic rather than model-based.
+The inference engine is intentionally deterministic rather than model-based.
 
 Current inference layers:
 
@@ -124,10 +126,12 @@ Current inference layers:
   derives `bestWord`, `englishMeaning`, and `MeaningJP`
 - `notesInference.js`
   derives the `Notes` field from top-ranked examples
+- `sentenceInference.js`
+  derives study-oriented sentence candidates from top-ranked words
 - `inferenceEngine.js`
   composes the full learner-facing inference result
 
-This gives the project a stable, testable inference contract before sentence generation or more advanced model-assisted logic is added.
+Phase 2 sentence inference is still heuristic and intentionally conservative. It creates deterministic study sentences from ranked word candidates so we can inspect the inference layer directly before introducing more advanced sentence generation.
 
 ## Output Fields
 
@@ -200,6 +204,15 @@ Optional flags:
 
 The benchmark reports duration, rows per second, cache hit ratio, network fetches, and validation failures so you can measure changes before and after optimization work.
 
+## Inference Workflow
+
+1. Call `GET /inference/:kanji` to inspect the current deterministic inference output.
+2. Review the ranked candidates, inferred meaning, notes, and sentence candidates.
+3. Tune scoring and selection rules in `src/inference/` rather than changing export formatting directly.
+4. Re-run tests and the export benchmark after meaningful inference changes.
+
+This route is the safest place to iterate on quality because it shows the intermediate reasoning results before the final deck export is generated.
+
 ## Stroke-Order Workflow
 
 1. Place source assets into the configured local source directories.
@@ -238,6 +251,10 @@ Current CI guarantees:
 - `GET /` basic liveness response
 - `GET /healthz` lightweight health check
 - `GET /readyz` readiness details including dataset counts, active config, and cache metrics
+
+### Inference endpoints
+
+- `GET /inference/:kanji` returns deterministic inference output for one kanji, including sentence candidates
 
 ### Media endpoints
 
@@ -289,6 +306,7 @@ The current test suite covers:
 
 - export formatting and row construction
 - deterministic inference output
+- sentence candidate generation
 - word-ranking behavior
 - cache creation and reuse
 - in-flight request deduplication
@@ -296,6 +314,7 @@ The current test suite covers:
 - corrupted cache recovery
 - upstream payload validation
 - health/readiness endpoint behavior
+- inference endpoint behavior
 - export download headers and request validation
 - media layout and manifest persistence
 - stroke-order source discovery and sync behavior
@@ -318,7 +337,7 @@ The working expectation for future changes is:
 
 - add request IDs and structured access logging
 - support resumable offline export workflows
-- add sentence-level inference on top of the deterministic engine
+- introduce richer sentence templates or corpus-backed sentence selection
 - add remote/provider adapters for stroke-order image and animation sources
 - add media acquisition jobs with checksum verification
 - add audio source adapters or synthesis jobs on top of the existing media manifest

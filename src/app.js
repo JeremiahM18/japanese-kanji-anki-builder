@@ -1,7 +1,8 @@
 const express = require("express");
 
 const { logger } = require("./logger");
-const { buildTsvForJlptLevel } = require("./services/exportService");
+const { createInferenceEngine } = require("./inference/inferenceEngine");
+const { createExportService } = require("./services/exportService");
 
 function parseLevel(param) {
     const s = String(param).toUpperCase().replace("N", "").trim();
@@ -28,7 +29,16 @@ function parseLimit(value) {
     return Math.floor(n);
 }
 
-function createApp({ config, jlptOnlyJson, kradMap, pickMainComponent, kanjiApiClient, strokeOrderService }) {
+function createApp({
+    config,
+    jlptOnlyJson,
+    kradMap,
+    pickMainComponent,
+    kanjiApiClient,
+    strokeOrderService,
+    inferenceEngine = createInferenceEngine(),
+    exportService = createExportService({ inferenceEngine }),
+}) {
     const app = express();
     const jlptKanjiCount = Object.keys(jlptOnlyJson).length;
 
@@ -69,6 +79,23 @@ function createApp({ config, jlptOnlyJson, kradMap, pickMainComponent, kanjiApiC
             },
             cache: metrics,
         });
+    });
+
+    app.get("/inference/:kanji", async (req, res, next) => {
+        try {
+            const inference = await exportService.buildInferenceForKanji({
+                kanji: req.params.kanji,
+                kanjiApiClient,
+                strokeOrderService,
+            });
+
+            return res.status(200).json({
+                status: "ok",
+                inference,
+            });
+        } catch (err) {
+            return next(err);
+        }
     });
 
     app.get("/media/:kanji", async (req, res, next) => {
@@ -129,7 +156,7 @@ function createApp({ config, jlptOnlyJson, kradMap, pickMainComponent, kanjiApiC
                 "Generating TSV for JLPT level"
             );
 
-            const tsv = await buildTsvForJlptLevel({
+            const tsv = await exportService.buildTsvForJlptLevel({
                 levelNumber: level,
                 jlptOnlyJson,
                 kradMap,

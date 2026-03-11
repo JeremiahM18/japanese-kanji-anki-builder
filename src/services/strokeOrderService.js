@@ -83,24 +83,26 @@ function createStrokeOrderService({
     mediaRootDir,
     imageSourceDir,
     animationSourceDir,
-    imageProviders,
-    animationProviders,
+    imageProviders = [],
+    animationProviders = [],
 }) {
-    const resolvedImageProviders = imageProviders || [
+    const resolvedImageProviders = [
         createLocalDirectoryProvider({
             name: "local-filesystem",
             sourceDir: imageSourceDir,
             extensionMap: IMAGE_EXTENSIONS,
             buildCandidates: (input) => buildKanjiFileCandidates(input),
         }),
+        ...imageProviders,
     ];
-    const resolvedAnimationProviders = animationProviders || [
+    const resolvedAnimationProviders = [
         createLocalDirectoryProvider({
             name: "local-filesystem",
             sourceDir: animationSourceDir,
             extensionMap: ANIMATION_EXTENSIONS,
             buildCandidates: (input) => buildKanjiFileCandidates(input),
         }),
+        ...animationProviders,
     ];
 
     async function syncKanji(kanji) {
@@ -173,10 +175,11 @@ function createStrokeOrderService({
 }
 
 module.exports = {
+    ANIMATION_EXTENSIONS,
+    IMAGE_EXTENSIONS,
     buildKanjiFileCandidates,
     copyAssetIfChanged,
     createStrokeOrderService,
     findMatchingAsset,
     normalizeKanji,
 };
-

@@ -13,6 +13,18 @@ Optional local media source folders:
 - `media_sources/stroke-order/animations/`
 - `media_sources/audio/`
 
+## Local and remote media sources
+
+The repository now supports both deterministic local-directory providers and optional remote HTTP fallback providers.
+
+Remote configuration lives in environment variables:
+
+- `REMOTE_STROKE_ORDER_IMAGE_BASE_URL`
+- `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL`
+- `REMOTE_AUDIO_BASE_URL`
+
+Remote providers look for the same candidate filenames you would use locally, appended to the configured base URL.
+
 ## Stroke-order source naming
 
 Recommended names:
@@ -41,10 +53,6 @@ Example for `日`:
 - `日.mp3`
 - `日_にち.mp3`
 - `65E5.m4a`
-
-## Provider notes
-
-The current repository ships with deterministic local-directory providers for stroke order and audio. The provider layer is shared so remote adapters can be added later without redesigning the services.
 
 ## Audio sync endpoint
 

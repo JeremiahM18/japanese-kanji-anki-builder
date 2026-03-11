@@ -13,6 +13,9 @@ const schema = z.object({
     strokeOrderImageSourceDir: z.string().default("data/media_sources/stroke-order/images"),
     strokeOrderAnimationSourceDir: z.string().default("data/media_sources/stroke-order/animations"),
     audioSourceDir: z.string().default("data/media_sources/audio"),
+    remoteStrokeOrderImageBaseUrl: z.string().url().optional(),
+    remoteStrokeOrderAnimationBaseUrl: z.string().url().optional(),
+    remoteAudioBaseUrl: z.string().url().optional(),
     exportConcurrency: z.coerce.number().int().positive().default(8),
     fetchTimeoutMs: z.coerce.number().int().positive().default(10000),
 });
@@ -34,6 +37,9 @@ function loadConfig() {
         strokeOrderImageSourceDir: process.env.STROKE_ORDER_IMAGE_SOURCE_DIR,
         strokeOrderAnimationSourceDir: process.env.STROKE_ORDER_ANIMATION_SOURCE_DIR,
         audioSourceDir: process.env.AUDIO_SOURCE_DIR,
+        remoteStrokeOrderImageBaseUrl: process.env.REMOTE_STROKE_ORDER_IMAGE_BASE_URL,
+        remoteStrokeOrderAnimationBaseUrl: process.env.REMOTE_STROKE_ORDER_ANIMATION_BASE_URL,
+        remoteAudioBaseUrl: process.env.REMOTE_AUDIO_BASE_URL,
         exportConcurrency: process.env.EXPORT_CONCURRENCY,
         fetchTimeoutMs: process.env.API_REQUEST_TIMEOUT,
     };

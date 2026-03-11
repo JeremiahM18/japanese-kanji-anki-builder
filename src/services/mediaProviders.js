@@ -15,6 +15,31 @@ async function readDirectoryEntries(sourceDir) {
     return fsp.readdir(sourceDir, { withFileTypes: true });
 }
 
+function normalizeBaseUrl(baseUrl) {
+    if (!baseUrl) {
+        return "";
+    }
+
+    return String(baseUrl).endsWith("/") ? String(baseUrl) : `${baseUrl}/`;
+}
+
+function buildRemoteAssetUrl(baseUrl, fileName) {
+    return new URL(fileName, normalizeBaseUrl(baseUrl)).toString();
+}
+
+async function fetchWithTimeout(fetchImpl, url, fetchTimeoutMs) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), Math.max(1, fetchTimeoutMs || 10000));
+
+    try {
+        return await fetchImpl(url, {
+            signal: controller.signal,
+        });
+    } finally {
+        clearTimeout(timeout);
+    }
+}
+
 function createLocalDirectoryProvider({ name = "local-filesystem", sourceDir, extensionMap, buildCandidates }) {
     return {
         name,
@@ -59,6 +84,64 @@ function createLocalDirectoryProvider({ name = "local-filesystem", sourceDir, ex
     };
 }
 
+function createRemoteHttpProvider({
+    name = "remote-http",
+    baseUrl,
+    extensionMap,
+    buildCandidates,
+    fetchImpl = fetch,
+    fetchTimeoutMs = 10000,
+}) {
+    return {
+        name,
+        async findAsset(input) {
+            if (!baseUrl) {
+                return null;
+            }
+
+            const candidates = Array.isArray(buildCandidates(input)) ? buildCandidates(input) : [];
+
+            for (const candidate of candidates) {
+                for (const extension of extensionMap.keys()) {
+                    const fileName = `${candidate}${extension}`;
+                    const url = buildRemoteAssetUrl(baseUrl, fileName);
+                    let response;
+
+                    try {
+                        response = await fetchWithTimeout(fetchImpl, url, fetchTimeoutMs);
+                    } catch (err) {
+                        if (err && err.name === "AbortError") {
+                            throw new Error(`Timed out fetching remote media asset from ${url}`);
+                        }
+
+                        throw err;
+                    }
+
+                    if (!response.ok) {
+                        continue;
+                    }
+
+                    const arrayBuffer = await response.arrayBuffer();
+                    const buffer = Buffer.from(arrayBuffer);
+
+                    return {
+                        fileName,
+                        mimeType: response.headers.get("content-type") || extensionMap.get(extension),
+                        checksum: computeChecksum(buffer),
+                        sizeBytes: buffer.length,
+                        content: buffer,
+                        extension,
+                        source: name,
+                        url,
+                    };
+                }
+            }
+
+            return null;
+        },
+    };
+}
+
 async function findAssetFromProviders(providers, input) {
     for (const provider of Array.isArray(providers) ? providers : []) {
         if (!provider || typeof provider.findAsset !== "function") {
@@ -78,7 +161,9 @@ async function findAssetFromProviders(providers, input) {
 }
 
 module.exports = {
+    buildRemoteAssetUrl,
     computeChecksum,
     createLocalDirectoryProvider,
+    createRemoteHttpProvider,
     findAssetFromProviders,
 };

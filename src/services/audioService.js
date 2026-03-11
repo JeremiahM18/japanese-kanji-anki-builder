@@ -151,14 +151,15 @@ function buildDestinationStem({ mediaId, category, text, reading }) {
     return parts.join("-") || `${mediaId}-kanji-reading`;
 }
 
-function createAudioService({ mediaRootDir, audioSourceDir, providers }) {
-    const resolvedProviders = providers || [
+function createAudioService({ mediaRootDir, audioSourceDir, providers = [] }) {
+    const resolvedProviders = [
         createLocalDirectoryProvider({
             name: "local-filesystem",
             sourceDir: audioSourceDir,
             extensionMap: AUDIO_EXTENSIONS,
             buildCandidates: buildAudioFileCandidates,
         }),
+        ...providers,
     ];
 
     async function getManifest(kanji) {

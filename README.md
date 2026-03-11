@@ -11,7 +11,7 @@ This repository is intentionally built with production-style standards even thou
 - Builds JLPT kanji decks for N5-N1
 - Generates deterministic TSV output for Anki import
 - Infers learner-friendly `MeaningJP`, `Notes`, and `ExampleSentence` output
-- Exports Anki-ready `StrokeOrder` and `Audio` fields
+- Exports Anki-ready `StrokeOrder`, `StrokeOrderImage`, `StrokeOrderAnimation`, and `Audio` fields
 - Uses curated study overrides for meanings, notes, preferred words, blocked words, blocked sentence phrases, and top example sentences
 - Uses sentence-corpus metadata to improve both word ranking and sentence selection
 - Exposes score breakdowns so ranking decisions are inspectable and tunable
@@ -134,7 +134,7 @@ C:\japanese_kanji_builder
 - `src/services/mediaServiceFactory.js`
   Centralizes media-provider construction so the server, bulk sync job, and build pipeline all use the same wiring.
 - `src/services/strokeOrderService.js`
-  Resolves stroke-order assets through providers, tracks provider outcomes, and imports winning assets into managed storage.
+  Resolves stroke-order image and animation assets through providers, tracks provider outcomes, and imports winning assets into managed storage.
 - `src/services/audioService.js`
   Resolves audio assets through providers, tracks provider outcomes, and imports winning assets into managed storage.
 - `src/services/mediaSync.js`
@@ -192,6 +192,29 @@ The current contract layer focuses on:
 - provider assets, attempts, and metrics
 - ranked inference output and sentence candidates
 - build normalization and artifact summaries
+
+## Stroke Order Media
+
+Stroke-order media is now surfaced in three ways:
+
+- `StrokeOrder` uses the best available asset and prefers animation over static image
+- `StrokeOrderImage` exposes the static asset directly when present
+- `StrokeOrderAnimation` exposes the animation asset directly when present
+
+That means a deck can keep a compatibility field while also using a dedicated animation field for kanji drawing playback.
+
+`GET /media/:kanji` now returns:
+
+- `bestStrokeOrderPath`
+- `strokeOrderImagePath`
+- `strokeOrderAnimationPath`
+
+`GET /inference/:kanji` now returns:
+
+- `strokeOrderPath`
+- `strokeOrderImagePath`
+- `strokeOrderAnimationPath`
+- matching Anki-ready HTML fields for each
 
 ## Build Pipeline
 
@@ -278,8 +301,8 @@ Media sync responses now also include an `acquisition` object that shows the ord
 
 ### Media endpoints
 
-- `GET /media/:kanji` returns the managed media manifest plus best stroke-order and audio paths
-- `POST /media/:kanji/sync` imports local or remote stroke-order assets and returns acquisition details
+- `GET /media/:kanji` returns the managed media manifest plus best stroke-order, explicit image/animation paths, and best audio path
+- `POST /media/:kanji/sync` imports local or remote stroke-order assets and returns acquisition details plus explicit image/animation paths
 - `POST /media/:kanji/audio/sync` imports local or remote audio assets and returns acquisition details
 
 ## Testing Strategy
@@ -297,7 +320,7 @@ The current test suite covers:
 - upstream payload validation
 - local and remote provider behavior
 - provider metrics and acquisition reporting
-- stroke-order source discovery and sync behavior
+- stroke-order source discovery, explicit image/animation selection, and sync behavior
 - audio source discovery, import, and selection behavior
 - build-pipeline artifact generation
 - media layout and manifest persistence

@@ -173,14 +173,18 @@ function createStrokeOrderService({
         return readManifestIfExists(mediaRootDir, normalizedKanji);
     }
 
-    async function getBestStrokeOrderPath(kanji) {
+    async function getStrokeOrderImagePath(kanji) {
         const manifest = await getManifest(kanji);
+        return manifest?.assets.strokeOrderImage?.path || "";
+    }
 
-        if (!manifest) {
-            return "";
-        }
+    async function getStrokeOrderAnimationPath(kanji) {
+        const manifest = await getManifest(kanji);
+        return manifest?.assets.strokeOrderAnimation?.path || "";
+    }
 
-        return manifest.assets.strokeOrderAnimation?.path || manifest.assets.strokeOrderImage?.path || "";
+    async function getBestStrokeOrderPath(kanji) {
+        return (await getStrokeOrderAnimationPath(kanji)) || (await getStrokeOrderImagePath(kanji)) || "";
     }
 
     function getProviderMetrics() {
@@ -191,6 +195,8 @@ function createStrokeOrderService({
         getBestStrokeOrderPath,
         getManifest,
         getProviderMetrics,
+        getStrokeOrderAnimationPath,
+        getStrokeOrderImagePath,
         syncKanji,
     };
 }

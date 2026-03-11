@@ -220,6 +220,12 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
         async getBestStrokeOrderPath(kanji) {
             return kanji === "日" ? "animations/65E5_日-stroke-order.gif" : "";
         },
+        async getStrokeOrderImagePath(kanji) {
+            return kanji === "日" ? "images/65E5_日-stroke-order.svg" : "";
+        },
+        async getStrokeOrderAnimationPath(kanji) {
+            return kanji === "日" ? "animations/65E5_日-stroke-order.gif" : "";
+        },
     };
 
     const audioService = {
@@ -242,15 +248,17 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
     const lines = tsv.trim().split("\n");
 
     assert.equal(lines.length, 2);
-    assert.equal(lines[0], "Kanji\tMeaningJP\tReading\tStrokeOrder\tAudio\tRadical\tNotes\tExampleSentence");
+    assert.equal(lines[0], "Kanji\tMeaningJP\tReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence");
 
     const cols = lines[1].split("\t");
     assert.equal(cols[0], "日");
     assert.equal(cols[1], "日本 （にほん） ／ day");
     assert.equal(cols[2], "オン:ニチ、 ジツ ／ くん:ひ、 び、 か");
     assert.equal(cols[3], '<img src="65E5_日-stroke-order.gif" />');
-    assert.equal(cols[4], "[sound:65E5_日-kanji-reading-日.mp3]");
-    assert.equal(cols[5], "日");
-    assert.equal(cols[6], "日本 （にほん） - Japan ／ 日よう日 （にちようび） - Sunday");
-    assert.equal(cols[7], '「日本」は「Japan」です。 ／ 「にほん」は「Japan」です。 ／ "日本" means "Japan."');
+    assert.equal(cols[4], '<img src="65E5_日-stroke-order.svg" />');
+    assert.equal(cols[5], '<img src="65E5_日-stroke-order.gif" />');
+    assert.equal(cols[6], "[sound:65E5_日-kanji-reading-日.mp3]");
+    assert.equal(cols[7], "日");
+    assert.equal(cols[8], "日本 （にほん） - Japan ／ 日よう日 （にちようび） - Sunday");
+    assert.equal(cols[9], '「日本」は「Japan」です。 ／ 「にほん」は「Japan」です。 ／ "日本" means "Japan."');
 });

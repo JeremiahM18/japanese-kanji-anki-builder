@@ -70,6 +70,8 @@ test("syncKanji imports image and animation assets into the media store", async 
         assert.equal(result.found.animation, true);
         assert.equal(result.manifest.assets.strokeOrderImage.path, `images/${mediaId}-stroke-order.svg`);
         assert.equal(result.manifest.assets.strokeOrderAnimation.path, `animations/${mediaId}-stroke-order.gif`);
+        assert.equal(await service.getStrokeOrderImagePath("日"), `images/${mediaId}-stroke-order.svg`);
+        assert.equal(await service.getStrokeOrderAnimationPath("日"), `animations/${mediaId}-stroke-order.gif`);
         assert.equal(await service.getBestStrokeOrderPath("日"), `animations/${mediaId}-stroke-order.gif`);
     } finally {
         cleanupTempDir(rootDir);
@@ -131,6 +133,8 @@ test("syncKanji preserves an empty manifest when no source assets exist", async 
         assert.equal(result.found.animation, false);
         assert.equal(result.manifest.assets.strokeOrderImage, null);
         assert.equal(result.manifest.assets.strokeOrderAnimation, null);
+        assert.equal(await service.getStrokeOrderImagePath("日"), "");
+        assert.equal(await service.getStrokeOrderAnimationPath("日"), "");
     } finally {
         cleanupTempDir(rootDir);
     }

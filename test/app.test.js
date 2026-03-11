@@ -182,6 +182,12 @@ function buildFixtureApp() {
         async getManifest(kanji) {
             return manifests.get(kanji) || null;
         },
+        async getStrokeOrderImagePath(kanji) {
+            return manifests.get(kanji)?.assets.strokeOrderImage?.path || "";
+        },
+        async getStrokeOrderAnimationPath(kanji) {
+            return manifests.get(kanji)?.assets.strokeOrderAnimation?.path || "";
+        },
         async getBestStrokeOrderPath(kanji) {
             const manifest = manifests.get(kanji);
             return manifest?.assets.strokeOrderAnimation?.path || manifest?.assets.strokeOrderImage?.path || "";
@@ -378,6 +384,10 @@ test("inference route exposes curated and corpus-backed study output", async () 
         assert.equal(json.inference.notes, "日本 （にほん） - Japan ／ curated-note");
         assert.equal(json.inference.strokeOrderPath, "animations/65E5_日-stroke-order.gif");
         assert.equal(json.inference.strokeOrderField, '<img src="65E5_日-stroke-order.gif" />');
+        assert.equal(json.inference.strokeOrderImagePath, "images/65E5_日-stroke-order.svg");
+        assert.equal(json.inference.strokeOrderImageField, '<img src="65E5_日-stroke-order.svg" />');
+        assert.equal(json.inference.strokeOrderAnimationPath, "animations/65E5_日-stroke-order.gif");
+        assert.equal(json.inference.strokeOrderAnimationField, '<img src="65E5_日-stroke-order.gif" />');
         assert.equal(json.inference.audioPath, "audio/65E5_日-kanji-reading-日.mp3");
         assert.equal(json.inference.audioField, "[sound:65E5_日-kanji-reading-日.mp3]");
         assert.equal(json.inference.sentenceCandidates[0].type, "curated");
@@ -395,6 +405,8 @@ test("media routes expose manifests sync results and acquisition reports", async
         const manifestJson = await manifestRes.json();
         assert.equal(manifestJson.status, "ok");
         assert.equal(manifestJson.bestStrokeOrderPath, "animations/65E5_日-stroke-order.gif");
+        assert.equal(manifestJson.strokeOrderImagePath, "images/65E5_日-stroke-order.svg");
+        assert.equal(manifestJson.strokeOrderAnimationPath, "animations/65E5_日-stroke-order.gif");
         assert.equal(manifestJson.bestAudioPath, "audio/65E5_日-kanji-reading-日.mp3");
 
         const missingRes = await fetch(`${baseUrl}/media/山`);
@@ -406,6 +418,8 @@ test("media routes expose manifests sync results and acquisition reports", async
         const syncJson = await syncRes.json();
         assert.equal(syncJson.found.image, true);
         assert.equal(syncJson.found.animation, true);
+        assert.equal(syncJson.strokeOrderImagePath, "images/65E5_日-stroke-order.svg");
+        assert.equal(syncJson.strokeOrderAnimationPath, "animations/65E5_日-stroke-order.gif");
         assert.deepEqual(syncJson.acquisition.image, [
             { provider: "local-filesystem", status: "miss" },
             { provider: "remote-stroke-order-image", status: "hit" },
@@ -447,13 +461,15 @@ test("download export sets attachment headers and includes Anki-ready media fiel
         const cols = lines[1].split("\t");
 
         assert.equal(lines.length, 2);
-        assert.equal(lines[0], "Kanji\tMeaningJP\tReading\tStrokeOrder\tAudio\tRadical\tNotes\tExampleSentence");
-        assert.equal(cols.length, 8);
+        assert.equal(lines[0], "Kanji\tMeaningJP\tReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence");
+        assert.equal(cols.length, 10);
         assert.equal(cols[3], '<img src="65E5_日-stroke-order.gif" />');
-        assert.equal(cols[4], "[sound:65E5_日-kanji-reading-日.mp3]");
-        assert.match(cols[6], /curated-note/);
-        assert.match(cols[7], /日本は島国です/);
-        assert.match(cols[7], /Japan is an island nation/);
+        assert.equal(cols[4], '<img src="65E5_日-stroke-order.svg" />');
+        assert.equal(cols[5], '<img src="65E5_日-stroke-order.gif" />');
+        assert.equal(cols[6], "[sound:65E5_日-kanji-reading-日.mp3]");
+        assert.match(cols[8], /curated-note/);
+        assert.match(cols[9], /日本は島国です/);
+        assert.match(cols[9], /Japan is an island nation/);
     });
 });
 

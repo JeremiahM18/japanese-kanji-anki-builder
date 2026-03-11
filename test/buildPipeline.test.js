@@ -96,6 +96,12 @@ test("runBuildPipeline writes exports, reports, and summary artifacts", async ()
                 async getBestStrokeOrderPath() {
                     return "";
                 },
+                async getStrokeOrderImagePath() {
+                    return "";
+                },
+                async getStrokeOrderAnimationPath() {
+                    return "";
+                },
             },
             audioService: {
                 async getBestAudioPath() {
@@ -112,7 +118,7 @@ test("runBuildPipeline writes exports, reports, and summary artifacts", async ()
     assert.equal(fs.existsSync(path.join(outDir, "build-summary.json")), true);
 
     const tsv = fs.readFileSync(path.join(outDir, "exports", "jlpt-n5.tsv"), "utf-8");
-    assert.match(tsv, /^Kanji\tMeaningJP\tReading\tStrokeOrder\tAudio\tRadical\tNotes\tExampleSentence/m);
+    assert.match(tsv, /^Kanji\tMeaningJP\tReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence/m);
     assert.match(tsv, /^日\t/m);
 
     const storedSummary = JSON.parse(fs.readFileSync(path.join(outDir, "build-summary.json"), "utf-8"));

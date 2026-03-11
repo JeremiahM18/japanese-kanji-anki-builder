@@ -135,6 +135,12 @@ function createApp({
                 status: "ok",
                 manifest,
                 bestStrokeOrderPath: await strokeOrderService.getBestStrokeOrderPath(req.params.kanji),
+                strokeOrderImagePath: typeof strokeOrderService?.getStrokeOrderImagePath === "function"
+                    ? await strokeOrderService.getStrokeOrderImagePath(req.params.kanji)
+                    : "",
+                strokeOrderAnimationPath: typeof strokeOrderService?.getStrokeOrderAnimationPath === "function"
+                    ? await strokeOrderService.getStrokeOrderAnimationPath(req.params.kanji)
+                    : "",
                 bestAudioPath: typeof audioService?.getBestAudioPath === "function"
                     ? await audioService.getBestAudioPath(req.params.kanji, { category: "kanji-reading", text: req.params.kanji })
                     : "",
@@ -151,6 +157,12 @@ function createApp({
                 status: "ok",
                 ...result,
                 bestStrokeOrderPath: await strokeOrderService.getBestStrokeOrderPath(req.params.kanji),
+                strokeOrderImagePath: typeof strokeOrderService?.getStrokeOrderImagePath === "function"
+                    ? await strokeOrderService.getStrokeOrderImagePath(req.params.kanji)
+                    : "",
+                strokeOrderAnimationPath: typeof strokeOrderService?.getStrokeOrderAnimationPath === "function"
+                    ? await strokeOrderService.getStrokeOrderAnimationPath(req.params.kanji)
+                    : "",
             });
         } catch (err) {
             return next(err);

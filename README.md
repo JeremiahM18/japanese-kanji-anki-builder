@@ -19,6 +19,7 @@ The engineering direction for this repository is deliberate: treat even a person
 - Stores cache entries in sharded subdirectories to avoid a single oversized cache folder
 - Recovers from corrupted cache files automatically
 - Exposes health and readiness endpoints for operational visibility
+- Runs CI on every push to `main`, every pull request, and on manual dispatch
 - Includes automated tests for caching, concurrency, retries, export formatting, and HTTP behavior
 
 ## Architecture
@@ -103,6 +104,27 @@ npm run lint
 npm test
 ```
 
+## CI Policy
+
+The repository now includes [ci.yml](/C:/japanese_kanji_builder/.github/workflows/ci.yml), which enforces the baseline verification path in GitHub Actions.
+
+Current CI guarantees:
+
+- runs on pushes to `main`
+- runs on every pull request
+- supports manual `workflow_dispatch`
+- verifies against Node.js 20 and 22
+- uses `npm ci` for reproducible installs
+- fails fast on lint or test regressions inside each job
+- cancels outdated in-progress runs for the same ref
+
+Recommended GitHub branch settings:
+
+- require pull requests before merging to `main`
+- require the `CI / Verify Node 20` and `CI / Verify Node 22` checks to pass
+- disable force pushes to `main`
+- disable branch deletion for `main`
+
 ## HTTP Endpoints
 
 ### Service endpoints
@@ -153,11 +175,11 @@ The working expectation for future changes is:
 - update the README whenever behavior, architecture, or operations change
 - preserve professional commit hygiene with focused, descriptive commits
 - add tests when changing behavior or infrastructure
+- keep CI green before merging
 
 ## Near-Term Improvement Ideas
 
-- add CI to run lint and tests on every push
-- introduce schema validation for upstream API payloads
+- add schema validation for upstream API payloads
 - add request IDs and structured access logging
 - support resumable offline export workflows
 - add benchmark scripts for export throughput at different concurrency levels

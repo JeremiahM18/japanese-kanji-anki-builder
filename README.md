@@ -439,3 +439,8 @@ The current test suite covers:
 - The tracked starter sentence corpus now covers a much broader slice of core JLPT N5 kanji with learner-friendly example sentences.
 - The starter curated study pack now covers a broader N5 foundation as well, so offline preview and exported notes can look substantially better before you add custom content.
 - Preferred-word ordering in curated study data is now preserved, so curated priority choices stay intact instead of being lost during normalization.
+## Recent N5 Coverage Improvements
+
+- The starter sentence and curated packs now cover a much larger share of JLPT N5, pushing the local N5 readiness baseline much closer to a useful learner deck.
+- With the current starter content merged locally, N5 sentence coverage is now roughly seventy percent and N5 curated coverage is above sixty percent.
+- That means the remaining big N5 gap is now media, with sentence coverage as the next content threshold to finish.

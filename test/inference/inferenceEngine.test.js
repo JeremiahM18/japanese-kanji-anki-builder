@@ -3,7 +3,12 @@ const assert = require("node:assert/strict");
 
 const { createInferenceEngine } = require("../../src/inference/inferenceEngine");
 const { scoreCandidate } = require("../../src/inference/ranking");
-const { scoreCorpusSentence } = require("../../src/inference/sentenceInference");
+const {
+    scoreCorpusSentence,
+    scoreSentenceLength,
+    scoreSentenceNaturalness,
+    scoreReadingPresence,
+} = require("../../src/inference/sentenceInference");
 
 test("corpus sentence scoring rewards quality metadata", () => {
     const candidate = {
@@ -17,6 +22,7 @@ test("corpus sentence scoring rewards quality metadata", () => {
         kanji: "日",
         written: "日本",
         japanese: "日本へ行きます。",
+        reading: "にほんへいきます。",
         english: "I will go to Japan.",
         source: "manual-curated",
         tags: ["core", "common", "beginner"],
@@ -29,6 +35,7 @@ test("corpus sentence scoring rewards quality metadata", () => {
         kanji: "日",
         written: "日本",
         japanese: "日本に参る。",
+        reading: "にほんにまいる。",
         english: "I go to Japan.",
         source: "dictionary-import",
         tags: ["rare", "archaic"],
@@ -38,6 +45,16 @@ test("corpus sentence scoring rewards quality metadata", () => {
     }, candidate, "日");
 
     assert.equal(strong > weak, true);
+});
+
+test("sentence scoring rewards short natural examples with reading metadata", () => {
+    assert.equal(scoreSentenceLength("日本へ行きます。") > scoreSentenceLength("日本国において文化的歴史的背景を深く学びます。"), true);
+    assert.equal(scoreReadingPresence("にほんへいきます。") > scoreReadingPresence(""), true);
+    assert.equal(
+        scoreSentenceNaturalness({ japanese: "日本へ行きます。", english: "I will go to Japan." })
+            > scoreSentenceNaturalness({ japanese: "「日本」は「Japan」です。", english: '"日本" means "Japan."' }),
+        true
+    );
 });
 
 test("scoreCandidate returns a structured score breakdown", () => {
@@ -372,4 +389,3 @@ test("inference engine falls back to templates when no corpus sentence exists", 
     assert.equal(result.curated.hasOverride, false);
     assert.equal(result.candidates[0].scoreBreakdown.totals.finalScore, result.candidates[0].score);
 });
-

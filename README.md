@@ -406,4 +406,9 @@ The current test suite covers:
 - Run `npm run deck:preview -- --level=5 --limit=5` to inspect sample cards before import.
 - The preview report shows the chosen meaning, reading, radical, notes, example sentence, and whether stroke-order, animation, and audio are currently present for each card.
 - You can also target specific kanji with `npm run deck:preview -- --kanji=日,本,学` to spot-check user-facing output for high-priority cards.
+## Recent Sentence Quality Improvements
+
+- Corpus sentence ranking now prefers shorter, more natural examples with reading metadata over long, literary, or definition-like lines.
+- Sentence scoring now rewards learner-friendly signals such as brevity, neutral register, common tags, strong frequency metadata, and explicit readings.
+- It also penalizes weak user-facing examples such as archaic phrasing, overly long lines, and sentence shapes that read like definitions instead of actual usage.
 

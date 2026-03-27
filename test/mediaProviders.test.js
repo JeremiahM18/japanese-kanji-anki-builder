@@ -63,6 +63,7 @@ test("createLocalDirectoryProvider caches the directory index until the folder f
     const rootDir = makeTempDir();
     let readDirectoryEntriesCalls = 0;
     let statDirectoryCalls = 0;
+    let fingerprintRevision = 1;
 
     try {
         fs.writeFileSync(path.join(rootDir, "日.svg"), "<svg />", "utf-8");
@@ -77,7 +78,12 @@ test("createLocalDirectoryProvider caches the directory index until the folder f
             },
             statDirectoryFn: async (sourceDir) => {
                 statDirectoryCalls += 1;
-                return fsp.stat(sourceDir);
+                const stats = await fsp.stat(sourceDir);
+                return {
+                    ...stats,
+                    mtimeMs: stats.mtimeMs + fingerprintRevision,
+                    ctimeMs: stats.ctimeMs + fingerprintRevision,
+                };
             },
         });
 
@@ -87,6 +93,7 @@ test("createLocalDirectoryProvider caches the directory index until the folder f
         assert.equal(statDirectoryCalls >= 2, true);
 
         fs.writeFileSync(path.join(rootDir, "本.svg"), "<svg />", "utf-8");
+        fingerprintRevision += 1000;
         await provider.findAsset("本");
 
         assert.equal(readDirectoryEntriesCalls, 2);

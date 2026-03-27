@@ -54,7 +54,7 @@ function scoreTags(tags) {
     if (tags.includes("beginner")) {
         score += 8;
     }
-    if (tags.includes("archaic") || tags.includes("rare")) {
+    if (tags.includes("rare") || tags.includes("archaic")) {
         score -= 10;
     }
 
@@ -92,6 +92,56 @@ function scoreJlpt(entryJlpt, kanji) {
     return kanji ? 4 : 0;
 }
 
+function scoreSentenceLength(japanese) {
+    const length = Array.from(String(japanese || "")).length;
+
+    if (length === 0) {
+        return -12;
+    }
+    if (length <= 8) {
+        return 12;
+    }
+    if (length <= 16) {
+        return 8;
+    }
+    if (length <= 24) {
+        return 3;
+    }
+    if (length <= 32) {
+        return -4;
+    }
+
+    return -12;
+}
+
+function scoreReadingPresence(reading) {
+    return String(reading || "").trim() ? 6 : -4;
+}
+
+function scoreSentenceNaturalness(entry) {
+    const japanese = String(entry.japanese || "");
+    const english = String(entry.english || "");
+    let score = 0;
+
+    if (/[。！？]$/.test(japanese)) {
+        score += 3;
+    }
+    if (/「.+」は「.+」です。/.test(japanese)) {
+        score -= 18;
+    }
+    if (/覚えます/.test(japanese)) {
+        score -= 10;
+    }
+    if (/ means /i.test(english) || /^".+" means /i.test(english)) {
+        score -= 12;
+    }
+    if (/I memorize/i.test(english)) {
+        score -= 10;
+    }
+
+    return score;
+}
+
 function scoreCorpusSentence(entry, candidate, kanji) {
     let score = candidate.score;
 
@@ -101,7 +151,7 @@ function scoreCorpusSentence(entry, candidate, kanji) {
     if (entry.kanji === kanji) {
         score += 20;
     }
-    if (entry.japanese.includes(candidate.written)) {
+    if (String(entry.japanese || "").includes(candidate.written)) {
         score += 10;
     }
 
@@ -110,6 +160,9 @@ function scoreCorpusSentence(entry, candidate, kanji) {
     score += scoreRegister(entry.register);
     score += scoreFrequencyRank(entry.frequencyRank);
     score += scoreJlpt(entry.jlpt, kanji);
+    score += scoreSentenceLength(entry.japanese);
+    score += scoreReadingPresence(entry.reading);
+    score += scoreSentenceNaturalness(entry);
 
     return score;
 }
@@ -195,7 +248,10 @@ module.exports = {
     scoreCorpusSentence,
     scoreFrequencyRank,
     scoreJlpt,
+    scoreReadingPresence,
     scoreRegister,
+    scoreSentenceLength,
+    scoreSentenceNaturalness,
     scoreSource,
     scoreTags,
 };

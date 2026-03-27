@@ -55,7 +55,7 @@ npm run deck:preview -- --kanji=日,本,学
 npm run deck:review:n5
 ```
 
-Preview shows meaning, notes, example sentence, radical, and media presence. `deck:review:n5` runs a small tracked golden N5 benchmark against hand-picked cards so we can keep the strongest level excellent as the inference and datasets evolve. Offline fallback preview now also surfaces local JLPT readings, and template-only fallback examples prefer a study-style line over a raw dictionary-definition sentence.
+Preview shows meaning, notes, example sentence, radical, and media presence. `deck:review:n5` runs a small tracked golden N5 benchmark against hand-picked cards so we can keep the strongest level excellent as the inference and datasets evolve. Offline fallback preview now also surfaces local JLPT readings, template-only fallback examples prefer a study-style line over a raw dictionary-definition sentence, and the shared inference layer now prefers more consistent exact-match meanings plus more diverse note selection drawn from the strongest N5 patterns.
 
 If the upstream kanji API is unavailable, preview falls back to local sentence corpus, curated study data, radicals, and managed media instead of failing outright.
 
@@ -270,3 +270,4 @@ npm run deck:preview -- --level=5 --limit=5
 npm run media:plan -- --level=5 --limit=10
 npm run deck:ready -- --levels=5 --limit=25
 ```
+

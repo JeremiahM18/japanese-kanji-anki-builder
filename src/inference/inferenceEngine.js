@@ -182,8 +182,8 @@ function createInferenceEngine({ sentenceCorpus = [], curatedStudyData = {} } = 
                 ),
                 curatedEntry
             );
-            const meaning = applyCuratedMeaning(inferMeaning({ kanjiMeanings, rankedCandidates }), curatedEntry, rankedCandidates);
-            const notes = applyCuratedNotes(inferNotes({ rankedCandidates, maxExamples }), curatedEntry);
+            const meaning = applyCuratedMeaning(inferMeaning({ kanji, kanjiMeanings, rankedCandidates }), curatedEntry, rankedCandidates);
+            const notes = applyCuratedNotes(inferNotes({ kanji, rankedCandidates, maxExamples }), curatedEntry);
             const sentenceCandidates = prependCuratedSentence(
                 filterBlockedSentenceCandidates(
                     inferSentenceCandidates({
@@ -241,3 +241,4 @@ module.exports = {
     getCuratedEntry,
     prependCuratedSentence,
 };
+

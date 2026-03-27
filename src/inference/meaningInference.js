@@ -11,6 +11,8 @@ const LEARNER_NOISE_PATTERNS = [
     /particle/i,
 ];
 
+const EXACT_WORD_GLOSS_MARGIN = 0;
+
 function scoreMeaningCandidate(meaning) {
     const text = String(meaning ?? "").trim();
 
@@ -70,6 +72,23 @@ function pickBestEnglishMeaning(meanings) {
     return ranked[0]?.meaning || String(meanings[0] ?? "").trim();
 }
 
+function chooseEnglishMeaning({ kanjiMeanings, bestWord, kanji }) {
+    const baseMeaning = pickBestEnglishMeaning(kanjiMeanings);
+    const baseScore = scoreMeaningCandidate(baseMeaning);
+    const wordGloss = String(bestWord?.gloss ?? "").trim();
+    const wordScore = scoreMeaningCandidate(wordGloss);
+
+    if (!baseMeaning && wordGloss) {
+        return wordGloss;
+    }
+
+    if (bestWord?.written === kanji && wordGloss && wordScore >= baseScore + EXACT_WORD_GLOSS_MARGIN) {
+        return wordGloss;
+    }
+
+    return baseMeaning || wordGloss;
+}
+
 function buildMeaningJP(bestWord, englishMeaning) {
     const jpHint = bestWord ? `${bestWord.written} （${bestWord.pron}）` : "";
     const english = String(englishMeaning ?? "").trim();
@@ -81,9 +100,9 @@ function buildMeaningJP(bestWord, englishMeaning) {
     return jpHint || english;
 }
 
-function inferMeaning({ kanjiMeanings, rankedCandidates }) {
+function inferMeaning({ kanji, kanjiMeanings, rankedCandidates }) {
     const bestWord = rankedCandidates[0] || null;
-    const englishMeaning = pickBestEnglishMeaning(kanjiMeanings);
+    const englishMeaning = chooseEnglishMeaning({ kanji, kanjiMeanings, bestWord });
 
     return {
         bestWord,
@@ -94,7 +113,9 @@ function inferMeaning({ kanjiMeanings, rankedCandidates }) {
 
 module.exports = {
     buildMeaningJP,
+    chooseEnglishMeaning,
     inferMeaning,
     pickBestEnglishMeaning,
     scoreMeaningCandidate,
 };
+

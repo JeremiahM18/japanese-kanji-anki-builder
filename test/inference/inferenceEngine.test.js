@@ -2,7 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const { createInferenceEngine } = require("../../src/inference/inferenceEngine");
-const { pickBestEnglishMeaning } = require("../../src/inference/meaningInference");
+const { chooseEnglishMeaning, pickBestEnglishMeaning } = require("../../src/inference/meaningInference");
 const { buildNotesFromRankedCandidates } = require("../../src/inference/notesInference");
 const { scoreCandidate } = require("../../src/inference/ranking");
 const {
@@ -343,7 +343,7 @@ test("inference engine ranks candidates and returns learner-friendly output", ()
     assert.equal(result.bestWord.written, "日本");
     assert.equal(result.englishMeaning, "day");
     assert.equal(result.meaningJP, "日本 （にほん） ／ day");
-    assert.match(result.notes, /日本/);
+    assert.equal(result.notes, "日本 （にほん） - Japan ／ 日よう日 （にちようび） - Sunday");
     assert.equal(result.candidates.length, 2);
     assert.equal(result.candidates[0].score > result.candidates[1].score, true);
     assert.equal(result.candidates[0].corpusSupportScore > 0, true);
@@ -386,6 +386,7 @@ test("inference engine falls back to templates when no corpus sentence exists", 
         ],
     });
 
+    assert.equal(result.englishMeaning, "book");
     assert.equal(result.sentenceCandidates[0].type, "study");
     assert.equal(result.sentenceCandidates[0].source, "template");
     assert.match(result.sentenceCandidates[0].japanese, /勉強します/);
@@ -393,6 +394,15 @@ test("inference engine falls back to templates when no corpus sentence exists", 
     assert.equal(result.candidates[0].scoreBreakdown.totals.finalScore, result.candidates[0].score);
 });
 
+test("chooseEnglishMeaning can prefer the exact-match word gloss over noisy kanji meanings", () => {
+    const result = chooseEnglishMeaning({
+        kanji: "本",
+        kanjiMeanings: ["counter for long cylindrical things", "origin"],
+        bestWord: { written: "本", gloss: "book" },
+    });
+
+    assert.equal(result, "book");
+});
 
 test("pickBestEnglishMeaning prefers learner-friendly meanings over metadata noise", () => {
     const result = pickBestEnglishMeaning([
@@ -404,12 +414,13 @@ test("pickBestEnglishMeaning prefers learner-friendly meanings over metadata noi
     assert.equal(result, "day");
 });
 
-test("buildNotesFromRankedCandidates dedupes repeated note variants", () => {
+test("buildNotesFromRankedCandidates favors exact-match and contextual notes without duplicates", () => {
     const result = buildNotesFromRankedCandidates([
         { written: "日本", gloss: "Japan", text: "日本 （にほん） - Japan" },
-        { written: "日本", gloss: "Japan", text: "日本 （にほん） - Japan" },
-        { written: "日本語", gloss: "Japanese", text: "日本語 （にほんご） - Japanese" },
-    ], 3);
+        { written: "日", gloss: "day", text: "日 （ひ） - day" },
+        { written: "日", gloss: "day", text: "日 （ひ） - day" },
+        { written: "日よう日", gloss: "Sunday", text: "日よう日 （にちようび） - Sunday" },
+    ], 3, "日");
 
-    assert.equal(result, "日本 （にほん） - Japan ／ 日本語 （にほんご） - Japanese");
+    assert.equal(result, "日 （ひ） - day ／ 日本 （にほん） - Japan ／ 日よう日 （にちようび） - Sunday");
 });

@@ -42,6 +42,7 @@ async function main() {
         strokeOrderImageSourceDir: config.strokeOrderImageSourceDir,
         strokeOrderAnimationSourceDir: config.strokeOrderAnimationSourceDir,
         audioSourceDir: config.audioSourceDir,
+        audioEnabled: config.enableAudio !== false,
         levels: options.levels,
         limit: options.limit,
     });

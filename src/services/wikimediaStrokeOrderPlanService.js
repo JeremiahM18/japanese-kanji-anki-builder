@@ -59,12 +59,12 @@ function cloneDiscoveryEntry(entry) {
     return entry ? JSON.parse(JSON.stringify(entry)) : null;
 }
 
-function buildPlanAsset(kanji, kind, discoveredAsset, discover) {
+function buildPlanAsset(kanji, kind, discoveredAsset, status) {
     if (discoveredAsset) {
         return {
             ...discoveredAsset,
             attribution: COMMONS_PROJECT_NOTE,
-            status: "confirmed_on_commons",
+            status,
         };
     }
 
@@ -74,8 +74,28 @@ function buildPlanAsset(kanji, kind, discoveredAsset, discover) {
         filePageUrl: buildCommonsFilePageUrl(fileName),
         downloadUrl: buildCommonsRedirectUrl(fileName),
         attribution: COMMONS_PROJECT_NOTE,
-        status: discover ? "not_found_on_commons" : "guessed_name",
+        status,
     };
+}
+
+function summarizeStatuses(rows) {
+    const summary = {
+        confirmed_on_commons: 0,
+        not_found_on_commons: 0,
+        guessed_name: 0,
+        discovery_unavailable: 0,
+    };
+
+    for (const row of rows) {
+        for (const asset of [row.image, row.animation]) {
+            if (!asset) {
+                continue;
+            }
+            summary[asset.status] = (summary[asset.status] || 0) + 1;
+        }
+    }
+
+    return summary;
 }
 
 async function buildWikimediaStrokeOrderPlan({
@@ -102,24 +122,42 @@ async function buildWikimediaStrokeOrderPlan({
     const fetchDiscoveryJson = fetchJson || (typeof fetch === "function" ? defaultFetchJson : null);
     const discoveryCache = discover ? loadDiscoveryCache(discoveryCachePath) : {};
     let cacheDirty = false;
+    let discoveryAvailable = discover;
+    let discoveryErrorMessage = null;
 
     for (const row of sourceReport.rows || []) {
         let discovery = discover ? cloneDiscoveryEntry(discoveryCache[row.kanji]) : null;
+        let discoveryState = discover ? "cache" : "disabled";
 
-        if (discover && !discovery && fetchDiscoveryJson) {
-            discovery = await discoverWikimediaStrokeOrderForKanji(row.kanji, {
-                fetchJson: fetchDiscoveryJson,
-            });
-            discoveryCache[row.kanji] = discovery;
-            cacheDirty = true;
+        if (discover && !discovery && fetchDiscoveryJson && discoveryAvailable) {
+            try {
+                discovery = await discoverWikimediaStrokeOrderForKanji(row.kanji, {
+                    fetchJson: fetchDiscoveryJson,
+                });
+                discoveryCache[row.kanji] = discovery;
+                cacheDirty = true;
+                discoveryState = "fetched";
+            } catch (error) {
+                discoveryAvailable = false;
+                discoveryErrorMessage = error.message;
+                discoveryState = "error";
+            }
         }
+
+        const fallbackStatus = !discover
+            ? "guessed_name"
+            : discoveryState === "error" || (!discovery && !discoveryAvailable)
+                ? "discovery_unavailable"
+                : "not_found_on_commons";
 
         rows.push({
             kanji: row.kanji,
             level: row.level,
-            image: row.hasImage ? null : buildPlanAsset(row.kanji, "image", discovery?.image || null, discover),
-            animation: row.hasAnimation ? null : buildPlanAsset(row.kanji, "animation", discovery?.animation || null, discover),
+            gapType: row.gapType,
+            image: row.hasImage ? null : buildPlanAsset(row.kanji, "image", discovery?.image || null, discovery?.image ? "confirmed_on_commons" : fallbackStatus),
+            animation: row.hasAnimation ? null : buildPlanAsset(row.kanji, "animation", discovery?.animation || null, discovery?.animation ? "confirmed_on_commons" : fallbackStatus),
             discovery,
+            discoveryState,
         });
     }
 
@@ -133,6 +171,9 @@ async function buildWikimediaStrokeOrderPlan({
         imageMissingCount: rows.filter((row) => Boolean(row.image)).length,
         animationMissingCount: rows.filter((row) => Boolean(row.animation)).length,
         discover,
+        discoveryAvailable,
+        discoveryErrorMessage,
+        statusSummary: summarizeStatuses(rows),
         rows,
         truncated: sourceReport.truncated,
         totalMissingRows: sourceReport.totalMissingRows,
@@ -149,7 +190,7 @@ function formatWikimediaStrokeOrderSheet(plan) {
     lines.push("");
 
     for (const row of plan.rows || []) {
-        const parts = [row.kanji, `N${row.level}`];
+        const parts = [row.kanji, `N${row.level}`, row.gapType || "unknown-gap"];
 
         if (row.image) {
             parts.push(row.image.fileName, row.image.filePageUrl);
@@ -180,7 +221,16 @@ function formatDiscoveryStatus(status) {
         ? "confirmed on Commons"
         : status === "not_found_on_commons"
             ? "not found on Commons at discovery time"
-            : "guessed Commons name";
+            : status === "discovery_unavailable"
+                ? "discovery unavailable; guessed Commons filename shown"
+                : "guessed Commons name";
+}
+
+function formatGapLabel(gapType) {
+    if (gapType === "animation_only") return "animation only";
+    if (gapType === "image_only") return "image only";
+    if (gapType === "missing_stroke_order") return "missing both stroke-order files";
+    return "mixed gap";
 }
 
 function formatWikimediaStrokeOrderPlan(plan) {
@@ -195,6 +245,12 @@ function formatWikimediaStrokeOrderPlan(plan) {
         lines.push("Discovery mode: enabled");
         if (plan.discoveryCachePath) {
             lines.push(`Discovery cache: ${plan.discoveryCachePath}`);
+        }
+        lines.push(`- Confirmed on Commons: ${plan.statusSummary.confirmed_on_commons || 0}`);
+        lines.push(`- Not found on Commons: ${plan.statusSummary.not_found_on_commons || 0}`);
+        lines.push(`- Discovery unavailable fallback: ${plan.statusSummary.discovery_unavailable || 0}`);
+        if (plan.discoveryErrorMessage) {
+            lines.push(`Discovery note: ${plan.discoveryErrorMessage}`);
         }
     }
     lines.push("");
@@ -211,7 +267,7 @@ function formatWikimediaStrokeOrderPlan(plan) {
     lines.push("");
     lines.push("Download checklist:");
     for (const row of plan.rows || []) {
-        lines.push(`- ${row.kanji} (N${row.level})`);
+        lines.push(`- ${row.kanji} (N${row.level}, ${formatGapLabel(row.gapType)})`);
         if (row.image) {
             lines.push(`  Image file: ${row.image.fileName}`);
             lines.push(`  Image page: ${row.image.filePageUrl}`);
@@ -234,7 +290,7 @@ function formatWikimediaStrokeOrderPlan(plan) {
     }
 
     lines.push("");
-    lines.push("Next step: if guessed Commons names start failing, run `npm run media:discover:stroke-order` to resolve real Wikimedia titles first; then download the listed files, keep the source page URLs for attribution, import them with `npm run media:import:stroke-order`, and rerun `npm run media:sources`.");
+    lines.push("Next step: use the animation-only rows first for the fastest N5 progress. If discovery is unavailable, the guessed Commons filenames are still shown so you can try direct file pages manually. After downloading, import with `npm run media:import:stroke-order` and rerun `npm run media:sources`.");
     return `${lines.join("\n")}\n`;
 }
 

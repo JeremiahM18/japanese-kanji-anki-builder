@@ -1,8 +1,8 @@
-const test = require("node:test");
-const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const os = require("node:os");
 const path = require("node:path");
+const test = require("node:test");
+const assert = require("node:assert/strict");
 
 const {
     buildCommonsFileName,
@@ -53,9 +53,11 @@ test("buildWikimediaStrokeOrderPlan lists only missing stroke-order assets", asy
         assert.equal(plan.imageMissingCount, 1);
         assert.equal(plan.animationMissingCount, 2);
         assert.equal(plan.rows[0].kanji, "日");
+        assert.equal(plan.rows[0].gapType, "animation_only");
         assert.equal(plan.rows[0].image, null);
         assert.equal(plan.rows[0].animation.fileName, "日-order.gif");
         assert.equal(plan.rows[0].animation.status, "guessed_name");
+        assert.equal(plan.rows[1].gapType, "missing_stroke_order");
         assert.equal(plan.rows[1].image.fileName, "本-bw.png");
         assert.equal(plan.rows[1].animation.fileName, "本-order.gif");
     } finally {
@@ -89,8 +91,42 @@ test("buildWikimediaStrokeOrderPlan can mark discovered Commons availability", a
         });
 
         assert.equal(plan.discover, true);
+        assert.equal(plan.discoveryAvailable, true);
+        assert.equal(plan.statusSummary.confirmed_on_commons, 1);
+        assert.equal(plan.statusSummary.not_found_on_commons, 1);
         assert.equal(plan.rows[0].image.status, "confirmed_on_commons");
         assert.equal(plan.rows[0].animation.status, "not_found_on_commons");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+test("buildWikimediaStrokeOrderPlan falls back cleanly when discovery is unavailable", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const imageSourceDir = path.join(rootDir, "images");
+        const animationSourceDir = path.join(rootDir, "animations");
+        fs.mkdirSync(imageSourceDir, { recursive: true });
+        fs.mkdirSync(animationSourceDir, { recursive: true });
+
+        const plan = await buildWikimediaStrokeOrderPlan({
+            jlptOnlyJson: { 今: { jlpt: 5 } },
+            strokeOrderImageSourceDir: imageSourceDir,
+            strokeOrderAnimationSourceDir: animationSourceDir,
+            levels: [5],
+            limit: 10,
+            discover: true,
+            fetchJson: async () => {
+                throw new Error("fetch failed");
+            },
+        });
+
+        assert.equal(plan.discoveryAvailable, false);
+        assert.match(plan.discoveryErrorMessage, /fetch failed/);
+        assert.equal(plan.statusSummary.discovery_unavailable, 2);
+        assert.equal(plan.rows[0].image.status, "discovery_unavailable");
+        assert.equal(plan.rows[0].animation.status, "discovery_unavailable");
     } finally {
         cleanupTempDir(rootDir);
     }
@@ -148,9 +184,18 @@ test("formatWikimediaStrokeOrderPlan renders a clear Commons checklist", () => {
         imageMissingCount: 79,
         animationMissingCount: 79,
         discover: true,
+        discoveryAvailable: false,
+        discoveryErrorMessage: "fetch failed",
+        statusSummary: {
+            confirmed_on_commons: 10,
+            not_found_on_commons: 20,
+            guessed_name: 0,
+            discovery_unavailable: 49,
+        },
         rows: [{
             kanji: "日",
             level: 5,
+            gapType: "animation_only",
             image: {
                 fileName: "日-bw.png",
                 filePageUrl: "https://commons.wikimedia.org/wiki/File:%E6%97%A5-bw.png",
@@ -159,7 +204,7 @@ test("formatWikimediaStrokeOrderPlan renders a clear Commons checklist", () => {
             animation: {
                 fileName: "日-order.gif",
                 filePageUrl: "https://commons.wikimedia.org/wiki/File:%E6%97%A5-order.gif",
-                status: "not_found_on_commons",
+                status: "discovery_unavailable",
             },
         }],
         truncated: false,
@@ -173,10 +218,13 @@ test("formatWikimediaStrokeOrderPlan renders a clear Commons checklist", () => {
     assert.match(text, /Wikimedia Stroke-Order Plan/);
     assert.match(text, /Missing Commons-style static images: 79/);
     assert.match(text, /Discovery mode: enabled/);
-    assert.match(text, /Discovery cache: C:\/repo\/cache\/wikimedia-stroke-order-discovery\.json/);
+    assert.match(text, /Confirmed on Commons: 10/);
+    assert.match(text, /Discovery unavailable fallback: 49/);
+    assert.match(text, /Discovery note: fetch failed/);
+    assert.match(text, /- 日 \(N5, animation only\)/);
     assert.match(text, /Image status: confirmed on Commons/);
-    assert.match(text, /Animation status: not found on Commons at discovery time/);
-    assert.match(text, /media:import:stroke-order/);
+    assert.match(text, /Animation status: discovery unavailable; guessed Commons filename shown/);
+    assert.match(text, /animation-only rows first/);
 });
 
 test("formatWikimediaStrokeOrderSheet renders a compact copyable checklist", () => {
@@ -185,6 +233,7 @@ test("formatWikimediaStrokeOrderSheet renders a compact copyable checklist", () 
         rows: [{
             kanji: "日",
             level: 5,
+            gapType: "animation_only",
             image: {
                 fileName: "日-bw.png",
                 filePageUrl: "https://commons.wikimedia.org/wiki/File:%E6%97%A5-bw.png",
@@ -199,5 +248,5 @@ test("formatWikimediaStrokeOrderSheet renders a compact copyable checklist", () 
     });
 
     assert.match(text, /Wikimedia Stroke-Order Sheet/);
-    assert.match(text, /日 \| N5 \| 日-bw\.png \| https:\/\/commons\.wikimedia\.org\/wiki\/File:%E6%97%A5-bw\.png \| confirmed_on_commons \| 日-order\.gif/);
+    assert.match(text, /日 \| N5 \| animation_only \| 日-bw\.png \| https:\/\/commons\.wikimedia\.org\/wiki\/File:%E6%97%A5-bw\.png \| confirmed_on_commons \| 日-order\.gif/);
 });

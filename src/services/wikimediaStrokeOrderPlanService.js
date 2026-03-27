@@ -1,3 +1,6 @@
+const fs = require("node:fs");
+const path = require("node:path");
+
 const { buildMediaSourceReport, parseLevelsArgument } = require("./mediaSourceReportService");
 const { discoverWikimediaStrokeOrderForKanji } = require("./wikimediaStrokeOrderDiscoveryService");
 
@@ -23,10 +26,37 @@ function buildCommonsRedirectUrl(fileName) {
 async function defaultFetchJson(url) {
     const response = await fetch(url);
     if (!response.ok) {
-        throw new Error(`Commons discovery request failed with ${response.status}`);
+        const error = new Error(`Commons discovery request failed with ${response.status}`);
+        error.status = response.status;
+        throw error;
     }
 
     return response.json();
+}
+
+function loadDiscoveryCache(discoveryCachePath) {
+    if (!discoveryCachePath || !fs.existsSync(discoveryCachePath)) {
+        return {};
+    }
+
+    try {
+        return JSON.parse(fs.readFileSync(discoveryCachePath, "utf-8"));
+    } catch {
+        return {};
+    }
+}
+
+function saveDiscoveryCache(discoveryCachePath, cache) {
+    if (!discoveryCachePath) {
+        return;
+    }
+
+    fs.mkdirSync(path.dirname(discoveryCachePath), { recursive: true });
+    fs.writeFileSync(discoveryCachePath, JSON.stringify(cache, null, 2) + "\n", "utf-8");
+}
+
+function cloneDiscoveryEntry(entry) {
+    return entry ? JSON.parse(JSON.stringify(entry)) : null;
 }
 
 function buildPlanAsset(kanji, kind, discoveredAsset, discover) {
@@ -56,6 +86,7 @@ async function buildWikimediaStrokeOrderPlan({
     limit = 25,
     discover = false,
     fetchJson = null,
+    discoveryCachePath = null,
 }) {
     const sourceReport = await buildMediaSourceReport({
         jlptOnlyJson,
@@ -69,14 +100,18 @@ async function buildWikimediaStrokeOrderPlan({
 
     const rows = [];
     const fetchDiscoveryJson = fetchJson || (typeof fetch === "function" ? defaultFetchJson : null);
+    const discoveryCache = discover ? loadDiscoveryCache(discoveryCachePath) : {};
+    let cacheDirty = false;
 
     for (const row of sourceReport.rows || []) {
-        let discovery = null;
+        let discovery = discover ? cloneDiscoveryEntry(discoveryCache[row.kanji]) : null;
 
-        if (discover && fetchDiscoveryJson) {
+        if (discover && !discovery && fetchDiscoveryJson) {
             discovery = await discoverWikimediaStrokeOrderForKanji(row.kanji, {
                 fetchJson: fetchDiscoveryJson,
             });
+            discoveryCache[row.kanji] = discovery;
+            cacheDirty = true;
         }
 
         rows.push({
@@ -86,6 +121,10 @@ async function buildWikimediaStrokeOrderPlan({
             animation: row.hasAnimation ? null : buildPlanAsset(row.kanji, "animation", discovery?.animation || null, discover),
             discovery,
         });
+    }
+
+    if (cacheDirty) {
+        saveDiscoveryCache(discoveryCachePath, discoveryCache);
     }
 
     return {
@@ -100,6 +139,7 @@ async function buildWikimediaStrokeOrderPlan({
         imageSourceDir: strokeOrderImageSourceDir,
         animationSourceDir: strokeOrderAnimationSourceDir,
         projectNote: COMMONS_PROJECT_NOTE,
+        discoveryCachePath,
     };
 }
 
@@ -153,6 +193,9 @@ function formatWikimediaStrokeOrderPlan(plan) {
     lines.push(`Missing Commons-style animations: ${plan.animationMissingCount}`);
     if (plan.discover) {
         lines.push("Discovery mode: enabled");
+        if (plan.discoveryCachePath) {
+            lines.push(`Discovery cache: ${plan.discoveryCachePath}`);
+        }
     }
     lines.push("");
     lines.push(`Recommended source: ${plan.projectNote}`);
@@ -204,4 +247,6 @@ module.exports = {
     buildWikimediaStrokeOrderPlan,
     formatWikimediaStrokeOrderPlan,
     formatWikimediaStrokeOrderSheet,
+    loadDiscoveryCache,
+    saveDiscoveryCache,
 };

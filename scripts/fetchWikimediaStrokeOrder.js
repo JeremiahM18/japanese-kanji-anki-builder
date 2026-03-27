@@ -1,4 +1,5 @@
 const fs = require("node:fs");
+const path = require("node:path");
 
 const { loadConfig } = require("../src/config");
 const { parseLevelsArgument } = require("../src/services/mediaSourceReportService");
@@ -52,6 +53,7 @@ async function main() {
         levels: options.levels,
         limit: options.planLimit,
         discover: true,
+        discoveryCachePath: path.join(config.cacheDir, "wikimedia-stroke-order-discovery.json"),
     });
 
     const summary = await fetchWikimediaStrokeOrderBatch({

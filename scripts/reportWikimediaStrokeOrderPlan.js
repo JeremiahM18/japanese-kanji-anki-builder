@@ -1,4 +1,5 @@
 const fs = require("node:fs");
+const path = require("node:path");
 
 const { loadConfig } = require("../src/config");
 const {
@@ -46,6 +47,7 @@ async function main() {
         levels: options.levels,
         limit: options.limit,
         discover: options.discover,
+        discoveryCachePath: options.discover ? path.join(config.cacheDir, "wikimedia-stroke-order-discovery.json") : null,
     });
 
     if (options.json) {

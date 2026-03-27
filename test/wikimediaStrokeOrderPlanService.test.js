@@ -96,6 +96,51 @@ test("buildWikimediaStrokeOrderPlan can mark discovered Commons availability", a
     }
 });
 
+test("buildWikimediaStrokeOrderPlan reuses cached discovery entries", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const imageSourceDir = path.join(rootDir, "images");
+        const animationSourceDir = path.join(rootDir, "animations");
+        const cachePath = path.join(rootDir, "cache", "wikimedia-stroke-order-discovery.json");
+        fs.mkdirSync(imageSourceDir, { recursive: true });
+        fs.mkdirSync(animationSourceDir, { recursive: true });
+        fs.mkdirSync(path.dirname(cachePath), { recursive: true });
+        fs.writeFileSync(cachePath, JSON.stringify({
+            今: {
+                kanji: "今",
+                image: {
+                    fileName: "今-bw.png",
+                    filePageUrl: "https://commons.wikimedia.org/wiki/File:%E4%BB%8A-bw.png",
+                    downloadUrl: "https://commons.wikimedia.org/wiki/Special:Redirect/file/%E4%BB%8A-bw.png",
+                },
+                animation: null,
+                diagram: null,
+                titles: ["今-bw.png"],
+            },
+        }, null, 2));
+
+        const plan = await buildWikimediaStrokeOrderPlan({
+            jlptOnlyJson: { 今: { jlpt: 5 } },
+            strokeOrderImageSourceDir: imageSourceDir,
+            strokeOrderAnimationSourceDir: animationSourceDir,
+            levels: [5],
+            limit: 10,
+            discover: true,
+            discoveryCachePath: cachePath,
+            fetchJson: async () => {
+                throw new Error("fetch should not be called when cache is present");
+            },
+        });
+
+        assert.equal(plan.rows[0].image.fileName, "今-bw.png");
+        assert.equal(plan.rows[0].image.status, "confirmed_on_commons");
+        assert.equal(plan.rows[0].animation.status, "not_found_on_commons");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
 test("formatWikimediaStrokeOrderPlan renders a clear Commons checklist", () => {
     const text = formatWikimediaStrokeOrderPlan({
         levels: [5],
@@ -122,11 +167,13 @@ test("formatWikimediaStrokeOrderPlan renders a clear Commons checklist", () => {
         imageSourceDir: "C:/repo/data/media_sources/stroke-order/images",
         animationSourceDir: "C:/repo/data/media_sources/stroke-order/animations",
         projectNote: "Wikimedia Commons CJK Stroke Order Project",
+        discoveryCachePath: "C:/repo/cache/wikimedia-stroke-order-discovery.json",
     });
 
     assert.match(text, /Wikimedia Stroke-Order Plan/);
     assert.match(text, /Missing Commons-style static images: 79/);
     assert.match(text, /Discovery mode: enabled/);
+    assert.match(text, /Discovery cache: C:\/repo\/cache\/wikimedia-stroke-order-discovery\.json/);
     assert.match(text, /Image status: confirmed on Commons/);
     assert.match(text, /Animation status: not found on Commons at discovery time/);
     assert.match(text, /media:import:stroke-order/);

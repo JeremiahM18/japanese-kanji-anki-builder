@@ -65,6 +65,92 @@ function buildPreferredFileNames(baseCandidates, extensions, limit = 4) {
     return fileNames;
 }
 
+function classifyGapType({ hasImage, hasAnimation, hasAudio, audioEnabled }) {
+    if (!audioEnabled) {
+        if (!hasImage && !hasAnimation) {
+            return "missing_stroke_order";
+        }
+        if (!hasImage && hasAnimation) {
+            return "image_only";
+        }
+        if (hasImage && !hasAnimation) {
+            return "animation_only";
+        }
+        return "complete";
+    }
+
+    if (!hasImage && !hasAnimation && !hasAudio) {
+        return "missing_all";
+    }
+    if (!hasImage && !hasAnimation && hasAudio) {
+        return "missing_stroke_order";
+    }
+    if (!hasImage && hasAnimation && hasAudio) {
+        return "image_only";
+    }
+    if (hasImage && !hasAnimation && hasAudio) {
+        return "animation_only";
+    }
+    if (hasImage && hasAnimation && !hasAudio) {
+        return "audio_only";
+    }
+    if (!hasImage && hasAnimation && !hasAudio) {
+        return "image_and_audio";
+    }
+    if (hasImage && !hasAnimation && !hasAudio) {
+        return "animation_and_audio";
+    }
+
+    return "mixed";
+}
+
+function summarizeGapTypes(rows) {
+    const summary = {
+        missing_stroke_order: 0,
+        image_only: 0,
+        animation_only: 0,
+        audio_only: 0,
+        image_and_audio: 0,
+        animation_and_audio: 0,
+        missing_all: 0,
+        mixed: 0,
+    };
+
+    for (const row of rows) {
+        if (row.gapType === "complete") {
+            continue;
+        }
+        summary[row.gapType] = (summary[row.gapType] || 0) + 1;
+    }
+
+    return summary;
+}
+
+function formatGapLabel(gapType, audioEnabled) {
+    if (gapType === "image_only") {
+        return "image only";
+    }
+    if (gapType === "animation_only") {
+        return "animation only";
+    }
+    if (gapType === "missing_stroke_order") {
+        return audioEnabled ? "stroke-order only" : "missing both stroke-order files";
+    }
+    if (gapType === "audio_only") {
+        return "audio only";
+    }
+    if (gapType === "image_and_audio") {
+        return "image and audio";
+    }
+    if (gapType === "animation_and_audio") {
+        return "animation and audio";
+    }
+    if (gapType === "missing_all") {
+        return "all media";
+    }
+    return "mixed gap";
+}
+
 async function buildMediaSourceReport({
     jlptOnlyJson = {},
     strokeOrderImageSourceDir,
@@ -97,6 +183,7 @@ async function buildMediaSourceReport({
             hasImage,
             hasAnimation,
             hasAudio,
+            gapType: classifyGapType({ hasImage, hasAnimation, hasAudio, audioEnabled }),
             preferredFileNames: {
                 image: !hasImage ? buildPreferredFileNames(buildStrokeOrderImageCandidates(entry.kanji), [".png", ".webp"]) : [],
                 animation: !hasAnimation ? buildPreferredFileNames(buildStrokeOrderAnimationCandidates(entry.kanji), [".gif", ".webp"]) : [],
@@ -118,6 +205,7 @@ async function buildMediaSourceReport({
         animationSourceDir: strokeOrderAnimationSourceDir,
         audioSourceDir,
         rows: limitedRows,
+        gapSummary: summarizeGapTypes(rows),
         truncated: rows.length > limitedRows.length,
         totalMissingRows: rows.length,
         sourceDirectoriesExist: {
@@ -144,6 +232,24 @@ function formatMediaSourceReport(report) {
         lines.push(`Source audio coverage: ${report.audioAvailableCount}/${report.totalKanji} (${formatPercent(report.audioAvailableCount, report.totalKanji)})`);
     }
     lines.push("");
+    lines.push("Gap summary:");
+    if (report.audioEnabled) {
+        lines.push(`- Missing image only: ${report.gapSummary.image_only || 0}`);
+        lines.push(`- Missing animation only: ${report.gapSummary.animation_only || 0}`);
+        lines.push(`- Missing audio only: ${report.gapSummary.audio_only || 0}`);
+        lines.push(`- Missing image and audio: ${report.gapSummary.image_and_audio || 0}`);
+        lines.push(`- Missing animation and audio: ${report.gapSummary.animation_and_audio || 0}`);
+        lines.push(`- Missing all media: ${report.gapSummary.missing_all || 0}`);
+        lines.push(`- Missing stroke-order only: ${report.gapSummary.missing_stroke_order || 0}`);
+        if (report.gapSummary.mixed) {
+            lines.push(`- Other mixed gaps: ${report.gapSummary.mixed}`);
+        }
+    } else {
+        lines.push(`- Missing image only: ${report.gapSummary.image_only || 0}`);
+        lines.push(`- Missing animation only: ${report.gapSummary.animation_only || 0}`);
+        lines.push(`- Missing both stroke-order files: ${report.gapSummary.missing_stroke_order || 0}`);
+    }
+    lines.push("");
     lines.push("Source directories:");
     lines.push(`- Images: ${report.imageSourceDir}${report.sourceDirectoriesExist.image ? "" : " (missing directory)"}`);
     lines.push(`- Animations: ${report.animationSourceDir}${report.sourceDirectoriesExist.animation ? "" : " (missing directory)"}`);
@@ -164,7 +270,7 @@ function formatMediaSourceReport(report) {
     lines.push("");
     lines.push("Still missing in local source folders:");
     for (const row of report.rows || []) {
-        lines.push(`- ${row.kanji} (N${row.level})`);
+        lines.push(`- ${row.kanji} (N${row.level}, ${formatGapLabel(row.gapType, report.audioEnabled)})`);
         if (!row.hasImage) {
             lines.push(`  Image: ${row.preferredFileNames.image.join(", ")}`);
         }
@@ -189,7 +295,10 @@ function formatMediaSourceReport(report) {
 module.exports = {
     buildMediaSourceReport,
     buildPreferredFileNames,
+    classifyGapType,
+    formatGapLabel,
     formatMediaSourceReport,
     hasAnyCandidate,
     parseLevelsArgument,
+    summarizeGapTypes,
 };

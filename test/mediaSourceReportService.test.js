@@ -7,9 +7,12 @@ const path = require("node:path");
 const {
     buildMediaSourceReport,
     buildPreferredFileNames,
+    classifyGapType,
+    formatGapLabel,
     formatMediaSourceReport,
     hasAnyCandidate,
     parseLevelsArgument,
+    summarizeGapTypes,
 } = require("../src/services/mediaSourceReportService");
 
 function makeTempDir() {
@@ -34,6 +37,35 @@ test("buildPreferredFileNames surfaces accepted Commons filename variants", () =
     assert.deepEqual(
         buildPreferredFileNames(["円", "円-bw", "円-jbw"], [".png", ".webp"], 6),
         ["円.png", "円.webp", "円-bw.png", "円-bw.webp", "円-jbw.png", "円-jbw.webp"],
+    );
+});
+
+test("classifyGapType and formatGapLabel describe stroke-order gaps clearly", () => {
+    assert.equal(classifyGapType({ hasImage: true, hasAnimation: false, hasAudio: false, audioEnabled: false }), "animation_only");
+    assert.equal(classifyGapType({ hasImage: false, hasAnimation: true, hasAudio: false, audioEnabled: false }), "image_only");
+    assert.equal(classifyGapType({ hasImage: false, hasAnimation: false, hasAudio: false, audioEnabled: false }), "missing_stroke_order");
+    assert.equal(formatGapLabel("animation_only", false), "animation only");
+    assert.equal(formatGapLabel("missing_stroke_order", false), "missing both stroke-order files");
+});
+
+test("summarizeGapTypes counts useful gap buckets", () => {
+    assert.deepEqual(
+        summarizeGapTypes([
+            { gapType: "image_only" },
+            { gapType: "animation_only" },
+            { gapType: "animation_only" },
+            { gapType: "missing_stroke_order" },
+        ]),
+        {
+            missing_stroke_order: 1,
+            image_only: 1,
+            animation_only: 2,
+            audio_only: 0,
+            image_and_audio: 0,
+            animation_and_audio: 0,
+            missing_all: 0,
+            mixed: 0,
+        },
     );
 });
 
@@ -72,10 +104,17 @@ test("buildMediaSourceReport summarizes source-folder coverage and missing asset
         assert.equal(report.rows[0].hasImage, true);
         assert.equal(report.rows[0].hasAnimation, true);
         assert.equal(report.rows[0].hasAudio, false);
+        assert.equal(report.rows[0].gapType, "audio_only");
         assert.equal(report.rows[1].hasAudio, true);
         assert.equal(report.rows[1].hasImage, false);
+        assert.equal(report.rows[1].gapType, "missing_stroke_order");
         assert.equal(report.rows[1].preferredFileNames.image[2], "本-bw.png");
         assert.equal(report.rows[2].hasImage, false);
+        assert.equal(report.rows[2].gapType, "missing_all");
+        assert.equal(report.gapSummary.audio_only, 1);
+        assert.equal(report.gapSummary.image_only, 0);
+        assert.equal(report.gapSummary.missing_stroke_order, 1);
+        assert.equal(report.gapSummary.missing_all, 1);
     } finally {
         cleanupTempDir(rootDir);
     }
@@ -89,6 +128,16 @@ test("formatMediaSourceReport produces a clear local-source summary", () => {
         animationAvailableCount: 10,
         audioAvailableCount: 5,
         audioEnabled: true,
+        gapSummary: {
+            missing_stroke_order: 3,
+            image_only: 4,
+            animation_only: 5,
+            audio_only: 2,
+            image_and_audio: 1,
+            animation_and_audio: 6,
+            missing_all: 7,
+            mixed: 0,
+        },
         imageSourceDir: "C:/repo/data/media_sources/stroke-order/images",
         animationSourceDir: "C:/repo/data/media_sources/stroke-order/animations",
         audioSourceDir: "C:/repo/data/media_sources/audio",
@@ -100,6 +149,7 @@ test("formatMediaSourceReport produces a clear local-source summary", () => {
         rows: [{
             kanji: "日",
             level: 5,
+            gapType: "missing_all",
             hasImage: false,
             hasAnimation: false,
             hasAudio: false,
@@ -115,8 +165,11 @@ test("formatMediaSourceReport produces a clear local-source summary", () => {
 
     assert.match(text, /Local Media Source Report/);
     assert.match(text, /Source image coverage: 20\/79/);
+    assert.match(text, /Gap summary:/);
+    assert.match(text, /Missing animation only: 5/);
+    assert.match(text, /Missing all media: 7/);
     assert.match(text, /Audio: C:\/repo\/data\/media_sources\/audio \(missing directory\)/);
-    assert.match(text, /- 日 \(N5\)/);
+    assert.match(text, /- 日 \(N5, all media\)/);
     assert.match(text, /Image: 日\.png, 日\.webp, 日-bw\.png, 日-bw\.webp/);
     assert.match(text, /Animation: 日-order\.gif, 日-order\.webp/);
     assert.match(text, /Audio: 日\.mp3, 日\.wav/);
@@ -131,6 +184,16 @@ test("formatMediaSourceReport hides audio details when audio is disabled", () =>
         animationAvailableCount: 10,
         audioAvailableCount: 0,
         audioEnabled: false,
+        gapSummary: {
+            missing_stroke_order: 4,
+            image_only: 2,
+            animation_only: 3,
+            audio_only: 0,
+            image_and_audio: 0,
+            animation_and_audio: 0,
+            missing_all: 0,
+            mixed: 0,
+        },
         imageSourceDir: "C:/repo/data/media_sources/stroke-order/images",
         animationSourceDir: "C:/repo/data/media_sources/stroke-order/animations",
         audioSourceDir: "C:/repo/data/media_sources/audio",
@@ -138,6 +201,7 @@ test("formatMediaSourceReport hides audio details when audio is disabled", () =>
         rows: [{
             kanji: "日",
             level: 5,
+            gapType: "animation_only",
             hasImage: true,
             hasAnimation: false,
             hasAudio: false,
@@ -148,6 +212,10 @@ test("formatMediaSourceReport hides audio details when audio is disabled", () =>
     });
 
     assert.doesNotMatch(text, /Source audio coverage/);
+    assert.match(text, /Gap summary:/);
+    assert.match(text, /Missing both stroke-order files: 4/);
     assert.doesNotMatch(text, /Audio: C:\/repo\/data\/media_sources\/audio/);
     assert.doesNotMatch(text, /Audio: 日\.mp3/);
+    assert.match(text, /- 日 \(N5, animation only\)/);
 });
+

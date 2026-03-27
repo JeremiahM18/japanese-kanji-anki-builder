@@ -350,3 +350,10 @@ The current test suite covers:
 - Shared bounded-concurrency execution now lives in `src/utils/concurrency.js` and is reused by both export generation and bulk media sync.
 - Bulk media sync now runs stroke-order and audio work in parallel for each kanji while preserving the top-level kanji concurrency cap.
 - Per-kanji manifest serialization still protects correctness underneath, so the added parallelism improves throughput without reintroducing manifest races.
+
+## Recent API Validation Improvements
+
+- Route parameters and audio-sync request bodies are now validated with `zod` at the HTTP boundary before service execution.
+- Invalid export parameters now return structured `400` JSON errors instead of ad hoc text responses.
+- Missing media manifests return structured `404` JSON errors, and invalid audio-sync bodies return `422` `validation_error` responses with issue details.
+- Malformed JSON request bodies now fail fast with a structured `400` `bad_request` response.

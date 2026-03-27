@@ -1,8 +1,22 @@
 const express = require("express");
+const { z, ZodError } = require("zod");
 
+const { BadRequestError, NotFoundError, ValidationError } = require("./apiErrors");
 const { logger } = require("./logger");
 const { createInferenceEngine } = require("./inference/inferenceEngine");
 const { createExportService } = require("./services/exportService");
+
+const kanjiParamsSchema = z.object({
+    kanji: z.string().trim().min(1),
+});
+
+const audioSyncBodySchema = z.object({
+    category: z.enum(["kanji-reading", "word-reading", "sentence"]).optional(),
+    text: z.string().trim().min(1).optional(),
+    reading: z.string().trim().min(1).optional(),
+    voice: z.string().trim().min(1).optional(),
+    locale: z.string().trim().min(1).optional(),
+}).strict();
 
 function parseLevel(param) {
     const s = String(param).toUpperCase().replace("N", "").trim();
@@ -27,6 +41,51 @@ function parseLimit(value) {
     }
 
     return Math.floor(n);
+}
+
+function formatZodIssues(error) {
+    return error.issues.map((issue) => ({
+        path: issue.path.join(".") || "root",
+        message: issue.message,
+        code: issue.code,
+    }));
+}
+
+function validateKanjiParams(params) {
+    const parsed = kanjiParamsSchema.safeParse(params);
+
+    if (!parsed.success) {
+        throw new ValidationError("Invalid kanji route parameter.", formatZodIssues(parsed.error));
+    }
+
+    return parsed.data;
+}
+
+function validateAudioSyncBody(body) {
+    const parsed = audioSyncBodySchema.safeParse(body || {});
+
+    if (!parsed.success) {
+        throw new ValidationError("Invalid audio sync request body.", formatZodIssues(parsed.error));
+    }
+
+    return parsed.data;
+}
+
+function validateExportRequest(req) {
+    const level = parseLevel(req.params.level);
+    if (!level) {
+        throw new BadRequestError("Invalid level parameter. Use N1-N5 or 1-5.");
+    }
+
+    const limit = parseLimit(req.query.limit);
+    if (req.query.limit != null && limit == null) {
+        throw new BadRequestError("Invalid limit parameter. Must be a positive integer.");
+    }
+
+    return {
+        level,
+        limit,
+    };
 }
 
 function createApp({
@@ -104,8 +163,9 @@ function createApp({
 
     app.get("/inference/:kanji", async (req, res, next) => {
         try {
+            const { kanji } = validateKanjiParams(req.params);
             const inference = await exportService.buildInferenceForKanji({
-                kanji: req.params.kanji,
+                kanji,
                 kanjiApiClient,
                 strokeOrderService,
                 audioService,
@@ -122,27 +182,25 @@ function createApp({
 
     app.get("/media/:kanji", async (req, res, next) => {
         try {
-            const manifest = await strokeOrderService.getManifest(req.params.kanji);
+            const { kanji } = validateKanjiParams(req.params);
+            const manifest = await strokeOrderService.getManifest(kanji);
 
             if (!manifest) {
-                return res.status(404).json({
-                    status: "missing",
-                    kanji: req.params.kanji,
-                });
+                throw new NotFoundError(`No managed media manifest exists for kanji '${kanji}'.`, { kanji });
             }
 
             return res.status(200).json({
                 status: "ok",
                 manifest,
-                bestStrokeOrderPath: await strokeOrderService.getBestStrokeOrderPath(req.params.kanji),
+                bestStrokeOrderPath: await strokeOrderService.getBestStrokeOrderPath(kanji),
                 strokeOrderImagePath: typeof strokeOrderService?.getStrokeOrderImagePath === "function"
-                    ? await strokeOrderService.getStrokeOrderImagePath(req.params.kanji)
+                    ? await strokeOrderService.getStrokeOrderImagePath(kanji)
                     : "",
                 strokeOrderAnimationPath: typeof strokeOrderService?.getStrokeOrderAnimationPath === "function"
-                    ? await strokeOrderService.getStrokeOrderAnimationPath(req.params.kanji)
+                    ? await strokeOrderService.getStrokeOrderAnimationPath(kanji)
                     : "",
                 bestAudioPath: typeof audioService?.getBestAudioPath === "function"
-                    ? await audioService.getBestAudioPath(req.params.kanji, { category: "kanji-reading", text: req.params.kanji })
+                    ? await audioService.getBestAudioPath(kanji, { category: "kanji-reading", text: kanji })
                     : "",
             });
         } catch (err) {
@@ -152,16 +210,17 @@ function createApp({
 
     app.post("/media/:kanji/sync", async (req, res, next) => {
         try {
-            const result = await strokeOrderService.syncKanji(req.params.kanji);
+            const { kanji } = validateKanjiParams(req.params);
+            const result = await strokeOrderService.syncKanji(kanji);
             return res.status(200).json({
                 status: "ok",
                 ...result,
-                bestStrokeOrderPath: await strokeOrderService.getBestStrokeOrderPath(req.params.kanji),
+                bestStrokeOrderPath: await strokeOrderService.getBestStrokeOrderPath(kanji),
                 strokeOrderImagePath: typeof strokeOrderService?.getStrokeOrderImagePath === "function"
-                    ? await strokeOrderService.getStrokeOrderImagePath(req.params.kanji)
+                    ? await strokeOrderService.getStrokeOrderImagePath(kanji)
                     : "",
                 strokeOrderAnimationPath: typeof strokeOrderService?.getStrokeOrderAnimationPath === "function"
-                    ? await strokeOrderService.getStrokeOrderAnimationPath(req.params.kanji)
+                    ? await strokeOrderService.getStrokeOrderAnimationPath(kanji)
                     : "",
             });
         } catch (err) {
@@ -171,14 +230,16 @@ function createApp({
 
     app.post("/media/:kanji/audio/sync", async (req, res, next) => {
         try {
-            const result = await audioService.syncKanji(req.params.kanji, req.body || {});
+            const { kanji } = validateKanjiParams(req.params);
+            const body = validateAudioSyncBody(req.body);
+            const result = await audioService.syncKanji(kanji, body);
             return res.status(200).json({
                 status: "ok",
                 ...result,
-                bestAudioPath: await audioService.getBestAudioPath(req.params.kanji, {
-                    category: req.body?.category || "kanji-reading",
-                    text: req.body?.text || req.params.kanji,
-                    reading: req.body?.reading,
+                bestAudioPath: await audioService.getBestAudioPath(kanji, {
+                    category: body.category || "kanji-reading",
+                    text: body.text || kanji,
+                    reading: body.reading,
                 }),
             });
         } catch (err) {
@@ -190,15 +251,7 @@ function createApp({
         const startedAt = Date.now();
 
         try {
-            const level = parseLevel(req.params.level);
-            if (!level) {
-                return res.status(400).type("text").send("Invalid level parameter. Use N1-N5 or 1-5.");
-            }
-
-            const limit = parseLimit(req.query.limit);
-            if (req.query.limit != null && limit == null) {
-                return res.status(400).type("text").send("Invalid limit parameter. Must be a positive integer.");
-            }
+            const { level, limit } = validateExportRequest(req);
 
             logger.info(
                 {
@@ -253,11 +306,37 @@ function createApp({
     app.use((err, _req, res, _next) => {
         logger.error({ err }, "Error handling request");
 
-        if (process.env.NODE_ENV !== "production") {
-            return res.status(500).type("text").send(`Internal Server Error:\n\n${err?.stack || err}`);
+        if (err instanceof ZodError) {
+            err = new ValidationError("Request validation failed.", formatZodIssues(err));
         }
 
-        return res.status(500).type("text").send("Internal Server Error");
+        if (err && err.type === "entity.parse.failed") {
+            err = new BadRequestError("Malformed JSON request body.");
+        }
+
+        if (err && typeof err.statusCode === "number") {
+            return res.status(err.statusCode).json({
+                status: "error",
+                code: err.code || "request_error",
+                message: err.message,
+                details: err.details || null,
+            });
+        }
+
+        if (process.env.NODE_ENV !== "production") {
+            return res.status(500).json({
+                status: "error",
+                code: "internal_error",
+                message: err?.message || "Internal Server Error",
+                stack: err?.stack || String(err),
+            });
+        }
+
+        return res.status(500).json({
+            status: "error",
+            code: "internal_error",
+            message: "Internal Server Error",
+        });
     });
 
     return app;

@@ -411,6 +411,9 @@ test("media routes expose manifests sync results and acquisition reports", async
 
         const missingRes = await fetch(`${baseUrl}/media/山`);
         assert.equal(missingRes.status, 404);
+        const missingJson = await missingRes.json();
+        assert.equal(missingJson.code, "not_found");
+        assert.equal(missingJson.details.kanji, "山");
 
         const syncRes = await fetch(`${baseUrl}/media/日/sync`, { method: "POST" });
         assert.equal(syncRes.status, 200);
@@ -448,6 +451,40 @@ test("media routes expose manifests sync results and acquisition reports", async
     });
 });
 
+test("audio sync rejects malformed or invalid JSON bodies with structured errors", async () => {
+    const app = buildFixtureApp();
+
+    await withServer(app, async (baseUrl) => {
+        const malformedRes = await fetch(`${baseUrl}/media/日/audio/sync`, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: "{",
+        });
+        assert.equal(malformedRes.status, 400);
+        const malformedJson = await malformedRes.json();
+        assert.equal(malformedJson.code, "bad_request");
+        assert.equal(malformedJson.message, "Malformed JSON request body.");
+
+        const invalidRes = await fetch(`${baseUrl}/media/日/audio/sync`, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({
+                category: "not-a-real-category",
+                extraField: true,
+            }),
+        });
+        assert.equal(invalidRes.status, 422);
+        const invalidJson = await invalidRes.json();
+        assert.equal(invalidJson.code, "validation_error");
+        assert.equal(invalidJson.message, "Invalid audio sync request body.");
+        assert.equal(Array.isArray(invalidJson.details), true);
+    });
+});
+
 test("download export sets attachment headers and includes Anki-ready media fields", async () => {
     const app = buildFixtureApp();
 
@@ -473,14 +510,18 @@ test("download export sets attachment headers and includes Anki-ready media fiel
     });
 });
 
-test("invalid export parameters return 400", async () => {
+test("invalid export parameters return structured 400 errors", async () => {
     const app = buildFixtureApp();
 
     await withServer(app, async (baseUrl) => {
         const badLevel = await fetch(`${baseUrl}/export/N9`);
         assert.equal(badLevel.status, 400);
+        const badLevelJson = await badLevel.json();
+        assert.equal(badLevelJson.code, "bad_request");
 
         const badLimit = await fetch(`${baseUrl}/export/N5?limit=0`);
         assert.equal(badLimit.status, 400);
+        const badLimitJson = await badLimit.json();
+        assert.equal(badLimitJson.code, "bad_request");
     });
 });

@@ -27,8 +27,8 @@ npm run deck:readiness
 
 Use these first.
 
-- `doctor` checks required datasets, optional study data, media source folders, managed media coverage, and next steps.
-- `deck:readiness` shows N5-N1 quality gates for sentence coverage, curated coverage, and stroke-order coverage. If you want to defer audio, set `ENABLE_AUDIO=false` and the user-facing reports will stop treating it as an active blocker.
+- `doctor` checks required datasets, optional study data, media source folders, managed media coverage, offline card-quality diagnostics, and next steps.
+- `deck:readiness` shows N5-N1 quality gates for sentence coverage, curated coverage, and stroke-order coverage, plus offline card-quality diagnostics for readings, meanings, examples, and contextual notes. If you want to defer audio, set `ENABLE_AUDIO=false` and the user-facing reports will stop treating it as an active blocker.
 
 ### 2. Bootstrap starter content
 
@@ -174,7 +174,7 @@ The repo now treats deck quality as a first-class contract, not a vague goal.
 - audio coverage: `75%`
 - full media coverage: `75%`
 
-If `ENABLE_AUDIO=false`, the user-facing quality model temporarily ignores the audio and full-media gates so you can concentrate on stroke order without the reports constantly flagging audio as missing.
+If `ENABLE_AUDIO=false`, the user-facing quality model temporarily ignores the audio and full-media gates so you can concentrate on stroke order without the reports constantly flagging audio as missing. Card-quality diagnostics remain active even when audio is disabled.
 
 ## Build Output
 
@@ -268,5 +268,6 @@ npm run deck:preview -- --level=5 --limit=5
 npm run media:plan -- --level=5 --limit=10
 npm run deck:ready -- --levels=5 --limit=25
 ```
+
 
 

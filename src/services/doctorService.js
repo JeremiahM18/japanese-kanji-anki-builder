@@ -5,6 +5,7 @@ const { buildMediaCoverageSummary } = require("../datasets/mediaCoverage");
 const { buildCoverageSummary } = require("../datasets/sentenceCorpusCoverage");
 const { loadCuratedStudyData } = require("../datasets/curatedStudyData");
 const { loadSentenceCorpus } = require("../datasets/sentenceCorpus");
+const { buildCardQualitySummary } = require("./cardQualityService");
 const { buildDefaultQualityThresholds, buildLevelReadinessReport } = require("./levelReadinessService");
 
 function describePathStatus(filePath, { label, required, kind = "file" }) {
@@ -86,6 +87,7 @@ async function buildDoctorReport({
     buildCoverageSummaryFn = buildCoverageSummary,
     buildCuratedStudySummaryFn = buildCuratedStudySummary,
     buildMediaCoverageSummaryFn = buildMediaCoverageSummary,
+    buildCardQualitySummaryFn = buildCardQualitySummary,
     buildLevelReadinessReportFn = buildLevelReadinessReport,
     loadSentenceCorpusFn = loadSentenceCorpus,
     loadCuratedStudyDataFn = loadCuratedStudyData,
@@ -109,11 +111,15 @@ async function buildDoctorReport({
     const mediaCoverage = requiredReady
         ? await buildMediaCoverageSummaryFn({ jlptOnlyJson, mediaRootDir: config.mediaRootDir })
         : null;
+    const cardQuality = requiredReady
+        ? buildCardQualitySummaryFn({ jlptOnlyJson, sentenceCorpus, curatedStudyData, levels: [5, 4, 3, 2, 1] })
+        : null;
     const levelReadiness = requiredReady
         ? buildLevelReadinessReportFn({
             sentenceCoverage,
             curatedCoverage,
             mediaCoverage,
+            cardQuality,
             levels: [5, 4, 3, 2, 1],
             thresholds: buildDefaultQualityThresholds({ audioEnabled: config.enableAudio !== false }),
         })
@@ -155,6 +161,9 @@ async function buildDoctorReport({
         const weakest = levelReadiness.weakestLevels?.[0];
         if (weakest) {
             nextSteps.push(`Raise JLPT N${weakest.level} to the quality gate first. It is currently failing ${weakest.failingChecks.join(", ")}.`);
+            if (Array.isArray(weakest.qualityFailingChecks) && weakest.qualityFailingChecks.length > 0) {
+                nextSteps.push(`Improve offline card quality for JLPT N${weakest.level}. Current quality issues: ${weakest.qualityFailingChecks.join(", ")}.`);
+            }
         }
     }
     if (nextSteps.length === 0) {
@@ -172,6 +181,7 @@ async function buildDoctorReport({
         },
         quality: {
             levelReadiness,
+            cardQuality,
         },
         nextSteps,
     };
@@ -269,6 +279,10 @@ function formatDoctorReport(report) {
                 metricParts.push(`full media ${formatPercent(row.metrics.fullMediaCoverage)}`);
             }
             lines.push(`- N${row.level}: ${row.ready ? "ready" : "needs work"}; ${metricParts.join(", ")}`);
+            lines.push(`  Card quality: readings ${formatPercent(row.cardQuality.metrics.readingCoverage)}, meanings ${formatPercent(row.cardQuality.metrics.meaningCoverage)}, examples ${formatPercent(row.cardQuality.metrics.exampleCoverage)}, contextual notes ${formatPercent(row.cardQuality.metrics.contextualNotesCoverage)}, generic fallback notes ${formatPercent(row.cardQuality.metrics.genericNotesFallbackRatio)}`);
+            if (Array.isArray(row.cardQuality.failingChecks) && row.cardQuality.failingChecks.length > 0) {
+                lines.push(`  Quality checks: ${row.cardQuality.failingChecks.join(", ")}`);
+            }
         }
     }
 

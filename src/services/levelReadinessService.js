@@ -8,6 +8,15 @@ function buildDefaultQualityThresholds({ audioEnabled = true } = {}) {
     };
 }
 
+function buildDefaultCardQualityThresholds() {
+    return {
+        readingCoverage: 1,
+        meaningCoverage: 0.98,
+        exampleCoverage: 0.9,
+        contextualNotesCoverage: 0.9,
+    };
+}
+
 function toLevelMap(rows = [], keyField = "level") {
     return new Map((Array.isArray(rows) ? rows : []).map((row) => [row[keyField], row]));
 }
@@ -21,16 +30,28 @@ function buildCheck({ label, actual, threshold }) {
     };
 }
 
+function buildCardQualityChecks(metrics, thresholds) {
+    return [
+        buildCheck({ label: "local reading coverage", actual: metrics.readingCoverage || 0, threshold: thresholds.readingCoverage }),
+        buildCheck({ label: "local meaning coverage", actual: metrics.meaningCoverage || 0, threshold: thresholds.meaningCoverage }),
+        buildCheck({ label: "local example coverage", actual: metrics.exampleCoverage || 0, threshold: thresholds.exampleCoverage }),
+        buildCheck({ label: "contextual notes coverage", actual: metrics.contextualNotesCoverage || 0, threshold: thresholds.contextualNotesCoverage }),
+    ];
+}
+
 function buildLevelReadinessReport({
     sentenceCoverage = null,
     curatedCoverage = null,
     mediaCoverage = null,
+    cardQuality = null,
     levels = [5, 4, 3, 2, 1],
     thresholds = buildDefaultQualityThresholds(),
+    cardQualityThresholds = buildDefaultCardQualityThresholds(),
 } = {}) {
     const sentenceLevels = toLevelMap(sentenceCoverage?.levels);
     const curatedLevels = toLevelMap(curatedCoverage?.levels);
     const mediaLevels = toLevelMap(mediaCoverage?.levels);
+    const cardQualityLevels = toLevelMap(cardQuality?.levels);
     const normalizedLevels = [...new Set((Array.isArray(levels) ? levels : [5, 4, 3, 2, 1]).filter((level) => Number.isInteger(level)))];
 
     const rows = normalizedLevels.map((level) => {
@@ -46,6 +67,20 @@ function buildLevelReadinessReport({
             fullMediaCoverageRatio: 0,
             sampleMissing: [],
         };
+        const cardQualityRow = cardQualityLevels.get(level) || {
+            totalKanji: sentenceRow.totalKanji,
+            readingCovered: 0,
+            meaningCovered: 0,
+            exampleCovered: 0,
+            contextualNotesCovered: 0,
+            genericNotesFallback: 0,
+            readingCoverageRatio: 0,
+            meaningCoverageRatio: 0,
+            exampleCoverageRatio: 0,
+            contextualNotesCoverageRatio: 0,
+            genericNotesFallbackRatio: 0,
+            sampleMissing: { reading: [], meaning: [], example: [], contextualNotes: [] },
+        };
 
         const checks = [
             buildCheck({ label: "sentence coverage", actual: sentenceRow.coverageRatio || 0, threshold: thresholds.sentenceCoverage }),
@@ -55,6 +90,13 @@ function buildLevelReadinessReport({
             thresholds.fullMediaCoverage == null ? null : buildCheck({ label: "full media coverage", actual: mediaRow.fullMediaCoverageRatio || 0, threshold: thresholds.fullMediaCoverage }),
         ].filter(Boolean);
 
+        const qualityChecks = buildCardQualityChecks({
+            readingCoverage: cardQualityRow.readingCoverageRatio || 0,
+            meaningCoverage: cardQualityRow.meaningCoverageRatio || 0,
+            exampleCoverage: cardQualityRow.exampleCoverageRatio || 0,
+            contextualNotesCoverage: cardQualityRow.contextualNotesCoverageRatio || 0,
+        }, cardQualityThresholds);
+
         const passedChecks = checks.filter((check) => check.passed).length;
         const failingChecks = checks.filter((check) => !check.passed);
         const readinessScore = checks.length > 0 ? Number((passedChecks / checks.length).toFixed(4)) : 0;
@@ -63,7 +105,7 @@ function buildLevelReadinessReport({
             level,
             ready: failingChecks.length === 0,
             readinessScore,
-            totalKanji: sentenceRow.totalKanji || curatedRow.totalKanji || mediaRow.totalKanji || 0,
+            totalKanji: sentenceRow.totalKanji || curatedRow.totalKanji || mediaRow.totalKanji || cardQualityRow.totalKanji || 0,
             metrics: {
                 sentenceCoverage: sentenceRow.coverageRatio || 0,
                 curatedCoverage: curatedRow.coverageRatio || 0,
@@ -77,6 +119,25 @@ function buildLevelReadinessReport({
                 strokeOrderCovered: mediaRow.strokeOrderCovered || 0,
                 audioCovered: mediaRow.audioCovered || 0,
                 fullMediaCovered: mediaRow.fullMediaCovered || 0,
+            },
+            cardQuality: {
+                metrics: {
+                    readingCoverage: cardQualityRow.readingCoverageRatio || 0,
+                    meaningCoverage: cardQualityRow.meaningCoverageRatio || 0,
+                    exampleCoverage: cardQualityRow.exampleCoverageRatio || 0,
+                    contextualNotesCoverage: cardQualityRow.contextualNotesCoverageRatio || 0,
+                    genericNotesFallbackRatio: cardQualityRow.genericNotesFallbackRatio || 0,
+                },
+                counts: {
+                    readingCovered: cardQualityRow.readingCovered || 0,
+                    meaningCovered: cardQualityRow.meaningCovered || 0,
+                    exampleCovered: cardQualityRow.exampleCovered || 0,
+                    contextualNotesCovered: cardQualityRow.contextualNotesCovered || 0,
+                    genericNotesFallback: cardQualityRow.genericNotesFallback || 0,
+                },
+                checks: qualityChecks,
+                failingChecks: qualityChecks.filter((check) => !check.passed).map((check) => check.label),
+                sampleMissing: cardQualityRow.sampleMissing || { reading: [], meaning: [], example: [], contextualNotes: [] },
             },
             checks,
             failingChecks: failingChecks.map((check) => check.label),
@@ -96,10 +157,12 @@ function buildLevelReadinessReport({
             level: row.level,
             readinessScore: row.readinessScore,
             failingChecks: row.failingChecks,
+            qualityFailingChecks: row.cardQuality.failingChecks,
         }));
 
     return {
         thresholds,
+        cardQualityThresholds,
         overallReady: rows.length > 0 && rows.every((row) => row.ready),
         readyLevels,
         levels: rows,
@@ -126,11 +189,21 @@ function formatLevelReadinessReport(report) {
         lines.push(`- Full media coverage: ${formatPercent(report.thresholds.fullMediaCoverage)}`);
     }
 
+    lines.push("");
+    lines.push("Card quality diagnostics:");
+    lines.push(`- Local reading coverage target: ${formatPercent(report.cardQualityThresholds.readingCoverage)}`);
+    lines.push(`- Local meaning coverage target: ${formatPercent(report.cardQualityThresholds.meaningCoverage)}`);
+    lines.push(`- Local example coverage target: ${formatPercent(report.cardQualityThresholds.exampleCoverage)}`);
+    lines.push(`- Contextual notes coverage target: ${formatPercent(report.cardQualityThresholds.contextualNotesCoverage)}`);
+
     if (Array.isArray(report.weakestLevels) && report.weakestLevels.length > 0) {
         lines.push("");
         lines.push("Weakest levels:");
         for (const entry of report.weakestLevels) {
-            lines.push(`- N${entry.level}: ${(entry.readinessScore * 100).toFixed(1)}% checks passing (${entry.failingChecks.join(", ") || "none"})`);
+            const qualityTail = Array.isArray(entry.qualityFailingChecks) && entry.qualityFailingChecks.length > 0
+                ? `; quality: ${entry.qualityFailingChecks.join(", ")}`
+                : "";
+            lines.push(`- N${entry.level}: ${(entry.readinessScore * 100).toFixed(1)}% checks passing (${entry.failingChecks.join(", ") || "none"})${qualityTail}`);
         }
     }
 
@@ -148,8 +221,12 @@ function formatLevelReadinessReport(report) {
             metricParts.push(`full media ${formatPercent(row.metrics.fullMediaCoverage)}`);
         }
         lines.push(`  ${metricParts.join(", ")}`);
+        lines.push(`  Card quality: readings ${formatPercent(row.cardQuality.metrics.readingCoverage)}, meanings ${formatPercent(row.cardQuality.metrics.meaningCoverage)}, examples ${formatPercent(row.cardQuality.metrics.exampleCoverage)}, contextual notes ${formatPercent(row.cardQuality.metrics.contextualNotesCoverage)}, generic fallback notes ${formatPercent(row.cardQuality.metrics.genericNotesFallbackRatio)}`);
         if (row.failingChecks.length > 0) {
             lines.push(`  Failing checks: ${row.failingChecks.join(", ")}`);
+        }
+        if (row.cardQuality.failingChecks.length > 0) {
+            lines.push(`  Quality checks: ${row.cardQuality.failingChecks.join(", ")}`);
         }
     }
 
@@ -157,6 +234,7 @@ function formatLevelReadinessReport(report) {
 }
 
 module.exports = {
+    buildDefaultCardQualityThresholds,
     buildDefaultQualityThresholds,
     buildLevelReadinessReport,
     formatLevelReadinessReport,

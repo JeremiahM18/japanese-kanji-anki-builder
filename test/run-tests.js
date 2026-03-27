@@ -20,6 +20,8 @@ require("./mediaSourceReportService.test");
 require("./mediaStore.test");
 require("./mediaSync.test");
 require("./previewService.test");
+require("./previewCardService.test");
+require("./goldenReviewService.test");
 require("./sentenceCorpus.test");
 require("./sentenceCorpusBootstrapService.test");
 require("./sentenceCorpusCoverage.test");
@@ -29,4 +31,3 @@ require("./wikimediaStrokeOrderPlanService.test");
 require("./wikimediaStrokeOrderDiscoveryService.test");
 require("./wikimediaStrokeOrderFetchService.test");
 require("./inference/inferenceEngine.test");
-

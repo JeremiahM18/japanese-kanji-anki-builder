@@ -52,9 +52,10 @@ These commands create or extend local ignored datasets so the deck becomes usefu
 ```bash
 npm run deck:preview -- --level=5 --limit=5
 npm run deck:preview -- --kanji=日,本,学
+npm run deck:review:n5
 ```
 
-Preview shows meaning, notes, example sentence, radical, and media presence. Offline fallback preview now also surfaces local JLPT readings, and template-only fallback examples prefer a study-style line over a raw dictionary-definition sentence.
+Preview shows meaning, notes, example sentence, radical, and media presence. `deck:review:n5` runs a small tracked golden N5 benchmark against hand-picked cards so we can keep the strongest level excellent as the inference and datasets evolve. Offline fallback preview now also surfaces local JLPT readings, and template-only fallback examples prefer a study-style line over a raw dictionary-definition sentence.
 
 If the upstream kanji API is unavailable, preview falls back to local sentence corpus, curated study data, radicals, and managed media instead of failing outright.
 
@@ -104,6 +105,7 @@ The project supports both local media folders and optional remote fallback provi
 | `npm run doctor` | Check setup, coverage, readiness, and next steps |
 | `npm run deck:readiness` | Show per-level deck quality gates |
 | `npm run deck:preview` | Preview cards before import |
+| `npm run deck:review:n5` | Run the tracked golden N5 benchmark |
 | `npm run deck:ready` | Run the full build/package happy path |
 | `npm run build:artifacts` | Run the deterministic build pipeline |
 | `npm run corpus:init` | Create or merge starter sentence corpus data |
@@ -268,6 +270,3 @@ npm run deck:preview -- --level=5 --limit=5
 npm run media:plan -- --level=5 --limit=10
 npm run deck:ready -- --levels=5 --limit=25
 ```
-
-
-

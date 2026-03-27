@@ -1,4 +1,5 @@
 const fs = require("node:fs");
+const path = require("node:path");
 
 const { loadConfig } = require("../src/config");
 const { createKanjiApiClient } = require("../src/clients/kanjiApiClient");
@@ -6,43 +7,19 @@ const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const { loadKradMap } = require("../src/datasets/kradfile");
 const { loadSentenceCorpus } = require("../src/datasets/sentenceCorpus");
 const { createMediaServices } = require("../src/services/mediaServiceFactory");
-const { buildPreviewCards, selectPreviewKanji } = require("../src/services/previewCardService");
-const { formatPreviewReport } = require("../src/services/previewService");
-
-function parseLevel(value) {
-    if (value == null) {
-        return null;
-    }
-
-    const normalized = String(value).trim().toUpperCase().replace(/^N/, "");
-    const parsed = Number(normalized);
-    return [1, 2, 3, 4, 5].includes(parsed) ? parsed : null;
-}
+const { buildPreviewCards } = require("../src/services/previewCardService");
+const { evaluateGoldenReviewSet, formatGoldenReviewReport } = require("../src/services/goldenReviewService");
 
 function parseArgs(argv) {
-    const options = {
-        level: null,
-        limit: 5,
-        kanji: [],
+    return {
         json: argv.includes("--json"),
     };
-
-    for (const arg of argv) {
-        if (arg.startsWith("--level=")) {
-            options.level = parseLevel(arg.split("=")[1]);
-        } else if (arg.startsWith("--limit=")) {
-            options.limit = Number(arg.split("=")[1]);
-        } else if (arg.startsWith("--kanji=")) {
-            options.kanji = arg.split("=")[1].split(",").map((entry) => entry.trim()).filter(Boolean);
-        }
-    }
-
-    return options;
 }
 
 async function main() {
     const options = parseArgs(process.argv.slice(2));
     const config = loadConfig();
+    const reviewSetPath = path.join(process.cwd(), "templates", "golden_n5_review_set.json");
 
     if (!fs.existsSync(config.jlptJsonPath)) {
         throw new Error(`Missing JLPT JSON file at ${config.jlptJsonPath}`);
@@ -50,7 +27,11 @@ async function main() {
     if (!fs.existsSync(config.kradfilePath)) {
         throw new Error(`Missing KRADFILE at ${config.kradfilePath}`);
     }
+    if (!fs.existsSync(reviewSetPath)) {
+        throw new Error(`Missing golden review set at ${reviewSetPath}`);
+    }
 
+    const expectations = JSON.parse(fs.readFileSync(reviewSetPath, "utf-8"));
     const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
     const sentenceCorpus = loadSentenceCorpus(config.sentenceCorpusPath);
     const curatedStudyData = loadCuratedStudyData(config.curatedStudyDataPath);
@@ -61,13 +42,7 @@ async function main() {
         fetchTimeoutMs: config.fetchTimeoutMs,
     });
     const { strokeOrderService, audioService } = createMediaServices(config);
-    const kanjiList = selectPreviewKanji({
-        jlptOnlyJson,
-        level: options.level,
-        limit: options.limit,
-        kanji: options.kanji,
-    });
-
+    const kanjiList = expectations.map((entry) => entry.kanji);
     const cards = await buildPreviewCards({
         kanjiList,
         jlptOnlyJson,
@@ -78,17 +53,15 @@ async function main() {
         strokeOrderService,
         audioService,
     });
-
-    const scope = options.kanji.length > 0
-        ? `kanji=${options.kanji.join(",")}`
-        : `level=${options.level == null ? "N5" : `N${options.level}`}, limit=${options.limit}`;
+    const report = evaluateGoldenReviewSet({ cards, expectations });
 
     if (options.json) {
-        console.log(JSON.stringify({ scope, cards }, null, 2));
-        return;
+        console.log(JSON.stringify({ report, cards }, null, 2));
+        process.exit(report.passed ? 0 : 1);
     }
 
-    process.stdout.write(formatPreviewReport({ cards, scope }));
+    process.stdout.write(formatGoldenReviewReport(report));
+    process.exit(report.passed ? 0 : 1);
 }
 
 main().catch((err) => {

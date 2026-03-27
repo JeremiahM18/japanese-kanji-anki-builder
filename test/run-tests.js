@@ -1,4 +1,5 @@
 require("./app.test");
+require("./audioGenerationService.test");
 require("./audioImportService.test");
 require("./audioService.test");
 require("./buildPipeline.test");
@@ -27,6 +28,7 @@ require("./sentenceCorpusBootstrapService.test");
 require("./sentenceCorpusCoverage.test");
 require("./server.test");
 require("./strokeOrderService.test");
+require("./voicevoxClient.test");
 require("./wikimediaStrokeOrderPlanService.test");
 require("./wikimediaStrokeOrderDiscoveryService.test");
 require("./wikimediaStrokeOrderFetchService.test");

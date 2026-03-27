@@ -298,7 +298,7 @@ function buildSchemaSql({ colId, crt, mod, scm, modelId, deckIdsByLevel, notes, 
         "CREATE INDEX ix_cards_usn on cards (usn);",
         "CREATE INDEX ix_cards_nid on cards (nid);",
         "CREATE INDEX ix_cards_sched on cards (did, queue, due);",
-        `INSERT INTO col VALUES (${colId}, ${crt}, ${mod}, ${scm}, 11, 0, 0, 0, '${shellEscapeSql(confJson)}', '${shellEscapeSql(modelsJson)}', '${shellEscapeSql(decksJson)}', '${shellEscapeSql(dconfJson)}', '');`,
+        `INSERT INTO col VALUES (${colId}, ${crt}, ${mod}, ${scm}, 11, 0, 0, 0, '${shellEscapeSql(confJson)}', '${shellEscapeSql(modelsJson)}', '${shellEscapeSql(decksJson)}', '${shellEscapeSql(dconfJson)}', '{}');`,
     ];
 
     for (const note of notes) {

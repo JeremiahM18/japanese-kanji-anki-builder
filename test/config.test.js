@@ -47,6 +47,8 @@ test("loadConfig reads .env values and resolves paths from cwd", () => {
             "PORT=4021",
             "STROKE_ORDER_IMAGE_SOURCE_DIR=data/custom-images",
             "REMOTE_AUDIO_BASE_URL=https://media.example.com/audio/",
+            "VOICEVOX_ENGINE_URL=http://127.0.0.1:50022",
+            "VOICEVOX_SPEAKER_ID=3",
         ].join("\n"), "utf-8");
 
         const config = loadConfig({ cwd: rootDir, env: {} });
@@ -54,6 +56,8 @@ test("loadConfig reads .env values and resolves paths from cwd", () => {
         assert.equal(config.port, 4021);
         assert.equal(config.strokeOrderImageSourceDir, path.join(rootDir, "data", "custom-images"));
         assert.equal(config.remoteAudioBaseUrl, "https://media.example.com/audio/");
+        assert.equal(config.voicevoxEngineUrl, "http://127.0.0.1:50022");
+        assert.equal(config.voicevoxSpeakerId, 3);
     } finally {
         cleanupTempDir(rootDir);
     }

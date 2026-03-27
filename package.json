@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "nodemon",
     "start": "node src/server.js",
-    "lint": "eslint .",
+    "lint": "eslint src scripts test *.js",
     "test": "node test/run-tests.js",
     "bench:export": "node scripts/benchmarkExport.js",
     "corpus:normalize": "node scripts/normalizeSentenceCorpus.js",
@@ -35,6 +35,7 @@
     "media:plan:stroke-order": "node scripts/reportWikimediaStrokeOrderPlan.js",
     "media:discover:stroke-order": "node scripts/discoverWikimediaStrokeOrder.js",
     "media:fetch:stroke-order": "node scripts/fetchWikimediaStrokeOrder.js",
+    "media:voicevox": "node scripts/generateVoicevoxAudio.js",
     "deck:review:n5": "node scripts/reviewGoldenN5.js",
     "deck:apkg": "python scripts/buildApkg.py"
   },

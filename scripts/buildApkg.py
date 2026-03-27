@@ -294,7 +294,7 @@ def create_collection_db(db_path: Path, levels, package_exports_dir: Path):
                 json.dumps(build_model(model_id, deck_ids_by_level[levels[0]], mod), ensure_ascii=False),
                 json.dumps(build_decks(deck_ids_by_level, mod), ensure_ascii=False),
                 json.dumps(build_dconf(mod), ensure_ascii=False),
-                "",
+                "{}",
             ),
         )
         cur.executemany("INSERT INTO notes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", note_rows)

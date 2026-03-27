@@ -92,12 +92,26 @@ npm run media:discover:stroke-order -- --level=5 --limit=10
 npm run media:fetch:stroke-order -- --level=5 --limit=20 --file-limit=4
 npm run media:import:stroke-order -- --input-dir=/path/to/files
 npm run media:import:audio -- --input-dir=/path/to/audio --level=5
+npm run media:voicevox -- --list-speakers
+npm run media:voicevox -- --level=5 --speaker-id=1
 npm run media:sources -- --level=5 --limit=25
 npm run media:sync -- --level=5 --limit=25
 npm run media:report -- --limit=25
 ```
 
-The project supports both local media folders and optional remote fallback providers. `media:plan` is the quickest way to see exactly which filenames the repo will accept for missing image, animation, and audio assets at a given JLPT level, and it now groups the remaining work into practical buckets like animation-only, image-only, or missing both stroke-order files. If you want to focus purely on stroke order for a while, run commands with `ENABLE_AUDIO=false` to hide audio from readiness and source-gap reporting. `media:plan:stroke-order` turns the free stroke-order path into a concrete Wikimedia Commons checklist with expected file names and Commons file-page URLs. Add `--discover` when you want the plan itself to mark assets as confirmed on Commons versus not found there at discovery time; if Commons discovery is unavailable, the plan now falls back cleanly and marks those rows as discovery-unavailable instead of crashing. When guessed Commons names start failing, `media:discover:stroke-order` queries Wikimedia Commons search directly and reports the real file titles it can find, including alternate static names like `-jbw.png`, KanjiVG-style `stroke order.svg` files, and animation variants like `-calligraphic-order.gif` or `-cursive-order.gif`. Add `--sheet` when you want a compact copyable download list. `media:fetch:stroke-order` uses that discovery data to download only confirmed Commons assets directly into the local source folders, reuses a local discovery cache across runs, waits between requests, and stops cleanly after repeated `429` responses so unattended runs do not thrash Wikimedia. For local audio, `media:import:audio` accepts the same candidate names the sync layer already understands, such as `日.mp3` or `日.wav`. `media:sources` is the checkpoint between import and sync: it shows what the repo can already see locally before anything is written into managed manifests, now groups the remaining gaps into practical buckets like image-only, animation-only, or missing both stroke-order files, and lists real accepted Commons-style variants such as `-bw.png`, `-jbw.png`, and `-cursive-order.gif` when those matter.
+The project supports both local media folders and optional remote fallback providers. `media:plan` is the quickest way to see exactly which filenames the repo will accept for missing image, animation, and audio assets at a given JLPT level, and it now groups the remaining work into practical buckets like animation-only, image-only, or missing both stroke-order files. If you want to focus purely on stroke order for a while, run commands with `ENABLE_AUDIO=false` to hide audio from readiness and source-gap reporting. `media:plan:stroke-order` turns the free stroke-order path into a concrete Wikimedia Commons checklist with expected file names and Commons file-page URLs. Add `--discover` when you want the plan itself to mark assets as confirmed on Commons versus not found there at discovery time; if Commons discovery is unavailable, the plan now falls back cleanly and marks those rows as discovery-unavailable instead of crashing. When guessed Commons names start failing, `media:discover:stroke-order` queries Wikimedia Commons search directly and reports the real file titles it can find, including alternate static names like `-jbw.png`, KanjiVG-style `stroke order.svg` files, and animation variants like `-calligraphic-order.gif` or `-cursive-order.gif`. Add `--sheet` when you want a compact copyable download list. `media:fetch:stroke-order` uses that discovery data to download only confirmed Commons assets directly into the local source folders, reuses a local discovery cache across runs, waits between requests, and stops cleanly after repeated `429` responses so unattended runs do not thrash Wikimedia. For local audio, `media:import:audio` accepts the same candidate names the sync layer already understands, such as `日.mp3` or `日.wav`. For free generated audio, `media:voicevox` talks to a local VOICEVOX engine, chooses a kana reading per kanji from the inference layer, writes deterministic `.wav` files into `data/media_sources/audio`, and is designed to be run before `media:sync`. Start with `media:voicevox -- --list-speakers`, choose a style id, then generate audio with either `--speaker-id=<id>` or `VOICEVOX_SPEAKER_ID` in `.env`. `media:sources` is the checkpoint between import and sync: it shows what the repo can already see locally before anything is written into managed manifests, now groups the remaining gaps into practical buckets like image-only, animation-only, or missing both stroke-order files, and lists real accepted Commons-style variants such as `-bw.png`, `-jbw.png`, and `-cursive-order.gif` when those matter.
+
+Recommended free-audio workflow:
+
+```bash
+npm run media:voicevox -- --list-speakers
+npm run media:voicevox -- --level=5 --speaker-id=1 --concurrency=4
+npm run media:sources -- --level=5 --limit=100
+npm run media:sync -- --level=5 --limit=100
+npm run deck:readiness
+```
+
+This workflow assumes a local VOICEVOX engine is already running at `VOICEVOX_ENGINE_URL` or the default `http://127.0.0.1:50021`.
 
 ## Important Commands
 
@@ -121,6 +135,7 @@ The project supports both local media folders and optional remote fallback provi
 | `npm run media:fetch:stroke-order` | Download confirmed Wikimedia stroke-order assets with backoff |
 | `npm run media:import:stroke-order` | Import free local stroke-order assets |
 | `npm run media:import:audio` | Import local kanji audio files into the source folder |
+| `npm run media:voicevox` | Generate free kanji audio from a local VOICEVOX engine |
 | `npm run media:sources` | Report local source-folder coverage before media sync |
 | `npm run media:sync` | Sync stroke-order and audio assets into managed storage |
 
@@ -142,6 +157,11 @@ Local source folders for acquisition:
 - `data/media_sources/stroke-order/images/`
 - `data/media_sources/stroke-order/animations/`
 - `data/media_sources/audio/`
+
+Optional VOICEVOX configuration lives in `.env`:
+
+- `VOICEVOX_ENGINE_URL`
+- `VOICEVOX_SPEAKER_ID`
 
 More detailed local-data guidance lives in [data/README.md](/C:/japanese_kanji_builder/data/README.md).
 

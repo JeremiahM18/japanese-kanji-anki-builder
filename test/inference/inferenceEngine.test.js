@@ -2,7 +2,12 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const { createInferenceEngine } = require("../../src/inference/inferenceEngine");
-const { chooseEnglishMeaning, pickBestEnglishMeaning } = require("../../src/inference/meaningInference");
+const {
+    buildMeaningJP,
+    chooseEnglishMeaning,
+    chooseMeaningDisplayCandidate,
+    pickBestEnglishMeaning,
+} = require("../../src/inference/meaningInference");
 const { buildNotesFromRankedCandidates } = require("../../src/inference/notesInference");
 const { scoreCandidate } = require("../../src/inference/ranking");
 const {
@@ -404,6 +409,25 @@ test("chooseEnglishMeaning can prefer the exact-match word gloss over noisy kanj
     assert.equal(result, "book");
 });
 
+test("chooseMeaningDisplayCandidate prefers an exact kanji match for learner-facing meanings", () => {
+    const result = chooseMeaningDisplayCandidate({
+        kanji: "五",
+        englishMeaning: "five",
+        rankedCandidates: [
+            { written: "五分", pron: "ごふん", gloss: "five minutes", score: 106 },
+            { written: "五", pron: "ウー", gloss: "five", score: 95 },
+        ],
+    });
+
+    assert.equal(result.written, "五");
+});
+
+test("buildMeaningJP hides exact-match katakana-only readings that look non-learner-friendly", () => {
+    const result = buildMeaningJP({ written: "七", pron: "チー" }, "seven");
+
+    assert.equal(result, "七 ／ seven");
+});
+
 test("pickBestEnglishMeaning prefers learner-friendly meanings over metadata noise", () => {
     const result = pickBestEnglishMeaning([
         "one radical (no.1)",
@@ -423,4 +447,14 @@ test("buildNotesFromRankedCandidates favors exact-match and contextual notes wit
     ], 3, "日");
 
     assert.equal(result, "日 （ひ） - day ／ 日本 （にほん） - Japan ／ 日よう日 （にちようび） - Sunday");
+});
+
+test("buildNotesFromRankedCandidates skips exact-match katakana-only notes", () => {
+    const result = buildNotesFromRankedCandidates([
+        { written: "九", pron: "チュー", gloss: "nine", text: "九 （チュー） - nine" },
+        { written: "九分", pron: "くぶ", gloss: "nine parts", text: "九分 （くぶ） - nine parts" },
+        { written: "九回", pron: "きゅうかい", gloss: "nine times", text: "九回 （きゅうかい） - nine times" },
+    ], 3, "九");
+
+    assert.equal(result, "九分 （くぶ） - nine parts ／ 九回 （きゅうかい） - nine times");
 });

@@ -1,3 +1,5 @@
+const { isKatakanaOnly } = require("./meaningInference");
+
 function normalizeNoteText(value) {
     return String(value ?? "").replace(/\s+/g, " ").trim();
 }
@@ -11,8 +13,22 @@ function isUsableNoteCandidate(candidate) {
     );
 }
 
+function isLearnerFriendlyNoteCandidate(candidate, kanji = "") {
+    if (!candidate) {
+        return false;
+    }
+
+    if (candidate.written === kanji && isKatakanaOnly(candidate.pron)) {
+        return false;
+    }
+
+    return true;
+}
+
 function pickDiverseNoteCandidates(rankedCandidates, kanji, max) {
-    const usable = (Array.isArray(rankedCandidates) ? rankedCandidates : []).filter(isUsableNoteCandidate);
+    const usable = (Array.isArray(rankedCandidates) ? rankedCandidates : [])
+        .filter(isUsableNoteCandidate)
+        .filter((candidate) => isLearnerFriendlyNoteCandidate(candidate, kanji));
     const selected = [];
     const seenWritten = new Set();
 
@@ -66,6 +82,7 @@ function inferNotes({ kanji, rankedCandidates, maxExamples = 3 }) {
 module.exports = {
     buildNotesFromRankedCandidates,
     inferNotes,
+    isLearnerFriendlyNoteCandidate,
     isUsableNoteCandidate,
     normalizeNoteText,
     pickDiverseNoteCandidates,

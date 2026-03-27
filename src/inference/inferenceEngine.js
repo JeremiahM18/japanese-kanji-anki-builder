@@ -1,5 +1,5 @@
 const { extractWordCandidates } = require("./candidateExtractor");
-const { inferMeaning } = require("./meaningInference");
+const { buildMeaningJP, inferMeaning } = require("./meaningInference");
 const { inferNotes } = require("./notesInference");
 const { rankWordCandidates } = require("./ranking");
 const { inferSentenceCandidates } = require("./sentenceInference");
@@ -58,6 +58,14 @@ function applyPreferredWords(rankedCandidates, curatedEntry) {
 
     preferred.sort((a, b) => preferredOrder.get(a.written) - preferredOrder.get(b.written));
     return [...preferred, ...remaining];
+}
+
+/**
+ * @param {RankedCandidate|null} bestWord
+ * @returns {string}
+ */
+function formatMeaningDisplayWord(bestWord) {
+    return buildMeaningJP(bestWord, "");
 }
 
 /**
@@ -137,19 +145,21 @@ function prependCuratedSentence(sentenceCandidates, curatedEntry, bestWord, maxS
 }
 
 /**
- * @param {{englishMeaning: string, meaningJP: string}} meaning
+ * @param {{bestWord: RankedCandidate|null, displayWord?: RankedCandidate|null, englishMeaning: string, meaningJP: string}} meaning
  * @param {any} curatedEntry
  * @param {RankedCandidate[]} rankedCandidates
  */
 function applyCuratedMeaning(meaning, curatedEntry, rankedCandidates) {
     const bestWord = rankedCandidates[0] || null;
+    const displayWord = meaning.displayWord || bestWord;
     const englishMeaning = curatedEntry?.englishMeaning || meaning.englishMeaning;
-    const meaningJP = bestWord && englishMeaning
-        ? `${bestWord.written} （${bestWord.pron}） ／ ${englishMeaning}`
+    const meaningJP = curatedEntry?.englishMeaning && displayWord && englishMeaning
+        ? `${formatMeaningDisplayWord(displayWord)} ／ ${englishMeaning}`
         : meaning.meaningJP;
 
     return {
         bestWord,
+        displayWord,
         englishMeaning,
         meaningJP,
     };
@@ -238,6 +248,7 @@ module.exports = {
     applyPreferredWords,
     createInferenceEngine,
     filterBlockedSentenceCandidates,
+    formatMeaningDisplayWord,
     getCuratedEntry,
     prependCuratedSentence,
 };

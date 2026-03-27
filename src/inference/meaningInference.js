@@ -1,3 +1,5 @@
+const { normalizeText } = require("../utils/text");
+
 const LEARNER_NOISE_PATTERNS = [
     /radical/i,
     /no\./i,
@@ -12,6 +14,7 @@ const LEARNER_NOISE_PATTERNS = [
 ];
 
 const EXACT_WORD_GLOSS_MARGIN = 0;
+const KATAKANA_ONLY_RE = /^[\p{Script=Katakana}ー]+$/u;
 
 function scoreMeaningCandidate(meaning) {
     const text = String(meaning ?? "").trim();
@@ -72,6 +75,59 @@ function pickBestEnglishMeaning(meanings) {
     return ranked[0]?.meaning || String(meanings[0] ?? "").trim();
 }
 
+function isKatakanaOnly(text) {
+    return KATAKANA_ONLY_RE.test(String(text ?? "").trim());
+}
+
+function glossSemanticallyMatches(gloss, englishMeaning) {
+    const normalizedGloss = normalizeText(gloss);
+    const normalizedMeaning = normalizeText(englishMeaning);
+
+    if (!normalizedGloss || !normalizedMeaning) {
+        return false;
+    }
+
+    return normalizedGloss.includes(normalizedMeaning) || normalizedMeaning.includes(normalizedGloss);
+}
+
+function compareDisplayCandidates(a, b, englishMeaning) {
+    const aMeaningMatch = glossSemanticallyMatches(a?.gloss, englishMeaning) ? 1 : 0;
+    const bMeaningMatch = glossSemanticallyMatches(b?.gloss, englishMeaning) ? 1 : 0;
+    if (bMeaningMatch !== aMeaningMatch) {
+        return bMeaningMatch - aMeaningMatch;
+    }
+
+    const aReadablePron = isKatakanaOnly(a?.pron) ? 0 : 1;
+    const bReadablePron = isKatakanaOnly(b?.pron) ? 0 : 1;
+    if (bReadablePron !== aReadablePron) {
+        return bReadablePron - aReadablePron;
+    }
+
+    const aGlossScore = scoreMeaningCandidate(a?.gloss);
+    const bGlossScore = scoreMeaningCandidate(b?.gloss);
+    if (bGlossScore !== aGlossScore) {
+        return bGlossScore - aGlossScore;
+    }
+
+    return (b?.score || 0) - (a?.score || 0);
+}
+
+function chooseMeaningDisplayCandidate({ kanji, rankedCandidates, englishMeaning }) {
+    const candidates = Array.isArray(rankedCandidates) ? rankedCandidates.filter(Boolean) : [];
+    const exactMatches = candidates.filter((candidate) => candidate.written === kanji);
+
+    if (exactMatches.length === 0) {
+        return candidates[0] || null;
+    }
+
+    const bestExactMatch = [...exactMatches].sort((a, b) => compareDisplayCandidates(a, b, englishMeaning))[0] || null;
+    if (bestExactMatch && glossSemanticallyMatches(bestExactMatch.gloss, englishMeaning)) {
+        return bestExactMatch;
+    }
+
+    return candidates[0] || bestExactMatch;
+}
+
 function chooseEnglishMeaning({ kanjiMeanings, bestWord, kanji }) {
     const baseMeaning = pickBestEnglishMeaning(kanjiMeanings);
     const baseScore = scoreMeaningCandidate(baseMeaning);
@@ -89,8 +145,15 @@ function chooseEnglishMeaning({ kanjiMeanings, bestWord, kanji }) {
     return baseMeaning || wordGloss;
 }
 
-function buildMeaningJP(bestWord, englishMeaning) {
-    const jpHint = bestWord ? `${bestWord.written} （${bestWord.pron}）` : "";
+function buildMeaningJP(displayWord, englishMeaning) {
+    let jpHint = "";
+
+    if (displayWord?.written) {
+        const usePronunciation = displayWord.pron && !(displayWord.written.length === 1 && isKatakanaOnly(displayWord.pron));
+        jpHint = usePronunciation
+            ? `${displayWord.written} （${displayWord.pron}）`
+            : `${displayWord.written}`;
+    }
     const english = String(englishMeaning ?? "").trim();
 
     if (jpHint && english) {
@@ -103,19 +166,22 @@ function buildMeaningJP(bestWord, englishMeaning) {
 function inferMeaning({ kanji, kanjiMeanings, rankedCandidates }) {
     const bestWord = rankedCandidates[0] || null;
     const englishMeaning = chooseEnglishMeaning({ kanji, kanjiMeanings, bestWord });
+    const displayWord = chooseMeaningDisplayCandidate({ kanji, rankedCandidates, englishMeaning });
 
     return {
         bestWord,
+        displayWord,
         englishMeaning,
-        meaningJP: buildMeaningJP(bestWord, englishMeaning),
+        meaningJP: buildMeaningJP(displayWord, englishMeaning),
     };
 }
 
 module.exports = {
     buildMeaningJP,
+    chooseMeaningDisplayCandidate,
     chooseEnglishMeaning,
     inferMeaning,
+    isKatakanaOnly,
     pickBestEnglishMeaning,
     scoreMeaningCandidate,
 };
-

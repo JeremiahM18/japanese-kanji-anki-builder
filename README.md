@@ -364,3 +364,10 @@ The current test suite covers:
 - `SIGINT` and `SIGTERM` now trigger graceful shutdown, listener cleanup, and clean server close behavior.
 - Shutdown is serialized so overlapping termination signals share one close path instead of racing.
 - Graceful shutdown now has a timeout guard so hung closes are surfaced and treated as failures instead of stalling indefinitely.
+
+## Recent User Workflow Improvements
+
+- Run `npm run doctor` to get a human-readable setup report before trying to build decks.
+- The doctor report checks required datasets, optional study datasets, local media source folders, and current coverage.
+- The report also recommends the next highest-value step so setup and content work are easier to prioritize.
+- Run `npm run doctor -- --json` if you want the same information in machine-readable form.

@@ -2,6 +2,7 @@ require("./app.test");
 require("./audioService.test");
 require("./buildPipeline.test");
 require("./concurrency.test");
+require("./config.test");
 require("./curatedStudyCoverage.test");
 require("./curatedStudyData.test");
 require("./deckReadyService.test");

@@ -385,4 +385,10 @@ The current test suite covers:
 - The deck-ready summary reports packaged stroke-order references, stroke-order images, stroke-order animations, and audio fields so you can see which media areas are actually landing in the final package.
 - The doctor report now shows media acquisition readiness for each channel, including whether local files exist and whether the matching remote fallback environment variable is configured.
 - When a media channel is not ready, the doctor output now points directly at the local directory and remote environment variable you need to set.
+## Recent Provider Setup Improvements
+
+- The app now loads configuration from `.env` automatically, with normal environment variables still taking precedence.
+- `.env.example` now includes the full local-media and remote-fallback configuration surface for stroke-order images, stroke-order animations, and audio.
+- Run `npm run media:init` to create the expected media source directories and bootstrap a local `.env` from `.env.example` when one does not exist yet.
+- This makes provider setup reproducible across machines and removes the need to hand-export environment variables before using `doctor`, `media:sync`, or `deck:ready`.
 

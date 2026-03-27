@@ -1,3 +1,4 @@
+const fs = require("node:fs");
 const path = require("node:path");
 const { z } = require("zod");
 
@@ -21,48 +22,109 @@ const schema = z.object({
     fetchTimeoutMs: z.coerce.number().int().positive().default(10000),
 });
 
-function resolveFromCwd(value) {
-    return path.resolve(process.cwd(), value);
+function resolveFromCwd(cwd, value) {
+    return path.resolve(cwd, value);
 }
 
-function loadConfig() {
-    const raw = {
-        port: process.env.PORT,
-        cacheDir: process.env.CACHE_DIR,
-        jlptJsonPath: process.env.JLPT_JSON_PATH,
-        kradfilePath: process.env.KRADFILE_PATH,
-        sentenceCorpusPath: process.env.SENTENCE_CORPUS_PATH,
-        curatedStudyDataPath: process.env.CURATED_STUDY_DATA_PATH,
-        kanjiApiBaseUrl: process.env.KANJI_API_BASE_URL,
-        mediaRootDir: process.env.MEDIA_ROOT_DIR,
-        strokeOrderImageSourceDir: process.env.STROKE_ORDER_IMAGE_SOURCE_DIR,
-        strokeOrderAnimationSourceDir: process.env.STROKE_ORDER_ANIMATION_SOURCE_DIR,
-        audioSourceDir: process.env.AUDIO_SOURCE_DIR,
-        remoteStrokeOrderImageBaseUrl: process.env.REMOTE_STROKE_ORDER_IMAGE_BASE_URL,
-        remoteStrokeOrderAnimationBaseUrl: process.env.REMOTE_STROKE_ORDER_ANIMATION_BASE_URL,
-        remoteAudioBaseUrl: process.env.REMOTE_AUDIO_BASE_URL,
-        buildOutDir: process.env.BUILD_OUT_DIR,
-        exportConcurrency: process.env.EXPORT_CONCURRENCY,
-        fetchTimeoutMs: process.env.API_REQUEST_TIMEOUT,
-    };
+function parseDotEnvValue(rawValue) {
+    const trimmed = String(rawValue ?? "").trim();
 
-    const parsed = schema.parse(raw);
+    if (!trimmed) {
+        return "";
+    }
+
+    if ((trimmed.startsWith('"') && trimmed.endsWith('"')) || (trimmed.startsWith("'") && trimmed.endsWith("'"))) {
+        return trimmed.slice(1, -1);
+    }
+
+    return trimmed;
+}
+
+function parseDotEnvText(text) {
+    const env = {};
+    const lines = String(text ?? "").split(/\r?\n/);
+
+    for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed || trimmed.startsWith("#")) {
+            continue;
+        }
+
+        const equalsIndex = trimmed.indexOf("=");
+        if (equalsIndex === -1) {
+            continue;
+        }
+
+        const key = trimmed.slice(0, equalsIndex).trim();
+        const value = trimmed.slice(equalsIndex + 1);
+        if (!key) {
+            continue;
+        }
+
+        env[key] = parseDotEnvValue(value);
+    }
+
+    return env;
+}
+
+function loadDotEnvFile({ cwd = process.cwd(), fileName = ".env" } = {}) {
+    const envPath = path.join(cwd, fileName);
+    if (!fs.existsSync(envPath)) {
+        return {};
+    }
+
+    return parseDotEnvText(fs.readFileSync(envPath, "utf-8"));
+}
+
+function buildRawConfig(env) {
+    return {
+        port: env.PORT,
+        cacheDir: env.CACHE_DIR,
+        jlptJsonPath: env.JLPT_JSON_PATH,
+        kradfilePath: env.KRADFILE_PATH,
+        sentenceCorpusPath: env.SENTENCE_CORPUS_PATH,
+        curatedStudyDataPath: env.CURATED_STUDY_DATA_PATH,
+        kanjiApiBaseUrl: env.KANJI_API_BASE_URL,
+        mediaRootDir: env.MEDIA_ROOT_DIR,
+        strokeOrderImageSourceDir: env.STROKE_ORDER_IMAGE_SOURCE_DIR,
+        strokeOrderAnimationSourceDir: env.STROKE_ORDER_ANIMATION_SOURCE_DIR,
+        audioSourceDir: env.AUDIO_SOURCE_DIR,
+        remoteStrokeOrderImageBaseUrl: env.REMOTE_STROKE_ORDER_IMAGE_BASE_URL,
+        remoteStrokeOrderAnimationBaseUrl: env.REMOTE_STROKE_ORDER_ANIMATION_BASE_URL,
+        remoteAudioBaseUrl: env.REMOTE_AUDIO_BASE_URL,
+        buildOutDir: env.BUILD_OUT_DIR,
+        exportConcurrency: env.EXPORT_CONCURRENCY,
+        fetchTimeoutMs: env.API_REQUEST_TIMEOUT,
+    };
+}
+
+function loadConfig({ cwd = process.cwd(), env = process.env, dotEnvFileName = ".env" } = {}) {
+    const dotEnvValues = loadDotEnvFile({ cwd, fileName: dotEnvFileName });
+    const mergedEnv = {
+        ...dotEnvValues,
+        ...env,
+    };
+    const parsed = schema.parse(buildRawConfig(mergedEnv));
 
     return {
         ...parsed,
-        cacheDir: resolveFromCwd(parsed.cacheDir),
-        jlptJsonPath: resolveFromCwd(parsed.jlptJsonPath),
-        kradfilePath: resolveFromCwd(parsed.kradfilePath),
-        sentenceCorpusPath: resolveFromCwd(parsed.sentenceCorpusPath),
-        curatedStudyDataPath: resolveFromCwd(parsed.curatedStudyDataPath),
-        mediaRootDir: resolveFromCwd(parsed.mediaRootDir),
-        strokeOrderImageSourceDir: resolveFromCwd(parsed.strokeOrderImageSourceDir),
-        strokeOrderAnimationSourceDir: resolveFromCwd(parsed.strokeOrderAnimationSourceDir),
-        audioSourceDir: resolveFromCwd(parsed.audioSourceDir),
-        buildOutDir: resolveFromCwd(parsed.buildOutDir),
+        cacheDir: resolveFromCwd(cwd, parsed.cacheDir),
+        jlptJsonPath: resolveFromCwd(cwd, parsed.jlptJsonPath),
+        kradfilePath: resolveFromCwd(cwd, parsed.kradfilePath),
+        sentenceCorpusPath: resolveFromCwd(cwd, parsed.sentenceCorpusPath),
+        curatedStudyDataPath: resolveFromCwd(cwd, parsed.curatedStudyDataPath),
+        mediaRootDir: resolveFromCwd(cwd, parsed.mediaRootDir),
+        strokeOrderImageSourceDir: resolveFromCwd(cwd, parsed.strokeOrderImageSourceDir),
+        strokeOrderAnimationSourceDir: resolveFromCwd(cwd, parsed.strokeOrderAnimationSourceDir),
+        audioSourceDir: resolveFromCwd(cwd, parsed.audioSourceDir),
+        buildOutDir: resolveFromCwd(cwd, parsed.buildOutDir),
     };
 }
 
 module.exports = {
+    buildRawConfig,
     loadConfig,
+    loadDotEnvFile,
+    parseDotEnvText,
+    parseDotEnvValue,
 };

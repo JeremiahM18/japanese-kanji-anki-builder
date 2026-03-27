@@ -43,7 +43,7 @@ test("formatPreviewCard marks offline local fallback cards", () => {
         previewMode: "offline-local-fallback",
         warning: "Preview used local fallback data because the kanji API could not be reached and no cached entry was available.",
         meaningJP: "学校",
-        reading: "",
+        reading: "オン:ガク ／ くん:まなぶ",
         radical: "子",
         notes: "Local example uses 学校 to illustrate this kanji.",
         exampleSentence: "学校で日本語を学びます。 ／ がっこうでにほんごをまなびます。 ／ I study Japanese at school.",
@@ -57,7 +57,8 @@ test("formatPreviewCard marks offline local fallback cards", () => {
 
     assert.match(text, /Preview mode: offline local fallback/);
     assert.match(text, /Preview note: Preview used local fallback data/);
-    assert.match(text, /Reading: n\/a/);
+    assert.match(text, /Reading: オン:ガク/);
+    assert.match(text, /くん:まなぶ/);
     assert.match(text, /Example: 学校で日本語を学びます/);
 });
 

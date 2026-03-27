@@ -10,6 +10,7 @@ const { createInferenceEngine } = require("../src/inference/inferenceEngine");
 const { createExportService, formatExampleSentence } = require("../src/services/exportService");
 const { createMediaServices } = require("../src/services/mediaServiceFactory");
 const { formatPreviewReport } = require("../src/services/previewService");
+const { labelReading } = require("../src/utils/text");
 
 function parseLevel(value) {
     if (value == null) {
@@ -129,9 +130,18 @@ function buildOfflineNotes({ curatedEntry, sentenceCandidate }) {
     return "Offline preview built from local data only. Add curated meanings or cached API data for richer output.";
 }
 
+function buildOfflineReading(jlptEntry) {
+    if (!jlptEntry || typeof jlptEntry !== "object") {
+        return "";
+    }
+
+    return labelReading(jlptEntry.on_readings, jlptEntry.kun_readings);
+}
+
 async function buildOfflineFallbackCard({
     kanji,
     levelLabel,
+    jlptEntry,
     curatedStudyData,
     sentenceCorpus,
     kradMap,
@@ -161,7 +171,7 @@ async function buildOfflineFallbackCard({
         previewMode: "offline-local-fallback",
         warning: "Preview rendered from local data because online kanji enrichment was unavailable.",
         meaningJP: buildOfflineMeaning({ kanji, curatedEntry, sentenceCandidate }),
-        reading: "",
+        reading: buildOfflineReading(jlptEntry),
         radical: pickMainComponent(kradMap.get(kanji) || []),
         notes: buildOfflineNotes({ curatedEntry, sentenceCandidate }),
         exampleSentence: formatExampleSentence(sentenceCandidate),
@@ -228,7 +238,8 @@ async function main() {
 
     const cards = [];
     for (const kanji of kanjiList) {
-        const levelLabel = `N${jlptOnlyJson[kanji]?.jlpt || "?"}`;
+        const jlptEntry = jlptOnlyJson[kanji] || null;
+        const levelLabel = `N${jlptEntry?.jlpt || "?"}`;
 
         try {
             const inference = await exportService.buildInferenceForKanji({
@@ -264,6 +275,7 @@ async function main() {
             const fallbackCard = await buildOfflineFallbackCard({
                 kanji,
                 levelLabel,
+                jlptEntry,
                 curatedStudyData,
                 sentenceCorpus,
                 kradMap,

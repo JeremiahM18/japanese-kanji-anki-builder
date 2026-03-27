@@ -83,6 +83,7 @@ npm run build:artifacts -- --levels=5,4 --limit=25
 ```bash
 npm run media:init
 npm run media:plan -- --level=5 --limit=25
+npm run media:plan:stroke-order -- --level=5 --limit=25
 npm run media:import:stroke-order -- --input-dir=/path/to/files
 npm run media:import:audio -- --input-dir=/path/to/audio --level=5
 npm run media:sources -- --level=5 --limit=25
@@ -90,7 +91,7 @@ npm run media:sync -- --level=5 --limit=25
 npm run media:report -- --limit=25
 ```
 
-The project supports both local media folders and optional remote fallback providers. `media:plan` is the quickest way to see exactly which filenames the repo will accept for missing image, animation, and audio assets at a given JLPT level. For local audio, `media:import:audio` accepts the same candidate names the sync layer already understands, such as `日.mp3` or `日.wav`. `media:sources` is the checkpoint between import and sync: it shows what the repo can already see locally before anything is written into managed manifests.
+The project supports both local media folders and optional remote fallback providers. `media:plan` is the quickest way to see exactly which filenames the repo will accept for missing image, animation, and audio assets at a given JLPT level. `media:plan:stroke-order` turns the free stroke-order path into a concrete Wikimedia Commons checklist with expected file names and Commons file-page URLs. For local audio, `media:import:audio` accepts the same candidate names the sync layer already understands, such as `日.mp3` or `日.wav`. `media:sources` is the checkpoint between import and sync: it shows what the repo can already see locally before anything is written into managed manifests.
 
 ## Important Commands
 
@@ -107,6 +108,7 @@ The project supports both local media folders and optional remote fallback provi
 | `npm run curated:init` | Create or merge starter curated study data |
 | `npm run media:init` | Create media source folders and bootstrap `.env` |
 | `npm run media:plan` | Show missing media by kanji with accepted local filenames |
+| `npm run media:plan:stroke-order` | Show Wikimedia Commons stroke-order checklist URLs |
 | `npm run media:import:stroke-order` | Import free local stroke-order assets |
 | `npm run media:import:audio` | Import local kanji audio files into the source folder |
 | `npm run media:sources` | Report local source-folder coverage before media sync |

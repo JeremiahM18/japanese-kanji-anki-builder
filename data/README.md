@@ -109,6 +109,12 @@ Artifacts are written to `out/build` by default:
 - `build-summary.json`
 ## Free stroke-order import helper
 
+Generate a Wikimedia Commons download checklist for the missing stroke-order assets first:
+
+```bash
+npm run media:plan:stroke-order -- --level=5 --limit=25
+```
+
 If you have a folder of downloaded free stroke-order assets, import them into the project source layout with:
 
 ```bash

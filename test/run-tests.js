@@ -25,4 +25,5 @@ require("./sentenceCorpusBootstrapService.test");
 require("./sentenceCorpusCoverage.test");
 require("./server.test");
 require("./strokeOrderService.test");
+require("./wikimediaStrokeOrderPlanService.test");
 require("./inference/inferenceEngine.test");

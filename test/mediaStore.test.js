@@ -1,6 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
+const fsp = require("node:fs/promises");
 const os = require("node:os");
 const path = require("node:path");
 
@@ -12,7 +13,9 @@ const {
     createEmptyMediaManifest,
     ensureMediaLayout,
     ensureMediaRoot,
+    isTransientRenameError,
     readManifestIfExists,
+    renameWithRetry,
     updateManifest,
     writeManifest,
 } = require("../src/services/mediaStore");
@@ -69,6 +72,13 @@ test("buildTemporaryManifestPath creates unique temp file names", () => {
     assert.match(second, /\.tmp$/);
 });
 
+test("isTransientRenameError matches expected Windows file-lock errors", () => {
+    assert.equal(isTransientRenameError({ code: "EPERM" }), true);
+    assert.equal(isTransientRenameError({ code: "EBUSY" }), true);
+    assert.equal(isTransientRenameError({ code: "EACCES" }), true);
+    assert.equal(isTransientRenameError({ code: "ENOENT" }), false);
+});
+
 test("createEmptyMediaManifest defines placeholders for stroke-order and audio assets", () => {
     const manifest = createEmptyMediaManifest("日");
 
@@ -77,6 +87,35 @@ test("createEmptyMediaManifest defines placeholders for stroke-order and audio a
     assert.equal(manifest.assets.strokeOrderImage, null);
     assert.equal(manifest.assets.strokeOrderAnimation, null);
     assert.deepEqual(manifest.assets.audio, []);
+});
+
+test("renameWithRetry retries transient rename failures", async () => {
+    const rootDir = makeTempDir();
+    const fromPath = path.join(rootDir, "from.tmp");
+    const toPath = path.join(rootDir, "to.json");
+    fs.writeFileSync(fromPath, "fixture", "utf-8");
+
+    const originalRename = fsp.rename;
+    let attempts = 0;
+
+    try {
+        fsp.rename = async (...args) => {
+            attempts += 1;
+            if (attempts < 3) {
+                const error = new Error("busy");
+                error.code = "EPERM";
+                throw error;
+            }
+            return originalRename(...args);
+        };
+
+        await renameWithRetry(fromPath, toPath, { retries: 4, baseDelayMs: 1 });
+        assert.equal(fs.existsSync(toPath), true);
+        assert.equal(attempts, 3);
+    } finally {
+        fsp.rename = originalRename;
+        cleanupTempDir(rootDir);
+    }
 });
 
 test("writeManifest persists a validated manifest that can be read back", async () => {

@@ -71,6 +71,44 @@ function buildTemporaryManifestPath(manifestPath) {
     return `${manifestPath}.${process.pid}.${Date.now()}.${crypto.randomUUID()}.tmp`;
 }
 
+function delay(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function isTransientRenameError(err) {
+    return Boolean(err && ["EPERM", "EBUSY", "EACCES"].includes(err.code));
+}
+
+async function renameWithRetry(fromPath, toPath, {
+    retries = 5,
+    baseDelayMs = 25,
+} = {}) {
+    let lastError = null;
+
+    for (let attempt = 0; attempt <= retries; attempt += 1) {
+        try {
+            await fsp.rename(fromPath, toPath);
+            return;
+        } catch (err) {
+            lastError = err;
+
+            if (err && err.code === "EXDEV") {
+                await fsp.copyFile(fromPath, toPath);
+                await fsp.unlink(fromPath);
+                return;
+            }
+
+            if (!isTransientRenameError(err) || attempt === retries) {
+                throw err;
+            }
+
+            await delay(baseDelayMs * (attempt + 1));
+        }
+    }
+
+    throw lastError;
+}
+
 /**
  * @param {string} kanji
  * @returns {MediaManifest}
@@ -163,7 +201,7 @@ async function writeManifest(mediaRootDir, manifest) {
     const tempPath = buildTemporaryManifestPath(layout.manifestPath);
 
     await fsp.writeFile(tempPath, JSON.stringify(parsed, null, 2), "utf-8");
-    await fsp.rename(tempPath, layout.manifestPath);
+    await renameWithRetry(tempPath, layout.manifestPath);
 
     return parsed;
 }
@@ -186,8 +224,10 @@ module.exports = {
     createEmptyMediaManifest,
     ensureMediaLayout,
     ensureMediaRoot,
+    isTransientRenameError,
     mediaManifestSchema,
     readManifestIfExists,
+    renameWithRetry,
     runWithManifestLock,
     updateManifest,
     writeManifest,

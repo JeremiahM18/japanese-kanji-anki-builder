@@ -27,4 +27,6 @@ require("./server.test");
 require("./strokeOrderService.test");
 require("./wikimediaStrokeOrderPlanService.test");
 require("./wikimediaStrokeOrderDiscoveryService.test");
+require("./wikimediaStrokeOrderFetchService.test");
 require("./inference/inferenceEngine.test");
+

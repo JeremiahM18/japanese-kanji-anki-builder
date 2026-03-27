@@ -33,7 +33,8 @@
     "media:import:audio": "node scripts/importAudio.js",
     "media:sources": "node scripts/reportMediaSources.js",
     "media:plan:stroke-order": "node scripts/reportWikimediaStrokeOrderPlan.js",
-    "media:discover:stroke-order": "node scripts/discoverWikimediaStrokeOrder.js"
+    "media:discover:stroke-order": "node scripts/discoverWikimediaStrokeOrder.js",
+    "media:fetch:stroke-order": "node scripts/fetchWikimediaStrokeOrder.js"
   },
   "keywords": [
     "japanese",
@@ -55,3 +56,4 @@
     "nodemon": "^3.1.14"
   }
 }
+

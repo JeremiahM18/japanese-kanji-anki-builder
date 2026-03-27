@@ -6,6 +6,7 @@ const path = require("node:path");
 
 const {
     buildMediaSourceReport,
+    buildPreferredFileNames,
     formatMediaSourceReport,
     hasAnyCandidate,
     parseLevelsArgument,
@@ -27,6 +28,13 @@ test("hasAnyCandidate detects candidate hits in an index", () => {
     const index = new Map([["日", [{ fileName: "日.png" }]]]);
     assert.equal(hasAnyCandidate(index, ["本", "日"]), true);
     assert.equal(hasAnyCandidate(index, ["本", "学"]), false);
+});
+
+test("buildPreferredFileNames surfaces accepted Commons filename variants", () => {
+    assert.deepEqual(
+        buildPreferredFileNames(["円", "円-bw", "円-jbw"], [".png", ".webp"], 6),
+        ["円.png", "円.webp", "円-bw.png", "円-bw.webp", "円-jbw.png", "円-jbw.webp"],
+    );
 });
 
 test("buildMediaSourceReport summarizes source-folder coverage and missing assets", async () => {
@@ -66,6 +74,7 @@ test("buildMediaSourceReport summarizes source-folder coverage and missing asset
         assert.equal(report.rows[0].hasAudio, false);
         assert.equal(report.rows[1].hasAudio, true);
         assert.equal(report.rows[1].hasImage, false);
+        assert.equal(report.rows[1].preferredFileNames.image[2], "本-bw.png");
         assert.equal(report.rows[2].hasImage, false);
     } finally {
         cleanupTempDir(rootDir);
@@ -91,11 +100,11 @@ test("formatMediaSourceReport produces a clear local-source summary", () => {
         rows: [{
             kanji: "日",
             level: 5,
-            hasImage: true,
+            hasImage: false,
             hasAnimation: false,
             hasAudio: false,
             preferredFileNames: {
-                image: [],
+                image: ["日.png", "日.webp", "日-bw.png", "日-bw.webp"],
                 animation: ["日-order.gif", "日-order.webp"],
                 audio: ["日.mp3", "日.wav"],
             },
@@ -108,6 +117,7 @@ test("formatMediaSourceReport produces a clear local-source summary", () => {
     assert.match(text, /Source image coverage: 20\/79/);
     assert.match(text, /Audio: C:\/repo\/data\/media_sources\/audio \(missing directory\)/);
     assert.match(text, /- 日 \(N5\)/);
+    assert.match(text, /Image: 日\.png, 日\.webp, 日-bw\.png, 日-bw\.webp/);
     assert.match(text, /Animation: 日-order\.gif, 日-order\.webp/);
     assert.match(text, /Audio: 日\.mp3, 日\.wav/);
     assert.match(text, /rerun this report before `npm run media:sync`/);

@@ -50,6 +50,21 @@ function hasAnyCandidate(index, candidates) {
     return false;
 }
 
+function buildPreferredFileNames(baseCandidates, extensions, limit = 4) {
+    const fileNames = [];
+
+    for (const candidate of baseCandidates) {
+        for (const extension of extensions) {
+            fileNames.push(`${candidate}${extension}`);
+            if (fileNames.length >= limit) {
+                return fileNames;
+            }
+        }
+    }
+
+    return fileNames;
+}
+
 async function buildMediaSourceReport({
     jlptOnlyJson = {},
     strokeOrderImageSourceDir,
@@ -83,8 +98,8 @@ async function buildMediaSourceReport({
             hasAnimation,
             hasAudio,
             preferredFileNames: {
-                image: !hasImage ? [`${entry.kanji}.png`, `${entry.kanji}.webp`] : [],
-                animation: !hasAnimation ? [`${entry.kanji}-order.gif`, `${entry.kanji}-order.webp`] : [],
+                image: !hasImage ? buildPreferredFileNames(buildStrokeOrderImageCandidates(entry.kanji), [".png", ".webp"]) : [],
+                animation: !hasAnimation ? buildPreferredFileNames(buildStrokeOrderAnimationCandidates(entry.kanji), [".gif", ".webp"]) : [],
                 audio: !hasAudio ? [`${entry.kanji}.mp3`, `${entry.kanji}.wav`] : [],
             },
         });
@@ -173,6 +188,7 @@ function formatMediaSourceReport(report) {
 
 module.exports = {
     buildMediaSourceReport,
+    buildPreferredFileNames,
     formatMediaSourceReport,
     hasAnyCandidate,
     parseLevelsArgument,

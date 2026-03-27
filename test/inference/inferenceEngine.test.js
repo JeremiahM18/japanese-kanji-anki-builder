@@ -2,6 +2,8 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const { createInferenceEngine } = require("../../src/inference/inferenceEngine");
+const { pickBestEnglishMeaning } = require("../../src/inference/meaningInference");
+const { buildNotesFromRankedCandidates } = require("../../src/inference/notesInference");
 const { scoreCandidate } = require("../../src/inference/ranking");
 const {
     scoreCorpusSentence,
@@ -384,8 +386,30 @@ test("inference engine falls back to templates when no corpus sentence exists", 
         ],
     });
 
-    assert.equal(result.sentenceCandidates[0].type, "definition");
+    assert.equal(result.sentenceCandidates[0].type, "study");
     assert.equal(result.sentenceCandidates[0].source, "template");
+    assert.match(result.sentenceCandidates[0].japanese, /勉強します/);
     assert.equal(result.curated.hasOverride, false);
     assert.equal(result.candidates[0].scoreBreakdown.totals.finalScore, result.candidates[0].score);
+});
+
+
+test("pickBestEnglishMeaning prefers learner-friendly meanings over metadata noise", () => {
+    const result = pickBestEnglishMeaning([
+        "one radical (no.1)",
+        "day",
+        "counter for long cylindrical things",
+    ]);
+
+    assert.equal(result, "day");
+});
+
+test("buildNotesFromRankedCandidates dedupes repeated note variants", () => {
+    const result = buildNotesFromRankedCandidates([
+        { written: "日本", gloss: "Japan", text: "日本 （にほん） - Japan" },
+        { written: "日本", gloss: "Japan", text: "日本 （にほん） - Japan" },
+        { written: "日本語", gloss: "Japanese", text: "日本語 （にほんご） - Japanese" },
+    ], 3);
+
+    assert.equal(result, "日本 （にほん） - Japan ／ 日本語 （にほんご） - Japanese");
 });

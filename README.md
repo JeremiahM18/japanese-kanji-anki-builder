@@ -54,7 +54,7 @@ npm run deck:preview -- --level=5 --limit=5
 npm run deck:preview -- --kanji=日,本,学
 ```
 
-Preview shows meaning, notes, example sentence, radical, and media presence.
+Preview shows meaning, notes, example sentence, radical, and media presence. Offline fallback preview now also surfaces local JLPT readings, and template-only fallback examples prefer a study-style line over a raw dictionary-definition sentence.
 
 If the upstream kanji API is unavailable, preview falls back to local sentence corpus, curated study data, radicals, and managed media instead of failing outright.
 

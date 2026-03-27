@@ -13,9 +13,9 @@ function buildDefinitionSentence(candidate) {
 function buildStudySentence(candidate) {
     return {
         type: "study",
-        japanese: `「${candidate.written}」を覚えます。`,
-        reading: `「${candidate.pron}」をおぼえます。`,
-        english: `I memorize "${candidate.gloss}."`,
+        japanese: `「${candidate.written}」を勉強します。`,
+        reading: `「${candidate.pron}」をべんきょうします。`,
+        english: `I study the word "${candidate.written}".`,
         sourceWord: candidate.written,
         score: candidate.score,
         source: "template",
@@ -132,11 +132,17 @@ function scoreSentenceNaturalness(entry) {
     if (/覚えます/.test(japanese)) {
         score -= 10;
     }
+    if (/勉強します/.test(japanese)) {
+        score -= 4;
+    }
     if (/ means /i.test(english) || /^".+" means /i.test(english)) {
         score -= 12;
     }
     if (/I memorize/i.test(english)) {
         score -= 10;
+    }
+    if (/I study the word/i.test(english)) {
+        score -= 4;
     }
 
     return score;
@@ -225,7 +231,7 @@ function inferSentenceCandidates({ rankedCandidates, kanji, sentenceCorpus = [],
             break;
         }
 
-        for (const sentence of [buildDefinitionSentence(candidate), buildStudySentence(candidate)]) {
+        for (const sentence of [buildStudySentence(candidate), buildDefinitionSentence(candidate)]) {
             if (sentences.length >= maxSentences) {
                 break;
             }

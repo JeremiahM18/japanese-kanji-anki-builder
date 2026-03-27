@@ -1,19 +1,27 @@
+function normalizeNoteText(value) {
+    return String(value ?? "").replace(/\s+/g, " ").trim();
+}
+
 function buildNotesFromRankedCandidates(rankedCandidates, max = 3) {
     const out = [];
-    const seen = new Set();
+    const seenWrittenGloss = new Set();
+    const seenText = new Set();
 
     for (const candidate of rankedCandidates) {
         if (out.length >= max) {
             break;
         }
 
-        const dedupeKey = `${candidate.written}|${candidate.pron}`;
-        if (seen.has(dedupeKey)) {
+        const noteText = normalizeNoteText(candidate.text);
+        const dedupeKey = `${candidate.written}|${candidate.gloss}`;
+
+        if (!noteText || seenWrittenGloss.has(dedupeKey) || seenText.has(noteText)) {
             continue;
         }
 
-        seen.add(dedupeKey);
-        out.push(candidate.text);
+        seenWrittenGloss.add(dedupeKey);
+        seenText.add(noteText);
+        out.push(noteText);
     }
 
     return out.join(" ／ ");
@@ -28,4 +36,5 @@ function inferNotes({ rankedCandidates, maxExamples = 3 }) {
 module.exports = {
     buildNotesFromRankedCandidates,
     inferNotes,
+    normalizeNoteText,
 };

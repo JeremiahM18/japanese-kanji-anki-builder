@@ -269,5 +269,5 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
     assert.equal(cols[6], "[sound:65E5_日-kanji-reading-日.mp3]");
     assert.equal(cols[7], "日");
     assert.equal(cols[8], "日本 （にほん） - Japan ／ 日よう日 （にちようび） - Sunday");
-    assert.equal(cols[9], '「日本」は「Japan」です。 ／ 「にほん」は「Japan」です。 ／ "日本" means "Japan."');
+    assert.equal(cols[9], '「日本」を勉強します。 ／ 「にほん」をべんきょうします。 ／ I study the word "日本".');
 });

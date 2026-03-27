@@ -1,4 +1,5 @@
 const { buildJlptBuckets } = require("../datasets/sentenceCorpusCoverage");
+const { mapWithConcurrency } = require("../utils/concurrency");
 
 function parseLevelArgument(value) {
     if (value == null) {
@@ -75,51 +76,30 @@ function summarizeSyncResults(results) {
     return summary;
 }
 
-async function mapWithConcurrency(items, concurrency, mapper) {
-    const results = new Array(items.length);
-    let nextIndex = 0;
-
-    async function worker() {
-        while (true) {
-            const currentIndex = nextIndex++;
-            if (currentIndex >= items.length) {
-                return;
-            }
-
-            results[currentIndex] = await mapper(items[currentIndex], currentIndex);
-        }
-    }
-
-    const workerCount = Math.min(Math.max(1, Number(concurrency) || 1), Math.max(1, items.length));
-    await Promise.all(Array.from({ length: workerCount }, () => worker()));
-    return results;
-}
-
 async function syncMediaForKanjiList({ kanjiList, strokeOrderService, audioService, concurrency = 4, audioMetadata = {} }) {
     const results = await mapWithConcurrency(kanjiList, concurrency, async (kanji) => {
-        const result = { kanji };
-
-        try {
-            result.strokeOrder = await strokeOrderService.syncKanji(kanji);
-        } catch (error) {
-            result.strokeOrder = {
-                error: error instanceof Error ? error.message : String(error),
-            };
-        }
-
-        try {
-            result.audio = await audioService.syncKanji(kanji, {
+        const [strokeOrder, audio] = await Promise.allSettled([
+            strokeOrderService.syncKanji(kanji),
+            audioService.syncKanji(kanji, {
                 category: "kanji-reading",
                 text: kanji,
                 ...audioMetadata,
-            });
-        } catch (error) {
-            result.audio = {
-                error: error instanceof Error ? error.message : String(error),
-            };
-        }
+            }),
+        ]);
 
-        return result;
+        return {
+            kanji,
+            strokeOrder: strokeOrder.status === "fulfilled"
+                ? strokeOrder.value
+                : {
+                    error: strokeOrder.reason instanceof Error ? strokeOrder.reason.message : String(strokeOrder.reason),
+                },
+            audio: audio.status === "fulfilled"
+                ? audio.value
+                : {
+                    error: audio.reason instanceof Error ? audio.reason.message : String(audio.reason),
+                },
+        };
     });
 
     return {

@@ -1,6 +1,7 @@
 const path = require("node:path");
 
 const { createInferenceEngine } = require("../inference/inferenceEngine");
+const { mapWithConcurrency } = require("../utils/concurrency");
 const { labelReading, tsvEscape } = require("../utils/text");
 
 function formatExampleSentence(sentence) {
@@ -51,32 +52,6 @@ async function resolveStrokeOrderFields(strokeOrderService, kanji) {
 }
 
 function createExportService({ inferenceEngine = createInferenceEngine() } = {}) {
-    async function mapWithConcurrency(items, concurrency, mapper) {
-        const results = new Array(items.length);
-        let nextIndex = 0;
-
-        async function worker() {
-            while (true) {
-                const currentIndex = nextIndex++;
-
-                if (currentIndex >= items.length) {
-                    return;
-                }
-
-                results[currentIndex] = await mapper(items[currentIndex], currentIndex);
-            }
-        }
-
-        const safeConcurrency = Math.max(1, Number(concurrency) || 1);
-        const workerCount = Math.min(safeConcurrency, Math.max(1, items.length));
-
-        await Promise.all(
-            Array.from({ length: workerCount }, () => worker())
-        );
-
-        return results;
-    }
-
     async function buildRowForKanji({
         kanji,
         kradMap,

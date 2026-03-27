@@ -73,9 +73,15 @@ test("summarizeSyncResults reports media hits and source counts", () => {
 
 test("syncMediaForKanjiList processes kanji with bounded concurrency", async () => {
     const calls = [];
+    let activeStrokeOrAudioTasks = 0;
+    let maxActiveStrokeOrAudioTasks = 0;
     const strokeOrderService = {
         async syncKanji(kanji) {
+            activeStrokeOrAudioTasks += 1;
+            maxActiveStrokeOrAudioTasks = Math.max(maxActiveStrokeOrAudioTasks, activeStrokeOrAudioTasks);
             calls.push(`stroke:${kanji}`);
+            await new Promise((resolve) => setTimeout(resolve, 15));
+            activeStrokeOrAudioTasks -= 1;
             return {
                 manifest: {
                     assets: {
@@ -88,7 +94,11 @@ test("syncMediaForKanjiList processes kanji with bounded concurrency", async () 
     };
     const audioService = {
         async syncKanji(kanji, metadata) {
+            activeStrokeOrAudioTasks += 1;
+            maxActiveStrokeOrAudioTasks = Math.max(maxActiveStrokeOrAudioTasks, activeStrokeOrAudioTasks);
             calls.push(`audio:${kanji}:${metadata.text}`);
+            await new Promise((resolve) => setTimeout(resolve, 15));
+            activeStrokeOrAudioTasks -= 1;
             return {
                 manifest: {
                     assets: {
@@ -111,4 +121,33 @@ test("syncMediaForKanjiList processes kanji with bounded concurrency", async () 
     assert.equal(result.summary.audio.hits, 2);
     assert.equal(calls.includes("stroke:日"), true);
     assert.equal(calls.includes("audio:本:本"), true);
+    assert.equal(maxActiveStrokeOrAudioTasks, 4);
+});
+
+test("syncMediaForKanjiList preserves one result when stroke-order or audio fails", async () => {
+    const result = await syncMediaForKanjiList({
+        kanjiList: ["日"],
+        strokeOrderService: {
+            async syncKanji() {
+                throw new Error("stroke failed");
+            },
+        },
+        audioService: {
+            async syncKanji() {
+                return {
+                    manifest: {
+                        assets: {
+                            audio: [{ source: "local-filesystem" }],
+                        },
+                    },
+                };
+            },
+        },
+        concurrency: 1,
+    });
+
+    assert.equal(result.results.length, 1);
+    assert.equal(result.results[0].strokeOrder.error, "stroke failed");
+    assert.equal(result.results[0].audio.manifest.assets.audio.length, 1);
+    assert.equal(result.summary.errors.length, 1);
 });

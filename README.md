@@ -344,3 +344,9 @@ The current test suite covers:
 - preserve professional commit hygiene with focused, descriptive commits
 - add tests when changing behavior or infrastructure
 - keep CI green before merging
+
+## Recent Concurrency Improvements
+
+- Shared bounded-concurrency execution now lives in `src/utils/concurrency.js` and is reused by both export generation and bulk media sync.
+- Bulk media sync now runs stroke-order and audio work in parallel for each kanji while preserving the top-level kanji concurrency cap.
+- Per-kanji manifest serialization still protects correctness underneath, so the added parallelism improves throughput without reintroducing manifest races.

@@ -32,6 +32,16 @@ test("formatDeckReadyReport summarizes packaged media and readiness", () => {
                 { label: "Audio", ready: false },
             ],
         },
+        quality: {
+            levelReadiness: {
+                overallReady: false,
+                weakestLevels: [{ level: 4 }],
+                levels: [
+                    { level: 5, ready: true, readinessScore: 1 },
+                    { level: 4, ready: false, readinessScore: 0.2 },
+                ],
+            },
+        },
     });
 
     assert.match(text, /Japanese Kanji Builder Deck Ready/);
@@ -39,6 +49,9 @@ test("formatDeckReadyReport summarizes packaged media and readiness", () => {
     assert.match(text, /Stroke-order animations: 2/);
     assert.match(text, /Audio: not ready/);
     assert.match(text, /Full media coverage: 25.0%/);
+    assert.match(text, /Level quality gates:/);
+    assert.match(text, /N4: needs work; 20.0% checks passing/);
+    assert.match(text, /Overall quality gate: failing/);
 });
 
 test("formatDeckReadyReport recommends configuring acquisition when no media was packaged", () => {

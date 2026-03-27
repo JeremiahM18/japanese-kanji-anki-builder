@@ -422,3 +422,9 @@ The current test suite covers:
 - `npm run deck:preview` now falls back to local sentence corpus, curated study data, radicals, and managed media when the upstream kanji API is unavailable.
 - Offline fallback cards are marked clearly in the preview output, so you can tell when you are seeing a local-only render instead of full online-enriched inference.
 - This removes the previous all-or-nothing preview failure mode and makes card review useful even when you are offline or the API is unreachable.
+## Recent Readiness Improvements
+
+- Run `npm run deck:readiness` to see a level-by-level quality dashboard for N5 through N1.
+- The readiness report applies explicit quality gates for sentence coverage, curated coverage, stroke-order coverage, audio coverage, and full media coverage.
+- `npm run doctor` and `npm run deck:ready` now surface the same level quality gates, so setup, build, and readiness workflows all report one consistent quality picture.
+- This makes deck quality measurable and helps prioritize the weakest JLPT level first instead of guessing where to invest effort.

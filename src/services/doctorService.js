@@ -5,6 +5,7 @@ const { buildMediaCoverageSummary } = require("../datasets/mediaCoverage");
 const { buildCoverageSummary } = require("../datasets/sentenceCorpusCoverage");
 const { loadCuratedStudyData } = require("../datasets/curatedStudyData");
 const { loadSentenceCorpus } = require("../datasets/sentenceCorpus");
+const { buildLevelReadinessReport } = require("./levelReadinessService");
 
 function describePathStatus(filePath, { label, required, kind = "file" }) {
     const exists = fs.existsSync(filePath);
@@ -84,6 +85,7 @@ async function buildDoctorReport({
     buildCoverageSummaryFn = buildCoverageSummary,
     buildCuratedStudySummaryFn = buildCuratedStudySummary,
     buildMediaCoverageSummaryFn = buildMediaCoverageSummary,
+    buildLevelReadinessReportFn = buildLevelReadinessReport,
     loadSentenceCorpusFn = loadSentenceCorpus,
     loadCuratedStudyDataFn = loadCuratedStudyData,
 }) {
@@ -105,6 +107,14 @@ async function buildDoctorReport({
         : null;
     const mediaCoverage = requiredReady
         ? await buildMediaCoverageSummaryFn({ jlptOnlyJson, mediaRootDir: config.mediaRootDir })
+        : null;
+    const levelReadiness = requiredReady
+        ? buildLevelReadinessReportFn({
+            sentenceCoverage,
+            curatedCoverage,
+            mediaCoverage,
+            levels: [5, 4, 3, 2, 1],
+        })
         : null;
 
     const nextSteps = [];
@@ -139,6 +149,12 @@ async function buildDoctorReport({
     if (requiredReady && curatedCoverage && curatedCoverage.coverageRatio < 1) {
         nextSteps.push(`Curate high-priority kanji notes or meanings. Current curated coverage is ${(curatedCoverage.coverageRatio * 100).toFixed(1)}%.`);
     }
+    if (requiredReady && levelReadiness && !levelReadiness.overallReady) {
+        const weakest = levelReadiness.weakestLevels?.[0];
+        if (weakest) {
+            nextSteps.push(`Raise JLPT N${weakest.level} to the quality gate first. It is currently failing ${weakest.failingChecks.join(", ")}.`);
+        }
+    }
     if (nextSteps.length === 0) {
         nextSteps.push("Core datasets and media coverage look healthy. The next user-facing step is previewing cards and packaging an import-ready deck.");
     }
@@ -151,6 +167,9 @@ async function buildDoctorReport({
             sentenceCorpus: sentenceCoverage,
             curatedStudyData: curatedCoverage,
             media: mediaCoverage,
+        },
+        quality: {
+            levelReadiness,
         },
         nextSteps,
     };
@@ -226,6 +245,15 @@ function formatDoctorReport(report) {
             lines.push(`- Stroke-order media: ${formatPercent(report.coverage.media.strokeOrderCoverageRatio)} (${report.coverage.media.strokeOrderCovered}/${report.coverage.media.totalKanji} kanji)`);
             lines.push(`- Audio media: ${formatPercent(report.coverage.media.audioCoverageRatio)} (${report.coverage.media.audioCovered}/${report.coverage.media.totalKanji} kanji)`);
             lines.push(`- Full media coverage: ${formatPercent(report.coverage.media.fullMediaCoverageRatio)} (${report.coverage.media.fullMediaCovered}/${report.coverage.media.totalKanji} kanji)`);
+        }
+    }
+
+    if (report.quality?.levelReadiness) {
+        lines.push("");
+        lines.push("Level quality gates:");
+        lines.push(`- Overall quality gate: ${report.quality.levelReadiness.overallReady ? "passing" : "failing"}`);
+        for (const row of report.quality.levelReadiness.levels) {
+            lines.push(`- N${row.level}: ${row.ready ? "ready" : "needs work"}; sentence ${formatPercent(row.metrics.sentenceCoverage)}, curated ${formatPercent(row.metrics.curatedCoverage)}, stroke-order ${formatPercent(row.metrics.strokeOrderCoverage)}, audio ${formatPercent(row.metrics.audioCoverage)}, full media ${formatPercent(row.metrics.fullMediaCoverage)}`);
         }
     }
 

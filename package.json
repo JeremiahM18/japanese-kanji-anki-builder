@@ -26,7 +26,8 @@
     "doctor": "node scripts/doctor.js",
     "deck:preview": "node scripts/previewDeck.js",
     "deck:package": "node scripts/buildArtifacts.js",
-    "deck:ready": "node scripts/prepareDeck.js"
+    "deck:ready": "node scripts/prepareDeck.js",
+    "deck:readiness": "node scripts/reportDeckReadiness.js"
   },
   "keywords": [
     "japanese",
@@ -48,4 +49,3 @@
     "nodemon": "^3.1.14"
   }
 }
-

@@ -10,6 +10,7 @@ require("./doctorService.test");
 require("./exportService.test");
 require("./freeStrokeOrderImportService.test");
 require("./kanjiApiClient.test");
+require("./levelReadinessService.test");
 require("./mediaCoverage.test");
 require("./mediaProviders.test");
 require("./mediaStore.test");

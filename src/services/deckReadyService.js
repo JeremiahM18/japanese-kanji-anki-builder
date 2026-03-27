@@ -2,6 +2,10 @@ function formatCount(value) {
     return Number.isFinite(value) ? String(value) : "0";
 }
 
+function formatPercent(value) {
+    return `${((value || 0) * 100).toFixed(1)}%`;
+}
+
 function formatDeckReadyReport(summary, doctorReport = null) {
     const packageSummary = summary.package || {};
     const mediaCounts = packageSummary.mediaCounts || {
@@ -10,6 +14,7 @@ function formatDeckReadyReport(summary, doctorReport = null) {
         strokeOrderAnimation: 0,
         audio: 0,
     };
+    const levelReadiness = doctorReport?.quality?.levelReadiness || null;
 
     const lines = [];
     lines.push("Japanese Kanji Builder Deck Ready");
@@ -36,13 +41,29 @@ function formatDeckReadyReport(summary, doctorReport = null) {
 
     lines.push("");
     lines.push("Coverage snapshot:");
-    lines.push(`- Stroke-order coverage: ${((summary.coverage?.strokeOrder || 0) * 100).toFixed(1)}%`);
-    lines.push(`- Audio coverage: ${((summary.coverage?.audio || 0) * 100).toFixed(1)}%`);
-    lines.push(`- Full media coverage: ${((summary.coverage?.fullMedia || 0) * 100).toFixed(1)}%`);
+    lines.push(`- Stroke-order coverage: ${formatPercent(summary.coverage?.strokeOrder || 0)}`);
+    lines.push(`- Audio coverage: ${formatPercent(summary.coverage?.audio || 0)}`);
+    lines.push(`- Full media coverage: ${formatPercent(summary.coverage?.fullMedia || 0)}`);
+
+    if (levelReadiness) {
+        lines.push("");
+        lines.push("Level quality gates:");
+        lines.push(`- Overall quality gate: ${levelReadiness.overallReady ? "passing" : "failing"}`);
+        for (const row of levelReadiness.levels.filter((entry) => (summary.levels || []).includes(entry.level))) {
+            lines.push(`- N${row.level}: ${row.ready ? "ready" : "needs work"}; ${(row.readinessScore * 100).toFixed(1)}% checks passing`);
+        }
+    }
 
     lines.push("");
     if ((packageSummary.mediaAssetCount || 0) === 0) {
         lines.push("Next step: add local media sources or configure remote fallback providers, then rerun `npm run deck:ready`.");
+    } else if (levelReadiness && !levelReadiness.overallReady) {
+        const weakest = levelReadiness.weakestLevels?.[0];
+        if (weakest) {
+            lines.push(`Next step: raise JLPT N${weakest.level} above the quality gate before calling the deck truly ready.`);
+        } else {
+            lines.push("Next step: improve level quality gate coverage before calling the deck truly ready.");
+        }
     } else {
         lines.push("Next step: import the TSV from the package exports folder and copy the packaged media into Anki's `collection.media` directory.");
     }

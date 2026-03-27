@@ -83,6 +83,7 @@ test("buildDoctorReport summarizes readiness coverage and acquisition next steps
                 coveredKanji: 1,
                 missingKanji: 1,
                 coverageRatio: 0.5,
+                levels: [{ level: 5, totalKanji: 2, coveredKanji: 1, coverageRatio: 0.5, sampleMissing: ["本"] }],
                 missingByPriority: [{ kanji: "本", level: 5 }],
             }),
             buildCuratedStudySummaryFn: () => ({
@@ -90,6 +91,7 @@ test("buildDoctorReport summarizes readiness coverage and acquisition next steps
                 curatedKanji: 1,
                 missingKanji: 1,
                 coverageRatio: 0.5,
+                levels: [{ level: 5, totalKanji: 2, curatedKanji: 1, coverageRatio: 0.5, sampleMissing: ["本"] }],
             }),
             buildMediaCoverageSummaryFn: async () => ({
                 totalKanji: 2,
@@ -99,13 +101,16 @@ test("buildDoctorReport summarizes readiness coverage and acquisition next steps
                 strokeOrderCoverageRatio: 0.5,
                 audioCoverageRatio: 0,
                 fullMediaCoverageRatio: 0,
+                levels: [{ level: 5, totalKanji: 2, strokeOrderCovered: 1, audioCovered: 0, fullMediaCovered: 0, strokeOrderCoverageRatio: 0.5, audioCoverageRatio: 0, fullMediaCoverageRatio: 0, sampleMissing: [{ kanji: "本", missingStrokeOrder: true, missingAudio: true }] }],
             }),
         });
 
         assert.equal(report.ready, true);
         assert.equal(report.coverage.media.audioCoverageRatio, 0);
+        assert.equal(report.quality.levelReadiness.overallReady, false);
         assert.equal(report.nextSteps.some((step) => step.includes("REMOTE_AUDIO_BASE_URL")), true);
         assert.equal(report.nextSteps.some((step) => step.includes("sentence coverage")), true);
+        assert.equal(report.nextSteps.some((step) => step.includes("quality gate")), true);
     } finally {
         cleanupTempDir(rootDir);
     }
@@ -129,12 +134,31 @@ test("formatDoctorReport produces a human-readable setup summary", () => {
             curatedStudyData: null,
             media: null,
         },
+        quality: {
+            levelReadiness: {
+                overallReady: false,
+                levels: [
+                    {
+                        level: 5,
+                        ready: false,
+                        metrics: {
+                            sentenceCoverage: 0,
+                            curatedCoverage: 0,
+                            strokeOrderCoverage: 0,
+                            audioCoverage: 0,
+                            fullMediaCoverage: 0,
+                        },
+                    },
+                ],
+            },
+        },
         nextSteps: ["Add the JLPT dataset first."],
     });
 
     assert.match(text, /Overall status: missing required setup/);
     assert.match(text, /Required inputs:/);
     assert.match(text, /Media acquisition readiness:/);
+    assert.match(text, /Level quality gates:/);
     assert.match(text, /REMOTE_AUDIO_BASE_URL/);
     assert.match(text, /Next steps:/);
     assert.match(text, /Add the JLPT dataset first/);

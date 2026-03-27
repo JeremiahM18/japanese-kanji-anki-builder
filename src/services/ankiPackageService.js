@@ -194,7 +194,7 @@ function createDeckConfig(mod) {
             buryReviews: false,
             dyn: false,
             id: 1,
-            lapses: {
+            lapse: {
                 delays: [10],
                 leechAction: 0,
                 leechFails: 8,
@@ -471,3 +471,4 @@ module.exports = {
     buildDeckName,
     parseTsv,
 };
+

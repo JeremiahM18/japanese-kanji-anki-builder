@@ -171,7 +171,7 @@ def build_dconf(mod: int):
             "buryReviews": False,
             "dyn": False,
             "id": 1,
-            "lapses": {"delays": [10], "leechAction": 0, "leechFails": 8, "minInt": 1, "mult": 0},
+            "lapse": {"delays": [10], "leechAction": 0, "leechFails": 8, "minInt": 1, "mult": 0},
             "maxTaken": 60,
             "mod": mod,
             "name": "Default",
@@ -371,3 +371,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

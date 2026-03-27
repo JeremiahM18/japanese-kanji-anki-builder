@@ -16,6 +16,7 @@ require("./levelReadinessService.test");
 require("./mediaGapService.test");
 require("./mediaCoverage.test");
 require("./mediaProviders.test");
+require("./mediaSourceReportService.test");
 require("./mediaStore.test");
 require("./mediaSync.test");
 require("./previewService.test");

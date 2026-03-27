@@ -30,7 +30,8 @@
     "deck:ready": "node scripts/prepareDeck.js",
     "deck:readiness": "node scripts/reportDeckReadiness.js",
     "media:plan": "node scripts/reportMediaPlan.js",
-    "media:import:audio": "node scripts/importAudio.js"
+    "media:import:audio": "node scripts/importAudio.js",
+    "media:sources": "node scripts/reportMediaSources.js"
   },
   "keywords": [
     "japanese",

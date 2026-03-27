@@ -45,7 +45,7 @@ npm run corpus:init -- --merge
 npm run curated:init -- --merge
 ```
 
-These commands create or extend local ignored datasets so the deck becomes useful faster instead of starting from empty content. The tracked starter content now gives N5 a strong baseline and also builds N4 through staged starter packs for sentence and curated-note coverage, with N4 starter support now past the forty-percent mark for both sentence and curated coverage and preview quality improving noticeably instead of depending on bare fallback cards.
+These commands create or extend local ignored datasets so the deck becomes useful faster instead of starting from empty content. The tracked starter content now gives N5 a strong baseline and also builds N4 through staged starter packs for sentence and curated-note coverage, with N4 starter support now past the halfway mark for both sentence and curated coverage and preview quality improving noticeably instead of depending on bare fallback cards.
 
 ### 3. Preview cards
 

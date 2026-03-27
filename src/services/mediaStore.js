@@ -1,6 +1,7 @@
 const fs = require("node:fs");
 const fsp = require("node:fs/promises");
 const path = require("node:path");
+const crypto = require("node:crypto");
 const { z } = require("zod");
 
 /** @typedef {import("../types/contracts").MediaAsset} MediaAsset */
@@ -34,6 +35,8 @@ const mediaManifestSchema = z.object({
     }),
 });
 
+const manifestWriteQueues = new Map();
+
 function ensureDir(dirPath) {
     if (!fs.existsSync(dirPath)) {
         fs.mkdirSync(dirPath, { recursive: true });
@@ -58,6 +61,14 @@ function buildMediaBasePath(mediaRootDir, kanji) {
 
 function buildManifestPath(mediaRootDir, kanji) {
     return path.join(buildMediaBasePath(mediaRootDir, kanji), "manifest.json");
+}
+
+function buildManifestQueueKey(mediaRootDir, kanji) {
+    return `${path.resolve(mediaRootDir)}::${buildKanjiMediaId(kanji)}`;
+}
+
+function buildTemporaryManifestPath(manifestPath) {
+    return `${manifestPath}.${process.pid}.${Date.now()}.${crypto.randomUUID()}.tmp`;
 }
 
 /**
@@ -115,6 +126,29 @@ async function readManifestIfExists(mediaRootDir, kanji) {
     }
 }
 
+async function runWithManifestLock(mediaRootDir, kanji, callback) {
+    const queueKey = buildManifestQueueKey(mediaRootDir, kanji);
+    const previous = manifestWriteQueues.get(queueKey) || Promise.resolve();
+
+    let releaseCurrent;
+    const current = new Promise((resolve) => {
+        releaseCurrent = resolve;
+    });
+
+    manifestWriteQueues.set(queueKey, previous.then(() => current, () => current));
+
+    try {
+        await previous;
+        return await callback();
+    } finally {
+        releaseCurrent();
+
+        if (manifestWriteQueues.get(queueKey) === current) {
+            manifestWriteQueues.delete(queueKey);
+        }
+    }
+}
+
 /**
  * @param {string} mediaRootDir
  * @param {MediaManifest} manifest
@@ -123,10 +157,10 @@ async function readManifestIfExists(mediaRootDir, kanji) {
 async function writeManifest(mediaRootDir, manifest) {
     const parsed = mediaManifestSchema.parse({
         ...manifest,
-        updatedAt: manifest.updatedAt || new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
     });
     const layout = ensureMediaLayout(mediaRootDir, parsed.kanji);
-    const tempPath = `${layout.manifestPath}.tmp`;
+    const tempPath = buildTemporaryManifestPath(layout.manifestPath);
 
     await fsp.writeFile(tempPath, JSON.stringify(parsed, null, 2), "utf-8");
     await fsp.rename(tempPath, layout.manifestPath);
@@ -134,14 +168,27 @@ async function writeManifest(mediaRootDir, manifest) {
     return parsed;
 }
 
+async function updateManifest(mediaRootDir, kanji, updater) {
+    return runWithManifestLock(mediaRootDir, kanji, async () => {
+        const existing = await readManifestIfExists(mediaRootDir, kanji);
+        const baseManifest = existing || createEmptyMediaManifest(kanji);
+        const nextManifest = await updater(baseManifest);
+
+        return writeManifest(mediaRootDir, nextManifest || baseManifest);
+    });
+}
+
 module.exports = {
     buildKanjiMediaId,
     buildManifestPath,
     buildMediaBasePath,
+    buildTemporaryManifestPath,
     createEmptyMediaManifest,
     ensureMediaLayout,
     ensureMediaRoot,
     mediaManifestSchema,
     readManifestIfExists,
+    runWithManifestLock,
+    updateManifest,
     writeManifest,
 };

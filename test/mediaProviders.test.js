@@ -1,6 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
+const fsp = require("node:fs/promises");
 const http = require("node:http");
 const os = require("node:os");
 const path = require("node:path");
@@ -53,6 +54,42 @@ test("createLocalDirectoryProvider finds a matching asset from candidate names",
         assert.equal(asset.fileName, "日.svg");
         assert.equal(asset.source, "local-filesystem");
         assert.equal(asset.mimeType, "image/svg+xml");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+test("createLocalDirectoryProvider caches the directory index until the folder fingerprint changes", async () => {
+    const rootDir = makeTempDir();
+    let readDirectoryEntriesCalls = 0;
+    let statDirectoryCalls = 0;
+
+    try {
+        fs.writeFileSync(path.join(rootDir, "日.svg"), "<svg />", "utf-8");
+
+        const provider = createLocalDirectoryProvider({
+            sourceDir: rootDir,
+            extensionMap: new Map([[".svg", "image/svg+xml"]]),
+            buildCandidates: (input) => buildKanjiFileCandidates(input),
+            readDirectoryEntriesFn: async (sourceDir) => {
+                readDirectoryEntriesCalls += 1;
+                return fsp.readdir(sourceDir, { withFileTypes: true });
+            },
+            statDirectoryFn: async (sourceDir) => {
+                statDirectoryCalls += 1;
+                return fsp.stat(sourceDir);
+            },
+        });
+
+        await provider.findAsset("日");
+        await provider.findAsset("日");
+        assert.equal(readDirectoryEntriesCalls, 1);
+        assert.equal(statDirectoryCalls >= 2, true);
+
+        fs.writeFileSync(path.join(rootDir, "本.svg"), "<svg />", "utf-8");
+        await provider.findAsset("本");
+
+        assert.equal(readDirectoryEntriesCalls, 2);
     } finally {
         cleanupTempDir(rootDir);
     }

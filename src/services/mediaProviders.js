@@ -20,6 +20,51 @@ async function readDirectoryEntries(sourceDir) {
     return fsp.readdir(sourceDir, { withFileTypes: true });
 }
 
+async function buildDirectoryFingerprint(sourceDir, statDirectoryFn = fsp.stat) {
+    if (!sourceDir || !fs.existsSync(sourceDir)) {
+        return `${path.resolve(sourceDir || "")}|missing`;
+    }
+
+    const stats = await statDirectoryFn(sourceDir);
+    const inode = Number.isFinite(stats.ino) && stats.ino > 0 ? stats.ino : "no-inode";
+
+    return [
+        path.resolve(sourceDir),
+        stats.dev,
+        inode,
+        stats.size,
+        Math.trunc(stats.mtimeMs),
+        Math.trunc(stats.ctimeMs),
+    ].join("|");
+}
+
+async function buildLocalDirectoryIndex(sourceDir, extensionMap, readDirectoryEntriesFn = readDirectoryEntries) {
+    const entries = await readDirectoryEntriesFn(sourceDir);
+    const index = new Map();
+
+    for (const entry of entries) {
+        if (!entry.isFile()) {
+            continue;
+        }
+
+        const extension = path.extname(entry.name).toLowerCase();
+        if (!extensionMap.has(extension)) {
+            continue;
+        }
+
+        const baseName = path.basename(entry.name, extension);
+        const matches = index.get(baseName) || [];
+        matches.push({
+            extension,
+            fileName: entry.name,
+        });
+        matches.sort((a, b) => a.fileName.localeCompare(b.fileName));
+        index.set(baseName, matches);
+    }
+
+    return index;
+}
+
 function normalizeBaseUrl(baseUrl) {
     if (!baseUrl) {
         return "";
@@ -99,7 +144,17 @@ function snapshotProviderMetrics(metrics) {
     return JSON.parse(JSON.stringify(metrics || {}));
 }
 
-function createLocalDirectoryProvider({ name = "local-filesystem", sourceDir, extensionMap, buildCandidates }) {
+function createLocalDirectoryProvider({
+    name = "local-filesystem",
+    sourceDir,
+    extensionMap,
+    buildCandidates,
+    readDirectoryEntriesFn = readDirectoryEntries,
+    statDirectoryFn = fsp.stat,
+}) {
+    let cachedFingerprint = null;
+    let cachedIndex = new Map();
+
     return {
         name,
         /**
@@ -108,35 +163,29 @@ function createLocalDirectoryProvider({ name = "local-filesystem", sourceDir, ex
          */
         async findAsset(input) {
             const candidates = Array.isArray(buildCandidates(input)) ? buildCandidates(input) : [];
-            const entries = await readDirectoryEntries(sourceDir);
+            const nextFingerprint = await buildDirectoryFingerprint(sourceDir, statDirectoryFn);
+
+            if (cachedFingerprint !== nextFingerprint) {
+                cachedIndex = await buildLocalDirectoryIndex(sourceDir, extensionMap, readDirectoryEntriesFn);
+                cachedFingerprint = nextFingerprint;
+            }
 
             for (const candidate of candidates) {
-                for (const entry of entries) {
-                    if (!entry.isFile()) {
-                        continue;
-                    }
+                const matches = cachedIndex.get(candidate) || [];
 
-                    const extension = path.extname(entry.name).toLowerCase();
-                    if (!extensionMap.has(extension)) {
-                        continue;
-                    }
-
-                    if (path.basename(entry.name, extension) !== candidate) {
-                        continue;
-                    }
-
-                    const absolutePath = path.join(sourceDir, entry.name);
+                for (const match of matches) {
+                    const absolutePath = path.join(sourceDir, match.fileName);
                     const buffer = await fsp.readFile(absolutePath);
                     const stats = await fsp.stat(absolutePath);
 
                     return {
                         absolutePath,
-                        fileName: entry.name,
-                        mimeType: extensionMap.get(extension),
+                        fileName: match.fileName,
+                        mimeType: extensionMap.get(match.extension),
                         checksum: computeChecksum(buffer),
                         sizeBytes: stats.size,
                         content: buffer,
-                        extension,
+                        extension: match.extension,
                         source: name,
                     };
                 }
@@ -288,6 +337,8 @@ async function findAssetFromProviders(providers, input) {
 }
 
 module.exports = {
+    buildDirectoryFingerprint,
+    buildLocalDirectoryIndex,
     buildRemoteAssetUrl,
     computeChecksum,
     createLocalDirectoryProvider,

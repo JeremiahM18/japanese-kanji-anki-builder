@@ -1,10 +1,9 @@
 const path = require("node:path");
 
 const {
-    createEmptyMediaManifest,
     ensureMediaLayout,
     readManifestIfExists,
-    writeManifest,
+    updateManifest,
     buildKanjiMediaId,
 } = require("./mediaStore");
 const {
@@ -156,6 +155,17 @@ function buildDestinationStem({ mediaId, category, text, reading }) {
     return parts.join("-") || `${mediaId}-kanji-reading`;
 }
 
+function cloneManifestForUpdate(manifest) {
+    return {
+        ...manifest,
+        assets: {
+            strokeOrderImage: manifest.assets?.strokeOrderImage || null,
+            strokeOrderAnimation: manifest.assets?.strokeOrderAnimation || null,
+            audio: Array.isArray(manifest.assets?.audio) ? [...manifest.assets.audio] : [],
+        },
+    };
+}
+
 function createAudioService({ mediaRootDir, audioSourceDir, providers = [] }) {
     const resolvedProviders = [
         createLocalDirectoryProvider({
@@ -175,8 +185,6 @@ function createAudioService({ mediaRootDir, audioSourceDir, providers = [] }) {
 
     async function syncKanji(kanji, metadata = {}) {
         const normalizedKanji = normalizeKanji(kanji);
-        const layout = ensureMediaLayout(mediaRootDir, normalizedKanji);
-        const manifest = (await readManifestIfExists(mediaRootDir, normalizedKanji)) || createEmptyMediaManifest(normalizedKanji);
         const mediaId = buildKanjiMediaId(normalizedKanji);
         const normalizedMetadata = {
             category: metadata.category || "kanji-reading",
@@ -193,48 +201,41 @@ function createAudioService({ mediaRootDir, audioSourceDir, providers = [] }) {
         }, providerMetrics);
         const audioAsset = audioLookup.asset;
 
-        if (!audioAsset) {
-            const writtenManifest = await writeManifest(mediaRootDir, manifest);
+        const writtenManifest = await updateManifest(mediaRootDir, normalizedKanji, async (manifest) => {
+            if (!audioAsset) {
+                return manifest;
+            }
 
-            return {
-                kanji: normalizedKanji,
-                manifest: writtenManifest,
-                found: {
-                    audio: false,
-                },
-                acquisition: {
-                    audio: audioLookup.attempts,
-                },
-            };
-        }
+            const nextManifest = cloneManifestForUpdate(manifest);
+            const layout = ensureMediaLayout(mediaRootDir, normalizedKanji);
+            const destinationPath = path.join(
+                layout.audioDir,
+                `${buildDestinationStem({ mediaId, ...normalizedMetadata })}${audioAsset.extension}`
+            );
+            await copyAssetIfChanged(audioAsset, destinationPath);
 
-        const destinationPath = path.join(
-            layout.audioDir,
-            `${buildDestinationStem({ mediaId, ...normalizedMetadata })}${audioAsset.extension}`
-        );
-        await copyAssetIfChanged(audioAsset, destinationPath);
+            nextManifest.assets.audio = upsertAudioAsset(nextManifest.assets.audio, {
+                kind: "audio",
+                path: path.relative(layout.basePath, destinationPath).replace(/\\/g, "/"),
+                mimeType: audioAsset.mimeType,
+                source: audioAsset.source || "local-filesystem",
+                checksum: audioAsset.checksum,
+                category: normalizedMetadata.category,
+                text: normalizedMetadata.text,
+                reading: normalizedMetadata.reading,
+                voice: normalizedMetadata.voice,
+                locale: normalizedMetadata.locale,
+                notes: `Imported from ${audioAsset.fileName}`,
+            });
 
-        manifest.assets.audio = upsertAudioAsset(manifest.assets.audio, {
-            kind: "audio",
-            path: path.relative(layout.basePath, destinationPath).replace(/\\/g, "/"),
-            mimeType: audioAsset.mimeType,
-            source: audioAsset.source || "local-filesystem",
-            checksum: audioAsset.checksum,
-            category: normalizedMetadata.category,
-            text: normalizedMetadata.text,
-            reading: normalizedMetadata.reading,
-            voice: normalizedMetadata.voice,
-            locale: normalizedMetadata.locale,
-            notes: `Imported from ${audioAsset.fileName}`,
+            return nextManifest;
         });
-
-        const writtenManifest = await writeManifest(mediaRootDir, manifest);
 
         return {
             kanji: normalizedKanji,
             manifest: writtenManifest,
             found: {
-                audio: true,
+                audio: Boolean(audioAsset),
             },
             acquisition: {
                 audio: audioLookup.attempts,

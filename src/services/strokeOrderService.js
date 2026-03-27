@@ -2,10 +2,9 @@ const fsp = require("node:fs/promises");
 const path = require("node:path");
 
 const {
-    createEmptyMediaManifest,
     ensureMediaLayout,
     readManifestIfExists,
-    writeManifest,
+    updateManifest,
     buildKanjiMediaId,
 } = require("./mediaStore");
 const {
@@ -85,6 +84,17 @@ async function copyAssetIfChanged(sourceAsset, destinationPath) {
     return true;
 }
 
+function cloneManifestForUpdate(manifest) {
+    return {
+        ...manifest,
+        assets: {
+            strokeOrderImage: manifest.assets?.strokeOrderImage || null,
+            strokeOrderAnimation: manifest.assets?.strokeOrderAnimation || null,
+            audio: Array.isArray(manifest.assets?.audio) ? [...manifest.assets.audio] : [],
+        },
+    };
+}
+
 function createStrokeOrderService({
     mediaRootDir,
     imageSourceDir,
@@ -117,42 +127,44 @@ function createStrokeOrderService({
 
     async function syncKanji(kanji) {
         const normalizedKanji = normalizeKanji(kanji);
-        const layout = ensureMediaLayout(mediaRootDir, normalizedKanji);
-        const manifest = (await readManifestIfExists(mediaRootDir, normalizedKanji)) || createEmptyMediaManifest(normalizedKanji);
         const mediaId = buildKanjiMediaId(normalizedKanji);
-
         const imageLookup = await findAssetFromProvidersWithReport(resolvedImageProviders, normalizedKanji, providerMetrics.image);
         const animationLookup = await findAssetFromProvidersWithReport(resolvedAnimationProviders, normalizedKanji, providerMetrics.animation);
         const imageAsset = imageLookup.asset;
         const animationAsset = animationLookup.asset;
 
-        if (imageAsset) {
-            const destinationPath = path.join(layout.imagesDir, `${mediaId}-stroke-order${imageAsset.extension}`);
-            await copyAssetIfChanged(imageAsset, destinationPath);
-            manifest.assets.strokeOrderImage = {
-                kind: "image",
-                path: path.relative(layout.basePath, destinationPath).replace(/\\/g, "/"),
-                mimeType: imageAsset.mimeType,
-                source: imageAsset.source || "local-filesystem",
-                checksum: imageAsset.checksum,
-                notes: `Imported from ${imageAsset.fileName}`,
-            };
-        }
+        const writtenManifest = await updateManifest(mediaRootDir, normalizedKanji, async (manifest) => {
+            const nextManifest = cloneManifestForUpdate(manifest);
+            const layout = ensureMediaLayout(mediaRootDir, normalizedKanji);
 
-        if (animationAsset) {
-            const destinationPath = path.join(layout.animationsDir, `${mediaId}-stroke-order${animationAsset.extension}`);
-            await copyAssetIfChanged(animationAsset, destinationPath);
-            manifest.assets.strokeOrderAnimation = {
-                kind: "animation",
-                path: path.relative(layout.basePath, destinationPath).replace(/\\/g, "/"),
-                mimeType: animationAsset.mimeType,
-                source: animationAsset.source || "local-filesystem",
-                checksum: animationAsset.checksum,
-                notes: `Imported from ${animationAsset.fileName}`,
-            };
-        }
+            if (imageAsset) {
+                const destinationPath = path.join(layout.imagesDir, `${mediaId}-stroke-order${imageAsset.extension}`);
+                await copyAssetIfChanged(imageAsset, destinationPath);
+                nextManifest.assets.strokeOrderImage = {
+                    kind: "image",
+                    path: path.relative(layout.basePath, destinationPath).replace(/\\/g, "/"),
+                    mimeType: imageAsset.mimeType,
+                    source: imageAsset.source || "local-filesystem",
+                    checksum: imageAsset.checksum,
+                    notes: `Imported from ${imageAsset.fileName}`,
+                };
+            }
 
-        const writtenManifest = await writeManifest(mediaRootDir, manifest);
+            if (animationAsset) {
+                const destinationPath = path.join(layout.animationsDir, `${mediaId}-stroke-order${animationAsset.extension}`);
+                await copyAssetIfChanged(animationAsset, destinationPath);
+                nextManifest.assets.strokeOrderAnimation = {
+                    kind: "animation",
+                    path: path.relative(layout.basePath, destinationPath).replace(/\\/g, "/"),
+                    mimeType: animationAsset.mimeType,
+                    source: animationAsset.source || "local-filesystem",
+                    checksum: animationAsset.checksum,
+                    notes: `Imported from ${animationAsset.fileName}`,
+                };
+            }
+
+            return nextManifest;
+        });
 
         return {
             kanji: normalizedKanji,

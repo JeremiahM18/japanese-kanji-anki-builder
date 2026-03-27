@@ -22,6 +22,9 @@ This repository is intentionally built with production-style standards even thou
 - Tracks provider hits, misses, errors, and last-success state for operational visibility
 - Returns per-sync acquisition reports that show which providers were tried and which one won
 - Persists per-kanji media manifests that can grow into richer provider and synthesis flows later
+- Serializes per-kanji media-manifest writes so concurrent stroke-order, animation, and audio syncs do not clobber each other
+- Uses unique manifest temp files for atomic persistence under concurrent activity
+- Indexes local media source directories by basename and refreshes the index only when the directory fingerprint changes
 - Runs a deterministic build pipeline that normalizes datasets, syncs media, exports decks, and writes machine-readable reports into `out/build`
 - Exposes health, readiness, inference, media lookup, stroke-order sync, and audio sync endpoints
 - Runs CI on pushes, pull requests, and manual dispatch
@@ -286,6 +289,10 @@ Media sync responses now also include an `acquisition` object that shows the ord
   ]
 }
 ```
+
+Local filesystem providers maintain a cached basename index per source directory. The index is refreshed only when the directory fingerprint changes, which keeps repeated image, animation, and audio lookups fast without sacrificing correctness when files are added or replaced.
+
+Per-kanji manifest updates are also serialized across media services. That means concurrent stroke-order, animation, and audio syncs for the same kanji share one write lane and preserve each other's manifest changes instead of racing on a shared `manifest.json`.
 
 ## HTTP Endpoints
 

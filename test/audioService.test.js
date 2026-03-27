@@ -9,6 +9,7 @@ const {
     createAudioService,
     selectBestAudioAsset,
 } = require("../src/services/audioService");
+const { createStrokeOrderService } = require("../src/services/strokeOrderService");
 
 function makeTempDir() {
     return fs.mkdtempSync(path.join(os.tmpdir(), "audio-service-test-"));
@@ -89,37 +90,117 @@ test("syncKanji imports audio into managed media storage", async () => {
     }
 });
 
+test("concurrent stroke-order and audio sync preserve both manifest sections", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const mediaRootDir = path.join(rootDir, "media");
+        const audioService = createAudioService({
+            mediaRootDir,
+            providers: [
+                {
+                    name: "fixture-audio",
+                    async findAsset() {
+                        await new Promise((resolve) => setTimeout(resolve, 10));
+                        return {
+                            fileName: "日.mp3",
+                            mimeType: "audio/mpeg",
+                            checksum: "audio-checksum",
+                            content: Buffer.from("fixture-audio"),
+                            extension: ".mp3",
+                            source: "fixture-audio",
+                        };
+                    },
+                },
+            ],
+        });
+        const strokeOrderService = createStrokeOrderService({
+            mediaRootDir,
+            imageProviders: [
+                {
+                    name: "fixture-image",
+                    async findAsset() {
+                        return {
+                            fileName: "日.svg",
+                            mimeType: "image/svg+xml",
+                            checksum: "image-checksum",
+                            content: Buffer.from("fixture-image"),
+                            extension: ".svg",
+                            source: "fixture-image",
+                        };
+                    },
+                },
+            ],
+            animationProviders: [
+                {
+                    name: "fixture-animation",
+                    async findAsset() {
+                        await new Promise((resolve) => setTimeout(resolve, 5));
+                        return {
+                            fileName: "日.gif",
+                            mimeType: "image/gif",
+                            checksum: "animation-checksum",
+                            content: Buffer.from("fixture-animation"),
+                            extension: ".gif",
+                            source: "fixture-animation",
+                        };
+                    },
+                },
+            ],
+        });
+
+        await Promise.all([
+            strokeOrderService.syncKanji("日"),
+            audioService.syncKanji("日", { text: "日", reading: "にち" }),
+        ]);
+
+        const manifest = await audioService.getManifest("日");
+        assert.equal(manifest.assets.strokeOrderImage.source, "fixture-image");
+        assert.equal(manifest.assets.strokeOrderAnimation.source, "fixture-animation");
+        assert.equal(manifest.assets.audio.length, 1);
+        assert.equal(manifest.assets.audio[0].source, "fixture-audio");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
 test("audio providers fall back when the first provider misses", async () => {
-    const audioService = createAudioService({
-        mediaRootDir: makeTempDir(),
-        providers: [
-            {
-                name: "missing-provider",
-                async findAsset() {
-                    return null;
-                },
-            },
-            {
-                name: "fixture-provider",
-                async findAsset() {
-                    return {
-                        absolutePath: "C:/fixture/日.mp3",
-                        fileName: "日.mp3",
-                        mimeType: "audio/mpeg",
-                        checksum: "fixture-checksum",
-                        content: Buffer.from("fixture-audio"),
-                        extension: ".mp3",
-                        source: "fixture-provider",
-                    };
-                },
-            },
-        ],
-    });
+    const rootDir = makeTempDir();
 
-    const result = await audioService.syncKanji("日", { text: "日" });
+    try {
+        const audioService = createAudioService({
+            mediaRootDir: rootDir,
+            providers: [
+                {
+                    name: "missing-provider",
+                    async findAsset() {
+                        return null;
+                    },
+                },
+                {
+                    name: "fixture-provider",
+                    async findAsset() {
+                        return {
+                            absolutePath: "C:/fixture/日.mp3",
+                            fileName: "日.mp3",
+                            mimeType: "audio/mpeg",
+                            checksum: "fixture-checksum",
+                            content: Buffer.from("fixture-audio"),
+                            extension: ".mp3",
+                            source: "fixture-provider",
+                        };
+                    },
+                },
+            ],
+        });
 
-    assert.equal(result.found.audio, true);
-    assert.equal(result.manifest.assets.audio[0].source, "fixture-provider");
+        const result = await audioService.syncKanji("日", { text: "日" });
+
+        assert.equal(result.found.audio, true);
+        assert.equal(result.manifest.assets.audio[0].source, "fixture-provider");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
 });
 
 test("syncKanji preserves an empty manifest when no audio source exists", async () => {

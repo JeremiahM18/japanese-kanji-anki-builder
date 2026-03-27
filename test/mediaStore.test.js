@@ -8,10 +8,12 @@ const {
     buildKanjiMediaId,
     buildManifestPath,
     buildMediaBasePath,
+    buildTemporaryManifestPath,
     createEmptyMediaManifest,
     ensureMediaLayout,
     ensureMediaRoot,
     readManifestIfExists,
+    updateManifest,
     writeManifest,
 } = require("../src/services/mediaStore");
 
@@ -57,6 +59,16 @@ test("ensureMediaLayout provisions per-kanji directories and manifest path", () 
     }
 });
 
+test("buildTemporaryManifestPath creates unique temp file names", () => {
+    const manifestPath = path.join("C:", "tmp", "manifest.json");
+    const first = buildTemporaryManifestPath(manifestPath);
+    const second = buildTemporaryManifestPath(manifestPath);
+
+    assert.notEqual(first, second);
+    assert.match(first, /\.tmp$/);
+    assert.match(second, /\.tmp$/);
+});
+
 test("createEmptyMediaManifest defines placeholders for stroke-order and audio assets", () => {
     const manifest = createEmptyMediaManifest("日");
 
@@ -99,6 +111,55 @@ test("writeManifest persists a validated manifest that can be read back", async 
         assert.equal(loaded.assets.audio.length, 1);
         assert.equal(loaded.assets.audio[0].category, "kanji-reading");
         assert.equal(loaded.assets.audio[0].text, "日");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+test("updateManifest serializes concurrent writes for the same kanji", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        await Promise.all([
+            updateManifest(rootDir, "日", async (manifest) => {
+                await new Promise((resolve) => setTimeout(resolve, 20));
+                return {
+                    ...manifest,
+                    assets: {
+                        ...manifest.assets,
+                        strokeOrderImage: {
+                            kind: "image",
+                            path: "images/stroke-order.svg",
+                            mimeType: "image/svg+xml",
+                            source: "fixture-image",
+                        },
+                    },
+                };
+            }),
+            updateManifest(rootDir, "日", async (manifest) => ({
+                ...manifest,
+                assets: {
+                    ...manifest.assets,
+                    audio: [
+                        ...manifest.assets.audio,
+                        {
+                            kind: "audio",
+                            path: "audio/kanji-reading.mp3",
+                            mimeType: "audio/mpeg",
+                            source: "fixture-audio",
+                            category: "kanji-reading",
+                            text: "日",
+                            locale: "ja-JP",
+                        },
+                    ],
+                },
+            })),
+        ]);
+
+        const loaded = await readManifestIfExists(rootDir, "日");
+        assert.equal(loaded.assets.strokeOrderImage.path, "images/stroke-order.svg");
+        assert.equal(loaded.assets.audio.length, 1);
+        assert.equal(loaded.assets.audio[0].path, "audio/kanji-reading.mp3");
     } finally {
         cleanupTempDir(rootDir);
     }

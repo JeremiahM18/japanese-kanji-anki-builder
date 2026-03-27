@@ -17,6 +17,15 @@ test("formatAnkiStrokeOrderField emits image markup from the managed asset name"
     assert.equal(formatAnkiStrokeOrderField(""), "");
 });
 
+
+
+test("formatAnkiStrokeOrderField keeps animated GIF references Anki can render", () => {
+    assert.equal(
+        formatAnkiStrokeOrderField("animations/4E00_一-stroke-order.gif"),
+        '<img src="4E00_一-stroke-order.gif" />'
+    );
+});
+
 test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async () => {
     const jlptOnlyJson = {
         日: { jlpt: 5 },

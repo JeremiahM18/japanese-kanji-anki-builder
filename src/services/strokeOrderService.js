@@ -54,11 +54,36 @@ function buildKanjiFileCandidates(kanji) {
     ];
 }
 
-async function findMatchingAsset(sourceDir, kanji, extensionMap) {
+function buildStrokeOrderImageCandidates(kanji) {
+    const baseCandidates = buildKanjiFileCandidates(kanji);
+    const candidates = new Set();
+
+    for (const base of baseCandidates) {
+        candidates.add(base);
+        candidates.add(`${base}-bw`);
+        candidates.add(`${base}-red`);
+    }
+
+    return [...candidates];
+}
+
+function buildStrokeOrderAnimationCandidates(kanji) {
+    const baseCandidates = buildKanjiFileCandidates(kanji);
+    const candidates = new Set();
+
+    for (const base of baseCandidates) {
+        candidates.add(base);
+        candidates.add(`${base}-order`);
+    }
+
+    return [...candidates];
+}
+
+async function findMatchingAsset(sourceDir, kanji, extensionMap, buildCandidates = buildKanjiFileCandidates) {
     const provider = createLocalDirectoryProvider({
         sourceDir,
         extensionMap,
-        buildCandidates: (input) => buildKanjiFileCandidates(input),
+        buildCandidates: (input) => buildCandidates(input),
     });
 
     return provider.findAsset(kanji);
@@ -107,7 +132,7 @@ function createStrokeOrderService({
             name: "local-filesystem",
             sourceDir: imageSourceDir,
             extensionMap: IMAGE_EXTENSIONS,
-            buildCandidates: (input) => buildKanjiFileCandidates(input),
+            buildCandidates: buildStrokeOrderImageCandidates,
         }),
         ...imageProviders,
     ];
@@ -116,7 +141,7 @@ function createStrokeOrderService({
             name: "local-filesystem",
             sourceDir: animationSourceDir,
             extensionMap: ANIMATION_EXTENSIONS,
-            buildCandidates: (input) => buildKanjiFileCandidates(input),
+            buildCandidates: buildStrokeOrderAnimationCandidates,
         }),
         ...animationProviders,
     ];
@@ -217,6 +242,8 @@ module.exports = {
     ANIMATION_EXTENSIONS,
     IMAGE_EXTENSIONS,
     buildKanjiFileCandidates,
+    buildStrokeOrderAnimationCandidates,
+    buildStrokeOrderImageCandidates,
     copyAssetIfChanged,
     createStrokeOrderService,
     findMatchingAsset,

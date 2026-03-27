@@ -391,4 +391,9 @@ The current test suite covers:
 - `.env.example` now includes the full local-media and remote-fallback configuration surface for stroke-order images, stroke-order animations, and audio.
 - Run `npm run media:init` to create the expected media source directories and bootstrap a local `.env` from `.env.example` when one does not exist yet.
 - This makes provider setup reproducible across machines and removes the need to hand-export environment variables before using `doctor`, `media:sync`, or `deck:ready`.
+## Recent Free Media Improvements
+
+- Local stroke-order import now recognizes Wikimedia-style free filenames such as `<kanji>-bw.png`, `<kanji>-red.png`, and `<kanji>-order.gif` in addition to the existing plain kanji and codepoint forms.
+- That means you can build a zero-cost local stroke-order source library without renaming every file into a custom project format first.
+- The local data guide in `data/README.md` now documents the recommended free naming scheme and reminds you to retain upstream attribution and license information when collecting those assets.
 

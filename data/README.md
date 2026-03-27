@@ -27,17 +27,27 @@ Remote providers look for the same candidate filenames you would use locally, ap
 
 ## Stroke-order source naming
 
-Recommended names:
+Recommended free local names, including Wikimedia-style files:
 
 - `<kanji>.svg`
+- `<kanji>-bw.png`
+- `<kanji>-red.png`
+- `<kanji>-order.gif`
 - `<KANJI_CODEPOINT>.svg`
-- `U+<KANJI_CODEPOINT>.gif`
+- `<KANJI_CODEPOINT>-bw.png`
+- `U+<KANJI_CODEPOINT>-order.gif`
 
 Example for `日`:
 
 - `日.svg`
+- `日-bw.png`
+- `日-red.png`
+- `日-order.gif`
 - `65E5.svg`
-- `U+65E5.gif`
+- `65E5-bw.png`
+- `U+65E5-order.gif`
+
+If you download stroke-order assets from Wikimedia Commons for personal use, keep the original attribution and license information with your source collection.
 
 ## Audio source naming
 
@@ -97,3 +107,4 @@ Artifacts are written to `out/build` by default:
 - `reports/media-coverage.json`
 - `reports/media-sync.json`
 - `build-summary.json`
+

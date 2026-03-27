@@ -28,7 +28,8 @@
     "deck:preview": "node scripts/previewDeck.js",
     "deck:package": "node scripts/buildArtifacts.js",
     "deck:ready": "node scripts/prepareDeck.js",
-    "deck:readiness": "node scripts/reportDeckReadiness.js"
+    "deck:readiness": "node scripts/reportDeckReadiness.js",
+    "media:plan": "node scripts/reportMediaPlan.js"
   },
   "keywords": [
     "japanese",

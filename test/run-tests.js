@@ -12,6 +12,7 @@ require("./exportService.test");
 require("./freeStrokeOrderImportService.test");
 require("./kanjiApiClient.test");
 require("./levelReadinessService.test");
+require("./mediaGapService.test");
 require("./mediaCoverage.test");
 require("./mediaProviders.test");
 require("./mediaStore.test");

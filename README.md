@@ -82,12 +82,13 @@ npm run build:artifacts -- --levels=5,4 --limit=25
 
 ```bash
 npm run media:init
+npm run media:plan -- --level=5 --limit=25
 npm run media:import:stroke-order -- --input-dir=/path/to/files
 npm run media:sync -- --level=5 --limit=25
 npm run media:report -- --limit=25
 ```
 
-The project supports both local media folders and optional remote fallback providers.
+The project supports both local media folders and optional remote fallback providers. `media:plan` is the quickest way to see exactly which filenames the repo will accept for missing image, animation, and audio assets at a given JLPT level.
 
 ## Important Commands
 
@@ -103,6 +104,7 @@ The project supports both local media folders and optional remote fallback provi
 | `npm run corpus:init` | Create or merge starter sentence corpus data |
 | `npm run curated:init` | Create or merge starter curated study data |
 | `npm run media:init` | Create media source folders and bootstrap `.env` |
+| `npm run media:plan` | Show missing media by kanji with accepted local filenames |
 | `npm run media:import:stroke-order` | Import free local stroke-order assets |
 | `npm run media:sync` | Sync stroke-order and audio assets into managed storage |
 
@@ -252,5 +254,6 @@ For user-facing build or content work, also validate with one or more of:
 npm run doctor
 npm run deck:readiness
 npm run deck:preview -- --level=5 --limit=5
+npm run media:plan -- --level=5 --limit=10
 npm run deck:ready -- --levels=5 --limit=25
 ```

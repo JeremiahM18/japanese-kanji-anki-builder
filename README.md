@@ -27,7 +27,7 @@ npm run deck:readiness
 
 Use these first.
 
-- `doctor` checks required datasets, optional study data, media source folders, coverage, and next steps.
+- `doctor` checks required datasets, optional study data, media source folders, managed media coverage, and next steps.
 - `deck:readiness` shows N5-N1 quality gates for sentence coverage, curated coverage, and stroke-order coverage. If you want to defer audio, set `ENABLE_AUDIO=false` and the user-facing reports will stop treating it as an active blocker.
 
 ### 2. Bootstrap starter content
@@ -268,5 +268,4 @@ npm run deck:preview -- --level=5 --limit=5
 npm run media:plan -- --level=5 --limit=10
 npm run deck:ready -- --levels=5 --limit=25
 ```
-
 

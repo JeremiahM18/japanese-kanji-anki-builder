@@ -244,10 +244,10 @@ function formatDoctorReport(report) {
             lines.push(`- Curated overrides: ${formatPercent(report.coverage.curatedStudyData.coverageRatio)} (${report.coverage.curatedStudyData.curatedKanji}/${report.coverage.curatedStudyData.totalKanji} kanji)`);
         }
         if (report.coverage.media) {
-            lines.push(`- Stroke-order media: ${formatPercent(report.coverage.media.strokeOrderCoverageRatio)} (${report.coverage.media.strokeOrderCovered}/${report.coverage.media.totalKanji} kanji)`);
+            lines.push(`- Managed stroke-order media: ${formatPercent(report.coverage.media.strokeOrderCoverageRatio)} (${report.coverage.media.strokeOrderCovered}/${report.coverage.media.totalKanji} kanji)`);
             if (report.status.audioEnabled) {
-                lines.push(`- Audio media: ${formatPercent(report.coverage.media.audioCoverageRatio)} (${report.coverage.media.audioCovered}/${report.coverage.media.totalKanji} kanji)`);
-                lines.push(`- Full media coverage: ${formatPercent(report.coverage.media.fullMediaCoverageRatio)} (${report.coverage.media.fullMediaCovered}/${report.coverage.media.totalKanji} kanji)`);
+                lines.push(`- Managed audio media: ${formatPercent(report.coverage.media.audioCoverageRatio)} (${report.coverage.media.audioCovered}/${report.coverage.media.totalKanji} kanji)`);
+                lines.push(`- Managed full media coverage: ${formatPercent(report.coverage.media.fullMediaCoverageRatio)} (${report.coverage.media.fullMediaCovered}/${report.coverage.media.totalKanji} kanji)`);
             }
         }
     }
@@ -255,6 +255,7 @@ function formatDoctorReport(report) {
     if (report.quality?.levelReadiness) {
         lines.push("");
         lines.push("Level quality gates:");
+        lines.push("- Uses synced managed media, not just files present in local source folders.");
         lines.push(`- Overall quality gate: ${report.quality.levelReadiness.overallReady ? "passing" : "failing"}`);
         const includeAudio = report.quality.levelReadiness.thresholds.audioCoverage != null;
         for (const row of report.quality.levelReadiness.levels) {
@@ -285,3 +286,4 @@ module.exports = {
     buildDoctorStatus,
     formatDoctorReport,
 };
+

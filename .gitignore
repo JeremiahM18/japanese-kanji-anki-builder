@@ -2,8 +2,10 @@ node_modules/
 .venv/
 cache/
 out/
+# Local datasets and acquired/generated media stay out of git.
 data/*
 !data/README.md
+downloads/
 .env
 .env.*
 !.env.example

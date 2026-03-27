@@ -35,7 +35,8 @@
     "media:plan:stroke-order": "node scripts/reportWikimediaStrokeOrderPlan.js",
     "media:discover:stroke-order": "node scripts/discoverWikimediaStrokeOrder.js",
     "media:fetch:stroke-order": "node scripts/fetchWikimediaStrokeOrder.js",
-    "deck:review:n5": "node scripts/reviewGoldenN5.js"
+    "deck:review:n5": "node scripts/reviewGoldenN5.js",
+    "deck:apkg": "python scripts/buildApkg.py"
   },
   "keywords": [
     "japanese",

@@ -58,10 +58,6 @@ function writeTextFile(filePath, value) {
     fs.writeFileSync(filePath, value, "utf-8");
 }
 
-/**
- * @param {{name: string, inputPath: string, outputPath: string, rawValue: unknown, normalizedValue: unknown, mode: string, missingInput: boolean}} input
- * @returns {DatasetNormalizationSummary}
- */
 function buildNormalizationSummary({ name, inputPath, outputPath, rawValue, normalizedValue, mode, missingInput }) {
     if (missingInput) {
         return {
@@ -95,10 +91,6 @@ function buildNormalizationSummary({ name, inputPath, outputPath, rawValue, norm
     };
 }
 
-/**
- * @param {{name: string, inputPath: string, outputPath: string, mode: string, normalizeValue: Function}} input
- * @returns {DatasetNormalizationSummary}
- */
 function normalizeOptionalFile({ name, inputPath, outputPath, mode, normalizeValue }) {
     if (!fs.existsSync(inputPath)) {
         return buildNormalizationSummary({
@@ -126,9 +118,6 @@ function normalizeOptionalFile({ name, inputPath, outputPath, mode, normalizeVal
     });
 }
 
-/**
- * @param {DatasetNormalizationSummary} summary
- */
 function persistNormalization(summary) {
     if (summary.missingInput || summary.normalizedText == null || summary.mode === "check") {
         return;
@@ -157,10 +146,6 @@ function selectBuildKanjiList({ jlptOnlyJson, levels, limit, selectKanjiForSyncF
     return [...new Set(Object.values(selectedByLevel).flatMap((kanjiList) => kanjiList))];
 }
 
-/**
- * @param {object} input
- * @returns {Promise<BuildSummary>}
- */
 async function runBuildPipeline({
     config,
     outDir,
@@ -338,7 +323,6 @@ async function runBuildPipeline({
     writeJsonFile(reportPaths.curatedNormalizationPath, curatedNormalization);
     writeJsonFile(reportPaths.mediaSyncPath, mediaSync);
 
-    /** @type {BuildSummary} */
     const summary = {
         generatedAt: new Date().toISOString(),
         outDir: buildPaths.root,
@@ -354,6 +338,7 @@ async function runBuildPipeline({
             exportCount: deckPackage.exportCount,
             mediaAssetCount: deckPackage.mediaAssetCount,
             mediaCounts: deckPackage.mediaCounts,
+            ankiPackage: deckPackage.ankiPackage,
         },
         normalization: {
             sentenceCorpus: {
@@ -399,4 +384,3 @@ module.exports = {
     runBuildPipeline,
     selectBuildKanjiList,
 };
-

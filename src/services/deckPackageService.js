@@ -2,6 +2,7 @@ const fs = require("node:fs");
 const fsp = require("node:fs/promises");
 const path = require("node:path");
 
+const { buildAnkiPackage } = require("./ankiPackageService");
 const { buildMediaBasePath } = require("./mediaStore");
 
 function ensureDir(dirPath) {
@@ -43,7 +44,7 @@ function createEmptyMediaCounts() {
     };
 }
 
-function buildImportGuide({ exportCount, mediaAssetCount, mediaCounts }) {
+function buildImportGuide({ exportCount, mediaAssetCount, mediaCounts, ankiPackage }) {
     return [
         "Japanese Kanji Builder Deck Package",
         "",
@@ -53,11 +54,23 @@ function buildImportGuide({ exportCount, mediaAssetCount, mediaCounts }) {
         `- Stroke-order images: ${mediaCounts.strokeOrderImage}`,
         `- Stroke-order animations: ${mediaCounts.strokeOrderAnimation}`,
         `- Audio fields: ${mediaCounts.audio}`,
+        ...(ankiPackage?.filePath ? [
+            `Anki package: ${ankiPackage.filePath}`,
+            `- Notes: ${ankiPackage.noteCount}`,
+            `- Decks: ${ankiPackage.deckCount}`,
+        ] : []),
+        ...(ankiPackage?.skipped ? [`Anki package skipped: ${ankiPackage.skipReason}`] : []),
         "",
         "Suggested import flow:",
-        "1. Import one of the TSV files from the exports folder into Anki.",
-        "2. Copy the media files from the media folder into your Anki collection.media directory.",
-        "3. Re-import when media coverage improves or when you regenerate the deck.",
+        ...(ankiPackage?.filePath
+            ? ["1. Import the generated .apkg file into Anki."]
+            : ["1. Import one of the TSV files from the exports folder into Anki."]),
+        ...(ankiPackage?.filePath
+            ? ["2. Re-import a newer .apkg when media coverage improves or when you regenerate the deck."]
+            : [
+                "2. Copy the media files from the media folder into your Anki collection.media directory.",
+                "3. Re-import when media coverage improves or when you regenerate the deck.",
+            ]),
         "",
         "This package contains the exact referenced audio and stroke-order assets currently available in managed media storage.",
         "One file can satisfy multiple exported fields, so field counts may be higher than unique copied files.",
@@ -157,10 +170,18 @@ async function buildDeckPackage({
         await copyFileIntoPackage(asset.sourcePath, path.join(packagePaths.mediaDir, asset.fileName));
     }
 
+    const ankiPackage = await buildAnkiPackage({
+        packageRootDir: packagePaths.rootDir,
+        exports,
+        mediaDir: packagePaths.mediaDir,
+        levels: exports.map((artifact) => artifact.level),
+    });
+
     await fsp.writeFile(packagePaths.readmePath, buildImportGuide({
         exportCount: exports.length,
         mediaAssetCount: assets.length,
         mediaCounts,
+        ankiPackage,
     }), "utf-8");
 
     const summary = {
@@ -171,6 +192,7 @@ async function buildDeckPackage({
         exportCount: exports.length,
         mediaAssetCount: assets.length,
         mediaCounts,
+        ankiPackage,
         assets,
     };
 

@@ -22,6 +22,9 @@ function formatDeckReadyReport(summary, doctorReport = null) {
     lines.push("");
     lines.push(`Output directory: ${summary.outDir}`);
     lines.push(`Package directory: ${packageSummary.rootDir || "n/a"}`);
+    if (packageSummary.ankiPackage?.filePath) {
+        lines.push(`Anki package: ${packageSummary.ankiPackage.filePath}`);
+    }
     lines.push(`Levels: ${(summary.levels || []).map((level) => `N${level}`).join(", ") || "n/a"}`);
     lines.push(`Exports generated: ${formatCount(packageSummary.exportCount ?? summary.exports?.length)}`);
     lines.push(`Unique packaged media files: ${formatCount(packageSummary.mediaAssetCount)}`);
@@ -32,6 +35,11 @@ function formatDeckReadyReport(summary, doctorReport = null) {
     lines.push(`- Stroke-order animations: ${formatCount(mediaCounts.strokeOrderAnimation)}`);
     if (audioEnabled) {
         lines.push(`- Audio fields: ${formatCount(mediaCounts.audio)}`);
+    }
+
+    if (packageSummary.ankiPackage?.skipped) {
+        lines.push("");
+        lines.push(`Anki package status: skipped (${packageSummary.ankiPackage.skipReason})`);
     }
 
     if (doctorReport?.status?.mediaReadiness) {
@@ -69,6 +77,8 @@ function formatDeckReadyReport(summary, doctorReport = null) {
         } else {
             lines.push("Next step: improve level quality gate coverage before calling the deck truly ready.");
         }
+    } else if (packageSummary.ankiPackage?.filePath) {
+        lines.push("Next step: import the generated `.apkg` file into Anki.");
     } else {
         lines.push("Next step: import the TSV from the package exports folder and copy the packaged media into Anki's `collection.media` directory.");
     }

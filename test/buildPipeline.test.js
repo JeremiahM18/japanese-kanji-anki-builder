@@ -3,9 +3,15 @@ const os = require("node:os");
 const path = require("node:path");
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const { spawnSync } = require("node:child_process");
 
 const { buildMediaBasePath } = require("../src/services/mediaStore");
 const { parseLevelsArgument, runBuildPipeline } = require("../src/services/buildPipeline");
+
+function commandAvailable(command, versionArg = "--version") {
+    const result = spawnSync(command, [versionArg], { stdio: "ignore" });
+    return !result.error;
+}
 
 test("parseLevelsArgument supports all and normalized JLPT levels", () => {
     assert.deepEqual(parseLevelsArgument(), [5, 4, 3, 2, 1]);
@@ -152,4 +158,32 @@ test("runBuildPipeline writes exports reports summary and an import-ready packag
         strokeOrderAnimation: 1,
         audio: 1,
     });
+
+    const apkgPath = storedSummary.package.ankiPackage?.filePath;
+    if (apkgPath && commandAvailable("sqlite3", "-version") && commandAvailable("tar")) {
+        assert.equal(fs.existsSync(apkgPath), true);
+
+        const listResult = spawnSync("tar", ["-tf", apkgPath], { encoding: "utf8" });
+        assert.equal(listResult.status, 0);
+        assert.match(listResult.stdout, /collection\.anki2/);
+        assert.match(listResult.stdout, /^media$/m);
+
+        const inspectDir = fs.mkdtempSync(path.join(os.tmpdir(), "kanji-apkg-inspect-"));
+        try {
+            const extractResult = spawnSync("tar", ["-xf", apkgPath], { cwd: inspectDir, encoding: "utf8" });
+            assert.equal(extractResult.status, 0);
+
+            const sqliteResult = spawnSync(
+                "sqlite3",
+                [path.join(inspectDir, "collection.anki2"), "SELECT count(*) FROM notes;"],
+                { encoding: "utf8" }
+            );
+            assert.equal(sqliteResult.status, 0);
+            assert.equal(sqliteResult.stdout.trim(), "1");
+        } finally {
+            fs.rmSync(inspectDir, { recursive: true, force: true });
+        }
+    } else {
+        assert.equal(storedSummary.package.ankiPackage.skipped, true);
+    }
 });

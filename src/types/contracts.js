@@ -155,6 +155,16 @@
  */
 
 /**
+ * @typedef {object} AnkiPackageSummary
+ * @property {string|null} filePath
+ * @property {boolean} skipped
+ * @property {string} skipReason
+ * @property {number} noteCount
+ * @property {number} deckCount
+ * @property {number} mediaFileCount
+ */
+
+/**
  * @typedef {object} BuildSummary
  * @property {string} generatedAt
  * @property {string} outDir
@@ -162,7 +172,7 @@
  * @property {number|null} limit
  * @property {number} concurrency
  * @property {BuildExportArtifact[]} exports
- * @property {{rootDir: string, exportsDir: string, mediaDir: string, readmePath: string, exportCount: number, mediaAssetCount: number, mediaCounts: {strokeOrder: number, strokeOrderImage: number, strokeOrderAnimation: number, audio: number}}} package
+ * @property {{rootDir: string, exportsDir: string, mediaDir: string, readmePath: string, exportCount: number, mediaAssetCount: number, mediaCounts: {strokeOrder: number, strokeOrderImage: number, strokeOrderAnimation: number, audio: number}, ankiPackage: AnkiPackageSummary}} package
  * @property {{sentenceCorpus: Omit<DatasetNormalizationSummary, "name"|"mode"|"normalizedText">, curatedStudyData: Omit<DatasetNormalizationSummary, "name"|"mode"|"normalizedText">}} normalization
  * @property {{sentenceCoveragePath: string, curatedCoveragePath: string, mediaCoveragePath: string, sentenceNormalizationPath: string, curatedNormalizationPath: string, mediaSyncPath: string}} reports
  * @property {{sentenceCorpus: number, curatedStudyData: number, strokeOrder: number, audio: number, fullMedia: number}} coverage
@@ -170,6 +180,3 @@
  */
 
 module.exports = {};
-
-
-

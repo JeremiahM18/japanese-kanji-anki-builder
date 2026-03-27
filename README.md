@@ -1,6 +1,6 @@
 # Japanese Kanji Anki Builder
 
-A Node.js project for building JLPT kanji decks for Anki with deterministic exports, curated study data, sentence-corpus support, managed media, offline-friendly previewing, and explicit deck-quality gates.
+A Node.js project for building JLPT kanji decks for Anki with deterministic exports, curated study data, sentence-corpus support, managed media, offline-friendly previewing, explicit deck-quality gates, and importable `.apkg` packaging.
 
 ## Overview
 
@@ -11,7 +11,7 @@ The system can:
 - build TSV decks for JLPT N5 through N1
 - infer learner-facing meanings, notes, and example sentences
 - override inference with curated study data
-- package import-ready deck artifacts
+- package import-ready deck artifacts and `.apkg` bundles
 - manage stroke-order image, stroke-order animation, and audio assets
 - preview cards even when upstream kanji enrichment is unavailable
 - report setup health, media readiness, and per-level quality gates
@@ -63,6 +63,7 @@ If the upstream kanji API is unavailable, preview falls back to local sentence c
 
 ```bash
 npm run deck:ready -- --levels=5 --limit=25
+npm run deck:apkg -- --levels=5
 ```
 
 This runs the user-facing happy path:
@@ -72,6 +73,8 @@ This runs the user-facing happy path:
 - builds exports
 - packages the deck in `out/build/package`
 - prints a summary including quality and media status
+
+`deck:apkg` converts the packaged exports and copied managed media into an Anki-importable `.apkg` file. Use it after `deck:ready` when you want Anki to receive the deck structure and note type automatically instead of importing the TSV manually.
 
 You can also run the lower-level artifact build directly:
 
@@ -107,6 +110,7 @@ The project supports both local media folders and optional remote fallback provi
 | `npm run deck:preview` | Preview cards before import |
 | `npm run deck:review:n5` | Run the tracked golden N5 benchmark |
 | `npm run deck:ready` | Run the full build/package happy path |
+| `npm run deck:apkg` | Build an importable `.apkg` from the packaged exports |
 | `npm run build:artifacts` | Run the deterministic build pipeline |
 | `npm run corpus:init` | Create or merge starter sentence corpus data |
 | `npm run curated:init` | Create or merge starter curated study data |
@@ -167,107 +171,3 @@ Supported media sourcing:
 ## Quality Model
 
 The repo now treats deck quality as a first-class contract, not a vague goal.
-
-`npm run deck:readiness` and `npm run doctor` evaluate each JLPT level against these gates:
-
-- sentence coverage: `90%`
-- curated coverage: `60%`
-- stroke-order coverage: `90%`
-- audio coverage: `75%`
-- full media coverage: `75%`
-
-If `ENABLE_AUDIO=false`, the user-facing quality model temporarily ignores the audio and full-media gates so you can concentrate on stroke order without the reports constantly flagging audio as missing. Card-quality diagnostics remain active even when audio is disabled.
-
-## Build Output
-
-Build artifacts are written under `out/build/`.
-
-Key outputs:
-
-- `out/build/exports/`
-- `out/build/reports/`
-- `out/build/build-summary.json`
-- `out/build/package/`
-- `out/build/package/IMPORT.txt`
-
-The package directory contains the exported TSVs plus any referenced managed media files that are currently available.
-
-## Configuration
-
-Configuration is read from environment variables and `.env`, with environment variables taking precedence.
-
-| Variable | Default |
-| --- | --- |
-| `PORT` | `3719` |
-| `CACHE_DIR` | `cache` |
-| `JLPT_JSON_PATH` | `data/kanji_jlpt_only.json` |
-| `KRADFILE_PATH` | `data/KRADFILE` |
-| `SENTENCE_CORPUS_PATH` | `data/sentence_corpus.json` |
-| `CURATED_STUDY_DATA_PATH` | `data/curated_study_data.json` |
-| `KANJI_API_BASE_URL` | `https://kanjiapi.dev` |
-| `MEDIA_ROOT_DIR` | `data/media` |
-| `STROKE_ORDER_IMAGE_SOURCE_DIR` | `data/media_sources/stroke-order/images` |
-| `STROKE_ORDER_ANIMATION_SOURCE_DIR` | `data/media_sources/stroke-order/animations` |
-| `AUDIO_SOURCE_DIR` | `data/media_sources/audio` |
-| `ENABLE_AUDIO` | `true` |
-| `REMOTE_STROKE_ORDER_IMAGE_BASE_URL` | unset |
-| `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` | unset |
-| `REMOTE_AUDIO_BASE_URL` | unset |
-| `BUILD_OUT_DIR` | `out/build` |
-| `EXPORT_CONCURRENCY` | `8` |
-| `API_REQUEST_TIMEOUT` | `10000` |
-
-## API Surface
-
-The app exposes HTTP routes for service health, inference, and media operations.
-
-Main routes:
-
-- `GET /`
-- `GET /healthz`
-- `GET /readyz`
-- `GET /inference/:kanji`
-- `GET /media/:kanji`
-- `POST /media/:kanji/sync`
-- `POST /media/:kanji/audio/sync`
-
-## Engineering Notes
-
-Key internal characteristics:
-
-- cache-backed upstream retrieval with validation
-- deterministic dataset normalization
-- provider metrics and acquisition reporting
-- shared JSDoc contracts for important runtime boundaries
-- bounded concurrency for export and media sync
-- explicit graceful shutdown behavior
-- structured API validation and error responses
-
-## Development Standard
-
-- avoid shortcuts when correctness can be explicit
-- prefer deterministic behavior over convenience
-- keep user workflows honest about what is and is not ready
-- update docs when behavior changes
-- add tests for behavior changes
-- keep commits focused and professional
-
-## Validation
-
-Before merging meaningful changes, the standard validation set is:
-
-```bash
-npm run lint
-npm test
-```
-
-For user-facing build or content work, also validate with one or more of:
-
-```bash
-npm run doctor
-npm run deck:readiness
-npm run deck:preview -- --level=5 --limit=5
-npm run media:plan -- --level=5 --limit=10
-npm run deck:ready -- --levels=5 --limit=25
-```
-

@@ -18,6 +18,7 @@
     "corpus:init": "node scripts/initSentenceCorpus.js",
     "curated:normalize": "node scripts/normalizeCuratedStudyData.js",
     "curated:report": "node scripts/reportCuratedStudyCoverage.js",
+    "curated:init": "node scripts/initCuratedStudyData.js",
     "build:artifacts": "node scripts/buildArtifacts.js",
     "media:report": "node scripts/reportMediaCoverage.js",
     "media:sync": "node scripts/syncMedia.js",

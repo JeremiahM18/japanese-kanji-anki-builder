@@ -428,3 +428,9 @@ The current test suite covers:
 - The readiness report applies explicit quality gates for sentence coverage, curated coverage, stroke-order coverage, audio coverage, and full media coverage.
 - `npm run doctor` and `npm run deck:ready` now surface the same level quality gates, so setup, build, and readiness workflows all report one consistent quality picture.
 - This makes deck quality measurable and helps prioritize the weakest JLPT level first instead of guessing where to invest effort.
+## Recent Curated Study Improvements
+
+- Run `npm run curated:init` to create a starter curated study dataset in `data/curated_study_data.json`.
+- The starter pack includes hand-picked beginner/intermediate overrides for high-value N5 and N4 kanji, including meanings, notes, preferred words, and example sentences.
+- Re-run with `npm run curated:init -- --merge` to blend the starter entries into an existing curated dataset without replacing your file.
+- This gives the deck a faster path from structurally correct output to actually polished learner-facing cards.

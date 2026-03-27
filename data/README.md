@@ -137,3 +137,18 @@ npm run corpus:init -- --merge
 
 The starter corpus is intentionally small and beginner-focused so preview and export quality improve immediately, and you can expand it over time with better or more specialized examples.
 
+## Starter curated study data
+
+Run this once to create a starter curated study dataset in `data/curated_study_data.json`:
+
+```bash
+npm run curated:init
+```
+
+If you already have curated study data and want to add the starter entries without overwriting your file:
+
+```bash
+npm run curated:init -- --merge
+```
+
+The starter curated pack is intentionally focused on high-value N5 and N4 kanji so learner-facing meanings, notes, and examples improve quickly before you expand deeper into the full JLPT set.

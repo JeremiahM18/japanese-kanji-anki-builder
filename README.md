@@ -417,3 +417,8 @@ The current test suite covers:
 - Re-run with `npm run corpus:init -- --merge` to blend the starter entries into an existing corpus without replacing your file.
 - This gives the project a practical first step beyond template-only examples, so preview and export quality can improve immediately from the user perspective.
 
+## Recent Offline Preview Improvements
+
+- `npm run deck:preview` now falls back to local sentence corpus, curated study data, radicals, and managed media when the upstream kanji API is unavailable.
+- Offline fallback cards are marked clearly in the preview output, so you can tell when you are seeing a local-only render instead of full online-enriched inference.
+- This removes the previous all-or-nothing preview failure mode and makes card review useful even when you are offline or the API is unreachable.

@@ -11,6 +11,14 @@ function formatPreviewCard(card) {
         return lines.join("\n");
     }
 
+    if (card.previewMode === "offline-local-fallback") {
+        lines.push("Preview mode: offline local fallback");
+    }
+
+    if (card.warning) {
+        lines.push(`Preview note: ${card.warning}`);
+    }
+
     lines.push(`Meaning: ${card.meaningJP || "n/a"}`);
     lines.push(`Reading: ${card.reading || "n/a"}`);
     lines.push(`Radical: ${card.radical || "n/a"}`);
@@ -26,10 +34,12 @@ function formatPreviewCard(card) {
 function formatPreviewReport({ cards, scope }) {
     const lines = [];
     const previewErrors = cards.filter((card) => card.error).length;
+    const offlineFallbacks = cards.filter((card) => card.previewMode === "offline-local-fallback").length;
     lines.push("Japanese Kanji Builder Preview");
     lines.push("");
     lines.push(`Cards previewed: ${cards.length}`);
     lines.push(`Preview errors: ${previewErrors}`);
+    lines.push(`Offline fallback cards: ${offlineFallbacks}`);
     lines.push(`Scope: ${scope}`);
 
     if (cards.length === 0) {

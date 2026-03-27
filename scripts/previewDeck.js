@@ -46,11 +46,140 @@ function formatPreviewError(err) {
     const message = err instanceof Error ? err.message : String(err);
 
     if (message === "fetch failed") {
-        return "Preview data is unavailable because the kanji API could not be reached and no cached entry was available.";
+        return "Preview used local fallback data because the kanji API could not be reached and no cached entry was available.";
     }
 
     return message;
 }
+
+function buildOfflineSentenceCandidate(kanji, curatedEntry, sentenceCorpus) {
+    if (curatedEntry?.exampleSentence) {
+        return {
+            type: "curated",
+            japanese: curatedEntry.exampleSentence.japanese,
+            reading: curatedEntry.exampleSentence.reading || "",
+            english: curatedEntry.exampleSentence.english,
+            written: curatedEntry.preferredWords?.[0] || kanji,
+            source: curatedEntry.exampleSentence.source || "curated-study-data",
+        };
+    }
+
+    const matches = sentenceCorpus
+        .filter((entry) => entry.kanji === kanji)
+        .sort((a, b) => {
+            const aReading = a.reading ? 1 : 0;
+            const bReading = b.reading ? 1 : 0;
+            const readingDiff = bReading - aReading;
+            if (readingDiff !== 0) {
+                return readingDiff;
+            }
+
+            const aFreq = Number.isInteger(a.frequencyRank) ? a.frequencyRank : Number.MAX_SAFE_INTEGER;
+            const bFreq = Number.isInteger(b.frequencyRank) ? b.frequencyRank : Number.MAX_SAFE_INTEGER;
+            if (aFreq !== bFreq) {
+                return aFreq - bFreq;
+            }
+
+            return a.japanese.length - b.japanese.length;
+        });
+
+    if (matches.length === 0) {
+        return null;
+    }
+
+    const best = matches[0];
+    return {
+        type: "corpus",
+        japanese: best.japanese,
+        reading: best.reading || "",
+        english: best.english,
+        written: best.written || kanji,
+        source: best.source || "local-corpus",
+    };
+}
+
+function buildOfflineMeaning({ kanji, curatedEntry, sentenceCandidate }) {
+    const written = curatedEntry?.preferredWords?.[0] || sentenceCandidate?.written || kanji;
+    const englishMeaning = curatedEntry?.englishMeaning || "";
+
+    if (written && englishMeaning) {
+        return `${written} ／ ${englishMeaning}`;
+    }
+
+    if (englishMeaning) {
+        return englishMeaning;
+    }
+
+    return written || "";
+}
+
+function buildOfflineNotes({ curatedEntry, sentenceCandidate }) {
+    if (curatedEntry?.notes) {
+        return curatedEntry.notes;
+    }
+
+    if (Array.isArray(curatedEntry?.alternativeNotes) && curatedEntry.alternativeNotes.length > 0) {
+        return curatedEntry.alternativeNotes.join(" ／ ");
+    }
+
+    if (sentenceCandidate?.written && sentenceCandidate?.english) {
+        return `Local example uses ${sentenceCandidate.written} to illustrate this kanji.`;
+    }
+
+    return "Offline preview built from local data only. Add curated meanings or cached API data for richer output.";
+}
+
+async function buildOfflineFallbackCard({
+    kanji,
+    levelLabel,
+    curatedStudyData,
+    sentenceCorpus,
+    kradMap,
+    strokeOrderService,
+    audioService,
+}) {
+    const curatedEntry = curatedStudyData[kanji] || null;
+    const sentenceCandidate = buildOfflineSentenceCandidate(kanji, curatedEntry, sentenceCorpus);
+    const [strokeOrderImagePath, strokeOrderAnimationPath, strokeOrderPath, audioPath] = await Promise.all([
+        typeof strokeOrderService?.getStrokeOrderImagePath === "function"
+            ? strokeOrderService.getStrokeOrderImagePath(kanji)
+            : Promise.resolve(""),
+        typeof strokeOrderService?.getStrokeOrderAnimationPath === "function"
+            ? strokeOrderService.getStrokeOrderAnimationPath(kanji)
+            : Promise.resolve(""),
+        typeof strokeOrderService?.getBestStrokeOrderPath === "function"
+            ? strokeOrderService.getBestStrokeOrderPath(kanji)
+            : Promise.resolve(""),
+        typeof audioService?.getBestAudioPath === "function"
+            ? audioService.getBestAudioPath(kanji, { category: "kanji-reading", text: kanji })
+            : Promise.resolve(""),
+    ]);
+
+    return {
+        kanji,
+        levelLabel,
+        previewMode: "offline-local-fallback",
+        warning: "Preview rendered from local data because online kanji enrichment was unavailable.",
+        meaningJP: buildOfflineMeaning({ kanji, curatedEntry, sentenceCandidate }),
+        reading: "",
+        radical: pickMainComponent(kradMap.get(kanji) || []),
+        notes: buildOfflineNotes({ curatedEntry, sentenceCandidate }),
+        exampleSentence: formatExampleSentence(sentenceCandidate),
+        media: {
+            strokeOrderPath,
+            strokeOrderImagePath,
+            strokeOrderAnimationPath,
+            audioPath,
+        },
+        fields: {
+            strokeOrderField: "",
+            strokeOrderImageField: "",
+            strokeOrderAnimationField: "",
+            audioField: "",
+        },
+    };
+}
+
 function selectPreviewKanji({ jlptOnlyJson, level, limit, kanji }) {
     if (Array.isArray(kanji) && kanji.length > 0) {
         return [...new Set(kanji)];
@@ -99,6 +228,8 @@ async function main() {
 
     const cards = [];
     for (const kanji of kanjiList) {
+        const levelLabel = `N${jlptOnlyJson[kanji]?.jlpt || "?"}`;
+
         try {
             const inference = await exportService.buildInferenceForKanji({
                 kanji,
@@ -109,7 +240,8 @@ async function main() {
             const radical = pickMainComponent(kradMap.get(kanji) || []);
             cards.push({
                 kanji,
-                levelLabel: `N${jlptOnlyJson[kanji]?.jlpt || "?"}`,
+                levelLabel,
+                previewMode: "full-inference",
                 meaningJP: inference.meaningJP,
                 reading: inference.reading,
                 radical,
@@ -129,11 +261,18 @@ async function main() {
                 },
             });
         } catch (err) {
-            cards.push({
+            const fallbackCard = await buildOfflineFallbackCard({
                 kanji,
-                levelLabel: `N${jlptOnlyJson[kanji]?.jlpt || "?"}`,
-                error: formatPreviewError(err),
+                levelLabel,
+                curatedStudyData,
+                sentenceCorpus,
+                kradMap,
+                strokeOrderService,
+                audioService,
             });
+
+            fallbackCard.warning = formatPreviewError(err);
+            cards.push(fallbackCard);
         }
     }
 
@@ -153,4 +292,3 @@ main().catch((err) => {
     console.error(err.stack || err);
     process.exit(1);
 });
-

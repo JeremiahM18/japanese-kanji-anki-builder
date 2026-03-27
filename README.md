@@ -357,3 +357,10 @@ The current test suite covers:
 - Invalid export parameters now return structured `400` JSON errors instead of ad hoc text responses.
 - Missing media manifests return structured `404` JSON errors, and invalid audio-sync bodies return `422` `validation_error` responses with issue details.
 - Malformed JSON request bodies now fail fast with a structured `400` `bad_request` response.
+
+## Recent Lifecycle Improvements
+
+- Server startup now runs through explicit runtime and listen helpers instead of a bare top-level `app.listen()` call.
+- `SIGINT` and `SIGTERM` now trigger graceful shutdown, listener cleanup, and clean server close behavior.
+- Shutdown is serialized so overlapping termination signals share one close path instead of racing.
+- Graceful shutdown now has a timeout guard so hung closes are surfaced and treated as failures instead of stalling indefinitely.

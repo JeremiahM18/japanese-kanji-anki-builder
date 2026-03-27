@@ -28,7 +28,7 @@ npm run deck:readiness
 Use these first.
 
 - `doctor` checks required datasets, optional study data, media source folders, coverage, and next steps.
-- `deck:readiness` shows N5-N1 quality gates for sentence coverage, curated coverage, stroke-order coverage, audio coverage, and full media coverage.
+- `deck:readiness` shows N5-N1 quality gates for sentence coverage, curated coverage, and stroke-order coverage. If you want to defer audio, set `ENABLE_AUDIO=false` and the user-facing reports will stop treating it as an active blocker.
 
 ### 2. Bootstrap starter content
 
@@ -92,7 +92,7 @@ npm run media:sync -- --level=5 --limit=25
 npm run media:report -- --limit=25
 ```
 
-The project supports both local media folders and optional remote fallback providers. `media:plan` is the quickest way to see exactly which filenames the repo will accept for missing image, animation, and audio assets at a given JLPT level. `media:plan:stroke-order` turns the free stroke-order path into a concrete Wikimedia Commons checklist with expected file names and Commons file-page URLs. When guessed Commons names start failing, `media:discover:stroke-order` queries Wikimedia Commons search directly and reports the real file titles it can find, including alternate static names like `-jbw.png`, KanjiVG-style `stroke order.svg` files, and animation variants like `-calligraphic-order.gif` or `-cursive-order.gif`. Add `--sheet` when you want a compact copyable download list. For local audio, `media:import:audio` accepts the same candidate names the sync layer already understands, such as `日.mp3` or `日.wav`. `media:sources` is the checkpoint between import and sync: it shows what the repo can already see locally before anything is written into managed manifests.
+The project supports both local media folders and optional remote fallback providers. `media:plan` is the quickest way to see exactly which filenames the repo will accept for missing image, animation, and audio assets at a given JLPT level. If you want to focus purely on stroke order for a while, run commands with `ENABLE_AUDIO=false` to hide audio from readiness and source-gap reporting. `media:plan:stroke-order` turns the free stroke-order path into a concrete Wikimedia Commons checklist with expected file names and Commons file-page URLs. When guessed Commons names start failing, `media:discover:stroke-order` queries Wikimedia Commons search directly and reports the real file titles it can find, including alternate static names like `-jbw.png`, KanjiVG-style `stroke order.svg` files, and animation variants like `-calligraphic-order.gif` or `-cursive-order.gif`. Add `--sheet` when you want a compact copyable download list. For local audio, `media:import:audio` accepts the same candidate names the sync layer already understands, such as `日.mp3` or `日.wav`. `media:sources` is the checkpoint between import and sync: it shows what the repo can already see locally before anything is written into managed manifests.
 
 ## Important Commands
 
@@ -172,7 +172,7 @@ The repo now treats deck quality as a first-class contract, not a vague goal.
 - audio coverage: `75%`
 - full media coverage: `75%`
 
-A deck level is not considered truly ready until it clears those gates.
+If `ENABLE_AUDIO=false`, the user-facing quality model temporarily ignores the audio and full-media gates so you can concentrate on stroke order without the reports constantly flagging audio as missing.
 
 ## Build Output
 
@@ -205,6 +205,7 @@ Configuration is read from environment variables and `.env`, with environment va
 | `STROKE_ORDER_IMAGE_SOURCE_DIR` | `data/media_sources/stroke-order/images` |
 | `STROKE_ORDER_ANIMATION_SOURCE_DIR` | `data/media_sources/stroke-order/animations` |
 | `AUDIO_SOURCE_DIR` | `data/media_sources/audio` |
+| `ENABLE_AUDIO` | `true` |
 | `REMOTE_STROKE_ORDER_IMAGE_BASE_URL` | unset |
 | `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` | unset |
 | `REMOTE_AUDIO_BASE_URL` | unset |

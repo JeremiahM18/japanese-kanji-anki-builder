@@ -71,3 +71,16 @@ test("formatLevelReadinessReport renders thresholds and weakest levels", () => {
     assert.match(text, /N4: 20.0% checks passing/);
     assert.match(text, /Failing checks: sentence coverage, audio coverage/);
 });
+
+test("buildLevelReadinessReport can ignore audio gates when audio is disabled", () => {
+    const report = buildLevelReadinessReport({
+        sentenceCoverage: { levels: [{ level: 5, totalKanji: 10, coveredKanji: 10, coverageRatio: 1, sampleMissing: [] }] },
+        curatedCoverage: { levels: [{ level: 5, totalKanji: 10, curatedKanji: 7, coverageRatio: 0.7, sampleMissing: [] }] },
+        mediaCoverage: { levels: [{ level: 5, totalKanji: 10, strokeOrderCovered: 10, audioCovered: 0, fullMediaCovered: 0, strokeOrderCoverageRatio: 1, audioCoverageRatio: 0, fullMediaCoverageRatio: 0, sampleMissing: [] }] },
+        levels: [5],
+        thresholds: buildDefaultQualityThresholds({ audioEnabled: false }),
+    });
+
+    assert.equal(report.overallReady, true);
+    assert.equal(report.levels[0].failingChecks.includes("audio coverage"), false);
+});

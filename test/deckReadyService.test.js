@@ -79,3 +79,25 @@ test("formatDeckReadyReport recommends configuring acquisition when no media was
 
     assert.match(text, /add local media sources or configure remote fallback providers/i);
 });
+
+test("formatDeckReadyReport hides audio sections when audio is disabled", () => {
+    const text = formatDeckReadyReport({
+        outDir: "C:/repo/out/build",
+        levels: [5],
+        exports: [{ level: 5 }],
+        package: {
+            rootDir: "C:/repo/out/build/package",
+            exportCount: 1,
+            mediaAssetCount: 2,
+            mediaCounts: { strokeOrder: 2, strokeOrderImage: 1, strokeOrderAnimation: 1, audio: 0 },
+        },
+        coverage: { strokeOrder: 0.5, audio: 0, fullMedia: 0 },
+    }, {
+        status: { audioEnabled: false, mediaReadiness: [{ label: "Stroke-order images", ready: true }] },
+        quality: { levelReadiness: { overallReady: false, weakestLevels: [{ level: 5 }], levels: [{ level: 5, ready: false, readinessScore: 0.6 }] } },
+    });
+
+    assert.doesNotMatch(text, /Audio fields:/);
+    assert.doesNotMatch(text, /Audio coverage:/);
+    assert.doesNotMatch(text, /Full media coverage:/);
+});

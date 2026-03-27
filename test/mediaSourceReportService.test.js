@@ -79,6 +79,7 @@ test("formatMediaSourceReport produces a clear local-source summary", () => {
         imageAvailableCount: 20,
         animationAvailableCount: 10,
         audioAvailableCount: 5,
+        audioEnabled: true,
         imageSourceDir: "C:/repo/data/media_sources/stroke-order/images",
         animationSourceDir: "C:/repo/data/media_sources/stroke-order/animations",
         audioSourceDir: "C:/repo/data/media_sources/audio",
@@ -110,4 +111,33 @@ test("formatMediaSourceReport produces a clear local-source summary", () => {
     assert.match(text, /Animation: 日-order\.gif, 日-order\.webp/);
     assert.match(text, /Audio: 日\.mp3, 日\.wav/);
     assert.match(text, /rerun this report before `npm run media:sync`/);
+});
+
+test("formatMediaSourceReport hides audio details when audio is disabled", () => {
+    const text = formatMediaSourceReport({
+        levels: [5],
+        totalKanji: 79,
+        imageAvailableCount: 20,
+        animationAvailableCount: 10,
+        audioAvailableCount: 0,
+        audioEnabled: false,
+        imageSourceDir: "C:/repo/data/media_sources/stroke-order/images",
+        animationSourceDir: "C:/repo/data/media_sources/stroke-order/animations",
+        audioSourceDir: "C:/repo/data/media_sources/audio",
+        sourceDirectoriesExist: { image: true, animation: true, audio: false },
+        rows: [{
+            kanji: "日",
+            level: 5,
+            hasImage: true,
+            hasAnimation: false,
+            hasAudio: false,
+            preferredFileNames: { image: [], animation: ["日-order.gif"], audio: ["日.mp3"] },
+        }],
+        truncated: false,
+        totalMissingRows: 1,
+    });
+
+    assert.doesNotMatch(text, /Source audio coverage/);
+    assert.doesNotMatch(text, /Audio: C:\/repo\/data\/media_sources\/audio/);
+    assert.doesNotMatch(text, /Audio: 日\.mp3/);
 });

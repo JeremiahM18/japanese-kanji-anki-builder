@@ -76,3 +76,12 @@ test("loadConfig prefers process env over .env", () => {
         cleanupTempDir(rootDir);
     }
 });
+
+test("loadConfig parses ENABLE_AUDIO as a boolean flag", () => {
+    const config = loadConfig({
+        cwd: process.cwd(),
+        env: { ENABLE_AUDIO: "false" },
+    });
+
+    assert.equal(config.enableAudio, false);
+});

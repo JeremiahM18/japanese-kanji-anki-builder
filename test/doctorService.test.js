@@ -137,6 +137,7 @@ test("formatDoctorReport produces a human-readable setup summary", () => {
         quality: {
             levelReadiness: {
                 overallReady: false,
+                thresholds: { audioCoverage: 0.75 },
                 levels: [
                     {
                         level: 5,
@@ -163,4 +164,33 @@ test("formatDoctorReport produces a human-readable setup summary", () => {
     assert.match(text, /Next steps:/);
     assert.match(text, /Add the JLPT dataset first/);
     assert.match(text, /C:\/repo\/data\/kanji_jlpt_only\.json/);
+});
+
+test("formatDoctorReport hides audio sections when audio is disabled", () => {
+    const text = formatDoctorReport({
+        ready: true,
+        status: {
+            audioEnabled: false,
+            required: [],
+            optionalDatasets: [],
+            mediaSources: [],
+            mediaReadiness: [],
+        },
+        coverage: {
+            sentenceCorpus: null,
+            curatedStudyData: null,
+            media: { strokeOrderCoverageRatio: 0.5, strokeOrderCovered: 1, totalKanji: 2, audioCoverageRatio: 0, audioCovered: 0, fullMediaCoverageRatio: 0, fullMediaCovered: 0 },
+        },
+        quality: {
+            levelReadiness: {
+                overallReady: false,
+                thresholds: { audioCoverage: null },
+                levels: [{ level: 5, ready: false, metrics: { sentenceCoverage: 1, curatedCoverage: 0.5, strokeOrderCoverage: 0.5, audioCoverage: 0, fullMediaCoverage: 0 } }],
+            },
+        },
+        nextSteps: ["Keep improving stroke order."],
+    });
+
+    assert.doesNotMatch(text, /Audio media:/);
+    assert.doesNotMatch(text, /full media/);
 });

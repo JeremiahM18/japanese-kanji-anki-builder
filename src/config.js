@@ -2,6 +2,27 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { z } = require("zod");
 
+const booleanLike = z.preprocess((value) => {
+    if (typeof value === "boolean") {
+        return value;
+    }
+
+    const normalized = String(value ?? "").trim().toLowerCase();
+    if (!normalized) {
+        return undefined;
+    }
+
+    if (["1", "true", "yes", "on"].includes(normalized)) {
+        return true;
+    }
+
+    if (["0", "false", "no", "off"].includes(normalized)) {
+        return false;
+    }
+
+    return value;
+}, z.boolean());
+
 const schema = z.object({
     port: z.coerce.number().int().positive().default(3719),
     cacheDir: z.string().default("cache"),
@@ -14,6 +35,7 @@ const schema = z.object({
     strokeOrderImageSourceDir: z.string().default("data/media_sources/stroke-order/images"),
     strokeOrderAnimationSourceDir: z.string().default("data/media_sources/stroke-order/animations"),
     audioSourceDir: z.string().default("data/media_sources/audio"),
+    enableAudio: booleanLike.default(true),
     remoteStrokeOrderImageBaseUrl: z.string().url().optional(),
     remoteStrokeOrderAnimationBaseUrl: z.string().url().optional(),
     remoteAudioBaseUrl: z.string().url().optional(),
@@ -89,6 +111,7 @@ function buildRawConfig(env) {
         strokeOrderImageSourceDir: env.STROKE_ORDER_IMAGE_SOURCE_DIR,
         strokeOrderAnimationSourceDir: env.STROKE_ORDER_ANIMATION_SOURCE_DIR,
         audioSourceDir: env.AUDIO_SOURCE_DIR,
+        enableAudio: env.ENABLE_AUDIO,
         remoteStrokeOrderImageBaseUrl: env.REMOTE_STROKE_ORDER_IMAGE_BASE_URL,
         remoteStrokeOrderAnimationBaseUrl: env.REMOTE_STROKE_ORDER_ANIMATION_BASE_URL,
         remoteAudioBaseUrl: env.REMOTE_AUDIO_BASE_URL,

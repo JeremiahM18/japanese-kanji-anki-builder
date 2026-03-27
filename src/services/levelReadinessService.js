@@ -1,10 +1,10 @@
-function buildDefaultQualityThresholds() {
+function buildDefaultQualityThresholds({ audioEnabled = true } = {}) {
     return {
         sentenceCoverage: 0.9,
         curatedCoverage: 0.6,
         strokeOrderCoverage: 0.9,
-        audioCoverage: 0.75,
-        fullMediaCoverage: 0.75,
+        audioCoverage: audioEnabled ? 0.75 : null,
+        fullMediaCoverage: audioEnabled ? 0.75 : null,
     };
 }
 
@@ -51,9 +51,9 @@ function buildLevelReadinessReport({
             buildCheck({ label: "sentence coverage", actual: sentenceRow.coverageRatio || 0, threshold: thresholds.sentenceCoverage }),
             buildCheck({ label: "curated coverage", actual: curatedRow.coverageRatio || 0, threshold: thresholds.curatedCoverage }),
             buildCheck({ label: "stroke-order coverage", actual: mediaRow.strokeOrderCoverageRatio || 0, threshold: thresholds.strokeOrderCoverage }),
-            buildCheck({ label: "audio coverage", actual: mediaRow.audioCoverageRatio || 0, threshold: thresholds.audioCoverage }),
-            buildCheck({ label: "full media coverage", actual: mediaRow.fullMediaCoverageRatio || 0, threshold: thresholds.fullMediaCoverage }),
-        ];
+            thresholds.audioCoverage == null ? null : buildCheck({ label: "audio coverage", actual: mediaRow.audioCoverageRatio || 0, threshold: thresholds.audioCoverage }),
+            thresholds.fullMediaCoverage == null ? null : buildCheck({ label: "full media coverage", actual: mediaRow.fullMediaCoverageRatio || 0, threshold: thresholds.fullMediaCoverage }),
+        ].filter(Boolean);
 
         const passedChecks = checks.filter((check) => check.passed).length;
         const failingChecks = checks.filter((check) => !check.passed);
@@ -121,8 +121,10 @@ function formatLevelReadinessReport(report) {
     lines.push(`- Sentence coverage: ${formatPercent(report.thresholds.sentenceCoverage)}`);
     lines.push(`- Curated coverage: ${formatPercent(report.thresholds.curatedCoverage)}`);
     lines.push(`- Stroke-order coverage: ${formatPercent(report.thresholds.strokeOrderCoverage)}`);
-    lines.push(`- Audio coverage: ${formatPercent(report.thresholds.audioCoverage)}`);
-    lines.push(`- Full media coverage: ${formatPercent(report.thresholds.fullMediaCoverage)}`);
+    if (report.thresholds.audioCoverage != null) {
+        lines.push(`- Audio coverage: ${formatPercent(report.thresholds.audioCoverage)}`);
+        lines.push(`- Full media coverage: ${formatPercent(report.thresholds.fullMediaCoverage)}`);
+    }
 
     if (Array.isArray(report.weakestLevels) && report.weakestLevels.length > 0) {
         lines.push("");
@@ -136,7 +138,16 @@ function formatLevelReadinessReport(report) {
     lines.push("Level readiness:");
     for (const row of report.levels || []) {
         lines.push(`- N${row.level}: ${row.ready ? "ready" : "needs work"}; ${(row.readinessScore * 100).toFixed(1)}% checks passing`);
-        lines.push(`  Sentence ${formatPercent(row.metrics.sentenceCoverage)}, curated ${formatPercent(row.metrics.curatedCoverage)}, stroke-order ${formatPercent(row.metrics.strokeOrderCoverage)}, audio ${formatPercent(row.metrics.audioCoverage)}, full media ${formatPercent(row.metrics.fullMediaCoverage)}`);
+        const metricParts = [
+            `Sentence ${formatPercent(row.metrics.sentenceCoverage)}`,
+            `curated ${formatPercent(row.metrics.curatedCoverage)}`,
+            `stroke-order ${formatPercent(row.metrics.strokeOrderCoverage)}`,
+        ];
+        if (report.thresholds.audioCoverage != null) {
+            metricParts.push(`audio ${formatPercent(row.metrics.audioCoverage)}`);
+            metricParts.push(`full media ${formatPercent(row.metrics.fullMediaCoverage)}`);
+        }
+        lines.push(`  ${metricParts.join(", ")}`);
         if (row.failingChecks.length > 0) {
             lines.push(`  Failing checks: ${row.failingChecks.join(", ")}`);
         }

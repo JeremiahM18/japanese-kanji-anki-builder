@@ -55,12 +55,13 @@ async function buildMediaSourceReport({
     strokeOrderImageSourceDir,
     strokeOrderAnimationSourceDir,
     audioSourceDir,
+    audioEnabled = true,
     levels = [5],
     limit = 25,
 }) {
     const imageIndex = await buildLocalDirectoryIndex(strokeOrderImageSourceDir, IMAGE_EXTENSIONS);
     const animationIndex = await buildLocalDirectoryIndex(strokeOrderAnimationSourceDir, ANIMATION_EXTENSIONS);
-    const audioIndex = await buildLocalDirectoryIndex(audioSourceDir, AUDIO_EXTENSIONS);
+    const audioIndex = audioEnabled ? await buildLocalDirectoryIndex(audioSourceDir, AUDIO_EXTENSIONS) : new Map();
     const buckets = buildJlptBuckets(jlptOnlyJson);
     const targetLevels = parseLevelsArgument(levels);
     const targetKanji = targetLevels.flatMap((level) => (buckets.get(level) || []).map((kanji) => ({ kanji, level })));
@@ -71,7 +72,7 @@ async function buildMediaSourceReport({
         const hasAnimation = hasAnyCandidate(animationIndex, buildStrokeOrderAnimationCandidates(entry.kanji));
         const hasAudio = hasAnyCandidate(audioIndex, buildAudioFileCandidates({ kanji: entry.kanji, text: entry.kanji }));
 
-        if (hasImage && hasAnimation && hasAudio) {
+        if (hasImage && hasAnimation && (!audioEnabled || hasAudio)) {
             continue;
         }
 
@@ -96,7 +97,8 @@ async function buildMediaSourceReport({
         totalKanji: targetKanji.length,
         imageAvailableCount: targetKanji.filter((entry) => hasAnyCandidate(imageIndex, buildStrokeOrderImageCandidates(entry.kanji))).length,
         animationAvailableCount: targetKanji.filter((entry) => hasAnyCandidate(animationIndex, buildStrokeOrderAnimationCandidates(entry.kanji))).length,
-        audioAvailableCount: targetKanji.filter((entry) => hasAnyCandidate(audioIndex, buildAudioFileCandidates({ kanji: entry.kanji, text: entry.kanji }))).length,
+        audioEnabled,
+        audioAvailableCount: audioEnabled ? targetKanji.filter((entry) => hasAnyCandidate(audioIndex, buildAudioFileCandidates({ kanji: entry.kanji, text: entry.kanji }))).length : 0,
         imageSourceDir: strokeOrderImageSourceDir,
         animationSourceDir: strokeOrderAnimationSourceDir,
         audioSourceDir,
@@ -106,7 +108,7 @@ async function buildMediaSourceReport({
         sourceDirectoriesExist: {
             image: fs.existsSync(strokeOrderImageSourceDir),
             animation: fs.existsSync(strokeOrderAnimationSourceDir),
-            audio: fs.existsSync(audioSourceDir),
+            audio: audioEnabled ? fs.existsSync(audioSourceDir) : false,
         },
     };
 }
@@ -123,16 +125,22 @@ function formatMediaSourceReport(report) {
     lines.push(`Kanji in scope: ${report.totalKanji}`);
     lines.push(`Source image coverage: ${report.imageAvailableCount}/${report.totalKanji} (${formatPercent(report.imageAvailableCount, report.totalKanji)})`);
     lines.push(`Source animation coverage: ${report.animationAvailableCount}/${report.totalKanji} (${formatPercent(report.animationAvailableCount, report.totalKanji)})`);
-    lines.push(`Source audio coverage: ${report.audioAvailableCount}/${report.totalKanji} (${formatPercent(report.audioAvailableCount, report.totalKanji)})`);
+    if (report.audioEnabled) {
+        lines.push(`Source audio coverage: ${report.audioAvailableCount}/${report.totalKanji} (${formatPercent(report.audioAvailableCount, report.totalKanji)})`);
+    }
     lines.push("");
     lines.push("Source directories:");
     lines.push(`- Images: ${report.imageSourceDir}${report.sourceDirectoriesExist.image ? "" : " (missing directory)"}`);
     lines.push(`- Animations: ${report.animationSourceDir}${report.sourceDirectoriesExist.animation ? "" : " (missing directory)"}`);
-    lines.push(`- Audio: ${report.audioSourceDir}${report.sourceDirectoriesExist.audio ? "" : " (missing directory)"}`);
+    if (report.audioEnabled) {
+        lines.push(`- Audio: ${report.audioSourceDir}${report.sourceDirectoriesExist.audio ? "" : " (missing directory)"}`);
+    }
 
     if ((report.rows || []).length === 0) {
         lines.push("");
-        lines.push("All requested kanji already have image, animation, and audio files available in the local source folders.");
+        lines.push(report.audioEnabled
+            ? "All requested kanji already have image, animation, and audio files available in the local source folders."
+            : "All requested kanji already have image and animation files available in the local source folders.");
         lines.push("");
         lines.push("Next step: run `npm run media:sync -- --level=" + (report.levels?.[0] || 5) + " --limit=25` to import them into managed media.");
         return `${lines.join("\n")}\n`;
@@ -148,7 +156,7 @@ function formatMediaSourceReport(report) {
         if (!row.hasAnimation) {
             lines.push(`  Animation: ${row.preferredFileNames.animation.join(", ")}`);
         }
-        if (!row.hasAudio) {
+        if (report.audioEnabled && !row.hasAudio) {
             lines.push(`  Audio: ${row.preferredFileNames.audio.join(", ")}`);
         }
     }

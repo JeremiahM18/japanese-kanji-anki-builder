@@ -31,6 +31,7 @@ async function buildWikimediaStrokeOrderPlan({
         strokeOrderImageSourceDir,
         strokeOrderAnimationSourceDir,
         audioSourceDir: "",
+        audioEnabled: false,
         levels,
         limit,
     });

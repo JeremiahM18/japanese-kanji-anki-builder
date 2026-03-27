@@ -5,7 +5,7 @@ const { buildMediaCoverageSummary } = require("../datasets/mediaCoverage");
 const { buildCoverageSummary } = require("../datasets/sentenceCorpusCoverage");
 const { loadCuratedStudyData } = require("../datasets/curatedStudyData");
 const { loadSentenceCorpus } = require("../datasets/sentenceCorpus");
-const { buildLevelReadinessReport } = require("./levelReadinessService");
+const { buildDefaultQualityThresholds, buildLevelReadinessReport } = require("./levelReadinessService");
 
 function describePathStatus(filePath, { label, required, kind = "file" }) {
     const exists = fs.existsSync(filePath);
@@ -44,6 +44,7 @@ function describeMediaReadiness({ label, localDir, remoteBaseUrl, remoteEnvVar }
 
 function buildDoctorStatus(config) {
     return {
+        audioEnabled: config.enableAudio !== false,
         required: [
             describePathStatus(config.jlptJsonPath, { label: "JLPT dataset", required: true }),
             describePathStatus(config.kradfilePath, { label: "KRADFILE", required: true }),
@@ -55,7 +56,7 @@ function buildDoctorStatus(config) {
         mediaSources: [
             describePathStatus(config.strokeOrderImageSourceDir, { label: "Stroke-order images", required: false, kind: "directory" }),
             describePathStatus(config.strokeOrderAnimationSourceDir, { label: "Stroke-order animations", required: false, kind: "directory" }),
-            describePathStatus(config.audioSourceDir, { label: "Audio sources", required: false, kind: "directory" }),
+            ...(config.enableAudio === false ? [] : [describePathStatus(config.audioSourceDir, { label: "Audio sources", required: false, kind: "directory" })]),
         ],
         mediaReadiness: [
             describeMediaReadiness({
@@ -70,12 +71,12 @@ function buildDoctorStatus(config) {
                 remoteBaseUrl: config.remoteStrokeOrderAnimationBaseUrl,
                 remoteEnvVar: "REMOTE_STROKE_ORDER_ANIMATION_BASE_URL",
             }),
-            describeMediaReadiness({
+            ...(config.enableAudio === false ? [] : [describeMediaReadiness({
                 label: "Audio",
                 localDir: config.audioSourceDir,
                 remoteBaseUrl: config.remoteAudioBaseUrl,
                 remoteEnvVar: "REMOTE_AUDIO_BASE_URL",
-            }),
+            })]),
         ],
     };
 }
@@ -114,6 +115,7 @@ async function buildDoctorReport({
             curatedCoverage,
             mediaCoverage,
             levels: [5, 4, 3, 2, 1],
+            thresholds: buildDefaultQualityThresholds({ audioEnabled: config.enableAudio !== false }),
         })
         : null;
 
@@ -140,7 +142,7 @@ async function buildDoctorReport({
     if (requiredReady && mediaCoverage && mediaCoverage.strokeOrderCoverageRatio < 1) {
         nextSteps.push(`Add stroke-order assets or configure remote fallbacks. Current stroke-order coverage is ${(mediaCoverage.strokeOrderCoverageRatio * 100).toFixed(1)}%.`);
     }
-    if (requiredReady && mediaCoverage && mediaCoverage.audioCoverageRatio < 1) {
+    if (config.enableAudio !== false && requiredReady && mediaCoverage && mediaCoverage.audioCoverageRatio < 1) {
         nextSteps.push(`Add audio assets or configure remote fallbacks. Current audio coverage is ${(mediaCoverage.audioCoverageRatio * 100).toFixed(1)}%.`);
     }
     if (requiredReady && sentenceCoverage && sentenceCoverage.coverageRatio < 1) {
@@ -243,8 +245,10 @@ function formatDoctorReport(report) {
         }
         if (report.coverage.media) {
             lines.push(`- Stroke-order media: ${formatPercent(report.coverage.media.strokeOrderCoverageRatio)} (${report.coverage.media.strokeOrderCovered}/${report.coverage.media.totalKanji} kanji)`);
-            lines.push(`- Audio media: ${formatPercent(report.coverage.media.audioCoverageRatio)} (${report.coverage.media.audioCovered}/${report.coverage.media.totalKanji} kanji)`);
-            lines.push(`- Full media coverage: ${formatPercent(report.coverage.media.fullMediaCoverageRatio)} (${report.coverage.media.fullMediaCovered}/${report.coverage.media.totalKanji} kanji)`);
+            if (report.status.audioEnabled) {
+                lines.push(`- Audio media: ${formatPercent(report.coverage.media.audioCoverageRatio)} (${report.coverage.media.audioCovered}/${report.coverage.media.totalKanji} kanji)`);
+                lines.push(`- Full media coverage: ${formatPercent(report.coverage.media.fullMediaCoverageRatio)} (${report.coverage.media.fullMediaCovered}/${report.coverage.media.totalKanji} kanji)`);
+            }
         }
     }
 
@@ -252,8 +256,18 @@ function formatDoctorReport(report) {
         lines.push("");
         lines.push("Level quality gates:");
         lines.push(`- Overall quality gate: ${report.quality.levelReadiness.overallReady ? "passing" : "failing"}`);
+        const includeAudio = report.quality.levelReadiness.thresholds.audioCoverage != null;
         for (const row of report.quality.levelReadiness.levels) {
-            lines.push(`- N${row.level}: ${row.ready ? "ready" : "needs work"}; sentence ${formatPercent(row.metrics.sentenceCoverage)}, curated ${formatPercent(row.metrics.curatedCoverage)}, stroke-order ${formatPercent(row.metrics.strokeOrderCoverage)}, audio ${formatPercent(row.metrics.audioCoverage)}, full media ${formatPercent(row.metrics.fullMediaCoverage)}`);
+            const metricParts = [
+                `sentence ${formatPercent(row.metrics.sentenceCoverage)}`,
+                `curated ${formatPercent(row.metrics.curatedCoverage)}`,
+                `stroke-order ${formatPercent(row.metrics.strokeOrderCoverage)}`,
+            ];
+            if (includeAudio) {
+                metricParts.push(`audio ${formatPercent(row.metrics.audioCoverage)}`);
+                metricParts.push(`full media ${formatPercent(row.metrics.fullMediaCoverage)}`);
+            }
+            lines.push(`- N${row.level}: ${row.ready ? "ready" : "needs work"}; ${metricParts.join(", ")}`);
         }
     }
 

@@ -15,6 +15,7 @@ function formatDeckReadyReport(summary, doctorReport = null) {
         audio: 0,
     };
     const levelReadiness = doctorReport?.quality?.levelReadiness || null;
+    const audioEnabled = doctorReport?.status?.audioEnabled !== false;
 
     const lines = [];
     lines.push("Japanese Kanji Builder Deck Ready");
@@ -29,7 +30,9 @@ function formatDeckReadyReport(summary, doctorReport = null) {
     lines.push(`- Stroke-order field references: ${formatCount(mediaCounts.strokeOrder)}`);
     lines.push(`- Stroke-order images: ${formatCount(mediaCounts.strokeOrderImage)}`);
     lines.push(`- Stroke-order animations: ${formatCount(mediaCounts.strokeOrderAnimation)}`);
-    lines.push(`- Audio fields: ${formatCount(mediaCounts.audio)}`);
+    if (audioEnabled) {
+        lines.push(`- Audio fields: ${formatCount(mediaCounts.audio)}`);
+    }
 
     if (doctorReport?.status?.mediaReadiness) {
         lines.push("");
@@ -42,8 +45,10 @@ function formatDeckReadyReport(summary, doctorReport = null) {
     lines.push("");
     lines.push("Coverage snapshot:");
     lines.push(`- Stroke-order coverage: ${formatPercent(summary.coverage?.strokeOrder || 0)}`);
-    lines.push(`- Audio coverage: ${formatPercent(summary.coverage?.audio || 0)}`);
-    lines.push(`- Full media coverage: ${formatPercent(summary.coverage?.fullMedia || 0)}`);
+    if (audioEnabled) {
+        lines.push(`- Audio coverage: ${formatPercent(summary.coverage?.audio || 0)}`);
+        lines.push(`- Full media coverage: ${formatPercent(summary.coverage?.fullMedia || 0)}`);
+    }
 
     if (levelReadiness) {
         lines.push("");

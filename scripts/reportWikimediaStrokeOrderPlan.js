@@ -14,6 +14,7 @@ function parseArgs(argv) {
         limit: 25,
         json: argv.includes("--json"),
         sheet: argv.includes("--sheet"),
+        discover: argv.includes("--discover"),
     };
 
     for (const arg of argv) {
@@ -44,6 +45,7 @@ async function main() {
         strokeOrderAnimationSourceDir: config.strokeOrderAnimationSourceDir,
         levels: options.levels,
         limit: options.limit,
+        discover: options.discover,
     });
 
     if (options.json) {

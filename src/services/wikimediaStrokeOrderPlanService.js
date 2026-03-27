@@ -1,4 +1,5 @@
 const { buildMediaSourceReport, parseLevelsArgument } = require("./mediaSourceReportService");
+const { discoverWikimediaStrokeOrderForKanji } = require("./wikimediaStrokeOrderDiscoveryService");
 
 const COMMONS_BASE_URL = "https://commons.wikimedia.org";
 const COMMONS_PROJECT_NOTE = "Wikimedia Commons CJK Stroke Order Project";
@@ -19,12 +20,42 @@ function buildCommonsRedirectUrl(fileName) {
     return `${COMMONS_BASE_URL}/wiki/Special:Redirect/file/${encodeURIComponent(fileName)}`;
 }
 
+async function defaultFetchJson(url) {
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error(`Commons discovery request failed with ${response.status}`);
+    }
+
+    return response.json();
+}
+
+function buildPlanAsset(kanji, kind, discoveredAsset, discover) {
+    if (discoveredAsset) {
+        return {
+            ...discoveredAsset,
+            attribution: COMMONS_PROJECT_NOTE,
+            status: "confirmed_on_commons",
+        };
+    }
+
+    const fileName = buildCommonsFileName(kanji, kind);
+    return {
+        fileName,
+        filePageUrl: buildCommonsFilePageUrl(fileName),
+        downloadUrl: buildCommonsRedirectUrl(fileName),
+        attribution: COMMONS_PROJECT_NOTE,
+        status: discover ? "not_found_on_commons" : "guessed_name",
+    };
+}
+
 async function buildWikimediaStrokeOrderPlan({
     jlptOnlyJson = {},
     strokeOrderImageSourceDir,
     strokeOrderAnimationSourceDir,
     levels = [5],
     limit = 25,
+    discover = false,
+    fetchJson = null,
 }) {
     const sourceReport = await buildMediaSourceReport({
         jlptOnlyJson,
@@ -36,28 +67,33 @@ async function buildWikimediaStrokeOrderPlan({
         limit,
     });
 
-    const rows = (sourceReport.rows || []).map((row) => ({
-        kanji: row.kanji,
-        level: row.level,
-        image: row.hasImage ? null : {
-            fileName: buildCommonsFileName(row.kanji, "image"),
-            filePageUrl: buildCommonsFilePageUrl(buildCommonsFileName(row.kanji, "image")),
-            downloadUrl: buildCommonsRedirectUrl(buildCommonsFileName(row.kanji, "image")),
-            attribution: COMMONS_PROJECT_NOTE,
-        },
-        animation: row.hasAnimation ? null : {
-            fileName: buildCommonsFileName(row.kanji, "animation"),
-            filePageUrl: buildCommonsFilePageUrl(buildCommonsFileName(row.kanji, "animation")),
-            downloadUrl: buildCommonsRedirectUrl(buildCommonsFileName(row.kanji, "animation")),
-            attribution: COMMONS_PROJECT_NOTE,
-        },
-    }));
+    const rows = [];
+    const fetchDiscoveryJson = fetchJson || (typeof fetch === "function" ? defaultFetchJson : null);
+
+    for (const row of sourceReport.rows || []) {
+        let discovery = null;
+
+        if (discover && fetchDiscoveryJson) {
+            discovery = await discoverWikimediaStrokeOrderForKanji(row.kanji, {
+                fetchJson: fetchDiscoveryJson,
+            });
+        }
+
+        rows.push({
+            kanji: row.kanji,
+            level: row.level,
+            image: row.hasImage ? null : buildPlanAsset(row.kanji, "image", discovery?.image || null, discover),
+            animation: row.hasAnimation ? null : buildPlanAsset(row.kanji, "animation", discovery?.animation || null, discover),
+            discovery,
+        });
+    }
 
     return {
         levels: parseLevelsArgument(levels),
         totalKanji: sourceReport.totalKanji,
         imageMissingCount: rows.filter((row) => Boolean(row.image)).length,
         animationMissingCount: rows.filter((row) => Boolean(row.animation)).length,
+        discover,
         rows,
         truncated: sourceReport.truncated,
         totalMissingRows: sourceReport.totalMissingRows,
@@ -77,10 +113,16 @@ function formatWikimediaStrokeOrderSheet(plan) {
 
         if (row.image) {
             parts.push(row.image.fileName, row.image.filePageUrl);
+            if (plan.discover) {
+                parts.push(row.image.status);
+            }
         }
 
         if (row.animation) {
             parts.push(row.animation.fileName, row.animation.filePageUrl);
+            if (plan.discover) {
+                parts.push(row.animation.status);
+            }
         }
 
         lines.push(parts.join(" | "));
@@ -93,6 +135,14 @@ function formatWikimediaStrokeOrderSheet(plan) {
     return `${lines.join("\n")}\n`;
 }
 
+function formatDiscoveryStatus(status) {
+    return status === "confirmed_on_commons"
+        ? "confirmed on Commons"
+        : status === "not_found_on_commons"
+            ? "not found on Commons at discovery time"
+            : "guessed Commons name";
+}
+
 function formatWikimediaStrokeOrderPlan(plan) {
     const lines = [];
     lines.push("Japanese Kanji Builder Wikimedia Stroke-Order Plan");
@@ -101,6 +151,9 @@ function formatWikimediaStrokeOrderPlan(plan) {
     lines.push(`Kanji in scope: ${plan.totalKanji}`);
     lines.push(`Missing Commons-style static images: ${plan.imageMissingCount}`);
     lines.push(`Missing Commons-style animations: ${plan.animationMissingCount}`);
+    if (plan.discover) {
+        lines.push("Discovery mode: enabled");
+    }
     lines.push("");
     lines.push(`Recommended source: ${plan.projectNote}`);
     lines.push(`Image destination: ${plan.imageSourceDir}`);
@@ -119,10 +172,16 @@ function formatWikimediaStrokeOrderPlan(plan) {
         if (row.image) {
             lines.push(`  Image file: ${row.image.fileName}`);
             lines.push(`  Image page: ${row.image.filePageUrl}`);
+            if (plan.discover) {
+                lines.push(`  Image status: ${formatDiscoveryStatus(row.image.status)}`);
+            }
         }
         if (row.animation) {
             lines.push(`  Animation file: ${row.animation.fileName}`);
             lines.push(`  Animation page: ${row.animation.filePageUrl}`);
+            if (plan.discover) {
+                lines.push(`  Animation status: ${formatDiscoveryStatus(row.animation.status)}`);
+            }
         }
     }
 

@@ -55,8 +55,42 @@ test("buildWikimediaStrokeOrderPlan lists only missing stroke-order assets", asy
         assert.equal(plan.rows[0].kanji, "日");
         assert.equal(plan.rows[0].image, null);
         assert.equal(plan.rows[0].animation.fileName, "日-order.gif");
+        assert.equal(plan.rows[0].animation.status, "guessed_name");
         assert.equal(plan.rows[1].image.fileName, "本-bw.png");
         assert.equal(plan.rows[1].animation.fileName, "本-order.gif");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+test("buildWikimediaStrokeOrderPlan can mark discovered Commons availability", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const imageSourceDir = path.join(rootDir, "images");
+        const animationSourceDir = path.join(rootDir, "animations");
+        fs.mkdirSync(imageSourceDir, { recursive: true });
+        fs.mkdirSync(animationSourceDir, { recursive: true });
+
+        const responses = {
+            "intitle:今 order": { query: { search: [{ title: "File:今-bw.png" }] } },
+            "intitle:今 stroke order": { query: { search: [] } },
+            "intitle:今 bw": { query: { search: [{ title: "File:今-bw.png" }] } },
+        };
+
+        const plan = await buildWikimediaStrokeOrderPlan({
+            jlptOnlyJson: { 今: { jlpt: 5 } },
+            strokeOrderImageSourceDir: imageSourceDir,
+            strokeOrderAnimationSourceDir: animationSourceDir,
+            levels: [5],
+            limit: 10,
+            discover: true,
+            fetchJson: async (url) => responses[new URL(url).searchParams.get("srsearch")] || { query: { search: [] } },
+        });
+
+        assert.equal(plan.discover, true);
+        assert.equal(plan.rows[0].image.status, "confirmed_on_commons");
+        assert.equal(plan.rows[0].animation.status, "not_found_on_commons");
     } finally {
         cleanupTempDir(rootDir);
     }
@@ -68,16 +102,19 @@ test("formatWikimediaStrokeOrderPlan renders a clear Commons checklist", () => {
         totalKanji: 79,
         imageMissingCount: 79,
         animationMissingCount: 79,
+        discover: true,
         rows: [{
             kanji: "日",
             level: 5,
             image: {
                 fileName: "日-bw.png",
                 filePageUrl: "https://commons.wikimedia.org/wiki/File:%E6%97%A5-bw.png",
+                status: "confirmed_on_commons",
             },
             animation: {
                 fileName: "日-order.gif",
                 filePageUrl: "https://commons.wikimedia.org/wiki/File:%E6%97%A5-order.gif",
+                status: "not_found_on_commons",
             },
         }],
         truncated: false,
@@ -89,28 +126,31 @@ test("formatWikimediaStrokeOrderPlan renders a clear Commons checklist", () => {
 
     assert.match(text, /Wikimedia Stroke-Order Plan/);
     assert.match(text, /Missing Commons-style static images: 79/);
-    assert.match(text, /日-bw\.png/);
-    assert.match(text, /日-order\.gif/);
-    assert.match(text, /commons\.wikimedia\.org\/wiki\/File:%E6%97%A5-bw\.png/);
+    assert.match(text, /Discovery mode: enabled/);
+    assert.match(text, /Image status: confirmed on Commons/);
+    assert.match(text, /Animation status: not found on Commons at discovery time/);
     assert.match(text, /media:import:stroke-order/);
 });
 
 test("formatWikimediaStrokeOrderSheet renders a compact copyable checklist", () => {
     const text = formatWikimediaStrokeOrderSheet({
+        discover: true,
         rows: [{
             kanji: "日",
             level: 5,
             image: {
                 fileName: "日-bw.png",
                 filePageUrl: "https://commons.wikimedia.org/wiki/File:%E6%97%A5-bw.png",
+                status: "confirmed_on_commons",
             },
             animation: {
                 fileName: "日-order.gif",
                 filePageUrl: "https://commons.wikimedia.org/wiki/File:%E6%97%A5-order.gif",
+                status: "not_found_on_commons",
             },
         }],
     });
 
     assert.match(text, /Wikimedia Stroke-Order Sheet/);
-    assert.match(text, /日 \| N5 \| 日-bw\.png \| https:\/\/commons\.wikimedia\.org\/wiki\/File:%E6%97%A5-bw\.png \| 日-order\.gif/);
+    assert.match(text, /日 \| N5 \| 日-bw\.png \| https:\/\/commons\.wikimedia\.org\/wiki\/File:%E6%97%A5-bw\.png \| confirmed_on_commons \| 日-order\.gif/);
 });

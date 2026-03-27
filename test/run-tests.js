@@ -1,4 +1,5 @@
 require("./app.test");
+require("./audioImportService.test");
 require("./audioService.test");
 require("./buildPipeline.test");
 require("./concurrency.test");

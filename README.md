@@ -84,11 +84,12 @@ npm run build:artifacts -- --levels=5,4 --limit=25
 npm run media:init
 npm run media:plan -- --level=5 --limit=25
 npm run media:import:stroke-order -- --input-dir=/path/to/files
+npm run media:import:audio -- --input-dir=/path/to/audio --level=5
 npm run media:sync -- --level=5 --limit=25
 npm run media:report -- --limit=25
 ```
 
-The project supports both local media folders and optional remote fallback providers. `media:plan` is the quickest way to see exactly which filenames the repo will accept for missing image, animation, and audio assets at a given JLPT level.
+The project supports both local media folders and optional remote fallback providers. `media:plan` is the quickest way to see exactly which filenames the repo will accept for missing image, animation, and audio assets at a given JLPT level. For local audio, `media:import:audio` accepts the same candidate names the sync layer already understands, such as `日.mp3` or `日.wav`.
 
 ## Important Commands
 
@@ -106,6 +107,7 @@ The project supports both local media folders and optional remote fallback provi
 | `npm run media:init` | Create media source folders and bootstrap `.env` |
 | `npm run media:plan` | Show missing media by kanji with accepted local filenames |
 | `npm run media:import:stroke-order` | Import free local stroke-order assets |
+| `npm run media:import:audio` | Import local kanji audio files into the source folder |
 | `npm run media:sync` | Sync stroke-order and audio assets into managed storage |
 
 ## Local Data Model

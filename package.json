@@ -29,7 +29,8 @@
     "deck:package": "node scripts/buildArtifacts.js",
     "deck:ready": "node scripts/prepareDeck.js",
     "deck:readiness": "node scripts/reportDeckReadiness.js",
-    "media:plan": "node scripts/reportMediaPlan.js"
+    "media:plan": "node scripts/reportMediaPlan.js",
+    "media:import:audio": "node scripts/importAudio.js"
   },
   "keywords": [
     "japanese",

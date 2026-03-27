@@ -10,6 +10,7 @@ const {
     buildCommonsRedirectUrl,
     buildWikimediaStrokeOrderPlan,
     formatWikimediaStrokeOrderPlan,
+    formatWikimediaStrokeOrderSheet,
 } = require("../src/services/wikimediaStrokeOrderPlanService");
 
 function makeTempDir() {
@@ -92,4 +93,24 @@ test("formatWikimediaStrokeOrderPlan renders a clear Commons checklist", () => {
     assert.match(text, /日-order\.gif/);
     assert.match(text, /commons\.wikimedia\.org\/wiki\/File:%E6%97%A5-bw\.png/);
     assert.match(text, /media:import:stroke-order/);
+});
+
+test("formatWikimediaStrokeOrderSheet renders a compact copyable checklist", () => {
+    const text = formatWikimediaStrokeOrderSheet({
+        rows: [{
+            kanji: "日",
+            level: 5,
+            image: {
+                fileName: "日-bw.png",
+                filePageUrl: "https://commons.wikimedia.org/wiki/File:%E6%97%A5-bw.png",
+            },
+            animation: {
+                fileName: "日-order.gif",
+                filePageUrl: "https://commons.wikimedia.org/wiki/File:%E6%97%A5-order.gif",
+            },
+        }],
+    });
+
+    assert.match(text, /Wikimedia Stroke-Order Sheet/);
+    assert.match(text, /日 \| N5 \| 日-bw\.png \| https:\/\/commons\.wikimedia\.org\/wiki\/File:%E6%97%A5-bw\.png \| 日-order\.gif/);
 });

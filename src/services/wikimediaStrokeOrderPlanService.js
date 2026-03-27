@@ -66,6 +66,32 @@ async function buildWikimediaStrokeOrderPlan({
     };
 }
 
+function formatWikimediaStrokeOrderSheet(plan) {
+    const lines = [];
+    lines.push("Japanese Kanji Builder Wikimedia Stroke-Order Sheet");
+    lines.push("");
+
+    for (const row of plan.rows || []) {
+        const parts = [row.kanji, `N${row.level}`];
+
+        if (row.image) {
+            parts.push(row.image.fileName, row.image.filePageUrl);
+        }
+
+        if (row.animation) {
+            parts.push(row.animation.fileName, row.animation.filePageUrl);
+        }
+
+        lines.push(parts.join(" | "));
+    }
+
+    if ((plan.rows || []).length === 0) {
+        lines.push("No missing Wikimedia-style stroke-order files were detected.");
+    }
+
+    return `${lines.join("\n")}\n`;
+}
+
 function formatWikimediaStrokeOrderPlan(plan) {
     const lines = [];
     lines.push("Japanese Kanji Builder Wikimedia Stroke-Order Plan");
@@ -117,4 +143,5 @@ module.exports = {
     buildCommonsRedirectUrl,
     buildWikimediaStrokeOrderPlan,
     formatWikimediaStrokeOrderPlan,
+    formatWikimediaStrokeOrderSheet,
 };

@@ -4,6 +4,7 @@ const { loadConfig } = require("../src/config");
 const {
     buildWikimediaStrokeOrderPlan,
     formatWikimediaStrokeOrderPlan,
+    formatWikimediaStrokeOrderSheet,
 } = require("../src/services/wikimediaStrokeOrderPlanService");
 const { parseLevelsArgument } = require("../src/services/mediaSourceReportService");
 
@@ -12,6 +13,7 @@ function parseArgs(argv) {
         levels: [5],
         limit: 25,
         json: argv.includes("--json"),
+        sheet: argv.includes("--sheet"),
     };
 
     for (const arg of argv) {
@@ -46,6 +48,11 @@ async function main() {
 
     if (options.json) {
         console.log(JSON.stringify(plan, null, 2));
+        return;
+    }
+
+    if (options.sheet) {
+        process.stdout.write(formatWikimediaStrokeOrderSheet(plan));
         return;
     }
 

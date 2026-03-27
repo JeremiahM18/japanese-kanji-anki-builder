@@ -401,4 +401,9 @@ The current test suite covers:
 - Run `npm run media:import:stroke-order -- --input-dir=/path/to/files` to scan a folder of downloaded free stroke-order assets and copy recognized files into the project media source layout.
 - The importer classifies supported Wikimedia-style image and animation names, preserves unchanged files, and reports skipped files that do not match known patterns.
 - This gives the free local-media path a practical ingestion workflow instead of requiring manual sorting and copying.
+## Recent Preview Improvements
+
+- Run `npm run deck:preview -- --level=5 --limit=5` to inspect sample cards before import.
+- The preview report shows the chosen meaning, reading, radical, notes, example sentence, and whether stroke-order, animation, and audio are currently present for each card.
+- You can also target specific kanji with `npm run deck:preview -- --kanji=日,本,学` to spot-check user-facing output for high-priority cards.
 

@@ -14,6 +14,7 @@ require("./mediaCoverage.test");
 require("./mediaProviders.test");
 require("./mediaStore.test");
 require("./mediaSync.test");
+require("./previewService.test");
 require("./sentenceCorpus.test");
 require("./sentenceCorpusCoverage.test");
 require("./server.test");

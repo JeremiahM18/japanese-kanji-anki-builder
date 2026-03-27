@@ -78,3 +78,37 @@ test("buildPreviewCards falls back cleanly when inference throws", async () => {
     assert.equal(cards[0].previewMode, "offline-local-fallback");
     assert.match(cards[0].warning, /local fallback data/);
 });
+test("buildPreviewCards uses local corpus and curated data in its default inference path", async () => {
+    const cards = await buildPreviewCards({
+        kanjiList: ["一"],
+        jlptOnlyJson: { 一: { jlpt: 5 } },
+        curatedStudyData: {
+            一: {
+                preferredWords: ["一つ"],
+                exampleSentence: {
+                    japanese: "一つください。",
+                    reading: "ひとつください。",
+                    english: "Please give me one.",
+                },
+            },
+        },
+        sentenceCorpus: [],
+        kradMap: new Map([["一", ["一"]]]),
+        kanjiApiClient: {
+            getKanji: async () => ({ meanings: ["one"], on_readings: ["イチ"], kun_readings: ["ひと"] }),
+            getWords: async () => ([
+                {
+                    variants: [{ written: "一", pronounced: "ひと", priorities: ["spec1"] }],
+                    meanings: [{ glosses: ["one"] }],
+                },
+            ]),
+        },
+        strokeOrderService: null,
+        audioService: null,
+    });
+
+    assert.equal(cards.length, 1);
+    assert.equal(cards[0].previewMode, "full-inference");
+    assert.match(cards[0].exampleSentence, /一つください/);
+});
+

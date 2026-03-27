@@ -1,5 +1,6 @@
 const { pickMainComponent } = require("../datasets/kradfile");
 const { buildJlptBuckets } = require("../datasets/sentenceCorpusCoverage");
+const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { createExportService, formatExampleSentence } = require("./exportService");
 const { labelReading } = require("../utils/text");
 
@@ -175,7 +176,9 @@ async function buildPreviewCards({
     kanjiApiClient,
     strokeOrderService,
     audioService,
-    exportService = createExportService(),
+    exportService = createExportService({
+        inferenceEngine: createInferenceEngine({ sentenceCorpus, curatedStudyData }),
+    }),
 }) {
     const cards = [];
 

@@ -47,8 +47,11 @@ test("buildStrokeOrderImageCandidates includes Wikimedia and KanjiVG image varia
     assert.ok(candidates.includes("円 - U+05186- KanjiVG stroke order"));
 });
 
-test("buildStrokeOrderAnimationCandidates includes Wikimedia-style animation variants", () => {
-    assert.deepEqual(buildStrokeOrderAnimationCandidates("日").slice(0, 4), ["日", "日-order", "65E5", "65E5-order"]);
+test("buildStrokeOrderAnimationCandidates includes Commons animation variants", () => {
+    const candidates = buildStrokeOrderAnimationCandidates("四");
+    assert.ok(candidates.includes("四-order"));
+    assert.ok(candidates.includes("四-calligraphic-order"));
+    assert.ok(candidates.includes("四-cursive-order"));
 });
 
 test("findMatchingAsset resolves a local stroke-order source file", async () => {
@@ -98,6 +101,29 @@ test("findMatchingAsset resolves KanjiVG and alternate Commons image file names"
         assert.equal(altAsset.fileName, "円-jbw.png");
         assert.equal(svgAsset.fileName, "今 - U+04ECA- KanjiVG stroke order.svg");
         assert.equal(svgAsset.mimeType, "image/svg+xml");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+
+test("findMatchingAsset resolves calligraphic Commons animation names", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const animationDir = path.join(rootDir, "animations");
+        fs.mkdirSync(animationDir, { recursive: true });
+        fs.writeFileSync(path.join(animationDir, "四-calligraphic-order.gif"), "gif", "utf-8");
+
+        const asset = await findMatchingAsset(
+            animationDir,
+            "四",
+            new Map([[".gif", "image/gif"]]),
+            buildStrokeOrderAnimationCandidates
+        );
+
+        assert.equal(asset.fileName, "四-calligraphic-order.gif");
+        assert.equal(asset.mimeType, "image/gif");
     } finally {
         cleanupTempDir(rootDir);
     }

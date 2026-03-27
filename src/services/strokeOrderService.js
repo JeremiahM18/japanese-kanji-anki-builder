@@ -92,6 +92,8 @@ function buildStrokeOrderAnimationCandidates(kanji) {
     for (const base of baseCandidates) {
         candidates.add(base);
         candidates.add(`${base}-order`);
+        candidates.add(`${base}-calligraphic-order`);
+        candidates.add(`${base}-cursive-order`);
     }
 
     return [...candidates];

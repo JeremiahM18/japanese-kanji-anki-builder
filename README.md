@@ -434,3 +434,8 @@ The current test suite covers:
 - The starter pack includes hand-picked beginner/intermediate overrides for high-value N5 and N4 kanji, including meanings, notes, preferred words, and example sentences.
 - Re-run with `npm run curated:init -- --merge` to blend the starter entries into an existing curated dataset without replacing your file.
 - This gives the deck a faster path from structurally correct output to actually polished learner-facing cards.
+## Recent Starter Content Improvements
+
+- The tracked starter sentence corpus now covers a much broader slice of core JLPT N5 kanji with learner-friendly example sentences.
+- The starter curated study pack now covers a broader N5 foundation as well, so offline preview and exported notes can look substantially better before you add custom content.
+- Preferred-word ordering in curated study data is now preserved, so curated priority choices stay intact instead of being lost during normalization.

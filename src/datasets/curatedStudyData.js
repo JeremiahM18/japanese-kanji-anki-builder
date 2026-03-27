@@ -50,6 +50,23 @@ function normalizeStringArray(values) {
     return [...normalized].sort((a, b) => a.localeCompare(b));
 }
 
+function normalizeOrderedStringArray(values) {
+    const out = [];
+    const seen = new Set();
+
+    for (const value of Array.isArray(values) ? values : []) {
+        const cleaned = cleanString(value);
+        if (!cleaned || seen.has(cleaned)) {
+            continue;
+        }
+
+        seen.add(cleaned);
+        out.push(cleaned);
+    }
+
+    return out;
+}
+
 function normalizeCuratedSentence(sentence) {
     if (!sentence) {
         return undefined;
@@ -70,7 +87,7 @@ function normalizeCuratedEntry(entry) {
         source: cleanString(entry?.source) || "curated-study-data",
         tags: normalizeTags(entry?.tags),
         jlpt: Number.isInteger(entry?.jlpt) ? entry.jlpt : undefined,
-        preferredWords: normalizeStringArray(entry?.preferredWords),
+        preferredWords: normalizeOrderedStringArray(entry?.preferredWords),
         blockedWords: normalizeStringArray(entry?.blockedWords),
         blockedSentencePhrases: normalizeStringArray(entry?.blockedSentencePhrases),
         notes: cleanString(entry?.notes),
@@ -113,6 +130,7 @@ module.exports = {
     normalizeCuratedEntry,
     normalizeCuratedSentence,
     normalizeCuratedStudyData,
+    normalizeOrderedStringArray,
     normalizeStringArray,
     normalizeTags,
 };

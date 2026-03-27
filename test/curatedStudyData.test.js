@@ -23,7 +23,7 @@ test("normalizeCuratedEntry canonicalizes metadata arrays and tags", () => {
         source: " Manual-Curated ",
         tags: [" Curated ", "override", "curated"],
         jlpt: 5,
-        preferredWords: [" 日本 ", "日本"],
+        preferredWords: [" 日本 ", "日曜日", "日本"],
         blockedWords: [" 日中 ", "日中"],
         blockedSentencePhrases: ["rare", " rare "],
         alternativeNotes: [" note-b ", "note-a", "note-b"],
@@ -39,7 +39,7 @@ test("normalizeCuratedEntry canonicalizes metadata arrays and tags", () => {
     assert.equal(result.englishMeaning, "sun / day marker");
     assert.equal(result.source, "Manual-Curated");
     assert.deepEqual(result.tags, ["curated", "override"]);
-    assert.deepEqual(result.preferredWords, ["日本"]);
+    assert.deepEqual(result.preferredWords, ["日本", "日曜日"]);
     assert.deepEqual(result.blockedWords, ["日中"]);
     assert.deepEqual(result.blockedSentencePhrases, ["rare"]);
     assert.deepEqual(result.alternativeNotes, ["note-a", "note-b"]);
@@ -63,7 +63,7 @@ test("loadCuratedStudyData validates and parses curated entries", () => {
     fs.writeFileSync(filePath, JSON.stringify({
         日: {
             englishMeaning: "sun / day marker",
-            preferredWords: ["日本"],
+            preferredWords: ["日本", "日曜日"],
             blockedWords: ["日中"],
             blockedSentencePhrases: ["rare"],
             alternativeNotes: ["note-a", "note-b"],
@@ -79,7 +79,7 @@ test("loadCuratedStudyData validates and parses curated entries", () => {
     const result = loadCuratedStudyData(filePath);
 
     assert.equal(result.日.englishMeaning, "sun / day marker");
-    assert.deepEqual(result.日.preferredWords, ["日本"]);
+    assert.deepEqual(result.日.preferredWords, ["日本", "日曜日"]);
     assert.deepEqual(result.日.blockedWords, ["日中"]);
     assert.deepEqual(result.日.blockedSentencePhrases, ["rare"]);
     assert.deepEqual(result.日.alternativeNotes, ["note-a", "note-b"]);

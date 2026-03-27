@@ -16,6 +16,7 @@ require("./mediaStore.test");
 require("./mediaSync.test");
 require("./previewService.test");
 require("./sentenceCorpus.test");
+require("./sentenceCorpusBootstrapService.test");
 require("./sentenceCorpusCoverage.test");
 require("./server.test");
 require("./strokeOrderService.test");

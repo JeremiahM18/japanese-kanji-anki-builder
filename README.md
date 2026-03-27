@@ -411,4 +411,9 @@ The current test suite covers:
 - Corpus sentence ranking now prefers shorter, more natural examples with reading metadata over long, literary, or definition-like lines.
 - Sentence scoring now rewards learner-friendly signals such as brevity, neutral register, common tags, strong frequency metadata, and explicit readings.
 - It also penalizes weak user-facing examples such as archaic phrasing, overly long lines, and sentence shapes that read like definitions instead of actual usage.
+## Recent Sentence Corpus Improvements
+
+- Run `npm run corpus:init` to create a small beginner-friendly starter sentence corpus in `data/sentence_corpus.json`.
+- Re-run with `npm run corpus:init -- --merge` to blend the starter entries into an existing corpus without replacing your file.
+- This gives the project a practical first step beyond template-only examples, so preview and export quality can improve immediately from the user perspective.
 

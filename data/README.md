@@ -121,4 +121,19 @@ Optional flags:
 - `--json` for machine-readable output
 
 The importer copies recognized image files into `media_sources/stroke-order/images/` and animation files into `media_sources/stroke-order/animations/`, while reporting skipped files that do not match supported naming patterns.
+## Starter sentence corpus
+
+Run this once to create a beginner-friendly starter sentence corpus in `data/sentence_corpus.json`:
+
+```bash
+npm run corpus:init
+```
+
+If you already have a sentence corpus and want to add the starter entries without overwriting your file:
+
+```bash
+npm run corpus:init -- --merge
+```
+
+The starter corpus is intentionally small and beginner-focused so preview and export quality improve immediately, and you can expand it over time with better or more specialized examples.
 

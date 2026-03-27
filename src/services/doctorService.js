@@ -24,6 +24,23 @@ function describePathStatus(filePath, { label, required, kind = "file" }) {
     };
 }
 
+function describeMediaReadiness({ label, localDir, remoteBaseUrl, remoteEnvVar }) {
+    const localStatus = describePathStatus(localDir, { label, required: false, kind: "directory" });
+    const localFilesReady = Boolean(localStatus.exists && (localStatus.entryCount || 0) > 0);
+    const remoteConfigured = Boolean(remoteBaseUrl);
+
+    return {
+        label,
+        localPath: localDir,
+        localDirectoryExists: localStatus.exists,
+        localFileCount: localStatus.entryCount || 0,
+        remoteConfigured,
+        remoteBaseUrl: remoteBaseUrl || null,
+        remoteEnvVar,
+        ready: localFilesReady || remoteConfigured,
+    };
+}
+
 function buildDoctorStatus(config) {
     return {
         required: [
@@ -38,6 +55,26 @@ function buildDoctorStatus(config) {
             describePathStatus(config.strokeOrderImageSourceDir, { label: "Stroke-order images", required: false, kind: "directory" }),
             describePathStatus(config.strokeOrderAnimationSourceDir, { label: "Stroke-order animations", required: false, kind: "directory" }),
             describePathStatus(config.audioSourceDir, { label: "Audio sources", required: false, kind: "directory" }),
+        ],
+        mediaReadiness: [
+            describeMediaReadiness({
+                label: "Stroke-order images",
+                localDir: config.strokeOrderImageSourceDir,
+                remoteBaseUrl: config.remoteStrokeOrderImageBaseUrl,
+                remoteEnvVar: "REMOTE_STROKE_ORDER_IMAGE_BASE_URL",
+            }),
+            describeMediaReadiness({
+                label: "Stroke-order animations",
+                localDir: config.strokeOrderAnimationSourceDir,
+                remoteBaseUrl: config.remoteStrokeOrderAnimationBaseUrl,
+                remoteEnvVar: "REMOTE_STROKE_ORDER_ANIMATION_BASE_URL",
+            }),
+            describeMediaReadiness({
+                label: "Audio",
+                localDir: config.audioSourceDir,
+                remoteBaseUrl: config.remoteAudioBaseUrl,
+                remoteEnvVar: "REMOTE_AUDIO_BASE_URL",
+            }),
         ],
     };
 }
@@ -83,6 +120,13 @@ async function buildDoctorReport({
     if (requiredReady && !status.optionalDatasets[1].exists) {
         nextSteps.push(`Add curated study data at ${config.curatedStudyDataPath} to override meanings, notes, and sentences.`);
     }
+
+    for (const entry of status.mediaReadiness) {
+        if (requiredReady && !entry.ready) {
+            nextSteps.push(`Add ${entry.label.toLowerCase()} files at ${entry.localPath} or set ${entry.remoteEnvVar} to enable fallback acquisition.`);
+        }
+    }
+
     if (requiredReady && mediaCoverage && mediaCoverage.strokeOrderCoverageRatio < 1) {
         nextSteps.push(`Add stroke-order assets or configure remote fallbacks. Current stroke-order coverage is ${(mediaCoverage.strokeOrderCoverageRatio * 100).toFixed(1)}%.`);
     }
@@ -130,6 +174,18 @@ function formatPathLine(entry) {
     return `- ${entry.label}: ${state} [${requirement}]${count}\n  ${entry.path}`;
 }
 
+function formatMediaReadinessLine(entry) {
+    const localState = entry.localDirectoryExists
+        ? `${entry.localFileCount} local file${entry.localFileCount === 1 ? "" : "s"}`
+        : "local directory missing";
+    const remoteState = entry.remoteConfigured
+        ? `remote fallback configured (${entry.remoteEnvVar})`
+        : `remote fallback not configured (${entry.remoteEnvVar})`;
+    const readiness = entry.ready ? "ready" : "not ready";
+
+    return `- ${entry.label}: ${readiness}; ${localState}; ${remoteState}`;
+}
+
 function formatDoctorReport(report) {
     const lines = [];
 
@@ -150,6 +206,11 @@ function formatDoctorReport(report) {
     lines.push("Media source folders:");
     for (const entry of report.status.mediaSources) {
         lines.push(formatPathLine(entry));
+    }
+    lines.push("");
+    lines.push("Media acquisition readiness:");
+    for (const entry of report.status.mediaReadiness) {
+        lines.push(formatMediaReadinessLine(entry));
     }
 
     if (report.coverage.sentenceCorpus || report.coverage.curatedStudyData || report.coverage.media) {
@@ -182,4 +243,3 @@ module.exports = {
     buildDoctorStatus,
     formatDoctorReport,
 };
-

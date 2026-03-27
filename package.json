@@ -21,7 +21,8 @@
     "media:report": "node scripts/reportMediaCoverage.js",
     "media:sync": "node scripts/syncMedia.js",
     "doctor": "node scripts/doctor.js",
-    "deck:package": "node scripts/buildArtifacts.js"
+    "deck:package": "node scripts/buildArtifacts.js",
+    "deck:ready": "node scripts/prepareDeck.js"
   },
   "keywords": [
     "japanese",
@@ -43,3 +44,4 @@
     "nodemon": "^3.1.14"
   }
 }
+

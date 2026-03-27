@@ -379,4 +379,10 @@ The current test suite covers:
 - `out/build/package/IMPORT.txt` explains how to import the TSV and copy the packaged media into Anki.
 - You can also run `npm run deck:package` as a user-facing alias for the same packaging flow.
 - Build summaries and package summaries now break media output down by stroke-order references, stroke-order images, stroke-order animations, and audio so coverage is visible at a glance.
+## Recent Deck Ready Improvements
+
+- Run `npm run deck:ready` to execute the user-facing happy path: validate setup, sync media, build exports, and package the ready-to-import deck in one command.
+- The deck-ready summary reports packaged stroke-order references, stroke-order images, stroke-order animations, and audio fields so you can see which media areas are actually landing in the final package.
+- The doctor report now shows media acquisition readiness for each channel, including whether local files exist and whether the matching remote fallback environment variable is configured.
+- When a media channel is not ready, the doctor output now points directly at the local directory and remote environment variable you need to set.
 

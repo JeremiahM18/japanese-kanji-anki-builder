@@ -18,7 +18,7 @@ function cleanupTempDir(dir) {
     fs.rmSync(dir, { recursive: true, force: true });
 }
 
-test("buildDoctorStatus reports required and optional paths clearly", () => {
+test("buildDoctorStatus reports required paths and media readiness clearly", () => {
     const rootDir = makeTempDir();
 
     try {
@@ -30,6 +30,9 @@ test("buildDoctorStatus reports required and optional paths clearly", () => {
             strokeOrderImageSourceDir: path.join(rootDir, "images"),
             strokeOrderAnimationSourceDir: path.join(rootDir, "animations"),
             audioSourceDir: path.join(rootDir, "audio"),
+            remoteStrokeOrderImageBaseUrl: "https://media.example.com/stroke/images/",
+            remoteStrokeOrderAnimationBaseUrl: "",
+            remoteAudioBaseUrl: "",
         };
 
         fs.writeFileSync(config.jlptJsonPath, "{}", "utf-8");
@@ -41,12 +44,16 @@ test("buildDoctorStatus reports required and optional paths clearly", () => {
         assert.equal(status.required[0].exists, true);
         assert.equal(status.required[1].exists, false);
         assert.equal(status.mediaSources[2].entryCount, 1);
+        assert.equal(status.mediaReadiness[0].remoteConfigured, true);
+        assert.equal(status.mediaReadiness[0].ready, true);
+        assert.equal(status.mediaReadiness[1].ready, false);
+        assert.equal(status.mediaReadiness[2].ready, true);
     } finally {
         cleanupTempDir(rootDir);
     }
 });
 
-test("buildDoctorReport summarizes readiness coverage and next steps", async () => {
+test("buildDoctorReport summarizes readiness coverage and acquisition next steps", async () => {
     const rootDir = makeTempDir();
 
     try {
@@ -59,6 +66,9 @@ test("buildDoctorReport summarizes readiness coverage and next steps", async () 
             strokeOrderAnimationSourceDir: path.join(rootDir, "animations"),
             audioSourceDir: path.join(rootDir, "audio"),
             mediaRootDir: path.join(rootDir, "media"),
+            remoteStrokeOrderImageBaseUrl: "",
+            remoteStrokeOrderAnimationBaseUrl: "",
+            remoteAudioBaseUrl: "",
         };
 
         fs.writeFileSync(config.jlptJsonPath, JSON.stringify({ 日: { jlpt: 5 }, 本: { jlpt: 5 } }), "utf-8");
@@ -94,7 +104,7 @@ test("buildDoctorReport summarizes readiness coverage and next steps", async () 
 
         assert.equal(report.ready, true);
         assert.equal(report.coverage.media.audioCoverageRatio, 0);
-        assert.equal(report.nextSteps.some((step) => step.includes("audio assets")), true);
+        assert.equal(report.nextSteps.some((step) => step.includes("REMOTE_AUDIO_BASE_URL")), true);
         assert.equal(report.nextSteps.some((step) => step.includes("sentence coverage")), true);
     } finally {
         cleanupTempDir(rootDir);
@@ -110,6 +120,9 @@ test("formatDoctorReport produces a human-readable setup summary", () => {
             ],
             optionalDatasets: [],
             mediaSources: [],
+            mediaReadiness: [
+                { label: "Audio", ready: false, localDirectoryExists: false, localFileCount: 0, remoteConfigured: false, remoteEnvVar: "REMOTE_AUDIO_BASE_URL" },
+            ],
         },
         coverage: {
             sentenceCorpus: null,
@@ -121,6 +134,8 @@ test("formatDoctorReport produces a human-readable setup summary", () => {
 
     assert.match(text, /Overall status: missing required setup/);
     assert.match(text, /Required inputs:/);
+    assert.match(text, /Media acquisition readiness:/);
+    assert.match(text, /REMOTE_AUDIO_BASE_URL/);
     assert.match(text, /Next steps:/);
     assert.match(text, /Add the JLPT dataset first/);
     assert.match(text, /C:\/repo\/data\/kanji_jlpt_only\.json/);

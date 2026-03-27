@@ -4,6 +4,7 @@ require("./buildPipeline.test");
 require("./concurrency.test");
 require("./curatedStudyCoverage.test");
 require("./curatedStudyData.test");
+require("./deckReadyService.test");
 require("./doctorService.test");
 require("./exportService.test");
 require("./kanjiApiClient.test");

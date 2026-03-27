@@ -21,6 +21,7 @@
     "media:report": "node scripts/reportMediaCoverage.js",
     "media:sync": "node scripts/syncMedia.js",
     "media:init": "node scripts/initMediaSources.js",
+    "media:import:stroke-order": "node scripts/importFreeStrokeOrder.js",
     "doctor": "node scripts/doctor.js",
     "deck:package": "node scripts/buildArtifacts.js",
     "deck:ready": "node scripts/prepareDeck.js"

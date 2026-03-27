@@ -396,4 +396,9 @@ The current test suite covers:
 - Local stroke-order import now recognizes Wikimedia-style free filenames such as `<kanji>-bw.png`, `<kanji>-red.png`, and `<kanji>-order.gif` in addition to the existing plain kanji and codepoint forms.
 - That means you can build a zero-cost local stroke-order source library without renaming every file into a custom project format first.
 - The local data guide in `data/README.md` now documents the recommended free naming scheme and reminds you to retain upstream attribution and license information when collecting those assets.
+## Recent Free Import Improvements
+
+- Run `npm run media:import:stroke-order -- --input-dir=/path/to/files` to scan a folder of downloaded free stroke-order assets and copy recognized files into the project media source layout.
+- The importer classifies supported Wikimedia-style image and animation names, preserves unchanged files, and reports skipped files that do not match known patterns.
+- This gives the free local-media path a practical ingestion workflow instead of requiring manual sorting and copying.
 

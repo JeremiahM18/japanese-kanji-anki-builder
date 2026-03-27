@@ -8,6 +8,7 @@ require("./curatedStudyData.test");
 require("./deckReadyService.test");
 require("./doctorService.test");
 require("./exportService.test");
+require("./freeStrokeOrderImportService.test");
 require("./kanjiApiClient.test");
 require("./mediaCoverage.test");
 require("./mediaProviders.test");

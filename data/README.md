@@ -107,4 +107,18 @@ Artifacts are written to `out/build` by default:
 - `reports/media-coverage.json`
 - `reports/media-sync.json`
 - `build-summary.json`
+## Free stroke-order import helper
+
+If you have a folder of downloaded free stroke-order assets, import them into the project source layout with:
+
+```bash
+npm run media:import:stroke-order -- --input-dir=/path/to/downloaded/files
+```
+
+Optional flags:
+
+- `--limit=250` to restrict matching to the first N kanji in the JLPT dataset
+- `--json` for machine-readable output
+
+The importer copies recognized image files into `media_sources/stroke-order/images/` and animation files into `media_sources/stroke-order/animations/`, while reporting skipped files that do not match supported naming patterns.
 

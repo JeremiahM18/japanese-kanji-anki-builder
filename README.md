@@ -371,3 +371,12 @@ The current test suite covers:
 - The doctor report checks required datasets, optional study datasets, local media source folders, and current coverage.
 - The report also recommends the next highest-value step so setup and content work are easier to prioritize.
 - Run `npm run doctor -- --json` if you want the same information in machine-readable form.
+
+## Recent Deck Package Improvements
+
+- `npm run build:artifacts` now creates an import-ready package in `out/build/package` alongside the raw reports and TSV exports.
+- The package includes exported TSV files plus the exact referenced stroke-order image, stroke-order animation, and audio files that are currently available in managed media storage.
+- `out/build/package/IMPORT.txt` explains how to import the TSV and copy the packaged media into Anki.
+- You can also run `npm run deck:package` as a user-facing alias for the same packaging flow.
+- Build summaries and package summaries now break media output down by stroke-order references, stroke-order images, stroke-order animations, and audio so coverage is visible at a glance.
+

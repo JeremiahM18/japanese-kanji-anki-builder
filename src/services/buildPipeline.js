@@ -9,6 +9,7 @@ const { buildMediaCoverageSummary } = require("../datasets/mediaCoverage");
 const { buildCoverageSummary } = require("../datasets/sentenceCorpusCoverage");
 const { loadSentenceCorpus, normalizeSentenceCorpus } = require("../datasets/sentenceCorpus");
 const { createInferenceEngine } = require("../inference/inferenceEngine");
+const { buildDeckPackage } = require("./deckPackageService");
 const { createExportService } = require("./exportService");
 const { ensureMediaRoot } = require("./mediaStore");
 const { createMediaServices } = require("./mediaServiceFactory");
@@ -136,14 +137,24 @@ function persistNormalization(summary) {
     writeTextFile(summary.outputPath, summary.normalizedText);
 }
 
+function buildSelectedKanjiByLevel({ jlptOnlyJson, levels, limit, selectKanjiForSyncFn }) {
+    return Object.fromEntries(
+        levels.map((level) => [
+            level,
+            selectKanjiForSyncFn({ jlptOnlyJson, level, limit }),
+        ])
+    );
+}
+
 function selectBuildKanjiList({ jlptOnlyJson, levels, limit, selectKanjiForSyncFn }) {
-    const selected = levels.flatMap((level) => selectKanjiForSyncFn({ jlptOnlyJson, level }));
+    const selectedByLevel = buildSelectedKanjiByLevel({
+        jlptOnlyJson,
+        levels,
+        limit,
+        selectKanjiForSyncFn,
+    });
 
-    if (Number.isFinite(limit) && limit > 0) {
-        return selected.slice(0, limit);
-    }
-
-    return selected;
+    return [...new Set(Object.values(selectedByLevel).flatMap((kanjiList) => kanjiList))];
 }
 
 /**
@@ -171,6 +182,7 @@ async function runBuildPipeline({
     loadKradMapFn = loadKradMap,
     syncMediaForKanjiListFn = syncMediaForKanjiList,
     selectKanjiForSyncFn = selectKanjiForSync,
+    buildDeckPackageFn = buildDeckPackage,
 }) {
     if (!fs.existsSync(config.jlptJsonPath)) {
         throw new Error(`Missing JLPT JSON file at ${config.jlptJsonPath}`);
@@ -227,12 +239,13 @@ async function runBuildPipeline({
         curatedStudyData,
     });
 
-    const syncKanjiList = selectBuildKanjiList({
+    const selectedKanjiByLevel = buildSelectedKanjiByLevel({
         jlptOnlyJson,
         levels,
         limit,
         selectKanjiForSyncFn,
     });
+    const syncKanjiList = [...new Set(Object.values(selectedKanjiByLevel).flatMap((kanjiList) => kanjiList))];
 
     const mediaSync = skipMediaSync
         ? {
@@ -295,6 +308,15 @@ async function runBuildPipeline({
         });
     }
 
+    const deckPackage = await buildDeckPackageFn({
+        outDir: buildPaths.root,
+        exports,
+        kanjiByLevel: selectedKanjiByLevel,
+        mediaRootDir: config.mediaRootDir,
+        strokeOrderService,
+        audioService,
+    });
+
     const mediaCoverage = await buildMediaCoverageSummaryFn({
         jlptOnlyJson,
         mediaRootDir: config.mediaRootDir,
@@ -324,6 +346,15 @@ async function runBuildPipeline({
         limit,
         concurrency: effectiveConcurrency,
         exports,
+        package: {
+            rootDir: deckPackage.rootDir,
+            exportsDir: deckPackage.exportsDir,
+            mediaDir: deckPackage.mediaDir,
+            readmePath: deckPackage.readmePath,
+            exportCount: deckPackage.exportCount,
+            mediaAssetCount: deckPackage.mediaAssetCount,
+            mediaCounts: deckPackage.mediaCounts,
+        },
         normalization: {
             sentenceCorpus: {
                 inputPath: sentenceNormalization.inputPath,
@@ -363,7 +394,9 @@ async function runBuildPipeline({
 
 module.exports = {
     buildBuildPaths,
+    buildSelectedKanjiByLevel,
     parseLevelsArgument,
     runBuildPipeline,
     selectBuildKanjiList,
 };
+

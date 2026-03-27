@@ -54,6 +54,16 @@ function buildKanjiFileCandidates(kanji) {
     ];
 }
 
+function buildKanjiVgStrokeOrderCandidates(kanji) {
+    const normalized = normalizeKanji(kanji);
+    const codePoint = Array.from(normalized)[0].codePointAt(0).toString(16).toUpperCase().padStart(5, "0");
+
+    return [
+        `${normalized} - U+${codePoint}- KanjiVG stroke order`,
+        `${normalized} - U+${codePoint} (Kaisho) - KanjiVG stroke order`,
+    ];
+}
+
 function buildStrokeOrderImageCandidates(kanji) {
     const baseCandidates = buildKanjiFileCandidates(kanji);
     const candidates = new Set();
@@ -61,7 +71,15 @@ function buildStrokeOrderImageCandidates(kanji) {
     for (const base of baseCandidates) {
         candidates.add(base);
         candidates.add(`${base}-bw`);
+        candidates.add(`${base}-jbw`);
         candidates.add(`${base}-red`);
+        candidates.add(`${base}-jred`);
+        candidates.add(`${base}-ired`);
+        candidates.add(`${base}-tred`);
+    }
+
+    for (const kanjiVgBase of buildKanjiVgStrokeOrderCandidates(kanji)) {
+        candidates.add(kanjiVgBase);
     }
 
     return [...candidates];
@@ -242,6 +260,7 @@ module.exports = {
     ANIMATION_EXTENSIONS,
     IMAGE_EXTENSIONS,
     buildKanjiFileCandidates,
+    buildKanjiVgStrokeOrderCandidates,
     buildStrokeOrderAnimationCandidates,
     buildStrokeOrderImageCandidates,
     copyAssetIfChanged,

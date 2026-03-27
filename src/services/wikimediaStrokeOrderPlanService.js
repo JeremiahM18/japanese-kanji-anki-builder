@@ -131,7 +131,7 @@ function formatWikimediaStrokeOrderPlan(plan) {
     }
 
     lines.push("");
-    lines.push("Next step: download the listed Commons files, keep the source page URLs for attribution, import them with `npm run media:import:stroke-order`, then run `npm run media:sources`." );
+    lines.push("Next step: if guessed Commons names start failing, run `npm run media:discover:stroke-order` to resolve real Wikimedia titles first; then download the listed files, keep the source page URLs for attribution, import them with `npm run media:import:stroke-order`, and rerun `npm run media:sources`.");
     return `${lines.join("\n")}\n`;
 }
 

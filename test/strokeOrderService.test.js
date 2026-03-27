@@ -7,6 +7,7 @@ const path = require("node:path");
 const { buildKanjiMediaId } = require("../src/services/mediaStore");
 const {
     buildKanjiFileCandidates,
+    buildKanjiVgStrokeOrderCandidates,
     buildStrokeOrderAnimationCandidates,
     buildStrokeOrderImageCandidates,
     createStrokeOrderService,
@@ -31,8 +32,19 @@ test("buildKanjiFileCandidates includes kanji and codepoint variants", () => {
     assert.deepEqual(buildKanjiFileCandidates("日"), ["日", "65E5", "U+65E5", "65e5", "u+65e5"]);
 });
 
-test("buildStrokeOrderImageCandidates includes Wikimedia-style image variants", () => {
-    assert.deepEqual(buildStrokeOrderImageCandidates("日").slice(0, 6), ["日", "日-bw", "日-red", "65E5", "65E5-bw", "65E5-red"]);
+test("buildKanjiVgStrokeOrderCandidates includes Commons KanjiVG variants", () => {
+    assert.deepEqual(buildKanjiVgStrokeOrderCandidates("今"), [
+        "今 - U+04ECA- KanjiVG stroke order",
+        "今 - U+04ECA (Kaisho) - KanjiVG stroke order",
+    ]);
+});
+
+test("buildStrokeOrderImageCandidates includes Wikimedia and KanjiVG image variants", () => {
+    const candidates = buildStrokeOrderImageCandidates("円");
+    assert.ok(candidates.includes("円-bw"));
+    assert.ok(candidates.includes("円-jbw"));
+    assert.ok(candidates.includes("円-jred"));
+    assert.ok(candidates.includes("円 - U+05186- KanjiVG stroke order"));
 });
 
 test("buildStrokeOrderAnimationCandidates includes Wikimedia-style animation variants", () => {
@@ -56,6 +68,36 @@ test("findMatchingAsset resolves a local stroke-order source file", async () => 
 
         assert.equal(asset.fileName, "日-bw.png");
         assert.equal(asset.mimeType, "image/png");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+test("findMatchingAsset resolves KanjiVG and alternate Commons image file names", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const imageDir = path.join(rootDir, "images");
+        fs.mkdirSync(imageDir, { recursive: true });
+        fs.writeFileSync(path.join(imageDir, "円-jbw.png"), "png", "utf-8");
+        fs.writeFileSync(path.join(imageDir, "今 - U+04ECA- KanjiVG stroke order.svg"), "svg", "utf-8");
+
+        const altAsset = await findMatchingAsset(
+            imageDir,
+            "円",
+            new Map([[".png", "image/png"], [".svg", "image/svg+xml"]]),
+            buildStrokeOrderImageCandidates
+        );
+        const svgAsset = await findMatchingAsset(
+            imageDir,
+            "今",
+            new Map([[".png", "image/png"], [".svg", "image/svg+xml"]]),
+            buildStrokeOrderImageCandidates
+        );
+
+        assert.equal(altAsset.fileName, "円-jbw.png");
+        assert.equal(svgAsset.fileName, "今 - U+04ECA- KanjiVG stroke order.svg");
+        assert.equal(svgAsset.mimeType, "image/svg+xml");
     } finally {
         cleanupTempDir(rootDir);
     }

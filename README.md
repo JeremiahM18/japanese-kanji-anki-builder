@@ -218,6 +218,7 @@ Behavior:
 - `OnReading` keeps the full on-yomi list for reference.
 - `KunReading` keeps the full kun-yomi list for reference.
 - The TSV and both `.apkg` builders share that split-reading schema, so package generation stays aligned with export.
+- The shared Anki note schema lives in `src/config/ankiNoteSchema.json`, which is the single source of truth for exported field order, note type metadata, and card template layout.
 - `StrokeOrder` prefers animation when available, then static image.
 - `StrokeOrderImage` exposes the static asset directly.
 - `StrokeOrderAnimation` exposes the animation asset directly.

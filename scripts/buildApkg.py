@@ -7,20 +7,23 @@ import time
 import zipfile
 from pathlib import Path
 
-FIELD_NAMES = [
-    "Kanji",
-    "MeaningJP",
-    "PrimaryReading",
-    "OnReading",
-    "KunReading",
-    "StrokeOrder",
-    "StrokeOrderImage",
-    "StrokeOrderAnimation",
-    "Audio",
-    "Radical",
-    "Notes",
-    "ExampleSentence",
-]
+REPO_ROOT = Path(__file__).resolve().parents[1]
+ANKI_NOTE_SCHEMA_PATH = REPO_ROOT / "src" / "config" / "ankiNoteSchema.json"
+
+
+def load_anki_note_schema():
+    schema = json.loads(ANKI_NOTE_SCHEMA_PATH.read_text(encoding="utf-8"))
+    required_keys = {"noteTypeName", "cardTemplateName", "fieldNames", "cssLines", "qfmt", "afmtLines"}
+    missing_keys = sorted(required_keys - set(schema.keys()))
+    if missing_keys:
+        raise RuntimeError("Anki note schema is missing keys: " + ", ".join(missing_keys))
+    return schema
+
+
+ANKI_NOTE_SCHEMA = load_anki_note_schema()
+FIELD_NAMES = ANKI_NOTE_SCHEMA["fieldNames"]
+ANKI_NOTE_TYPE_NAME = ANKI_NOTE_SCHEMA["noteTypeName"]
+ANKI_CARD_TEMPLATE_NAME = ANKI_NOTE_SCHEMA["cardTemplateName"]
 
 
 LEGACY_HEADER_ALIASES = {
@@ -97,55 +100,15 @@ def parse_tsv(tsv_path: Path):
 
 
 def build_css() -> str:
-    return "\n".join([
-        ".card {",
-        '  font-family: "Yu Gothic UI", "Hiragino Sans", sans-serif;',
-        "  font-size: 20px;",
-        "  text-align: center;",
-        "  color: #1f2933;",
-        "  background: #f7f3ea;",
-        "}",
-        ".kanji {",
-        "  font-size: 64px;",
-        "  margin: 16px 0;",
-        "}",
-        ".reading-primary {",
-        "  font-size: 28px;",
-        "  font-weight: 700;",
-        "}",
-        ".reading-full {",
-        "  font-size: 17px;",
-        "  color: #52606d;",
-        "}",
-        ".reading, .meaning, .meta, .notes, .example, .media, .audio {",
-        "  margin: 12px 0;",
-        "  line-height: 1.5;",
-        "}",
-        ".media img {",
-        "  max-width: 280px;",
-        "  height: auto;",
-        "}",
-    ])
+    return "\n".join(ANKI_NOTE_SCHEMA["cssLines"])
 
 
 def build_qfmt() -> str:
-    return '<div class="kanji">{{Kanji}}</div>'
+    return ANKI_NOTE_SCHEMA["qfmt"]
 
 
 def build_afmt() -> str:
-    return "".join([
-        "{{FrontSide}}",
-        '<hr id="answer">',
-        '<div class="meaning">{{MeaningJP}}</div>',
-        '{{#PrimaryReading}}<div class="reading reading-primary">Primary reading: {{PrimaryReading}}</div>{{/PrimaryReading}}',
-        '{{#OnReading}}<div class="reading reading-full">On-yomi: {{OnReading}}</div>{{/OnReading}}',
-        '{{#KunReading}}<div class="reading reading-full">Kun-yomi: {{KunReading}}</div>{{/KunReading}}',
-        '<div class="media">{{StrokeOrder}}</div>',
-        '<div class="meta">Radical: {{Radical}}</div>',
-        '<div class="notes">{{Notes}}</div>',
-        '<div class="example">{{ExampleSentence}}</div>',
-        '<div class="audio">{{Audio}}</div>',
-    ])
+    return "".join(ANKI_NOTE_SCHEMA["afmtLines"])
 
 
 def build_model(model_id: int, deck_id: int, mod: int):
@@ -168,7 +131,7 @@ def build_model(model_id: int, deck_id: int, mod: int):
         })
 
     templates = [{
-        "name": "Recognition",
+        "name": ANKI_CARD_TEMPLATE_NAME,
         "ord": 0,
         "qfmt": build_qfmt(),
         "afmt": build_afmt(),
@@ -187,7 +150,7 @@ def build_model(model_id: int, deck_id: int, mod: int):
             "latexPost": "\\end{document}",
             "latexPre": "\\documentclass[12pt]{article}\n\\special{papersize=3in,5in}\n\\usepackage[utf8]{inputenc}\n\\usepackage{amssymb,amsmath}\n\\pagestyle{empty}\n\\setlength{\\parindent}{0in}\n\\begin{document}",
             "mod": mod,
-            "name": "Japanese Kanji Builder",
+            "name": ANKI_NOTE_TYPE_NAME,
             "req": [[0, "all", [0]]],
             "sortf": 0,
             "tags": [],

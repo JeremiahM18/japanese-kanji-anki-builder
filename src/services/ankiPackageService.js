@@ -5,25 +5,14 @@ const os = require("node:os");
 const path = require("node:path");
 const { spawnSync } = require("node:child_process");
 
+const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
+
 const ANKI_MEDIA_INDEX_FILE = "media";
 const ANKI_COLLECTION_FILE = "collection.anki2";
-const ANKI_NOTE_TYPE_NAME = "Japanese Kanji Builder";
-const ANKI_CARD_TEMPLATE_NAME = "Recognition";
-
-const DEFAULT_FIELD_NAMES = [
-    "Kanji",
-    "MeaningJP",
-    "PrimaryReading",
-    "OnReading",
-    "KunReading",
-    "StrokeOrder",
-    "StrokeOrderImage",
-    "StrokeOrderAnimation",
-    "Audio",
-    "Radical",
-    "Notes",
-    "ExampleSentence",
-];
+const ANKI_NOTE_SCHEMA = loadAnkiNoteSchema();
+const ANKI_NOTE_TYPE_NAME = ANKI_NOTE_SCHEMA.noteTypeName;
+const ANKI_CARD_TEMPLATE_NAME = ANKI_NOTE_SCHEMA.cardTemplateName;
+const DEFAULT_FIELD_NAMES = ANKI_NOTE_SCHEMA.fieldNames;
 
 function shellEscapeSql(value) {
     return String(value ?? "").replace(/'/g, "''");
@@ -65,55 +54,15 @@ function buildApkgFileName(levels) {
 }
 
 function buildCss() {
-    return [
-        ".card {",
-        "  font-family: \"Yu Gothic UI\", \"Hiragino Sans\", sans-serif;",
-        "  font-size: 20px;",
-        "  text-align: center;",
-        "  color: #1f2933;",
-        "  background: #f7f3ea;",
-        "}",
-        ".kanji {",
-        "  font-size: 64px;",
-        "  margin: 16px 0;",
-        "}",
-        ".reading-primary {",
-        "  font-size: 28px;",
-        "  font-weight: 700;",
-        "}",
-        ".reading-full {",
-        "  font-size: 17px;",
-        "  color: #52606d;",
-        "}",
-        ".reading, .meaning, .meta, .notes, .example, .media, .audio {",
-        "  margin: 12px 0;",
-        "  line-height: 1.5;",
-        "}",
-        ".media img {",
-        "  max-width: 280px;",
-        "  height: auto;",
-        "}",
-    ].join("\n");
+    return ANKI_NOTE_SCHEMA.css;
 }
 
 function buildQfmt() {
-    return "<div class=\"kanji\">{{Kanji}}</div>";
+    return ANKI_NOTE_SCHEMA.qfmt;
 }
 
 function buildAfmt() {
-    return [
-        "{{FrontSide}}",
-        "<hr id=\"answer\">",
-        "<div class=\"meaning\">{{MeaningJP}}</div>",
-        "{{#PrimaryReading}}<div class=\"reading reading-primary\">Primary reading: {{PrimaryReading}}</div>{{/PrimaryReading}}",
-        "{{#OnReading}}<div class=\"reading reading-full\">On-yomi: {{OnReading}}</div>{{/OnReading}}",
-        "{{#KunReading}}<div class=\"reading reading-full\">Kun-yomi: {{KunReading}}</div>{{/KunReading}}",
-        "<div class=\"media\">{{StrokeOrder}}</div>",
-        "<div class=\"meta\">Radical: {{Radical}}</div>",
-        "<div class=\"notes\">{{Notes}}</div>",
-        "<div class=\"example\">{{ExampleSentence}}</div>",
-        "<div class=\"audio\">{{Audio}}</div>",
-    ].join("");
+    return ANKI_NOTE_SCHEMA.afmt;
 }
 
 function createFieldDefinitions(fieldNames, timestampSeconds) {

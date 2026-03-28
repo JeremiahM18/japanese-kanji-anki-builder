@@ -1,4 +1,5 @@
 require("./app.test");
+require("./ankiNoteSchema.test");
 require("./audioGenerationService.test");
 require("./audioImportService.test");
 require("./audioService.test");

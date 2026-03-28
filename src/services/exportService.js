@@ -1,8 +1,11 @@
 const path = require("node:path");
 
 const { createInferenceEngine } = require("../inference/inferenceEngine");
+const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 const { mapWithConcurrency } = require("../utils/concurrency");
 const { labelKunReading, labelOnReading, labelReading, tsvEscape } = require("../utils/text");
+
+const ANKI_FIELD_NAMES = loadAnkiNoteSchema().fieldNames;
 
 function formatExampleSentence(sentence) {
     if (!sentence) {
@@ -179,20 +182,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
         limit = null,
         concurrency = 8,
     }) {
-        const header = [
-            "Kanji",
-            "MeaningJP",
-            "PrimaryReading",
-            "OnReading",
-            "KunReading",
-            "StrokeOrder",
-            "StrokeOrderImage",
-            "StrokeOrderAnimation",
-            "Audio",
-            "Radical",
-            "Notes",
-            "ExampleSentence",
-        ].join("\t");
+        const header = ANKI_FIELD_NAMES.join("\t");
 
         const kanjiList = Object.entries(jlptOnlyJson)
             .filter(([, value]) => value?.jlpt === levelNumber)

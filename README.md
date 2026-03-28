@@ -59,7 +59,7 @@ npm run corpus:init -- --merge
 npm run curated:init -- --merge
 ```
 
-These commands create or extend local ignored datasets so the deck is usable before you build out full coverage.
+These commands create or extend local ignored datasets so the deck is usable before you build out full coverage. The tracked starter packs now carry a stronger N5 baseline for learner-facing meanings, notes, and example sentences, which makes the preview and export output more stable even before deeper manual curation.
 
 ### Preview cards
 

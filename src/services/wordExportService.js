@@ -328,6 +328,7 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null }) {
     const useExactCandidate = !curatedDisplayWord
         && exactCandidate?.written === kanji
         && exactPron
+        && !KATAKANA_ONLY_RE.test(exactPron)
         && exactPron === inferredPrimaryReading;
     const displayWord = curatedDisplayWord || (useExactCandidate
         ? { written: kanji, pron: exactPron }

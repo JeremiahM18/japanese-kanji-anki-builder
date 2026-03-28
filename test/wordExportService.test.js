@@ -2,7 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const { loadAnkiNoteSchema } = require("../src/config/ankiNoteSchema");
-const { createWordExportService, inferWordLevel } = require("../src/services/wordExportService");
+const { buildBreakdownInference, createWordExportService, inferWordLevel } = require("../src/services/wordExportService");
 
 test("loadAnkiNoteSchema can load the shared word note contract", () => {
     const schema = loadAnkiNoteSchema("word");
@@ -30,6 +30,26 @@ test("inferWordLevel uses the hardest constituent JLPT kanji", () => {
             年: { jlpt: 4 },
         },
     }), 4);
+});
+
+test("buildBreakdownInference suppresses katakana-only exact-match primaries", () => {
+    const result = buildBreakdownInference({
+        kanji: "二",
+        inference: {
+            candidates: [{ written: "二", pron: "アル", gloss: "two", score: 100 }],
+            primaryReading: "アル",
+            englishMeaning: "two",
+            meaningJP: "二 ／ two",
+            onReading: "オン:ジ、 ニ",
+            kunReading: "くん:ふた、 ふた.つ",
+        },
+        curatedEntry: {
+            englishMeaning: "two",
+        },
+    });
+
+    assert.equal(result.primaryReading, "");
+    assert.equal(result.meaningJP, "二 ／ two");
 });
 
 test("buildWordTsvForJlptLevel prefers curated N5 word entries and suppresses uncurated alternate readings", async () => {

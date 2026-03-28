@@ -192,6 +192,7 @@ This assumes a local VOICEVOX engine is already running at `VOICEVOX_ENGINE_URL`
 | `npm run deck:review:n4` | Run the tracked golden N4 benchmark |
 | `npm run deck:review:n5` | Run the tracked golden N5 kanji benchmark |
 | `npm run deck:words:review:n5` | Run the tracked golden N5 word benchmark |
+| `npm run deck:words:reading-audit:n5` | Audit curated N5 reading coverage against the current word deck |
 | `npm run deck:ready` | Run the full kanji build and package path |
 | `npm run deck:apkg` | Build an importable `.apkg` from packaged kanji exports |
 | `npm run deck:words:ready` | Run the full word-deck build and package path |

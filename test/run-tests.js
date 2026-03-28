@@ -39,3 +39,4 @@ require("./inference/inferenceEngine.test");
 
 require("./wordExportService.test");
 require("./wordStudyData.test");
+require("./wordReadingCoverageService.test");

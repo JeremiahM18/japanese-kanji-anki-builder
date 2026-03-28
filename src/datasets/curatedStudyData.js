@@ -17,7 +17,9 @@ const curatedDisplayWordSchema = z.object({
 
 const curatedEntrySchema = z.object({
     englishMeaning: z.string().min(1).optional(),
+    breakdownEnglishMeaning: z.string().min(1).optional(),
     displayWord: curatedDisplayWordSchema.optional(),
+    breakdownDisplayWord: curatedDisplayWordSchema.optional(),
     source: z.string().default("curated-study-data"),
     tags: z.array(z.string()).default(["curated"]),
     jlpt: z.number().int().min(1).max(5).optional(),
@@ -102,7 +104,9 @@ function normalizeCuratedDisplayWord(displayWord) {
 function normalizeCuratedEntry(entry) {
     return curatedEntrySchema.parse({
         englishMeaning: cleanString(entry?.englishMeaning),
+        breakdownEnglishMeaning: cleanString(entry?.breakdownEnglishMeaning),
         displayWord: normalizeCuratedDisplayWord(entry?.displayWord),
+        breakdownDisplayWord: normalizeCuratedDisplayWord(entry?.breakdownDisplayWord),
         source: cleanString(entry?.source) || "curated-study-data",
         tags: normalizeTags(entry?.tags),
         jlpt: Number.isInteger(entry?.jlpt) ? entry.jlpt : undefined,
@@ -154,6 +158,14 @@ function mergeCuratedEntry(starterEntry = {}, localEntry = {}) {
                 displayWord: {
                     ...(starterEntry.displayWord || {}),
                     ...(localEntry.displayWord || {}),
+                },
+            }
+            : {}),
+        ...(starterEntry.breakdownDisplayWord || localEntry.breakdownDisplayWord
+            ? {
+                breakdownDisplayWord: {
+                    ...(starterEntry.breakdownDisplayWord || {}),
+                    ...(localEntry.breakdownDisplayWord || {}),
                 },
             }
             : {}),

@@ -54,6 +54,30 @@ test("buildBreakdownInference prefers curated display words for learner-facing k
     assert.equal(result.meaningJP, "大きい （おおきい） ／ big / large");
 });
 
+test("buildBreakdownInference can use breakdown-only overrides for compound contexts", () => {
+    const result = buildBreakdownInference({
+        kanji: "行",
+        contextWord: "銀行",
+        inference: {
+            candidates: [{ written: "行", pron: "いく", gloss: "go", score: 100 }],
+            primaryReading: "いく",
+            englishMeaning: "go",
+            meaningJP: "行く （いく） ／ go",
+            onReading: "オン:アン、 ギョウ、 コウ",
+            kunReading: "くん:い.く、 ゆ.く",
+        },
+        curatedEntry: {
+            englishMeaning: "go",
+            displayWord: { written: "行く", pron: "いく" },
+            breakdownEnglishMeaning: "go / line",
+            breakdownDisplayWord: { written: "行", pron: "こう" },
+        },
+    });
+
+    assert.equal(result.primaryReading, "こう");
+    assert.equal(result.meaningJP, "行 （こう） ／ go / line");
+});
+
 test("buildBreakdownInference suppresses katakana-only exact-match primaries", () => {
     const result = buildBreakdownInference({
         kanji: "二",
@@ -106,6 +130,12 @@ test("starter curated data provides learner-friendly N5 breakdown fallbacks", ()
     assert.deepEqual(curatedStudyData["強"].displayWord, { written: "強", pron: "きょう" });
     assert.deepEqual(curatedStudyData["題"].displayWord, { written: "題", pron: "だい" });
     assert.deepEqual(curatedStudyData["忙"].displayWord, { written: "忙しい", pron: "いそがしい" });
+    assert.deepEqual(curatedStudyData["行"].breakdownDisplayWord, { written: "行", pron: "こう" });
+    assert.equal(curatedStudyData["行"].breakdownEnglishMeaning, "go / line");
+    assert.deepEqual(curatedStudyData["会"].breakdownDisplayWord, { written: "会", pron: "かい" });
+    assert.deepEqual(curatedStudyData["昼"].breakdownDisplayWord, { written: "昼", pron: "ひる" });
+    assert.deepEqual(curatedStudyData["飯"].breakdownDisplayWord, { written: "飯", pron: "はん" });
+    assert.deepEqual(curatedStudyData["晩"].breakdownDisplayWord, { written: "晩", pron: "ばん" });
 });
 
 test("buildWordTsvForJlptLevel prefers curated N5 word entries and suppresses uncurated alternate readings", async () => {

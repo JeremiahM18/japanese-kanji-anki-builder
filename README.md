@@ -121,7 +121,7 @@ Important word-deck rules:
 
 - word identity is `written + reading`, and curated words tagged for a JLPT level are included even when their constituent kanji are outside that level's kanji slice
 - curated word entries suppress uncurated alternate readings for the same written form
-- kanji breakdown panels on the back prefer curated kanji display words and meanings, which lets starter curation pin learner-friendly forms such as `大きい`, `小さい`, `高い`, `前`, `座る`, `閉める`, and `所` instead of raw dictionary winners
+- kanji breakdown panels on the back prefer curated kanji display words and meanings, and can use dedicated breakdown-only overrides for compound contexts so cards like `銀行`, `会社員`, `昼ご飯`, and `晩ご飯` stay learner-friendly without changing primary study forms such as `行く`
 - use `--include-inferred` when you explicitly want to expand beyond curated words during exploration
 
 ### Lower-level build

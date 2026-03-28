@@ -970,6 +970,11 @@
         "example",
         "starter"
       ]
+    },
+    "breakdownEnglishMeaning": "meeting / association",
+    "breakdownDisplayWord": {
+      "written": "会",
+      "pron": "かい"
     }
   },
   "回": {
@@ -3217,6 +3222,11 @@
         "example",
         "starter"
       ]
+    },
+    "breakdownEnglishMeaning": "go / line",
+    "breakdownDisplayWord": {
+      "written": "行",
+      "pron": "こう"
     }
   },
   "高": {
@@ -6993,6 +7003,10 @@
         "example",
         "starter"
       ]
+    },
+    "breakdownDisplayWord": {
+      "written": "昼",
+      "pron": "ひる"
     }
   },
   "注": {
@@ -8321,7 +8335,10 @@
     ],
     "jlpt": 4,
     "preferredWords": [
-      "ご飯"
+      "ご飯",
+      "昼ご飯",
+      "晩ご飯",
+      "朝ご飯"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
@@ -8336,6 +8353,11 @@
         "example",
         "starter"
       ]
+    },
+    "breakdownEnglishMeaning": "meal / rice",
+    "breakdownDisplayWord": {
+      "written": "飯",
+      "pron": "はん"
     }
   },
   "否": {
@@ -10473,6 +10495,42 @@
       "japanese": "今週は仕事で忙しいです。",
       "reading": "こんしゅうはしごとでいそがしいです。",
       "english": "I am busy with work this week.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "晩": {
+    "englishMeaning": "evening",
+    "breakdownEnglishMeaning": "evening",
+    "displayWord": {
+      "written": "晩",
+      "pron": "ばん"
+    },
+    "breakdownDisplayWord": {
+      "written": "晩",
+      "pron": "ばん"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n4",
+      "starter"
+    ],
+    "jlpt": 4,
+    "preferredWords": [
+      "晩ご飯",
+      "今晩"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "晩ご飯 （ばんごはん） - dinner ／ 今晩 （こんばん） - tonight",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "家で晩ご飯を食べます。",
+      "reading": "いえでばんごはんをたべます。",
+      "english": "I eat dinner at home.",
       "source": "starter-curated",
       "tags": [
         "example",

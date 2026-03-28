@@ -315,16 +315,25 @@ function selectWordSentence({ candidate, curatedEntry, sourceKanji, constituentK
     } : null;
 }
 
-function buildBreakdownInference({ kanji, inference, curatedEntry = null }) {
+function buildBreakdownInference({ kanji, inference, curatedEntry = null, contextWord = "" }) {
     const exactCandidate = pickBestExactSingleCandidate(inference, kanji);
     const exactPron = String(exactCandidate?.pron || "").trim();
     const inferredPrimaryReading = String(inference?.primaryReading || "").trim();
-    const curatedDisplayWord = curatedEntry?.displayWord?.written
+    const constituentCount = extractConstituentKanji(contextWord).length;
+    const useBreakdownOverrides = constituentCount > 1;
+    const curatedDisplayWord = (useBreakdownOverrides
+        ? curatedEntry?.breakdownDisplayWord
+        : curatedEntry?.displayWord)?.written
         ? {
-            written: String(curatedEntry.displayWord.written).trim(),
-            pron: String(curatedEntry.displayWord.pron || "").trim(),
+            written: String((useBreakdownOverrides ? curatedEntry.breakdownDisplayWord.written : curatedEntry.displayWord.written) || "").trim(),
+            pron: String((useBreakdownOverrides ? curatedEntry?.breakdownDisplayWord?.pron : curatedEntry?.displayWord?.pron) || "").trim(),
         }
-        : null;
+        : (curatedEntry?.displayWord?.written && String(curatedEntry.displayWord.written).trim() === kanji
+            ? {
+                written: String(curatedEntry.displayWord.written).trim(),
+                pron: String(curatedEntry.displayWord.pron || "").trim(),
+            }
+            : null);
     const useExactCandidate = !curatedDisplayWord
         && exactCandidate?.written === kanji
         && exactPron
@@ -334,7 +343,8 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null }) {
         ? { written: kanji, pron: exactPron }
         : { written: kanji, pron: "" });
     const englishMeaning = String(
-        curatedEntry?.englishMeaning
+        (useBreakdownOverrides ? curatedEntry?.breakdownEnglishMeaning : "")
+        || curatedEntry?.englishMeaning
         || inference?.englishMeaning
         || extractEnglishMeaningFromMeaningJP(inference?.meaningJP)
         || ""
@@ -351,8 +361,8 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null }) {
     };
 }
 
-function buildBreakdownHtmlItem({ kanji, inference, curatedEntry = null }) {
-    const breakdown = buildBreakdownInference({ kanji, inference, curatedEntry });
+function buildBreakdownHtmlItem({ kanji, inference, curatedEntry = null, contextWord = "" }) {
+    const breakdown = buildBreakdownInference({ kanji, inference, curatedEntry, contextWord });
     const readingLines = [
         breakdown.onReading ? `<div class="kanji-reading-line"><span class="kanji-reading-label">On:</span> ${breakdown.onReading}</div>` : "",
         breakdown.kunReading ? `<div class="kanji-reading-line"><span class="kanji-reading-label">Kun:</span> ${breakdown.kunReading}</div>` : "",
@@ -597,6 +607,7 @@ function createWordExportService({
                         kanji,
                         inference,
                         curatedEntry: curatedStudyData?.[kanji] || null,
+                        contextWord: entry.candidate.written,
                     });
                 })
                 .filter(Boolean)

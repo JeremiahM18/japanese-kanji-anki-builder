@@ -84,6 +84,7 @@ npm run deck:review:n5
 - `deck:review:n4` and `deck:review:n5` run the tracked golden benchmark sets against hand-picked kanji cards.
 - `deck:words:review:n5` runs the tracked golden benchmark set against hand-picked N5 word cards.
 - Build and report CLIs reject unsupported flags instead of silently ignoring them.
+- The tracked N5 word benchmark now covers a broader representative slice of the deck, including older core cards and newer compound cards such as `映画`, `食べ物`, `飲み物`, `切手`, `本屋`, and `日本語`.
 - Shared CLI parsing helpers live in `src/utils/cliArgs.js` so the main scripts handle flags consistently.
 - Script entrypoints consistently use `require.main === module` guards and export `main` and `parseArgs` where applicable.
 - `deck:ready` coverage snapshots are scoped to the levels you requested, so a single-level build reports single-level media coverage instead of repo-wide totals.

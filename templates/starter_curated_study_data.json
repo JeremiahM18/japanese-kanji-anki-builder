@@ -189,6 +189,7 @@
     ],
     "jlpt": 4,
     "preferredWords": [
+      "不",
       "不便",
       "不安"
     ],
@@ -205,6 +206,9 @@
         "example",
         "starter"
       ]
+    },
+    "displayWord": {
+      "written": "不"
     }
   },
   "世": {
@@ -261,7 +265,7 @@
     }
   },
   "主": {
-    "englishMeaning": "main / master",
+    "englishMeaning": "main / primary",
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -269,22 +273,27 @@
     ],
     "jlpt": 4,
     "preferredWords": [
+      "主に",
       "主人",
-      "主に"
+      "主"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "主人 （しゅじん） - shop owner / husband ／ 主に （おもに） - mainly",
+    "notes": "主に （おもに） - mainly ／ 主人 （しゅじん） - shop owner / husband",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "店の主人は親切な人でした。",
-      "reading": "みせのしゅじんはしんせつなひとでした。",
-      "english": "The shop owner was a kind person.",
+      "japanese": "主に電車で通っています。",
+      "reading": "おもにでんしゃでかよっています。",
+      "english": "I mainly commute by train.",
       "source": "starter-curated",
       "tags": [
         "example",
         "starter"
       ]
+    },
+    "displayWord": {
+      "written": "主",
+      "pron": "おも"
     }
   },
   "九": {
@@ -324,22 +333,27 @@
     ],
     "jlpt": 4,
     "preferredWords": [
+      "事",
       "仕事",
       "大事"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "仕事 （しごと） - work ／ 大事 （だいじ） - important",
+    "notes": "事 （こと） - matter / thing ／ 仕事 （しごと） - work",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "大事な仕事があります。",
-      "reading": "だいじなしごとがあります。",
-      "english": "I have important work to do.",
+      "japanese": "大事な事を先に話します。",
+      "reading": "だいじなことをさきにはなします。",
+      "english": "I will talk about the important matter first.",
       "source": "starter-curated",
       "tags": [
         "example",
         "starter"
       ]
+    },
+    "displayWord": {
+      "written": "事",
+      "pron": "こと"
     }
   },
   "二": {
@@ -406,6 +420,7 @@
     ],
     "jlpt": 4,
     "preferredWords": [
+      "京",
       "東京",
       "京都"
     ],
@@ -422,6 +437,10 @@
         "example",
         "starter"
       ]
+    },
+    "displayWord": {
+      "written": "京",
+      "pron": "きょう"
     }
   },
   "人": {
@@ -484,7 +503,7 @@
     }
   },
   "仕": {
-    "englishMeaning": "do / serve",
+    "englishMeaning": "serve / do",
     "source": "starter-curated",
     "tags": [
       "core",
@@ -493,25 +512,31 @@
     ],
     "jlpt": 4,
     "preferredWords": [
-      "仕事"
+      "仕える",
+      "仕事",
+      "仕方"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "仕事 （しごと） - work ／ 仕方 （しかた） - way of doing",
+    "notes": "仕える （つかえる） - serve ／ 仕事 （しごと） - work",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "父は朝早く仕事に出かけます。",
-      "reading": "ちちはあさはやくしごとにでかけます。",
-      "english": "My father leaves early in the morning for work.",
+      "japanese": "昔は王に仕える人がいました。",
+      "reading": "むかしはおうにつかえるひとがいました。",
+      "english": "In the past there were people who served a king.",
       "source": "starter-curated",
       "tags": [
         "example",
         "starter"
       ]
+    },
+    "displayWord": {
+      "written": "仕",
+      "pron": "つか"
     }
   },
   "代": {
-    "englishMeaning": "substitute / cost / generation",
+    "englishMeaning": "substitute / generation / cost",
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -519,12 +544,13 @@
     ],
     "jlpt": 4,
     "preferredWords": [
-      "電車代",
-      "時代"
+      "代",
+      "時代",
+      "電車代"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "電車代 （でんしゃだい） - train fare ／ 時代 （じだい） - era",
+    "notes": "代 （だい） - cost / substitute ／ 時代 （じだい） - era",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "今日は電車代が高かったです。",
@@ -535,6 +561,10 @@
         "example",
         "starter"
       ]
+    },
+    "displayWord": {
+      "written": "代",
+      "pron": "だい"
     }
   },
   "以": {
@@ -546,6 +576,7 @@
     ],
     "jlpt": 4,
     "preferredWords": [
+      "以",
       "以上",
       "以内"
     ],
@@ -562,6 +593,10 @@
         "example",
         "starter"
       ]
+    },
+    "displayWord": {
+      "written": "以",
+      "pron": "い"
     }
   },
   "休": {
@@ -929,12 +964,13 @@
     ],
     "jlpt": 4,
     "preferredWords": [
+      "公",
       "公園",
       "公立"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "公園 （こうえん） - park ／ 公立 （こうりつ） - public (institution)",
+    "notes": "公園 （こうえん） - park ／ 公立 （こうりつ） - public institution",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "昼休みに公園で少し休みました。",
@@ -945,6 +981,10 @@
         "example",
         "starter"
       ]
+    },
+    "displayWord": {
+      "written": "公",
+      "pron": "こう"
     }
   },
   "六": {
@@ -1009,12 +1049,12 @@
     ],
     "jlpt": 4,
     "preferredWords": [
-      "写真",
-      "写す"
+      "写す",
+      "写真"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "写真 （しゃしん） - photograph ／ 写す （うつす） - copy / photograph",
+    "notes": "写す （うつす） - copy / photograph ／ 写真 （しゃしん） - photograph",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "旅行でたくさん写真を写しました。",
@@ -1025,6 +1065,10 @@
         "example",
         "starter"
       ]
+    },
+    "displayWord": {
+      "written": "写す",
+      "pron": "うつす"
     }
   },
   "冬": {
@@ -1282,6 +1326,7 @@
     ],
     "jlpt": 4,
     "preferredWords": [
+      "医",
       "医者",
       "医学"
     ],
@@ -1298,6 +1343,10 @@
         "example",
         "starter"
       ]
+    },
+    "displayWord": {
+      "written": "医",
+      "pron": "い"
     }
   },
   "十": {
@@ -1446,11 +1495,12 @@
     ],
     "jlpt": 4,
     "preferredWords": [
+      "去る",
       "去年"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "去年 （きょねん） - last year ／ 去る （さる） - leave",
+    "notes": "去る （さる） - leave ／ 去年 （きょねん） - last year",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "去年の夏に北海道へ行きました。",
@@ -1461,6 +1511,10 @@
         "example",
         "starter"
       ]
+    },
+    "displayWord": {
+      "written": "去る",
+      "pron": "さる"
     }
   },
   "友": {
@@ -1498,12 +1552,12 @@
     ],
     "jlpt": 4,
     "preferredWords": [
-      "入口",
-      "口"
+      "口",
+      "入口"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "入口 （いりぐち） - entrance ／ 口 （くち） - mouth",
+    "notes": "口 （くち） - mouth ／ 入口 （いりぐち） - entrance",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "駅の入口で友だちを待ちました。",
@@ -1514,6 +1568,10 @@
         "example",
         "starter"
       ]
+    },
+    "displayWord": {
+      "written": "口",
+      "pron": "くち"
     }
   },
   "古": {
@@ -1543,7 +1601,7 @@
     }
   },
   "台": {
-    "englishMeaning": "stand / counter / platform",
+    "englishMeaning": "stand / platform",
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -1551,6 +1609,7 @@
     ],
     "jlpt": 4,
     "preferredWords": [
+      "台",
       "台所",
       "台風"
     ],
@@ -1567,6 +1626,10 @@
         "example",
         "starter"
       ]
+    },
+    "displayWord": {
+      "written": "台",
+      "pron": "だい"
     }
   },
   "右": {

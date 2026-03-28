@@ -128,6 +128,8 @@
  * @property {string[]} kanjiMeanings
  * @property {RankedCandidate[]} candidates
  * @property {RankedCandidate|null} bestWord
+ * @property {RankedCandidate|null} displayWord
+ * @property {string} primaryReading
  * @property {string} englishMeaning
  * @property {string} meaningJP
  * @property {string} notes

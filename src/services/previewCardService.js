@@ -2,7 +2,7 @@ const { pickMainComponent } = require("../datasets/kradfile");
 const { buildJlptBuckets } = require("../datasets/sentenceCorpusCoverage");
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { buildMeaningJP } = require("../inference/meaningInference");
-const { createExportService, formatExampleSentence } = require("./exportService");
+const { createExportService, formatExampleSentence, selectPrimaryReading } = require("./exportService");
 const { labelReading } = require("../utils/text");
 
 function formatPreviewError(err) {
@@ -114,6 +114,13 @@ async function buildOfflineFallbackCard({
 }) {
     const curatedEntry = curatedStudyData[kanji] || null;
     const sentenceCandidate = buildOfflineSentenceCandidate(kanji, curatedEntry, sentenceCorpus);
+    const displayWord = curatedEntry?.displayWord?.written
+        ? { written: curatedEntry.displayWord.written, pron: curatedEntry.displayWord.pron || "" }
+        : { written: curatedEntry?.preferredWords?.[0] || sentenceCandidate?.written || kanji, pron: "" };
+    const primaryReading = selectPrimaryReading({
+        displayWord,
+        bestWord: sentenceCandidate?.reading ? { pron: sentenceCandidate.reading } : null,
+    });
     const [strokeOrderImagePath, strokeOrderAnimationPath, strokeOrderPath, audioPath] = await Promise.all([
         typeof strokeOrderService?.getStrokeOrderImagePath === "function"
             ? strokeOrderService.getStrokeOrderImagePath(kanji)
@@ -135,6 +142,7 @@ async function buildOfflineFallbackCard({
         previewMode: "offline-local-fallback",
         warning: "Preview rendered from local data because online kanji enrichment was unavailable.",
         meaningJP: buildOfflineMeaning({ kanji, curatedEntry, sentenceCandidate }),
+        primaryReading,
         reading: buildOfflineReading(jlptEntry),
         radical: pickMainComponent(kradMap.get(kanji) || []),
         notes: buildOfflineNotes({ curatedEntry, sentenceCandidate }),
@@ -202,6 +210,7 @@ async function buildPreviewCards({
                 levelLabel,
                 previewMode: "full-inference",
                 meaningJP: inference.meaningJP,
+                primaryReading: inference.primaryReading,
                 reading: inference.reading,
                 radical,
                 notes: inference.notes,

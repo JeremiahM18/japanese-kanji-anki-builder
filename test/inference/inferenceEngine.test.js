@@ -255,6 +255,8 @@ test("curated displayWord can override learner-facing meaning text without chang
 
     assert.equal(result.bestWord.written, "日本");
     assert.equal(result.meaningJP, "日 （ひ） ／ sun / day marker");
+    assert.equal(result.displayWord.written, "日");
+    assert.equal(result.displayWord.pron, "ひ");
     assert.equal(result.curated.hasCustomDisplayWord, true);
 });
 

@@ -20,6 +20,7 @@ function formatPreviewCard(card) {
     }
 
     lines.push(`Meaning: ${card.meaningJP || "n/a"}`);
+    lines.push(`Primary reading: ${card.primaryReading || "n/a"}`);
     lines.push(`Reading: ${card.reading || "n/a"}`);
     lines.push(`Radical: ${card.radical || "n/a"}`);
     lines.push(`Stroke order: ${formatMediaState(card.media.strokeOrderPath)}`);

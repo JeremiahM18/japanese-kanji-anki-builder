@@ -8,6 +8,7 @@ test("formatPreviewCard renders user-facing card details and media presence", ()
         kanji: "日",
         levelLabel: "N5",
         meaningJP: "日本 （にほん） ／ day",
+        primaryReading: "にほん",
         reading: "オン:ニチ ／ くん:ひ",
         radical: "日",
         notes: "fixture notes",
@@ -21,6 +22,7 @@ test("formatPreviewCard renders user-facing card details and media presence", ()
     });
 
     assert.match(text, /日 \(N5\)/);
+    assert.match(text, /Primary reading: にほん/);
     assert.match(text, /Stroke-order image: present/);
     assert.match(text, /Audio: present/);
     assert.match(text, /Example: 日本です/);
@@ -43,6 +45,7 @@ test("formatPreviewCard marks offline local fallback cards", () => {
         previewMode: "offline-local-fallback",
         warning: "Preview used local fallback data because the kanji API could not be reached and no cached entry was available.",
         meaningJP: "学校",
+        primaryReading: "まなぶ",
         reading: "オン:ガク ／ くん:まなぶ",
         radical: "子",
         notes: "Local example uses 学校 to illustrate this kanji.",

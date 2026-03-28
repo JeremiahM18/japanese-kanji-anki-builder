@@ -31,6 +31,20 @@ function formatAnkiStrokeOrderField(strokeOrderPath) {
     return `<img src="${path.posix.basename(strokeOrderPath)}" />`;
 }
 
+function selectPrimaryReading({ displayWord, bestWord }) {
+    const displayPron = String(displayWord?.pron ?? "").trim();
+    if (displayPron) {
+        return displayPron;
+    }
+
+    const bestPron = String(bestWord?.pron ?? "").trim();
+    if (bestPron) {
+        return bestPron;
+    }
+
+    return "";
+}
+
 async function resolveStrokeOrderFields(strokeOrderService, kanji) {
     const imagePath = typeof strokeOrderService?.getStrokeOrderImagePath === "function"
         ? await strokeOrderService.getStrokeOrderImagePath(kanji)
@@ -78,6 +92,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
                 maxSentences: 3,
             });
             const reading = labelReading(kanjiInfo?.on_readings, kanjiInfo?.kun_readings);
+            const primaryReading = selectPrimaryReading(inferred);
             const components = kradMap.get(kanji) || [];
             const radical = pickMainComponent(components);
             const exampleSentence = formatExampleSentence(inferred.sentenceCandidates[0]);
@@ -85,6 +100,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
             return [
                 kanji,
                 inferred.meaningJP,
+                primaryReading,
                 reading,
                 formatAnkiStrokeOrderField(strokeOrderFields.strokeOrderPath),
                 formatAnkiStrokeOrderField(strokeOrderFields.strokeOrderImagePath),
@@ -97,6 +113,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
         } catch (error) {
             return [
                 kanji,
+                "",
                 "",
                 "",
                 "",
@@ -120,14 +137,17 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
                 : Promise.resolve(""),
         ]);
 
+        const inferred = inferenceEngine.inferKanjiStudyData({
+            kanji,
+            kanjiInfo,
+            words,
+            maxExamples: 3,
+            maxSentences: 4,
+        });
+
         return {
-            ...inferenceEngine.inferKanjiStudyData({
-                kanji,
-                kanjiInfo,
-                words,
-                maxExamples: 3,
-                maxSentences: 4,
-            }),
+            ...inferred,
+            primaryReading: selectPrimaryReading(inferred),
             reading: labelReading(kanjiInfo?.on_readings, kanjiInfo?.kun_readings),
             strokeOrderPath: strokeOrderFields.strokeOrderPath,
             strokeOrderField: formatAnkiStrokeOrderField(strokeOrderFields.strokeOrderPath),
@@ -154,6 +174,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
         const header = [
             "Kanji",
             "MeaningJP",
+            "PrimaryReading",
             "Reading",
             "StrokeOrder",
             "StrokeOrderImage",
@@ -197,6 +218,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
         formatExampleSentence,
         mapWithConcurrency,
         resolveStrokeOrderFields,
+        selectPrimaryReading,
     };
 }
 
@@ -212,4 +234,5 @@ module.exports = {
     formatExampleSentence: defaultExportService.formatExampleSentence,
     mapWithConcurrency: defaultExportService.mapWithConcurrency,
     resolveStrokeOrderFields: defaultExportService.resolveStrokeOrderFields,
+    selectPrimaryReading: defaultExportService.selectPrimaryReading,
 };

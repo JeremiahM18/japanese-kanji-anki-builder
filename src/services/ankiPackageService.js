@@ -13,6 +13,7 @@ const ANKI_CARD_TEMPLATE_NAME = "Recognition";
 const DEFAULT_FIELD_NAMES = [
     "Kanji",
     "MeaningJP",
+    "PrimaryReading",
     "Reading",
     "StrokeOrder",
     "StrokeOrderImage",
@@ -75,7 +76,15 @@ function buildCss() {
         "  font-size: 64px;",
         "  margin: 16px 0;",
         "}",
-        ".reading, .meaning, .meta, .notes, .example, .media {",
+        ".reading-primary {",
+        "  font-size: 28px;",
+        "  font-weight: 700;",
+        "}",
+        ".reading-full {",
+        "  font-size: 17px;",
+        "  color: #52606d;",
+        "}",
+        ".reading, .meaning, .meta, .notes, .example, .media, .audio {",
         "  margin: 12px 0;",
         "  line-height: 1.5;",
         "}",
@@ -95,7 +104,8 @@ function buildAfmt() {
         "{{FrontSide}}",
         "<hr id=\"answer\">",
         "<div class=\"meaning\">{{MeaningJP}}</div>",
-        "<div class=\"reading\">{{Reading}}</div>",
+        "{{#PrimaryReading}}<div class=\"reading reading-primary\">Primary reading: {{PrimaryReading}}</div>{{/PrimaryReading}}",
+        "<div class=\"reading reading-full\">All readings: {{Reading}}</div>",
         "<div class=\"media\">{{StrokeOrder}}</div>",
         "<div class=\"meta\">Radical: {{Radical}}</div>",
         "<div class=\"notes\">{{Notes}}</div>",
@@ -145,7 +155,7 @@ function createModel({ modelId, deckId, mod, fieldNames }) {
             flds: createFieldDefinitions(fieldNames, mod),
             id: modelId,
             latexPost: "\\end{document}",
-            latexPre: "\\documentclass[12pt]{article}\n\\special{papersize=3in,5in}\n\\usepackage[utf8]{inputenc}\n\\usepackage{amssymb,amsmath}\n\\pagestyle{empty}\n\\setlength{\\parindent}{0in}\n\\begin{document}",
+            latexPre: "\\documentclass[12pt]{article}\\n\\special{papersize=3in,5in}\\n\\usepackage[utf8]{inputenc}\\n\\usepackage{amssymb,amsmath}\\n\\pagestyle{empty}\\n\\setlength{\\parindent}{0in}\\n\\begin{document}",
             mod,
             name: ANKI_NOTE_TYPE_NAME,
             req: [[0, "all", [0]]],
@@ -274,13 +284,13 @@ function runCommand(command, args, options = {}) {
     return result;
 }
 
-function buildSchemaSql({ colId, crt, mod, scm, modelId, deckIdsByLevel, notes, cards }) {
+function buildSchemaSql({ colId, crt, mod, scm, modelId, deckIdsByLevel, notes, cards, fieldNames }) {
     const primaryDeckId = Number(Object.values(deckIdsByLevel)[0] || 1);
     const modelsJson = JSON.stringify(createModel({
         modelId,
         deckId: primaryDeckId,
         mod,
-        fieldNames: DEFAULT_FIELD_NAMES,
+        fieldNames,
     }));
     const decksJson = JSON.stringify(createDecks({ deckIdsByLevel, mod }));
     const dconfJson = JSON.stringify(createDeckConfig(mod));
@@ -348,21 +358,32 @@ async function stageApkgMedia({ sourceMediaDir, tempDir, mediaFiles }) {
 
 function buildAnkiRows({ exports }) {
     const rows = [];
+    let fieldNames = null;
 
     for (const artifact of exports) {
         const tsv = fs.readFileSync(artifact.filePath, "utf8");
         const parsed = parseTsv(tsv);
         const level = Number(artifact.level);
+        const header = Array.isArray(parsed.header) && parsed.header.length > 0
+            ? parsed.header
+            : DEFAULT_FIELD_NAMES;
+
+        if (!fieldNames) {
+            fieldNames = header;
+        }
 
         for (const columns of parsed.rows) {
             rows.push({
                 level,
-                fields: DEFAULT_FIELD_NAMES.map((_, index) => columns[index] || ""),
+                fields: header.map((_, index) => columns[index] || ""),
             });
         }
     }
 
-    return rows;
+    return {
+        fieldNames: fieldNames || DEFAULT_FIELD_NAMES,
+        rows,
+    };
 }
 
 async function buildAnkiPackage({
@@ -382,7 +403,7 @@ async function buildAnkiPackage({
         };
     }
 
-    const rows = buildAnkiRows({ exports });
+    const { fieldNames, rows } = buildAnkiRows({ exports });
     const mediaFiles = fs.existsSync(mediaDir)
         ? fs.readdirSync(mediaDir).filter((fileName) => fs.statSync(path.join(mediaDir, fileName)).isFile()).sort()
         : [];
@@ -426,6 +447,7 @@ async function buildAnkiPackage({
             deckIdsByLevel,
             notes,
             cards,
+            fieldNames,
         });
 
         runCommand("sqlite3", [collectionPath], { input: schemaSql });
@@ -471,4 +493,3 @@ module.exports = {
     buildDeckName,
     parseTsv,
 };
-

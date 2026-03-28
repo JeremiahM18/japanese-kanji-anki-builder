@@ -5,6 +5,7 @@ const {
     buildTsvForJlptLevel,
     formatAnkiAudioField,
     formatAnkiStrokeOrderField,
+    selectPrimaryReading,
 } = require("../src/services/exportService");
 
 test("formatAnkiAudioField emits sound markup from the managed asset name", () => {
@@ -24,6 +25,17 @@ test("formatAnkiStrokeOrderField keeps animated GIF references Anki can render",
         formatAnkiStrokeOrderField("animations/4E00_一-stroke-order.gif"),
         '<img src="4E00_一-stroke-order.gif" />'
     );
+});
+
+test("selectPrimaryReading prefers the learner-facing display pronunciation", () => {
+    assert.equal(selectPrimaryReading({
+        displayWord: { written: "行く", pron: "いく" },
+        bestWord: { written: "銀行", pron: "ぎんこう" },
+    }), "いく");
+    assert.equal(selectPrimaryReading({
+        displayWord: { written: "行", pron: "" },
+        bestWord: { written: "行", pron: "こう" },
+    }), "こう");
 });
 
 test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async () => {
@@ -257,17 +269,18 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
     const lines = tsv.trim().split("\n");
 
     assert.equal(lines.length, 2);
-    assert.equal(lines[0], "Kanji\tMeaningJP\tReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence");
+    assert.equal(lines[0], "Kanji\tMeaningJP\tPrimaryReading\tReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence");
 
     const cols = lines[1].split("\t");
     assert.equal(cols[0], "日");
     assert.equal(cols[1], "日本 （にほん） ／ day");
-    assert.equal(cols[2], "オン:ニチ、 ジツ ／ くん:ひ、 び、 か");
-    assert.equal(cols[3], '<img src="65E5_日-stroke-order.gif" />');
-    assert.equal(cols[4], '<img src="65E5_日-stroke-order.svg" />');
-    assert.equal(cols[5], '<img src="65E5_日-stroke-order.gif" />');
-    assert.equal(cols[6], "[sound:65E5_日-kanji-reading-日.mp3]");
-    assert.equal(cols[7], "日");
-    assert.equal(cols[8], "日本 （にほん） - Japan ／ 日よう日 （にちようび） - Sunday");
-    assert.equal(cols[9], '「日本」を勉強します。 ／ 「にほん」をべんきょうします。 ／ I study the word "日本".');
+    assert.equal(cols[2], "にほん");
+    assert.equal(cols[3], "オン:ニチ、 ジツ ／ くん:ひ、 び、 か");
+    assert.equal(cols[4], '<img src="65E5_日-stroke-order.gif" />');
+    assert.equal(cols[5], '<img src="65E5_日-stroke-order.svg" />');
+    assert.equal(cols[6], '<img src="65E5_日-stroke-order.gif" />');
+    assert.equal(cols[7], "[sound:65E5_日-kanji-reading-日.mp3]");
+    assert.equal(cols[8], "日");
+    assert.equal(cols[9], "日本 （にほん） - Japan ／ 日よう日 （にちようび） - Sunday");
+    assert.equal(cols[10], '「日本」を勉強します。 ／ 「にほん」をべんきょうします。 ／ I study the word "日本".');
 });

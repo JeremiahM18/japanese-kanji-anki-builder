@@ -232,6 +232,7 @@ function createInferenceEngine({ sentenceCorpus = [], curatedStudyData = {} } = 
                 kanjiMeanings,
                 candidates: rankedCandidates,
                 bestWord: meaning.bestWord,
+                displayWord: meaning.displayWord,
                 englishMeaning: meaning.englishMeaning,
                 meaningJP: meaning.meaningJP,
                 notes: notes.notes,

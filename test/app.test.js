@@ -381,6 +381,7 @@ test("inference route exposes curated and corpus-backed study output", async () 
         assert.equal(json.status, "ok");
         assert.equal(json.inference.bestWord.written, "日本");
         assert.equal(json.inference.englishMeaning, "sun / day marker");
+        assert.equal(json.inference.primaryReading, "にほん");
         assert.equal(json.inference.notes, "日本 （にほん） - Japan ／ curated-note");
         assert.equal(json.inference.strokeOrderPath, "animations/65E5_日-stroke-order.gif");
         assert.equal(json.inference.strokeOrderField, '<img src="65E5_日-stroke-order.gif" />');
@@ -498,15 +499,16 @@ test("download export sets attachment headers and includes Anki-ready media fiel
         const cols = lines[1].split("\t");
 
         assert.equal(lines.length, 2);
-        assert.equal(lines[0], "Kanji\tMeaningJP\tReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence");
-        assert.equal(cols.length, 10);
-        assert.equal(cols[3], '<img src="65E5_日-stroke-order.gif" />');
-        assert.equal(cols[4], '<img src="65E5_日-stroke-order.svg" />');
-        assert.equal(cols[5], '<img src="65E5_日-stroke-order.gif" />');
-        assert.equal(cols[6], "[sound:65E5_日-kanji-reading-日.mp3]");
-        assert.match(cols[8], /curated-note/);
-        assert.match(cols[9], /日本は島国です/);
-        assert.match(cols[9], /Japan is an island nation/);
+        assert.equal(lines[0], "Kanji\tMeaningJP\tPrimaryReading\tReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence");
+        assert.equal(cols.length, 11);
+        assert.equal(cols[2], "にほん");
+        assert.equal(cols[4], '<img src="65E5_日-stroke-order.gif" />');
+        assert.equal(cols[5], '<img src="65E5_日-stroke-order.svg" />');
+        assert.equal(cols[6], '<img src="65E5_日-stroke-order.gif" />');
+        assert.equal(cols[7], "[sound:65E5_日-kanji-reading-日.mp3]");
+        assert.match(cols[9], /curated-note/);
+        assert.match(cols[10], /日本は島国です/);
+        assert.match(cols[10], /Japan is an island nation/);
     });
 });
 

@@ -3,14 +3,24 @@ const { buildDoctorReport } = require("../src/services/doctorService");
 const { formatLevelReadinessReport } = require("../src/services/levelReadinessService");
 
 function parseArgs(argv) {
-    return {
-        json: argv.includes("--json"),
-    };
+    const options = { json: false, unknownArgs: [] };
+    for (const arg of argv) {
+        if (arg === "--json") {
+            options.json = true;
+        } else {
+            options.unknownArgs.push(arg);
+        }
+    }
+    return options;
 }
 
 async function main() {
     const options = parseArgs(process.argv.slice(2));
     const config = loadConfig();
+
+    if (options.unknownArgs.length > 0) {
+        throw new Error("Unsupported arguments for reportDeckReadiness: " + options.unknownArgs.join(", "));
+    }
     const report = await buildDoctorReport({ config });
     const readiness = report.quality?.levelReadiness;
 
@@ -26,7 +36,14 @@ async function main() {
     process.stdout.write(formatLevelReadinessReport(readiness));
 }
 
-main().catch((err) => {
-    console.error(err.stack || err);
-    process.exit(1);
-});
+if (require.main === module) {
+    main().catch((err) => {
+        console.error(err.stack || err);
+        process.exit(1);
+    });
+}
+
+module.exports = {
+    main,
+    parseArgs,
+};

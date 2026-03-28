@@ -1,5 +1,6 @@
 const { loadConfig } = require("../src/config");
 const { parseLevelsArgument, runBuildPipeline } = require("../src/services/buildPipeline");
+const { assertNoUnknownArgs, collectUnknownArg, parseNumericOption, parseStringOption } = require("../src/utils/cliArgs");
 
 function parseArgs(argv) {
     const options = {
@@ -16,23 +17,23 @@ function parseArgs(argv) {
 
     for (const arg of argv) {
         if (arg.startsWith("--levels=")) {
-            options.levels = parseLevelsArgument(arg.split("=")[1]);
+            options.levels = parseLevelsArgument(parseStringOption(arg, "levels"));
         } else if (arg.startsWith("--limit=")) {
-            options.limit = Number(arg.split("=")[1]);
+            options.limit = parseNumericOption(arg, "limit");
         } else if (arg.startsWith("--concurrency=")) {
-            options.concurrency = Number(arg.split("=")[1]);
+            options.concurrency = parseNumericOption(arg, "concurrency");
         } else if (arg.startsWith("--out-dir=")) {
-            options.outDir = arg.split("=")[1];
+            options.outDir = parseStringOption(arg, "out-dir");
         } else if (arg === "--skip-media-sync") {
             options.skipMediaSync = true;
         } else if (arg.startsWith("--audio-reading=")) {
-            options.audioReading = arg.split("=")[1];
+            options.audioReading = parseStringOption(arg, "audio-reading");
         } else if (arg.startsWith("--audio-voice=")) {
-            options.audioVoice = arg.split("=")[1];
+            options.audioVoice = parseStringOption(arg, "audio-voice");
         } else if (arg.startsWith("--audio-locale=")) {
-            options.audioLocale = arg.split("=")[1];
+            options.audioLocale = parseStringOption(arg, "audio-locale");
         } else {
-            options.unknownArgs.push(arg);
+            collectUnknownArg(options, arg);
         }
     }
 
@@ -43,9 +44,7 @@ async function main() {
     const config = loadConfig();
     const options = parseArgs(process.argv.slice(2));
 
-    if (options.unknownArgs.length > 0) {
-        throw new Error("Unsupported arguments for buildArtifacts: " + options.unknownArgs.join(", "));
-    }
+    assertNoUnknownArgs("buildArtifacts", options.unknownArgs);
 
     const summary = await runBuildPipeline({
         config,

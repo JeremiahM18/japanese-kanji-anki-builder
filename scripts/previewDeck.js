@@ -8,6 +8,7 @@ const { loadSentenceCorpus } = require("../src/datasets/sentenceCorpus");
 const { createMediaServices } = require("../src/services/mediaServiceFactory");
 const { buildPreviewCards, selectPreviewKanji } = require("../src/services/previewCardService");
 const { formatPreviewReport } = require("../src/services/previewService");
+const { collectUnknownArg, parseCsvOption, parseNumericOption, parseStringOption } = require("../src/utils/cliArgs");
 
 function parseLevel(value) {
     if (value == null) {
@@ -25,15 +26,18 @@ function parseArgs(argv) {
         limit: 5,
         kanji: [],
         json: argv.includes("--json"),
+        unknownArgs: [],
     };
 
     for (const arg of argv) {
         if (arg.startsWith("--level=")) {
-            options.level = parseLevel(arg.split("=")[1]);
+            options.level = parseLevel(parseStringOption(arg, "level"));
         } else if (arg.startsWith("--limit=")) {
-            options.limit = Number(arg.split("=")[1]);
+            options.limit = parseNumericOption(arg, "limit");
         } else if (arg.startsWith("--kanji=")) {
-            options.kanji = arg.split("=")[1].split(",").map((entry) => entry.trim()).filter(Boolean);
+            options.kanji = parseCsvOption(arg, "kanji");
+        } else if (arg !== "--json") {
+            collectUnknownArg(options, arg);
         }
     }
 
@@ -43,6 +47,10 @@ function parseArgs(argv) {
 async function main() {
     const options = parseArgs(process.argv.slice(2));
     const config = loadConfig();
+
+    if (options.unknownArgs.length > 0) {
+        throw new Error("Unsupported arguments for previewDeck: " + options.unknownArgs.join(", "));
+    }
 
     if (!fs.existsSync(config.jlptJsonPath)) {
         throw new Error(`Missing JLPT JSON file at ${config.jlptJsonPath}`);
@@ -91,7 +99,14 @@ async function main() {
     process.stdout.write(formatPreviewReport({ cards, scope }));
 }
 
-main().catch((err) => {
-    console.error(err.stack || err);
-    process.exit(1);
-});
+if (require.main === module) {
+    main().catch((err) => {
+        console.error(err.stack || err);
+        process.exit(1);
+    });
+}
+
+module.exports = {
+    main,
+    parseArgs,
+};

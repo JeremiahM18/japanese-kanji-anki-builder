@@ -5,6 +5,7 @@ const { ensureMediaRoot } = require("../src/services/mediaStore");
 const { createMediaServices } = require("../src/services/mediaServiceFactory");
 const { parseLevelArgument, selectKanjiForSync, syncMediaForKanjiList } = require("../src/services/mediaSync");
 const { parseLevelsArgument } = require("../src/services/buildPipeline");
+const { assertNoUnknownArgs, collectUnknownArg, parseCsvOption, parseNumericOption, parseStringOption } = require("../src/utils/cliArgs");
 
 function parseArgs(argv) {
     const options = {
@@ -20,27 +21,27 @@ function parseArgs(argv) {
 
     for (const arg of argv) {
         if (arg.startsWith("--level=")) {
-            options.level = parseLevelArgument(arg.split("=")[1]);
+            options.level = parseLevelArgument(parseStringOption(arg, "level"));
         } else if (arg.startsWith("--levels=")) {
-            const levels = parseLevelsArgument(arg.split("=")[1]);
+            const levels = parseLevelsArgument(parseStringOption(arg, "levels"));
             if (levels.length > 1) {
                 throw new Error("syncMedia accepts one level at a time. Use --level=N or rerun per level.");
             }
             options.level = levels[0] || null;
         } else if (arg.startsWith("--limit=")) {
-            options.limit = Number(arg.split("=")[1]);
+            options.limit = parseNumericOption(arg, "limit");
         } else if (arg.startsWith("--concurrency=")) {
-            options.concurrency = Number(arg.split("=")[1]);
+            options.concurrency = parseNumericOption(arg, "concurrency");
         } else if (arg.startsWith("--kanji=")) {
-            options.kanji = arg.split("=")[1].split(",").map((item) => item.trim()).filter(Boolean);
+            options.kanji = parseCsvOption(arg, "kanji");
         } else if (arg.startsWith("--audio-reading=")) {
-            options.audioReading = arg.split("=")[1];
+            options.audioReading = parseStringOption(arg, "audio-reading");
         } else if (arg.startsWith("--audio-voice=")) {
-            options.audioVoice = arg.split("=")[1];
+            options.audioVoice = parseStringOption(arg, "audio-voice");
         } else if (arg.startsWith("--audio-locale=")) {
-            options.audioLocale = arg.split("=")[1];
+            options.audioLocale = parseStringOption(arg, "audio-locale");
         } else {
-            options.unknownArgs.push(arg);
+            collectUnknownArg(options, arg);
         }
     }
 
@@ -51,9 +52,7 @@ async function main() {
     const options = parseArgs(process.argv.slice(2));
     const config = loadConfig();
 
-    if (options.unknownArgs.length > 0) {
-        throw new Error("Unsupported arguments for syncMedia: " + options.unknownArgs.join(", "));
-    }
+    assertNoUnknownArgs("syncMedia", options.unknownArgs);
 
     if (!fs.existsSync(config.jlptJsonPath)) {
         throw new Error("Missing JLPT JSON file at " + config.jlptJsonPath);

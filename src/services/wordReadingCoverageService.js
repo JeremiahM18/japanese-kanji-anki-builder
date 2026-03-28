@@ -128,7 +128,11 @@ function readingMatchesExample(targetReading, exampleReading) {
 }
 
 function buildWordDeckIndex(wordRows) {
-  return new Set(wordRows.map((row) => `${String(row.Word || '').trim()}|${String(row.Reading || '').trim()}`));
+  return wordRows.map((row) => ({
+    written: String(row.Word || '').trim(),
+    reading: String(row.Reading || '').trim(),
+    normalizedReading: normalizeReadingToken(String(row.Reading || '').trim()),
+  }));
 }
 
 function buildReadingCoverageForKanji(row, wordDeckIndex) {
@@ -139,7 +143,16 @@ function buildReadingCoverageForKanji(row, wordDeckIndex) {
 
   const evaluateReading = (reading) => {
     const matchingExamples = examples.filter((example) => readingMatchesExample(reading, example.normalizedReading));
-    const deckExamples = matchingExamples.filter((example) => wordDeckIndex.has(`${example.written}|${example.reading}`));
+    const deckExamples = wordDeckIndex
+      .filter((deckEntry) => deckEntry.written.includes(kanji)
+        && matchingExamples.some((example) => readingMatchesExample(example.normalizedReading, deckEntry.normalizedReading)))
+      .map((deckEntry) => ({
+        written: deckEntry.written,
+        reading: deckEntry.reading,
+        normalizedReading: deckEntry.normalizedReading,
+        meaning: '',
+        source: 'deck',
+      }));
 
     let status = 'missing_example';
     if (deckExamples.length > 0) {

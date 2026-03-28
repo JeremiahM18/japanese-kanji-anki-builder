@@ -61,3 +61,26 @@ test('buildWordReadingCoverageReport distinguishes covered, missing word, and mi
   assert.equal(entry.kunCoverage[0].status, 'covered');
   assert.equal(entry.kunCoverage[1].status, 'missing_word_card');
 });
+
+
+test('buildWordReadingCoverageReport counts a related word card as covered when the reading matches', () => {
+  const kanjiRows = parseKanjiTsv([
+    'Kanji	DisplayWord	MeaningJP	PrimaryReading	OnReading	KunReading	StrokeOrder	StrokeOrderImage	StrokeOrderAnimation	Audio	Radical	Notes	ExampleSentence',
+    '後	後	後 ／ after	あと	オン:ゴ	くん:あと、 うし.ろ						後ろ （うしろ） - behind / back	',
+  ].join('\n'));
+
+  const wordRows = parseWordTsv([
+    'Word	Reading	Meaning	JLPTLevel	KanjiBreakdown	ExampleSentence	Notes',
+    '後ろ	うしろ	behind / back	JLPT N5	<div>後</div>	家の後ろに公園があります。	',
+  ].join('\n'));
+
+  const report = buildWordReadingCoverageReport({ kanjiRows, wordRows, levelLabel: 'N5' });
+  assert.equal(report.summary.coveredReadings, 1);
+  assert.equal(report.summary.missingWordCardReadings, 1);
+
+  const entry = report.kanji[0];
+  assert.equal(entry.kunCoverage[0].status, 'missing_word_card');
+  assert.equal(entry.kunCoverage[1].status, 'covered');
+  assert.equal(entry.kunCoverage[1].deckExamples[0].written, '後ろ');
+});
+

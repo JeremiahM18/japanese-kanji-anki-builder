@@ -68,7 +68,7 @@ npm run curated:init -- --merge
 npm run words:init -- --merge
 ```
 
-These commands create or extend local ignored datasets so the decks are usable before you build out full coverage. The tracked starter packs now carry complete N5 and N4 kanji curation, the first four N3 kanji starter batches, and a 244-card curated N5 starter word pack for the word deck.
+These commands create or extend local ignored datasets so the decks are usable before you build out full coverage. The tracked starter packs now carry complete N5 and N4 kanji curation, the first four N3 kanji starter batches, and a 248-card curated N5 starter word pack for the word deck.
 
 ### Preview and review cards
 
@@ -84,7 +84,7 @@ npm run deck:review:n5
 - `deck:review:n4` and `deck:review:n5` run the tracked golden benchmark sets against hand-picked kanji cards.
 - `deck:words:review:n5` runs the tracked golden benchmark set against hand-picked N5 word cards.
 - Build and report CLIs reject unsupported flags instead of silently ignoring them.
-- The tracked N5 word benchmark now covers a broader representative slice of the deck, including older core cards and newer compound cards such as `映画`, `食べ物`, `飲み物`, `切手`, `本屋`, `日本語`, `起きる`, `公園`, `電気`, `三時`, `一時半`, `一万円`, `雨の日`, `上手`, `半分`, `辞書`, `読書`, `小学校`, `駅前`, `家の中`, `夜空`, `来ます`, `外国`, and `生まれる`.
+- The tracked N5 word benchmark now covers a broader representative slice of the deck, including older core cards and newer compound cards such as `映画`, `食べ物`, `飲み物`, `切手`, `本屋`, `日本語`, `起きる`, `公園`, `電気`, `三時`, `一時半`, `一万円`, `雨の日`, `上手`, `半分`, `辞書`, `読書`, `小学校`, `駅前`, `家の中`, `夜空`, `来ます`, `外国`, `生まれる`, `東京`, and `会話`.
 - Shared CLI parsing helpers live in `src/utils/cliArgs.js` so the main scripts handle flags consistently.
 - Script entrypoints consistently use `require.main === module` guards and export `main` and `parseArgs` where applicable.
 - `deck:ready` coverage snapshots are scoped to the levels you requested, so a single-level build reports single-level media coverage instead of repo-wide totals.
@@ -192,7 +192,7 @@ This assumes a local VOICEVOX engine is already running at `VOICEVOX_ENGINE_URL`
 | `npm run deck:review:n4` | Run the tracked golden N4 benchmark |
 | `npm run deck:review:n5` | Run the tracked golden N5 kanji benchmark |
 | `npm run deck:words:review:n5` | Run the tracked golden N5 word benchmark |
-| `npm run deck:words:reading-audit:n5` | Audit curated N5 reading coverage against the current word deck |
+| `npm run deck:words:reading-audit:n5` | Audit curated N5 reading coverage against the current word deck; matching word cards count even when they use a fuller form like `後ろ` for `後` |
 | `npm run deck:ready` | Run the full kanji build and package path |
 | `npm run deck:apkg` | Build an importable `.apkg` from packaged kanji exports |
 | `npm run deck:words:ready` | Run the full word-deck build and package path |

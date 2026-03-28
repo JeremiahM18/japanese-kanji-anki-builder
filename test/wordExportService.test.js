@@ -142,6 +142,12 @@ test("starter curated data provides learner-friendly N5 breakdown fallbacks", ()
     assert.deepEqual(curatedStudyData["後"].breakdownDisplayWord, { written: "後", pron: "ご" });
     assert.deepEqual(curatedStudyData["間"].breakdownDisplayWord, { written: "間", pron: "かん" });
     assert.deepEqual(curatedStudyData["電"].breakdownDisplayWord, { written: "電", pron: "でん" });
+    assert.deepEqual(curatedStudyData["校"].breakdownDisplayWord, { written: "校", pron: "こう" });
+    assert.equal(curatedStudyData["校"].breakdownEnglishMeaning, "school campus");
+    assert.deepEqual(curatedStudyData["病"].breakdownDisplayWord, { written: "病", pron: "びょう" });
+    assert.deepEqual(curatedStudyData["院"].breakdownDisplayWord, { written: "院", pron: "いん" });
+    assert.deepEqual(curatedStudyData["図"].breakdownDisplayWord, { written: "図", pron: "と" });
+    assert.deepEqual(curatedStudyData["館"].breakdownDisplayWord, { written: "館", pron: "かん" });
 });
 
 test("buildWordTsvForJlptLevel prefers curated N5 word entries and suppresses uncurated alternate readings", async () => {

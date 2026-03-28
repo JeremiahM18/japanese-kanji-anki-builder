@@ -285,8 +285,8 @@ The word deck exports fields such as:
 Behavior:
 
 - the front shows the written study word with no furigana
-- the back shows the reading, English meaning, JLPT label, example sentence, and kanji breakdown
-- kanji breakdown panels prefer curated kanji display words and meanings, then fall back to bare-kanji meanings, reading lists, and stroke-order media when the constituent kanji should stay generic
+- the back shows the reading, English meaning, JLPT label, example sentence, and a compact kanji breakdown
+- kanji breakdown panels prefer curated kanji display words and meanings, then fall back to bare-kanji meanings and reading lists; stroke-order study stays in the kanji deck so the word deck remains compact
 - the shared Anki note schemas live in `src/config/ankiNoteSchema.json` and `src/config/ankiWordNoteSchema.json`, which are the single sources of truth for exported field order, note type metadata, and card template layout
 
 ## Media model

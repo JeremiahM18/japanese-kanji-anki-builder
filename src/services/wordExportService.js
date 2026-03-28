@@ -353,11 +353,9 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null }) {
 
 function buildBreakdownHtmlItem({ kanji, inference, curatedEntry = null }) {
     const breakdown = buildBreakdownInference({ kanji, inference, curatedEntry });
-    const mediaField = breakdown.strokeOrderAnimationField || breakdown.strokeOrderImageField || breakdown.strokeOrderField || "";
     const readingLines = [
-        breakdown.primaryReading ? `<div class="kanji-reading-line">Primary: ${breakdown.primaryReading}</div>` : "",
-        breakdown.onReading ? `<div class="kanji-reading-line">On-yomi: ${breakdown.onReading}</div>` : "",
-        breakdown.kunReading ? `<div class="kanji-reading-line">Kun-yomi: ${breakdown.kunReading}</div>` : "",
+        breakdown.onReading ? `<div class="kanji-reading-line"><span class="kanji-reading-label">On:</span> ${breakdown.onReading}</div>` : "",
+        breakdown.kunReading ? `<div class="kanji-reading-line"><span class="kanji-reading-label">Kun:</span> ${breakdown.kunReading}</div>` : "",
     ].filter(Boolean).join("");
 
     return [
@@ -368,7 +366,6 @@ function buildBreakdownHtmlItem({ kanji, inference, curatedEntry = null }) {
         "</div>",
         breakdown.meaningJP ? `<div class="kanji-meaning">${breakdown.meaningJP}</div>` : "",
         readingLines,
-        mediaField ? `<div class="kanji-media">${mediaField}</div>` : "",
         "</div>",
     ].join("");
 }

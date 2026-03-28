@@ -1,7 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { buildReviewReadingText, evaluateGoldenReviewSet, formatGoldenReviewReport } = require("../src/services/goldenReviewService");
+const { buildReviewReadingText, evaluateGoldenReviewSet, evaluateGoldenWordReviewSet, formatGoldenReviewReport } = require("../src/services/goldenReviewService");
 
 test("evaluateGoldenReviewSet passes when cards meet expectations", () => {
     const report = evaluateGoldenReviewSet({
@@ -75,7 +75,6 @@ test("formatGoldenReviewReport renders a readable benchmark summary", () => {
     assert.match(text, /reading is empty/);
 });
 
-
 test("formatGoldenReviewReport accepts a custom title", () => {
     const text = formatGoldenReviewReport({
         totalCards: 1,
@@ -94,4 +93,31 @@ test("buildReviewReadingText prefers split reading fields and falls back to lega
     assert.equal(buildReviewReadingText({ onReading: "オン:ニチ", kunReading: "くん:ひ" }), "オン:ニチ ／ くん:ひ");
     assert.equal(buildReviewReadingText({ reading: "オン:ガク ／ くん:まなぶ" }), "オン:ガク ／ くん:まなぶ");
     assert.equal(buildReviewReadingText({}), "");
+});
+
+test("evaluateGoldenWordReviewSet validates word cards and breakdown content", () => {
+    const report = evaluateGoldenWordReviewSet({
+        rows: [
+            {
+                word: "今日",
+                reading: "きょう",
+                meaning: "today",
+                kanjiBreakdown: "今 （いま） ／ now ... 日 （ひ） ／ day / sun",
+                exampleSentence: "今日は図書館へ行きます。",
+                notes: "",
+            },
+        ],
+        expectations: [
+            {
+                word: "今日",
+                readingIncludes: ["きょう"],
+                meaningIncludes: ["today"],
+                breakdownIncludes: ["今 （いま）", "日 （ひ）"],
+                exampleIncludes: ["図書館へ行きます"],
+            },
+        ],
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.passedCount, 1);
 });

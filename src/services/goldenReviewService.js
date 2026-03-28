@@ -77,9 +77,71 @@ function evaluateExpectation(card, expectation) {
     };
 }
 
+function evaluateWordExpectation(row, expectation) {
+    const failures = [];
+
+    if (!row) {
+        return {
+            word: expectation.word,
+            passed: false,
+            failures: ["word could not be generated"],
+        };
+    }
+
+    if (!normalizeText(row.reading)) {
+        failures.push("reading is empty");
+    }
+    if (!normalizeText(row.meaning)) {
+        failures.push("meaning is empty");
+    }
+    if (!normalizeText(row.kanjiBreakdown)) {
+        failures.push("kanji breakdown is empty");
+    }
+    if (!normalizeText(row.exampleSentence)) {
+        failures.push("example sentence is empty");
+    }
+
+    if (Array.isArray(expectation.readingIncludes) && !includesAll(row.reading, expectation.readingIncludes)) {
+        failures.push(`reading did not include: ${expectation.readingIncludes.join(", ")}`);
+    }
+    if (Array.isArray(expectation.meaningIncludes) && !includesAll(row.meaning, expectation.meaningIncludes)) {
+        failures.push(`meaning did not include: ${expectation.meaningIncludes.join(", ")}`);
+    }
+    if (Array.isArray(expectation.breakdownIncludes) && !includesAll(row.kanjiBreakdown, expectation.breakdownIncludes)) {
+        failures.push(`breakdown did not include: ${expectation.breakdownIncludes.join(", ")}`);
+    }
+    if (Array.isArray(expectation.exampleIncludes) && !includesAll(row.exampleSentence, expectation.exampleIncludes)) {
+        failures.push(`example did not include: ${expectation.exampleIncludes.join(", ")}`);
+    }
+    if (Array.isArray(expectation.notesIncludes) && !includesAll(row.notes, expectation.notesIncludes)) {
+        failures.push(`notes did not include: ${expectation.notesIncludes.join(", ")}`);
+    }
+
+    return {
+        word: expectation.word,
+        passed: failures.length === 0,
+        failures,
+        row,
+    };
+}
+
 function evaluateGoldenReviewSet({ cards = [], expectations = [] } = {}) {
     const cardsByKanji = new Map((Array.isArray(cards) ? cards : []).map((card) => [card.kanji, card]));
     const results = (Array.isArray(expectations) ? expectations : []).map((expectation) => evaluateExpectation(cardsByKanji.get(expectation.kanji), expectation));
+    const passedCount = results.filter((result) => result.passed).length;
+
+    return {
+        totalCards: results.length,
+        passedCount,
+        failedCount: results.length - passedCount,
+        passed: results.length > 0 && passedCount === results.length,
+        results,
+    };
+}
+
+function evaluateGoldenWordReviewSet({ rows = [], expectations = [] } = {}) {
+    const rowsByWord = new Map((Array.isArray(rows) ? rows : []).map((row) => [row.word, row]));
+    const results = (Array.isArray(expectations) ? expectations : []).map((expectation) => evaluateWordExpectation(rowsByWord.get(expectation.word), expectation));
     const passedCount = results.filter((result) => result.passed).length;
 
     return {
@@ -101,8 +163,9 @@ function formatGoldenReviewReport(report, { title = "Japanese Kanji Builder Gold
     lines.push(`Overall result: ${report.passed ? "passing" : "failing"}`);
 
     for (const result of report.results || []) {
+        const label = result.kanji || result.word || "entry";
         lines.push("");
-        lines.push(`- ${result.kanji}: ${result.passed ? "pass" : "fail"}`);
+        lines.push(`- ${label}: ${result.passed ? "pass" : "fail"}`);
         if (!result.passed) {
             for (const failure of result.failures) {
                 lines.push(`  ${failure}`);
@@ -116,5 +179,6 @@ function formatGoldenReviewReport(report, { title = "Japanese Kanji Builder Gold
 module.exports = {
     buildReviewReadingText,
     evaluateGoldenReviewSet,
+    evaluateGoldenWordReviewSet,
     formatGoldenReviewReport,
 };

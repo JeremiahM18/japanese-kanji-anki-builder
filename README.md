@@ -81,7 +81,8 @@ npm run deck:review:n5
 
 - `deck:preview` shows the learner-facing study word, meaning, primary reading, on-yomi, kun-yomi, notes, example sentence, radical, and media presence.
 - Preview and golden review consume the split reading fields directly instead of depending on an internal combined-reading string.
-- `deck:review:n4` and `deck:review:n5` run the tracked golden benchmark sets against hand-picked cards.
+- `deck:review:n4` and `deck:review:n5` run the tracked golden benchmark sets against hand-picked kanji cards.
+- `deck:words:review:n5` runs the tracked golden benchmark set against hand-picked N5 word cards.
 - Build and report CLIs reject unsupported flags instead of silently ignoring them.
 - Shared CLI parsing helpers live in `src/utils/cliArgs.js` so the main scripts handle flags consistently.
 - Script entrypoints consistently use `require.main === module` guards and export `main` and `parseArgs` where applicable.
@@ -188,7 +189,8 @@ This assumes a local VOICEVOX engine is already running at `VOICEVOX_ENGINE_URL`
 | `npm run deck:readiness:global` | Explicit alias for the all-level readiness report |
 | `npm run deck:preview` | Preview kanji cards before import |
 | `npm run deck:review:n4` | Run the tracked golden N4 benchmark |
-| `npm run deck:review:n5` | Run the tracked golden N5 benchmark |
+| `npm run deck:review:n5` | Run the tracked golden N5 kanji benchmark |
+| `npm run deck:words:review:n5` | Run the tracked golden N5 word benchmark |
 | `npm run deck:ready` | Run the full kanji build and package path |
 | `npm run deck:apkg` | Build an importable `.apkg` from packaged kanji exports |
 | `npm run deck:words:ready` | Run the full word-deck build and package path |

@@ -330,19 +330,34 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null, contex
             pron: String(contextCandidate?.reading || contextCandidate?.pron || "").trim(),
         }
         : null;
-    const curatedDisplayWord = (useBreakdownOverrides
-        ? curatedEntry?.breakdownDisplayWord
-        : curatedEntry?.displayWord)?.written
+    const breakdownOverrideDisplayWord = curatedEntry?.breakdownDisplayWord?.written
         ? {
-            written: String((useBreakdownOverrides ? curatedEntry.breakdownDisplayWord.written : curatedEntry.displayWord.written) || "").trim(),
-            pron: String((useBreakdownOverrides ? curatedEntry?.breakdownDisplayWord?.pron : curatedEntry?.displayWord?.pron) || "").trim(),
+            written: String(curatedEntry.breakdownDisplayWord.written || "").trim(),
+            pron: String(curatedEntry?.breakdownDisplayWord?.pron || "").trim(),
         }
-        : (curatedEntry?.displayWord?.written && String(curatedEntry.displayWord.written).trim() === kanji
-            ? {
-                written: String(curatedEntry.displayWord.written).trim(),
-                pron: String(curatedEntry.displayWord.pron || "").trim(),
-            }
-            : null);
+        : null;
+    const breakdownOverrideMatchesContext = Boolean(breakdownOverrideDisplayWord)
+        && (breakdownOverrideDisplayWord.written === kanji
+            || breakdownOverrideDisplayWord.written === String(contextWord || "").trim()
+            || breakdownOverrideDisplayWord.written === String(contextCandidate?.written || "").trim());
+    const defaultCuratedDisplayWord = curatedEntry?.displayWord?.written
+        ? {
+            written: String(curatedEntry.displayWord.written || "").trim(),
+            pron: String(curatedEntry?.displayWord?.pron || "").trim(),
+        }
+        : null;
+    const defaultCuratedDisplayWordKanji = defaultCuratedDisplayWord
+        ? extractConstituentKanji(defaultCuratedDisplayWord.written)
+        : [];
+    const defaultCuratedDisplayWordAllowed = Boolean(defaultCuratedDisplayWord)
+        && (!useBreakdownOverrides
+            || defaultCuratedDisplayWord.written === kanji
+            || defaultCuratedDisplayWord.written === String(contextWord || "").trim()
+            || defaultCuratedDisplayWord.written === String(contextCandidate?.written || "").trim()
+            || (defaultCuratedDisplayWordKanji.length === 1 && defaultCuratedDisplayWordKanji[0] === kanji));
+    const curatedDisplayWord = (useBreakdownOverrides && breakdownOverrideMatchesContext
+        ? breakdownOverrideDisplayWord
+        : (defaultCuratedDisplayWordAllowed ? defaultCuratedDisplayWord : null));
     const useExactCandidate = !contextDisplayWord
         && !curatedDisplayWord
         && exactCandidate?.written === kanji
@@ -353,7 +368,7 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null, contex
         ? { written: kanji, pron: exactPron }
         : { written: kanji, pron: "" });
     const englishMeaning = String(
-        (useBreakdownOverrides ? curatedEntry?.breakdownEnglishMeaning : "")
+        ((useBreakdownOverrides && breakdownOverrideMatchesContext) ? curatedEntry?.breakdownEnglishMeaning : "")
         || (isSingleKanjiWordContext ? contextCandidate?.meaning || contextCandidate?.gloss || "" : "")
         || curatedEntry?.englishMeaning
         || inference?.englishMeaning

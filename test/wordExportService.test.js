@@ -128,6 +128,62 @@ test("buildBreakdownInference can use breakdown-only overrides for compound cont
     assert.equal(result.meaningJP, "行 （こう） ／ go / line");
 });
 
+test("buildBreakdownInference limits multi-character breakdown overrides to matching word contexts", () => {
+    const result = buildBreakdownInference({
+        kanji: "三",
+        contextWord: "三時",
+        contextCandidate: {
+            written: "三時",
+            reading: "さんじ",
+            meaning: "three o'clock",
+        },
+        inference: {
+            candidates: [{ written: "三", pron: "さん", gloss: "three", score: 100 }],
+            primaryReading: "さん",
+            englishMeaning: "three",
+            meaningJP: "三 （さん） ／ three",
+            onReading: "オン:サン、 ゾウ",
+            kunReading: "くん:み、 み.つ、 みっ.つ",
+        },
+        curatedEntry: {
+            englishMeaning: "three",
+            displayWord: { written: "三人", pron: "さんにん" },
+            breakdownDisplayWord: { written: "三人", pron: "さんにん" },
+            breakdownEnglishMeaning: "three people",
+        },
+    });
+
+    assert.equal(result.primaryReading, "さん");
+    assert.equal(result.meaningJP, "三 （さん） ／ three");
+});
+
+test("buildBreakdownInference keeps okurigana display words in compound contexts", () => {
+    const result = buildBreakdownInference({
+        kanji: "切",
+        contextWord: "切手",
+        contextCandidate: {
+            written: "切手",
+            reading: "きって",
+            meaning: "stamp",
+        },
+        inference: {
+            candidates: [{ written: "切", pron: "きる", gloss: "cut", score: 100 }],
+            primaryReading: "きる",
+            englishMeaning: "cut",
+            meaningJP: "切る （きる） ／ cut",
+            onReading: "オン:サイ、 セツ",
+            kunReading: "くん:き.る",
+        },
+        curatedEntry: {
+            englishMeaning: "cut",
+            displayWord: { written: "切る", pron: "きる" },
+        },
+    });
+
+    assert.equal(result.primaryReading, "きる");
+    assert.equal(result.meaningJP, "切る （きる） ／ cut");
+});
+
 
 test("buildBreakdownInference uses the current single-kanji word on word cards", () => {
     const result = buildBreakdownInference({

@@ -2561,11 +2561,13 @@
     ],
     "jlpt": 5,
     "preferredWords": [
-      "見る"
+      "見る",
+      "見える",
+      "見せる"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "見る （みる） - see / watch ／ 見せる （みせる） - show",
+    "notes": "見る （みる） - see / watch ／ 見える （みえる） - be visible ／ 見せる （みせる） - show",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "映画を見ます。",
@@ -3763,12 +3765,13 @@
     ],
     "jlpt": 5,
     "preferredWords": [
+      "三人",
       "三時",
       "三つ"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "三時 （さんじ） - three o'clock ／ 三つ （みっつ） - three things",
+    "notes": "三人 （さんにん） - three people ／ 三時 （さんじ） - three o'clock ／ 三つ （みっつ） - three things",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "三時に会いましょう。",
@@ -3779,7 +3782,12 @@
         "example",
         "starter"
       ]
-    }
+    },
+    "breakdownDisplayWord": {
+      "written": "三人",
+      "pron": "さんにん"
+    },
+    "breakdownEnglishMeaning": "three people"
   },
   "参": {
     "englishMeaning": "participate / join",
@@ -5797,11 +5805,14 @@
     ],
     "jlpt": 5,
     "preferredWords": [
-      "人"
+      "人",
+      "一人",
+      "二人",
+      "三人"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "人 （ひと） - person ／ 人が多い （ひとがおおい） - many people",
+    "notes": "人 （ひと） - person ／ 一人 （ひとり） - one person ／ 二人 （ふたり） - two people ／ 三人 （さんにん） - three people",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "人が多いです。",
@@ -9170,11 +9181,12 @@
     "jlpt": 5,
     "preferredWords": [
       "聞く",
+      "聞こえる",
       "新聞"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "聞く （きく） - hear / listen ／ 新聞 （しんぶん） - newspaper",
+    "notes": "聞く （きく） - hear / listen ／ 聞こえる （きこえる） - be heard ／ 新聞 （しんぶん） - newspaper",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "先生の話をよく聞きます。",
@@ -10412,7 +10424,11 @@
       "written": "来",
       "pron": "らい"
     },
-    "breakdownEnglishMeaning": "next / come"
+    "breakdownEnglishMeaning": "next / come",
+    "displayWord": {
+      "written": "来る",
+      "pron": "くる"
+    }
   },
   "利": {
     "englishMeaning": "advantage / useful",

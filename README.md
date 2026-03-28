@@ -68,7 +68,7 @@ npm run curated:init -- --merge
 npm run words:init -- --merge
 ```
 
-These commands create or extend local ignored datasets so the decks are usable before you build out full coverage. The tracked starter packs now carry complete N5 and N4 kanji curation, the first four N3 kanji starter batches, and a 269-card curated N5 starter word pack for the word deck.
+These commands create or extend local ignored datasets so the decks are usable before you build out full coverage. The tracked starter packs now carry complete N5 and N4 kanji curation, the first four N3 kanji starter batches, and a 269-card curated N5 starter word pack for the word deck. Editor-local workspace files such as `.vscode/`, `.code-workspace`, and `.history/` are also ignored so local tooling does not dirty the repo.
 
 ### Preview and review cards
 

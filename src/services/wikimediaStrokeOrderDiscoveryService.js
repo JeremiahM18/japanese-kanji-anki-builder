@@ -13,6 +13,16 @@ function buildCommonsSearchUrl(query, limit = 10) {
     return url.toString();
 }
 
+function buildCommonsPrefixUrl(prefix, limit = 10) {
+    const url = new URL(COMMONS_API_URL);
+    url.searchParams.set("action", "query");
+    url.searchParams.set("list", "allimages");
+    url.searchParams.set("ailimit", String(limit));
+    url.searchParams.set("format", "json");
+    url.searchParams.set("aiprefix", prefix);
+    return url.toString();
+}
+
 function buildSearchQueries(kanji) {
     return [
         `intitle:${kanji} order`,
@@ -21,8 +31,24 @@ function buildSearchQueries(kanji) {
     ];
 }
 
+function buildPrefixQueries(kanji) {
+    return [
+        String(kanji),
+        `${kanji}-`,
+        `${kanji} - U+`,
+    ];
+}
+
 function normalizeFileTitle(title) {
     return String(title || "").replace(/^File:/i, "").trim();
+}
+
+function extractFileTitle(entry) {
+    if (!entry || typeof entry !== "object") {
+        return "";
+    }
+
+    return normalizeFileTitle(entry.title || entry.name || "");
 }
 
 function scoreImageTitle(fileName, kanji) {
@@ -87,7 +113,22 @@ async function discoverWikimediaStrokeOrderForKanji(kanji, { fetchJson, limit = 
         const matches = response?.query?.search || [];
 
         for (const match of matches) {
-            const fileName = normalizeFileTitle(match.title);
+            const fileName = extractFileTitle(match);
+            if (!fileName || seen.has(fileName)) {
+                continue;
+            }
+
+            seen.add(fileName);
+            titles.push(fileName);
+        }
+    }
+
+    for (const prefix of buildPrefixQueries(kanji)) {
+        const response = await fetchJson(buildCommonsPrefixUrl(prefix, limit));
+        const matches = response?.query?.allimages || [];
+
+        for (const match of matches) {
+            const fileName = extractFileTitle(match);
             if (!fileName || seen.has(fileName)) {
                 continue;
             }
@@ -127,9 +168,12 @@ async function discoverWikimediaStrokeOrderForKanji(kanji, { fetchJson, limit = 
 
 module.exports = {
     COMMONS_API_URL,
+    buildCommonsPrefixUrl,
     buildCommonsSearchUrl,
+    buildPrefixQueries,
     buildSearchQueries,
     discoverWikimediaStrokeOrderForKanji,
+    extractFileTitle,
     normalizeFileTitle,
     scoreAnimationTitle,
     scoreImageTitle,

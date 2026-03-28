@@ -1,36 +1,50 @@
 # Japanese Kanji Anki Builder
 
-A Node.js project for building JLPT kanji decks for Anki with deterministic exports, curated study data, sentence-corpus support, managed media, offline-friendly previewing, explicit deck-quality gates, and importable `.apkg` packaging.
+A Node.js project for building JLPT kanji decks for Anki with deterministic exports, curated study data, managed media, offline-friendly previewing, readiness gates, and optional `.apkg` packaging.
 
-## Overview
+## What this repo does
 
-This repo is designed as a serious personal project: correctness first, clear structure, reproducible builds, and user-facing workflows that make it obvious what is ready and what still needs work.
-
-The system can:
+The project can:
 
 - build TSV decks for JLPT N5 through N1
 - infer learner-facing meanings, notes, and example sentences
 - override inference with curated study data
 - package import-ready deck artifacts and `.apkg` bundles
-- manage stroke-order image, stroke-order animation, and audio assets
+- manage stroke-order images, stroke-order animations, and audio assets
 - preview cards even when upstream kanji enrichment is unavailable
 - report setup health, media readiness, and per-level quality gates
 
-## Current User Workflows
+## Quick start
 
-### 1. Check setup and quality
+Use this path first:
+
+```bash
+npm install
+npm run doctor
+npm run corpus:init
+npm run curated:init
+npm run media:init
+$env:ENABLE_AUDIO='false'; npm run deck:readiness
+npm run deck:preview -- --level=5 --limit=5
+npm run deck:ready -- --levels=5 --limit=25
+npm run deck:apkg -- --levels=5
+```
+
+If you are intentionally deferring audio work, keep `ENABLE_AUDIO=false` for readiness and reporting commands.
+
+## Core workflows
+
+### Check setup and readiness
 
 ```bash
 npm run doctor
 npm run deck:readiness
 ```
 
-Use these first.
+- `doctor` checks required datasets, optional local study data, media folders, managed media coverage, and next steps.
+- `deck:readiness` shows per-level gates for sentence coverage, curated coverage, stroke-order coverage, and offline card quality.
 
-- `doctor` checks required datasets, optional study data, media source folders, managed media coverage, offline card-quality diagnostics, and next steps.
-- `deck:readiness` shows N5-N1 quality gates for sentence coverage, curated coverage, and stroke-order coverage, plus offline card-quality diagnostics for readings, meanings, examples, and contextual notes. If you want to defer audio, set `ENABLE_AUDIO=false` and the user-facing reports will stop treating it as an active blocker.
-
-### 2. Bootstrap starter content
+### Bootstrap starter data
 
 ```bash
 npm run corpus:init
@@ -45,9 +59,9 @@ npm run corpus:init -- --merge
 npm run curated:init -- --merge
 ```
 
-These commands create or extend local ignored datasets so the deck becomes useful faster instead of starting from empty content. The tracked starter content now gives N5 a strong baseline and also builds N4 through staged starter packs for sentence and curated-note coverage, with N4 starter support now past the sixty-percent mark for both sentence and curated coverage and preview quality improving noticeably instead of depending on bare fallback cards.
+These commands create or extend local ignored datasets so the deck is usable before you build out full coverage.
 
-### 3. Preview cards
+### Preview cards
 
 ```bash
 npm run deck:preview -- --level=5 --limit=5
@@ -55,18 +69,18 @@ npm run deck:preview -- --kanji=日,本,学
 npm run deck:review:n5
 ```
 
-Preview shows meaning, notes, example sentence, radical, and media presence. `deck:review:n5` runs a small tracked golden N5 benchmark against hand-picked cards so we can keep the strongest level excellent as the inference and datasets evolve. Offline fallback preview now also surfaces local JLPT readings, template-only fallback examples prefer a study-style line over a raw dictionary-definition sentence, and the shared inference layer now prefers more consistent exact-match meanings plus more diverse note selection drawn from the strongest N5 patterns.
+- `deck:preview` shows meaning, reading, notes, example sentence, radical, and media presence.
+- `deck:review:n5` runs the tracked golden N5 benchmark against hand-picked cards.
+- If the upstream kanji API is unavailable, preview falls back to local sentence corpus, curated study data, radicals, and managed media.
 
-If the upstream kanji API is unavailable, preview falls back to local sentence corpus, curated study data, radicals, and managed media instead of failing outright.
-
-### 4. Build and package a deck
+### Build and package a deck
 
 ```bash
 npm run deck:ready -- --levels=5 --limit=25
 npm run deck:apkg -- --levels=5
 ```
 
-This runs the user-facing happy path:
+`deck:ready` runs the main user-facing build path:
 
 - validates setup
 - syncs media
@@ -74,15 +88,17 @@ This runs the user-facing happy path:
 - packages the deck in `out/build/package`
 - prints a summary including quality and media status
 
-`deck:apkg` converts the packaged exports and copied managed media into an Anki-importable `.apkg` file. Use it after `deck:ready` when you want Anki to receive the deck structure and note type automatically instead of importing the TSV manually.
+`deck:apkg` converts the packaged exports and copied managed media into an Anki-importable `.apkg` file.
 
-You can also run the lower-level artifact build directly:
+Lower-level build:
 
 ```bash
 npm run build:artifacts -- --levels=5,4 --limit=25
 ```
 
-### 5. Work on media
+## Media workflows
+
+### Common commands
 
 ```bash
 npm run media:init
@@ -94,15 +110,28 @@ npm run media:import:stroke-order -- --input-dir=/path/to/files
 npm run media:import:kanjivg -- --input-dir=/path/to/extracted-kanjivg/kanji --level=4
 npm run media:import:audio -- --input-dir=/path/to/audio --level=5
 npm run media:voicevox -- --list-speakers
-npm run media:voicevox -- --level=5 --speaker-id=1
+npm run media:voicevox -- --level=5 --speaker-id=1 --concurrency=4
 npm run media:sources -- --level=5 --limit=25
 npm run media:sync -- --level=5 --limit=25
 npm run media:report -- --limit=25
 ```
 
-The project supports both local media folders and optional remote fallback providers. `media:plan` is the quickest way to see exactly which filenames the repo will accept for missing image, animation, and audio assets at a given JLPT level, and it now groups the remaining work into practical buckets like animation-only, image-only, or missing both stroke-order files. If you want to focus purely on stroke order for a while, run commands with `ENABLE_AUDIO=false` to hide audio from readiness and source-gap reporting. `media:plan:stroke-order` turns the free stroke-order path into a concrete Wikimedia Commons checklist with expected file names and Commons file-page URLs. Add `--discover` when you want the plan itself to mark assets as confirmed on Commons versus not found there at discovery time; if Commons discovery is unavailable, the plan now falls back cleanly and marks those rows as discovery-unavailable instead of crashing. When guessed Commons names start failing, `media:discover:stroke-order` now combines Wikimedia Commons title search with file-prefix listing, which is much better at surfacing real asset names for direct files like `-bw.png`, `-jbw.png`, and `-order.gif` plus KanjiVG-style `stroke order.svg` files. Add `--sheet` when you want a compact copyable download list. `media:fetch:stroke-order` uses that discovery data to download only confirmed Commons assets directly into the local source folders, reuses a local discovery cache across runs, waits between requests, and stops cleanly after repeated `429` responses so unattended runs do not thrash Wikimedia. When Wikimedia coverage stalls, `media:import:kanjivg` imports official KanjiVG SVG files from an extracted KanjiVG checkout or release folder, maps hex codepoint filenames like `04eca.svg` to canonical repo names like `今 - U+04ECA- KanjiVG stroke order.svg`, and drops them into the existing stroke-order image source folder. For local audio, `media:import:audio` accepts the same candidate names the sync layer already understands, such as `日.mp3` or `日.wav`. For free generated audio, `media:voicevox` talks to a local VOICEVOX engine, chooses a kana reading per kanji from the inference layer, writes deterministic `.wav` files into `data/media_sources/audio`, and is designed to be run before `media:sync`. Start with `media:voicevox -- --list-speakers`, choose a style id, then generate audio with either `--speaker-id=<id>` or `VOICEVOX_SPEAKER_ID` in `.env`. `media:sources` is the checkpoint between import and sync: it shows what the repo can already see locally before anything is written into managed manifests, now groups the remaining gaps into practical buckets like image-only, animation-only, or missing both stroke-order files, and lists real accepted Commons-style variants such as `-bw.png`, `-jbw.png`, and `-cursive-order.gif` when those matter.
+### Stroke-order acquisition
 
-Recommended free-audio workflow:
+- `media:plan` shows accepted filenames for missing image, animation, and audio assets.
+- `media:plan:stroke-order` builds a Wikimedia Commons checklist for missing stroke-order assets.
+- `media:discover:stroke-order` combines Commons title search with file-prefix listing to find real asset names.
+- `media:fetch:stroke-order` downloads only confirmed Commons assets, reuses discovery cache, and backs off on `429` responses.
+- `media:import:kanjivg` imports official KanjiVG SVG files into the repo's canonical source layout.
+
+If you are focused only on stroke order, run readiness and media reporting with `ENABLE_AUDIO=false`.
+
+### Audio acquisition
+
+- `media:import:audio` imports local audio files into the source folder using the same candidate names the sync layer already supports.
+- `media:voicevox` generates deterministic `.wav` files from a local VOICEVOX engine.
+
+Recommended VOICEVOX flow:
 
 ```bash
 npm run media:voicevox -- --list-speakers
@@ -112,9 +141,9 @@ npm run media:sync -- --level=5 --limit=100
 npm run deck:readiness
 ```
 
-This workflow assumes a local VOICEVOX engine is already running at `VOICEVOX_ENGINE_URL` or the default `http://127.0.0.1:50021`.
+This assumes a local VOICEVOX engine is already running at `VOICEVOX_ENGINE_URL` or the default `http://127.0.0.1:50021`.
 
-## Important Commands
+## Important commands
 
 | Command | Purpose |
 | --- | --- |
@@ -124,32 +153,33 @@ This workflow assumes a local VOICEVOX engine is already running at `VOICEVOX_EN
 | `npm run deck:readiness` | Show per-level deck quality gates |
 | `npm run deck:preview` | Preview cards before import |
 | `npm run deck:review:n5` | Run the tracked golden N5 benchmark |
-| `npm run deck:ready` | Run the full build/package happy path |
-| `npm run deck:apkg` | Build an importable `.apkg` from the packaged exports |
+| `npm run deck:ready` | Run the full build and package path |
+| `npm run deck:apkg` | Build an importable `.apkg` from packaged exports |
 | `npm run build:artifacts` | Run the deterministic build pipeline |
 | `npm run corpus:init` | Create or merge starter sentence corpus data |
 | `npm run curated:init` | Create or merge starter curated study data |
 | `npm run media:init` | Create media source folders and bootstrap `.env` |
-| `npm run media:plan` | Show missing media by kanji with accepted local filenames |
+| `npm run media:plan` | Show missing media by kanji with accepted filenames |
 | `npm run media:plan:stroke-order` | Show Wikimedia Commons stroke-order checklist URLs |
 | `npm run media:discover:stroke-order` | Discover real Wikimedia Commons titles for missing stroke-order assets |
 | `npm run media:fetch:stroke-order` | Download confirmed Wikimedia stroke-order assets with backoff |
 | `npm run media:import:stroke-order` | Import free local stroke-order assets |
+| `npm run media:import:kanjivg` | Import KanjiVG SVG stroke-order files into the source tree |
 | `npm run media:import:audio` | Import local kanji audio files into the source folder |
-| `npm run media:voicevox` | Generate free kanji audio from a local VOICEVOX engine |
+| `npm run media:voicevox` | Generate kanji audio from a local VOICEVOX engine |
 | `npm run media:sources` | Report local source-folder coverage before media sync |
 | `npm run media:sync` | Sync stroke-order and audio assets into managed storage |
 
-## Local Data Model
+## Local data and config
 
 The project expects local ignored datasets under `data/`:
-
-Curated study entries can pin a learner-facing display form with `displayWord`, for example `{ "written": "上", "pron": "うえ" }`, so exports and offline previews stay aligned even when the strongest ranked dictionary word uses a different surface form.
 
 - `data/kanji_jlpt_only.json`
 - `data/KRADFILE`
 - `data/sentence_corpus.json`
 - `data/curated_study_data.json`
+
+Curated study entries can pin a learner-facing display form with `displayWord`, for example `{ "written": "上", "pron": "うえ" }`, so exports and offline previews stay aligned even when the highest-ranked dictionary word uses a different surface form.
 
 Managed media is stored under:
 
@@ -161,14 +191,14 @@ Local source folders for acquisition:
 - `data/media_sources/stroke-order/animations/`
 - `data/media_sources/audio/`
 
-Optional VOICEVOX configuration lives in `.env`:
+Optional VOICEVOX configuration in `.env`:
 
 - `VOICEVOX_ENGINE_URL`
 - `VOICEVOX_SPEAKER_ID`
 
-More detailed local-data guidance lives in [data/README.md](/C:/japanese_kanji_builder/data/README.md).
+More detailed local data guidance lives in [data/README.md](/C:/japanese_kanji_builder/data/README.md).
 
-## Media Model
+## Media model
 
 The exported deck includes these fields:
 
@@ -179,10 +209,10 @@ The exported deck includes these fields:
 
 Behavior:
 
-- `StrokeOrder` prefers animation when available, then static image
-- `StrokeOrderImage` exposes the static asset directly
-- `StrokeOrderAnimation` exposes the animation asset directly
-- `Audio` exports Anki sound markup when a managed audio asset exists
+- `StrokeOrder` prefers animation when available, then static image.
+- `StrokeOrderImage` exposes the static asset directly.
+- `StrokeOrderAnimation` exposes the animation asset directly.
+- `Audio` exports Anki sound markup when a managed audio asset exists.
 
 Supported media sourcing:
 
@@ -191,8 +221,41 @@ Supported media sourcing:
 - managed per-kanji manifests for imported assets
 - atomic manifest writes with per-kanji serialization
 
-## Quality Model
+## Quality model
 
-The repo now treats deck quality as a first-class contract, not a vague goal.
+Deck quality is treated as a first-class contract.
 
+Readiness checks evaluate:
 
+- sentence coverage
+- curated study coverage
+- stroke-order coverage
+- audio coverage when audio is enabled
+- offline card quality for readings, meanings, examples, and contextual notes
+
+Current default readiness thresholds are:
+
+- sentence coverage: `90%`
+- curated coverage: `60%`
+- stroke-order coverage: `90%`
+
+Use these commands to inspect quality:
+
+```bash
+npm run doctor
+npm run deck:readiness
+npm run deck:review:n5
+```
+
+## Output layout
+
+Build artifacts are written to `out/build`:
+
+- `exports/jlpt-n5.tsv`
+- `reports/sentence-corpus-coverage.json`
+- `reports/curated-study-coverage.json`
+- `reports/media-coverage.json`
+- `reports/media-sync.json`
+- `build-summary.json`
+
+Import-ready packaging is written to `out/build/package`.

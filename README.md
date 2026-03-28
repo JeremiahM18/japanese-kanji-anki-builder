@@ -21,6 +21,7 @@ Use this path first:
 ```bash
 npm install
 npm run doctor
+npm run deck:readiness:global
 npm run corpus:init
 npm run curated:init
 npm run media:init
@@ -39,10 +40,12 @@ If you are intentionally deferring audio work, keep `ENABLE_AUDIO=false` for rea
 ```bash
 npm run doctor
 npm run deck:readiness
+npm run deck:readiness:global
 ```
 
 - `doctor` checks required datasets, optional local study data, media folders, managed media coverage, and next steps.
-- `deck:readiness` shows per-level gates for sentence coverage, curated coverage, stroke-order coverage, and offline card quality.
+- `deck:readiness` shows the global per-level readiness report across N5 through N1.
+- `deck:readiness:global` is an explicit alias for the same all-level readiness report when you want the command name to say exactly what it does.
 
 ### Bootstrap starter data
 
@@ -157,7 +160,8 @@ This assumes a local VOICEVOX engine is already running at `VOICEVOX_ENGINE_URL`
 | `npm test` | Run the full test suite |
 | `npm run lint` | Run ESLint |
 | `npm run doctor` | Check setup, coverage, readiness, and next steps |
-| `npm run deck:readiness` | Show per-level deck quality gates |
+| `npm run deck:readiness` | Show the global per-level deck quality gates across all JLPT levels |
+| `npm run deck:readiness:global` | Explicit alias for the all-level readiness report |
 | `npm run deck:preview` | Preview cards before import |
 | `npm run deck:review:n4` | Run the tracked golden N4 benchmark |
 | `npm run deck:review:n5` | Run the tracked golden N5 benchmark |

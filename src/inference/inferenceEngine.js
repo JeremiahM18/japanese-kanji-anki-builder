@@ -17,11 +17,6 @@ function getCuratedEntry(curatedStudyData, kanji) {
     return curatedStudyData[kanji] || null;
 }
 
-/**
- * @param {RankedCandidate[]} rankedCandidates
- * @param {any} curatedEntry
- * @returns {RankedCandidate[]}
- */
 function applyBlockedWords(rankedCandidates, curatedEntry) {
     const blockedWords = new Set(Array.isArray(curatedEntry?.blockedWords) ? curatedEntry.blockedWords : []);
 
@@ -32,11 +27,6 @@ function applyBlockedWords(rankedCandidates, curatedEntry) {
     return rankedCandidates.filter((candidate) => !blockedWords.has(candidate.written));
 }
 
-/**
- * @param {RankedCandidate[]} rankedCandidates
- * @param {any} curatedEntry
- * @returns {RankedCandidate[]}
- */
 function applyPreferredWords(rankedCandidates, curatedEntry) {
     const preferredWords = Array.isArray(curatedEntry?.preferredWords) ? curatedEntry.preferredWords : [];
 
@@ -60,19 +50,51 @@ function applyPreferredWords(rankedCandidates, curatedEntry) {
     return [...preferred, ...remaining];
 }
 
-/**
- * @param {RankedCandidate|null} bestWord
- * @returns {string}
- */
 function formatMeaningDisplayWord(bestWord) {
     return buildMeaningJP(bestWord, "");
 }
 
-/**
- * @param {any} curatedEntry
- * @param {RankedCandidate|null} bestWord
- * @returns {SentenceCandidate|null}
- */
+function buildCuratedDisplayWord(curatedEntry, rankedCandidates) {
+    const written = String(curatedEntry?.displayWord?.written || "").trim();
+    const pron = String(curatedEntry?.displayWord?.pron || "").trim();
+
+    if (!written) {
+        return null;
+    }
+
+    const candidates = Array.isArray(rankedCandidates) ? rankedCandidates.filter(Boolean) : [];
+    const exactPronMatch = candidates.find((candidate) => candidate.written === written && candidate.pron === pron);
+    if (exactPronMatch) {
+        return exactPronMatch;
+    }
+
+    const exactWrittenMatch = candidates.find((candidate) => candidate.written === written);
+    if (exactWrittenMatch) {
+        return {
+            ...exactWrittenMatch,
+            pron,
+        };
+    }
+
+    return {
+        written,
+        pron,
+        gloss: "",
+        text: "",
+        score: Number.MAX_SAFE_INTEGER,
+        corpusSupportScore: 0,
+        scoreBreakdown: {
+            heuristic: [],
+            corpusSupport: [],
+            totals: {
+                heuristicScore: 0,
+                corpusSupportScore: 0,
+                finalScore: 0,
+            },
+        },
+    };
+}
+
 function buildCuratedSentence(curatedEntry, bestWord) {
     if (!curatedEntry?.exampleSentence) {
         return null;
@@ -90,11 +112,6 @@ function buildCuratedSentence(curatedEntry, bestWord) {
     };
 }
 
-/**
- * @param {SentenceCandidate[]} sentenceCandidates
- * @param {any} curatedEntry
- * @returns {SentenceCandidate[]}
- */
 function filterBlockedSentenceCandidates(sentenceCandidates, curatedEntry) {
     const blockedPhrases = Array.isArray(curatedEntry?.blockedSentencePhrases)
         ? curatedEntry.blockedSentencePhrases.filter(Boolean)
@@ -110,13 +127,6 @@ function filterBlockedSentenceCandidates(sentenceCandidates, curatedEntry) {
     });
 }
 
-/**
- * @param {SentenceCandidate[]} sentenceCandidates
- * @param {any} curatedEntry
- * @param {RankedCandidate|null} bestWord
- * @param {number} maxSentences
- * @returns {SentenceCandidate[]}
- */
 function prependCuratedSentence(sentenceCandidates, curatedEntry, bestWord, maxSentences) {
     const curatedSentence = buildCuratedSentence(curatedEntry, bestWord);
 
@@ -144,16 +154,11 @@ function prependCuratedSentence(sentenceCandidates, curatedEntry, bestWord, maxS
     return out;
 }
 
-/**
- * @param {{bestWord: RankedCandidate|null, displayWord?: RankedCandidate|null, englishMeaning: string, meaningJP: string}} meaning
- * @param {any} curatedEntry
- * @param {RankedCandidate[]} rankedCandidates
- */
 function applyCuratedMeaning(meaning, curatedEntry, rankedCandidates) {
     const bestWord = rankedCandidates[0] || null;
-    const displayWord = meaning.displayWord || bestWord;
     const englishMeaning = curatedEntry?.englishMeaning || meaning.englishMeaning;
-    const meaningJP = curatedEntry?.englishMeaning && displayWord && englishMeaning
+    const displayWord = buildCuratedDisplayWord(curatedEntry, rankedCandidates) || meaning.displayWord || bestWord;
+    const meaningJP = displayWord && englishMeaning
         ? `${formatMeaningDisplayWord(displayWord)} ／ ${englishMeaning}`
         : meaning.meaningJP;
 
@@ -177,10 +182,6 @@ function applyCuratedNotes(notes, curatedEntry) {
 
 function createInferenceEngine({ sentenceCorpus = [], curatedStudyData = {} } = {}) {
     return {
-        /**
-         * @param {{kanji: string, kanjiInfo: any, words: any[], maxExamples?: number, maxSentences?: number}} input
-         * @returns {InferenceResult}
-         */
         inferKanjiStudyData({ kanji, kanjiInfo, words, maxExamples = 3, maxSentences = 3 }) {
             const kanjiMeanings = Array.isArray(kanjiInfo?.meanings) ? kanjiInfo.meanings : [];
             const extractedCandidates = extractWordCandidates(words);
@@ -209,7 +210,6 @@ function createInferenceEngine({ sentenceCorpus = [], curatedStudyData = {} } = 
                 maxSentences
             );
 
-            /** @type {CuratedInferenceInfo} */
             const curated = curatedEntry ? {
                 hasOverride: true,
                 source: curatedEntry.source,
@@ -222,6 +222,7 @@ function createInferenceEngine({ sentenceCorpus = [], curatedStudyData = {} } = 
                 hasCustomNotes: Boolean(curatedEntry.notes),
                 hasCustomExampleSentence: Boolean(curatedEntry.exampleSentence),
                 hasCustomMeaning: Boolean(curatedEntry.englishMeaning),
+                hasCustomDisplayWord: Boolean(curatedEntry.displayWord?.written),
             } : {
                 hasOverride: false,
             };
@@ -246,10 +247,10 @@ module.exports = {
     applyCuratedMeaning,
     applyCuratedNotes,
     applyPreferredWords,
+    buildCuratedDisplayWord,
     createInferenceEngine,
     filterBlockedSentenceCandidates,
     formatMeaningDisplayWord,
     getCuratedEntry,
     prependCuratedSentence,
 };
-

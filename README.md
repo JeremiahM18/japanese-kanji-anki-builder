@@ -144,6 +144,8 @@ This workflow assumes a local VOICEVOX engine is already running at `VOICEVOX_EN
 
 The project expects local ignored datasets under `data/`:
 
+Curated study entries can pin a learner-facing display form with `displayWord`, for example `{ "written": "上", "pron": "うえ" }`, so exports and offline previews stay aligned even when the strongest ranked dictionary word uses a different surface form.
+
 - `data/kanji_jlpt_only.json`
 - `data/KRADFILE`
 - `data/sentence_corpus.json`

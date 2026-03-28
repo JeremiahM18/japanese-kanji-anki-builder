@@ -1,4 +1,4 @@
-const { pickBestEnglishMeaning } = require("../inference/meaningInference");
+const { buildMeaningJP, pickBestEnglishMeaning } = require("../inference/meaningInference");
 const { labelReading } = require("../utils/text");
 
 function buildOfflineSentenceCandidate(kanji, curatedEntry, sentenceCorpus) {
@@ -56,14 +56,16 @@ function buildOfflineReading(jlptEntry) {
 }
 
 function buildOfflineMeaning(jlptEntry, curatedEntry, sentenceCandidate, kanji) {
-    const written = curatedEntry?.preferredWords?.[0] || sentenceCandidate?.written || "";
+    const displayWord = curatedEntry?.displayWord?.written
+        ? { written: curatedEntry.displayWord.written, pron: curatedEntry.displayWord.pron || "" }
+        : { written: curatedEntry?.preferredWords?.[0] || sentenceCandidate?.written || "", pron: "" };
     const englishMeaning = curatedEntry?.englishMeaning || pickBestEnglishMeaning(jlptEntry?.meanings || []);
 
-    if (written && englishMeaning) {
-        return `${written} ／ ${englishMeaning}`;
+    if (displayWord?.written && englishMeaning) {
+        return buildMeaningJP(displayWord, englishMeaning);
     }
 
-    return englishMeaning || written || (kanji || "");
+    return englishMeaning || displayWord?.written || (kanji || "");
 }
 
 function summarizeLevel(level, levelKanji, jlptOnlyJson, sentenceCorpus, curatedStudyData) {

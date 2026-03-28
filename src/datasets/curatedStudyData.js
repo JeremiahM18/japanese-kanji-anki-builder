@@ -9,8 +9,14 @@ const curatedSentenceSchema = z.object({
     tags: z.array(z.string()).default(["curated"]),
 });
 
+const curatedDisplayWordSchema = z.object({
+    written: z.string().min(1),
+    pron: z.string().min(1).optional(),
+});
+
 const curatedEntrySchema = z.object({
     englishMeaning: z.string().min(1).optional(),
+    displayWord: curatedDisplayWordSchema.optional(),
     source: z.string().default("curated-study-data"),
     tags: z.array(z.string()).default(["curated"]),
     jlpt: z.number().int().min(1).max(5).optional(),
@@ -81,9 +87,21 @@ function normalizeCuratedSentence(sentence) {
     });
 }
 
+function normalizeCuratedDisplayWord(displayWord) {
+    if (!displayWord) {
+        return undefined;
+    }
+
+    return curatedDisplayWordSchema.parse({
+        written: cleanString(displayWord.written),
+        pron: cleanString(displayWord.pron),
+    });
+}
+
 function normalizeCuratedEntry(entry) {
     return curatedEntrySchema.parse({
         englishMeaning: cleanString(entry?.englishMeaning),
+        displayWord: normalizeCuratedDisplayWord(entry?.displayWord),
         source: cleanString(entry?.source) || "curated-study-data",
         tags: normalizeTags(entry?.tags),
         jlpt: Number.isInteger(entry?.jlpt) ? entry.jlpt : undefined,
@@ -123,10 +141,12 @@ function loadCuratedStudyData(curatedStudyDataPath) {
 
 module.exports = {
     cleanString,
+    curatedDisplayWordSchema,
     curatedEntrySchema,
     curatedSentenceSchema,
     curatedStudyDataSchema,
     loadCuratedStudyData,
+    normalizeCuratedDisplayWord,
     normalizeCuratedEntry,
     normalizeCuratedSentence,
     normalizeCuratedStudyData,

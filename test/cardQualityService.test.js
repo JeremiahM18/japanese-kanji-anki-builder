@@ -45,11 +45,11 @@ test("buildOfflineMeaning prefers curated wording and learner-facing meaning", (
     assert.equal(
         buildOfflineMeaning(
             { meanings: ["study", "learning"] },
-            { preferredWords: ["学校"], englishMeaning: "school" },
+            { preferredWords: ["学校"], displayWord: { written: "学", pron: "まな" }, englishMeaning: "school" },
             null,
             "学"
         ),
-        "学校 ／ school"
+        "学 （まな） ／ school"
     );
 });
 

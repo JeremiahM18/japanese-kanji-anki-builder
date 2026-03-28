@@ -21,11 +21,21 @@ function buildJlptBuckets(jlptOnlyJson = {}) {
     return buckets;
 }
 
+function hasCuratedCoverage(entry) {
+    return Boolean(
+        entry?.exampleSentence
+        || entry?.notes
+        || entry?.englishMeaning
+        || entry?.displayWord?.written
+        || (entry?.preferredWords || []).length > 0
+    );
+}
+
 function getCuratedCoverageSet(curatedStudyData = {}) {
     const covered = new Set();
 
     for (const [kanji, entry] of Object.entries(curatedStudyData || {})) {
-        if (entry?.exampleSentence || entry?.notes || entry?.englishMeaning || (entry?.preferredWords || []).length > 0) {
+        if (hasCuratedCoverage(entry)) {
             covered.add(kanji);
         }
     }
@@ -67,6 +77,7 @@ function buildCuratedStudySummary({ jlptOnlyJson = {}, curatedStudyData = {} }) 
         coverageRatio: totalKanji > 0 ? Number((curatedKanji / totalKanji).toFixed(4)) : 0,
         curatedStudyEntries: entries.length,
         customMeaningEntries: entries.filter(([, entry]) => Boolean(entry?.englishMeaning)).length,
+        customDisplayWordEntries: entries.filter(([, entry]) => Boolean(entry?.displayWord?.written)).length,
         customNotesEntries: entries.filter(([, entry]) => Boolean(entry?.notes)).length,
         customSentenceEntries: entries.filter(([, entry]) => Boolean(entry?.exampleSentence)).length,
         blockedWordEntries: entries.filter(([, entry]) => (entry?.blockedWords || []).length > 0).length,
@@ -82,4 +93,5 @@ module.exports = {
     buildCuratedCoverageRows,
     buildCuratedStudySummary,
     getCuratedCoverageSet,
+    hasCuratedCoverage,
 };

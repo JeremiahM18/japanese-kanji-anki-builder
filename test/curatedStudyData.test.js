@@ -20,6 +20,7 @@ test("loadCuratedStudyData returns empty object when file is missing", () => {
 test("normalizeCuratedEntry canonicalizes metadata arrays and tags", () => {
     const result = normalizeCuratedEntry({
         englishMeaning: " sun / day marker ",
+        displayWord: { written: " 日 ", pron: " ひ " },
         source: " Manual-Curated ",
         tags: [" Curated ", "override", "curated"],
         jlpt: 5,
@@ -37,6 +38,8 @@ test("normalizeCuratedEntry canonicalizes metadata arrays and tags", () => {
     });
 
     assert.equal(result.englishMeaning, "sun / day marker");
+    assert.equal(result.displayWord.written, "日");
+    assert.equal(result.displayWord.pron, "ひ");
     assert.equal(result.source, "Manual-Curated");
     assert.deepEqual(result.tags, ["curated", "override"]);
     assert.deepEqual(result.preferredWords, ["日本", "日曜日"]);
@@ -63,6 +66,7 @@ test("loadCuratedStudyData validates and parses curated entries", () => {
     fs.writeFileSync(filePath, JSON.stringify({
         日: {
             englishMeaning: "sun / day marker",
+            displayWord: { written: "日", pron: "ひ" },
             preferredWords: ["日本", "日曜日"],
             blockedWords: ["日中"],
             blockedSentencePhrases: ["rare"],
@@ -79,6 +83,8 @@ test("loadCuratedStudyData validates and parses curated entries", () => {
     const result = loadCuratedStudyData(filePath);
 
     assert.equal(result.日.englishMeaning, "sun / day marker");
+    assert.equal(result.日.displayWord.written, "日");
+    assert.equal(result.日.displayWord.pron, "ひ");
     assert.deepEqual(result.日.preferredWords, ["日本", "日曜日"]);
     assert.deepEqual(result.日.blockedWords, ["日中"]);
     assert.deepEqual(result.日.blockedSentencePhrases, ["rare"]);

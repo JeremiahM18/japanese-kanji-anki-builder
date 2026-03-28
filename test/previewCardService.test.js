@@ -36,6 +36,7 @@ test("buildOfflineFallbackCard uses local data when inference is unavailable", a
         curatedStudyData: {
             学: {
                 preferredWords: ["学校"],
+                displayWord: { written: "学", pron: "まな" },
                 englishMeaning: "school",
                 notes: "Study-related kanji.",
                 exampleSentence: {
@@ -52,7 +53,7 @@ test("buildOfflineFallbackCard uses local data when inference is unavailable", a
     });
 
     assert.equal(card.previewMode, "offline-local-fallback");
-    assert.equal(card.meaningJP, "学校 ／ school");
+    assert.equal(card.meaningJP, "学 （まな） ／ school");
     assert.match(card.reading, /ガク/);
     assert.match(card.exampleSentence, /学校へ行きます/);
 });

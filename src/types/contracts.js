@@ -119,6 +119,7 @@
  * @property {boolean=} hasCustomNotes
  * @property {boolean=} hasCustomExampleSentence
  * @property {boolean=} hasCustomMeaning
+ * @property {boolean=} hasCustomDisplayWord
  */
 
 /**

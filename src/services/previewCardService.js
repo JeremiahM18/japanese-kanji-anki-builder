@@ -1,6 +1,7 @@
 const { pickMainComponent } = require("../datasets/kradfile");
 const { buildJlptBuckets } = require("../datasets/sentenceCorpusCoverage");
 const { createInferenceEngine } = require("../inference/inferenceEngine");
+const { buildMeaningJP } = require("../inference/meaningInference");
 const { createExportService, formatExampleSentence } = require("./exportService");
 const { labelReading } = require("../utils/text");
 
@@ -61,18 +62,20 @@ function buildOfflineSentenceCandidate(kanji, curatedEntry, sentenceCorpus) {
 }
 
 function buildOfflineMeaning({ kanji, curatedEntry, sentenceCandidate }) {
-    const written = curatedEntry?.preferredWords?.[0] || sentenceCandidate?.written || kanji;
+    const displayWord = curatedEntry?.displayWord?.written
+        ? { written: curatedEntry.displayWord.written, pron: curatedEntry.displayWord.pron || "" }
+        : { written: curatedEntry?.preferredWords?.[0] || sentenceCandidate?.written || kanji, pron: "" };
     const englishMeaning = curatedEntry?.englishMeaning || "";
 
-    if (written && englishMeaning) {
-        return `${written} ／ ${englishMeaning}`;
+    if (displayWord?.written && englishMeaning) {
+        return buildMeaningJP(displayWord, englishMeaning);
     }
 
     if (englishMeaning) {
         return englishMeaning;
     }
 
-    return written || "";
+    return displayWord?.written || "";
 }
 
 function buildOfflineNotes({ curatedEntry, sentenceCandidate }) {

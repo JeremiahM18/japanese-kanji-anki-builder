@@ -1,3 +1,13 @@
+function hasCuratedCoverage(entry) {
+    return Boolean(
+        entry?.exampleSentence
+        || entry?.notes
+        || entry?.englishMeaning
+        || entry?.displayWord?.written
+        || (entry?.preferredWords || []).length > 0
+    );
+}
+
 function getCoveredKanjiSet(sentenceCorpus = [], curatedStudyData = {}) {
     const covered = new Set();
 
@@ -8,7 +18,7 @@ function getCoveredKanjiSet(sentenceCorpus = [], curatedStudyData = {}) {
     }
 
     for (const [kanji, entry] of Object.entries(curatedStudyData || {})) {
-        if (entry?.exampleSentence || entry?.notes || entry?.englishMeaning || (entry?.preferredWords || []).length > 0) {
+        if (hasCuratedCoverage(entry)) {
             covered.add(kanji);
         }
     }
@@ -89,4 +99,5 @@ module.exports = {
     buildCoverageSummary,
     buildJlptBuckets,
     getCoveredKanjiSet,
+    hasCuratedCoverage,
 };

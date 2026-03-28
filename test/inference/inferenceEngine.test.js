@@ -205,6 +205,96 @@ test("curated study data overrides meaning notes and top sentence", () => {
     assert.equal(result.sentenceCandidates.some((sentence) => /daytime/i.test(sentence.english)), false);
 });
 
+test("curated displayWord can override learner-facing meaning text without changing bestWord", () => {
+    const inferenceEngine = createInferenceEngine({
+        curatedStudyData: {
+            日: {
+                englishMeaning: "sun / day marker",
+                displayWord: { written: "日", pron: "ひ" },
+                preferredWords: ["日本"],
+            },
+        },
+    });
+
+    const result = inferenceEngine.inferKanjiStudyData({
+        kanji: "日",
+        kanjiInfo: {
+            meanings: ["day", "sun"],
+        },
+        words: [
+            {
+                variants: [
+                    {
+                        written: "日本",
+                        pronounced: "にほん",
+                        priorities: ["ichi1"],
+                    },
+                ],
+                meanings: [
+                    {
+                        glosses: ["Japan"],
+                    },
+                ],
+            },
+            {
+                variants: [
+                    {
+                        written: "日",
+                        pronounced: "にち",
+                        priorities: ["news1"],
+                    },
+                ],
+                meanings: [
+                    {
+                        glosses: ["day"],
+                    },
+                ],
+            },
+        ],
+    });
+
+    assert.equal(result.bestWord.written, "日本");
+    assert.equal(result.meaningJP, "日 （ひ） ／ sun / day marker");
+    assert.equal(result.curated.hasCustomDisplayWord, true);
+});
+
+test("curated displayWord can intentionally suppress pronunciation in learner-facing meaning text", () => {
+    const inferenceEngine = createInferenceEngine({
+        curatedStudyData: {
+            一: {
+                englishMeaning: "one",
+                displayWord: { written: "一" },
+                preferredWords: ["一つ"],
+            },
+        },
+    });
+
+    const result = inferenceEngine.inferKanjiStudyData({
+        kanji: "一",
+        kanjiInfo: {
+            meanings: ["one"],
+        },
+        words: [
+            {
+                variants: [
+                    {
+                        written: "一",
+                        pronounced: "ひと",
+                        priorities: ["news1"],
+                    },
+                ],
+                meanings: [
+                    {
+                        glosses: ["one"],
+                    },
+                ],
+            },
+        ],
+    });
+
+    assert.equal(result.meaningJP, "一 ／ one");
+});
+
 test("corpus support can rerank bestWord and notes", () => {
     const words = [
         {

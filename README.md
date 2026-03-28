@@ -72,6 +72,7 @@ npm run deck:review:n5
 
 - `deck:preview` shows meaning, primary reading, on-yomi, kun-yomi, notes, example sentence, radical, and media presence.
 - `deck:review:n4` and `deck:review:n5` run the tracked golden benchmark sets against hand-picked cards.
+- Build/report CLIs now reject unsupported flags instead of silently ignoring them, and `deck:apkg` expects a fresh `deck:ready` package as its input.
 - If the upstream kanji API is unavailable, preview falls back to local sentence corpus, curated study data, radicals, and managed media.
 
 ### Build and package a deck

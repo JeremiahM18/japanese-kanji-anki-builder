@@ -11,6 +11,7 @@ function parseArgs(argv) {
         audioReading: null,
         audioVoice: null,
         audioLocale: null,
+        unknownArgs: [],
     };
 
     for (const arg of argv) {
@@ -30,6 +31,8 @@ function parseArgs(argv) {
             options.audioVoice = arg.split("=")[1];
         } else if (arg.startsWith("--audio-locale=")) {
             options.audioLocale = arg.split("=")[1];
+        } else {
+            options.unknownArgs.push(arg);
         }
     }
 
@@ -39,6 +42,11 @@ function parseArgs(argv) {
 async function main() {
     const config = loadConfig();
     const options = parseArgs(process.argv.slice(2));
+
+    if (options.unknownArgs.length > 0) {
+        throw new Error("Unsupported arguments for buildArtifacts: " + options.unknownArgs.join(", "));
+    }
+
     const summary = await runBuildPipeline({
         config,
         outDir: options.outDir || config.buildOutDir,
@@ -56,7 +64,14 @@ async function main() {
     console.log(JSON.stringify(summary, null, 2));
 }
 
-main().catch((err) => {
-    console.error(err.stack || err);
-    process.exit(1);
-});
+if (require.main === module) {
+    main().catch((err) => {
+        console.error(err.stack || err);
+        process.exit(1);
+    });
+}
+
+module.exports = {
+    main,
+    parseArgs,
+};

@@ -1,6 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
+const { parseArgs: parseBuildArtifactsArgs } = require("../scripts/buildArtifacts");
 const { parseArgs: parseSyncArgs } = require("../scripts/syncMedia");
 const { parseArgs: parsePrepareArgs } = require("../scripts/prepareDeck");
 
@@ -28,5 +29,13 @@ test("prepareDeck parseArgs records unsupported flags and json mode", () => {
 
     assert.deepEqual(options.levels, [5, 4]);
     assert.equal(options.json, true);
+    assert.deepEqual(options.unknownArgs, ["--oops"]);
+});
+
+test("buildArtifacts parseArgs records unsupported flags", () => {
+    const options = parseBuildArtifactsArgs(["--levels=5,4", "--skip-media-sync", "--oops"]);
+
+    assert.deepEqual(options.levels, [5, 4]);
+    assert.equal(options.skipMediaSync, true);
     assert.deepEqual(options.unknownArgs, ["--oops"]);
 });

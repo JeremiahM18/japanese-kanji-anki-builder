@@ -372,6 +372,17 @@ def build_apkg(out_dir: Path, levels):
     apkg_path = package_root / build_apkg_file_name(levels)
     stage_dir = package_root / ".apkg-staging"
 
+    missing_exports = [level for level in levels if not (exports_dir / f"jlpt-n{level}.tsv").exists()]
+    if missing_exports:
+        missing_list = ", ".join(f"N{level}" for level in missing_exports)
+        raise RuntimeError(
+            "Missing packaged TSV exports for " + missing_list + ". Run `npm run deck:ready -- --levels="
+            + ",".join(str(level) for level in levels)
+            + "` before `npm run deck:apkg -- --levels="
+            + ",".join(str(level) for level in levels)
+            + "`."
+        )
+
     if stage_dir.exists():
         shutil.rmtree(stage_dir, ignore_errors=True)
     stage_dir.mkdir(parents=True, exist_ok=True)

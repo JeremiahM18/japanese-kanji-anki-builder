@@ -6,7 +6,7 @@ const assert = require("node:assert/strict");
 const { spawnSync } = require("node:child_process");
 
 const { buildMediaBasePath } = require("../src/services/mediaStore");
-const { parseLevelsArgument, runBuildPipeline } = require("../src/services/buildPipeline");
+const { buildScopedCoverageRatio, parseLevelsArgument, runBuildPipeline } = require("../src/services/buildPipeline");
 
 function commandAvailable(command, versionArg = "--version") {
     const result = spawnSync(command, [versionArg], { stdio: "ignore" });
@@ -18,6 +18,16 @@ test("parseLevelsArgument supports all and normalized JLPT levels", () => {
     assert.deepEqual(parseLevelsArgument("all"), [5, 4, 3, 2, 1]);
     assert.deepEqual(parseLevelsArgument("N5,3,1"), [5, 3, 1]);
     assert.deepEqual(parseLevelsArgument("bad"), [5, 4, 3, 2, 1]);
+});
+
+test("buildScopedCoverageRatio aggregates only the selected levels", () => {
+    const ratio = buildScopedCoverageRatio([
+        { level: 5, totalKanji: 79, strokeOrderCovered: 79 },
+        { level: 4, totalKanji: 166, strokeOrderCovered: 166 },
+        { level: 3, totalKanji: 123, strokeOrderCovered: 0 },
+    ], [5], "strokeOrderCovered");
+
+    assert.equal(ratio, 1);
 });
 
 test("runBuildPipeline writes exports reports summary and an import-ready package", async () => {
@@ -158,6 +168,11 @@ test("runBuildPipeline writes exports reports summary and an import-ready packag
         strokeOrderAnimation: 1,
         audio: 1,
     });
+    assert.equal(storedSummary.coverage.sentenceCorpus, 0.5);
+    assert.equal(storedSummary.coverage.curatedStudyData, 0.5);
+    assert.equal(storedSummary.coverage.strokeOrder, 0);
+    assert.equal(storedSummary.coverage.audio, 0);
+    assert.equal(storedSummary.coverage.fullMedia, 0);
 
     const apkgPath = storedSummary.package.ankiPackage?.filePath;
     if (apkgPath && commandAvailable("sqlite3", "-version") && commandAvailable("tar")) {

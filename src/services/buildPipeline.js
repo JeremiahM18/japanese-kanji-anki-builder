@@ -146,6 +146,21 @@ function selectBuildKanjiList({ jlptOnlyJson, levels, limit, selectKanjiForSyncF
     return [...new Set(Object.values(selectedByLevel).flatMap((kanjiList) => kanjiList))];
 }
 
+function buildScopedCoverageRatio(levelRows = [], levels = [], countField, totalField = "totalKanji") {
+    const selectedLevels = new Set(Array.isArray(levels) ? levels : []);
+    const scopedRows = (Array.isArray(levelRows) ? levelRows : []).filter((row) => selectedLevels.has(row.level));
+    const totals = scopedRows.reduce((acc, row) => ({
+        covered: acc.covered + (Number.isFinite(row?.[countField]) ? row[countField] : 0),
+        total: acc.total + (Number.isFinite(row?.[totalField]) ? row[totalField] : 0),
+    }), { covered: 0, total: 0 });
+
+    if (totals.total === 0) {
+        return 0;
+    }
+
+    return Number((totals.covered / totals.total).toFixed(4));
+}
+
 async function runBuildPipeline({
     config,
     outDir,
@@ -360,11 +375,11 @@ async function runBuildPipeline({
         },
         reports: reportPaths,
         coverage: {
-            sentenceCorpus: sentenceCoverage.coverageRatio,
-            curatedStudyData: curatedCoverage.coverageRatio,
-            strokeOrder: mediaCoverage.strokeOrderCoverageRatio,
-            audio: mediaCoverage.audioCoverageRatio,
-            fullMedia: mediaCoverage.fullMediaCoverageRatio,
+            sentenceCorpus: buildScopedCoverageRatio(sentenceCoverage.levels, levels, "coveredKanji"),
+            curatedStudyData: buildScopedCoverageRatio(curatedCoverage.levels, levels, "curatedKanji"),
+            strokeOrder: buildScopedCoverageRatio(mediaCoverage.levels, levels, "strokeOrderCovered"),
+            audio: buildScopedCoverageRatio(mediaCoverage.levels, levels, "audioCovered"),
+            fullMedia: buildScopedCoverageRatio(mediaCoverage.levels, levels, "fullMediaCovered"),
         },
         mediaSync: {
             skipped: mediaSync.skipped,
@@ -379,6 +394,7 @@ async function runBuildPipeline({
 
 module.exports = {
     buildBuildPaths,
+    buildScopedCoverageRatio,
     buildSelectedKanjiByLevel,
     parseLevelsArgument,
     runBuildPipeline,

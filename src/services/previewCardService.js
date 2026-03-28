@@ -2,7 +2,7 @@ const { pickMainComponent } = require("../datasets/kradfile");
 const { buildJlptBuckets } = require("../datasets/sentenceCorpusCoverage");
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { buildMeaningJP } = require("../inference/meaningInference");
-const { createExportService, formatExampleSentence, selectPrimaryReading } = require("./exportService");
+const { createExportService, formatExampleSentence, selectDisplayWord, selectPrimaryReading } = require("./exportService");
 const { labelKunReading, labelOnReading } = require("../utils/text");
 
 function formatPreviewError(err) {
@@ -125,7 +125,7 @@ async function buildOfflineFallbackCard({
         : { written: curatedEntry?.preferredWords?.[0] || sentenceCandidate?.written || kanji, pron: "" };
     const primaryReading = selectPrimaryReading({
         displayWord,
-        bestWord: sentenceCandidate?.reading ? { pron: sentenceCandidate.reading } : null,
+        bestWord: null,
     });
     const readingFields = buildOfflineReadingFields(jlptEntry);
     const [strokeOrderImagePath, strokeOrderAnimationPath, strokeOrderPath, audioPath] = await Promise.all([
@@ -148,6 +148,7 @@ async function buildOfflineFallbackCard({
         levelLabel,
         previewMode: "offline-local-fallback",
         warning: "Preview rendered from local data because online kanji enrichment was unavailable.",
+        displayWord: selectDisplayWord({ kanji, displayWord, bestWord: null }),
         meaningJP: buildOfflineMeaning({ kanji, curatedEntry, sentenceCandidate }),
         primaryReading,
         onReading: readingFields.onReading,
@@ -217,6 +218,7 @@ async function buildPreviewCards({
                 kanji,
                 levelLabel,
                 previewMode: "full-inference",
+                displayWord: inference.displayWordText,
                 meaningJP: inference.meaningJP,
                 primaryReading: inference.primaryReading,
                 onReading: inference.onReading,

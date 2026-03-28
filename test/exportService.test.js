@@ -269,19 +269,20 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
     const lines = tsv.trim().split("\n");
 
     assert.equal(lines.length, 2);
-    assert.equal(lines[0], "Kanji\tMeaningJP\tPrimaryReading\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence");
+    assert.equal(lines[0], "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence");
 
     const cols = lines[1].split("\t");
     assert.equal(cols[0], "日");
-    assert.equal(cols[1], "日本 （にほん） ／ day");
-    assert.equal(cols[2], "にほん");
-    assert.equal(cols[3], "オン:ニチ、 ジツ");
-    assert.equal(cols[4], "くん:ひ、 び、 か");
-    assert.equal(cols[5], '<img src="65E5_日-stroke-order.gif" />');
-    assert.equal(cols[6], '<img src="65E5_日-stroke-order.svg" />');
-    assert.equal(cols[7], '<img src="65E5_日-stroke-order.gif" />');
-    assert.equal(cols[8], "[sound:65E5_日-kanji-reading-日.mp3]");
-    assert.equal(cols[9], "日");
-    assert.equal(cols[10], "日本 （にほん） - Japan ／ 日よう日 （にちようび） - Sunday");
-    assert.equal(cols[11], '「日本」を勉強します。 ／ 「にほん」をべんきょうします。 ／ I study the word "日本".');
+    assert.equal(cols[1], "日本");
+    assert.equal(cols[2], "日本 （にほん） ／ day");
+    assert.equal(cols[3], "にほん");
+    assert.equal(cols[4], "オン:ニチ、 ジツ");
+    assert.equal(cols[5], "くん:ひ、 び、 か");
+    assert.equal(cols[6], '<img src="65E5_日-stroke-order.gif" />');
+    assert.equal(cols[7], '<img src="65E5_日-stroke-order.svg" />');
+    assert.equal(cols[8], '<img src="65E5_日-stroke-order.gif" />');
+    assert.equal(cols[9], "[sound:65E5_日-kanji-reading-日.mp3]");
+    assert.equal(cols[10], "日");
+    assert.equal(cols[11], "日本 （にほん） - Japan ／ 日よう日 （にちようび） - Sunday");
+    assert.equal(cols[12], '「日本」を勉強します。 ／ 「にほん」をべんきょうします。 ／ I study the word "日本".');
 });

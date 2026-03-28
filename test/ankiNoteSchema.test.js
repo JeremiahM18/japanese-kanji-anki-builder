@@ -11,6 +11,7 @@ test("loadAnkiNoteSchema returns a stable shared note contract", () => {
     assert.equal(schema.cardTemplateName, "Recognition");
     assert.deepEqual(schema.fieldNames, [
         "Kanji",
+        "DisplayWord",
         "MeaningJP",
         "PrimaryReading",
         "OnReading",
@@ -23,8 +24,8 @@ test("loadAnkiNoteSchema returns a stable shared note contract", () => {
         "Notes",
         "ExampleSentence",
     ]);
-    assert.match(schema.css, /reading-primary/);
-    assert.match(schema.afmt, /Primary reading:/);
+    assert.match(schema.css, /study-word/);
+    assert.match(schema.qfmt, /DisplayWord/);
     assert.match(schema.afmt, /On-yomi:/);
     assert.match(schema.afmt, /Kun-yomi:/);
 });

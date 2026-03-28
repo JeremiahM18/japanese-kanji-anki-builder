@@ -48,6 +48,20 @@ function selectPrimaryReading({ displayWord, bestWord }) {
     return "";
 }
 
+function selectDisplayWord({ kanji, displayWord, bestWord }) {
+    const displayWritten = String(displayWord?.written ?? "").trim();
+    if (displayWritten) {
+        return displayWritten;
+    }
+
+    const bestWritten = String(bestWord?.written ?? "").trim();
+    if (bestWritten) {
+        return bestWritten;
+    }
+
+    return String(kanji ?? "").trim();
+}
+
 async function resolveStrokeOrderFields(strokeOrderService, kanji) {
     const imagePath = typeof strokeOrderService?.getStrokeOrderImagePath === "function"
         ? await strokeOrderService.getStrokeOrderImagePath(kanji)
@@ -94,6 +108,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
                 maxExamples: 3,
                 maxSentences: 3,
             });
+            const displayWord = selectDisplayWord({ kanji, displayWord: inferred.displayWord, bestWord: inferred.bestWord });
             const primaryReading = selectPrimaryReading(inferred);
             const onReading = labelOnReading(kanjiInfo?.on_readings);
             const kunReading = labelKunReading(kanjiInfo?.kun_readings);
@@ -103,6 +118,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
 
             return [
                 kanji,
+                displayWord,
                 inferred.meaningJP,
                 primaryReading,
                 onReading,
@@ -118,6 +134,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
         } catch (error) {
             return [
                 kanji,
+                "",
                 "",
                 "",
                 "",
@@ -156,6 +173,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
 
         return {
             ...inferred,
+            displayWordText: selectDisplayWord({ kanji, displayWord: inferred.displayWord, bestWord: inferred.bestWord }),
             primaryReading: selectPrimaryReading(inferred),
             onReading,
             kunReading,
@@ -216,6 +234,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
         formatExampleSentence,
         mapWithConcurrency,
         resolveStrokeOrderFields,
+        selectDisplayWord,
         selectPrimaryReading,
     };
 }
@@ -232,5 +251,6 @@ module.exports = {
     formatExampleSentence: defaultExportService.formatExampleSentence,
     mapWithConcurrency: defaultExportService.mapWithConcurrency,
     resolveStrokeOrderFields: defaultExportService.resolveStrokeOrderFields,
+    selectDisplayWord: defaultExportService.selectDisplayWord,
     selectPrimaryReading: defaultExportService.selectPrimaryReading,
 };

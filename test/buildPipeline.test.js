@@ -186,7 +186,7 @@ test("runBuildPipeline writes exports reports summary and an import-ready packag
     assert.equal(fs.existsSync(path.join(outDir, "package", "IMPORT.txt")), true);
 
     const tsv = fs.readFileSync(path.join(outDir, "exports", "jlpt-n5.tsv"), "utf-8");
-    assert.match(tsv, /^Kanji\tMeaningJP\tPrimaryReading\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence/m);
+    assert.match(tsv, /^Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence/m);
     assert.match(tsv, /^日\t/m);
 
     const storedSummary = JSON.parse(fs.readFileSync(path.join(outDir, "build-summary.json"), "utf-8"));

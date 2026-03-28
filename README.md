@@ -73,7 +73,7 @@ npm run deck:review:n4
 npm run deck:review:n5
 ```
 
-- `deck:preview` shows meaning, primary reading, on-yomi, kun-yomi, notes, example sentence, radical, and media presence.
+- `deck:preview` shows the learner-facing study word, meaning, primary reading, on-yomi, kun-yomi, notes, example sentence, radical, and media presence.
 - Preview and golden review now consume the split reading fields directly instead of depending on an internal combined-reading string.
 - `deck:review:n4` and `deck:review:n5` run the tracked golden benchmark sets against hand-picked cards.
 - Build/report CLIs now reject unsupported flags instead of silently ignoring them, and `deck:apkg` expects a fresh `deck:ready` package as its input.
@@ -226,7 +226,8 @@ The exported deck includes these fields:
 
 Behavior:
 
-- `MeaningJP` carries the learner-facing display word plus the English gloss.
+- `DisplayWord` carries the learner-facing study form shown on the front of the card, such as `話す`, `行く`, or `今`.
+- `MeaningJP` carries that learner-facing display word plus the English gloss.
 - `PrimaryReading` carries the pronunciation of that learner-facing display word when one is available.
 - `OnReading` keeps the full on-yomi list for reference.
 - `KunReading` keeps the full kun-yomi list for reference.

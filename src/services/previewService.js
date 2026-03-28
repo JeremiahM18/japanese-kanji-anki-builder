@@ -19,6 +19,7 @@ function formatPreviewCard(card) {
         lines.push(`Preview note: ${card.warning}`);
     }
 
+    lines.push(`Study word: ${card.displayWord || "n/a"}`);
     lines.push(`Meaning: ${card.meaningJP || "n/a"}`);
     lines.push(`Primary reading: ${card.primaryReading || "n/a"}`);
     lines.push(`On-yomi: ${card.onReading || "n/a"}`);

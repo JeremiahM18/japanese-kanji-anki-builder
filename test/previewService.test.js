@@ -7,6 +7,7 @@ test("formatPreviewCard renders user-facing card details and media presence", ()
     const text = formatPreviewCard({
         kanji: "日",
         levelLabel: "N5",
+        displayWord: "日本",
         meaningJP: "日本 （にほん） ／ day",
         primaryReading: "にほん",
         onReading: "オン:ニチ",
@@ -23,6 +24,7 @@ test("formatPreviewCard renders user-facing card details and media presence", ()
     });
 
     assert.match(text, /日 \(N5\)/);
+    assert.match(text, /Study word: 日本/);
     assert.match(text, /Primary reading: にほん/);
     assert.match(text, /On-yomi: オン:ニチ/);
     assert.match(text, /Kun-yomi: くん:ひ/);
@@ -47,6 +49,7 @@ test("formatPreviewCard marks offline local fallback cards", () => {
         levelLabel: "N5",
         previewMode: "offline-local-fallback",
         warning: "Preview used local fallback data because the kanji API could not be reached and no cached entry was available.",
+        displayWord: "学",
         meaningJP: "学校",
         primaryReading: "まなぶ",
         onReading: "オン:ガク",

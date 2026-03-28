@@ -58,9 +58,14 @@ function main() {
     process.stdout.write(formatReport(summary));
 }
 
-try {
-    main();
-} catch (err) {
-    console.error(err.stack || err);
-    process.exit(1);
+if (require.main === module) {
+    main().catch((err) => {
+        console.error(err.stack || err);
+        process.exit(1);
+    });
 }
+
+module.exports = {
+    main,
+    parseArgs,
+};

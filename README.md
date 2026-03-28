@@ -75,6 +75,7 @@ npm run deck:review:n5
 - `deck:review:n4` and `deck:review:n5` run the tracked golden benchmark sets against hand-picked cards.
 - Build/report CLIs now reject unsupported flags instead of silently ignoring them, and `deck:apkg` expects a fresh `deck:ready` package as its input.
 - Shared CLI parsing helpers now live in `src/utils/cliArgs.js` so the main scripts handle flags consistently.
+- Script entrypoints now consistently use `require.main === module` guards and export their `main`/`parseArgs` functions where applicable, which keeps them testable and safer to reuse.
 - If the upstream kanji API is unavailable, preview falls back to local sentence corpus, curated study data, radicals, and managed media.
 
 ### Build and package a deck

@@ -3836,7 +3836,12 @@
         "example",
         "starter"
       ]
-    }
+    },
+    "breakdownDisplayWord": {
+      "written": "仕",
+      "pron": "し"
+    },
+    "breakdownEnglishMeaning": "work / serve"
   },
   "使": {
     "englishMeaning": "use",
@@ -4173,7 +4178,12 @@
         "example",
         "starter"
       ]
-    }
+    },
+    "breakdownDisplayWord": {
+      "written": "事",
+      "pron": "ごと"
+    },
+    "breakdownEnglishMeaning": "matter / work"
   },
   "似": {
     "englishMeaning": "resemble / be similar",
@@ -4888,7 +4898,12 @@
         "example",
         "starter"
       ]
-    }
+    },
+    "breakdownDisplayWord": {
+      "written": "週",
+      "pron": "しゅう"
+    },
+    "breakdownEnglishMeaning": "week"
   },
   "集": {
     "englishMeaning": "gather / collect",
@@ -5908,7 +5923,12 @@
         "example",
         "starter"
       ]
-    }
+    },
+    "breakdownDisplayWord": {
+      "written": "生",
+      "pron": "せい"
+    },
+    "breakdownEnglishMeaning": "life / birth"
   },
   "声": {
     "englishMeaning": "voice / sound",
@@ -7095,7 +7115,12 @@
         "example",
         "starter"
       ]
-    }
+    },
+    "breakdownDisplayWord": {
+      "written": "朝",
+      "pron": "あさ"
+    },
+    "breakdownEnglishMeaning": "morning"
   },
   "町": {
     "englishMeaning": "town",
@@ -7702,7 +7727,12 @@
         "example",
         "starter"
       ]
-    }
+    },
+    "breakdownDisplayWord": {
+      "written": "働く",
+      "pron": "はたらく"
+    },
+    "breakdownEnglishMeaning": "work / labor"
   },
   "動": {
     "englishMeaning": "move",
@@ -9710,7 +9740,16 @@
         "example",
         "starter"
       ]
-    }
+    },
+    "displayWord": {
+      "written": "夜",
+      "pron": "よる"
+    },
+    "breakdownDisplayWord": {
+      "written": "夜",
+      "pron": "よる"
+    },
+    "breakdownEnglishMeaning": "night"
   },
   "野": {
     "englishMeaning": "field / plain",
@@ -9876,7 +9915,12 @@
         "example",
         "starter"
       ]
-    }
+    },
+    "breakdownDisplayWord": {
+      "written": "夕",
+      "pron": "ゆう"
+    },
+    "breakdownEnglishMeaning": "evening"
   },
   "予": {
     "englishMeaning": "plan / in advance",
@@ -10581,6 +10625,41 @@
       "japanese": "家で晩ご飯を食べます。",
       "reading": "いえでばんごはんをたべます。",
       "english": "I eat dinner at home.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "誕": {
+    "englishMeaning": "birth",
+    "breakdownEnglishMeaning": "birth",
+    "displayWord": {
+      "written": "誕",
+      "pron": "たん"
+    },
+    "breakdownDisplayWord": {
+      "written": "誕",
+      "pron": "たん"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "誕生日"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "誕生日 （たんじょうび） - birthday",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "来月は弟の誕生日です。",
+      "reading": "らいげつはおとうとのたんじょうびです。",
+      "english": "Next month is my younger brother's birthday.",
       "source": "starter-curated",
       "tags": [
         "example",

@@ -854,17 +854,19 @@
   "休み|やすみ": {
     "written": "休み",
     "reading": "やすみ",
-    "meaning": "holiday / day off",
+    "meaning": "day off / break / holiday",
     "jlpt": 5,
+    "source": "starter-word",
     "tags": [
+      "n5",
       "starter",
-      "core",
-      "n5"
+      "reading-coverage"
     ],
+    "notes": "Common noun form built from 休む.",
     "exampleSentence": {
-      "japanese": "日曜日は休みです。",
-      "reading": "にちようびはやすみです。",
-      "english": "Sunday is a day off."
+      "japanese": "今日は学校が休みです。",
+      "reading": "きょうはがっこうがやすみです。",
+      "english": "School is off today."
     }
   },
   "休む|やすむ": {
@@ -4171,6 +4173,75 @@
       "japanese": "先生と日本語で話します。",
       "reading": "せんせいとにほんごではなします。",
       "english": "I speak with the teacher in Japanese."
+    }
+  },
+  "下さい|ください": {
+    "written": "下さい",
+    "reading": "ください",
+    "meaning": "please give me / please",
+    "jlpt": 5,
+    "source": "starter-word",
+    "tags": [
+      "n5",
+      "starter",
+      "reading-coverage"
+    ],
+    "notes": "Useful polite request form connected to the ください reading.",
+    "exampleSentence": {
+      "japanese": "水を下さい。",
+      "reading": "みずをください。",
+      "english": "Please give me water."
+    }
+  },
+  "下りる|おりる": {
+    "written": "下りる",
+    "reading": "おりる",
+    "meaning": "to go down / descend",
+    "jlpt": 5,
+    "source": "starter-word",
+    "tags": [
+      "n5",
+      "starter",
+      "reading-coverage"
+    ],
+    "exampleSentence": {
+      "japanese": "階段を下ります。",
+      "reading": "かいだんをおります。",
+      "english": "I go down the stairs."
+    }
+  },
+  "下ろす|おろす": {
+    "written": "下ろす",
+    "reading": "おろす",
+    "meaning": "to lower / take down",
+    "jlpt": 5,
+    "source": "starter-word",
+    "tags": [
+      "n5",
+      "starter",
+      "reading-coverage"
+    ],
+    "exampleSentence": {
+      "japanese": "かばんをいすに下ろします。",
+      "reading": "かばんをいすにおろします。",
+      "english": "I put my bag down on the chair."
+    }
+  },
+  "上着|うわぎ": {
+    "written": "上着",
+    "reading": "うわぎ",
+    "meaning": "jacket / outerwear",
+    "jlpt": 5,
+    "source": "starter-word",
+    "tags": [
+      "n5",
+      "starter",
+      "reading-coverage"
+    ],
+    "exampleSentence": {
+      "japanese": "寒いので上着を着ます。",
+      "reading": "さむいのでうわぎをきます。",
+      "english": "I wear a jacket because it is cold."
     }
   }
 }

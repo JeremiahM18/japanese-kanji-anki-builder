@@ -2,6 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const { loadAnkiNoteSchema } = require("../src/config/ankiNoteSchema");
+const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const { buildBreakdownInference, createWordExportService, inferWordLevel } = require("../src/services/wordExportService");
 
 test("loadAnkiNoteSchema can load the shared word note contract", () => {
@@ -71,6 +72,18 @@ test("buildBreakdownInference suppresses katakana-only exact-match primaries", (
 
     assert.equal(result.primaryReading, "");
     assert.equal(result.meaningJP, "二 ／ two");
+});
+
+test("starter curated data provides learner-friendly N5 breakdown fallbacks", () => {
+    const curatedStudyData = loadCuratedStudyData();
+
+    assert.deepEqual(curatedStudyData["中"].displayWord, { written: "中", pron: "なか" });
+    assert.deepEqual(curatedStudyData["分"].displayWord, { written: "分", pron: "ぶん" });
+    assert.equal(curatedStudyData["分"].englishMeaning, "part / minute");
+    assert.deepEqual(curatedStudyData["部"].displayWord, { written: "部", pron: "ぶ" });
+    assert.deepEqual(curatedStudyData["所"].displayWord, { written: "所", pron: "ところ" });
+    assert.deepEqual(curatedStudyData["座"].displayWord, { written: "座る", pron: "すわる" });
+    assert.deepEqual(curatedStudyData["閉"].displayWord, { written: "閉める", pron: "しめる" });
 });
 
 test("buildWordTsvForJlptLevel prefers curated N5 word entries and suppresses uncurated alternate readings", async () => {

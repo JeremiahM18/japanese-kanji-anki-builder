@@ -119,7 +119,7 @@ Important word-deck rules:
 
 - word identity is `written + reading`
 - curated word entries suppress uncurated alternate readings for the same written form
-- kanji breakdown panels on the back prefer curated kanji display words and meanings, then fall back to bare-kanji meanings and reading lists when the constituent kanji should stay generic
+- kanji breakdown panels on the back prefer curated kanji display words and meanings, which lets starter curation pin learner-friendly forms such as `大きい`, `小さい`, `高い`, and `前` instead of raw dictionary winners
 - use `--include-inferred` when you explicitly want to expand beyond curated words during exploration
 
 ### Lower-level build

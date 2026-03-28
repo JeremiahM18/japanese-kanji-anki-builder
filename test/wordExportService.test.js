@@ -32,6 +32,27 @@ test("inferWordLevel uses the hardest constituent JLPT kanji", () => {
     }), 4);
 });
 
+test("buildBreakdownInference prefers curated display words for learner-facing kanji panels", () => {
+    const result = buildBreakdownInference({
+        kanji: "大",
+        inference: {
+            candidates: [{ written: "大", pron: "おおい", gloss: "big / large", score: 100 }],
+            primaryReading: "おおい",
+            englishMeaning: "big / large",
+            meaningJP: "大 （おおい） ／ big / large",
+            onReading: "オン:タイ、 ダイ",
+            kunReading: "くん:-おお.いに、 おお-、 おお.きい",
+        },
+        curatedEntry: {
+            englishMeaning: "big / large",
+            displayWord: { written: "大きい", pron: "おおきい" },
+        },
+    });
+
+    assert.equal(result.primaryReading, "おおきい");
+    assert.equal(result.meaningJP, "大きい （おおきい） ／ big / large");
+});
+
 test("buildBreakdownInference suppresses katakana-only exact-match primaries", () => {
     const result = buildBreakdownInference({
         kanji: "二",

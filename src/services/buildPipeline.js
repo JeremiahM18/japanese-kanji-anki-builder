@@ -135,6 +135,18 @@ function buildSelectedKanjiByLevel({ jlptOnlyJson, levels, limit, selectKanjiFor
     );
 }
 
+function filterJlptOnlyJsonByLevels(jlptOnlyJson = {}, levels = []) {
+    const selectedLevels = new Set(Array.isArray(levels) ? levels : []);
+
+    if (selectedLevels.size === 0) {
+        return { ...jlptOnlyJson };
+    }
+
+    return Object.fromEntries(
+        Object.entries(jlptOnlyJson).filter(([, value]) => selectedLevels.has(value?.jlpt))
+    );
+}
+
 function selectBuildKanjiList({ jlptOnlyJson, levels, limit, selectKanjiForSyncFn }) {
     const selectedByLevel = buildSelectedKanjiByLevel({
         jlptOnlyJson,
@@ -318,7 +330,7 @@ async function runBuildPipeline({
     });
 
     const mediaCoverage = await buildMediaCoverageSummaryFn({
-        jlptOnlyJson,
+        jlptOnlyJson: filterJlptOnlyJsonByLevels(jlptOnlyJson, levels),
         mediaRootDir: config.mediaRootDir,
     });
 
@@ -395,6 +407,7 @@ async function runBuildPipeline({
 module.exports = {
     buildBuildPaths,
     buildScopedCoverageRatio,
+    filterJlptOnlyJsonByLevels,
     buildSelectedKanjiByLevel,
     parseLevelsArgument,
     runBuildPipeline,

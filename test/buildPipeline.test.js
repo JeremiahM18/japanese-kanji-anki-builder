@@ -72,6 +72,34 @@ test("runBuildPipeline writes exports reports summary and an import-ready packag
     fs.writeFileSync(path.join(mediaBasePath, "images", "65E5_日-stroke-order.svg"), "<svg />", "utf-8");
     fs.writeFileSync(path.join(mediaBasePath, "animations", "65E5_日-stroke-order.gif"), "gif", "utf-8");
     fs.writeFileSync(path.join(mediaBasePath, "audio", "65E5_日-kanji-reading-日.mp3"), "mp3", "utf-8");
+    fs.writeFileSync(path.join(mediaBasePath, "manifest.json"), `${JSON.stringify({
+        kanji: "日",
+        version: 1,
+        updatedAt: "2026-01-01T00:00:00.000Z",
+        assets: {
+            strokeOrderImage: {
+                kind: "image",
+                path: "images/65E5_日-stroke-order.svg",
+                mimeType: "image/svg+xml",
+                source: "local-filesystem",
+            },
+            strokeOrderAnimation: {
+                kind: "animation",
+                path: "animations/65E5_日-stroke-order.gif",
+                mimeType: "image/gif",
+                source: "local-filesystem",
+            },
+            audio: [{
+                kind: "audio",
+                path: "audio/65E5_日-kanji-reading-日.mp3",
+                mimeType: "audio/mpeg",
+                source: "local-filesystem",
+                category: "kanji-reading",
+                text: "日",
+                locale: "ja-JP",
+            }],
+        },
+    }, null, 2)}\n`, "utf-8");
 
     const summary = await runBuildPipeline({
         config: {
@@ -170,9 +198,9 @@ test("runBuildPipeline writes exports reports summary and an import-ready packag
     });
     assert.equal(storedSummary.coverage.sentenceCorpus, 0.5);
     assert.equal(storedSummary.coverage.curatedStudyData, 0.5);
-    assert.equal(storedSummary.coverage.strokeOrder, 0);
-    assert.equal(storedSummary.coverage.audio, 0);
-    assert.equal(storedSummary.coverage.fullMedia, 0);
+    assert.equal(storedSummary.coverage.strokeOrder, 0.5);
+    assert.equal(storedSummary.coverage.audio, 0.5);
+    assert.equal(storedSummary.coverage.fullMedia, 0.5);
 
     const apkgPath = storedSummary.package.ankiPackage?.filePath;
     if (apkgPath && commandAvailable("sqlite3", "-version") && commandAvailable("tar")) {

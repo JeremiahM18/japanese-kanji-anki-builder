@@ -47,11 +47,12 @@ test("buildStrokeOrderImageCandidates includes Wikimedia and KanjiVG image varia
     assert.ok(candidates.includes("円 - U+05186- KanjiVG stroke order"));
 });
 
-test("buildStrokeOrderAnimationCandidates includes Commons animation variants", () => {
+test("buildStrokeOrderAnimationCandidates includes Commons and KanjiVG animation variants", () => {
     const candidates = buildStrokeOrderAnimationCandidates("四");
     assert.ok(candidates.includes("四-order"));
     assert.ok(candidates.includes("四-calligraphic-order"));
     assert.ok(candidates.includes("四-cursive-order"));
+    assert.ok(candidates.includes("四 - U+056DB- KanjiVG stroke order"));
 });
 
 test("findMatchingAsset resolves a local stroke-order source file", async () => {
@@ -124,6 +125,36 @@ test("findMatchingAsset resolves calligraphic Commons animation names", async ()
 
         assert.equal(asset.fileName, "四-calligraphic-order.gif");
         assert.equal(asset.mimeType, "image/gif");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+test("syncKanji can promote KanjiVG SVGs into animation coverage", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const imageDir = path.join(rootDir, "source-images");
+        const animationDir = path.join(rootDir, "source-animations");
+        fs.mkdirSync(imageDir, { recursive: true });
+        fs.mkdirSync(animationDir, { recursive: true });
+        fs.writeFileSync(path.join(imageDir, "今 - U+04ECA- KanjiVG stroke order.svg"), "svg-binary", "utf-8");
+
+        const service = createStrokeOrderService({
+            mediaRootDir: path.join(rootDir, "media"),
+            imageSourceDir: imageDir,
+            animationSourceDir: animationDir,
+        });
+
+        const result = await service.syncKanji("今");
+        const mediaId = buildKanjiMediaId("今");
+
+        assert.equal(result.found.image, true);
+        assert.equal(result.found.animation, true);
+        assert.equal(result.manifest.assets.strokeOrderImage.path, `images/${mediaId}-stroke-order.svg`);
+        assert.equal(result.manifest.assets.strokeOrderAnimation.path, `animations/${mediaId}-stroke-order.svg`);
+        assert.equal(result.manifest.assets.strokeOrderAnimation.source, "kanjivg-svg-fallback");
+        assert.equal(await service.getBestStrokeOrderPath("今"), `animations/${mediaId}-stroke-order.svg`);
     } finally {
         cleanupTempDir(rootDir);
     }

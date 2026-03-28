@@ -33,6 +33,36 @@ test("hasAnyCandidate detects candidate hits in an index", () => {
     assert.equal(hasAnyCandidate(index, ["本", "学"]), false);
 });
 
+test("buildMediaSourceReport counts KanjiVG SVGs as animation coverage", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const imageSourceDir = path.join(rootDir, "images");
+        const animationSourceDir = path.join(rootDir, "animations");
+        fs.mkdirSync(imageSourceDir, { recursive: true });
+        fs.mkdirSync(animationSourceDir, { recursive: true });
+        fs.writeFileSync(path.join(imageSourceDir, "今 - U+04ECA- KanjiVG stroke order.svg"), "svg", "utf-8");
+
+        const report = await buildMediaSourceReport({
+            jlptOnlyJson: {
+                今: { jlpt: 5 },
+            },
+            strokeOrderImageSourceDir: imageSourceDir,
+            strokeOrderAnimationSourceDir: animationSourceDir,
+            audioSourceDir: path.join(rootDir, "audio"),
+            audioEnabled: false,
+            levels: [5],
+            limit: 10,
+        });
+
+        assert.equal(report.imageAvailableCount, 1);
+        assert.equal(report.animationAvailableCount, 1);
+        assert.equal(report.rows.length, 0);
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
 test("buildPreferredFileNames surfaces accepted Commons filename variants", () => {
     assert.deepEqual(
         buildPreferredFileNames(["円", "円-bw", "円-jbw"], [".png", ".webp"], 6),

@@ -123,6 +123,7 @@ npm run media:report -- --limit=25
 - `media:discover:stroke-order` combines Commons title search with file-prefix listing to find real asset names.
 - `media:fetch:stroke-order` downloads only confirmed Commons assets, reuses discovery cache, and backs off on `429` responses.
 - `media:import:kanjivg` imports official KanjiVG SVG files into the repo's canonical source layout.
+- When a GIF/WebP animation is missing, the sync pipeline can promote a KanjiVG SVG from the image source tree into the managed animation slot so stroke-order animation coverage stays complete.
 
 If you are focused only on stroke order, run readiness and media reporting with `ENABLE_AUDIO=false`.
 
@@ -212,6 +213,7 @@ Behavior:
 - `StrokeOrder` prefers animation when available, then static image.
 - `StrokeOrderImage` exposes the static asset directly.
 - `StrokeOrderAnimation` exposes the animation asset directly.
+- Managed animation assets can come from native animation files (`.gif`, `.webp`, `.apng`) or from KanjiVG SVG fallback when no dedicated animation file exists.
 - `Audio` exports Anki sound markup when a managed audio asset exists.
 
 Supported media sourcing:

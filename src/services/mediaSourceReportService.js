@@ -50,6 +50,11 @@ function hasAnyCandidate(index, candidates) {
     return false;
 }
 
+function hasAnimationSource({ animationIndex, imageIndex, kanji }) {
+    return hasAnyCandidate(animationIndex, buildStrokeOrderAnimationCandidates(kanji))
+        || hasAnyCandidate(imageIndex, buildStrokeOrderAnimationCandidates(kanji));
+}
+
 function buildPreferredFileNames(baseCandidates, extensions, limit = 4) {
     const fileNames = [];
 
@@ -170,7 +175,7 @@ async function buildMediaSourceReport({
 
     for (const entry of targetKanji) {
         const hasImage = hasAnyCandidate(imageIndex, buildStrokeOrderImageCandidates(entry.kanji));
-        const hasAnimation = hasAnyCandidate(animationIndex, buildStrokeOrderAnimationCandidates(entry.kanji));
+        const hasAnimation = hasAnimationSource({ animationIndex, imageIndex, kanji: entry.kanji });
         const hasAudio = hasAnyCandidate(audioIndex, buildAudioFileCandidates({ kanji: entry.kanji, text: entry.kanji }));
 
         if (hasImage && hasAnimation && (!audioEnabled || hasAudio)) {
@@ -198,7 +203,7 @@ async function buildMediaSourceReport({
         levels: targetLevels,
         totalKanji: targetKanji.length,
         imageAvailableCount: targetKanji.filter((entry) => hasAnyCandidate(imageIndex, buildStrokeOrderImageCandidates(entry.kanji))).length,
-        animationAvailableCount: targetKanji.filter((entry) => hasAnyCandidate(animationIndex, buildStrokeOrderAnimationCandidates(entry.kanji))).length,
+        animationAvailableCount: targetKanji.filter((entry) => hasAnimationSource({ animationIndex, imageIndex, kanji: entry.kanji })).length,
         audioEnabled,
         audioAvailableCount: audioEnabled ? targetKanji.filter((entry) => hasAnyCandidate(audioIndex, buildAudioFileCandidates({ kanji: entry.kanji, text: entry.kanji }))).length : 0,
         imageSourceDir: strokeOrderImageSourceDir,

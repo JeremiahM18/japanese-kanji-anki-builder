@@ -96,6 +96,10 @@ function buildStrokeOrderAnimationCandidates(kanji) {
         candidates.add(`${base}-cursive-order`);
     }
 
+    for (const kanjiVgBase of buildKanjiVgStrokeOrderCandidates(kanji)) {
+        candidates.add(kanjiVgBase);
+    }
+
     return [...candidates];
 }
 
@@ -161,6 +165,14 @@ function createStrokeOrderService({
             name: "local-filesystem",
             sourceDir: animationSourceDir,
             extensionMap: ANIMATION_EXTENSIONS,
+            buildCandidates: buildStrokeOrderAnimationCandidates,
+        }),
+        createLocalDirectoryProvider({
+            name: "kanjivg-svg-fallback",
+            sourceDir: imageSourceDir,
+            extensionMap: new Map([
+                [".svg", "image/svg+xml"],
+            ]),
             buildCandidates: buildStrokeOrderAnimationCandidates,
         }),
         ...animationProviders,

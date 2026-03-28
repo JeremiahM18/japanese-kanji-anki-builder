@@ -594,7 +594,12 @@
         "example",
         "starter"
       ]
-    }
+    },
+    "breakdownDisplayWord": {
+      "written": "園",
+      "pron": "えん"
+    },
+    "breakdownEnglishMeaning": "garden / park"
   },
   "屋": {
     "englishMeaning": "shop / room",
@@ -1590,6 +1595,10 @@
         "example",
         "starter"
       ]
+    },
+    "displayWord": {
+      "written": "起きる",
+      "pron": "おきる"
     }
   },
   "客": {
@@ -3888,6 +3897,10 @@
         "example",
         "starter"
       ]
+    },
+    "displayWord": {
+      "written": "使う",
+      "pron": "つかう"
     }
   },
   "四": {
@@ -4982,6 +4995,10 @@
         "example",
         "starter"
       ]
+    },
+    "displayWord": {
+      "written": "住む",
+      "pron": "すむ"
     }
   },
   "十": {
@@ -5601,6 +5618,41 @@
       ]
     }
   },
+  "寝": {
+    "englishMeaning": "sleep / go to bed",
+    "source": "starter-curated",
+    "tags": [
+      "n4",
+      "starter"
+    ],
+    "jlpt": 4,
+    "preferredWords": [
+      "寝る"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "寝る （ねる） - sleep / go to bed",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "毎晩十一時に寝ます。",
+      "reading": "まいばんじゅういちじにねます。",
+      "english": "I go to bed at eleven every night.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    },
+    "displayWord": {
+      "written": "寝る",
+      "pron": "ねる"
+    },
+    "breakdownDisplayWord": {
+      "written": "寝る",
+      "pron": "ねる"
+    },
+    "breakdownEnglishMeaning": "sleep / go to bed"
+  },
   "心": {
     "englishMeaning": "heart / mind",
     "source": "starter-curated",
@@ -6097,7 +6149,12 @@
     "displayWord": {
       "written": "切る",
       "pron": "きる"
-    }
+    },
+    "breakdownDisplayWord": {
+      "written": "切る",
+      "pron": "きる"
+    },
+    "breakdownEnglishMeaning": "cut"
   },
   "先": {
     "englishMeaning": "ahead / previous",
@@ -6641,6 +6698,10 @@
         "example",
         "starter"
       ]
+    },
+    "displayWord": {
+      "written": "待つ",
+      "pron": "まつ"
     }
   },
   "貸": {
@@ -6850,6 +6911,41 @@
       "japanese": "この問題は思ったより簡単です。",
       "reading": "このもんだいはおもったよりかんたんです。",
       "english": "This problem is easier than I thought.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "誕": {
+    "englishMeaning": "birth",
+    "breakdownEnglishMeaning": "birth",
+    "displayWord": {
+      "written": "誕",
+      "pron": "たん"
+    },
+    "breakdownDisplayWord": {
+      "written": "誕",
+      "pron": "たん"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "誕生日"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "誕生日 （たんじょうび） - birthday",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "来月は弟の誕生日です。",
+      "reading": "らいげつはおとうとのたんじょうびです。",
+      "english": "Next month is my younger brother's birthday.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -8455,6 +8551,42 @@
       "pron": "はん"
     }
   },
+  "晩": {
+    "englishMeaning": "evening",
+    "breakdownEnglishMeaning": "evening",
+    "displayWord": {
+      "written": "晩",
+      "pron": "ばん"
+    },
+    "breakdownDisplayWord": {
+      "written": "晩",
+      "pron": "ばん"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n4",
+      "starter"
+    ],
+    "jlpt": 4,
+    "preferredWords": [
+      "晩ご飯",
+      "今晩"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "晩ご飯 （ばんごはん） - dinner ／ 今晩 （こんばん） - tonight",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "家で晩ご飯を食べます。",
+      "reading": "いえでばんごはんをたべます。",
+      "english": "I eat dinner at home.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
   "否": {
     "englishMeaning": "deny / reject",
     "displayWord": {
@@ -8796,6 +8928,41 @@
         "starter"
       ]
     }
+  },
+  "符": {
+    "englishMeaning": "sign / token",
+    "source": "starter-curated",
+    "tags": [
+      "n2",
+      "starter"
+    ],
+    "jlpt": 2,
+    "preferredWords": [
+      "切符"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "切符 （きっぷ） - ticket",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "切符を買ってホームへ行きます。",
+      "reading": "きっぷをかってほーむへいきます。",
+      "english": "I buy a ticket and go to the platform.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    },
+    "displayWord": {
+      "written": "符",
+      "pron": "ふ"
+    },
+    "breakdownDisplayWord": {
+      "written": "符",
+      "pron": "ぷ"
+    },
+    "breakdownEnglishMeaning": "sign / token"
   },
   "部": {
     "englishMeaning": "section / part",
@@ -9298,6 +9465,36 @@
       "japanese": "祖父は去年亡くなりました。",
       "reading": "そふはきょねんなくなりました。",
       "english": "My grandfather passed away last year.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "忙": {
+    "englishMeaning": "busy",
+    "displayWord": {
+      "written": "忙しい",
+      "pron": "いそがしい"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n4",
+      "starter"
+    ],
+    "jlpt": 4,
+    "preferredWords": [
+      "忙しい"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "忙しい （いそがしい） - busy",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "今週は仕事で忙しいです。",
+      "reading": "こんしゅうはしごとでいそがしいです。",
+      "english": "I am busy with work this week.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -10599,107 +10796,6 @@
       "japanese": "先生と日本語で話します。",
       "reading": "せんせいとにほんごではなします。",
       "english": "I speak with the teacher in Japanese.",
-      "source": "starter-curated",
-      "tags": [
-        "example",
-        "starter"
-      ]
-    }
-  },
-  "忙": {
-    "englishMeaning": "busy",
-    "displayWord": {
-      "written": "忙しい",
-      "pron": "いそがしい"
-    },
-    "source": "starter-curated",
-    "tags": [
-      "n4",
-      "starter"
-    ],
-    "jlpt": 4,
-    "preferredWords": [
-      "忙しい"
-    ],
-    "blockedWords": [],
-    "blockedSentencePhrases": [],
-    "notes": "忙しい （いそがしい） - busy",
-    "alternativeNotes": [],
-    "exampleSentence": {
-      "japanese": "今週は仕事で忙しいです。",
-      "reading": "こんしゅうはしごとでいそがしいです。",
-      "english": "I am busy with work this week.",
-      "source": "starter-curated",
-      "tags": [
-        "example",
-        "starter"
-      ]
-    }
-  },
-  "晩": {
-    "englishMeaning": "evening",
-    "breakdownEnglishMeaning": "evening",
-    "displayWord": {
-      "written": "晩",
-      "pron": "ばん"
-    },
-    "breakdownDisplayWord": {
-      "written": "晩",
-      "pron": "ばん"
-    },
-    "source": "starter-curated",
-    "tags": [
-      "n4",
-      "starter"
-    ],
-    "jlpt": 4,
-    "preferredWords": [
-      "晩ご飯",
-      "今晩"
-    ],
-    "blockedWords": [],
-    "blockedSentencePhrases": [],
-    "notes": "晩ご飯 （ばんごはん） - dinner ／ 今晩 （こんばん） - tonight",
-    "alternativeNotes": [],
-    "exampleSentence": {
-      "japanese": "家で晩ご飯を食べます。",
-      "reading": "いえでばんごはんをたべます。",
-      "english": "I eat dinner at home.",
-      "source": "starter-curated",
-      "tags": [
-        "example",
-        "starter"
-      ]
-    }
-  },
-  "誕": {
-    "englishMeaning": "birth",
-    "breakdownEnglishMeaning": "birth",
-    "displayWord": {
-      "written": "誕",
-      "pron": "たん"
-    },
-    "breakdownDisplayWord": {
-      "written": "誕",
-      "pron": "たん"
-    },
-    "source": "starter-curated",
-    "tags": [
-      "n3",
-      "starter"
-    ],
-    "jlpt": 3,
-    "preferredWords": [
-      "誕生日"
-    ],
-    "blockedWords": [],
-    "blockedSentencePhrases": [],
-    "notes": "誕生日 （たんじょうび） - birthday",
-    "alternativeNotes": [],
-    "exampleSentence": {
-      "japanese": "来月は弟の誕生日です。",
-      "reading": "らいげつはおとうとのたんじょうびです。",
-      "english": "Next month is my younger brother's birthday.",
       "source": "starter-curated",
       "tags": [
         "example",

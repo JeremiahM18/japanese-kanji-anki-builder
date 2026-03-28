@@ -6,15 +6,18 @@ const path = require("node:path");
 
 const {
     loadCuratedStudyData,
+    mergeCuratedEntry,
+    mergeCuratedStudyData,
     normalizeCuratedEntry,
     normalizeCuratedStudyData,
 } = require("../src/datasets/curatedStudyData");
 
-test("loadCuratedStudyData returns empty object when file is missing", () => {
+test("loadCuratedStudyData returns empty object when file and starter are missing", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "curated-study-"));
     const filePath = path.join(dir, "missing.json");
+    const starterPath = path.join(dir, "missing-starter.json");
 
-    assert.deepEqual(loadCuratedStudyData(filePath), {});
+    assert.deepEqual(loadCuratedStudyData(filePath, { starterPath }), {});
 });
 
 test("normalizeCuratedEntry canonicalizes metadata arrays and tags", () => {
@@ -59,19 +62,64 @@ test("normalizeCuratedStudyData sorts keys deterministically", () => {
     assert.deepEqual(Object.keys(result), ["日", "本"]);
 });
 
-test("loadCuratedStudyData validates and parses curated entries", () => {
+test("mergeCuratedEntry preserves starter defaults while keeping local overrides", () => {
+    const result = mergeCuratedEntry(
+        {
+            englishMeaning: "day / sun",
+            displayWord: { written: "日", pron: "ひ" },
+            notes: "starter-note",
+            exampleSentence: {
+                japanese: "今日は日曜日です。",
+                reading: "きょうはにちようびです。",
+                english: "Today is Sunday.",
+            },
+        },
+        {
+            notes: "local-note",
+            exampleSentence: {
+                english: "It is Sunday today.",
+            },
+        }
+    );
+
+    assert.equal(result.englishMeaning, "day / sun");
+    assert.equal(result.displayWord.pron, "ひ");
+    assert.equal(result.notes, "local-note");
+    assert.equal(result.exampleSentence.japanese, "今日は日曜日です。");
+    assert.equal(result.exampleSentence.english, "It is Sunday today.");
+});
+
+test("mergeCuratedStudyData overlays local entries onto starter entries field-by-field", () => {
+    const result = mergeCuratedStudyData(
+        {
+            日: {
+                englishMeaning: "day / sun",
+                displayWord: { written: "日", pron: "ひ" },
+            },
+        },
+        {
+            日: {
+                notes: "local-note",
+            },
+        }
+    );
+
+    assert.equal(result.日.englishMeaning, "day / sun");
+    assert.equal(result.日.displayWord.pron, "ひ");
+    assert.equal(result.日.notes, "local-note");
+});
+
+test("loadCuratedStudyData validates parses and merges starter data with local overrides", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "curated-study-"));
     const filePath = path.join(dir, "curated_study_data.json");
+    const starterPath = path.join(dir, "starter_curated_study_data.json");
 
-    fs.writeFileSync(filePath, JSON.stringify({
+    fs.writeFileSync(starterPath, JSON.stringify({
         日: {
             englishMeaning: "sun / day marker",
             displayWord: { written: "日", pron: "ひ" },
             preferredWords: ["日本", "日曜日"],
-            blockedWords: ["日中"],
-            blockedSentencePhrases: ["rare"],
-            alternativeNotes: ["note-a", "note-b"],
-            notes: "日本 （にほん） - Japan ／ curated-note",
+            notes: "日本 （にほん） - Japan ／ starter-note",
             exampleSentence: {
                 japanese: "日本は島国です。",
                 reading: "にほんはしまぐにです。",
@@ -80,7 +128,16 @@ test("loadCuratedStudyData validates and parses curated entries", () => {
         },
     }), "utf-8");
 
-    const result = loadCuratedStudyData(filePath);
+    fs.writeFileSync(filePath, JSON.stringify({
+        日: {
+            blockedWords: ["日中"],
+            blockedSentencePhrases: ["rare"],
+            alternativeNotes: ["note-a", "note-b"],
+            notes: "local-note",
+        },
+    }), "utf-8");
+
+    const result = loadCuratedStudyData(filePath, { starterPath });
 
     assert.equal(result.日.englishMeaning, "sun / day marker");
     assert.equal(result.日.displayWord.written, "日");
@@ -89,6 +146,7 @@ test("loadCuratedStudyData validates and parses curated entries", () => {
     assert.deepEqual(result.日.blockedWords, ["日中"]);
     assert.deepEqual(result.日.blockedSentencePhrases, ["rare"]);
     assert.deepEqual(result.日.alternativeNotes, ["note-a", "note-b"]);
+    assert.equal(result.日.notes, "local-note");
     assert.equal(result.日.exampleSentence.source, "curated-study-data");
     assert.deepEqual(result.日.exampleSentence.tags, ["curated"]);
 });

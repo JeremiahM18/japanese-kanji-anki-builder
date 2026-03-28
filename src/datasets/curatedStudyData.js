@@ -1,4 +1,5 @@
 const fs = require("node:fs");
+const path = require("node:path");
 const { z } = require("zod");
 
 const curatedSentenceSchema = z.object({
@@ -129,14 +130,67 @@ function normalizeCuratedStudyData(curatedStudyData = {}) {
     return normalized;
 }
 
-function loadCuratedStudyData(curatedStudyDataPath) {
-    if (!fs.existsSync(curatedStudyDataPath)) {
+function loadCuratedStudyDataFile(filePath) {
+    if (!filePath || !fs.existsSync(filePath)) {
         return {};
     }
 
-    const text = fs.readFileSync(curatedStudyDataPath, "utf-8");
+    const text = fs.readFileSync(filePath, "utf-8");
     const parsed = JSON.parse(text);
-    return normalizeCuratedStudyData(parsed);
+
+    if (!parsed || Array.isArray(parsed) || typeof parsed !== "object") {
+        throw new Error(`Expected JSON object in ${filePath}`);
+    }
+
+    return parsed;
+}
+
+function mergeCuratedEntry(starterEntry = {}, localEntry = {}) {
+    return {
+        ...starterEntry,
+        ...localEntry,
+        ...(starterEntry.displayWord || localEntry.displayWord
+            ? {
+                displayWord: {
+                    ...(starterEntry.displayWord || {}),
+                    ...(localEntry.displayWord || {}),
+                },
+            }
+            : {}),
+        ...(starterEntry.exampleSentence || localEntry.exampleSentence
+            ? {
+                exampleSentence: {
+                    ...(starterEntry.exampleSentence || {}),
+                    ...(localEntry.exampleSentence || {}),
+                },
+            }
+            : {}),
+    };
+}
+
+function mergeCuratedStudyData(starterEntries = {}, localEntries = {}) {
+    const merged = {};
+    const keys = new Set([
+        ...Object.keys(starterEntries || {}),
+        ...Object.keys(localEntries || {}),
+    ]);
+
+    for (const key of [...keys].sort(compareCuratedKeys)) {
+        merged[key] = mergeCuratedEntry(starterEntries?.[key], localEntries?.[key]);
+    }
+
+    return merged;
+}
+
+function loadCuratedStudyData(
+    curatedStudyDataPath,
+    {
+        starterPath = path.resolve(process.cwd(), "templates", "starter_curated_study_data.json"),
+    } = {}
+) {
+    const starterEntries = loadCuratedStudyDataFile(starterPath);
+    const localEntries = loadCuratedStudyDataFile(curatedStudyDataPath);
+    return normalizeCuratedStudyData(mergeCuratedStudyData(starterEntries, localEntries));
 }
 
 module.exports = {
@@ -146,6 +200,9 @@ module.exports = {
     curatedSentenceSchema,
     curatedStudyDataSchema,
     loadCuratedStudyData,
+    loadCuratedStudyDataFile,
+    mergeCuratedEntry,
+    mergeCuratedStudyData,
     normalizeCuratedDisplayWord,
     normalizeCuratedEntry,
     normalizeCuratedSentence,

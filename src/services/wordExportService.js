@@ -1,4 +1,5 @@
 const { createInferenceEngine } = require("../inference/inferenceEngine");
+const { buildMeaningJP } = require("../inference/meaningInference");
 const { inferSentenceCandidates, scoreCorpusSentence } = require("../inference/sentenceInference");
 const { createExportService, formatExampleSentence } = require("./exportService");
 const { buildOfflineFallbackCard } = require("./previewCardService");
@@ -314,21 +315,57 @@ function selectWordSentence({ candidate, curatedEntry, sourceKanji, constituentK
     } : null;
 }
 
-function buildBreakdownHtmlItem({ kanji, inference }) {
-    const mediaField = inference.strokeOrderAnimationField || inference.strokeOrderImageField || inference.strokeOrderField || "";
+function buildBreakdownInference({ kanji, inference, curatedEntry = null }) {
+    const exactCandidate = pickBestExactSingleCandidate(inference, kanji);
+    const exactPron = String(exactCandidate?.pron || "").trim();
+    const inferredPrimaryReading = String(inference?.primaryReading || "").trim();
+    const curatedDisplayWord = curatedEntry?.displayWord?.written
+        ? {
+            written: String(curatedEntry.displayWord.written).trim(),
+            pron: String(curatedEntry.displayWord.pron || "").trim(),
+        }
+        : null;
+    const useExactCandidate = !curatedDisplayWord
+        && exactCandidate?.written === kanji
+        && exactPron
+        && exactPron === inferredPrimaryReading;
+    const displayWord = curatedDisplayWord || (useExactCandidate
+        ? { written: kanji, pron: exactPron }
+        : { written: kanji, pron: "" });
+    const englishMeaning = String(
+        curatedEntry?.englishMeaning
+        || inference?.englishMeaning
+        || extractEnglishMeaningFromMeaningJP(inference?.meaningJP)
+        || ""
+    ).trim();
+
+    return {
+        primaryReading: curatedDisplayWord?.pron || (useExactCandidate ? exactPron : ""),
+        meaningJP: buildMeaningJP(displayWord, englishMeaning),
+        onReading: inference?.onReading || "",
+        kunReading: inference?.kunReading || "",
+        strokeOrderField: inference?.strokeOrderField || "",
+        strokeOrderImageField: inference?.strokeOrderImageField || "",
+        strokeOrderAnimationField: inference?.strokeOrderAnimationField || "",
+    };
+}
+
+function buildBreakdownHtmlItem({ kanji, inference, curatedEntry = null }) {
+    const breakdown = buildBreakdownInference({ kanji, inference, curatedEntry });
+    const mediaField = breakdown.strokeOrderAnimationField || breakdown.strokeOrderImageField || breakdown.strokeOrderField || "";
     const readingLines = [
-        inference.primaryReading ? `<div class="kanji-reading-line">Primary: ${inference.primaryReading}</div>` : "",
-        inference.onReading ? `<div class="kanji-reading-line">On-yomi: ${inference.onReading}</div>` : "",
-        inference.kunReading ? `<div class="kanji-reading-line">Kun-yomi: ${inference.kunReading}</div>` : "",
+        breakdown.primaryReading ? `<div class="kanji-reading-line">Primary: ${breakdown.primaryReading}</div>` : "",
+        breakdown.onReading ? `<div class="kanji-reading-line">On-yomi: ${breakdown.onReading}</div>` : "",
+        breakdown.kunReading ? `<div class="kanji-reading-line">Kun-yomi: ${breakdown.kunReading}</div>` : "",
     ].filter(Boolean).join("");
 
     return [
         '<div class="kanji-breakdown-item">',
         '<div class="kanji-breakdown-head">',
         `<span class="kanji-char">${kanji}</span>`,
-        inference.primaryReading ? `<span class="kanji-primary">${inference.primaryReading}</span>` : "",
+        breakdown.primaryReading ? `<span class="kanji-primary">${breakdown.primaryReading}</span>` : "",
         "</div>",
-        inference.meaningJP ? `<div class="kanji-meaning">${inference.meaningJP}</div>` : "",
+        breakdown.meaningJP ? `<div class="kanji-meaning">${breakdown.meaningJP}</div>` : "",
         readingLines,
         mediaField ? `<div class="kanji-media">${mediaField}</div>` : "",
         "</div>",
@@ -532,7 +569,11 @@ function createWordExportService({
                     if (!inference) {
                         return "";
                     }
-                    return buildBreakdownHtmlItem({ kanji, inference });
+                    return buildBreakdownHtmlItem({
+                        kanji,
+                        inference,
+                        curatedEntry: curatedStudyData?.[kanji] || null,
+                    });
                 })
                 .filter(Boolean)
                 .join("");
@@ -572,6 +613,7 @@ function createWordExportService({
     }
 
     return {
+        buildBreakdownInference,
         buildWordDeckForLevel,
         buildWordTsvForJlptLevel,
         buildCandidatePool,
@@ -587,6 +629,7 @@ function createWordExportService({
 const defaultWordExportService = createWordExportService();
 
 module.exports = {
+    buildBreakdownInference,
     buildCandidatePool,
     buildDisplayCandidate,
     buildJlptLabel,
@@ -603,3 +646,4 @@ module.exports = {
     pickPreferredCandidate,
     selectWordSentence,
 };
+

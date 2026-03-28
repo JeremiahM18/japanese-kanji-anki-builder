@@ -1,6 +1,6 @@
 const fs = require("node:fs");
 
-const { normalizeCuratedStudyData } = require("../datasets/curatedStudyData");
+const { mergeCuratedStudyData, normalizeCuratedStudyData } = require("../datasets/curatedStudyData");
 
 function readJsonObject(filePath) {
     const text = fs.readFileSync(filePath, "utf-8");
@@ -22,7 +22,7 @@ function bootstrapCuratedStudyData({
     const targetExists = fs.existsSync(targetPath);
     const existingEntries = targetExists ? readJsonObject(targetPath) : {};
     const nextEntries = merge
-        ? normalizeCuratedStudyData({ ...existingEntries, ...starterEntries })
+        ? normalizeCuratedStudyData(mergeCuratedStudyData(starterEntries, existingEntries))
         : starterEntries;
 
     if (!targetExists || merge) {

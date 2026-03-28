@@ -119,7 +119,7 @@ Important word-deck rules:
 
 - word identity is `written + reading`
 - curated word entries suppress uncurated alternate readings for the same written form
-- kanji breakdown panels on the back reuse the existing kanji inference and media pipeline
+- kanji breakdown panels on the back prefer curated kanji display words and meanings, then fall back to bare-kanji meanings and reading lists when the constituent kanji should stay generic
 - use `--include-inferred` when you explicitly want to expand beyond curated words during exploration
 
 ### Lower-level build
@@ -221,6 +221,8 @@ The project expects local ignored datasets under `data/`:
 
 Curated kanji study entries can pin a learner-facing display form with `displayWord`, for example `{ "written": "上", "pron": "うえ" }`, so exports and offline previews stay aligned even when the highest-ranked dictionary word uses a different surface form.
 
+Runtime curated kanji loading uses the tracked starter pack as a baseline and layers local ignored overrides on top, so starter improvements keep flowing into builds without clobbering local edits.
+
 Curated word study entries are keyed by `written|reading`, for example `今日|きょう`, so the word deck can intentionally keep `今日 / きょう` while excluding `今日 / こんにち` unless you curate both.
 
 Managed media is stored under:
@@ -284,7 +286,7 @@ Behavior:
 
 - the front shows the written study word with no furigana
 - the back shows the reading, English meaning, JLPT label, example sentence, and kanji breakdown
-- kanji breakdown panels reuse the kanji deck's meaning, reading, and stroke-order media
+- kanji breakdown panels prefer curated kanji display words and meanings, then fall back to bare-kanji meanings, reading lists, and stroke-order media when the constituent kanji should stay generic
 - the shared Anki note schemas live in `src/config/ankiNoteSchema.json` and `src/config/ankiWordNoteSchema.json`, which are the single sources of truth for exported field order, note type metadata, and card template layout
 
 ## Media model

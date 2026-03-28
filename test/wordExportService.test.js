@@ -5,6 +5,56 @@ const { loadAnkiNoteSchema } = require("../src/config/ankiNoteSchema");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const { buildBreakdownInference, createWordExportService, inferWordLevel } = require("../src/services/wordExportService");
 
+test("buildWordTsvForJlptLevel ignores repetition marks in kanji breakdowns", async () => {
+    const wordExportService = createWordExportService({
+        sentenceCorpus: [],
+        curatedStudyData: {
+            時: {
+                englishMeaning: "time / o'clock",
+                preferredWords: ["時間", "三時", "時々"],
+                notes: "時間 （じかん） - time ／ 三時 （さんじ） - three o'clock ／ 時々 （ときどき） - sometimes",
+            },
+        },
+        wordStudyData: {
+            "時々|ときどき": {
+                written: "時々",
+                reading: "ときどき",
+                meaning: "sometimes",
+                jlpt: 5,
+                exampleSentence: {
+                    japanese: "時々公園で友だちに会います。",
+                    reading: "ときどきこうえんでともだちにあいます。",
+                    english: "I sometimes meet my friend at the park.",
+                },
+            },
+        },
+    });
+
+    const kanjiApiClient = {
+        async getKanji(kanji) {
+            return kanji === "時"
+                ? { meanings: ["time", "hour"], on_readings: ["ジ"], kun_readings: ["とき"] }
+                : { meanings: [kanji], on_readings: [], kun_readings: [] };
+        },
+        async getWords(kanji) {
+            return kanji === "時"
+                ? [{ variants: [{ written: "時", pronounced: "じ", priorities: ["ichi1"] }], meanings: [{ glosses: ["time"] }] }]
+                : [];
+        },
+    };
+
+    const jlptOnlyJson = { 時: { jlpt: 5 } };
+    const { tsv } = await wordExportService.buildWordTsvForJlptLevel({
+        levelNumber: 5,
+        jlptOnlyJson,
+        kanjiApiClient,
+        concurrency: 1,
+    });
+
+    assert.match(tsv, /時々 （ときどき）/u);
+    assert.doesNotMatch(tsv, /class="kanji-char">々</u);
+});
+
 test("loadAnkiNoteSchema can load the shared word note contract", () => {
     const schema = loadAnkiNoteSchema("word");
 

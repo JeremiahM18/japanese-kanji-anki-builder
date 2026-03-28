@@ -13,7 +13,7 @@ const HAN_RE = /\p{Script=Han}/u;
 const KATAKANA_ONLY_RE = /^[\p{Script=Katakana}ー]+$/u;
 
 function extractConstituentKanji(text) {
-    return [...new Set(Array.from(String(text ?? "")).filter((char) => HAN_RE.test(char)))];
+    return [...new Set(Array.from(String(text ?? "")).filter((char) => HAN_RE.test(char) && char !== "々"))];
 }
 
 function inferWordLevel({ written, jlptOnlyJson, fallbackLevel = null }) {

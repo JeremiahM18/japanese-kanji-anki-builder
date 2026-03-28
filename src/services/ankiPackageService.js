@@ -9,10 +9,10 @@ const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 
 const ANKI_MEDIA_INDEX_FILE = "media";
 const ANKI_COLLECTION_FILE = "collection.anki2";
-const ANKI_NOTE_SCHEMA = loadAnkiNoteSchema();
-const ANKI_NOTE_TYPE_NAME = ANKI_NOTE_SCHEMA.noteTypeName;
-const ANKI_CARD_TEMPLATE_NAME = ANKI_NOTE_SCHEMA.cardTemplateName;
-const DEFAULT_FIELD_NAMES = ANKI_NOTE_SCHEMA.fieldNames;
+
+function resolveNoteSchema(deckKind = "kanji") {
+    return loadAnkiNoteSchema(deckKind);
+}
 
 function shellEscapeSql(value) {
     return String(value ?? "").replace(/'/g, "''");
@@ -45,24 +45,29 @@ function parseTsv(tsvText) {
     };
 }
 
-function buildDeckName(level) {
+function buildDeckName(level, deckKind = "kanji") {
+    if (deckKind === "word") {
+        return `Japanese Kanji Builder::Word Deck::JLPT N${level}`;
+    }
+
     return `Japanese Kanji Builder::JLPT N${level}`;
 }
 
-function buildApkgFileName(levels) {
-    return `japanese-kanji-builder-${normalizeDeckSlug(levels)}.apkg`;
+function buildApkgFileName(levels, deckKind = "kanji") {
+    const prefix = deckKind === "word" ? "japanese-kanji-builder-words" : "japanese-kanji-builder";
+    return `${prefix}-${normalizeDeckSlug(levels)}.apkg`;
 }
 
-function buildCss() {
-    return ANKI_NOTE_SCHEMA.css;
+function buildCss(noteSchema) {
+    return noteSchema.css;
 }
 
-function buildQfmt() {
-    return ANKI_NOTE_SCHEMA.qfmt;
+function buildQfmt(noteSchema) {
+    return noteSchema.qfmt;
 }
 
-function buildAfmt() {
-    return ANKI_NOTE_SCHEMA.afmt;
+function buildAfmt(noteSchema) {
+    return noteSchema.afmt;
 }
 
 function createFieldDefinitions(fieldNames, timestampSeconds) {
@@ -83,13 +88,13 @@ function createFieldDefinitions(fieldNames, timestampSeconds) {
     }));
 }
 
-function createTemplateDefinitions(timestampSeconds) {
+function createTemplateDefinitions(noteSchema, timestampSeconds) {
     return [
         {
-            name: ANKI_CARD_TEMPLATE_NAME,
+            name: noteSchema.cardTemplateName,
             ord: 0,
-            qfmt: buildQfmt(),
-            afmt: buildAfmt(),
+            qfmt: buildQfmt(noteSchema),
+            afmt: buildAfmt(noteSchema),
             bqfmt: "",
             bafmt: "",
             did: null,
@@ -98,21 +103,21 @@ function createTemplateDefinitions(timestampSeconds) {
     ];
 }
 
-function createModel({ modelId, deckId, mod, fieldNames }) {
+function createModel({ modelId, deckId, mod, fieldNames, noteSchema }) {
     return {
         [String(modelId)]: {
-            css: buildCss(),
+            css: buildCss(noteSchema),
             did: deckId,
             flds: createFieldDefinitions(fieldNames, mod),
             id: modelId,
             latexPost: "\\end{document}",
             latexPre: "\\documentclass[12pt]{article}\\n\\special{papersize=3in,5in}\\n\\usepackage[utf8]{inputenc}\\n\\usepackage{amssymb,amsmath}\\n\\pagestyle{empty}\\n\\setlength{\\parindent}{0in}\\n\\begin{document}",
             mod,
-            name: ANKI_NOTE_TYPE_NAME,
+            name: noteSchema.noteTypeName,
             req: [[0, "all", [0]]],
             sortf: 0,
             tags: [],
-            tmpls: createTemplateDefinitions(mod),
+            tmpls: createTemplateDefinitions(noteSchema, mod),
             type: 0,
             usn: 0,
             vers: [],
@@ -120,7 +125,7 @@ function createModel({ modelId, deckId, mod, fieldNames }) {
     };
 }
 
-function createDecks({ deckIdsByLevel, mod }) {
+function createDecks({ deckIdsByLevel, mod, deckKind }) {
     const decks = {};
 
     for (const [level, deckId] of Object.entries(deckIdsByLevel)) {
@@ -135,7 +140,7 @@ function createDecks({ deckIdsByLevel, mod }) {
             id: deckId,
             lrnToday: [0, 0],
             mod,
-            name: buildDeckName(level),
+            name: buildDeckName(level, deckKind),
             newToday: [0, 0],
             revToday: [0, 0],
             timeToday: [0, 0],
@@ -209,8 +214,8 @@ function computeChecksum(value) {
     return Number.parseInt(hash.slice(0, 8), 16);
 }
 
-function buildGuid(kanji, level) {
-    return crypto.createHash("sha1").update(`${level}:${kanji}`, "utf8").digest("base64url").slice(0, 10);
+function buildGuid(primaryField, level, deckKind = "kanji") {
+    return crypto.createHash("sha1").update(`${deckKind}:${level}:${primaryField}`, "utf8").digest("base64url").slice(0, 10);
 }
 
 function commandAvailable(command, versionArg = "--version") {
@@ -235,15 +240,16 @@ function runCommand(command, args, options = {}) {
     return result;
 }
 
-function buildSchemaSql({ colId, crt, mod, scm, modelId, deckIdsByLevel, notes, cards, fieldNames }) {
+function buildSchemaSql({ colId, crt, mod, scm, modelId, deckIdsByLevel, notes, cards, fieldNames, noteSchema, deckKind }) {
     const primaryDeckId = Number(Object.values(deckIdsByLevel)[0] || 1);
     const modelsJson = JSON.stringify(createModel({
         modelId,
         deckId: primaryDeckId,
         mod,
         fieldNames,
+        noteSchema,
     }));
-    const decksJson = JSON.stringify(createDecks({ deckIdsByLevel, mod }));
+    const decksJson = JSON.stringify(createDecks({ deckIdsByLevel, mod, deckKind }));
     const dconfJson = JSON.stringify(createDeckConfig(mod));
     const confJson = JSON.stringify(createCollectionConfig());
 
@@ -307,34 +313,25 @@ async function stageApkgMedia({ sourceMediaDir, tempDir, mediaFiles }) {
     );
 }
 
-function buildAnkiRows({ exports }) {
+function buildAnkiRows({ exports, fieldNames }) {
     const rows = [];
-    let fieldNames = null;
 
     for (const artifact of exports) {
         const tsv = fs.readFileSync(artifact.filePath, "utf8");
         const parsed = parseTsv(tsv);
-        const level = Number(artifact.level);
         const header = Array.isArray(parsed.header) && parsed.header.length > 0
             ? parsed.header
-            : DEFAULT_FIELD_NAMES;
-
-        if (!fieldNames) {
-            fieldNames = header;
-        }
+            : fieldNames;
 
         for (const columns of parsed.rows) {
             rows.push({
-                level,
+                level: Number(artifact.level),
                 fields: header.map((_, index) => columns[index] || ""),
             });
         }
     }
 
-    return {
-        fieldNames: fieldNames || DEFAULT_FIELD_NAMES,
-        rows,
-    };
+    return rows;
 }
 
 async function buildAnkiPackage({
@@ -342,6 +339,7 @@ async function buildAnkiPackage({
     exports,
     mediaDir,
     levels,
+    deckKind = "kanji",
 }) {
     if (!commandAvailable("sqlite3", "-version") || !commandAvailable("tar")) {
         return {
@@ -354,7 +352,9 @@ async function buildAnkiPackage({
         };
     }
 
-    const { fieldNames, rows } = buildAnkiRows({ exports });
+    const noteSchema = resolveNoteSchema(deckKind);
+    const fieldNames = noteSchema.fieldNames;
+    const rows = buildAnkiRows({ exports, fieldNames });
     const mediaFiles = fs.existsSync(mediaDir)
         ? fs.readdirSync(mediaDir).filter((fileName) => fs.statSync(path.join(mediaDir, fileName)).isFile()).sort()
         : [];
@@ -371,7 +371,7 @@ async function buildAnkiPackage({
 
     const notes = rows.map((row, index) => ({
         id: now + 2000 + index,
-        guid: buildGuid(row.fields[0], row.level),
+        guid: buildGuid(row.fields[0], row.level, deckKind),
         mid: modelId,
         flds: row.fields.join("\u001f"),
         sfld: row.fields[0],
@@ -386,7 +386,7 @@ async function buildAnkiPackage({
 
     const tempDir = await fsp.mkdtemp(path.join(os.tmpdir(), "kanji-apkg-"));
     const collectionPath = path.join(tempDir, ANKI_COLLECTION_FILE);
-    const apkgPath = path.join(packageRootDir, buildApkgFileName(levels));
+    const apkgPath = path.join(packageRootDir, buildApkgFileName(levels, deckKind));
 
     try {
         const schemaSql = buildSchemaSql({
@@ -399,6 +399,8 @@ async function buildAnkiPackage({
             notes,
             cards,
             fieldNames,
+            noteSchema,
+            deckKind,
         });
 
         runCommand("sqlite3", [collectionPath], { input: schemaSql });
@@ -438,9 +440,9 @@ async function buildAnkiPackage({
 module.exports = {
     ANKI_COLLECTION_FILE,
     ANKI_MEDIA_INDEX_FILE,
-    ANKI_NOTE_TYPE_NAME,
     buildAnkiPackage,
     buildApkgFileName,
     buildDeckName,
     parseTsv,
+    resolveNoteSchema,
 };

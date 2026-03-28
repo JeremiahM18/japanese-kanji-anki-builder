@@ -2,7 +2,10 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { z } = require("zod");
 
-const ANKI_NOTE_SCHEMA_PATH = path.join(__dirname, "ankiNoteSchema.json");
+const NOTE_SCHEMA_PATHS = {
+    kanji: path.join(__dirname, "ankiNoteSchema.json"),
+    word: path.join(__dirname, "ankiWordNoteSchema.json"),
+};
 
 const schema = z.object({
     noteTypeName: z.string().min(1),
@@ -13,30 +16,49 @@ const schema = z.object({
     afmtLines: z.array(z.string()).min(1),
 });
 
-let cachedSchema = null;
+const cachedSchemas = new Map();
 
-function loadAnkiNoteSchema() {
-    if (cachedSchema) {
-        return cachedSchema;
+function resolveSchemaPath(kind = "kanji") {
+    const normalizedKind = String(kind ?? "kanji").trim().toLowerCase();
+    const schemaPath = NOTE_SCHEMA_PATHS[normalizedKind];
+
+    if (!schemaPath) {
+        throw new Error(`Unsupported Anki note schema kind: ${kind}`);
     }
 
-    const raw = JSON.parse(fs.readFileSync(ANKI_NOTE_SCHEMA_PATH, "utf-8"));
+    return {
+        kind: normalizedKind,
+        schemaPath,
+    };
+}
+
+function loadAnkiNoteSchema(kind = "kanji") {
+    const resolved = resolveSchemaPath(kind);
+    if (cachedSchemas.has(resolved.kind)) {
+        return cachedSchemas.get(resolved.kind);
+    }
+
+    const raw = JSON.parse(fs.readFileSync(resolved.schemaPath, "utf-8"));
     const parsed = schema.parse(raw);
     const uniqueFieldNames = [...new Set(parsed.fieldNames)];
     if (uniqueFieldNames.length !== parsed.fieldNames.length) {
         throw new Error("Anki note schema contains duplicate field names.");
     }
 
-    cachedSchema = {
+    const hydrated = {
         ...parsed,
+        kind: resolved.kind,
+        schemaPath: resolved.schemaPath,
         fieldNames: uniqueFieldNames,
         css: parsed.cssLines.join("\n"),
         afmt: parsed.afmtLines.join(""),
     };
-    return cachedSchema;
+    cachedSchemas.set(resolved.kind, hydrated);
+    return hydrated;
 }
 
 module.exports = {
-    ANKI_NOTE_SCHEMA_PATH,
+    ANKI_NOTE_SCHEMA_PATH: NOTE_SCHEMA_PATHS.kanji,
+    NOTE_SCHEMA_PATHS,
     loadAnkiNoteSchema,
 };

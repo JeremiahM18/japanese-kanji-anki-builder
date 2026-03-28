@@ -171,7 +171,7 @@ This assumes a local VOICEVOX engine is already running at `VOICEVOX_ENGINE_URL`
 | `npm run deck:review:n4` | Run the tracked golden N4 benchmark |
 | `npm run deck:review:n5` | Run the tracked golden N5 benchmark |
 | `npm run deck:ready` | Run the full build and package path |
-| `npm run deck:apkg` | Build an importable `.apkg` from packaged exports |
+| `npm run deck:apkg` | Build an importable `.apkg` from packaged kanji exports |`r`n| `npm run deck:words:ready` | Build and package the parallel word deck |`r`n| `npm run deck:words:apkg` | Build an importable `.apkg` from packaged word exports |
 | `npm run build:artifacts` | Run the deterministic build pipeline |
 | `npm run corpus:init` | Create or merge starter sentence corpus data |
 | `npm run curated:init` | Create or merge starter curated study data |
@@ -232,7 +232,7 @@ Behavior:
 - `OnReading` keeps the full on-yomi list for reference.
 - `KunReading` keeps the full kun-yomi list for reference.
 - The TSV and both `.apkg` builders share that split-reading schema, so package generation stays aligned with export.
-- The shared Anki note schema lives in `src/config/ankiNoteSchema.json`, which is the single source of truth for exported field order, note type metadata, and card template layout.
+- The shared Anki note schemas live in `src/config/ankiNoteSchema.json` and `src/config/ankiWordNoteSchema.json`, which are the single sources of truth for exported field order, note type metadata, and card template layout for the kanji and word decks.
 - `StrokeOrder` prefers animation when available, then static image.
 - `StrokeOrderImage` exposes the static asset directly.
 - `StrokeOrderAnimation` exposes the managed animation asset directly when one exists.
@@ -286,5 +286,6 @@ Build artifacts are written to `out/build`:
 - `build-summary.json`
 
 Import-ready packaging is written to `out/build/package`.
+
 
 

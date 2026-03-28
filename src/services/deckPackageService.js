@@ -152,12 +152,26 @@ async function collectPackageAssets({ kanjiList, mediaRootDir, concurrency = 8 }
     };
 }
 
+function collectReferencedKanji({ exports, kanjiByLevel }) {
+    const exportReferenced = (Array.isArray(exports) ? exports : [])
+        .flatMap((artifact) => Array.isArray(artifact?.mediaKanji) ? artifact.mediaKanji : []);
+
+    if (exportReferenced.length > 0) {
+        return [...new Set(exportReferenced.filter(Boolean))];
+    }
+
+    return [...new Set(
+        Object.values(kanjiByLevel || {}).flatMap((list) => Array.isArray(list) ? list : [])
+    )];
+}
+
 async function buildDeckPackage({
     outDir,
     exports,
     kanjiByLevel,
     mediaRootDir,
     packageConcurrency = 8,
+    deckKind = "kanji",
 }) {
     const packagePaths = buildDeckPackagePaths(outDir);
     ensureDir(packagePaths.rootDir);
@@ -175,9 +189,7 @@ async function buildDeckPackage({
         );
     });
 
-    const selectedKanji = [...new Set(
-        Object.values(kanjiByLevel || {}).flatMap((list) => Array.isArray(list) ? list : [])
-    )];
+    const selectedKanji = collectReferencedKanji({ exports, kanjiByLevel });
     const { assets, mediaCounts } = await collectPackageAssets({
         kanjiList: selectedKanji,
         mediaRootDir,
@@ -193,6 +205,7 @@ async function buildDeckPackage({
         exports,
         mediaDir: packagePaths.mediaDir,
         levels: exports.map((artifact) => artifact.level),
+        deckKind,
     });
 
     await fsp.writeFile(packagePaths.readmePath, buildImportGuide({
@@ -224,6 +237,7 @@ module.exports = {
     buildImportGuide,
     buildPackageAssetCandidatesFromManifest,
     collectPackageAssets,
+    collectReferencedKanji,
     createEmptyMediaCounts,
     resolveManagedAssetAbsolutePath,
 };

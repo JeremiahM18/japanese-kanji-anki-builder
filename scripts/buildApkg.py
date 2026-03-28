@@ -8,57 +8,22 @@ import zipfile
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-ANKI_NOTE_SCHEMA_PATH = REPO_ROOT / "src" / "config" / "ankiNoteSchema.json"
+NOTE_SCHEMA_PATHS = {
+    "kanji": REPO_ROOT / "src" / "config" / "ankiNoteSchema.json",
+    "word": REPO_ROOT / "src" / "config" / "ankiWordNoteSchema.json",
+}
 
 
-def load_anki_note_schema():
-    schema = json.loads(ANKI_NOTE_SCHEMA_PATH.read_text(encoding="utf-8"))
+def load_anki_note_schema(deck_kind: str):
+    schema_path = NOTE_SCHEMA_PATHS.get(deck_kind)
+    if not schema_path:
+        raise RuntimeError(f"Unsupported deck kind: {deck_kind}")
+    schema = json.loads(schema_path.read_text(encoding="utf-8"))
     required_keys = {"noteTypeName", "cardTemplateName", "fieldNames", "cssLines", "qfmt", "afmtLines"}
     missing_keys = sorted(required_keys - set(schema.keys()))
     if missing_keys:
         raise RuntimeError("Anki note schema is missing keys: " + ", ".join(missing_keys))
     return schema
-
-
-ANKI_NOTE_SCHEMA = load_anki_note_schema()
-FIELD_NAMES = ANKI_NOTE_SCHEMA["fieldNames"]
-ANKI_NOTE_TYPE_NAME = ANKI_NOTE_SCHEMA["noteTypeName"]
-ANKI_CARD_TEMPLATE_NAME = ANKI_NOTE_SCHEMA["cardTemplateName"]
-
-
-def normalize_tsv_row(header, cols):
-    if not header:
-        return [(cols[i] if i < len(cols) else "") for i in range(len(FIELD_NAMES))]
-
-    header_index = {name: index for index, name in enumerate(header)}
-    fields = []
-    for field_name in FIELD_NAMES:
-        if field_name not in header_index:
-            fields.append("")
-            continue
-        source_index = header_index[field_name]
-        fields.append(cols[source_index] if source_index < len(cols) else "")
-    return fields
-
-
-def validate_tsv_header(header, level: int):
-    if not header:
-        return
-
-    missing = []
-    for field_name in FIELD_NAMES:
-        if field_name in header:
-            continue
-        missing.append(field_name)
-
-    extras = [name for name in header if name not in FIELD_NAMES]
-    if missing or extras:
-        details = []
-        if missing:
-            details.append(f"missing fields: {', '.join(missing)}")
-        if extras:
-            details.append(f"unexpected fields: {', '.join(extras)}")
-        raise RuntimeError(f"Unexpected TSV header in jlpt-n{level}.tsv ({'; '.join(details)})")
 
 
 def parse_levels(value: str):
@@ -70,13 +35,22 @@ def parse_levels(value: str):
     return levels or [5]
 
 
-def build_deck_name(level: int) -> str:
+def build_deck_name(level: int, deck_kind: str) -> str:
+    if deck_kind == "word":
+        return f"Japanese Kanji Builder::Word Deck::JLPT N{level}"
     return f"Japanese Kanji Builder::JLPT N{level}"
 
 
-def build_apkg_file_name(levels):
+def build_apkg_file_name(levels, deck_kind: str):
     suffix = "-".join(f"n{level}" for level in levels) or "deck"
-    return f"japanese-kanji-builder-{suffix}.apkg"
+    prefix = "japanese-kanji-builder-words" if deck_kind == "word" else "japanese-kanji-builder"
+    return f"{prefix}-{suffix}.apkg"
+
+
+def build_export_file_name(level: int, deck_kind: str) -> str:
+    if deck_kind == "word":
+        return f"jlpt-n{level}-words.tsv"
+    return f"jlpt-n{level}.tsv"
 
 
 def parse_tsv(tsv_path: Path):
@@ -86,21 +60,58 @@ def parse_tsv(tsv_path: Path):
     return lines[0].split("\t"), [line.split("\t") for line in lines[1:]]
 
 
-def build_css() -> str:
-    return "\n".join(ANKI_NOTE_SCHEMA["cssLines"])
+def build_css(note_schema) -> str:
+    return "\n".join(note_schema["cssLines"])
 
 
-def build_qfmt() -> str:
-    return ANKI_NOTE_SCHEMA["qfmt"]
+def build_qfmt(note_schema) -> str:
+    return note_schema["qfmt"]
 
 
-def build_afmt() -> str:
-    return "".join(ANKI_NOTE_SCHEMA["afmtLines"])
+def build_afmt(note_schema) -> str:
+    return "".join(note_schema["afmtLines"])
 
 
-def build_model(model_id: int, deck_id: int, mod: int):
+def normalize_tsv_row(header, cols, field_names):
+    if not header:
+        return [(cols[i] if i < len(cols) else "") for i in range(len(field_names))]
+
+    header_index = {name: index for index, name in enumerate(header)}
     fields = []
-    for index, name in enumerate(FIELD_NAMES):
+    for field_name in field_names:
+        if field_name not in header_index:
+            fields.append("")
+            continue
+        source_index = header_index[field_name]
+        fields.append(cols[source_index] if source_index < len(cols) else "")
+    return fields
+
+
+def validate_tsv_header(header, level: int, field_names, deck_kind: str):
+    if not header:
+        return
+
+    missing = []
+    for field_name in field_names:
+        if field_name in header:
+            continue
+        missing.append(field_name)
+
+    extras = [name for name in header if name not in field_names]
+    if missing or extras:
+        details = []
+        if missing:
+            details.append(f"missing fields: {', '.join(missing)}")
+        if extras:
+            details.append(f"unexpected fields: {', '.join(extras)}")
+        raise RuntimeError(
+            f"Unexpected TSV header in {build_export_file_name(level, deck_kind)} ({'; '.join(details)})"
+        )
+
+
+def build_model(model_id: int, deck_id: int, mod: int, note_schema, field_names):
+    fields = []
+    for index, name in enumerate(field_names):
         fields.append({
             "name": name,
             "ord": index,
@@ -118,10 +129,10 @@ def build_model(model_id: int, deck_id: int, mod: int):
         })
 
     templates = [{
-        "name": ANKI_CARD_TEMPLATE_NAME,
+        "name": note_schema["cardTemplateName"],
         "ord": 0,
-        "qfmt": build_qfmt(),
-        "afmt": build_afmt(),
+        "qfmt": build_qfmt(note_schema),
+        "afmt": build_afmt(note_schema),
         "bqfmt": "",
         "bafmt": "",
         "did": None,
@@ -130,14 +141,14 @@ def build_model(model_id: int, deck_id: int, mod: int):
 
     return {
         str(model_id): {
-            "css": build_css(),
+            "css": build_css(note_schema),
             "did": deck_id,
             "flds": fields,
             "id": model_id,
             "latexPost": "\\end{document}",
             "latexPre": "\\documentclass[12pt]{article}\n\\special{papersize=3in,5in}\n\\usepackage[utf8]{inputenc}\n\\usepackage{amssymb,amsmath}\n\\pagestyle{empty}\n\\setlength{\\parindent}{0in}\n\\begin{document}",
             "mod": mod,
-            "name": ANKI_NOTE_TYPE_NAME,
+            "name": note_schema["noteTypeName"],
             "req": [[0, "all", [0]]],
             "sortf": 0,
             "tags": [],
@@ -149,7 +160,7 @@ def build_model(model_id: int, deck_id: int, mod: int):
     }
 
 
-def build_decks(deck_ids_by_level, mod: int):
+def build_decks(deck_ids_by_level, mod: int, deck_kind: str):
     decks = {}
     for level, deck_id in deck_ids_by_level.items():
         decks[str(deck_id)] = {
@@ -163,7 +174,7 @@ def build_decks(deck_ids_by_level, mod: int):
             "id": deck_id,
             "lrnToday": [0, 0],
             "mod": mod,
-            "name": build_deck_name(level),
+            "name": build_deck_name(level, deck_kind),
             "newToday": [0, 0],
             "revToday": [0, 0],
             "timeToday": [0, 0],
@@ -214,32 +225,34 @@ def compute_checksum(value: str) -> int:
     return int(hashlib.sha1(value.encode("utf-8")).hexdigest()[:8], 16)
 
 
-def build_guid(kanji: str, level: int) -> str:
-    return hashlib.sha1(f"{level}:{kanji}".encode("utf-8")).hexdigest()[:10]
+def build_guid(primary_field: str, level: int, deck_kind: str) -> str:
+    return hashlib.sha1(f"{deck_kind}:{level}:{primary_field}".encode("utf-8")).hexdigest()[:10]
 
 
-def create_collection_db(db_path: Path, levels, package_exports_dir: Path):
+def create_collection_db(db_path: Path, levels, package_exports_dir: Path, deck_kind: str):
     db_path.parent.mkdir(parents=True, exist_ok=True)
 
     now_ms = int(time.time() * 1000)
     mod = int(time.time())
     model_id = now_ms
     deck_ids_by_level = {level: now_ms + 1000 + index for index, level in enumerate(levels)}
+    note_schema = load_anki_note_schema(deck_kind)
+    field_names = note_schema["fieldNames"]
 
     note_rows = []
     card_rows = []
     order = 1
 
     for level in levels:
-        header, rows = parse_tsv(package_exports_dir / f"jlpt-n{level}.tsv")
-        validate_tsv_header(header, level)
+        header, rows = parse_tsv(package_exports_dir / build_export_file_name(level, deck_kind))
+        validate_tsv_header(header, level, field_names, deck_kind)
 
         for cols in rows:
-            fields = normalize_tsv_row(header, cols)
+            fields = normalize_tsv_row(header, cols, field_names)
             note_id = now_ms + 2000 + len(note_rows)
             note_rows.append((
                 note_id,
-                build_guid(fields[0], level),
+                build_guid(fields[0], level, deck_kind),
                 model_id,
                 mod,
                 0,
@@ -300,8 +313,8 @@ def create_collection_db(db_path: Path, levels, package_exports_dir: Path):
                 0,
                 0,
                 json.dumps(build_conf(), ensure_ascii=False),
-                json.dumps(build_model(model_id, deck_ids_by_level[levels[0]], mod), ensure_ascii=False),
-                json.dumps(build_decks(deck_ids_by_level, mod), ensure_ascii=False),
+                json.dumps(build_model(model_id, deck_ids_by_level[levels[0]], mod, note_schema, field_names), ensure_ascii=False),
+                json.dumps(build_decks(deck_ids_by_level, mod, deck_kind), ensure_ascii=False),
                 json.dumps(build_dconf(mod), ensure_ascii=False),
                 "{}",
             ),
@@ -315,20 +328,24 @@ def create_collection_db(db_path: Path, levels, package_exports_dir: Path):
     return len(note_rows), len(deck_ids_by_level)
 
 
-def build_apkg(out_dir: Path, levels):
+def build_apkg(out_dir: Path, levels, deck_kind: str):
     package_root = out_dir / "package"
     exports_dir = package_root / "exports"
     media_dir = package_root / "media"
-    apkg_path = package_root / build_apkg_file_name(levels)
+    apkg_path = package_root / build_apkg_file_name(levels, deck_kind)
     stage_dir = package_root / ".apkg-staging"
 
-    missing_exports = [level for level in levels if not (exports_dir / f"jlpt-n{level}.tsv").exists()]
+    missing_exports = [level for level in levels if not (exports_dir / build_export_file_name(level, deck_kind)).exists()]
     if missing_exports:
         missing_list = ", ".join(f"N{level}" for level in missing_exports)
         raise RuntimeError(
-            "Missing packaged TSV exports for " + missing_list + ". Run `npm run deck:ready -- --levels="
+            "Missing packaged TSV exports for " + missing_list + ". Run `npm run "
+            + ("deck:words:ready" if deck_kind == "word" else "deck:ready")
+            + " -- --levels="
             + ",".join(str(level) for level in levels)
-            + "` before `npm run deck:apkg -- --levels="
+            + "` before `npm run "
+            + ("deck:words:apkg" if deck_kind == "word" else "deck:apkg")
+            + " -- --levels="
             + ",".join(str(level) for level in levels)
             + "`."
         )
@@ -341,7 +358,7 @@ def build_apkg(out_dir: Path, levels):
         collection_path = stage_dir / "collection.anki2"
         media_index_path = stage_dir / "media"
 
-        note_count, deck_count = create_collection_db(collection_path, levels, exports_dir)
+        note_count, deck_count = create_collection_db(collection_path, levels, exports_dir, deck_kind)
 
         media_files = sorted([item for item in media_dir.iterdir() if item.is_file()]) if media_dir.exists() else []
         media_map = {}
@@ -375,11 +392,12 @@ def main():
     parser = argparse.ArgumentParser(description="Build an Anki .apkg from packaged TSV/media artifacts.")
     parser.add_argument("--out-dir", default="out/build", help="Build output directory containing the package folder.")
     parser.add_argument("--levels", default="5", help="Comma-separated JLPT levels, for example 5 or 5,4.")
+    parser.add_argument("--deck-kind", default="kanji", choices=["kanji", "word"], help="Packaged deck type to build.")
     args = parser.parse_args()
 
     out_dir = Path(args.out_dir).resolve()
     levels = parse_levels(args.levels)
-    result = build_apkg(out_dir, levels)
+    result = build_apkg(out_dir, levels, args.deck_kind)
 
     print("Japanese Kanji Builder APKG")
     print("")

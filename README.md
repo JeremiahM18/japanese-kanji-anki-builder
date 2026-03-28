@@ -216,6 +216,7 @@ Behavior:
 - `PrimaryReading` carries the pronunciation of that learner-facing display word when one is available.
 - `OnReading` keeps the full on-yomi list for reference.
 - `KunReading` keeps the full kun-yomi list for reference.
+- The TSV and both `.apkg` builders share that split-reading schema, so package generation stays aligned with export.
 - `StrokeOrder` prefers animation when available, then static image.
 - `StrokeOrderImage` exposes the static asset directly.
 - `StrokeOrderAnimation` exposes the animation asset directly.

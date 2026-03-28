@@ -10,7 +10,9 @@ from pathlib import Path
 FIELD_NAMES = [
     "Kanji",
     "MeaningJP",
-    "Reading",
+    "PrimaryReading",
+    "OnReading",
+    "KunReading",
     "StrokeOrder",
     "StrokeOrderImage",
     "StrokeOrderAnimation",
@@ -19,6 +21,54 @@ FIELD_NAMES = [
     "Notes",
     "ExampleSentence",
 ]
+
+
+LEGACY_HEADER_ALIASES = {
+    "Reading": None,
+}
+
+
+def normalize_tsv_row(header, cols):
+    if not header:
+        return [(cols[i] if i < len(cols) else "") for i in range(len(FIELD_NAMES))]
+
+    header_index = {name: index for index, name in enumerate(header)}
+    fields = []
+    for field_name in FIELD_NAMES:
+        source_name = field_name if field_name in header_index else None
+        if source_name is None:
+            for legacy_name, replacement in LEGACY_HEADER_ALIASES.items():
+                if replacement == field_name and legacy_name in header_index:
+                    source_name = legacy_name
+                    break
+        if source_name is None:
+            fields.append("")
+            continue
+        source_index = header_index[source_name]
+        fields.append(cols[source_index] if source_index < len(cols) else "")
+    return fields
+
+
+def validate_tsv_header(header, level: int):
+    if not header:
+        return
+
+    missing = []
+    for field_name in FIELD_NAMES:
+        if field_name in header:
+            continue
+        legacy_match = any(legacy_name in header and replacement == field_name for legacy_name, replacement in LEGACY_HEADER_ALIASES.items())
+        if not legacy_match:
+            missing.append(field_name)
+
+    extras = [name for name in header if name not in FIELD_NAMES and name not in LEGACY_HEADER_ALIASES]
+    if missing or extras:
+        details = []
+        if missing:
+            details.append(f"missing fields: {', '.join(missing)}")
+        if extras:
+            details.append(f"unexpected fields: {', '.join(extras)}")
+        raise RuntimeError(f"Unexpected TSV header in jlpt-n{level}.tsv ({'; '.join(details)})")
 
 
 def parse_levels(value: str):
@@ -59,7 +109,15 @@ def build_css() -> str:
         "  font-size: 64px;",
         "  margin: 16px 0;",
         "}",
-        ".reading, .meaning, .meta, .notes, .example, .media {",
+        ".reading-primary {",
+        "  font-size: 28px;",
+        "  font-weight: 700;",
+        "}",
+        ".reading-full {",
+        "  font-size: 17px;",
+        "  color: #52606d;",
+        "}",
+        ".reading, .meaning, .meta, .notes, .example, .media, .audio {",
         "  margin: 12px 0;",
         "  line-height: 1.5;",
         "}",
@@ -79,7 +137,9 @@ def build_afmt() -> str:
         "{{FrontSide}}",
         '<hr id="answer">',
         '<div class="meaning">{{MeaningJP}}</div>',
-        '<div class="reading">{{Reading}}</div>',
+        '{{#PrimaryReading}}<div class="reading reading-primary">Primary reading: {{PrimaryReading}}</div>{{/PrimaryReading}}',
+        '{{#OnReading}}<div class="reading reading-full">On-yomi: {{OnReading}}</div>{{/OnReading}}',
+        '{{#KunReading}}<div class="reading reading-full">Kun-yomi: {{KunReading}}</div>{{/KunReading}}',
         '<div class="media">{{StrokeOrder}}</div>',
         '<div class="meta">Radical: {{Radical}}</div>',
         '<div class="notes">{{Notes}}</div>',
@@ -222,11 +282,10 @@ def create_collection_db(db_path: Path, levels, package_exports_dir: Path):
 
     for level in levels:
         header, rows = parse_tsv(package_exports_dir / f"jlpt-n{level}.tsv")
-        if header and header != FIELD_NAMES:
-            raise RuntimeError(f"Unexpected TSV header in jlpt-n{level}.tsv")
+        validate_tsv_header(header, level)
 
         for cols in rows:
-            fields = [(cols[i] if i < len(cols) else "") for i in range(len(FIELD_NAMES))]
+            fields = normalize_tsv_row(header, cols)
             note_id = now_ms + 2000 + len(note_rows)
             note_rows.append((
                 note_id,

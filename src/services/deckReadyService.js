@@ -12,8 +12,6 @@ function formatDeckReadyReport(summary, doctorReport = null) {
         strokeOrder: 0,
         strokeOrderImage: 0,
         strokeOrderAnimation: 0,
-        trueStrokeOrderAnimation: 0,
-        svgStrokeOrderAnimationFallback: 0,
         audio: 0,
     };
     const levelReadiness = doctorReport?.quality?.levelReadiness || null;
@@ -35,8 +33,6 @@ function formatDeckReadyReport(summary, doctorReport = null) {
     lines.push(`- Stroke-order field references: ${formatCount(mediaCounts.strokeOrder)}`);
     lines.push(`- Stroke-order images: ${formatCount(mediaCounts.strokeOrderImage)}`);
     lines.push(`- Stroke-order animation fields: ${formatCount(mediaCounts.strokeOrderAnimation)}`);
-    lines.push(`- True animated stroke-order fields: ${formatCount(mediaCounts.trueStrokeOrderAnimation)}`);
-    lines.push(`- SVG fallback animation fields: ${formatCount(mediaCounts.svgStrokeOrderAnimationFallback)}`);
     if (audioEnabled) {
         lines.push(`- Audio fields: ${formatCount(mediaCounts.audio)}`);
     }
@@ -57,7 +53,7 @@ function formatDeckReadyReport(summary, doctorReport = null) {
     lines.push("");
     lines.push("Coverage snapshot:");
     lines.push(`- Stroke-order coverage: ${formatPercent(summary.coverage?.strokeOrder || 0)}`);
-    lines.push(`- True animated stroke-order coverage: ${formatPercent(summary.coverage?.trueAnimation || 0)}`);
+    lines.push(`- Animation coverage: ${formatPercent(summary.coverage?.trueAnimation || 0)}`);
     if (audioEnabled) {
         lines.push(`- Audio coverage: ${formatPercent(summary.coverage?.audio || 0)}`);
         lines.push(`- Full media coverage: ${formatPercent(summary.coverage?.fullMedia || 0)}`);

@@ -33,7 +33,7 @@ test("hasAnyCandidate detects candidate hits in an index", () => {
     assert.equal(hasAnyCandidate(index, ["本", "学"]), false);
 });
 
-test("buildMediaSourceReport separates animation-slot and true-animation coverage", async () => {
+test("buildMediaSourceReport treats SVG image fallback as image-only coverage", async () => {
     const rootDir = makeTempDir();
 
     try {
@@ -56,12 +56,12 @@ test("buildMediaSourceReport separates animation-slot and true-animation coverag
         });
 
         assert.equal(report.imageAvailableCount, 1);
-        assert.equal(report.animationAvailableCount, 1);
+        assert.equal(report.animationAvailableCount, 0);
         assert.equal(report.trueAnimationAvailableCount, 0);
         assert.equal(report.rows.length, 1);
         assert.equal(report.rows[0].kanji, "今");
         assert.equal(report.rows[0].gapType, "animation_only");
-        assert.equal(report.rows[0].hasAnimation, true);
+        assert.equal(report.rows[0].hasAnimation, false);
         assert.equal(report.rows[0].hasTrueAnimation, false);
     } finally {
         cleanupTempDir(rootDir);
@@ -162,7 +162,7 @@ test("formatMediaSourceReport produces a clear local-source summary", () => {
         totalKanji: 79,
         imageAvailableCount: 20,
         animationAvailableCount: 10,
-        trueAnimationAvailableCount: 6,
+        trueAnimationAvailableCount: 10,
         audioAvailableCount: 5,
         audioEnabled: true,
         gapSummary: {
@@ -219,7 +219,7 @@ test("formatMediaSourceReport hides audio details when audio is disabled", () =>
         totalKanji: 79,
         imageAvailableCount: 20,
         animationAvailableCount: 10,
-        trueAnimationAvailableCount: 7,
+        trueAnimationAvailableCount: 10,
         audioAvailableCount: 0,
         audioEnabled: false,
         gapSummary: {

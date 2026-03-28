@@ -130,7 +130,7 @@ test("findMatchingAsset resolves calligraphic Commons animation names", async ()
     }
 });
 
-test("syncKanji can promote KanjiVG SVGs into animation coverage", async () => {
+test("syncKanji keeps KanjiVG SVGs as static image coverage only", async () => {
     const rootDir = makeTempDir();
 
     try {
@@ -150,11 +150,10 @@ test("syncKanji can promote KanjiVG SVGs into animation coverage", async () => {
         const mediaId = buildKanjiMediaId("今");
 
         assert.equal(result.found.image, true);
-        assert.equal(result.found.animation, true);
+        assert.equal(result.found.animation, false);
         assert.equal(result.manifest.assets.strokeOrderImage.path, `images/${mediaId}-stroke-order.svg`);
-        assert.equal(result.manifest.assets.strokeOrderAnimation.path, `animations/${mediaId}-stroke-order.svg`);
-        assert.equal(result.manifest.assets.strokeOrderAnimation.source, "kanjivg-svg-fallback");
-        assert.equal(await service.getBestStrokeOrderPath("今"), `animations/${mediaId}-stroke-order.svg`);
+        assert.equal(result.manifest.assets.strokeOrderAnimation, null);
+        assert.equal(await service.getBestStrokeOrderPath("今"), `images/${mediaId}-stroke-order.svg`);
     } finally {
         cleanupTempDir(rootDir);
     }

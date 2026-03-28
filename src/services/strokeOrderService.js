@@ -27,7 +27,6 @@ const ANIMATION_EXTENSIONS = new Map([
     [".gif", "image/gif"],
     [".webp", "image/webp"],
     [".apng", "image/apng"],
-    [".svg", "image/svg+xml"],
 ]);
 
 const TRUE_ANIMATION_EXTENSIONS = new Set([".gif", ".webp", ".apng"]);
@@ -176,14 +175,6 @@ function createStrokeOrderService({
             name: "local-filesystem",
             sourceDir: animationSourceDir,
             extensionMap: ANIMATION_EXTENSIONS,
-            buildCandidates: buildStrokeOrderAnimationCandidates,
-        }),
-        createLocalDirectoryProvider({
-            name: "kanjivg-svg-fallback",
-            sourceDir: imageSourceDir,
-            extensionMap: new Map([
-                [".svg", "image/svg+xml"],
-            ]),
             buildCandidates: buildStrokeOrderAnimationCandidates,
         }),
         ...animationProviders,

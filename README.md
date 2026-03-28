@@ -117,7 +117,6 @@ npm run media:plan:stroke-order -- --level=5 --limit=25
 npm run media:discover:stroke-order -- --level=5 --limit=10
 npm run media:fetch:stroke-order -- --level=5 --limit=20 --file-limit=4
 npm run media:fetch:stroke-order -- --level=5 --limit=20 --file-limit=20 --probe-guessed
-npm run media:generate:stroke-order-gifs -- --level=5 --limit=20
 npm run media:import:stroke-order -- --input-dir=/path/to/files
 npm run media:import:kanjivg -- --input-dir=/path/to/extracted-kanjivg/kanji --level=4
 npm run media:import:audio -- --input-dir=/path/to/audio --level=5
@@ -134,9 +133,8 @@ npm run media:report -- --limit=25
 - `media:plan:stroke-order` builds a Wikimedia Commons checklist for missing stroke-order assets.
 - `media:discover:stroke-order` combines Commons title search with file-prefix listing to find real asset names.
 - `media:fetch:stroke-order` downloads confirmed Commons assets, and `--probe-guessed` will also try direct Commons redirect URLs for guessed filenames when discovery cannot confirm them.
-- `media:generate:stroke-order-gifs` generates deterministic GIF animations from local KanjiVG SVG sources for kanji that still lack true animation files.
+- If you want an additional remote GIF source during sync, set `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL=https://raw.githubusercontent.com/jcsirot/kanji.gif/master/kanji/gif/150x150/` in `.env`.
 - `media:import:kanjivg` imports official KanjiVG SVG files into the repo's canonical source layout.
-- When a GIF/WebP animation is missing, the sync pipeline can promote a KanjiVG SVG from the image source tree into the managed animation slot so stroke-order animation coverage stays complete.
 
 If you are focused only on stroke order, run readiness and media reporting with `ENABLE_AUDIO=false`.
 
@@ -179,7 +177,6 @@ This assumes a local VOICEVOX engine is already running at `VOICEVOX_ENGINE_URL`
 | `npm run media:plan:stroke-order` | Show Wikimedia Commons stroke-order checklist URLs |
 | `npm run media:discover:stroke-order` | Discover real Wikimedia Commons titles for missing stroke-order assets |
 | `npm run media:fetch:stroke-order` | Download confirmed Wikimedia stroke-order assets, or probe guessed filenames with `--probe-guessed` |
-| `npm run media:generate:stroke-order-gifs` | Generate true animated GIF stroke-order assets from local SVG sources |
 | `npm run media:import:stroke-order` | Import free local stroke-order assets |
 | `npm run media:import:kanjivg` | Import KanjiVG SVG stroke-order files into the source tree |
 | `npm run media:import:audio` | Import local kanji audio files into the source folder |
@@ -234,10 +231,9 @@ Behavior:
 - The shared Anki note schema lives in `src/config/ankiNoteSchema.json`, which is the single source of truth for exported field order, note type metadata, and card template layout.
 - `StrokeOrder` prefers animation when available, then static image.
 - `StrokeOrderImage` exposes the static asset directly.
-- `StrokeOrderAnimation` exposes the best animation-slot asset directly.
-- Managed animation-slot assets can come from native animation files (`.gif`, `.webp`, `.apng`) or from KanjiVG SVG fallback when no dedicated animation file exists.
-- The repo can also synthesize native `.gif` stroke-order animations directly from local KanjiVG SVG files when free upstream GIF coverage is incomplete.
-- Reporting now distinguishes broad stroke-order coverage from true animated stroke-order coverage so SVG fallback does not overstate Anki-visible animation quality.
+- `StrokeOrderAnimation` exposes the managed animation asset directly when one exists.
+- Managed animation assets come only from real animation files (`.gif`, `.webp`, `.apng`).
+- Static stroke-order image coverage and animation coverage are reported separately so card quality stays honest.
 - `Audio` exports Anki sound markup when a managed audio asset exists.
 
 Supported media sourcing:
@@ -256,7 +252,7 @@ Readiness checks evaluate:
 - sentence coverage
 - curated study coverage
 - stroke-order coverage
-- true animated stroke-order coverage as a separate diagnostic
+- animation coverage as a separate diagnostic
 - audio coverage when audio is enabled
 - offline card quality for readings, meanings, examples, and contextual notes
 

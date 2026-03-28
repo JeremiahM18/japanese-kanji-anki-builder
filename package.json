@@ -40,8 +40,7 @@
     "deck:apkg": "python scripts/buildApkg.py",
     "media:import:kanjivg": "node scripts/importKanjiVgStrokeOrder.js",
     "deck:review:n4": "node scripts/reviewGoldenLevel.js --level=4",
-    "deck:readiness:global": "node scripts/reportDeckReadiness.js",
-    "media:generate:stroke-order-gifs": "node scripts/generateStrokeOrderGifs.js"
+    "deck:readiness:global": "node scripts/reportDeckReadiness.js"
   },
   "keywords": [
     "japanese",

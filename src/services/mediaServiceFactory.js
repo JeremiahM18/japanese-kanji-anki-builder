@@ -1,6 +1,6 @@
 const { createRemoteHttpProvider } = require("./mediaProviders");
 const { AUDIO_EXTENSIONS, buildAudioFileCandidates, createAudioService } = require("./audioService");
-const { ANIMATION_EXTENSIONS, IMAGE_EXTENSIONS, buildKanjiFileCandidates, createStrokeOrderService } = require("./strokeOrderService");
+const { ANIMATION_EXTENSIONS, IMAGE_EXTENSIONS, buildStrokeOrderAnimationCandidates, buildStrokeOrderImageCandidates, createStrokeOrderService } = require("./strokeOrderService");
 
 function createMediaServices(config) {
     const imageProviders = [
@@ -8,7 +8,7 @@ function createMediaServices(config) {
             name: "remote-stroke-order-image",
             baseUrl: config.remoteStrokeOrderImageBaseUrl,
             extensionMap: IMAGE_EXTENSIONS,
-            buildCandidates: (input) => buildKanjiFileCandidates(input),
+            buildCandidates: (input) => buildStrokeOrderImageCandidates(input),
             fetchTimeoutMs: config.fetchTimeoutMs,
         })] : []),
     ];
@@ -17,7 +17,7 @@ function createMediaServices(config) {
             name: "remote-stroke-order-animation",
             baseUrl: config.remoteStrokeOrderAnimationBaseUrl,
             extensionMap: ANIMATION_EXTENSIONS,
-            buildCandidates: (input) => buildKanjiFileCandidates(input),
+            buildCandidates: (input) => buildStrokeOrderAnimationCandidates(input),
             fetchTimeoutMs: config.fetchTimeoutMs,
         })] : []),
     ];

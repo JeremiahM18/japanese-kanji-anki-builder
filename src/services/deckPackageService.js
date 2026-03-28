@@ -58,8 +58,6 @@ function buildImportGuide({ exportCount, mediaAssetCount, mediaCounts, ankiPacka
         `- Stroke-order field references: ${mediaCounts.strokeOrder}`,
         `- Stroke-order images: ${mediaCounts.strokeOrderImage}`,
         `- Stroke-order animation fields: ${mediaCounts.strokeOrderAnimation}`,
-        `- True animated stroke-order fields: ${mediaCounts.trueStrokeOrderAnimation}`,
-        `- SVG fallback animation fields: ${mediaCounts.svgStrokeOrderAnimationFallback}`,
         `- Audio fields: ${mediaCounts.audio}`,
         ...(ankiPackage?.filePath ? [
             `Anki package: ${ankiPackage.filePath}`,

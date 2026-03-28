@@ -160,6 +160,17 @@ test("starter curated data provides learner-friendly N5 breakdown fallbacks", ()
     assert.deepEqual(curatedStudyData["去"].breakdownDisplayWord, { written: "去", pron: "きょ" });
     assert.deepEqual(curatedStudyData["来"].breakdownDisplayWord, { written: "来", pron: "らい" });
     assert.deepEqual(curatedStudyData["方"].breakdownDisplayWord, { written: "方", pron: "がた" });
+    assert.deepEqual(curatedStudyData["元"].breakdownDisplayWord, { written: "元", pron: "げん" });
+    assert.deepEqual(curatedStudyData["気"].breakdownDisplayWord, { written: "気", pron: "き" });
+    assert.equal(curatedStudyData["仕"].breakdownEnglishMeaning, "service / work");
+    assert.equal(curatedStudyData["事"].breakdownEnglishMeaning, "matter / task");
+    assert.equal(curatedStudyData["会"].breakdownEnglishMeaning, "meeting / gathering");
+    assert.deepEqual(curatedStudyData["社"].breakdownDisplayWord, { written: "社", pron: "しゃ" });
+    assert.equal(curatedStudyData["院"].breakdownEnglishMeaning, "institution / facility");
+    assert.deepEqual(curatedStudyData["本"].breakdownDisplayWord, { written: "本", pron: "ほん" });
+    assert.equal(curatedStudyData["本"].breakdownEnglishMeaning, "book / base");
+    assert.deepEqual(curatedStudyData["屋"].breakdownDisplayWord, { written: "屋", pron: "や" });
+    assert.equal(curatedStudyData["屋"].breakdownEnglishMeaning, "shop / place");
 });
 
 test("buildWordTsvForJlptLevel prefers curated N5 word entries and suppresses uncurated alternate readings", async () => {

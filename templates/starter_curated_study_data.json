@@ -1,6 +1,9 @@
 {
   "一": {
     "englishMeaning": "one",
+    "displayWord": {
+      "written": "一"
+    },
     "source": "starter-curated",
     "tags": [
       "core",
@@ -25,9 +28,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "一"
     }
   },
   "七": {
@@ -58,6 +58,10 @@
   },
   "万": {
     "englishMeaning": "ten thousand",
+    "displayWord": {
+      "written": "万",
+      "pron": "まん"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -81,10 +85,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "万",
-      "pron": "まん"
     }
   },
   "三": {
@@ -117,6 +117,10 @@
   },
   "上": {
     "englishMeaning": "up / above",
+    "displayWord": {
+      "written": "上",
+      "pron": "うえ"
+    },
     "source": "starter-curated",
     "tags": [
       "core",
@@ -141,14 +145,14 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "上",
-      "pron": "うえ"
     }
   },
   "下": {
     "englishMeaning": "down / below",
+    "displayWord": {
+      "written": "下",
+      "pron": "した"
+    },
     "source": "starter-curated",
     "tags": [
       "core",
@@ -173,14 +177,13 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "下",
-      "pron": "した"
     }
   },
   "不": {
     "englishMeaning": "not / non-",
+    "displayWord": {
+      "written": "不"
+    },
     "source": "starter-curated",
     "tags": [
       "core",
@@ -206,9 +209,36 @@
         "example",
         "starter"
       ]
-    },
+    }
+  },
+  "与": {
+    "englishMeaning": "give / grant",
     "displayWord": {
-      "written": "不"
+      "written": "与える",
+      "pron": "あたえる"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "与える"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "与える （あたえる） - give ／ 影響を与える （えいきょうをあたえる） - have an effect",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "先生は宿題を与えました。",
+      "reading": "せんせいはしゅくだいをあたえました。",
+      "english": "The teacher gave homework.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
     }
   },
   "世": {
@@ -230,6 +260,37 @@
       "japanese": "いつか世界を旅行したいです。",
       "reading": "いつかせかいをりょこうしたいです。",
       "english": "Someday I want to travel the world.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "両": {
+    "englishMeaning": "both / two",
+    "displayWord": {
+      "written": "両方",
+      "pron": "りょうほう"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "両方",
+      "両親"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "両方 （りょうほう） - both sides ／ 両親 （りょうしん） - both parents",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "両方のドアを開けてください。",
+      "reading": "りょうほうのドアをあけてください。",
+      "english": "Please open both doors.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -266,6 +327,10 @@
   },
   "主": {
     "englishMeaning": "main / primary",
+    "displayWord": {
+      "written": "主",
+      "pron": "おも"
+    },
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -290,10 +355,37 @@
         "example",
         "starter"
       ]
-    },
+    }
+  },
+  "乗": {
+    "englishMeaning": "ride / board",
     "displayWord": {
-      "written": "主",
-      "pron": "おも"
+      "written": "乗る",
+      "pron": "のる"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "乗る",
+      "乗り換える"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "乗る （のる） - ride ／ 乗り換える （のりかえる） - transfer",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "毎朝電車に乗って会社へ行きます。",
+      "reading": "まいあさでんしゃにのってかいしゃへいきます。",
+      "english": "I ride the train to work every morning.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
     }
   },
   "九": {
@@ -323,8 +415,74 @@
       ]
     }
   },
+  "予": {
+    "englishMeaning": "plan / in advance",
+    "displayWord": {
+      "written": "予定",
+      "pron": "よてい"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "予定",
+      "予習"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "予定 （よてい） - plan / schedule ／ 予習 （よしゅう） - preparation",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "旅行の予定を早めに立てました。",
+      "reading": "りょこうのよていをはやめにたてました。",
+      "english": "I made the travel plans early.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "争": {
+    "englishMeaning": "fight / dispute",
+    "displayWord": {
+      "written": "争う",
+      "pron": "あらそう"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "争う",
+      "争い"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "争う （あらそう） - fight / dispute ／ 争い （あらそい） - conflict",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "意見が違っても争わないでください。",
+      "reading": "いけんがちがってもあらそわないでください。",
+      "english": "Please do not fight even if your opinions differ.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
   "事": {
     "englishMeaning": "matter / thing",
+    "displayWord": {
+      "written": "事",
+      "pron": "こと"
+    },
     "source": "starter-curated",
     "tags": [
       "core",
@@ -350,10 +508,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "事",
-      "pron": "こと"
     }
   },
   "二": {
@@ -377,6 +531,36 @@
       "japanese": "りんごを二つ買いました。",
       "reading": "りんごをふたつかいました。",
       "english": "I bought two apples.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "互": {
+    "englishMeaning": "each other / mutual",
+    "displayWord": {
+      "written": "互い",
+      "pron": "たがい"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "互い"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "互い （たがい） - each other ／ お互いに助け合う （おたがいにたすけあう） - help each other",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "お互いに助け合うことが大切です。",
+      "reading": "おたがいにたすけあうことがたいせつです。",
+      "english": "It is important to help each other.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -411,8 +595,74 @@
       ]
     }
   },
+  "亡": {
+    "englishMeaning": "die / be lost",
+    "displayWord": {
+      "written": "亡くなる",
+      "pron": "なくなる"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "亡くなる",
+      "亡ぶ"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "亡くなる （なくなる） - pass away ／ 亡ぶ （ほろぶ） - perish",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "祖父は去年亡くなりました。",
+      "reading": "そふはきょねんなくなりました。",
+      "english": "My grandfather passed away last year.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "交": {
+    "englishMeaning": "exchange / intersect",
+    "displayWord": {
+      "written": "交わす",
+      "pron": "かわす"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "交わす",
+      "交通"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "交わす （かわす） - exchange ／ 交通 （こうつう） - traffic / transportation",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "友だちと手紙を交わしました。",
+      "reading": "ともだちとてがみをかわしました。",
+      "english": "I exchanged letters with a friend.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
   "京": {
     "englishMeaning": "capital",
+    "displayWord": {
+      "written": "京",
+      "pron": "きょう"
+    },
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -437,14 +687,14 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "京",
-      "pron": "きょう"
     }
   },
   "人": {
     "englishMeaning": "person / people",
+    "displayWord": {
+      "written": "人",
+      "pron": "ひと"
+    },
     "source": "starter-curated",
     "tags": [
       "core",
@@ -468,10 +718,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "人",
-      "pron": "ひと"
     }
   },
   "今": {
@@ -504,6 +750,10 @@
   },
   "仕": {
     "englishMeaning": "serve / do",
+    "displayWord": {
+      "written": "仕",
+      "pron": "つか"
+    },
     "source": "starter-curated",
     "tags": [
       "core",
@@ -529,14 +779,76 @@
         "example",
         "starter"
       ]
-    },
+    }
+  },
+  "他": {
+    "englishMeaning": "other / another",
     "displayWord": {
-      "written": "仕",
-      "pron": "つか"
+      "written": "他",
+      "pron": "ほか"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "他",
+      "他の方法"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "他 （ほか） - other ／ 他の方法 （ほかのほうほう） - another method",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "他の方法を考えましょう。",
+      "reading": "ほかのほうほうをかんがえましょう。",
+      "english": "Let's consider another method.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "付": {
+    "englishMeaning": "attach / add",
+    "displayWord": {
+      "written": "付ける",
+      "pron": "つける"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "付ける",
+      "気を付ける"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "付ける （つける） - attach ／ 気を付ける （きをつける） - be careful",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "名前を書いて写真を付けてください。",
+      "reading": "なまえをかいてしゃしんをつけてください。",
+      "english": "Write your name and attach a photo.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
     }
   },
   "代": {
     "englishMeaning": "substitute / generation / cost",
+    "displayWord": {
+      "written": "代",
+      "pron": "だい"
+    },
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -561,14 +873,14 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "代",
-      "pron": "だい"
     }
   },
   "以": {
     "englishMeaning": "from / by means of",
+    "displayWord": {
+      "written": "以",
+      "pron": "い"
+    },
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -593,10 +905,68 @@
         "example",
         "starter"
       ]
-    },
+    }
+  },
+  "件": {
+    "englishMeaning": "matter / case",
     "displayWord": {
-      "written": "以",
-      "pron": "い"
+      "written": "件",
+      "pron": "けん"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "件",
+      "事件"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "件 （けん） - matter / case ／ 事件 （じけん） - incident",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "この件は明日話しましょう。",
+      "reading": "このけんはあしたはなしましょう。",
+      "english": "Let's talk about this matter tomorrow.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "任": {
+    "englishMeaning": "entrust / responsibility",
+    "displayWord": {
+      "written": "任せる",
+      "pron": "まかせる"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "任せる",
+      "責任"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "任せる （まかせる） - entrust ／ 責任 （せきにん） - responsibility",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "この仕事は私に任せてください。",
+      "reading": "このしごとはわたしにまかせてください。",
+      "english": "Please leave this job to me.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
     }
   },
   "休": {
@@ -647,6 +1017,99 @@
       "japanese": "友だちに会います。",
       "reading": "ともだちにあいます。",
       "english": "I will meet a friend.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "伝": {
+    "englishMeaning": "tell / convey",
+    "displayWord": {
+      "written": "伝える",
+      "pron": "つたえる"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "伝える",
+      "伝言"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "伝える （つたえる） - tell / convey ／ 伝言 （でんごん） - message",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "大事なことを家族に伝えました。",
+      "reading": "だいじなことをかぞくにつたえました。",
+      "english": "I told my family something important.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "似": {
+    "englishMeaning": "resemble / be similar",
+    "displayWord": {
+      "written": "似る",
+      "pron": "にる"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "似る",
+      "似た声"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "似る （にる） - resemble ／ 似た声 （にたこえ） - similar voice",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "彼は父に似ています。",
+      "reading": "かれはちちににています。",
+      "english": "He resembles his father.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "位": {
+    "englishMeaning": "rank / place",
+    "displayWord": {
+      "written": "一位",
+      "pron": "いちい"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "一位",
+      "地位"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "一位 （いちい） - first place ／ 地位 （ちい） - status / position",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "一位になってうれしかったです。",
+      "reading": "いちいになってうれしかったです。",
+      "english": "I was happy to come in first place.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -735,6 +1198,37 @@
       ]
     }
   },
+  "余": {
+    "englishMeaning": "remain / extra",
+    "displayWord": {
+      "written": "余る",
+      "pron": "あまる"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "余る",
+      "余分"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "余る （あまる） - remain ／ 余分 （よぶん） - extra",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "時間が少し余っています。",
+      "reading": "じかんがすこしあまっています。",
+      "english": "We have a little time left.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
   "作": {
     "englishMeaning": "make / create",
     "source": "starter-curated",
@@ -790,6 +1284,223 @@
       ]
     }
   },
+  "例": {
+    "englishMeaning": "example / case",
+    "displayWord": {
+      "written": "例",
+      "pron": "れい"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "例",
+      "例えば"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "例 （れい） - example ／ 例えば （たとえば） - for example",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "例を一つ書いてください。",
+      "reading": "れいをひとつかいてください。",
+      "english": "Please write one example.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "供": {
+    "englishMeaning": "offer / place before",
+    "displayWord": {
+      "written": "供える",
+      "pron": "そなえる"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "供える",
+      "お供え"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "供える （そなえる） - offer ／ お供え （おそなえ） - offering",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "花を写真の前に供えました。",
+      "reading": "はなをしゃしんのまえにそなえました。",
+      "english": "I offered flowers in front of the photograph.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "便": {
+    "englishMeaning": "convenience / mail",
+    "displayWord": {
+      "written": "便利",
+      "pron": "べんり"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "便利",
+      "郵便"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "便利 （べんり） - convenient ／ 郵便 （ゆうびん） - mail",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "この店は駅に近くて便利です。",
+      "reading": "このみせはえきにちかくてべんりです。",
+      "english": "This store is convenient because it is near the station.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "係": {
+    "englishMeaning": "person in charge / connection",
+    "displayWord": {
+      "written": "係",
+      "pron": "かかり"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "係",
+      "関係"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "係 （かかり） - person in charge ／ 関係 （かんけい） - relationship",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "分からないことは受付の係に聞いてください。",
+      "reading": "わからないことはうけつけのかかりにきいてください。",
+      "english": "If something is unclear, ask the person at the reception desk.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "信": {
+    "englishMeaning": "believe / trust",
+    "displayWord": {
+      "written": "信じる",
+      "pron": "しんじる"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "信じる",
+      "自信"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "信じる （しんじる） - believe ／ 自信 （じしん） - confidence",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "彼の言葉を信じています。",
+      "reading": "かれのことばをしんじています。",
+      "english": "I believe his words.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "倒": {
+    "englishMeaning": "fall over / collapse",
+    "displayWord": {
+      "written": "倒れる",
+      "pron": "たおれる"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "倒れる",
+      "倒す"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "倒れる （たおれる） - fall over ／ 倒す （たおす） - knock down",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "自転車が風で倒れました。",
+      "reading": "じてんしゃがかぜでたおれました。",
+      "english": "The bicycle fell over in the wind.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "候": {
+    "englishMeaning": "season / climate",
+    "displayWord": {
+      "written": "気候",
+      "pron": "きこう"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "気候",
+      "天候"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "気候 （きこう） - climate ／ 天候 （てんこう） - weather",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "この町は一年中気候が穏やかです。",
+      "reading": "このまちはいちねんじゅうきこうがおだやかです。",
+      "english": "This town has a mild climate all year round.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
   "借": {
     "englishMeaning": "borrow",
     "source": "starter-curated",
@@ -816,8 +1527,74 @@
       ]
     }
   },
+  "値": {
+    "englishMeaning": "value / price",
+    "displayWord": {
+      "written": "値段",
+      "pron": "ねだん"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "値段",
+      "価値"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "値段 （ねだん） - price ／ 価値 （かち） - value",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "このかばんは値段が高いです。",
+      "reading": "このかばんはねだんがたかいです。",
+      "english": "This bag is expensive.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "偉": {
+    "englishMeaning": "great / admirable",
+    "displayWord": {
+      "written": "偉い",
+      "pron": "えらい"
+    },
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "偉い",
+      "偉人"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "偉い （えらい） - great / admirable ／ 偉人 （いじん） - great person",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "偉い先生に会いました。",
+      "reading": "えらいせんせいにあいました。",
+      "english": "I met an admirable teacher.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
   "元": {
     "englishMeaning": "origin / former",
+    "displayWord": {
+      "written": "元",
+      "pron": "もと"
+    },
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -841,10 +1618,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "元",
-      "pron": "もと"
     }
   },
   "兄": {
@@ -875,6 +1648,10 @@
   },
   "先": {
     "englishMeaning": "ahead / previous",
+    "displayWord": {
+      "written": "先",
+      "pron": "さき"
+    },
     "source": "starter-curated",
     "tags": [
       "core",
@@ -899,10 +1676,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "先",
-      "pron": "さき"
     }
   },
   "入": {
@@ -961,6 +1734,10 @@
   },
   "公": {
     "englishMeaning": "public / official",
+    "displayWord": {
+      "written": "公",
+      "pron": "こう"
+    },
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -985,10 +1762,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "公",
-      "pron": "こう"
     }
   },
   "六": {
@@ -1019,6 +1792,10 @@
   },
   "円": {
     "englishMeaning": "yen / circle",
+    "displayWord": {
+      "written": "円",
+      "pron": "えん"
+    },
     "source": "starter-curated",
     "tags": [
       "core",
@@ -1043,14 +1820,14 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "円",
-      "pron": "えん"
     }
   },
   "写": {
     "englishMeaning": "copy / photograph",
+    "displayWord": {
+      "written": "写す",
+      "pron": "うつす"
+    },
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -1074,10 +1851,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "写す",
-      "pron": "うつす"
     }
   },
   "冬": {
@@ -1242,6 +2015,10 @@
   },
   "勉": {
     "englishMeaning": "study / effort",
+    "displayWord": {
+      "written": "勉",
+      "pron": "べん"
+    },
     "source": "starter-curated",
     "tags": [
       "core",
@@ -1266,10 +2043,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "勉",
-      "pron": "べん"
     }
   },
   "動": {
@@ -1302,6 +2075,10 @@
   },
   "北": {
     "englishMeaning": "north",
+    "displayWord": {
+      "written": "北",
+      "pron": "きた"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -1325,14 +2102,14 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "北",
-      "pron": "きた"
     }
   },
   "医": {
     "englishMeaning": "medicine / doctor",
+    "displayWord": {
+      "written": "医",
+      "pron": "い"
+    },
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -1357,10 +2134,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "医",
-      "pron": "い"
     }
   },
   "十": {
@@ -1471,6 +2244,10 @@
   },
   "南": {
     "englishMeaning": "south",
+    "displayWord": {
+      "written": "南",
+      "pron": "みなみ"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -1494,14 +2271,14 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "南",
-      "pron": "みなみ"
     }
   },
   "去": {
     "englishMeaning": "leave / past",
+    "displayWord": {
+      "written": "去る",
+      "pron": "さる"
+    },
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -1525,10 +2302,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "去る",
-      "pron": "さる"
     }
   },
   "友": {
@@ -1559,6 +2332,10 @@
   },
   "口": {
     "englishMeaning": "mouth / opening",
+    "displayWord": {
+      "written": "口",
+      "pron": "くち"
+    },
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -1582,10 +2359,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "口",
-      "pron": "くち"
     }
   },
   "古": {
@@ -1616,6 +2389,10 @@
   },
   "台": {
     "englishMeaning": "stand / platform",
+    "displayWord": {
+      "written": "台",
+      "pron": "だい"
+    },
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -1640,14 +2417,14 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "台",
-      "pron": "だい"
     }
   },
   "右": {
     "englishMeaning": "right",
+    "displayWord": {
+      "written": "右",
+      "pron": "みぎ"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -1671,10 +2448,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "右",
-      "pron": "みぎ"
     }
   },
   "同": {
@@ -1760,6 +2533,10 @@
   },
   "品": {
     "englishMeaning": "goods / quality",
+    "displayWord": {
+      "written": "品",
+      "pron": "しな"
+    },
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -1784,14 +2561,14 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "品",
-      "pron": "しな"
     }
   },
   "員": {
     "englishMeaning": "member / employee",
+    "displayWord": {
+      "written": "員",
+      "pron": "いん"
+    },
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -1816,10 +2593,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "員",
-      "pron": "いん"
     }
   },
   "問": {
@@ -1852,6 +2625,10 @@
   },
   "四": {
     "englishMeaning": "four",
+    "displayWord": {
+      "written": "四",
+      "pron": "よん"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -1875,14 +2652,14 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "四",
-      "pron": "よん"
     }
   },
   "図": {
     "englishMeaning": "diagram / plan / map",
+    "displayWord": {
+      "written": "図",
+      "pron": "ず"
+    },
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -1907,14 +2684,14 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "図",
-      "pron": "ず"
     }
   },
   "国": {
     "englishMeaning": "country",
+    "displayWord": {
+      "written": "国",
+      "pron": "くに"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -1938,14 +2715,14 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "国",
-      "pron": "くに"
     }
   },
   "土": {
     "englishMeaning": "soil / earth",
+    "displayWord": {
+      "written": "土",
+      "pron": "つち"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -1969,10 +2746,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "土",
-      "pron": "つち"
     }
   },
   "地": {
@@ -2136,6 +2909,10 @@
   },
   "外": {
     "englishMeaning": "outside",
+    "displayWord": {
+      "written": "外",
+      "pron": "そと"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -2161,10 +2938,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "外",
-      "pron": "そと"
     }
   },
   "多": {
@@ -2250,6 +3023,10 @@
   },
   "天": {
     "englishMeaning": "sky / heaven",
+    "displayWord": {
+      "written": "天",
+      "pron": "てん"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -2273,10 +3050,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "天",
-      "pron": "てん"
     }
   },
   "女": {
@@ -2712,6 +3485,10 @@
   },
   "左": {
     "englishMeaning": "left",
+    "displayWord": {
+      "written": "左",
+      "pron": "ひだり"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -2735,10 +3512,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "左",
-      "pron": "ひだり"
     }
   },
   "帰": {
@@ -2770,6 +3543,10 @@
   },
   "年": {
     "englishMeaning": "year",
+    "displayWord": {
+      "written": "年",
+      "pron": "とし"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -2793,10 +3570,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "年",
-      "pron": "とし"
     }
   },
   "広": {
@@ -3617,6 +4390,10 @@
   },
   "書": {
     "englishMeaning": "write",
+    "displayWord": {
+      "written": "書く",
+      "pron": "かく"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -3640,14 +4417,14 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "書く",
-      "pron": "かく"
     }
   },
   "月": {
     "englishMeaning": "month / moon",
+    "displayWord": {
+      "written": "月",
+      "pron": "つき"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -3671,10 +4448,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "月",
-      "pron": "つき"
     }
   },
   "有": {
@@ -3758,6 +4531,10 @@
   },
   "木": {
     "englishMeaning": "tree / wood",
+    "displayWord": {
+      "written": "木",
+      "pron": "き"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -3781,10 +4558,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "木",
-      "pron": "き"
     }
   },
   "本": {
@@ -3844,6 +4617,10 @@
   },
   "東": {
     "englishMeaning": "east",
+    "displayWord": {
+      "written": "東",
+      "pron": "ひがし"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -3867,14 +4644,14 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "東",
-      "pron": "ひがし"
     }
   },
   "校": {
     "englishMeaning": "school",
+    "displayWord": {
+      "written": "学校",
+      "pron": "がっこう"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -3898,10 +4675,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "学校",
-      "pron": "がっこう"
     }
   },
   "業": {
@@ -4093,6 +4866,10 @@
   },
   "母": {
     "englishMeaning": "mother",
+    "displayWord": {
+      "written": "母",
+      "pron": "はは"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -4116,14 +4893,14 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "母",
-      "pron": "はは"
     }
   },
   "毎": {
     "englishMeaning": "every",
+    "displayWord": {
+      "written": "毎",
+      "pron": "まい"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -4147,14 +4924,14 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "毎",
-      "pron": "まい"
     }
   },
   "気": {
     "englishMeaning": "spirit / energy",
+    "displayWord": {
+      "written": "気",
+      "pron": "き"
+    },
     "source": "starter-curated",
     "tags": [
       "core",
@@ -4180,10 +4957,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "気",
-      "pron": "き"
     }
   },
   "水": {
@@ -4320,6 +5093,10 @@
   },
   "火": {
     "englishMeaning": "fire",
+    "displayWord": {
+      "written": "火",
+      "pron": "ひ"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -4343,14 +5120,14 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "火",
-      "pron": "ひ"
     }
   },
   "父": {
     "englishMeaning": "father",
+    "displayWord": {
+      "written": "父",
+      "pron": "ちち"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -4374,10 +5151,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "父",
-      "pron": "ちち"
     }
   },
   "牛": {
@@ -4594,6 +5367,10 @@
   },
   "男": {
     "englishMeaning": "man / male",
+    "displayWord": {
+      "written": "男",
+      "pron": "おとこ"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -4617,10 +5394,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "男",
-      "pron": "おとこ"
     }
   },
   "町": {
@@ -4757,6 +5530,10 @@
   },
   "白": {
     "englishMeaning": "white",
+    "displayWord": {
+      "written": "白い",
+      "pron": "しろい"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -4780,10 +5557,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "白い",
-      "pron": "しろい"
     }
   },
   "百": {
@@ -5277,6 +6050,10 @@
   },
   "聞": {
     "englishMeaning": "hear / listen",
+    "displayWord": {
+      "written": "聞く",
+      "pron": "きく"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -5300,10 +6077,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "聞く",
-      "pron": "きく"
     }
   },
   "肉": {
@@ -5470,6 +6243,10 @@
   },
   "行": {
     "englishMeaning": "go",
+    "displayWord": {
+      "written": "行く",
+      "pron": "いく"
+    },
     "source": "starter-curated",
     "tags": [
       "core",
@@ -5494,14 +6271,14 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "行く",
-      "pron": "いく"
     }
   },
   "西": {
     "englishMeaning": "west",
+    "displayWord": {
+      "written": "西",
+      "pron": "にし"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -5525,10 +6302,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "西",
-      "pron": "にし"
     }
   },
   "見": {
@@ -5668,6 +6441,10 @@
   },
   "話": {
     "englishMeaning": "speak / talk",
+    "displayWord": {
+      "written": "話す",
+      "pron": "はなす"
+    },
     "source": "starter-curated",
     "tags": [
       "core",
@@ -5693,14 +6470,14 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "話す",
-      "pron": "はなす"
     }
   },
   "語": {
     "englishMeaning": "language / word",
+    "displayWord": {
+      "written": "語",
+      "pron": "ご"
+    },
     "source": "starter-curated",
     "tags": [
       "core",
@@ -5726,10 +6503,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "語",
-      "pron": "ご"
     }
   },
   "読": {
@@ -6212,6 +6985,10 @@
   },
   "金": {
     "englishMeaning": "money / gold",
+    "displayWord": {
+      "written": "金",
+      "pron": "かね"
+    },
     "source": "starter-curated",
     "tags": [
       "core",
@@ -6236,10 +7013,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "金",
-      "pron": "かね"
     }
   },
   "銀": {
@@ -6270,6 +7043,10 @@
   },
   "長": {
     "englishMeaning": "long",
+    "displayWord": {
+      "written": "長い",
+      "pron": "ながい"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -6293,10 +7070,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "長い",
-      "pron": "ながい"
     }
   },
   "開": {
@@ -6329,6 +7102,10 @@
   },
   "間": {
     "englishMeaning": "time / interval",
+    "displayWord": {
+      "written": "時間",
+      "pron": "じかん"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -6352,10 +7129,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "時間",
-      "pron": "じかん"
     }
   },
   "院": {
@@ -6413,6 +7186,10 @@
   },
   "雨": {
     "englishMeaning": "rain",
+    "displayWord": {
+      "written": "雨",
+      "pron": "あめ"
+    },
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -6436,10 +7213,6 @@
         "example",
         "starter"
       ]
-    },
-    "displayWord": {
-      "written": "雨",
-      "pron": "あめ"
     }
   },
   "電": {

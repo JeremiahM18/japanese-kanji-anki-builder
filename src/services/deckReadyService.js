@@ -16,6 +16,11 @@ function formatDeckReadyReport(summary, doctorReport = null) {
     };
     const levelReadiness = doctorReport?.quality?.levelReadiness || null;
     const audioEnabled = doctorReport?.status?.audioEnabled !== false;
+    const selectedLevels = Array.isArray(summary.levels) ? summary.levels : [];
+    const selectedReadinessRows = levelReadiness?.levels?.filter((entry) => selectedLevels.includes(entry.level)) || [];
+    const selectedWeakestLevel = selectedReadinessRows.length > 0
+        ? [...selectedReadinessRows].sort((a, b) => a.readinessScore - b.readinessScore || b.level - a.level)[0]
+        : null;
 
     const lines = [];
     lines.push("Japanese Kanji Builder Deck Ready");
@@ -63,7 +68,7 @@ function formatDeckReadyReport(summary, doctorReport = null) {
         lines.push("");
         lines.push("Level quality gates:");
         lines.push(`- Overall quality gate: ${levelReadiness.overallReady ? "passing" : "failing"}`);
-        for (const row of levelReadiness.levels.filter((entry) => (summary.levels || []).includes(entry.level))) {
+        for (const row of selectedReadinessRows) {
             lines.push(`- N${row.level}: ${row.ready ? "ready" : "needs work"}; ${(row.readinessScore * 100).toFixed(1)}% checks passing`);
         }
     }
@@ -71,12 +76,14 @@ function formatDeckReadyReport(summary, doctorReport = null) {
     lines.push("");
     if ((packageSummary.mediaAssetCount || 0) === 0) {
         lines.push("Next step: add local media sources or configure remote fallback providers, then rerun `npm run deck:ready`.");
+    } else if (selectedWeakestLevel && !selectedWeakestLevel.ready) {
+        lines.push(`Next step: raise JLPT N${selectedWeakestLevel.level} above the quality gate before calling this deck truly ready.`);
     } else if (levelReadiness && !levelReadiness.overallReady) {
-        const weakest = levelReadiness.weakestLevels?.[0];
-        if (weakest) {
-            lines.push(`Next step: raise JLPT N${weakest.level} above the quality gate before calling the deck truly ready.`);
+        const globalWeakest = levelReadiness.weakestLevels?.[0];
+        if (globalWeakest) {
+            lines.push(`Next step: this deck is ready, but the project-wide quality gate is still blocked by JLPT N${globalWeakest.level}. Use \`npm run deck:readiness:global\` to track the remaining levels.`);
         } else {
-            lines.push("Next step: improve level quality gate coverage before calling the deck truly ready.");
+            lines.push("Next step: this deck is ready, but the project-wide quality gate is still failing. Use `npm run deck:readiness:global` to track the remaining levels.");
         }
     } else if (packageSummary.ankiPackage?.filePath) {
         lines.push("Next step: import the generated `.apkg` file into Anki.");

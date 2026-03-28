@@ -6,7 +6,11 @@ const { buildCoverageSummary } = require("../datasets/sentenceCorpusCoverage");
 const { loadCuratedStudyData } = require("../datasets/curatedStudyData");
 const { loadSentenceCorpus } = require("../datasets/sentenceCorpus");
 const { buildCardQualitySummary } = require("./cardQualityService");
-const { buildDefaultQualityThresholds, buildLevelReadinessReport } = require("./levelReadinessService");
+const {
+    buildDefaultQualityThresholds,
+    buildLevelReadinessReport,
+    formatCardQualityMetricsLine,
+} = require("./levelReadinessService");
 
 function describePathStatus(filePath, { label, required, kind = "file" }) {
     const exists = fs.existsSync(filePath);
@@ -280,7 +284,7 @@ function formatDoctorReport(report) {
                 metricParts.push(`full media ${formatPercent(row.metrics.fullMediaCoverage)}`);
             }
             lines.push(`- N${row.level}: ${row.ready ? "ready" : "needs work"}; ${metricParts.join(", ")}`);
-            lines.push(`  Card quality: readings ${formatPercent(row.cardQuality.metrics.readingCoverage)}, meanings ${formatPercent(row.cardQuality.metrics.meaningCoverage)}, examples ${formatPercent(row.cardQuality.metrics.exampleCoverage)}, contextual notes ${formatPercent(row.cardQuality.metrics.contextualNotesCoverage)}, generic fallback notes ${formatPercent(row.cardQuality.metrics.genericNotesFallbackRatio)}`);
+            lines.push(`  ${formatCardQualityMetricsLine(row.cardQuality.metrics)}`);
             if (Array.isArray(row.cardQuality.failingChecks) && row.cardQuality.failingChecks.length > 0) {
                 lines.push(`  Quality checks: ${row.cardQuality.failingChecks.join(", ")}`);
             }

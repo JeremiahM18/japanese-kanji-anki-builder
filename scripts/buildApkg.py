@@ -26,11 +26,6 @@ ANKI_NOTE_TYPE_NAME = ANKI_NOTE_SCHEMA["noteTypeName"]
 ANKI_CARD_TEMPLATE_NAME = ANKI_NOTE_SCHEMA["cardTemplateName"]
 
 
-LEGACY_HEADER_ALIASES = {
-    "Reading": None,
-}
-
-
 def normalize_tsv_row(header, cols):
     if not header:
         return [(cols[i] if i < len(cols) else "") for i in range(len(FIELD_NAMES))]
@@ -38,16 +33,10 @@ def normalize_tsv_row(header, cols):
     header_index = {name: index for index, name in enumerate(header)}
     fields = []
     for field_name in FIELD_NAMES:
-        source_name = field_name if field_name in header_index else None
-        if source_name is None:
-            for legacy_name, replacement in LEGACY_HEADER_ALIASES.items():
-                if replacement == field_name and legacy_name in header_index:
-                    source_name = legacy_name
-                    break
-        if source_name is None:
+        if field_name not in header_index:
             fields.append("")
             continue
-        source_index = header_index[source_name]
+        source_index = header_index[field_name]
         fields.append(cols[source_index] if source_index < len(cols) else "")
     return fields
 
@@ -60,11 +49,9 @@ def validate_tsv_header(header, level: int):
     for field_name in FIELD_NAMES:
         if field_name in header:
             continue
-        legacy_match = any(legacy_name in header and replacement == field_name for legacy_name, replacement in LEGACY_HEADER_ALIASES.items())
-        if not legacy_match:
-            missing.append(field_name)
+        missing.append(field_name)
 
-    extras = [name for name in header if name not in FIELD_NAMES and name not in LEGACY_HEADER_ALIASES]
+    extras = [name for name in header if name not in FIELD_NAMES]
     if missing or extras:
         details = []
         if missing:

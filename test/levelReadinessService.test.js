@@ -5,6 +5,7 @@ const {
     buildDefaultCardQualityThresholds,
     buildDefaultQualityThresholds,
     buildLevelReadinessReport,
+    formatCardQualityMetricsLine,
     formatLevelReadinessReport,
 } = require("../src/services/levelReadinessService");
 
@@ -149,4 +150,17 @@ test("buildLevelReadinessReport can ignore audio gates when audio is disabled", 
 
     assert.equal(report.overallReady, true);
     assert.equal(report.levels[0].failingChecks.includes("audio coverage"), false);
+});
+
+
+test("formatCardQualityMetricsLine renders a stable shared card-quality summary", () => {
+    const text = formatCardQualityMetricsLine({
+        readingCoverage: 0.8,
+        meaningCoverage: 0.6,
+        exampleCoverage: 0.5,
+        contextualNotesCoverage: 0.4,
+        genericNotesFallbackRatio: 0.6,
+    });
+
+    assert.equal(text, "Card quality: readings 80.0%, meanings 60.0%, examples 50.0%, contextual notes 40.0%, generic fallback notes 60.0%");
 });

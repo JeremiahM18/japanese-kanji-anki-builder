@@ -174,6 +174,10 @@ function formatPercent(value) {
     return `${((value || 0) * 100).toFixed(1)}%`;
 }
 
+function formatCardQualityMetricsLine(metrics = {}) {
+    return `Card quality: readings ${formatPercent(metrics.readingCoverage)}, meanings ${formatPercent(metrics.meaningCoverage)}, examples ${formatPercent(metrics.exampleCoverage)}, contextual notes ${formatPercent(metrics.contextualNotesCoverage)}, generic fallback notes ${formatPercent(metrics.genericNotesFallbackRatio)}`;
+}
+
 function formatLevelReadinessReport(report) {
     const lines = [];
 
@@ -221,7 +225,7 @@ function formatLevelReadinessReport(report) {
             metricParts.push(`full media ${formatPercent(row.metrics.fullMediaCoverage)}`);
         }
         lines.push(`  ${metricParts.join(", ")}`);
-        lines.push(`  Card quality: readings ${formatPercent(row.cardQuality.metrics.readingCoverage)}, meanings ${formatPercent(row.cardQuality.metrics.meaningCoverage)}, examples ${formatPercent(row.cardQuality.metrics.exampleCoverage)}, contextual notes ${formatPercent(row.cardQuality.metrics.contextualNotesCoverage)}, generic fallback notes ${formatPercent(row.cardQuality.metrics.genericNotesFallbackRatio)}`);
+        lines.push(`  ${formatCardQualityMetricsLine(row.cardQuality.metrics)}`);
         if (row.failingChecks.length > 0) {
             lines.push(`  Failing checks: ${row.failingChecks.join(", ")}`);
         }
@@ -237,5 +241,6 @@ module.exports = {
     buildDefaultCardQualityThresholds,
     buildDefaultQualityThresholds,
     buildLevelReadinessReport,
+    formatCardQualityMetricsLine,
     formatLevelReadinessReport,
 };

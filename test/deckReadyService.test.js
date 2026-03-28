@@ -101,3 +101,50 @@ test("formatDeckReadyReport hides audio sections when audio is disabled", () => 
     assert.doesNotMatch(text, /Audio coverage:/);
     assert.doesNotMatch(text, /Full media coverage:/);
 });
+
+
+test("formatDeckReadyReport keeps single-level next steps scoped to the built deck", () => {
+    const text = formatDeckReadyReport({
+        outDir: "C:/repo/out/build",
+        levels: [5],
+        exports: [{ level: 5 }],
+        package: {
+            rootDir: "C:/repo/out/build/package",
+            exportCount: 1,
+            mediaAssetCount: 158,
+            mediaCounts: {
+                strokeOrder: 79,
+                strokeOrderImage: 79,
+                strokeOrderAnimation: 79,
+                audio: 0,
+            },
+        },
+        coverage: {
+            strokeOrder: 1,
+            trueAnimation: 1,
+            audio: 0,
+            fullMedia: 0,
+        },
+    }, {
+        status: {
+            audioEnabled: false,
+            mediaReadiness: [
+                { label: "Stroke-order images", ready: true },
+                { label: "Stroke-order animations", ready: true },
+            ],
+        },
+        quality: {
+            levelReadiness: {
+                overallReady: false,
+                weakestLevels: [{ level: 3 }],
+                levels: [
+                    { level: 5, ready: true, readinessScore: 1 },
+                    { level: 3, ready: false, readinessScore: 0 },
+                ],
+            },
+        },
+    });
+
+    assert.match(text, /this deck is ready, but the project-wide quality gate is still blocked by JLPT N3/i);
+    assert.doesNotMatch(text, /raise JLPT N3 above the quality gate before calling this deck truly ready/i);
+});

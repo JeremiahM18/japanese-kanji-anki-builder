@@ -12,6 +12,7 @@ require("./deckReadyService.test");
 require("./doctorService.test");
 require("./exportService.test");
 require("./freeStrokeOrderImportService.test");
+require("./kanjiVgImportService.test");
 require("./kanjiApiClient.test");
 require("./levelReadinessService.test");
 require("./mediaGapService.test");

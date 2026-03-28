@@ -167,6 +167,7 @@ module.exports = {
     IMAGE_EXTENSIONS,
     buildCandidateLookup,
     classifyStrokeOrderFile,
+    copyIfChanged,
     importFreeStrokeOrderDirectory,
     listFilesRecursive,
 };

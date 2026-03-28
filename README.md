@@ -230,8 +230,9 @@ Behavior:
 - The shared Anki note schema lives in `src/config/ankiNoteSchema.json`, which is the single source of truth for exported field order, note type metadata, and card template layout.
 - `StrokeOrder` prefers animation when available, then static image.
 - `StrokeOrderImage` exposes the static asset directly.
-- `StrokeOrderAnimation` exposes the animation asset directly.
-- Managed animation assets can come from native animation files (`.gif`, `.webp`, `.apng`) or from KanjiVG SVG fallback when no dedicated animation file exists.
+- `StrokeOrderAnimation` exposes the best animation-slot asset directly.
+- Managed animation-slot assets can come from native animation files (`.gif`, `.webp`, `.apng`) or from KanjiVG SVG fallback when no dedicated animation file exists.
+- Reporting now distinguishes broad stroke-order coverage from true animated stroke-order coverage so SVG fallback does not overstate Anki-visible animation quality.
 - `Audio` exports Anki sound markup when a managed audio asset exists.
 
 Supported media sourcing:
@@ -250,6 +251,7 @@ Readiness checks evaluate:
 - sentence coverage
 - curated study coverage
 - stroke-order coverage
+- true animated stroke-order coverage as a separate diagnostic
 - audio coverage when audio is enabled
 - offline card quality for readings, meanings, examples, and contextual notes
 

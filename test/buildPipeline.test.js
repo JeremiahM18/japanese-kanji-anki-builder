@@ -172,6 +172,8 @@ test("runBuildPipeline writes exports reports summary and an import-ready packag
         strokeOrder: 1,
         strokeOrderImage: 1,
         strokeOrderAnimation: 1,
+        trueStrokeOrderAnimation: 1,
+        svgStrokeOrderAnimationFallback: 0,
         audio: 1,
     });
     assert.equal(fs.existsSync(path.join(outDir, "exports", "jlpt-n5.tsv")), true);
@@ -194,11 +196,14 @@ test("runBuildPipeline writes exports reports summary and an import-ready packag
         strokeOrder: 1,
         strokeOrderImage: 1,
         strokeOrderAnimation: 1,
+        trueStrokeOrderAnimation: 1,
+        svgStrokeOrderAnimationFallback: 0,
         audio: 1,
     });
     assert.equal(storedSummary.coverage.sentenceCorpus, 0.5);
     assert.equal(storedSummary.coverage.curatedStudyData, 0.5);
     assert.equal(storedSummary.coverage.strokeOrder, 0.5);
+    assert.equal(storedSummary.coverage.trueAnimation, 0.5);
     assert.equal(storedSummary.coverage.audio, 0.5);
     assert.equal(storedSummary.coverage.fullMedia, 0.5);
 

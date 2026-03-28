@@ -96,12 +96,14 @@ test("buildDoctorReport summarizes readiness coverage and acquisition next steps
             buildMediaCoverageSummaryFn: async () => ({
                 totalKanji: 2,
                 strokeOrderCovered: 1,
+                trueAnimationCovered: 0,
                 audioCovered: 0,
                 fullMediaCovered: 0,
                 strokeOrderCoverageRatio: 0.5,
+                trueAnimationCoverageRatio: 0,
                 audioCoverageRatio: 0,
                 fullMediaCoverageRatio: 0,
-                levels: [{ level: 5, totalKanji: 2, strokeOrderCovered: 1, audioCovered: 0, fullMediaCovered: 0, strokeOrderCoverageRatio: 0.5, audioCoverageRatio: 0, fullMediaCoverageRatio: 0, sampleMissing: [{ kanji: "本", missingStrokeOrder: true, missingAudio: true }] }],
+                levels: [{ level: 5, totalKanji: 2, strokeOrderCovered: 1, trueAnimationCovered: 0, audioCovered: 0, fullMediaCovered: 0, strokeOrderCoverageRatio: 0.5, trueAnimationCoverageRatio: 0, audioCoverageRatio: 0, fullMediaCoverageRatio: 0, sampleMissing: [{ kanji: "本", missingStrokeOrder: true, missingTrueAnimation: true, missingAudio: true }] }],
             }),
             buildCardQualitySummaryFn: () => ({
                 levels: [{
@@ -123,7 +125,8 @@ test("buildDoctorReport summarizes readiness coverage and acquisition next steps
         });
 
         assert.equal(report.ready, true);
-        assert.equal(report.coverage.media.audioCoverageRatio, 0);
+        assert.equal(report.coverage.media.trueAnimationCoverageRatio, 0);
+    assert.equal(report.coverage.media.audioCoverageRatio, 0);
         assert.equal(report.quality.levelReadiness.overallReady, false);
         assert.equal(report.quality.cardQuality.levels[0].exampleCoverageRatio, 0.5);
         assert.equal(report.nextSteps.some((step) => step.includes("REMOTE_AUDIO_BASE_URL")), true);
@@ -211,7 +214,7 @@ test("formatDoctorReport hides audio sections when audio is disabled", () => {
         coverage: {
             sentenceCorpus: null,
             curatedStudyData: null,
-            media: { strokeOrderCoverageRatio: 0.5, strokeOrderCovered: 1, totalKanji: 2, audioCoverageRatio: 0, audioCovered: 0, fullMediaCoverageRatio: 0, fullMediaCovered: 0 },
+            media: { strokeOrderCoverageRatio: 0.5, strokeOrderCovered: 1, trueAnimationCoverageRatio: 0, trueAnimationCovered: 0, totalKanji: 2, audioCoverageRatio: 0, audioCovered: 0, fullMediaCoverageRatio: 0, fullMediaCovered: 0 },
         },
         quality: {
             levelReadiness: {

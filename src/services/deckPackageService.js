@@ -6,6 +6,7 @@ const { mapWithConcurrency } = require("../utils/concurrency");
 const { buildAnkiPackage } = require("./ankiPackageService");
 const { selectBestAudioAsset } = require("./audioService");
 const { buildMediaBasePath, readManifestIfExists } = require("./mediaStore");
+const { isTrueAnimatedStrokeOrderPath } = require("./strokeOrderService");
 
 function ensureDir(dirPath) {
     if (!fs.existsSync(dirPath)) {
@@ -42,6 +43,8 @@ function createEmptyMediaCounts() {
         strokeOrder: 0,
         strokeOrderImage: 0,
         strokeOrderAnimation: 0,
+        trueStrokeOrderAnimation: 0,
+        svgStrokeOrderAnimationFallback: 0,
         audio: 0,
     };
 }
@@ -54,7 +57,9 @@ function buildImportGuide({ exportCount, mediaAssetCount, mediaCounts, ankiPacka
         `Unique media files included: ${mediaAssetCount}`,
         `- Stroke-order field references: ${mediaCounts.strokeOrder}`,
         `- Stroke-order images: ${mediaCounts.strokeOrderImage}`,
-        `- Stroke-order animations: ${mediaCounts.strokeOrderAnimation}`,
+        `- Stroke-order animation fields: ${mediaCounts.strokeOrderAnimation}`,
+        `- True animated stroke-order fields: ${mediaCounts.trueStrokeOrderAnimation}`,
+        `- SVG fallback animation fields: ${mediaCounts.svgStrokeOrderAnimationFallback}`,
         `- Audio fields: ${mediaCounts.audio}`,
         ...(ankiPackage?.filePath ? [
             `Anki package: ${ankiPackage.filePath}`,
@@ -122,6 +127,13 @@ async function collectPackageAssets({ kanjiList, mediaRootDir, concurrency = 8 }
             }
 
             mediaCounts[candidate.kind] += 1;
+            if (candidate.kind === "strokeOrderAnimation") {
+                if (isTrueAnimatedStrokeOrderPath(candidate.relativePath)) {
+                    mediaCounts.trueStrokeOrderAnimation += 1;
+                } else {
+                    mediaCounts.svgStrokeOrderAnimationFallback += 1;
+                }
+            }
 
             const fileName = path.basename(candidate.relativePath);
             if (!assets.has(fileName)) {

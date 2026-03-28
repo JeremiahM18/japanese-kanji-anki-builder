@@ -46,7 +46,7 @@ test("formatDeckReadyReport summarizes packaged media and readiness", () => {
 
     assert.match(text, /Japanese Kanji Builder Deck Ready/);
     assert.match(text, /Unique packaged media files: 3/);
-    assert.match(text, /Stroke-order animations: 2/);
+    assert.match(text, /Stroke-order animation fields: 2/);
     assert.match(text, /Audio: not ready/);
     assert.match(text, /Full media coverage: 25.0%/);
     assert.match(text, /Level quality gates:/);

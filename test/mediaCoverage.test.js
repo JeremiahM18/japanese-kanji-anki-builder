@@ -51,18 +51,24 @@ test("buildMediaCoverageSummaryFromRows reports coverage and source distribution
             kanji: "日",
             level: 5,
             strokeOrderAsset: { source: "remote-stroke-order-animation" },
+            strokeOrderAnimationAsset: { path: "animations/a.gif", source: "remote-stroke-order-animation" },
+            trueAnimationAsset: { path: "animations/a.gif", source: "remote-stroke-order-animation" },
             audioAsset: { source: "remote-audio" },
         },
         {
             kanji: "本",
             level: 5,
             strokeOrderAsset: { source: "local-filesystem" },
+            strokeOrderAnimationAsset: { path: "animations/b.svg", source: "local-filesystem" },
+            trueAnimationAsset: null,
             audioAsset: null,
         },
         {
             kanji: "学",
             level: 4,
             strokeOrderAsset: null,
+            strokeOrderAnimationAsset: null,
+            trueAnimationAsset: null,
             audioAsset: null,
         },
     ], {
@@ -73,13 +79,16 @@ test("buildMediaCoverageSummaryFromRows reports coverage and source distribution
 
     assert.equal(summary.totalKanji, 3);
     assert.equal(summary.strokeOrderCovered, 2);
+    assert.equal(summary.trueAnimationCovered, 1);
     assert.equal(summary.audioCovered, 1);
     assert.equal(summary.fullMediaCovered, 1);
     assert.equal(summary.strokeOrderSources["remote-stroke-order-animation"], 1);
     assert.equal(summary.strokeOrderSources["local-filesystem"], 1);
     assert.equal(summary.audioSources["remote-audio"], 1);
+    assert.equal(summary.trueAnimationCoverageRatio, 0.3333);
     assert.deepEqual(summary.missingByPriority, [
-        { kanji: "学", level: 4, missingStrokeOrder: true, missingAudio: true },
-        { kanji: "本", level: 5, missingStrokeOrder: false, missingAudio: true },
-    ]);
+        { kanji: "学", level: 4, missingStrokeOrder: true, missingTrueAnimation: true, missingAudio: true },
+        { kanji: "日", level: 5, missingStrokeOrder: false, missingTrueAnimation: false, missingAudio: false },
+        { kanji: "本", level: 5, missingStrokeOrder: false, missingTrueAnimation: true, missingAudio: true },
+    ].filter((row) => row.missingStrokeOrder || row.missingTrueAnimation || row.missingAudio));
 });

@@ -30,6 +30,17 @@ const ANIMATION_EXTENSIONS = new Map([
     [".svg", "image/svg+xml"],
 ]);
 
+const TRUE_ANIMATION_EXTENSIONS = new Set([".gif", ".webp", ".apng"]);
+
+function isTrueAnimatedStrokeOrderPath(assetOrPath) {
+    const candidate = typeof assetOrPath === "string"
+        ? assetOrPath
+        : assetOrPath?.path || "";
+    const extension = path.extname(String(candidate || "")).toLowerCase();
+
+    return TRUE_ANIMATION_EXTENSIONS.has(extension);
+}
+
 function normalizeKanji(value) {
     const normalized = String(value ?? "").trim();
 
@@ -273,6 +284,7 @@ function createStrokeOrderService({
 module.exports = {
     ANIMATION_EXTENSIONS,
     IMAGE_EXTENSIONS,
+    TRUE_ANIMATION_EXTENSIONS,
     buildKanjiFileCandidates,
     buildKanjiVgStrokeOrderCandidates,
     buildStrokeOrderAnimationCandidates,
@@ -280,5 +292,6 @@ module.exports = {
     copyAssetIfChanged,
     createStrokeOrderService,
     findMatchingAsset,
+    isTrueAnimatedStrokeOrderPath,
     normalizeKanji,
 };

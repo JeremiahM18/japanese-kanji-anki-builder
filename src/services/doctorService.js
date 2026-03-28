@@ -255,6 +255,7 @@ function formatDoctorReport(report) {
         }
         if (report.coverage.media) {
             lines.push(`- Managed stroke-order media: ${formatPercent(report.coverage.media.strokeOrderCoverageRatio)} (${report.coverage.media.strokeOrderCovered}/${report.coverage.media.totalKanji} kanji)`);
+            lines.push(`- Managed true animated stroke-order media: ${formatPercent(report.coverage.media.trueAnimationCoverageRatio)} (${report.coverage.media.trueAnimationCovered}/${report.coverage.media.totalKanji} kanji)`);
             if (report.status.audioEnabled) {
                 lines.push(`- Managed audio media: ${formatPercent(report.coverage.media.audioCoverageRatio)} (${report.coverage.media.audioCovered}/${report.coverage.media.totalKanji} kanji)`);
                 lines.push(`- Managed full media coverage: ${formatPercent(report.coverage.media.fullMediaCoverageRatio)} (${report.coverage.media.fullMediaCovered}/${report.coverage.media.totalKanji} kanji)`);

@@ -390,6 +390,7 @@ async function runBuildPipeline({
             sentenceCorpus: buildScopedCoverageRatio(sentenceCoverage.levels, levels, "coveredKanji"),
             curatedStudyData: buildScopedCoverageRatio(curatedCoverage.levels, levels, "curatedKanji"),
             strokeOrder: buildScopedCoverageRatio(mediaCoverage.levels, levels, "strokeOrderCovered"),
+            trueAnimation: buildScopedCoverageRatio(mediaCoverage.levels, levels, "trueAnimationCovered"),
             audio: buildScopedCoverageRatio(mediaCoverage.levels, levels, "audioCovered"),
             fullMedia: buildScopedCoverageRatio(mediaCoverage.levels, levels, "fullMediaCovered"),
         },

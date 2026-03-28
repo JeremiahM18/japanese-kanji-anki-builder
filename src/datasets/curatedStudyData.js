@@ -15,11 +15,18 @@ const curatedDisplayWordSchema = z.object({
     pron: z.string().min(1).optional(),
 });
 
+const curatedBreakdownOverrideSchema = z.object({
+    matchWord: z.string().min(1),
+    englishMeaning: z.string().min(1).optional(),
+    displayWord: curatedDisplayWordSchema.optional(),
+});
+
 const curatedEntrySchema = z.object({
     englishMeaning: z.string().min(1).optional(),
     breakdownEnglishMeaning: z.string().min(1).optional(),
     displayWord: curatedDisplayWordSchema.optional(),
     breakdownDisplayWord: curatedDisplayWordSchema.optional(),
+    breakdownOverrides: z.array(curatedBreakdownOverrideSchema).default([]),
     source: z.string().default("curated-study-data"),
     tags: z.array(z.string()).default(["curated"]),
     jlpt: z.number().int().min(1).max(5).optional(),
@@ -101,12 +108,40 @@ function normalizeCuratedDisplayWord(displayWord) {
     });
 }
 
+function normalizeCuratedBreakdownOverrides(overrides) {
+    const out = [];
+    const seen = new Set();
+
+    for (const override of Array.isArray(overrides) ? overrides : []) {
+        const matchWord = cleanString(override?.matchWord);
+        if (!matchWord || seen.has(matchWord)) {
+            continue;
+        }
+
+        const displayWord = normalizeCuratedDisplayWord(override?.displayWord);
+        const englishMeaning = cleanString(override?.englishMeaning);
+        if (!displayWord && !englishMeaning) {
+            continue;
+        }
+
+        seen.add(matchWord);
+        out.push(curatedBreakdownOverrideSchema.parse({
+            matchWord,
+            englishMeaning,
+            displayWord,
+        }));
+    }
+
+    return out;
+}
+
 function normalizeCuratedEntry(entry) {
     return curatedEntrySchema.parse({
         englishMeaning: cleanString(entry?.englishMeaning),
         breakdownEnglishMeaning: cleanString(entry?.breakdownEnglishMeaning),
         displayWord: normalizeCuratedDisplayWord(entry?.displayWord),
         breakdownDisplayWord: normalizeCuratedDisplayWord(entry?.breakdownDisplayWord),
+        breakdownOverrides: normalizeCuratedBreakdownOverrides(entry?.breakdownOverrides),
         source: cleanString(entry?.source) || "curated-study-data",
         tags: normalizeTags(entry?.tags),
         jlpt: Number.isInteger(entry?.jlpt) ? entry.jlpt : undefined,
@@ -169,6 +204,14 @@ function mergeCuratedEntry(starterEntry = {}, localEntry = {}) {
                 },
             }
             : {}),
+        ...(Array.isArray(starterEntry.breakdownOverrides) || Array.isArray(localEntry.breakdownOverrides)
+            ? {
+                breakdownOverrides: [
+                    ...(Array.isArray(starterEntry.breakdownOverrides) ? starterEntry.breakdownOverrides : []),
+                    ...(Array.isArray(localEntry.breakdownOverrides) ? localEntry.breakdownOverrides : []),
+                ],
+            }
+            : {}),
         ...(starterEntry.exampleSentence || localEntry.exampleSentence
             ? {
                 exampleSentence: {
@@ -216,6 +259,7 @@ module.exports = {
     mergeCuratedEntry,
     mergeCuratedStudyData,
     normalizeCuratedDisplayWord,
+    normalizeCuratedBreakdownOverrides,
     normalizeCuratedEntry,
     normalizeCuratedSentence,
     normalizeCuratedStudyData,

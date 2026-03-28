@@ -1650,11 +1650,12 @@
     "preferredWords": [
       "休み",
       "休む",
-      "休み時間"
+      "休み時間",
+      "休日"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "休み （やすみ） - day off ／ 休む （やすむ） - rest ／ 休み時間 （やすみじかん） - break time",
+    "notes": "休み （やすみ） - day off ／ 休む （やすむ） - rest ／ 休み時間 （やすみじかん） - break time ／ 休日 （きゅうじつ） - holiday",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "日曜日は休みです。",
@@ -1665,7 +1666,17 @@
         "example",
         "starter"
       ]
-    }
+    },
+    "breakdownOverrides": [
+      {
+        "matchWord": "休日",
+        "displayWord": {
+          "written": "休",
+          "pron": "きゅう"
+        },
+        "englishMeaning": "rest / holiday"
+      }
+    ]
   },
   "吸": {
     "englishMeaning": "inhale / absorb",
@@ -5815,11 +5826,12 @@
       "人",
       "一人",
       "二人",
-      "三人"
+      "三人",
+      "外国人"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "人 （ひと） - person ／ 一人 （ひとり） - one person ／ 二人 （ふたり） - two people ／ 三人 （さんにん） - three people",
+    "notes": "人 （ひと） - person ／ 一人 （ひとり） - one person ／ 二人 （ふたり） - two people ／ 三人 （さんにん） - three people ／ 外国人 （がいこくじん） - foreign person",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "人が多いです。",
@@ -5830,7 +5842,25 @@
         "example",
         "starter"
       ]
-    }
+    },
+    "breakdownOverrides": [
+      {
+        "matchWord": "三人",
+        "displayWord": {
+          "written": "人",
+          "pron": "にん"
+        },
+        "englishMeaning": "people counter"
+      },
+      {
+        "matchWord": "外国人",
+        "displayWord": {
+          "written": "人",
+          "pron": "じん"
+        },
+        "englishMeaning": "person / nationality suffix"
+      }
+    ]
   },
   "図": {
     "englishMeaning": "diagram / plan / map",
@@ -8036,11 +8066,13 @@
     ],
     "jlpt": 5,
     "preferredWords": [
-      "読む"
+      "読む",
+      "読みます",
+      "読書"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "読む （よむ） - read ／ 読みます （よみます） - read",
+    "notes": "読む （よむ） - read ／ 読みます （よみます） - read ／ 読書 （どくしょ） - reading",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "毎晩、本を読みます。",
@@ -8051,7 +8083,17 @@
         "example",
         "starter"
       ]
-    }
+    },
+    "breakdownOverrides": [
+      {
+        "matchWord": "読書",
+        "displayWord": {
+          "written": "読",
+          "pron": "どく"
+        },
+        "englishMeaning": "read / reading"
+      }
+    ]
   },
   "内": {
     "englishMeaning": "inside / within",

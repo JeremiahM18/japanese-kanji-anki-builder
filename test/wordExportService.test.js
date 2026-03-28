@@ -157,6 +157,41 @@ test("buildBreakdownInference limits multi-character breakdown overrides to matc
     assert.equal(result.meaningJP, "三 （さん） ／ three");
 });
 
+
+test("buildBreakdownInference supports context-specific breakdown overrides", () => {
+    const result = buildBreakdownInference({
+        kanji: "読",
+        contextWord: "読書",
+        contextCandidate: {
+            written: "読書",
+            reading: "どくしょ",
+            meaning: "reading / reading books",
+        },
+        inference: {
+            candidates: [{ written: "読", pron: "よむ", gloss: "read", score: 100 }],
+            primaryReading: "よむ",
+            englishMeaning: "read",
+            meaningJP: "読む （よむ） ／ read",
+            onReading: "オン:トウ、 トク、 ドク",
+            kunReading: "くん:-よ.み、 よ.む",
+        },
+        curatedEntry: {
+            englishMeaning: "read",
+            displayWord: { written: "読む", pron: "よむ" },
+            breakdownOverrides: [
+                {
+                    matchWord: "読書",
+                    displayWord: { written: "読", pron: "どく" },
+                    englishMeaning: "read / reading",
+                },
+            ],
+        },
+    });
+
+    assert.equal(result.primaryReading, "どく");
+    assert.equal(result.meaningJP, "読 （どく） ／ read / reading");
+});
+
 test("buildBreakdownInference keeps okurigana display words in compound contexts", () => {
     const result = buildBreakdownInference({
         kanji: "切",

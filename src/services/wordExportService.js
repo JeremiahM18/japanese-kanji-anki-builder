@@ -330,12 +330,23 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null, contex
             pron: String(contextCandidate?.reading || contextCandidate?.pron || "").trim(),
         }
         : null;
-    const breakdownOverrideDisplayWord = curatedEntry?.breakdownDisplayWord?.written
+    const contextOverride = (Array.isArray(curatedEntry?.breakdownOverrides) ? curatedEntry.breakdownOverrides : []).find((override) => {
+        const matchWord = String(override?.matchWord || "").trim();
+        return matchWord
+            && (matchWord === String(contextWord || "").trim()
+                || matchWord === String(contextCandidate?.written || "").trim());
+    }) || null;
+    const breakdownOverrideDisplayWord = contextOverride?.displayWord?.written
         ? {
-            written: String(curatedEntry.breakdownDisplayWord.written || "").trim(),
-            pron: String(curatedEntry?.breakdownDisplayWord?.pron || "").trim(),
+            written: String(contextOverride.displayWord.written || "").trim(),
+            pron: String(contextOverride?.displayWord?.pron || "").trim(),
         }
-        : null;
+        : (curatedEntry?.breakdownDisplayWord?.written
+            ? {
+                written: String(curatedEntry.breakdownDisplayWord.written || "").trim(),
+                pron: String(curatedEntry?.breakdownDisplayWord?.pron || "").trim(),
+            }
+            : null);
     const breakdownOverrideMatchesContext = Boolean(breakdownOverrideDisplayWord)
         && (breakdownOverrideDisplayWord.written === kanji
             || breakdownOverrideDisplayWord.written === String(contextWord || "").trim()
@@ -368,7 +379,8 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null, contex
         ? { written: kanji, pron: exactPron }
         : { written: kanji, pron: "" });
     const englishMeaning = String(
-        ((useBreakdownOverrides && breakdownOverrideMatchesContext) ? curatedEntry?.breakdownEnglishMeaning : "")
+        ((useBreakdownOverrides && contextOverride?.englishMeaning) ? contextOverride.englishMeaning : "")
+        || ((useBreakdownOverrides && breakdownOverrideMatchesContext) ? curatedEntry?.breakdownEnglishMeaning : "")
         || (isSingleKanjiWordContext ? contextCandidate?.meaning || contextCandidate?.gloss || "" : "")
         || curatedEntry?.englishMeaning
         || inference?.englishMeaning

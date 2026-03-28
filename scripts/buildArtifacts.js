@@ -1,6 +1,6 @@
 const { loadConfig } = require("../src/config");
 const { parseLevelsArgument, runBuildPipeline } = require("../src/services/buildPipeline");
-const { assertNoUnknownArgs, collectUnknownArg, parseNumericOption, parseStringOption } = require("../src/utils/cliArgs");
+const { assertNoUnknownArgs, collectUnknownArg, parseNumericOption, parseStringOption, invokeCliMain } = require("../src/utils/cliArgs");
 
 function parseArgs(argv) {
     const options = {
@@ -64,11 +64,12 @@ async function main() {
 }
 
 if (require.main === module) {
-    main().catch((err) => {
+    invokeCliMain(main).catch((err) => {
         console.error(err.stack || err);
         process.exit(1);
     });
 }
+
 
 module.exports = {
     main,

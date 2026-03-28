@@ -1,5 +1,6 @@
 const path = require("node:path");
 const fs = require("node:fs");
+const { invokeCliMain } = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
 const { importAudioDirectory } = require("../src/services/audioImportService");
@@ -86,11 +87,12 @@ async function main() {
 }
 
 if (require.main === module) {
-    main().catch((err) => {
+    invokeCliMain(main).catch((err) => {
         console.error(err.stack || err);
         process.exit(1);
     });
 }
+
 
 module.exports = {
     main,

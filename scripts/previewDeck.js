@@ -8,7 +8,7 @@ const { loadSentenceCorpus } = require("../src/datasets/sentenceCorpus");
 const { createMediaServices } = require("../src/services/mediaServiceFactory");
 const { buildPreviewCards, selectPreviewKanji } = require("../src/services/previewCardService");
 const { formatPreviewReport } = require("../src/services/previewService");
-const { collectUnknownArg, parseCsvOption, parseNumericOption, parseStringOption } = require("../src/utils/cliArgs");
+const { collectUnknownArg, parseCsvOption, parseNumericOption, parseStringOption, invokeCliMain } = require("../src/utils/cliArgs");
 
 function parseLevel(value) {
     if (value == null) {
@@ -100,11 +100,12 @@ async function main() {
 }
 
 if (require.main === module) {
-    main().catch((err) => {
+    invokeCliMain(main).catch((err) => {
         console.error(err.stack || err);
         process.exit(1);
     });
 }
+
 
 module.exports = {
     main,

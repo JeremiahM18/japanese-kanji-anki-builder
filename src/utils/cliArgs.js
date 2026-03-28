@@ -23,9 +23,14 @@ function assertNoUnknownArgs(commandName, unknownArgs = []) {
     }
 }
 
+function invokeCliMain(mainFn) {
+    return Promise.resolve().then(() => mainFn());
+}
+
 module.exports = {
     assertNoUnknownArgs,
     collectUnknownArg,
+    invokeCliMain,
     parseCsvOption,
     parseNumericOption,
     parseStringOption,

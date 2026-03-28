@@ -1,5 +1,6 @@
 const fs = require("node:fs");
 const path = require("node:path");
+const { invokeCliMain } = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
 const { parseLevelsArgument } = require("../src/services/mediaSourceReportService");
@@ -71,11 +72,12 @@ async function main() {
 }
 
 if (require.main === module) {
-    main().catch((err) => {
+    invokeCliMain(main).catch((err) => {
         console.error(err.stack || err);
         process.exit(1);
     });
 }
+
 
 module.exports = {
     main,

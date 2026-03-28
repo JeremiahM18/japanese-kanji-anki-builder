@@ -1,5 +1,6 @@
 const { loadConfig } = require("../src/config");
 const { buildDoctorReport, formatDoctorReport } = require("../src/services/doctorService");
+const { invokeCliMain } = require("../src/utils/cliArgs");
 
 function parseArgs(argv) {
     return {
@@ -21,11 +22,12 @@ async function main() {
 }
 
 if (require.main === module) {
-    main().catch((err) => {
+    invokeCliMain(main).catch((err) => {
         console.error(err.stack || err);
         process.exit(1);
     });
 }
+
 
 module.exports = {
     main,

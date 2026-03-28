@@ -1,6 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
+const { invokeCliMain } = require("../src/utils/cliArgs");
 const { parseArgs: parseBuildArtifactsArgs } = require("../scripts/buildArtifacts");
 const { parseArgs: parsePreviewArgs } = require("../scripts/previewDeck");
 const { parseArgs: parseReadinessArgs } = require("../scripts/reportDeckReadiness");
@@ -56,4 +57,11 @@ test("reportDeckReadiness parseArgs records unsupported flags", () => {
 
     assert.equal(options.json, true);
     assert.deepEqual(options.unknownArgs, ["--oops"]);
+});
+
+
+test("invokeCliMain resolves both sync and async entrypoints", async () => {
+    await assert.doesNotReject(() => invokeCliMain(() => 42));
+    await assert.doesNotReject(() => invokeCliMain(async () => 42));
+    await assert.rejects(() => invokeCliMain(() => { throw new Error("boom"); }), /boom/);
 });

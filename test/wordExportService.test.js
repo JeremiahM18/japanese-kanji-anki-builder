@@ -78,6 +78,33 @@ test("buildBreakdownInference can use breakdown-only overrides for compound cont
     assert.equal(result.meaningJP, "行 （こう） ／ go / line");
 });
 
+
+test("buildBreakdownInference uses the current single-kanji word on word cards", () => {
+    const result = buildBreakdownInference({
+        kanji: "出",
+        contextWord: "出す",
+        contextCandidate: {
+            written: "出す",
+            reading: "だす",
+            meaning: "to take out / put out",
+        },
+        inference: {
+            candidates: [{ written: "出", pron: "でる", gloss: "go out", score: 100 }],
+            primaryReading: "でる",
+            englishMeaning: "exit / go out",
+            meaningJP: "出る （でる） ／ exit / go out",
+            onReading: "オン:シュツ、 スイ",
+            kunReading: "くん:だ.す、 で.る",
+        },
+        curatedEntry: {
+            englishMeaning: "exit / go out",
+        },
+    });
+
+    assert.equal(result.primaryReading, "だす");
+    assert.equal(result.meaningJP, "出す （だす） ／ to take out / put out");
+});
+
 test("buildBreakdownInference suppresses katakana-only exact-match primaries", () => {
     const result = buildBreakdownInference({
         kanji: "二",

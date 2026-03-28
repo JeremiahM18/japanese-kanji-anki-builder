@@ -315,12 +315,21 @@ function selectWordSentence({ candidate, curatedEntry, sourceKanji, constituentK
     } : null;
 }
 
-function buildBreakdownInference({ kanji, inference, curatedEntry = null, contextWord = "" }) {
+function buildBreakdownInference({ kanji, inference, curatedEntry = null, contextWord = "", contextCandidate = null }) {
     const exactCandidate = pickBestExactSingleCandidate(inference, kanji);
     const exactPron = String(exactCandidate?.pron || "").trim();
     const inferredPrimaryReading = String(inference?.primaryReading || "").trim();
     const constituentCount = extractConstituentKanji(contextWord).length;
+    const isSingleKanjiWordContext = constituentCount === 1
+        && extractConstituentKanji(String(contextCandidate?.written || "")).length === 1
+        && String(contextCandidate?.written || "").includes(kanji);
     const useBreakdownOverrides = constituentCount > 1;
+    const contextDisplayWord = isSingleKanjiWordContext
+        ? {
+            written: String(contextCandidate?.written || "").trim(),
+            pron: String(contextCandidate?.reading || contextCandidate?.pron || "").trim(),
+        }
+        : null;
     const curatedDisplayWord = (useBreakdownOverrides
         ? curatedEntry?.breakdownDisplayWord
         : curatedEntry?.displayWord)?.written
@@ -334,16 +343,18 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null, contex
                 pron: String(curatedEntry.displayWord.pron || "").trim(),
             }
             : null);
-    const useExactCandidate = !curatedDisplayWord
+    const useExactCandidate = !contextDisplayWord
+        && !curatedDisplayWord
         && exactCandidate?.written === kanji
         && exactPron
         && !KATAKANA_ONLY_RE.test(exactPron)
         && exactPron === inferredPrimaryReading;
-    const displayWord = curatedDisplayWord || (useExactCandidate
+    const displayWord = contextDisplayWord || curatedDisplayWord || (useExactCandidate
         ? { written: kanji, pron: exactPron }
         : { written: kanji, pron: "" });
     const englishMeaning = String(
         (useBreakdownOverrides ? curatedEntry?.breakdownEnglishMeaning : "")
+        || (isSingleKanjiWordContext ? contextCandidate?.meaning || contextCandidate?.gloss || "" : "")
         || curatedEntry?.englishMeaning
         || inference?.englishMeaning
         || extractEnglishMeaningFromMeaningJP(inference?.meaningJP)
@@ -351,7 +362,7 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null, contex
     ).trim();
 
     return {
-        primaryReading: curatedDisplayWord?.pron || (useExactCandidate ? exactPron : ""),
+        primaryReading: contextDisplayWord?.pron || curatedDisplayWord?.pron || (useExactCandidate ? exactPron : ""),
         meaningJP: buildMeaningJP(displayWord, englishMeaning),
         onReading: inference?.onReading || "",
         kunReading: inference?.kunReading || "",
@@ -361,8 +372,8 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null, contex
     };
 }
 
-function buildBreakdownHtmlItem({ kanji, inference, curatedEntry = null, contextWord = "" }) {
-    const breakdown = buildBreakdownInference({ kanji, inference, curatedEntry, contextWord });
+function buildBreakdownHtmlItem({ kanji, inference, curatedEntry = null, contextWord = "", contextCandidate = null }) {
+    const breakdown = buildBreakdownInference({ kanji, inference, curatedEntry, contextWord, contextCandidate });
     const readingLines = [
         breakdown.onReading ? `<div class="kanji-reading-line"><span class="kanji-reading-label">On:</span> ${breakdown.onReading}</div>` : "",
         breakdown.kunReading ? `<div class="kanji-reading-line"><span class="kanji-reading-label">Kun:</span> ${breakdown.kunReading}</div>` : "",
@@ -608,6 +619,11 @@ function createWordExportService({
                         inference,
                         curatedEntry: curatedStudyData?.[kanji] || null,
                         contextWord: entry.candidate.written,
+                        contextCandidate: {
+                            written: entry.candidate.written,
+                            reading: entry.curatedEntry?.reading || entry.candidate.pron,
+                            meaning: entry.curatedEntry?.meaning || entry.candidate.gloss,
+                        },
                     });
                 })
                 .filter(Boolean)

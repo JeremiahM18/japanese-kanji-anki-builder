@@ -15,13 +15,23 @@ function tsvEscape(value) {
         .trim();
 }
 
+function labelOnReading(onArr) {
+    return Array.isArray(onArr) && onArr.length ? `オン:${onArr.join("、 ")}` : "";
+}
+
+function labelKunReading(kunArr) {
+    return Array.isArray(kunArr) && kunArr.length ? `くん:${kunArr.join("、 ")}` : "";
+}
+
 function labelReading(onArr, kunArr) {
-    const on = Array.isArray(onArr) && onArr.length ? `オン:${onArr.join("、 ")}` : "";
-    const kun = Array.isArray(kunArr) && kunArr.length ? `くん:${kunArr.join("、 ")}` : "";
+    const on = labelOnReading(onArr);
+    const kun = labelKunReading(kunArr);
     return [on, kun].filter(Boolean).join(" ／ ");
 }
 
 module.exports = {
+    labelKunReading,
+    labelOnReading,
     labelReading,
     normalizeGlosses,
     normalizeText,

@@ -70,7 +70,7 @@ npm run deck:review:n4
 npm run deck:review:n5
 ```
 
-- `deck:preview` shows meaning, primary reading, full reading list, notes, example sentence, radical, and media presence.
+- `deck:preview` shows meaning, primary reading, on-yomi, kun-yomi, notes, example sentence, radical, and media presence.
 - `deck:review:n4` and `deck:review:n5` run the tracked golden benchmark sets against hand-picked cards.
 - If the upstream kanji API is unavailable, preview falls back to local sentence corpus, curated study data, radicals, and managed media.
 
@@ -182,7 +182,7 @@ The project expects local ignored datasets under `data/`:
 - `data/sentence_corpus.json`
 - `data/curated_study_data.json`
 
-Curated study entries can pin a learner-facing display form with `displayWord`, for example `{ "written": "上", "pron": "うえ" }`, so exports and offline previews stay aligned even when the highest-ranked dictionary word uses a different surface form. That same pronunciation now feeds the exported `PrimaryReading` field, which lets the Anki template lead with the learner-relevant reading while still keeping the complete on/kun list in `Reading`.
+Curated study entries can pin a learner-facing display form with `displayWord`, for example `{ "written": "上", "pron": "うえ" }`, so exports and offline previews stay aligned even when the highest-ranked dictionary word uses a different surface form. That same pronunciation now feeds the exported `PrimaryReading` field, which lets the Anki template lead with the learner-relevant reading while still keeping the complete reading inventory split into `OnReading` and `KunReading`.
 
 Managed media is stored under:
 
@@ -214,7 +214,8 @@ Behavior:
 
 - `MeaningJP` carries the learner-facing display word plus the English gloss.
 - `PrimaryReading` carries the pronunciation of that learner-facing display word when one is available.
-- `Reading` keeps the full on-yomi and kun-yomi list for reference.
+- `OnReading` keeps the full on-yomi list for reference.
+- `KunReading` keeps the full kun-yomi list for reference.
 - `StrokeOrder` prefers animation when available, then static image.
 - `StrokeOrderImage` exposes the static asset directly.
 - `StrokeOrderAnimation` exposes the animation asset directly.

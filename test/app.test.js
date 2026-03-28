@@ -499,16 +499,18 @@ test("download export sets attachment headers and includes Anki-ready media fiel
         const cols = lines[1].split("\t");
 
         assert.equal(lines.length, 2);
-        assert.equal(lines[0], "Kanji\tMeaningJP\tPrimaryReading\tReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence");
-        assert.equal(cols.length, 11);
+        assert.equal(lines[0], "Kanji\tMeaningJP\tPrimaryReading\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence");
+        assert.equal(cols.length, 12);
         assert.equal(cols[2], "にほん");
-        assert.equal(cols[4], '<img src="65E5_日-stroke-order.gif" />');
-        assert.equal(cols[5], '<img src="65E5_日-stroke-order.svg" />');
-        assert.equal(cols[6], '<img src="65E5_日-stroke-order.gif" />');
-        assert.equal(cols[7], "[sound:65E5_日-kanji-reading-日.mp3]");
-        assert.match(cols[9], /curated-note/);
-        assert.match(cols[10], /日本は島国です/);
-        assert.match(cols[10], /Japan is an island nation/);
+        assert.equal(cols[3], "オン:ニチ");
+        assert.equal(cols[4], "くん:ひ");
+        assert.equal(cols[5], '<img src="65E5_日-stroke-order.gif" />');
+        assert.equal(cols[6], '<img src="65E5_日-stroke-order.svg" />');
+        assert.equal(cols[7], '<img src="65E5_日-stroke-order.gif" />');
+        assert.equal(cols[8], "[sound:65E5_日-kanji-reading-日.mp3]");
+        assert.match(cols[10], /curated-note/);
+        assert.match(cols[11], /日本は島国です/);
+        assert.match(cols[11], /Japan is an island nation/);
     });
 });
 

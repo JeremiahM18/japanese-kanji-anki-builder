@@ -9,6 +9,8 @@ test("formatPreviewCard renders user-facing card details and media presence", ()
         levelLabel: "N5",
         meaningJP: "日本 （にほん） ／ day",
         primaryReading: "にほん",
+        onReading: "オン:ニチ",
+        kunReading: "くん:ひ",
         reading: "オン:ニチ ／ くん:ひ",
         radical: "日",
         notes: "fixture notes",
@@ -23,6 +25,8 @@ test("formatPreviewCard renders user-facing card details and media presence", ()
 
     assert.match(text, /日 \(N5\)/);
     assert.match(text, /Primary reading: にほん/);
+    assert.match(text, /On-yomi: オン:ニチ/);
+    assert.match(text, /Kun-yomi: くん:ひ/);
     assert.match(text, /Stroke-order image: present/);
     assert.match(text, /Audio: present/);
     assert.match(text, /Example: 日本です/);
@@ -46,6 +50,8 @@ test("formatPreviewCard marks offline local fallback cards", () => {
         warning: "Preview used local fallback data because the kanji API could not be reached and no cached entry was available.",
         meaningJP: "学校",
         primaryReading: "まなぶ",
+        onReading: "オン:ガク",
+        kunReading: "くん:まなぶ",
         reading: "オン:ガク ／ くん:まなぶ",
         radical: "子",
         notes: "Local example uses 学校 to illustrate this kanji.",
@@ -60,8 +66,8 @@ test("formatPreviewCard marks offline local fallback cards", () => {
 
     assert.match(text, /Preview mode: offline local fallback/);
     assert.match(text, /Preview note: Preview used local fallback data/);
-    assert.match(text, /Reading: オン:ガク/);
-    assert.match(text, /くん:まなぶ/);
+    assert.match(text, /On-yomi: オン:ガク/);
+    assert.match(text, /Kun-yomi: くん:まなぶ/);
     assert.match(text, /Example: 学校で日本語を学びます/);
 });
 

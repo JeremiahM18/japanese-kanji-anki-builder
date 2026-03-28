@@ -3,7 +3,7 @@ const { buildJlptBuckets } = require("../datasets/sentenceCorpusCoverage");
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { buildMeaningJP } = require("../inference/meaningInference");
 const { createExportService, formatExampleSentence, selectPrimaryReading } = require("./exportService");
-const { labelReading } = require("../utils/text");
+const { labelKunReading, labelOnReading, labelReading } = require("../utils/text");
 
 function formatPreviewError(err) {
     const message = err instanceof Error ? err.message : String(err);
@@ -94,12 +94,23 @@ function buildOfflineNotes({ curatedEntry, sentenceCandidate }) {
     return "Offline preview built from local data only. Add curated meanings or cached API data for richer output.";
 }
 
-function buildOfflineReading(jlptEntry) {
+function buildOfflineReadingFields(jlptEntry) {
     if (!jlptEntry || typeof jlptEntry !== "object") {
-        return "";
+        return {
+            onReading: "",
+            kunReading: "",
+            reading: "",
+        };
     }
 
-    return labelReading(jlptEntry.on_readings, jlptEntry.kun_readings);
+    const onReading = labelOnReading(jlptEntry.on_readings);
+    const kunReading = labelKunReading(jlptEntry.kun_readings);
+
+    return {
+        onReading,
+        kunReading,
+        reading: labelReading(jlptEntry.on_readings, jlptEntry.kun_readings),
+    };
 }
 
 async function buildOfflineFallbackCard({
@@ -121,6 +132,7 @@ async function buildOfflineFallbackCard({
         displayWord,
         bestWord: sentenceCandidate?.reading ? { pron: sentenceCandidate.reading } : null,
     });
+    const readingFields = buildOfflineReadingFields(jlptEntry);
     const [strokeOrderImagePath, strokeOrderAnimationPath, strokeOrderPath, audioPath] = await Promise.all([
         typeof strokeOrderService?.getStrokeOrderImagePath === "function"
             ? strokeOrderService.getStrokeOrderImagePath(kanji)
@@ -143,7 +155,9 @@ async function buildOfflineFallbackCard({
         warning: "Preview rendered from local data because online kanji enrichment was unavailable.",
         meaningJP: buildOfflineMeaning({ kanji, curatedEntry, sentenceCandidate }),
         primaryReading,
-        reading: buildOfflineReading(jlptEntry),
+        onReading: readingFields.onReading,
+        kunReading: readingFields.kunReading,
+        reading: readingFields.reading,
         radical: pickMainComponent(kradMap.get(kanji) || []),
         notes: buildOfflineNotes({ curatedEntry, sentenceCandidate }),
         exampleSentence: formatExampleSentence(sentenceCandidate),
@@ -211,6 +225,8 @@ async function buildPreviewCards({
                 previewMode: "full-inference",
                 meaningJP: inference.meaningJP,
                 primaryReading: inference.primaryReading,
+                onReading: inference.onReading,
+                kunReading: inference.kunReading,
                 reading: inference.reading,
                 radical,
                 notes: inference.notes,
@@ -252,7 +268,7 @@ module.exports = {
     buildOfflineFallbackCard,
     buildOfflineMeaning,
     buildOfflineNotes,
-    buildOfflineReading,
+    buildOfflineReadingFields,
     buildOfflineSentenceCandidate,
     buildPreviewCards,
     formatPreviewError,

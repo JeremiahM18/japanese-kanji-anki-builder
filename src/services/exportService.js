@@ -2,7 +2,7 @@ const path = require("node:path");
 
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { mapWithConcurrency } = require("../utils/concurrency");
-const { labelReading, tsvEscape } = require("../utils/text");
+const { labelKunReading, labelOnReading, labelReading, tsvEscape } = require("../utils/text");
 
 function formatExampleSentence(sentence) {
     if (!sentence) {
@@ -91,8 +91,9 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
                 maxExamples: 3,
                 maxSentences: 3,
             });
-            const reading = labelReading(kanjiInfo?.on_readings, kanjiInfo?.kun_readings);
             const primaryReading = selectPrimaryReading(inferred);
+            const onReading = labelOnReading(kanjiInfo?.on_readings);
+            const kunReading = labelKunReading(kanjiInfo?.kun_readings);
             const components = kradMap.get(kanji) || [];
             const radical = pickMainComponent(components);
             const exampleSentence = formatExampleSentence(inferred.sentenceCandidates[0]);
@@ -101,7 +102,8 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
                 kanji,
                 inferred.meaningJP,
                 primaryReading,
-                reading,
+                onReading,
+                kunReading,
                 formatAnkiStrokeOrderField(strokeOrderFields.strokeOrderPath),
                 formatAnkiStrokeOrderField(strokeOrderFields.strokeOrderImagePath),
                 formatAnkiStrokeOrderField(strokeOrderFields.strokeOrderAnimationPath),
@@ -113,6 +115,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
         } catch (error) {
             return [
                 kanji,
+                "",
                 "",
                 "",
                 "",
@@ -145,9 +148,14 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
             maxSentences: 4,
         });
 
+        const onReading = labelOnReading(kanjiInfo?.on_readings);
+        const kunReading = labelKunReading(kanjiInfo?.kun_readings);
+
         return {
             ...inferred,
             primaryReading: selectPrimaryReading(inferred),
+            onReading,
+            kunReading,
             reading: labelReading(kanjiInfo?.on_readings, kanjiInfo?.kun_readings),
             strokeOrderPath: strokeOrderFields.strokeOrderPath,
             strokeOrderField: formatAnkiStrokeOrderField(strokeOrderFields.strokeOrderPath),
@@ -175,7 +183,8 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
             "Kanji",
             "MeaningJP",
             "PrimaryReading",
-            "Reading",
+            "OnReading",
+            "KunReading",
             "StrokeOrder",
             "StrokeOrderImage",
             "StrokeOrderAnimation",

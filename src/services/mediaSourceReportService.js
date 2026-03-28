@@ -1,7 +1,11 @@
 const fs = require("node:fs");
 const { buildLocalDirectoryIndex } = require("./mediaProviders");
 const { buildJlptBuckets } = require("../datasets/sentenceCorpusCoverage");
-const { buildStrokeOrderImageCandidates, buildStrokeOrderAnimationCandidates } = require("./strokeOrderService");
+const {
+    buildStrokeOrderImageCandidates,
+    buildStrokeOrderAnimationCandidates,
+    isTrueAnimatedStrokeOrderPath,
+} = require("./strokeOrderService");
 const { buildAudioFileCandidates } = require("./audioService");
 
 const IMAGE_EXTENSIONS = new Map([
@@ -53,6 +57,17 @@ function hasAnyCandidate(index, candidates) {
 function hasAnimationSource({ animationIndex, imageIndex, kanji }) {
     return hasAnyCandidate(animationIndex, buildStrokeOrderAnimationCandidates(kanji))
         || hasAnyCandidate(imageIndex, buildStrokeOrderAnimationCandidates(kanji));
+}
+
+function hasTrueAnimationSource({ animationIndex, kanji }) {
+    for (const candidate of buildStrokeOrderAnimationCandidates(kanji)) {
+        const matches = animationIndex.get(candidate) || [];
+        if (matches.some((match) => isTrueAnimatedStrokeOrderPath(match?.fileName || ""))) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 function buildPreferredFileNames(baseCandidates, extensions, limit = 4) {
@@ -176,9 +191,10 @@ async function buildMediaSourceReport({
     for (const entry of targetKanji) {
         const hasImage = hasAnyCandidate(imageIndex, buildStrokeOrderImageCandidates(entry.kanji));
         const hasAnimation = hasAnimationSource({ animationIndex, imageIndex, kanji: entry.kanji });
+        const hasTrueAnimation = hasTrueAnimationSource({ animationIndex, kanji: entry.kanji });
         const hasAudio = hasAnyCandidate(audioIndex, buildAudioFileCandidates({ kanji: entry.kanji, text: entry.kanji }));
 
-        if (hasImage && hasAnimation && (!audioEnabled || hasAudio)) {
+        if (hasImage && hasTrueAnimation && (!audioEnabled || hasAudio)) {
             continue;
         }
 
@@ -187,11 +203,12 @@ async function buildMediaSourceReport({
             level: entry.level,
             hasImage,
             hasAnimation,
+            hasTrueAnimation,
             hasAudio,
-            gapType: classifyGapType({ hasImage, hasAnimation, hasAudio, audioEnabled }),
+            gapType: classifyGapType({ hasImage, hasAnimation: hasTrueAnimation, hasAudio, audioEnabled }),
             preferredFileNames: {
                 image: !hasImage ? buildPreferredFileNames(buildStrokeOrderImageCandidates(entry.kanji), [".png", ".webp"]) : [],
-                animation: !hasAnimation ? buildPreferredFileNames(buildStrokeOrderAnimationCandidates(entry.kanji), [".gif", ".webp"]) : [],
+                animation: !hasTrueAnimation ? buildPreferredFileNames(buildStrokeOrderAnimationCandidates(entry.kanji), [".gif", ".webp", ".apng"]) : [],
                 audio: !hasAudio ? [`${entry.kanji}.mp3`, `${entry.kanji}.wav`] : [],
             },
         });
@@ -204,6 +221,7 @@ async function buildMediaSourceReport({
         totalKanji: targetKanji.length,
         imageAvailableCount: targetKanji.filter((entry) => hasAnyCandidate(imageIndex, buildStrokeOrderImageCandidates(entry.kanji))).length,
         animationAvailableCount: targetKanji.filter((entry) => hasAnimationSource({ animationIndex, imageIndex, kanji: entry.kanji })).length,
+        trueAnimationAvailableCount: targetKanji.filter((entry) => hasTrueAnimationSource({ animationIndex, kanji: entry.kanji })).length,
         audioEnabled,
         audioAvailableCount: audioEnabled ? targetKanji.filter((entry) => hasAnyCandidate(audioIndex, buildAudioFileCandidates({ kanji: entry.kanji, text: entry.kanji }))).length : 0,
         imageSourceDir: strokeOrderImageSourceDir,
@@ -232,7 +250,8 @@ function formatMediaSourceReport(report) {
     lines.push(`Target levels: ${(report.levels || []).map((level) => `N${level}`).join(", ") || "n/a"}`);
     lines.push(`Kanji in scope: ${report.totalKanji}`);
     lines.push(`Source image coverage: ${report.imageAvailableCount}/${report.totalKanji} (${formatPercent(report.imageAvailableCount, report.totalKanji)})`);
-    lines.push(`Source animation coverage: ${report.animationAvailableCount}/${report.totalKanji} (${formatPercent(report.animationAvailableCount, report.totalKanji)})`);
+    lines.push(`Source animation-slot coverage: ${report.animationAvailableCount}/${report.totalKanji} (${formatPercent(report.animationAvailableCount, report.totalKanji)})`);
+    lines.push(`Source true animation coverage: ${report.trueAnimationAvailableCount}/${report.totalKanji} (${formatPercent(report.trueAnimationAvailableCount, report.totalKanji)})`);
     if (report.audioEnabled) {
         lines.push(`Source audio coverage: ${report.audioAvailableCount}/${report.totalKanji} (${formatPercent(report.audioAvailableCount, report.totalKanji)})`);
     }
@@ -279,7 +298,7 @@ function formatMediaSourceReport(report) {
         if (!row.hasImage) {
             lines.push(`  Image: ${row.preferredFileNames.image.join(", ")}`);
         }
-        if (!row.hasAnimation) {
+        if (!row.hasTrueAnimation) {
             lines.push(`  Animation: ${row.preferredFileNames.animation.join(", ")}`);
         }
         if (report.audioEnabled && !row.hasAudio) {

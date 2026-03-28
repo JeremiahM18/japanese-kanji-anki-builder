@@ -116,6 +116,8 @@ npm run media:plan -- --level=5 --limit=25
 npm run media:plan:stroke-order -- --level=5 --limit=25
 npm run media:discover:stroke-order -- --level=5 --limit=10
 npm run media:fetch:stroke-order -- --level=5 --limit=20 --file-limit=4
+npm run media:fetch:stroke-order -- --level=5 --limit=20 --file-limit=20 --probe-guessed
+npm run media:generate:stroke-order-gifs -- --level=5 --limit=20
 npm run media:import:stroke-order -- --input-dir=/path/to/files
 npm run media:import:kanjivg -- --input-dir=/path/to/extracted-kanjivg/kanji --level=4
 npm run media:import:audio -- --input-dir=/path/to/audio --level=5
@@ -131,7 +133,8 @@ npm run media:report -- --limit=25
 - `media:plan` shows accepted filenames for missing image, animation, and audio assets.
 - `media:plan:stroke-order` builds a Wikimedia Commons checklist for missing stroke-order assets.
 - `media:discover:stroke-order` combines Commons title search with file-prefix listing to find real asset names.
-- `media:fetch:stroke-order` downloads only confirmed Commons assets, reuses discovery cache, and backs off on `429` responses.
+- `media:fetch:stroke-order` downloads confirmed Commons assets, and `--probe-guessed` will also try direct Commons redirect URLs for guessed filenames when discovery cannot confirm them.
+- `media:generate:stroke-order-gifs` generates deterministic GIF animations from local KanjiVG SVG sources for kanji that still lack true animation files.
 - `media:import:kanjivg` imports official KanjiVG SVG files into the repo's canonical source layout.
 - When a GIF/WebP animation is missing, the sync pipeline can promote a KanjiVG SVG from the image source tree into the managed animation slot so stroke-order animation coverage stays complete.
 
@@ -175,7 +178,8 @@ This assumes a local VOICEVOX engine is already running at `VOICEVOX_ENGINE_URL`
 | `npm run media:plan` | Show missing media by kanji with accepted filenames |
 | `npm run media:plan:stroke-order` | Show Wikimedia Commons stroke-order checklist URLs |
 | `npm run media:discover:stroke-order` | Discover real Wikimedia Commons titles for missing stroke-order assets |
-| `npm run media:fetch:stroke-order` | Download confirmed Wikimedia stroke-order assets with backoff |
+| `npm run media:fetch:stroke-order` | Download confirmed Wikimedia stroke-order assets, or probe guessed filenames with `--probe-guessed` |
+| `npm run media:generate:stroke-order-gifs` | Generate true animated GIF stroke-order assets from local SVG sources |
 | `npm run media:import:stroke-order` | Import free local stroke-order assets |
 | `npm run media:import:kanjivg` | Import KanjiVG SVG stroke-order files into the source tree |
 | `npm run media:import:audio` | Import local kanji audio files into the source folder |
@@ -232,6 +236,7 @@ Behavior:
 - `StrokeOrderImage` exposes the static asset directly.
 - `StrokeOrderAnimation` exposes the best animation-slot asset directly.
 - Managed animation-slot assets can come from native animation files (`.gif`, `.webp`, `.apng`) or from KanjiVG SVG fallback when no dedicated animation file exists.
+- The repo can also synthesize native `.gif` stroke-order animations directly from local KanjiVG SVG files when free upstream GIF coverage is incomplete.
 - Reporting now distinguishes broad stroke-order coverage from true animated stroke-order coverage so SVG fallback does not overstate Anki-visible animation quality.
 - `Audio` exports Anki sound markup when a managed audio asset exists.
 
@@ -281,4 +286,5 @@ Build artifacts are written to `out/build`:
 - `build-summary.json`
 
 Import-ready packaging is written to `out/build/package`.
+
 

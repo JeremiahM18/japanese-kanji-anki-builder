@@ -100,7 +100,7 @@ async function main() {
 
     const results = [];
     for (const row of sourceReport.rows || []) {
-        if (row.hasImage && row.hasAnimation) {
+        if (row.hasImage && row.hasTrueAnimation) {
             continue;
         }
 

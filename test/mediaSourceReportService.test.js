@@ -33,7 +33,7 @@ test("hasAnyCandidate detects candidate hits in an index", () => {
     assert.equal(hasAnyCandidate(index, ["本", "学"]), false);
 });
 
-test("buildMediaSourceReport counts KanjiVG SVGs as animation coverage", async () => {
+test("buildMediaSourceReport separates animation-slot and true-animation coverage", async () => {
     const rootDir = makeTempDir();
 
     try {
@@ -57,7 +57,12 @@ test("buildMediaSourceReport counts KanjiVG SVGs as animation coverage", async (
 
         assert.equal(report.imageAvailableCount, 1);
         assert.equal(report.animationAvailableCount, 1);
-        assert.equal(report.rows.length, 0);
+        assert.equal(report.trueAnimationAvailableCount, 0);
+        assert.equal(report.rows.length, 1);
+        assert.equal(report.rows[0].kanji, "今");
+        assert.equal(report.rows[0].gapType, "animation_only");
+        assert.equal(report.rows[0].hasAnimation, true);
+        assert.equal(report.rows[0].hasTrueAnimation, false);
     } finally {
         cleanupTempDir(rootDir);
     }
@@ -129,6 +134,7 @@ test("buildMediaSourceReport summarizes source-folder coverage and missing asset
         assert.equal(report.totalKanji, 3);
         assert.equal(report.imageAvailableCount, 1);
         assert.equal(report.animationAvailableCount, 1);
+        assert.equal(report.trueAnimationAvailableCount, 1);
         assert.equal(report.audioAvailableCount, 1);
         assert.deepEqual(report.rows.map((row) => row.kanji), ["日", "本", "学"]);
         assert.equal(report.rows[0].hasImage, true);
@@ -156,6 +162,7 @@ test("formatMediaSourceReport produces a clear local-source summary", () => {
         totalKanji: 79,
         imageAvailableCount: 20,
         animationAvailableCount: 10,
+        trueAnimationAvailableCount: 6,
         audioAvailableCount: 5,
         audioEnabled: true,
         gapSummary: {
@@ -212,6 +219,7 @@ test("formatMediaSourceReport hides audio details when audio is disabled", () =>
         totalKanji: 79,
         imageAvailableCount: 20,
         animationAvailableCount: 10,
+        trueAnimationAvailableCount: 7,
         audioAvailableCount: 0,
         audioEnabled: false,
         gapSummary: {

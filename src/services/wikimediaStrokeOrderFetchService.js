@@ -1,11 +1,11 @@
 const fs = require("node:fs");
 const path = require("node:path");
 
-function buildFetchTargets(plan) {
+function buildFetchTargets(plan, { includeFallback = false } = {}) {
     const targets = [];
 
     for (const row of plan.rows || []) {
-        if (row.image?.status === "confirmed_on_commons") {
+        if (row.image?.status === "confirmed_on_commons" || (includeFallback && row.image)) {
             targets.push({
                 kanji: row.kanji,
                 level: row.level,
@@ -13,10 +13,11 @@ function buildFetchTargets(plan) {
                 fileName: row.image.fileName,
                 url: row.image.downloadUrl,
                 filePageUrl: row.image.filePageUrl,
+                discoveryStatus: row.image.status,
             });
         }
 
-        if (row.animation?.status === "confirmed_on_commons") {
+        if (row.animation?.status === "confirmed_on_commons" || (includeFallback && row.animation)) {
             targets.push({
                 kanji: row.kanji,
                 level: row.level,
@@ -24,6 +25,7 @@ function buildFetchTargets(plan) {
                 fileName: row.animation.fileName,
                 url: row.animation.downloadUrl,
                 filePageUrl: row.animation.filePageUrl,
+                discoveryStatus: row.animation.status,
             });
         }
     }
@@ -66,14 +68,17 @@ async function fetchWikimediaStrokeOrderBatch({
     animationSourceDir,
     fileLimit = 4,
     delayMs = 2000,
+    includeFallback = false,
     maxConsecutiveRateLimits = 2,
     downloadFile = null,
     sleep = delay,
 }) {
-    const targets = buildFetchTargets(plan);
+    const targets = buildFetchTargets(plan, { includeFallback });
     const effectiveDownloadFile = downloadFile || buildDefaultDownloadFile();
     const summary = {
         totalCandidates: targets.length,
+        confirmedCandidates: targets.filter((target) => target.discoveryStatus === "confirmed_on_commons").length,
+        fallbackCandidates: targets.filter((target) => target.discoveryStatus !== "confirmed_on_commons").length,
         attempted: 0,
         downloaded: 0,
         skippedExisting: 0,
@@ -153,7 +158,9 @@ function formatWikimediaStrokeOrderFetchSummary(summary) {
     const lines = [];
     lines.push("Japanese Kanji Builder Wikimedia Stroke-Order Fetch");
     lines.push("");
-    lines.push(`Confirmed Commons candidates in scope: ${summary.totalCandidates}`);
+    lines.push(`Candidates in scope: ${summary.totalCandidates}`);
+    lines.push(`- Confirmed by discovery: ${summary.confirmedCandidates || 0}`);
+    lines.push(`- Fallback direct probes: ${summary.fallbackCandidates || 0}`);
     lines.push(`Attempted downloads: ${summary.attempted}`);
     lines.push(`Downloaded files: ${summary.downloaded}`);
     lines.push(`Skipped existing files: ${summary.skippedExisting}`);
@@ -176,6 +183,9 @@ function formatWikimediaStrokeOrderFetchSummary(summary) {
         lines.push("Failures:");
         for (const failure of summary.failures) {
             lines.push(`- ${failure.kanji} (${failure.kind}): ${failure.fileName} [${failure.status}]`);
+            if (failure.discoveryStatus) {
+                lines.push(`  Discovery status: ${failure.discoveryStatus}`);
+            }
         }
     }
 

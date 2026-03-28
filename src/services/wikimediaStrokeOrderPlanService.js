@@ -155,7 +155,7 @@ async function buildWikimediaStrokeOrderPlan({
             level: row.level,
             gapType: row.gapType,
             image: row.hasImage ? null : buildPlanAsset(row.kanji, "image", discovery?.image || null, discovery?.image ? "confirmed_on_commons" : fallbackStatus),
-            animation: row.hasAnimation ? null : buildPlanAsset(row.kanji, "animation", discovery?.animation || null, discovery?.animation ? "confirmed_on_commons" : fallbackStatus),
+            animation: row.hasTrueAnimation ? null : buildPlanAsset(row.kanji, "animation", discovery?.animation || null, discovery?.animation ? "confirmed_on_commons" : fallbackStatus),
             discovery,
             discoveryState,
         });
@@ -169,7 +169,7 @@ async function buildWikimediaStrokeOrderPlan({
         levels: parseLevelsArgument(levels),
         totalKanji: sourceReport.totalKanji,
         imageMissingCount: rows.filter((row) => Boolean(row.image)).length,
-        animationMissingCount: rows.filter((row) => Boolean(row.animation)).length,
+        trueAnimationMissingCount: rows.filter((row) => Boolean(row.animation)).length,
         discover,
         discoveryAvailable,
         discoveryErrorMessage,
@@ -240,7 +240,7 @@ function formatWikimediaStrokeOrderPlan(plan) {
     lines.push(`Target levels: ${(plan.levels || []).map((level) => `N${level}`).join(", ") || "n/a"}`);
     lines.push(`Kanji in scope: ${plan.totalKanji}`);
     lines.push(`Missing Commons-style static images: ${plan.imageMissingCount}`);
-    lines.push(`Missing Commons-style animations: ${plan.animationMissingCount}`);
+    lines.push(`Missing Commons-style true animations: ${plan.trueAnimationMissingCount}`);
     if (plan.discover) {
         lines.push("Discovery mode: enabled");
         if (plan.discoveryCachePath) {
@@ -290,7 +290,7 @@ function formatWikimediaStrokeOrderPlan(plan) {
     }
 
     lines.push("");
-    lines.push("Next step: use the animation-only rows first for the fastest N5 progress. If discovery is unavailable, the guessed Commons filenames are still shown so you can try direct file pages manually. After downloading, import with `npm run media:import:stroke-order` and rerun `npm run media:sources`.");
+    lines.push("Next step: use the animation-only rows first for the fastest true-animation progress. If discovery is unavailable, the guessed Commons filenames are still shown so you can try direct file pages manually. After downloading, import with `npm run media:import:stroke-order` and rerun `npm run media:sources`.");
     return `${lines.join("\n")}\n`;
 }
 

@@ -18,8 +18,8 @@ function cleanupTempDir(dir) {
     fs.rmSync(dir, { recursive: true, force: true });
 }
 
-test("buildFetchTargets keeps only confirmed Commons assets", () => {
-    const targets = buildFetchTargets({
+test("buildFetchTargets keeps only confirmed Commons assets unless fallback probing is enabled", () => {
+    const plan = {
         rows: [
             {
                 kanji: "日",
@@ -34,10 +34,18 @@ test("buildFetchTargets keeps only confirmed Commons assets", () => {
                 animation: { fileName: "月-order.gif", downloadUrl: "https://example.com/moon.gif", filePageUrl: "https://example.com/moon-gif", status: "confirmed_on_commons" },
             },
         ],
-    });
+    };
 
+    const targets = buildFetchTargets(plan);
     assert.deepEqual(targets.map((entry) => `${entry.kanji}:${entry.kind}:${entry.fileName}`), [
         "日:image:日-bw.png",
+        "月:animation:月-order.gif",
+    ]);
+
+    const probedTargets = buildFetchTargets(plan, { includeFallback: true });
+    assert.deepEqual(probedTargets.map((entry) => `${entry.kanji}:${entry.kind}:${entry.fileName}`), [
+        "日:image:日-bw.png",
+        "日:animation:日-order.gif",
         "月:animation:月-order.gif",
     ]);
 });
@@ -66,6 +74,7 @@ test("fetchWikimediaStrokeOrderBatch downloads confirmed files and skips existin
             animationSourceDir: animationDir,
             fileLimit: 4,
             delayMs: 0,
+            includeFallback: false,
             downloadFile: async (url, destinationPath) => {
                 writes.push({ url, destinationPath });
                 await fs.promises.writeFile(destinationPath, "downloaded");
@@ -103,6 +112,7 @@ test("fetchWikimediaStrokeOrderBatch stops after repeated rate limits", async ()
             fileLimit: 4,
             delayMs: 0,
             maxConsecutiveRateLimits: 1,
+            includeFallback: false,
             downloadFile: async () => {
                 const error = new Error("Download failed with 429");
                 error.status = 429;
@@ -121,6 +131,8 @@ test("fetchWikimediaStrokeOrderBatch stops after repeated rate limits", async ()
 test("formatWikimediaStrokeOrderFetchSummary renders a readable fetch report", () => {
     const text = formatWikimediaStrokeOrderFetchSummary({
         totalCandidates: 6,
+        confirmedCandidates: 2,
+        fallbackCandidates: 4,
         attempted: 3,
         downloaded: 2,
         skippedExisting: 1,
@@ -135,6 +147,9 @@ test("formatWikimediaStrokeOrderFetchSummary renders a readable fetch report", (
     });
 
     assert.match(text, /Wikimedia Stroke-Order Fetch/);
+    assert.match(text, /Candidates in scope: 6/);
+    assert.match(text, /Confirmed by discovery: 2/);
+    assert.match(text, /Fallback direct probes: 4/);
     assert.match(text, /Downloaded files: 2/);
     assert.match(text, /Stopped early: yes/);
     assert.match(text, /日 \(image\): 日-bw\.png/);

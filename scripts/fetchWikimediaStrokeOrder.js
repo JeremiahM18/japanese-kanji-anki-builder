@@ -16,6 +16,7 @@ function parseArgs(argv) {
         fileLimit: 4,
         delayMs: 2000,
         max429: 2,
+        probeGuessed: argv.includes("--probe-guessed"),
     };
 
     for (const arg of argv) {
@@ -63,6 +64,7 @@ async function main() {
         fileLimit: options.fileLimit,
         delayMs: options.delayMs,
         maxConsecutiveRateLimits: options.max429,
+        includeFallback: options.probeGuessed,
     });
 
     process.stdout.write(formatWikimediaStrokeOrderFetchSummary(summary));

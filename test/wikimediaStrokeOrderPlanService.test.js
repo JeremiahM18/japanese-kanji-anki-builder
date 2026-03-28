@@ -51,7 +51,7 @@ test("buildWikimediaStrokeOrderPlan lists only missing stroke-order assets", asy
 
         assert.equal(plan.totalKanji, 2);
         assert.equal(plan.imageMissingCount, 1);
-        assert.equal(plan.animationMissingCount, 2);
+        assert.equal(plan.trueAnimationMissingCount, 2);
         assert.equal(plan.rows[0].kanji, "日");
         assert.equal(plan.rows[0].gapType, "animation_only");
         assert.equal(plan.rows[0].image, null);
@@ -182,7 +182,7 @@ test("formatWikimediaStrokeOrderPlan renders a clear Commons checklist", () => {
         levels: [5],
         totalKanji: 79,
         imageMissingCount: 79,
-        animationMissingCount: 79,
+        trueAnimationMissingCount: 79,
         discover: true,
         discoveryAvailable: false,
         discoveryErrorMessage: "fetch failed",
@@ -224,7 +224,7 @@ test("formatWikimediaStrokeOrderPlan renders a clear Commons checklist", () => {
     assert.match(text, /- 日 \(N5, animation only\)/);
     assert.match(text, /Image status: confirmed on Commons/);
     assert.match(text, /Animation status: discovery unavailable; guessed Commons filename shown/);
-    assert.match(text, /animation-only rows first/);
+    assert.match(text, /animation-only rows first for the fastest true-animation progress/);
 });
 
 test("formatWikimediaStrokeOrderSheet renders a compact copyable checklist", () => {

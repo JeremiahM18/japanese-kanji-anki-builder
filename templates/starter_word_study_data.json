@@ -1,4 +1,662 @@
 {
+  "お金|おかね": {
+    "written": "お金",
+    "reading": "おかね",
+    "meaning": "money",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "お金がありません。",
+      "reading": "おかねがありません。",
+      "english": "I do not have money."
+    }
+  },
+  "一時|いちじ": {
+    "written": "一時",
+    "reading": "いちじ",
+    "meaning": "one o'clock",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "一時に会いましょう。",
+      "reading": "いちじにあいましょう。",
+      "english": "Let's meet at one o'clock."
+    }
+  },
+  "一人|ひとり": {
+    "written": "一人",
+    "reading": "ひとり",
+    "meaning": "one person / alone",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "notes": "Irregular counter reading. Learn this as a whole word.",
+    "exampleSentence": {
+      "japanese": "今日は一人で帰ります。",
+      "reading": "きょうはひとりでかえります。",
+      "english": "Today I will go home alone."
+    }
+  },
+  "飲む|のむ": {
+    "written": "飲む",
+    "reading": "のむ",
+    "meaning": "drink",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "毎朝お茶を飲みます。",
+      "reading": "まいあさおちゃをのみます。",
+      "english": "I drink tea every morning."
+    }
+  },
+  "右|みぎ": {
+    "written": "右",
+    "reading": "みぎ",
+    "meaning": "right",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "右に曲がります。",
+      "reading": "みぎにまがります。",
+      "english": "I turn right."
+    }
+  },
+  "雨|あめ": {
+    "written": "雨",
+    "reading": "あめ",
+    "meaning": "rain",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "今日は雨です。",
+      "reading": "きょうはあめです。",
+      "english": "It is raining today."
+    }
+  },
+  "英語|えいご": {
+    "written": "英語",
+    "reading": "えいご",
+    "meaning": "English language",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "英語の宿題を終えました。",
+      "reading": "えいごのしゅくだいをおえました。",
+      "english": "I finished my English homework."
+    }
+  },
+  "駅|えき": {
+    "written": "駅",
+    "reading": "えき",
+    "meaning": "station",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "駅で友だちを待ちます。",
+      "reading": "えきでともだちをまちます。",
+      "english": "I wait for my friend at the station."
+    }
+  },
+  "下|した": {
+    "written": "下",
+    "reading": "した",
+    "meaning": "down / under / below",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "いすの下にねこがいます。",
+      "reading": "いすのしたにねこがいます。",
+      "english": "There is a cat under the chair."
+    }
+  },
+  "何|なに": {
+    "written": "何",
+    "reading": "なに",
+    "meaning": "what",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "これは何ですか。",
+      "reading": "これはなんですか。",
+      "english": "What is this?"
+    }
+  },
+  "何時|なんじ": {
+    "written": "何時",
+    "reading": "なんじ",
+    "meaning": "what time",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "notes": "Question word used for asking the time.",
+    "exampleSentence": {
+      "japanese": "今、何時ですか。",
+      "reading": "いま、なんじですか。",
+      "english": "What time is it now?"
+    }
+  },
+  "家|いえ": {
+    "written": "家",
+    "reading": "いえ",
+    "meaning": "house / home",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "家で日本語を勉強します。",
+      "reading": "いえでにほんごをべんきょうします。",
+      "english": "I study Japanese at home."
+    }
+  },
+  "火|ひ": {
+    "written": "火",
+    "reading": "ひ",
+    "meaning": "fire",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "火を消してください。",
+      "reading": "ひをけしてください。",
+      "english": "Please put out the fire."
+    }
+  },
+  "火曜日|かようび": {
+    "written": "火曜日",
+    "reading": "かようび",
+    "meaning": "Tuesday",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "火曜日は日本語のクラスがあります。",
+      "reading": "かようびはにほんごのクラスがあります。",
+      "english": "I have Japanese class on Tuesday."
+    }
+  },
+  "花|はな": {
+    "written": "花",
+    "reading": "はな",
+    "meaning": "flower",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "きれいな花を買いました。",
+      "reading": "きれいなはなをかいました。",
+      "english": "I bought beautiful flowers."
+    }
+  },
+  "会う|あう": {
+    "written": "会う",
+    "reading": "あう",
+    "meaning": "meet",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "学校の後で先生に会います。",
+      "reading": "がっこうのあとでせんせいにあいます。",
+      "english": "I meet the teacher after school."
+    }
+  },
+  "会社|かいしゃ": {
+    "written": "会社",
+    "reading": "かいしゃ",
+    "meaning": "company",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "父は会社へ行きます。",
+      "reading": "ちちはかいしゃへいきます。",
+      "english": "My father goes to work at the company."
+    }
+  },
+  "海|うみ": {
+    "written": "海",
+    "reading": "うみ",
+    "meaning": "sea / ocean",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "夏に海へ行きたいです。",
+      "reading": "なつにうみへいきたいです。",
+      "english": "I want to go to the sea in summer."
+    }
+  },
+  "開ける|あける": {
+    "written": "開ける",
+    "reading": "あける",
+    "meaning": "open",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "窓を開けます。",
+      "reading": "まどをあけます。",
+      "english": "I open the window."
+    }
+  },
+  "外|そと": {
+    "written": "外",
+    "reading": "そと",
+    "meaning": "outside",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "今日は外で昼ご飯を食べます。",
+      "reading": "きょうはそとでひるごはんをたべます。",
+      "english": "Today I eat lunch outside."
+    }
+  },
+  "外国人|がいこくじん": {
+    "written": "外国人",
+    "reading": "がいこくじん",
+    "meaning": "foreigner",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "あの外国人は日本語が上手です。",
+      "reading": "あのがいこくじんはにほんごがじょうずです。",
+      "english": "That foreigner is good at Japanese."
+    }
+  },
+  "学校|がっこう": {
+    "written": "学校",
+    "reading": "がっこう",
+    "meaning": "school",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "学校は八時に始まります。",
+      "reading": "がっこうははちじにはじまります。",
+      "english": "School starts at eight o'clock."
+    }
+  },
+  "学生|がくせい": {
+    "written": "学生",
+    "reading": "がくせい",
+    "meaning": "student",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "あの人は学生です。",
+      "reading": "あのひとはがくせいです。",
+      "english": "That person is a student."
+    }
+  },
+  "帰る|かえる": {
+    "written": "帰る",
+    "reading": "かえる",
+    "meaning": "return / go home",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "午後六時に家へ帰ります。",
+      "reading": "ごごろくじにいえへかえります。",
+      "english": "I go home at 6 p.m."
+    }
+  },
+  "休み|やすみ": {
+    "written": "休み",
+    "reading": "やすみ",
+    "meaning": "holiday / day off",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "日曜日は休みです。",
+      "reading": "にちようびはやすみです。",
+      "english": "Sunday is a day off."
+    }
+  },
+  "休む|やすむ": {
+    "written": "休む",
+    "reading": "やすむ",
+    "meaning": "to rest / take a break",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "日曜日は家で休みます。",
+      "reading": "にちようびはいえでやすみます。",
+      "english": "I rest at home on Sunday."
+    }
+  },
+  "魚|さかな": {
+    "written": "魚",
+    "reading": "さかな",
+    "meaning": "fish",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "晩ご飯に魚を食べます。",
+      "reading": "ばんごはんにさかなをたべます。",
+      "english": "I eat fish for dinner."
+    }
+  },
+  "金曜日|きんようび": {
+    "written": "金曜日",
+    "reading": "きんようび",
+    "meaning": "Friday",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "金曜日に友だちと会います。",
+      "reading": "きんようびにともだちとあいます。",
+      "english": "I will meet my friend on Friday."
+    }
+  },
+  "空|そら": {
+    "written": "空",
+    "reading": "そら",
+    "meaning": "sky",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "空がとても青いです。",
+      "reading": "そらがとてもあおいです。",
+      "english": "The sky is very blue."
+    }
+  },
+  "兄|あに": {
+    "written": "兄",
+    "reading": "あに",
+    "meaning": "older brother",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "兄は大学で勉強しています。",
+      "reading": "あにはだいがくでべんきょうしています。",
+      "english": "My older brother studies at university."
+    }
+  },
+  "月|つき": {
+    "written": "月",
+    "reading": "つき",
+    "meaning": "moon",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "今夜は月がきれいです。",
+      "reading": "こんやはつきがきれいです。",
+      "english": "The moon is beautiful tonight."
+    }
+  },
+  "月曜日|げつようび": {
+    "written": "月曜日",
+    "reading": "げつようび",
+    "meaning": "Monday",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "月曜日に学校へ行きます。",
+      "reading": "げつようびにがっこうへいきます。",
+      "english": "I go to school on Monday."
+    }
+  },
+  "犬|いぬ": {
+    "written": "犬",
+    "reading": "いぬ",
+    "meaning": "dog",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "その犬はとても元気です。",
+      "reading": "そのいぬはとてもげんきです。",
+      "english": "That dog is very energetic."
+    }
+  },
+  "見る|みる": {
+    "written": "見る",
+    "reading": "みる",
+    "meaning": "to see / watch",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "映画を見ます。",
+      "reading": "えいがをみます。",
+      "english": "I watch a movie."
+    }
+  },
+  "元気|げんき": {
+    "written": "元気",
+    "reading": "げんき",
+    "meaning": "healthy / energetic / well",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "今日は元気です。",
+      "reading": "きょうはげんきです。",
+      "english": "I am well today."
+    }
+  },
+  "午後|ごご": {
+    "written": "午後",
+    "reading": "ごご",
+    "meaning": "afternoon / p.m.",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "午後は図書館で本を読みます。",
+      "reading": "ごごはとしょかんでほんをよみます。",
+      "english": "In the afternoon I read books at the library."
+    }
+  },
+  "午前|ごぜん": {
+    "written": "午前",
+    "reading": "ごぜん",
+    "meaning": "morning / a.m.",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "午前九時に学校へ行きます。",
+      "reading": "ごぜんくじにがっこうへいきます。",
+      "english": "I go to school at 9 a.m."
+    }
+  },
+  "口|くち": {
+    "written": "口",
+    "reading": "くち",
+    "meaning": "mouth",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "口を大きく開けます。",
+      "reading": "くちをおおきくあけます。",
+      "english": "I open my mouth wide."
+    }
+  },
+  "行く|いく": {
+    "written": "行く",
+    "reading": "いく",
+    "meaning": "to go",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "学校へ行きます。",
+      "reading": "がっこうへいきます。",
+      "english": "I go to school."
+    }
+  },
+  "高い|たかい": {
+    "written": "高い",
+    "reading": "たかい",
+    "meaning": "high / expensive",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "このりんごは高いです。",
+      "reading": "このりんごはたかいです。",
+      "english": "This apple is expensive."
+    }
+  },
+  "国|くに": {
+    "written": "国",
+    "reading": "くに",
+    "meaning": "country",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "日本はきれいな国です。",
+      "reading": "にほんはきれいなくにです。",
+      "english": "Japan is a beautiful country."
+    }
+  },
   "今|いま": {
     "written": "今",
     "reading": "いま",
@@ -49,154 +707,10 @@
       "english": "This year I will go to Japan."
     }
   },
-  "話す|はなす": {
-    "written": "話す",
-    "reading": "はなす",
-    "meaning": "to speak / talk",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "先生と日本語で話します。",
-      "reading": "せんせいとにほんごではなします。",
-      "english": "I speak with the teacher in Japanese."
-    }
-  },
-  "行く|いく": {
-    "written": "行く",
-    "reading": "いく",
-    "meaning": "to go",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "学校へ行きます。",
-      "reading": "がっこうへいきます。",
-      "english": "I go to school."
-    }
-  },
-  "見る|みる": {
-    "written": "見る",
-    "reading": "みる",
-    "meaning": "to see / watch",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "映画を見ます。",
-      "reading": "えいがをみます。",
-      "english": "I watch a movie."
-    }
-  },
-  "食べる|たべる": {
-    "written": "食べる",
-    "reading": "たべる",
-    "meaning": "to eat",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "毎朝パンを食べます。",
-      "reading": "まいあさぱんをたべます。",
-      "english": "I eat bread every morning."
-    }
-  },
-  "日本語|にほんご": {
-    "written": "日本語",
-    "reading": "にほんご",
-    "meaning": "Japanese language",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "日本語を毎日勉強します。",
-      "reading": "にほんごをまいにちべんきょうします。",
-      "english": "I study Japanese every day."
-    }
-  },
-  "学生|がくせい": {
-    "written": "学生",
-    "reading": "がくせい",
-    "meaning": "student",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "あの人は学生です。",
-      "reading": "あのひとはがくせいです。",
-      "english": "That person is a student."
-    }
-  },
-  "先生|せんせい": {
-    "written": "先生",
-    "reading": "せんせい",
-    "meaning": "teacher",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "先生に質問します。",
-      "reading": "せんせいにしつもんします。",
-      "english": "I ask the teacher a question."
-    }
-  },
-  "休み|やすみ": {
-    "written": "休み",
-    "reading": "やすみ",
-    "meaning": "holiday / day off",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "日曜日は休みです。",
-      "reading": "にちようびはやすみです。",
-      "english": "Sunday is a day off."
-    }
-  },
-  "学校|がっこう": {
-    "written": "学校",
-    "reading": "がっこう",
-    "meaning": "school",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "学校は八時に始まります。",
-      "reading": "がっこうははちじにはじまります。",
-      "english": "School starts at eight o'clock."
-    }
-  },
-  "日本人|にほんじん": {
-    "written": "日本人",
-    "reading": "にほんじん",
-    "meaning": "Japanese person",
+  "左|ひだり": {
+    "written": "左",
+    "reading": "ひだり",
+    "meaning": "left",
     "jlpt": 5,
     "tags": [
       "starter",
@@ -204,15 +718,31 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "彼は日本人です。",
-      "reading": "かれはにほんじんです。",
-      "english": "He is Japanese."
+      "japanese": "左に郵便局があります。",
+      "reading": "ひだりにゆうびんきょくがあります。",
+      "english": "There is a post office on the left."
     }
   },
-  "外国人|がいこくじん": {
-    "written": "外国人",
-    "reading": "がいこくじん",
-    "meaning": "foreigner",
+  "座る|すわる": {
+    "written": "座る",
+    "reading": "すわる",
+    "meaning": "sit",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "ここに座ってください。",
+      "reading": "ここにすわってください。",
+      "english": "Please sit here."
+    }
+  },
+  "山|やま": {
+    "written": "山",
+    "reading": "やま",
+    "meaning": "mountain",
     "jlpt": 5,
     "tags": [
       "starter",
@@ -220,15 +750,15 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "あの外国人は日本語が上手です。",
-      "reading": "あのがいこくじんはにほんごがじょうずです。",
-      "english": "That foreigner is good at Japanese."
+      "japanese": "山が見えます。",
+      "reading": "やまがみえます。",
+      "english": "I can see a mountain."
     }
   },
-  "百円|ひゃくえん": {
-    "written": "百円",
-    "reading": "ひゃくえん",
-    "meaning": "100 yen",
+  "姉|あね": {
+    "written": "姉",
+    "reading": "あね",
+    "meaning": "older sister",
     "jlpt": 5,
     "tags": [
       "starter",
@@ -236,15 +766,47 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "このペンは百円です。",
-      "reading": "このぺんはひゃくえんです。",
-      "english": "This pen is 100 yen."
+      "japanese": "姉は駅の近くに住んでいます。",
+      "reading": "あねはえきのちかくにすんでいます。",
+      "english": "My older sister lives near the station."
     }
   },
-  "一時|いちじ": {
-    "written": "一時",
-    "reading": "いちじ",
-    "meaning": "one o'clock",
+  "子ども|こども": {
+    "written": "子ども",
+    "reading": "こども",
+    "meaning": "child",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "子どもが公園で遊んでいます。",
+      "reading": "こどもがこうえんであそんでいます。",
+      "english": "A child is playing in the park."
+    }
+  },
+  "時間|じかん": {
+    "written": "時間",
+    "reading": "じかん",
+    "meaning": "time / hour",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "今日は勉強する時間があります。",
+      "reading": "きょうはべんきょうするじかんがあります。",
+      "english": "Today I have time to study."
+    }
+  },
+  "自転車|じてんしゃ": {
+    "written": "自転車",
+    "reading": "じてんしゃ",
+    "meaning": "bicycle",
     "jlpt": 5,
     "tags": [
       "starter",
@@ -252,15 +814,15 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "一時に会いましょう。",
-      "reading": "いちじにあいましょう。",
-      "english": "Let's meet at one o'clock."
+      "japanese": "自転車で学校へ行きます。",
+      "reading": "じてんしゃでがっこうへいきます。",
+      "english": "I go to school by bicycle."
     }
   },
-  "入口|いりぐち": {
-    "written": "入口",
-    "reading": "いりぐち",
-    "meaning": "entrance",
+  "車|くるま": {
+    "written": "車",
+    "reading": "くるま",
+    "meaning": "car",
     "jlpt": 5,
     "tags": [
       "starter",
@@ -268,9 +830,41 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "入口はあちらです。",
-      "reading": "いりぐちはあちらです。",
-      "english": "The entrance is over there."
+      "japanese": "白い車があります。",
+      "reading": "しろいくるまがあります。",
+      "english": "There is a white car."
+    }
+  },
+  "手|て": {
+    "written": "手",
+    "reading": "て",
+    "meaning": "hand",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "手を洗ってください。",
+      "reading": "てをあらってください。",
+      "english": "Please wash your hands."
+    }
+  },
+  "出る|でる": {
+    "written": "出る",
+    "reading": "でる",
+    "meaning": "to go out / leave",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "七時に家を出ます。",
+      "reading": "しちじにいえをでます。",
+      "english": "I leave home at seven."
     }
   },
   "出口|でぐち": {
@@ -289,10 +883,10 @@
       "english": "I will wait for my friend at the exit."
     }
   },
-  "何|なに": {
-    "written": "何",
-    "reading": "なに",
-    "meaning": "what",
+  "書く|かく": {
+    "written": "書く",
+    "reading": "かく",
+    "meaning": "to write",
     "jlpt": 5,
     "tags": [
       "starter",
@@ -300,31 +894,31 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "これは何ですか。",
-      "reading": "これはなんですか。",
-      "english": "What is this?"
+      "japanese": "ノートに名前を書きます。",
+      "reading": "のーとになまえをかきます。",
+      "english": "I write my name in the notebook."
     }
   },
-  "日本|にほん": {
-    "written": "日本",
-    "reading": "にほん",
-    "meaning": "Japan",
+  "女|おんな": {
+    "written": "女",
+    "reading": "おんな",
+    "meaning": "woman / girl",
     "jlpt": 5,
     "tags": [
       "starter",
-      "core",
+      "common",
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "日本へ行きたいです。",
-      "reading": "にほんへいきたいです。",
-      "english": "I want to go to Japan."
+      "japanese": "女の人が店に入ります。",
+      "reading": "おんなのひとがみせにはいります。",
+      "english": "A woman enters the shop."
     }
   },
-  "毎日|まいにち": {
-    "written": "毎日",
-    "reading": "まいにち",
-    "meaning": "every day",
+  "小さい|ちいさい": {
+    "written": "小さい",
+    "reading": "ちいさい",
+    "meaning": "small",
     "jlpt": 5,
     "tags": [
       "starter",
@@ -332,26 +926,457 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "毎日、日本語を勉強します。",
-      "reading": "まいにち、にほんごをべんきょうします。",
-      "english": "I study Japanese every day."
+      "japanese": "この犬は小さいです。",
+      "reading": "このいぬはちいさいです。",
+      "english": "This dog is small."
     }
   },
-  "一人|ひとり": {
-    "written": "一人",
-    "reading": "ひとり",
-    "meaning": "one person / alone",
+  "上|うえ": {
+    "written": "上",
+    "reading": "うえ",
+    "meaning": "up / above",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "机の上に本があります。",
+      "reading": "つくえのうえにほんがあります。",
+      "english": "There is a book on the desk."
+    }
+  },
+  "乗る|のる": {
+    "written": "乗る",
+    "reading": "のる",
+    "meaning": "ride / get on",
     "jlpt": 5,
     "tags": [
       "starter",
       "core",
       "n5"
     ],
-    "notes": "Irregular counter reading. Learn this as a whole word.",
     "exampleSentence": {
-      "japanese": "今日は一人で帰ります。",
-      "reading": "きょうはひとりでかえります。",
-      "english": "Today I will go home alone."
+      "japanese": "電車に乗って学校へ行きます。",
+      "reading": "でんしゃにのってがっこうへいきます。",
+      "english": "I take the train to school."
+    }
+  },
+  "食べる|たべる": {
+    "written": "食べる",
+    "reading": "たべる",
+    "meaning": "to eat",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "毎朝パンを食べます。",
+      "reading": "まいあさぱんをたべます。",
+      "english": "I eat bread every morning."
+    }
+  },
+  "新聞|しんぶん": {
+    "written": "新聞",
+    "reading": "しんぶん",
+    "meaning": "newspaper",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "父は朝に新聞を読みます。",
+      "reading": "ちちはあさにしんぶんをよみます。",
+      "english": "My father reads the newspaper in the morning."
+    }
+  },
+  "人|ひと": {
+    "written": "人",
+    "reading": "ひと",
+    "meaning": "person",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "あの人は先生です。",
+      "reading": "あのひとはせんせいです。",
+      "english": "That person is a teacher."
+    }
+  },
+  "水|みず": {
+    "written": "水",
+    "reading": "みず",
+    "meaning": "water",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "水を一杯ください。",
+      "reading": "みずをいっぱいください。",
+      "english": "Please give me a glass of water."
+    }
+  },
+  "水曜日|すいようび": {
+    "written": "水曜日",
+    "reading": "すいようび",
+    "meaning": "Wednesday",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "水曜日に図書館で勉強します。",
+      "reading": "すいようびにとしょかんでべんきょうします。",
+      "english": "I study at the library on Wednesday."
+    }
+  },
+  "西|にし": {
+    "written": "西",
+    "reading": "にし",
+    "meaning": "west",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "学校は町の西にあります。",
+      "reading": "がっこうはまちのにしにあります。",
+      "english": "The school is in the west part of town."
+    }
+  },
+  "青い|あおい": {
+    "written": "青い",
+    "reading": "あおい",
+    "meaning": "blue",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "空が青いです。",
+      "reading": "そらがあおいです。",
+      "english": "The sky is blue."
+    }
+  },
+  "赤い|あかい": {
+    "written": "赤い",
+    "reading": "あかい",
+    "meaning": "red",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "赤い車が見えます。",
+      "reading": "あかいくるまがみえます。",
+      "english": "I can see a red car."
+    }
+  },
+  "先生|せんせい": {
+    "written": "先生",
+    "reading": "せんせい",
+    "meaning": "teacher",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "先生に質問します。",
+      "reading": "せんせいにしつもんします。",
+      "english": "I ask the teacher a question."
+    }
+  },
+  "川|かわ": {
+    "written": "川",
+    "reading": "かわ",
+    "meaning": "river",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "川の水がきれいです。",
+      "reading": "かわのみずがきれいです。",
+      "english": "The river water is clean."
+    }
+  },
+  "台所|だいどころ": {
+    "written": "台所",
+    "reading": "だいどころ",
+    "meaning": "kitchen",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "台所で母が料理を作ります。",
+      "reading": "だいどころでははがりょうりをつくります。",
+      "english": "My mother cooks in the kitchen."
+    }
+  },
+  "大きい|おおきい": {
+    "written": "大きい",
+    "reading": "おおきい",
+    "meaning": "big / large",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "このかばんは大きいです。",
+      "reading": "このかばんはおおきいです。",
+      "english": "This bag is big."
+    }
+  },
+  "大学|だいがく": {
+    "written": "大学",
+    "reading": "だいがく",
+    "meaning": "university",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "姉は大学で日本語を勉強しています。",
+      "reading": "あねはだいがくでにほんごをべんきょうしています。",
+      "english": "My older sister studies Japanese at university."
+    }
+  },
+  "男|おとこ": {
+    "written": "男",
+    "reading": "おとこ",
+    "meaning": "man / boy",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "あの男の人は先生です。",
+      "reading": "あのおとこのひとはせんせいです。",
+      "english": "That man is a teacher."
+    }
+  },
+  "中|なか": {
+    "written": "中",
+    "reading": "なか",
+    "meaning": "inside / middle",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "かばんの中にペンがあります。",
+      "reading": "かばんのなかにペンがあります。",
+      "english": "There is a pen in the bag."
+    }
+  },
+  "朝|あさ": {
+    "written": "朝",
+    "reading": "あさ",
+    "meaning": "morning",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "朝にコーヒーを飲みます。",
+      "reading": "あさにコーヒーをのみます。",
+      "english": "I drink coffee in the morning."
+    }
+  },
+  "弟|おとうと": {
+    "written": "弟",
+    "reading": "おとうと",
+    "meaning": "younger brother",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "弟は毎日サッカーをします。",
+      "reading": "おとうとはまいにちサッカーをします。",
+      "english": "My younger brother plays soccer every day."
+    }
+  },
+  "天気|てんき": {
+    "written": "天気",
+    "reading": "てんき",
+    "meaning": "weather",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "今日は天気がいいです。",
+      "reading": "きょうはてんきがいいです。",
+      "english": "The weather is nice today."
+    }
+  },
+  "店|みせ": {
+    "written": "店",
+    "reading": "みせ",
+    "meaning": "shop / store",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "あの店は毎日開いています。",
+      "reading": "あのみせはまいにちあいています。",
+      "english": "That shop is open every day."
+    }
+  },
+  "電車|でんしゃ": {
+    "written": "電車",
+    "reading": "でんしゃ",
+    "meaning": "train",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "電車で学校へ行きます。",
+      "reading": "でんしゃでがっこうへいきます。",
+      "english": "I go to school by train."
+    }
+  },
+  "電話|でんわ": {
+    "written": "電話",
+    "reading": "でんわ",
+    "meaning": "telephone / phone call",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "友だちに電話をかけます。",
+      "reading": "ともだちにでんわをかけます。",
+      "english": "I call my friend on the phone."
+    }
+  },
+  "土|つち": {
+    "written": "土",
+    "reading": "つち",
+    "meaning": "soil / earth",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "手に土がつきました。",
+      "reading": "てにつちがつきました。",
+      "english": "My hands got dirt on them."
+    }
+  },
+  "土曜日|どようび": {
+    "written": "土曜日",
+    "reading": "どようび",
+    "meaning": "Saturday",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "土曜日に友だちと会います。",
+      "reading": "どようびにともだちとあいます。",
+      "english": "I meet a friend on Saturday."
+    }
+  },
+  "東|ひがし": {
+    "written": "東",
+    "reading": "ひがし",
+    "meaning": "east",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "駅の東に大きい公園があります。",
+      "reading": "えきのひがしにおおきいこうえんがあります。",
+      "english": "There is a big park east of the station."
+    }
+  },
+  "読む|よむ": {
+    "written": "読む",
+    "reading": "よむ",
+    "meaning": "to read",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "毎晩、本を読みます。",
+      "reading": "まいばん、ほんをよみます。",
+      "english": "I read a book every evening."
+    }
+  },
+  "南|みなみ": {
+    "written": "南",
+    "reading": "みなみ",
+    "meaning": "south",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "南の国へ行きたいです。",
+      "reading": "みなみのくにへいきたいです。",
+      "english": "I want to go to a southern country."
     }
   },
   "二人|ふたり": {
@@ -371,10 +1396,10 @@
       "english": "My friend and I will watch a movie together."
     }
   },
-  "友人|ゆうじん": {
-    "written": "友人",
-    "reading": "ゆうじん",
-    "meaning": "friend",
+  "肉|にく": {
+    "written": "肉",
+    "reading": "にく",
+    "meaning": "meat",
     "jlpt": 5,
     "tags": [
       "starter",
@@ -382,63 +1407,15 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "友人と駅で会います。",
-      "reading": "ゆうじんとえきであいます。",
-      "english": "I will meet a friend at the station."
+      "japanese": "この店の肉はおいしいです。",
+      "reading": "このみせのにくはおいしいです。",
+      "english": "The meat at this restaurant is delicious."
     }
   },
-  "来年|らいねん": {
-    "written": "来年",
-    "reading": "らいねん",
-    "meaning": "next year",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "来年、大学に入ります。",
-      "reading": "らいねん、だいがくにはいります。",
-      "english": "Next year I will enter university."
-    }
-  },
-  "午前|ごぜん": {
-    "written": "午前",
-    "reading": "ごぜん",
-    "meaning": "morning / a.m.",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "午前九時に学校へ行きます。",
-      "reading": "ごぜんくじにがっこうへいきます。",
-      "english": "I go to school at 9 a.m."
-    }
-  },
-  "午後|ごご": {
-    "written": "午後",
-    "reading": "ごご",
-    "meaning": "afternoon / p.m.",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "午後は図書館で本を読みます。",
-      "reading": "ごごはとしょかんでほんをよみます。",
-      "english": "In the afternoon I read books at the library."
-    }
-  },
-  "電車|でんしゃ": {
-    "written": "電車",
-    "reading": "でんしゃ",
-    "meaning": "train",
+  "日本|にほん": {
+    "written": "日本",
+    "reading": "にほん",
+    "meaning": "Japan",
     "jlpt": 5,
     "tags": [
       "starter",
@@ -446,15 +1423,15 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "電車で学校へ行きます。",
-      "reading": "でんしゃでがっこうへいきます。",
-      "english": "I go to school by train."
+      "japanese": "日本へ行きたいです。",
+      "reading": "にほんへいきたいです。",
+      "english": "I want to go to Japan."
     }
   },
-  "読む|よむ": {
-    "written": "読む",
-    "reading": "よむ",
-    "meaning": "to read",
+  "日本語|にほんご": {
+    "written": "日本語",
+    "reading": "にほんご",
+    "meaning": "Japanese language",
     "jlpt": 5,
     "tags": [
       "starter",
@@ -462,15 +1439,95 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "毎晩、本を読みます。",
-      "reading": "まいばん、ほんをよみます。",
-      "english": "I read a book every evening."
+      "japanese": "日本語を毎日勉強します。",
+      "reading": "にほんごをまいにちべんきょうします。",
+      "english": "I study Japanese every day."
     }
   },
-  "書く|かく": {
-    "written": "書く",
-    "reading": "かく",
-    "meaning": "to write",
+  "日本人|にほんじん": {
+    "written": "日本人",
+    "reading": "にほんじん",
+    "meaning": "Japanese person",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "彼は日本人です。",
+      "reading": "かれはにほんじんです。",
+      "english": "He is Japanese."
+    }
+  },
+  "日曜日|にちようび": {
+    "written": "日曜日",
+    "reading": "にちようび",
+    "meaning": "Sunday",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "日曜日は家で休みます。",
+      "reading": "にちようびはいえでやすみます。",
+      "english": "I rest at home on Sunday."
+    }
+  },
+  "入る|はいる": {
+    "written": "入る",
+    "reading": "はいる",
+    "meaning": "to enter / go in",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "教室に入る前にノックします。",
+      "reading": "きょうしつにはいるまえにのっくします。",
+      "english": "I knock before entering the classroom."
+    }
+  },
+  "入口|いりぐち": {
+    "written": "入口",
+    "reading": "いりぐち",
+    "meaning": "entrance",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "入口はあちらです。",
+      "reading": "いりぐちはあちらです。",
+      "english": "The entrance is over there."
+    }
+  },
+  "猫|ねこ": {
+    "written": "猫",
+    "reading": "ねこ",
+    "meaning": "cat",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "猫が窓のそばで寝ています。",
+      "reading": "ねこがまどのそばでねています。",
+      "english": "The cat is sleeping by the window."
+    }
+  },
+  "買う|かう": {
+    "written": "買う",
+    "reading": "かう",
+    "meaning": "buy",
     "jlpt": 5,
     "tags": [
       "starter",
@@ -478,9 +1535,105 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "ノートに名前を書きます。",
-      "reading": "のーとになまえをかきます。",
-      "english": "I write my name in the notebook."
+      "japanese": "駅前の店で本を買います。",
+      "reading": "えきまえのみせでほんをかいます。",
+      "english": "I buy a book at the shop in front of the station."
+    }
+  },
+  "白い|しろい": {
+    "written": "白い",
+    "reading": "しろい",
+    "meaning": "white",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "白いねこがいます。",
+      "reading": "しろいねこがいます。",
+      "english": "There is a white cat."
+    }
+  },
+  "百円|ひゃくえん": {
+    "written": "百円",
+    "reading": "ひゃくえん",
+    "meaning": "100 yen",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "このペンは百円です。",
+      "reading": "このぺんはひゃくえんです。",
+      "english": "This pen is 100 yen."
+    }
+  },
+  "病院|びょういん": {
+    "written": "病院",
+    "reading": "びょういん",
+    "meaning": "hospital",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "病院は駅の前にあります。",
+      "reading": "びょういんはえきのまえにあります。",
+      "english": "The hospital is in front of the station."
+    }
+  },
+  "父|ちち": {
+    "written": "父",
+    "reading": "ちち",
+    "meaning": "father",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "父は会社で働いています。",
+      "reading": "ちちはかいしゃではたらいています。",
+      "english": "My father works at a company."
+    }
+  },
+  "部屋|へや": {
+    "written": "部屋",
+    "reading": "へや",
+    "meaning": "room",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "部屋で本を読みます。",
+      "reading": "へやでほんをよみます。",
+      "english": "I read a book in my room."
+    }
+  },
+  "分かる|わかる": {
+    "written": "分かる",
+    "reading": "わかる",
+    "meaning": "understand",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "日本語が少し分かります。",
+      "reading": "にほんごがすこしわかります。",
+      "english": "I understand a little Japanese."
     }
   },
   "聞く|きく": {
@@ -499,42 +1652,42 @@
       "english": "I ask the teacher how to read it in Japanese."
     }
   },
-  "休む|やすむ": {
-    "written": "休む",
-    "reading": "やすむ",
-    "meaning": "to rest / take a break",
+  "閉める|しめる": {
+    "written": "閉める",
+    "reading": "しめる",
+    "meaning": "close / shut",
     "jlpt": 5,
     "tags": [
       "starter",
-      "common",
+      "core",
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "日曜日は家で休みます。",
-      "reading": "にちようびはいえでやすみます。",
-      "english": "I rest at home on Sunday."
+      "japanese": "ドアを閉めます。",
+      "reading": "ドアをしめます。",
+      "english": "I close the door."
     }
   },
-  "出る|でる": {
-    "written": "出る",
-    "reading": "でる",
-    "meaning": "to go out / leave",
+  "歩く|あるく": {
+    "written": "歩く",
+    "reading": "あるく",
+    "meaning": "walk",
     "jlpt": 5,
     "tags": [
       "starter",
-      "common",
+      "core",
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "七時に家を出ます。",
-      "reading": "しちじにいえをでます。",
-      "english": "I leave home at seven."
+      "japanese": "駅まで歩きます。",
+      "reading": "えきまであるきます。",
+      "english": "I walk to the station."
     }
   },
-  "入る|はいる": {
-    "written": "入る",
-    "reading": "はいる",
-    "meaning": "to enter / go in",
+  "母|はは": {
+    "written": "母",
+    "reading": "はは",
+    "meaning": "mother",
     "jlpt": 5,
     "tags": [
       "starter",
@@ -542,9 +1695,185 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "教室に入る前にノックします。",
-      "reading": "きょうしつにはいるまえにのっくします。",
-      "english": "I knock before entering the classroom."
+      "japanese": "母は毎朝早く起きます。",
+      "reading": "はははまいあさはやくおきます。",
+      "english": "My mother gets up early every morning."
+    }
+  },
+  "北|きた": {
+    "written": "北",
+    "reading": "きた",
+    "meaning": "north",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "北の空は暗いです。",
+      "reading": "きたのそらはくらいです。",
+      "english": "The northern sky is dark."
+    }
+  },
+  "本屋|ほんや": {
+    "written": "本屋",
+    "reading": "ほんや",
+    "meaning": "bookstore",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "駅前の本屋で辞書を買います。",
+      "reading": "えきまえのほんやでじしょをかいます。",
+      "english": "I buy a dictionary at the bookstore in front of the station."
+    }
+  },
+  "妹|いもうと": {
+    "written": "妹",
+    "reading": "いもうと",
+    "meaning": "younger sister",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "妹は白い犬が好きです。",
+      "reading": "いもうとはしろいいぬがすきです。",
+      "english": "My younger sister likes white dogs."
+    }
+  },
+  "毎週|まいしゅう": {
+    "written": "毎週",
+    "reading": "まいしゅう",
+    "meaning": "every week",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "毎週土曜日に図書館へ行きます。",
+      "reading": "まいしゅうどようびにとしょかんへいきます。",
+      "english": "I go to the library every Saturday."
+    }
+  },
+  "毎日|まいにち": {
+    "written": "毎日",
+    "reading": "まいにち",
+    "meaning": "every day",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "毎日、日本語を勉強します。",
+      "reading": "まいにち、にほんごをべんきょうします。",
+      "english": "I study Japanese every day."
+    }
+  },
+  "名前|なまえ": {
+    "written": "名前",
+    "reading": "なまえ",
+    "meaning": "name",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "お名前は何ですか。",
+      "reading": "おなまえはなんですか。",
+      "english": "What is your name?"
+    }
+  },
+  "木|き": {
+    "written": "木",
+    "reading": "き",
+    "meaning": "tree",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "大きい木の下で休みます。",
+      "reading": "おおきいきのしたでやすみます。",
+      "english": "I rest under the big tree."
+    }
+  },
+  "木曜日|もくようび": {
+    "written": "木曜日",
+    "reading": "もくようび",
+    "meaning": "Thursday",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "木曜日に先生と話します。",
+      "reading": "もくようびにせんせいとはなします。",
+      "english": "I speak with the teacher on Thursday."
+    }
+  },
+  "目|め": {
+    "written": "目",
+    "reading": "め",
+    "meaning": "eye",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "目が少し痛いです。",
+      "reading": "めがすこしいたいです。",
+      "english": "My eye hurts a little."
+    }
+  },
+  "友だち|ともだち": {
+    "written": "友だち",
+    "reading": "ともだち",
+    "meaning": "friend",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "core",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "友だちと映画を見ます。",
+      "reading": "ともだちとえいがをみます。",
+      "english": "I watch a movie with my friend."
+    }
+  },
+  "友人|ゆうじん": {
+    "written": "友人",
+    "reading": "ゆうじん",
+    "meaning": "friend",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "exampleSentence": {
+      "japanese": "友人と駅で会います。",
+      "reading": "ゆうじんとえきであいます。",
+      "english": "I will meet a friend at the station."
     }
   },
   "来る|くる": {
@@ -564,43 +1893,10 @@
       "english": "My friend is coming to my house tomorrow."
     }
   },
-  "何時|なんじ": {
-    "written": "何時",
-    "reading": "なんじ",
-    "meaning": "what time",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "notes": "Question word used for asking the time.",
-    "exampleSentence": {
-      "japanese": "今、何時ですか。",
-      "reading": "いま、なんじですか。",
-      "english": "What time is it now?"
-    }
-  },
-  "時間|じかん": {
-    "written": "時間",
-    "reading": "じかん",
-    "meaning": "time / hour",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "今日は勉強する時間があります。",
-      "reading": "きょうはべんきょうするじかんがあります。",
-      "english": "Today I have time to study."
-    }
-  },
-  "大学|だいがく": {
-    "written": "大学",
-    "reading": "だいがく",
-    "meaning": "university",
+  "来年|らいねん": {
+    "written": "来年",
+    "reading": "らいねん",
+    "meaning": "next year",
     "jlpt": 5,
     "tags": [
       "starter",
@@ -608,745 +1904,9 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "姉は大学で日本語を勉強しています。",
-      "reading": "あねはだいがくでにほんごをべんきょうしています。",
-      "english": "My older sister studies Japanese at university."
-    }
-  },
-  "元気|げんき": {
-    "written": "元気",
-    "reading": "げんき",
-    "meaning": "healthy / energetic / well",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "今日は元気です。",
-      "reading": "きょうはげんきです。",
-      "english": "I am well today."
-    }
-  },
-  "名前|なまえ": {
-    "written": "名前",
-    "reading": "なまえ",
-    "meaning": "name",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "お名前は何ですか。",
-      "reading": "おなまえはなんですか。",
-      "english": "What is your name?"
-    }
-  },
-  "友だち|ともだち": {
-    "written": "友だち",
-    "reading": "ともだち",
-    "meaning": "friend",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "友だちと映画を見ます。",
-      "reading": "ともだちとえいがをみます。",
-      "english": "I watch a movie with my friend."
-    }
-  },
-  "毎週|まいしゅう": {
-    "written": "毎週",
-    "reading": "まいしゅう",
-    "meaning": "every week",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "毎週土曜日に図書館へ行きます。",
-      "reading": "まいしゅうどようびにとしょかんへいきます。",
-      "english": "I go to the library every Saturday."
-    }
-  },
-  "金曜日|きんようび": {
-    "written": "金曜日",
-    "reading": "きんようび",
-    "meaning": "Friday",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "金曜日に友だちと会います。",
-      "reading": "きんようびにともだちとあいます。",
-      "english": "I will meet my friend on Friday."
-    }
-  },
-  "日曜日|にちようび": {
-    "written": "日曜日",
-    "reading": "にちようび",
-    "meaning": "Sunday",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "日曜日は家で休みます。",
-      "reading": "にちようびはいえでやすみます。",
-      "english": "I rest at home on Sunday."
-    }
-  },
-  "本屋|ほんや": {
-    "written": "本屋",
-    "reading": "ほんや",
-    "meaning": "bookstore",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "駅前の本屋で辞書を買います。",
-      "reading": "えきまえのほんやでじしょをかいます。",
-      "english": "I buy a dictionary at the bookstore in front of the station."
-    }
-  },
-  "白い|しろい": {
-    "written": "白い",
-    "reading": "しろい",
-    "meaning": "white",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "白いねこがいます。",
-      "reading": "しろいねこがいます。",
-      "english": "There is a white cat."
-    }
-  },
-  "高い|たかい": {
-    "written": "高い",
-    "reading": "たかい",
-    "meaning": "high / expensive",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "このりんごは高いです。",
-      "reading": "このりんごはたかいです。",
-      "english": "This apple is expensive."
-    }
-  },
-  "小さい|ちいさい": {
-    "written": "小さい",
-    "reading": "ちいさい",
-    "meaning": "small",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "この犬は小さいです。",
-      "reading": "このいぬはちいさいです。",
-      "english": "This dog is small."
-    }
-  },
-  "大きい|おおきい": {
-    "written": "大きい",
-    "reading": "おおきい",
-    "meaning": "big / large",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "このかばんは大きいです。",
-      "reading": "このかばんはおおきいです。",
-      "english": "This bag is big."
-    }
-  },
-  "英語|えいご": {
-    "written": "英語",
-    "reading": "えいご",
-    "meaning": "English language",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "英語の宿題を終えました。",
-      "reading": "えいごのしゅくだいをおえました。",
-      "english": "I finished my English homework."
-    }
-  },
-  "月曜日|げつようび": {
-    "written": "月曜日",
-    "reading": "げつようび",
-    "meaning": "Monday",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "月曜日に学校へ行きます。",
-      "reading": "げつようびにがっこうへいきます。",
-      "english": "I go to school on Monday."
-    }
-  },
-  "火曜日|かようび": {
-    "written": "火曜日",
-    "reading": "かようび",
-    "meaning": "Tuesday",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "火曜日は日本語のクラスがあります。",
-      "reading": "かようびはにほんごのクラスがあります。",
-      "english": "I have Japanese class on Tuesday."
-    }
-  },
-  "水曜日|すいようび": {
-    "written": "水曜日",
-    "reading": "すいようび",
-    "meaning": "Wednesday",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "水曜日に図書館で勉強します。",
-      "reading": "すいようびにとしょかんでべんきょうします。",
-      "english": "I study at the library on Wednesday."
-    }
-  },
-  "木曜日|もくようび": {
-    "written": "木曜日",
-    "reading": "もくようび",
-    "meaning": "Thursday",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "木曜日に先生と話します。",
-      "reading": "もくようびにせんせいとはなします。",
-      "english": "I speak with the teacher on Thursday."
-    }
-  },
-  "土曜日|どようび": {
-    "written": "土曜日",
-    "reading": "どようび",
-    "meaning": "Saturday",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "土曜日に友だちと会います。",
-      "reading": "どようびにともだちとあいます。",
-      "english": "I meet a friend on Saturday."
-    }
-  },
-  "赤い|あかい": {
-    "written": "赤い",
-    "reading": "あかい",
-    "meaning": "red",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "赤い車が見えます。",
-      "reading": "あかいくるまがみえます。",
-      "english": "I can see a red car."
-    }
-  },
-  "青い|あおい": {
-    "written": "青い",
-    "reading": "あおい",
-    "meaning": "blue",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "空が青いです。",
-      "reading": "そらがあおいです。",
-      "english": "The sky is blue."
-    }
-  },
-  "買う|かう": {
-    "written": "買う",
-    "reading": "かう",
-    "meaning": "buy",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "駅前の店で本を買います。",
-      "reading": "えきまえのみせでほんをかいます。",
-      "english": "I buy a book at the shop in front of the station."
-    }
-  },
-  "会う|あう": {
-    "written": "会う",
-    "reading": "あう",
-    "meaning": "meet",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "学校の後で先生に会います。",
-      "reading": "がっこうのあとでせんせいにあいます。",
-      "english": "I meet the teacher after school."
-    }
-  },
-  "分かる|わかる": {
-    "written": "分かる",
-    "reading": "わかる",
-    "meaning": "understand",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "日本語が少し分かります。",
-      "reading": "にほんごがすこしわかります。",
-      "english": "I understand a little Japanese."
-    }
-  },
-  "店|みせ": {
-    "written": "店",
-    "reading": "みせ",
-    "meaning": "shop / store",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "あの店は毎日開いています。",
-      "reading": "あのみせはまいにちあいています。",
-      "english": "That shop is open every day."
-    }
-  },
-  "山|やま": {
-    "written": "山",
-    "reading": "やま",
-    "meaning": "mountain",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "山が見えます。",
-      "reading": "やまがみえます。",
-      "english": "I can see a mountain."
-    }
-  },
-  "川|かわ": {
-    "written": "川",
-    "reading": "かわ",
-    "meaning": "river",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "川の水がきれいです。",
-      "reading": "かわのみずがきれいです。",
-      "english": "The river water is clean."
-    }
-  },
-  "駅|えき": {
-    "written": "駅",
-    "reading": "えき",
-    "meaning": "station",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "駅で友だちを待ちます。",
-      "reading": "えきでともだちをまちます。",
-      "english": "I wait for my friend at the station."
-    }
-  },
-  "家|いえ": {
-    "written": "家",
-    "reading": "いえ",
-    "meaning": "house / home",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "家で日本語を勉強します。",
-      "reading": "いえでにほんごをべんきょうします。",
-      "english": "I study Japanese at home."
-    }
-  },
-  "会社|かいしゃ": {
-    "written": "会社",
-    "reading": "かいしゃ",
-    "meaning": "company",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "父は会社へ行きます。",
-      "reading": "ちちはかいしゃへいきます。",
-      "english": "My father goes to work at the company."
-    }
-  },
-  "電話|でんわ": {
-    "written": "電話",
-    "reading": "でんわ",
-    "meaning": "telephone / phone call",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "友だちに電話をかけます。",
-      "reading": "ともだちにでんわをかけます。",
-      "english": "I call my friend on the phone."
-    }
-  },
-  "朝|あさ": {
-    "written": "朝",
-    "reading": "あさ",
-    "meaning": "morning",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "朝にコーヒーを飲みます。",
-      "reading": "あさにコーヒーをのみます。",
-      "english": "I drink coffee in the morning."
-    }
-  },
-  "雨|あめ": {
-    "written": "雨",
-    "reading": "あめ",
-    "meaning": "rain",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "今日は雨です。",
-      "reading": "きょうはあめです。",
-      "english": "It is raining today."
-    }
-  },
-  "車|くるま": {
-    "written": "車",
-    "reading": "くるま",
-    "meaning": "car",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "白い車があります。",
-      "reading": "しろいくるまがあります。",
-      "english": "There is a white car."
-    }
-  },
-  "国|くに": {
-    "written": "国",
-    "reading": "くに",
-    "meaning": "country",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "日本はきれいな国です。",
-      "reading": "にほんはきれいなくにです。",
-      "english": "Japan is a beautiful country."
-    }
-  },
-  "男|おとこ": {
-    "written": "男",
-    "reading": "おとこ",
-    "meaning": "man / boy",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "あの男の人は先生です。",
-      "reading": "あのおとこのひとはせんせいです。",
-      "english": "That man is a teacher."
-    }
-  },
-  "女|おんな": {
-    "written": "女",
-    "reading": "おんな",
-    "meaning": "woman / girl",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "女の人が店に入ります。",
-      "reading": "おんなのひとがみせにはいります。",
-      "english": "A woman enters the shop."
-    }
-  },
-  "母|はは": {
-    "written": "母",
-    "reading": "はは",
-    "meaning": "mother",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "母は毎朝早く起きます。",
-      "reading": "はははまいあさはやくおきます。",
-      "english": "My mother gets up early every morning."
-    }
-  },
-  "父|ちち": {
-    "written": "父",
-    "reading": "ちち",
-    "meaning": "father",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "父は会社で働いています。",
-      "reading": "ちちはかいしゃではたらいています。",
-      "english": "My father works at a company."
-    }
-  },
-  "兄|あに": {
-    "written": "兄",
-    "reading": "あに",
-    "meaning": "older brother",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "兄は大学で勉強しています。",
-      "reading": "あにはだいがくでべんきょうしています。",
-      "english": "My older brother studies at university."
-    }
-  },
-  "姉|あね": {
-    "written": "姉",
-    "reading": "あね",
-    "meaning": "older sister",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "姉は駅の近くに住んでいます。",
-      "reading": "あねはえきのちかくにすんでいます。",
-      "english": "My older sister lives near the station."
-    }
-  },
-  "弟|おとうと": {
-    "written": "弟",
-    "reading": "おとうと",
-    "meaning": "younger brother",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "弟は毎日サッカーをします。",
-      "reading": "おとうとはまいにちサッカーをします。",
-      "english": "My younger brother plays soccer every day."
-    }
-  },
-  "妹|いもうと": {
-    "written": "妹",
-    "reading": "いもうと",
-    "meaning": "younger sister",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "妹は白い犬が好きです。",
-      "reading": "いもうとはしろいいぬがすきです。",
-      "english": "My younger sister likes white dogs."
-    }
-  },
-  "部屋|へや": {
-    "written": "部屋",
-    "reading": "へや",
-    "meaning": "room",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "部屋で本を読みます。",
-      "reading": "へやでほんをよみます。",
-      "english": "I read a book in my room."
-    }
-  },
-  "台所|だいどころ": {
-    "written": "台所",
-    "reading": "だいどころ",
-    "meaning": "kitchen",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "台所で母が料理を作ります。",
-      "reading": "だいどころでははがりょうりをつくります。",
-      "english": "My mother cooks in the kitchen."
-    }
-  },
-  "病院|びょういん": {
-    "written": "病院",
-    "reading": "びょういん",
-    "meaning": "hospital",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "病院は駅の前にあります。",
-      "reading": "びょういんはえきのまえにあります。",
-      "english": "The hospital is in front of the station."
-    }
-  },
-  "新聞|しんぶん": {
-    "written": "新聞",
-    "reading": "しんぶん",
-    "meaning": "newspaper",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "父は朝に新聞を読みます。",
-      "reading": "ちちはあさにしんぶんをよみます。",
-      "english": "My father reads the newspaper in the morning."
-    }
-  },
-  "お金|おかね": {
-    "written": "お金",
-    "reading": "おかね",
-    "meaning": "money",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "お金がありません。",
-      "reading": "おかねがありません。",
-      "english": "I do not have money."
+      "japanese": "来年、大学に入ります。",
+      "reading": "らいねん、だいがくにはいります。",
+      "english": "Next year I will enter university."
     }
   },
   "料理|りょうり": {
@@ -1365,170 +1925,10 @@
       "english": "I like Japanese food."
     }
   },
-  "右|みぎ": {
-    "written": "右",
-    "reading": "みぎ",
-    "meaning": "right",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "右に曲がります。",
-      "reading": "みぎにまがります。",
-      "english": "I turn right."
-    }
-  },
-  "左|ひだり": {
-    "written": "左",
-    "reading": "ひだり",
-    "meaning": "left",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "左に郵便局があります。",
-      "reading": "ひだりにゆうびんきょくがあります。",
-      "english": "There is a post office on the left."
-    }
-  },
-  "上|うえ": {
-    "written": "上",
-    "reading": "うえ",
-    "meaning": "up / above",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "机の上に本があります。",
-      "reading": "つくえのうえにほんがあります。",
-      "english": "There is a book on the desk."
-    }
-  },
-  "下|した": {
-    "written": "下",
-    "reading": "した",
-    "meaning": "down / under / below",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "いすの下にねこがいます。",
-      "reading": "いすのしたにねこがいます。",
-      "english": "There is a cat under the chair."
-    }
-  },
-  "中|なか": {
-    "written": "中",
-    "reading": "なか",
-    "meaning": "inside / middle",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "かばんの中にペンがあります。",
-      "reading": "かばんのなかにペンがあります。",
-      "english": "There is a pen in the bag."
-    }
-  },
-  "外|そと": {
-    "written": "外",
-    "reading": "そと",
-    "meaning": "outside",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "今日は外で昼ご飯を食べます。",
-      "reading": "きょうはそとでひるごはんをたべます。",
-      "english": "Today I eat lunch outside."
-    }
-  },
-  "東|ひがし": {
-    "written": "東",
-    "reading": "ひがし",
-    "meaning": "east",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "駅の東に大きい公園があります。",
-      "reading": "えきのひがしにおおきいこうえんがあります。",
-      "english": "There is a big park east of the station."
-    }
-  },
-  "西|にし": {
-    "written": "西",
-    "reading": "にし",
-    "meaning": "west",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "学校は町の西にあります。",
-      "reading": "がっこうはまちのにしにあります。",
-      "english": "The school is in the west part of town."
-    }
-  },
-  "南|みなみ": {
-    "written": "南",
-    "reading": "みなみ",
-    "meaning": "south",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "南の国へ行きたいです。",
-      "reading": "みなみのくにへいきたいです。",
-      "english": "I want to go to a southern country."
-    }
-  },
-  "北|きた": {
-    "written": "北",
-    "reading": "きた",
-    "meaning": "north",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "北の空は暗いです。",
-      "reading": "きたのそらはくらいです。",
-      "english": "The northern sky is dark."
-    }
-  },
-  "飲む|のむ": {
-    "written": "飲む",
-    "reading": "のむ",
-    "meaning": "drink",
+  "話す|はなす": {
+    "written": "話す",
+    "reading": "はなす",
+    "meaning": "to speak / talk",
     "jlpt": 5,
     "tags": [
       "starter",
@@ -1536,217 +1936,9 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "毎朝お茶を飲みます。",
-      "reading": "まいあさおちゃをのみます。",
-      "english": "I drink tea every morning."
-    }
-  },
-  "自転車|じてんしゃ": {
-    "written": "自転車",
-    "reading": "じてんしゃ",
-    "meaning": "bicycle",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "自転車で学校へ行きます。",
-      "reading": "じてんしゃでがっこうへいきます。",
-      "english": "I go to school by bicycle."
-    }
-  },
-  "海|うみ": {
-    "written": "海",
-    "reading": "うみ",
-    "meaning": "sea / ocean",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "夏に海へ行きたいです。",
-      "reading": "なつにうみへいきたいです。",
-      "english": "I want to go to the sea in summer."
-    }
-  },
-  "空|そら": {
-    "written": "空",
-    "reading": "そら",
-    "meaning": "sky",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "空がとても青いです。",
-      "reading": "そらがとてもあおいです。",
-      "english": "The sky is very blue."
-    }
-  },
-  "天気|てんき": {
-    "written": "天気",
-    "reading": "てんき",
-    "meaning": "weather",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "今日は天気がいいです。",
-      "reading": "きょうはてんきがいいです。",
-      "english": "The weather is nice today."
-    }
-  },
-  "手|て": {
-    "written": "手",
-    "reading": "て",
-    "meaning": "hand",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "手を洗ってください。",
-      "reading": "てをあらってください。",
-      "english": "Please wash your hands."
-    }
-  },
-  "目|め": {
-    "written": "目",
-    "reading": "め",
-    "meaning": "eye",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "目が少し痛いです。",
-      "reading": "めがすこしいたいです。",
-      "english": "My eye hurts a little."
-    }
-  },
-  "口|くち": {
-    "written": "口",
-    "reading": "くち",
-    "meaning": "mouth",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "口を大きく開けます。",
-      "reading": "くちをおおきくあけます。",
-      "english": "I open my mouth wide."
-    }
-  },
-  "乗る|のる": {
-    "written": "乗る",
-    "reading": "のる",
-    "meaning": "ride / get on",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "電車に乗って学校へ行きます。",
-      "reading": "でんしゃにのってがっこうへいきます。",
-      "english": "I take the train to school."
-    }
-  },
-  "帰る|かえる": {
-    "written": "帰る",
-    "reading": "かえる",
-    "meaning": "return / go home",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "午後六時に家へ帰ります。",
-      "reading": "ごごろくじにいえへかえります。",
-      "english": "I go home at 6 p.m."
-    }
-  },
-  "開ける|あける": {
-    "written": "開ける",
-    "reading": "あける",
-    "meaning": "open",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "窓を開けます。",
-      "reading": "まどをあけます。",
-      "english": "I open the window."
-    }
-  },
-  "閉める|しめる": {
-    "written": "閉める",
-    "reading": "しめる",
-    "meaning": "close / shut",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "ドアを閉めます。",
-      "reading": "ドアをしめます。",
-      "english": "I close the door."
-    }
-  },
-  "座る|すわる": {
-    "written": "座る",
-    "reading": "すわる",
-    "meaning": "sit",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "ここに座ってください。",
-      "reading": "ここにすわってください。",
-      "english": "Please sit here."
-    }
-  },
-  "歩く|あるく": {
-    "written": "歩く",
-    "reading": "あるく",
-    "meaning": "walk",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "core",
-      "n5"
-    ],
-    "exampleSentence": {
-      "japanese": "駅まで歩きます。",
-      "reading": "えきまであるきます。",
-      "english": "I walk to the station."
+      "japanese": "先生と日本語で話します。",
+      "reading": "せんせいとにほんごではなします。",
+      "english": "I speak with the teacher in Japanese."
     }
   }
 }

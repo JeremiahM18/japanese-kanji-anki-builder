@@ -171,7 +171,7 @@ This assumes a local VOICEVOX engine is already running at `VOICEVOX_ENGINE_URL`
 | `npm run media:import:audio` | Import local kanji audio files into the source folder |
 | `npm run media:voicevox` | Generate kanji audio from a local VOICEVOX engine |
 | `npm run media:sources` | Report local source-folder coverage before media sync |
-| `npm run media:sync` | Sync stroke-order and audio assets into managed storage |
+| `npm run media:sync` | Sync stroke-order and audio assets into managed storage for one level at a time |
 
 ## Local data and config
 

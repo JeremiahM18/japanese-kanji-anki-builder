@@ -12,11 +12,14 @@ function parseArgs(argv) {
         audioReading: null,
         audioVoice: null,
         audioLocale: null,
-        json: argv.includes("--json"),
+        json: false,
+        unknownArgs: [],
     };
 
     for (const arg of argv) {
-        if (arg.startsWith("--levels=")) {
+        if (arg === "--json") {
+            options.json = true;
+        } else if (arg.startsWith("--levels=")) {
             options.levels = parseLevelsArgument(arg.split("=")[1]);
         } else if (arg.startsWith("--limit=")) {
             options.limit = Number(arg.split("=")[1]);
@@ -30,6 +33,8 @@ function parseArgs(argv) {
             options.audioVoice = arg.split("=")[1];
         } else if (arg.startsWith("--audio-locale=")) {
             options.audioLocale = arg.split("=")[1];
+        } else {
+            options.unknownArgs.push(arg);
         }
     }
 
@@ -39,6 +44,11 @@ function parseArgs(argv) {
 async function main() {
     const config = loadConfig();
     const options = parseArgs(process.argv.slice(2));
+
+    if (options.unknownArgs.length > 0) {
+        throw new Error("Unsupported arguments for prepareDeck: " + options.unknownArgs.join(", "));
+    }
+
     const doctorReport = await buildDoctorReport({ config });
 
     if (!doctorReport.ready) {
@@ -69,7 +79,14 @@ async function main() {
     process.stdout.write(formatDeckReadyReport(summary, doctorReport));
 }
 
-main().catch((err) => {
-    console.error(err.stack || err);
-    process.exit(1);
-});
+if (require.main === module) {
+    main().catch((err) => {
+        console.error(err.stack || err);
+        process.exit(1);
+    });
+}
+
+module.exports = {
+    main,
+    parseArgs,
+};

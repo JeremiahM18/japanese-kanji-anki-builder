@@ -4,6 +4,7 @@ const { loadConfig } = require("../src/config");
 const { ensureMediaRoot } = require("../src/services/mediaStore");
 const { createMediaServices } = require("../src/services/mediaServiceFactory");
 const { parseLevelArgument, selectKanjiForSync, syncMediaForKanjiList } = require("../src/services/mediaSync");
+const { parseLevelsArgument } = require("../src/services/buildPipeline");
 
 function parseArgs(argv) {
     const options = {
@@ -14,11 +15,18 @@ function parseArgs(argv) {
         audioReading: null,
         audioVoice: null,
         audioLocale: null,
+        unknownArgs: [],
     };
 
     for (const arg of argv) {
         if (arg.startsWith("--level=")) {
             options.level = parseLevelArgument(arg.split("=")[1]);
+        } else if (arg.startsWith("--levels=")) {
+            const levels = parseLevelsArgument(arg.split("=")[1]);
+            if (levels.length > 1) {
+                throw new Error("syncMedia accepts one level at a time. Use --level=N or rerun per level.");
+            }
+            options.level = levels[0] || null;
         } else if (arg.startsWith("--limit=")) {
             options.limit = Number(arg.split("=")[1]);
         } else if (arg.startsWith("--concurrency=")) {
@@ -31,6 +39,8 @@ function parseArgs(argv) {
             options.audioVoice = arg.split("=")[1];
         } else if (arg.startsWith("--audio-locale=")) {
             options.audioLocale = arg.split("=")[1];
+        } else {
+            options.unknownArgs.push(arg);
         }
     }
 
@@ -41,8 +51,12 @@ async function main() {
     const options = parseArgs(process.argv.slice(2));
     const config = loadConfig();
 
+    if (options.unknownArgs.length > 0) {
+        throw new Error("Unsupported arguments for syncMedia: " + options.unknownArgs.join(", "));
+    }
+
     if (!fs.existsSync(config.jlptJsonPath)) {
-        throw new Error(`Missing JLPT JSON file at ${config.jlptJsonPath}`);
+        throw new Error("Missing JLPT JSON file at " + config.jlptJsonPath);
     }
 
     const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
@@ -83,7 +97,14 @@ async function main() {
     }, null, 2));
 }
 
-main().catch((err) => {
-    console.error(err.stack || err);
-    process.exit(1);
-});
+if (require.main === module) {
+    main().catch((err) => {
+        console.error(err.stack || err);
+        process.exit(1);
+    });
+}
+
+module.exports = {
+    main,
+    parseArgs,
+};

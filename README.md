@@ -96,6 +96,7 @@ npm run deck:apkg -- --levels=5
 - syncs media
 - builds exports
 - packages the deck in `out/build/package`
+- rebuilds packaged exports and media from a clean slate so stale files do not leak between runs
 - prints a summary including quality and media status
 
 `deck:apkg` converts the packaged exports and copied managed media into an Anki-importable `.apkg` file.

@@ -161,6 +161,10 @@ async function buildDeckPackage({
 }) {
     const packagePaths = buildDeckPackagePaths(outDir);
     ensureDir(packagePaths.rootDir);
+    await fsp.rm(packagePaths.exportsDir, { recursive: true, force: true });
+    await fsp.rm(packagePaths.mediaDir, { recursive: true, force: true });
+    await fsp.rm(packagePaths.readmePath, { force: true });
+    await fsp.rm(packagePaths.summaryPath, { force: true });
     ensureDir(packagePaths.exportsDir);
     ensureDir(packagePaths.mediaDir);
 

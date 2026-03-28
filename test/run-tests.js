@@ -37,3 +37,4 @@ require("./wikimediaStrokeOrderFetchService.test");
 require("./inference/inferenceEngine.test");
 
 require("./wordExportService.test");
+require("./wordStudyData.test");

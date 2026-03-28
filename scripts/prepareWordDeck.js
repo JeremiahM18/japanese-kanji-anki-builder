@@ -5,6 +5,7 @@ const { loadConfig } = require("../src/config");
 const { createKanjiApiClient } = require("../src/clients/kanjiApiClient");
 const { loadSentenceCorpus } = require("../src/datasets/sentenceCorpus");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
+const { loadWordStudyData } = require("../src/datasets/wordStudyData");
 const { buildSelectedKanjiByLevel, parseLevelsArgument } = require("../src/services/buildPipeline");
 const { buildDeckPackage } = require("../src/services/deckPackageService");
 const { createMediaServices } = require("../src/services/mediaServiceFactory");
@@ -46,6 +47,7 @@ function parseArgs(argv) {
         outDir: null,
         maxWordsPerKanji: null,
         minimumCandidateScore: null,
+        includeInferred: false,
         json: false,
         unknownArgs: [],
     };
@@ -53,6 +55,8 @@ function parseArgs(argv) {
     for (const arg of argv) {
         if (arg === "--json") {
             options.json = true;
+        } else if (arg === "--include-inferred") {
+            options.includeInferred = true;
         } else if (arg.startsWith("--levels=")) {
             options.levels = parseLevelsArgument(parseStringOption(arg, "levels"));
         } else if (arg.startsWith("--limit=")) {
@@ -81,6 +85,7 @@ function formatWordDeckReadyReport(summary, doctorReport) {
         `Package directory: ${summary.package.rootDir}`,
         ...(summary.package.ankiPackage?.filePath ? [`Anki package: ${summary.package.ankiPackage.filePath}`] : []),
         `Levels: ${summary.levels.map((level) => `N${level}`).join(", ")}`,
+        `Word mode: ${summary.settings.includeInferred ? "curated + inferred" : "curated only"}`,
         `Exports generated: ${summary.exports.length}`,
         `Word notes generated: ${summary.exports.reduce((total, item) => total + item.rows, 0)}`,
         `Unique referenced kanji: ${summary.referencedKanjiCount}`,
@@ -114,13 +119,16 @@ async function main() {
     const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
     const sentenceCorpus = loadSentenceCorpus(config.sentenceCorpusPath);
     const curatedStudyData = loadCuratedStudyData(config.curatedStudyDataPath);
+    const wordStudyData = loadWordStudyData({
+        localPath: config.wordStudyDataPath,
+    });
     const kanjiApiClient = createKanjiApiClient({
         baseUrl: config.kanjiApiBaseUrl,
         cacheDir: config.cacheDir,
         fetchTimeoutMs: config.fetchTimeoutMs,
     });
     const { strokeOrderService, audioService } = createMediaServices(config);
-    const wordExportService = createWordExportService({ sentenceCorpus, curatedStudyData });
+    const wordExportService = createWordExportService({ sentenceCorpus, curatedStudyData, wordStudyData });
     const levels = options.levels || [5];
     const concurrency = Number.isFinite(options.concurrency) ? options.concurrency : config.exportConcurrency;
     const selectedKanjiByLevel = buildSelectedKanjiByLevel({
@@ -151,6 +159,7 @@ async function main() {
             concurrency,
             maxWordsPerKanji: Number.isFinite(options.maxWordsPerKanji) ? options.maxWordsPerKanji : null,
             minimumCandidateScore: Number.isFinite(options.minimumCandidateScore) ? options.minimumCandidateScore : 20,
+            includeInferred: options.includeInferred,
         });
         const filePath = path.join(buildPaths.exportsDir, `jlpt-n${level}-words.tsv`);
         writeText(filePath, `${result.tsv}\n`);
@@ -183,6 +192,7 @@ async function main() {
             concurrency,
             maxWordsPerKanji: Number.isFinite(options.maxWordsPerKanji) ? options.maxWordsPerKanji : null,
             minimumCandidateScore: Number.isFinite(options.minimumCandidateScore) ? options.minimumCandidateScore : 20,
+            includeInferred: options.includeInferred,
         },
     };
 
@@ -209,5 +219,3 @@ module.exports = {
     main,
     parseArgs,
 };
-
-

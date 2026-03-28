@@ -32,7 +32,7 @@ test("inferWordLevel uses the hardest constituent JLPT kanji", () => {
     }), 4);
 });
 
-test("buildWordTsvForJlptLevel creates deduplicated word notes with kanji breakdowns", async () => {
+test("buildWordTsvForJlptLevel prefers curated N5 word entries and suppresses uncurated alternate readings", async () => {
     const wordExportService = createWordExportService({
         sentenceCorpus: [
             {
@@ -55,7 +55,43 @@ test("buildWordTsvForJlptLevel creates deduplicated word notes with kanji breakd
                 tags: ["core", "common", "beginner"],
                 jlpt: 5,
             },
+            {
+                kanji: "先",
+                written: "先生",
+                japanese: "先生に質問します。",
+                reading: "せんせいにしつもんします。",
+                english: "I ask the teacher a question.",
+                source: "manual-curated",
+                tags: ["core", "common", "beginner"],
+                jlpt: 5,
+            },
         ],
+        wordStudyData: {
+            "今日|きょう": {
+                written: "今日",
+                reading: "きょう",
+                meaning: "today",
+                jlpt: 5,
+                notes: "Irregular reading.",
+                exampleSentence: {
+                    japanese: "今日は図書館へ行きます。",
+                    reading: "きょうはとしょかんへいきます。",
+                    english: "Today I am going to the library.",
+                },
+            },
+            "今年|ことし": {
+                written: "今年",
+                reading: "ことし",
+                meaning: "this year",
+                jlpt: 5,
+            },
+            "先生|せんせい": {
+                written: "先生",
+                reading: "せんせい",
+                meaning: "teacher",
+                jlpt: 5,
+            },
+        },
     });
 
     const kanjiApiClient = {
@@ -64,6 +100,8 @@ test("buildWordTsvForJlptLevel creates deduplicated word notes with kanji breakd
                 今: { meanings: ["now"], on_readings: ["コン", "キン"], kun_readings: ["いま"] },
                 日: { meanings: ["day"], on_readings: ["ニチ"], kun_readings: ["ひ"] },
                 年: { meanings: ["year"], on_readings: ["ネン"], kun_readings: ["とし"] },
+                先: { meanings: ["ahead"], on_readings: ["セン"], kun_readings: ["さき"] },
+                生: { meanings: ["life"], on_readings: ["セイ"], kun_readings: ["い.きる"] },
             };
             return entries[kanji];
         },
@@ -73,6 +111,10 @@ test("buildWordTsvForJlptLevel creates deduplicated word notes with kanji breakd
                     {
                         variants: [{ written: "今", pronounced: "いま", priorities: ["ichi1"] }],
                         meanings: [{ glosses: ["now"] }],
+                    },
+                    {
+                        variants: [{ written: "今日", pronounced: "こんにち", priorities: ["news1"] }],
+                        meanings: [{ glosses: ["nowadays", "these days"] }],
                     },
                     {
                         variants: [{ written: "今日", pronounced: "きょう", priorities: ["ichi1"] }],
@@ -85,6 +127,10 @@ test("buildWordTsvForJlptLevel creates deduplicated word notes with kanji breakd
                 ],
                 日: [
                     {
+                        variants: [{ written: "今日", pronounced: "こんにち", priorities: ["news1"] }],
+                        meanings: [{ glosses: ["nowadays", "these days"] }],
+                    },
+                    {
                         variants: [{ written: "今日", pronounced: "きょう", priorities: ["ichi1"] }],
                         meanings: [{ glosses: ["today"] }],
                     },
@@ -93,6 +139,26 @@ test("buildWordTsvForJlptLevel creates deduplicated word notes with kanji breakd
                     {
                         variants: [{ written: "今年", pronounced: "ことし", priorities: ["ichi1"] }],
                         meanings: [{ glosses: ["this year"] }],
+                    },
+                ],
+                先: [
+                    {
+                        variants: [{ written: "先生", pronounced: "せんしょう", priorities: ["spec1"] }],
+                        meanings: [{ glosses: ["previous existence"] }],
+                    },
+                    {
+                        variants: [{ written: "先生", pronounced: "せんせい", priorities: ["ichi1"] }],
+                        meanings: [{ glosses: ["teacher"] }],
+                    },
+                ],
+                生: [
+                    {
+                        variants: [{ written: "先生", pronounced: "せんしょう", priorities: ["spec1"] }],
+                        meanings: [{ glosses: ["previous existence"] }],
+                    },
+                    {
+                        variants: [{ written: "先生", pronounced: "せんせい", priorities: ["ichi1"] }],
+                        meanings: [{ glosses: ["teacher"] }],
                     },
                 ],
             };
@@ -118,6 +184,8 @@ test("buildWordTsvForJlptLevel creates deduplicated word notes with kanji breakd
             今: { jlpt: 5 },
             日: { jlpt: 5 },
             年: { jlpt: 5 },
+            先: { jlpt: 5 },
+            生: { jlpt: 5 },
         },
         kanjiApiClient,
         strokeOrderService,
@@ -128,15 +196,12 @@ test("buildWordTsvForJlptLevel creates deduplicated word notes with kanji breakd
 
     const lines = result.tsv.trim().split("\n");
     assert.equal(lines[0], loadAnkiNoteSchema("word").fieldNames.join("\t"));
-    assert.equal(lines.length, 6);
-    assert.equal(result.mediaKanji.join(","), "今,年,日");
     assert.match(result.tsv, /^今日\tきょう\ttoday\tJLPT N5\t/m);
     assert.match(result.tsv, /^今年\tことし\tthis year\tJLPT N5\t/m);
-    assert.match(result.tsv, /^今\tいま\tnow\tJLPT N5\t/m);
+    assert.match(result.tsv, /^先生\tせんせい\tteacher\tJLPT N5\t/m);
+    assert.doesNotMatch(result.tsv, /^今日\tこんにち\t/m);
+    assert.doesNotMatch(result.tsv, /^先生\tせんしょう\t/m);
+    assert.match(result.tsv, /Irregular reading\./);
+    assert.match(result.tsv, /今日は図書館へ行きます/);
     assert.match(result.tsv, /kanji-breakdown-item/);
-    assert.match(result.tsv, /今 （いま） ／ now/);
-    assert.match(result.tsv, /今日は忙しいです/);
-    assert.match(result.tsv, /今年は日本へ行きます/);
 });
-
-

@@ -1,9 +1,11 @@
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { inferSentenceCandidates, scoreCorpusSentence } = require("../inference/sentenceInference");
 const { createExportService, formatExampleSentence } = require("./exportService");
+const { buildOfflineFallbackCard } = require("./previewCardService");
 const { mapWithConcurrency } = require("../utils/concurrency");
 const { tsvEscape } = require("../utils/text");
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
+const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 
 const WORD_FIELD_NAMES = loadAnkiNoteSchema("word").fieldNames;
 const HAN_RE = /\p{Script=Han}/u;
@@ -26,11 +28,14 @@ function inferWordLevel({ written, jlptOnlyJson, fallbackLevel = null }) {
 }
 
 function buildWordKey(candidate) {
-    return String(candidate?.written || "").trim();
+    return buildWordStudyEntryKey({
+        written: String(candidate?.written || "").trim(),
+        reading: String(candidate?.pron || "").trim(),
+    });
 }
 
-function buildWordNotes() {
-    return "";
+function buildWordNotes(curatedEntry) {
+    return String(curatedEntry?.notes || "").trim();
 }
 
 function buildJlptLabel(level) {
@@ -55,6 +60,16 @@ function pickBestExactSingleCandidate(inference, sourceKanji) {
     })[0];
 }
 
+function extractEnglishMeaningFromMeaningJP(meaningJP) {
+    const text = String(meaningJP || "").trim();
+    if (!text) {
+        return "";
+    }
+
+    const parts = text.split("／").map((part) => part.trim()).filter(Boolean);
+    return parts.length > 1 ? parts[parts.length - 1] : text;
+}
+
 function buildDisplayCandidate(inference, sourceKanji) {
     const written = String(sourceKanji || "").trim();
     if (!written) {
@@ -63,38 +78,146 @@ function buildDisplayCandidate(inference, sourceKanji) {
 
     const exactCandidate = pickBestExactSingleCandidate(inference, sourceKanji);
     const pron = String(exactCandidate?.pron || inference?.primaryReading || inference?.displayWord?.pron || "").trim();
-    const gloss = String(exactCandidate?.gloss || inference?.englishMeaning || "").trim();
+    const gloss = String(exactCandidate?.gloss || inference?.englishMeaning || extractEnglishMeaningFromMeaningJP(inference?.meaningJP) || "").trim();
 
     return {
         written,
         pron,
         gloss,
-        score: Number.MAX_SAFE_INTEGER,
-        corpusSupportScore: Number.MAX_SAFE_INTEGER,
+        score: Number.MAX_SAFE_INTEGER - 1,
+        corpusSupportScore: Number.MAX_SAFE_INTEGER - 1,
         variant: { priorities: ["display-word"] },
     };
 }
 
-function buildCandidatePool({ inference, sourceKanji, maxWordsPerKanji, minimumCandidateScore }) {
+function buildWordStudyIndexes(wordStudyData = {}) {
+    const exactEntries = new Map();
+    const entriesByWritten = new Map();
+    const entriesByKanji = new Map();
+
+    for (const entry of Object.values(wordStudyData || {})) {
+        const key = buildWordStudyEntryKey(entry);
+        exactEntries.set(key, entry);
+
+        const written = String(entry?.written || "").trim();
+        if (!entriesByWritten.has(written)) {
+            entriesByWritten.set(written, []);
+        }
+        entriesByWritten.get(written).push(entry);
+
+        for (const kanji of extractConstituentKanji(written)) {
+            if (!entriesByKanji.has(kanji)) {
+                entriesByKanji.set(kanji, []);
+            }
+            entriesByKanji.get(kanji).push(entry);
+        }
+    }
+
+    return {
+        exactEntries,
+        entriesByWritten,
+        entriesByKanji,
+    };
+}
+
+function buildCuratedCandidate(entry) {
+    return {
+        written: entry.written,
+        pron: entry.reading,
+        gloss: entry.meaning,
+        score: Number.MAX_SAFE_INTEGER,
+        corpusSupportScore: Number.MAX_SAFE_INTEGER,
+        variant: { priorities: ["curated-word"] },
+    };
+}
+
+function getCandidateLevel({ candidate, curatedEntry, jlptOnlyJson, fallbackLevel }) {
+    if (Number.isInteger(curatedEntry?.jlpt)) {
+        return curatedEntry.jlpt;
+    }
+
+    return inferWordLevel({
+        written: candidate?.written,
+        jlptOnlyJson,
+        fallbackLevel,
+    });
+}
+
+function hasCuratedWrittenVariant(candidate, wordStudyIndexes) {
+    const written = String(candidate?.written || "").trim();
+    return (wordStudyIndexes.entriesByWritten.get(written) || []).length > 0;
+}
+
+function isAllowedByCuratedWords(candidate, wordStudyIndexes) {
+    if (!hasCuratedWrittenVariant(candidate, wordStudyIndexes)) {
+        return true;
+    }
+
+    return wordStudyIndexes.exactEntries.has(buildWordKey(candidate));
+}
+
+function dedupeCandidatePool(pool) {
+    const deduped = new Map();
+    for (const candidate of pool) {
+        const key = buildWordKey(candidate);
+        if (!key || key === "|") {
+            continue;
+        }
+
+        const existing = deduped.get(key);
+        if (!existing || (candidate.score || 0) > (existing.score || 0)) {
+            deduped.set(key, candidate);
+        }
+    }
+
+    return [...deduped.values()];
+}
+
+function buildCandidatePool({
+    inference,
+    sourceKanji,
+    maxWordsPerKanji,
+    minimumCandidateScore,
+    wordStudyIndexes,
+    levelNumber,
+    jlptOnlyJson,
+    includeInferred = false,
+}) {
     const pool = [];
+    const curatedCandidates = (wordStudyIndexes.entriesByKanji.get(sourceKanji) || [])
+        .filter((entry) => getCandidateLevel({
+            candidate: entry,
+            curatedEntry: entry,
+            jlptOnlyJson,
+            fallbackLevel: levelNumber,
+        }) === levelNumber)
+        .map(buildCuratedCandidate);
+
+    pool.push(...curatedCandidates);
+
+    if (!includeInferred) {
+        return dedupeCandidatePool(pool);
+    }
+
     const displayCandidate = buildDisplayCandidate(inference, sourceKanji);
-    if (displayCandidate) {
+    if (displayCandidate && isAllowedByCuratedWords(displayCandidate, wordStudyIndexes)) {
         pool.push(displayCandidate);
     }
 
     const rankedCandidates = (Array.isArray(inference?.candidates) ? inference.candidates : [])
         .filter((candidate) => Number.isFinite(candidate?.score) && candidate.score >= minimumCandidateScore)
         .filter((candidate) => candidate?.written && extractConstituentKanji(candidate.written).length > 0)
+        .filter((candidate) => candidate.written.length > 0)
         .filter((candidate) => candidate.written !== sourceKanji)
-        .filter((candidate) => candidate.written.length > 1)
-        .filter((candidate) => (candidate.corpusSupportScore || 0) > 0 || (candidate.variant?.priorities?.length || 0) > 0);
+        .filter((candidate) => (candidate.corpusSupportScore || 0) > 0 || (candidate.variant?.priorities?.length || 0) > 0)
+        .filter((candidate) => isAllowedByCuratedWords(candidate, wordStudyIndexes));
 
     const scopedCandidates = Number.isFinite(maxWordsPerKanji)
         ? rankedCandidates.slice(0, maxWordsPerKanji)
         : rankedCandidates;
 
     pool.push(...scopedCandidates);
-    return pool;
+    return dedupeCandidatePool(pool);
 }
 
 function buildWordSupportScore(candidate, sentenceCorpus) {
@@ -106,8 +229,11 @@ function buildWordSupportScore(candidate, sentenceCorpus) {
     }
 
     let score = 100;
+    if (entries.some((entry) => String(entry?.reading || "").trim() === String(candidate?.pron || "").trim())) {
+        score += 300;
+    }
     if (entries.some((entry) => String(entry?.reading || "").includes(String(candidate?.pron || "")))) {
-        score += 200;
+        score += 100;
     }
     if (entries.some((entry) => String(entry?.japanese || "").includes(candidate?.written || ""))) {
         score += 50;
@@ -138,13 +264,27 @@ function pickPreferredCandidate(existingCandidate, incomingCandidate, sentenceCo
         : existingCandidate;
 }
 
-function selectWordSentence({ candidate, sourceKanji, constituentKanji, sentenceCorpus }) {
+function selectWordSentence({ candidate, curatedEntry, sourceKanji, constituentKanji, sentenceCorpus }) {
+    if (curatedEntry?.exampleSentence) {
+        return {
+            japanese: curatedEntry.exampleSentence.japanese,
+            reading: curatedEntry.exampleSentence.reading || candidate.pron,
+            english: curatedEntry.exampleSentence.english,
+        };
+    }
+
     const wordEntries = (Array.isArray(sentenceCorpus) ? sentenceCorpus : [])
         .filter((entry) => entry?.written === candidate?.written);
 
     if (wordEntries.length > 0) {
         const targetKanji = sourceKanji || constituentKanji[0] || "";
         const bestEntry = [...wordEntries].sort((a, b) => {
+            const aExactPronMatch = String(a?.reading || "").trim() === String(candidate?.pron || "").trim() ? 1 : 0;
+            const bExactPronMatch = String(b?.reading || "").trim() === String(candidate?.pron || "").trim() ? 1 : 0;
+            if (bExactPronMatch !== aExactPronMatch) {
+                return bExactPronMatch - aExactPronMatch;
+            }
+
             const aPronMatch = String(a?.reading || "").includes(String(candidate?.pron || "")) ? 1 : 0;
             const bPronMatch = String(b?.reading || "").includes(String(candidate?.pron || "")) ? 1 : 0;
             if (bPronMatch !== aPronMatch) {
@@ -187,34 +327,87 @@ function buildBreakdownHtmlItem({ kanji, inference }) {
         '<div class="kanji-breakdown-head">',
         `<span class="kanji-char">${kanji}</span>`,
         inference.primaryReading ? `<span class="kanji-primary">${inference.primaryReading}</span>` : "",
-        '</div>',
+        "</div>",
         inference.meaningJP ? `<div class="kanji-meaning">${inference.meaningJP}</div>` : "",
         readingLines,
         mediaField ? `<div class="kanji-media">${mediaField}</div>` : "",
-        '</div>',
+        "</div>",
     ].join("");
 }
 
 function createWordExportService({
     sentenceCorpus = [],
     curatedStudyData = {},
+    wordStudyData = {},
     inferenceEngine = createInferenceEngine({ sentenceCorpus, curatedStudyData }),
     kanjiExportService = createExportService({ inferenceEngine }),
 } = {}) {
-    async function buildKanjiInferenceCache({ kanjiList, kanjiApiClient, strokeOrderService, audioService, concurrency = 8 }) {
+    const wordStudyIndexes = buildWordStudyIndexes(wordStudyData);
+
+    async function buildOfflineKanjiInference({ kanji, jlptEntry, strokeOrderService, audioService }) {
+        const fallbackCard = await buildOfflineFallbackCard({
+            kanji,
+            levelLabel: `N${jlptEntry?.jlpt || "?"}`,
+            jlptEntry,
+            curatedStudyData,
+            sentenceCorpus,
+            kradMap: new Map(),
+            strokeOrderService,
+            audioService,
+        });
+
+        return {
+            candidates: [],
+            displayWord: {
+                written: fallbackCard.displayWord,
+                pron: fallbackCard.primaryReading,
+            },
+            primaryReading: fallbackCard.primaryReading,
+            englishMeaning: extractEnglishMeaningFromMeaningJP(fallbackCard.meaningJP),
+            meaningJP: fallbackCard.meaningJP,
+            notes: fallbackCard.notes,
+            sentenceCandidates: [],
+            onReading: fallbackCard.onReading,
+            kunReading: fallbackCard.kunReading,
+            strokeOrderPath: fallbackCard.media.strokeOrderPath,
+            strokeOrderField: fallbackCard.fields.strokeOrderField,
+            strokeOrderImagePath: fallbackCard.media.strokeOrderImagePath,
+            strokeOrderImageField: fallbackCard.fields.strokeOrderImageField,
+            strokeOrderAnimationPath: fallbackCard.media.strokeOrderAnimationPath,
+            strokeOrderAnimationField: fallbackCard.fields.strokeOrderAnimationField,
+            audioPath: fallbackCard.media.audioPath,
+            audioField: fallbackCard.fields.audioField,
+        };
+    }
+
+    async function buildKanjiInferenceCache({ kanjiList, jlptOnlyJson, kanjiApiClient, strokeOrderService, audioService, concurrency = 8 }) {
         const cache = new Map();
         const inferredCards = await mapWithConcurrency(
             [...new Set((Array.isArray(kanjiList) ? kanjiList : []).filter(Boolean))],
             concurrency,
-            async (kanji) => ({
-                kanji,
-                inference: await kanjiExportService.buildInferenceForKanji({
-                    kanji,
-                    kanjiApiClient,
-                    strokeOrderService,
-                    audioService,
-                }),
-            })
+            async (kanji) => {
+                try {
+                    return {
+                        kanji,
+                        inference: await kanjiExportService.buildInferenceForKanji({
+                            kanji,
+                            kanjiApiClient,
+                            strokeOrderService,
+                            audioService,
+                        }),
+                    };
+                } catch {
+                    return {
+                        kanji,
+                        inference: await buildOfflineKanjiInference({
+                            kanji,
+                            jlptEntry: jlptOnlyJson?.[kanji] || {},
+                            strokeOrderService,
+                            audioService,
+                        }),
+                    };
+                }
+            }
         );
 
         for (const entry of inferredCards) {
@@ -234,6 +427,7 @@ function createWordExportService({
         concurrency = 8,
         maxWordsPerKanji = null,
         minimumCandidateScore = 20,
+        includeInferred = false,
     }) {
         const sourceKanjiList = Object.entries(jlptOnlyJson || {})
             .filter(([, value]) => value?.jlpt === levelNumber)
@@ -243,6 +437,7 @@ function createWordExportService({
             : sourceKanjiList;
         const kanjiInferenceCache = await buildKanjiInferenceCache({
             kanjiList: scopedSourceKanji,
+            jlptOnlyJson,
             kanjiApiClient,
             strokeOrderService,
             audioService,
@@ -261,11 +456,17 @@ function createWordExportService({
                 sourceKanji,
                 maxWordsPerKanji,
                 minimumCandidateScore,
+                wordStudyIndexes,
+                levelNumber,
+                jlptOnlyJson,
+                includeInferred,
             });
 
             for (const candidate of candidatePool) {
-                const assignedLevel = inferWordLevel({
-                    written: candidate.written,
+                const curatedEntry = wordStudyIndexes.exactEntries.get(buildWordKey(candidate)) || null;
+                const assignedLevel = getCandidateLevel({
+                    candidate,
+                    curatedEntry,
                     jlptOnlyJson,
                     fallbackLevel: levelNumber,
                 });
@@ -279,6 +480,7 @@ function createWordExportService({
                 if (!existing) {
                     wordCandidates.set(key, {
                         candidate,
+                        curatedEntry,
                         level: assignedLevel,
                         sourceKanji: new Set([sourceKanji]),
                     });
@@ -288,6 +490,7 @@ function createWordExportService({
                 const preferredCandidate = pickPreferredCandidate(existing.candidate, candidate, sentenceCorpus);
                 if (preferredCandidate !== existing.candidate) {
                     existing.candidate = preferredCandidate;
+                    existing.curatedEntry = wordStudyIndexes.exactEntries.get(buildWordKey(preferredCandidate)) || null;
                 }
                 existing.sourceKanji.add(sourceKanji);
             }
@@ -300,6 +503,7 @@ function createWordExportService({
         if (missingKanji.length > 0) {
             const additionalCache = await buildKanjiInferenceCache({
                 kanjiList: missingKanji,
+                jlptOnlyJson,
                 kanjiApiClient,
                 strokeOrderService,
                 audioService,
@@ -316,6 +520,7 @@ function createWordExportService({
             (b.candidate.score || 0) - (a.candidate.score || 0)
             || a.candidate.written.length - b.candidate.written.length
             || a.candidate.written.localeCompare(b.candidate.written)
+            || a.candidate.pron.localeCompare(b.candidate.pron)
         ));
 
         for (const entry of sortedEntries) {
@@ -333,6 +538,7 @@ function createWordExportService({
                 .join("");
             const exampleSentence = formatExampleSentence(selectWordSentence({
                 candidate: entry.candidate,
+                curatedEntry: entry.curatedEntry,
                 sourceKanji: [...entry.sourceKanji][0] || "",
                 constituentKanji,
                 sentenceCorpus,
@@ -340,12 +546,12 @@ function createWordExportService({
 
             rows.push([
                 entry.candidate.written,
-                entry.candidate.pron,
-                entry.candidate.gloss,
+                entry.curatedEntry?.reading || entry.candidate.pron,
+                entry.curatedEntry?.meaning || entry.candidate.gloss,
                 buildJlptLabel(entry.level),
                 breakdownHtml,
                 exampleSentence,
-                buildWordNotes(entry),
+                buildWordNotes(entry.curatedEntry),
             ].map(tsvEscape).join("\t"));
         }
 
@@ -370,6 +576,7 @@ function createWordExportService({
         buildWordTsvForJlptLevel,
         buildCandidatePool,
         buildWordKey,
+        buildWordNotes,
         inferWordLevel,
         extractConstituentKanji,
         pickPreferredCandidate,
@@ -385,11 +592,13 @@ module.exports = {
     buildJlptLabel,
     buildWordKey,
     buildWordNotes,
+    buildWordStudyIndexes,
     buildWordSupportScore,
     createWordExportService,
     defaultWordExportService,
     extractConstituentKanji,
     inferWordLevel,
+    isAllowedByCuratedWords,
     pickBestExactSingleCandidate,
     pickPreferredCandidate,
     selectWordSentence,

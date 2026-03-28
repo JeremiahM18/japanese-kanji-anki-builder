@@ -3,9 +3,10 @@
 Place these files in this folder:
 
 - `kanji_jlpt_only.json` - JLPT kanji list by level
-- `KRADFILE` - kanji to component/radical mapping
+- `KRADFILE` - kanji to component and radical mapping
 - `sentence_corpus.json` - optional sentence corpus for deterministic sentence selection
-- `curated_study_data.json` - optional curated overrides for meaning, notes, preferred words, blocked words, and top example sentences
+- `curated_study_data.json` - optional curated kanji overrides for meaning, notes, preferred words, blocked words, and top example sentences
+- `word_study_data.json` - optional curated word-deck overrides keyed by `written|reading`, such as `今日|きょう`
 
 Optional local media source folders:
 
@@ -15,7 +16,7 @@ Optional local media source folders:
 
 ## Local and remote media sources
 
-The repository now supports both deterministic local-directory providers and optional remote HTTP fallback providers.
+The repository supports both deterministic local-directory providers and optional remote HTTP fallback providers.
 
 Remote configuration lives in environment variables:
 
@@ -64,6 +65,42 @@ Example for `日`:
 - `日_にち.mp3`
 - `65E5.m4a`
 
+## Word study data
+
+Curated word study entries let the word deck lock onto the exact study target you want.
+
+Recommended shape:
+
+```json
+{
+  "今日|きょう": {
+    "written": "今日",
+    "reading": "きょう",
+    "meaning": "today",
+    "jlpt": 5,
+    "notes": "Irregular reading. Learn this as a whole word.",
+    "exampleSentence": {
+      "japanese": "今日は図書館へ行きます。",
+      "reading": "きょうはとしょかんへいきます。",
+      "english": "Today I am going to the library."
+    }
+  }
+}
+```
+
+Why the key matters:
+
+- the word deck treats `written + reading` as the study identity
+- if you curate `今日|きょう`, the exporter suppresses uncurated alternatives such as `今日|こんにち`
+- if you want both readings, curate both entries explicitly
+
+Bootstrap the starter pack with:
+
+```bash
+npm run words:init
+npm run words:init -- --merge
+```
+
 ## Audio sync endpoint
 
 ```bash
@@ -107,6 +144,7 @@ Artifacts are written to `out/build` by default:
 - `reports/media-coverage.json`
 - `reports/media-sync.json`
 - `build-summary.json`
+
 ## Free stroke-order import helper
 
 Generate a Wikimedia Commons download checklist for the missing stroke-order assets first:
@@ -127,6 +165,7 @@ Optional flags:
 - `--json` for machine-readable output
 
 The importer copies recognized image files into `media_sources/stroke-order/images/` and animation files into `media_sources/stroke-order/animations/`, while reporting skipped files that do not match supported naming patterns.
+
 ## Starter sentence corpus
 
 Run this once to create a beginner-friendly starter sentence corpus in `data/sentence_corpus.json`:
@@ -143,18 +182,18 @@ npm run corpus:init -- --merge
 
 The starter corpus is intentionally small and beginner-focused so preview and export quality improve immediately, and you can expand it over time with better or more specialized examples.
 
-## Starter curated study data
+## Starter curated kanji study data
 
-Run this once to create a starter curated study dataset in `data/curated_study_data.json`:
+Run this once to create a starter curated kanji study dataset in `data/curated_study_data.json`:
 
 ```bash
 npm run curated:init
 ```
 
-If you already have curated study data and want to add the starter entries without overwriting your file:
+If you already have curated kanji study data and want to add the starter entries without overwriting your file:
 
 ```bash
 npm run curated:init -- --merge
 ```
 
-The starter curated pack is intentionally focused on high-value N5 and N4 kanji so learner-facing meanings, notes, and examples improve quickly before you expand deeper into the full JLPT set.
+The starter curated kanji pack is intentionally focused on high-value N5 and N4 kanji so learner-facing meanings, notes, and examples improve quickly before you expand deeper into the full JLPT set.

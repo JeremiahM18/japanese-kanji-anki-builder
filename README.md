@@ -68,7 +68,7 @@ npm run curated:init -- --merge
 npm run words:init -- --merge
 ```
 
-These commands create or extend local ignored datasets so the decks are usable before you build out full coverage. The tracked starter packs now carry complete N5 and N4 kanji curation, the first four N3 kanji starter batches, and a broader curated N5 starter word pack for the word deck.
+These commands create or extend local ignored datasets so the decks are usable before you build out full coverage. The tracked starter packs now carry complete N5 and N4 kanji curation, the first four N3 kanji starter batches, and a 61-card curated N5 starter word pack for the word deck.
 
 ### Preview and review cards
 
@@ -117,7 +117,7 @@ The word deck is a separate Anki note type focused on real study words such as `
 
 Important word-deck rules:
 
-- word identity is `written + reading`
+- word identity is `written + reading`, and curated words tagged for a JLPT level are included even when their constituent kanji are outside that level's kanji slice
 - curated word entries suppress uncurated alternate readings for the same written form
 - kanji breakdown panels on the back prefer curated kanji display words and meanings, which lets starter curation pin learner-friendly forms such as `大きい`, `小さい`, `高い`, and `前` instead of raw dictionary winners
 - use `--include-inferred` when you explicitly want to expand beyond curated words during exploration

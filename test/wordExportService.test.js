@@ -132,6 +132,12 @@ test("buildWordTsvForJlptLevel prefers curated N5 word entries and suppresses un
                 meaning: "teacher",
                 jlpt: 5,
             },
+            "店|みせ": {
+                written: "店",
+                reading: "みせ",
+                meaning: "shop / store",
+                jlpt: 5,
+            },
         },
     });
 

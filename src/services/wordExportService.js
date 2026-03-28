@@ -531,6 +531,32 @@ function createWordExportService({
             }
         }
 
+        for (const curatedEntry of wordStudyIndexes.exactEntries.values()) {
+            const candidate = buildCuratedCandidate(curatedEntry);
+            const assignedLevel = getCandidateLevel({
+                candidate,
+                curatedEntry,
+                jlptOnlyJson,
+                fallbackLevel: levelNumber,
+            });
+
+            if (assignedLevel !== levelNumber) {
+                continue;
+            }
+
+            const key = buildWordKey(candidate);
+            if (wordCandidates.has(key)) {
+                continue;
+            }
+
+            wordCandidates.set(key, {
+                candidate,
+                curatedEntry,
+                level: assignedLevel,
+                sourceKanji: new Set(extractConstituentKanji(candidate.written)),
+            });
+        }
+
         const requiredConstituentKanji = [...new Set(
             [...wordCandidates.values()].flatMap((entry) => extractConstituentKanji(entry.candidate.written))
         )];

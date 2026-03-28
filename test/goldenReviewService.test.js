@@ -67,8 +67,24 @@ test("formatGoldenReviewReport renders a readable benchmark summary", () => {
         ],
     });
 
+    assert.match(text, /Japanese Kanji Builder Golden Review/);
     assert.match(text, /Cards reviewed: 2/);
     assert.match(text, /Overall result: failing/);
     assert.match(text, /- 学: fail/);
     assert.match(text, /reading is empty/);
+});
+
+
+test("formatGoldenReviewReport accepts a custom title", () => {
+    const text = formatGoldenReviewReport({
+        totalCards: 1,
+        passedCount: 1,
+        failedCount: 0,
+        passed: true,
+        results: [
+            { kanji: "日", passed: true, failures: [] },
+        ],
+    }, { title: "Japanese Kanji Builder Golden N4 Review" });
+
+    assert.match(text, /Japanese Kanji Builder Golden N4 Review/);
 });

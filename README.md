@@ -66,11 +66,12 @@ These commands create or extend local ignored datasets so the deck is usable bef
 ```bash
 npm run deck:preview -- --level=5 --limit=5
 npm run deck:preview -- --kanji=日,本,学
+npm run deck:review:n4
 npm run deck:review:n5
 ```
 
 - `deck:preview` shows meaning, reading, notes, example sentence, radical, and media presence.
-- `deck:review:n5` runs the tracked golden N5 benchmark against hand-picked cards.
+- `deck:review:n4` and `deck:review:n5` run the tracked golden benchmark sets against hand-picked cards.
 - If the upstream kanji API is unavailable, preview falls back to local sentence corpus, curated study data, radicals, and managed media.
 
 ### Build and package a deck
@@ -153,6 +154,7 @@ This assumes a local VOICEVOX engine is already running at `VOICEVOX_ENGINE_URL`
 | `npm run doctor` | Check setup, coverage, readiness, and next steps |
 | `npm run deck:readiness` | Show per-level deck quality gates |
 | `npm run deck:preview` | Preview cards before import |
+| `npm run deck:review:n4` | Run the tracked golden N4 benchmark |
 | `npm run deck:review:n5` | Run the tracked golden N5 benchmark |
 | `npm run deck:ready` | Run the full build and package path |
 | `npm run deck:apkg` | Build an importable `.apkg` from packaged exports |
@@ -261,3 +263,4 @@ Build artifacts are written to `out/build`:
 - `build-summary.json`
 
 Import-ready packaging is written to `out/build/package`.
+

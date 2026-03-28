@@ -36,9 +36,10 @@
     "media:discover:stroke-order": "node scripts/discoverWikimediaStrokeOrder.js",
     "media:fetch:stroke-order": "node scripts/fetchWikimediaStrokeOrder.js",
     "media:voicevox": "node scripts/generateVoicevoxAudio.js",
-    "deck:review:n5": "node scripts/reviewGoldenN5.js",
+    "deck:review:n5": "node scripts/reviewGoldenLevel.js --level=5",
     "deck:apkg": "python scripts/buildApkg.py",
-    "media:import:kanjivg": "node scripts/importKanjiVgStrokeOrder.js"
+    "media:import:kanjivg": "node scripts/importKanjiVgStrokeOrder.js",
+    "deck:review:n4": "node scripts/reviewGoldenLevel.js --level=4"
   },
   "keywords": [
     "japanese",

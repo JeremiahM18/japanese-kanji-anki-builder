@@ -78,9 +78,9 @@ function evaluateGoldenReviewSet({ cards = [], expectations = [] } = {}) {
     };
 }
 
-function formatGoldenReviewReport(report) {
+function formatGoldenReviewReport(report, { title = "Japanese Kanji Builder Golden Review" } = {}) {
     const lines = [];
-    lines.push("Japanese Kanji Builder Golden N5 Review");
+    lines.push(title);
     lines.push("");
     lines.push(`Cards reviewed: ${report.totalCards}`);
     lines.push(`Passed: ${report.passedCount}`);

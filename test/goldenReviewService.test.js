@@ -1,7 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { evaluateGoldenReviewSet, formatGoldenReviewReport } = require("../src/services/goldenReviewService");
+const { buildReviewReadingText, evaluateGoldenReviewSet, formatGoldenReviewReport } = require("../src/services/goldenReviewService");
 
 test("evaluateGoldenReviewSet passes when cards meet expectations", () => {
     const report = evaluateGoldenReviewSet({
@@ -9,7 +9,8 @@ test("evaluateGoldenReviewSet passes when cards meet expectations", () => {
             {
                 kanji: "日",
                 meaningJP: "日本 ／ day",
-                reading: "オン:ニチ ／ くん:ひ",
+                onReading: "オン:ニチ",
+                kunReading: "くん:ひ",
                 notes: "Used in 日本 and 日曜日.",
                 exampleSentence: "日本です。 ／ にほんです。 ／ It is Japan.",
             },
@@ -87,4 +88,10 @@ test("formatGoldenReviewReport accepts a custom title", () => {
     }, { title: "Japanese Kanji Builder Golden N4 Review" });
 
     assert.match(text, /Japanese Kanji Builder Golden N4 Review/);
+});
+
+test("buildReviewReadingText prefers split reading fields and falls back to legacy reading", () => {
+    assert.equal(buildReviewReadingText({ onReading: "オン:ニチ", kunReading: "くん:ひ" }), "オン:ニチ ／ くん:ひ");
+    assert.equal(buildReviewReadingText({ reading: "オン:ガク ／ くん:まなぶ" }), "オン:ガク ／ くん:まなぶ");
+    assert.equal(buildReviewReadingText({}), "");
 });

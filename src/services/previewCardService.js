@@ -3,7 +3,7 @@ const { buildJlptBuckets } = require("../datasets/sentenceCorpusCoverage");
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { buildMeaningJP } = require("../inference/meaningInference");
 const { createExportService, formatExampleSentence, selectPrimaryReading } = require("./exportService");
-const { labelKunReading, labelOnReading, labelReading } = require("../utils/text");
+const { labelKunReading, labelOnReading } = require("../utils/text");
 
 function formatPreviewError(err) {
     const message = err instanceof Error ? err.message : String(err);
@@ -99,17 +99,12 @@ function buildOfflineReadingFields(jlptEntry) {
         return {
             onReading: "",
             kunReading: "",
-            reading: "",
         };
     }
 
-    const onReading = labelOnReading(jlptEntry.on_readings);
-    const kunReading = labelKunReading(jlptEntry.kun_readings);
-
     return {
-        onReading,
-        kunReading,
-        reading: labelReading(jlptEntry.on_readings, jlptEntry.kun_readings),
+        onReading: labelOnReading(jlptEntry.on_readings),
+        kunReading: labelKunReading(jlptEntry.kun_readings),
     };
 }
 
@@ -157,7 +152,6 @@ async function buildOfflineFallbackCard({
         primaryReading,
         onReading: readingFields.onReading,
         kunReading: readingFields.kunReading,
-        reading: readingFields.reading,
         radical: pickMainComponent(kradMap.get(kanji) || []),
         notes: buildOfflineNotes({ curatedEntry, sentenceCandidate }),
         exampleSentence: formatExampleSentence(sentenceCandidate),
@@ -227,7 +221,6 @@ async function buildPreviewCards({
                 primaryReading: inference.primaryReading,
                 onReading: inference.onReading,
                 kunReading: inference.kunReading,
-                reading: inference.reading,
                 radical,
                 notes: inference.notes,
                 exampleSentence: formatExampleSentence(inference.sentenceCandidates?.[0]),

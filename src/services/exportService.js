@@ -3,7 +3,7 @@ const path = require("node:path");
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 const { mapWithConcurrency } = require("../utils/concurrency");
-const { labelKunReading, labelOnReading, labelReading, tsvEscape } = require("../utils/text");
+const { labelKunReading, labelOnReading, tsvEscape } = require("../utils/text");
 
 const ANKI_FIELD_NAMES = loadAnkiNoteSchema().fieldNames;
 
@@ -159,7 +159,6 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
             primaryReading: selectPrimaryReading(inferred),
             onReading,
             kunReading,
-            reading: labelReading(kanjiInfo?.on_readings, kanjiInfo?.kun_readings),
             strokeOrderPath: strokeOrderFields.strokeOrderPath,
             strokeOrderField: formatAnkiStrokeOrderField(strokeOrderFields.strokeOrderPath),
             strokeOrderImagePath: strokeOrderFields.strokeOrderImagePath,

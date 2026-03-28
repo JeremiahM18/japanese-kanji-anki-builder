@@ -11,6 +11,18 @@ function includesAll(haystack, needles = []) {
     return (Array.isArray(needles) ? needles : []).every((needle) => normalizedHaystack.includes(normalizeForCompare(needle)));
 }
 
+function buildReviewReadingText(card = {}) {
+    const parts = [card.onReading, card.kunReading]
+        .map((value) => normalizeText(value))
+        .filter(Boolean);
+
+    if (parts.length > 0) {
+        return parts.join(" ／ ");
+    }
+
+    return normalizeText(card.reading);
+}
+
 function evaluateExpectation(card, expectation) {
     const failures = [];
     const genericFallback = "Offline preview built from local data only.";
@@ -30,7 +42,8 @@ function evaluateExpectation(card, expectation) {
     if (!normalizeText(card.meaningJP)) {
         failures.push("meaning is empty");
     }
-    if (!normalizeText(card.reading)) {
+    const reviewReading = buildReviewReadingText(card);
+    if (!reviewReading) {
         failures.push("reading is empty");
     }
     if (!normalizeText(card.exampleSentence)) {
@@ -43,7 +56,7 @@ function evaluateExpectation(card, expectation) {
         failures.push("notes still use the generic offline fallback");
     }
 
-    if (Array.isArray(expectation.readingIncludes) && !includesAll(card.reading, expectation.readingIncludes)) {
+    if (Array.isArray(expectation.readingIncludes) && !includesAll(reviewReading, expectation.readingIncludes)) {
         failures.push(`reading did not include: ${expectation.readingIncludes.join(", ")}`);
     }
     if (Array.isArray(expectation.meaningIncludes) && !includesAll(card.meaningJP, expectation.meaningIncludes)) {
@@ -101,6 +114,7 @@ function formatGoldenReviewReport(report, { title = "Japanese Kanji Builder Gold
 }
 
 module.exports = {
+    buildReviewReadingText,
     evaluateGoldenReviewSet,
     formatGoldenReviewReport,
 };

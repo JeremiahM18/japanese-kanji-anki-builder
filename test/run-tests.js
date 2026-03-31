@@ -4,6 +4,7 @@ require("./audioGenerationService.test");
 require("./audioImportService.test");
 require("./audioService.test");
 require("./buildPipeline.test");
+require("./ciSmokeService.test");
 require("./concurrency.test");
 require("./config.test");
 require("./curatedStudyBootstrapService.test");

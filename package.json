@@ -46,7 +46,8 @@
     "deck:words:apkg": "python scripts/buildApkg.py --deck-kind=word --out-dir=out/word-build",
     "deck:words:review:n5": "node scripts/reviewGoldenWordLevel.js --level=5",
     "deck:words:reading-audit": "node scripts/reportWordReadingCoverage.js",
-    "deck:words:reading-audit:n5": "node scripts/reportWordReadingCoverage.js --level=5"
+    "deck:words:reading-audit:n5": "node scripts/reportWordReadingCoverage.js --level=5",
+    "ci:smoke": "node scripts/ciSmoke.js"
   },
   "keywords": [
     "japanese",

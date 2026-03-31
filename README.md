@@ -1,6 +1,6 @@
 # Japanese Kanji Anki Builder
 
-A Node.js project for building JLPT kanji and word study decks for Anki with deterministic exports, curated study data, managed media, offline-friendly previewing, readiness gates, and optional `.apkg` packaging.
+A Node.js project for building JLPT kanji and word study decks for Anki with deterministic exports, curated study data, managed media, offline-friendly previewing, readiness gates, optional `.apkg` packaging, and release-style CI smoke verification.
 
 ## What this repo does
 
@@ -179,12 +179,22 @@ npm run deck:readiness
 
 This assumes a local VOICEVOX engine is already running at `VOICEVOX_ENGINE_URL` or the default `http://127.0.0.1:50021`.
 
+## CI verification
+
+GitHub Actions now runs two verification lanes:
+
+- an Ubuntu verification matrix on Node 20 and Node 22 for lint and the full automated test suite
+- a cross-platform smoke matrix on Ubuntu, Windows, and macOS that seeds a deterministic fixture workspace with `npm run ci:smoke` and verifies kanji and word deck packaging paths from a clean checkout
+
+The smoke job keeps its generated `out/` tree as a workflow artifact so packaging regressions are easier to inspect after a failure.
+
 ## Important commands
 
 | Command | Purpose |
 | --- | --- |
 | `npm test` | Run the full test suite |
 | `npm run lint` | Run ESLint |
+| `npm run ci:smoke` | Seed a deterministic fixture workspace and smoke-test kanji plus word deck artifact generation |
 | `npm run doctor` | Check setup, coverage, readiness, and next steps |
 | `npm run deck:readiness` | Show the global per-level deck quality gates across all JLPT levels |
 | `npm run deck:readiness:global` | Explicit alias for the all-level readiness report |
@@ -359,7 +369,4 @@ Import-ready packaging is written to:
 
 - `out/build/package`
 - `out/word-build/package`
-
-
-
 

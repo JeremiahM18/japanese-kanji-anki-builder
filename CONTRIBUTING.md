@@ -12,7 +12,7 @@ This repository is maintained with production-style standards even though it is 
 - Update `README.md` whenever architecture, workflow, configuration, or operational behavior changes.
 - Add or update tests for behavioral changes.
 - Keep commits focused and professionally titled.
-- Do not merge with failing lint, tests, smoke validation, or CI.
+- Do not merge with failing lint, tests, smoke validation, release gates, or CI.
 
 ## Development Workflow
 
@@ -31,6 +31,7 @@ Run the standard checks before opening a pull request:
 npm run lint
 npm test
 npm run ci:smoke
+npm run release:gate
 npm run build:artifacts -- --levels=5 --limit=1 --skip-media-sync
 ```
 

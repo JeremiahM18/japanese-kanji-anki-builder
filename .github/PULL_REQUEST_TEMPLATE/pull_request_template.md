@@ -31,3 +31,5 @@
 - [ ] Tests added or updated when behavior changed
 - [ ] Lint and tests pass locally
 - [ ] CI is expected to pass
+- [ ] `release:gate` run when packaging, CI, or toolchain behavior changed
+- [ ] CODEOWNERS review requested when touching protected paths

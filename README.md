@@ -1,6 +1,6 @@
 # Japanese Kanji Anki Builder
 
-A Node.js project for building JLPT kanji and word study decks for Anki with deterministic exports, curated study data, managed media, offline-friendly previewing, readiness gates, optional `.apkg` packaging, and release-style CI smoke verification.
+A Node.js project for building JLPT kanji and word study decks for Anki with deterministic exports, curated study data, managed media, offline-friendly previewing, readiness gates, optional `.apkg` packaging, release-style CI smoke verification, and a stricter Ubuntu release gate.
 
 ## What this repo does
 
@@ -47,7 +47,7 @@ npm run deck:readiness
 npm run deck:readiness:global
 ```
 
-- `doctor` checks required datasets, optional local study data, media folders, managed media coverage, and next steps.
+- `doctor` checks required datasets, optional local study data, media folders, managed media coverage, local toolchain readiness, and next steps.
 - `deck:readiness` shows the global per-level readiness report across N5 through N1.
 - `deck:readiness:global` is an explicit alias for the same all-level readiness report when you want the command name to say exactly what it does.
 
@@ -181,12 +181,13 @@ This assumes a local VOICEVOX engine is already running at `VOICEVOX_ENGINE_URL`
 
 ## CI verification
 
-GitHub Actions now runs two verification lanes:
+GitHub Actions now runs three verification lanes:
 
 - an Ubuntu verification matrix on Node 20 and Node 22 for lint and the full automated test suite
 - a cross-platform smoke matrix on Ubuntu, Windows, and macOS that seeds a deterministic fixture workspace with `npm run ci:smoke` and verifies kanji and word deck packaging paths from a clean checkout
+- a dedicated Ubuntu release gate that installs `sqlite3`, runs `npm run release:gate -- --require-apkg-tools`, and asserts artifact contracts plus native `.apkg` generation
 
-The smoke job keeps its generated `out/` tree as a workflow artifact so packaging regressions are easier to inspect after a failure.
+The smoke and release-gate jobs keep their generated `out/` trees as workflow artifacts so packaging regressions are easier to inspect after a failure.
 
 ## Important commands
 
@@ -195,6 +196,7 @@ The smoke job keeps its generated `out/` tree as a workflow artifact so packagin
 | `npm test` | Run the full test suite |
 | `npm run lint` | Run ESLint |
 | `npm run ci:smoke` | Seed a deterministic fixture workspace and smoke-test kanji plus word deck artifact generation |
+| `npm run release:gate` | Assert smoke artifacts, TSV schemas, package summaries, and optionally require native `.apkg` tooling |
 | `npm run doctor` | Check setup, coverage, readiness, and next steps |
 | `npm run deck:readiness` | Show the global per-level deck quality gates across all JLPT levels |
 | `npm run deck:readiness:global` | Explicit alias for the all-level readiness report |

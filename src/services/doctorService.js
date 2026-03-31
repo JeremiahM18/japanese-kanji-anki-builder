@@ -11,6 +11,11 @@ const {
     buildLevelReadinessReport,
     formatCardQualityMetricsLine,
 } = require("./levelReadinessService");
+const {
+    buildToolchainStatus,
+    getMissingPackagingTools,
+    getMissingRequiredTools,
+} = require("./toolchainService");
 
 function describePathStatus(filePath, { label, required, kind = "file" }) {
     const exists = fs.existsSync(filePath);
@@ -47,7 +52,7 @@ function describeMediaReadiness({ label, localDir, remoteBaseUrl, remoteEnvVar }
     };
 }
 
-function buildDoctorStatus(config) {
+function buildDoctorStatus(config, { buildToolchainStatusFn = buildToolchainStatus } = {}) {
     return {
         audioEnabled: config.enableAudio !== false,
         required: [
@@ -83,6 +88,7 @@ function buildDoctorStatus(config) {
                 remoteEnvVar: "REMOTE_AUDIO_BASE_URL",
             })]),
         ],
+        toolchain: buildToolchainStatusFn(),
     };
 }
 
@@ -95,8 +101,9 @@ async function buildDoctorReport({
     buildLevelReadinessReportFn = buildLevelReadinessReport,
     loadSentenceCorpusFn = loadSentenceCorpus,
     loadCuratedStudyDataFn = loadCuratedStudyData,
+    buildToolchainStatusFn = buildToolchainStatus,
 }) {
-    const status = buildDoctorStatus(config);
+    const status = buildDoctorStatus(config, { buildToolchainStatusFn });
     const requiredReady = status.required.every((entry) => entry.exists);
     const sentenceCorpus = status.optionalDatasets[0].exists ? loadSentenceCorpusFn(config.sentenceCorpusPath) : [];
     const curatedStudyData = status.optionalDatasets[1].exists ? loadCuratedStudyDataFn(config.curatedStudyDataPath) : {};
@@ -129,7 +136,10 @@ async function buildDoctorReport({
         })
         : null;
 
+    const missingRequiredTools = getMissingRequiredTools(status.toolchain);
+    const missingPackagingTools = getMissingPackagingTools(status.toolchain);
     const nextSteps = [];
+
     if (!status.required[0].exists) {
         nextSteps.push(`Add the JLPT dataset at ${config.jlptJsonPath}.`);
     }
@@ -141,6 +151,10 @@ async function buildDoctorReport({
     }
     if (requiredReady && !status.optionalDatasets[1].exists) {
         nextSteps.push(`Add curated study data at ${config.curatedStudyDataPath} to override meanings, notes, and sentences.`);
+    }
+
+    for (const tool of missingRequiredTools) {
+        nextSteps.push(`Install the required ${tool.name} toolchain dependency for ${tool.purpose}.`);
     }
 
     for (const entry of status.mediaReadiness) {
@@ -170,13 +184,16 @@ async function buildDoctorReport({
             }
         }
     }
+    if (missingPackagingTools.length > 0) {
+        nextSteps.push(`Install packaging tools for native .apkg generation: ${missingPackagingTools.map((tool) => tool.name).join(", ")}.`);
+    }
     if (nextSteps.length === 0) {
-        nextSteps.push("Core datasets and media coverage look healthy. The next user-facing step is previewing cards and packaging an import-ready deck.");
+        nextSteps.push("Core datasets, toolchain, and media coverage look healthy. The next user-facing step is previewing cards and packaging an import-ready deck.");
     }
 
     return {
         generatedAt: new Date().toISOString(),
-        ready: requiredReady,
+        ready: requiredReady && missingRequiredTools.length === 0,
         status,
         coverage: {
             sentenceCorpus: sentenceCoverage,
@@ -221,6 +238,15 @@ function formatMediaReadinessLine(entry) {
     return `- ${entry.label}: ${readiness}; ${localState}; ${remoteState}`;
 }
 
+function formatToolLine(tool) {
+    const state = tool.available ? "available" : "missing";
+    const version = tool.version ? `; ${tool.version}` : "";
+    const error = tool.error ? `; ${tool.error}` : "";
+    const required = tool.required ? "required" : "optional";
+
+    return `- ${tool.name}: ${state} [${required}] for ${tool.purpose}${version}${error}`;
+}
+
 function formatDoctorReport(report) {
     const lines = [];
 
@@ -246,6 +272,14 @@ function formatDoctorReport(report) {
     lines.push("Media acquisition readiness:");
     for (const entry of report.status.mediaReadiness) {
         lines.push(formatMediaReadinessLine(entry));
+    }
+    lines.push("");
+    lines.push("Toolchain:");
+    for (const tool of (report.status.toolchain?.runtime || [])) {
+        lines.push(formatToolLine(tool));
+    }
+    for (const tool of (report.status.toolchain?.packaging || [])) {
+        lines.push(formatToolLine(tool));
     }
 
     if (report.coverage.sentenceCorpus || report.coverage.curatedStudyData || report.coverage.media) {

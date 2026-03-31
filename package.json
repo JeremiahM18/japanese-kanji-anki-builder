@@ -47,7 +47,8 @@
     "deck:words:review:n5": "node scripts/reviewGoldenWordLevel.js --level=5",
     "deck:words:reading-audit": "node scripts/reportWordReadingCoverage.js",
     "deck:words:reading-audit:n5": "node scripts/reportWordReadingCoverage.js --level=5",
-    "ci:smoke": "node scripts/ciSmoke.js"
+    "ci:smoke": "node scripts/ciSmoke.js",
+    "release:gate": "node scripts/releaseGate.js"
   },
   "keywords": [
     "japanese",

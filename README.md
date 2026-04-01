@@ -189,6 +189,12 @@ GitHub Actions now runs three verification lanes:
 
 The smoke and release-gate jobs keep their generated `out/` trees as workflow artifacts so packaging regressions are easier to inspect after a failure.
 
+## Repository governance
+
+`main` should be protected in GitHub with required pull requests, code-owner review, stale-review dismissal, conversation resolution, and the exact required checks listed in [docs/branch-protection.md](/C:/japanese_kanji_builder/docs/branch-protection.md).
+
+The checked-in policy files in [.github/CODEOWNERS](/C:/japanese_kanji_builder/.github/CODEOWNERS) and [docs/branch-protection.md](/C:/japanese_kanji_builder/docs/branch-protection.md) are treated as part of the repo contract and are covered by automated tests.
+
 ## Important commands
 
 | Command | Purpose |
@@ -371,4 +377,3 @@ Import-ready packaging is written to:
 
 - `out/build/package`
 - `out/word-build/package`
-

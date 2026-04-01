@@ -25,6 +25,7 @@ require("./mediaStore.test");
 require("./mediaSync.test");
 require("./previewService.test");
 require("./previewCardService.test");
+require("./repositoryGovernance.test");
 require("./goldenReviewService.test");
 require("./releaseGateService.test");
 require("./reviewGoldenWordLevel.test");

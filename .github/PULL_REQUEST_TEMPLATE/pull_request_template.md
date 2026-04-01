@@ -24,6 +24,7 @@
 
 - [ ] `README.md` updated when behavior, architecture, configuration, or process changed
 - [ ] Additional docs updated when needed
+- [ ] `CHANGELOG.md` updated when the change affects a release milestone or tagged artifact contract
 
 ## Checklist
 

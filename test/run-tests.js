@@ -28,6 +28,7 @@ require("./previewCardService.test");
 require("./repositoryGovernance.test");
 require("./goldenReviewService.test");
 require("./releaseGateService.test");
+require("./releasePolicy.test");
 require("./reviewGoldenWordLevel.test");
 require("./sentenceCorpus.test");
 require("./sentenceCorpusBootstrapService.test");

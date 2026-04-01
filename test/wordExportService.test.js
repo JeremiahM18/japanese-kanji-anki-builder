@@ -91,8 +91,8 @@ test("buildBreakdownInference prefers curated display words for learner-facing k
             primaryReading: "おおい",
             englishMeaning: "big / large",
             meaningJP: "大 （おおい） ／ big / large",
-            onReading: "オン:タイ、 ダイ",
-            kunReading: "くん:-おお.いに、 おお-、 おお.きい",
+            onReading: "オン: タイ、 ダイ",
+            kunReading: "くん: -おお.いに、 おお-、 おお.きい",
         },
         curatedEntry: {
             englishMeaning: "big / large",
@@ -113,8 +113,8 @@ test("buildBreakdownInference can use breakdown-only overrides for compound cont
             primaryReading: "いく",
             englishMeaning: "go",
             meaningJP: "行く （いく） ／ go",
-            onReading: "オン:アン、 ギョウ、 コウ",
-            kunReading: "くん:い.く、 ゆ.く",
+            onReading: "オン: アン、 ギョウ、 コウ",
+            kunReading: "くん: い.く、 ゆ.く",
         },
         curatedEntry: {
             englishMeaning: "go",
@@ -142,8 +142,8 @@ test("buildBreakdownInference limits multi-character breakdown overrides to matc
             primaryReading: "さん",
             englishMeaning: "three",
             meaningJP: "三 （さん） ／ three",
-            onReading: "オン:サン、 ゾウ",
-            kunReading: "くん:み、 み.つ、 みっ.つ",
+            onReading: "オン: サン、 ゾウ",
+            kunReading: "くん: み、 み.つ、 みっ.つ",
         },
         curatedEntry: {
             englishMeaning: "three",
@@ -172,8 +172,8 @@ test("buildBreakdownInference supports context-specific breakdown overrides", ()
             primaryReading: "よむ",
             englishMeaning: "read",
             meaningJP: "読む （よむ） ／ read",
-            onReading: "オン:トウ、 トク、 ドク",
-            kunReading: "くん:-よ.み、 よ.む",
+            onReading: "オン: トウ、 トク、 ドク",
+            kunReading: "くん: -よ.み、 よ.む",
         },
         curatedEntry: {
             englishMeaning: "read",
@@ -206,8 +206,8 @@ test("buildBreakdownInference keeps okurigana display words in compound contexts
             primaryReading: "きる",
             englishMeaning: "cut",
             meaningJP: "切る （きる） ／ cut",
-            onReading: "オン:サイ、 セツ",
-            kunReading: "くん:き.る",
+            onReading: "オン: サイ、 セツ",
+            kunReading: "くん: き.る",
         },
         curatedEntry: {
             englishMeaning: "cut",
@@ -234,8 +234,8 @@ test("buildBreakdownInference uses the current single-kanji word on word cards",
             primaryReading: "でる",
             englishMeaning: "exit / go out",
             meaningJP: "出る （でる） ／ exit / go out",
-            onReading: "オン:シュツ、 スイ",
-            kunReading: "くん:だ.す、 で.る",
+            onReading: "オン: シュツ、 スイ",
+            kunReading: "くん: だ.す、 で.る",
         },
         curatedEntry: {
             englishMeaning: "exit / go out",
@@ -254,8 +254,8 @@ test("buildBreakdownInference suppresses katakana-only exact-match primaries", (
             primaryReading: "アル",
             englishMeaning: "two",
             meaningJP: "二 ／ two",
-            onReading: "オン:ジ、 ニ",
-            kunReading: "くん:ふた、 ふた.つ",
+            onReading: "オン: ジ、 ニ",
+            kunReading: "くん: ふた、 ふた.つ",
         },
         curatedEntry: {
             englishMeaning: "two",
@@ -532,3 +532,4 @@ test("buildWordTsvForJlptLevel prefers curated N5 word entries and suppresses un
     assert.match(result.tsv, /今日は図書館へ行きます/);
     assert.match(result.tsv, /kanji-breakdown-item/);
 });
+

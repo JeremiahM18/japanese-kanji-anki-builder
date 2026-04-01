@@ -9,8 +9,8 @@ test("evaluateGoldenReviewSet passes when cards meet expectations", () => {
             {
                 kanji: "日",
                 meaningJP: "日本 ／ day",
-                onReading: "オン:ニチ",
-                kunReading: "くん:ひ",
+                onReading: "オン: ニチ",
+                kunReading: "くん: ひ",
                 notes: "Used in 日本 and 日曜日.",
                 exampleSentence: "日本です。 ／ にほんです。 ／ It is Japan.",
             },
@@ -90,8 +90,8 @@ test("formatGoldenReviewReport accepts a custom title", () => {
 });
 
 test("buildReviewReadingText prefers split reading fields and falls back to legacy reading", () => {
-    assert.equal(buildReviewReadingText({ onReading: "オン:ニチ", kunReading: "くん:ひ" }), "オン:ニチ ／ くん:ひ");
-    assert.equal(buildReviewReadingText({ reading: "オン:ガク ／ くん:まなぶ" }), "オン:ガク ／ くん:まなぶ");
+    assert.equal(buildReviewReadingText({ onReading: "オン: ニチ", kunReading: "くん: ひ" }), "オン: ニチ ／ くん: ひ");
+    assert.equal(buildReviewReadingText({ reading: "オン: ガク ／ くん: まなぶ" }), "オン: ガク ／ くん: まなぶ");
     assert.equal(buildReviewReadingText({}), "");
 });
 
@@ -121,3 +121,4 @@ test("evaluateGoldenWordReviewSet validates word cards and breakdown content", (
     assert.equal(report.passed, true);
     assert.equal(report.passedCount, 1);
 });
+

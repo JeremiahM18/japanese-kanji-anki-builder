@@ -503,8 +503,8 @@ test("download export sets attachment headers and includes Anki-ready media fiel
         assert.equal(cols.length, 13);
         assert.equal(cols[1], "日本");
         assert.equal(cols[3], "にほん");
-        assert.equal(cols[4], "オン:ニチ");
-        assert.equal(cols[5], "くん:ひ");
+        assert.equal(cols[4], "オン: ニチ");
+        assert.equal(cols[5], "くん: ひ");
         assert.equal(cols[6], '<img src="65E5_日-stroke-order.gif" />');
         assert.equal(cols[7], '<img src="65E5_日-stroke-order.svg" />');
         assert.equal(cols[8], '<img src="65E5_日-stroke-order.gif" />');
@@ -530,3 +530,4 @@ test("invalid export parameters return structured 400 errors", async () => {
         assert.equal(badLimitJson.code, "bad_request");
     });
 });
+

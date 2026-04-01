@@ -10,13 +10,13 @@ const {
 } = require('../src/services/wordReadingCoverageService');
 
 test('normalizeReadingToken normalizes katakana and dictionary punctuation', () => {
-  assert.equal(normalizeReadingToken('オン:ショウ'), 'しょう');
-  assert.equal(normalizeReadingToken('くん:-あ.がる'), 'あがる');
+  assert.equal(normalizeReadingToken('オン: ショウ'), 'しょう');
+  assert.equal(normalizeReadingToken('くん: -あ.がる'), 'あがる');
 });
 
 test('parseDelimitedReadingField splits on and kun readings cleanly', () => {
-  assert.deepEqual(parseDelimitedReadingField('オン:ショウ、 ジョウ', 'オン:'), ['しょう', 'じょう']);
-  assert.deepEqual(parseDelimitedReadingField('くん:-あ.がる、 うえ、 うえ', 'くん:'), ['あがる', 'うえ']);
+  assert.deepEqual(parseDelimitedReadingField('オン: ショウ、 ジョウ', 'オン: '), ['しょう', 'じょう']);
+  assert.deepEqual(parseDelimitedReadingField('くん: -あ.がる、 うえ、 うえ', 'くん: '), ['あがる', 'うえ']);
 });
 
 test('parseExampleEntries extracts curated word examples from notes', () => {
@@ -41,7 +41,7 @@ test('parseExampleEntries extracts curated word examples from notes', () => {
 test('buildWordReadingCoverageReport distinguishes covered, missing word, and missing example readings', () => {
   const kanjiRows = parseKanjiTsv([
     'Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence',
-    '上\t上\t上 ／ up\tうえ\tオン:ジョウ\tくん:うえ、 あ.がる\t\t\t\t\t\t上手 （じょうず） - skillful ／ 上がる （あがる） - go up\t',
+    '上\t上\t上 ／ up\tうえ\tオン: ジョウ\tくん: うえ、 あ.がる\t\t\t\t\t\t上手 （じょうず） - skillful ／ 上がる （あがる） - go up\t',
   ].join('\n'));
 
   const wordRows = parseWordTsv([
@@ -66,7 +66,7 @@ test('buildWordReadingCoverageReport distinguishes covered, missing word, and mi
 test('buildWordReadingCoverageReport counts a related word card as covered when the reading matches', () => {
   const kanjiRows = parseKanjiTsv([
     'Kanji	DisplayWord	MeaningJP	PrimaryReading	OnReading	KunReading	StrokeOrder	StrokeOrderImage	StrokeOrderAnimation	Audio	Radical	Notes	ExampleSentence',
-    '後	後	後 ／ after	あと	オン:ゴ	くん:あと、 うし.ろ						後ろ （うしろ） - behind / back	',
+    '後	後	後 ／ after	あと	オン: ゴ	くん: あと、 うし.ろ						後ろ （うしろ） - behind / back	',
   ].join('\n'));
 
   const wordRows = parseWordTsv([

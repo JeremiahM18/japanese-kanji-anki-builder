@@ -10,8 +10,8 @@ test("formatPreviewCard renders user-facing card details and media presence", ()
         displayWord: "日本",
         meaningJP: "日本 （にほん） ／ day",
         primaryReading: "にほん",
-        onReading: "オン:ニチ",
-        kunReading: "くん:ひ",
+        onReading: "オン: ニチ",
+        kunReading: "くん: ひ",
         radical: "日",
         notes: "fixture notes",
         exampleSentence: "日本です。 ／ にほんです。 ／ It is Japan.",
@@ -26,8 +26,8 @@ test("formatPreviewCard renders user-facing card details and media presence", ()
     assert.match(text, /日 \(N5\)/);
     assert.match(text, /Study word: 日本/);
     assert.match(text, /Primary reading: にほん/);
-    assert.match(text, /On-yomi: オン:ニチ/);
-    assert.match(text, /Kun-yomi: くん:ひ/);
+    assert.match(text, /On-yomi: オン: ニチ/);
+    assert.match(text, /Kun-yomi: くん: ひ/);
     assert.match(text, /Stroke-order image: present/);
     assert.match(text, /Audio: present/);
     assert.match(text, /Example: 日本です/);
@@ -52,8 +52,8 @@ test("formatPreviewCard marks offline local fallback cards", () => {
         displayWord: "学",
         meaningJP: "学校",
         primaryReading: "まなぶ",
-        onReading: "オン:ガク",
-        kunReading: "くん:まなぶ",
+        onReading: "オン: ガク",
+        kunReading: "くん: まなぶ",
         radical: "子",
         notes: "Local example uses 学校 to illustrate this kanji.",
         exampleSentence: "学校で日本語を学びます。 ／ がっこうでにほんごをまなびます。 ／ I study Japanese at school.",
@@ -67,8 +67,8 @@ test("formatPreviewCard marks offline local fallback cards", () => {
 
     assert.match(text, /Preview mode: offline local fallback/);
     assert.match(text, /Preview note: Preview used local fallback data/);
-    assert.match(text, /On-yomi: オン:ガク/);
-    assert.match(text, /Kun-yomi: くん:まなぶ/);
+    assert.match(text, /On-yomi: オン: ガク/);
+    assert.match(text, /Kun-yomi: くん: まなぶ/);
     assert.match(text, /Example: 学校で日本語を学びます/);
 });
 
@@ -79,3 +79,4 @@ test("formatPreviewReport summarizes scope and empty results", () => {
     assert.match(text, /Offline fallback cards: 0/);
     assert.match(text, /No cards matched/);
 });
+

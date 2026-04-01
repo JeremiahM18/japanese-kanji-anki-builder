@@ -37,7 +37,7 @@ test("buildOfflineSentenceCandidate prefers corpus entries with readings and bet
 test("buildOfflineReading formats JLPT readings", () => {
     assert.equal(
         buildOfflineReading({ on_readings: ["ガク"], kun_readings: ["まな.ぶ"] }),
-        "オン:ガク ／ くん:まな.ぶ"
+        "オン: ガク ／ くん: まな.ぶ"
     );
 });
 
@@ -79,3 +79,4 @@ test("buildCardQualitySummary reports per-level local card quality coverage", ()
     assert.deepEqual(summary.levels[1].sampleMissing.reading, ["本"]);
     assert.deepEqual(summary.levels[1].sampleMissing.example, ["本"]);
 });
+

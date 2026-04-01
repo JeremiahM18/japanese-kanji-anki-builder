@@ -16,11 +16,11 @@ function tsvEscape(value) {
 }
 
 function labelOnReading(onArr) {
-    return Array.isArray(onArr) && onArr.length ? `オン:${onArr.join("、 ")}` : "";
+    return Array.isArray(onArr) && onArr.length ? `オン: ${onArr.join("、 ")}` : "";
 }
 
 function labelKunReading(kunArr) {
-    return Array.isArray(kunArr) && kunArr.length ? `くん:${kunArr.join("、 ")}` : "";
+    return Array.isArray(kunArr) && kunArr.length ? `くん: ${kunArr.join("、 ")}` : "";
 }
 
 function labelReading(onArr, kunArr) {
@@ -37,3 +37,4 @@ module.exports = {
     normalizeText,
     tsvEscape,
 };
+

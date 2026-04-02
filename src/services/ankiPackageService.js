@@ -240,6 +240,14 @@ function runCommand(command, args, options = {}) {
     return result;
 }
 
+function formatAnkiPackageSkipReason(error) {
+    if (error && error.code === "EPERM") {
+        return "Unable to run sqlite3 on this machine (EPERM). The deck exports and packaged media were built, but native .apkg generation was skipped.";
+    }
+
+    return error instanceof Error ? error.message : String(error);
+}
+
 function buildSchemaSql({ colId, crt, mod, scm, modelId, deckIdsByLevel, notes, cards, fieldNames, noteSchema, deckKind }) {
     const primaryDeckId = Number(Object.values(deckIdsByLevel)[0] || 1);
     const modelsJson = JSON.stringify(createModel({
@@ -427,7 +435,7 @@ async function buildAnkiPackage({
         return {
             filePath: null,
             skipped: true,
-            skipReason: error instanceof Error ? error.message : String(error),
+            skipReason: formatAnkiPackageSkipReason(error),
             noteCount: 0,
             deckCount: 0,
             mediaFileCount: mediaFiles.length,

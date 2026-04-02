@@ -326,5 +326,6 @@ test("runBuildPipeline writes exports reports summary and an import-ready packag
         }
     } else {
         assert.equal(storedSummary.package.ankiPackage.skipped, true);
+        assert.match(storedSummary.package.ankiPackage.skipReason, /sqlite3|tar|apkg/i);
     }
 });

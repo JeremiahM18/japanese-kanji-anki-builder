@@ -95,7 +95,7 @@ function buildCuratedDisplayWord(curatedEntry, rankedCandidates) {
     };
 }
 
-function buildCuratedSentence(curatedEntry, bestWord) {
+function buildCuratedSentence(curatedEntry, bestWord, displayWord) {
     if (!curatedEntry?.exampleSentence) {
         return null;
     }
@@ -103,7 +103,7 @@ function buildCuratedSentence(curatedEntry, bestWord) {
     return {
         type: "curated",
         japanese: curatedEntry.exampleSentence.japanese,
-        reading: curatedEntry.exampleSentence.reading || bestWord?.pron || "",
+        reading: curatedEntry.exampleSentence.reading || bestWord?.pron || displayWord?.pron || "",
         english: curatedEntry.exampleSentence.english,
         sourceWord: bestWord?.written || "",
         score: Number.MAX_SAFE_INTEGER,
@@ -127,8 +127,8 @@ function filterBlockedSentenceCandidates(sentenceCandidates, curatedEntry) {
     });
 }
 
-function prependCuratedSentence(sentenceCandidates, curatedEntry, bestWord, maxSentences) {
-    const curatedSentence = buildCuratedSentence(curatedEntry, bestWord);
+function prependCuratedSentence(sentenceCandidates, curatedEntry, bestWord, displayWord, maxSentences) {
+    const curatedSentence = buildCuratedSentence(curatedEntry, bestWord, displayWord);
 
     if (!curatedSentence) {
         return sentenceCandidates;
@@ -170,6 +170,18 @@ function applyCuratedMeaning(meaning, curatedEntry, rankedCandidates) {
     };
 }
 
+function hasFullyCuratedKanjiEntry(curatedEntry) {
+    return Boolean(
+        curatedEntry?.displayWord?.written
+        && curatedEntry?.displayWord?.pron
+        && curatedEntry?.englishMeaning
+        && curatedEntry?.notes
+        && curatedEntry?.exampleSentence?.japanese
+        && (curatedEntry?.exampleSentence?.reading || curatedEntry?.displayWord?.pron)
+        && curatedEntry?.exampleSentence?.english
+    );
+}
+
 function applyCuratedNotes(notes, curatedEntry) {
     if (curatedEntry?.notes) {
         return {
@@ -182,6 +194,10 @@ function applyCuratedNotes(notes, curatedEntry) {
 
 function createInferenceEngine({ sentenceCorpus = [], curatedStudyData = {} } = {}) {
     return {
+        hasFullyCuratedKanjiEntry(kanji) {
+            return hasFullyCuratedKanjiEntry(getCuratedEntry(curatedStudyData, kanji));
+        },
+
         inferKanjiStudyData({ kanji, kanjiInfo, words, maxExamples = 3, maxSentences = 3 }) {
             const kanjiMeanings = Array.isArray(kanjiInfo?.meanings) ? kanjiInfo.meanings : [];
             const extractedCandidates = extractWordCandidates(words);
@@ -207,6 +223,7 @@ function createInferenceEngine({ sentenceCorpus = [], curatedStudyData = {} } = 
                 ),
                 curatedEntry,
                 meaning.bestWord,
+                meaning.displayWord,
                 maxSentences
             );
 
@@ -252,6 +269,7 @@ module.exports = {
     createInferenceEngine,
     filterBlockedSentenceCandidates,
     formatMeaningDisplayWord,
+    hasFullyCuratedKanjiEntry,
     getCuratedEntry,
     prependCuratedSentence,
 };

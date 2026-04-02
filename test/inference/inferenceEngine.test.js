@@ -491,6 +491,31 @@ test("inference engine falls back to templates when no corpus sentence exists", 
     assert.equal(result.candidates[0].scoreBreakdown.totals.finalScore, result.candidates[0].score);
 });
 
+test("inference engine reports when a kanji entry is fully curated", () => {
+    const inferenceEngine = createInferenceEngine({
+        curatedStudyData: {
+            日: {
+                englishMeaning: "day",
+                displayWord: { written: "日本", pron: "にほん" },
+                notes: "日本 （にほん） - Japan",
+                exampleSentence: {
+                    japanese: "日本へ行きます。",
+                    reading: "にほんへいきます。",
+                    english: "I will go to Japan.",
+                },
+            },
+            本: {
+                englishMeaning: "book",
+                notes: "本 （ほん） - book",
+            },
+        },
+    });
+
+    assert.equal(inferenceEngine.hasFullyCuratedKanjiEntry("日"), true);
+    assert.equal(inferenceEngine.hasFullyCuratedKanjiEntry("本"), false);
+    assert.equal(inferenceEngine.hasFullyCuratedKanjiEntry("学"), false);
+});
+
 test("chooseEnglishMeaning can prefer the exact-match word gloss over noisy kanji meanings", () => {
     const result = chooseEnglishMeaning({
         kanji: "本",

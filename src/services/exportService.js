@@ -119,6 +119,11 @@ async function resolveManagedMediaFields({ kanji, strokeOrderService, audioServi
     };
 }
 
+function shouldSkipWordFetch(inferenceEngine, kanji) {
+    return typeof inferenceEngine?.hasFullyCuratedKanjiEntry === "function"
+        && inferenceEngine.hasFullyCuratedKanjiEntry(kanji);
+}
+
 function createExportService({ inferenceEngine = createInferenceEngine() } = {}) {
     async function buildRowForKanji({
         kanji,
@@ -129,9 +134,10 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
         audioService,
     }) {
         try {
+            const skipWordFetch = shouldSkipWordFetch(inferenceEngine, kanji);
             const [kanjiInfo, words, mediaFields] = await Promise.all([
                 kanjiApiClient.getKanji(kanji),
-                kanjiApiClient.getWords(kanji),
+                skipWordFetch ? Promise.resolve([]) : kanjiApiClient.getWords(kanji),
                 resolveManagedMediaFields({ kanji, strokeOrderService, audioService }),
             ]);
 
@@ -185,9 +191,10 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
     }
 
     async function buildInferenceForKanji({ kanji, kanjiApiClient, strokeOrderService, audioService }) {
+        const skipWordFetch = shouldSkipWordFetch(inferenceEngine, kanji);
         const [kanjiInfo, words, mediaFields] = await Promise.all([
             kanjiApiClient.getKanji(kanji),
-            kanjiApiClient.getWords(kanji),
+            skipWordFetch ? Promise.resolve([]) : kanjiApiClient.getWords(kanji),
             resolveManagedMediaFields({ kanji, strokeOrderService, audioService }),
         ]);
 
@@ -265,6 +272,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
         formatExampleSentence,
         mapWithConcurrency,
         resolveManagedMediaFields,
+        shouldSkipWordFetch,
         resolveStrokeOrderFields,
         selectDisplayWord,
         selectPrimaryReading,
@@ -283,6 +291,7 @@ module.exports = {
     formatExampleSentence: defaultExportService.formatExampleSentence,
     mapWithConcurrency: defaultExportService.mapWithConcurrency,
     resolveManagedMediaFields: defaultExportService.resolveManagedMediaFields,
+    shouldSkipWordFetch: defaultExportService.shouldSkipWordFetch,
     resolveStrokeOrderFields: defaultExportService.resolveStrokeOrderFields,
     selectDisplayWord: defaultExportService.selectDisplayWord,
     selectPrimaryReading: defaultExportService.selectPrimaryReading,

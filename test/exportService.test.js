@@ -3,6 +3,7 @@ const assert = require("node:assert/strict");
 
 const {
     buildTsvForJlptLevel,
+    createExportService,
     formatAnkiAudioField,
     formatAnkiStrokeOrderField,
     resolveManagedMediaFields,
@@ -75,6 +76,62 @@ test("resolveManagedMediaFields reuses a single shared manifest lookup when avai
         strokeOrderAnimationPath: "animations/65E5_日-stroke-order.gif",
         audioPath: "audio/65E5_日-kanji-reading-日.mp3",
     });
+});
+
+test("buildRowForKanji skips word fetch for fully curated kanji cards", async () => {
+    let wordFetchCalled = false;
+    const exportService = createExportService({
+        inferenceEngine: {
+            hasFullyCuratedKanjiEntry(kanji) {
+                return kanji === "日";
+            },
+            inferKanjiStudyData() {
+                return {
+                    displayWord: { written: "日本", pron: "にほん" },
+                    bestWord: null,
+                    meaningJP: "日本 （にほん） ／ Japan",
+                    notes: "日本 （にほん） - Japan",
+                    sentenceCandidates: [{
+                        japanese: "日本へ行きます。",
+                        reading: "にほんへいきます。",
+                        english: "I will go to Japan.",
+                    }],
+                };
+            },
+        },
+    });
+
+    const row = await exportService.buildRowForKanji({
+        kanji: "日",
+        kradMap: new Map([["日", ["日"]]]),
+        pickMainComponent(components) {
+            return components[0] || "";
+        },
+        kanjiApiClient: {
+            async getKanji() {
+                return {
+                    meanings: ["day"],
+                    on_readings: ["ニチ"],
+                    kun_readings: ["ひ"],
+                };
+            },
+            async getWords() {
+                wordFetchCalled = true;
+                throw new Error("should not fetch words for a fully curated card");
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+    });
+
+    const cols = row.split("	");
+    assert.equal(wordFetchCalled, false);
+    assert.equal(cols[0], "日");
+    assert.equal(cols[1], "日本");
+    assert.equal(cols[2], "日本 （にほん） ／ Japan");
+    assert.equal(cols[3], "にほん");
+    assert.equal(cols[11], "日本 （にほん） - Japan");
+    assert.equal(cols[12], "日本へ行きます。 ／ にほんへいきます。 ／ I will go to Japan.");
 });
 
 test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async () => {

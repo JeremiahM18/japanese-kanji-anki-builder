@@ -7902,6 +7902,72 @@
       ]
     }
   },
+  "恥": {
+    "englishMeaning": "shame / embarrassment",
+    "displayWord": {
+      "written": "恥ずかしい",
+      "pron": "はずかしい"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "恥ずかしい",
+      "恥",
+      "恥じる"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "恥ずかしい （はずかしい） - embarrassed ／ 恥 （はじ） - shame ／ 恥じる （はじる） - feel ashamed",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "みんなの前でほめられて少し恥ずかしかったです。",
+      "reading": "みんなのまえでほめられてすこしはずかしかったです。",
+      "english": "I felt a little embarrassed when I was praised in front of everyone.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "息": {
+    "englishMeaning": "breath / son",
+    "displayWord": {
+      "written": "息",
+      "pron": "いき"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "息",
+      "息子",
+      "休息"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "息 （いき） - breath ／ 息子 （むすこ） - son ／ 休息 （きゅうそく） - rest",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "山の上まで走って息が切れました。",
+      "reading": "やまのうえまではしっていきがきれました。",
+      "english": "I ran to the top of the hill and got out of breath.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
   "悪": {
     "englishMeaning": "bad",
     "breakdownOverrides": [],
@@ -7922,6 +7988,110 @@
       "japanese": "昨日は気分が悪くて早く寝ました。",
       "reading": "きのうはきぶんがわるくてはやくねました。",
       "english": "Yesterday I felt sick, so I went to bed early.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "悲": {
+    "englishMeaning": "sad / sorrowful",
+    "displayWord": {
+      "written": "悲しい",
+      "pron": "かなしい"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "悲しい",
+      "悲しむ",
+      "悲劇"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "悲しい （かなしい） - sad ／ 悲しむ （かなしむ） - grieve ／ 悲劇 （ひげき） - tragedy",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "その映画の最後はとても悲しかったです。",
+      "reading": "そのえいがのさいごはとてもかなしかったです。",
+      "english": "The ending of that movie was very sad.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "情": {
+    "englishMeaning": "feeling / emotion / circumstances",
+    "displayWord": {
+      "written": "気持ち",
+      "pron": "きもち"
+    },
+    "breakdownOverrides": [
+      {
+        "matchWord": "気持ち",
+        "englishMeaning": "feeling"
+      }
+    ],
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "気持ち",
+      "事情",
+      "愛情"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "気持ち （きもち） - feeling ／ 事情 （じじょう） - circumstances ／ 愛情 （あいじょう） - affection",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "事情を説明すれば分かってもらえると思います。",
+      "reading": "じじょうをせつめいすればわかってもらえるとおもいます。",
+      "english": "I think they will understand if you explain the situation.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "想": {
+    "englishMeaning": "think / imagine",
+    "displayWord": {
+      "written": "想像",
+      "pron": "そうぞう"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "想像",
+      "感想",
+      "理想"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "想像 （そうぞう） - imagination ／ 感想 （かんそう） - impression ／ 理想 （りそう） - ideal",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "その景色は想像していたよりきれいでした。",
+      "reading": "そのけしきはそうぞうしていたよりきれいでした。",
+      "english": "That scenery was more beautiful than I had imagined.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -7951,6 +8121,204 @@
       "japanese": "この言葉の意味を先生に聞きました。",
       "reading": "このことばのいみをせんせいにききました。",
       "english": "I asked the teacher the meaning of this word.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "愛": {
+    "englishMeaning": "love / affection",
+    "displayWord": {
+      "written": "愛",
+      "pron": "あい"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "愛",
+      "愛情",
+      "可愛がる"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "愛 （あい） - love ／ 愛情 （あいじょう） - affection ／ 可愛がる （かわいがる） - adore / cherish",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "家族への愛は言葉だけでは表せません。",
+      "reading": "かぞくへのあいはことばだけではあらわせません。",
+      "english": "Love for family can't be expressed with words alone.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "感": {
+    "englishMeaning": "feeling / sense",
+    "displayWord": {
+      "written": "感じる",
+      "pron": "かんじる"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "感じる",
+      "感謝",
+      "安心感"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "感じる （かんじる） - feel ／ 感謝 （かんしゃ） - gratitude ／ 安心感 （あんしんかん） - sense of security",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "春になると空気の変化を感じます。",
+      "reading": "はるになるとくうきのへんかをかんじます。",
+      "english": "When spring comes, I can feel the change in the air.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "慣": {
+    "englishMeaning": "get used to / become accustomed",
+    "displayWord": {
+      "written": "慣れる",
+      "pron": "なれる"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "慣れる",
+      "慣れ",
+      "不慣れ"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "慣れる （なれる） - get used to ／ 慣れ （なれ） - familiarity ／ 不慣れ （ふなれ） - inexperienced",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "新しい仕事にも少しずつ慣れてきました。",
+      "reading": "あたらしいしごとにもすこしずつなれてきました。",
+      "english": "I have gradually gotten used to my new job.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "成": {
+    "englishMeaning": "become / achieve / complete",
+    "displayWord": {
+      "written": "成功",
+      "pron": "せいこう"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "成功",
+      "成長",
+      "完成"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "成功 （せいこう） - success ／ 成長 （せいちょう） - growth ／ 完成 （かんせい） - completion",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "計画が成功してみんな安心しました。",
+      "reading": "けいかくがせいこうしてみんなあんしんしました。",
+      "english": "Everyone felt relieved when the plan succeeded.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "戦": {
+    "englishMeaning": "battle / fight",
+    "displayWord": {
+      "written": "戦う",
+      "pron": "たたかう"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "戦う",
+      "作戦",
+      "戦争"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "戦う （たたかう） - fight ／ 作戦 （さくせん） - strategy ／ 戦争 （せんそう） - war",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "最後まであきらめずに戦いました。",
+      "reading": "さいごまであきらめずにたたかいました。",
+      "english": "We fought without giving up until the end.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "戻": {
+    "englishMeaning": "return / go back",
+    "displayWord": {
+      "written": "戻る",
+      "pron": "もどる"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "戻る",
+      "取り戻す",
+      "戻す"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "戻る （もどる） - return ／ 取り戻す （とりもどす） - get back ／ 戻す （もどす） - put back",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "忘れ物を取りに家へ戻りました。",
+      "reading": "わすれものをとりにいえへもどりました。",
+      "english": "I went back home to get something I forgot.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -8012,6 +8380,303 @@
       "japanese": "寒かったので手がとても冷たくなりました。",
       "reading": "さむかったのでてがとてもつめたくなりました。",
       "english": "Because it was cold, my hands became very cold.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "才": {
+    "englishMeaning": "years old / talent",
+    "displayWord": {
+      "written": "十才",
+      "pron": "じゅっさい"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "十才",
+      "才能",
+      "何才"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "十才 （じゅっさい） - ten years old ／ 才能 （さいのう） - talent ／ 何才 （なんさい） - how old",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "弟は今年十才になりました。",
+      "reading": "おとうとはことしじゅっさいになりました。",
+      "english": "My younger brother turned ten this year.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "打": {
+    "englishMeaning": "hit / strike",
+    "displayWord": {
+      "written": "打つ",
+      "pron": "うつ"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "打つ",
+      "打ち合わせ",
+      "打者"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "打つ （うつ） - hit ／ 打ち合わせ （うちあわせ） - meeting / arrangement ／ 打者 （だしゃ） - batter",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "会議の前に短い打ち合わせをしました。",
+      "reading": "かいぎのまえにみじかいうちあわせをしました。",
+      "english": "We had a short meeting before the conference.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "払": {
+    "englishMeaning": "pay / brush away",
+    "displayWord": {
+      "written": "支払う",
+      "pron": "しはらう"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "支払う",
+      "払う",
+      "払い戻し"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "支払う （しはらう） - pay ／ 払う （はらう） - pay / brush off ／ 払い戻し （はらいもどし） - refund",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "カードで料金を支払いました。",
+      "reading": "カードでりょうきんをしはらいました。",
+      "english": "I paid the fee by card.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "投": {
+    "englishMeaning": "throw / cast / invest",
+    "displayWord": {
+      "written": "投げる",
+      "pron": "なげる"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "投げる",
+      "投票",
+      "投資"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "投げる （なげる） - throw ／ 投票 （とうひょう） - vote ／ 投資 （とうし） - investment",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "試合でボールを遠くまで投げました。",
+      "reading": "しあいでボールをとおくまでなげました。",
+      "english": "I threw the ball far in the game.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "折": {
+    "englishMeaning": "fold / break",
+    "displayWord": {
+      "written": "折る",
+      "pron": "おる"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "折る",
+      "骨折",
+      "折り紙"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "折る （おる） - fold / break ／ 骨折 （こっせつ） - fracture ／ 折り紙 （おりがみ） - origami",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "紙を半分に折ってください。",
+      "reading": "かみをはんぶんにおってください。",
+      "english": "Please fold the paper in half.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "抜": {
+    "englishMeaning": "pull out / omit",
+    "displayWord": {
+      "written": "抜く",
+      "pron": "ぬく"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "抜く",
+      "手を抜く",
+      "抜ける"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "抜く （ぬく） - pull out ／ 手を抜く （てをぬく） - cut corners ／ 抜ける （ぬける） - come out / be omitted",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "いすのくぎをペンチで抜きました。",
+      "reading": "いすのくぎをペンチでぬきました。",
+      "english": "I pulled the nail out of the chair with pliers.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "抱": {
+    "englishMeaning": "hold / hug / have",
+    "displayWord": {
+      "written": "抱える",
+      "pron": "かかえる"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "抱える",
+      "抱く",
+      "抱負"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "抱える （かかえる） - hold / carry ／ 抱く （だく） - hug ／ 抱負 （ほうふ） - aspiration",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "彼は大きな箱を抱えて階段を上がりました。",
+      "reading": "かれはおおきなはこをかかえてかいだんをあがりました。",
+      "english": "He carried a big box up the stairs.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "押": {
+    "englishMeaning": "push / press",
+    "displayWord": {
+      "written": "押す",
+      "pron": "おす"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "押す",
+      "押さえる",
+      "押し入れ"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "押す （おす） - push ／ 押さえる （おさえる） - hold down ／ 押し入れ （おしいれ） - closet",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "エレベーターのボタンを押してください。",
+      "reading": "エレベーターのボタンをおしてください。",
+      "english": "Please press the elevator button.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "招": {
+    "englishMeaning": "invite / cause",
+    "displayWord": {
+      "written": "招待",
+      "pron": "しょうたい"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n3",
+      "starter"
+    ],
+    "jlpt": 3,
+    "preferredWords": [
+      "招待",
+      "招く",
+      "招待状"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "招待 （しょうたい） - invitation ／ 招く （まねく） - invite ／ 招待状 （しょうたいじょう） - invitation card",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "友達を家に招待しました。",
+      "reading": "ともだちをいえにしょうたいしました。",
+      "english": "I invited my friend to my house.",
       "source": "starter-curated",
       "tags": [
         "example",

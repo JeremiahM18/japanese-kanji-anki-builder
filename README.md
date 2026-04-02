@@ -222,6 +222,7 @@ The tagged workflow in [.github/workflows/release.yml](/C:/japanese_kanji_builde
 | `npm run deck:words:reading-audit:n5` | Audit curated N5 reading coverage against the current word deck; matching word cards count even when they use a fuller form like `後ろ` for `後` |
 | `npm run deck:ready` | Run the full kanji build and package path |
 | `npm run bench:build` | Benchmark the full kanji build path and capture phase timings |
+| `npm run bench:export` | Benchmark kanji TSV export; defaults to a deterministic offline fixture mode and accepts `--live` for real API timing |
 | `npm run deck:apkg` | Build an importable `.apkg` from packaged kanji exports |
 | `npm run deck:words:ready` | Run the full word-deck build and package path |
 | `npm run deck:words:apkg` | Build an importable `.apkg` from packaged word exports |

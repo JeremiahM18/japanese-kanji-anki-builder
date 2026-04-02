@@ -5,6 +5,7 @@ require("./audioImportService.test");
 require("./audioService.test");
 require("./buildPipeline.test");
 require("./benchmarkBuild.test");
+require("./benchmarkExport.test");
 require("./ciSmokeService.test");
 require("./concurrency.test");
 require("./config.test");

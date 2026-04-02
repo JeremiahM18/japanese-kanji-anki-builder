@@ -13,6 +13,7 @@ function parseArgs(argv) {
         limit: 25,
         concurrency: null,
         warmup: true,
+        offline: true,
     };
 
     for (const arg of argv) {
@@ -24,6 +25,10 @@ function parseArgs(argv) {
             options.concurrency = Number(arg.split("=")[1]);
         } else if (arg === "--no-warmup") {
             options.warmup = false;
+        } else if (arg === "--live") {
+            options.offline = false;
+        } else if (arg === "--offline") {
+            options.offline = true;
         }
     }
 
@@ -39,6 +44,84 @@ function diffMetrics(before, after) {
         networkFetches: after.networkFetches - baseline.networkFetches,
         cacheWrites: after.cacheWrites - baseline.cacheWrites,
         payloadValidationFailures: after.payloadValidationFailures - baseline.payloadValidationFailures,
+    };
+}
+
+function createFixtureKanjiApiClient() {
+    const metrics = createEmptyClientMetrics();
+
+    return {
+        async getKanji(kanji) {
+            const value = String(kanji || "").trim();
+            return {
+                kanji: value,
+                meanings: [
+                    `benchmark meaning for ${value}`,
+                    `sample usage of ${value}`,
+                ],
+                on_readings: [`オン-${value}`],
+                kun_readings: [`くん-${value}`],
+            };
+        },
+
+        async getWords(kanji) {
+            const value = String(kanji || "").trim();
+            return [
+                {
+                    variants: [
+                        {
+                            written: value,
+                            pronounced: `よみ-${value}`,
+                            priorities: ["ichi1"],
+                        },
+                    ],
+                    meanings: [
+                        {
+                            glosses: [`core gloss for ${value}`],
+                        },
+                    ],
+                },
+                {
+                    variants: [
+                        {
+                            written: `${value}語`,
+                            pronounced: `ご-${value}`,
+                            priorities: ["news1"],
+                        },
+                    ],
+                    meanings: [
+                        {
+                            glosses: [`word using ${value}`],
+                        },
+                    ],
+                },
+            ];
+        },
+
+        getMetrics() {
+            return { ...metrics };
+        },
+    };
+}
+
+function summarizeRows(tsv) {
+    const lines = tsv.trimEnd().split("\n");
+    const rows = Math.max(lines.length - 1, 0);
+    const errorRows = lines.slice(1).filter((line) => line.includes("ERROR:")).length;
+
+    return {
+        rows,
+        errorRows,
+        successfulRows: rows - errorRows,
+    };
+}
+
+function roundProfile(exportProfile) {
+    return {
+        ...exportProfile,
+        timingsMs: Object.fromEntries(
+            Object.entries(exportProfile.timingsMs).map(([key, value]) => [key, Number(value.toFixed(3))])
+        ),
     };
 }
 
@@ -60,13 +143,15 @@ async function runExportOnce({ jlptOnlyJson, kradMap, kanjiApiClient, level, lim
 
     const durationMs = performance.now() - started;
     const metricsAfter = kanjiApiClient.getMetrics();
-    const rows = tsv.trim().split("\n").length - 1;
+    const rowSummary = summarizeRows(tsv);
 
     return {
         durationMs,
-        rows,
+        rows: rowSummary.rows,
+        errorRows: rowSummary.errorRows,
+        successfulRows: rowSummary.successfulRows,
         metrics: diffMetrics(metricsBefore, metricsAfter),
-        exportProfile,
+        exportProfile: roundProfile(exportProfile),
     };
 }
 
@@ -83,11 +168,13 @@ async function main() {
 
     const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
     const kradMap = loadKradMap(config.kradfilePath);
-    const kanjiApiClient = createKanjiApiClient({
-        baseUrl: config.kanjiApiBaseUrl,
-        cacheDir: config.cacheDir,
-        fetchTimeoutMs: config.fetchTimeoutMs,
-    });
+    const kanjiApiClient = options.offline
+        ? createFixtureKanjiApiClient()
+        : createKanjiApiClient({
+            baseUrl: config.kanjiApiBaseUrl,
+            cacheDir: config.cacheDir,
+            fetchTimeoutMs: config.fetchTimeoutMs,
+        });
 
     const concurrency = options.concurrency || config.exportConcurrency;
 
@@ -99,6 +186,7 @@ async function main() {
         cacheDir: config.cacheDir,
         mediaRootDir: config.mediaRootDir,
         warmup: options.warmup,
+        mode: options.offline ? "offline-fixture" : "live-api",
     }, null, 2));
 
     if (options.warmup) {
@@ -146,8 +234,10 @@ if (require.main === module) {
     });
 }
 
-
 module.exports = {
+    createFixtureKanjiApiClient,
     main,
     parseArgs,
+    runExportOnce,
+    summarizeRows,
 };

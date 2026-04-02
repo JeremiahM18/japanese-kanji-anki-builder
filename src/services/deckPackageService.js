@@ -104,13 +104,28 @@ function buildPackageAssetCandidatesFromManifest(manifest, kanji) {
     ].filter((entry) => entry.relativePath);
 }
 
-async function collectPackageAssets({ kanjiList, mediaRootDir, concurrency = 8 }) {
+async function readManagedManifest({ kanji, mediaRootDir, strokeOrderService, audioService }) {
+    const manifestProvider = typeof strokeOrderService?.getManifest === "function"
+        ? strokeOrderService
+        : (typeof audioService?.getManifest === "function" ? audioService : null);
+
+    if (manifestProvider) {
+        const manifest = await manifestProvider.getManifest(kanji);
+        if (manifest) {
+            return manifest;
+        }
+    }
+
+    return readManifestIfExists(mediaRootDir, kanji);
+}
+
+async function collectPackageAssets({ kanjiList, mediaRootDir, strokeOrderService = null, audioService = null, concurrency = 8 }) {
     const assets = new Map();
     const mediaCounts = createEmptyMediaCounts();
     const selectedKanji = [...new Set((Array.isArray(kanjiList) ? kanjiList : []).filter(Boolean))];
 
     const assetGroups = await mapWithConcurrency(selectedKanji, concurrency, async (kanji) => {
-        const manifest = await readManifestIfExists(mediaRootDir, kanji);
+        const manifest = await readManagedManifest({ kanji, mediaRootDir, strokeOrderService, audioService });
         return buildPackageAssetCandidatesFromManifest(manifest, kanji).map((candidate) => ({
             ...candidate,
             kanji,
@@ -170,6 +185,8 @@ async function buildDeckPackage({
     exports,
     kanjiByLevel,
     mediaRootDir,
+    strokeOrderService = null,
+    audioService = null,
     packageConcurrency = 8,
     deckKind = "kanji",
 }) {
@@ -193,6 +210,8 @@ async function buildDeckPackage({
     const { assets, mediaCounts } = await collectPackageAssets({
         kanjiList: selectedKanji,
         mediaRootDir,
+        strokeOrderService,
+        audioService,
         concurrency: packageConcurrency,
     });
 
@@ -239,5 +258,6 @@ module.exports = {
     collectPackageAssets,
     collectReferencedKanji,
     createEmptyMediaCounts,
+    readManagedManifest,
     resolveManagedAssetAbsolutePath,
 };

@@ -30,6 +30,99 @@ test("buildScopedCoverageRatio aggregates only the selected levels", () => {
     assert.equal(ratio, 1);
 });
 
+test("runBuildPipeline reuses the shared manifest lookup during packaging", async () => {
+    const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "kanji-build-pipeline-manifest-"));
+    const dataDir = path.join(tempRoot, "data");
+    const outDir = path.join(tempRoot, "out", "build");
+    const mediaRootDir = path.join(dataDir, "media");
+
+    fs.mkdirSync(dataDir, { recursive: true });
+
+    const jlptJsonPath = path.join(dataDir, "kanji_jlpt_only.json");
+    const kradfilePath = path.join(dataDir, "KRADFILE");
+    const sentenceCorpusPath = path.join(dataDir, "sentence_corpus.json");
+    const curatedStudyDataPath = path.join(dataDir, "curated_study_data.json");
+
+    fs.writeFileSync(jlptJsonPath, JSON.stringify({ 日: { jlpt: 5 } }, null, 2) + "\n", "utf-8");
+    fs.writeFileSync(kradfilePath, "日 : 日\n", "utf-8");
+    fs.writeFileSync(sentenceCorpusPath, JSON.stringify([], null, 2) + "\n", "utf-8");
+    fs.writeFileSync(curatedStudyDataPath, JSON.stringify({}, null, 2) + "\n", "utf-8");
+
+    const mediaBasePath = buildMediaBasePath(mediaRootDir, "日");
+    fs.mkdirSync(path.join(mediaBasePath, "images"), { recursive: true });
+    fs.mkdirSync(path.join(mediaBasePath, "animations"), { recursive: true });
+    fs.writeFileSync(path.join(mediaBasePath, "images", "65E5_日-stroke-order.svg"), "<svg />", "utf-8");
+    fs.writeFileSync(path.join(mediaBasePath, "animations", "65E5_日-stroke-order.gif"), "gif", "utf-8");
+
+    let manifestCalls = 0;
+    await runBuildPipeline({
+        config: {
+            jlptJsonPath,
+            kradfilePath,
+            sentenceCorpusPath,
+            curatedStudyDataPath,
+            mediaRootDir,
+            cacheDir: path.join(tempRoot, "cache"),
+            kanjiApiBaseUrl: "https://kanjiapi.dev",
+            fetchTimeoutMs: 10000,
+            exportConcurrency: 1,
+            buildOutDir: outDir,
+        },
+        outDir,
+        levels: [5],
+        limit: 1,
+        skipMediaSync: true,
+        createKanjiApiClientFn: () => ({
+            async getKanji() {
+                return { meanings: ["day"], on_readings: ["ニチ"], kun_readings: ["ひ"] };
+            },
+            async getWords() {
+                return [];
+            },
+        }),
+        createMediaServicesFn: () => ({
+            strokeOrderService: {
+                async getManifest() {
+                    manifestCalls += 1;
+                    return {
+                        assets: {
+                            strokeOrderImage: {
+                                kind: "image",
+                                path: "images/65E5_日-stroke-order.svg",
+                                mimeType: "image/svg+xml",
+                                source: "local-filesystem",
+                            },
+                            strokeOrderAnimation: {
+                                kind: "animation",
+                                path: "animations/65E5_日-stroke-order.gif",
+                                mimeType: "image/gif",
+                                source: "local-filesystem",
+                            },
+                            audio: [],
+                        },
+                    };
+                },
+                async getBestStrokeOrderPath() {
+                    throw new Error("should not use stroke-order fallback getters when manifest is available");
+                },
+                async getStrokeOrderImagePath() {
+                    throw new Error("should not use stroke-order image fallback getter when manifest is available");
+                },
+                async getStrokeOrderAnimationPath() {
+                    throw new Error("should not use stroke-order animation fallback getter when manifest is available");
+                },
+            },
+            audioService: {
+                async getBestAudioPath() {
+                    throw new Error("should not use audio fallback getter when manifest is available");
+                },
+            },
+        }),
+    });
+
+    assert.equal(manifestCalls, 2);
+});
+
 test("runBuildPipeline writes exports reports summary and an import-ready package", async () => {
     const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "kanji-build-pipeline-"));
     const dataDir = path.join(tempRoot, "data");

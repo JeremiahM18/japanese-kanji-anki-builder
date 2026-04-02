@@ -25,7 +25,7 @@ test("loadAnkiNoteSchema returns a stable shared note contract", () => {
         "ExampleSentence",
     ]);
     assert.match(schema.css, /study-word/);
-    assert.match(schema.qfmt, /DisplayWord/);
+    assert.equal(schema.qfmt, "<div class=\"study-word\">{{Kanji}}</div>");
     assert.match(schema.afmt, /On-yomi:/);
     assert.match(schema.afmt, /Kun-yomi:/);
 });

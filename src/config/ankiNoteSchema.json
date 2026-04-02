@@ -50,7 +50,7 @@
     "  height: auto;",
     "}"
   ],
-  "qfmt": "<div class=\"study-word\">{{DisplayWord}}</div>{{#PrimaryReading}}<div class=\"reading reading-primary\">{{PrimaryReading}}</div>{{/PrimaryReading}}<div class=\"kanji-core\">Core kanji: {{Kanji}}</div>",
+  "qfmt": "<div class=\"study-word\">{{Kanji}}</div>",
   "afmtLines": [
     "{{FrontSide}}",
     "<hr id=\"answer\">",

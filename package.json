@@ -50,7 +50,8 @@
     "ci:smoke": "node scripts/ciSmoke.js",
     "release:gate": "node scripts/releaseGate.js",
     "deck:review:n3": "node scripts/reviewGoldenLevel.js --level=3",
-    "bench:build": "node scripts/benchmarkBuild.js"
+    "bench:build": "node scripts/benchmarkBuild.js",
+    "bench:build:gate": "node scripts/benchmarkBuild.js --levels=5,4,3 --no-warmup --budget=default"
   },
   "keywords": [
     "japanese",

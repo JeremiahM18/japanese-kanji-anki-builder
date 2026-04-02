@@ -222,6 +222,7 @@ The tagged workflow in [.github/workflows/release.yml](/C:/japanese_kanji_builde
 | `npm run deck:words:reading-audit:n5` | Audit curated N5 reading coverage against the current word deck; matching word cards count even when they use a fuller form like `後ろ` for `後` |
 | `npm run deck:ready` | Run the full kanji build and package path |
 | `npm run bench:build` | Benchmark the full kanji build path and capture phase timings |
+| `npm run bench:build:gate` | Run the N3-N5 no-warmup build benchmark against the default regression budget |
 | `npm run bench:export` | Benchmark kanji TSV export; defaults to a deterministic offline fixture mode and accepts `--live` for real API timing |
 | `npm run deck:apkg` | Build an importable `.apkg` from packaged kanji exports |
 | `npm run deck:words:ready` | Run the full word-deck build and package path |
@@ -233,6 +234,8 @@ The tagged workflow in [.github/workflows/release.yml](/C:/japanese_kanji_builde
 | `npm run media:init` | Create media source folders and bootstrap `.env` |
 | `npm run media:plan` | Show missing media by kanji with accepted filenames |
 | `npm run media:plan:stroke-order` | Show Wikimedia Commons checklist URLs for supplemental stroke-order assets |
+
+Build benchmark budget: `bench:build` accepts `--budget=default` plus optional overrides like `--budget-total-ms=4500`, `--budget-export-ms=2200`, `--budget-media-sync-ms=1300`, and `--budget-packaging-ms=550`. The default gate is tuned for the current N3-N5 no-audio path with modest headroom.
 | `npm run media:discover:stroke-order` | Discover real Wikimedia Commons titles for missing supplemental stroke-order assets |
 | `npm run media:fetch:stroke-order` | Download confirmed Wikimedia stroke-order assets, or probe guessed filenames with `--probe-guessed` |
 | `npm run media:import:stroke-order` | Import free local stroke-order assets |

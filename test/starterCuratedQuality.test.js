@@ -45,12 +45,21 @@ test("starter curated N3 entries keep selected learner-facing editorial choices 
     assert.equal(curatedStudyData["便"].englishMeaning, "convenience / mail service");
     assert.deepEqual(curatedStudyData["便"].preferredWords, ["便利", "郵便"]);
 
-    assert.deepEqual(curatedStudyData["情"].displayWord, { written: "気持ち", pron: "きもち" });
-    assert.equal(curatedStudyData["情"].englishMeaning, "feeling / situation");
-    assert.equal(curatedStudyData["情"].breakdownOverrides[0].englishMeaning, "feeling");
+    assert.deepEqual(curatedStudyData["情"].displayWord, { written: "事情", pron: "じじょう" });
+    assert.equal(curatedStudyData["情"].englishMeaning, "situation / emotion");
+    assert.deepEqual(curatedStudyData["情"].preferredWords, ["事情", "感情", "愛情"]);
 
     assert.deepEqual(curatedStudyData["成"].displayWord, { written: "成功", pron: "せいこう" });
     assert.equal(curatedStudyData["成"].englishMeaning, "succeed / become / complete");
+
+    assert.equal(curatedStudyData["役"].englishMeaning, "role / usefulness");
+    assert.deepEqual(curatedStudyData["役"].preferredWords, ["役に立つ", "役目", "役所"]);
+
+    assert.equal(curatedStudyData["暮"].englishMeaning, "live / dusk / year end");
+    assert.deepEqual(curatedStudyData["暮"].preferredWords, ["暮らす", "日暮れ", "暮れ"]);
+
+    assert.equal(curatedStudyData["偶"].preferredWords.length, 2);
+    assert.deepEqual(curatedStudyData["偶"].preferredWords, ["偶然", "偶数"]);
 
     assert.deepEqual(curatedStudyData["候"].displayWord, { written: "気候", pron: "きこう" });
     assert.equal(curatedStudyData["候"].englishMeaning, "season / climate");

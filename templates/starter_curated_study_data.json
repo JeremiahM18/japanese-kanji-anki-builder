@@ -1771,7 +1771,8 @@
     ],
     "jlpt": 3,
     "preferredWords": [
-      "偶然"
+      "偶然",
+      "偶数"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
@@ -7326,7 +7327,7 @@
     }
   },
   "役": {
-    "englishMeaning": "role / duty",
+    "englishMeaning": "role / usefulness",
     "displayWord": {
       "written": "役に立つ",
       "pron": "やくにたつ"
@@ -7339,13 +7340,13 @@
     ],
     "jlpt": 3,
     "preferredWords": [
-      "役",
       "役に立つ",
+      "役目",
       "役所"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "役 （やく） - role ／ 役に立つ （やくにたつ） - be useful ／ 役所 （やくしょ） - government office",
+    "notes": "役に立つ （やくにたつ） - be useful ／ 役目 （やくめ） - role / duty ／ 役所 （やくしょ） - government office",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "この辞書は勉強にとても役に立ちます。",
@@ -8029,17 +8030,12 @@
     }
   },
   "情": {
-    "englishMeaning": "feeling / situation",
+    "englishMeaning": "situation / emotion",
     "displayWord": {
-      "written": "気持ち",
-      "pron": "きもち"
+      "written": "事情",
+      "pron": "じじょう"
     },
-    "breakdownOverrides": [
-      {
-        "matchWord": "気持ち",
-        "englishMeaning": "feeling"
-      }
-    ],
+    "breakdownOverrides": [],
     "source": "starter-curated",
     "tags": [
       "n3",
@@ -8047,13 +8043,13 @@
     ],
     "jlpt": 3,
     "preferredWords": [
-      "気持ち",
       "事情",
+      "感情",
       "愛情"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "気持ち （きもち） - feeling ／ 事情 （じじょう） - circumstances ／ 愛情 （あいじょう） - affection",
+    "notes": "事情 （じじょう） - situation / circumstances ／ 感情 （かんじょう） - emotion ／ 愛情 （あいじょう） - affection",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "事情を説明すれば分かってもらえると思います。",
@@ -9736,7 +9732,7 @@
     }
   },
   "暮": {
-    "englishMeaning": "live / spend / dusk",
+    "englishMeaning": "live / dusk / year end",
     "displayWord": {
       "written": "暮らす",
       "pron": "くらす"
@@ -9751,11 +9747,11 @@
     "preferredWords": [
       "暮らす",
       "日暮れ",
-      "年末"
+      "暮れ"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "暮らす （くらす） - live ／ 日暮れ （ひぐれ） - dusk ／ 年末 （ねんまつ） - end of the year",
+    "notes": "暮らす （くらす） - live ／ 日暮れ （ひぐれ） - dusk ／ 暮れ （くれ） - year end / close of the day",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "静かな町で暮らしてみたいです。",

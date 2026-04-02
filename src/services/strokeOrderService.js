@@ -160,6 +160,7 @@ function createStrokeOrderService({
     animationSourceDir,
     imageProviders = [],
     animationProviders = [],
+    preferRemoteAnimationProviders = false,
 }) {
     const resolvedImageProviders = [
         createLocalDirectoryProvider({
@@ -170,15 +171,21 @@ function createStrokeOrderService({
         }),
         ...imageProviders,
     ];
-    const resolvedAnimationProviders = [
-        createLocalDirectoryProvider({
-            name: "local-filesystem",
-            sourceDir: animationSourceDir,
-            extensionMap: ANIMATION_EXTENSIONS,
-            buildCandidates: buildStrokeOrderAnimationCandidates,
-        }),
-        ...animationProviders,
-    ];
+    const localAnimationProvider = createLocalDirectoryProvider({
+        name: "local-filesystem",
+        sourceDir: animationSourceDir,
+        extensionMap: ANIMATION_EXTENSIONS,
+        buildCandidates: buildStrokeOrderAnimationCandidates,
+    });
+    const resolvedAnimationProviders = preferRemoteAnimationProviders
+        ? [
+            ...animationProviders,
+            localAnimationProvider,
+        ]
+        : [
+            localAnimationProvider,
+            ...animationProviders,
+        ];
     const providerMetrics = {
         image: createProviderMetrics(resolvedImageProviders),
         animation: createProviderMetrics(resolvedAnimationProviders),

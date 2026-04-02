@@ -230,6 +230,49 @@ test("stroke-order providers fall back when the first provider misses", async ()
     }
 });
 
+test("syncKanji prefers configured remote animation providers before local animation files", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const imageDir = path.join(rootDir, "source-images");
+        const animationDir = path.join(rootDir, "source-animations");
+        fs.mkdirSync(imageDir, { recursive: true });
+        fs.mkdirSync(animationDir, { recursive: true });
+        fs.writeFileSync(path.join(animationDir, "日-order.gif"), "local-gif", "utf-8");
+
+        const service = createStrokeOrderService({
+            mediaRootDir: path.join(rootDir, "media"),
+            imageSourceDir: imageDir,
+            animationSourceDir: animationDir,
+            preferRemoteAnimationProviders: true,
+            animationProviders: [
+                {
+                    name: "remote-stroke-order-animation",
+                    async findAsset() {
+                        return {
+                            fileName: "日.gif",
+                            mimeType: "image/gif",
+                            checksum: "remote-checksum",
+                            content: Buffer.from("remote-gif"),
+                            extension: ".gif",
+                            source: "remote-stroke-order-animation",
+                        };
+                    },
+                },
+            ],
+        });
+
+        const result = await service.syncKanji("日");
+
+        assert.equal(result.found.animation, true);
+        assert.equal(result.manifest.assets.strokeOrderAnimation.source, "remote-stroke-order-animation");
+        assert.equal(result.acquisition.animation[0].provider, "remote-stroke-order-animation");
+        assert.equal(result.acquisition.animation[0].status, "hit");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
 test("syncKanji preserves an empty manifest when no source assets exist", async () => {
     const rootDir = makeTempDir();
 

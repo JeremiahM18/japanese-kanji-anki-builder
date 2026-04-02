@@ -38,6 +38,7 @@ function createMediaServices(config) {
             animationSourceDir: config.strokeOrderAnimationSourceDir,
             imageProviders,
             animationProviders,
+            preferRemoteAnimationProviders: Boolean(config.remoteStrokeOrderAnimationBaseUrl),
         }),
         audioService: createAudioService({
             mediaRootDir: config.mediaRootDir,

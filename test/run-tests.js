@@ -34,6 +34,7 @@ require("./sentenceCorpus.test");
 require("./sentenceCorpusBootstrapService.test");
 require("./sentenceCorpusCoverage.test");
 require("./server.test");
+require("./starterCuratedQuality.test");
 require("./strokeOrderService.test");
 require("./toolchainService.test");
 require("./voicevoxClient.test");

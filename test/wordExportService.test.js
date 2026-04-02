@@ -279,7 +279,7 @@ test("starter curated data provides learner-friendly N5 breakdown fallbacks", ()
     assert.deepEqual(curatedStudyData["子"].displayWord, { written: "子", pron: "こ" });
     assert.deepEqual(curatedStudyData["猫"].displayWord, { written: "猫", pron: "ねこ" });
     assert.deepEqual(curatedStudyData["郵"].displayWord, { written: "郵", pron: "ゆう" });
-    assert.deepEqual(curatedStudyData["便"].displayWord, { written: "便", pron: "びん" });
+    assert.deepEqual(curatedStudyData["便"].displayWord, { written: "便利", pron: "べんり" });
     assert.deepEqual(curatedStudyData["局"].displayWord, { written: "局", pron: "きょく" });
     assert.deepEqual(curatedStudyData["山"].displayWord, { written: "山", pron: "やま" });
     assert.deepEqual(curatedStudyData["切"].displayWord, { written: "切る", pron: "きる" });

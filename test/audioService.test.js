@@ -10,6 +10,7 @@ const {
     selectBestAudioAsset,
 } = require("../src/services/audioService");
 const { createStrokeOrderService } = require("../src/services/strokeOrderService");
+const { buildKanjiMediaId } = require("../src/services/mediaStore");
 
 function makeTempDir() {
     return fs.mkdtempSync(path.join(os.tmpdir(), "audio-service-test-"));
@@ -159,6 +160,68 @@ test("concurrent stroke-order and audio sync preserve both manifest sections", a
         assert.equal(manifest.assets.strokeOrderAnimation.source, "fixture-animation");
         assert.equal(manifest.assets.audio.length, 1);
         assert.equal(manifest.assets.audio[0].source, "fixture-audio");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+test("getManifest caches audio manifests and refreshes after sync", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const mediaRootDir = path.join(rootDir, "media");
+        const audioSourceDir = path.join(rootDir, "sources");
+        const mediaId = buildKanjiMediaId("日");
+        const manifestPath = path.join(mediaRootDir, "kanji", "65", mediaId, "manifest.json");
+        fs.mkdirSync(path.dirname(manifestPath), { recursive: true });
+        fs.mkdirSync(audioSourceDir, { recursive: true });
+        fs.writeFileSync(manifestPath, JSON.stringify({
+            kanji: "日",
+            version: 1,
+            updatedAt: "2026-01-01T00:00:00.000Z",
+            assets: {
+                strokeOrderImage: null,
+                strokeOrderAnimation: null,
+                audio: [],
+            },
+        }, null, 2), "utf-8");
+
+        const audioService = createAudioService({
+            mediaRootDir,
+            audioSourceDir,
+        });
+
+        const firstManifest = await audioService.getManifest("日");
+        fs.writeFileSync(manifestPath, JSON.stringify({
+            kanji: "日",
+            version: 1,
+            updatedAt: "2026-01-02T00:00:00.000Z",
+            assets: {
+                strokeOrderImage: null,
+                strokeOrderAnimation: null,
+                audio: [{
+                    kind: "audio",
+                    path: "audio/stale.mp3",
+                    mimeType: "audio/mpeg",
+                    source: "stale-disk-write",
+                    category: "kanji-reading",
+                    text: "日",
+                    locale: "ja-JP",
+                }],
+            },
+        }, null, 2), "utf-8");
+
+        const cachedManifest = await audioService.getManifest("日");
+        assert.deepEqual(cachedManifest.assets.audio, []);
+        assert.equal(cachedManifest.updatedAt, firstManifest.updatedAt);
+
+        fs.writeFileSync(path.join(audioSourceDir, "日.mp3"), Buffer.from("fake-mp3"));
+        await audioService.syncKanji("日", { text: "日", reading: "にち" });
+
+        const refreshedManifest = await audioService.getManifest("日");
+        assert.equal(refreshedManifest.assets.audio.some((asset) => asset.source === "local-filesystem"), true);
+        const localAsset = refreshedManifest.assets.audio.find((asset) => asset.source === "local-filesystem");
+        assert.match(localAsset.path, new RegExp("^audio/" + mediaId + "-kanji-reading-日"));
     } finally {
         cleanupTempDir(rootDir);
     }

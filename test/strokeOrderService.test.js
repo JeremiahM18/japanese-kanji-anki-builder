@@ -273,6 +273,67 @@ test("syncKanji prefers configured remote animation providers before local anima
     }
 });
 
+test("getManifest caches stroke-order manifests and refreshes after sync", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const mediaRootDir = path.join(rootDir, "media");
+        const imageDir = path.join(rootDir, "source-images");
+        const animationDir = path.join(rootDir, "source-animations");
+        const mediaId = buildKanjiMediaId("日");
+        const manifestPath = path.join(mediaRootDir, "kanji", "65", mediaId, "manifest.json");
+        fs.mkdirSync(path.dirname(manifestPath), { recursive: true });
+        fs.mkdirSync(imageDir, { recursive: true });
+        fs.mkdirSync(animationDir, { recursive: true });
+        fs.writeFileSync(manifestPath, JSON.stringify({
+            kanji: "日",
+            version: 1,
+            updatedAt: "2026-01-01T00:00:00.000Z",
+            assets: {
+                strokeOrderImage: null,
+                strokeOrderAnimation: null,
+                audio: [],
+            },
+        }, null, 2), "utf-8");
+
+        const service = createStrokeOrderService({
+            mediaRootDir,
+            imageSourceDir: imageDir,
+            animationSourceDir: animationDir,
+        });
+
+        const firstManifest = await service.getManifest("日");
+        fs.writeFileSync(manifestPath, JSON.stringify({
+            kanji: "日",
+            version: 1,
+            updatedAt: "2026-01-02T00:00:00.000Z",
+            assets: {
+                strokeOrderImage: {
+                    kind: "image",
+                    path: "images/stale.png",
+                    mimeType: "image/png",
+                    source: "stale-disk-write",
+                },
+                strokeOrderAnimation: null,
+                audio: [],
+            },
+        }, null, 2), "utf-8");
+
+        const cachedManifest = await service.getManifest("日");
+        assert.equal(cachedManifest.assets.strokeOrderImage, null);
+        assert.equal(cachedManifest.updatedAt, firstManifest.updatedAt);
+
+        fs.writeFileSync(path.join(imageDir, "日-bw.png"), "png-binary", "utf-8");
+        await service.syncKanji("日");
+
+        const refreshedManifest = await service.getManifest("日");
+        assert.equal(refreshedManifest.assets.strokeOrderImage.path, "images/" + mediaId + "-stroke-order.png");
+        assert.equal(refreshedManifest.assets.strokeOrderImage.source, "local-filesystem");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
 test("syncKanji preserves an empty manifest when no source assets exist", async () => {
     const rootDir = makeTempDir();
 

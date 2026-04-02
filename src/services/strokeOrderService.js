@@ -190,6 +190,7 @@ function createStrokeOrderService({
         image: createProviderMetrics(resolvedImageProviders),
         animation: createProviderMetrics(resolvedAnimationProviders),
     };
+    const manifestCache = new Map();
 
     async function syncKanji(kanji) {
         const normalizedKanji = normalizeKanji(kanji);
@@ -231,6 +232,8 @@ function createStrokeOrderService({
 
             return nextManifest;
         });
+        manifestCache.set(normalizedKanji, writtenManifest);
+
 
         return {
             kanji: normalizedKanji,
@@ -248,7 +251,14 @@ function createStrokeOrderService({
 
     async function getManifest(kanji) {
         const normalizedKanji = normalizeKanji(kanji);
-        return readManifestIfExists(mediaRootDir, normalizedKanji);
+
+        if (manifestCache.has(normalizedKanji)) {
+            return manifestCache.get(normalizedKanji);
+        }
+
+        const manifest = await readManifestIfExists(mediaRootDir, normalizedKanji);
+        manifestCache.set(normalizedKanji, manifest);
+        return manifest;
     }
 
     async function getStrokeOrderImagePath(kanji) {

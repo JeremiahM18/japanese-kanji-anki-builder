@@ -75,6 +75,7 @@ These commands create or extend local ignored datasets so the decks are usable b
 ```bash
 npm run deck:preview -- --level=5 --limit=5
 npm run deck:preview -- --kanji=日,本,学
+npm run deck:review:n2
 npm run deck:review:n3
 npm run deck:review:n4
 npm run deck:review:n5
@@ -82,7 +83,7 @@ npm run deck:review:n5
 
 - `deck:preview` shows the learner-facing study word, meaning, primary reading, on-yomi, kun-yomi, notes, example sentence, radical, and media presence.
 - Preview and golden review consume the split reading fields directly instead of depending on an internal combined-reading string.
-- `deck:review:n3`, `deck:review:n4`, and `deck:review:n5` run the tracked golden benchmark sets against hand-picked kanji cards.
+- `deck:review:n2`, `deck:review:n3`, `deck:review:n4`, and `deck:review:n5` run the tracked golden benchmark sets against hand-picked kanji cards.
 - `deck:words:review:n5` runs the tracked golden benchmark set against hand-picked N5 word cards.
 - Build and report CLIs reject unsupported flags instead of silently ignoring them.
 - The tracked N5 word benchmark now covers a broader representative slice of the deck, including older core cards and newer compound cards such as `映画`, `食べ物`, `飲み物`, `切手`, `本屋`, `日本語`, `起きる`, `公園`, `電気`, `三時`, `一時半`, `一万円`, `雨の日`, `上手`, `半分`, `辞書`, `読書`, `小学校`, `駅前`, `家の中`, `夜空`, `来ます`, `外国`, `生まれる`, `東京`, and `会話`.
@@ -215,6 +216,7 @@ The tagged workflow in [.github/workflows/release.yml](/C:/japanese_kanji_builde
 | `npm run deck:readiness` | Show the global per-level deck quality gates across all JLPT levels |
 | `npm run deck:readiness:global` | Explicit alias for the all-level readiness report |
 | `npm run deck:preview` | Preview kanji cards before import |
+| `npm run deck:review:n2` | Run the tracked golden N2 benchmark |
 | `npm run deck:review:n3` | Run the tracked golden N3 benchmark |
 | `npm run deck:review:n4` | Run the tracked golden N4 benchmark |
 | `npm run deck:review:n5` | Run the tracked golden N5 kanji benchmark |
@@ -370,6 +372,7 @@ Use these commands to inspect quality:
 ```bash
 npm run doctor
 npm run deck:readiness
+npm run deck:review:n2
 npm run deck:review:n5
 ```
 

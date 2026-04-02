@@ -26,6 +26,8 @@ Remote configuration lives in environment variables:
 
 Remote providers look for the same candidate filenames you would use locally, appended to the configured base URL.
 
+The repo now treats `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` as the primary stroke-order animation path, and `.env.example` points it at the GitHub `jcsirot/kanji.gif` set by default. Wikimedia Commons is still useful for static images and manual fallback acquisition, but it is no longer the recommended primary animation workflow.
+
 ## Stroke-order source naming
 
 Recommended free local names, including Wikimedia-style files:
@@ -48,7 +50,7 @@ Example for `日`:
 - `65E5-bw.png`
 - `U+65E5-order.gif`
 
-If you download stroke-order assets from Wikimedia Commons for personal use, keep the original attribution and license information with your source collection.
+If you download stroke-order assets from Wikimedia Commons for personal use, keep the original attribution and license information with your source collection. In the current repo workflow, Commons is best treated as a supplemental source for local static images or targeted fallback assets, while the default synced animation source is GitHub.
 
 ## Audio source naming
 
@@ -147,7 +149,7 @@ Artifacts are written to `out/build` by default:
 
 ## Free stroke-order import helper
 
-Generate a Wikimedia Commons download checklist for the missing stroke-order assets first:
+Generate a Wikimedia Commons download checklist for missing supplemental stroke-order assets first:
 
 ```bash
 npm run media:plan:stroke-order -- --level=5 --limit=25

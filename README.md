@@ -155,10 +155,11 @@ npm run media:report -- --limit=25
 ### Stroke-order acquisition
 
 - `media:plan` shows accepted filenames for missing image, animation, and audio assets.
-- `media:plan:stroke-order` builds a Wikimedia Commons checklist for missing stroke-order assets.
-- `media:discover:stroke-order` combines Commons title search with file-prefix listing to find real asset names.
+- GitHub `jcsirot/kanji.gif` is the default remote animation source during sync, so managed stroke-order animations stay fast and stylistically consistent.
+- `media:plan:stroke-order` builds a Wikimedia Commons checklist for supplemental stroke-order assets, mainly static images and any manual fallback work you still want to do.
+- `media:discover:stroke-order` combines Commons title search with file-prefix listing to find real Commons asset names when you are filling local gaps.
 - `media:fetch:stroke-order` downloads confirmed Commons assets, and `--probe-guessed` also tries direct Commons redirect URLs for guessed filenames when discovery cannot confirm them.
-- If you want an additional remote GIF source during sync, set `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL=https://raw.githubusercontent.com/jcsirot/kanji.gif/master/kanji/gif/150x150/` in `.env`.
+- `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` is now populated in `.env.example`; override it only if you intentionally want a different remote animation source.
 - `media:import:kanjivg` imports official KanjiVG SVG files into the repo's canonical source layout.
 
 If you are focused only on stroke order, run readiness and media reporting with `ENABLE_AUDIO=false`.
@@ -229,8 +230,8 @@ The tagged workflow in [.github/workflows/release.yml](/C:/japanese_kanji_builde
 | `npm run words:init` | Create or merge starter curated word study data |
 | `npm run media:init` | Create media source folders and bootstrap `.env` |
 | `npm run media:plan` | Show missing media by kanji with accepted filenames |
-| `npm run media:plan:stroke-order` | Show Wikimedia Commons stroke-order checklist URLs |
-| `npm run media:discover:stroke-order` | Discover real Wikimedia Commons titles for missing stroke-order assets |
+| `npm run media:plan:stroke-order` | Show Wikimedia Commons checklist URLs for supplemental stroke-order assets |
+| `npm run media:discover:stroke-order` | Discover real Wikimedia Commons titles for missing supplemental stroke-order assets |
 | `npm run media:fetch:stroke-order` | Download confirmed Wikimedia stroke-order assets, or probe guessed filenames with `--probe-guessed` |
 | `npm run media:import:stroke-order` | Import free local stroke-order assets |
 | `npm run media:import:kanjivg` | Import KanjiVG SVG stroke-order files into the source tree |
@@ -273,6 +274,8 @@ Optional `.env` settings:
 - `REMOTE_STROKE_ORDER_IMAGE_BASE_URL`
 - `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL`
 - `REMOTE_AUDIO_BASE_URL`
+
+By default, `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` points at the GitHub `jcsirot/kanji.gif` set so animation sync prefers the same fast remote source across machines unless you intentionally override it.
 
 More detailed local data guidance lives in [data/README.md](/C:/japanese_kanji_builder/data/README.md).
 
@@ -333,6 +336,7 @@ Media behavior:
 - `StrokeOrder` prefers animation when available, then static image.
 - `StrokeOrderImage` exposes the static asset directly.
 - `StrokeOrderAnimation` exposes the managed animation asset directly when one exists.
+- The default managed animation path comes from the GitHub `jcsirot/kanji.gif` remote provider unless you override `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` or import a local animation file first.
 - Managed animation assets come only from real animation files such as `.gif`, `.webp`, and `.apng`.
 - Static stroke-order image coverage and animation coverage are reported separately so card quality stays honest.
 - `Audio` exports Anki sound markup when a managed audio asset exists.

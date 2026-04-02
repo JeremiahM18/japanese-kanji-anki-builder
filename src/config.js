@@ -38,7 +38,7 @@ const schema = z.object({
     audioSourceDir: z.string().default("data/media_sources/audio"),
     enableAudio: booleanLike.default(true),
     remoteStrokeOrderImageBaseUrl: z.string().url().optional(),
-    remoteStrokeOrderAnimationBaseUrl: z.string().url().optional(),
+    remoteStrokeOrderAnimationBaseUrl: z.string().url().default("https://raw.githubusercontent.com/jcsirot/kanji.gif/master/kanji/gif/150x150/"),
     remoteAudioBaseUrl: z.string().url().optional(),
     voicevoxEngineUrl: z.string().url().default("http://127.0.0.1:50021"),
     voicevoxSpeakerId: z.coerce.number().int().nonnegative().optional(),

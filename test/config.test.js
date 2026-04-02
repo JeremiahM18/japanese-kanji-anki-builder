@@ -89,3 +89,15 @@ test("loadConfig parses ENABLE_AUDIO as a boolean flag", () => {
 
     assert.equal(config.enableAudio, false);
 });
+
+test("loadConfig defaults stroke-order animation remote to the GitHub kanji gif set", () => {
+    const config = loadConfig({
+        cwd: process.cwd(),
+        env: {},
+    });
+
+    assert.equal(
+        config.remoteStrokeOrderAnimationBaseUrl,
+        "https://raw.githubusercontent.com/jcsirot/kanji.gif/master/kanji/gif/150x150/",
+    );
+});

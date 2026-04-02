@@ -1507,7 +1507,7 @@
     }
   },
   "係": {
-    "englishMeaning": "person in charge / connection",
+    "englishMeaning": "person in charge / relation",
     "displayWord": {
       "written": "係",
       "pron": "かかり"
@@ -1521,11 +1521,12 @@
     "jlpt": 3,
     "preferredWords": [
       "係",
+      "係員",
       "関係"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "係 （かかり） - person in charge ／ 関係 （かんけい） - relationship",
+    "notes": "係 （かかり） - person in charge ／ 係員 （かかりいん） - attendant / staff member ／ 関係 （かんけい） - relation / relationship",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "分からないことは受付の係に聞いてください。",
@@ -2421,7 +2422,7 @@
     }
   },
   "処": {
-    "englishMeaning": "deal with / place",
+    "englishMeaning": "handle / place",
     "displayWord": {
       "written": "処理",
       "pron": "しょり"
@@ -2439,7 +2440,7 @@
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "処理 （しょり） - process / deal with ／ ところ - place",
+    "notes": "処理 （しょり） - handling / processing ／ 処 （ところ） - place",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "この問題は早く処理する必要があります。",
@@ -6450,8 +6451,8 @@
   "居": {
     "englishMeaning": "be present / stay",
     "displayWord": {
-      "written": "居間",
-      "pron": "いま"
+      "written": "居る",
+      "pron": "いる"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -6461,18 +6462,18 @@
     ],
     "jlpt": 3,
     "preferredWords": [
-      "居間",
       "居る",
+      "居間",
       "居場所"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "居間 （いま） - living room ／ 居る （いる） - be present ／ 居場所 （いばしょ） - place where someone belongs",
+    "notes": "居る （いる） - be present / exist ／ 居間 （いま） - living room ／ 居場所 （いばしょ） - place where someone belongs",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "祖父はいつも居間で新聞を読んでいます。",
-      "reading": "そふはいつもいまでしんぶんをよんでいます。",
-      "english": "My grandfather is always reading the newspaper in the living room.",
+      "japanese": "妹はまだ家に居ます。",
+      "reading": "いもうとはまだいえにいます。",
+      "english": "My younger sister is still at home.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -6702,7 +6703,7 @@
     }
   },
   "師": {
-    "englishMeaning": "expert / teacher",
+    "englishMeaning": "specialist / teacher",
     "displayWord": {
       "written": "教師",
       "pron": "きょうし"
@@ -6796,10 +6797,10 @@
     }
   },
   "常": {
-    "englishMeaning": "usual / constant",
+    "englishMeaning": "usual / always / constant",
     "displayWord": {
-      "written": "日常",
-      "pron": "にちじょう"
+      "written": "常に",
+      "pron": "つねに"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -6809,18 +6810,18 @@
     ],
     "jlpt": 3,
     "preferredWords": [
-      "日常",
       "常に",
+      "日常",
       "非常"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "日常 （にちじょう） - everyday life ／ 常に （つねに） - always ／ 非常 （ひじょう） - emergency / extraordinary",
+    "notes": "常に （つねに） - always ／ 日常 （にちじょう） - everyday life ／ 非常 （ひじょう） - emergency / extraordinary",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "日常生活では水を大切に使っています。",
-      "reading": "にちじょうせいかつではみずをたいせつにつかっています。",
-      "english": "I use water carefully in daily life.",
+      "japanese": "彼は常に落ち着いています。",
+      "reading": "かれはつねにおちついています。",
+      "english": "He is always calm.",
       "source": "starter-curated",
       "tags": [
         "example",

@@ -38,8 +38,8 @@ test("tracked starter curated N3-N5 entries keep required learner-facing quality
     }
 });
 
-test("starter curated N3 entries keep selected learner-facing editorial choices stable", () => {
-    const curatedStudyData = loadCuratedStudyData();
+test("resolved curated N3 entries keep selected learner-facing editorial choices stable", () => {
+    const curatedStudyData = loadCuratedStudyData(path.join(process.cwd(), "data", "curated_study_data.json"));
 
     assert.deepEqual(curatedStudyData["便"].displayWord, { written: "便利", pron: "べんり" });
     assert.equal(curatedStudyData["便"].englishMeaning, "convenience / mail service");
@@ -54,6 +54,20 @@ test("starter curated N3 entries keep selected learner-facing editorial choices 
 
     assert.equal(curatedStudyData["役"].englishMeaning, "role / usefulness");
     assert.deepEqual(curatedStudyData["役"].preferredWords, ["役に立つ", "役目", "役所"]);
+
+    assert.deepEqual(curatedStudyData["居"].displayWord, { written: "居る", pron: "いる" });
+    assert.deepEqual(curatedStudyData["居"].preferredWords, ["居る", "居間", "居場所"]);
+
+    assert.deepEqual(curatedStudyData["常"].displayWord, { written: "常に", pron: "つねに" });
+    assert.equal(curatedStudyData["常"].englishMeaning, "usual / always / constant");
+
+    assert.equal(curatedStudyData["師"].englishMeaning, "specialist / teacher");
+
+    assert.deepEqual(curatedStudyData["係"].preferredWords, ["係", "係員", "関係"]);
+    assert.equal(curatedStudyData["係"].englishMeaning, "person in charge / relation");
+
+    assert.equal(curatedStudyData["処"].englishMeaning, "handle / place");
+    assert.ok(curatedStudyData["処"].notes.includes("処 （ところ） - place"));
 
     assert.equal(curatedStudyData["暮"].englishMeaning, "live / dusk / year end");
     assert.deepEqual(curatedStudyData["暮"].preferredWords, ["暮らす", "日暮れ", "暮れ"]);

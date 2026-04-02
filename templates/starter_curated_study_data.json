@@ -7775,6 +7775,39 @@
       ]
     }
   },
+  "劣": {
+    "englishMeaning": "inferior / poor",
+    "displayWord": {
+      "written": "劣る",
+      "pron": "おとる"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n1",
+      "starter"
+    ],
+    "jlpt": 1,
+    "preferredWords": [
+      "劣る",
+      "劣勢",
+      "劣等感"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "劣る （おとる） - be inferior to ／ 劣勢 （れっせい） - disadvantage / losing position ／ 劣等感 （れっとうかん） - inferiority complex",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "値段は安いですが品質は少し劣ります。",
+      "reading": "ねだんはやすいですがひんしつはすこしおとります。",
+      "english": "The price is low, but the quality is a little inferior.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
   "助": {
     "englishMeaning": "help / assist",
     "displayWord": {
@@ -7831,6 +7864,39 @@
       "japanese": "毎日少しずつ努力しています。",
       "reading": "まいにちすこしずつどりょくしています。",
       "english": "I am making an effort a little bit every day.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "励": {
+    "englishMeaning": "encourage / strive",
+    "displayWord": {
+      "written": "励ます",
+      "pron": "はげます"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n1",
+      "starter"
+    ],
+    "jlpt": 1,
+    "preferredWords": [
+      "励ます",
+      "励む",
+      "奨励"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "励ます （はげます） - encourage ／ 励む （はげむ） - strive / work hard ／ 奨励 （しょうれい） - encouragement / promotion",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "友人の言葉に励まされて最後まで頑張れました。",
+      "reading": "ゆうじんのことばにはげまされてさいごまでがんばれました。",
+      "english": "My friend's words encouraged me to keep going to the end.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -7896,6 +7962,105 @@
       "japanese": "この薬はよく効くと聞きました。",
       "reading": "このくすりはよくきくとききました。",
       "english": "I heard this medicine works well.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "劾": {
+    "englishMeaning": "censure / impeach",
+    "displayWord": {
+      "written": "弾劾",
+      "pron": "だんがい"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n1",
+      "starter"
+    ],
+    "jlpt": 1,
+    "preferredWords": [
+      "弾劾",
+      "劾問",
+      "糾弾"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "弾劾 （だんがい） - impeachment / denunciation ／ 劾問 （がいもん） - interrogation / censure ／ 糾弾 （きゅうだん） - condemnation",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "議会ではその行為を厳しく弾劾する声が上がりました。",
+      "reading": "ぎかいではそのこういをきびしくだんがいするこえがあがりました。",
+      "english": "Voices rose in parliament calling for the act to be severely condemned.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "勁": {
+    "englishMeaning": "strong / vigorous",
+    "displayWord": {
+      "written": "力強い",
+      "pron": "ちからづよい"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n1",
+      "starter"
+    ],
+    "jlpt": 1,
+    "preferredWords": [
+      "力強い",
+      "勁草",
+      "遒勁"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "力強い （ちからづよい） - powerful / strong ／ 勁草 （けいそう） - tough grass / resilient character ／ 遒勁 （しゅうけい） - vigorous and strong",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "彼の演説には勁い意志が感じられました。",
+      "reading": "かれのえんぜつにはつよいいしがかんじられました。",
+      "english": "A strong will could be felt in his speech.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "勅": {
+    "englishMeaning": "imperial order / decree",
+    "displayWord": {
+      "written": "勅令",
+      "pron": "ちょくれい"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n1",
+      "starter"
+    ],
+    "jlpt": 1,
+    "preferredWords": [
+      "勅令",
+      "勅使",
+      "詔勅"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "勅令 （ちょくれい） - imperial decree ／ 勅使 （ちょくし） - imperial messenger ／ 詔勅 （しょうちょく） - imperial rescript",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "歴史の授業で古い勅令について学びました。",
+      "reading": "れきしのじゅぎょうでふるいちょくれいについてまなびました。",
+      "english": "In history class, we studied an old imperial decree.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -7991,6 +8156,39 @@
       "japanese": "この時計はまだ動いています。",
       "reading": "このとけいはまだうごいています。",
       "english": "This clock is still running.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "勘": {
+    "englishMeaning": "intuition / sense / calculation",
+    "displayWord": {
+      "written": "勘",
+      "pron": "かん"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n1",
+      "starter"
+    ],
+    "jlpt": 1,
+    "preferredWords": [
+      "勘",
+      "勘違い",
+      "勘定"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "勘 （かん） - intuition / hunch ／ 勘違い （かんちがい） - misunderstanding ／ 勘定 （かんじょう） - calculation / bill",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "長年の経験で危険を勘で察しました。",
+      "reading": "ながねんのけいけんできけんをかんでさっしました。",
+      "english": "Years of experience let me sense the danger by intuition.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -8153,6 +8351,72 @@
       "japanese": "父は夜勤の勤務をしています。",
       "reading": "ちちはやきんのきんむをしています。",
       "english": "My father works a night shift.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "勧": {
+    "englishMeaning": "recommend / urge",
+    "displayWord": {
+      "written": "勧める",
+      "pron": "すすめる"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n1",
+      "starter"
+    ],
+    "jlpt": 1,
+    "preferredWords": [
+      "勧める",
+      "勧告",
+      "勧誘"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "勧める （すすめる） - recommend / urge ／ 勧告 （かんこく） - advice / warning ／ 勧誘 （かんゆう） - solicitation / invitation",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "医者にもっと休むよう強く勧められました。",
+      "reading": "いしゃにもっとやすむようつよくすすめられました。",
+      "english": "The doctor strongly advised me to rest more.",
+      "source": "starter-curated",
+      "tags": [
+        "example",
+        "starter"
+      ]
+    }
+  },
+  "勲": {
+    "englishMeaning": "meritorious service / decoration",
+    "displayWord": {
+      "written": "勲章",
+      "pron": "くんしょう"
+    },
+    "breakdownOverrides": [],
+    "source": "starter-curated",
+    "tags": [
+      "n1",
+      "starter"
+    ],
+    "jlpt": 1,
+    "preferredWords": [
+      "勲章",
+      "勲功",
+      "殊勲"
+    ],
+    "blockedWords": [],
+    "blockedSentencePhrases": [],
+    "notes": "勲章 （くんしょう） - medal / decoration ／ 勲功 （くんこう） - meritorious service ／ 殊勲 （しゅくん） - distinguished service",
+    "alternativeNotes": [],
+    "exampleSentence": {
+      "japanese": "長年の功績が認められて勲章を受けました。",
+      "reading": "ながねんのこうせきがみとめられてくんしょうをうけました。",
+      "english": "His long years of achievement were recognized with a medal.",
       "source": "starter-curated",
       "tags": [
         "example",

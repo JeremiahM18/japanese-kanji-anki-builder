@@ -151,3 +151,35 @@ test("syncMediaForKanjiList preserves one result when stroke-order or audio fail
     assert.equal(result.results[0].audio.manifest.assets.audio.length, 1);
     assert.equal(result.summary.errors.length, 1);
 });
+
+
+test("syncMediaForKanjiList skips audio work cleanly when no audio service is configured", async () => {
+    const calls = [];
+    const result = await syncMediaForKanjiList({
+        kanjiList: ["日"],
+        strokeOrderService: {
+            async syncKanji(kanji) {
+                calls.push(
+                    "stroke:" + kanji
+                );
+                return {
+                    manifest: {
+                        assets: {
+                            strokeOrderImage: { source: "local-filesystem" },
+                            strokeOrderAnimation: { source: "remote-stroke-order-animation" },
+                        },
+                    },
+                };
+            },
+        },
+        audioService: null,
+        concurrency: 1,
+    });
+
+    assert.deepEqual(calls, ["stroke:日"]);
+    assert.equal(result.results.length, 1);
+    assert.equal(result.results[0].audio.skipped, true);
+    assert.deepEqual(result.results[0].audio.manifest.assets.audio, []);
+    assert.equal(result.summary.audio.hits, 0);
+    assert.equal(result.summary.errors.length, 0);
+});

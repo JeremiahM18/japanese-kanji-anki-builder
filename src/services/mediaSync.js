@@ -78,14 +78,31 @@ function summarizeSyncResults(results) {
 
 async function syncMediaForKanjiList({ kanjiList, strokeOrderService, audioService, concurrency = 4, audioMetadata = {} }) {
     const results = await mapWithConcurrency(kanjiList, concurrency, async (kanji) => {
-        const [strokeOrder, audio] = await Promise.allSettled([
+        const tasks = [
             strokeOrderService.syncKanji(kanji),
-            audioService.syncKanji(kanji, {
-                category: "kanji-reading",
-                text: kanji,
-                ...audioMetadata,
-            }),
-        ]);
+            typeof audioService?.syncKanji === "function"
+                ? audioService.syncKanji(kanji, {
+                    category: "kanji-reading",
+                    text: kanji,
+                    ...audioMetadata,
+                })
+                : Promise.resolve({
+                    kanji,
+                    manifest: {
+                        assets: {
+                            audio: [],
+                        },
+                    },
+                    found: {
+                        audio: false,
+                    },
+                    acquisition: {
+                        audio: [],
+                    },
+                    skipped: true,
+                }),
+        ];
+        const [strokeOrder, audio] = await Promise.allSettled(tasks);
 
         return {
             kanji,

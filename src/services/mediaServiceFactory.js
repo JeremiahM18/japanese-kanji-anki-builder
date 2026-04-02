@@ -40,11 +40,13 @@ function createMediaServices(config) {
             animationProviders,
             preferRemoteAnimationProviders: Boolean(config.remoteStrokeOrderAnimationBaseUrl),
         }),
-        audioService: createAudioService({
-            mediaRootDir: config.mediaRootDir,
-            audioSourceDir: config.audioSourceDir,
-            providers: audioProviders,
-        }),
+        audioService: config.enableAudio === false
+            ? null
+            : createAudioService({
+                mediaRootDir: config.mediaRootDir,
+                audioSourceDir: config.audioSourceDir,
+                providers: audioProviders,
+            }),
     };
 }
 

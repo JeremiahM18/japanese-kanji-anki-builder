@@ -32,8 +32,8 @@ async function main() {
     const options = parseArgs(process.argv.slice(2));
     const level = options.level;
 
-    if (![4, 5].includes(level)) {
-        throw new Error("Golden review level must be N4 or N5.");
+    if (![3, 4, 5].includes(level)) {
+        throw new Error("Golden review level must be N3, N4, or N5.");
     }
 
     const config = loadConfig();

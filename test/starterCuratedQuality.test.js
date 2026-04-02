@@ -75,6 +75,12 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
     assert.equal(curatedStudyData["偶"].preferredWords.length, 2);
     assert.deepEqual(curatedStudyData["偶"].preferredWords, ["偶然", "偶数"]);
 
+    assert.deepEqual(curatedStudyData["回"].displayWord, { written: "今回", pron: "こんかい" });
+    assert.equal(curatedStudyData["回"].englishMeaning, "time / occurrence");
+
+    assert.equal(curatedStudyData["君"].englishMeaning, "you (informal)");
+    assert.deepEqual(curatedStudyData["君"].preferredWords, ["君", "君たち"]);
+
     assert.deepEqual(curatedStudyData["愛"].displayWord, { written: "愛情", pron: "あいじょう" });
     assert.equal(curatedStudyData["愛"].englishMeaning, "affection / love");
 

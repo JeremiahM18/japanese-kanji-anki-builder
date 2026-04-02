@@ -1,7 +1,11 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { createInferenceEngine } = require("../../src/inference/inferenceEngine");
+const {
+    buildSentenceCorpusIndex,
+    createInferenceEngine,
+    getRelevantSentenceCorpus,
+} = require("../../src/inference/inferenceEngine");
 const {
     buildMeaningJP,
     chooseEnglishMeaning,
@@ -295,6 +299,41 @@ test("curated displayWord can intentionally suppress pronunciation in learner-fa
     });
 
     assert.equal(result.meaningJP, "一 ／ one");
+});
+
+test("getRelevantSentenceCorpus indexes sentences by kanji and written form", () => {
+    const sameKanjiEntry = {
+        kanji: "日",
+        written: "日記",
+        japanese: "日記を書きます。",
+        english: "I write in my diary.",
+    };
+    const matchingWrittenEntry = {
+        kanji: "記",
+        written: "日記",
+        japanese: "日記は毎日書きます。",
+        english: "I write in my diary every day.",
+    };
+    const unrelatedEntry = {
+        kanji: "月",
+        written: "月曜",
+        japanese: "月曜に行きます。",
+        english: "I will go on Monday.",
+    };
+
+    const sentenceCorpusIndex = buildSentenceCorpusIndex([
+        sameKanjiEntry,
+        matchingWrittenEntry,
+        unrelatedEntry,
+    ]);
+
+    const relevant = getRelevantSentenceCorpus({
+        kanji: "日",
+        rankedCandidates: [{ written: "日記" }],
+        sentenceCorpusIndex,
+    });
+
+    assert.deepEqual(relevant, [sameKanjiEntry, matchingWrittenEntry]);
 });
 
 test("corpus support can rerank bestWord and notes", () => {

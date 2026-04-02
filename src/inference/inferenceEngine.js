@@ -192,7 +192,65 @@ function applyCuratedNotes(notes, curatedEntry) {
     return notes;
 }
 
+function buildSentenceCorpusIndex(sentenceCorpus = []) {
+    const entriesByKanji = new Map();
+    const entriesByWritten = new Map();
+
+    for (const entry of Array.isArray(sentenceCorpus) ? sentenceCorpus : []) {
+        const kanji = String(entry?.kanji || '').trim();
+        const written = String(entry?.written || '').trim();
+
+        if (kanji) {
+            if (!entriesByKanji.has(kanji)) {
+                entriesByKanji.set(kanji, []);
+            }
+            entriesByKanji.get(kanji).push(entry);
+        }
+
+        if (written) {
+            if (!entriesByWritten.has(written)) {
+                entriesByWritten.set(written, []);
+            }
+            entriesByWritten.get(written).push(entry);
+        }
+    }
+
+    return {
+        entriesByKanji,
+        entriesByWritten,
+    };
+}
+
+function getRelevantSentenceCorpus({ kanji, rankedCandidates = [], sentenceCorpusIndex }) {
+    if (!sentenceCorpusIndex) {
+        return [];
+    }
+
+    const out = [];
+    const seen = new Set();
+
+    const appendEntries = (entries) => {
+        for (const entry of Array.isArray(entries) ? entries : []) {
+            if (!entry || seen.has(entry)) {
+                continue;
+            }
+
+            seen.add(entry);
+            out.push(entry);
+        }
+    };
+
+    appendEntries(sentenceCorpusIndex.entriesByKanji.get(kanji));
+
+    for (const candidate of Array.isArray(rankedCandidates) ? rankedCandidates : []) {
+        appendEntries(sentenceCorpusIndex.entriesByWritten.get(candidate?.written));
+    }
+
+    return out;
+}
+
 function createInferenceEngine({ sentenceCorpus = [], curatedStudyData = {} } = {}) {
+    const sentenceCorpusIndex = buildSentenceCorpusIndex(sentenceCorpus);
     return {
         hasFullyCuratedKanjiEntry(kanji) {
             return hasFullyCuratedKanjiEntry(getCuratedEntry(curatedStudyData, kanji));
@@ -202,9 +260,14 @@ function createInferenceEngine({ sentenceCorpus = [], curatedStudyData = {} } = 
             const kanjiMeanings = Array.isArray(kanjiInfo?.meanings) ? kanjiInfo.meanings : [];
             const extractedCandidates = extractWordCandidates(words);
             const curatedEntry = getCuratedEntry(curatedStudyData, kanji);
+            const relevantSentenceCorpus = getRelevantSentenceCorpus({
+                kanji,
+                rankedCandidates: extractedCandidates,
+                sentenceCorpusIndex,
+            });
             const rankedCandidates = applyPreferredWords(
                 applyBlockedWords(
-                    rankWordCandidates(extractedCandidates, kanji, kanjiMeanings, sentenceCorpus),
+                    rankWordCandidates(extractedCandidates, kanji, kanjiMeanings, relevantSentenceCorpus),
                     curatedEntry
                 ),
                 curatedEntry
@@ -216,7 +279,7 @@ function createInferenceEngine({ sentenceCorpus = [], curatedStudyData = {} } = 
                     inferSentenceCandidates({
                         rankedCandidates,
                         kanji,
-                        sentenceCorpus,
+                        sentenceCorpus: relevantSentenceCorpus,
                         maxSentences,
                     }),
                     curatedEntry
@@ -268,8 +331,10 @@ module.exports = {
     buildCuratedDisplayWord,
     createInferenceEngine,
     filterBlockedSentenceCandidates,
+    buildSentenceCorpusIndex,
     formatMeaningDisplayWord,
-    hasFullyCuratedKanjiEntry,
     getCuratedEntry,
+    getRelevantSentenceCorpus,
+    hasFullyCuratedKanjiEntry,
     prependCuratedSentence,
 };

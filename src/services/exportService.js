@@ -2,6 +2,7 @@ const path = require("node:path");
 
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
+const { selectBestAudioAsset } = require("./audioService");
 const { mapWithConcurrency } = require("../utils/concurrency");
 const { labelKunReading, labelOnReading, tsvEscape } = require("../utils/text");
 
@@ -82,6 +83,42 @@ async function resolveStrokeOrderFields(strokeOrderService, kanji) {
     };
 }
 
+async function resolveManagedMediaFields({ kanji, strokeOrderService, audioService }) {
+    const manifestProvider = typeof strokeOrderService?.getManifest === "function"
+        ? strokeOrderService
+        : (typeof audioService?.getManifest === "function" ? audioService : null);
+
+    if (manifestProvider) {
+        const manifest = await manifestProvider.getManifest(kanji);
+        const imagePath = manifest?.assets?.strokeOrderImage?.path || "";
+        const animationPath = manifest?.assets?.strokeOrderAnimation?.path || "";
+        const bestPath = animationPath || imagePath || "";
+        const audioPath = selectBestAudioAsset(manifest?.assets?.audio || [], {
+            category: "kanji-reading",
+            text: kanji,
+        })?.path || "";
+
+        return {
+            strokeOrderPath: bestPath,
+            strokeOrderImagePath: imagePath,
+            strokeOrderAnimationPath: animationPath,
+            audioPath,
+        };
+    }
+
+    const [strokeOrderFields, audioPath] = await Promise.all([
+        resolveStrokeOrderFields(strokeOrderService, kanji),
+        typeof audioService?.getBestAudioPath === "function"
+            ? audioService.getBestAudioPath(kanji, { category: "kanji-reading", text: kanji })
+            : Promise.resolve(""),
+    ]);
+
+    return {
+        ...strokeOrderFields,
+        audioPath,
+    };
+}
+
 function createExportService({ inferenceEngine = createInferenceEngine() } = {}) {
     async function buildRowForKanji({
         kanji,
@@ -92,13 +129,10 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
         audioService,
     }) {
         try {
-            const [kanjiInfo, words, strokeOrderFields, audioPath] = await Promise.all([
+            const [kanjiInfo, words, mediaFields] = await Promise.all([
                 kanjiApiClient.getKanji(kanji),
                 kanjiApiClient.getWords(kanji),
-                resolveStrokeOrderFields(strokeOrderService, kanji),
-                typeof audioService?.getBestAudioPath === "function"
-                    ? audioService.getBestAudioPath(kanji, { category: "kanji-reading", text: kanji })
-                    : Promise.resolve(""),
+                resolveManagedMediaFields({ kanji, strokeOrderService, audioService }),
             ]);
 
             const inferred = inferenceEngine.inferKanjiStudyData({
@@ -123,10 +157,10 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
                 primaryReading,
                 onReading,
                 kunReading,
-                formatAnkiStrokeOrderField(strokeOrderFields.strokeOrderPath),
-                formatAnkiStrokeOrderField(strokeOrderFields.strokeOrderImagePath),
-                formatAnkiStrokeOrderField(strokeOrderFields.strokeOrderAnimationPath),
-                formatAnkiAudioField(audioPath),
+                formatAnkiStrokeOrderField(mediaFields.strokeOrderPath),
+                formatAnkiStrokeOrderField(mediaFields.strokeOrderImagePath),
+                formatAnkiStrokeOrderField(mediaFields.strokeOrderAnimationPath),
+                formatAnkiAudioField(mediaFields.audioPath),
                 radical,
                 inferred.notes,
                 exampleSentence,
@@ -151,13 +185,10 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
     }
 
     async function buildInferenceForKanji({ kanji, kanjiApiClient, strokeOrderService, audioService }) {
-        const [kanjiInfo, words, strokeOrderFields, audioPath] = await Promise.all([
+        const [kanjiInfo, words, mediaFields] = await Promise.all([
             kanjiApiClient.getKanji(kanji),
             kanjiApiClient.getWords(kanji),
-            resolveStrokeOrderFields(strokeOrderService, kanji),
-            typeof audioService?.getBestAudioPath === "function"
-                ? audioService.getBestAudioPath(kanji, { category: "kanji-reading", text: kanji })
-                : Promise.resolve(""),
+            resolveManagedMediaFields({ kanji, strokeOrderService, audioService }),
         ]);
 
         const inferred = inferenceEngine.inferKanjiStudyData({
@@ -177,14 +208,14 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
             primaryReading: selectPrimaryReading(inferred),
             onReading,
             kunReading,
-            strokeOrderPath: strokeOrderFields.strokeOrderPath,
-            strokeOrderField: formatAnkiStrokeOrderField(strokeOrderFields.strokeOrderPath),
-            strokeOrderImagePath: strokeOrderFields.strokeOrderImagePath,
-            strokeOrderImageField: formatAnkiStrokeOrderField(strokeOrderFields.strokeOrderImagePath),
-            strokeOrderAnimationPath: strokeOrderFields.strokeOrderAnimationPath,
-            strokeOrderAnimationField: formatAnkiStrokeOrderField(strokeOrderFields.strokeOrderAnimationPath),
-            audioPath,
-            audioField: formatAnkiAudioField(audioPath),
+            strokeOrderPath: mediaFields.strokeOrderPath,
+            strokeOrderField: formatAnkiStrokeOrderField(mediaFields.strokeOrderPath),
+            strokeOrderImagePath: mediaFields.strokeOrderImagePath,
+            strokeOrderImageField: formatAnkiStrokeOrderField(mediaFields.strokeOrderImagePath),
+            strokeOrderAnimationPath: mediaFields.strokeOrderAnimationPath,
+            strokeOrderAnimationField: formatAnkiStrokeOrderField(mediaFields.strokeOrderAnimationPath),
+            audioPath: mediaFields.audioPath,
+            audioField: formatAnkiAudioField(mediaFields.audioPath),
         };
     }
 
@@ -233,6 +264,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
         formatAnkiStrokeOrderField,
         formatExampleSentence,
         mapWithConcurrency,
+        resolveManagedMediaFields,
         resolveStrokeOrderFields,
         selectDisplayWord,
         selectPrimaryReading,
@@ -250,6 +282,7 @@ module.exports = {
     formatAnkiStrokeOrderField: defaultExportService.formatAnkiStrokeOrderField,
     formatExampleSentence: defaultExportService.formatExampleSentence,
     mapWithConcurrency: defaultExportService.mapWithConcurrency,
+    resolveManagedMediaFields: defaultExportService.resolveManagedMediaFields,
     resolveStrokeOrderFields: defaultExportService.resolveStrokeOrderFields,
     selectDisplayWord: defaultExportService.selectDisplayWord,
     selectPrimaryReading: defaultExportService.selectPrimaryReading,

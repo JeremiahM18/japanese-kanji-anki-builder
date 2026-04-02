@@ -5,6 +5,7 @@ const {
     buildTsvForJlptLevel,
     formatAnkiAudioField,
     formatAnkiStrokeOrderField,
+    resolveManagedMediaFields,
     selectPrimaryReading,
 } = require("../src/services/exportService");
 
@@ -36,6 +37,44 @@ test("selectPrimaryReading prefers the learner-facing display pronunciation", ()
         displayWord: { written: "行", pron: "" },
         bestWord: { written: "行", pron: "こう" },
     }), "こう");
+});
+
+
+test("resolveManagedMediaFields reuses a single shared manifest lookup when available", async () => {
+    let manifestCalls = 0;
+    const mediaFields = await resolveManagedMediaFields({
+        kanji: "日",
+        strokeOrderService: {
+            async getManifest() {
+                manifestCalls += 1;
+                return {
+                    assets: {
+                        strokeOrderImage: { path: "images/65E5_日-stroke-order.png" },
+                        strokeOrderAnimation: { path: "animations/65E5_日-stroke-order.gif" },
+                        audio: [{
+                            path: "audio/65E5_日-kanji-reading-日.mp3",
+                            category: "kanji-reading",
+                            text: "日",
+                            locale: "ja-JP",
+                        }],
+                    },
+                };
+            },
+        },
+        audioService: {
+            async getBestAudioPath() {
+                throw new Error("should not call audio fallback when manifest lookup is available");
+            },
+        },
+    });
+
+    assert.equal(manifestCalls, 1);
+    assert.deepEqual(mediaFields, {
+        strokeOrderPath: "animations/65E5_日-stroke-order.gif",
+        strokeOrderImagePath: "images/65E5_日-stroke-order.png",
+        strokeOrderAnimationPath: "animations/65E5_日-stroke-order.gif",
+        audioPath: "audio/65E5_日-kanji-reading-日.mp3",
+    });
 });
 
 test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async () => {

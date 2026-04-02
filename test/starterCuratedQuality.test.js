@@ -38,7 +38,7 @@ test("tracked starter curated N3-N5 entries keep required learner-facing quality
     }
 });
 
-test("resolved curated N3 entries keep selected learner-facing editorial choices stable", () => {
+test("resolved curated N3-N5 entries keep selected learner-facing editorial choices stable", () => {
     const curatedStudyData = loadCuratedStudyData(path.join(process.cwd(), "data", "curated_study_data.json"));
 
     assert.deepEqual(curatedStudyData["便"].displayWord, { written: "便利", pron: "べんり" });
@@ -74,6 +74,41 @@ test("resolved curated N3 entries keep selected learner-facing editorial choices
 
     assert.equal(curatedStudyData["偶"].preferredWords.length, 2);
     assert.deepEqual(curatedStudyData["偶"].preferredWords, ["偶然", "偶数"]);
+
+    assert.deepEqual(curatedStudyData["以"].displayWord, { written: "以内", pron: "いない" });
+    assert.equal(curatedStudyData["以"].englishMeaning, "within / from");
+
+    assert.deepEqual(curatedStudyData["医"].displayWord, { written: "医者", pron: "いしゃ" });
+    assert.equal(curatedStudyData["医"].englishMeaning, "doctor / medicine");
+
+    assert.deepEqual(curatedStudyData["員"].displayWord, { written: "店員", pron: "てんいん" });
+    assert.deepEqual(curatedStudyData["員"].preferredWords, ["店員", "会社員", "会員"]);
+
+    assert.deepEqual(curatedStudyData["映"].displayWord, { written: "映画", pron: "えいが" });
+    assert.equal(curatedStudyData["映"].englishMeaning, "movie / reflect");
+
+    assert.deepEqual(curatedStudyData["画"].displayWord, { written: "計画", pron: "けいかく" });
+    assert.equal(curatedStudyData["画"].englishMeaning, "plan / picture");
+
+    assert.deepEqual(curatedStudyData["銀"].displayWord, { written: "銀行", pron: "ぎんこう" });
+    assert.equal(curatedStudyData["銀"].englishMeaning, "bank / silver");
+
+    assert.deepEqual(curatedStudyData["局"].displayWord, { written: "郵便局", pron: "ゆうびんきょく" });
+    assert.deepEqual(curatedStudyData["局"].preferredWords, ["郵便局", "放送局"]);
+
+    assert.deepEqual(curatedStudyData["来"].preferredWords, ["来る", "来週"]);
+    assert.equal(curatedStudyData["来"].notes, "来る （くる） - come ／ 来週 （らいしゅう） - next week");
+
+    assert.deepEqual(curatedStudyData["読"].preferredWords, ["読む", "読書"]);
+    assert.equal(curatedStudyData["読"].notes, "読む （よむ） - read ／ 読書 （どくしょ） - reading");
+
+    assert.deepEqual(curatedStudyData["話"].preferredWords, ["話す", "会話"]);
+    assert.equal(curatedStudyData["話"].notes, "話す （はなす） - speak / talk ／ 会話 （かいわ） - conversation");
+
+    assert.equal(curatedStudyData["水"].notes, "水 （みず） - water ／ 水曜日 （すいようび） - Wednesday");
+
+    assert.deepEqual(curatedStudyData["天"].displayWord, { written: "天気", pron: "てんき" });
+    assert.equal(curatedStudyData["天"].englishMeaning, "weather / sky");
 
     assert.deepEqual(curatedStudyData["候"].displayWord, { written: "気候", pron: "きこう" });
     assert.equal(curatedStudyData["候"].englishMeaning, "season / climate");

@@ -334,6 +334,72 @@ test("getManifest caches stroke-order manifests and refreshes after sync", async
     }
 });
 
+test("syncKanji reuses existing managed stroke-order assets without provider lookups", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const mediaRootDir = path.join(rootDir, "media");
+        const mediaId = buildKanjiMediaId("日");
+        const baseDir = path.join(mediaRootDir, "kanji", "65", mediaId);
+        fs.mkdirSync(path.join(baseDir, "images"), { recursive: true });
+        fs.mkdirSync(path.join(baseDir, "animations"), { recursive: true });
+        fs.writeFileSync(path.join(baseDir, "images", mediaId + "-stroke-order.png"), "png-binary", "utf-8");
+        fs.writeFileSync(path.join(baseDir, "animations", mediaId + "-stroke-order.gif"), "gif-binary", "utf-8");
+        fs.writeFileSync(path.join(baseDir, "manifest.json"), JSON.stringify({
+            kanji: "日",
+            version: 1,
+            updatedAt: "2026-01-01T00:00:00.000Z",
+            assets: {
+                strokeOrderImage: {
+                    kind: "image",
+                    path: "images/" + mediaId + "-stroke-order.png",
+                    mimeType: "image/png",
+                    source: "local-filesystem",
+                },
+                strokeOrderAnimation: {
+                    kind: "animation",
+                    path: "animations/" + mediaId + "-stroke-order.gif",
+                    mimeType: "image/gif",
+                    source: "remote-stroke-order-animation",
+                },
+                audio: [],
+            },
+        }, null, 2), "utf-8");
+
+        let imageRequests = 0;
+        let animationRequests = 0;
+        const service = createStrokeOrderService({
+            mediaRootDir,
+            imageProviders: [{
+                name: "fixture-image",
+                async findAsset() {
+                    imageRequests += 1;
+                    return null;
+                },
+            }],
+            animationProviders: [{
+                name: "fixture-animation",
+                async findAsset() {
+                    animationRequests += 1;
+                    return null;
+                },
+            }],
+        });
+
+        const result = await service.syncKanji("日");
+        assert.equal(imageRequests, 0);
+        assert.equal(animationRequests, 0);
+        assert.equal(result.found.image, false);
+        assert.equal(result.found.animation, false);
+        assert.equal(result.acquisition.image.length, 0);
+        assert.equal(result.acquisition.animation.length, 0);
+        assert.equal(result.manifest.assets.strokeOrderImage.path, "images/" + mediaId + "-stroke-order.png");
+        assert.equal(result.manifest.assets.strokeOrderAnimation.path, "animations/" + mediaId + "-stroke-order.gif");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
 test("syncKanji preserves an empty manifest when no source assets exist", async () => {
     const rootDir = makeTempDir();
 

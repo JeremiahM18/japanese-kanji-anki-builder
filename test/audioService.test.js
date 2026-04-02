@@ -227,6 +227,58 @@ test("getManifest caches audio manifests and refreshes after sync", async () => 
     }
 });
 
+test("syncKanji reuses existing managed audio assets without provider lookups", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const mediaRootDir = path.join(rootDir, "media");
+        const mediaId = buildKanjiMediaId("日");
+        const baseDir = path.join(mediaRootDir, "kanji", "65", mediaId);
+        fs.mkdirSync(path.join(baseDir, "audio"), { recursive: true });
+        fs.writeFileSync(path.join(baseDir, "audio", mediaId + "-kanji-reading-日.mp3"), Buffer.from("fake-mp3"));
+        fs.writeFileSync(path.join(baseDir, "manifest.json"), JSON.stringify({
+            kanji: "日",
+            version: 1,
+            updatedAt: "2026-01-01T00:00:00.000Z",
+            assets: {
+                strokeOrderImage: null,
+                strokeOrderAnimation: null,
+                audio: [{
+                    kind: "audio",
+                    path: "audio/" + mediaId + "-kanji-reading-日.mp3",
+                    mimeType: "audio/mpeg",
+                    source: "local-filesystem",
+                    category: "kanji-reading",
+                    text: "日",
+                    reading: "にち",
+                    locale: "ja-JP",
+                }],
+            },
+        }, null, 2), "utf-8");
+
+        let providerRequests = 0;
+        const audioService = createAudioService({
+            mediaRootDir,
+            providers: [{
+                name: "fixture-audio",
+                async findAsset() {
+                    providerRequests += 1;
+                    return null;
+                },
+            }],
+        });
+
+        const result = await audioService.syncKanji("日", { text: "日", reading: "にち" });
+        assert.equal(providerRequests, 0);
+        assert.equal(result.found.audio, false);
+        assert.equal(result.acquisition.audio.length, 0);
+        assert.equal(result.manifest.assets.audio.length, 1);
+        assert.match(result.manifest.assets.audio[0].path, new RegExp("^audio/" + mediaId + "-kanji-reading-日"));
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
 test("audio providers fall back when the first provider misses", async () => {
     const rootDir = makeTempDir();
 

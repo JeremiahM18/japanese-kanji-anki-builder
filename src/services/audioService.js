@@ -1,3 +1,4 @@
+const fs = require("node:fs");
 const path = require("node:path");
 
 const {
@@ -5,6 +6,7 @@ const {
     readManifestIfExists,
     updateManifest,
     buildKanjiMediaId,
+    buildMediaBasePath,
 } = require("./mediaStore");
 const {
     createLocalDirectoryProvider,
@@ -155,6 +157,15 @@ function buildDestinationStem({ mediaId, category, text, reading }) {
     return parts.join("-") || `${mediaId}-kanji-reading`;
 }
 
+function managedAssetExists(mediaRootDir, kanji, relativePath) {
+    if (!relativePath) {
+        return false;
+    }
+
+    const normalizedParts = String(relativePath).split("/").filter(Boolean);
+    return fs.existsSync(path.join(buildMediaBasePath(mediaRootDir, kanji), ...normalizedParts));
+}
+
 function cloneManifestForUpdate(manifest) {
     return {
         ...manifest,
@@ -202,11 +213,15 @@ function createAudioService({ mediaRootDir, audioSourceDir, providers = [] }) {
             locale: cleanToken(metadata.locale) || "ja-JP",
         };
 
-        const audioLookup = await findAssetFromProvidersWithReport(resolvedProviders, {
-            kanji: normalizedKanji,
-            text: normalizedMetadata.text,
-            reading: normalizedMetadata.reading,
-        }, providerMetrics);
+        const existingManifest = await getManifest(normalizedKanji);
+        const existingAudioAsset = selectBestAudioAsset(existingManifest?.assets?.audio || [], normalizedMetadata);
+        const audioLookup = managedAssetExists(mediaRootDir, normalizedKanji, existingAudioAsset?.path)
+            ? { asset: null, attempts: [] }
+            : await findAssetFromProvidersWithReport(resolvedProviders, {
+                kanji: normalizedKanji,
+                text: normalizedMetadata.text,
+                reading: normalizedMetadata.reading,
+            }, providerMetrics);
         const audioAsset = audioLookup.asset;
 
         const writtenManifest = await updateManifest(mediaRootDir, normalizedKanji, async (manifest) => {

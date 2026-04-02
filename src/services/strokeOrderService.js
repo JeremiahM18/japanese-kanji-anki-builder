@@ -6,6 +6,7 @@ const {
     readManifestIfExists,
     updateManifest,
     buildKanjiMediaId,
+    buildMediaBasePath,
 } = require("./mediaStore");
 const {
     computeChecksum,
@@ -143,6 +144,15 @@ async function copyAssetIfChanged(sourceAsset, destinationPath) {
     return true;
 }
 
+function managedAssetExists(mediaRootDir, kanji, relativePath) {
+    if (!relativePath) {
+        return false;
+    }
+
+    const normalizedParts = String(relativePath).split("/").filter(Boolean);
+    return require("node:fs").existsSync(path.join(buildMediaBasePath(mediaRootDir, kanji), ...normalizedParts));
+}
+
 function cloneManifestForUpdate(manifest) {
     return {
         ...manifest,
@@ -195,8 +205,15 @@ function createStrokeOrderService({
     async function syncKanji(kanji) {
         const normalizedKanji = normalizeKanji(kanji);
         const mediaId = buildKanjiMediaId(normalizedKanji);
-        const imageLookup = await findAssetFromProvidersWithReport(resolvedImageProviders, normalizedKanji, providerMetrics.image);
-        const animationLookup = await findAssetFromProvidersWithReport(resolvedAnimationProviders, normalizedKanji, providerMetrics.animation);
+        const existingManifest = await getManifest(normalizedKanji);
+        const hasExistingImage = managedAssetExists(mediaRootDir, normalizedKanji, existingManifest?.assets?.strokeOrderImage?.path);
+        const hasExistingAnimation = managedAssetExists(mediaRootDir, normalizedKanji, existingManifest?.assets?.strokeOrderAnimation?.path);
+        const imageLookup = hasExistingImage
+            ? { asset: null, attempts: [] }
+            : await findAssetFromProvidersWithReport(resolvedImageProviders, normalizedKanji, providerMetrics.image);
+        const animationLookup = hasExistingAnimation
+            ? { asset: null, attempts: [] }
+            : await findAssetFromProvidersWithReport(resolvedAnimationProviders, normalizedKanji, providerMetrics.animation);
         const imageAsset = imageLookup.asset;
         const animationAsset = animationLookup.asset;
 

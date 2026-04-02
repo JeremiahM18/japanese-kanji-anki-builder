@@ -1,4 +1,5 @@
 const path = require("node:path");
+const { performance } = require("node:perf_hooks");
 
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
@@ -7,6 +8,42 @@ const { mapWithConcurrency } = require("../utils/concurrency");
 const { labelKunReading, labelOnReading, tsvEscape } = require("../utils/text");
 
 const ANKI_FIELD_NAMES = loadAnkiNoteSchema().fieldNames;
+
+function createEmptyExportProfile() {
+    return {
+        rows: 0,
+        fullyCuratedRows: 0,
+        inferredRows: 0,
+        timingsMs: {
+            getKanji: 0,
+            getWords: 0,
+            media: 0,
+            inference: 0,
+            formatting: 0,
+        },
+    };
+}
+
+function recordProfileTiming(exportProfile, key, startedAt) {
+    if (!exportProfile || !key || !Number.isFinite(startedAt)) {
+        return;
+    }
+
+    exportProfile.timingsMs[key] += performance.now() - startedAt;
+}
+
+async function measureAsync(exportProfile, key, action) {
+    if (!exportProfile) {
+        return action();
+    }
+
+    const startedAt = performance.now();
+    try {
+        return await action();
+    } finally {
+        recordProfileTiming(exportProfile, key, startedAt);
+    }
+}
 
 function formatExampleSentence(sentence) {
     if (!sentence) {
@@ -132,15 +169,19 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
         kanjiApiClient,
         strokeOrderService,
         audioService,
+        exportProfile = null,
     }) {
         try {
             const skipWordFetch = shouldSkipWordFetch(inferenceEngine, kanji);
             const [kanjiInfo, words, mediaFields] = await Promise.all([
-                kanjiApiClient.getKanji(kanji),
-                skipWordFetch ? Promise.resolve([]) : kanjiApiClient.getWords(kanji),
-                resolveManagedMediaFields({ kanji, strokeOrderService, audioService }),
+                measureAsync(exportProfile, "getKanji", () => kanjiApiClient.getKanji(kanji)),
+                skipWordFetch
+                    ? Promise.resolve([])
+                    : measureAsync(exportProfile, "getWords", () => kanjiApiClient.getWords(kanji)),
+                measureAsync(exportProfile, "media", () => resolveManagedMediaFields({ kanji, strokeOrderService, audioService })),
             ]);
 
+            const inferenceStartedAt = exportProfile ? performance.now() : NaN;
             const inferred = inferenceEngine.inferKanjiStudyData({
                 kanji,
                 kanjiInfo,
@@ -148,6 +189,18 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
                 maxExamples: 3,
                 maxSentences: 3,
             });
+            recordProfileTiming(exportProfile, "inference", inferenceStartedAt);
+
+            if (exportProfile) {
+                exportProfile.rows += 1;
+                if (skipWordFetch) {
+                    exportProfile.fullyCuratedRows += 1;
+                } else {
+                    exportProfile.inferredRows += 1;
+                }
+            }
+
+            const formattingStartedAt = exportProfile ? performance.now() : NaN;
             const displayWord = selectDisplayWord({ kanji, displayWord: inferred.displayWord, bestWord: inferred.bestWord });
             const primaryReading = selectPrimaryReading(inferred);
             const onReading = labelOnReading(kanjiInfo?.on_readings);
@@ -156,7 +209,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
             const radical = pickMainComponent(components);
             const exampleSentence = formatExampleSentence(inferred.sentenceCandidates[0]);
 
-            return [
+            const row = [
                 kanji,
                 displayWord,
                 inferred.meaningJP,
@@ -171,6 +224,8 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
                 inferred.notes,
                 exampleSentence,
             ].map(tsvEscape).join("\t");
+            recordProfileTiming(exportProfile, "formatting", formattingStartedAt);
+            return row;
         } catch (error) {
             return [
                 kanji,
@@ -236,6 +291,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
         audioService = null,
         limit = null,
         concurrency = 8,
+        exportProfile = null,
     }) {
         const header = ANKI_FIELD_NAMES.join("\t");
 
@@ -257,6 +313,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
                 kanjiApiClient,
                 strokeOrderService,
                 audioService,
+                exportProfile,
             })
         );
 
@@ -267,6 +324,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
         buildInferenceForKanji,
         buildRowForKanji,
         buildTsvForJlptLevel,
+        createEmptyExportProfile,
         formatAnkiAudioField,
         formatAnkiStrokeOrderField,
         formatExampleSentence,
@@ -282,6 +340,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
 const defaultExportService = createExportService();
 
 module.exports = {
+    createEmptyExportProfile,
     createExportService,
     buildInferenceForKanji: defaultExportService.buildInferenceForKanji,
     buildRowForKanji: defaultExportService.buildRowForKanji,

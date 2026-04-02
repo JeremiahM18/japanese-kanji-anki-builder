@@ -3,6 +3,7 @@ const assert = require("node:assert/strict");
 
 const {
     buildTsvForJlptLevel,
+    createEmptyExportProfile,
     createExportService,
     formatAnkiAudioField,
     formatAnkiStrokeOrderField,
@@ -133,6 +134,58 @@ test("buildRowForKanji skips word fetch for fully curated kanji cards", async ()
     assert.equal(cols[11], "日本 （にほん） - Japan");
     assert.equal(cols[12], "日本へ行きます。 ／ にほんへいきます。 ／ I will go to Japan.");
 });
+
+test("buildRowForKanji records export profiling timings and row counts", async () => {
+    const exportProfile = createEmptyExportProfile();
+    const exportService = createExportService({
+        inferenceEngine: {
+            hasFullyCuratedKanjiEntry() {
+                return false;
+            },
+            inferKanjiStudyData() {
+                return {
+                    displayWord: { written: "日本", pron: "にほん" },
+                    bestWord: null,
+                    meaningJP: "日本 （にほん） ／ Japan",
+                    notes: "日本 （にほん） - Japan",
+                    sentenceCandidates: [{
+                        japanese: "日本へ行きます。",
+                        reading: "にほんへいきます。",
+                        english: "I will go to Japan.",
+                    }],
+                };
+            },
+        },
+    });
+
+    await exportService.buildRowForKanji({
+        kanji: "日",
+        kradMap: new Map([["日", ["日"]]]),
+        pickMainComponent(components) {
+            return components[0] || "";
+        },
+        kanjiApiClient: {
+            async getKanji() {
+                return { meanings: ["day"], on_readings: ["ニチ"], kun_readings: ["ひ"] };
+            },
+            async getWords() {
+                return [];
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+        exportProfile,
+    });
+
+    assert.equal(exportProfile.rows, 1);
+    assert.equal(exportProfile.fullyCuratedRows, 0);
+    assert.equal(exportProfile.inferredRows, 1);
+    assert.equal(exportProfile.timingsMs.getKanji > 0, true);
+    assert.equal(exportProfile.timingsMs.getWords > 0, true);
+    assert.equal(exportProfile.timingsMs.media >= 0, true);
+    assert.equal(exportProfile.timingsMs.inference >= 0, true);
+    assert.equal(exportProfile.timingsMs.formatting >= 0, true);
+  });
 
 test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async () => {
     const jlptOnlyJson = {

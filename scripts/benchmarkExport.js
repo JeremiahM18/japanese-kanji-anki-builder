@@ -4,7 +4,7 @@ const { invokeCliMain } = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
 const { loadKradMap, pickMainComponent } = require("../src/datasets/kradfile");
-const { buildTsvForJlptLevel } = require("../src/services/exportService");
+const { buildTsvForJlptLevel, createEmptyExportProfile } = require("../src/services/exportService");
 const { createKanjiApiClient, createEmptyClientMetrics } = require("../src/clients/kanjiApiClient");
 
 function parseArgs(argv) {
@@ -45,6 +45,7 @@ function diffMetrics(before, after) {
 async function runExportOnce({ jlptOnlyJson, kradMap, kanjiApiClient, level, limit, concurrency }) {
     const started = performance.now();
     const metricsBefore = kanjiApiClient.getMetrics();
+    const exportProfile = createEmptyExportProfile();
 
     const tsv = await buildTsvForJlptLevel({
         levelNumber: level,
@@ -54,6 +55,7 @@ async function runExportOnce({ jlptOnlyJson, kradMap, kanjiApiClient, level, lim
         kanjiApiClient,
         limit,
         concurrency,
+        exportProfile,
     });
 
     const durationMs = performance.now() - started;
@@ -64,6 +66,7 @@ async function runExportOnce({ jlptOnlyJson, kradMap, kanjiApiClient, level, lim
         durationMs,
         rows,
         metrics: diffMetrics(metricsBefore, metricsAfter),
+        exportProfile,
     };
 }
 

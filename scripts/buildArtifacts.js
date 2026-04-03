@@ -9,6 +9,7 @@ function parseArgs(argv) {
         concurrency: null,
         outDir: null,
         skipMediaSync: false,
+        failOnExportIssues: false,
         audioReading: null,
         audioVoice: null,
         audioLocale: null,
@@ -26,6 +27,8 @@ function parseArgs(argv) {
             options.outDir = parseStringOption(arg, "out-dir");
         } else if (arg === "--skip-media-sync") {
             options.skipMediaSync = true;
+        } else if (arg === "--fail-on-export-issues") {
+            options.failOnExportIssues = true;
         } else if (arg.startsWith("--audio-reading=")) {
             options.audioReading = parseStringOption(arg, "audio-reading");
         } else if (arg.startsWith("--audio-voice=")) {
@@ -61,6 +64,10 @@ async function main() {
     });
 
     console.log(JSON.stringify(summary, null, 2));
+
+    if (options.failOnExportIssues && (summary.exportIssues?.count || 0) > 0) {
+        process.exitCode = 1;
+    }
 }
 
 if (require.main === module) {

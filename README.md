@@ -108,9 +108,12 @@ npm run deck:apkg -- --levels=5
 - packages the deck in `out/build/package`
 - rebuilds packaged exports and media from a clean slate so stale files do not leak between runs
 - prints a summary including quality and media status
+- fails with a non-zero exit code if any kanji export row required fallback data, unless you pass `--allow-export-fallbacks`
 - writes `reports/export-issues.json` when any kanji row had to fall back to local data during export instead of using live API enrichment
 
 `deck:apkg` converts the packaged exports and copied managed media into an Anki-importable `.apkg` file.
+
+If you intentionally want a usable-but-degraded deck when the live kanji API is flaky, run `npm run deck:ready -- --levels=5 --allow-export-fallbacks`. The default `deck:ready` contract is now strict so fallback-built cards are surfaced as a failed build instead of silently shipping.
 
 ### Build and package the word deck
 
@@ -224,14 +227,14 @@ The tagged workflow in [.github/workflows/release.yml](/C:/japanese_kanji_builde
 | `npm run deck:review:n5` | Run the tracked golden N5 kanji benchmark |
 | `npm run deck:words:review:n5` | Run the tracked golden N5 word benchmark |
 | `npm run deck:words:reading-audit:n5` | Audit curated N5 reading coverage against the current word deck; matching word cards count even when they use a fuller form like `後ろ` for `後` |
-| `npm run deck:ready` | Run the full kanji build and package path |
+| `npm run deck:ready` | Run the full kanji build and package path (fails if export fallbacks occur unless `--allow-export-fallbacks` is set) |
 | `npm run bench:build` | Benchmark the full kanji build path and capture phase timings |
 | `npm run bench:build:gate` | Run the N3-N5 no-warmup build benchmark against the default regression budget |
 | `npm run bench:export` | Benchmark kanji TSV export; defaults to a deterministic offline fixture mode and accepts `--live` for real API timing |
 | `npm run deck:apkg` | Build an importable `.apkg` from packaged kanji exports |
 | `npm run deck:words:ready` | Run the full word-deck build and package path |
 | `npm run deck:words:apkg` | Build an importable `.apkg` from packaged word exports |
-| `npm run build:artifacts` | Run the deterministic kanji build pipeline |
+| `npm run build:artifacts` | Run the deterministic kanji build pipeline (`--fail-on-export-issues` available for strict scripting) |
 | `npm run corpus:init` | Create or merge starter sentence corpus data |
 | `npm run curated:init` | Create or merge starter curated kanji study data |
 | `npm run words:init` | Create or merge starter curated word study data |
@@ -400,4 +403,5 @@ Import-ready packaging is written to:
 
 - `out/build/package`
 - `out/word-build/package`
+
 

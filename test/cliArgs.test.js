@@ -27,19 +27,21 @@ test("syncMedia parseArgs rejects multi-level alias input", () => {
     assert.throws(() => parseSyncArgs(["--levels=5,4"]), /one level at a time/);
 });
 
-test("prepareDeck parseArgs records unsupported flags and json mode", () => {
-    const options = parsePrepareArgs(["--levels=5,4", "--json", "--oops"]);
+test("prepareDeck parseArgs records unsupported flags, json mode, and strict override", () => {
+    const options = parsePrepareArgs(["--levels=5,4", "--json", "--allow-export-fallbacks", "--oops"]);
 
     assert.deepEqual(options.levels, [5, 4]);
     assert.equal(options.json, true);
+    assert.equal(options.allowExportFallbacks, true);
     assert.deepEqual(options.unknownArgs, ["--oops"]);
 });
 
-test("buildArtifacts parseArgs records unsupported flags", () => {
-    const options = parseBuildArtifactsArgs(["--levels=5,4", "--skip-media-sync", "--oops"]);
+test("buildArtifacts parseArgs records unsupported flags and export issue gate", () => {
+    const options = parseBuildArtifactsArgs(["--levels=5,4", "--skip-media-sync", "--fail-on-export-issues", "--oops"]);
 
     assert.deepEqual(options.levels, [5, 4]);
     assert.equal(options.skipMediaSync, true);
+    assert.equal(options.failOnExportIssues, true);
     assert.deepEqual(options.unknownArgs, ["--oops"]);
 });
 

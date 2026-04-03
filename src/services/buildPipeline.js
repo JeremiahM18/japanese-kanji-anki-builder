@@ -55,7 +55,9 @@ function writeJsonFile(filePath, value) {
 
 function writeTextFile(filePath, value) {
     fs.mkdirSync(path.dirname(filePath), { recursive: true });
-    fs.writeFileSync(filePath, value, "utf-8");
+    const tempPath = `${filePath}.tmp-${process.pid}-${Date.now()}`;
+    fs.writeFileSync(tempPath, value, "utf-8");
+    fs.renameSync(tempPath, filePath);
 }
 
 function capturePhaseTiming(timings, phaseName, startedAt) {
@@ -452,4 +454,5 @@ module.exports = {
     runBuildPipeline,
     selectBuildKanjiList,
 };
+
 

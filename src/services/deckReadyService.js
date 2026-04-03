@@ -14,6 +14,8 @@ function formatDeckReadyReport(summary, doctorReport = null) {
         strokeOrderAnimation: 0,
         audio: 0,
     };
+    const exportIssues = summary.exportIssues || { count: 0, warnings: 0, errors: 0 };
+    const exportIssuesPath = summary.reports?.exportIssuesPath || "reports/export-issues.json";
     const levelReadiness = doctorReport?.quality?.levelReadiness || null;
     const audioEnabled = doctorReport?.status?.audioEnabled !== false;
     const selectedLevels = Array.isArray(summary.levels) ? summary.levels : [];
@@ -64,6 +66,15 @@ function formatDeckReadyReport(summary, doctorReport = null) {
         lines.push(`- Full media coverage: ${formatPercent(summary.coverage?.fullMedia || 0)}`);
     }
 
+    lines.push("");
+    lines.push("Export health:");
+    lines.push(`- Export fallback issues: ${formatCount(exportIssues.count)}`);
+    if (exportIssues.count > 0) {
+        lines.push(`- Fallback warnings: ${formatCount(exportIssues.warnings)}`);
+        lines.push(`- Hard export errors: ${formatCount(exportIssues.errors)}`);
+        lines.push(`- Export issue report: ${exportIssuesPath}`);
+    }
+
     if (levelReadiness) {
         lines.push("");
         lines.push("Level quality gates:");
@@ -74,7 +85,9 @@ function formatDeckReadyReport(summary, doctorReport = null) {
     }
 
     lines.push("");
-    if ((packageSummary.mediaAssetCount || 0) === 0) {
+    if (exportIssues.count > 0) {
+        lines.push("Next step: inspect `reports/export-issues.json` and either fix the missing curated/local data or rerun with `--allow-export-fallbacks` only if you intentionally accept those fallback cards.");
+    } else if ((packageSummary.mediaAssetCount || 0) === 0) {
         lines.push("Next step: add local media sources or configure remote fallback providers, then rerun `npm run deck:ready`.");
     } else if (selectedWeakestLevel && !selectedWeakestLevel.ready) {
         lines.push(`Next step: raise JLPT N${selectedWeakestLevel.level} above the quality gate before calling this deck truly ready.`);

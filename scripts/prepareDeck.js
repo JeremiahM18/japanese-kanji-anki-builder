@@ -14,12 +14,15 @@ function parseArgs(argv) {
         audioVoice: null,
         audioLocale: null,
         json: false,
+        allowExportFallbacks: false,
         unknownArgs: [],
     };
 
     for (const arg of argv) {
         if (arg === "--json") {
             options.json = true;
+        } else if (arg === "--allow-export-fallbacks") {
+            options.allowExportFallbacks = true;
         } else if (arg.startsWith("--levels=")) {
             options.levels = parseLevelsArgument(parseStringOption(arg, "levels"));
         } else if (arg.startsWith("--limit=")) {
@@ -72,10 +75,13 @@ async function main() {
 
     if (options.json) {
         console.log(JSON.stringify({ doctor: doctorReport, build: summary }, null, 2));
-        return;
+    } else {
+        process.stdout.write(formatDeckReadyReport(summary, doctorReport));
     }
 
-    process.stdout.write(formatDeckReadyReport(summary, doctorReport));
+    if (!options.allowExportFallbacks && (summary.exportIssues?.count || 0) > 0) {
+        process.exitCode = 1;
+    }
 }
 
 if (require.main === module) {

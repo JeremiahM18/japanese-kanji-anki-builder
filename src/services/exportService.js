@@ -174,6 +174,14 @@ function shouldSkipWordFetch(inferenceEngine, kanji) {
         && inferenceEngine.hasFullyCuratedKanjiEntry(kanji);
 }
 
+function shouldUseLocalJlptEntry({ inferenceEngine, kanji, jlptEntry }) {
+    return Boolean(
+        jlptEntry
+        && typeof jlptEntry === "object"
+        && shouldSkipWordFetch(inferenceEngine, kanji)
+    );
+}
+
 function buildInferredRow({ kanji, inferred, kanjiInfo, kradMap, pickMainComponent, mediaFields }) {
     const displayWord = selectDisplayWord({ kanji, displayWord: inferred.displayWord, bestWord: inferred.bestWord });
     const primaryReading = selectPrimaryReading(inferred);
@@ -236,8 +244,11 @@ function createExportService({
     }) {
         try {
             const skipWordFetch = shouldSkipWordFetch(inferenceEngine, kanji);
+            const useLocalJlptEntry = shouldUseLocalJlptEntry({ inferenceEngine, kanji, jlptEntry });
             const [kanjiInfo, words, mediaFields] = await Promise.all([
-                measureAsync(exportProfile, "getKanji", () => kanjiApiClient.getKanji(kanji)),
+                useLocalJlptEntry
+                    ? Promise.resolve(jlptEntry)
+                    : measureAsync(exportProfile, "getKanji", () => kanjiApiClient.getKanji(kanji)),
                 skipWordFetch
                     ? Promise.resolve([])
                     : measureAsync(exportProfile, "getWords", () => kanjiApiClient.getWords(kanji)),
@@ -313,10 +324,11 @@ function createExportService({
         }
     }
 
-    async function buildInferenceForKanji({ kanji, kanjiApiClient, strokeOrderService, audioService }) {
+    async function buildInferenceForKanji({ kanji, jlptEntry = null, kanjiApiClient, strokeOrderService, audioService }) {
         const skipWordFetch = shouldSkipWordFetch(inferenceEngine, kanji);
+        const useLocalJlptEntry = shouldUseLocalJlptEntry({ inferenceEngine, kanji, jlptEntry });
         const [kanjiInfo, words, mediaFields] = await Promise.all([
-            kanjiApiClient.getKanji(kanji),
+            useLocalJlptEntry ? Promise.resolve(jlptEntry) : kanjiApiClient.getKanji(kanji),
             skipWordFetch ? Promise.resolve([]) : kanjiApiClient.getWords(kanji),
             resolveManagedMediaFields({ kanji, strokeOrderService, audioService }),
         ]);
@@ -402,6 +414,7 @@ function createExportService({
         mapWithConcurrency,
         resolveManagedMediaFields,
         shouldSkipWordFetch,
+        shouldUseLocalJlptEntry,
         resolveStrokeOrderFields,
         selectDisplayWord,
         selectPrimaryReading,
@@ -422,6 +435,7 @@ module.exports = {
     mapWithConcurrency: defaultExportService.mapWithConcurrency,
     resolveManagedMediaFields: defaultExportService.resolveManagedMediaFields,
     shouldSkipWordFetch: defaultExportService.shouldSkipWordFetch,
+    shouldUseLocalJlptEntry: defaultExportService.shouldUseLocalJlptEntry,
     resolveStrokeOrderFields: defaultExportService.resolveStrokeOrderFields,
     selectDisplayWord: defaultExportService.selectDisplayWord,
     selectPrimaryReading: defaultExportService.selectPrimaryReading,

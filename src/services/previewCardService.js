@@ -54,6 +54,7 @@ async function buildPreviewCards({
         try {
             const inference = await exportService.buildInferenceForKanji({
                 kanji,
+                jlptEntry,
                 kanjiApiClient,
                 strokeOrderService,
                 audioService,

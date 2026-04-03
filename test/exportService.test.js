@@ -135,6 +135,69 @@ test("buildRowForKanji skips word fetch for fully curated kanji cards", async ()
     assert.equal(cols[12], "日本へ行きます。 ／ にほんへいきます。 ／ I will go to Japan.");
 });
 
+test("buildRowForKanji uses local JLPT data and skips remote fetches for fully curated kanji cards", async () => {
+    let wordFetchCalled = false;
+    let kanjiFetchCalled = false;
+    const exportService = createExportService({
+        inferenceEngine: {
+            hasFullyCuratedKanjiEntry(kanji) {
+                return kanji === "日";
+            },
+            inferKanjiStudyData() {
+                return {
+                    displayWord: { written: "日本", pron: "にほん" },
+                    bestWord: null,
+                    meaningJP: "日本 （にほん） ／ Japan",
+                    notes: "日本 （にほん） - Japan",
+                    sentenceCandidates: [{
+                        japanese: "日本へ行きます。",
+                        reading: "にほんへいきます。",
+                        english: "I will go to Japan.",
+                    }],
+                };
+            },
+        },
+    });
+
+    const row = await exportService.buildRowForKanji({
+        kanji: "日",
+        jlptEntry: {
+            jlpt: 5,
+            meanings: ["day"],
+            on_readings: ["ニチ"],
+            kun_readings: ["ひ"],
+        },
+        kradMap: new Map([["日", ["日"]]]),
+        pickMainComponent(components) {
+            return components[0] || "";
+        },
+        kanjiApiClient: {
+            async getKanji() {
+                kanjiFetchCalled = true;
+                throw new Error("should not fetch kanji info for a fully curated card when jlptEntry is available");
+            },
+            async getWords() {
+                wordFetchCalled = true;
+                throw new Error("should not fetch words for a fully curated card");
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+    });
+
+    const cols = row.split("	");
+    assert.equal(wordFetchCalled, false);
+    assert.equal(kanjiFetchCalled, false);
+    assert.equal(cols[0], "日");
+    assert.equal(cols[1], "日本");
+    assert.equal(cols[2], "日本 （にほん） ／ Japan");
+    assert.equal(cols[3], "にほん");
+    assert.equal(cols[4], "オン: ニチ");
+    assert.equal(cols[5], "くん: ひ");
+    assert.equal(cols[11], "日本 （にほん） - Japan");
+    assert.equal(cols[12], "日本へ行きます。 ／ にほんへいきます。 ／ I will go to Japan.");
+});
+
 test("buildRowForKanji records export profiling timings and row counts", async () => {
     const exportProfile = createEmptyExportProfile();
     const exportService = createExportService({

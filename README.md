@@ -92,6 +92,7 @@ npm run deck:review:n5
 - `deck:ready` coverage snapshots are scoped to the levels you requested, so a single-level build reports single-level media coverage instead of repo-wide totals.
 - If the upstream kanji API is unavailable, preview falls back to local sentence corpus, curated study data, radicals, and managed media.
 - Kanji deck exports never serialize raw upstream `ERROR:` text into card fields; export-time fallbacks are recorded in `reports/export-issues.json` and summarized in `build-summary.json`.
+- Fully curated kanji rows use local JLPT metadata for readings and meanings before any remote kanji lookup, so finished decks can still pass strict builds even when the kanji API is flaky.
 
 ### Build and package the kanji deck
 

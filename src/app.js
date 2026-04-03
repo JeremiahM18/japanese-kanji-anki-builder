@@ -166,6 +166,7 @@ function createApp({
             const { kanji } = validateKanjiParams(req.params);
             const inference = await exportService.buildInferenceForKanji({
                 kanji,
+                jlptEntry: jlptOnlyJson[kanji] || null,
                 kanjiApiClient,
                 strokeOrderService,
                 audioService,

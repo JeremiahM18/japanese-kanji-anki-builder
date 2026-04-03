@@ -82,6 +82,57 @@ test("buildPreviewCards falls back cleanly when inference throws", async () => {
     assert.equal(cards[0].previewMode, "offline-local-fallback");
     assert.match(cards[0].warning, /local fallback data/);
 });
+test("buildPreviewCards uses local JLPT data for fully curated cards when the API is unavailable", async () => {
+    let kanjiFetchCalled = false;
+    let wordFetchCalled = false;
+
+    const cards = await buildPreviewCards({
+        kanjiList: ["世"],
+        jlptOnlyJson: {
+            世: {
+                jlpt: 4,
+                meanings: ["world", "generation"],
+                on_readings: ["セ", "セイ", "ソウ"],
+                kun_readings: ["よ"],
+            },
+        },
+        curatedStudyData: {
+            世: {
+                englishMeaning: "world / generation",
+                displayWord: { written: "世界", pron: "せかい" },
+                notes: "世界 （せかい） - world ／ 世の中 （よのなか） - society",
+                exampleSentence: {
+                    japanese: "いつか世界を旅行したいです。",
+                    reading: "いつかせかいをりょこうしたいです。",
+                    english: "Someday I want to travel the world.",
+                },
+            },
+        },
+        sentenceCorpus: [],
+        kradMap: new Map([["世", ["一"]]]),
+        kanjiApiClient: {
+            async getKanji() {
+                kanjiFetchCalled = true;
+                throw new Error("should not fetch remote kanji info");
+            },
+            async getWords() {
+                wordFetchCalled = true;
+                throw new Error("should not fetch remote words");
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+    });
+
+    assert.equal(kanjiFetchCalled, false);
+    assert.equal(wordFetchCalled, false);
+    assert.equal(cards.length, 1);
+    assert.equal(cards[0].previewMode, "full-inference");
+    assert.equal(cards[0].displayWord, "世界");
+    assert.equal(cards[0].primaryReading, "せかい");
+    assert.match(cards[0].onReading, /オン: セ/);
+});
+
 test("buildPreviewCards uses local corpus and curated data in its default inference path", async () => {
     const cards = await buildPreviewCards({
         kanjiList: ["一"],

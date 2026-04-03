@@ -91,6 +91,7 @@ npm run deck:review:n5
 - Script entrypoints consistently use `require.main === module` guards and export `main` and `parseArgs` where applicable.
 - `deck:ready` coverage snapshots are scoped to the levels you requested, so a single-level build reports single-level media coverage instead of repo-wide totals.
 - If the upstream kanji API is unavailable, preview falls back to local sentence corpus, curated study data, radicals, and managed media.
+- Kanji deck exports never serialize raw upstream `ERROR:` text into card fields; export-time fallbacks are recorded in `reports/export-issues.json` and summarized in `build-summary.json`.
 
 ### Build and package the kanji deck
 
@@ -107,6 +108,7 @@ npm run deck:apkg -- --levels=5
 - packages the deck in `out/build/package`
 - rebuilds packaged exports and media from a clean slate so stale files do not leak between runs
 - prints a summary including quality and media status
+- writes `reports/export-issues.json` when any kanji row had to fall back to local data during export instead of using live API enrichment
 
 `deck:apkg` converts the packaged exports and copied managed media into an Anki-importable `.apkg` file.
 
@@ -385,6 +387,7 @@ Kanji build artifacts are written to `out/build`:
 - `reports/curated-study-coverage.json`
 - `reports/media-coverage.json`
 - `reports/media-sync.json`
+- `reports/export-issues.json`
 - `build-summary.json`
 
 Word build artifacts are written to `out/word-build`:
@@ -397,3 +400,4 @@ Import-ready packaging is written to:
 
 - `out/build/package`
 - `out/word-build/package`
+

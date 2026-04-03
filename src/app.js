@@ -99,7 +99,7 @@ function createApp({
     sentenceCorpus = [],
     curatedStudyData = {},
     inferenceEngine = createInferenceEngine({ sentenceCorpus, curatedStudyData }),
-    exportService = createExportService({ inferenceEngine }),
+    exportService = createExportService({ inferenceEngine, curatedStudyData, sentenceCorpus }),
 }) {
     const app = express();
     const jlptKanjiCount = Object.keys(jlptOnlyJson).length;
@@ -347,3 +347,4 @@ module.exports = {
     parseLevel,
     parseLimit,
 };
+

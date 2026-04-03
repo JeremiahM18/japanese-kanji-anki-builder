@@ -250,7 +250,7 @@ async function runBuildPipeline({
     });
     const { strokeOrderService, audioService } = createMediaServicesFn(config);
     const inferenceEngine = createInferenceEngineFn({ sentenceCorpus, curatedStudyData });
-    const exportService = createExportServiceFn({ inferenceEngine });
+    const exportService = createExportServiceFn({ inferenceEngine, curatedStudyData, sentenceCorpus });
     const effectiveConcurrency = concurrency || config.exportConcurrency;
     capturePhaseTiming(timingsMs, "serviceSetup", serviceSetupStartedAt);
 
@@ -317,6 +317,7 @@ async function runBuildPipeline({
 
     const exportStartedAt = Date.now();
     const exports = [];
+    const exportIssues = [];
     for (const level of levels) {
         const tsv = await exportService.buildTsvForJlptLevel({
             levelNumber: level,
@@ -328,6 +329,7 @@ async function runBuildPipeline({
             audioService,
             limit,
             concurrency: effectiveConcurrency,
+            exportIssues,
         });
         const filePath = path.join(buildPaths.exportsDir, `jlpt-n${level}.tsv`);
         writeTextFile(filePath, `${tsv}\n`);
@@ -365,6 +367,7 @@ async function runBuildPipeline({
         sentenceNormalizationPath: path.join(buildPaths.reportsDir, "sentence-corpus-normalization.json"),
         curatedNormalizationPath: path.join(buildPaths.reportsDir, "curated-study-normalization.json"),
         mediaSyncPath: path.join(buildPaths.reportsDir, "media-sync.json"),
+        exportIssuesPath: path.join(buildPaths.reportsDir, "export-issues.json"),
     };
 
     writeJsonFile(reportPaths.sentenceCoveragePath, sentenceCoverage);
@@ -373,6 +376,7 @@ async function runBuildPipeline({
     writeJsonFile(reportPaths.sentenceNormalizationPath, sentenceNormalization);
     writeJsonFile(reportPaths.curatedNormalizationPath, curatedNormalization);
     writeJsonFile(reportPaths.mediaSyncPath, mediaSync);
+    writeJsonFile(reportPaths.exportIssuesPath, exportIssues);
     capturePhaseTiming(timingsMs, "reportWrite", reportWriteStartedAt);
 
     const summary = {
@@ -424,6 +428,11 @@ async function runBuildPipeline({
             totalKanji: mediaSync.summary.totalKanji,
             errors: mediaSync.summary.errors.length,
         },
+        exportIssues: {
+            count: exportIssues.length,
+            warnings: exportIssues.filter((issue) => issue.severity === "warning").length,
+            errors: exportIssues.filter((issue) => issue.severity === "error").length,
+        },
         timingsMs: {
             ...timingsMs,
             total: Date.now() - totalStartedAt,
@@ -443,3 +452,4 @@ module.exports = {
     runBuildPipeline,
     selectBuildKanjiList,
 };
+

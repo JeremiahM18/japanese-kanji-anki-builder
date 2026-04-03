@@ -329,3 +329,101 @@ test("runBuildPipeline writes exports reports summary and an import-ready packag
         assert.match(storedSummary.package.ankiPackage.skipReason, /sqlite3|tar|apkg/i);
     }
 });
+
+test("runBuildPipeline reports export fallback issues instead of writing raw error rows", async () => {
+    const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "kanji-build-pipeline-export-issues-"));
+    const dataDir = path.join(tempRoot, "data");
+    const outDir = path.join(tempRoot, "out", "build");
+    const mediaRootDir = path.join(dataDir, "media");
+
+    fs.mkdirSync(dataDir, { recursive: true });
+
+    const jlptJsonPath = path.join(dataDir, "kanji_jlpt_only.json");
+    const kradfilePath = path.join(dataDir, "KRADFILE");
+    const sentenceCorpusPath = path.join(dataDir, "sentence_corpus.json");
+    const curatedStudyDataPath = path.join(dataDir, "curated_study_data.json");
+
+    fs.writeFileSync(jlptJsonPath, `${JSON.stringify({
+        龘: {
+            jlpt: 4,
+            meanings: ["master", "main", "lord"],
+            on_readings: ["シュ"],
+            kun_readings: ["ぬし", "おも"],
+        },
+    }, null, 2)}\n`, "utf-8");
+    fs.writeFileSync(kradfilePath, "龘 : 丶\n", "utf-8");
+    fs.writeFileSync(sentenceCorpusPath, `${JSON.stringify([], null, 2)}\n`, "utf-8");
+    fs.writeFileSync(curatedStudyDataPath, `${JSON.stringify({
+        龘: {
+            englishMeaning: "test meaning",
+            preferredWords: ["龘"],
+            notes: "龘 （おも） - test meaning",
+            exampleSentence: {
+                japanese: "龘な理由を説明してください。",
+                reading: "てすとかんじをせつめいしてください。",
+                english: "Please explain this test kanji.",
+            },
+        },
+    }, null, 2)}\n`, "utf-8");
+
+    const summary = await runBuildPipeline({
+        config: {
+            jlptJsonPath,
+            kradfilePath,
+            sentenceCorpusPath,
+            curatedStudyDataPath,
+            mediaRootDir,
+            cacheDir: path.join(tempRoot, "cache"),
+            kanjiApiBaseUrl: "https://kanjiapi.dev",
+            fetchTimeoutMs: 10000,
+            exportConcurrency: 1,
+            buildOutDir: outDir,
+        },
+        outDir,
+        levels: [4],
+        limit: 1,
+        skipMediaSync: true,
+        createKanjiApiClientFn: () => ({
+            async getKanji() {
+                return {
+                    meanings: ["master", "main", "lord"],
+                    on_readings: ["シュ"],
+                    kun_readings: ["ぬし", "おも"],
+                };
+            },
+            async getWords() {
+                throw new Error("Request timed out after 10000 ms: https://kanjiapi.dev/v1/words/%E9%BE%98");
+            },
+        }),
+        createMediaServicesFn: () => ({
+            strokeOrderService: {
+                async getBestStrokeOrderPath() {
+                    return "";
+                },
+                async getStrokeOrderImagePath() {
+                    return "";
+                },
+                async getStrokeOrderAnimationPath() {
+                    return "";
+                },
+            },
+            audioService: {
+                async getBestAudioPath() {
+                    return "";
+                },
+            },
+        }),
+    });
+
+    const tsv = fs.readFileSync(path.join(outDir, "exports", "jlpt-n4.tsv"), "utf-8");
+    const exportIssues = JSON.parse(fs.readFileSync(path.join(outDir, "reports", "export-issues.json"), "utf-8"));
+
+    assert.equal(tsv.includes("ERROR:"), false);
+    assert.equal(summary.exportIssues.count, 1);
+    assert.equal(summary.exportIssues.warnings, 1);
+    assert.equal(summary.exportIssues.errors, 0);
+    assert.equal(exportIssues.length, 1);
+    assert.equal(exportIssues[0].kanji, "龘");
+    assert.equal(exportIssues[0].resolution, "offline-local-fallback");
+});
+

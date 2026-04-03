@@ -436,3 +436,78 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
     assert.equal(cols[12], '「日本」を勉強します。 ／ 「にほん」をべんきょうします。 ／ I study the word "日本".');
 });
 
+
+test("buildRowForKanji falls back to local data instead of leaking raw timeout errors", async () => {
+    const exportIssues = [];
+    const exportService = createExportService({
+        inferenceEngine: {
+            hasFullyCuratedKanjiEntry() {
+                return false;
+            },
+            inferKanjiStudyData() {
+                throw new Error("inference should not run when API fetch fails");
+            },
+        },
+        curatedStudyData: {
+            主: {
+                englishMeaning: "main / primary",
+                displayWord: { written: "主", pron: "おも" },
+                preferredWords: ["主"],
+                notes: "主 （おも） - main / primary",
+                exampleSentence: {
+                    japanese: "主な理由を説明してください。",
+                    reading: "おもなりゆうをせつめいしてください。",
+                    english: "Please explain the main reason.",
+                },
+            },
+        },
+        sentenceCorpus: [],
+    });
+
+    const row = await exportService.buildRowForKanji({
+        kanji: "主",
+        jlptEntry: {
+            jlpt: 4,
+            meanings: ["master", "main", "lord"],
+            on_readings: ["シュ"],
+            kun_readings: ["ぬし", "おも"],
+        },
+        kradMap: new Map([["主", ["丶"]]]),
+        pickMainComponent(components) {
+            return components[0] || "";
+        },
+        kanjiApiClient: {
+            async getKanji() {
+                return {
+                    meanings: ["master", "main", "lord"],
+                    on_readings: ["シュ"],
+                    kun_readings: ["ぬし", "おも"],
+                };
+            },
+            async getWords() {
+                throw new Error("Request timed out after 10000 ms: https://kanjiapi.dev/v1/words/%E4%B8%BB");
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+        exportIssues,
+    });
+
+    const cols = row.split("\t");
+    assert.equal(row.includes("ERROR:"), false);
+    assert.equal(cols[0], "主");
+    assert.equal(cols[1], "主");
+    assert.equal(cols[2], "主 （おも） ／ main / primary");
+    assert.equal(cols[4], "オン: シュ");
+    assert.equal(cols[5], "くん: ぬし、 おも");
+    assert.equal(cols[11], "主 （おも） - main / primary");
+    assert.equal(cols[12], "主な理由を説明してください。 ／ おもなりゆうをせつめいしてください。 ／ Please explain the main reason.");
+    assert.deepEqual(exportIssues, [{
+        kanji: "主",
+        level: 4,
+        severity: "warning",
+        resolution: "offline-local-fallback",
+        error: "Request timed out after 10000 ms: https://kanjiapi.dev/v1/words/%E4%B8%BB",
+    }]);
+});
+

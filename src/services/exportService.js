@@ -3,6 +3,7 @@ const { performance } = require("node:perf_hooks");
 
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
+const { buildOfflineFallbackCard } = require("./offlineKanjiFallback");
 const { selectBestAudioAsset } = require("./audioService");
 const { mapWithConcurrency } = require("../utils/concurrency");
 const { labelKunReading, labelOnReading, tsvEscape } = require("../utils/text");
@@ -100,6 +101,18 @@ function selectDisplayWord({ kanji, displayWord, bestWord }) {
     return String(kanji ?? "").trim();
 }
 
+function formatTsvRow(fields) {
+    return fields.map(tsvEscape).join("\t");
+}
+
+function appendExportIssue(exportIssues, issue) {
+    if (!Array.isArray(exportIssues)) {
+        return;
+    }
+
+    exportIssues.push(issue);
+}
+
 async function resolveStrokeOrderFields(strokeOrderService, kanji) {
     const imagePath = typeof strokeOrderService?.getStrokeOrderImagePath === "function"
         ? await strokeOrderService.getStrokeOrderImagePath(kanji)
@@ -161,15 +174,65 @@ function shouldSkipWordFetch(inferenceEngine, kanji) {
         && inferenceEngine.hasFullyCuratedKanjiEntry(kanji);
 }
 
-function createExportService({ inferenceEngine = createInferenceEngine() } = {}) {
+function buildInferredRow({ kanji, inferred, kanjiInfo, kradMap, pickMainComponent, mediaFields }) {
+    const displayWord = selectDisplayWord({ kanji, displayWord: inferred.displayWord, bestWord: inferred.bestWord });
+    const primaryReading = selectPrimaryReading(inferred);
+    const onReading = labelOnReading(kanjiInfo?.on_readings);
+    const kunReading = labelKunReading(kanjiInfo?.kun_readings);
+    const components = kradMap.get(kanji) || [];
+    const radical = pickMainComponent(components);
+    const exampleSentence = formatExampleSentence(inferred.sentenceCandidates[0]);
+
+    return formatTsvRow([
+        kanji,
+        displayWord,
+        inferred.meaningJP,
+        primaryReading,
+        onReading,
+        kunReading,
+        formatAnkiStrokeOrderField(mediaFields.strokeOrderPath),
+        formatAnkiStrokeOrderField(mediaFields.strokeOrderImagePath),
+        formatAnkiStrokeOrderField(mediaFields.strokeOrderAnimationPath),
+        formatAnkiAudioField(mediaFields.audioPath),
+        radical,
+        inferred.notes,
+        exampleSentence,
+    ]);
+}
+
+function buildFallbackRow({ fallbackCard }) {
+    return formatTsvRow([
+        fallbackCard.kanji,
+        fallbackCard.displayWord,
+        fallbackCard.meaningJP,
+        fallbackCard.primaryReading,
+        fallbackCard.onReading,
+        fallbackCard.kunReading,
+        formatAnkiStrokeOrderField(fallbackCard.media.strokeOrderPath),
+        formatAnkiStrokeOrderField(fallbackCard.media.strokeOrderImagePath),
+        formatAnkiStrokeOrderField(fallbackCard.media.strokeOrderAnimationPath),
+        formatAnkiAudioField(fallbackCard.media.audioPath),
+        fallbackCard.radical,
+        fallbackCard.notes,
+        fallbackCard.exampleSentence,
+    ]);
+}
+
+function createExportService({
+    inferenceEngine = createInferenceEngine(),
+    curatedStudyData = {},
+    sentenceCorpus = [],
+} = {}) {
     async function buildRowForKanji({
         kanji,
+        jlptEntry = null,
         kradMap,
         pickMainComponent,
         kanjiApiClient,
         strokeOrderService,
         audioService,
         exportProfile = null,
+        exportIssues = null,
     }) {
         try {
             const skipWordFetch = shouldSkipWordFetch(inferenceEngine, kanji);
@@ -201,47 +264,52 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
             }
 
             const formattingStartedAt = exportProfile ? performance.now() : NaN;
-            const displayWord = selectDisplayWord({ kanji, displayWord: inferred.displayWord, bestWord: inferred.bestWord });
-            const primaryReading = selectPrimaryReading(inferred);
-            const onReading = labelOnReading(kanjiInfo?.on_readings);
-            const kunReading = labelKunReading(kanjiInfo?.kun_readings);
-            const components = kradMap.get(kanji) || [];
-            const radical = pickMainComponent(components);
-            const exampleSentence = formatExampleSentence(inferred.sentenceCandidates[0]);
-
-            const row = [
+            const row = buildInferredRow({
                 kanji,
-                displayWord,
-                inferred.meaningJP,
-                primaryReading,
-                onReading,
-                kunReading,
-                formatAnkiStrokeOrderField(mediaFields.strokeOrderPath),
-                formatAnkiStrokeOrderField(mediaFields.strokeOrderImagePath),
-                formatAnkiStrokeOrderField(mediaFields.strokeOrderAnimationPath),
-                formatAnkiAudioField(mediaFields.audioPath),
-                radical,
-                inferred.notes,
-                exampleSentence,
-            ].map(tsvEscape).join("\t");
+                inferred,
+                kanjiInfo,
+                kradMap,
+                pickMainComponent,
+                mediaFields,
+            });
             recordProfileTiming(exportProfile, "formatting", formattingStartedAt);
             return row;
         } catch (error) {
-            return [
-                kanji,
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                `ERROR: ${error instanceof Error ? error.message : String(error)}`,
-                "",
-            ].map(tsvEscape).join("\t");
+            try {
+                const fallbackCard = await buildOfflineFallbackCard({
+                    kanji,
+                    levelLabel: `N${jlptEntry?.jlpt || "?"}`,
+                    jlptEntry,
+                    curatedStudyData,
+                    sentenceCorpus,
+                    kradMap,
+                    strokeOrderService,
+                    audioService,
+                });
+
+                appendExportIssue(exportIssues, {
+                    kanji,
+                    level: jlptEntry?.jlpt || null,
+                    severity: "warning",
+                    resolution: "offline-local-fallback",
+                    error: error instanceof Error ? error.message : String(error),
+                });
+
+                return buildFallbackRow({ fallbackCard });
+            } catch (fallbackError) {
+                appendExportIssue(exportIssues, {
+                    kanji,
+                    level: jlptEntry?.jlpt || null,
+                    severity: "error",
+                    resolution: "build-failed",
+                    error: error instanceof Error ? error.message : String(error),
+                    fallbackError: fallbackError instanceof Error ? fallbackError.message : String(fallbackError),
+                });
+
+                throw new Error(
+                    `Failed to build export row for ${kanji}: ${error instanceof Error ? error.message : String(error)}; fallback failed: ${fallbackError instanceof Error ? fallbackError.message : String(fallbackError)}`
+                );
+            }
         }
     }
 
@@ -292,6 +360,7 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
         limit = null,
         concurrency = 8,
         exportProfile = null,
+        exportIssues = null,
     }) {
         const header = ANKI_FIELD_NAMES.join("\t");
 
@@ -308,12 +377,14 @@ function createExportService({ inferenceEngine = createInferenceEngine() } = {})
             concurrency,
             async (kanji) => buildRowForKanji({
                 kanji,
+                jlptEntry: jlptOnlyJson[kanji] || null,
                 kradMap,
                 pickMainComponent,
                 kanjiApiClient,
                 strokeOrderService,
                 audioService,
                 exportProfile,
+                exportIssues,
             })
         );
 
@@ -355,3 +426,4 @@ module.exports = {
     selectDisplayWord: defaultExportService.selectDisplayWord,
     selectPrimaryReading: defaultExportService.selectPrimaryReading,
 };
+

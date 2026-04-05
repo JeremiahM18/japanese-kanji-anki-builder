@@ -1,5 +1,7 @@
 const { spawnSync } = require("node:child_process");
 
+const BLOCKED_ERROR_CODES = new Set(["EPERM", "EACCES"]);
+
 function trimVersionText(value) {
     return String(value || "").trim();
 }
@@ -17,63 +19,67 @@ function probeCommand(command, args = ["--version"]) {
         command,
         args,
         version,
+        errorCode: result.error ? result.error.code || null : null,
         error: result.error ? result.error.message : null,
         status: result.status,
     };
 }
 
-function describeTool({ name, command, args = ["--version"], required = false, purpose = "" }) {
-    if (command === process.execPath && Array.isArray(args) && args.length === 1 && args[0] === "--version") {
-        return {
-            name,
-            command,
-            args,
-            required,
-            purpose,
-            available: true,
-            version: process.version,
-            error: null,
-        };
+function classifyProbeResult(result) {
+    if (!result.error && result.status === 0) {
+        return "available";
     }
 
-    const result = probeCommand(command, args);
-
-    if (result.error) {
-        return {
-            name,
-            command,
-            args,
-            required,
-            purpose,
-            available: false,
-            version: null,
-            error: result.error,
-        };
+    if (result.errorCode && BLOCKED_ERROR_CODES.has(result.errorCode)) {
+        return "blocked";
     }
 
-    if (result.status !== 0) {
-        return {
-            name,
-            command,
-            args,
-            required,
-            purpose,
-            available: false,
-            version: result.version,
-            error: `exit code ${result.status}`,
-        };
-    }
+    return "missing";
+}
 
+function buildToolDescriptor({ name, command, args, required, purpose, status, version, error, runArgsPrefix }) {
     return {
         name,
         command,
         args,
         required,
         purpose,
-        available: true,
-        version: result.version,
-        error: null,
+        available: status === "available",
+        blocked: status === "blocked",
+        status,
+        version,
+        error,
+        ...(runArgsPrefix ? { runArgsPrefix } : {}),
     };
+}
+
+function describeTool({ name, command, args = ["--version"], required = false, purpose = "" }) {
+    if (command === process.execPath && Array.isArray(args) && args.length === 1 && args[0] === "--version") {
+        return buildToolDescriptor({
+            name,
+            command,
+            args,
+            required,
+            purpose,
+            status: "available",
+            version: process.version,
+            error: null,
+        });
+    }
+
+    const result = probeCommand(command, args);
+    const status = classifyProbeResult(result);
+
+    return buildToolDescriptor({
+        name,
+        command,
+        args,
+        required,
+        purpose,
+        status,
+        version: status === "available" ? result.version : (status === "blocked" ? result.version : null),
+        error: result.error || (result.status !== 0 && status !== "available" ? `exit code ${result.status}` : null),
+    });
 }
 
 function describeNpmTool() {
@@ -81,16 +87,16 @@ function describeNpmTool() {
     const match = userAgent.match(/npm\/(\S+)/);
 
     if (match) {
-        return {
+        return buildToolDescriptor({
             name: "npm",
             command: process.platform === "win32" ? "npm.cmd" : "npm",
             args: ["--version"],
             required: true,
             purpose: "package management",
-            available: true,
+            status: "available",
             version: match[1],
             error: null,
-        };
+        });
     }
 
     return describeTool({
@@ -138,41 +144,44 @@ function describePythonTool() {
 
     for (const candidate of candidates) {
         const result = probeCommand(candidate.command, candidate.probeArgs);
-        if (!result.error && result.status === 0) {
-            return {
+        const status = classifyProbeResult(result);
+        if (status === "available") {
+            return buildToolDescriptor({
                 name: "Python",
                 command: candidate.command,
                 args: candidate.probeArgs,
                 required: false,
                 purpose: "native .apkg generation",
-                available: true,
+                status,
                 version: result.version,
                 error: null,
                 runArgsPrefix: candidate.runArgsPrefix,
-            };
+            });
         }
 
-        if (!firstFailure) {
+        if (!firstFailure || firstFailure.status !== "blocked") {
             firstFailure = {
                 command: candidate.command,
                 args: candidate.probeArgs,
-                version: result.version,
+                version: status === "blocked" ? result.version : null,
+                status,
                 error: result.error || `exit code ${result.status}`,
+                runArgsPrefix: candidate.runArgsPrefix,
             };
         }
     }
 
-    return {
+    return buildToolDescriptor({
         name: "Python",
         command: firstFailure?.command || candidates[0].command,
         args: firstFailure?.args || candidates[0].probeArgs,
         required: false,
         purpose: "native .apkg generation",
-        available: false,
-        version: null,
+        status: firstFailure?.status || "missing",
+        version: firstFailure?.version || null,
         error: firstFailure?.error || "not found",
-        runArgsPrefix: candidates[0].runArgsPrefix,
-    };
+        runArgsPrefix: firstFailure?.runArgsPrefix || candidates[0].runArgsPrefix,
+    });
 }
 
 function resolvePythonCommand() {
@@ -209,18 +218,26 @@ function buildToolchainStatus() {
 function getMissingRequiredTools(toolGroups = {}) {
     return Object.values(toolGroups)
         .flatMap((group) => Array.isArray(group) ? group : [])
-        .filter((tool) => tool.required && !tool.available);
+        .filter((tool) => tool.required && !tool.available && !tool.blocked);
 }
 
 function getMissingPackagingTools(toolGroups = {}) {
     return (Array.isArray(toolGroups.packaging) ? toolGroups.packaging : [])
-        .filter((tool) => !tool.available);
+        .filter((tool) => !tool.available && !tool.blocked);
+}
+
+function getBlockedTools(toolGroups = {}) {
+    return Object.values(toolGroups)
+        .flatMap((group) => Array.isArray(group) ? group : [])
+        .filter((tool) => tool.blocked);
 }
 
 module.exports = {
     buildToolchainStatus,
+    classifyProbeResult,
     describePythonTool,
     describeTool,
+    getBlockedTools,
     getMissingPackagingTools,
     getMissingRequiredTools,
     resolvePythonCommand,

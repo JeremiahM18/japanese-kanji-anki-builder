@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { spawnSync } = require("node:child_process");
 
-const { resolvePythonCommand } = require("./toolchainService");
+const { describePythonTool, resolvePythonCommand } = require("./toolchainService");
 
 function normalizeDeckSlug(levels) {
     const normalized = (Array.isArray(levels) ? levels : [])
@@ -85,14 +85,17 @@ async function buildAnkiPackage({
     levels,
     deckKind = "kanji",
 }) {
-    const python = resolvePythonCommand();
+    const pythonTool = describePythonTool();
+    const python = pythonTool.available ? resolvePythonCommand() : null;
     const mediaFiles = listMediaFiles(mediaDir);
 
     if (!python) {
         return {
             filePath: null,
             skipped: true,
-            skipReason: "Missing required packaging tool: Python.",
+            skipReason: pythonTool.blocked
+                ? "Python packaging is blocked in the current runtime, so native .apkg generation was skipped."
+                : "Missing required packaging tool: Python.",
             noteCount: 0,
             deckCount: 0,
             mediaFileCount: mediaFiles.length,

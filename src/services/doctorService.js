@@ -13,6 +13,7 @@ const {
 } = require("./levelReadinessService");
 const {
     buildToolchainStatus,
+    getBlockedTools,
     getMissingPackagingTools,
     getMissingRequiredTools,
 } = require("./toolchainService");
@@ -138,6 +139,7 @@ async function buildDoctorReport({
 
     const missingRequiredTools = getMissingRequiredTools(status.toolchain);
     const missingPackagingTools = getMissingPackagingTools(status.toolchain);
+    const blockedTools = getBlockedTools(status.toolchain);
     const nextSteps = [];
 
     if (!status.required[0].exists) {
@@ -155,6 +157,10 @@ async function buildDoctorReport({
 
     for (const tool of missingRequiredTools) {
         nextSteps.push(`Install the required ${tool.name} toolchain dependency for ${tool.purpose}.`);
+    }
+
+    for (const tool of blockedTools) {
+        nextSteps.push(`Verify ${tool.name} outside the current sandboxed runtime. This environment blocked tool detection for ${tool.purpose}.`);
     }
 
     for (const entry of status.mediaReadiness) {
@@ -239,7 +245,7 @@ function formatMediaReadinessLine(entry) {
 }
 
 function formatToolLine(tool) {
-    const state = tool.available ? "available" : "missing";
+    const state = tool.available ? "available" : (tool.blocked ? "blocked" : "missing");
     const version = tool.version ? `; ${tool.version}` : "";
     const error = tool.error ? `; ${tool.error}` : "";
     const required = tool.required ? "required" : "optional";

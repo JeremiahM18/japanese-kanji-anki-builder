@@ -138,6 +138,56 @@ test("buildDoctorReport summarizes readiness coverage and acquisition next steps
     }
 });
 
+test("buildDoctorReport distinguishes blocked tooling from missing tooling", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const config = {
+            jlptJsonPath: path.join(rootDir, "kanji_jlpt_only.json"),
+            kradfilePath: path.join(rootDir, "KRADFILE"),
+            sentenceCorpusPath: path.join(rootDir, "sentence_corpus.json"),
+            curatedStudyDataPath: path.join(rootDir, "curated_study_data.json"),
+            strokeOrderImageSourceDir: path.join(rootDir, "images"),
+            strokeOrderAnimationSourceDir: path.join(rootDir, "animations"),
+            audioSourceDir: path.join(rootDir, "audio"),
+            mediaRootDir: path.join(rootDir, "media"),
+            remoteStrokeOrderImageBaseUrl: "",
+            remoteStrokeOrderAnimationBaseUrl: "",
+            remoteAudioBaseUrl: "",
+        };
+
+        fs.writeFileSync(config.jlptJsonPath, JSON.stringify({ 日: { jlpt: 5 } }), "utf-8");
+        fs.writeFileSync(config.kradfilePath, "日 : 日\n", "utf-8");
+
+        const report = await buildDoctorReport({
+            config,
+            buildCoverageSummaryFn: () => ({ totalKanji: 1, coveredKanji: 1, missingKanji: 0, coverageRatio: 1, levels: [], missingByPriority: [] }),
+            buildCuratedStudySummaryFn: () => ({ totalKanji: 1, curatedKanji: 1, missingKanji: 0, coverageRatio: 1, levels: [] }),
+            buildMediaCoverageSummaryFn: async () => ({ totalKanji: 1, strokeOrderCovered: 1, trueAnimationCovered: 1, audioCovered: 0, fullMediaCovered: 0, strokeOrderCoverageRatio: 1, trueAnimationCoverageRatio: 1, audioCoverageRatio: 0, fullMediaCoverageRatio: 0, levels: [] }),
+            buildCardQualitySummaryFn: () => ({ levels: [] }),
+            buildToolchainStatusFn: () => ({
+                runtime: [],
+                packaging: [
+                    {
+                        name: "Python",
+                        purpose: "native .apkg generation",
+                        available: false,
+                        blocked: true,
+                        status: "blocked",
+                        error: "spawnSync python EPERM",
+                        required: false,
+                    },
+                ],
+            }),
+        });
+
+        assert.equal(report.nextSteps.some((step) => step.includes("blocked tool detection")), true);
+        assert.equal(report.nextSteps.some((step) => step.includes("Install packaging tools")), false);
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
 test("formatDoctorReport produces a human-readable setup summary", () => {
     const text = formatDoctorReport({
         ready: false,
@@ -151,6 +201,19 @@ test("formatDoctorReport produces a human-readable setup summary", () => {
             mediaReadiness: [
                 { label: "Audio", ready: false, localDirectoryExists: false, localFileCount: 0, remoteConfigured: false, remoteEnvVar: "REMOTE_AUDIO_BASE_URL" },
             ],
+            toolchain: {
+                runtime: [],
+                packaging: [
+                    {
+                        name: "Python",
+                        available: false,
+                        blocked: true,
+                        required: false,
+                        purpose: "native .apkg generation",
+                        error: "spawnSync python EPERM",
+                    },
+                ],
+            },
         },
         coverage: {
             sentenceCorpus: null,
@@ -192,6 +255,7 @@ test("formatDoctorReport produces a human-readable setup summary", () => {
     assert.match(text, /Overall status: missing required setup/);
     assert.match(text, /Required inputs:/);
     assert.match(text, /Media acquisition readiness:/);
+    assert.match(text, /Python: blocked \[optional\] for native \.apkg generation/);
     assert.match(text, /Level quality gates:/);
     assert.match(text, /REMOTE_AUDIO_BASE_URL/);
     assert.match(text, /Card quality: readings 80.0%, meanings 70.0%, examples 50.0%, contextual notes 40.0%, generic fallback notes 60.0%/);

@@ -38,3 +38,18 @@ test("runReleaseGate fails early when packaging tools are required but unavailab
         /Release gate requires packaging tools/
     );
 });
+
+test("runReleaseGate fails early when packaging tools are blocked by the current runtime", async () => {
+    await assert.rejects(
+        () => runReleaseGate({
+            requireApkgTools: true,
+            buildToolchainStatusFn: () => ({
+                runtime: [],
+                packaging: [
+                    { name: "Python", available: false, blocked: true },
+                ],
+            }),
+        }),
+        /blocked in this runtime/
+    );
+});

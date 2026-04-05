@@ -2,8 +2,10 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const {
+    classifyProbeResult,
     describePythonTool,
     describeTool,
+    getBlockedTools,
     trimVersionText,
     getMissingPackagingTools,
 } = require("../src/services/toolchainService");
@@ -37,15 +39,31 @@ test("describeTool reports a missing command cleanly", () => {
     assert.equal(typeof tool.error, "string");
 });
 
+test("classifyProbeResult marks EPERM failures as blocked", () => {
+    assert.equal(classifyProbeResult({ error: "spawnSync python EPERM", errorCode: "EPERM", status: null }), "blocked");
+});
+
 test("getMissingPackagingTools filters unavailable packaging commands", () => {
     const missing = getMissingPackagingTools({
         packaging: [
-            { name: "Python", available: false },
-            { name: "Node.js", available: true },
+            { name: "Python", available: false, blocked: false },
+            { name: "Sandboxed Python", available: false, blocked: true },
+            { name: "Node.js", available: true, blocked: false },
         ],
     });
 
-    assert.deepEqual(missing, [{ name: "Python", available: false }]);
+    assert.deepEqual(missing, [{ name: "Python", available: false, blocked: false }]);
+});
+
+test("getBlockedTools filters tools blocked by the current runtime", () => {
+    const blocked = getBlockedTools({
+        packaging: [
+            { name: "Python", available: false, blocked: true },
+            { name: "Node.js", available: true, blocked: false },
+        ],
+    });
+
+    assert.deepEqual(blocked, [{ name: "Python", available: false, blocked: true }]);
 });
 
 test("describePythonTool reports an available Python runtime when present", () => {

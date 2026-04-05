@@ -3,7 +3,7 @@ const path = require("node:path");
 const assert = require("node:assert/strict");
 
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
-const { buildToolchainStatus, getMissingPackagingTools } = require("./toolchainService");
+const { buildToolchainStatus, getBlockedTools, getMissingPackagingTools } = require("./toolchainService");
 const { runCiSmoke } = require("./ciSmokeService");
 
 function assertPathExists(filePath) {
@@ -60,9 +60,17 @@ async function runReleaseGate({
 } = {}) {
     const toolchainStatus = buildToolchainStatusFn();
     const missingPackagingTools = getMissingPackagingTools(toolchainStatus);
+    const blockedTools = getBlockedTools(toolchainStatus).filter((tool) => Array.isArray(toolchainStatus.packaging) && toolchainStatus.packaging.includes(tool));
 
-    if (requireApkgTools && missingPackagingTools.length > 0) {
-        throw new Error(`Release gate requires packaging tools, but these are unavailable: ${missingPackagingTools.map((tool) => tool.name).join(", ")}`);
+    if (requireApkgTools && (missingPackagingTools.length > 0 || blockedTools.length > 0)) {
+        const issueParts = [];
+        if (missingPackagingTools.length > 0) {
+            issueParts.push(`unavailable: ${missingPackagingTools.map((tool) => tool.name).join(", ")}`);
+        }
+        if (blockedTools.length > 0) {
+            issueParts.push(`blocked in this runtime: ${blockedTools.map((tool) => tool.name).join(", ")}`);
+        }
+        throw new Error(`Release gate requires packaging tools, but these are ${issueParts.join("; ")}`);
     }
 
     const shouldCleanupTempDir = !rootDir && !keepTempDir;

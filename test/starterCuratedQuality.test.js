@@ -211,4 +211,12 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["覧"].englishMeaning, "look / view / peruse");
     assert.deepEqual(curatedStudyData["聖"].preferredWords, ["神聖", "聖書", "聖地"]);
     assert.equal(curatedStudyData["紫"].exampleSentence.english, "The evening sky looked light purple.");
+    assert.deepEqual(curatedStudyData["詠"].displayWord, { written: "詠う", pron: "うたう" });
+    assert.deepEqual(curatedStudyData["票"].preferredWords, ["投票", "票", "伝票"]);
+    assert.equal(curatedStudyData["禅"].notes, "禅 （ぜん） - Zen ／ 座禅 （ざぜん） - seated meditation ／ 禅寺 （ぜんでら） - Zen temple");
+    assert.equal(curatedStudyData["禍"].exampleSentence.english, "A small lapse invited a major disaster.");
+    assert.deepEqual(curatedStudyData["稀"].displayWord, { written: "稀", pron: "まれ" });
+    assert.equal(curatedStudyData["稲"].exampleSentence.japanese, "秋の田んぼで稲が風に揺れていた。");
+    assert.deepEqual(curatedStudyData["穂"].preferredWords, ["穂", "稲穂"]);
+    assert.equal(curatedStudyData["碁"].englishMeaning, "go board game");
 });

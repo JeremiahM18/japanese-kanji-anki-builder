@@ -31,8 +31,7 @@ test("runReleaseGate fails early when packaging tools are required but unavailab
             buildToolchainStatusFn: () => ({
                 runtime: [],
                 packaging: [
-                    { name: "sqlite3", available: false },
-                    { name: "tar", available: true },
+                    { name: "Python", available: false },
                 ],
             }),
         }),

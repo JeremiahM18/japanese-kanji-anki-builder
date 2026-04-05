@@ -4,6 +4,24 @@ function trimVersionText(value) {
     return String(value || "").trim();
 }
 
+function probeCommand(command, args = ["--version"]) {
+    const result = spawnSync(command, args, {
+        encoding: "utf8",
+    });
+
+    const stdout = trimVersionText(result.stdout);
+    const stderr = trimVersionText(result.stderr);
+    const version = stdout || stderr || null;
+
+    return {
+        command,
+        args,
+        version,
+        error: result.error ? result.error.message : null,
+        status: result.status,
+    };
+}
+
 function describeTool({ name, command, args = ["--version"], required = false, purpose = "" }) {
     if (command === process.execPath && Array.isArray(args) && args.length === 1 && args[0] === "--version") {
         return {
@@ -18,13 +36,7 @@ function describeTool({ name, command, args = ["--version"], required = false, p
         };
     }
 
-    const result = spawnSync(command, args, {
-        encoding: "utf8",
-    });
-
-    const stdout = trimVersionText(result.stdout);
-    const stderr = trimVersionText(result.stderr);
-    const version = stdout || stderr || null;
+    const result = probeCommand(command, args);
 
     if (result.error) {
         return {
@@ -35,7 +47,7 @@ function describeTool({ name, command, args = ["--version"], required = false, p
             purpose,
             available: false,
             version: null,
-            error: result.error.message,
+            error: result.error,
         };
     }
 
@@ -47,7 +59,7 @@ function describeTool({ name, command, args = ["--version"], required = false, p
             required,
             purpose,
             available: false,
-            version,
+            version: result.version,
             error: `exit code ${result.status}`,
         };
     }
@@ -59,7 +71,7 @@ function describeTool({ name, command, args = ["--version"], required = false, p
         required,
         purpose,
         available: true,
-        version,
+        version: result.version,
         error: null,
     };
 }
@@ -90,6 +102,92 @@ function describeNpmTool() {
     });
 }
 
+function getPythonCandidates() {
+    if (process.platform === "win32") {
+        return [
+            {
+                command: "python",
+                probeArgs: ["--version"],
+                runArgsPrefix: [],
+            },
+            {
+                command: "py",
+                probeArgs: ["-3", "--version"],
+                runArgsPrefix: ["-3"],
+            },
+        ];
+    }
+
+    return [
+        {
+            command: "python3",
+            probeArgs: ["--version"],
+            runArgsPrefix: [],
+        },
+        {
+            command: "python",
+            probeArgs: ["--version"],
+            runArgsPrefix: [],
+        },
+    ];
+}
+
+function describePythonTool() {
+    const candidates = getPythonCandidates();
+    let firstFailure = null;
+
+    for (const candidate of candidates) {
+        const result = probeCommand(candidate.command, candidate.probeArgs);
+        if (!result.error && result.status === 0) {
+            return {
+                name: "Python",
+                command: candidate.command,
+                args: candidate.probeArgs,
+                required: false,
+                purpose: "native .apkg generation",
+                available: true,
+                version: result.version,
+                error: null,
+                runArgsPrefix: candidate.runArgsPrefix,
+            };
+        }
+
+        if (!firstFailure) {
+            firstFailure = {
+                command: candidate.command,
+                args: candidate.probeArgs,
+                version: result.version,
+                error: result.error || `exit code ${result.status}`,
+            };
+        }
+    }
+
+    return {
+        name: "Python",
+        command: firstFailure?.command || candidates[0].command,
+        args: firstFailure?.args || candidates[0].probeArgs,
+        required: false,
+        purpose: "native .apkg generation",
+        available: false,
+        version: null,
+        error: firstFailure?.error || "not found",
+        runArgsPrefix: candidates[0].runArgsPrefix,
+    };
+}
+
+function resolvePythonCommand() {
+    const tool = describePythonTool();
+    if (!tool.available) {
+        return null;
+    }
+
+    return {
+        command: tool.command,
+        argsPrefix: Array.isArray(tool.runArgsPrefix) ? tool.runArgsPrefix : [],
+        version: tool.version,
+    };
+}
+
 function buildToolchainStatus() {
     return {
         runtime: [
@@ -103,27 +201,7 @@ function buildToolchainStatus() {
             describeNpmTool(),
         ],
         packaging: [
-            describeTool({
-                name: "Python",
-                command: process.platform === "win32" ? "python" : "python3",
-                args: ["--version"],
-                required: false,
-                purpose: "Python packaging CLI",
-            }),
-            describeTool({
-                name: "sqlite3",
-                command: "sqlite3",
-                args: ["-version"],
-                required: false,
-                purpose: "native .apkg collection generation",
-            }),
-            describeTool({
-                name: "tar",
-                command: "tar",
-                args: ["--version"],
-                required: false,
-                purpose: "native .apkg archive creation",
-            }),
+            describePythonTool(),
         ],
     };
 }
@@ -141,8 +219,10 @@ function getMissingPackagingTools(toolGroups = {}) {
 
 module.exports = {
     buildToolchainStatus,
+    describePythonTool,
     describeTool,
     getMissingPackagingTools,
     getMissingRequiredTools,
+    resolvePythonCommand,
     trimVersionText,
 };

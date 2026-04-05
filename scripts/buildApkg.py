@@ -380,6 +380,8 @@ def build_apkg(out_dir: Path, levels, deck_kind: str):
 
         return {
             "filePath": str(apkg_path),
+            "skipped": False,
+            "skipReason": "",
             "noteCount": note_count,
             "deckCount": deck_count,
             "mediaFileCount": len(media_files),
@@ -393,11 +395,16 @@ def main():
     parser.add_argument("--out-dir", default="out/build", help="Build output directory containing the package folder.")
     parser.add_argument("--levels", default="5", help="Comma-separated JLPT levels, for example 5 or 5,4.")
     parser.add_argument("--deck-kind", default="kanji", choices=["kanji", "word"], help="Packaged deck type to build.")
+    parser.add_argument("--json", action="store_true", help="Emit a machine-readable JSON summary instead of plain text.")
     args = parser.parse_args()
 
     out_dir = Path(args.out_dir).resolve()
     levels = parse_levels(args.levels)
     result = build_apkg(out_dir, levels, args.deck_kind)
+
+    if args.json:
+        print(json.dumps(result, ensure_ascii=False))
+        return
 
     print("Japanese Kanji Builder APKG")
     print("")

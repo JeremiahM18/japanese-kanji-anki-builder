@@ -7,11 +7,7 @@ const { spawnSync } = require("node:child_process");
 
 const { buildMediaBasePath } = require("../src/services/mediaStore");
 const { buildScopedCoverageRatio, parseLevelsArgument, runBuildPipeline } = require("../src/services/buildPipeline");
-
-function commandAvailable(command, versionArg = "--version") {
-    const result = spawnSync(command, [versionArg], { stdio: "ignore" });
-    return !result.error;
-}
+const { resolvePythonCommand } = require("../src/services/toolchainService");
 
 test("parseLevelsArgument supports all and normalized JLPT levels", () => {
     assert.deepEqual(parseLevelsArgument(), [5, 4, 3, 2, 1]);
@@ -301,32 +297,34 @@ test("runBuildPipeline writes exports reports summary and an import-ready packag
     assert.equal(storedSummary.coverage.fullMedia, 0.5);
 
     const apkgPath = storedSummary.package.ankiPackage?.filePath;
-    if (apkgPath && commandAvailable("sqlite3", "-version") && commandAvailable("tar")) {
+    const python = resolvePythonCommand();
+    if (apkgPath && python) {
         assert.equal(fs.existsSync(apkgPath), true);
-
-        const listResult = spawnSync("tar", ["-tf", apkgPath], { encoding: "utf8" });
-        assert.equal(listResult.status, 0);
-        assert.match(listResult.stdout, /collection\.anki2/);
-        assert.match(listResult.stdout, /^media$/m);
-
-        const inspectDir = fs.mkdtempSync(path.join(os.tmpdir(), "kanji-apkg-inspect-"));
-        try {
-            const extractResult = spawnSync("tar", ["-xf", apkgPath], { cwd: inspectDir, encoding: "utf8" });
-            assert.equal(extractResult.status, 0);
-
-            const sqliteResult = spawnSync(
-                "sqlite3",
-                [path.join(inspectDir, "collection.anki2"), "SELECT count(*) FROM notes;"],
-                { encoding: "utf8" }
-            );
-            assert.equal(sqliteResult.status, 0);
-            assert.equal(sqliteResult.stdout.trim(), "1");
-        } finally {
-            fs.rmSync(inspectDir, { recursive: true, force: true });
-        }
+        const inspectScript = [
+            "import sqlite3, sys, tempfile, zipfile",
+            "apkg_path = sys.argv[1]",
+            "with tempfile.TemporaryDirectory() as temp_dir:",
+            "    with zipfile.ZipFile(apkg_path, 'r') as archive:",
+            "        names = set(archive.namelist())",
+            "        assert 'collection.anki2' in names",
+            "        assert 'media' in names",
+            "        archive.extract('collection.anki2', temp_dir)",
+            "    conn = sqlite3.connect(f'{temp_dir}/collection.anki2')",
+            "    try:",
+            "        note_count = conn.execute('SELECT count(*) FROM notes;').fetchone()[0]",
+            "    finally:",
+            "        conn.close()",
+            "    assert note_count == 1, f'note count mismatch: {note_count}'",
+        ].join("\n");
+        const inspectResult = spawnSync(
+            python.command,
+            [...python.argsPrefix, "-c", inspectScript, apkgPath],
+            { encoding: "utf8" }
+        );
+        assert.equal(inspectResult.status, 0, inspectResult.stderr || inspectResult.stdout || "Python .apkg inspection failed");
     } else {
         assert.equal(storedSummary.package.ankiPackage.skipped, true);
-        assert.match(storedSummary.package.ankiPackage.skipReason, /sqlite3|tar|apkg/i);
+        assert.match(storedSummary.package.ankiPackage.skipReason, /python|apkg/i);
     }
 });
 

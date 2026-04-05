@@ -1,7 +1,12 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { describeTool, trimVersionText, getMissingPackagingTools } = require("../src/services/toolchainService");
+const {
+    describePythonTool,
+    describeTool,
+    trimVersionText,
+    getMissingPackagingTools,
+} = require("../src/services/toolchainService");
 
 test("trimVersionText trims whitespace safely", () => {
     assert.equal(trimVersionText("  hello  \n"), "hello");
@@ -35,10 +40,20 @@ test("describeTool reports a missing command cleanly", () => {
 test("getMissingPackagingTools filters unavailable packaging commands", () => {
     const missing = getMissingPackagingTools({
         packaging: [
-            { name: "sqlite3", available: false },
-            { name: "tar", available: true },
+            { name: "Python", available: false },
+            { name: "Node.js", available: true },
         ],
     });
 
-    assert.deepEqual(missing, [{ name: "sqlite3", available: false }]);
+    assert.deepEqual(missing, [{ name: "Python", available: false }]);
+});
+
+test("describePythonTool reports an available Python runtime when present", () => {
+    const tool = describePythonTool();
+
+    assert.equal(typeof tool.available, "boolean");
+    if (tool.available) {
+        assert.match(tool.version, /^Python \d+/);
+        assert.equal(Array.isArray(tool.runArgsPrefix), true);
+    }
 });

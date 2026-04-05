@@ -194,7 +194,7 @@ GitHub Actions now runs three verification lanes:
 
 - an Ubuntu verification matrix on Node 20 and Node 22 for lint and the full automated test suite
 - a cross-platform smoke matrix on Ubuntu, Windows, and macOS that seeds a deterministic fixture workspace with `npm run ci:smoke` and verifies kanji and word deck packaging paths from a clean checkout
-- a dedicated Ubuntu release gate that installs `sqlite3`, runs `npm run release:gate -- --require-apkg-tools`, and asserts artifact contracts plus native `.apkg` generation
+- a dedicated Ubuntu release gate that provisions Python, runs `npm run release:gate -- --require-apkg-tools`, and asserts artifact contracts plus native `.apkg` generation
 
 The smoke and release-gate jobs keep their generated `out/` trees as workflow artifacts so packaging regressions are easier to inspect after a failure.
 

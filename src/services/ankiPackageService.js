@@ -1,22 +1,8 @@
-const crypto = require("node:crypto");
 const fs = require("node:fs");
-const fsp = require("node:fs/promises");
-const os = require("node:os");
 const path = require("node:path");
 const { spawnSync } = require("node:child_process");
 
-const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
-
-const ANKI_MEDIA_INDEX_FILE = "media";
-const ANKI_COLLECTION_FILE = "collection.anki2";
-
-function resolveNoteSchema(deckKind = "kanji") {
-    return loadAnkiNoteSchema(deckKind);
-}
-
-function shellEscapeSql(value) {
-    return String(value ?? "").replace(/'/g, "''");
-}
+const { resolvePythonCommand } = require("./toolchainService");
 
 function normalizeDeckSlug(levels) {
     const normalized = (Array.isArray(levels) ? levels : [])
@@ -24,25 +10,6 @@ function normalizeDeckSlug(levels) {
         .join("-");
 
     return normalized || "deck";
-}
-
-function parseTsv(tsvText) {
-    const lines = String(tsvText ?? "")
-        .split(/\r?\n/)
-        .map((line) => line.trimEnd())
-        .filter(Boolean);
-
-    if (lines.length === 0) {
-        return {
-            header: [],
-            rows: [],
-        };
-    }
-
-    return {
-        header: lines[0].split("\t"),
-        rows: lines.slice(1).map((line) => line.split("\t")),
-    };
 }
 
 function buildDeckName(level, deckKind = "kanji") {
@@ -58,378 +25,94 @@ function buildApkgFileName(levels, deckKind = "kanji") {
     return `${prefix}-${normalizeDeckSlug(levels)}.apkg`;
 }
 
-function buildCss(noteSchema) {
-    return noteSchema.css;
-}
-
-function buildQfmt(noteSchema) {
-    return noteSchema.qfmt;
-}
-
-function buildAfmt(noteSchema) {
-    return noteSchema.afmt;
-}
-
-function createFieldDefinitions(fieldNames, timestampSeconds) {
-    return fieldNames.map((name, index) => ({
-        name,
-        ord: index,
-        rtl: false,
-        sticky: false,
-        collapsed: false,
-        plainText: false,
-        font: "Arial",
-        size: 20,
-        description: "",
-        media: [],
-        id: timestampSeconds + index + 1,
-        tag: null,
-        preventDeletion: false,
-    }));
-}
-
-function createTemplateDefinitions(noteSchema, timestampSeconds) {
-    return [
-        {
-            name: noteSchema.cardTemplateName,
-            ord: 0,
-            qfmt: buildQfmt(noteSchema),
-            afmt: buildAfmt(noteSchema),
-            bqfmt: "",
-            bafmt: "",
-            did: null,
-            id: timestampSeconds + 100,
-        },
-    ];
-}
-
-function createModel({ modelId, deckId, mod, fieldNames, noteSchema }) {
-    return {
-        [String(modelId)]: {
-            css: buildCss(noteSchema),
-            did: deckId,
-            flds: createFieldDefinitions(fieldNames, mod),
-            id: modelId,
-            latexPost: "\\end{document}",
-            latexPre: "\\documentclass[12pt]{article}\\n\\special{papersize=3in,5in}\\n\\usepackage[utf8]{inputenc}\\n\\usepackage{amssymb,amsmath}\\n\\pagestyle{empty}\\n\\setlength{\\parindent}{0in}\\n\\begin{document}",
-            mod,
-            name: noteSchema.noteTypeName,
-            req: [[0, "all", [0]]],
-            sortf: 0,
-            tags: [],
-            tmpls: createTemplateDefinitions(noteSchema, mod),
-            type: 0,
-            usn: 0,
-            vers: [],
-        },
-    };
-}
-
-function createDecks({ deckIdsByLevel, mod, deckKind }) {
-    const decks = {};
-
-    for (const [level, deckId] of Object.entries(deckIdsByLevel)) {
-        decks[String(deckId)] = {
-            collapsed: false,
-            browserCollapsed: false,
-            conf: 1,
-            desc: "",
-            dyn: 0,
-            extendNew: 0,
-            extendRev: 0,
-            id: deckId,
-            lrnToday: [0, 0],
-            mod,
-            name: buildDeckName(level, deckKind),
-            newToday: [0, 0],
-            revToday: [0, 0],
-            timeToday: [0, 0],
-            usn: 0,
-        };
+function listMediaFiles(mediaDir) {
+    if (!fs.existsSync(mediaDir)) {
+        return [];
     }
 
-    return decks;
+    return fs.readdirSync(mediaDir)
+        .filter((fileName) => fs.statSync(path.join(mediaDir, fileName)).isFile())
+        .sort();
 }
 
-function createDeckConfig(mod) {
-    return {
-        "1": {
-            autoplay: true,
-            buryInterdayLearning: false,
-            buryNew: false,
-            buryReviews: false,
-            dyn: false,
-            id: 1,
-            lapse: {
-                delays: [10],
-                leechAction: 0,
-                leechFails: 8,
-                minInt: 1,
-                mult: 0,
-            },
-            maxTaken: 60,
-            mod,
-            name: "Default",
-            new: {
-                bury: false,
-                delays: [1, 10],
-                initialFactor: 2500,
-                ints: [1, 4, 7],
-                order: 1,
-                perDay: 20,
-            },
-            replayq: true,
-            rev: {
-                bury: false,
-                ease4: 1.3,
-                fuzz: 0.05,
-                ivlFct: 1,
-                maxIvl: 36500,
-                perDay: 200,
-            },
-            timer: 0,
-            usn: 0,
-        },
-    };
+function formatAnkiPackageSkipReason(error) {
+    if (error && error.code === "EPERM") {
+        return "Unable to run Python packaging on this machine (EPERM). The deck exports and packaged media were built, but native .apkg generation was skipped.";
+    }
+
+    return error instanceof Error ? error.message : String(error);
 }
 
-function createCollectionConfig() {
-    return {
-        activeDecks: [1],
-        addToCur: true,
-        curDeck: 1,
-        currentModelId: 1,
-        collapseTime: 1200,
-        dueCounts: true,
-        estTimes: true,
-        newSpread: 0,
-        nightMode: false,
-        sortType: "noteFld",
-        timeLim: 0,
-    };
-}
+function runPythonApkgBuilder({ outDir, levels, deckKind }) {
+    const python = resolvePythonCommand();
+    if (!python) {
+        throw new Error("Missing required packaging tool: Python.");
+    }
 
-function computeChecksum(value) {
-    const hash = crypto.createHash("sha1").update(String(value ?? ""), "utf8").digest("hex");
-    return Number.parseInt(hash.slice(0, 8), 16);
-}
-
-function buildGuid(primaryField, level, deckKind = "kanji") {
-    return crypto.createHash("sha1").update(`${deckKind}:${level}:${primaryField}`, "utf8").digest("base64url").slice(0, 10);
-}
-
-function commandAvailable(command, versionArg = "--version") {
-    const result = spawnSync(command, [versionArg], { stdio: "ignore" });
-    return !result.error;
-}
-
-function runCommand(command, args, options = {}) {
-    const result = spawnSync(command, args, {
-        encoding: "utf8",
-        ...options,
-    });
+    const scriptPath = path.resolve(__dirname, "..", "..", "scripts", "buildApkg.py");
+    const result = spawnSync(
+        python.command,
+        [
+            ...python.argsPrefix,
+            scriptPath,
+            `--out-dir=${outDir}`,
+            `--levels=${(Array.isArray(levels) ? levels : []).join(",") || "5"}`,
+            `--deck-kind=${deckKind}`,
+            "--json",
+        ],
+        {
+            encoding: "utf8",
+        }
+    );
 
     if (result.error) {
         throw result.error;
     }
 
     if (result.status !== 0) {
-        throw new Error(`${command} failed with exit code ${result.status}: ${result.stderr || result.stdout || ""}`.trim());
-    }
-
-    return result;
-}
-
-function formatAnkiPackageSkipReason(error) {
-    if (error && error.code === "EPERM") {
-        return "Unable to run sqlite3 on this machine (EPERM). The deck exports and packaged media were built, but native .apkg generation was skipped.";
-    }
-
-    return error instanceof Error ? error.message : String(error);
-}
-
-function buildSchemaSql({ colId, crt, mod, scm, modelId, deckIdsByLevel, notes, cards, fieldNames, noteSchema, deckKind }) {
-    const primaryDeckId = Number(Object.values(deckIdsByLevel)[0] || 1);
-    const modelsJson = JSON.stringify(createModel({
-        modelId,
-        deckId: primaryDeckId,
-        mod,
-        fieldNames,
-        noteSchema,
-    }));
-    const decksJson = JSON.stringify(createDecks({ deckIdsByLevel, mod, deckKind }));
-    const dconfJson = JSON.stringify(createDeckConfig(mod));
-    const confJson = JSON.stringify(createCollectionConfig());
-
-    const statements = [
-        "PRAGMA journal_mode=WAL;",
-        "PRAGMA synchronous=OFF;",
-        "CREATE TABLE col (id integer primary key, crt integer not null, mod integer not null, scm integer not null, ver integer not null, dty integer not null, usn integer not null, ls integer not null, conf text not null, models text not null, decks text not null, dconf text not null, tags text not null);",
-        "CREATE TABLE notes (id integer primary key, guid text not null, mid integer not null, mod integer not null, usn integer not null, tags text not null, flds text not null, sfld integer not null, csum integer not null, flags integer not null, data text not null);",
-        "CREATE TABLE cards (id integer primary key, nid integer not null, did integer not null, ord integer not null, mod integer not null, usn integer not null, type integer not null, queue integer not null, due integer not null, ivl integer not null, factor integer not null, reps integer not null, lapses integer not null, left integer not null, odue integer not null, odid integer not null, flags integer not null, data text not null);",
-        "CREATE TABLE revlog (id integer primary key, cid integer not null, usn integer not null, ease integer not null, ivl integer not null, lastIvl integer not null, factor integer not null, time integer not null, type integer not null);",
-        "CREATE TABLE graves (usn integer not null, oid integer not null, type integer not null);",
-        "CREATE INDEX ix_notes_usn on notes (usn);",
-        "CREATE INDEX ix_cards_usn on cards (usn);",
-        "CREATE INDEX ix_cards_nid on cards (nid);",
-        "CREATE INDEX ix_cards_sched on cards (did, queue, due);",
-        `INSERT INTO col VALUES (${colId}, ${crt}, ${mod}, ${scm}, 11, 0, 0, 0, '${shellEscapeSql(confJson)}', '${shellEscapeSql(modelsJson)}', '${shellEscapeSql(decksJson)}', '${shellEscapeSql(dconfJson)}', '{}');`,
-    ];
-
-    for (const note of notes) {
-        statements.push(
-            `INSERT INTO notes VALUES (${note.id}, '${shellEscapeSql(note.guid)}', ${note.mid}, ${mod}, 0, '', '${shellEscapeSql(note.flds)}', '${shellEscapeSql(note.sfld)}', ${note.csum}, 0, '');`
+        throw new Error(
+            `Python .apkg build failed with exit code ${result.status}: ${String(result.stderr || result.stdout || "").trim()}`
         );
     }
 
-    for (const card of cards) {
-        statements.push(
-            `INSERT INTO cards VALUES (${card.id}, ${card.nid}, ${card.did}, 0, ${mod}, 0, 0, 0, ${card.due}, 0, 2500, 0, 0, 0, 0, 0, 0, '');`
-        );
-    }
-
-    statements.push("VACUUM;");
-    return `${statements.join("\n")}\n`;
-}
-
-async function createArchiveWithTar({ workingDir, outputPath, fileNames }) {
-    const zipPath = `${outputPath}.zip`;
-    if (fs.existsSync(zipPath)) {
-        await fsp.unlink(zipPath);
-    }
-    if (fs.existsSync(outputPath)) {
-        await fsp.unlink(outputPath);
-    }
-
-    runCommand("tar", ["-a", "-c", "-f", zipPath, ...fileNames], { cwd: workingDir });
-    await fsp.rename(zipPath, outputPath);
-}
-
-async function stageApkgMedia({ sourceMediaDir, tempDir, mediaFiles }) {
-    const mediaMap = {};
-
-    for (const [index, fileName] of mediaFiles.entries()) {
-        const numericName = String(index);
-        await fsp.copyFile(path.join(sourceMediaDir, fileName), path.join(tempDir, numericName));
-        mediaMap[numericName] = fileName;
-    }
-
-    await fsp.writeFile(
-        path.join(tempDir, ANKI_MEDIA_INDEX_FILE),
-        `${JSON.stringify(mediaMap, null, 2)}\n`,
-        "utf8"
-    );
-}
-
-function buildAnkiRows({ exports, fieldNames }) {
-    const rows = [];
-
-    for (const artifact of exports) {
-        const tsv = fs.readFileSync(artifact.filePath, "utf8");
-        const parsed = parseTsv(tsv);
-        const header = Array.isArray(parsed.header) && parsed.header.length > 0
-            ? parsed.header
-            : fieldNames;
-
-        for (const columns of parsed.rows) {
-            rows.push({
-                level: Number(artifact.level),
-                fields: header.map((_, index) => columns[index] || ""),
-            });
-        }
-    }
-
-    return rows;
+    return JSON.parse(String(result.stdout || "{}").trim());
 }
 
 async function buildAnkiPackage({
     packageRootDir,
-    exports,
+    exports: _exports,
     mediaDir,
     levels,
     deckKind = "kanji",
 }) {
-    if (!commandAvailable("sqlite3", "-version") || !commandAvailable("tar")) {
+    const python = resolvePythonCommand();
+    const mediaFiles = listMediaFiles(mediaDir);
+
+    if (!python) {
         return {
             filePath: null,
             skipped: true,
-            skipReason: "Missing required system tools: sqlite3 and/or tar.",
+            skipReason: "Missing required packaging tool: Python.",
             noteCount: 0,
             deckCount: 0,
-            mediaFileCount: 0,
+            mediaFileCount: mediaFiles.length,
         };
     }
 
-    const noteSchema = resolveNoteSchema(deckKind);
-    const fieldNames = noteSchema.fieldNames;
-    const rows = buildAnkiRows({ exports, fieldNames });
-    const mediaFiles = fs.existsSync(mediaDir)
-        ? fs.readdirSync(mediaDir).filter((fileName) => fs.statSync(path.join(mediaDir, fileName)).isFile()).sort()
-        : [];
-
-    const now = Date.now();
-    const mod = Math.floor(now / 1000);
-    const crt = mod;
-    const scm = now;
-    const colId = 1;
-    const modelId = now;
-    const deckIdsByLevel = Object.fromEntries(
-        (Array.isArray(levels) ? levels : []).map((level, index) => [level, now + 1000 + index])
-    );
-
-    const notes = rows.map((row, index) => ({
-        id: now + 2000 + index,
-        guid: buildGuid(row.fields[0], row.level, deckKind),
-        mid: modelId,
-        flds: row.fields.join("\u001f"),
-        sfld: row.fields[0],
-        csum: computeChecksum(row.fields[0]),
-    }));
-    const cards = rows.map((row, index) => ({
-        id: now + 5000 + index,
-        nid: notes[index].id,
-        did: deckIdsByLevel[row.level],
-        due: index + 1,
-    }));
-
-    const tempDir = await fsp.mkdtemp(path.join(os.tmpdir(), "kanji-apkg-"));
-    const collectionPath = path.join(tempDir, ANKI_COLLECTION_FILE);
-    const apkgPath = path.join(packageRootDir, buildApkgFileName(levels, deckKind));
-
     try {
-        const schemaSql = buildSchemaSql({
-            colId,
-            crt,
-            mod,
-            scm,
-            modelId,
-            deckIdsByLevel,
-            notes,
-            cards,
-            fieldNames,
-            noteSchema,
+        const result = runPythonApkgBuilder({
+            outDir: path.dirname(packageRootDir),
+            levels,
             deckKind,
         });
 
-        runCommand("sqlite3", [collectionPath], { input: schemaSql });
-        await stageApkgMedia({ sourceMediaDir: mediaDir, tempDir, mediaFiles });
-        await createArchiveWithTar({
-            workingDir: tempDir,
-            outputPath: apkgPath,
-            fileNames: [
-                ANKI_COLLECTION_FILE,
-                ANKI_MEDIA_INDEX_FILE,
-                ...mediaFiles.map((_, index) => String(index)),
-            ],
-        });
-
         return {
-            filePath: apkgPath,
+            filePath: result.filePath || path.join(packageRootDir, buildApkgFileName(levels, deckKind)),
             skipped: false,
             skipReason: "",
-            noteCount: notes.length,
-            deckCount: Object.keys(deckIdsByLevel).length,
-            mediaFileCount: mediaFiles.length,
+            noteCount: Number(result.noteCount) || 0,
+            deckCount: Number(result.deckCount) || new Set(levels || []).size,
+            mediaFileCount: Number(result.mediaFileCount) || mediaFiles.length,
         };
     } catch (error) {
         return {
@@ -440,17 +123,12 @@ async function buildAnkiPackage({
             deckCount: 0,
             mediaFileCount: mediaFiles.length,
         };
-    } finally {
-        fs.rmSync(tempDir, { recursive: true, force: true });
     }
 }
 
 module.exports = {
-    ANKI_COLLECTION_FILE,
-    ANKI_MEDIA_INDEX_FILE,
     buildAnkiPackage,
     buildApkgFileName,
     buildDeckName,
-    parseTsv,
-    resolveNoteSchema,
+    formatAnkiPackageSkipReason,
 };

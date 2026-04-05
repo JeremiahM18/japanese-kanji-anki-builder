@@ -227,4 +227,12 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["縫"].exampleSentence.japanese, "ほつれた所を丁寧に縫い直した。");
     assert.deepEqual(curatedStudyData["繁"].preferredWords, ["繁忙", "繁栄", "頻繁"]);
     assert.equal(curatedStudyData["臭"].englishMeaning, "smell / odor / stinking");
+    assert.deepEqual(curatedStudyData["郷"].displayWord, { written: "故郷", pron: "ふるさと" });
+    assert.equal(curatedStudyData["鎮"].notes, "鎮める （しずめる） - calm / suppress ／ 鎮静 （ちんせい） - calming / sedation ／ 鎮火 （ちんか） - extinguishing a fire");
+    assert.deepEqual(curatedStudyData["附"].preferredWords, ["附録", "附属", "附記"]);
+    assert.equal(curatedStudyData["詩"].exampleSentence.english, "I read a short poem aloud.");
+    assert.deepEqual(curatedStudyData["瞳"].displayWord, { written: "瞳", pron: "ひとみ" });
+    assert.equal(curatedStudyData["謹"].englishMeaning, "be respectful / be humble / reverent");
+    assert.deepEqual(curatedStudyData["跳"].preferredWords, ["跳ぶ", "跳ねる", "跳躍"]);
+    assert.equal(curatedStudyData["軸"].exampleSentence.japanese, "話の軸が最後までぶれなかった。");
 });

@@ -243,4 +243,12 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["綱"].englishMeaning, "rope / cord / main line");
     assert.deepEqual(curatedStudyData["融"].preferredWords, ["融ける", "金融", "融通"]);
     assert.equal(curatedStudyData["露"].exampleSentence.japanese, "草の先に朝露が静かに残っていた。");
+    assert.deepEqual(curatedStudyData["網"].displayWord, { written: "網", pron: "あみ" });
+    assert.equal(curatedStudyData["縄"].notes, "縄 （なわ） - rope ／ 縄跳び （なわとび） - jump rope ／ 縄文 （じょうもん） - Jomon period / cord-marked pattern");
+    assert.deepEqual(curatedStudyData["羊"].preferredWords, ["羊", "羊毛", "羊肉"]);
+    assert.equal(curatedStudyData["肺"].exampleSentence.english, "I underwent a test to examine the condition of my lungs.");
+    assert.deepEqual(curatedStudyData["舌"].displayWord, { written: "舌", pron: "した" });
+    assert.equal(curatedStudyData["訳"].englishMeaning, "reason / meaning / translate");
+    assert.deepEqual(curatedStudyData["証"].preferredWords, ["証拠", "証明", "保証"]);
+    assert.equal(curatedStudyData["評"].exampleSentence.japanese, "新しい企画は高い評価を受けた。");
 });

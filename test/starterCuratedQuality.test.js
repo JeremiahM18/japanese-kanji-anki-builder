@@ -251,4 +251,12 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["訳"].englishMeaning, "reason / meaning / translate");
     assert.deepEqual(curatedStudyData["証"].preferredWords, ["証拠", "証明", "保証"]);
     assert.equal(curatedStudyData["評"].exampleSentence.japanese, "新しい企画は高い評価を受けた。");
+    assert.deepEqual(curatedStudyData["街"].displayWord, { written: "街", pron: "まち" });
+    assert.equal(curatedStudyData["邦"].notes, "邦画 （ほうが） - Japanese film ／ 邦人 （ほうじん） - fellow countryman ／ 友邦 （ゆうほう） - friendly nation");
+    assert.deepEqual(curatedStudyData["邸"].preferredWords, ["官邸", "公邸", "邸宅"]);
+    assert.equal(curatedStudyData["裸"].exampleSentence.english, "The child was running barefoot along the beach.");
+    assert.deepEqual(curatedStudyData["虹"].displayWord, { written: "虹", pron: "にじ" });
+    assert.equal(curatedStudyData["蛇"].englishMeaning, "snake");
+    assert.deepEqual(curatedStudyData["菊"].preferredWords, ["菊", "菊花", "白菊"]);
+    assert.equal(curatedStudyData["苗"].exampleSentence.japanese, "田んぼに新しい苗が並んで植えられた。");
 });

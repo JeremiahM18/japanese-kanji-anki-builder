@@ -200,15 +200,15 @@ The smoke and release-gate jobs keep their generated `out/` trees as workflow ar
 
 ## Repository governance
 
-`main` should be protected in GitHub with required pull requests, code-owner review, stale-review dismissal, conversation resolution, and the exact required checks listed in [docs/branch-protection.md](/C:/japanese_kanji_builder/docs/branch-protection.md).
+`main` should be protected in GitHub with required pull requests, code-owner review, stale-review dismissal, conversation resolution, and the exact required checks listed in [docs/branch-protection.md](docs/branch-protection.md).
 
-The checked-in policy files in [.github/CODEOWNERS](/C:/japanese_kanji_builder/.github/CODEOWNERS) and [docs/branch-protection.md](/C:/japanese_kanji_builder/docs/branch-protection.md) are treated as part of the repo contract and are covered by automated tests.
+The checked-in policy files in [.github/CODEOWNERS](.github/CODEOWNERS) and [docs/branch-protection.md](docs/branch-protection.md) are treated as part of the repo contract and are covered by automated tests.
 
 ## Release process
 
-Tagged releases should follow [docs/release-process.md](/C:/japanese_kanji_builder/docs/release-process.md), keep [CHANGELOG.md](/C:/japanese_kanji_builder/CHANGELOG.md) current, and use `v<package.json version>` tags so version metadata, docs, and workflow triggers stay aligned.
+Tagged releases should follow [docs/release-process.md](docs/release-process.md), keep [CHANGELOG.md](CHANGELOG.md) current, and use `v<package.json version>` tags so version metadata, docs, and workflow triggers stay aligned.
 
-The tagged workflow in [.github/workflows/release.yml](/C:/japanese_kanji_builder/.github/workflows/release.yml) reruns release verification, publishes deterministic smoke and release-gate artifacts, and emits `release-artifacts.sha256` for traceability.
+The tagged workflow in [.github/workflows/release.yml](.github/workflows/release.yml) reruns release verification, publishes deterministic smoke and release-gate artifacts, and emits `release-artifacts.sha256` for traceability.
 
 ## Important commands
 
@@ -242,8 +242,6 @@ The tagged workflow in [.github/workflows/release.yml](/C:/japanese_kanji_builde
 | `npm run media:init` | Create media source folders and bootstrap `.env` |
 | `npm run media:plan` | Show missing media by kanji with accepted filenames |
 | `npm run media:plan:stroke-order` | Show Wikimedia Commons checklist URLs for supplemental stroke-order assets |
-
-Build benchmark budget: `bench:build` accepts `--budget=default` plus optional overrides like `--budget-total-ms=4500`, `--budget-export-ms=2200`, `--budget-media-sync-ms=1300`, and `--budget-packaging-ms=550`. The default gate is tuned for the current N3-N5 no-audio path with modest headroom.
 | `npm run media:discover:stroke-order` | Discover real Wikimedia Commons titles for missing supplemental stroke-order assets |
 | `npm run media:fetch:stroke-order` | Download confirmed Wikimedia stroke-order assets, or probe guessed filenames with `--probe-guessed` |
 | `npm run media:import:stroke-order` | Import free local stroke-order assets |
@@ -252,6 +250,8 @@ Build benchmark budget: `bench:build` accepts `--budget=default` plus optional o
 | `npm run media:voicevox` | Generate kanji audio from a local VOICEVOX engine |
 | `npm run media:sources` | Report local source-folder coverage before media sync |
 | `npm run media:sync` | Sync stroke-order and audio assets into managed storage for one level at a time |
+
+Build benchmark budget: `bench:build` accepts `--budget=default` plus optional overrides like `--budget-total-ms=4500`, `--budget-export-ms=2200`, `--budget-media-sync-ms=1300`, and `--budget-packaging-ms=550`. The default gate is tuned for the current N3-N5 no-audio path with modest headroom.
 
 ## Local data and config
 
@@ -290,7 +290,7 @@ Optional `.env` settings:
 
 By default, `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` points at the GitHub `jcsirot/kanji.gif` set so animation sync prefers the same fast remote source across machines unless you intentionally override it.
 
-More detailed local data guidance lives in [data/README.md](/C:/japanese_kanji_builder/data/README.md).
+More detailed local data guidance lives in [data/README.md](data/README.md).
 
 ## Deck model
 

@@ -219,4 +219,12 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["稲"].exampleSentence.japanese, "秋の田んぼで稲が風に揺れていた。");
     assert.deepEqual(curatedStudyData["穂"].preferredWords, ["穂", "稲穂"]);
     assert.equal(curatedStudyData["碁"].englishMeaning, "go board game");
+    assert.deepEqual(curatedStudyData["謡"].displayWord, { written: "謡う", pron: "うたう" });
+    assert.equal(curatedStudyData["顕"].notes, "顕著 （けんちょ） - remarkable / noticeable ／ 顕在 （けんざい） - become apparent ／ 顕微鏡 （けんびきょう） - microscope");
+    assert.deepEqual(curatedStudyData["肝"].preferredWords, ["肝心", "肝", "肝臓"]);
+    assert.equal(curatedStudyData["紋"].exampleSentence.english, "The fabric pattern stood out beautifully in the light.");
+    assert.deepEqual(curatedStudyData["絞"].displayWord, { written: "絞る", pron: "しぼる" });
+    assert.equal(curatedStudyData["縫"].exampleSentence.japanese, "ほつれた所を丁寧に縫い直した。");
+    assert.deepEqual(curatedStudyData["繁"].preferredWords, ["繁忙", "繁栄", "頻繁"]);
+    assert.equal(curatedStudyData["臭"].englishMeaning, "smell / odor / stinking");
 });

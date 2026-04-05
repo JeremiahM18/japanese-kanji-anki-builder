@@ -283,4 +283,12 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["霞"].englishMeaning, "haze / mist");
     assert.deepEqual(curatedStudyData["霜"].preferredWords, ["霜", "霜柱", "霜降り"]);
     assert.equal(curatedStudyData["墨"].exampleSentence.japanese, "半紙に墨の香りが静かに広がった。");
+    assert.deepEqual(curatedStudyData["芽"].displayWord, { written: "芽", pron: "め" });
+    assert.equal(curatedStudyData["茎"].notes, "茎 （くき） - stem / stalk ／ 花茎 （かけい） - flower stalk ／ 地下茎 （ちかけい） - rhizome");
+    assert.deepEqual(curatedStudyData["薫"].preferredWords, ["薫る", "薫り", "薫風"]);
+    assert.equal(curatedStudyData["鳩"].exampleSentence.english, "A pigeon in the park was walking near people's feet.");
+    assert.deepEqual(curatedStudyData["鶴"].displayWord, { written: "鶴", pron: "つる" });
+    assert.equal(curatedStudyData["鯨"].englishMeaning, "whale");
+    assert.deepEqual(curatedStudyData["雛"].preferredWords, ["雛", "雛鳥", "雛人形"]);
+    assert.equal(curatedStudyData["苑"].exampleSentence.japanese, "静かな苑を歩くと心が落ち着いた。");
 });

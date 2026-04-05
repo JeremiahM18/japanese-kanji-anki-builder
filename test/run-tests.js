@@ -32,6 +32,7 @@ require("./goldenReviewService.test");
 require("./reviewGoldenLevelScript.test");
 require("./releaseGateService.test");
 require("./releasePolicy.test");
+require("./reportCuratedStudyCoverageScript.test");
 require("./reviewGoldenWordLevel.test");
 require("./sentenceCorpus.test");
 require("./sentenceCorpusBootstrapService.test");

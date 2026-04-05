@@ -238,6 +238,7 @@ The tagged workflow in [.github/workflows/release.yml](.github/workflows/release
 | `npm run build:artifacts` | Run the deterministic kanji build pipeline (`--fail-on-export-issues` available for strict scripting) |
 | `npm run corpus:init` | Create or merge starter sentence corpus data |
 | `npm run curated:init` | Create or merge starter curated kanji study data |
+| `npm run curated:report -- --level=1 --limit=8` | Show the next high-value missing curated kanji for a level, ranked by cached word candidates |
 | `npm run words:init` | Create or merge starter curated word study data |
 | `npm run media:init` | Create media source folders and bootstrap `.env` |
 | `npm run media:plan` | Show missing media by kanji with accepted filenames |

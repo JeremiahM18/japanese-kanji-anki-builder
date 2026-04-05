@@ -4,15 +4,22 @@ const { invokeCliMain } = require("../src/utils/cliArgs");
 const { loadConfig } = require("../src/config");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const { buildCuratedStudySummary } = require("../src/datasets/curatedStudyCoverage");
+const { assertNoUnknownArgs, collectUnknownArg } = require("../src/utils/cliArgs");
 
 function parseArgs(argv) {
     const options = {
         limit: 25,
+        level: null,
+        unknownArgs: [],
     };
 
     for (const arg of argv) {
         if (arg.startsWith("--limit=")) {
             options.limit = Number(arg.split("=")[1]);
+        } else if (arg.startsWith("--level=")) {
+            options.level = Number(arg.split("=")[1]);
+        } else {
+            collectUnknownArg(options, arg);
         }
     }
 
@@ -22,6 +29,7 @@ function parseArgs(argv) {
 function main() {
     const config = loadConfig();
     const options = parseArgs(process.argv.slice(2));
+    assertNoUnknownArgs("reportCuratedStudyCoverage", options.unknownArgs);
 
     if (!fs.existsSync(config.jlptJsonPath)) {
         throw new Error(`Missing JLPT JSON file at ${config.jlptJsonPath}`);
@@ -32,6 +40,8 @@ function main() {
     const summary = buildCuratedStudySummary({
         jlptOnlyJson,
         curatedStudyData,
+        cacheDir: config.cacheDir,
+        level: Number.isInteger(options.level) ? options.level : null,
     });
 
     console.log(JSON.stringify({

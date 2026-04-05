@@ -203,4 +203,12 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["織"].englishMeaning, "weave / organization / fabric");
     assert.deepEqual(curatedStudyData["磁"].preferredWords, ["磁石", "磁気", "磁場"]);
     assert.equal(curatedStudyData["秘"].exampleSentence.english, "That plan remained secret until the end.");
+    assert.deepEqual(curatedStudyData["級"].displayWord, { written: "高級", pron: "こうきゅう" });
+    assert.equal(curatedStudyData["系"].notes, "体系 （たいけい） - system / framework ／ 系統 （けいとう） - system / line ／ 家系 （かけい） - family line");
+    assert.deepEqual(curatedStudyData["請"].preferredWords, ["請求", "要請", "申請"]);
+    assert.equal(curatedStudyData["診"].exampleSentence.japanese, "医師の診断を受けて安心した。");
+    assert.deepEqual(curatedStudyData["閲"].displayWord, { written: "閲覧", pron: "えつらん" });
+    assert.equal(curatedStudyData["覧"].englishMeaning, "look / view / peruse");
+    assert.deepEqual(curatedStudyData["聖"].preferredWords, ["神聖", "聖書", "聖地"]);
+    assert.equal(curatedStudyData["紫"].exampleSentence.english, "The evening sky looked light purple.");
 });

@@ -235,4 +235,12 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["謹"].englishMeaning, "be respectful / be humble / reverent");
     assert.deepEqual(curatedStudyData["跳"].preferredWords, ["跳ぶ", "跳ねる", "跳躍"]);
     assert.equal(curatedStudyData["軸"].exampleSentence.japanese, "話の軸が最後までぶれなかった。");
+    assert.deepEqual(curatedStudyData["穴"].displayWord, { written: "穴", pron: "あな" });
+    assert.equal(curatedStudyData["笛"].notes, "笛 （ふえ） - flute ／ 汽笛 （きてき） - steam whistle ／ 口笛 （くちぶえ） - whistle");
+    assert.deepEqual(curatedStudyData["筋"].preferredWords, ["筋", "筋道", "筋肉"]);
+    assert.equal(curatedStudyData["紺"].exampleSentence.english, "The navy jacket creates a calm impression.");
+    assert.deepEqual(curatedStudyData["絹"].displayWord, { written: "絹", pron: "きぬ" });
+    assert.equal(curatedStudyData["綱"].englishMeaning, "rope / cord / main line");
+    assert.deepEqual(curatedStudyData["融"].preferredWords, ["融ける", "金融", "融通"]);
+    assert.equal(curatedStudyData["露"].exampleSentence.japanese, "草の先に朝露が静かに残っていた。");
 });

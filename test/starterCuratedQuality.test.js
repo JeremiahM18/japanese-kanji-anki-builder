@@ -11,6 +11,13 @@ function normalizeForSearch(value) {
         .replace(/[\s　（）()／・、。,.-]/g, "");
 }
 
+function getTrackedN1BatchPaths() {
+    return fs.readdirSync(path.join(process.cwd(), "templates"))
+        .filter((name) => /^starter_curated_study_data_n1_batch_\d+\.json$/.test(name))
+        .sort((a, b) => a.localeCompare(b))
+        .map((name) => path.join(process.cwd(), "templates", name));
+}
+
 test("tracked starter curated N3-N5 entries keep required learner-facing quality metadata", () => {
     const starterPath = path.join(process.cwd(), "templates", "starter_curated_study_data.json");
     const starterData = JSON.parse(fs.readFileSync(starterPath, "utf8"));
@@ -39,30 +46,36 @@ test("tracked starter curated N3-N5 entries keep required learner-facing quality
 });
 
 test("tracked starter curated N1 batch entries keep required learner-facing quality metadata", () => {
-    const starterPath = path.join(process.cwd(), "templates", "starter_curated_study_data_n1_batch_01.json");
-    const starterData = JSON.parse(fs.readFileSync(starterPath, "utf8"));
+    const starterPaths = getTrackedN1BatchPaths();
 
-    assert.equal(Object.keys(starterData).length, 8);
+    assert.ok(starterPaths.length >= 1, "expected at least one tracked N1 batch file");
 
-    for (const [kanji, entry] of Object.entries(starterData)) {
-        assert.equal(entry.source, "starter-curated", `${kanji}: source should stay starter-curated`);
-        assert.equal(entry.jlpt, 1, `${kanji}: batch should stay N1`);
-        assert.ok(entry.tags.includes("starter"), `${kanji}: tags should include starter`);
-        assert.ok(entry.tags.includes("n1"), `${kanji}: tags should include n1`);
-        assert.ok(Array.isArray(entry.preferredWords) && entry.preferredWords.length > 0, `${kanji}: should have preferred words`);
-        assert.ok(String(entry.displayWord?.written || "").trim().length > 0, `${kanji}: display word should be present`);
-        assert.ok(String(entry.displayWord?.pron || "").trim().length > 0, `${kanji}: display reading should be present`);
-        assert.ok(String(entry.englishMeaning || "").trim().length > 0, `${kanji}: meaning should be present`);
-        assert.ok(String(entry.notes || "").trim().length > 0, `${kanji}: notes should be present`);
-        assert.ok(String(entry.exampleSentence?.japanese || "").trim().length > 0, `${kanji}: example Japanese should be present`);
-        assert.ok(String(entry.exampleSentence?.reading || "").trim().length > 0, `${kanji}: example reading should be present`);
-        assert.ok(String(entry.exampleSentence?.english || "").trim().length > 0, `${kanji}: example English should be present`);
-        assert.ok(String(entry.exampleSentence.japanese).length <= 30, `${kanji}: example sentence should stay concise for learners`);
-        assert.ok(!String(entry.notes).includes("Offline preview built from local data only."), `${kanji}: notes should never fall back to the generic offline placeholder`);
+    for (const starterPath of starterPaths) {
+        const starterData = JSON.parse(fs.readFileSync(starterPath, "utf8"));
+        const entryCount = Object.keys(starterData).length;
 
-        const normalizedNotes = normalizeForSearch(entry.notes);
-        const mentionsPreferredWord = entry.preferredWords.some((word) => normalizedNotes.includes(normalizeForSearch(word)));
-        assert.ok(mentionsPreferredWord, `${kanji}: notes should mention at least one preferred word`);
+        assert.ok(entryCount >= 6 && entryCount <= 8, `${path.basename(starterPath)}: batch should stay within the 6-8 kanji workflow`);
+
+        for (const [kanji, entry] of Object.entries(starterData)) {
+            assert.equal(entry.source, "starter-curated", `${kanji}: source should stay starter-curated`);
+            assert.equal(entry.jlpt, 1, `${kanji}: batch should stay N1`);
+            assert.ok(entry.tags.includes("starter"), `${kanji}: tags should include starter`);
+            assert.ok(entry.tags.includes("n1"), `${kanji}: tags should include n1`);
+            assert.ok(Array.isArray(entry.preferredWords) && entry.preferredWords.length > 0, `${kanji}: should have preferred words`);
+            assert.ok(String(entry.displayWord?.written || "").trim().length > 0, `${kanji}: display word should be present`);
+            assert.ok(String(entry.displayWord?.pron || "").trim().length > 0, `${kanji}: display reading should be present`);
+            assert.ok(String(entry.englishMeaning || "").trim().length > 0, `${kanji}: meaning should be present`);
+            assert.ok(String(entry.notes || "").trim().length > 0, `${kanji}: notes should be present`);
+            assert.ok(String(entry.exampleSentence?.japanese || "").trim().length > 0, `${kanji}: example Japanese should be present`);
+            assert.ok(String(entry.exampleSentence?.reading || "").trim().length > 0, `${kanji}: example reading should be present`);
+            assert.ok(String(entry.exampleSentence?.english || "").trim().length > 0, `${kanji}: example English should be present`);
+            assert.ok(String(entry.exampleSentence.japanese).length <= 30, `${kanji}: example sentence should stay concise for learners`);
+            assert.ok(!String(entry.notes).includes("Offline preview built from local data only."), `${kanji}: notes should never fall back to the generic offline placeholder`);
+
+            const normalizedNotes = normalizeForSearch(entry.notes);
+            const mentionsPreferredWord = entry.preferredWords.some((word) => normalizedNotes.includes(normalizeForSearch(word)));
+            assert.ok(mentionsPreferredWord, `${kanji}: notes should mention at least one preferred word`);
+        }
     }
 });
 
@@ -174,4 +187,12 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["穏"].exampleSentence.japanese, "海は一日中穏やかだった。");
     assert.equal(curatedStudyData["巡"].exampleSentence.english, "I walked along the riverside path that circles the area.");
     assert.equal(curatedStudyData["祉"].englishMeaning, "welfare / well-being");
+    assert.deepEqual(curatedStudyData["素"].displayWord, { written: "素晴らしい", pron: "すばらしい" });
+    assert.equal(curatedStudyData["策"].notes, "対策 （たいさく） - countermeasure / step ／ 政策 （せいさく） - policy ／ 作戦 （さくせん） - strategy / operation");
+    assert.equal(curatedStudyData["節"].exampleSentence.japanese, "この季節は朝晩が冷えます。");
+    assert.deepEqual(curatedStudyData["紀"].preferredWords, ["世紀", "紀元", "紀行"]);
+    assert.equal(curatedStudyData["統"].englishMeaning, "unite / control / govern");
+    assert.deepEqual(curatedStudyData["縁"].displayWord, { written: "縁", pron: "えん" });
+    assert.deepEqual(curatedStudyData["締"].preferredWords, ["締切", "引き締める", "取締"]);
+    assert.equal(curatedStudyData["縮"].exampleSentence.english, "We shortened the meeting to thirty minutes.");
 });

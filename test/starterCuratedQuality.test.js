@@ -267,4 +267,12 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["鎖"].englishMeaning, "chain / link / shackle");
     assert.deepEqual(curatedStudyData["雷"].preferredWords, ["雷", "落雷", "雷雨"]);
     assert.equal(curatedStudyData["霧"].exampleSentence.japanese, "朝の霧で山道が白く包まれていた。");
+    assert.deepEqual(curatedStudyData["虎"].displayWord, { written: "虎", pron: "とら" });
+    assert.equal(curatedStudyData["蚊"].notes, "蚊 （か） - mosquito ／ 蚊取り線香 （かとりせんこう） - mosquito coil ／ 蚊帳 （かや） - mosquito net");
+    assert.deepEqual(curatedStudyData["蝶"].preferredWords, ["蝶", "蝶々", "胡蝶"]);
+    assert.equal(curatedStudyData["鐘"].exampleSentence.english, "The temple bell was echoing at dusk.");
+    assert.deepEqual(curatedStudyData["鏡"].displayWord, { written: "鏡", pron: "かがみ" });
+    assert.equal(curatedStudyData["鉢"].englishMeaning, "bowl / pot");
+    assert.deepEqual(curatedStudyData["酢"].preferredWords, ["酢", "酢の物", "黒酢"]);
+    assert.equal(curatedStudyData["隣"].exampleSentence.japanese, "隣の席の人が静かに本を読んでいた。");
 });

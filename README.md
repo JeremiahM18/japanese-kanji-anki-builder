@@ -27,7 +27,7 @@ npm run corpus:init
 npm run curated:init
 npm run words:init
 npm run media:init
-$env:ENABLE_AUDIO='false'; npm run deck:readiness
+npm run deck:readiness
 npm run deck:preview -- --level=5 --limit=5
 npm run deck:ready -- --levels=5
 npm run deck:apkg -- --levels=5
@@ -35,7 +35,7 @@ npm run deck:words:ready -- --levels=5
 npm run deck:words:apkg -- --levels=5
 ```
 
-If you are intentionally deferring audio work, keep `ENABLE_AUDIO=false` for readiness and reporting commands.
+Audio is advisory by default in readiness scoring: a deck can be `ready` without audio, and audio coverage is reported separately in readiness output.
 
 ## Core workflows
 
@@ -364,7 +364,7 @@ Readiness checks evaluate:
 - curated study coverage
 - stroke-order coverage
 - animation coverage as a separate diagnostic
-- audio coverage when audio is enabled
+- audio coverage as a separate advisory diagnostic when audio is enabled
 - offline card quality for readings, meanings, examples, and contextual notes
 
 Current default readiness thresholds are:
@@ -372,6 +372,8 @@ Current default readiness thresholds are:
 - sentence coverage: `90%`
 - curated coverage: `60%`
 - stroke-order coverage: `90%`
+
+Audio coverage and full-media coverage are still reported, but they do not block the main `ready` state by default.
 
 Use these commands to inspect quality:
 

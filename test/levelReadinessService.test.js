@@ -81,7 +81,7 @@ test("buildLevelReadinessReport evaluates per-level quality gates", () => {
     assert.equal(report.levels[1].level, 5);
     assert.equal(report.levels[1].ready, true);
     assert.equal(report.weakestLevels[0].level, 4);
-    assert.equal(report.weakestLevels[0].failingChecks.includes("audio coverage"), true);
+    assert.equal(report.weakestLevels[0].failingChecks.includes("audio coverage"), false);
     assert.equal(report.weakestLevels[0].qualityFailingChecks.includes("local meaning coverage"), true);
     assert.equal(report.levels[0].cardQuality.failingChecks.includes("contextual notes coverage"), true);
 });
@@ -97,7 +97,7 @@ test("formatLevelReadinessReport renders thresholds and weakest levels", () => {
             {
                 level: 4,
                 readinessScore: 0.2,
-                failingChecks: ["sentence coverage", "audio coverage"],
+                failingChecks: ["sentence coverage"],
                 qualityFailingChecks: ["local meaning coverage", "local example coverage"],
             },
         ],
@@ -123,7 +123,7 @@ test("formatLevelReadinessReport renders thresholds and weakest levels", () => {
                     },
                     failingChecks: ["local meaning coverage", "local example coverage"],
                 },
-                failingChecks: ["sentence coverage", "audio coverage"],
+                failingChecks: ["sentence coverage"],
             },
         ],
     });
@@ -133,19 +133,21 @@ test("formatLevelReadinessReport renders thresholds and weakest levels", () => {
     assert.match(text, /Card quality diagnostics:/);
     assert.match(text, /Weakest levels:/);
     assert.match(text, /N4: 20.0% checks passing/);
-    assert.match(text, /Failing checks: sentence coverage, audio coverage/);
+    assert.match(text, /Optional audio diagnostics: not required for ready/);
+    assert.match(text, /Optional audio: audio 0.0%, full media 0.0%/);
+    assert.match(text, /Failing checks: sentence coverage/);
     assert.match(text, /Card quality: readings 80.0%, meanings 60.0%, examples 50.0%, contextual notes 40.0%, generic fallback notes 60.0%/);
     assert.match(text, /Quality checks: local meaning coverage, local example coverage/);
 });
 
-test("buildLevelReadinessReport can ignore audio gates when audio is disabled", () => {
+test("buildLevelReadinessReport keeps audio out of required gates by default", () => {
     const report = buildLevelReadinessReport({
         sentenceCoverage: { levels: [{ level: 5, totalKanji: 10, coveredKanji: 10, coverageRatio: 1, sampleMissing: [] }] },
         curatedCoverage: { levels: [{ level: 5, totalKanji: 10, curatedKanji: 7, coverageRatio: 0.7, sampleMissing: [] }] },
         mediaCoverage: { levels: [{ level: 5, totalKanji: 10, strokeOrderCovered: 10, audioCovered: 0, fullMediaCovered: 0, strokeOrderCoverageRatio: 1, audioCoverageRatio: 0, fullMediaCoverageRatio: 0, sampleMissing: [] }] },
         cardQuality: { levels: [buildCardQualityRow(5)] },
         levels: [5],
-        thresholds: buildDefaultQualityThresholds({ audioEnabled: false }),
+        thresholds: buildDefaultQualityThresholds(),
     });
 
     assert.equal(report.overallReady, true);

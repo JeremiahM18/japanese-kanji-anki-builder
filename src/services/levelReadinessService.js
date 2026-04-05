@@ -1,10 +1,11 @@
-function buildDefaultQualityThresholds({ audioEnabled = true } = {}) {
+function buildDefaultQualityThresholds({ audioEnabled = true, audioRequired = false } = {}) {
     return {
         sentenceCoverage: 0.9,
         curatedCoverage: 0.6,
         strokeOrderCoverage: 0.9,
         audioCoverage: audioEnabled ? 0.75 : null,
         fullMediaCoverage: audioEnabled ? 0.75 : null,
+        audioRequired,
     };
 }
 
@@ -86,8 +87,8 @@ function buildLevelReadinessReport({
             buildCheck({ label: "sentence coverage", actual: sentenceRow.coverageRatio || 0, threshold: thresholds.sentenceCoverage }),
             buildCheck({ label: "curated coverage", actual: curatedRow.coverageRatio || 0, threshold: thresholds.curatedCoverage }),
             buildCheck({ label: "stroke-order coverage", actual: mediaRow.strokeOrderCoverageRatio || 0, threshold: thresholds.strokeOrderCoverage }),
-            thresholds.audioCoverage == null ? null : buildCheck({ label: "audio coverage", actual: mediaRow.audioCoverageRatio || 0, threshold: thresholds.audioCoverage }),
-            thresholds.fullMediaCoverage == null ? null : buildCheck({ label: "full media coverage", actual: mediaRow.fullMediaCoverageRatio || 0, threshold: thresholds.fullMediaCoverage }),
+            (thresholds.audioRequired && thresholds.audioCoverage != null) ? buildCheck({ label: "audio coverage", actual: mediaRow.audioCoverageRatio || 0, threshold: thresholds.audioCoverage }) : null,
+            (thresholds.audioRequired && thresholds.fullMediaCoverage != null) ? buildCheck({ label: "full media coverage", actual: mediaRow.fullMediaCoverageRatio || 0, threshold: thresholds.fullMediaCoverage }) : null,
         ].filter(Boolean);
 
         const qualityChecks = buildCardQualityChecks({
@@ -188,10 +189,6 @@ function formatLevelReadinessReport(report) {
     lines.push(`- Sentence coverage: ${formatPercent(report.thresholds.sentenceCoverage)}`);
     lines.push(`- Curated coverage: ${formatPercent(report.thresholds.curatedCoverage)}`);
     lines.push(`- Stroke-order coverage: ${formatPercent(report.thresholds.strokeOrderCoverage)}`);
-    if (report.thresholds.audioCoverage != null) {
-        lines.push(`- Audio coverage: ${formatPercent(report.thresholds.audioCoverage)}`);
-        lines.push(`- Full media coverage: ${formatPercent(report.thresholds.fullMediaCoverage)}`);
-    }
 
     lines.push("");
     lines.push("Card quality diagnostics:");
@@ -199,6 +196,13 @@ function formatLevelReadinessReport(report) {
     lines.push(`- Local meaning coverage target: ${formatPercent(report.cardQualityThresholds.meaningCoverage)}`);
     lines.push(`- Local example coverage target: ${formatPercent(report.cardQualityThresholds.exampleCoverage)}`);
     lines.push(`- Contextual notes coverage target: ${formatPercent(report.cardQualityThresholds.contextualNotesCoverage)}`);
+
+    if (report.thresholds.audioCoverage != null) {
+        lines.push("");
+        lines.push(`Optional audio diagnostics:${report.thresholds.audioRequired ? " required" : " not required for ready"}`);
+        lines.push(`- Audio coverage target: ${formatPercent(report.thresholds.audioCoverage)}`);
+        lines.push(`- Full media coverage target: ${formatPercent(report.thresholds.fullMediaCoverage)}`);
+    }
 
     if (Array.isArray(report.weakestLevels) && report.weakestLevels.length > 0) {
         lines.push("");
@@ -220,11 +224,10 @@ function formatLevelReadinessReport(report) {
             `curated ${formatPercent(row.metrics.curatedCoverage)}`,
             `stroke-order ${formatPercent(row.metrics.strokeOrderCoverage)}`,
         ];
-        if (report.thresholds.audioCoverage != null) {
-            metricParts.push(`audio ${formatPercent(row.metrics.audioCoverage)}`);
-            metricParts.push(`full media ${formatPercent(row.metrics.fullMediaCoverage)}`);
-        }
         lines.push(`  ${metricParts.join(", ")}`);
+        if (report.thresholds.audioCoverage != null) {
+            lines.push(`  Optional audio: audio ${formatPercent(row.metrics.audioCoverage)}, full media ${formatPercent(row.metrics.fullMediaCoverage)}`);
+        }
         lines.push(`  ${formatCardQualityMetricsLine(row.cardQuality.metrics)}`);
         if (row.failingChecks.length > 0) {
             lines.push(`  Failing checks: ${row.failingChecks.join(", ")}`);

@@ -3,6 +3,7 @@ const path = require("node:path");
 const { invokeCliMain } = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
+const { resolveTrackedStarterPaths } = require("../src/datasets/curatedStudyData");
 const { bootstrapCuratedStudyData } = require("../src/services/curatedStudyBootstrapService");
 
 function parseArgs(argv) {
@@ -17,6 +18,7 @@ function formatReport(summary) {
     lines.push("Japanese Kanji Builder Curated Study Init");
     lines.push("");
     lines.push(`Starter entries available: ${summary.starterEntries}`);
+    lines.push(`Starter files loaded: ${summary.starterPaths.length}`);
     lines.push(`Existing target entries: ${summary.existingEntries}`);
     lines.push(`Written target entries: ${summary.writtenEntries}`);
     lines.push(`Mode: ${summary.merge ? "merge" : "initialize"}`);
@@ -40,6 +42,7 @@ function main() {
     const options = parseArgs(process.argv.slice(2));
     const config = loadConfig();
     const starterPath = path.resolve(process.cwd(), "templates", "starter_curated_study_data.json");
+    const starterPaths = resolveTrackedStarterPaths({ starterPath });
 
     if (!fs.existsSync(starterPath)) {
         throw new Error(`Missing starter curated study data at ${starterPath}`);
@@ -48,6 +51,7 @@ function main() {
     const summary = bootstrapCuratedStudyData({
         targetPath: config.curatedStudyDataPath,
         starterPath,
+        starterPaths,
         merge: options.merge,
     });
 

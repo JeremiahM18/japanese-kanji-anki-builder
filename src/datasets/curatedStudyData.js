@@ -184,6 +184,37 @@ function loadCuratedStudyDataFile(filePath) {
     return parsed;
 }
 
+function buildDefaultStarterBatchPrefix(starterPath) {
+    const parsedPath = path.parse(starterPath);
+    return `${parsedPath.name}_`;
+}
+
+function resolveTrackedStarterPaths({
+    starterPath = path.resolve(process.cwd(), "templates", "starter_curated_study_data.json"),
+    starterPaths,
+} = {}) {
+    const explicitPaths = (Array.isArray(starterPaths) ? starterPaths : [starterPath])
+        .map((entry) => cleanString(entry))
+        .filter(Boolean)
+        .map((entry) => path.resolve(entry));
+
+    if (Array.isArray(starterPaths)) {
+        return [...new Set(explicitPaths)];
+    }
+
+    const resolvedStarterPath = explicitPaths[0];
+    const starterDir = path.dirname(resolvedStarterPath);
+    const batchPrefix = buildDefaultStarterBatchPrefix(resolvedStarterPath);
+    const batchPaths = fs.existsSync(starterDir)
+        ? fs.readdirSync(starterDir)
+            .filter((name) => name.startsWith(batchPrefix) && name.endsWith(".json"))
+            .sort((a, b) => a.localeCompare(b))
+            .map((name) => path.join(starterDir, name))
+        : [];
+
+    return [...new Set([resolvedStarterPath, ...batchPaths])];
+}
+
 function mergeCuratedEntry(starterEntry = {}, localEntry = {}) {
     return {
         ...starterEntry,
@@ -241,9 +272,11 @@ function loadCuratedStudyData(
     curatedStudyDataPath,
     {
         starterPath = path.resolve(process.cwd(), "templates", "starter_curated_study_data.json"),
+        starterPaths,
     } = {}
 ) {
-    const starterEntries = loadCuratedStudyDataFile(starterPath);
+    const starterEntries = resolveTrackedStarterPaths({ starterPath, starterPaths })
+        .reduce((mergedEntries, entryPath) => mergeCuratedStudyData(mergedEntries, loadCuratedStudyDataFile(entryPath)), {});
     const localEntries = loadCuratedStudyDataFile(curatedStudyDataPath);
     return normalizeCuratedStudyData(mergeCuratedStudyData(starterEntries, localEntries));
 }
@@ -266,4 +299,5 @@ module.exports = {
     normalizeOrderedStringArray,
     normalizeStringArray,
     normalizeTags,
+    resolveTrackedStarterPaths,
 };

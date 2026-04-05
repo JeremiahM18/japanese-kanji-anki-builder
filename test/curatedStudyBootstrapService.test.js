@@ -98,3 +98,35 @@ test("bootstrapCuratedStudyData leaves existing curated data untouched without m
         cleanupTempDir(rootDir);
     }
 });
+
+test("bootstrapCuratedStudyData initializes from layered starter batches", () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const starterPath = path.join(rootDir, "starter_curated_study_data.json");
+        const starterBatchPath = path.join(rootDir, "starter_curated_study_data_n1_batch_01.json");
+        const targetPath = path.join(rootDir, "curated_study_data.json");
+        fs.writeFileSync(starterPath, JSON.stringify({
+            日: {
+                englishMeaning: "day",
+                notes: "日本 - Japan",
+            },
+        }), "utf-8");
+        fs.writeFileSync(starterBatchPath, JSON.stringify({
+            本: {
+                englishMeaning: "book",
+                notes: "本 - book",
+            },
+        }), "utf-8");
+
+        const summary = bootstrapCuratedStudyData({ targetPath, starterPath, merge: false });
+        const written = JSON.parse(fs.readFileSync(targetPath, "utf-8"));
+
+        assert.equal(summary.changed, true);
+        assert.equal(summary.starterPaths.length, 2);
+        assert.equal(summary.writtenEntries, 2);
+        assert.deepEqual(Object.keys(written), ["日", "本"]);
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});

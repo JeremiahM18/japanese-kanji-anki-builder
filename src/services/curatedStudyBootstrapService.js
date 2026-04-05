@@ -1,6 +1,10 @@
 const fs = require("node:fs");
 
-const { mergeCuratedStudyData, normalizeCuratedStudyData } = require("../datasets/curatedStudyData");
+const {
+    mergeCuratedStudyData,
+    normalizeCuratedStudyData,
+    resolveTrackedStarterPaths,
+} = require("../datasets/curatedStudyData");
 
 function readJsonObject(filePath) {
     const text = fs.readFileSync(filePath, "utf-8");
@@ -16,9 +20,13 @@ function readJsonObject(filePath) {
 function bootstrapCuratedStudyData({
     targetPath,
     starterPath,
+    starterPaths,
     merge = false,
 }) {
-    const starterEntries = normalizeCuratedStudyData(readJsonObject(starterPath));
+    const resolvedStarterPaths = resolveTrackedStarterPaths({ starterPath, starterPaths });
+    const starterEntries = normalizeCuratedStudyData(
+        resolvedStarterPaths.reduce((mergedEntries, entryPath) => mergeCuratedStudyData(mergedEntries, readJsonObject(entryPath)), {})
+    );
     const targetExists = fs.existsSync(targetPath);
     const existingEntries = targetExists ? readJsonObject(targetPath) : {};
     const nextEntries = merge
@@ -32,6 +40,7 @@ function bootstrapCuratedStudyData({
     return {
         targetPath,
         starterPath,
+        starterPaths: resolvedStarterPaths,
         targetExists,
         merge,
         starterEntries: Object.keys(starterEntries).length,

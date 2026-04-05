@@ -68,7 +68,7 @@ npm run curated:init -- --merge
 npm run words:init -- --merge
 ```
 
-These commands create or extend local ignored datasets so the decks are usable before you build out full coverage. The tracked starter packs now carry complete N5 and N4 kanji curation, the first six N3 kanji starter batches, and a 269-card curated N5 starter word pack for the word deck. Editor-local workspace files such as `.vscode/`, `.code-workspace`, and `.history/` are also ignored so local tooling does not dirty the repo.
+These commands create or extend local ignored datasets so the decks are usable before you build out full coverage. The tracked starter packs now carry complete N5 and N4 kanji curation, the first six N3 kanji starter batches, the first tracked N1 starter batch of 8 kanji, and a 269-card curated N5 starter word pack for the word deck. Editor-local workspace files such as `.vscode/`, `.code-workspace`, and `.history/` are also ignored so local tooling does not dirty the repo.
 
 ### Preview and review cards
 
@@ -265,7 +265,7 @@ The project expects local ignored datasets under `data/`:
 
 Curated kanji study entries can pin a learner-facing display form with `displayWord`, for example `{ "written": "上", "pron": "うえ" }`, so exports and offline previews stay aligned even when the highest-ranked dictionary word uses a different surface form.
 
-Runtime curated kanji loading uses the tracked starter pack as a baseline and layers local ignored overrides on top, so starter improvements keep flowing into builds without clobbering local edits.
+Runtime curated kanji loading uses the tracked base starter pack plus any tracked `starter_curated_study_data_*.json` batch files as the baseline, then layers local ignored overrides on top, so starter improvements keep flowing into builds without clobbering local edits.
 
 Curated word study entries are keyed by `written|reading`, for example `今日|きょう`, so the word deck can intentionally keep `今日 / きょう` while excluding `今日 / こんにち` unless you curate both.
 

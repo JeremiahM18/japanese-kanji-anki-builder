@@ -10,6 +10,7 @@ const {
     mergeCuratedStudyData,
     normalizeCuratedEntry,
     normalizeCuratedStudyData,
+    resolveTrackedStarterPaths,
 } = require("../src/datasets/curatedStudyData");
 
 test("loadCuratedStudyData returns empty object when file and starter are missing", () => {
@@ -149,4 +150,50 @@ test("loadCuratedStudyData validates parses and merges starter data with local o
     assert.equal(result.日.notes, "local-note");
     assert.equal(result.日.exampleSentence.source, "curated-study-data");
     assert.deepEqual(result.日.exampleSentence.tags, ["curated"]);
+});
+
+test("resolveTrackedStarterPaths includes sorted starter batch extensions after the base file", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "curated-study-"));
+    const starterPath = path.join(dir, "starter_curated_study_data.json");
+    const batchBPath = path.join(dir, "starter_curated_study_data_n1_batch_02.json");
+    const batchAPath = path.join(dir, "starter_curated_study_data_n1_batch_01.json");
+
+    fs.writeFileSync(starterPath, "{}\n", "utf-8");
+    fs.writeFileSync(batchBPath, "{}\n", "utf-8");
+    fs.writeFileSync(batchAPath, "{}\n", "utf-8");
+
+    const result = resolveTrackedStarterPaths({ starterPath });
+
+    assert.deepEqual(result, [starterPath, batchAPath, batchBPath]);
+});
+
+test("loadCuratedStudyData merges multiple tracked starter files before local overrides", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "curated-study-"));
+    const filePath = path.join(dir, "curated_study_data.json");
+    const starterPath = path.join(dir, "starter_curated_study_data.json");
+    const starterBatchPath = path.join(dir, "starter_curated_study_data_n1_batch_01.json");
+
+    fs.writeFileSync(starterPath, JSON.stringify({
+        日: {
+            englishMeaning: "day / sun",
+            notes: "日本 （にほん） - Japan",
+        },
+    }), "utf-8");
+    fs.writeFileSync(starterBatchPath, JSON.stringify({
+        本: {
+            englishMeaning: "book / origin",
+            notes: "本 （ほん） - book",
+        },
+    }), "utf-8");
+    fs.writeFileSync(filePath, JSON.stringify({
+        本: {
+            preferredWords: ["本屋"],
+        },
+    }), "utf-8");
+
+    const result = loadCuratedStudyData(filePath, { starterPath });
+
+    assert.equal(result.日.englishMeaning, "day / sun");
+    assert.equal(result.本.englishMeaning, "book / origin");
+    assert.deepEqual(result.本.preferredWords, ["本屋"]);
 });

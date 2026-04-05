@@ -275,4 +275,12 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["鉢"].englishMeaning, "bowl / pot");
     assert.deepEqual(curatedStudyData["酢"].preferredWords, ["酢", "酢の物", "黒酢"]);
     assert.equal(curatedStudyData["隣"].exampleSentence.japanese, "隣の席の人が静かに本を読んでいた。");
+    assert.deepEqual(curatedStudyData["雄"].displayWord, { written: "雄", pron: "おす" });
+    assert.equal(curatedStudyData["雌"].notes, "雌 （めす） - female ／ 雌花 （しか） - female flower ／ 雌鳥 （めんどり） - hen");
+    assert.deepEqual(curatedStudyData["釣"].preferredWords, ["釣る", "釣り", "釣り糸"]);
+    assert.equal(curatedStudyData["酸"].exampleSentence.english, "That fruit was more sour than I expected.");
+    assert.deepEqual(curatedStudyData["鉛"].displayWord, { written: "鉛", pron: "なまり" });
+    assert.equal(curatedStudyData["霞"].englishMeaning, "haze / mist");
+    assert.deepEqual(curatedStudyData["霜"].preferredWords, ["霜", "霜柱", "霜降り"]);
+    assert.equal(curatedStudyData["墨"].exampleSentence.japanese, "半紙に墨の香りが静かに広がった。");
 });

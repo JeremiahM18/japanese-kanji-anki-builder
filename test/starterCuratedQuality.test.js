@@ -322,4 +322,12 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.deepEqual(curatedStudyData["襟"].displayWord, { written: "襟元", pron: "えりもと" });
     assert.equal(curatedStudyData["閑"].notes, "閑静 （かんせい） - quiet / peaceful ／ 閑散 （かんさん） - deserted / quiet ／ 閑話 （かんわ） - digression / side talk");
     assert.equal(curatedStudyData["郡"].exampleSentence.japanese, "郡部では車が生活の足になっている。");
+    assert.deepEqual(curatedStudyData["翼"].displayWord, { written: "翼", pron: "つばさ" });
+    assert.equal(curatedStudyData["繭"].exampleSentence.english, "There was a white cocoon on the mulberry leaf.");
+    assert.deepEqual(curatedStudyData["篤"].preferredWords, ["危篤", "篤実", "篤志"]);
+    assert.equal(curatedStudyData["翻"].notes, "翻訳 （ほんやく） - translation ／ 翻す （ひるがえす） - turn over / wave ／ 翻弄 （ほんろう） - toy with / lead around");
+    assert.deepEqual(curatedStudyData["聴"].displayWord, { written: "傾聴", pron: "けいちょう" });
+    assert.equal(curatedStudyData["臨"].exampleSentence.japanese, "本番に臨む前に深呼吸した。");
+    assert.deepEqual(curatedStudyData["蓄"].preferredWords, ["蓄える", "蓄積", "貯蓄"]);
+    assert.equal(curatedStudyData["衡"].notes, "均衡 （きんこう） - balance ／ 平衡 （へいこう） - equilibrium ／ 衡量 （こうりょう） - weighing / judgment");
 });

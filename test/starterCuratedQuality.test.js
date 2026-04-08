@@ -330,4 +330,12 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["臨"].exampleSentence.japanese, "本番に臨む前に深呼吸した。");
     assert.deepEqual(curatedStudyData["蓄"].preferredWords, ["蓄える", "蓄積", "貯蓄"]);
     assert.equal(curatedStudyData["衡"].notes, "均衡 （きんこう） - balance ／ 平衡 （へいこう） - equilibrium ／ 衡量 （こうりょう） - weighing / judgment");
+    assert.deepEqual(curatedStudyData["裁"].displayWord, { written: "裁判", pron: "さいばん" });
+    assert.equal(curatedStudyData["訴"].exampleSentence.english, "The victim plans to sue the company.");
+    assert.deepEqual(curatedStudyData["礁"].preferredWords, ["岩礁", "暗礁", "珊瑚礁"]);
+    assert.equal(curatedStudyData["視"].notes, "視点 （してん） - point of view ／ 監視 （かんし） - monitoring ／ 凝視 （ぎょうし） - stare");
+    assert.deepEqual(curatedStudyData["製"].displayWord, { written: "製品", pron: "せいひん" });
+    assert.equal(curatedStudyData["覇"].exampleSentence.japanese, "地域での覇権を争う企業が多い。");
+    assert.deepEqual(curatedStudyData["閥"].preferredWords, ["派閥", "財閥", "閥族"]);
+    assert.equal(curatedStudyData["蚕"].notes, "蚕 （かいこ） - silkworm ／ 養蚕 （ようさん） - sericulture ／ 蚕糸 （さんし） - silk thread");
 });

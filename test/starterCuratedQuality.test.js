@@ -338,4 +338,12 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["覇"].exampleSentence.japanese, "地域での覇権を争う企業が多い。");
     assert.deepEqual(curatedStudyData["閥"].preferredWords, ["派閥", "財閥", "閥族"]);
     assert.equal(curatedStudyData["蚕"].notes, "蚕 （かいこ） - silkworm ／ 養蚕 （ようさん） - sericulture ／ 蚕糸 （さんし） - silk thread");
+    assert.deepEqual(curatedStudyData["鮎"].displayWord, { written: "鮎", pron: "あゆ" });
+    assert.equal(curatedStudyData["膜"].exampleSentence.english, "I was careful not to damage the cornea.");
+    assert.deepEqual(curatedStudyData["糾"].preferredWords, ["糾弾", "糾合", "糾明"]);
+    assert.equal(curatedStudyData["薦"].notes, "推薦 （すいせん） - recommendation ／ 自薦 （じせん） - self-recommendation ／ 薦める （すすめる） - recommend");
+    assert.deepEqual(curatedStudyData["翔"].displayWord, { written: "飛翔", pron: "ひしょう" });
+    assert.equal(curatedStudyData["衷"].exampleSentence.japanese, "両案を折衷した形でまとめた。");
+    assert.deepEqual(curatedStudyData["端"].preferredWords, ["先端", "極端", "端末"]);
+    assert.equal(curatedStudyData["罷"].notes, "罷免 （ひめん） - dismissal from office ／ 罷業 （ひぎょう） - strike / work stoppage ／ 罷める （やめる） - resign / stop");
 });

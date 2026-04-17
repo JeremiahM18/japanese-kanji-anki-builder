@@ -369,4 +369,12 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["譜"].exampleSentence.japanese, "古い楽譜を見ながら静かに練習した。");
     assert.deepEqual(curatedStudyData["譲"].preferredWords, ["譲る", "譲歩", "譲渡"]);
     assert.equal(curatedStudyData["遥"].notes, "遥か （はるか） - distant / far away ／ 遥々 （はるばる） - from afar ／ 遥拝 （ようはい） - worship from afar");
+    assert.deepEqual(curatedStudyData["逮"].displayWord, { written: "逮捕", pron: "たいほ" });
+    assert.equal(curatedStudyData["踏"].exampleSentence.english, "We reviewed the policy based on feedback from the field.");
+    assert.deepEqual(curatedStudyData["衰"].preferredWords, ["衰える", "衰退", "盛衰"]);
+    assert.equal(curatedStudyData["逸"].notes, "逸れる （それる） - stray / deviate ／ 秀逸 （しゅういつ） - excellent ／ 逸話 （いつわ） - anecdote");
+    assert.deepEqual(curatedStudyData["遂"].displayWord, { written: "完遂", pron: "かんすい" });
+    assert.equal(curatedStudyData["輔"].exampleSentence.japanese, "新任の責任者を輔佐する役目を任された。");
+    assert.deepEqual(curatedStudyData["緯"].preferredWords, ["北緯", "南緯", "経緯"]);
+    assert.equal(curatedStudyData["逝"].notes, "急逝 （きゅうせい） - sudden death ／ 逝去 （せいきょ） - passing away ／ 逝く （ゆく） - pass away");
 });

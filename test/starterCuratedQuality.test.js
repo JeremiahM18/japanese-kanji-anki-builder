@@ -346,4 +346,12 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["衷"].exampleSentence.japanese, "両案を折衷した形でまとめた。");
     assert.deepEqual(curatedStudyData["端"].preferredWords, ["先端", "極端", "端末"]);
     assert.equal(curatedStudyData["罷"].notes, "罷免 （ひめん） - dismissal from office ／ 罷業 （ひぎょう） - strike / work stoppage ／ 罷める （やめる） - resign / stop");
+    assert.deepEqual(curatedStudyData["該"].displayWord, { written: "該当", pron: "がいとう" });
+    assert.equal(curatedStudyData["謀"].exampleSentence.english, "People around me said it was a reckless challenge.");
+    assert.deepEqual(curatedStudyData["護"].preferredWords, ["保護", "弁護", "介護"]);
+    assert.equal(curatedStudyData["豪"].notes, "豪華 （ごうか） - luxurious ／ 豪雨 （ごうう） - torrential rain ／ 豪快 （ごうかい） - bold / hearty");
+    assert.deepEqual(curatedStudyData["透"].displayWord, { written: "透明", pron: "とうめい" });
+    assert.equal(curatedStudyData["貫"].exampleSentence.japanese, "彼女は最後まで信念を貫いた。");
+    assert.deepEqual(curatedStudyData["養"].preferredWords, ["栄養", "養う", "養成"]);
+    assert.equal(curatedStudyData["魅"].notes, "魅力 （みりょく） - charm / appeal ／ 魅了 （みりょう） - captivate ／ 魅惑 （みわく） - fascination / temptation");
 });

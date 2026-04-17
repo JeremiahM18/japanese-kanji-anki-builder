@@ -361,4 +361,12 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.deepEqual(curatedStudyData["轄"].displayWord, { written: "管轄", pron: "かんかつ" });
     assert.deepEqual(curatedStudyData["謙"].preferredWords, ["謙虚", "謙遜", "謙る"]);
     assert.equal(curatedStudyData["輝"].notes, "輝く （かがやく） - shine / sparkle ／ 光輝 （こうき） - brilliance ／ 輝度 （きど） - brightness / luminance");
+    assert.deepEqual(curatedStudyData["矢"].displayWord, { written: "矢印", pron: "やじるし" });
+    assert.equal(curatedStudyData["遣"].exampleSentence.english, "Specialists were dispatched to the disaster area.");
+    assert.deepEqual(curatedStudyData["粋"].preferredWords, ["純粋", "粋", "無粋"]);
+    assert.equal(curatedStudyData["託"].notes, "委託 （いたく） - entrust / outsource ／ 託す （たくす） - entrust ／ 寄託 （きたく） - deposit / entrustment");
+    assert.deepEqual(curatedStudyData["諾"].displayWord, { written: "承諾", pron: "しょうだく" });
+    assert.equal(curatedStudyData["譜"].exampleSentence.japanese, "古い楽譜を見ながら静かに練習した。");
+    assert.deepEqual(curatedStudyData["譲"].preferredWords, ["譲る", "譲歩", "譲渡"]);
+    assert.equal(curatedStudyData["遥"].notes, "遥か （はるか） - distant / far away ／ 遥々 （はるばる） - from afar ／ 遥拝 （ようはい） - worship from afar");
 });

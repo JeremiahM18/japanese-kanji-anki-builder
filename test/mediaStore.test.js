@@ -118,6 +118,44 @@ test("renameWithRetry retries transient rename failures", async () => {
     }
 });
 
+test("renameWithRetry uses exponential backoff for transient rename failures", async () => {
+    const rootDir = makeTempDir();
+    const fromPath = path.join(rootDir, "from.tmp");
+    const toPath = path.join(rootDir, "to.json");
+    fs.writeFileSync(fromPath, "fixture", "utf-8");
+
+    const originalRename = fsp.rename;
+    const originalSetTimeout = global.setTimeout;
+    const delays = [];
+    let attempts = 0;
+
+    try {
+        global.setTimeout = (callback, ms, ...args) => {
+            delays.push(ms);
+            callback(...args);
+            return 0;
+        };
+
+        fsp.rename = async (...renameArgs) => {
+            attempts += 1;
+            if (attempts < 4) {
+                const error = new Error("busy");
+                error.code = "EPERM";
+                throw error;
+            }
+            return originalRename(...renameArgs);
+        };
+
+        await renameWithRetry(fromPath, toPath, { retries: 4, baseDelayMs: 5 });
+        assert.deepEqual(delays, [5, 10, 20]);
+        assert.equal(fs.existsSync(toPath), true);
+    } finally {
+        global.setTimeout = originalSetTimeout;
+        fsp.rename = originalRename;
+        cleanupTempDir(rootDir);
+    }
+});
+
 test("writeManifest persists a validated manifest that can be read back", async () => {
     const rootDir = makeTempDir();
 

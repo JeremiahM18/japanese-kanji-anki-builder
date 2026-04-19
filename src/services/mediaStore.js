@@ -102,7 +102,7 @@ async function renameWithRetry(fromPath, toPath, {
                 throw err;
             }
 
-            await delay(baseDelayMs * (attempt + 1));
+            await delay(baseDelayMs * (2 ** attempt));
         }
     }
 

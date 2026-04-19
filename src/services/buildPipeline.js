@@ -19,6 +19,8 @@ const { selectKanjiForSync, syncMediaForKanjiList } = require("./mediaSync");
 /** @typedef {import("../types/contracts").BuildSummary} BuildSummary */
 /** @typedef {import("../types/contracts").DatasetNormalizationSummary} DatasetNormalizationSummary */
 
+let temporaryWriteCounter = 0;
+
 function parseLevelsArgument(value) {
     if (value == null || String(value).trim() === "") {
         return [5, 4, 3, 2, 1];
@@ -53,9 +55,14 @@ function writeJsonFile(filePath, value) {
     writeTextFile(filePath, `${JSON.stringify(value, null, 2)}\n`);
 }
 
+function buildTemporaryWritePath(filePath) {
+    temporaryWriteCounter += 1;
+    return `${filePath}.tmp-${process.pid}-${Date.now()}-${temporaryWriteCounter}`;
+}
+
 function writeTextFile(filePath, value) {
     fs.mkdirSync(path.dirname(filePath), { recursive: true });
-    const tempPath = `${filePath}.tmp-${process.pid}-${Date.now()}`;
+    const tempPath = buildTemporaryWritePath(filePath);
     fs.writeFileSync(tempPath, value, "utf-8");
     fs.renameSync(tempPath, filePath);
 }
@@ -469,6 +476,7 @@ async function runBuildPipeline({
 }
 
 module.exports = {
+    buildTemporaryWritePath,
     buildBuildPaths,
     buildScopedCoverageRatio,
     summarizeExportIssues,

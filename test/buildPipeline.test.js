@@ -6,7 +6,7 @@ const assert = require("node:assert/strict");
 const { spawnSync } = require("node:child_process");
 
 const { buildMediaBasePath } = require("../src/services/mediaStore");
-const { buildScopedCoverageRatio, parseLevelsArgument, runBuildPipeline, summarizeExportIssues } = require("../src/services/buildPipeline");
+const { buildScopedCoverageRatio, buildTemporaryWritePath, parseLevelsArgument, runBuildPipeline, summarizeExportIssues } = require("../src/services/buildPipeline");
 const { resolvePythonCommand } = require("../src/services/toolchainService");
 
 test("parseLevelsArgument supports all and normalized JLPT levels", () => {
@@ -40,6 +40,22 @@ test("summarizeExportIssues tracks fallback ratios and threshold breaches", () =
     assert.equal(summary.fallbackRatio, 0.2);
     assert.equal(summary.maxAllowedFallbackRatio, 0.1);
     assert.equal(summary.thresholdExceeded, true);
+});
+
+test("buildTemporaryWritePath stays unique within the same millisecond", () => {
+    const originalNow = Date.now;
+
+    try {
+        Date.now = () => 1234567890;
+        const first = buildTemporaryWritePath(path.join("out", "build-summary.json"));
+        const second = buildTemporaryWritePath(path.join("out", "build-summary.json"));
+
+        assert.notEqual(first, second);
+        assert.match(first, /\.tmp-\d+-1234567890-\d+$/);
+        assert.match(second, /\.tmp-\d+-1234567890-\d+$/);
+    } finally {
+        Date.now = originalNow;
+    }
 });
 
 test("runBuildPipeline reuses the shared manifest lookup during packaging", async () => {

@@ -6,6 +6,16 @@ const { createInferenceEngine } = require("../src/inference/inferenceEngine");
 const { createExportService } = require("../src/services/exportService");
 
 function buildFixtureContext() {
+    const loggerCalls = [];
+    const appLogger = {
+        info(payloadOrMessage, maybeMessage) {
+            loggerCalls.push({ level: "info", payloadOrMessage, maybeMessage });
+        },
+        error(payloadOrMessage, maybeMessage) {
+            loggerCalls.push({ level: "error", payloadOrMessage, maybeMessage });
+        },
+    };
+
     const config = {
         cacheDir: "C:\\repo\\cache",
         jlptJsonPath: "C:\\repo\\data\\kanji_jlpt_only.json",
@@ -318,10 +328,13 @@ function buildFixtureContext() {
         strokeOrderService,
         audioService,
         exportService,
+        appLogger,
     });
 
     return {
         app,
+        appLogger,
+        loggerCalls,
         jlptOnlyJson,
         kradMap,
         pickMainComponent,
@@ -376,7 +389,8 @@ test("countExportRows uses the selected JLPT list instead of parsing rendered TS
 });
 
 test("health and readiness endpoints expose operational state", async () => {
-    const app = buildFixtureApp();
+    const fixture = buildFixtureContext();
+    const app = fixture.app;
 
     await withServer(app, async (baseUrl) => {
         const healthRes = await fetch(`${baseUrl}/healthz`);
@@ -404,6 +418,13 @@ test("health and readiness endpoints expose operational state", async () => {
         assert.equal(readyJson.mediaProviders.strokeOrder.image["remote-stroke-order-image"].hits, 1);
         assert.equal(readyJson.mediaProviders.audio["remote-audio"].hits, 1);
     });
+
+    const handledRequests = fixture.loggerCalls.filter(
+        (entry) => entry.level === "info" && entry.maybeMessage === "Handled request"
+    );
+    assert.equal(handledRequests.some((entry) => entry.payloadOrMessage.method === "GET" && entry.payloadOrMessage.path === "/healthz" && entry.payloadOrMessage.statusCode === 200), true);
+    assert.equal(handledRequests.some((entry) => entry.payloadOrMessage.method === "GET" && entry.payloadOrMessage.path === "/readyz" && entry.payloadOrMessage.statusCode === 200), true);
+    assert.equal(handledRequests.every((entry) => Number.isFinite(entry.payloadOrMessage.durationMs)), true);
 });
 
 test("inference route exposes curated and corpus-backed study output", async () => {
@@ -644,6 +665,7 @@ test("internal errors hide stacks when config nodeEnv is production", async () =
         strokeOrderService: fixture.strokeOrderService,
         audioService: fixture.audioService,
         exportService,
+        appLogger: fixture.appLogger,
     });
 
     await withServer(app, async (baseUrl) => {

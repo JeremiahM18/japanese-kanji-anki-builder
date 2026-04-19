@@ -106,6 +106,26 @@ function assertCreateAppDependencies({ exportService }) {
     }
 }
 
+function createRequestLoggingMiddleware(appLogger = logger) {
+    return function requestLoggingMiddleware(req, res, next) {
+        const startedAt = Date.now();
+
+        res.on("finish", () => {
+            appLogger.info(
+                {
+                    method: req.method,
+                    path: req.originalUrl || req.url,
+                    statusCode: res.statusCode,
+                    durationMs: Date.now() - startedAt,
+                },
+                "Handled request"
+            );
+        });
+
+        next();
+    };
+}
+
 function createApp({
     config,
     jlptOnlyJson,
@@ -117,6 +137,7 @@ function createApp({
     sentenceCorpus = [],
     curatedStudyData = {},
     exportService,
+    appLogger = logger,
 }) {
     assertCreateAppDependencies({ exportService });
 
@@ -124,6 +145,7 @@ function createApp({
     const jlptKanjiCount = Object.keys(jlptOnlyJson).length;
 
     app.use(express.json());
+    app.use(createRequestLoggingMiddleware(appLogger));
 
     app.get("/", (_req, res) => {
         res.type("text").send("OK - Japanese Kanji TSV Exporter");
@@ -356,6 +378,7 @@ function createApp({
 
 module.exports = {
     countExportRows,
+    createRequestLoggingMiddleware,
     createApp,
     parseLevel,
     parseLimit,

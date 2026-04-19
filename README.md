@@ -220,11 +220,11 @@ npm run media:report -- --limit=25
 ### Stroke-order acquisition
 
 - `media:plan` shows accepted filenames for missing image, animation, and audio assets.
-- GitHub `jcsirot/kanji.gif` is the default remote animation source during sync, so managed stroke-order animations stay fast and stylistically consistent.
+- Remote stroke-order animation sync is opt-in. Set `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` when you want managed animation fallback from a shared source such as GitHub `jcsirot/kanji.gif`.
 - `media:plan:stroke-order` builds a Wikimedia Commons checklist for supplemental stroke-order assets, mainly static images and any manual fallback work you still want to do.
 - `media:discover:stroke-order` combines Commons title search with file-prefix listing to find real Commons asset names when you are filling local gaps.
 - `media:fetch:stroke-order` downloads confirmed Commons assets, and `--probe-guessed` also tries direct Commons redirect URLs for guessed filenames when discovery cannot confirm them.
-- `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` is now populated in `.env.example`; override it only if you intentionally want a different remote animation source.
+- `.env.example` includes a commented `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` example so each machine opts into its intended remote animation source explicitly.
 - `media:import:kanjivg` imports official KanjiVG SVG files into the repo's canonical source layout.
 
 If you are focused only on stroke order, run readiness and media reporting with `ENABLE_AUDIO=false`.
@@ -348,7 +348,7 @@ Optional `.env` settings:
 - `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL`
 - `REMOTE_AUDIO_BASE_URL`
 
-By default, `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` points at the GitHub `jcsirot/kanji.gif` set so animation sync prefers the same fast remote source across machines unless you intentionally override it.
+`REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` is optional. Leave it unset if you only want local animation assets, or point it at a pinned remote source such as the GitHub `jcsirot/kanji.gif` set when you want managed fallback acquisition.
 
 More detailed local data guidance lives in [data/README.md](data/README.md).
 
@@ -409,7 +409,7 @@ Media behavior:
 - `StrokeOrder` prefers animation when available, then static image.
 - `StrokeOrderImage` exposes the static asset directly.
 - `StrokeOrderAnimation` exposes the managed animation asset directly when one exists.
-- The default managed animation path comes from the GitHub `jcsirot/kanji.gif` remote provider unless you override `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` or import a local animation file first.
+- Managed animation assets come from your local imports first, then from `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` when that remote fallback is explicitly configured.
 - Managed animation assets come only from real animation files such as `.gif`, `.webp`, and `.apng`.
 - Static stroke-order image coverage and animation coverage are reported separately so card quality stays honest.
 - `Audio` exports Anki sound markup when a managed audio asset exists.

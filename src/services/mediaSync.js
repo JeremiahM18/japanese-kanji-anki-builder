@@ -126,7 +126,6 @@ async function syncMediaForKanjiList({ kanjiList, strokeOrderService, audioServi
 }
 
 module.exports = {
-    mapWithConcurrency,
     parseLevelArgument,
     selectKanjiForSync,
     summarizeSyncResults,

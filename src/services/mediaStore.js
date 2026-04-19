@@ -173,7 +173,8 @@ async function runWithManifestLock(mediaRootDir, kanji, callback) {
         releaseCurrent = resolve;
     });
 
-    manifestWriteQueues.set(queueKey, previous.then(() => current, () => current));
+    const queued = previous.then(() => current, () => current);
+    manifestWriteQueues.set(queueKey, queued);
 
     try {
         await previous;
@@ -181,7 +182,7 @@ async function runWithManifestLock(mediaRootDir, kanji, callback) {
     } finally {
         releaseCurrent();
 
-        if (manifestWriteQueues.get(queueKey) === current) {
+        if (manifestWriteQueues.get(queueKey) === queued) {
             manifestWriteQueues.delete(queueKey);
         }
     }

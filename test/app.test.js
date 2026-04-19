@@ -1,7 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { createApp, parseLevel, parseLimit } = require("../src/app");
+const { countExportRows, createApp, parseLevel, parseLimit } = require("../src/app");
 const { createInferenceEngine } = require("../src/inference/inferenceEngine");
 const { createExportService } = require("../src/services/exportService");
 
@@ -363,6 +363,18 @@ test("parseLimit floors positive numbers and rejects invalid input", () => {
     assert.equal(parseLimit("0"), null);
 });
 
+test("countExportRows uses the selected JLPT list instead of parsing rendered TSV text", () => {
+    const jlptOnlyJson = {
+        日: { jlpt: 5 },
+        本: { jlpt: 5 },
+        学: { jlpt: 4 },
+    };
+
+    assert.equal(countExportRows(jlptOnlyJson, 5), 2);
+    assert.equal(countExportRows(jlptOnlyJson, 5, 1), 1);
+    assert.equal(countExportRows(jlptOnlyJson, 4), 1);
+});
+
 test("health and readiness endpoints expose operational state", async () => {
     const app = buildFixtureApp();
 
@@ -383,9 +395,11 @@ test("health and readiness endpoints expose operational state", async () => {
         assert.equal(readyJson.datasets.kradEntries, 2);
         assert.equal(readyJson.datasets.sentenceCorpusEntries, 2);
         assert.equal(readyJson.datasets.curatedStudyEntries, 1);
+        assert.equal(readyJson.config.nodeEnv, "development");
         assert.equal(readyJson.config.exportConcurrency, 4);
-        assert.equal(readyJson.config.audioSourceDir, "C:\\repo\\data\\media_sources\\audio");
         assert.equal(readyJson.config.remoteAudioBaseUrl, "https://media.example.com/audio/");
+        assert.equal("cacheDir" in readyJson.config, false);
+        assert.equal("audioSourceDir" in readyJson.config, false);
         assert.equal(readyJson.cache.cacheHits, 7);
         assert.equal(readyJson.mediaProviders.strokeOrder.image["remote-stroke-order-image"].hits, 1);
         assert.equal(readyJson.mediaProviders.audio["remote-audio"].hits, 1);

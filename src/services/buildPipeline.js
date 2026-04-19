@@ -4,6 +4,7 @@ const path = require("node:path");
 const { createKanjiApiClient } = require("../clients/kanjiApiClient");
 const { buildCuratedStudySummary } = require("../datasets/curatedStudyCoverage");
 const { loadCuratedStudyData, normalizeCuratedStudyData } = require("../datasets/curatedStudyData");
+const { loadJlptOnlyJson } = require("../datasets/jlptOnlyJson");
 const { loadKradMap, pickMainComponent } = require("../datasets/kradfile");
 const { buildMediaCoverageSummary } = require("../datasets/mediaCoverage");
 const { buildCoverageSummary } = require("../datasets/sentenceCorpusCoverage");
@@ -213,7 +214,7 @@ async function runBuildPipeline({
 
     const mode = "write";
     const buildPaths = buildBuildPaths(outDir || config.buildOutDir);
-    const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
+    const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
 
     const normalizationStartedAt = Date.now();
     const sentenceNormalization = normalizeOptionalFile({
@@ -337,7 +338,7 @@ async function runBuildPipeline({
         exports.push({
             level,
             filePath,
-            rows: Math.max(0, tsv.trim().split("\n").length - 1),
+            rows: selectedKanjiByLevel[level]?.length || 0,
         });
     }
     capturePhaseTiming(timingsMs, "export", exportStartedAt);

@@ -4,6 +4,7 @@ const { loadConfig } = require("./config");
 const { logger } = require("./logger");
 const { createKanjiApiClient } = require("./clients/kanjiApiClient");
 const { loadCuratedStudyData } = require("./datasets/curatedStudyData");
+const { loadJlptOnlyJson } = require("./datasets/jlptOnlyJson");
 const { loadKradMap, pickMainComponent } = require("./datasets/kradfile");
 const { loadSentenceCorpus } = require("./datasets/sentenceCorpus");
 const { ensureMediaRoot } = require("./services/mediaStore");
@@ -12,6 +13,8 @@ const { createInferenceEngine } = require("./inference/inferenceEngine");
 const { createApp } = require("./app");
 
 function logServerStarted({ logger: runtimeLogger, config, sentenceCorpus, curatedStudyData }) {
+    const baseUrl = `http://127.0.0.1:${config.port}`;
+
     runtimeLogger.info(
         {
             port: config.port,
@@ -29,17 +32,18 @@ function logServerStarted({ logger: runtimeLogger, config, sentenceCorpus, curat
             remoteStrokeOrderImageBaseUrl: config.remoteStrokeOrderImageBaseUrl || null,
             remoteStrokeOrderAnimationBaseUrl: config.remoteStrokeOrderAnimationBaseUrl || null,
             remoteAudioBaseUrl: config.remoteAudioBaseUrl || null,
+            urls: {
+                exportN5: `${baseUrl}/export/N5`,
+                downloadN5: `${baseUrl}/export/N5/download`,
+                health: `${baseUrl}/healthz`,
+                readiness: `${baseUrl}/readyz`,
+                inference: `${baseUrl}/inference/日`,
+                mediaLookup: `${baseUrl}/media/日`,
+                audioSync: `${baseUrl}/media/日/audio/sync`,
+            },
         },
         "Server started"
     );
-
-    runtimeLogger.info(`Try: http://127.0.0.1:${config.port}/export/N5`);
-    runtimeLogger.info(`Download: http://127.0.0.1:${config.port}/export/N5/download`);
-    runtimeLogger.info(`Health: http://127.0.0.1:${config.port}/healthz`);
-    runtimeLogger.info(`Readiness: http://127.0.0.1:${config.port}/readyz`);
-    runtimeLogger.info(`Inference: http://127.0.0.1:${config.port}/inference/日`);
-    runtimeLogger.info(`Media lookup: http://127.0.0.1:${config.port}/media/日`);
-    runtimeLogger.info(`Audio sync: http://127.0.0.1:${config.port}/media/日/audio/sync`);
 }
 
 function listenAsync(app, port, host = "0.0.0.0") {
@@ -168,7 +172,7 @@ async function buildRuntime({
         throw new Error(`Missing KRADFILE at ${config.kradfilePath}`);
     }
 
-    const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
+    const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
     const kradMap = loadKradMapFn(config.kradfilePath);
     const sentenceCorpus = loadSentenceCorpusFn(config.sentenceCorpusPath);
     const curatedStudyData = loadCuratedStudyDataFn(config.curatedStudyDataPath);

@@ -2,6 +2,7 @@ const fs = require("node:fs");
 
 const { buildCuratedStudySummary } = require("../datasets/curatedStudyCoverage");
 const { buildMediaCoverageSummary } = require("../datasets/mediaCoverage");
+const { loadJlptOnlyJson } = require("../datasets/jlptOnlyJson");
 const { buildCoverageSummary } = require("../datasets/sentenceCorpusCoverage");
 const { loadCuratedStudyData } = require("../datasets/curatedStudyData");
 const { loadSentenceCorpus } = require("../datasets/sentenceCorpus");
@@ -111,7 +112,7 @@ async function buildDoctorReport({
 
     let jlptOnlyJson = {};
     if (requiredReady) {
-        jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
+        jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
     }
 
     const sentenceCoverage = requiredReady

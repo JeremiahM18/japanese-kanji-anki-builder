@@ -88,6 +88,18 @@ function validateExportRequest(req) {
     };
 }
 
+function countExportRows(jlptOnlyJson, level, limit = null) {
+    const matchingKanji = Object.entries(jlptOnlyJson || {})
+        .filter(([, value]) => value?.jlpt === level)
+        .map(([kanji]) => kanji);
+
+    if (limit == null) {
+        return matchingKanji.length;
+    }
+
+    return Math.min(matchingKanji.length, limit);
+}
+
 function createApp({
     config,
     jlptOnlyJson,
@@ -138,15 +150,7 @@ function createApp({
                 curatedStudyEntries: Object.keys(curatedStudyData).length,
             },
             config: {
-                cacheDir: config.cacheDir,
-                jlptJsonPath: config.jlptJsonPath,
-                kradfilePath: config.kradfilePath,
-                sentenceCorpusPath: config.sentenceCorpusPath,
-                curatedStudyDataPath: config.curatedStudyDataPath,
-                mediaRootDir: config.mediaRootDir,
-                strokeOrderImageSourceDir: config.strokeOrderImageSourceDir,
-                strokeOrderAnimationSourceDir: config.strokeOrderAnimationSourceDir,
-                audioSourceDir: config.audioSourceDir,
+                nodeEnv: config.nodeEnv,
                 remoteStrokeOrderImageBaseUrl: config.remoteStrokeOrderImageBaseUrl || null,
                 remoteStrokeOrderAnimationBaseUrl: config.remoteStrokeOrderAnimationBaseUrl || null,
                 remoteAudioBaseUrl: config.remoteAudioBaseUrl || null,
@@ -281,7 +285,7 @@ function createApp({
                     level,
                     limit: limit ?? "all",
                     durationMs: Date.now() - startedAt,
-                    rowCount: tsv.split("\n").length - 1,
+                    rowCount: countExportRows(jlptOnlyJson, level, limit),
                     download: Boolean(options.download),
                     cache: typeof kanjiApiClient.getMetrics === "function" ? kanjiApiClient.getMetrics() : undefined,
                 },
@@ -344,6 +348,7 @@ function createApp({
 }
 
 module.exports = {
+    countExportRows,
     createApp,
     parseLevel,
     parseLimit,

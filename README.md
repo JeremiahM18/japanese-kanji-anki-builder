@@ -208,9 +208,12 @@ npm run build:artifacts -- --levels=5,4 --limit=25 --max-fallback-ratio=0.05
 npm run media:init
 npm run media:plan -- --level=5 --limit=25
 npm run media:plan:stroke-order -- --level=5 --limit=25
+npm run media:plan:stroke-order -- --animation-only --discover --level=5 --limit=25
 npm run media:discover:stroke-order -- --level=5 --limit=10
 npm run media:fetch:stroke-order -- --level=5 --limit=20 --file-limit=4
+npm run media:fetch:stroke-order -- --animation-only --level=5 --limit=20 --file-limit=4
 npm run media:fetch:stroke-order -- --level=5 --limit=20 --file-limit=20 --probe-guessed
+npm run media:report:animations -- --level=5 --limit=25
 npm run media:import:stroke-order -- --input-dir=/path/to/files
 npm run media:import:kanjivg -- --input-dir=/path/to/extracted-kanjivg/kanji --level=4
 npm run media:import:audio -- --input-dir=/path/to/audio --level=5
@@ -226,8 +229,11 @@ npm run media:report -- --limit=25
 - `media:plan` shows accepted filenames for missing image, animation, and audio assets.
 - Remote stroke-order animation sync is opt-in. Set `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` when you want managed animation fallback from a shared source such as GitHub `jcsirot/kanji.gif`.
 - `media:plan:stroke-order` builds a Wikimedia Commons checklist for supplemental stroke-order assets, mainly static images and any manual fallback work you still want to do.
+- Add `--animation-only` when you want that checklist limited to missing true animations, with no image rows mixed in.
 - `media:discover:stroke-order` combines Commons title search with file-prefix listing to find real Commons asset names when you are filling local gaps.
 - `media:fetch:stroke-order` downloads confirmed Commons assets, and `--probe-guessed` also tries direct Commons redirect URLs for guessed filenames when discovery cannot confirm them.
+- `media:fetch:stroke-order -- --animation-only ...` keeps the Commons fetch pass focused on missing animations only.
+- `media:report:animations` shows the current managed true-animation gap queue by level, and `media:report:animations:n1` is the optional convenience shortcut for the full N1 queue.
 - `.env.example` includes a commented `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` example so each machine opts into its intended remote animation source explicitly.
 - `media:import:kanjivg` imports official KanjiVG SVG files into the repo's canonical source layout.
 
@@ -309,6 +315,7 @@ The tagged workflow in [.github/workflows/release.yml](.github/workflows/release
 | `npm run media:plan:stroke-order` | Show Wikimedia Commons checklist URLs for supplemental stroke-order assets |
 | `npm run media:discover:stroke-order` | Discover real Wikimedia Commons titles for missing supplemental stroke-order assets |
 | `npm run media:fetch:stroke-order` | Download confirmed Wikimedia stroke-order assets, or probe guessed filenames with `--probe-guessed` |
+| `npm run media:report:animations` | Show only the remaining managed true-animation gaps for the requested JLPT levels |
 | `npm run media:import:stroke-order` | Import free local stroke-order assets |
 | `npm run media:import:kanjivg` | Import KanjiVG SVG stroke-order files into the source tree |
 | `npm run media:import:audio` | Import local kanji audio files into the source folder |

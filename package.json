@@ -35,6 +35,8 @@
     "media:plan:stroke-order": "node scripts/reportWikimediaStrokeOrderPlan.js",
     "media:discover:stroke-order": "node scripts/discoverWikimediaStrokeOrder.js",
     "media:fetch:stroke-order": "node scripts/fetchWikimediaStrokeOrder.js",
+    "media:report:animations": "node scripts/reportMissingManagedAnimations.js",
+    "media:report:animations:n1": "node scripts/reportMissingManagedAnimations.js --level=1 --limit=100",
     "media:voicevox": "node scripts/generateVoicevoxAudio.js",
     "deck:review:n5": "node scripts/reviewGoldenLevel.js --level=5",
     "deck:apkg": "python scripts/buildApkg.py",

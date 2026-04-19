@@ -104,6 +104,7 @@ async function buildWikimediaStrokeOrderPlan({
     strokeOrderAnimationSourceDir,
     levels = [5],
     limit = 25,
+    animationOnly = false,
     discover = false,
     fetchJson = null,
     discoveryCachePath = null,
@@ -116,6 +117,7 @@ async function buildWikimediaStrokeOrderPlan({
         audioEnabled: false,
         levels,
         limit,
+        gapTypes: animationOnly ? ["animation_only", "missing_stroke_order"] : null,
     });
 
     const rows = [];
@@ -154,7 +156,7 @@ async function buildWikimediaStrokeOrderPlan({
             kanji: row.kanji,
             level: row.level,
             gapType: row.gapType,
-            image: row.hasImage ? null : buildPlanAsset(row.kanji, "image", discovery?.image || null, discovery?.image ? "confirmed_on_commons" : fallbackStatus),
+            image: animationOnly || row.hasImage ? null : buildPlanAsset(row.kanji, "image", discovery?.image || null, discovery?.image ? "confirmed_on_commons" : fallbackStatus),
             animation: row.hasAnimation ? null : buildPlanAsset(row.kanji, "animation", discovery?.animation || null, discovery?.animation ? "confirmed_on_commons" : fallbackStatus),
             discovery,
             discoveryState,
@@ -171,6 +173,7 @@ async function buildWikimediaStrokeOrderPlan({
         imageMissingCount: rows.filter((row) => Boolean(row.image)).length,
         animationMissingCount: rows.filter((row) => Boolean(row.animation)).length,
         trueAnimationMissingCount: rows.filter((row) => Boolean(row.animation)).length,
+        animationOnly,
         discover,
         discoveryAvailable,
         discoveryErrorMessage,
@@ -239,6 +242,9 @@ function formatWikimediaStrokeOrderPlan(plan) {
     lines.push("Japanese Kanji Builder Wikimedia Stroke-Order Plan");
     lines.push("");
     lines.push(`Target levels: ${(plan.levels || []).map((level) => `N${level}`).join(", ") || "n/a"}`);
+    if (plan.animationOnly) {
+        lines.push("Mode: animation-only");
+    }
     lines.push(`Kanji in scope: ${plan.totalKanji}`);
     lines.push(`Missing Commons-style static images: ${plan.imageMissingCount}`);
     lines.push(`Missing Commons-style animations: ${plan.animationMissingCount}`);

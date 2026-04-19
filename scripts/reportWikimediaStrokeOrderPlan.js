@@ -14,6 +14,7 @@ function parseArgs(argv) {
     const options = {
         levels: [5],
         limit: 25,
+        animationOnly: argv.includes("--animation-only"),
         json: argv.includes("--json"),
         sheet: argv.includes("--sheet"),
         discover: argv.includes("--discover"),
@@ -47,6 +48,7 @@ async function main() {
         strokeOrderAnimationSourceDir: config.strokeOrderAnimationSourceDir,
         levels: options.levels,
         limit: options.limit,
+        animationOnly: options.animationOnly,
         discover: options.discover,
         discoveryCachePath: options.discover ? path.join(config.cacheDir, "wikimedia-stroke-order-discovery.json") : null,
     });

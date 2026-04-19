@@ -65,6 +65,37 @@ test("buildWikimediaStrokeOrderPlan lists only missing stroke-order assets", asy
     }
 });
 
+test("buildWikimediaStrokeOrderPlan can focus on animation-only gaps without planning images", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const imageSourceDir = path.join(rootDir, "images");
+        const animationSourceDir = path.join(rootDir, "animations");
+        fs.mkdirSync(imageSourceDir, { recursive: true });
+        fs.mkdirSync(animationSourceDir, { recursive: true });
+
+        const plan = await buildWikimediaStrokeOrderPlan({
+            jlptOnlyJson: {
+                日: { jlpt: 5 },
+            },
+            strokeOrderImageSourceDir: imageSourceDir,
+            strokeOrderAnimationSourceDir: animationSourceDir,
+            levels: [5],
+            limit: 10,
+            animationOnly: true,
+        });
+
+        assert.equal(plan.animationOnly, true);
+        assert.equal(plan.imageMissingCount, 0);
+        assert.equal(plan.animationMissingCount, 1);
+        assert.equal(plan.rows[0].gapType, "missing_stroke_order");
+        assert.equal(plan.rows[0].image, null);
+        assert.equal(plan.rows[0].animation.fileName, "日-order.gif");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
 test("buildWikimediaStrokeOrderPlan can mark discovered Commons availability", async () => {
     const rootDir = makeTempDir();
 
@@ -225,6 +256,24 @@ test("formatWikimediaStrokeOrderPlan renders a clear Commons checklist", () => {
     assert.match(text, /Image status: confirmed on Commons/);
     assert.match(text, /Animation status: discovery unavailable; guessed Commons filename shown/);
     assert.match(text, /animation-only rows first for the fastest true-animation progress/);
+});
+
+test("formatWikimediaStrokeOrderPlan calls out animation-only mode when enabled", () => {
+    const text = formatWikimediaStrokeOrderPlan({
+        levels: [1],
+        totalKanji: 3,
+        imageMissingCount: 0,
+        animationMissingCount: 3,
+        rows: [],
+        truncated: false,
+        totalMissingRows: 0,
+        imageSourceDir: "C:/repo/data/media_sources/stroke-order/images",
+        animationSourceDir: "C:/repo/data/media_sources/stroke-order/animations",
+        projectNote: "Wikimedia Commons CJK Stroke Order Project",
+        animationOnly: true,
+    });
+
+    assert.match(text, /Mode: animation-only/);
 });
 
 test("formatWikimediaStrokeOrderSheet renders a compact copyable checklist", () => {

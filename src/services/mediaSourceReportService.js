@@ -189,6 +189,7 @@ async function buildMediaSourceReport({
     audioEnabled = true,
     levels = [5],
     limit = 25,
+    gapTypes = null,
 }) {
     const imageIndex = await buildLocalDirectoryIndex(strokeOrderImageSourceDir, IMAGE_EXTENSIONS);
     const animationIndex = await buildLocalDirectoryIndex(strokeOrderAnimationSourceDir, ANIMATION_EXTENSIONS);
@@ -228,7 +229,10 @@ async function buildMediaSourceReport({
         });
     }
 
-    const limitedRows = rows.slice(0, Math.max(1, limit || 25));
+    const filteredRows = Array.isArray(gapTypes) && gapTypes.length > 0
+        ? rows.filter((row) => gapTypes.includes(row.gapType))
+        : rows;
+    const limitedRows = filteredRows.slice(0, Math.max(1, limit || 25));
 
     return {
         levels: targetLevels,
@@ -242,10 +246,10 @@ async function buildMediaSourceReport({
         animationSourceDir: strokeOrderAnimationSourceDir,
         audioSourceDir,
         rows: limitedRows,
-        gapSummary: summarizeGapTypes(rows),
+        gapSummary: summarizeGapTypes(filteredRows),
         duplicateSourceMatches,
-        truncated: rows.length > limitedRows.length,
-        totalMissingRows: rows.length,
+        truncated: filteredRows.length > limitedRows.length,
+        totalMissingRows: filteredRows.length,
         sourceDirectoriesExist: {
             image: fs.existsSync(strokeOrderImageSourceDir),
             animation: fs.existsSync(strokeOrderAnimationSourceDir),

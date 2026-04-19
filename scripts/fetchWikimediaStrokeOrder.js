@@ -17,6 +17,7 @@ function parseArgs(argv) {
         fileLimit: 4,
         delayMs: 2000,
         max429: 2,
+        animationOnly: argv.includes("--animation-only"),
         probeGuessed: argv.includes("--probe-guessed"),
     };
 
@@ -54,6 +55,7 @@ async function main() {
         strokeOrderAnimationSourceDir: config.strokeOrderAnimationSourceDir,
         levels: options.levels,
         limit: options.planLimit,
+        animationOnly: options.animationOnly,
         discover: true,
         discoveryCachePath: path.join(config.cacheDir, "wikimedia-stroke-order-discovery.json"),
     });

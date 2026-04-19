@@ -178,6 +178,43 @@ test("buildMediaSourceReport summarizes source-folder coverage and missing asset
     }
 });
 
+test("buildMediaSourceReport can scope rows to animation-related gaps only", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const imageSourceDir = path.join(rootDir, "images");
+        const animationSourceDir = path.join(rootDir, "animations");
+        fs.mkdirSync(imageSourceDir, { recursive: true });
+        fs.mkdirSync(animationSourceDir, { recursive: true });
+        fs.writeFileSync(path.join(imageSourceDir, "日.png"), "image", "utf-8");
+        fs.writeFileSync(path.join(animationSourceDir, "本-order.gif"), "animation", "utf-8");
+
+        const report = await buildMediaSourceReport({
+            jlptOnlyJson: {
+                日: { jlpt: 5 },
+                本: { jlpt: 5 },
+                学: { jlpt: 5 },
+            },
+            strokeOrderImageSourceDir: imageSourceDir,
+            strokeOrderAnimationSourceDir: animationSourceDir,
+            audioSourceDir: path.join(rootDir, "audio"),
+            audioEnabled: false,
+            levels: [5],
+            limit: 10,
+            gapTypes: ["animation_only", "missing_stroke_order"],
+        });
+
+        assert.deepEqual(report.rows.map((row) => [row.kanji, row.gapType]), [
+            ["学", "missing_stroke_order"],
+            ["日", "animation_only"],
+        ]);
+        assert.equal(report.totalMissingRows, 2);
+        assert.equal(report.gapSummary.image_only, 0);
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
 test("formatMediaSourceReport produces a clear local-source summary", () => {
     const text = formatMediaSourceReport({
         levels: [5],

@@ -50,6 +50,32 @@ test("buildFetchTargets keeps only confirmed Commons assets unless fallback prob
     ]);
 });
 
+test("buildFetchTargets respects animation-only plans", () => {
+    const plan = {
+        rows: [
+            {
+                kanji: "日",
+                level: 5,
+                image: null,
+                animation: { fileName: "日-order.gif", downloadUrl: "https://example.com/day.gif", filePageUrl: "https://example.com/day-gif", status: "confirmed_on_commons" },
+            },
+        ],
+    };
+
+    const targets = buildFetchTargets(plan);
+    assert.deepEqual(targets, [
+        {
+            kanji: "日",
+            level: 5,
+            kind: "animation",
+            fileName: "日-order.gif",
+            url: "https://example.com/day.gif",
+            filePageUrl: "https://example.com/day-gif",
+            discoveryStatus: "confirmed_on_commons",
+        },
+    ]);
+});
+
 test("fetchWikimediaStrokeOrderBatch downloads confirmed files and skips existing ones", async () => {
     const rootDir = makeTempDir();
 

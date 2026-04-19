@@ -8,6 +8,7 @@ const {
     buildMediaSourceReport,
     buildPreferredFileNames,
     classifyGapType,
+    findDuplicateCandidateMatches,
     formatGapLabel,
     formatMediaSourceReport,
     hasAnyCandidate,
@@ -31,6 +32,26 @@ test("hasAnyCandidate detects candidate hits in an index", () => {
     const index = new Map([["日", [{ fileName: "日.png" }]]]);
     assert.equal(hasAnyCandidate(index, ["本", "日"]), true);
     assert.equal(hasAnyCandidate(index, ["本", "学"]), false);
+});
+
+test("findDuplicateCandidateMatches reports multiple source files for the same kanji candidate set", () => {
+    const index = new Map([
+        ["日-order", [{ fileName: "日-order.gif" }]],
+        ["日-calligraphic-order", [{ fileName: "日-calligraphic-order.gif" }]],
+        ["月-order", [{ fileName: "月-order.gif" }]],
+    ]);
+
+    const duplicates = findDuplicateCandidateMatches(index, (kanji) => {
+        if (kanji === "日") {
+            return ["日-order", "日-calligraphic-order"];
+        }
+        return ["月-order"];
+    }, ["日", "月"]);
+
+    assert.deepEqual(duplicates, [{
+        kanji: "日",
+        files: ["日-calligraphic-order.gif", "日-order.gif"],
+    }]);
 });
 
 test("buildMediaSourceReport treats SVG image fallback as image-only coverage", async () => {
@@ -136,6 +157,7 @@ test("buildMediaSourceReport summarizes source-folder coverage and missing asset
         assert.equal(report.animationAvailableCount, 1);
         assert.equal(report.trueAnimationAvailableCount, 1);
         assert.equal(report.audioAvailableCount, 1);
+        assert.deepEqual(report.duplicateSourceMatches, { images: [], animations: [] });
         assert.deepEqual(report.rows.map((row) => row.kanji), ["日", "本", "学"]);
         assert.equal(report.rows[0].hasImage, true);
         assert.equal(report.rows[0].hasAnimation, true);
@@ -183,6 +205,13 @@ test("formatMediaSourceReport produces a clear local-source summary", () => {
             animation: true,
             audio: false,
         },
+        duplicateSourceMatches: {
+            images: [],
+            animations: [{
+                kanji: "日",
+                files: ["日-calligraphic-order.gif", "日-order.gif"],
+            }],
+        },
         rows: [{
             kanji: "日",
             level: 5,
@@ -203,10 +232,14 @@ test("formatMediaSourceReport produces a clear local-source summary", () => {
     assert.match(text, /Local Media Source Report/);
     assert.match(text, /Source image coverage: 20\/79/);
     assert.match(text, /Gap summary:/);
+    assert.match(text, /Duplicate source candidates:/);
+    assert.match(text, /- Images: 0/);
+    assert.match(text, /- Animations: 1/);
     assert.match(text, /Missing animation only: 5/);
     assert.match(text, /Missing all media: 7/);
     assert.match(text, /Audio: C:\/repo\/data\/media_sources\/audio \(missing directory\)/);
     assert.match(text, /- 日 \(N5, all media\)/);
+    assert.match(text, /Animation duplicate: 日 -> 日-calligraphic-order\.gif, 日-order\.gif/);
     assert.match(text, /Image: 日\.png, 日\.webp, 日-bw\.png, 日-bw\.webp/);
     assert.match(text, /Animation: 日-order\.gif, 日-order\.webp/);
     assert.match(text, /Audio: 日\.mp3, 日\.wav/);
@@ -236,6 +269,7 @@ test("formatMediaSourceReport hides audio details when audio is disabled", () =>
         animationSourceDir: "C:/repo/data/media_sources/stroke-order/animations",
         audioSourceDir: "C:/repo/data/media_sources/audio",
         sourceDirectoriesExist: { image: true, animation: true, audio: false },
+        duplicateSourceMatches: { images: [], animations: [] },
         rows: [{
             kanji: "日",
             level: 5,

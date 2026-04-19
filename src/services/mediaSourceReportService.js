@@ -56,6 +56,30 @@ function hasAnimationSource({ animationIndex, kanji }) {
     return hasAnyCandidate(animationIndex, buildStrokeOrderAnimationCandidates(kanji));
 }
 
+function findDuplicateCandidateMatches(index, buildCandidates, kanjiList = []) {
+    const duplicates = [];
+
+    for (const kanji of kanjiList) {
+        const matches = new Set();
+
+        for (const candidate of buildCandidates(kanji)) {
+            const entries = index.get(candidate) || [];
+            for (const entry of entries) {
+                matches.add(entry.fileName);
+            }
+        }
+
+        if (matches.size > 1) {
+            duplicates.push({
+                kanji,
+                files: [...matches].sort((a, b) => a.localeCompare(b)),
+            });
+        }
+    }
+
+    return duplicates.sort((a, b) => a.kanji.localeCompare(b.kanji));
+}
+
 function buildPreferredFileNames(baseCandidates, extensions, limit = 4) {
     const fileNames = [];
 
@@ -172,7 +196,12 @@ async function buildMediaSourceReport({
     const buckets = buildJlptBuckets(jlptOnlyJson);
     const targetLevels = parseLevelsArgument(levels);
     const targetKanji = targetLevels.flatMap((level) => (buckets.get(level) || []).map((kanji) => ({ kanji, level })));
+    const targetKanjiList = targetKanji.map((entry) => entry.kanji);
     const rows = [];
+    const duplicateSourceMatches = {
+        images: findDuplicateCandidateMatches(imageIndex, buildStrokeOrderImageCandidates, targetKanjiList),
+        animations: findDuplicateCandidateMatches(animationIndex, buildStrokeOrderAnimationCandidates, targetKanjiList),
+    };
 
     for (const entry of targetKanji) {
         const hasImage = hasAnyCandidate(imageIndex, buildStrokeOrderImageCandidates(entry.kanji));
@@ -214,6 +243,7 @@ async function buildMediaSourceReport({
         audioSourceDir,
         rows: limitedRows,
         gapSummary: summarizeGapTypes(rows),
+        duplicateSourceMatches,
         truncated: rows.length > limitedRows.length,
         totalMissingRows: rows.length,
         sourceDirectoriesExist: {
@@ -265,8 +295,29 @@ function formatMediaSourceReport(report) {
         lines.push(`- Audio: ${report.audioSourceDir}${report.sourceDirectoriesExist.audio ? "" : " (missing directory)"}`);
     }
 
+    const duplicateImages = report.duplicateSourceMatches?.images || [];
+    const duplicateAnimations = report.duplicateSourceMatches?.animations || [];
+    lines.push("");
+    lines.push("Duplicate source candidates:");
+    lines.push(`- Images: ${duplicateImages.length}`);
+    lines.push(`- Animations: ${duplicateAnimations.length}`);
+
     if ((report.rows || []).length === 0) {
         lines.push("");
+        if (duplicateImages.length > 0 || duplicateAnimations.length > 0) {
+            lines.push("Duplicate source candidates still need cleanup before the local source folders are considered clean.");
+            lines.push("");
+            for (const entry of duplicateImages.slice(0, 10)) {
+                lines.push(`- Image duplicate: ${entry.kanji} -> ${entry.files.join(", ")}`);
+            }
+            for (const entry of duplicateAnimations.slice(0, 10)) {
+                lines.push(`- Animation duplicate: ${entry.kanji} -> ${entry.files.join(", ")}`);
+            }
+            if (duplicateImages.length + duplicateAnimations.length > 10) {
+                lines.push(`Showing a sample of duplicate source candidates. Total duplicates: ${duplicateImages.length + duplicateAnimations.length}.`);
+            }
+            lines.push("");
+        }
         lines.push(report.audioEnabled
             ? "All requested kanji already have image, animation, and audio files available in the local source folders."
             : "All requested kanji already have image and animation files available in the local source folders.");
@@ -295,6 +346,20 @@ function formatMediaSourceReport(report) {
         lines.push(`Showing ${report.rows.length} of ${report.totalMissingRows} kanji with missing local source files. Increase --limit to see more.`);
     }
 
+    if (duplicateImages.length > 0 || duplicateAnimations.length > 0) {
+        lines.push("");
+        lines.push("Duplicate source candidates detected:");
+        for (const entry of duplicateImages.slice(0, 10)) {
+            lines.push(`- Image duplicate: ${entry.kanji} -> ${entry.files.join(", ")}`);
+        }
+        for (const entry of duplicateAnimations.slice(0, 10)) {
+            lines.push(`- Animation duplicate: ${entry.kanji} -> ${entry.files.join(", ")}`);
+        }
+        if (duplicateImages.length + duplicateAnimations.length > 10) {
+            lines.push(`Showing a sample of duplicate source candidates. Total duplicates: ${duplicateImages.length + duplicateAnimations.length}.`);
+        }
+    }
+
     lines.push("");
     lines.push("Next step: add the missing files or run the import commands, then rerun this report before `npm run media:sync`.");
     return `${lines.join("\n")}\n`;
@@ -304,6 +369,7 @@ module.exports = {
     buildMediaSourceReport,
     buildPreferredFileNames,
     classifyGapType,
+    findDuplicateCandidateMatches,
     formatGapLabel,
     formatMediaSourceReport,
     hasAnyCandidate,

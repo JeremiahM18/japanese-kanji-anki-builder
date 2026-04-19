@@ -11,7 +11,7 @@
     "dev": "nodemon",
     "start": "node src/server.js",
     "lint": "eslint src scripts test *.js",
-    "test": "node test/run-tests.js",
+    "test": "node --test --test-isolation=none \"test/**/*.test.js\"",
     "bench:export": "node scripts/benchmarkExport.js",
     "corpus:normalize": "node scripts/normalizeSentenceCorpus.js",
     "corpus:report": "node scripts/reportSentenceCorpusCoverage.js",

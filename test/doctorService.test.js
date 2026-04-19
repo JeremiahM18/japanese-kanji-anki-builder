@@ -78,6 +78,7 @@ test("buildDoctorReport summarizes readiness coverage and acquisition next steps
             config,
             loadSentenceCorpusFn: () => [{ kanji: "日", japanese: "日本です。", english: "It is Japan." }],
             loadCuratedStudyDataFn: () => ({ 日: { notes: "fixture" } }),
+            buildToolchainStatusFn: () => ({ runtime: [], packaging: [] }),
             buildCoverageSummaryFn: () => ({
                 totalKanji: 2,
                 coveredKanji: 1,

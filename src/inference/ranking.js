@@ -10,6 +10,8 @@ const { HAN_CHAR_RE, KANA_ONLY_RE, KATAKANA_ONLY_RE, normalizeText } = require("
 
 const INVALID_SCORE = -999;
 
+// Empirically tuned ranking weights. Validate changes against the golden review
+// commands (for example `npm run deck:review:n5`) before treating adjustments as improvements.
 const SCORE = {
     CONTAINS_TARGET_KANJI: 20,
     MISSING_TARGET_KANJI: -25,

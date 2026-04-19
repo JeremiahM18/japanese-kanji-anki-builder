@@ -357,13 +357,21 @@ function verifyAnkiPackage(summary) {
     };
 }
 
-async function runCiSmoke({ rootDir = null, keepTempDir = false } = {}) {
+async function runCiSmoke({
+    rootDir = null,
+    keepTempDir = false,
+    buildDoctorReportFn = buildDoctorReport,
+    buildDoctorReportOptions = {},
+} = {}) {
     const workspace = createSmokeWorkspace(rootDir);
     const mockKanjiApiClient = createMockKanjiApiClient();
     const mediaServices = createStubMediaServices();
 
     try {
-        const doctorReport = await buildDoctorReport({ config: workspace.config });
+        const doctorReport = await buildDoctorReportFn({
+            config: workspace.config,
+            ...buildDoctorReportOptions,
+        });
         assert.equal(doctorReport.ready, true);
 
         const kanjiSummary = await runBuildPipeline({

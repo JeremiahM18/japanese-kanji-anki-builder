@@ -37,6 +37,9 @@ test("runCiSmoke produces kanji and word deck smoke artifacts", async () => {
         const summary = await runCiSmoke({
             rootDir: tempRoot,
             keepTempDir: true,
+            buildDoctorReportOptions: {
+                buildToolchainStatusFn: () => ({ runtime: [], packaging: [] }),
+            },
         });
 
         assert.equal(summary.rootDir, tempRoot);

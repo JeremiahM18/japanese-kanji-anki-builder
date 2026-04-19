@@ -5,6 +5,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const { runReleaseGate } = require("../src/services/releaseGateService");
+const { runCiSmoke } = require("../src/services/ciSmokeService");
 
 test("runReleaseGate verifies deterministic artifact contracts", async () => {
     const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "kanji-release-gate-"));
@@ -13,6 +14,12 @@ test("runReleaseGate verifies deterministic artifact contracts", async () => {
         const report = await runReleaseGate({
             rootDir: tempRoot,
             keepTempDir: true,
+            runCiSmokeFn: (options) => runCiSmoke({
+                ...options,
+                buildDoctorReportOptions: {
+                    buildToolchainStatusFn: () => ({ runtime: [], packaging: [] }),
+                },
+            }),
         });
 
         assert.equal(report.smoke.kanjiExports, 1);

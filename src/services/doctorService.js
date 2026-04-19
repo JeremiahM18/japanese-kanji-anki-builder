@@ -37,10 +37,14 @@ function describePathStatus(filePath, { label, required, kind = "file" }) {
     };
 }
 
-function describeMediaReadiness({ label, localDir, remoteBaseUrl, remoteEnvVar }) {
+function describeMediaReadiness({ label, localDir, remoteBaseUrl, remoteEnvVar, remoteFallbackBaseUrls = [] }) {
     const localStatus = describePathStatus(localDir, { label, required: false, kind: "directory" });
     const localFilesReady = Boolean(localStatus.exists && (localStatus.entryCount || 0) > 0);
-    const remoteConfigured = Boolean(remoteBaseUrl);
+    const configuredRemoteBaseUrls = [
+        ...(remoteBaseUrl ? [remoteBaseUrl] : []),
+        ...remoteFallbackBaseUrls.filter(Boolean),
+    ];
+    const remoteConfigured = configuredRemoteBaseUrls.length > 0;
 
     return {
         label,
@@ -49,6 +53,7 @@ function describeMediaReadiness({ label, localDir, remoteBaseUrl, remoteEnvVar }
         localFileCount: localStatus.entryCount || 0,
         remoteConfigured,
         remoteBaseUrl: remoteBaseUrl || null,
+        remoteFallbackBaseUrls: remoteFallbackBaseUrls.filter(Boolean),
         remoteEnvVar,
         ready: localFilesReady || remoteConfigured,
     };
@@ -81,7 +86,8 @@ function buildDoctorStatus(config, { buildToolchainStatusFn = buildToolchainStat
                 label: "Stroke-order animations",
                 localDir: config.strokeOrderAnimationSourceDir,
                 remoteBaseUrl: config.remoteStrokeOrderAnimationBaseUrl,
-                remoteEnvVar: "REMOTE_STROKE_ORDER_ANIMATION_BASE_URL",
+                remoteFallbackBaseUrls: [config.remoteStrokeOrderAnimCjkBaseUrl],
+                remoteEnvVar: "REMOTE_STROKE_ORDER_ANIMATION_BASE_URL or REMOTE_STROKE_ORDER_ANIMCJK_BASE_URL",
             }),
             ...(config.enableAudio === false ? [] : [describeMediaReadiness({
                 label: "Audio",

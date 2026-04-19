@@ -97,6 +97,21 @@ test("loadConfig leaves stroke-order animation remote unset unless configured", 
     });
 
     assert.equal(config.remoteStrokeOrderAnimationBaseUrl, undefined);
+    assert.equal(config.remoteStrokeOrderAnimCjkBaseUrl, undefined);
+});
+
+test("loadConfig reads the optional AnimCJK fallback base URL", () => {
+    const config = loadConfig({
+        cwd: process.cwd(),
+        env: {
+            REMOTE_STROKE_ORDER_ANIMCJK_BASE_URL: "https://raw.githubusercontent.com/parsimonhi/animCJK/master/svgsJa/",
+        },
+    });
+
+    assert.equal(
+        config.remoteStrokeOrderAnimCjkBaseUrl,
+        "https://raw.githubusercontent.com/parsimonhi/animCJK/master/svgsJa/"
+    );
 });
 
 test("loadConfig rejects invalid boolean-like values for ENABLE_AUDIO", () => {

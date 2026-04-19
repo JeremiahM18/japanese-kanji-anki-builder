@@ -28,6 +28,7 @@ function buildFixtureContext() {
         audioSourceDir: "C:\\repo\\data\\media_sources\\audio",
         remoteStrokeOrderImageBaseUrl: "https://media.example.com/stroke/images/",
         remoteStrokeOrderAnimationBaseUrl: "https://media.example.com/stroke/animations/",
+        remoteStrokeOrderAnimCjkBaseUrl: "https://raw.githubusercontent.com/parsimonhi/animCJK/master/svgsJa/",
         remoteAudioBaseUrl: "https://media.example.com/audio/",
         nodeEnv: "development",
         exportConcurrency: 4,
@@ -411,6 +412,7 @@ test("health and readiness endpoints expose operational state", async () => {
         assert.equal(readyJson.datasets.curatedStudyEntries, 1);
         assert.equal(readyJson.config.nodeEnv, "development");
         assert.equal(readyJson.config.exportConcurrency, 4);
+        assert.equal(readyJson.config.remoteStrokeOrderAnimCjkBaseUrl, "https://raw.githubusercontent.com/parsimonhi/animCJK/master/svgsJa/");
         assert.equal(readyJson.config.remoteAudioBaseUrl, "https://media.example.com/audio/");
         assert.equal("cacheDir" in readyJson.config, false);
         assert.equal("audioSourceDir" in readyJson.config, false);

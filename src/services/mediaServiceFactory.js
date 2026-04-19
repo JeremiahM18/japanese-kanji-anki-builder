@@ -1,6 +1,13 @@
 const { createRemoteHttpProvider } = require("./mediaProviders");
 const { AUDIO_EXTENSIONS, buildAudioFileCandidates, createAudioService } = require("./audioService");
-const { ANIMATION_EXTENSIONS, IMAGE_EXTENSIONS, buildStrokeOrderAnimationCandidates, buildStrokeOrderImageCandidates, createStrokeOrderService } = require("./strokeOrderService");
+const {
+    ANIMATION_EXTENSIONS,
+    IMAGE_EXTENSIONS,
+    buildAnimCjkAnimationCandidates,
+    buildStrokeOrderAnimationCandidates,
+    buildStrokeOrderImageCandidates,
+    createStrokeOrderService,
+} = require("./strokeOrderService");
 
 function createMediaServices(config) {
     const imageProviders = [
@@ -18,6 +25,13 @@ function createMediaServices(config) {
             baseUrl: config.remoteStrokeOrderAnimationBaseUrl,
             extensionMap: ANIMATION_EXTENSIONS,
             buildCandidates: (input) => buildStrokeOrderAnimationCandidates(input),
+            fetchTimeoutMs: config.fetchTimeoutMs,
+        })] : []),
+        ...(config.remoteStrokeOrderAnimCjkBaseUrl ? [createRemoteHttpProvider({
+            name: "remote-stroke-order-animation-animcjk",
+            baseUrl: config.remoteStrokeOrderAnimCjkBaseUrl,
+            extensionMap: new Map([[".svg", "image/svg+xml"]]),
+            buildCandidates: (input) => buildAnimCjkAnimationCandidates(input),
             fetchTimeoutMs: config.fetchTimeoutMs,
         })] : []),
     ];
@@ -38,7 +52,7 @@ function createMediaServices(config) {
             animationSourceDir: config.strokeOrderAnimationSourceDir,
             imageProviders,
             animationProviders,
-            preferRemoteAnimationProviders: Boolean(config.remoteStrokeOrderAnimationBaseUrl),
+            preferRemoteAnimationProviders: animationProviders.length > 0,
         }),
         audioService: config.enableAudio === false
             ? null

@@ -32,6 +32,7 @@ function logServerStarted({ logger: runtimeLogger, config, sentenceCorpus, curat
             audioSourceDir: config.audioSourceDir,
             remoteStrokeOrderImageBaseUrl: config.remoteStrokeOrderImageBaseUrl || null,
             remoteStrokeOrderAnimationBaseUrl: config.remoteStrokeOrderAnimationBaseUrl || null,
+            remoteStrokeOrderAnimCjkBaseUrl: config.remoteStrokeOrderAnimCjkBaseUrl || null,
             remoteAudioBaseUrl: config.remoteAudioBaseUrl || null,
             urls: {
                 exportN5: `${baseUrl}/export/N5`,

@@ -227,14 +227,14 @@ npm run media:report -- --limit=25
 ### Stroke-order acquisition
 
 - `media:plan` shows accepted filenames for missing image, animation, and audio assets.
-- Remote stroke-order animation sync is opt-in. Set `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` when you want managed animation fallback from a shared source such as GitHub `jcsirot/kanji.gif`.
+- Remote stroke-order animation sync is opt-in. Set `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` for the primary GitHub GIF source, and optionally set `REMOTE_STROKE_ORDER_ANIMCJK_BASE_URL` for a secondary GitHub animated-SVG fallback.
 - `media:plan:stroke-order` builds a Wikimedia Commons checklist for supplemental stroke-order assets, mainly static images and any manual fallback work you still want to do.
 - Add `--animation-only` when you want that checklist limited to missing true animations, with no image rows mixed in.
 - `media:discover:stroke-order` combines Commons title search with file-prefix listing to find real Commons asset names when you are filling local gaps.
 - `media:fetch:stroke-order` downloads confirmed Commons assets, and `--probe-guessed` also tries direct Commons redirect URLs for guessed filenames when discovery cannot confirm them.
 - `media:fetch:stroke-order -- --animation-only ...` keeps the Commons fetch pass focused on missing animations only.
 - `media:report:animations` shows the current managed true-animation gap queue by level, and `media:report:animations:n1` is the optional convenience shortcut for the full N1 queue.
-- `.env.example` includes a commented `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` example so each machine opts into its intended remote animation source explicitly.
+- `.env.example` includes commented primary and secondary remote animation examples so each machine opts into its intended source order explicitly.
 - `media:import:kanjivg` imports official KanjiVG SVG files into the repo's canonical source layout.
 
 If you are focused only on stroke order, run readiness and media reporting with `ENABLE_AUDIO=false`.
@@ -359,9 +359,12 @@ Optional `.env` settings:
 - `VOICEVOX_SPEAKER_ID`
 - `REMOTE_STROKE_ORDER_IMAGE_BASE_URL`
 - `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL`
+- `REMOTE_STROKE_ORDER_ANIMCJK_BASE_URL`
 - `REMOTE_AUDIO_BASE_URL`
 
-`REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` is optional. Leave it unset if you only want local animation assets, or point it at a pinned remote source such as the GitHub `jcsirot/kanji.gif` set when you want managed fallback acquisition.
+`REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` is optional. Leave it unset if you only want local animation assets, or point it at a pinned remote source such as GitHub `jcsirot/kanji.gif` when you want managed GIF fallback acquisition.
+
+`REMOTE_STROKE_ORDER_ANIMCJK_BASE_URL` is also optional. Set it when you want a secondary GitHub animated-SVG fallback from AnimCJK after the primary GIF source misses.
 
 More detailed local data guidance lives in [data/README.md](data/README.md).
 
@@ -422,8 +425,8 @@ Media behavior:
 - `StrokeOrder` prefers animation when available, then static image.
 - `StrokeOrderImage` exposes the static asset directly.
 - `StrokeOrderAnimation` exposes the managed animation asset directly when one exists.
-- Managed animation assets come from your local imports first, then from `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` when that remote fallback is explicitly configured.
-- Managed animation assets come only from real animation files such as `.gif`, `.webp`, and `.apng`.
+- Managed animation assets come from your configured remote providers in order, then fall back to local imports. The intended priority is `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` first, then `REMOTE_STROKE_ORDER_ANIMCJK_BASE_URL`, then local files when the remotes miss.
+- Managed animation assets include real animation files such as `.gif`, `.webp`, `.apng`, and animated `.svg` files sourced from AnimCJK.
 - Static stroke-order image coverage and animation coverage are reported separately so card quality stays honest.
 - `Audio` exports Anki sound markup when a managed audio asset exists.
 

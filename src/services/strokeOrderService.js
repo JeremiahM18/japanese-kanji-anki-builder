@@ -29,9 +29,10 @@ const ANIMATION_EXTENSIONS = new Map([
     [".gif", "image/gif"],
     [".webp", "image/webp"],
     [".apng", "image/apng"],
+    [".svg", "image/svg+xml"],
 ]);
 
-const TRUE_ANIMATION_EXTENSIONS = new Set([".gif", ".webp", ".apng"]);
+const TRUE_ANIMATION_EXTENSIONS = new Set([".gif", ".webp", ".apng", ".svg"]);
 
 function isTrueAnimatedStrokeOrderPath(assetOrPath) {
     const candidate = typeof assetOrPath === "string"
@@ -113,6 +114,13 @@ function buildStrokeOrderAnimationCandidates(kanji) {
     }
 
     return [...candidates];
+}
+
+function buildAnimCjkAnimationCandidates(kanji) {
+    const normalized = normalizeKanji(kanji);
+    const codePoint = Array.from(normalized)[0].codePointAt(0);
+
+    return [String(codePoint)];
 }
 
 async function findMatchingAsset(sourceDir, kanji, extensionMap, buildCandidates = buildKanjiFileCandidates) {
@@ -335,6 +343,7 @@ module.exports = {
     ANIMATION_EXTENSIONS,
     IMAGE_EXTENSIONS,
     TRUE_ANIMATION_EXTENSIONS,
+    buildAnimCjkAnimationCandidates,
     buildKanjiFileCandidates,
     buildKanjiVgStrokeOrderCandidates,
     buildStrokeOrderAnimationCandidates,

@@ -6,6 +6,7 @@ const path = require("node:path");
 
 const { buildKanjiMediaId } = require("../src/services/mediaStore");
 const {
+    buildAnimCjkAnimationCandidates,
     buildKanjiFileCandidates,
     buildKanjiVgStrokeOrderCandidates,
     buildStrokeOrderAnimationCandidates,
@@ -54,6 +55,10 @@ test("buildStrokeOrderAnimationCandidates includes Commons and KanjiVG animation
     assert.ok(candidates.includes("四-calligraphic-order"));
     assert.ok(candidates.includes("四-cursive-order"));
     assert.ok(candidates.includes("四 - U+056DB- KanjiVG stroke order"));
+});
+
+test("buildAnimCjkAnimationCandidates uses decimal unicode file names", () => {
+    assert.deepEqual(buildAnimCjkAnimationCandidates("日"), ["26085"]);
 });
 
 test("findMatchingAsset resolves a local stroke-order source file", async () => {
@@ -269,6 +274,28 @@ test("syncKanji prefers configured remote animation providers before local anima
         assert.equal(result.manifest.assets.strokeOrderAnimation.source, "remote-stroke-order-animation");
         assert.equal(result.acquisition.animation[0].provider, "remote-stroke-order-animation");
         assert.equal(result.acquisition.animation[0].status, "hit");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+test("findMatchingAsset resolves AnimCJK decimal SVG animation names", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const animationDir = path.join(rootDir, "animations");
+        fs.mkdirSync(animationDir, { recursive: true });
+        fs.writeFileSync(path.join(animationDir, "26085.svg"), "svg", "utf-8");
+
+        const asset = await findMatchingAsset(
+            animationDir,
+            "日",
+            new Map([[".svg", "image/svg+xml"]]),
+            buildAnimCjkAnimationCandidates
+        );
+
+        assert.equal(asset.fileName, "26085.svg");
+        assert.equal(asset.mimeType, "image/svg+xml");
     } finally {
         cleanupTempDir(rootDir);
     }

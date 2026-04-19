@@ -182,6 +182,7 @@ function createApp({
                 nodeEnv: config.nodeEnv,
                 remoteStrokeOrderImageBaseUrl: config.remoteStrokeOrderImageBaseUrl || null,
                 remoteStrokeOrderAnimationBaseUrl: config.remoteStrokeOrderAnimationBaseUrl || null,
+                remoteStrokeOrderAnimCjkBaseUrl: config.remoteStrokeOrderAnimCjkBaseUrl || null,
                 remoteAudioBaseUrl: config.remoteAudioBaseUrl || null,
                 exportConcurrency: config.exportConcurrency,
                 fetchTimeoutMs: config.fetchTimeoutMs,

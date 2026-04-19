@@ -14,9 +14,9 @@ function parseNodeVersion(version = process.versions.node) {
 }
 
 function supportsTestIsolationFlag(version = process.versions.node) {
-    const { major, minor } = parseNodeVersion(version);
+    const { major } = parseNodeVersion(version);
 
-    return major > 22 || (major === 22 && minor >= 8);
+    return major >= 24;
 }
 
 function buildNodeTestArgs(version = process.versions.node) {

@@ -165,6 +165,24 @@ function cloneManifestForUpdate(manifest) {
     };
 }
 
+function shouldRefreshPreferredAnimation({
+    existingAnimationAsset,
+    hasExistingAnimation,
+    preferRemoteAnimationProviders,
+    animationProviders = [],
+}) {
+    if (!hasExistingAnimation || !preferRemoteAnimationProviders) {
+        return false;
+    }
+
+    const preferredProviderName = animationProviders[0]?.name || "";
+    if (!preferredProviderName) {
+        return false;
+    }
+
+    return existingAnimationAsset?.source !== preferredProviderName;
+}
+
 function createStrokeOrderService({
     mediaRootDir,
     imageSourceDir,
@@ -209,10 +227,16 @@ function createStrokeOrderService({
         const existingManifest = await getManifest(normalizedKanji);
         const hasExistingImage = managedAssetExists(mediaRootDir, normalizedKanji, existingManifest?.assets?.strokeOrderImage?.path);
         const hasExistingAnimation = managedAssetExists(mediaRootDir, normalizedKanji, existingManifest?.assets?.strokeOrderAnimation?.path);
+        const shouldRefreshAnimation = shouldRefreshPreferredAnimation({
+            existingAnimationAsset: existingManifest?.assets?.strokeOrderAnimation || null,
+            hasExistingAnimation,
+            preferRemoteAnimationProviders,
+            animationProviders,
+        });
         const imageLookup = hasExistingImage
             ? { asset: null, attempts: [] }
             : await findAssetFromProvidersWithReport(resolvedImageProviders, normalizedKanji, providerMetrics.image);
-        const animationLookup = hasExistingAnimation
+        const animationLookup = hasExistingAnimation && !shouldRefreshAnimation
             ? { asset: null, attempts: [] }
             : await findAssetFromProvidersWithReport(resolvedAnimationProviders, normalizedKanji, providerMetrics.animation);
         const imageAsset = imageLookup.asset;
@@ -320,4 +344,5 @@ module.exports = {
     findMatchingAsset,
     isTrueAnimatedStrokeOrderPath,
     normalizeKanji,
+    shouldRefreshPreferredAnimation,
 };

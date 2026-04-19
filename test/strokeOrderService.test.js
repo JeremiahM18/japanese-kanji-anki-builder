@@ -13,6 +13,7 @@ const {
     createStrokeOrderService,
     findMatchingAsset,
     normalizeKanji,
+    shouldRefreshPreferredAnimation,
 } = require("../src/services/strokeOrderService");
 
 function makeTempDir() {
@@ -271,6 +272,92 @@ test("syncKanji prefers configured remote animation providers before local anima
     } finally {
         cleanupTempDir(rootDir);
     }
+});
+
+test("syncKanji upgrades an existing local animation to the preferred remote provider", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const mediaRootDir = path.join(rootDir, "media");
+        const mediaId = buildKanjiMediaId("日");
+        const baseDir = path.join(mediaRootDir, "kanji", "65", mediaId);
+        fs.mkdirSync(path.join(baseDir, "images"), { recursive: true });
+        fs.mkdirSync(path.join(baseDir, "animations"), { recursive: true });
+        fs.writeFileSync(path.join(baseDir, "images", mediaId + "-stroke-order.png"), "png-binary", "utf-8");
+        fs.writeFileSync(path.join(baseDir, "animations", mediaId + "-stroke-order.gif"), "local-gif", "utf-8");
+        fs.writeFileSync(path.join(baseDir, "manifest.json"), JSON.stringify({
+            kanji: "日",
+            version: 1,
+            updatedAt: "2026-01-01T00:00:00.000Z",
+            assets: {
+                strokeOrderImage: {
+                    kind: "image",
+                    path: "images/" + mediaId + "-stroke-order.png",
+                    mimeType: "image/png",
+                    source: "local-filesystem",
+                },
+                strokeOrderAnimation: {
+                    kind: "animation",
+                    path: "animations/" + mediaId + "-stroke-order.gif",
+                    mimeType: "image/gif",
+                    source: "local-filesystem",
+                },
+                audio: [],
+            },
+        }, null, 2), "utf-8");
+
+        let remoteAnimationRequests = 0;
+        const service = createStrokeOrderService({
+            mediaRootDir,
+            preferRemoteAnimationProviders: true,
+            animationProviders: [{
+                name: "remote-stroke-order-animation",
+                async findAsset() {
+                    remoteAnimationRequests += 1;
+                    return {
+                        fileName: "日.gif",
+                        mimeType: "image/gif",
+                        checksum: "remote-checksum",
+                        content: Buffer.from("remote-gif"),
+                        extension: ".gif",
+                        source: "remote-stroke-order-animation",
+                    };
+                },
+            }],
+        });
+
+        const result = await service.syncKanji("日");
+
+        assert.equal(remoteAnimationRequests, 1);
+        assert.equal(result.manifest.assets.strokeOrderAnimation.source, "remote-stroke-order-animation");
+        assert.equal(result.acquisition.animation[0].provider, "remote-stroke-order-animation");
+        assert.equal(result.acquisition.animation[0].status, "hit");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+test("shouldRefreshPreferredAnimation only refreshes when remote animation should replace an existing source", () => {
+    assert.equal(shouldRefreshPreferredAnimation({
+        existingAnimationAsset: { source: "local-filesystem" },
+        hasExistingAnimation: true,
+        preferRemoteAnimationProviders: true,
+        animationProviders: [{ name: "remote-stroke-order-animation" }],
+    }), true);
+
+    assert.equal(shouldRefreshPreferredAnimation({
+        existingAnimationAsset: { source: "remote-stroke-order-animation" },
+        hasExistingAnimation: true,
+        preferRemoteAnimationProviders: true,
+        animationProviders: [{ name: "remote-stroke-order-animation" }],
+    }), false);
+
+    assert.equal(shouldRefreshPreferredAnimation({
+        existingAnimationAsset: { source: "local-filesystem" },
+        hasExistingAnimation: false,
+        preferRemoteAnimationProviders: true,
+        animationProviders: [{ name: "remote-stroke-order-animation" }],
+    }), false);
 });
 
 test("getManifest caches stroke-order manifests and refreshes after sync", async () => {

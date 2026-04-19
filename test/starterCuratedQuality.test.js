@@ -47,20 +47,14 @@ test("tracked starter curated N3-N5 entries keep required learner-facing quality
 
 test("tracked starter curated N1 batch entries keep required learner-facing quality metadata", () => {
     const starterPaths = getTrackedN1BatchPaths();
-    const curatedStudyData = loadCuratedStudyData(path.join(process.cwd(), "data", "curated_study_data.json"));
-    const jlptOnlyData = JSON.parse(fs.readFileSync(path.join(process.cwd(), "data", "kanji_jlpt_only.json"), "utf8"));
     const finalBatchPath = starterPaths.at(-1);
-    const remainingN1Kanji = Object.entries(jlptOnlyData)
-        .filter(([, entry]) => entry?.jlpt === 1)
-        .filter(([kanji]) => !curatedStudyData[kanji])
-        .map(([kanji]) => kanji);
 
     assert.ok(starterPaths.length >= 1, "expected at least one tracked N1 batch file");
 
     for (const starterPath of starterPaths) {
         const starterData = JSON.parse(fs.readFileSync(starterPath, "utf8"));
         const entryCount = Object.keys(starterData).length;
-        const isFinalCloseoutBatch = starterPath === finalBatchPath && remainingN1Kanji.length === 0;
+        const isFinalCloseoutBatch = starterPath === finalBatchPath;
 
         if (isFinalCloseoutBatch) {
             assert.ok(

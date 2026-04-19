@@ -198,4 +198,4 @@ If you already have curated kanji study data and want to add the starter entries
 npm run curated:init -- --merge
 ```
 
-The starter curated kanji pack is intentionally focused on high-value tracked batches so learner-facing meanings, notes, and examples improve quickly before you expand deeper into the full JLPT set. Runtime and bootstrap loading include the base `starter_curated_study_data.json` file plus any tracked `starter_curated_study_data_*.json` batch files.
+The starter curated kanji pack is intentionally focused on high-value tracked batches so learner-facing meanings, notes, and examples improve quickly before you expand deeper into the full JLPT set. Runtime and bootstrap loading include the base `starter_curated_study_data.json` file plus any tracked `starter_curated_study_data_*.json` batch files. Tracked N1 batches normally stay in the 6-8 kanji range, with a smaller final closeout batch allowed only when it completes the remaining N1 gap.

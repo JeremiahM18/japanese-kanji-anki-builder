@@ -91,13 +91,19 @@ test("loadConfig parses ENABLE_AUDIO as a boolean flag", () => {
 });
 
 test("loadConfig leaves stroke-order animation remote unset unless configured", () => {
-    const config = loadConfig({
-        cwd: process.cwd(),
-        env: {},
-    });
+    const rootDir = makeTempDir();
 
-    assert.equal(config.remoteStrokeOrderAnimationBaseUrl, undefined);
-    assert.equal(config.remoteStrokeOrderAnimCjkBaseUrl, undefined);
+    try {
+        const config = loadConfig({
+            cwd: rootDir,
+            env: {},
+        });
+
+        assert.equal(config.remoteStrokeOrderAnimationBaseUrl, undefined);
+        assert.equal(config.remoteStrokeOrderAnimCjkBaseUrl, undefined);
+    } finally {
+        cleanupTempDir(rootDir);
+    }
 });
 
 test("loadConfig reads the optional AnimCJK fallback base URL", () => {

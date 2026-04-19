@@ -194,7 +194,10 @@ Important word-deck rules:
 
 ```bash
 npm run build:artifacts -- --levels=5,4 --limit=25
+npm run build:artifacts -- --levels=5,4 --limit=25 --max-fallback-ratio=0.05
 ```
+
+`build:artifacts` stays reporting-friendly by default, but you can now enforce a fallback ceiling for strict scripting. For example, `--max-fallback-ratio=0.05` fails the build when more than 5% of exported rows degrade to offline local fallback cards.
 
 ## Media workflows
 
@@ -293,7 +296,7 @@ The tagged workflow in [.github/workflows/release.yml](.github/workflows/release
 | `npm run deck:apkg` | Build an importable `.apkg` from packaged kanji exports |
 | `npm run deck:words:ready` | Run the full word-deck build and package path |
 | `npm run deck:words:apkg` | Build an importable `.apkg` from packaged word exports |
-| `npm run build:artifacts` | Run the deterministic kanji build pipeline (`--fail-on-export-issues` available for strict scripting) |
+| `npm run build:artifacts` | Run the deterministic kanji build pipeline (`--fail-on-export-issues` and `--max-fallback-ratio=<0..1>` available for strict scripting) |
 | `npm run corpus:init` | Create or merge starter sentence corpus data |
 | `npm run curated:init` | Create or merge starter curated kanji study data |
 | `npm run curated:report -- --level=1 --limit=8` | Show the next high-value missing curated kanji for a level, ranked by cached word candidates |

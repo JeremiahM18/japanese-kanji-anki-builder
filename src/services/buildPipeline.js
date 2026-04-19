@@ -179,12 +179,33 @@ function buildScopedCoverageRatio(levelRows = [], levels = [], countField, total
     return Number((totals.covered / totals.total).toFixed(4));
 }
 
+function summarizeExportIssues(exportIssues = [], totalRows = 0, maxFallbackRatio = null) {
+    const issues = Array.isArray(exportIssues) ? exportIssues : [];
+    const fallbackCount = issues.filter((issue) => issue?.resolution === "offline-local-fallback").length;
+    const warnings = issues.filter((issue) => issue?.severity === "warning").length;
+    const errors = issues.filter((issue) => issue?.severity === "error").length;
+    const fallbackRatio = totalRows > 0 ? Number((fallbackCount / totalRows).toFixed(4)) : 0;
+    const hasConfiguredThreshold = Number.isFinite(maxFallbackRatio);
+    const thresholdExceeded = hasConfiguredThreshold && fallbackRatio > maxFallbackRatio;
+
+    return {
+        count: issues.length,
+        warnings,
+        errors,
+        fallbackCount,
+        fallbackRatio,
+        maxAllowedFallbackRatio: hasConfiguredThreshold ? maxFallbackRatio : null,
+        thresholdExceeded,
+    };
+}
+
 async function runBuildPipeline({
     config,
     outDir,
     levels = [5, 4, 3, 2, 1],
     limit = null,
     concurrency = null,
+    maxFallbackRatio = null,
     skipMediaSync = false,
     syncAudioMetadata = {},
     createKanjiApiClientFn = createKanjiApiClient,
@@ -381,6 +402,12 @@ async function runBuildPipeline({
     writeJsonFile(reportPaths.exportIssuesPath, exportIssues);
     capturePhaseTiming(timingsMs, "reportWrite", reportWriteStartedAt);
 
+    const exportIssueSummary = summarizeExportIssues(
+        exportIssues,
+        exports.reduce((sum, entry) => sum + (entry.rows || 0), 0),
+        maxFallbackRatio
+    );
+
     const summary = {
         generatedAt: new Date().toISOString(),
         outDir: buildPaths.root,
@@ -430,11 +457,7 @@ async function runBuildPipeline({
             totalKanji: mediaSync.summary.totalKanji,
             errors: mediaSync.summary.errors.length,
         },
-        exportIssues: {
-            count: exportIssues.length,
-            warnings: exportIssues.filter((issue) => issue.severity === "warning").length,
-            errors: exportIssues.filter((issue) => issue.severity === "error").length,
-        },
+        exportIssues: exportIssueSummary,
         timingsMs: {
             ...timingsMs,
             total: Date.now() - totalStartedAt,
@@ -448,6 +471,7 @@ async function runBuildPipeline({
 module.exports = {
     buildBuildPaths,
     buildScopedCoverageRatio,
+    summarizeExportIssues,
     filterJlptOnlyJsonByLevels,
     buildSelectedKanjiByLevel,
     parseLevelsArgument,

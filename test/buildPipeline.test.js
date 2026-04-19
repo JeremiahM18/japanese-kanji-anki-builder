@@ -6,7 +6,7 @@ const assert = require("node:assert/strict");
 const { spawnSync } = require("node:child_process");
 
 const { buildMediaBasePath } = require("../src/services/mediaStore");
-const { buildScopedCoverageRatio, parseLevelsArgument, runBuildPipeline } = require("../src/services/buildPipeline");
+const { buildScopedCoverageRatio, parseLevelsArgument, runBuildPipeline, summarizeExportIssues } = require("../src/services/buildPipeline");
 const { resolvePythonCommand } = require("../src/services/toolchainService");
 
 test("parseLevelsArgument supports all and normalized JLPT levels", () => {
@@ -24,6 +24,22 @@ test("buildScopedCoverageRatio aggregates only the selected levels", () => {
     ], [5], "strokeOrderCovered");
 
     assert.equal(ratio, 1);
+});
+
+test("summarizeExportIssues tracks fallback ratios and threshold breaches", () => {
+    const summary = summarizeExportIssues([
+        { severity: "warning", resolution: "offline-local-fallback" },
+        { severity: "warning", resolution: "offline-local-fallback" },
+        { severity: "error", resolution: "export-failed" },
+    ], 10, 0.1);
+
+    assert.equal(summary.count, 3);
+    assert.equal(summary.warnings, 2);
+    assert.equal(summary.errors, 1);
+    assert.equal(summary.fallbackCount, 2);
+    assert.equal(summary.fallbackRatio, 0.2);
+    assert.equal(summary.maxAllowedFallbackRatio, 0.1);
+    assert.equal(summary.thresholdExceeded, true);
 });
 
 test("runBuildPipeline reuses the shared manifest lookup during packaging", async () => {
@@ -420,8 +436,104 @@ test("runBuildPipeline reports export fallback issues instead of writing raw err
     assert.equal(summary.exportIssues.count, 1);
     assert.equal(summary.exportIssues.warnings, 1);
     assert.equal(summary.exportIssues.errors, 0);
+    assert.equal(summary.exportIssues.fallbackCount, 1);
+    assert.equal(summary.exportIssues.fallbackRatio, 1);
+    assert.equal(summary.exportIssues.maxAllowedFallbackRatio, null);
+    assert.equal(summary.exportIssues.thresholdExceeded, false);
     assert.equal(exportIssues.length, 1);
     assert.equal(exportIssues[0].kanji, "龘");
     assert.equal(exportIssues[0].resolution, "offline-local-fallback");
+});
+
+test("runBuildPipeline records when export fallback ratio exceeds a configured threshold", async () => {
+    const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "kanji-build-pipeline-fallback-threshold-"));
+    const dataDir = path.join(tempRoot, "data");
+    const outDir = path.join(tempRoot, "out", "build");
+    const mediaRootDir = path.join(dataDir, "media");
+
+    fs.mkdirSync(dataDir, { recursive: true });
+
+    const jlptJsonPath = path.join(dataDir, "kanji_jlpt_only.json");
+    const kradfilePath = path.join(dataDir, "KRADFILE");
+    const sentenceCorpusPath = path.join(dataDir, "sentence_corpus.json");
+    const curatedStudyDataPath = path.join(dataDir, "curated_study_data.json");
+
+    fs.writeFileSync(jlptJsonPath, `${JSON.stringify({
+        龘: {
+            jlpt: 4,
+            meanings: ["master", "main", "lord"],
+            on_readings: ["シュ"],
+            kun_readings: ["ぬし", "おも"],
+        },
+    }, null, 2)}\n`, "utf-8");
+    fs.writeFileSync(kradfilePath, "龘 : 丶\n", "utf-8");
+    fs.writeFileSync(sentenceCorpusPath, `${JSON.stringify([], null, 2)}\n`, "utf-8");
+    fs.writeFileSync(curatedStudyDataPath, `${JSON.stringify({
+        龘: {
+            englishMeaning: "test meaning",
+            preferredWords: ["龘"],
+            notes: "龘 （おも） - test meaning",
+            exampleSentence: {
+                japanese: "龘な理由を説明してください。",
+                reading: "てすとかんじをせつめいしてください。",
+                english: "Please explain this test kanji.",
+            },
+        },
+    }, null, 2)}\n`, "utf-8");
+
+    const summary = await runBuildPipeline({
+        config: {
+            jlptJsonPath,
+            kradfilePath,
+            sentenceCorpusPath,
+            curatedStudyDataPath,
+            mediaRootDir,
+            cacheDir: path.join(tempRoot, "cache"),
+            kanjiApiBaseUrl: "https://kanjiapi.dev",
+            fetchTimeoutMs: 10000,
+            exportConcurrency: 1,
+            buildOutDir: outDir,
+        },
+        outDir,
+        levels: [4],
+        limit: 1,
+        maxFallbackRatio: 0.05,
+        skipMediaSync: true,
+        createKanjiApiClientFn: () => ({
+            async getKanji() {
+                return {
+                    meanings: ["master", "main", "lord"],
+                    on_readings: ["シュ"],
+                    kun_readings: ["ぬし", "おも"],
+                };
+            },
+            async getWords() {
+                throw new Error("Request timed out after 10000 ms: https://kanjiapi.dev/v1/words/%E9%BE%98");
+            },
+        }),
+        createMediaServicesFn: () => ({
+            strokeOrderService: {
+                async getBestStrokeOrderPath() {
+                    return "";
+                },
+                async getStrokeOrderImagePath() {
+                    return "";
+                },
+                async getStrokeOrderAnimationPath() {
+                    return "";
+                },
+            },
+            audioService: {
+                async getBestAudioPath() {
+                    return "";
+                },
+            },
+        }),
+    });
+
+    assert.equal(summary.exportIssues.fallbackCount, 1);
+    assert.equal(summary.exportIssues.fallbackRatio, 1);
+    assert.equal(summary.exportIssues.maxAllowedFallbackRatio, 0.05);
+    assert.equal(summary.exportIssues.thresholdExceeded, true);
 });
 

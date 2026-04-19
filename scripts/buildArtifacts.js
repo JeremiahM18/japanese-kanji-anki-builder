@@ -10,6 +10,7 @@ function parseArgs(argv) {
         outDir: null,
         skipMediaSync: false,
         failOnExportIssues: false,
+        maxFallbackRatio: null,
         audioReading: null,
         audioVoice: null,
         audioLocale: null,
@@ -29,6 +30,8 @@ function parseArgs(argv) {
             options.skipMediaSync = true;
         } else if (arg === "--fail-on-export-issues") {
             options.failOnExportIssues = true;
+        } else if (arg.startsWith("--max-fallback-ratio=")) {
+            options.maxFallbackRatio = parseNumericOption(arg, "max-fallback-ratio");
         } else if (arg.startsWith("--audio-reading=")) {
             options.audioReading = parseStringOption(arg, "audio-reading");
         } else if (arg.startsWith("--audio-voice=")) {
@@ -49,12 +52,17 @@ async function main() {
 
     assertNoUnknownArgs("buildArtifacts", options.unknownArgs);
 
+    if (options.maxFallbackRatio != null && (!Number.isFinite(options.maxFallbackRatio) || options.maxFallbackRatio < 0 || options.maxFallbackRatio > 1)) {
+        throw new Error("Invalid max-fallback-ratio. Must be a number between 0 and 1.");
+    }
+
     const summary = await runBuildPipeline({
         config,
         outDir: options.outDir || config.buildOutDir,
         levels: options.levels || [5, 4, 3, 2, 1],
         limit: Number.isFinite(options.limit) ? options.limit : null,
         concurrency: Number.isFinite(options.concurrency) ? options.concurrency : null,
+        maxFallbackRatio: Number.isFinite(options.maxFallbackRatio) ? options.maxFallbackRatio : null,
         skipMediaSync: options.skipMediaSync,
         syncAudioMetadata: {
             reading: options.audioReading || undefined,
@@ -66,6 +74,10 @@ async function main() {
     console.log(JSON.stringify(summary, null, 2));
 
     if (options.failOnExportIssues && (summary.exportIssues?.count || 0) > 0) {
+        process.exitCode = 1;
+    }
+
+    if (summary.exportIssues?.thresholdExceeded) {
         process.exitCode = 1;
     }
 }

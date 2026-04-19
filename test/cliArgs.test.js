@@ -36,12 +36,13 @@ test("prepareDeck parseArgs records unsupported flags, json mode, and strict ove
     assert.deepEqual(options.unknownArgs, ["--oops"]);
 });
 
-test("buildArtifacts parseArgs records unsupported flags and export issue gate", () => {
-    const options = parseBuildArtifactsArgs(["--levels=5,4", "--skip-media-sync", "--fail-on-export-issues", "--oops"]);
+test("buildArtifacts parseArgs records unsupported flags and export issue gates", () => {
+    const options = parseBuildArtifactsArgs(["--levels=5,4", "--skip-media-sync", "--fail-on-export-issues", "--max-fallback-ratio=0.05", "--oops"]);
 
     assert.deepEqual(options.levels, [5, 4]);
     assert.equal(options.skipMediaSync, true);
     assert.equal(options.failOnExportIssues, true);
+    assert.equal(options.maxFallbackRatio, 0.05);
     assert.deepEqual(options.unknownArgs, ["--oops"]);
 });
 

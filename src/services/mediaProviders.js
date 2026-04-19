@@ -141,7 +141,7 @@ function updateProviderMetric(metrics, providerName, update) {
  * @returns {Record<string, ProviderMetric>}
  */
 function snapshotProviderMetrics(metrics) {
-    return JSON.parse(JSON.stringify(metrics || {}));
+    return structuredClone(metrics || {});
 }
 
 function createLocalDirectoryProvider({

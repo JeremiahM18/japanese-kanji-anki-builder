@@ -448,6 +448,66 @@ test("getManifest caches stroke-order manifests and refreshes after sync", async
     }
 });
 
+test("getManifest refreshes expired stroke-order cache entries", async () => {
+    const rootDir = makeTempDir();
+    let now = 1_000;
+
+    try {
+        const mediaRootDir = path.join(rootDir, "media");
+        const imageDir = path.join(rootDir, "source-images");
+        const animationDir = path.join(rootDir, "source-animations");
+        const mediaId = buildKanjiMediaId("日");
+        const manifestPath = path.join(mediaRootDir, "kanji", "65", mediaId, "manifest.json");
+        fs.mkdirSync(path.dirname(manifestPath), { recursive: true });
+        fs.mkdirSync(imageDir, { recursive: true });
+        fs.mkdirSync(animationDir, { recursive: true });
+        fs.writeFileSync(manifestPath, JSON.stringify({
+            kanji: "日",
+            version: 1,
+            updatedAt: "2026-01-01T00:00:00.000Z",
+            assets: {
+                strokeOrderImage: null,
+                strokeOrderAnimation: null,
+                audio: [],
+            },
+        }, null, 2), "utf-8");
+
+        const service = createStrokeOrderService({
+            mediaRootDir,
+            imageSourceDir: imageDir,
+            animationSourceDir: animationDir,
+            manifestCacheTtlMs: 100,
+            nowFn: () => now,
+        });
+
+        const firstManifest = await service.getManifest("日");
+        fs.writeFileSync(manifestPath, JSON.stringify({
+            kanji: "日",
+            version: 1,
+            updatedAt: "2026-01-02T00:00:00.000Z",
+            assets: {
+                strokeOrderImage: {
+                    kind: "image",
+                    path: "images/updated.png",
+                    mimeType: "image/png",
+                    source: "disk-update",
+                },
+                strokeOrderAnimation: null,
+                audio: [],
+            },
+        }, null, 2), "utf-8");
+
+        now += 150;
+        const refreshedManifest = await service.getManifest("日");
+
+        assert.equal(firstManifest.updatedAt, "2026-01-01T00:00:00.000Z");
+        assert.equal(refreshedManifest.updatedAt, "2026-01-02T00:00:00.000Z");
+        assert.equal(refreshedManifest.assets.strokeOrderImage.path, "images/updated.png");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
 test("syncKanji reuses existing managed stroke-order assets without provider lookups", async () => {
     const rootDir = makeTempDir();
 

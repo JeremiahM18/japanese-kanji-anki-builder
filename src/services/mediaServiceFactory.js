@@ -53,6 +53,7 @@ function createMediaServices(config) {
             imageProviders,
             animationProviders,
             preferRemoteAnimationProviders: animationProviders.length > 0,
+            manifestCacheTtlMs: config.mediaManifestCacheTtlMs,
         }),
         audioService: config.enableAudio === false
             ? null
@@ -60,6 +61,7 @@ function createMediaServices(config) {
                 mediaRootDir: config.mediaRootDir,
                 audioSourceDir: config.audioSourceDir,
                 providers: audioProviders,
+                manifestCacheTtlMs: config.mediaManifestCacheTtlMs,
             }),
     };
 }

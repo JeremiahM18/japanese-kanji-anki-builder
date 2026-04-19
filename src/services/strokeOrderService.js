@@ -4,8 +4,10 @@ const path = require("node:path");
 const {
     cloneManifestForUpdate,
     ensureMediaLayout,
+    getCachedManifest,
     managedAssetExists,
     readManifestIfExists,
+    setCachedManifest,
     updateManifest,
     buildKanjiMediaId,
 } = require("./mediaStore");
@@ -178,6 +180,8 @@ function createStrokeOrderService({
     imageProviders = [],
     animationProviders = [],
     preferRemoteAnimationProviders = false,
+    manifestCacheTtlMs = 30000,
+    nowFn = Date.now,
 }) {
     const resolvedImageProviders = [
         createLocalDirectoryProvider({
@@ -262,7 +266,7 @@ function createStrokeOrderService({
 
             return nextManifest;
         });
-        manifestCache.set(normalizedKanji, writtenManifest);
+        setCachedManifest(manifestCache, normalizedKanji, writtenManifest, { nowFn });
 
 
         return {
@@ -282,12 +286,13 @@ function createStrokeOrderService({
     async function getManifest(kanji) {
         const normalizedKanji = normalizeKanji(kanji);
 
-        if (manifestCache.has(normalizedKanji)) {
-            return manifestCache.get(normalizedKanji);
+        const cachedManifest = getCachedManifest(manifestCache, normalizedKanji, { manifestCacheTtlMs, nowFn });
+        if (cachedManifest !== undefined) {
+            return cachedManifest;
         }
 
         const manifest = await readManifestIfExists(mediaRootDir, normalizedKanji);
-        manifestCache.set(normalizedKanji, manifest);
+        setCachedManifest(manifestCache, normalizedKanji, manifest, { nowFn });
         return manifest;
     }
 

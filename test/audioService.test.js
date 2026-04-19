@@ -227,6 +227,66 @@ test("getManifest caches audio manifests and refreshes after sync", async () => 
     }
 });
 
+test("getManifest refreshes expired audio cache entries", async () => {
+    const rootDir = makeTempDir();
+    let now = 1_000;
+
+    try {
+        const mediaRootDir = path.join(rootDir, "media");
+        const audioSourceDir = path.join(rootDir, "sources");
+        const mediaId = buildKanjiMediaId("日");
+        const manifestPath = path.join(mediaRootDir, "kanji", "65", mediaId, "manifest.json");
+        fs.mkdirSync(path.dirname(manifestPath), { recursive: true });
+        fs.mkdirSync(audioSourceDir, { recursive: true });
+        fs.writeFileSync(manifestPath, JSON.stringify({
+            kanji: "日",
+            version: 1,
+            updatedAt: "2026-01-01T00:00:00.000Z",
+            assets: {
+                strokeOrderImage: null,
+                strokeOrderAnimation: null,
+                audio: [],
+            },
+        }, null, 2), "utf-8");
+
+        const audioService = createAudioService({
+            mediaRootDir,
+            audioSourceDir,
+            manifestCacheTtlMs: 100,
+            nowFn: () => now,
+        });
+
+        const firstManifest = await audioService.getManifest("日");
+        fs.writeFileSync(manifestPath, JSON.stringify({
+            kanji: "日",
+            version: 1,
+            updatedAt: "2026-01-02T00:00:00.000Z",
+            assets: {
+                strokeOrderImage: null,
+                strokeOrderAnimation: null,
+                audio: [{
+                    kind: "audio",
+                    path: "audio/updated.mp3",
+                    mimeType: "audio/mpeg",
+                    source: "disk-update",
+                    category: "kanji-reading",
+                    text: "日",
+                    locale: "ja-JP",
+                }],
+            },
+        }, null, 2), "utf-8");
+
+        now += 150;
+        const refreshedManifest = await audioService.getManifest("日");
+
+        assert.equal(firstManifest.updatedAt, "2026-01-01T00:00:00.000Z");
+        assert.equal(refreshedManifest.updatedAt, "2026-01-02T00:00:00.000Z");
+        assert.equal(refreshedManifest.assets.audio[0].path, "audio/updated.mp3");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
 test("syncKanji reuses existing managed audio assets without provider lookups", async () => {
     const rootDir = makeTempDir();
 

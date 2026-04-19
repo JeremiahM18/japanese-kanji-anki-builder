@@ -5,6 +5,10 @@ const path = require("node:path");
 
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 
+const repoRootDir = path.resolve(__dirname, "..");
+const templatesDir = path.join(repoRootDir, "templates");
+const dataDir = path.join(repoRootDir, "data");
+
 function normalizeForSearch(value) {
     return String(value ?? "")
         .toLowerCase()
@@ -12,14 +16,14 @@ function normalizeForSearch(value) {
 }
 
 function getTrackedN1BatchPaths() {
-    return fs.readdirSync(path.join(process.cwd(), "templates"))
+    return fs.readdirSync(templatesDir)
         .filter((name) => /^starter_curated_study_data_n1_batch_\d+\.json$/.test(name))
         .sort((a, b) => a.localeCompare(b))
-        .map((name) => path.join(process.cwd(), "templates", name));
+        .map((name) => path.join(templatesDir, name));
 }
 
 test("tracked starter curated N3-N5 entries keep required learner-facing quality metadata", () => {
-    const starterPath = path.join(process.cwd(), "templates", "starter_curated_study_data.json");
+    const starterPath = path.join(templatesDir, "starter_curated_study_data.json");
     const starterData = JSON.parse(fs.readFileSync(starterPath, "utf8"));
 
     for (const [kanji, entry] of Object.entries(starterData)) {
@@ -89,7 +93,7 @@ test("tracked starter curated N1 batch entries keep required learner-facing qual
 });
 
 test("resolved curated N3-N5 entries keep selected learner-facing editorial choices stable", () => {
-    const curatedStudyData = loadCuratedStudyData(path.join(process.cwd(), "data", "curated_study_data.json"));
+    const curatedStudyData = loadCuratedStudyData(path.join(dataDir, "curated_study_data.json"));
 
     assert.deepEqual(curatedStudyData["便"].displayWord, { written: "便利", pron: "べんり" });
     assert.equal(curatedStudyData["便"].englishMeaning, "convenience / mail service");

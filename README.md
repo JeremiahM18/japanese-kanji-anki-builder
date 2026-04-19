@@ -361,10 +361,13 @@ Optional `.env` settings:
 - `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL`
 - `REMOTE_STROKE_ORDER_ANIMCJK_BASE_URL`
 - `REMOTE_AUDIO_BASE_URL`
+- `MEDIA_MANIFEST_CACHE_TTL_MS`
 
 `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` is optional. Leave it unset if you only want local animation assets, or point it at a pinned remote source such as GitHub `jcsirot/kanji.gif` when you want managed GIF fallback acquisition.
 
 `REMOTE_STROKE_ORDER_ANIMCJK_BASE_URL` is also optional. Set it when you want a secondary GitHub animated-SVG fallback from AnimCJK after the primary GIF source misses.
+
+`MEDIA_MANIFEST_CACHE_TTL_MS` controls how long the long-running server keeps managed media manifests in memory before rereading them from disk. The default is `30000` ms, which keeps requests fast while still letting the server notice external `media:sync` changes without a restart.
 
 More detailed local data guidance lives in [data/README.md](data/README.md).
 

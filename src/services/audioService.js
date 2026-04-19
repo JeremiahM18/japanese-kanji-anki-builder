@@ -3,8 +3,10 @@ const path = require("node:path");
 const {
     cloneManifestForUpdate,
     ensureMediaLayout,
+    getCachedManifest,
     managedAssetExists,
     readManifestIfExists,
+    setCachedManifest,
     updateManifest,
     buildKanjiMediaId,
 } = require("./mediaStore");
@@ -157,7 +159,7 @@ function buildDestinationStem({ mediaId, category, text, reading }) {
     return parts.join("-") || `${mediaId}-kanji-reading`;
 }
 
-function createAudioService({ mediaRootDir, audioSourceDir, providers = [] }) {
+function createAudioService({ mediaRootDir, audioSourceDir, providers = [], manifestCacheTtlMs = 30000, nowFn = Date.now }) {
     const resolvedProviders = [
         createLocalDirectoryProvider({
             name: "local-filesystem",
@@ -173,12 +175,13 @@ function createAudioService({ mediaRootDir, audioSourceDir, providers = [] }) {
     async function getManifest(kanji) {
         const normalizedKanji = normalizeKanji(kanji);
 
-        if (manifestCache.has(normalizedKanji)) {
-            return manifestCache.get(normalizedKanji);
+        const cachedManifest = getCachedManifest(manifestCache, normalizedKanji, { manifestCacheTtlMs, nowFn });
+        if (cachedManifest !== undefined) {
+            return cachedManifest;
         }
 
         const manifest = await readManifestIfExists(mediaRootDir, normalizedKanji);
-        manifestCache.set(normalizedKanji, manifest);
+        setCachedManifest(manifestCache, normalizedKanji, manifest, { nowFn });
         return manifest;
     }
 
@@ -233,7 +236,7 @@ function createAudioService({ mediaRootDir, audioSourceDir, providers = [] }) {
 
             return nextManifest;
         });
-        manifestCache.set(normalizedKanji, writtenManifest);
+        setCachedManifest(manifestCache, normalizedKanji, writtenManifest, { nowFn });
 
 
         return {

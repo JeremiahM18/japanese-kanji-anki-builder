@@ -141,6 +141,29 @@ function cloneManifestForUpdate(manifest) {
     };
 }
 
+function getCachedManifest(manifestCache, kanji, { manifestCacheTtlMs = 30000, nowFn = Date.now } = {}) {
+    const cacheEntry = manifestCache.get(kanji);
+    if (!cacheEntry) {
+        return undefined;
+    }
+
+    if (manifestCacheTtlMs > 0 && (nowFn() - cacheEntry.cachedAt) > manifestCacheTtlMs) {
+        manifestCache.delete(kanji);
+        return undefined;
+    }
+
+    return cacheEntry.manifest;
+}
+
+function setCachedManifest(manifestCache, kanji, manifest, { nowFn = Date.now } = {}) {
+    manifestCache.set(kanji, {
+        manifest,
+        cachedAt: nowFn(),
+    });
+
+    return manifest;
+}
+
 function ensureMediaLayout(mediaRootDir, kanji) {
     ensureMediaRoot(mediaRootDir);
 
@@ -242,12 +265,14 @@ module.exports = {
     ensureMediaLayout,
     ensureMediaRoot,
     ensureDir,
+    getCachedManifest,
     isTransientRenameError,
     managedAssetExists,
     mediaManifestSchema,
     readManifestIfExists,
     renameWithRetry,
     runWithManifestLock,
+    setCachedManifest,
     updateManifest,
     writeManifest,
 };

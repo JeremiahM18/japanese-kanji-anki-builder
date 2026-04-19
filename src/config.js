@@ -47,6 +47,7 @@ const schema = z.object({
     buildOutDir: z.string().default("out/build"),
     exportConcurrency: z.coerce.number().int().positive().default(8),
     fetchTimeoutMs: z.coerce.number().int().positive().default(10000),
+    mediaManifestCacheTtlMs: z.coerce.number().int().nonnegative().default(30000),
 });
 
 function resolveFromCwd(cwd, value) {
@@ -128,6 +129,7 @@ function buildRawConfig(env) {
         buildOutDir: env.BUILD_OUT_DIR,
         exportConcurrency: env.EXPORT_CONCURRENCY,
         fetchTimeoutMs: env.API_REQUEST_TIMEOUT,
+        mediaManifestCacheTtlMs: env.MEDIA_MANIFEST_CACHE_TTL_MS,
     };
 }
 

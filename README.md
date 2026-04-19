@@ -192,7 +192,7 @@ This assumes a local VOICEVOX engine is already running at `VOICEVOX_ENGINE_URL`
 
 GitHub Actions now runs three verification lanes:
 
-- an Ubuntu verification matrix on Node 20 and Node 22 for lint and the full automated test suite
+- an Ubuntu verification matrix on Node 18, Node 20, and Node 22 for lint and the full automated test suite
 - a cross-platform smoke matrix on Ubuntu, Windows, and macOS that seeds a deterministic fixture workspace with `npm run ci:smoke` and verifies kanji and word deck packaging paths from a clean checkout
 - a dedicated Ubuntu release gate that provisions Python, runs `npm run release:gate -- --require-apkg-tools`, and asserts artifact contracts plus native `.apkg` generation
 

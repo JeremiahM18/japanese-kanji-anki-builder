@@ -1,4 +1,4 @@
-const { normalizeText } = require("../utils/text");
+const { KATAKANA_ONLY_RE, normalizeText } = require("../utils/text");
 
 const LEARNER_NOISE_PATTERNS = [
     /radical/i,
@@ -14,8 +14,6 @@ const LEARNER_NOISE_PATTERNS = [
 ];
 
 const EXACT_WORD_GLOSS_MARGIN = 0;
-const KATAKANA_ONLY_RE = /^[\p{Script=Katakana}ー]+$/u;
-
 function scoreMeaningCandidate(meaning) {
     const text = String(meaning ?? "").trim();
 

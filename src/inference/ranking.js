@@ -6,7 +6,7 @@ const {
     scoreSource,
     scoreTags,
 } = require("./sentenceInference");
-const { normalizeText } = require("../utils/text");
+const { HAN_CHAR_RE, KANA_ONLY_RE, KATAKANA_ONLY_RE, normalizeText } = require("../utils/text");
 
 const INVALID_SCORE = -999;
 
@@ -42,9 +42,6 @@ const SCORE = {
     CORPUS_SUPPORT_CAP: 45,
 };
 
-const KATAKANA_ONLY_RE = /^[\p{Script=Katakana}ー]+$/u;
-const KANA_ONLY_RE = /^[\p{Script=Hiragana}\p{Script=Katakana}ー]+$/u;
-const HAN_CHAR_RE = /\p{Script=Han}/u;
 const ASCII_ALNUM_RE = /^[A-Za-z0-9]+$/;
 const JAPANESE_PARENS_NOISE_RE = /[(（].+[)）]/;
 

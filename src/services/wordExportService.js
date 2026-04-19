@@ -4,16 +4,14 @@ const { inferSentenceCandidates, scoreCorpusSentence } = require("../inference/s
 const { createExportService, formatExampleSentence } = require("./exportService");
 const { buildOfflineFallbackCard } = require("./previewCardService");
 const { mapWithConcurrency } = require("../utils/concurrency");
-const { tsvEscape } = require("../utils/text");
+const { HAN_CHAR_RE, KATAKANA_ONLY_RE, tsvEscape } = require("../utils/text");
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 
 const WORD_FIELD_NAMES = loadAnkiNoteSchema("word").fieldNames;
-const HAN_RE = /\p{Script=Han}/u;
-const KATAKANA_ONLY_RE = /^[\p{Script=Katakana}ー]+$/u;
 
 function extractConstituentKanji(text) {
-    return [...new Set(Array.from(String(text ?? "")).filter((char) => HAN_RE.test(char) && char !== "々"))];
+    return [...new Set(Array.from(String(text ?? "")).filter((char) => HAN_CHAR_RE.test(char) && char !== "々"))];
 }
 
 function inferWordLevel({ written, jlptOnlyJson, fallbackLevel = null }) {

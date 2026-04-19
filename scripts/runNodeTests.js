@@ -1,4 +1,9 @@
 const { spawnSync } = require("node:child_process");
+const fs = require("node:fs");
+const path = require("node:path");
+
+const TEST_ROOT_DIR = path.resolve(__dirname, "..", "test");
+const TEST_FILE_SUFFIX = ".test.js";
 
 function parseNodeVersion(version = process.versions.node) {
     const [major = 0, minor = 0] = String(version)
@@ -21,8 +26,34 @@ function buildNodeTestArgs(version = process.versions.node) {
         args.push("--test-isolation=none");
     }
 
-    args.push("test/**/*.test.js");
+    args.push(...findTestFiles());
     return args;
+}
+
+function findTestFiles(rootDir = TEST_ROOT_DIR) {
+    const discovered = [];
+    const pending = [rootDir];
+
+    while (pending.length > 0) {
+        const currentDir = pending.pop();
+        const entries = fs.readdirSync(currentDir, { withFileTypes: true });
+
+        for (const entry of entries) {
+            const entryPath = path.join(currentDir, entry.name);
+
+            if (entry.isDirectory()) {
+                pending.push(entryPath);
+                continue;
+            }
+
+            if (entry.isFile() && entry.name.endsWith(TEST_FILE_SUFFIX)) {
+                discovered.push(path.relative(process.cwd(), entryPath));
+            }
+        }
+    }
+
+    discovered.sort((left, right) => left.localeCompare(right));
+    return discovered;
 }
 
 function main() {
@@ -44,6 +75,7 @@ if (require.main === module) {
 
 module.exports = {
     buildNodeTestArgs,
+    findTestFiles,
     parseNodeVersion,
     supportsTestIsolationFlag,
 };

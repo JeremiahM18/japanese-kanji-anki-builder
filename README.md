@@ -39,6 +39,64 @@ Audio is advisory by default in readiness scoring: a deck can be `ready` without
 
 ## Core workflows
 
+### Typical workflow
+
+Use this sequence when you are moving from a clean checkout toward a reviewable deck build:
+
+1. Verify the repo and local environment.
+
+```bash
+npm install
+npm run doctor
+npm run deck:readiness:global
+```
+
+2. Bootstrap local ignored datasets if this machine does not have them yet.
+
+```bash
+npm run corpus:init
+npm run curated:init
+npm run words:init
+npm run media:init
+```
+
+3. Improve content before building.
+
+```bash
+npm run curated:report -- --level=1 --limit=8
+npm run deck:preview -- --level=5 --limit=5
+npm run deck:review:n5
+npm run deck:words:review:n5
+```
+
+4. Fill media gaps for the level you are actively working on.
+
+```bash
+npm run media:plan -- --level=5 --limit=25
+npm run media:sources -- --level=5 --limit=25
+npm run media:sync -- --level=5 --limit=25
+```
+
+5. Build the deck you want to inspect or ship.
+
+```bash
+npm run deck:ready -- --levels=5
+npm run deck:apkg -- --levels=5
+npm run deck:words:ready -- --levels=5
+npm run deck:words:apkg -- --levels=5
+```
+
+6. Run release-style verification before merging or tagging.
+
+```bash
+npm test
+npm run lint
+npm run ci:smoke
+npm run release:gate
+```
+
+This is the default happy path for the repo: diagnose first, improve data and media second, preview and review before packaging, then run the same validation layers CI expects.
+
 ### Check setup and readiness
 
 ```bash

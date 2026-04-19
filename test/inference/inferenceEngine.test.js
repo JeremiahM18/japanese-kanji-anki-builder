@@ -13,7 +13,7 @@ const {
     pickBestEnglishMeaning,
 } = require("../../src/inference/meaningInference");
 const { buildNotesFromRankedCandidates } = require("../../src/inference/notesInference");
-const { scoreCandidate } = require("../../src/inference/ranking");
+const { SCORE, rankWordCandidates, scoreCandidate } = require("../../src/inference/ranking");
 const {
     scoreCorpusSentence,
     scoreSentenceLength,
@@ -103,6 +103,140 @@ test("scoreCandidate returns a structured score breakdown", () => {
         scored.scoreBreakdown.totals.finalScore,
         scored.scoreBreakdown.totals.heuristicScore + scored.scoreBreakdown.totals.corpusSupportScore
     );
+});
+
+test("rankWordCandidates prefers an exact core-meaning match over a stronger-length near match", () => {
+    const ranked = rankWordCandidates([
+        {
+            written: "五分",
+            pron: "ごふん",
+            gloss: "five minutes",
+            allGlossText: "five minutes",
+            text: "五分 （ごふん） - five minutes",
+            variant: { priorities: ["ichi1"] },
+            meaning: { glosses: ["five minutes"] },
+        },
+        {
+            written: "五",
+            pron: "ご",
+            gloss: "five",
+            allGlossText: "five",
+            text: "五 （ご） - five",
+            variant: { priorities: [] },
+            meaning: { glosses: ["five"] },
+        },
+    ], "五", ["five"]);
+
+    assert.deepEqual(
+        ranked.map((candidate) => candidate.written),
+        ["五", "五分"]
+    );
+    assert.equal(ranked[0].scoreBreakdown.heuristic.some((item) => item.key === "exact_match_bonus"), true);
+    assert.equal(ranked[0].scoreBreakdown.heuristic.some((item) => item.key === "exact_match_core_meaning_bonus"), true);
+});
+
+test("rankWordCandidates penalizes exact single-kanji katakana readings that are not learner-friendly", () => {
+    const ranked = rankWordCandidates([
+        {
+            written: "九",
+            pron: "チュー",
+            gloss: "nine",
+            allGlossText: "nine",
+            text: "九 （チュー） - nine",
+            variant: { priorities: [] },
+            meaning: { glosses: ["nine"] },
+        },
+        {
+            written: "九回",
+            pron: "きゅうかい",
+            gloss: "nine times",
+            allGlossText: "nine times",
+            text: "九回 （きゅうかい） - nine times",
+            variant: { priorities: ["ichi1"] },
+            meaning: { glosses: ["nine times"] },
+        },
+    ], "九", ["nine"]);
+
+    assert.deepEqual(
+        ranked.map((candidate) => candidate.written),
+        ["九回", "九"]
+    );
+    assert.equal(ranked[1].scoreBreakdown.heuristic.some((item) => item.key === "single_kanji_katakana_penalty"), true);
+});
+
+test("rankWordCandidates lets corpus support rerank candidates toward the sentence-backed word", () => {
+    const ranked = rankWordCandidates([
+        {
+            written: "日中",
+            pron: "にっちゅう",
+            gloss: "daytime",
+            allGlossText: "daytime",
+            text: "日中 （にっちゅう） - daytime",
+            variant: { priorities: ["ichi1", "news1"] },
+            meaning: { glosses: ["daytime"] },
+        },
+        {
+            written: "日本",
+            pron: "にほん",
+            gloss: "Japan",
+            allGlossText: "Japan",
+            text: "日本 （にほん） - Japan",
+            variant: { priorities: ["ichi1"] },
+            meaning: { glosses: ["Japan"] },
+        },
+    ], "日", ["day", "sun"], [
+        {
+            kanji: "日",
+            written: "日本",
+            japanese: "日本へ行きます。",
+            reading: "にほんへいきます。",
+            english: "I will go to Japan.",
+            source: "manual-curated",
+            tags: ["core", "common", "beginner"],
+            register: "neutral",
+            frequencyRank: 120,
+            jlpt: 5,
+        },
+    ]);
+
+    assert.deepEqual(
+        ranked.map((candidate) => candidate.written),
+        ["日本", "日中"]
+    );
+    assert.equal(ranked[0].corpusSupportScore > 0, true);
+    assert.equal(ranked[0].scoreBreakdown.corpusSupport.some((item) => item.key === "corpus_exact_written_bonus"), true);
+});
+
+test("scoreCandidate caps oversized corpus support and records the cap adjustment", () => {
+    const scored = scoreCandidate({
+        written: "日本",
+        pron: "にほん",
+        gloss: "Japan",
+        allGlossText: "Japan",
+        text: "日本 （にほん） - Japan",
+        variant: {
+            priorities: ["ichi1"],
+        },
+        meaning: {
+            glosses: ["Japan"],
+        },
+    }, "日", ["day", "sun"], [
+        {
+            kanji: "日",
+            written: "日本",
+            japanese: "日本へ行きます。",
+            reading: "にほんへいきます。",
+            english: "I will go to Japan.",
+            source: "manual-curated",
+            tags: ["core", "common", "beginner"],
+            register: "neutral",
+            frequencyRank: 1,
+            jlpt: 5,
+        },
+    ]);
+
+    assert.equal(scored.corpusSupportScore, SCORE.CORPUS_SUPPORT_CAP);
+    assert.equal(scored.scoreBreakdown.corpusSupport.some((item) => item.key === "corpus_support_cap"), true);
 });
 
 test("curated study data overrides meaning notes and top sentence", () => {

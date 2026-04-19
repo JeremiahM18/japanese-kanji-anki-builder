@@ -6,8 +6,6 @@ const {
     createExportService,
     formatAnkiAudioField,
     formatAnkiStrokeOrderField,
-    resolveManagedMediaFields,
-    selectPrimaryReading,
 } = require("../src/services/exportService");
 
 test("formatAnkiAudioField emits sound markup from the managed asset name", () => {
@@ -29,22 +27,70 @@ test("formatAnkiStrokeOrderField keeps animated GIF references Anki can render",
     );
 });
 
-test("selectPrimaryReading prefers the learner-facing display pronunciation", () => {
-    assert.equal(selectPrimaryReading({
-        displayWord: { written: "行く", pron: "いく" },
-        bestWord: { written: "銀行", pron: "ぎんこう" },
-    }), "いく");
-    assert.equal(selectPrimaryReading({
-        displayWord: { written: "行", pron: "" },
-        bestWord: { written: "行", pron: "こう" },
-    }), "こう");
+test("buildInferenceForKanji prefers the learner-facing display pronunciation", async () => {
+    const exportService = createExportService({
+        inferenceEngine: {
+            hasFullyCuratedKanjiEntry() {
+                return false;
+            },
+            inferKanjiStudyData() {
+                return {
+                    displayWord: { written: "行く", pron: "いく" },
+                    bestWord: { written: "銀行", pron: "ぎんこう" },
+                    meaningJP: "行く （いく） ／ go",
+                    notes: "行く （いく） - go",
+                    sentenceCandidates: [],
+                };
+            },
+        },
+    });
+
+    const inference = await exportService.buildInferenceForKanji({
+        kanji: "行",
+        kanjiApiClient: {
+            async getKanji() {
+                return { meanings: ["go"], on_readings: ["コウ"], kun_readings: ["いく"] };
+            },
+            async getWords() {
+                return [];
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+    });
+
+    assert.equal(inference.primaryReading, "いく");
 });
 
-
-test("resolveManagedMediaFields reuses a single shared manifest lookup when available", async () => {
+test("buildInferenceForKanji reuses a single shared manifest lookup when available", async () => {
     let manifestCalls = 0;
-    const mediaFields = await resolveManagedMediaFields({
+    const exportService = createExportService({
+        inferenceEngine: {
+            hasFullyCuratedKanjiEntry() {
+                return false;
+            },
+            inferKanjiStudyData() {
+                return {
+                    displayWord: { written: "日", pron: "にち" },
+                    bestWord: { written: "日", pron: "にち" },
+                    meaningJP: "日 （にち） ／ day",
+                    notes: "日 （にち） - day",
+                    sentenceCandidates: [],
+                };
+            },
+        },
+    });
+
+    const inference = await exportService.buildInferenceForKanji({
         kanji: "日",
+        kanjiApiClient: {
+            async getKanji() {
+                return { meanings: ["day"], on_readings: ["ニチ"], kun_readings: ["ひ"] };
+            },
+            async getWords() {
+                return [];
+            },
+        },
         strokeOrderService: {
             async getManifest() {
                 manifestCalls += 1;
@@ -70,12 +116,10 @@ test("resolveManagedMediaFields reuses a single shared manifest lookup when avai
     });
 
     assert.equal(manifestCalls, 1);
-    assert.deepEqual(mediaFields, {
-        strokeOrderPath: "animations/65E5_日-stroke-order.gif",
-        strokeOrderImagePath: "images/65E5_日-stroke-order.png",
-        strokeOrderAnimationPath: "animations/65E5_日-stroke-order.gif",
-        audioPath: "audio/65E5_日-kanji-reading-日.mp3",
-    });
+    assert.equal(inference.strokeOrderPath, "animations/65E5_日-stroke-order.gif");
+    assert.equal(inference.strokeOrderImagePath, "images/65E5_日-stroke-order.png");
+    assert.equal(inference.strokeOrderAnimationPath, "animations/65E5_日-stroke-order.gif");
+    assert.equal(inference.audioPath, "audio/65E5_日-kanji-reading-日.mp3");
 });
 
 test("buildRowForKanji skips word fetch for fully curated kanji cards", async () => {

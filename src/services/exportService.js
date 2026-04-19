@@ -413,12 +413,6 @@ function createExportService({
         formatAnkiAudioField,
         formatAnkiStrokeOrderField,
         formatExampleSentence,
-        resolveManagedMediaFields,
-        shouldSkipWordFetch,
-        shouldUseLocalJlptEntry,
-        resolveStrokeOrderFields,
-        selectDisplayWord,
-        selectPrimaryReading,
     };
 }
 
@@ -428,11 +422,5 @@ module.exports = {
     formatAnkiAudioField,
     formatAnkiStrokeOrderField,
     formatExampleSentence,
-    resolveManagedMediaFields,
-    shouldSkipWordFetch,
-    shouldUseLocalJlptEntry,
-    resolveStrokeOrderFields,
-    selectDisplayWord,
-    selectPrimaryReading,
 };
 

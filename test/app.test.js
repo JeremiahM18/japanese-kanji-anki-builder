@@ -2,8 +2,10 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const { createApp, parseLevel, parseLimit } = require("../src/app");
+const { createInferenceEngine } = require("../src/inference/inferenceEngine");
+const { createExportService } = require("../src/services/exportService");
 
-function buildFixtureApp() {
+function buildFixtureContext() {
     const config = {
         cacheDir: "C:\\repo\\cache",
         jlptJsonPath: "C:\\repo\\data\\kanji_jlpt_only.json",
@@ -301,17 +303,36 @@ function buildFixtureApp() {
         },
     };
 
-    return createApp({
+    const pickMainComponent = (components) => components[0] || "";
+    const inferenceEngine = createInferenceEngine({ sentenceCorpus, curatedStudyData });
+    const app = createApp({
         config,
         jlptOnlyJson,
         kradMap,
         sentenceCorpus,
         curatedStudyData,
-        pickMainComponent: (components) => components[0] || "",
+        pickMainComponent,
         kanjiApiClient,
         strokeOrderService,
         audioService,
+        inferenceEngine,
     });
+    const exportService = createExportService({ inferenceEngine, sentenceCorpus, curatedStudyData });
+
+    return {
+        app,
+        jlptOnlyJson,
+        kradMap,
+        pickMainComponent,
+        kanjiApiClient,
+        strokeOrderService,
+        audioService,
+        exportService,
+    };
+}
+
+function buildFixtureApp() {
+    return buildFixtureContext().app;
 }
 
 async function withServer(app, callback) {
@@ -393,6 +414,36 @@ test("inference route exposes curated and corpus-backed study output", async () 
         assert.equal(json.inference.audioField, "[sound:65E5_日-kanji-reading-日.mp3]");
         assert.equal(json.inference.sentenceCandidates[0].type, "curated");
         assert.equal(json.inference.curated.hasOverride, true);
+    });
+});
+
+test("inference route stays aligned with build rows for fixture sentence candidates", async () => {
+    const fixture = buildFixtureContext();
+    const row = await fixture.exportService.buildRowForKanji({
+        kanji: "日",
+        jlptEntry: fixture.jlptOnlyJson.日,
+        kradMap: fixture.kradMap,
+        pickMainComponent: fixture.pickMainComponent,
+        kanjiApiClient: fixture.kanjiApiClient,
+        strokeOrderService: fixture.strokeOrderService,
+        audioService: fixture.audioService,
+    });
+    const cols = row.split("\t");
+
+    await withServer(fixture.app, async (baseUrl) => {
+        const response = await fetch(`${baseUrl}/inference/日`);
+        assert.equal(response.status, 200);
+
+        const json = await response.json();
+        const sentence = json.inference.sentenceCandidates[0];
+
+        assert.equal(json.inference.displayWordText, cols[1]);
+        assert.equal(json.inference.primaryReading, cols[3]);
+        assert.equal(json.inference.notes, cols[11]);
+        assert.equal(
+            `${sentence.japanese} ／ ${sentence.reading} ／ ${sentence.english}`,
+            cols[12]
+        );
     });
 });
 

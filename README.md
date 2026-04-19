@@ -259,6 +259,8 @@ GitHub Actions now runs three verification lanes:
 
 The smoke and release-gate jobs keep their generated `out/` trees as workflow artifacts so packaging regressions are easier to inspect after a failure.
 
+`npm test` intentionally runs through `scripts/runNodeTests.js` instead of calling `node --test` directly. The wrapper expands an explicit sorted test-file list for cross-version compatibility, and Node 24+ adds `--test-isolation=none` only where that flag is supported. Keep tests resilient to shared module state: avoid module-scope mutable singletons in test fixtures, and reset any unavoidable in-memory caches, counters, or queues inside setup or teardown hooks rather than relying on file load order.
+
 ## Repository governance
 
 `main` should be protected in GitHub with required pull requests, code-owner review, stale-review dismissal, conversation resolution, and the exact required checks listed in [docs/branch-protection.md](docs/branch-protection.md).

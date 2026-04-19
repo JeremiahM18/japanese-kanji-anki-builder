@@ -5,6 +5,9 @@ const path = require("node:path");
 const TEST_ROOT_DIR = path.resolve(__dirname, "..", "test");
 const TEST_FILE_SUFFIX = ".test.js";
 
+// Keep the test invocation compatible across the supported Node matrix.
+// Newer runtimes can opt into shared-process execution, while older CI lanes
+// still run with the plain built-in runner and the same explicit test file set.
 function parseNodeVersion(version = process.versions.node) {
     const [major = 0, minor = 0] = String(version)
         .split(".")

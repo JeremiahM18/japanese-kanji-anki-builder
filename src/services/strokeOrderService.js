@@ -1,13 +1,13 @@
-const fs = require("node:fs");
 const fsp = require("node:fs/promises");
 const path = require("node:path");
 
 const {
+    cloneManifestForUpdate,
     ensureMediaLayout,
+    managedAssetExists,
     readManifestIfExists,
     updateManifest,
     buildKanjiMediaId,
-    buildMediaBasePath,
 } = require("./mediaStore");
 const {
     computeChecksum,
@@ -151,26 +151,6 @@ async function copyAssetIfChanged(sourceAsset, destinationPath) {
 
     await fsp.writeFile(destinationPath, sourceAsset.content);
     return true;
-}
-
-function managedAssetExists(mediaRootDir, kanji, relativePath) {
-    if (!relativePath) {
-        return false;
-    }
-
-    const normalizedParts = String(relativePath).split("/").filter(Boolean);
-    return fs.existsSync(path.join(buildMediaBasePath(mediaRootDir, kanji), ...normalizedParts));
-}
-
-function cloneManifestForUpdate(manifest) {
-    return {
-        ...manifest,
-        assets: {
-            strokeOrderImage: manifest.assets?.strokeOrderImage || null,
-            strokeOrderAnimation: manifest.assets?.strokeOrderAnimation || null,
-            audio: Array.isArray(manifest.assets?.audio) ? [...manifest.assets.audio] : [],
-        },
-    };
 }
 
 function shouldRefreshPreferredAnimation({

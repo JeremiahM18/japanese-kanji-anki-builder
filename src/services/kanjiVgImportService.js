@@ -1,18 +1,12 @@
-const fs = require("node:fs");
 const fsp = require("node:fs/promises");
 const path = require("node:path");
 
 const { listFilesRecursive } = require("./freeStrokeOrderImportService");
 const { normalizeKanji } = require("./strokeOrderService");
+const { ensureDir } = require("../utils/fs");
 
 const KANJIVG_EXTENSION = ".svg";
 const HEX_FILE_RE = /^(?:0x)?([0-9a-f]{4,6})$/i;
-
-function ensureDir(dirPath) {
-    if (!fs.existsSync(dirPath)) {
-        fs.mkdirSync(dirPath, { recursive: true });
-    }
-}
 
 function buildKanjiVgDestinationFileName(kanji) {
     const normalized = normalizeKanji(kanji);

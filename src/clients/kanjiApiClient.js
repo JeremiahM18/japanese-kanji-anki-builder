@@ -1,7 +1,7 @@
-const fs = require("node:fs");
 const fsp = require("node:fs/promises");
 const path = require("node:path");
 const { z } = require("zod");
+const { ensureDir } = require("../utils/fs");
 
 const kanjiPayloadSchema = z.object({
     kanji: z.string().min(1).optional(),
@@ -24,12 +24,6 @@ const wordsPayloadSchema = z.array(z.object({
     variants: z.array(wordVariantSchema).default([]),
     meanings: z.array(wordMeaningSchema).default([]),
 }).passthrough());
-
-function ensureDir(dirPath) {
-    if (!fs.existsSync(dirPath)) {
-        fs.mkdirSync(dirPath, { recursive: true });
-    }
-}
 
 function safeKey(value) {
     return encodeURIComponent(value).replace(/%/g, "_");

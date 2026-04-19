@@ -162,7 +162,8 @@ function createLocalDirectoryProvider({
          * @returns {Promise<ProviderAsset|null>}
          */
         async findAsset(input) {
-            const candidates = Array.isArray(buildCandidates(input)) ? buildCandidates(input) : [];
+            const builtCandidates = buildCandidates(input);
+            const candidates = Array.isArray(builtCandidates) ? builtCandidates : [];
             const nextFingerprint = await buildDirectoryFingerprint(sourceDir, statDirectoryFn);
 
             if (cachedFingerprint !== nextFingerprint) {
@@ -215,7 +216,8 @@ function createRemoteHttpProvider({
                 return null;
             }
 
-            const candidates = Array.isArray(buildCandidates(input)) ? buildCandidates(input) : [];
+            const builtCandidates = buildCandidates(input);
+            const candidates = Array.isArray(builtCandidates) ? builtCandidates : [];
 
             for (const candidate of candidates) {
                 for (const extension of extensionMap.keys()) {

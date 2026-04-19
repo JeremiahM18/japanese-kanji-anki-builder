@@ -3,14 +3,9 @@ const fsp = require("node:fs/promises");
 const path = require("node:path");
 
 const { buildAudioFileCandidates } = require("./audioService");
+const { ensureDir } = require("../utils/fs");
 
 const AUDIO_EXTENSIONS = new Set([".mp3", ".wav", ".m4a", ".ogg", ".webm"]);
-
-function ensureDir(dirPath) {
-    if (!fs.existsSync(dirPath)) {
-        fs.mkdirSync(dirPath, { recursive: true });
-    }
-}
 
 function listFilesRecursive(rootDir) {
     if (!rootDir || !fs.existsSync(rootDir)) {

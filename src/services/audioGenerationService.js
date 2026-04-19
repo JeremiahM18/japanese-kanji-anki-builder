@@ -7,13 +7,8 @@ const { loadCuratedStudyData } = require("../datasets/curatedStudyData");
 const { loadSentenceCorpus } = require("../datasets/sentenceCorpus");
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { mapWithConcurrency } = require("../utils/concurrency");
+const { ensureDir } = require("../utils/fs");
 const { isKanaOnly, katakanaToHiragana } = require("../utils/japanese");
-
-function ensureDir(dirPath) {
-    if (!fs.existsSync(dirPath)) {
-        fs.mkdirSync(dirPath, { recursive: true });
-    }
-}
 
 function normalizeKanaReading(value) {
     return katakanaToHiragana(String(value || ""))

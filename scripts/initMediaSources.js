@@ -2,12 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const { loadConfig } = require("../src/config");
-
-function ensureDir(dirPath) {
-    if (!fs.existsSync(dirPath)) {
-        fs.mkdirSync(dirPath, { recursive: true });
-    }
-}
+const { ensureDir } = require("../src/utils/fs");
 
 function ensureFileFromExample(targetPath, examplePath) {
     if (fs.existsSync(targetPath) || !fs.existsSync(examplePath)) {

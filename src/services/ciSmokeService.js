@@ -10,12 +10,7 @@ const { buildMediaBasePath } = require("./mediaStore");
 const { resolvePythonCommand } = require("./toolchainService");
 const { createWordExportService } = require("./wordExportService");
 const { runBuildPipeline } = require("./buildPipeline");
-
-function ensureDir(dirPath) {
-    if (!fs.existsSync(dirPath)) {
-        fs.mkdirSync(dirPath, { recursive: true });
-    }
-}
+const { ensureDir } = require("../utils/fs");
 
 function writeJson(filePath, value) {
     ensureDir(path.dirname(filePath));

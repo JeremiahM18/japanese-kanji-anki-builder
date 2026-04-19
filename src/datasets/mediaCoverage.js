@@ -1,7 +1,10 @@
 const { selectBestAudioAsset } = require("../services/audioService");
 const { readManifestIfExists } = require("../services/mediaStore");
 const { isTrueAnimatedStrokeOrderPath } = require("../services/strokeOrderService");
+const { mapWithConcurrency } = require("../utils/concurrency");
 const { buildJlptBuckets } = require("./sentenceCorpusCoverage");
+
+const MEDIA_COVERAGE_CONCURRENCY = 16;
 
 function getStrokeOrderAnimationAsset(manifest) {
     if (!manifest?.assets) {
@@ -35,10 +38,8 @@ function incrementCount(map, key) {
     map[name] = (map[name] || 0) + 1;
 }
 
-async function loadMediaRows({ jlptOnlyJson = {}, mediaRootDir }) {
-    const rows = [];
-
-    for (const [kanji, value] of Object.entries(jlptOnlyJson)) {
+async function loadMediaRows({ jlptOnlyJson = {}, mediaRootDir, concurrency = MEDIA_COVERAGE_CONCURRENCY }) {
+    return mapWithConcurrency(Object.entries(jlptOnlyJson), concurrency, async ([kanji, value]) => {
         const manifest = await readManifestIfExists(mediaRootDir, kanji);
         const strokeOrderAsset = getBestStrokeOrderAsset(manifest);
         const strokeOrderAnimationAsset = getStrokeOrderAnimationAsset(manifest);
@@ -47,17 +48,15 @@ async function loadMediaRows({ jlptOnlyJson = {}, mediaRootDir }) {
             : null;
         const audioAsset = getBestAudioAsset(manifest, kanji);
 
-        rows.push({
+        return {
             kanji,
             level: value?.jlpt,
             strokeOrderAsset,
             strokeOrderAnimationAsset,
             trueAnimationAsset,
             audioAsset,
-        });
-    }
-
-    return rows;
+        };
+    });
 }
 
 function buildMediaCoverageSummaryFromRows(rows, jlptOnlyJson) {
@@ -140,6 +139,7 @@ async function buildMediaCoverageSummary({ jlptOnlyJson = {}, mediaRootDir }) {
 }
 
 module.exports = {
+    MEDIA_COVERAGE_CONCURRENCY,
     buildMediaCoverageSummary,
     buildMediaCoverageSummaryFromRows,
     getBestAudioAsset,

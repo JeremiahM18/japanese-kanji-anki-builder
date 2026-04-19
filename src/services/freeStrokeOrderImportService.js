@@ -3,15 +3,10 @@ const fsp = require("node:fs/promises");
 const path = require("node:path");
 
 const { buildStrokeOrderAnimationCandidates, buildStrokeOrderImageCandidates } = require("./strokeOrderService");
+const { ensureDir } = require("../utils/fs");
 
 const IMAGE_EXTENSIONS = new Set([".svg", ".png", ".webp", ".jpg", ".jpeg"]);
 const ANIMATION_EXTENSIONS = new Set([".gif", ".webp", ".apng", ".svg"]);
-
-function ensureDir(dirPath) {
-    if (!fs.existsSync(dirPath)) {
-        fs.mkdirSync(dirPath, { recursive: true });
-    }
-}
 
 function listFilesRecursive(rootDir) {
     if (!rootDir || !fs.existsSync(rootDir)) {

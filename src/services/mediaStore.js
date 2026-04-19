@@ -3,6 +3,7 @@ const fsp = require("node:fs/promises");
 const path = require("node:path");
 const crypto = require("node:crypto");
 const { z } = require("zod");
+const { ensureDir } = require("../utils/fs");
 
 /** @typedef {import("../types/contracts").MediaAsset} MediaAsset */
 /** @typedef {import("../types/contracts").MediaManifest} MediaManifest */
@@ -36,12 +37,6 @@ const mediaManifestSchema = z.object({
 });
 
 const manifestWriteQueues = new Map();
-
-function ensureDir(dirPath) {
-    if (!fs.existsSync(dirPath)) {
-        fs.mkdirSync(dirPath, { recursive: true });
-    }
-}
 
 function ensureMediaRoot(mediaRootDir) {
     ensureDir(mediaRootDir);
@@ -122,6 +117,26 @@ function createEmptyMediaManifest(kanji) {
             strokeOrderImage: null,
             strokeOrderAnimation: null,
             audio: [],
+        },
+    };
+}
+
+function managedAssetExists(mediaRootDir, kanji, relativePath) {
+    if (!relativePath) {
+        return false;
+    }
+
+    const normalizedParts = String(relativePath).split("/").filter(Boolean);
+    return fs.existsSync(path.join(buildMediaBasePath(mediaRootDir, kanji), ...normalizedParts));
+}
+
+function cloneManifestForUpdate(manifest) {
+    return {
+        ...manifest,
+        assets: {
+            strokeOrderImage: manifest.assets?.strokeOrderImage || null,
+            strokeOrderAnimation: manifest.assets?.strokeOrderAnimation || null,
+            audio: Array.isArray(manifest.assets?.audio) ? [...manifest.assets.audio] : [],
         },
     };
 }
@@ -222,10 +237,13 @@ module.exports = {
     buildManifestPath,
     buildMediaBasePath,
     buildTemporaryManifestPath,
+    cloneManifestForUpdate,
     createEmptyMediaManifest,
     ensureMediaLayout,
     ensureMediaRoot,
+    ensureDir,
     isTransientRenameError,
+    managedAssetExists,
     mediaManifestSchema,
     readManifestIfExists,
     renameWithRetry,

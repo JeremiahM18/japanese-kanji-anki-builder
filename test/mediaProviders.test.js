@@ -102,6 +102,31 @@ test("createLocalDirectoryProvider caches the directory index until the folder f
     }
 });
 
+test("createLocalDirectoryProvider evaluates buildCandidates only once per lookup", async () => {
+    const rootDir = makeTempDir();
+    let buildCandidatesCalls = 0;
+
+    try {
+        fs.writeFileSync(path.join(rootDir, "日.svg"), "<svg />", "utf-8");
+
+        const provider = createLocalDirectoryProvider({
+            sourceDir: rootDir,
+            extensionMap: new Map([[".svg", "image/svg+xml"]]),
+            buildCandidates: (input) => {
+                buildCandidatesCalls += 1;
+                return buildKanjiFileCandidates(input);
+            },
+        });
+
+        const asset = await provider.findAsset("日");
+
+        assert.equal(asset.fileName, "日.svg");
+        assert.equal(buildCandidatesCalls, 1);
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
 test("buildRemoteAssetUrl resolves a filename against the base URL", () => {
     assert.equal(buildRemoteAssetUrl("https://example.com/media", "日.svg"), "https://example.com/media/%E6%97%A5.svg");
 });
@@ -131,6 +156,37 @@ test("createRemoteHttpProvider downloads an asset from a remote base URL", async
         assert.equal(asset.source, "remote-stroke-order-image");
         assert.equal(asset.mimeType, "image/svg+xml");
         assert.equal(asset.url, `${baseUrl}%E6%97%A5.svg`);
+    });
+});
+
+test("createRemoteHttpProvider evaluates buildCandidates only once per lookup", async () => {
+    let buildCandidatesCalls = 0;
+
+    await withHttpServer((req, res) => {
+        if (req.url === "/%E6%97%A5.svg") {
+            res.writeHead(200, { "content-type": "image/svg+xml" });
+            res.end("<svg />");
+            return;
+        }
+
+        res.writeHead(404);
+        res.end("missing");
+    }, async (baseUrl) => {
+        const provider = createRemoteHttpProvider({
+            name: "remote-stroke-order-image",
+            baseUrl,
+            extensionMap: new Map([[".svg", "image/svg+xml"]]),
+            buildCandidates: (input) => {
+                buildCandidatesCalls += 1;
+                return buildKanjiFileCandidates(input);
+            },
+            fetchTimeoutMs: 1000,
+        });
+
+        const asset = await provider.findAsset("日");
+
+        assert.equal(asset.fileName, "日.svg");
+        assert.equal(buildCandidatesCalls, 1);
     });
 });
 

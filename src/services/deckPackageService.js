@@ -3,16 +3,11 @@ const fsp = require("node:fs/promises");
 const path = require("node:path");
 
 const { mapWithConcurrency } = require("../utils/concurrency");
+const { ensureDir } = require("../utils/fs");
 const { buildAnkiPackage } = require("./ankiPackageService");
 const { selectBestAudioAsset } = require("./audioService");
 const { buildMediaBasePath, readManifestIfExists } = require("./mediaStore");
 const { isTrueAnimatedStrokeOrderPath } = require("./strokeOrderService");
-
-function ensureDir(dirPath) {
-    if (!fs.existsSync(dirPath)) {
-        fs.mkdirSync(dirPath, { recursive: true });
-    }
-}
 
 function buildDeckPackagePaths(rootDir) {
     const packageDir = path.join(rootDir, "package");

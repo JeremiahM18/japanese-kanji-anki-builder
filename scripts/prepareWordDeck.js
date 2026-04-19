@@ -13,6 +13,7 @@ const { selectKanjiForSync, syncMediaForKanjiList } = require("../src/services/m
 const { createWordExportService } = require("../src/services/wordExportService");
 const { buildDoctorReport, formatDoctorReport } = require("../src/services/doctorService");
 const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseNumericOption, parseStringOption } = require("../src/utils/cliArgs");
+const { ensureDir } = require("../src/utils/fs");
 
 function buildOutputPaths(outDir) {
     const root = path.resolve(outDir);
@@ -21,12 +22,6 @@ function buildOutputPaths(outDir) {
         exportsDir: path.join(root, "exports"),
         reportsDir: path.join(root, "reports"),
     };
-}
-
-function ensureDir(dirPath) {
-    if (!fs.existsSync(dirPath)) {
-        fs.mkdirSync(dirPath, { recursive: true });
-    }
 }
 
 function writeJson(filePath, value) {

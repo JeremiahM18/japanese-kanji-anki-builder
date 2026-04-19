@@ -11,7 +11,10 @@ module.exports = [
         rules: {
             "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
             "no-constant-condition": "error",
+            eqeqeq: ["error", "always"],
             "no-console": "off",
+            "no-prototype-builtins": "error",
+            "no-var": "error",
         },
     },
 ];

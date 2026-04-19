@@ -52,7 +52,8 @@ async function main() {
 
     assertNoUnknownArgs("buildArtifacts", options.unknownArgs);
 
-    if (options.maxFallbackRatio != null && (!Number.isFinite(options.maxFallbackRatio) || options.maxFallbackRatio < 0 || options.maxFallbackRatio > 1)) {
+    if (options.maxFallbackRatio !== null && options.maxFallbackRatio !== undefined
+        && (!Number.isFinite(options.maxFallbackRatio) || options.maxFallbackRatio < 0 || options.maxFallbackRatio > 1)) {
         throw new Error("Invalid max-fallback-ratio. Must be a number between 0 and 1.");
     }
 

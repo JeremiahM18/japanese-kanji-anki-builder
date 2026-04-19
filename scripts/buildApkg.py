@@ -232,10 +232,11 @@ def build_guid(primary_field: str, level: int, deck_kind: str) -> str:
 def create_collection_db(db_path: Path, levels, package_exports_dir: Path, deck_kind: str):
     db_path.parent.mkdir(parents=True, exist_ok=True)
 
+    unique_seed = time.time_ns()
     now_ms = int(time.time() * 1000)
     mod = int(time.time())
-    model_id = now_ms
-    deck_ids_by_level = {level: now_ms + 1000 + index for index, level in enumerate(levels)}
+    model_id = unique_seed
+    deck_ids_by_level = {level: unique_seed + 1000 + index for index, level in enumerate(levels)}
     note_schema = load_anki_note_schema(deck_kind)
     field_names = note_schema["fieldNames"]
 
@@ -249,7 +250,7 @@ def create_collection_db(db_path: Path, levels, package_exports_dir: Path, deck_
 
         for cols in rows:
             fields = normalize_tsv_row(header, cols, field_names)
-            note_id = now_ms + 2000 + len(note_rows)
+            note_id = unique_seed + 2000 + len(note_rows)
             note_rows.append((
                 note_id,
                 build_guid(fields[0], level, deck_kind),
@@ -264,7 +265,7 @@ def create_collection_db(db_path: Path, levels, package_exports_dir: Path, deck_
                 "",
             ))
             card_rows.append((
-                now_ms + 5000 + len(card_rows),
+                unique_seed + 5000 + len(card_rows),
                 note_id,
                 deck_ids_by_level[level],
                 0,

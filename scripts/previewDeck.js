@@ -11,7 +11,7 @@ const { formatPreviewReport } = require("../src/services/previewService");
 const { collectUnknownArg, parseCsvOption, parseNumericOption, parseStringOption, invokeCliMain } = require("../src/utils/cliArgs");
 
 function parseLevel(value) {
-    if (value == null) {
+    if (value === null || value === undefined) {
         return null;
     }
 
@@ -89,7 +89,7 @@ async function main() {
 
     const scope = options.kanji.length > 0
         ? `kanji=${options.kanji.join(",")}`
-        : `level=${options.level == null ? "N5" : `N${options.level}`}, limit=${options.limit}`;
+        : `level=${options.level === null || options.level === undefined ? "N5" : `N${options.level}`}, limit=${options.limit}`;
 
     if (options.json) {
         console.log(JSON.stringify({ scope, cards }, null, 2));

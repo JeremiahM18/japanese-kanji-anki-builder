@@ -2,7 +2,7 @@ const { buildJlptBuckets } = require("../datasets/sentenceCorpusCoverage");
 const { mapWithConcurrency } = require("../utils/concurrency");
 
 function parseLevelArgument(value) {
-    if (value == null) {
+    if (value === null || value === undefined) {
         return null;
     }
 
@@ -17,7 +17,7 @@ function selectKanjiForSync({ jlptOnlyJson = {}, level = null, limit = null, kan
     }
 
     const buckets = buildJlptBuckets(jlptOnlyJson);
-    const levels = level == null
+    const levels = level === null || level === undefined
         ? [...buckets.keys()].sort((a, b) => a - b)
         : [level];
     const selected = levels.flatMap((entryLevel) => buckets.get(entryLevel) || []);

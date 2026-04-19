@@ -319,7 +319,8 @@ function formatDoctorReport(report) {
         lines.push("Level quality gates:");
         lines.push("- Uses synced managed media, not just files present in local source folders.");
         lines.push(`- Overall quality gate: ${report.quality.levelReadiness.overallReady ? "passing" : "failing"}`);
-        const includeAudio = report.quality.levelReadiness.thresholds.audioCoverage != null;
+        const includeAudio = report.quality.levelReadiness.thresholds.audioCoverage !== null
+            && report.quality.levelReadiness.thresholds.audioCoverage !== undefined;
         for (const row of report.quality.levelReadiness.levels) {
             const metricParts = [
                 `sentence ${formatPercent(row.metrics.sentenceCoverage)}`,

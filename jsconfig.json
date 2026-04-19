@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "noEmit": true,
+    "strict": true,
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "lib": ["ES2022"],
+    "allowSyntheticDefaultImports": false
+  },
+  "exclude": [
+    "node_modules",
+    "cache",
+    "out"
+  ]
+}

@@ -28,7 +28,7 @@ function parseLevel(param) {
 }
 
 function parseLimit(value) {
-    if (value == null) {
+    if (value === null || value === undefined) {
         return null;
     }
 
@@ -76,7 +76,7 @@ function validateExportRequest(req) {
     }
 
     const limit = parseLimit(req.query.limit);
-    if (req.query.limit != null && limit == null) {
+    if (req.query.limit !== null && req.query.limit !== undefined && (limit === null || limit === undefined)) {
         throw new BadRequestError("Invalid limit parameter. Must be a positive integer.");
     }
 
@@ -91,7 +91,7 @@ function countExportRows(jlptOnlyJson, level, limit = null) {
         .filter(([, value]) => value?.jlpt === level)
         .map(([kanji]) => kanji);
 
-    if (limit == null) {
+    if (limit === null || limit === undefined) {
         return matchingKanji.length;
     }
 

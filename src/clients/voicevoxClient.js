@@ -13,7 +13,7 @@ function buildUrl(baseUrl, pathname, query = {}) {
     const url = new URL(pathname.replace(/^\//, ""), normalizeBaseUrl(baseUrl));
 
     for (const [key, value] of Object.entries(query)) {
-        if (value == null || value === "") {
+        if (value === null || value === undefined || value === "") {
             continue;
         }
 

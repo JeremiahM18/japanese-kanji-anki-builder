@@ -22,7 +22,7 @@ const { selectKanjiForSync, syncMediaForKanjiList } = require("./mediaSync");
 let temporaryWriteCounter = 0;
 
 function parseLevelsArgument(value) {
-    if (value == null || String(value).trim() === "") {
+    if (value === null || value === undefined || String(value).trim() === "") {
         return [5, 4, 3, 2, 1];
     }
 
@@ -132,7 +132,7 @@ function normalizeOptionalFile({ name, inputPath, outputPath, mode, normalizeVal
 }
 
 function persistNormalization(summary) {
-    if (summary.missingInput || summary.normalizedText == null || summary.mode === "check") {
+    if (summary.missingInput || summary.normalizedText === null || summary.normalizedText === undefined || summary.mode === "check") {
         return;
     }
 

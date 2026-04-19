@@ -20,7 +20,7 @@ function selectPreviewKanji({ jlptOnlyJson, level, limit, kanji }) {
     }
 
     const buckets = buildJlptBuckets(jlptOnlyJson);
-    const levels = level == null ? [5] : [level];
+    const levels = level === null || level === undefined ? [5] : [level];
     const selected = levels.flatMap((entryLevel) => buckets.get(entryLevel) || []);
 
     if (Number.isFinite(limit) && limit > 0) {

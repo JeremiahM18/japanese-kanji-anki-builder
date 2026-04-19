@@ -324,7 +324,7 @@ function createApp({
             });
         }
 
-        if (process.env.NODE_ENV !== "production") {
+        if (config.nodeEnv !== "production") {
             return res.status(500).json({
                 status: "error",
                 code: "internal_error",

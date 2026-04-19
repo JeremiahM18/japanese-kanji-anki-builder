@@ -340,6 +340,7 @@ Local source folders for acquisition:
 
 Optional `.env` settings:
 
+- `NODE_ENV`
 - `WORD_STUDY_DATA_PATH`
 - `VOICEVOX_ENGINE_URL`
 - `VOICEVOX_SPEAKER_ID`

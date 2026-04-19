@@ -101,3 +101,25 @@ test("loadConfig defaults stroke-order animation remote to the GitHub kanji gif 
         "https://raw.githubusercontent.com/jcsirot/kanji.gif/master/kanji/gif/150x150/",
     );
 });
+
+test("loadConfig validates NODE_ENV and defaults it to development", () => {
+    const defaultConfig = loadConfig({
+        cwd: process.cwd(),
+        env: {},
+    });
+    assert.equal(defaultConfig.nodeEnv, "development");
+
+    const productionConfig = loadConfig({
+        cwd: process.cwd(),
+        env: { NODE_ENV: "production" },
+    });
+    assert.equal(productionConfig.nodeEnv, "production");
+
+    assert.throws(
+        () => loadConfig({
+            cwd: process.cwd(),
+            env: { NODE_ENV: "staging" },
+        }),
+        /Invalid option/
+    );
+});

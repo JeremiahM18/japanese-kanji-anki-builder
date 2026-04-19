@@ -24,6 +24,7 @@ const booleanLike = z.preprocess((value) => {
 }, z.boolean());
 
 const schema = z.object({
+    nodeEnv: z.enum(["development", "production", "test"]).default("development"),
     port: z.coerce.number().int().positive().default(3719),
     cacheDir: z.string().default("cache"),
     jlptJsonPath: z.string().default("data/kanji_jlpt_only.json"),
@@ -103,6 +104,7 @@ function loadDotEnvFile({ cwd = process.cwd(), fileName = ".env" } = {}) {
 
 function buildRawConfig(env) {
     return {
+        nodeEnv: env.NODE_ENV,
         port: env.PORT,
         cacheDir: env.CACHE_DIR,
         jlptJsonPath: env.JLPT_JSON_PATH,

@@ -19,6 +19,7 @@ function buildFixtureContext() {
         remoteStrokeOrderImageBaseUrl: "https://media.example.com/stroke/images/",
         remoteStrokeOrderAnimationBaseUrl: "https://media.example.com/stroke/animations/",
         remoteAudioBaseUrl: "https://media.example.com/audio/",
+        nodeEnv: "development",
         exportConcurrency: 4,
         fetchTimeoutMs: 2500,
     };
@@ -579,6 +580,60 @@ test("invalid export parameters return structured 400 errors", async () => {
         assert.equal(badLimit.status, 400);
         const badLimitJson = await badLimit.json();
         assert.equal(badLimitJson.code, "bad_request");
+    });
+});
+
+test("internal errors hide stacks when config nodeEnv is production", async () => {
+    const fixture = buildFixtureContext();
+    const app = createApp({
+        config: {
+            ...fixture.app.locals?.config,
+            ...{
+                cacheDir: "C:\\repo\\cache",
+                jlptJsonPath: "C:\\repo\\data\\kanji_jlpt_only.json",
+                kradfilePath: "C:\\repo\\data\\KRADFILE",
+                sentenceCorpusPath: "C:\\repo\\data\\sentence_corpus.json",
+                curatedStudyDataPath: "C:\\repo\\data\\curated_study_data.json",
+                mediaRootDir: "C:\\repo\\data\\media",
+                strokeOrderImageSourceDir: "C:\\repo\\data\\media_sources\\stroke-order\\images",
+                strokeOrderAnimationSourceDir: "C:\\repo\\data\\media_sources\\stroke-order\\animations",
+                audioSourceDir: "C:\\repo\\data\\media_sources\\audio",
+                remoteStrokeOrderImageBaseUrl: "https://media.example.com/stroke/images/",
+                remoteStrokeOrderAnimationBaseUrl: "https://media.example.com/stroke/animations/",
+                remoteAudioBaseUrl: "https://media.example.com/audio/",
+                nodeEnv: "production",
+                exportConcurrency: 4,
+                fetchTimeoutMs: 2500,
+            },
+        },
+        jlptOnlyJson: fixture.jlptOnlyJson,
+        kradMap: fixture.kradMap,
+        sentenceCorpus: [],
+        curatedStudyData: {},
+        pickMainComponent: fixture.pickMainComponent,
+        kanjiApiClient: {
+            async getKanji() {
+                throw new Error("unexpected upstream failure");
+            },
+            async getWords() {
+                return [];
+            },
+            getMetrics() {
+                return null;
+            },
+        },
+        strokeOrderService: fixture.strokeOrderService,
+        audioService: fixture.audioService,
+    });
+
+    await withServer(app, async (baseUrl) => {
+        const response = await fetch(`${baseUrl}/inference/日`);
+        assert.equal(response.status, 500);
+
+        const json = await response.json();
+        assert.equal(json.code, "internal_error");
+        assert.equal(json.message, "Internal Server Error");
+        assert.equal("stack" in json, false);
     });
 });
 

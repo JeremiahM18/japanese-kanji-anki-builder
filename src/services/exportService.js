@@ -413,7 +413,6 @@ function createExportService({
         formatAnkiAudioField,
         formatAnkiStrokeOrderField,
         formatExampleSentence,
-        mapWithConcurrency,
         resolveManagedMediaFields,
         shouldSkipWordFetch,
         shouldUseLocalJlptEntry,
@@ -423,23 +422,17 @@ function createExportService({
     };
 }
 
-const defaultExportService = createExportService();
-
 module.exports = {
     createEmptyExportProfile,
     createExportService,
-    buildInferenceForKanji: defaultExportService.buildInferenceForKanji,
-    buildRowForKanji: defaultExportService.buildRowForKanji,
-    buildTsvForJlptLevel: defaultExportService.buildTsvForJlptLevel,
-    formatAnkiAudioField: defaultExportService.formatAnkiAudioField,
-    formatAnkiStrokeOrderField: defaultExportService.formatAnkiStrokeOrderField,
-    formatExampleSentence: defaultExportService.formatExampleSentence,
-    mapWithConcurrency: defaultExportService.mapWithConcurrency,
-    resolveManagedMediaFields: defaultExportService.resolveManagedMediaFields,
-    shouldSkipWordFetch: defaultExportService.shouldSkipWordFetch,
-    shouldUseLocalJlptEntry: defaultExportService.shouldUseLocalJlptEntry,
-    resolveStrokeOrderFields: defaultExportService.resolveStrokeOrderFields,
-    selectDisplayWord: defaultExportService.selectDisplayWord,
-    selectPrimaryReading: defaultExportService.selectPrimaryReading,
+    formatAnkiAudioField,
+    formatAnkiStrokeOrderField,
+    formatExampleSentence,
+    resolveManagedMediaFields,
+    shouldSkipWordFetch,
+    shouldUseLocalJlptEntry,
+    resolveStrokeOrderFields,
+    selectDisplayWord,
+    selectPrimaryReading,
 };
 

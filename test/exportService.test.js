@@ -2,7 +2,6 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const {
-    buildTsvForJlptLevel,
     createEmptyExportProfile,
     createExportService,
     formatAnkiAudioField,
@@ -467,7 +466,8 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
         },
     };
 
-    const tsv = await buildTsvForJlptLevel({
+    const exportService = createExportService();
+    const tsv = await exportService.buildTsvForJlptLevel({
         levelNumber: 5,
         jlptOnlyJson,
         kradMap,

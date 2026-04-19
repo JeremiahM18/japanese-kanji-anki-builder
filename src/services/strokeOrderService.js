@@ -1,3 +1,4 @@
+const fs = require("node:fs");
 const fsp = require("node:fs/promises");
 const path = require("node:path");
 
@@ -150,7 +151,7 @@ function managedAssetExists(mediaRootDir, kanji, relativePath) {
     }
 
     const normalizedParts = String(relativePath).split("/").filter(Boolean);
-    return require("node:fs").existsSync(path.join(buildMediaBasePath(mediaRootDir, kanji), ...normalizedParts));
+    return fs.existsSync(path.join(buildMediaBasePath(mediaRootDir, kanji), ...normalizedParts));
 }
 
 function cloneManifestForUpdate(manifest) {

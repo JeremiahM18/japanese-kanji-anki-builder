@@ -9,6 +9,8 @@ const { mapWithConcurrency } = require("../utils/concurrency");
 const { labelKunReading, labelOnReading, tsvEscape } = require("../utils/text");
 
 const ANKI_FIELD_NAMES = loadAnkiNoteSchema().fieldNames;
+const MAX_INFERENCE_EXAMPLES = 3;
+const MAX_INFERENCE_SENTENCES = 3;
 
 function createEmptyExportProfile() {
     return {
@@ -260,8 +262,8 @@ function createExportService({
                 kanji,
                 kanjiInfo,
                 words,
-                maxExamples: 3,
-                maxSentences: 3,
+                maxExamples: MAX_INFERENCE_EXAMPLES,
+                maxSentences: MAX_INFERENCE_SENTENCES,
             });
             recordProfileTiming(exportProfile, "inference", inferenceStartedAt);
 
@@ -337,8 +339,8 @@ function createExportService({
             kanji,
             kanjiInfo,
             words,
-            maxExamples: 3,
-            maxSentences: 4,
+            maxExamples: MAX_INFERENCE_EXAMPLES,
+            maxSentences: MAX_INFERENCE_SENTENCES,
         });
 
         const onReading = labelOnReading(kanjiInfo?.on_readings);

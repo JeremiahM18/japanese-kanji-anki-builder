@@ -49,8 +49,7 @@ function buildBuildPaths(outDir) {
 }
 
 function writeJsonFile(filePath, value) {
-    fs.mkdirSync(path.dirname(filePath), { recursive: true });
-    fs.writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\n`, "utf-8");
+    writeTextFile(filePath, `${JSON.stringify(value, null, 2)}\n`);
 }
 
 function writeTextFile(filePath, value) {

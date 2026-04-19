@@ -306,6 +306,7 @@ function buildFixtureContext() {
 
     const pickMainComponent = (components) => components[0] || "";
     const inferenceEngine = createInferenceEngine({ sentenceCorpus, curatedStudyData });
+    const exportService = createExportService({ inferenceEngine, sentenceCorpus, curatedStudyData });
     const app = createApp({
         config,
         jlptOnlyJson,
@@ -316,9 +317,8 @@ function buildFixtureContext() {
         kanjiApiClient,
         strokeOrderService,
         audioService,
-        inferenceEngine,
+        exportService,
     });
-    const exportService = createExportService({ inferenceEngine, sentenceCorpus, curatedStudyData });
 
     return {
         app,
@@ -599,6 +599,11 @@ test("invalid export parameters return structured 400 errors", async () => {
 
 test("internal errors hide stacks when config nodeEnv is production", async () => {
     const fixture = buildFixtureContext();
+    const exportService = createExportService({
+        inferenceEngine: createInferenceEngine({ sentenceCorpus: [], curatedStudyData: {} }),
+        sentenceCorpus: [],
+        curatedStudyData: {},
+    });
     const app = createApp({
         config: {
             ...fixture.app.locals?.config,
@@ -638,6 +643,7 @@ test("internal errors hide stacks when config nodeEnv is production", async () =
         },
         strokeOrderService: fixture.strokeOrderService,
         audioService: fixture.audioService,
+        exportService,
     });
 
     await withServer(app, async (baseUrl) => {
@@ -649,5 +655,40 @@ test("internal errors hide stacks when config nodeEnv is production", async () =
         assert.equal(json.message, "Internal Server Error");
         assert.equal("stack" in json, false);
     });
+});
+
+test("createApp requires an explicit export service runtime dependency", () => {
+    const fixture = buildFixtureContext();
+
+    assert.throws(
+        () => createApp({
+            config: {
+                cacheDir: "C:\\repo\\cache",
+                jlptJsonPath: "C:\\repo\\data\\kanji_jlpt_only.json",
+                kradfilePath: "C:\\repo\\data\\KRADFILE",
+                sentenceCorpusPath: "C:\\repo\\data\\sentence_corpus.json",
+                curatedStudyDataPath: "C:\\repo\\data\\curated_study_data.json",
+                mediaRootDir: "C:\\repo\\data\\media",
+                strokeOrderImageSourceDir: "C:\\repo\\data\\media_sources\\stroke-order\\images",
+                strokeOrderAnimationSourceDir: "C:\\repo\\data\\media_sources\\stroke-order\\animations",
+                audioSourceDir: "C:\\repo\\data\\media_sources\\audio",
+                remoteStrokeOrderImageBaseUrl: "https://media.example.com/stroke/images/",
+                remoteStrokeOrderAnimationBaseUrl: "https://media.example.com/stroke/animations/",
+                remoteAudioBaseUrl: "https://media.example.com/audio/",
+                nodeEnv: "development",
+                exportConcurrency: 4,
+                fetchTimeoutMs: 2500,
+            },
+            jlptOnlyJson: fixture.jlptOnlyJson,
+            kradMap: fixture.kradMap,
+            sentenceCorpus: [],
+            curatedStudyData: {},
+            pickMainComponent: fixture.pickMainComponent,
+            kanjiApiClient: fixture.kanjiApiClient,
+            strokeOrderService: fixture.strokeOrderService,
+            audioService: fixture.audioService,
+        }),
+        /createApp requires an exportService/
+    );
 });
 

@@ -10,6 +10,7 @@ const { loadSentenceCorpus } = require("./datasets/sentenceCorpus");
 const { ensureMediaRoot } = require("./services/mediaStore");
 const { createMediaServices } = require("./services/mediaServiceFactory");
 const { createInferenceEngine } = require("./inference/inferenceEngine");
+const { createExportService } = require("./services/exportService");
 const { createApp } = require("./app");
 
 function logServerStarted({ logger: runtimeLogger, config, sentenceCorpus, curatedStudyData }) {
@@ -161,6 +162,7 @@ async function buildRuntime({
     ensureMediaRootFn = ensureMediaRoot,
     createMediaServicesFn = createMediaServices,
     createInferenceEngineFn = createInferenceEngine,
+    createExportServiceFn = createExportService,
     createAppFn = createApp,
 } = {}) {
     const config = loadConfigFn();
@@ -187,6 +189,7 @@ async function buildRuntime({
 
     const { strokeOrderService, audioService } = createMediaServicesFn(config);
     const inferenceEngine = createInferenceEngineFn({ sentenceCorpus, curatedStudyData });
+    const exportService = createExportServiceFn({ inferenceEngine, sentenceCorpus, curatedStudyData });
 
     const app = createAppFn({
         config,
@@ -196,7 +199,7 @@ async function buildRuntime({
         kanjiApiClient,
         strokeOrderService,
         audioService,
-        inferenceEngine,
+        exportService,
         sentenceCorpus,
         curatedStudyData,
     });

@@ -3,8 +3,6 @@ const { z, ZodError } = require("zod");
 
 const { BadRequestError, NotFoundError, ValidationError } = require("./apiErrors");
 const { logger } = require("./logger");
-const { createInferenceEngine } = require("./inference/inferenceEngine");
-const { createExportService } = require("./services/exportService");
 
 const kanjiParamsSchema = z.object({
     kanji: z.string().trim().min(1),
@@ -100,6 +98,14 @@ function countExportRows(jlptOnlyJson, level, limit = null) {
     return Math.min(matchingKanji.length, limit);
 }
 
+function assertCreateAppDependencies({ exportService }) {
+    if (!exportService || typeof exportService.buildInferenceForKanji !== "function" || typeof exportService.buildTsvForJlptLevel !== "function") {
+        throw new TypeError(
+            "createApp requires an exportService with buildInferenceForKanji() and buildTsvForJlptLevel()."
+        );
+    }
+}
+
 function createApp({
     config,
     jlptOnlyJson,
@@ -110,9 +116,10 @@ function createApp({
     audioService,
     sentenceCorpus = [],
     curatedStudyData = {},
-    inferenceEngine = createInferenceEngine({ sentenceCorpus, curatedStudyData }),
-    exportService = createExportService({ inferenceEngine, curatedStudyData, sentenceCorpus }),
+    exportService,
 }) {
+    assertCreateAppDependencies({ exportService });
+
     const app = express();
     const jlptKanjiCount = Object.keys(jlptOnlyJson).length;
 

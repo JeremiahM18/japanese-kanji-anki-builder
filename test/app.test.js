@@ -575,8 +575,60 @@ test("audio sync rejects malformed or invalid JSON bodies with structured errors
     });
 });
 
+test("audio sync returns a 503 when audio support is disabled", async () => {
+    const fixture = buildFixtureContext();
+    const app = createApp({
+        config: {
+            cacheDir: "C:\\repo\\cache",
+            jlptJsonPath: "C:\\repo\\data\\kanji_jlpt_only.json",
+            kradfilePath: "C:\\repo\\data\\KRADFILE",
+            sentenceCorpusPath: "C:\\repo\\data\\sentence_corpus.json",
+            curatedStudyDataPath: "C:\\repo\\data\\curated_study_data.json",
+            mediaRootDir: "C:\\repo\\data\\media",
+            strokeOrderImageSourceDir: "C:\\repo\\data\\media_sources\\stroke-order\\images",
+            strokeOrderAnimationSourceDir: "C:\\repo\\data\\media_sources\\stroke-order\\animations",
+            audioSourceDir: "C:\\repo\\data\\media_sources\\audio",
+            remoteStrokeOrderImageBaseUrl: "https://media.example.com/stroke/images/",
+            remoteStrokeOrderAnimationBaseUrl: "https://media.example.com/stroke/animations/",
+            remoteAudioBaseUrl: null,
+            nodeEnv: "development",
+            exportConcurrency: 4,
+            fetchTimeoutMs: 2500,
+        },
+        jlptOnlyJson: fixture.jlptOnlyJson,
+        kradMap: fixture.kradMap,
+        sentenceCorpus: [],
+        curatedStudyData: {},
+        pickMainComponent: fixture.pickMainComponent,
+        kanjiApiClient: fixture.kanjiApiClient,
+        strokeOrderService: fixture.strokeOrderService,
+        audioService: null,
+        exportService: fixture.exportService,
+        appLogger: fixture.appLogger,
+    });
+
+    await withServer(app, async (baseUrl) => {
+        const response = await fetch(`${baseUrl}/media/日/audio/sync`, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({
+                category: "kanji-reading",
+                text: "日",
+            }),
+        });
+        assert.equal(response.status, 503);
+
+        const json = await response.json();
+        assert.equal(json.code, "audio_unavailable");
+        assert.equal(json.message, "Audio sync is unavailable because audio support is disabled.");
+    });
+});
+
 test("download export sets attachment headers and includes Anki-ready media fields", async () => {
-    const app = buildFixtureApp();
+    const fixture = buildFixtureContext();
+    const app = fixture.app;
 
     await withServer(app, async (baseUrl) => {
         const response = await fetch(`${baseUrl}/export/N5/download?limit=1`);
@@ -602,6 +654,14 @@ test("download export sets attachment headers and includes Anki-ready media fiel
         assert.match(cols[12], /日本は島国です/);
         assert.match(cols[12], /Japan is an island nation/);
     });
+
+    const exportLogs = fixture.loggerCalls.filter(
+        (entry) => entry.level === "info"
+            && ["Generating TSV for JLPT level", "Generated TSV for JLPT level"].includes(entry.maybeMessage)
+    );
+    assert.equal(exportLogs.length, 2);
+    assert.equal(exportLogs[0].maybeMessage, "Generating TSV for JLPT level");
+    assert.equal(exportLogs[1].maybeMessage, "Generated TSV for JLPT level");
 });
 
 test("invalid export parameters return structured 400 errors", async () => {

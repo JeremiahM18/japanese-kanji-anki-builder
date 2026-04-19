@@ -40,6 +40,13 @@ function buildCacheFilePath(cacheDir, cacheKey) {
     return path.join(cacheDir, shard, `${cacheKey}.json`);
 }
 
+let tempWriteCounter = 0;
+
+function buildTemporaryWritePath(filePath) {
+    tempWriteCounter += 1;
+    return `${filePath}.tmp-${process.pid}-${Date.now()}-${tempWriteCounter}`;
+}
+
 function createEmptyClientMetrics() {
     return {
         cacheHits: 0,
@@ -103,7 +110,7 @@ async function deleteFileIfExists(filePath) {
 }
 
 async function writeJsonAtomic(filePath, data) {
-    const tempPath = `${filePath}.tmp`;
+    const tempPath = buildTemporaryWritePath(filePath);
     const text = JSON.stringify(data, null, 2);
 
     ensureDir(path.dirname(filePath));
@@ -223,6 +230,7 @@ function createKanjiApiClient({ baseUrl, cacheDir, fetchTimeoutMs = 10000 }) {
 
 module.exports = {
     buildCacheFilePath,
+    buildTemporaryWritePath,
     createEmptyClientMetrics,
     createKanjiApiClient,
     validatePayload,

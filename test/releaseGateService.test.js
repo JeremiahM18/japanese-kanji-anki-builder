@@ -60,3 +60,20 @@ test("runReleaseGate fails early when packaging tools are blocked by the current
         /blocked in this runtime/
     );
 });
+
+test("runReleaseGate matches blocked packaging tools by name instead of object identity", async () => {
+    await assert.rejects(
+        () => runReleaseGate({
+            requireApkgTools: true,
+            buildToolchainStatusFn: () => ({
+                runtime: [
+                    { name: "Python", available: false, blocked: true },
+                ],
+                packaging: [
+                    { name: "Python", available: false, blocked: true },
+                ],
+            }),
+        }),
+        /blocked in this runtime/
+    );
+});

@@ -266,6 +266,14 @@ function createApp({
     app.post("/media/:kanji/audio/sync", async (req, res, next) => {
         try {
             const { kanji } = validateKanjiParams(req.params);
+            if (!audioService || typeof audioService.syncKanji !== "function" || typeof audioService.getBestAudioPath !== "function") {
+                return res.status(503).json({
+                    status: "error",
+                    code: "audio_unavailable",
+                    message: "Audio sync is unavailable because audio support is disabled.",
+                    details: null,
+                });
+            }
             const body = validateAudioSyncBody(req.body);
             const result = await audioService.syncKanji(kanji, body);
             return res.status(200).json({
@@ -288,7 +296,7 @@ function createApp({
         try {
             const { level, limit } = validateExportRequest(req);
 
-            logger.info(
+            appLogger.info(
                 {
                     level,
                     limit: limit ?? "all",
@@ -310,7 +318,7 @@ function createApp({
                 concurrency: config.exportConcurrency,
             });
 
-            logger.info(
+            appLogger.info(
                 {
                     level,
                     limit: limit ?? "all",

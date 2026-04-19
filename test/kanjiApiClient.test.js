@@ -7,6 +7,7 @@ const { z } = require("zod");
 
 const {
     buildCacheFilePath,
+    buildTemporaryWritePath,
     createEmptyClientMetrics,
     createKanjiApiClient,
     validatePayload,
@@ -24,6 +25,21 @@ test("buildCacheFilePath shards cache entries into subdirectories", () => {
     const cachePath = buildCacheFilePath("cache-root", "kanji__E6_97_A5");
 
     assert.equal(cachePath, path.join("cache-root", "ka", "kanji__E6_97_A5.json"));
+});
+
+test("buildTemporaryWritePath stays unique within the same millisecond", (t) => {
+    const originalNow = Date.now;
+    Date.now = () => 1234567890;
+    t.after(() => {
+        Date.now = originalNow;
+    });
+
+    const first = buildTemporaryWritePath(path.join("cache-root", "ka", "kanji__E6_97_A5.json"));
+    const second = buildTemporaryWritePath(path.join("cache-root", "ka", "kanji__E6_97_A5.json"));
+
+    assert.notEqual(first, second);
+    assert.match(first, /\.tmp-\d+-1234567890-\d+$/);
+    assert.match(second, /\.tmp-\d+-1234567890-\d+$/);
 });
 
 test("createEmptyClientMetrics starts all counters at zero", () => {

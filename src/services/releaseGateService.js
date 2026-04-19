@@ -60,7 +60,10 @@ async function runReleaseGate({
 } = {}) {
     const toolchainStatus = buildToolchainStatusFn();
     const missingPackagingTools = getMissingPackagingTools(toolchainStatus);
-    const blockedTools = getBlockedTools(toolchainStatus).filter((tool) => Array.isArray(toolchainStatus.packaging) && toolchainStatus.packaging.includes(tool));
+    const blockedTools = getBlockedTools(toolchainStatus).filter((tool) => (
+        Array.isArray(toolchainStatus.packaging)
+        && toolchainStatus.packaging.some((packagingTool) => packagingTool?.name === tool?.name)
+    ));
 
     if (requireApkgTools && (missingPackagingTools.length > 0 || blockedTools.length > 0)) {
         const issueParts = [];

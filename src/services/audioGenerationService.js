@@ -7,15 +7,12 @@ const { loadCuratedStudyData } = require("../datasets/curatedStudyData");
 const { loadSentenceCorpus } = require("../datasets/sentenceCorpus");
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { mapWithConcurrency } = require("../utils/concurrency");
+const { isKanaOnly, katakanaToHiragana } = require("../utils/japanese");
 
 function ensureDir(dirPath) {
     if (!fs.existsSync(dirPath)) {
         fs.mkdirSync(dirPath, { recursive: true });
     }
-}
-
-function katakanaToHiragana(value) {
-    return String(value || "").replace(/[\u30A1-\u30F6]/g, (char) => String.fromCharCode(char.charCodeAt(0) - 0x60));
 }
 
 function normalizeKanaReading(value) {
@@ -24,10 +21,6 @@ function normalizeKanaReading(value) {
         .replace(/-/g, "")
         .replace(/\s+/g, "")
         .trim();
-}
-
-function isKanaOnly(value) {
-    return /^[ぁ-ゖゝゞー]+$/.test(String(value || ""));
 }
 
 function selectPreferredAudioReading({ inferenceResult, kanjiInfo }) {

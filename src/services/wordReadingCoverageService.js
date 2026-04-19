@@ -1,12 +1,4 @@
-function katakanaToHiragana(text) {
-  return Array.from(String(text || '')).map((char) => {
-    const code = char.charCodeAt(0);
-    if (code >= 0x30A1 && code <= 0x30F6) {
-      return String.fromCharCode(code - 0x60);
-    }
-    return char;
-  }).join('');
-}
+const { katakanaToHiragana } = require('../utils/japanese');
 
 function normalizeReadingToken(value) {
   return katakanaToHiragana(String(value || ''))

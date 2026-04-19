@@ -1,7 +1,3 @@
-const KATAKANA_ONLY_RE = /^[\p{Script=Katakana}ー]+$/u;
-const KANA_ONLY_RE = /^[\p{Script=Hiragana}\p{Script=Katakana}ー]+$/u;
-const HAN_CHAR_RE = /\p{Script=Han}/u;
-
 function normalizeText(value) {
     return String(value ?? "").trim().toLowerCase();
 }
@@ -34,9 +30,6 @@ function labelReading(onArr, kunArr) {
 }
 
 module.exports = {
-    HAN_CHAR_RE,
-    KANA_ONLY_RE,
-    KATAKANA_ONLY_RE,
     labelKunReading,
     labelOnReading,
     labelReading,

@@ -6,7 +6,8 @@ const {
     scoreSource,
     scoreTags,
 } = require("./sentenceInference");
-const { HAN_CHAR_RE, KANA_ONLY_RE, KATAKANA_ONLY_RE, normalizeText } = require("../utils/text");
+const { normalizeText } = require("../utils/text");
+const { HAN_CHAR_RE, KANA_ONLY_RE, KATAKANA_ONLY_RE } = require("../utils/japanese");
 
 const INVALID_SCORE = -999;
 

@@ -1,4 +1,5 @@
-const { KATAKANA_ONLY_RE, normalizeText } = require("../utils/text");
+const { normalizeText } = require("../utils/text");
+const { KATAKANA_ONLY_RE } = require("../utils/japanese");
 
 const LEARNER_NOISE_PATTERNS = [
     /radical/i,

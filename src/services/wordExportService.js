@@ -4,7 +4,8 @@ const { inferSentenceCandidates, scoreCorpusSentence } = require("../inference/s
 const { createExportService, formatExampleSentence } = require("./exportService");
 const { buildOfflineFallbackCard } = require("./previewCardService");
 const { mapWithConcurrency } = require("../utils/concurrency");
-const { HAN_CHAR_RE, KATAKANA_ONLY_RE, tsvEscape } = require("../utils/text");
+const { tsvEscape } = require("../utils/text");
+const { HAN_CHAR_RE, KATAKANA_ONLY_RE } = require("../utils/japanese");
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 

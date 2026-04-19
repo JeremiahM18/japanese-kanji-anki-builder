@@ -347,7 +347,7 @@ function createApp({
     app.get("/export/:level/download", (req, res, next) => handleExportRequest(req, res, next, { download: true }));
 
     app.use((err, _req, res, _next) => {
-        logger.error({ err }, "Error handling request");
+        appLogger.error({ err }, "Error handling request");
 
         if (err instanceof ZodError) {
             err = new ValidationError("Request validation failed.", formatZodIssues(err));

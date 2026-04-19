@@ -739,6 +739,11 @@ test("internal errors hide stacks when config nodeEnv is production", async () =
         assert.equal(json.message, "Internal Server Error");
         assert.equal("stack" in json, false);
     });
+
+    const errorLogs = fixture.loggerCalls.filter(
+        (entry) => entry.level === "error" && entry.maybeMessage === "Error handling request"
+    );
+    assert.equal(errorLogs.length, 1);
 });
 
 test("createApp requires an explicit export service runtime dependency", () => {

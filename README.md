@@ -138,6 +138,7 @@ npm run deck:review:n2
 npm run deck:review:n3
 npm run deck:review:n4
 npm run deck:review:n5
+npm run deck:review:coverage
 ```
 
 - `deck:preview` shows the learner-facing study word, meaning, primary reading, on-yomi, kun-yomi, notes, example sentence, radical, and media presence.
@@ -154,6 +155,7 @@ npm run deck:review:n5
 - The N5 golden review set now also guards the curated beginner anchors we rely on for later word-deck work, including stabilized numerals and learner-first cards like `午`, `女`, `食`, `生`, and `電`.
 - Preview and golden review consume the split reading fields directly instead of depending on an internal combined-reading string.
 - `deck:review:n2`, `deck:review:n3`, `deck:review:n4`, and `deck:review:n5` run the tracked golden benchmark sets against hand-picked kanji cards.
+- `deck:review:coverage` reports how much of the tracked starter-curated N4/N5 kanji foundation is currently protected by those golden review sets, so benchmark readiness can be audited systematically.
 - `deck:words:review:n5` runs the tracked golden benchmark set against hand-picked N5 word cards.
 - Build and report CLIs reject unsupported flags instead of silently ignoring them.
 - Tracked N1 curation batches normally stay in the 6-8 kanji range; the final closeout batch may be smaller when it honestly completes the remaining N1 gap.
@@ -309,6 +311,7 @@ The tagged workflow in [.github/workflows/release.yml](.github/workflows/release
 | `npm run deck:review:n3` | Run the tracked golden N3 benchmark |
 | `npm run deck:review:n4` | Run the tracked golden N4 benchmark |
 | `npm run deck:review:n5` | Run the tracked golden N5 kanji benchmark |
+| `npm run deck:review:coverage` | Audit golden-review coverage for the tracked N4/N5 starter kanji foundation |
 | `npm run deck:words:review:n5` | Run the tracked golden N5 word benchmark |
 | `npm run deck:words:reading-audit:n5` | Audit curated N5 reading coverage against the current word deck; matching word cards count even when they use a fuller form like `後ろ` for `後` |
 | `npm run deck:ready` | Run the full kanji build and package path (fails if export fallbacks occur unless `--allow-export-fallbacks` is set) |

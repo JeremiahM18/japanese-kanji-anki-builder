@@ -149,6 +149,7 @@ npm run deck:review:n5
 - The same principle applies to awkward bare-kanji kunyomi anchors: `主` now teaches through `主に` instead of the less natural standalone `主 (おも)`, so the card matches the form beginners are actually likely to encounter first.
 - When a whole compound hides the kanji’s reusable reading too much, the starter curation can prefer a short natural phrase instead of the most familiar compound, so `世` now teaches through `世の中` rather than anchoring the entire card on `世界`.
 - The N4 golden review set now explicitly checks learner-facing anchors like `主に`, `世の中`, and `勉強` so future refactors are less likely to quietly regress the study experience while still passing broad meaning checks.
+- The N5 golden review set now also guards the curated beginner anchors we rely on for later word-deck work, including stabilized numerals and learner-first cards like `午`, `女`, `食`, `生`, and `電`.
 - Preview and golden review consume the split reading fields directly instead of depending on an internal combined-reading string.
 - `deck:review:n2`, `deck:review:n3`, `deck:review:n4`, and `deck:review:n5` run the tracked golden benchmark sets against hand-picked kanji cards.
 - `deck:words:review:n5` runs the tracked golden benchmark set against hand-picked N5 word cards.

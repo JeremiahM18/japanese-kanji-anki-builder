@@ -1,36 +1,134 @@
-# Local datasets (not committed)
+# Local Data Guide
 
-Place these files in this folder:
+This folder holds the local datasets and media that make the repo usable on a real workstation. These files are ignored by git on purpose: they are machine-local inputs, cached media, and editorial working data rather than source-controlled product code.
+
+## What belongs here
+
+Required local datasets:
 
 - `kanji_jlpt_only.json` - JLPT kanji list by level
-- `KRADFILE` - kanji to component and radical mapping
-- `sentence_corpus.json` - optional sentence corpus for deterministic sentence selection
-- `curated_study_data.json` - optional curated kanji overrides for meaning, notes, preferred words, blocked words, and top example sentences
-- `word_study_data.json` - optional curated word-deck overrides keyed by `written|reading`, such as `今日|きょう`
+- `KRADFILE` - kanji-to-component and radical mapping
 
-Optional local media source folders:
+Optional but high-value local datasets:
+
+- `sentence_corpus.json` - sentence corpus used for deterministic learner-facing example selection
+- `curated_study_data.json` - local kanji curation overrides for meanings, notes, preferred words, blocked words, and examples
+- `word_study_data.json` - local word-deck curation overrides keyed by `written|reading`, for example `今日|きょう`
+
+Managed media output:
+
+- `media/`
+
+Local media source folders for acquisition and imports:
 
 - `media_sources/stroke-order/images/`
 - `media_sources/stroke-order/animations/`
 - `media_sources/audio/`
 
-## Local and remote media sources
+## Recommended setup
 
-The repository supports both deterministic local-directory providers and optional remote HTTP fallback providers.
+Use the repo bootstrap commands before hand-editing files:
 
-Remote configuration lives in environment variables:
+```bash
+npm run corpus:init
+npm run curated:init
+npm run words:init
+npm run media:init
+```
+
+Use these variants when you already have local files:
+
+```bash
+npm run corpus:init -- --merge
+npm run curated:init -- --merge
+npm run curated:init -- --refresh-starter
+npm run words:init -- --merge
+```
+
+Guidance:
+
+- Use `--merge` when you want new tracked starter content without overwriting local editorial work.
+- Use `--refresh-starter` when tracked starter kanji entries improved and you want stale starter-derived local copies refreshed while keeping true local custom entries intact.
+
+## Curated kanji data
+
+Curated kanji entries are where the product locks in learner-facing choices that should not be left to generic inference.
+
+Use curation when you need to pin:
+
+- a better learner-facing display form
+- clearer meanings or notes
+- preferred or blocked study words
+- a better example sentence
+
+Example:
+
+```json
+{
+  "上": {
+    "displayWord": {
+      "written": "上",
+      "pron": "うえ"
+    },
+    "englishMeaning": "above / up",
+    "notes": "上 （うえ） - above ／ 上手 （じょうず） - skillful"
+  }
+}
+```
+
+Runtime loading uses the tracked starter pack plus tracked `starter_curated_study_data_*.json` batch files as the base layer, then applies local ignored overrides on top. That means starter improvements flow into builds without clobbering intentional local edits.
+
+## Curated word data
+
+Curated word study entries define exact study targets for the word deck.
+
+Key rule:
+
+- word identity is `written|reading`
+
+That lets the deck intentionally keep `今日|きょう` while excluding `今日|こんにち` unless you explicitly curate both.
+
+Example:
+
+```json
+{
+  "今日|きょう": {
+    "written": "今日",
+    "reading": "きょう",
+    "meaning": "today",
+    "jlpt": 5,
+    "notes": "Irregular reading. Learn this as a whole word.",
+    "exampleSentence": {
+      "japanese": "今日は図書館へ行きます。",
+      "reading": "きょうはとしょかんへいきます。",
+      "english": "Today I am going to the library."
+    }
+  }
+}
+```
+
+## Media sourcing
+
+The repo supports both local media imports and optional remote fallback providers.
+
+Remote environment variables:
 
 - `REMOTE_STROKE_ORDER_IMAGE_BASE_URL`
 - `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL`
+- `REMOTE_STROKE_ORDER_ANIMCJK_BASE_URL`
 - `REMOTE_AUDIO_BASE_URL`
 
-Remote providers look for the same candidate filenames you would use locally, appended to the configured base URL.
+The intended stroke-order animation priority is:
 
-The repo now treats `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL` as the primary stroke-order animation path, and `.env.example` points it at the GitHub `jcsirot/kanji.gif` set by default. Wikimedia Commons is still useful for static images and manual fallback acquisition, but it is no longer the recommended primary animation workflow.
+1. `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL`
+2. `REMOTE_STROKE_ORDER_ANIMCJK_BASE_URL`
+3. local imported files
 
-## Stroke-order source naming
+Wikimedia Commons is still useful for static images and targeted fallback acquisition, but it is no longer the recommended primary animation workflow.
 
-Recommended free local names, including Wikimedia-style files:
+### Stroke-order naming
+
+Recommended source names include:
 
 - `<kanji>.svg`
 - `<kanji>-bw.png`
@@ -50,11 +148,9 @@ Example for `日`:
 - `65E5-bw.png`
 - `U+65E5-order.gif`
 
-If you download stroke-order assets from Wikimedia Commons for personal use, keep the original attribution and license information with your source collection. In the current repo workflow, Commons is best treated as a supplemental source for local static images or targeted fallback assets, while the default synced animation source is GitHub.
+### Audio naming
 
-## Audio source naming
-
-Recommended names:
+Recommended source names include:
 
 - `<kanji>.mp3`
 - `<kanji>_<reading>.mp3`
@@ -67,40 +163,45 @@ Example for `日`:
 - `日_にち.mp3`
 - `65E5.m4a`
 
-## Word study data
+## Useful local-data workflows
 
-Curated word study entries let the word deck lock onto the exact study target you want.
-
-Recommended shape:
-
-```json
-{
-  "今日|きょう": {
-    "written": "今日",
-    "reading": "きょう",
-    "meaning": "today",
-    "jlpt": 5,
-    "notes": "Irregular reading. Learn this as a whole word.",
-    "exampleSentence": {
-      "japanese": "今日は図書館へ行きます。",
-      "reading": "きょうはとしょかんへいきます。",
-      "english": "Today I am going to the library."
-    }
-  }
-}
-```
-
-Why the key matters:
-
-- the word deck treats `written + reading` as the study identity
-- if you curate `今日|きょう`, the exporter suppresses uncurated alternatives such as `今日|こんにち`
-- if you want both readings, curate both entries explicitly
-
-Bootstrap the starter pack with:
+Inspect managed media coverage:
 
 ```bash
-npm run words:init
-npm run words:init -- --merge
+npm run media:report -- --limit=50
+```
+
+Sync media for a level or explicit kanji list:
+
+```bash
+npm run media:sync -- --level=5 --limit=25
+npm run media:sync -- --kanji=日,本,学
+```
+
+Import free stroke-order assets:
+
+```bash
+npm run media:plan:stroke-order -- --level=5 --limit=25
+npm run media:import:stroke-order -- --input-dir=/path/to/downloaded/files
+```
+
+Import official KanjiVG SVGs:
+
+```bash
+npm run media:import:kanjivg -- --input-dir=/path/to/extracted-kanjivg/kanji --level=4
+```
+
+Import local audio:
+
+```bash
+npm run media:import:audio -- --input-dir=/path/to/audio --level=5
+```
+
+Generate audio from a local VOICEVOX engine:
+
+```bash
+npm run media:voicevox -- --list-speakers
+npm run media:voicevox -- --level=5 --speaker-id=1 --concurrency=4
 ```
 
 ## Audio sync endpoint
@@ -117,85 +218,7 @@ Optional JSON body fields:
 - `voice` to record voice provenance in the manifest
 - `locale` to record locale metadata in the manifest
 
-These datasets are ignored by git and must be downloaded or curated locally.
+## Notes
 
-Managed media coverage report:
-
-```bash
-npm run media:report -- --limit=50
-```
-
-Bulk media sync:
-
-```bash
-npm run media:sync -- --level=5 --limit=25
-npm run media:sync -- --kanji=日,本,学
-```
-
-Deterministic build pipeline:
-
-```bash
-npm run build:artifacts -- --levels=5,4 --limit=25
-```
-
-Artifacts are written to `out/build` by default:
-
-- `exports/jlpt-n5.tsv`
-- `reports/sentence-corpus-coverage.json`
-- `reports/curated-study-coverage.json`
-- `reports/media-coverage.json`
-- `reports/media-sync.json`
-- `build-summary.json`
-
-## Free stroke-order import helper
-
-Generate a Wikimedia Commons download checklist for missing supplemental stroke-order assets first:
-
-```bash
-npm run media:plan:stroke-order -- --level=5 --limit=25
-```
-
-If you have a folder of downloaded free stroke-order assets, import them into the project source layout with:
-
-```bash
-npm run media:import:stroke-order -- --input-dir=/path/to/downloaded/files
-```
-
-Optional flags:
-
-- `--limit=250` to restrict matching to the first N kanji in the JLPT dataset
-- `--json` for machine-readable output
-
-The importer copies recognized image files into `media_sources/stroke-order/images/` and animation files into `media_sources/stroke-order/animations/`, while reporting skipped files that do not match supported naming patterns.
-
-## Starter sentence corpus
-
-Run this once to create a beginner-friendly starter sentence corpus in `data/sentence_corpus.json`:
-
-```bash
-npm run corpus:init
-```
-
-If you already have a sentence corpus and want to add the starter entries without overwriting your file:
-
-```bash
-npm run corpus:init -- --merge
-```
-
-The starter corpus is intentionally small and beginner-focused so preview and export quality improve immediately, and you can expand it over time with better or more specialized examples.
-
-## Starter curated kanji study data
-
-Run this once to create a starter curated kanji study dataset in `data/curated_study_data.json`:
-
-```bash
-npm run curated:init
-```
-
-If you already have curated kanji study data and want to add the starter entries without overwriting your file:
-
-```bash
-npm run curated:init -- --merge
-```
-
-The starter curated kanji pack is intentionally focused on high-value tracked batches so learner-facing meanings, notes, and examples improve quickly before you expand deeper into the full JLPT set. Runtime and bootstrap loading include the base `starter_curated_study_data.json` file plus any tracked `starter_curated_study_data_*.json` batch files. Tracked N1 batches normally stay in the 6-8 kanji range, with a smaller final closeout batch allowed only when it completes the remaining N1 gap.
+- Keep original attribution and license information with any external source assets you download for personal use.
+- Use the top-level [README](../README.md) for build, review, packaging, and release workflows. This file is only for local data and media guidance.

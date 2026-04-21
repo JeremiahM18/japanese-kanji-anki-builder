@@ -279,7 +279,7 @@ Tagged releases should follow [docs/release-process.md](docs/release-process.md)
 
 The tagged workflow in [.github/workflows/release.yml](.github/workflows/release.yml) reruns release verification, publishes deterministic smoke and release-gate artifacts, and emits `release-artifacts.sha256` for traceability.
 
-## Important commands
+## Common commands
 
 | Command | Purpose |
 | --- | --- |
@@ -289,41 +289,24 @@ The tagged workflow in [.github/workflows/release.yml](.github/workflows/release
 | `npm run release:gate` | Assert smoke artifacts, TSV schemas, package summaries, and optionally require native `.apkg` tooling |
 | `npm run doctor` | Check setup, coverage, readiness, and next steps |
 | `npm run deck:readiness` | Show the global per-level deck quality gates across all JLPT levels |
-| `npm run deck:readiness:global` | Explicit alias for the all-level readiness report |
 | `npm run deck:preview` | Preview kanji cards before import |
-| `npm run deck:review:n2` | Run the tracked golden N2 benchmark |
-| `npm run deck:review:n3` | Run the tracked golden N3 benchmark |
+| `npm run deck:review:coverage` | Audit golden-review coverage for the tracked N4/N5 starter kanji foundation |
 | `npm run deck:review:n4` | Run the tracked golden N4 benchmark |
 | `npm run deck:review:n5` | Run the tracked golden N5 kanji benchmark |
-| `npm run deck:review:coverage` | Audit golden-review coverage for the tracked N4/N5 starter kanji foundation |
 | `npm run deck:words:review:n5` | Run the tracked golden N5 word benchmark |
-| `npm run deck:words:reading-audit:n5` | Audit curated N5 reading coverage against the current word deck; matching word cards count even when they use a fuller form like `後ろ` for `後` |
 | `npm run deck:ready` | Run the full kanji build and package path (fails if export fallbacks occur unless `--allow-export-fallbacks` is set) |
-| `npm run bench:build` | Benchmark the full kanji build path and capture phase timings |
-| `npm run bench:build:gate` | Run the N3-N5 no-warmup build benchmark against the default regression budget |
-| `npm run bench:export` | Benchmark kanji TSV export; defaults to a deterministic offline fixture mode and accepts `--live` for real API timing |
 | `npm run deck:apkg` | Build an importable `.apkg` from packaged kanji exports |
 | `npm run deck:words:ready` | Run the full word-deck build and package path |
 | `npm run deck:words:apkg` | Build an importable `.apkg` from packaged word exports |
-| `npm run build:artifacts` | Run the deterministic kanji build pipeline (`--fail-on-export-issues` and `--max-fallback-ratio=<0..1>` available for strict scripting) |
 | `npm run corpus:init` | Create or merge starter sentence corpus data |
 | `npm run curated:init` | Create or merge starter curated kanji study data |
-| `npm run curated:report -- --level=1 --limit=8` | Show the next high-value missing curated kanji for a level, ranked by cached word candidates |
 | `npm run words:init` | Create or merge starter curated word study data |
 | `npm run media:init` | Create media source folders and bootstrap `.env` |
 | `npm run media:plan` | Show missing media by kanji with accepted filenames |
-| `npm run media:plan:stroke-order` | Show Wikimedia Commons checklist URLs for supplemental stroke-order assets |
-| `npm run media:discover:stroke-order` | Discover real Wikimedia Commons titles for missing supplemental stroke-order assets |
-| `npm run media:fetch:stroke-order` | Download confirmed Wikimedia stroke-order assets, or probe guessed filenames with `--probe-guessed` |
-| `npm run media:report:animations` | Show only the remaining managed true-animation gaps for the requested JLPT levels |
-| `npm run media:import:stroke-order` | Import free local stroke-order assets |
-| `npm run media:import:kanjivg` | Import KanjiVG SVG stroke-order files into the source tree |
-| `npm run media:import:audio` | Import local kanji audio files into the source folder |
-| `npm run media:voicevox` | Generate kanji audio from a local VOICEVOX engine |
 | `npm run media:sources` | Report local source-folder coverage before media sync |
 | `npm run media:sync` | Sync stroke-order and audio assets into managed storage for one level at a time |
 
-Build benchmark budget: `bench:build` accepts `--budget=default` plus optional overrides like `--budget-total-ms=4500`, `--budget-export-ms=2200`, `--budget-media-sync-ms=1300`, and `--budget-packaging-ms=550`. The default gate is tuned for the current N3-N5 no-audio path with modest headroom.
+The sections above document the specialized media, benchmark, and import commands in more detail. This table is the common operating surface rather than the full script inventory.
 
 ## Local data and config
 

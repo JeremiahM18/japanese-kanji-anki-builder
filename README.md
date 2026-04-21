@@ -123,10 +123,11 @@ Useful variants:
 ```bash
 npm run corpus:init -- --merge
 npm run curated:init -- --merge
+npm run curated:init -- --refresh-starter
 npm run words:init -- --merge
 ```
 
-These commands create or extend local ignored datasets so the decks are usable before you build out full coverage. The tracked starter packs now carry complete N5 and N4 kanji curation, the first six N3 kanji starter batches, the first tracked N1 starter batch of 8 kanji, and a 269-card curated N5 starter word pack for the word deck. Editor-local workspace files such as `.vscode/`, `.code-workspace`, and `.history/` are also ignored so local tooling does not dirty the repo.
+These commands create or extend local ignored datasets so the decks are usable before you build out full coverage. Use `--merge` when you want to add newly tracked starter entries without disturbing local customizations. Use `--refresh-starter` when tracked starter entries have improved and you want to replace stale starter-derived local copies while preserving non-starter local work. The tracked starter packs now carry complete N5 and N4 kanji curation, the first six N3 kanji starter batches, the first tracked N1 starter batch of 8 kanji, and a 269-card curated N5 starter word pack for the word deck. Editor-local workspace files such as `.vscode/`, `.code-workspace`, and `.history/` are also ignored so local tooling does not dirty the repo.
 
 ### Preview and review cards
 

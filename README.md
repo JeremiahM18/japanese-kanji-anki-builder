@@ -143,6 +143,7 @@ npm run deck:review:n5
 - `deck:preview` shows the learner-facing study word, meaning, primary reading, on-yomi, kun-yomi, notes, example sentence, radical, and media presence.
 - The tracked starter kanji data now pins bare-kanji display readings for the core N5 numerals so previews and early deck exports teach stable foundational forms such as `一 (いち)`, `二 (に)`, `三 (さん)`, `五 (ご)`, `七 (なな)`, and `九 (きゅう)` instead of leaking context-specific counter or time readings.
 - The same starter curation pass now also pins bare-kanji anchors for foundational time-and-people cards such as `十 (じゅう)`, `千 (せん)`, `午 (ご)`, and `女 (おんな)` so beginners are taught the kanji’s core form before longer compounds like `十時`, `千円`, `午前`, or `女の子`.
+- It also now does the same for compound-heavy utility kanji such as `電 (でん)`, `地 (ち)`, `員 (いん)`, `問 (もん)`, and `堂 (どう)`, so previews stop teaching `電車`, `地下鉄`, `店員`, `問題`, or `食堂` as if those whole words were the kanji’s primary standalone form.
 - Preview and golden review consume the split reading fields directly instead of depending on an internal combined-reading string.
 - `deck:review:n2`, `deck:review:n3`, `deck:review:n4`, and `deck:review:n5` run the tracked golden benchmark sets against hand-picked kanji cards.
 - `deck:words:review:n5` runs the tracked golden benchmark set against hand-picked N5 word cards.

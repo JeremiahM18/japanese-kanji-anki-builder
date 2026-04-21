@@ -155,7 +155,7 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
     assert.deepEqual(curatedStudyData["医"].displayWord, { written: "医者", pron: "いしゃ" });
     assert.equal(curatedStudyData["医"].englishMeaning, "doctor / medicine");
 
-    assert.deepEqual(curatedStudyData["員"].displayWord, { written: "店員", pron: "てんいん" });
+    assert.deepEqual(curatedStudyData["員"].displayWord, { written: "員", pron: "いん" });
     assert.deepEqual(curatedStudyData["員"].preferredWords, ["店員", "会社員", "会員"]);
 
     assert.deepEqual(curatedStudyData["映"].displayWord, { written: "映画", pron: "えいが" });
@@ -194,6 +194,11 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
     assert.deepEqual(curatedStudyData["午"].displayWord, { written: "午", pron: "ご" });
     assert.deepEqual(curatedStudyData["女"].displayWord, { written: "女", pron: "おんな" });
     assert.equal(curatedStudyData["女"].notes, "女 （おんな） - woman ／ 女の子 （おんなのこ） - girl");
+    assert.deepEqual(curatedStudyData["電"].displayWord, { written: "電", pron: "でん" });
+    assert.deepEqual(curatedStudyData["地"].displayWord, { written: "地", pron: "ち" });
+    assert.deepEqual(curatedStudyData["員"].displayWord, { written: "員", pron: "いん" });
+    assert.deepEqual(curatedStudyData["問"].displayWord, { written: "問", pron: "もん" });
+    assert.deepEqual(curatedStudyData["堂"].displayWord, { written: "堂", pron: "どう" });
 
     assert.deepEqual(curatedStudyData["天"].displayWord, { written: "天気", pron: "てんき" });
     assert.equal(curatedStudyData["天"].englishMeaning, "weather / sky");

@@ -146,6 +146,7 @@ npm run deck:review:n5
 - It also now does the same for compound-heavy utility kanji such as `電 (でん)`, `地 (ち)`, `員 (いん)`, `問 (もん)`, and `堂 (どう)`, so previews stop teaching `電車`, `地下鉄`, `店員`, `問題`, or `食堂` as if those whole words were the kanji’s primary standalone form.
 - For broader beginner kanji, the starter curation now mixes bare-kanji and learner-word anchors intentionally: cards like `力 (ちから)`, `場 (ば)`, `用 (よう)`, and `間 (あいだ)` expose the kanji-level hook directly, while cards like `食` and `生` intentionally teach through `食べる` and `生きる` because those are the clearer first-use anchors for beginners.
 - Bound or highly compound-dependent kanji can also prefer a real learner word over an unnatural bare form, so `勉` now teaches through `勉強` rather than pretending the standalone `勉` is the right beginner-facing anchor.
+- The same principle applies to awkward bare-kanji kunyomi anchors: `主` now teaches through `主に` instead of the less natural standalone `主 (おも)`, so the card matches the form beginners are actually likely to encounter first.
 - Preview and golden review consume the split reading fields directly instead of depending on an internal combined-reading string.
 - `deck:review:n2`, `deck:review:n3`, `deck:review:n4`, and `deck:review:n5` run the tracked golden benchmark sets against hand-picked kanji cards.
 - `deck:words:review:n5` runs the tracked golden benchmark set against hand-picked N5 word cards.

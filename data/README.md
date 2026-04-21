@@ -49,6 +49,7 @@ Guidance:
 
 - Use `--merge` when you want new tracked starter content without overwriting local editorial work.
 - Use `--refresh-starter` when tracked starter kanji entries improved and you want stale starter-derived local copies refreshed while keeping true local custom entries intact.
+- Run `npm run data:verify:jlpt` after replacing or editing `kanji_jlpt_only.json` so missing rows or broken JLPT counts fail fast before they skew deck audits.
 
 ## Curated kanji data
 

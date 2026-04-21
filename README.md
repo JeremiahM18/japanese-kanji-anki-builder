@@ -302,6 +302,7 @@ The tagged workflow in [.github/workflows/release.yml](.github/workflows/release
 | `npm run deck:words:apkg` | Build an importable `.apkg` from packaged word exports |
 | `npm run corpus:init` | Create or merge starter sentence corpus data |
 | `npm run curated:init` | Create or merge starter curated kanji study data |
+| `npm run data:verify:jlpt` | Verify the local JLPT kanji dataset against the canonical per-level inventory contract |
 | `npm run words:init` | Create or merge starter curated word study data |
 | `npm run media:init` | Create media source folders and bootstrap `.env` |
 | `npm run media:plan` | Show missing media by kanji with accepted filenames |

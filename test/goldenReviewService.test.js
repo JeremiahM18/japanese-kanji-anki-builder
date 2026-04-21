@@ -91,6 +91,10 @@ test("formatGoldenReviewReport accepts a custom title", () => {
 
 test("buildReviewReadingText prefers split reading fields and falls back to legacy reading", () => {
     assert.equal(buildReviewReadingText({ onReading: "オン: ニチ", kunReading: "くん: ひ" }), "オン: ニチ ／ くん: ひ");
+    assert.equal(
+        buildReviewReadingText({ primaryReading: "ひ", onReading: "オン: ニチ", kunReading: "くん: ひ" }),
+        "ひ ／ オン: ニチ ／ くん: ひ"
+    );
     assert.equal(buildReviewReadingText({ reading: "オン: ガク ／ くん: まなぶ" }), "オン: ガク ／ くん: まなぶ");
     assert.equal(buildReviewReadingText({}), "");
 });

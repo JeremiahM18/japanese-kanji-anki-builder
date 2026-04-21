@@ -23,11 +23,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Tightened `世` so it now teaches through `世の中` instead of anchoring the whole card on `世界`, giving learners a more reusable reading hook while still keeping `世界` in notes.
 - Strengthened the N4 golden review gate so learner-facing anchors like `主に`, `世の中`, and `勉強` are checked explicitly instead of relying only on broad meaning fragments.
 - Strengthened the N5 golden review gate so stabilized numeral anchors and learner-first cards like `午`, `女`, `食`, `生`, and `電` are checked explicitly as part of the kanji-foundation contract.
+- Strengthened the kanji golden review matcher itself so benchmark reading checks include the learner-facing primary reading in addition to on-yomi and kun-yomi.
 - Expanded the N4 golden review gate to cover more learner-critical utility kanji, including `地`, `問`, `堂`, `用`, and `場`, so early word-building anchors are protected by product-level checks.
 - Expanded the kanji golden review coverage further for bridge cards like `間`, `会`, and `事`, which directly influence how learners interpret common compound readings later.
 - Added a `deck:review:coverage` audit so the team can measure how much of the tracked N4/N5 starter kanji foundation is protected by golden review benchmarks, instead of relying on one-off spot checks.
 - Expanded N5 golden review coverage for another high-frequency beginner batch including `火`, `気`, `休`, `月`, `後`, `語`, `校`, `高`, `国`, and `時`.
 - Expanded N5 golden review coverage again for an ultra-core beginner batch including `今`, `上`, `下`, `子`, `車`, `出`, `書`, and `小`.
+- Expanded N5 golden review coverage again for another foundational beginner batch including `人`, `水`, `前`, `大`, `先`, `山`, `川`, `三`, `十`, `右`, `左`, `円`, `何`, `西`, and `南`.
 - Tightened word-deck kanji breakdown selection so compound cards keep learner-friendly per-kanji readings instead of leaking whole-compound readings onto single-kanji panels.
 - Added curated breakdown overrides for high-visibility N5 benchmark compounds such as `映画`, `銀行`, `郵便局`, `青い空`, and `夜空`, and aligned the golden review matcher with the exported formatting.
 

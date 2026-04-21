@@ -153,8 +153,10 @@ npm run deck:review:coverage
 - That N4 review coverage now also protects early utility cards like `地`, `問`, `堂`, `用`, and `場`, which matter disproportionately because they become building blocks for later word-deck reading fluency.
 - We now also review bridge cards like `間`, `会`, and `事` explicitly, because these are the kinds of everyday kanji where a fuzzy first reading or meaning can quietly distort a large number of later word cards.
 - The N5 golden review set now also guards the curated beginner anchors we rely on for later word-deck work, including stabilized numerals and learner-first cards like `午`, `女`, `食`, `生`, and `電`.
+- The kanji golden review matcher now checks the learner-facing primary reading alongside on-yomi and kun-yomi, so the benchmark protects the first reading shown on the card instead of only the dictionary-style reading buckets.
 - That N5 review coverage now also protects another high-frequency beginner batch including `火`, `気`, `休`, `月`, `後`, `語`, `校`, `高`, `国`, and `時`, so the core reading-building surface is less likely to drift as we expand the product.
 - It now also covers another ultra-core beginner batch including `今`, `上`, `下`, `子`, `車`, `出`, `書`, and `小`, which strengthens the benchmark around basic spatial, action, and everyday classroom/life vocabulary.
+- It now also covers another foundational batch including `人`, `水`, `前`, `大`, `先`, `山`, `川`, `三`, `十`, `右`, `左`, `円`, `何`, `西`, and `南`, which hardens the benchmark around quantity, direction, place, and daily-life reference language that learners reuse constantly in early reading.
 - Preview and golden review consume the split reading fields directly instead of depending on an internal combined-reading string.
 - `deck:review:n2`, `deck:review:n3`, `deck:review:n4`, and `deck:review:n5` run the tracked golden benchmark sets against hand-picked kanji cards.
 - `deck:review:coverage` reports how much of the tracked starter-curated N4/N5 kanji foundation is currently protected by those golden review sets, so benchmark readiness can be audited systematically.

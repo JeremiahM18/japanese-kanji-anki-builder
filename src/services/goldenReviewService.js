@@ -14,7 +14,7 @@ function includesAll(haystack, needles = []) {
 }
 
 function buildReviewReadingText(card = {}) {
-    const parts = [card.onReading, card.kunReading]
+    const parts = [card.primaryReading, card.onReading, card.kunReading]
         .map((value) => normalizeText(value))
         .filter(Boolean);
 

@@ -93,7 +93,9 @@ test("tracked starter curated N1 batch entries keep required learner-facing qual
 });
 
 test("resolved curated N3-N5 entries keep selected learner-facing editorial choices stable", () => {
-    const curatedStudyData = loadCuratedStudyData(path.join(dataDir, "curated_study_data.json"));
+    const curatedStudyData = loadCuratedStudyData(path.join(dataDir, "__tracked_starter_only__.json"), {
+        starterPath: path.join(templatesDir, "starter_curated_study_data.json"),
+    });
 
     assert.deepEqual(curatedStudyData["便"].displayWord, { written: "便利", pron: "べんり" });
     assert.equal(curatedStudyData["便"].englishMeaning, "convenience / mail service");
@@ -178,6 +180,15 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
     assert.equal(curatedStudyData["話"].notes, "話す （はなす） - speak / talk ／ 会話 （かいわ） - conversation");
 
     assert.equal(curatedStudyData["水"].notes, "水 （みず） - water ／ 水曜日 （すいようび） - Wednesday");
+    assert.deepEqual(curatedStudyData["一"].displayWord, { written: "一", pron: "いち" });
+    assert.deepEqual(curatedStudyData["二"].displayWord, { written: "二", pron: "に" });
+    assert.deepEqual(curatedStudyData["三"].displayWord, { written: "三", pron: "さん" });
+    assert.deepEqual(curatedStudyData["四"].displayWord, { written: "四", pron: "よん" });
+    assert.deepEqual(curatedStudyData["五"].displayWord, { written: "五", pron: "ご" });
+    assert.deepEqual(curatedStudyData["六"].displayWord, { written: "六", pron: "ろく" });
+    assert.deepEqual(curatedStudyData["七"].displayWord, { written: "七", pron: "なな" });
+    assert.deepEqual(curatedStudyData["八"].displayWord, { written: "八", pron: "はち" });
+    assert.deepEqual(curatedStudyData["九"].displayWord, { written: "九", pron: "きゅう" });
 
     assert.deepEqual(curatedStudyData["天"].displayWord, { written: "天気", pron: "てんき" });
     assert.equal(curatedStudyData["天"].englishMeaning, "weather / sky");

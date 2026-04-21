@@ -33,6 +33,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Expanded N5 golden review coverage again for another foundational beginner batch including `千`, `男`, `中`, `長`, `天`, `東`, `読`, `二`, `入`, `年`, `白`, `八`, `半`, `百`, and `父`.
 - Expanded N5 golden review coverage again for the final tracked beginner batch including `分`, `聞`, `母`, `本`, `毎`, `万`, `名`, `木`, `友`, `来`, `六`, and `話`, bringing tracked starter-curated N5 kanji benchmark coverage to 100%.
 - Started the N4 hardening pass by pinning learner-facing anchors for weak cards like `飲む`, `歌`, `家 （いえ）`, and `音 （おと）`, and expanded the N4 golden review set with an initial high-value batch including `悪`, `安`, `以`, `意`, `飲`, `院`, `運`, `映`, `英`, `駅`, `屋`, `音`, `夏`, `家`, and `歌`.
+- Expanded the N4 golden review set again for another high-frequency batch including `花`, `画`, `海`, `界`, `開`, `楽`, `漢`, `館`, `帰`, `起`, `急`, `究`, `牛`, `去`, `魚`, `教`, `業`, `局`, and `近`, while keeping `強` out of the benchmark until its learner-facing front is tightened cleanly.
 - Tightened word-deck kanji breakdown selection so compound cards keep learner-friendly per-kanji readings instead of leaking whole-compound readings onto single-kanji panels.
 - Added curated breakdown overrides for high-visibility N5 benchmark compounds such as `映画`, `銀行`, `郵便局`, `青い空`, and `夜空`, and aligned the golden review matcher with the exported formatting.
 

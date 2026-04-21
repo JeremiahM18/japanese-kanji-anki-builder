@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Extended that foundational N5 curation to `十`, `千`, `午`, and `女` so previews prefer the kanji’s core learner-facing form over longer inherited compounds like `十時`, `千円`, `午前`, and `女の子`.
 - Extended the same foundation-first curation to compound-heavy utility kanji such as `電`, `地`, `員`, `問`, and `堂`, so previews teach the kanji’s core learner-facing anchor instead of whole compounds like `電車`, `地下鉄`, `店員`, `問題`, and `食堂`.
 - Tightened another set of broad early kanji so cards like `力`, `場`, `用`, and `間` expose the kanji-level hook directly, while `食` now intentionally prefers `食べる` as the more natural beginner-facing anchor.
+- Continued the foundation pass for broad or compound-dependent beginner kanji by making `生` teach through `生きる` with an aligned example sentence and making `勉` teach through `勉強` instead of the unnatural standalone form.
 - Tightened word-deck kanji breakdown selection so compound cards keep learner-friendly per-kanji readings instead of leaking whole-compound readings onto single-kanji panels.
 - Added curated breakdown overrides for high-visibility N5 benchmark compounds such as `映画`, `銀行`, `郵便局`, `青い空`, and `夜空`, and aligned the golden review matcher with the exported formatting.
 

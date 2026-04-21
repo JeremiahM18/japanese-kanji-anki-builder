@@ -302,6 +302,8 @@ The tagged workflow in [.github/workflows/release.yml](.github/workflows/release
 | `npm run deck:words:apkg` | Build an importable `.apkg` from packaged word exports |
 | `npm run corpus:init` | Create or merge starter sentence corpus data |
 | `npm run curated:init` | Create or merge starter curated kanji study data |
+| `npm run data:audit:jlpt` | Audit local JLPT data, tracked starter curation, and golden review placement against the tracked JLPT level contract |
+| `npm run data:sync:jlpt` | Rewrite the local ignored JLPT dataset so its `jlpt` levels match the tracked JLPT level contract |
 | `npm run data:verify:jlpt` | Verify the local JLPT kanji dataset against the canonical per-level inventory contract |
 | `npm run words:init` | Create or merge starter curated word study data |
 | `npm run media:init` | Create media source folders and bootstrap `.env` |
@@ -324,6 +326,8 @@ The project expects local ignored datasets under `data/`:
 Curated kanji study entries can pin a learner-facing display form with `displayWord`, for example `{ "written": "上", "pron": "うえ" }`, so exports and offline previews stay aligned even when the highest-ranked dictionary word uses a different surface form.
 
 Runtime curated kanji loading uses the tracked base starter pack plus any tracked `starter_curated_study_data_*.json` batch files as the baseline, then layers local ignored overrides on top, so starter improvements keep flowing into builds without clobbering local edits.
+
+JLPT level taxonomy is now governed by the tracked [templates/jlpt_level_contract.json](templates/jlpt_level_contract.json) contract rather than by a workstation-local assumption. Use `npm run data:audit:jlpt` when you want the full alignment picture across the local `kanji_jlpt_only.json`, tracked starter curation, and golden review placement, use `npm run data:verify:jlpt` when you only need to validate the local ignored dataset against that contract, and use `npm run data:sync:jlpt` when a workstation copy needs to be brought back into alignment.
 
 Curated word study entries are keyed by `written|reading`, for example `今日|きょう`, so the word deck can intentionally keep `今日 / きょう` while excluding `今日 / こんにち` unless you curate both.
 

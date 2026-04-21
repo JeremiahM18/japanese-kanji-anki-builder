@@ -1,8 +1,10 @@
 const fs = require("node:fs");
+const path = require("node:path");
 
 const { invokeCliMain, assertNoUnknownArgs, collectUnknownArg } = require("../src/utils/cliArgs");
 const { loadConfig } = require("../src/config");
-const { loadJlptOnlyJson, validateCanonicalJlptInventory } = require("../src/datasets/jlptOnlyJson");
+const { auditJlptInventoryAgainstContract, loadJlptLevelContract } = require("../src/datasets/jlptLevelContract");
+const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 
 function parseArgs(argv) {
     const options = {
@@ -26,16 +28,18 @@ function formatInventoryReport(result, filePath) {
         "JLPT Inventory Check",
         "",
         `Dataset: ${filePath}`,
-        `Total kanji: ${result.summary.totalKanji}`,
-        `Counts: N5 ${result.summary.counts[5]}, N4 ${result.summary.counts[4]}, N3 ${result.summary.counts[3]}, N2 ${result.summary.counts[2]}, N1 ${result.summary.counts[1]}`,
+        `Contract kanji: ${result.contractKanjiCount}`,
+        `Dataset kanji: ${result.datasetKanjiCount}`,
+        `Counts: N5 ${result.datasetCounts[5]}, N4 ${result.datasetCounts[4]}, N3 ${result.datasetCounts[3]}, N2 ${result.datasetCounts[2]}, N1 ${result.datasetCounts[1]}`,
         `Result: ${result.valid ? "passing" : "failing"}`,
     ];
 
     if (!result.valid) {
         lines.push("", "Issues:");
-        for (const error of result.errors) {
-            lines.push(`- ${error}`);
-        }
+        lines.push(`- Missing kanji: ${result.missingKanji.length}`);
+        lines.push(`- Unexpected kanji: ${result.unexpectedKanji.length}`);
+        lines.push(`- Wrong level assignments: ${result.levelMismatches.length}`);
+        lines.push(`- Per-level count mismatches: ${result.countMismatches.length}`);
     }
 
     return `${lines.join("\n")}\n`;
@@ -46,17 +50,22 @@ function main() {
     assertNoUnknownArgs("verifyJlptInventory", options.unknownArgs);
 
     const config = loadConfig();
+    const contractPath = path.join(process.cwd(), "templates", "jlpt_level_contract.json");
 
     if (!fs.existsSync(config.jlptJsonPath)) {
         throw new Error(`Missing JLPT JSON file at ${config.jlptJsonPath}`);
     }
+    if (!fs.existsSync(contractPath)) {
+        throw new Error(`Missing JLPT level contract at ${contractPath}`);
+    }
 
     const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
-    const result = validateCanonicalJlptInventory(jlptOnlyJson);
+    const result = auditJlptInventoryAgainstContract(jlptOnlyJson, loadJlptLevelContract(contractPath));
 
     if (options.json) {
         console.log(JSON.stringify({
             dataset: config.jlptJsonPath,
+            contractPath,
             ...result,
         }, null, 2));
     } else {

@@ -99,12 +99,12 @@ test("buildPreviewCards uses local JLPT data for fully curated cards when the AP
         curatedStudyData: {
             世: {
                 englishMeaning: "world / generation",
-                displayWord: { written: "世界", pron: "せかい" },
-                notes: "世界 （せかい） - world ／ 世の中 （よのなか） - society",
+                displayWord: { written: "世の中", pron: "よのなか" },
+                notes: "世の中 （よのなか） - society / world ／ 世界 （せかい） - world",
                 exampleSentence: {
-                    japanese: "いつか世界を旅行したいです。",
-                    reading: "いつかせかいをりょこうしたいです。",
-                    english: "Someday I want to travel the world.",
+                    japanese: "世の中は広いです。",
+                    reading: "よのなかはひろいです。",
+                    english: "The world is wide.",
                 },
             },
         },
@@ -128,9 +128,10 @@ test("buildPreviewCards uses local JLPT data for fully curated cards when the AP
     assert.equal(wordFetchCalled, false);
     assert.equal(cards.length, 1);
     assert.equal(cards[0].previewMode, "full-inference");
-    assert.equal(cards[0].displayWord, "世界");
-    assert.equal(cards[0].primaryReading, "せかい");
+    assert.equal(cards[0].displayWord, "世の中");
+    assert.equal(cards[0].primaryReading, "よのなか");
     assert.match(cards[0].onReading, /オン: セ/);
+    assert.match(cards[0].exampleSentence, /世の中は広いです/);
 });
 
 test("buildPreviewCards uses local corpus and curated data in its default inference path", async () => {

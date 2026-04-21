@@ -362,8 +362,6 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null, contex
     const defaultCuratedDisplayWordAllowed = Boolean(defaultCuratedDisplayWord)
         && (!useBreakdownOverrides
             || defaultCuratedDisplayWord.written === kanji
-            || defaultCuratedDisplayWord.written === String(contextWord || "").trim()
-            || defaultCuratedDisplayWord.written === String(contextCandidate?.written || "").trim()
             || (defaultCuratedDisplayWordKanji.length === 1 && defaultCuratedDisplayWordKanji[0] === kanji));
     const curatedDisplayWord = (useBreakdownOverrides && breakdownOverrideMatchesContext
         ? breakdownOverrideDisplayWord

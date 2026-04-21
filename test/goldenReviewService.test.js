@@ -122,3 +122,27 @@ test("evaluateGoldenWordReviewSet validates word cards and breakdown content", (
     assert.equal(report.passedCount, 1);
 });
 
+test("evaluateGoldenWordReviewSet ignores spacing after reading labels in breakdown checks", () => {
+    const report = evaluateGoldenWordReviewSet({
+        rows: [
+            {
+                word: "休み",
+                reading: "やすみ",
+                meaning: "holiday / day off",
+                kanjiBreakdown: "休み （やすみ） ／ holiday / day off ... On: オン: キュウ",
+                exampleSentence: "日曜日は休みです。",
+                notes: "",
+            },
+        ],
+        expectations: [
+            {
+                word: "休み",
+                breakdownIncludes: ["休み （やすみ）", "オン:キュウ"],
+            },
+        ],
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.passedCount, 1);
+});
+

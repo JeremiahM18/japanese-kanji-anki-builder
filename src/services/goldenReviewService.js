@@ -3,7 +3,9 @@ function normalizeText(value) {
 }
 
 function normalizeForCompare(value) {
-    return normalizeText(value).toLowerCase();
+    return normalizeText(value)
+        .replace(/:\s+/g, ":")
+        .toLowerCase();
 }
 
 function includesAll(haystack, needles = []) {

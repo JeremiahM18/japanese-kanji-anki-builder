@@ -189,6 +189,7 @@ Important word-deck rules:
 - word identity is `written + reading`, and curated words tagged for a JLPT level are included even when their constituent kanji are outside that level's kanji slice
 - curated word entries suppress uncurated alternate readings for the same written form
 - kanji breakdown panels on the back prefer curated kanji display words and meanings, and can use dedicated breakdown-only overrides for compound contexts so cards like `銀行`, `会社`, `会社員`, `昼ご飯`, `晩ご飯`, `午前`, `午後`, `時間`, `月曜日`, `学校`, `病院`, `郵便局`, `去年`, `来月`, `来週`, `夕方`, `元気`, and `仕事` stay learner-friendly without changing primary study forms such as `行く`
+- those breakdown panels now avoid leaking a full compound reading onto a single-kanji panel unless you intentionally curate that context, so compounds like `映画`, `銀行`, `郵便局`, `青い空`, and `夜空` stay readable instead of teaching the wrong sub-reading
 - use `--include-inferred` when you explicitly want to expand beyond curated words during exploration
 
 ### Lower-level build
@@ -411,7 +412,7 @@ Behavior:
 
 - the front shows the written study word with no furigana
 - the back shows the reading, English meaning, JLPT label, example sentence, and a compact kanji breakdown
-- kanji breakdown panels prefer curated kanji display words and meanings, then fall back to bare-kanji meanings and reading lists; stroke-order study stays in the kanji deck so the word deck remains compact
+- kanji breakdown panels prefer curated kanji display words and meanings, then fall back to bare-kanji meanings and reading lists; in compound contexts they avoid inheriting a whole-word reading unless you curate that override explicitly, so stroke-order study stays in the kanji deck and the word deck remains compact plus learner-clear
 - the shared Anki note schemas live in `src/config/ankiNoteSchema.json` and `src/config/ankiWordNoteSchema.json`, which are the single sources of truth for exported field order, note type metadata, and card template layout
 
 ## Media model

@@ -3557,12 +3557,21 @@
     }
   },
   "便": {
-    "englishMeaning": "convenience / mail service",
-    "displayWord": {
-      "written": "便利",
-      "pron": "べんり"
-    },
-    "breakdownOverrides": [],
+      "englishMeaning": "convenience / mail service",
+      "displayWord": {
+        "written": "便利",
+        "pron": "べんり"
+      },
+      "breakdownOverrides": [
+        {
+          "matchWord": "郵便局",
+          "englishMeaning": "mail / convenience",
+          "displayWord": {
+            "written": "便",
+            "pron": "びん"
+          }
+        }
+      ],
     "source": "starter-curated",
     "tags": [
       "n3",
@@ -11304,12 +11313,16 @@
     }
   },
   "員": {
-    "englishMeaning": "member / employee",
-    "displayWord": {
-      "written": "店員",
-      "pron": "てんいん"
-    },
-    "breakdownOverrides": [],
+      "englishMeaning": "member / employee",
+      "displayWord": {
+        "written": "店員",
+        "pron": "てんいん"
+      },
+      "breakdownDisplayWord": {
+        "written": "員",
+        "pron": "いん"
+      },
+      "breakdownOverrides": [],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -18267,12 +18280,16 @@
     }
   },
   "局": {
-    "englishMeaning": "office / bureau",
-    "displayWord": {
-      "written": "郵便局",
-      "pron": "ゆうびんきょく"
-    },
-    "breakdownOverrides": [],
+      "englishMeaning": "office / bureau",
+      "displayWord": {
+        "written": "郵便局",
+        "pron": "ゆうびんきょく"
+      },
+      "breakdownDisplayWord": {
+        "written": "局",
+        "pron": "きょく"
+      },
+      "breakdownOverrides": [],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -20686,8 +20703,13 @@
     }
   },
   "店": {
-    "englishMeaning": "shop / store",
-    "breakdownOverrides": [],
+      "englishMeaning": "shop / store",
+      "breakdownDisplayWord": {
+        "written": "店",
+        "pron": "みせ"
+      },
+      "breakdownEnglishMeaning": "shop / store",
+      "breakdownOverrides": [],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -29918,12 +29940,21 @@
     }
   },
   "映": {
-    "englishMeaning": "movie / reflect",
-    "displayWord": {
-      "written": "映画",
-      "pron": "えいが"
-    },
-    "breakdownOverrides": [],
+      "englishMeaning": "movie / reflect",
+      "displayWord": {
+        "written": "映画",
+        "pron": "えいが"
+      },
+      "breakdownOverrides": [
+        {
+          "matchWord": "映画",
+          "englishMeaning": "show / project",
+          "displayWord": {
+            "written": "映",
+            "pron": "えい"
+          }
+        }
+      ],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -42827,12 +42858,21 @@
     }
   },
   "画": {
-    "englishMeaning": "plan / picture",
-    "displayWord": {
-      "written": "計画",
-      "pron": "けいかく"
-    },
-    "breakdownOverrides": [],
+      "englishMeaning": "plan / picture",
+      "displayWord": {
+        "written": "計画",
+        "pron": "けいかく"
+      },
+      "breakdownOverrides": [
+        {
+          "matchWord": "映画",
+          "englishMeaning": "picture / drawing",
+          "displayWord": {
+            "written": "画",
+            "pron": "が"
+          }
+        }
+      ],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -45627,8 +45667,12 @@
     }
   },
   "空": {
-    "englishMeaning": "sky / empty",
-    "breakdownOverrides": [],
+      "englishMeaning": "sky / empty",
+      "breakdownDisplayWord": {
+        "written": "空",
+        "pron": "そら"
+      },
+      "breakdownOverrides": [],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -53303,12 +53347,16 @@
     }
   },
   "銀": {
-    "englishMeaning": "bank / silver",
-    "displayWord": {
-      "written": "銀行",
-      "pron": "ぎんこう"
-    },
-    "breakdownOverrides": [],
+      "englishMeaning": "bank / silver",
+      "displayWord": {
+        "written": "銀行",
+        "pron": "ぎんこう"
+      },
+      "breakdownDisplayWord": {
+        "written": "銀",
+        "pron": "ぎん"
+      },
+      "breakdownOverrides": [],
     "source": "starter-curated",
     "tags": [
       "n4",

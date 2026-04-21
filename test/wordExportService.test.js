@@ -219,6 +219,34 @@ test("buildBreakdownInference keeps okurigana display words in compound contexts
     assert.equal(result.meaningJP, "切る （きる） ／ cut");
 });
 
+test("buildBreakdownInference does not leak multi-kanji display words into single-kanji compound panels", () => {
+    const result = buildBreakdownInference({
+        kanji: "映",
+        contextWord: "映画",
+        contextCandidate: {
+            written: "映画",
+            reading: "えいが",
+            meaning: "movie",
+        },
+        inference: {
+            candidates: [{ written: "映", pron: "えい", gloss: "show / project", score: 100 }],
+            primaryReading: "えい",
+            englishMeaning: "show / project",
+            meaningJP: "映 （えい） ／ show / project",
+            onReading: "オン: エイ",
+            kunReading: "くん: うつ.す、 うつ.る",
+        },
+        curatedEntry: {
+            englishMeaning: "movie / reflect",
+            displayWord: { written: "映画", pron: "えいが" },
+        },
+    });
+
+    assert.equal(result.primaryReading, "えい");
+    assert.equal(result.meaningJP, "映 （えい） ／ movie / reflect");
+    assert.doesNotMatch(result.meaningJP, /映画/u);
+});
+
 
 test("buildBreakdownInference uses the current single-kanji word on word cards", () => {
     const result = buildBreakdownInference({
@@ -295,12 +323,17 @@ test("starter curated data provides learner-friendly N5 breakdown fallbacks", ()
     assert.deepEqual(curatedStudyData["近"].displayWord, { written: "近い", pron: "ちかい" });
     assert.deepEqual(curatedStudyData["社"].displayWord, { written: "社", pron: "しゃ" });
     assert.deepEqual(curatedStudyData["銀"].displayWord, { written: "銀行", pron: "ぎんこう" });
+    assert.deepEqual(curatedStudyData["銀"].breakdownDisplayWord, { written: "銀", pron: "ぎん" });
     assert.deepEqual(curatedStudyData["強"].displayWord, { written: "強", pron: "きょう" });
     assert.deepEqual(curatedStudyData["題"].displayWord, { written: "題", pron: "だい" });
     assert.deepEqual(curatedStudyData["忙"].displayWord, { written: "忙しい", pron: "いそがしい" });
     assert.deepEqual(curatedStudyData["行"].breakdownDisplayWord, { written: "行", pron: "こう" });
     assert.equal(curatedStudyData["行"].breakdownEnglishMeaning, "go / line");
     assert.deepEqual(curatedStudyData["会"].breakdownDisplayWord, { written: "会", pron: "かい" });
+    assert.deepEqual(curatedStudyData["店"].breakdownDisplayWord, { written: "店", pron: "みせ" });
+    assert.equal(curatedStudyData["店"].breakdownEnglishMeaning, "shop / store");
+    assert.deepEqual(curatedStudyData["局"].breakdownDisplayWord, { written: "局", pron: "きょく" });
+    assert.deepEqual(curatedStudyData["員"].breakdownDisplayWord, { written: "員", pron: "いん" });
     assert.deepEqual(curatedStudyData["昼"].breakdownDisplayWord, { written: "昼", pron: "ひる" });
     assert.deepEqual(curatedStudyData["飯"].breakdownDisplayWord, { written: "飯", pron: "はん" });
     assert.deepEqual(curatedStudyData["晩"].breakdownDisplayWord, { written: "晩", pron: "ばん" });
@@ -319,6 +352,7 @@ test("starter curated data provides learner-friendly N5 breakdown fallbacks", ()
     assert.deepEqual(curatedStudyData["朝"].breakdownDisplayWord, { written: "朝", pron: "あさ" });
     assert.deepEqual(curatedStudyData["夕"].breakdownDisplayWord, { written: "夕", pron: "ゆう" });
     assert.deepEqual(curatedStudyData["夜"].breakdownDisplayWord, { written: "夜", pron: "よる" });
+    assert.deepEqual(curatedStudyData["空"].breakdownDisplayWord, { written: "空", pron: "そら" });
     assert.deepEqual(curatedStudyData["週"].breakdownDisplayWord, { written: "週", pron: "しゅう" });
     assert.deepEqual(curatedStudyData["生"].breakdownDisplayWord, { written: "生", pron: "せい" });
     assert.deepEqual(curatedStudyData["仕"].breakdownDisplayWord, { written: "仕", pron: "し" });
@@ -351,6 +385,27 @@ test("starter curated data provides learner-friendly N5 breakdown fallbacks", ()
     assert.equal(curatedStudyData["符"].breakdownEnglishMeaning, "sign / token");
     assert.deepEqual(curatedStudyData["切"].breakdownDisplayWord, { written: "切る", pron: "きる" });
     assert.equal(curatedStudyData["切"].breakdownEnglishMeaning, "cut");
+    assert.deepEqual(curatedStudyData["便"].breakdownOverrides, [
+        {
+            matchWord: "郵便局",
+            englishMeaning: "mail / convenience",
+            displayWord: { written: "便", pron: "びん" },
+        },
+    ]);
+    assert.deepEqual(curatedStudyData["映"].breakdownOverrides, [
+        {
+            matchWord: "映画",
+            englishMeaning: "show / project",
+            displayWord: { written: "映", pron: "えい" },
+        },
+    ]);
+    assert.deepEqual(curatedStudyData["画"].breakdownOverrides, [
+        {
+            matchWord: "映画",
+            englishMeaning: "picture / drawing",
+            displayWord: { written: "画", pron: "が" },
+        },
+    ]);
 });
 
 test("buildWordTsvForJlptLevel prefers curated N5 word entries and suppresses uncurated alternate readings", async () => {

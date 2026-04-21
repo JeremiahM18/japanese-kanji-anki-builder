@@ -142,34 +142,12 @@ npm run deck:review:coverage
 ```
 
 - `deck:preview` shows the learner-facing study word, meaning, primary reading, on-yomi, kun-yomi, notes, example sentence, radical, and media presence.
-- The tracked starter kanji data now pins bare-kanji display readings for the core N5 numerals so previews and early deck exports teach stable foundational forms such as `一 (いち)`, `二 (に)`, `三 (さん)`, `五 (ご)`, `七 (なな)`, and `九 (きゅう)` instead of leaking context-specific counter or time readings.
-- The same starter curation pass now also pins bare-kanji anchors for foundational time-and-people cards such as `十 (じゅう)`, `千 (せん)`, `午 (ご)`, and `女 (おんな)` so beginners are taught the kanji’s core form before longer compounds like `十時`, `千円`, `午前`, or `女の子`.
-- It also now does the same for compound-heavy utility kanji such as `電 (でん)`, `地 (ち)`, `員 (いん)`, `問 (もん)`, and `堂 (どう)`, so previews stop teaching `電車`, `地下鉄`, `店員`, `問題`, or `食堂` as if those whole words were the kanji’s primary standalone form.
-- For broader beginner kanji, the starter curation now mixes bare-kanji and learner-word anchors intentionally: cards like `力 (ちから)`, `場 (ば)`, `用 (よう)`, and `間 (あいだ)` expose the kanji-level hook directly, while cards like `食` and `生` intentionally teach through `食べる` and `生きる` because those are the clearer first-use anchors for beginners.
-- Bound or highly compound-dependent kanji can also prefer a real learner word over an unnatural bare form, so `勉` now teaches through `勉強` rather than pretending the standalone `勉` is the right beginner-facing anchor.
-- The same principle applies to awkward bare-kanji kunyomi anchors: `主` now teaches through `主に` instead of the less natural standalone `主 (おも)`, so the card matches the form beginners are actually likely to encounter first.
-- When a whole compound hides the kanji’s reusable reading too much, the starter curation can prefer a short natural phrase instead of the most familiar compound, so `世` now teaches through `世の中` rather than anchoring the entire card on `世界`.
-- The N4 golden review set now explicitly checks learner-facing anchors like `主に`, `世の中`, and `勉強` so future refactors are less likely to quietly regress the study experience while still passing broad meaning checks.
-- That N4 review coverage now also protects early utility cards like `地`, `問`, `堂`, `用`, and `場`, which matter disproportionately because they become building blocks for later word-deck reading fluency.
-- We now also review bridge cards like `間`, `会`, and `事` explicitly, because these are the kinds of everyday kanji where a fuzzy first reading or meaning can quietly distort a large number of later word cards.
-- The N5 golden review set now also guards the curated beginner anchors we rely on for later word-deck work, including stabilized numerals and learner-first cards like `午`, `女`, `食`, `生`, and `電`.
-- The kanji golden review matcher now checks the learner-facing primary reading alongside on-yomi and kun-yomi, so the benchmark protects the first reading shown on the card instead of only the dictionary-style reading buckets.
-- That N5 review coverage now also protects another high-frequency beginner batch including `火`, `気`, `休`, `月`, `後`, `語`, `校`, `高`, `国`, and `時`, so the core reading-building surface is less likely to drift as we expand the product.
-- It now also covers another ultra-core beginner batch including `今`, `上`, `下`, `子`, `車`, `出`, `書`, and `小`, which strengthens the benchmark around basic spatial, action, and everyday classroom/life vocabulary.
-- It now also covers another foundational batch including `人`, `水`, `前`, `大`, `先`, `山`, `川`, `三`, `十`, `右`, `左`, `円`, `何`, `西`, and `南`, which hardens the benchmark around quantity, direction, place, and daily-life reference language that learners reuse constantly in early reading.
-- It now also covers another foundational batch including `千`, `男`, `中`, `長`, `天`, `東`, `読`, `二`, `入`, `年`, `白`, `八`, `半`, `百`, and `父`, which hardens the benchmark around family, quantities, colors, time, and beginner reading verbs that recur across the earliest real-world vocabulary.
-- It now also covers the final tracked N5 foundation batch including `分`, `聞`, `母`, `本`, `毎`, `万`, `名`, `木`, `友`, `来`, `六`, and `話`, bringing the tracked starter-curated N5 kanji benchmark to full coverage rather than leaving the last common beginner cards to spot checks.
-- Preview and golden review consume the split reading fields directly instead of depending on an internal combined-reading string.
-- `deck:review:n2`, `deck:review:n3`, `deck:review:n4`, and `deck:review:n5` run the tracked golden benchmark sets against hand-picked kanji cards.
-- `deck:review:coverage` reports how much of the tracked starter-curated N4/N5 kanji foundation is currently protected by those golden review sets, so benchmark readiness can be audited systematically.
-- `deck:words:review:n5` runs the tracked golden benchmark set against hand-picked N5 word cards.
-- Build and report CLIs reject unsupported flags instead of silently ignoring them.
-- Tracked N1 curation batches normally stay in the 6-8 kanji range; the final closeout batch may be smaller when it honestly completes the remaining N1 gap.
-- The tracked N5 word benchmark now covers a broader representative slice of the deck, including older core cards and newer compound cards such as `映画`, `食べ物`, `飲み物`, `切手`, `本屋`, `日本語`, `起きる`, `公園`, `電気`, `三時`, `一時半`, `一万円`, `雨の日`, `上手`, `半分`, `辞書`, `読書`, `小学校`, `駅前`, `家の中`, `夜空`, `来ます`, `外国`, `生まれる`, `東京`, and `会話`.
-- Shared CLI parsing helpers live in `src/utils/cliArgs.js` so the main scripts handle flags consistently.
-- Script entrypoints consistently use `require.main === module` guards and export `main` and `parseArgs` where applicable.
-- `deck:ready` coverage snapshots are scoped to the levels you requested, so a single-level build reports single-level media coverage instead of repo-wide totals.
-- If the upstream kanji API is unavailable, preview falls back to local sentence corpus, curated study data, radicals, and managed media.
+- Starter curation is meant to improve learner clarity, not just coverage. For beginner cards, the repo prefers the form that helps a learner read and remember the kanji correctly in later words. That means bare-kanji anchors for cards like `一`, `二`, `三`, `十`, `千`, and `女`, but real learner words for cards like `食べる`, `生きる`, `勉強`, `主に`, and `世の中` when those are the stronger first hook.
+- The tracked N5 kanji foundation is fully covered by the golden review set. `deck:review:n5` now protects all tracked starter-curated N5 kanji, and the matcher checks the learner-facing primary reading as well as on-yomi and kun-yomi so the benchmark protects what the learner actually sees on the card.
+- `deck:review:n4` is still intentionally partial. Use `deck:review:coverage` to audit how much of the tracked N4/N5 starter foundation is covered before claiming a level is benchmark-hardened.
+- `deck:words:review:n5` covers a representative N5 word slice across simple forms and compound-heavy cards such as `映画`, `本屋`, `日本語`, `公園`, `電気`, `辞書`, `小学校`, `駅前`, `夜空`, and `会話`.
+- Preview and review consume split learner-facing reading fields directly rather than relying on a combined fallback string.
+- If the upstream kanji API is unavailable, preview falls back to local sentence corpus, curated study data, radicals, and managed media instead of failing outright.
 - Kanji deck exports never serialize raw upstream `ERROR:` text into card fields; export-time fallbacks are recorded in `reports/export-issues.json` and summarized in `build-summary.json`.
 - Fully curated kanji rows use local JLPT metadata for readings and meanings before any remote kanji lookup, so finished decks can still pass strict builds even when the kanji API is flaky.
 

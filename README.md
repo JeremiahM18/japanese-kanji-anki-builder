@@ -158,6 +158,7 @@ npm run deck:review:coverage
 - It now also covers another ultra-core beginner batch including `今`, `上`, `下`, `子`, `車`, `出`, `書`, and `小`, which strengthens the benchmark around basic spatial, action, and everyday classroom/life vocabulary.
 - It now also covers another foundational batch including `人`, `水`, `前`, `大`, `先`, `山`, `川`, `三`, `十`, `右`, `左`, `円`, `何`, `西`, and `南`, which hardens the benchmark around quantity, direction, place, and daily-life reference language that learners reuse constantly in early reading.
 - It now also covers another foundational batch including `千`, `男`, `中`, `長`, `天`, `東`, `読`, `二`, `入`, `年`, `白`, `八`, `半`, `百`, and `父`, which hardens the benchmark around family, quantities, colors, time, and beginner reading verbs that recur across the earliest real-world vocabulary.
+- It now also covers the final tracked N5 foundation batch including `分`, `聞`, `母`, `本`, `毎`, `万`, `名`, `木`, `友`, `来`, `六`, and `話`, bringing the tracked starter-curated N5 kanji benchmark to full coverage rather than leaving the last common beginner cards to spot checks.
 - Preview and golden review consume the split reading fields directly instead of depending on an internal combined-reading string.
 - `deck:review:n2`, `deck:review:n3`, `deck:review:n4`, and `deck:review:n5` run the tracked golden benchmark sets against hand-picked kanji cards.
 - `deck:review:coverage` reports how much of the tracked starter-curated N4/N5 kanji foundation is currently protected by those golden review sets, so benchmark readiness can be audited systematically.

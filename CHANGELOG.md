@@ -31,6 +31,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Expanded N5 golden review coverage again for an ultra-core beginner batch including `今`, `上`, `下`, `子`, `車`, `出`, `書`, and `小`.
 - Expanded N5 golden review coverage again for another foundational beginner batch including `人`, `水`, `前`, `大`, `先`, `山`, `川`, `三`, `十`, `右`, `左`, `円`, `何`, `西`, and `南`.
 - Expanded N5 golden review coverage again for another foundational beginner batch including `千`, `男`, `中`, `長`, `天`, `東`, `読`, `二`, `入`, `年`, `白`, `八`, `半`, `百`, and `父`.
+- Expanded N5 golden review coverage again for the final tracked beginner batch including `分`, `聞`, `母`, `本`, `毎`, `万`, `名`, `木`, `友`, `来`, `六`, and `話`, bringing tracked starter-curated N5 kanji benchmark coverage to 100%.
 - Tightened word-deck kanji breakdown selection so compound cards keep learner-friendly per-kanji readings instead of leaking whole-compound readings onto single-kanji panels.
 - Added curated breakdown overrides for high-visibility N5 benchmark compounds such as `映画`, `銀行`, `郵便局`, `青い空`, and `夜空`, and aligned the golden review matcher with the exported formatting.
 

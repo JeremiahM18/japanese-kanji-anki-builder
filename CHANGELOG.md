@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Started the N4 hardening pass by pinning learner-facing anchors for weak cards like `飲む`, `歌`, `家 （いえ）`, and `音 （おと）`, and expanded the N4 golden review set with an initial high-value batch including `悪`, `安`, `以`, `意`, `飲`, `院`, `運`, `映`, `英`, `駅`, `屋`, `音`, `夏`, `家`, and `歌`.
 - Expanded the N4 golden review set again for another high-frequency batch including `花`, `画`, `海`, `界`, `開`, `楽`, `漢`, `館`, `帰`, `起`, `急`, `究`, `牛`, `去`, `魚`, `教`, `業`, `局`, and `近`, while keeping `強` out of the benchmark until its learner-facing front is tightened cleanly.
 - Added a tracked `jlpt_level_contract.json` taxonomy contract plus `data:audit:jlpt`, `data:verify:jlpt`, and `data:sync:jlpt` governance commands so local JLPT data, tracked starter curation, and golden review placement can be audited and repaired against one explicit level system.
+- Removed the old hardcoded JLPT inventory constants from the JSON loader so the tracked taxonomy contract is the repo's single level source of truth.
 - Tightened word-deck kanji breakdown selection so compound cards keep learner-friendly per-kanji readings instead of leaking whole-compound readings onto single-kanji panels.
 - Added curated breakdown overrides for high-visibility N5 benchmark compounds such as `映画`, `銀行`, `郵便局`, `青い空`, and `夜空`, and aligned the golden review matcher with the exported formatting.
 

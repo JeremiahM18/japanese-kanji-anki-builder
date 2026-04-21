@@ -189,6 +189,11 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
     assert.deepEqual(curatedStudyData["七"].displayWord, { written: "七", pron: "なな" });
     assert.deepEqual(curatedStudyData["八"].displayWord, { written: "八", pron: "はち" });
     assert.deepEqual(curatedStudyData["九"].displayWord, { written: "九", pron: "きゅう" });
+    assert.deepEqual(curatedStudyData["十"].displayWord, { written: "十", pron: "じゅう" });
+    assert.deepEqual(curatedStudyData["千"].displayWord, { written: "千", pron: "せん" });
+    assert.deepEqual(curatedStudyData["午"].displayWord, { written: "午", pron: "ご" });
+    assert.deepEqual(curatedStudyData["女"].displayWord, { written: "女", pron: "おんな" });
+    assert.equal(curatedStudyData["女"].notes, "女 （おんな） - woman ／ 女の子 （おんなのこ） - girl");
 
     assert.deepEqual(curatedStudyData["天"].displayWord, { written: "天気", pron: "てんき" });
     assert.equal(curatedStudyData["天"].englishMeaning, "weather / sky");

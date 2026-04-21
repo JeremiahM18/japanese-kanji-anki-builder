@@ -210,6 +210,8 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
     assert.deepEqual(curatedStudyData["勉"].preferredWords, ["勉強"]);
     assert.deepEqual(curatedStudyData["主"].displayWord, { written: "主に", pron: "おもに" });
     assert.deepEqual(curatedStudyData["主"].preferredWords, ["主に", "主人"]);
+    assert.deepEqual(curatedStudyData["世"].displayWord, { written: "世の中", pron: "よのなか" });
+    assert.equal(curatedStudyData["世"].exampleSentence.japanese, "世の中は広いです。");
 
     assert.deepEqual(curatedStudyData["天"].displayWord, { written: "天気", pron: "てんき" });
     assert.equal(curatedStudyData["天"].englishMeaning, "weather / sky");

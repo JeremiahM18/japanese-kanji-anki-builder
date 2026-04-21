@@ -46,6 +46,10 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Verify tracked JLPT taxonomy alignment
+        run: npm run data:audit:jlpt -- --strict
+        if: ${{ hashFiles('data/kanji_jlpt_only.json') != '' }}
+
   smoke:
     name: Smoke ${{ matrix.os }} Node ${{ matrix.node-version }}
     runs-on: ${{ matrix.os }}

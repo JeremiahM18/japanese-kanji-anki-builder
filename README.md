@@ -64,6 +64,7 @@ npm run media:init
 
 ```bash
 npm run curated:report -- --level=1 --limit=8
+npm run data:audit:jlpt
 npm run deck:preview -- --level=5 --limit=5
 npm run deck:review:n5
 npm run deck:words:review:n5
@@ -96,6 +97,8 @@ npm run release:gate
 ```
 
 This is the default happy path for the repo: diagnose first, improve data and media second, preview and review before packaging, then run the same validation layers CI expects.
+
+For JLPT taxonomy, starter curation, golden review placement, or deck-membership changes, `npm run data:audit:jlpt` is part of the normal pre-merge bar. The tracked starter and golden alignment checks also run in the test suite so clean-checkout CI still protects the canonical JLPT contract.
 
 ### Check setup and readiness
 
@@ -146,6 +149,7 @@ npm run deck:review:coverage
 - The tracked N5 kanji foundation is fully covered by the golden review set. `deck:review:n5` now protects all tracked starter-curated N5 kanji, and the matcher checks the learner-facing primary reading as well as on-yomi and kun-yomi so the benchmark protects what the learner actually sees on the card.
 - `deck:review:n4` is still intentionally partial, but N4 hardening is now active work. The first expanded N4 batch covers cards such as `悪`, `安`, `以`, `意`, `飲`, `院`, `運`, `映`, `英`, `駅`, `屋`, `音`, `夏`, `家`, and `歌`, and the starter curation now pins learner-facing anchors like `飲む`, `歌`, `家 （いえ）`, and `音 （おと)` instead of letting ranking heuristics choose weaker fronts.
 - The next N4 batch now also covers high-frequency daily-life and school cards such as `花`, `画`, `海`, `界`, `開`, `楽`, `漢`, `館`, `帰`, `起`, `急`, `究`, `牛`, `去`, `魚`, `教`, `業`, `局`, and `近`, while `強` is still being treated as an active editorial follow-up rather than something to lock prematurely.
+- The N4 operating rule is deliberate: tighten weak learner-facing anchors first, then lock benchmark entries, then re-run `data:audit:jlpt`, `deck:review:n4`, and `deck:review:coverage` before moving to the next batch.
 - Use `deck:review:coverage` to audit how much of the tracked N4/N5 starter foundation is covered before claiming a level is benchmark-hardened.
 - `deck:words:review:n5` covers a representative N5 word slice across simple forms and compound-heavy cards such as `映画`, `本屋`, `日本語`, `公園`, `電気`, `辞書`, `小学校`, `駅前`, `夜空`, and `会話`.
 - Preview and review consume split learner-facing reading fields directly rather than relying on a combined fallback string.

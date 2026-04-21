@@ -28,3 +28,5 @@ Mark these checks as required on `main`:
 ## Ownership expectation
 
 Changes to workflow, packaging, shared schema, services, test harnesses, or contributor process files should request code-owner review before merge.
+
+For changes that affect JLPT taxonomy, starter curation, golden review placement, or deck-membership logic, the expected local verification bar also includes `npm run data:audit:jlpt` before merge.

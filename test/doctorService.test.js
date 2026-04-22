@@ -76,6 +76,15 @@ test("buildDoctorReport summarizes readiness coverage and acquisition next steps
 
         const report = await buildDoctorReport({
             config,
+            buildVoicevoxDoctorReportFn: async () => ({
+                ready: false,
+                reachable: false,
+                expectedSpeakerId: 1,
+                expectedSpeakerName: "女性1",
+                actualSpeaker: null,
+                error: "VOICEVOX engine is not reachable.",
+                nextSteps: ["Start the local VOICEVOX Nemo engine."],
+            }),
             loadSentenceCorpusFn: () => [{ kanji: "日", japanese: "日本です。", english: "It is Japan." }],
             loadCuratedStudyDataFn: () => ({ 日: { notes: "fixture" } }),
             buildToolchainStatusFn: () => ({ runtime: [], packaging: [] }),
@@ -131,6 +140,7 @@ test("buildDoctorReport summarizes readiness coverage and acquisition next steps
         assert.equal(report.quality.levelReadiness.overallReady, false);
         assert.equal(report.quality.cardQuality.levels[0].exampleCoverageRatio, 0.5);
         assert.equal(report.nextSteps.some((step) => step.includes("REMOTE_AUDIO_BASE_URL")), true);
+        assert.equal(report.nextSteps.some((step) => step.includes("VOICEVOX Nemo engine")), true);
         assert.equal(report.nextSteps.some((step) => step.includes("sentence coverage")), true);
         assert.equal(report.nextSteps.some((step) => step.includes("quality gate")), true);
         assert.equal(report.nextSteps.some((step) => step.includes("offline card quality")), true);
@@ -162,6 +172,15 @@ test("buildDoctorReport distinguishes blocked tooling from missing tooling", asy
 
         const report = await buildDoctorReport({
             config,
+            buildVoicevoxDoctorReportFn: async () => ({
+                ready: false,
+                reachable: false,
+                expectedSpeakerId: 1,
+                expectedSpeakerName: "女性1",
+                actualSpeaker: null,
+                error: "VOICEVOX engine is not reachable.",
+                nextSteps: ["Start the local VOICEVOX Nemo engine."],
+            }),
             buildCoverageSummaryFn: () => ({ totalKanji: 1, coveredKanji: 1, missingKanji: 0, coverageRatio: 1, levels: [], missingByPriority: [] }),
             buildCuratedStudySummaryFn: () => ({ totalKanji: 1, curatedKanji: 1, missingKanji: 0, coverageRatio: 1, levels: [] }),
             buildMediaCoverageSummaryFn: async () => ({ totalKanji: 1, strokeOrderCovered: 1, trueAnimationCovered: 1, audioCovered: 0, fullMediaCovered: 0, strokeOrderCoverageRatio: 1, trueAnimationCoverageRatio: 1, audioCoverageRatio: 0, fullMediaCoverageRatio: 0, levels: [] }),
@@ -250,6 +269,16 @@ test("formatDoctorReport produces a human-readable setup summary", () => {
                 ],
             },
         },
+        audio: {
+            voicevox: {
+                reachable: false,
+                expectedSpeakerId: 1,
+                expectedSpeakerName: "女性1",
+                actualSpeaker: null,
+                ready: false,
+                error: "VOICEVOX engine is not reachable.",
+            },
+        },
         nextSteps: ["Add the JLPT dataset first."],
     });
 
@@ -257,6 +286,9 @@ test("formatDoctorReport produces a human-readable setup summary", () => {
     assert.match(text, /Required inputs:/);
     assert.match(text, /Media acquisition readiness:/);
     assert.match(text, /Python: blocked \[optional\] for native \.apkg generation/);
+    assert.match(text, /VOICEVOX release-audio preflight:/);
+    assert.match(text, /Pinned speaker: 女性1 \(style id 1\)/);
+    assert.match(text, /VOICEVOX engine is not reachable/);
     assert.match(text, /Level quality gates:/);
     assert.match(text, /REMOTE_AUDIO_BASE_URL/);
     assert.match(text, /Card quality: readings 80.0%, meanings 70.0%, examples 50.0%, contextual notes 40.0%, generic fallback notes 60.0%/);
@@ -301,6 +333,9 @@ test("formatDoctorReport hides audio sections when audio is disabled", () => {
                     },
                 }],
             },
+        },
+        audio: {
+            voicevox: null,
         },
         nextSteps: ["Keep improving stroke order."],
     });

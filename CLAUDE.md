@@ -65,6 +65,7 @@ For audio specifically:
 - do not trust the legacy audio pipeline
 - the current shipped audio contract is `VOICEVOX Nemo` with pinned release speaker `女性1` (style id `1`)
 - do not silently switch speakers, mix voices, or weaken provenance in a published deck
+- use `npm run doctor:voicevox` before assuming a local machine is actually ready to generate governed audio
 
 ## Word Deck Truth Model
 

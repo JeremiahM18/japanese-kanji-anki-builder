@@ -1,5 +1,6 @@
 const fs = require("node:fs");
 
+const { buildVoicevoxDoctorReport } = require("./voicevoxDoctorService");
 const { buildCuratedStudySummary } = require("../datasets/curatedStudyCoverage");
 const { buildMediaCoverageSummary } = require("../datasets/mediaCoverage");
 const { loadJlptOnlyJson } = require("../datasets/jlptOnlyJson");
@@ -110,6 +111,7 @@ async function buildDoctorReport({
     loadSentenceCorpusFn = loadSentenceCorpus,
     loadCuratedStudyDataFn = loadCuratedStudyData,
     buildToolchainStatusFn = buildToolchainStatus,
+    buildVoicevoxDoctorReportFn = buildVoicevoxDoctorReport,
 }) {
     const status = buildDoctorStatus(config, { buildToolchainStatusFn });
     const requiredReady = status.required.every((entry) => entry.exists);
@@ -142,6 +144,9 @@ async function buildDoctorReport({
             levels: [5, 4, 3, 2, 1],
             thresholds: buildDefaultQualityThresholds({ audioEnabled: config.enableAudio !== false }),
         })
+        : null;
+    const voicevox = config.enableAudio !== false
+        ? await buildVoicevoxDoctorReportFn({ config })
         : null;
 
     const missingRequiredTools = getMissingRequiredTools(status.toolchain);
@@ -182,6 +187,11 @@ async function buildDoctorReport({
     if (config.enableAudio !== false && requiredReady && mediaCoverage && mediaCoverage.audioCoverageRatio < 1) {
         nextSteps.push(`Add audio assets or configure remote fallbacks. Current audio coverage is ${(mediaCoverage.audioCoverageRatio * 100).toFixed(1)}%.`);
     }
+    if (voicevox && !voicevox.ready) {
+        for (const step of voicevox.nextSteps) {
+            nextSteps.push(step);
+        }
+    }
     if (requiredReady && sentenceCoverage && sentenceCoverage.coverageRatio < 1) {
         nextSteps.push(`Improve sentence coverage for missing kanji, starting with JLPT N${sentenceCoverage.missingByPriority[0]?.level || 5}.`);
     }
@@ -216,6 +226,9 @@ async function buildDoctorReport({
         quality: {
             levelReadiness,
             cardQuality,
+        },
+        audio: {
+            voicevox,
         },
         nextSteps,
     };
@@ -293,6 +306,20 @@ function formatDoctorReport(report) {
     }
     for (const tool of (report.status.toolchain?.packaging || [])) {
         lines.push(formatToolLine(tool));
+    }
+
+    if (report.audio?.voicevox) {
+        lines.push("");
+        lines.push("VOICEVOX release-audio preflight:");
+        lines.push(`- Engine reachable: ${report.audio.voicevox.reachable ? "yes" : "no"}`);
+        lines.push(`- Pinned speaker: ${report.audio.voicevox.expectedSpeakerName} (style id ${report.audio.voicevox.expectedSpeakerId})`);
+        if (report.audio.voicevox.actualSpeaker) {
+            lines.push(`- Resolved speaker: ${report.audio.voicevox.actualSpeaker.label}`);
+        }
+        lines.push(`- Release voice ready: ${report.audio.voicevox.ready ? "yes" : "no"}`);
+        if (report.audio.voicevox.error) {
+            lines.push(`  ${report.audio.voicevox.error}`);
+        }
     }
 
     if (report.coverage.sentenceCorpus || report.coverage.curatedStudyData || report.coverage.media) {

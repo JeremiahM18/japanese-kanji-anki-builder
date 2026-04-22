@@ -22,6 +22,7 @@ Use this path first:
 ```bash
 npm install
 npm run doctor
+npm run doctor:voicevox
 npm run deck:readiness:global
 npm run corpus:init
 npm run curated:init
@@ -50,6 +51,7 @@ Use this sequence when you are moving from a clean checkout toward a reviewable 
 ```bash
 npm install
 npm run doctor
+npm run doctor:voicevox
 npm run deck:readiness:global
 ```
 
@@ -103,17 +105,19 @@ This is the default happy path for the repo: diagnose first, improve data and me
 
 For JLPT taxonomy, starter curation, golden review placement, or deck-membership changes, `npm run data:audit:jlpt` is part of the normal pre-merge bar. The tracked starter and golden alignment checks also run in the test suite so clean-checkout CI still protects the canonical JLPT contract.
 
-For audio-policy work, use `npm run data:audit:audio` to verify that managed audio manifests still match the tracked release source policy before treating any audio coverage as trustworthy. The Ubuntu-style `npm run release:gate` path now also runs this policy verification as part of release validation, so managed audio provenance cannot quietly drift once audio starts shipping.
+For audio-policy work, run `npm run doctor:voicevox` first so the repo can confirm the local VOICEVOX Nemo engine is reachable and that the pinned release speaker is actually installed, then use `npm run data:audit:audio` to verify that managed audio manifests still match the tracked release source policy before treating any audio coverage as trustworthy. The Ubuntu-style `npm run release:gate` path now also runs this policy verification as part of release validation, so managed audio provenance cannot quietly drift once audio starts shipping.
 
 ### Check setup and readiness
 
 ```bash
 npm run doctor
+npm run doctor:voicevox
 npm run deck:readiness
 npm run deck:readiness:global
 ```
 
 - `doctor` checks required datasets, optional local study data, media folders, managed media coverage, local toolchain readiness, and next steps.
+- `doctor:voicevox` verifies that the local VOICEVOX Nemo engine is reachable, that the pinned release speaker exists on this machine, and that governed audio generation is safe to run.
 - `deck:readiness` shows the global per-level readiness report across N5 through N1.
 - `deck:readiness:global` is an explicit alias for the same all-level readiness report when you want the command name to say exactly what it does.
 

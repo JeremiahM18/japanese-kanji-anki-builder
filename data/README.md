@@ -60,6 +60,8 @@ The canonical repo-side JLPT word-level contract lives in [../templates/jlpt_wor
 
 The canonical repo-side release audio policy now lives in [../templates/audio_source_policy.json](../templates/audio_source_policy.json). Treat that file as the governing truth for shipped audio provenance and source discipline. The current release contract expects `voicevox-nemo` as the canonical shipped source, pins the release speaker to `女性1` (style id `1`), requires explicit voice and locale metadata in managed manifests, and forbids a remote audio provider for released decks.
 
+Before generating governed audio on a new machine, run `npm run doctor:voicevox`. That preflight verifies that the local VOICEVOX Nemo engine is reachable and that the pinned release speaker is actually installed, which is a much safer check than discovering a generic `fetch failed` during generation.
+
 ## Curated kanji data
 
 Curated kanji entries are where the product locks in learner-facing choices that should not be left to generic inference.

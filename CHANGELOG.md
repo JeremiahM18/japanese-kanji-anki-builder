@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added a `curated:init -- --refresh-starter` workflow for refreshing stale starter-derived local curated kanji entries without overwriting non-starter local edits.
 - Added a tracked `jlpt_word_level_contract.json` plus `data:audit:jlpt:words` so learner-facing word-card JLPT labels can prefer canonical word-level truth where the repo has it, instead of relying only on constituent-kanji heuristics.
 - Added an explicit `coverage` contract to starter word entries so key N5 study words can track `role`, `focusKanji`, and `coversReadings` directly in data instead of relying only on runtime derivation.
+- Added `deck:words:completion:n5`, a combined N5 word audit that reports canonical inventory size, phrase-tagged contract exclusions, starter-eligible rows missing from the built deck, and current reading-coverage totals in one place.
 
 ### Changed
 

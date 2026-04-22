@@ -201,6 +201,7 @@ Important word-deck rules:
 - `npm run data:audit:jlpt:words` now audits the tracked starter word surface more honestly: it reports canonical starter coverage by level, curated-only starter entries, phrase-tagged starter exclusions, explicit reading-coverage contract counts, and contract drift so we can see how much of the default word deck surface is actually governed before widening any level. The current tracked baseline is `258/258` governed default-deck starter entries for N5 plus the first governed N4 batch of `6` entries.
 - `npm run deck:words:reading-audit:n5` now trusts the exported word-card `FocusKanji` and `CoversReading` fields before falling back to whole-word heuristics, so the audit can correctly credit cross-reading support from cards like `今日`, `時間`, and `休み時間` and report whether coverage is coming from core JLPT words, reading-support words, or inferred support.
 - `npm run deck:words:ready -- --levels=5` now writes an explicit completion block into `out/word-build/build-summary.json` and the console report so we can see tracked N5 governance coverage, explicit reading-coverage contract coverage, and the current canonical inventory counts before claiming the word deck is complete.
+- `npm run deck:words:completion:n5` is the combined N5 word completion gate: it reports canonical inventory size, phrase-tagged exclusions still living in that inventory, real starter-eligible rows missing from the built deck, and current reading-coverage totals in one audit instead of making us compare multiple reports by hand.
 - use `--include-inferred` when you explicitly want to expand beyond curated words during exploration
 
 ### Lower-level build
@@ -307,6 +308,7 @@ The tagged workflow in [.github/workflows/release.yml](.github/workflows/release
 | `npm run deck:review:n4` | Run the tracked golden N4 benchmark |
 | `npm run deck:review:n5` | Run the tracked golden N5 kanji benchmark |
 | `npm run deck:words:review:n5` | Run the tracked golden N5 word benchmark |
+| `npm run deck:words:completion:n5` | Audit combined N5 word inventory coverage and reading coverage |
 | `npm run deck:ready` | Run the full kanji build and package path (fails if export fallbacks occur unless `--allow-export-fallbacks` is set) |
 | `npm run deck:apkg` | Build an importable `.apkg` from packaged kanji exports |
 | `npm run deck:words:ready` | Run the full word-deck build and package path |

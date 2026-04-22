@@ -19,10 +19,23 @@ function normalizeKanaReading(value) {
 }
 
 function selectPreferredAudioReading({ inferenceResult, kanjiInfo }) {
+    const displayWritten = String(inferenceResult?.displayWord?.written || "").trim();
+    const displayPron = normalizeKanaReading(inferenceResult?.displayWord?.pron);
+    const bestWritten = String(inferenceResult?.bestWord?.written || "").trim();
+    const bestPron = normalizeKanaReading(inferenceResult?.bestWord?.pron);
+
     const ranked = [
         {
+            source: "display-word",
+            text: displayPron,
+        },
+        {
+            source: "best-word-display-match",
+            text: displayWritten && displayWritten === bestWritten ? bestPron : "",
+        },
+        {
             source: "best-word",
-            text: normalizeKanaReading(inferenceResult?.bestWord?.pron),
+            text: !displayWritten ? bestPron : "",
         },
         ...((Array.isArray(kanjiInfo?.kun_readings) ? kanjiInfo.kun_readings : []).map((reading) => ({
             source: "kun-reading",

@@ -27,9 +27,10 @@ test("normalizeKanaReading converts katakana and strips dictionary punctuation",
     assert.equal(normalizeKanaReading("ひと.つ"), "ひとつ");
 });
 
-test("selectPreferredAudioReading prefers the inferred best-word pronunciation", () => {
+test("selectPreferredAudioReading prefers the learner-facing display pronunciation", () => {
     const selected = selectPreferredAudioReading({
         inferenceResult: {
+            displayWord: { written: "日", pron: "ひ" },
             bestWord: { pron: "にほん" },
         },
         kanjiInfo: {
@@ -38,13 +39,32 @@ test("selectPreferredAudioReading prefers the inferred best-word pronunciation",
         },
     });
 
-    assert.equal(selected.text, "にほん");
-    assert.equal(selected.source, "best-word");
+    assert.equal(selected.text, "ひ");
+    assert.equal(selected.source, "display-word");
 });
 
-test("selectPreferredAudioReading falls back to normalized kunyomi and onyomi", () => {
+test("selectPreferredAudioReading uses the best word only when it matches the learner-facing display form", () => {
+    const selected = selectPreferredAudioReading({
+        inferenceResult: {
+            displayWord: { written: "日本", pron: "" },
+            bestWord: { written: "日本", pron: "にほん" },
+        },
+        kanjiInfo: {
+            kun_readings: ["ひ"],
+            on_readings: ["ニチ"],
+        },
+    });
+
+    assert.equal(selected.text, "にほん");
+    assert.equal(selected.source, "best-word-display-match");
+});
+
+test("selectPreferredAudioReading falls back to normalized kunyomi and onyomi when the display form is bare kanji", () => {
     const kunSelected = selectPreferredAudioReading({
-        inferenceResult: { bestWord: null },
+        inferenceResult: {
+            displayWord: { written: "上", pron: "" },
+            bestWord: { written: "上手", pron: "じょうず" },
+        },
         kanjiInfo: {
             kun_readings: ["-あ.がる"],
             on_readings: ["ジョウ"],
@@ -54,7 +74,10 @@ test("selectPreferredAudioReading falls back to normalized kunyomi and onyomi", 
     assert.equal(kunSelected.source, "kun-reading");
 
     const onSelected = selectPreferredAudioReading({
-        inferenceResult: { bestWord: null },
+        inferenceResult: {
+            displayWord: { written: "学", pron: "" },
+            bestWord: { written: "学校", pron: "がっこう" },
+        },
         kanjiInfo: {
             kun_readings: [],
             on_readings: ["ガク"],
@@ -137,8 +160,14 @@ test("generateVoicevoxAudioForKanjiList writes wav files with bounded concurrenc
             inferenceEngine: {
                 inferKanjiStudyData({ kanji }) {
                     return kanji === "日"
-                        ? { bestWord: { written: "日本", pron: "にほん" } }
-                        : { bestWord: { written: "学校", pron: "がっこう" } };
+                        ? {
+                            displayWord: { written: "日", pron: "ひ" },
+                            bestWord: { written: "日本", pron: "にほん" },
+                        }
+                        : {
+                            displayWord: { written: "学", pron: "" },
+                            bestWord: { written: "学校", pron: "がっこう" },
+                        };
                 },
             },
             voicevoxClient: {
@@ -154,11 +183,12 @@ test("generateVoicevoxAudioForKanjiList writes wav files with bounded concurrenc
         assert.equal(summary.generated, 2);
         assert.equal(summary.failed, 0);
         assert.equal(fs.existsSync(path.join(rootDir, "audio", "日.wav")), true);
-        assert.equal(fs.readFileSync(path.join(rootDir, "audio", "日.wav"), "utf-8"), "10005:にほん");
-        assert.equal(fs.readFileSync(path.join(rootDir, "audio", "学.wav"), "utf-8"), "10005:がっこう");
+        assert.equal(fs.readFileSync(path.join(rootDir, "audio", "日.wav"), "utf-8"), "10005:ひ");
+        assert.equal(fs.readFileSync(path.join(rootDir, "audio", "学.wav"), "utf-8"), "10005:まなぶ");
         const sidecar = JSON.parse(fs.readFileSync(path.join(rootDir, "audio", "日.json"), "utf-8"));
         assert.equal(sidecar.source, "voicevox");
         assert.equal(sidecar.voice, "女声1 / ノーマル");
+        assert.equal(sidecar.reading, "ひ");
     } finally {
         cleanupTempDir(rootDir);
     }
@@ -194,7 +224,10 @@ test("generateVoicevoxAudioForKanjiList falls back to the policy speaker name wh
             },
             inferenceEngine: {
                 inferKanjiStudyData() {
-                    return { bestWord: { written: "日本", pron: "にほん" } };
+                    return {
+                        displayWord: { written: "日", pron: "ひ" },
+                        bestWord: { written: "日本", pron: "にほん" },
+                    };
                 },
             },
             voicevoxClient: {
@@ -210,6 +243,7 @@ test("generateVoicevoxAudioForKanjiList falls back to the policy speaker name wh
         assert.equal(summary.generated, 1);
         const sidecar = JSON.parse(fs.readFileSync(path.join(rootDir, "audio", "日.json"), "utf-8"));
         assert.equal(sidecar.voice, "女声1");
+        assert.equal(sidecar.reading, "ひ");
     } finally {
         cleanupTempDir(rootDir);
     }
@@ -222,7 +256,7 @@ test("formatVoicevoxGenerationSummary renders a readable generation report", () 
         skippedExisting: 1,
         failed: 0,
         results: [
-            { kanji: "日", status: "generated", reading: "にほん", readingSource: "best-word" },
+            { kanji: "日", status: "generated", reading: "ひ", readingSource: "display-word" },
             { kanji: "学", status: "skipped" },
         ],
     }, {
@@ -232,5 +266,5 @@ test("formatVoicevoxGenerationSummary renders a readable generation report", () 
 
     assert.match(text, /Speaker ID: 10005/);
     assert.match(text, /Generated: 1/);
-    assert.match(text, /日: にほん \(best-word\)/);
+    assert.match(text, /日: ひ \(display-word\)/);
 });

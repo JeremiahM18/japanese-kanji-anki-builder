@@ -116,7 +116,22 @@ function chooseMeaningDisplayCandidate({ kanji, rankedCandidates, englishMeaning
     const exactMatches = candidates.filter((candidate) => candidate.written === kanji);
 
     if (exactMatches.length === 0) {
-        return candidates[0] || null;
+        const topCandidate = candidates[0] || null;
+        if (!topCandidate) {
+            return null;
+        }
+
+        if (glossSemanticallyMatches(topCandidate.gloss, englishMeaning)) {
+            return topCandidate;
+        }
+
+        return {
+            written: kanji,
+            pron: "",
+            gloss: englishMeaning,
+            text: kanji,
+            score: Number.MIN_SAFE_INTEGER,
+        };
     }
 
     const bestExactMatch = [...exactMatches].sort((a, b) => compareDisplayCandidates(a, b, englishMeaning))[0] || null;

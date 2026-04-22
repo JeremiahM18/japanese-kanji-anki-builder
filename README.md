@@ -393,6 +393,8 @@ Behavior:
 - `DisplayWord` carries the learner-facing study form shown on the front of the card, such as `話す`, `行く`, or `今`.
 - `MeaningJP` carries that learner-facing display word plus the English gloss.
 - `PrimaryReading` carries the pronunciation of that learner-facing display word when one is available.
+- When uncurated ranking only finds compound candidates whose gloss does not match the chosen kanji meaning, inference now falls back to the bare kanji for `DisplayWord` and `MeaningJP` instead of surfacing a misleading compound front such as `日本 ／ day`.
+- Curated entries can still intentionally teach through a compound hook by pinning `displayWord` directly or by supplying `preferredWords`, and `PrimaryReading` now stays aligned with the selected learner-facing display form instead of inheriting a different compound reading.
 - `OnReading` keeps the full on-yomi list for reference.
 - `KunReading` keeps the full kun-yomi list for reference.
 

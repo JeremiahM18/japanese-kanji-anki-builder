@@ -157,7 +157,10 @@ function prependCuratedSentence(sentenceCandidates, curatedEntry, bestWord, disp
 function applyCuratedMeaning(meaning, curatedEntry, rankedCandidates) {
     const bestWord = rankedCandidates[0] || null;
     const englishMeaning = curatedEntry?.englishMeaning || meaning.englishMeaning;
-    const displayWord = buildCuratedDisplayWord(curatedEntry, rankedCandidates) || meaning.displayWord || bestWord;
+    const displayWord = buildCuratedDisplayWord(curatedEntry, rankedCandidates)
+        || ((Array.isArray(curatedEntry?.preferredWords) && curatedEntry.preferredWords.length > 0) ? bestWord : null)
+        || meaning.displayWord
+        || bestWord;
     const meaningJP = displayWord && englishMeaning
         ? `${formatMeaningDisplayWord(displayWord)} ／ ${englishMeaning}`
         : meaning.meaningJP;

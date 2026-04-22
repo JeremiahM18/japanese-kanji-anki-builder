@@ -81,8 +81,10 @@ function selectPrimaryReading({ displayWord, bestWord }) {
         return displayPron;
     }
 
+    const displayWritten = String(displayWord?.written ?? "").trim();
     const bestPron = String(bestWord?.pron ?? "").trim();
-    if (bestPron) {
+    const bestWritten = String(bestWord?.written ?? "").trim();
+    if (bestPron && (!displayWritten || displayWritten === bestWritten)) {
         return bestPron;
     }
 

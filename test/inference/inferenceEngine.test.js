@@ -612,7 +612,7 @@ test("inference engine ranks candidates and returns learner-friendly output", ()
 
     assert.equal(result.bestWord.written, "日本");
     assert.equal(result.englishMeaning, "day");
-    assert.equal(result.meaningJP, "日本 （にほん） ／ day");
+    assert.equal(result.meaningJP, "日 ／ day");
     assert.equal(result.notes, "日本 （にほん） - Japan ／ 日よう日 （にちようび） - Sunday");
     assert.equal(result.candidates.length, 2);
     assert.equal(result.candidates[0].score > result.candidates[1].score, true);
@@ -710,6 +710,25 @@ test("chooseMeaningDisplayCandidate prefers an exact kanji match for learner-fac
     });
 
     assert.equal(result.written, "五");
+});
+
+test("chooseMeaningDisplayCandidate falls back to the bare kanji when only mismatched compounds are available", () => {
+    const result = chooseMeaningDisplayCandidate({
+        kanji: "日",
+        englishMeaning: "day",
+        rankedCandidates: [
+            { written: "日本", pron: "にほん", gloss: "Japan", score: 120 },
+            { written: "日中", pron: "にっちゅう", gloss: "daytime", score: 115 },
+        ],
+    });
+
+    assert.deepEqual(result, {
+        written: "日",
+        pron: "",
+        gloss: "day",
+        text: "日",
+        score: Number.MIN_SAFE_INTEGER,
+    });
 });
 
 test("buildMeaningJP hides exact-match katakana-only readings that look non-learner-friendly", () => {

@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Tightened kanji inference so uncurated cards fall back to the bare kanji when the top ranked compound does not match the chosen English meaning, and kept curated `preferredWords` entries free to preserve intentional compound study hooks without letting `PrimaryReading` drift onto a different display form.
 - Tightened the default word-deck contract so compositional phrases like `高い山`, `兄の部屋`, and `川の近く` no longer count as normal JLPT word cards, while learner-facing breakdown panels now normalize raw internal `オン:` / `くん:` notation into clean `On:` / `Kun:` labels.
 - Raised the merge/process bar for JLPT-sensitive changes: the tracked taxonomy contract is now reinforced by a clean-checkout governance test, README workflow guidance, CI workflow expectations, branch-protection guidance, and a pull-request checklist item that calls for `data:audit:jlpt` when JLPT data or deck-membership behavior changes.
 - Pinned learner-facing display readings for the core N5 numeral kanji so previewed and exported kanji cards teach stable bare-kanji forms such as `一 (いち)`, `二 (に)`, `三 (さん)`, `五 (ご)`, `七 (なな)`, and `九 (きゅう)` instead of inheriting misleading counter or clock readings.

@@ -245,6 +245,24 @@ function getTrustedCandidateLevel({ candidate, curatedEntry, jlptWordLevelContra
     return null;
 }
 
+function isStandaloneKanjiOutsideDeckLevel({ candidate, levelNumber, jlptOnlyJson }) {
+    const written = String(candidate?.written || "");
+    const chars = Array.from(written);
+
+    if (chars.length !== 1) {
+        return false;
+    }
+
+    const kanji = chars[0];
+    const kanjiLevel = jlptOnlyJson?.[kanji]?.jlpt ?? null;
+
+    if (!Number.isInteger(kanjiLevel)) {
+        return true;
+    }
+
+    return kanjiLevel !== levelNumber;
+}
+
 function hasCuratedWrittenVariant(candidate, wordStudyIndexes) {
     const written = String(candidate?.written || "").trim();
     return (wordStudyIndexes.entriesByWritten.get(written) || []).length > 0;
@@ -827,6 +845,10 @@ function createWordExportService({
                     continue;
                 }
 
+                if (isStandaloneKanjiOutsideDeckLevel({ candidate, levelNumber, jlptOnlyJson })) {
+                    continue;
+                }
+
                 const key = buildWordKey(candidate);
                 const existing = wordCandidates.get(key);
                 if (!existing) {
@@ -862,6 +884,10 @@ function createWordExportService({
             });
 
             if (assignedLevel !== levelNumber) {
+                continue;
+            }
+
+            if (isStandaloneKanjiOutsideDeckLevel({ candidate, levelNumber, jlptOnlyJson })) {
                 continue;
             }
 
@@ -990,6 +1016,7 @@ function createWordExportService({
         buildWordNotes,
         inferWordLevel,
         getTrustedCandidateLevel,
+        isStandaloneKanjiOutsideDeckLevel,
         extractConstituentKanji,
         pickPreferredCandidate,
         selectWordSentence,
@@ -1015,6 +1042,7 @@ module.exports = {
     getTrustedCandidateLevel,
     hasExcludedWordCardTag,
     inferWordLevel,
+    isStandaloneKanjiOutsideDeckLevel,
     isLikelyPhraseCard,
     isAllowedByCuratedWords,
     extractPrimaryCoverageReading,

@@ -1075,6 +1075,78 @@ test("buildWordTsvForJlptLevel supports higher-level constituent kanji when supp
     assert.match(result.tsv, /JLPT N3 kanji/u);
 });
 
+test("buildWordTsvForJlptLevel excludes standalone higher-level kanji from lower-level word decks while keeping multi-kanji support words", async () => {
+    const wordExportService = createWordExportService({
+        sentenceCorpus: [],
+        wordStudyData: {
+            "兄|あに": {
+                written: "兄",
+                reading: "あに",
+                meaning: "older brother",
+                jlpt: 4,
+                exampleSentence: {
+                    japanese: "兄は大学で勉強しています。",
+                    reading: "あにはだいがくでべんきょうしています。",
+                    english: "My older brother studies at university.",
+                },
+            },
+            "子猫|こねこ": {
+                written: "子猫",
+                reading: "こねこ",
+                meaning: "kitten",
+                jlpt: 5,
+                exampleSentence: {
+                    japanese: "子猫が部屋で寝ています。",
+                    reading: "こねこがへやでねています。",
+                    english: "A kitten is sleeping in the room.",
+                },
+            },
+        },
+    });
+
+    const result = await wordExportService.buildWordTsvForJlptLevel({
+        levelNumber: 5,
+        jlptOnlyJson: {
+            子: { jlpt: 5, meanings: ["child"], on_readings: ["シ"], kun_readings: ["こ"] },
+            猫: { jlpt: 4, meanings: ["cat"], on_readings: ["ビョウ"], kun_readings: ["ねこ"] },
+            兄: { jlpt: 4, meanings: ["older brother"], on_readings: ["キョウ"], kun_readings: ["あに"] },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {
+                "兄|あに": {
+                    written: "兄",
+                    reading: "あに",
+                    jlpt: 4,
+                },
+                "子猫|こねこ": {
+                    written: "子猫",
+                    reading: "こねこ",
+                    jlpt: 5,
+                },
+            },
+        },
+        kanjiApiClient: {
+            async getKanji(kanji) {
+                if (kanji === "兄") {
+                    return { meanings: ["older brother"], on_readings: ["キョウ"], kun_readings: ["あに"] };
+                }
+                if (kanji === "猫") {
+                    return { meanings: ["cat"], on_readings: ["ビョウ"], kun_readings: ["ねこ"] };
+                }
+                return { meanings: ["child"], on_readings: ["シ"], kun_readings: ["こ"] };
+            },
+            async getWords() {
+                return [];
+            },
+        },
+        concurrency: 1,
+    });
+
+    assert.doesNotMatch(result.tsv, /^兄\tあに\tolder brother\t/m);
+    assert.match(result.tsv, /^子猫\tこねこ\tkitten\tJLPT N5\t/m);
+    assert.match(result.tsv, /JLPT N4 kanji/u);
+});
+
 test("buildWordTsvForJlptLevel uses the canonical word-level contract before constituent heuristics", async () => {
     const wordExportService = createWordExportService({
         sentenceCorpus: [],

@@ -420,6 +420,27 @@ test("tracked starter word data includes the ninth governed N4 completion batch"
     assert.equal(starterEntries["仕える|つかえる"].coverage.coversReadings["仕"], "つかえる");
 });
 
+test("tracked starter word data includes the tenth governed N4 completion batch", () => {
+    const starterEntries = loadWordStudyData({
+        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
+        localPath: null,
+    });
+
+    assert.equal(starterEntries["屋|や"].coverage.coversReadings["屋"], "や");
+    assert.equal(starterEntries["社会|しゃかい"].coverage.coversReadings["社"], "しゃ");
+    assert.equal(starterEntries["青空|あおぞら"].coverage.coversReadings["青"], "あお");
+    assert.equal(starterEntries["赤ちゃん|あかちゃん"].coverage.coversReadings["赤"], "あか");
+    assert.equal(starterEntries["家|うち"].coverage.coversReadings["家"], "うち");
+    assert.equal(starterEntries["花火|はなび"].coverage.coversReadings["花"], "か");
+    assert.equal(starterEntries["終点|しゅうてん"].coverage.coversReadings["終"], "しゅう");
+    assert.equal(starterEntries["事情|じじょう"].coverage.coversReadings["事"], "じ");
+    assert.equal(starterEntries["集中|しゅうちゅう"].coverage.coversReadings["集"], "しゅう");
+    assert.equal(starterEntries["会場|かいじょう"].coverage.coversReadings["会"], "かい");
+    assert.equal(starterEntries["色|いろ"].coverage.coversReadings["色"], "いろ");
+    assert.equal(starterEntries["人気|にんき"].coverage.coversReadings["人"], "にん");
+    assert.equal(starterEntries["人気|にんき"].coverage.coversReadings["気"], "き");
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadWordStudyData({
         starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),

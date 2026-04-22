@@ -81,6 +81,11 @@ function parseArgs(argv) {
 }
 
 function formatWordDeckReadyReport(summary, doctorReport) {
+    const trueAnimationCovered = summary.completion?.trueAnimationCoverage?.coveredKanji || 0;
+    const trueAnimationTotal = summary.completion?.trueAnimationCoverage?.totalKanji || 0;
+    const trueAnimationPercent = trueAnimationTotal > 0
+        ? Number(((trueAnimationCovered / trueAnimationTotal) * 100).toFixed(1))
+        : 0;
     const readingCoverageLines = summary.completion.readingCoverageAuditByLevel
         ? summary.levels.flatMap((level) => {
             const audit = summary.completion.readingCoverageAuditByLevel[`N${level}`];
@@ -118,6 +123,7 @@ function formatWordDeckReadyReport(summary, doctorReport) {
         `- N5 explicit reading-coverage contracts: ${summary.completion.readingCoverageContract.explicitCoveragePercentByLevel[5]}% (${summary.completion.readingCoverageContract.explicitCoverageEntriesByLevel[5]}/${summary.completion.readingCoverageContract.starterEntriesByLevel[5]})`,
         `- Canonical inventory counts: N5=${summary.completion.contractInventoryCounts["5"] || 0}, N4=${summary.completion.contractInventoryCounts["4"] || 0}, N3=${summary.completion.contractInventoryCounts["3"] || 0}, N2=${summary.completion.contractInventoryCounts["2"] || 0}, N1=${summary.completion.contractInventoryCounts["1"] || 0}`,
         ...readingCoverageLines,
+        `- True looping animation coverage: ${trueAnimationPercent}% (${trueAnimationCovered}/${trueAnimationTotal})`,
         `Unique referenced kanji: ${summary.referencedKanjiCount}`,
         `Unique packaged media files: ${summary.package.mediaAssetCount}`,
         "",
@@ -125,6 +131,8 @@ function formatWordDeckReadyReport(summary, doctorReport) {
         `- Stroke-order field references: ${summary.package.mediaCounts.strokeOrder}`,
         `- Stroke-order images: ${summary.package.mediaCounts.strokeOrderImage}`,
         `- Stroke-order animation fields: ${summary.package.mediaCounts.strokeOrderAnimation}`,
+        `- True looping animation assets: ${summary.package.mediaCounts.trueStrokeOrderAnimation}`,
+        `- SVG animation fallbacks: ${summary.package.mediaCounts.svgStrokeOrderAnimationFallback}`,
         ...(doctorReport.enableAudio ? [`- Audio fields: ${summary.package.mediaCounts.audio}`] : []),
         "",
         "Next step: import the generated .apkg into Anki and review the new word cards alongside the kanji deck.",
@@ -252,6 +260,11 @@ async function main() {
             starterGovernance,
             readingCoverageContract,
             readingCoverageAuditByLevel,
+            trueAnimationCoverage: {
+                coveredKanji: deckPackage.mediaCounts.trueStrokeOrderAnimation,
+                totalKanji: [...new Set(exports.flatMap((artifact) => artifact.mediaKanji || []))].length,
+                svgFallbackKanji: deckPackage.mediaCounts.svgStrokeOrderAnimationFallback,
+            },
         },
         referencedKanjiCount: [...new Set(exports.flatMap((artifact) => artifact.mediaKanji || []))].length,
         package: deckPackage,
@@ -267,12 +280,22 @@ async function main() {
     writeJson(path.join(buildPaths.root, "build-summary.json"), summary);
     writeJson(path.join(buildPaths.reportsDir, "word-deck-summary.json"), summary);
 
+    const trueAnimationCoverage = summary.completion.trueAnimationCoverage;
+    const hasFullTrueAnimationCoverage = trueAnimationCoverage.totalKanji === 0
+        || trueAnimationCoverage.coveredKanji >= trueAnimationCoverage.totalKanji;
+
     if (options.json) {
         console.log(JSON.stringify({ doctor: doctorReport, build: summary }, null, 2));
+        if (!hasFullTrueAnimationCoverage) {
+            process.exitCode = 1;
+        }
         return;
     }
 
     process.stdout.write(formatWordDeckReadyReport(summary, doctorReport));
+    if (!hasFullTrueAnimationCoverage) {
+        process.exitCode = 1;
+    }
 }
 
 if (require.main === module) {

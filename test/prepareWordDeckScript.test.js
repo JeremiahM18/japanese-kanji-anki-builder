@@ -34,6 +34,11 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
                     variantGapReadings: 16,
                 },
             },
+            trueAnimationCoverage: {
+                coveredKanji: 166,
+                totalKanji: 166,
+                svgFallbackKanji: 0,
+            },
         },
         referencedKanjiCount: 166,
         package: {
@@ -43,6 +48,8 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
                 strokeOrder: 165,
                 strokeOrderImage: 148,
                 strokeOrderAnimation: 165,
+                trueStrokeOrderAnimation: 165,
+                svgStrokeOrderAnimationFallback: 0,
                 audio: 0,
             },
             ankiPackage: { filePath: null },
@@ -57,6 +64,8 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
     assert.match(text, /N5 starter governance: 100% \(258\/258\)/);
     assert.match(text, /N5 reading coverage: 52\.6% \(181\/344\)/);
     assert.match(text, /distinct missing targets: 147, variant-style gaps: 16/);
+    assert.match(text, /True looping animation coverage: 100% \(166\/166\)/);
+    assert.match(text, /True looping animation assets: 165/);
     assert.match(text, /Canonical inventory counts: N5=271, N4=6/);
 });
 

@@ -334,6 +334,34 @@ test("tracked starter word data includes the sixth governed N4 completion batch"
     assert.equal(starterEntries["集める|あつめる"].coverage.coversReadings["集"], "あつめる");
 });
 
+test("tracked starter word data includes the seventh governed N4 completion batch", () => {
+    const starterEntries = loadWordStudyData({
+        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
+        localPath: null,
+    });
+
+    assert.equal(starterEntries["不足|ふそく"].coverage.coversReadings["足"], "そく");
+    assert.equal(starterEntries["主に|おもに"].coverage.coversReadings["主"], "おも");
+    assert.equal(starterEntries["京都|きょうと"].coverage.coversReadings["京"], "きょう");
+    assert.equal(starterEntries["会員|かいいん"].coverage.coversReadings["員"], "いん");
+    assert.equal(starterEntries["会議室|かいぎしつ"].coverage.coversReadings["室"], "しつ");
+    assert.equal(starterEntries["住所|じゅうしょ"].coverage.coversReadings["住"], "じゅう");
+    assert.equal(starterEntries["作る|つくる"].coverage.coversReadings["作"], "つくる");
+    assert.equal(starterEntries["借りる|かりる"].coverage.coversReadings["借"], "かりる");
+    assert.equal(starterEntries["場所|ばしょ"].coverage.coversReadings["場"], "ば");
+    assert.equal(starterEntries["夏休み|なつやすみ"].coverage.coversReadings["夏"], "なつ");
+    assert.equal(starterEntries["始まる|はじまる"].coverage.coversReadings["始"], "はじまる");
+    assert.equal(starterEntries["始める|はじめる"].coverage.coversReadings["始"], "はじめる");
+    assert.equal(starterEntries["少ない|すくない"].coverage.coversReadings["少"], "すくない");
+    assert.equal(starterEntries["教える|おしえる"].coverage.coversReadings["教"], "おしえる");
+    assert.equal(starterEntries["教室|きょうしつ"].coverage.coversReadings["教"], "きょう");
+    assert.equal(starterEntries["真ん中|まんなか"].coverage.coversReadings["真"], "ま");
+    assert.equal(starterEntries["言葉|ことば"].coverage.coversReadings["言"], "こと");
+    assert.equal(starterEntries["週末|しゅうまつ"].coverage.coversReadings["週"], "しゅう");
+    assert.equal(starterEntries["音楽|おんがく"].coverage.coversReadings["音"], "おん");
+    assert.equal(starterEntries["黒板|こくばん"].coverage.coversReadings["黒"], "こく");
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadWordStudyData({
         starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),

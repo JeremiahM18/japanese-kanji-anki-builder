@@ -40,6 +40,12 @@
  * @property {string} extension
  * @property {string} source
  * @property {string=} url
+ * @property {"kanji-reading"|"word-reading"|"sentence"=} category
+ * @property {string=} text
+ * @property {string=} reading
+ * @property {string=} voice
+ * @property {string=} locale
+ * @property {string=} notes
  */
 
 /**

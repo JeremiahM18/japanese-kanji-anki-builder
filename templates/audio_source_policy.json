@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "releaseAudio": {
+    "primarySourceId": "voicevox-nemo",
+    "allowedSourceIds": [
+      "voicevox-nemo"
+    ],
+    "requireSingleSourcePerDeck": true,
+    "requireVoiceMetadata": true,
+    "requiredLocale": "ja-JP",
+    "allowedCategories": [
+      "kanji-reading"
+    ],
+    "wordDeckAudioEnabled": false,
+    "remoteAudioProvidersAllowed": false
+  },
+  "experimentalSourceIds": [
+    "openjtalk-local",
+    "aivis-reviewed-model"
+  ]
+}

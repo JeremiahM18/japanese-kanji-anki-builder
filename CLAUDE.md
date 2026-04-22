@@ -56,6 +56,7 @@ The canonical taxonomy sources are:
 
 - kanji levels: [templates/jlpt_level_contract.json](C:\Users\cover\Projects\Active\Fullstack\japanese_kanji_builder\templates\jlpt_level_contract.json)
 - word levels: [templates/jlpt_word_level_contract.json](C:\Users\cover\Projects\Active\Fullstack\japanese_kanji_builder\templates\jlpt_word_level_contract.json)
+- release audio source policy: [templates/audio_source_policy.json](C:\Users\cover\Projects\Active\Fullstack\japanese_kanji_builder\templates\audio_source_policy.json)
 
 Do not bypass those contracts.
 
@@ -152,8 +153,21 @@ Avoid:
 - brittle heuristics presented as truth
 - impressive but confusing content
 - whole-compound leakage onto single-kanji breakdowns unless explicitly intended
+- generic or mixed-source audio provenance in shipped artifacts
 
 If a card would confuse a beginner, it is not good enough.
+
+## Audio Policy
+
+Do not trust the legacy audio pipeline assumptions.
+
+Treat shipped audio as a governed product surface:
+
+- the release audio source policy controls what counts as acceptable shipped audio
+- generated audio must preserve provenance into managed manifests instead of collapsing into generic `local-filesystem`
+- a release deck should use one canonical audio source, not a mix of engines or ad hoc imports
+- managed audio should carry explicit `source`, `voice`, and `locale` metadata
+- do not enable word-deck audio by default until the repo explicitly raises that product bar
 
 ## Required Audits And Validation
 

@@ -159,6 +159,19 @@ function buildDestinationStem({ mediaId, category, text, reading }) {
     return parts.join("-") || `${mediaId}-kanji-reading`;
 }
 
+function mergeAudioMetadata(asset, requestedMetadata) {
+    const merged = {
+        category: cleanToken(asset?.category) || requestedMetadata.category || "kanji-reading",
+        text: cleanToken(asset?.text) || requestedMetadata.text || "",
+        reading: cleanToken(asset?.reading) || requestedMetadata.reading || undefined,
+        voice: cleanToken(asset?.voice) || requestedMetadata.voice || undefined,
+        locale: cleanToken(asset?.locale) || requestedMetadata.locale || "ja-JP",
+        notes: cleanToken(asset?.notes) || undefined,
+    };
+
+    return merged;
+}
+
 function createAudioService({ mediaRootDir, audioSourceDir, providers = [], manifestCacheTtlMs = 30000, nowFn = Date.now }) {
     const resolvedProviders = [
         createLocalDirectoryProvider({
@@ -206,6 +219,7 @@ function createAudioService({ mediaRootDir, audioSourceDir, providers = [], mani
                 reading: normalizedMetadata.reading,
             }, providerMetrics);
         const audioAsset = audioLookup.asset;
+        const mergedMetadata = mergeAudioMetadata(audioAsset, normalizedMetadata);
 
         const writtenManifest = await updateManifest(mediaRootDir, normalizedKanji, async (manifest) => {
             if (!audioAsset) {
@@ -216,7 +230,7 @@ function createAudioService({ mediaRootDir, audioSourceDir, providers = [], mani
             const layout = ensureMediaLayout(mediaRootDir, normalizedKanji);
             const destinationPath = path.join(
                 layout.audioDir,
-                `${buildDestinationStem({ mediaId, ...normalizedMetadata })}${audioAsset.extension}`
+                `${buildDestinationStem({ mediaId, ...mergedMetadata })}${audioAsset.extension}`
             );
             await copyAssetIfChanged(audioAsset, destinationPath);
 
@@ -224,14 +238,14 @@ function createAudioService({ mediaRootDir, audioSourceDir, providers = [], mani
                 kind: "audio",
                 path: path.relative(layout.basePath, destinationPath).replace(/\\/g, "/"),
                 mimeType: audioAsset.mimeType,
-                source: audioAsset.source || "local-filesystem",
+                source: cleanToken(audioAsset.source) || "local-filesystem",
                 checksum: audioAsset.checksum,
-                category: normalizedMetadata.category,
-                text: normalizedMetadata.text,
-                reading: normalizedMetadata.reading,
-                voice: normalizedMetadata.voice,
-                locale: normalizedMetadata.locale,
-                notes: `Imported from ${audioAsset.fileName}`,
+                category: mergedMetadata.category,
+                text: mergedMetadata.text,
+                reading: mergedMetadata.reading,
+                voice: mergedMetadata.voice,
+                locale: mergedMetadata.locale,
+                notes: mergedMetadata.notes || `Imported from ${audioAsset.fileName}`,
             });
 
             return nextManifest;

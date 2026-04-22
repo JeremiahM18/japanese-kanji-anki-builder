@@ -258,9 +258,11 @@ function createSmokeWorkspace(rootDir) {
                     kind: "audio",
                     path: "audio/65E5_日-kanji-reading-日.mp3",
                     mimeType: "audio/mpeg",
-                    source: "local-filesystem",
+                    source: "voicevox-nemo",
                     category: "kanji-reading",
                     text: "日",
+                    reading: "にち",
+                    voice: "VOICEVOX Nemo / Calm",
                     locale: "ja-JP",
                 },
             ],
@@ -463,6 +465,10 @@ async function runCiSmoke({
             },
             doctor: {
                 nextSteps: doctorReport.nextSteps,
+            },
+            config: {
+                mediaRootDir: workspace.config.mediaRootDir,
+                remoteAudioBaseUrl: workspace.config.remoteAudioBaseUrl || null,
             },
             packageVerification: {
                 kanji: verifyAnkiPackage(kanjiSummary, { deckKind: "kanji", levels: [5] }),

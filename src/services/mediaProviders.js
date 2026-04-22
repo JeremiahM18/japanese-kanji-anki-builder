@@ -65,6 +65,21 @@ async function buildLocalDirectoryIndex(sourceDir, extensionMap, readDirectoryEn
     return index;
 }
 
+async function readOptionalSidecarMetadata(absolutePath) {
+    const sidecarPath = absolutePath.replace(/\.[^.]+$/, ".json");
+
+    if (!sidecarPath || sidecarPath === absolutePath || !fs.existsSync(sidecarPath)) {
+        return null;
+    }
+
+    try {
+        const parsed = JSON.parse(await fsp.readFile(sidecarPath, "utf-8"));
+        return parsed && typeof parsed === "object" ? parsed : null;
+    } catch {
+        return null;
+    }
+}
+
 function normalizeBaseUrl(baseUrl) {
     if (!baseUrl) {
         return "";
@@ -178,6 +193,7 @@ function createLocalDirectoryProvider({
                     const absolutePath = path.join(sourceDir, match.fileName);
                     const buffer = await fsp.readFile(absolutePath);
                     const stats = await fsp.stat(absolutePath);
+                    const sidecarMetadata = await readOptionalSidecarMetadata(absolutePath);
 
                     return {
                         absolutePath,
@@ -187,7 +203,15 @@ function createLocalDirectoryProvider({
                         sizeBytes: stats.size,
                         content: buffer,
                         extension: match.extension,
-                        source: name,
+                        source: typeof sidecarMetadata?.source === "string" && sidecarMetadata.source.trim()
+                            ? sidecarMetadata.source.trim()
+                            : name,
+                        category: typeof sidecarMetadata?.category === "string" ? sidecarMetadata.category : undefined,
+                        text: typeof sidecarMetadata?.text === "string" ? sidecarMetadata.text : undefined,
+                        reading: typeof sidecarMetadata?.reading === "string" ? sidecarMetadata.reading : undefined,
+                        voice: typeof sidecarMetadata?.voice === "string" ? sidecarMetadata.voice : undefined,
+                        locale: typeof sidecarMetadata?.locale === "string" ? sidecarMetadata.locale : undefined,
+                        notes: typeof sidecarMetadata?.notes === "string" ? sidecarMetadata.notes : undefined,
                     };
                 }
             }
@@ -348,5 +372,6 @@ module.exports = {
     createRemoteHttpProvider,
     findAssetFromProviders,
     findAssetFromProvidersWithReport,
+    readOptionalSidecarMetadata,
     snapshotProviderMetrics,
 };

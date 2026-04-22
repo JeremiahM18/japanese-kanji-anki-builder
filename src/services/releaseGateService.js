@@ -3,6 +3,8 @@ const path = require("node:path");
 const assert = require("node:assert/strict");
 
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
+const { loadAudioSourcePolicy } = require("../datasets/audioSourcePolicy");
+const { buildAudioPolicyAuditReport } = require("./audioPolicyAuditService");
 const { buildToolchainStatus, getBlockedTools, getMissingPackagingTools } = require("./toolchainService");
 const { runCiSmoke } = require("./ciSmokeService");
 
@@ -35,7 +37,7 @@ function assertPackageSummary(packageSummary, { label, requireApkgTools = false 
     }
 }
 
-function buildReleaseGateReport({ smokeSummary, toolchainStatus, requireApkgTools }) {
+function buildReleaseGateReport({ smokeSummary, toolchainStatus, requireApkgTools, audioPolicyReport, audioSourcePolicy }) {
     return {
         generatedAt: new Date().toISOString(),
         requireApkgTools,
@@ -47,6 +49,17 @@ function buildReleaseGateReport({ smokeSummary, toolchainStatus, requireApkgTool
             kanjiExports: smokeSummary.kanjiBuild.exports.length,
             wordRows: smokeSummary.wordBuild.rows,
         },
+        audioPolicy: {
+            policyPath: audioSourcePolicy.policyPath,
+            valid: audioPolicyReport.valid,
+            manifestCount: audioPolicyReport.manifestCount,
+            totalAudioAssets: audioPolicyReport.totalAudioAssets,
+            uniqueSources: audioPolicyReport.uniqueSources,
+            mixedReleaseSources: audioPolicyReport.mixedReleaseSources,
+            remoteAudioConfigured: audioPolicyReport.remoteAudioConfigured,
+            remoteAudioViolation: audioPolicyReport.remoteAudioViolation,
+            violatingAssets: audioPolicyReport.violatingAssets.length,
+        },
         packageVerification: smokeSummary.packageVerification,
     };
 }
@@ -57,6 +70,8 @@ async function runReleaseGate({
     requireApkgTools = false,
     runCiSmokeFn = runCiSmoke,
     buildToolchainStatusFn = buildToolchainStatus,
+    loadAudioSourcePolicyFn = loadAudioSourcePolicy,
+    buildAudioPolicyAuditReportFn = buildAudioPolicyAuditReport,
 } = {}) {
     const toolchainStatus = buildToolchainStatusFn();
     const missingPackagingTools = getMissingPackagingTools(toolchainStatus);
@@ -80,6 +95,14 @@ async function runReleaseGate({
     const smokeSummary = await runCiSmokeFn({ rootDir, keepTempDir: true });
 
     try {
+        assert.ok(smokeSummary.config?.mediaRootDir, "Smoke summary must include mediaRootDir for audio policy verification");
+        const audioSourcePolicy = loadAudioSourcePolicyFn();
+        const audioPolicyReport = buildAudioPolicyAuditReportFn({
+            mediaRootDir: smokeSummary.config?.mediaRootDir,
+            audioSourcePolicy,
+            remoteAudioBaseUrl: smokeSummary.config?.remoteAudioBaseUrl || null,
+        });
+        assert.equal(audioPolicyReport.valid, true, "Release gate audio policy audit failed");
         const kanjiTsvPath = path.join(smokeSummary.kanjiBuild.outDir, "exports", "jlpt-n5.tsv");
         const wordTsvPath = path.join(smokeSummary.wordBuild.outDir, "exports", "jlpt-n5-words.tsv");
         assertPathExists(kanjiTsvPath);
@@ -93,6 +116,8 @@ async function runReleaseGate({
             smokeSummary,
             toolchainStatus,
             requireApkgTools,
+            audioPolicyReport,
+            audioSourcePolicy,
         });
     } finally {
         if (shouldCleanupTempDir) {

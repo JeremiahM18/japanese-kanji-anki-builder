@@ -4,6 +4,7 @@ const { invokeCliMain } = require("../src/utils/cliArgs");
 const { loadConfig } = require("../src/config");
 const { createKanjiApiClient } = require("../src/clients/kanjiApiClient");
 const { createVoicevoxClient } = require("../src/clients/voicevoxClient");
+const { loadAudioSourcePolicy } = require("../src/datasets/audioSourcePolicy");
 const { formatVoicevoxGenerationSummary, formatVoicevoxSpeakerTable, generateVoicevoxAudioForKanjiList } = require("../src/services/audioGenerationService");
 const { parseLevelArgument, selectKanjiForSync } = require("../src/services/mediaSync");
 
@@ -14,6 +15,9 @@ function parseArgs(argv) {
         concurrency: null,
         kanji: [],
         speakerId: null,
+        sourceId: null,
+        voiceName: "",
+        locale: null,
         overwrite: argv.includes("--overwrite"),
         listSpeakers: argv.includes("--list-speakers"),
     };
@@ -29,6 +33,12 @@ function parseArgs(argv) {
             options.kanji = arg.split("=")[1].split(",").map((item) => item.trim()).filter(Boolean);
         } else if (arg.startsWith("--speaker-id=")) {
             options.speakerId = Number(arg.split("=")[1]);
+        } else if (arg.startsWith("--source-id=")) {
+            options.sourceId = arg.split("=")[1].trim();
+        } else if (arg.startsWith("--voice-name=")) {
+            options.voiceName = arg.split("=")[1].trim();
+        } else if (arg.startsWith("--locale=")) {
+            options.locale = arg.split("=")[1].trim();
         }
     }
 
@@ -38,6 +48,7 @@ function parseArgs(argv) {
 async function main() {
     const options = parseArgs(process.argv.slice(2));
     const config = loadConfig();
+    const audioSourcePolicy = loadAudioSourcePolicy();
 
     const voicevoxClient = createVoicevoxClient({
         baseUrl: config.voicevoxEngineUrl,
@@ -77,6 +88,9 @@ async function main() {
         speakerId: options.speakerId ?? config.voicevoxSpeakerId,
         concurrency: options.concurrency || config.exportConcurrency,
         overwrite: options.overwrite,
+        sourceId: options.sourceId || audioSourcePolicy.releaseAudio.primarySourceId,
+        voiceLabel: options.voiceName,
+        locale: options.locale || audioSourcePolicy.releaseAudio.requiredLocale,
         kanjiApiClient,
         voicevoxClient,
     });

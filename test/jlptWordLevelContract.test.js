@@ -80,7 +80,7 @@ test("tracked JLPT word contract now includes the first governed N4 starter batc
     const contract = loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json"));
 
     assert.equal(contract.inventoryCounts["4"] >= 6, true);
-    assert.equal(contract.inventoryCounts["5"], 276);
+    assert.equal(contract.inventoryCounts["5"], 280);
     assert.equal(getJlptWordLevel(contract, "安心|あんしん"), 4);
     assert.equal(getJlptWordLevel(contract, "急ぐ|いそぐ"), 4);
     assert.equal(getJlptWordLevel(contract, "海岸|かいがん"), 4);
@@ -94,6 +94,10 @@ test("tracked JLPT word contract now includes the first governed N4 starter batc
     assert.equal(getJlptWordLevel(contract, "有名|ゆうめい"), 5);
     assert.equal(getJlptWordLevel(contract, "帽子|ぼうし"), 5);
     assert.equal(getJlptWordLevel(contract, "彼女|かのじょ"), 5);
+    assert.equal(getJlptWordLevel(contract, "中国|ちゅうごく"), 5);
+    assert.equal(getJlptWordLevel(contract, "地下|ちか"), 5);
+    assert.equal(getJlptWordLevel(contract, "上下|じょうげ"), 5);
+    assert.equal(getJlptWordLevel(contract, "外す|はずす"), 5);
 });
 
 test("auditWordStudyEntriesAgainstContract reports starter drift against the canonical word contract", () => {

@@ -137,6 +137,11 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
     assert.equal(starterEntries["帽子|ぼうし"].coverage.coversReadings["子"], "し");
     assert.equal(starterEntries["彼女|かのじょ"].coverage.role, "support");
     assert.equal(starterEntries["彼女|かのじょ"].coverage.coversReadings["女"], "じょ");
+    assert.equal(starterEntries["中国|ちゅうごく"].coverage.role, "support");
+    assert.equal(starterEntries["中国|ちゅうごく"].coverage.coversReadings["中"], "ちゅう");
+    assert.equal(starterEntries["地下|ちか"].coverage.coversReadings["下"], "か");
+    assert.equal(starterEntries["上下|じょうげ"].coverage.coversReadings["下"], "げ");
+    assert.equal(starterEntries["外す|はずす"].coverage.coversReadings["外"], "はずす");
     assert.equal(starterEntries["見せる|みせる"].coverage.coversReadings["見"], "みせる");
     assert.equal(starterEntries["見る|みる"].coverage.coversReadings["見"], "みる");
     assert.equal(starterEntries["見える|みえる"].coverage.coversReadings["見"], "みえる");

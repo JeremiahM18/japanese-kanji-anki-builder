@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added governed N5 month support words `四月` and `五月` so the word deck can explicitly track `四 -> し` and `月 -> がつ` through real calendar vocabulary instead of leaving those beginner readings uncovered.
 - Added explicit reading-coverage contracts to existing N5 learner-facing words like `月曜日`, `毎月`, `中`, `名前`, `見る`, `見える`, and `見せる` so the deck tracks more of its current study intent directly in starter data instead of relying only on runtime credit.
 - Added governed N5 support words `有名`, `帽子`, and `彼女`, plus an explicit reading-support contract on `下さい`, so the word deck can intentionally cover `名 -> めい`, `子 -> し`, `女 -> じょ`, and `下 -> くださる` instead of leaving those beginner readings implicit.
+- Added governed N5 support words `中国`, `地下`, `上下`, and `外す` so the word deck can intentionally cover `中 -> ちゅう`, `下 -> か`, `下 -> げ`, and `外 -> はずす` with real learner-facing example words instead of leaving those readings as open N5 gaps.
 
 ### Changed
 
@@ -29,6 +30,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Raised tracked explicit N5 reading-contract coverage again to `29/276` (`10.51%`), and the live N5 reading audit now reports `189/344` covered readings (`54.9%`), `181` covered by JLPT-core rows, `8` by support rows, `139` distinct missing targets, and `16` lower-priority variant gaps.
 - Surfaced word-reading coverage directly in `deck:words:ready` and the stored word build summary so a successful N5 word build now shows the real reading-completeness signal (`189/344`, `54.9%` on the current baseline) instead of only the inventory-side `263/263` metric.
 - Hardened the word export fallback path so support words that introduce higher-level constituent kanji can still build cleanly through offline kanji fallback instead of crashing `deck:words:ready` when one constituent falls back out of the API path.
+- Raised the tracked N5 word baseline again to `280` canonical rows with `267/267` default-deck starter-eligible rows built, pushed explicit reading-contract coverage to `33/280` (`11.79%`), and moved the live N5 reading audit to `193/344` covered readings (`56.1%`) with `181` covered by JLPT-core rows, `12` by support rows, `135` distinct missing targets, and `16` lower-priority variant gaps.
 - Upgraded the learner-facing word-card surface so word decks now expose `CoverageRole`, `FocusKanji`, and `CoversReading`, making it clear whether a card is core JLPT vocabulary, reading-coverage support, or both.
 - Tightened word-deck JLPT trust so inferred exploratory rows no longer receive learner-facing JLPT labels by default; exported labels now come only from the canonical word-level contract or an explicit curated JLPT tag.
 - Tightened compound breakdown rendering on word cards so learner-facing study focus follows the written kanji order and context-specific reading forms such as `時 （じ）`, `学 （がく）`, `車 （くるま）`, `休 （やすみ）`, and `間 （かん）` survive into the exported card instead of weaker bare defaults.

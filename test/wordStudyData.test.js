@@ -116,6 +116,63 @@ test("tracked starter word data includes the first governed N4 starter entries",
     assert.equal(starterEntries["開く|ひらく"].jlpt, 4);
 });
 
+test("tracked starter word data includes the first promoted N4 completion batch", () => {
+    const starterEntries = loadWordStudyData({
+        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
+        localPath: null,
+    });
+
+    assert.equal(starterEntries["文|ぶん"].jlpt, 4);
+    assert.deepEqual(starterEntries["文|ぶん"].coverage, {
+        role: "both",
+        focusKanji: ["文"],
+        coversReadings: {
+            文: "ぶん",
+        },
+    });
+    assert.equal(starterEntries["別|べつ"].jlpt, 4);
+    assert.equal(starterEntries["別れる|わかれる"].coverage.coversReadings["別"], "わかれる");
+    assert.equal(starterEntries["問|もん"].coverage.coversReadings["問"], "もん");
+    assert.equal(starterEntries["有る|ある"].coverage.coversReadings["有"], "ある");
+    assert.equal(starterEntries["郵便|ゆうびん"].coverage.coversReadings["郵"], "ゆう");
+    assert.equal(starterEntries["曜日|ようび"].coverage.coversReadings["曜"], "よう");
+    assert.equal(starterEntries["洋服|ようふく"].coverage.coversReadings["洋"], "よう");
+    assert.equal(starterEntries["理由|りゆう"].coverage.coversReadings["理"], "り");
+    assert.equal(starterEntries["旅行|りょこう"].coverage.coversReadings["旅"], "りょ");
+    assert.equal(starterEntries["料金|りょうきん"].coverage.coversReadings["料"], "りょう");
+    assert.equal(starterEntries["立つ|たつ"].coverage.coversReadings["立"], "たつ");
+    assert.equal(starterEntries["味|あじ"].coverage.coversReadings["味"], "あじ");
+    assert.equal(starterEntries["明るい|あかるい"].coverage.coversReadings["明"], "あかるい");
+    assert.equal(starterEntries["野原|のはら"].coverage.coversReadings["野"], "の");
+});
+
+test("tracked starter word data includes the second governed N4 completion batch", () => {
+    const starterEntries = loadWordStudyData({
+        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
+        localPath: null,
+    });
+
+    assert.equal(starterEntries["不便|ふべん"].coverage.coversReadings["不"], "ふ");
+    assert.equal(starterEntries["歌|うた"].coverage.coversReadings["歌"], "うた");
+    assert.equal(starterEntries["売る|うる"].coverage.coversReadings["売"], "うる");
+    assert.equal(starterEntries["晩|ばん"].coverage.coversReadings["晩"], "ばん");
+    assert.equal(starterEntries["品|しな"].coverage.coversReadings["品"], "しな");
+    assert.equal(starterEntries["部|ぶ"].coverage.coversReadings["部"], "ぶ");
+    assert.equal(starterEntries["風|かぜ"].coverage.coversReadings["風"], "かぜ");
+    assert.equal(starterEntries["台風|たいふう"].coverage.coversReadings["風"], "ふう");
+    assert.equal(starterEntries["物|もの"].coverage.coversReadings["物"], "もの");
+    assert.equal(starterEntries["閉まる|しまる"].coverage.coversReadings["閉"], "しまる");
+    assert.equal(starterEntries["野菜|やさい"].coverage.coversReadings["野"], "や");
+    assert.equal(starterEntries["用|よう"].coverage.coversReadings["用"], "よう");
+    assert.equal(starterEntries["力|ちから"].coverage.coversReadings["力"], "ちから");
+    assert.equal(starterEntries["入力|にゅうりょく"].coverage.coversReadings["力"], "りょく");
+    assert.equal(starterEntries["意味|いみ"].coverage.coversReadings["味"], "み");
+    assert.equal(starterEntries["今夜|こんや"].coverage.coversReadings["夜"], "や");
+    assert.equal(starterEntries["道|みち"].coverage.coversReadings["道"], "みち");
+    assert.equal(starterEntries["道具|どうぐ"].coverage.coversReadings["道"], "どう");
+    assert.equal(starterEntries["特に|とくに"].coverage.coversReadings["特"], "とく");
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadWordStudyData({
         starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),

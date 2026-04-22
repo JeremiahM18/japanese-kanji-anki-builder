@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Locked the post-N5 word-deck operating contract into the repo itself: N5 word is now treated as stabilized except for regressions or explicit editorial decisions, N4 word work is required to start under the same policy bar from day one, and convenience N4 word audit aliases now exist for completion, reading coverage, and triage.
 - Split the tracked word contract so canonical inventory now means “default-deck eligible” only: `jlpt_word_level_contract.json` now keeps `342` canonical N5 rows and `25` canonical N4 rows in `wordLevels`, moves the `13` phrase-tagged source rows into `excludedWordLevels` with `exclusionReason: "phrase"`, and validates both `inventoryCounts` and `excludedCounts`.
 - Updated the N5 word audits and readiness reports to surface tracked source-only exclusions alongside canonical inventory counts, which makes `deck:words:completion:n5`, `deck:words:ready`, and `data:audit:jlpt:words` report the true learner-facing canonical surface instead of mixing in excluded phrase rows.
 - Tightened the explicit reading-coverage contract denominator to the default-deck starter surface, so the current governed N5 baseline now reports `128/342` explicit contracts (`37.43%`) instead of inflating that ratio with excluded phrase rows.

@@ -218,6 +218,9 @@ Important word-deck rules:
 - `deck:words:ready` and `deck:words:completion:n5` now also run a soft sentence-orthography audit against the built TSV: they flag likely cases where a governed word appears only in kana in the full Japanese example sentence even though the card itself is teaching a kanji form. This is a non-blocking editorial review signal rather than a hard failure, so natural kana-preferred Japanese can still be handled intentionally instead of being misclassified as a product bug. The current N5 baseline is clean at `0` suspicious kana-only examples.
 - `deck:words:ready` now also enforces the word-card animation rule directly: if every kanji referenced by the word deck does not have a true looping animation asset, the script exits non-zero instead of quietly treating static or fallback animation coverage as good enough.
 - `npm run deck:words:completion:n5` is the combined N5 word completion gate: it reports canonical inventory size, tracked source-only exclusions outside that inventory, real starter-eligible rows missing from the built deck, and current reading-coverage totals in one audit instead of making us compare multiple reports by hand.
+- N5 word is now treated as stabilized. Keep it frozen except for regressions or explicit editorial decisions, and use `npm run deck:words:ready -- --levels=5 --require-no-active-triage` as the normal shared-pipeline guard so future changes do not quietly destabilize the shipped N5 surface.
+- N4 word work should start under the same contract from day one. That means no duplicate standalone higher-level kanji cards, explicit cross-level or outside-contract constituent labels on the card, explicit reading-coverage tracking where the intent matters, the same soft sentence-orthography review, and the same hard deck-policy audit instead of a looser “we will clean it up later” phase.
+- Convenience startup commands now exist for the N4 word surface too: `npm run deck:words:completion:n4 -- --json`, `npm run deck:words:reading-audit:n4 -- --json`, and `npm run deck:words:triage:n4 -- --json`.
 - use `--include-inferred` when you explicitly want to expand beyond curated words during exploration
 
 ### Lower-level build
@@ -327,6 +330,9 @@ The tagged workflow in [.github/workflows/release.yml](.github/workflows/release
 | `npm run deck:review:n5` | Run the tracked golden N5 kanji benchmark |
 | `npm run deck:words:review:n5` | Run the tracked golden N5 word benchmark |
 | `npm run deck:words:completion:n5` | Audit combined N5 word inventory coverage and reading coverage |
+| `npm run deck:words:completion:n4` | Audit combined N4 word inventory coverage and reading coverage |
+| `npm run deck:words:reading-audit:n4` | Audit N4 word reading coverage against the built N4 word deck |
+| `npm run deck:words:triage:n4` | Classify the remaining N4 word reading gaps into an actionable backlog |
 | `npm run deck:ready` | Run the full kanji build and package path (fails if export fallbacks occur unless `--allow-export-fallbacks` is set) |
 | `npm run deck:apkg` | Build an importable `.apkg` from packaged kanji exports |
 | `npm run deck:words:ready` | Run the full word-deck build and package path |

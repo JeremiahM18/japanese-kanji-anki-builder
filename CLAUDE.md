@@ -101,6 +101,26 @@ For word-deck expansion:
 - do not propose “let’s move on to N4” unless N5 gaps are clearly accounted for
 - prefer closing N5 reading-coverage and completion gaps first
 
+## N5 Word Freeze And N4 Startup Rule
+
+N5 word work is now stabilized.
+
+That means:
+
+- keep N5 word frozen except for regressions or explicit editorial decisions
+- do not churn N5 word rows just to move a metric once the active triage backlog is cleared
+- use `npm run deck:words:ready -- --levels=5 --require-no-active-triage` as the normal N5 word guard before and after changes that could affect the shared word-deck pipeline
+
+When N4 word work starts, use the full N5 contract from day one:
+
+- no duplicate standalone higher-level kanji cards in lower-level word decks
+- cross-level or outside-contract constituent kanji must be visibly labeled on the learner-facing card
+- reading coverage must be tracked explicitly where intent matters
+- sentence orthography gets a soft editorial audit, not a hard simplistic rule
+- deck policy violations are hard-fail build issues, not just review notes
+
+Do not treat N4 word work as a looser experimental surface. Start it under the same policy bar that stabilized N5.
+
 ## What “Done” Means
 
 Do not treat a passing script as product completion.
@@ -163,6 +183,15 @@ npm run deck:words:ready -- --levels=5
 npm run deck:words:completion:n5 -- --json
 npm run deck:words:reading-audit:n5
 npm run deck:words:triage:n5
+```
+
+N4 word startup checks:
+
+```bash
+npm run deck:words:ready -- --levels=4
+npm run deck:words:completion:n4 -- --json
+npm run deck:words:reading-audit:n4 -- --json
+npm run deck:words:triage:n4 -- --json
 ```
 
 If you change exported word behavior, do not trust the deck summary alone. Cross-check:

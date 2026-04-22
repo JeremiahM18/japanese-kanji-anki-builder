@@ -834,22 +834,48 @@
       "english": "I want to go abroad."
     }
   },
-  "外国人|がいこくじん": {
-    "written": "外国人",
-    "reading": "がいこくじん",
-    "meaning": "foreigner",
+    "外国人|がいこくじん": {
+      "written": "外国人",
+      "reading": "がいこくじん",
+      "meaning": "foreigner",
     "jlpt": 5,
     "tags": [
       "starter",
       "common",
       "n5"
     ],
-    "exampleSentence": {
-      "japanese": "あの外国人は日本語が上手です。",
-      "reading": "あのがいこくじんはにほんごがじょうずです。",
-      "english": "That foreigner is good at Japanese."
-    }
-  },
+      "exampleSentence": {
+        "japanese": "あの外国人は日本語が上手です。",
+        "reading": "あのがいこくじんはにほんごがじょうずです。",
+        "english": "That foreigner is good at Japanese."
+      }
+    },
+    "火山|かざん": {
+      "written": "火山",
+      "reading": "かざん",
+      "meaning": "volcano",
+      "jlpt": 5,
+      "tags": [
+        "starter",
+        "common",
+        "n5"
+      ],
+      "coverage": {
+        "role": "support",
+        "focusKanji": [
+          "山"
+        ],
+        "coversReadings": {
+          "山": "さん"
+        }
+      },
+      "notes": "Reading-coverage support word for the common 山 -> さん pattern.",
+      "exampleSentence": {
+        "japanese": "その島には大きい火山があります。",
+        "reading": "そのしまにはおおきいかざんがあります。",
+        "english": "There is a large volcano on that island."
+      }
+    },
   "外す|はずす": {
     "written": "外す",
     "reading": "はずす",
@@ -1620,22 +1646,48 @@
       "english": "That tall mountain is beautiful."
     }
   },
-  "高校|こうこう": {
-    "written": "高校",
-    "reading": "こうこう",
-    "meaning": "high school",
+    "高校|こうこう": {
+      "written": "高校",
+      "reading": "こうこう",
+      "meaning": "high school",
     "jlpt": 5,
     "tags": [
       "starter",
       "common",
       "n5"
     ],
-    "exampleSentence": {
-      "japanese": "姉は高校で勉強しています。",
-      "reading": "あねはこうこうでべんきょうしています。",
-      "english": "My older sister studies at high school."
-    }
-  },
+      "exampleSentence": {
+        "japanese": "姉は高校で勉強しています。",
+        "reading": "あねはこうこうでべんきょうしています。",
+        "english": "My older sister studies at high school."
+      }
+    },
+    "社長|しゃちょう": {
+      "written": "社長",
+      "reading": "しゃちょう",
+      "meaning": "company president",
+      "jlpt": 5,
+      "tags": [
+        "starter",
+        "common",
+        "n5"
+      ],
+      "coverage": {
+        "role": "support",
+        "focusKanji": [
+          "長"
+        ],
+        "coversReadings": {
+          "長": "ちょう"
+        }
+      },
+      "notes": "Reading-coverage support word for the common 長 -> ちょう pattern.",
+      "exampleSentence": {
+        "japanese": "社長は朝早く会社に来ます。",
+        "reading": "しゃちょうはあさはやくかいしゃにきます。",
+        "english": "The company president comes to the office early in the morning."
+      }
+    },
   "国|くに": {
     "written": "国",
     "reading": "くに",
@@ -3046,22 +3098,48 @@
       "english": "My mother cooks in the kitchen."
     }
   },
-  "大きい|おおきい": {
-    "written": "大きい",
-    "reading": "おおきい",
-    "meaning": "big / large",
+    "大きい|おおきい": {
+      "written": "大きい",
+      "reading": "おおきい",
+      "meaning": "big / large",
     "jlpt": 5,
     "tags": [
       "starter",
       "core",
       "n5"
     ],
-    "exampleSentence": {
-      "japanese": "このかばんは大きいです。",
-      "reading": "このかばんはおおきいです。",
-      "english": "This bag is big."
-    }
-  },
+      "exampleSentence": {
+        "japanese": "このかばんは大きいです。",
+        "reading": "このかばんはおおきいです。",
+        "english": "This bag is big."
+      }
+    },
+    "大変|たいへん": {
+      "written": "大変",
+      "reading": "たいへん",
+      "meaning": "very / difficult / serious",
+      "jlpt": 5,
+      "tags": [
+        "starter",
+        "common",
+        "n5"
+      ],
+      "coverage": {
+        "role": "support",
+        "focusKanji": [
+          "大"
+        ],
+        "coversReadings": {
+          "大": "たい"
+        }
+      },
+      "notes": "Reading-coverage support word for the common 大 -> たい pattern.",
+      "exampleSentence": {
+        "japanese": "この宿題は大変です。",
+        "reading": "このしゅくだいはたいへんです。",
+        "english": "This homework is tough."
+      }
+    },
   "大学|だいがく": {
     "written": "大学",
     "reading": "だいがく",
@@ -3151,10 +3229,10 @@
       }
     }
   },
-  "中国|ちゅうごく": {
-    "written": "中国",
-    "reading": "ちゅうごく",
-    "meaning": "China",
+    "中国|ちゅうごく": {
+      "written": "中国",
+      "reading": "ちゅうごく",
+      "meaning": "China",
     "jlpt": 5,
     "tags": [
       "starter",
@@ -3171,12 +3249,38 @@
       }
     },
     "notes": "Reading-coverage support word for the common 中 -> ちゅう pattern.",
-    "exampleSentence": {
-      "japanese": "友だちは中国の料理が好きです。",
-      "reading": "ともだちはちゅうごくのりょうりがすきです。",
-      "english": "My friend likes Chinese food."
-    }
-  },
+      "exampleSentence": {
+        "japanese": "友だちは中国の料理が好きです。",
+        "reading": "ともだちはちゅうごくのりょうりがすきです。",
+        "english": "My friend likes Chinese food."
+      }
+    },
+    "二日|ふつか": {
+      "written": "二日",
+      "reading": "ふつか",
+      "meaning": "the second day / two days",
+      "jlpt": 5,
+      "tags": [
+        "starter",
+        "common",
+        "n5"
+      ],
+      "coverage": {
+        "role": "support",
+        "focusKanji": [
+          "日"
+        ],
+        "coversReadings": {
+          "日": "か"
+        }
+      },
+      "notes": "Reading-coverage support word for the common 日 -> か date pattern.",
+      "exampleSentence": {
+        "japanese": "会議は二日にあります。",
+        "reading": "かいぎはふつかにあります。",
+        "english": "The meeting is on the second."
+      }
+    },
   "昼ご飯|ひるごはん": {
     "written": "昼ご飯",
     "reading": "ひるごはん",
@@ -3767,22 +3871,48 @@
       "english": "I put the book into my bag."
     }
   },
-  "入る|はいる": {
-    "written": "入る",
-    "reading": "はいる",
-    "meaning": "to enter / go in",
+    "入る|はいる": {
+      "written": "入る",
+      "reading": "はいる",
+      "meaning": "to enter / go in",
     "jlpt": 5,
     "tags": [
       "starter",
       "common",
       "n5"
     ],
-    "exampleSentence": {
-      "japanese": "教室に入る前にノックします。",
-      "reading": "きょうしつにはいるまえにのっくします。",
-      "english": "I knock before entering the classroom."
-    }
-  },
+      "exampleSentence": {
+        "japanese": "教室に入る前にノックします。",
+        "reading": "きょうしつにはいるまえにのっくします。",
+        "english": "I knock before entering the classroom."
+      }
+    },
+    "入学|にゅうがく": {
+      "written": "入学",
+      "reading": "にゅうがく",
+      "meaning": "school enrollment / entering school",
+      "jlpt": 5,
+      "tags": [
+        "starter",
+        "common",
+        "n5"
+      ],
+      "coverage": {
+        "role": "support",
+        "focusKanji": [
+          "入"
+        ],
+        "coversReadings": {
+          "入": "にゅう"
+        }
+      },
+      "notes": "Reading-coverage support word for the common 入 -> にゅう pattern.",
+      "exampleSentence": {
+        "japanese": "四月に小学校へ入学します。",
+        "reading": "しがつにしょうがっこうへにゅうがくします。",
+        "english": "I will enter elementary school in April."
+      }
+    },
   "入口|いりぐち": {
     "written": "入口",
     "reading": "いりぐち",

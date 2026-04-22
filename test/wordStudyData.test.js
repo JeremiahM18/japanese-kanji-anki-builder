@@ -304,6 +304,36 @@ test("tracked starter word data includes the fifth governed N4 completion batch"
     assert.equal(starterEntries["使い方|つかいかた"].coverage.coversReadings["方"], "かた");
 });
 
+test("tracked starter word data includes the sixth governed N4 completion batch", () => {
+    const starterEntries = loadWordStudyData({
+        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
+        localPath: null,
+    });
+
+    assert.equal(starterEntries["親切|しんせつ"].coverage.coversReadings["親"], "しん");
+    assert.equal(starterEntries["親切|しんせつ"].coverage.coversReadings["切"], "せつ");
+    assert.equal(starterEntries["世の中|よのなか"].coverage.coversReadings["世"], "よ");
+    assert.equal(starterEntries["正午|しょうご"].coverage.coversReadings["正"], "しょう");
+    assert.equal(starterEntries["切る|きる"].coverage.coversReadings["切"], "きる");
+    assert.equal(starterEntries["大切|たいせつ"].coverage.coversReadings["切"], "せつ");
+    assert.equal(starterEntries["多分|たぶん"].coverage.coversReadings["多"], "た");
+    assert.equal(starterEntries["体|からだ"].coverage.coversReadings["体"], "からだ");
+    assert.equal(starterEntries["体調|たいちょう"].coverage.coversReadings["体"], "たい");
+    assert.equal(starterEntries["時代|じだい"].coverage.coversReadings["代"], "だい");
+    assert.equal(starterEntries["知らせる|しらせる"].coverage.coversReadings["知"], "しらせる");
+    assert.equal(starterEntries["競走|きょうそう"].coverage.coversReadings["走"], "そう");
+    assert.equal(starterEntries["送る|おくる"].coverage.coversReadings["送"], "おくる");
+    assert.equal(starterEntries["正しい|ただしい"].coverage.coversReadings["正"], "ただしい");
+    assert.equal(starterEntries["試す|ためす"].coverage.coversReadings["試"], "ためす");
+    assert.equal(starterEntries["試験|しけん"].coverage.coversReadings["験"], "けん");
+    assert.equal(starterEntries["練習|れんしゅう"].coverage.coversReadings["習"], "しゅう");
+    assert.equal(starterEntries["習う|ならう"].coverage.coversReadings["習"], "ならう");
+    assert.equal(starterEntries["近所|きんじょ"].coverage.coversReadings["近"], "きん");
+    assert.equal(starterEntries["郵便局|ゆうびんきょく"].coverage.coversReadings["局"], "きょく");
+    assert.equal(starterEntries["自由|じゆう"].coverage.coversReadings["自"], "じ");
+    assert.equal(starterEntries["集める|あつめる"].coverage.coversReadings["集"], "あつめる");
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadWordStudyData({
         starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),

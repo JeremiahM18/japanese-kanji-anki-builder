@@ -189,9 +189,14 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
     assert.equal(starterEntries["語る|かたる"].coverage.coversReadings["語"], "かたる");
     assert.equal(starterEntries["下町|したまち"].coverage.coversReadings["下"], "しも");
     assert.equal(starterEntries["外科|げか"].coverage.coversReadings["外"], "げ");
+    assert.equal(starterEntries["外れる|はずれる"].coverage.coversReadings["外"], "はずれる");
     assert.equal(starterEntries["行う|おこなう"].coverage.coversReadings["行"], "おこなう");
     assert.equal(starterEntries["生ビール|なまびーる"].coverage.coversReadings["生"], "なま");
     assert.equal(starterEntries["西瓜|すいか"].coverage.coversReadings["西"], "す");
+    assert.equal(starterEntries["手間|てま"].coverage.coversReadings["間"], "ま");
+    assert.equal(starterEntries["白紙|はくし"].coverage.coversReadings["白"], "はく");
+    assert.equal(starterEntries["音読|おんどく"].coverage.coversReadings["読"], "とう");
+    assert.equal(starterEntries["万事|ばんじ"].coverage.coversReadings["万"], "ばん");
     assert.equal(starterEntries["四月|しがつ"].coverage.role, "support");
     assert.equal(starterEntries["四月|しがつ"].coverage.coversReadings["四"], "し");
     assert.equal(starterEntries["五月|ごがつ"].coverage.coversReadings["月"], "がつ");

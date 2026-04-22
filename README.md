@@ -288,6 +288,8 @@ The smoke and release-gate jobs keep their generated `out/` trees as workflow ar
 
 The checked-in policy files in [.github/CODEOWNERS](.github/CODEOWNERS) and [docs/branch-protection.md](docs/branch-protection.md) are treated as part of the repo contract and are covered by automated tests.
 
+AI-assisted changes should also follow the repo-specific guardrails in [CLAUDE.md](C:\Users\cover\Projects\Active\Fullstack\japanese_kanji_builder\CLAUDE.md), especially for JLPT taxonomy, N5-before-N4 sequencing, and the word-deck reading-coverage contract.
+
 ## Release process
 
 Tagged releases should follow [docs/release-process.md](docs/release-process.md), keep [CHANGELOG.md](CHANGELOG.md) current, and use `v<package.json version>` tags so version metadata, docs, and workflow triggers stay aligned.

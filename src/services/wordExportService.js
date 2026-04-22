@@ -13,6 +13,7 @@ const { tsvEscape } = require("../utils/text");
 const { HAN_CHAR_RE, KATAKANA_ONLY_RE } = require("../utils/japanese");
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
+const { findManagedWordAudioAsset } = require("./wordAudioService");
 
 const WORD_FIELD_NAMES = loadAnkiNoteSchema("word").fieldNames;
 const EXCLUDED_WORD_CARD_TAGS = new Set(["phrase"]);
@@ -72,6 +73,38 @@ function buildWordKey(candidate) {
 
 function buildWordNotes(curatedEntry) {
     return String(curatedEntry?.notes || "").trim();
+}
+
+async function resolveWordAudioReference({ candidate, focusKanji, audioService }) {
+    if (!audioService) {
+        return {
+            audioField: "",
+            mediaRefs: [],
+        };
+    }
+
+    const { kanji, asset } = await findManagedWordAudioAsset({
+        written: candidate?.written,
+        reading: candidate?.pron,
+        focusKanji,
+        audioService,
+    });
+
+    if (!asset?.path || !kanji) {
+        return {
+            audioField: "",
+            mediaRefs: [],
+        };
+    }
+
+    return {
+        audioField: formatAnkiAudioField(asset.path),
+        mediaRefs: [{
+            kind: "audio",
+            kanji,
+            relativePath: asset.path,
+        }],
+    };
 }
 
 function summarizeCoverageRole(entry, jlptWordLevelContract) {
@@ -924,6 +957,7 @@ function createWordExportService({
 
         const rows = [];
         const mediaKanji = new Set();
+        const mediaRefs = [];
         const sortedEntries = [...wordCandidates.values()].sort((a, b) => (
             (b.candidate.score || 0) - (a.candidate.score || 0)
             || a.candidate.written.length - b.candidate.written.length
@@ -968,15 +1002,25 @@ function createWordExportService({
                 constituentKanji,
                 sentenceCorpus,
             }));
+            const wordAudio = await resolveWordAudioReference({
+                candidate: {
+                    written: entry.candidate.written,
+                    pron: entry.curatedEntry?.reading || entry.candidate.pron,
+                },
+                focusKanji: coverageMetadata.focusKanji,
+                audioService,
+            });
             const trustedLevel = getTrustedCandidateLevel({
                 candidate: entry.candidate,
                 curatedEntry: entry.curatedEntry,
                 jlptWordLevelContract,
             });
+            mediaRefs.push(...wordAudio.mediaRefs);
 
             rows.push([
                 entry.candidate.written,
                 entry.curatedEntry?.reading || entry.candidate.pron,
+                wordAudio.audioField,
                 entry.curatedEntry?.meaning || entry.candidate.gloss,
                 buildJlptLabel(trustedLevel),
                 summarizeCoverageRole(entry, jlptWordLevelContract),
@@ -992,6 +1036,7 @@ function createWordExportService({
             header: WORD_FIELD_NAMES.join("\t"),
             rows,
             mediaKanji: [...mediaKanji].sort(),
+            mediaRefs,
             governance: buildWordDeckGovernanceSummary(sortedEntries, jlptWordLevelContract),
         };
     }
@@ -1001,6 +1046,7 @@ function createWordExportService({
         return {
             tsv: [result.header, ...result.rows].join("\n"),
             mediaKanji: result.mediaKanji,
+            mediaRefs: result.mediaRefs,
             rowCount: result.rows.length,
             governance: result.governance,
         };

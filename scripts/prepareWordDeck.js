@@ -8,9 +8,11 @@ const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const { loadWordStudyData } = require("../src/datasets/wordStudyData");
 const { loadJlptWordLevelContract } = require("../src/datasets/jlptWordLevelContract");
 const { loadJlptLevelContract } = require("../src/datasets/jlptLevelContract");
+const { loadAudioSourcePolicy } = require("../src/datasets/audioSourcePolicy");
 const { buildWordCoverageContractSummary } = require("../src/datasets/wordStudyData");
 const { buildStarterWordGovernanceSummary } = require("../src/datasets/jlptWordLevelContract");
 const { buildWordDeckCompletionReport } = require("../src/services/wordDeckCompletionService");
+const { buildWordAudioReviewReport } = require("../src/services/wordAudioReviewService");
 const { buildSelectedKanjiByLevel, parseLevelsArgument } = require("../src/services/buildPipeline");
 const { buildDeckPackage } = require("../src/services/deckPackageService");
 const { createMediaServices } = require("../src/services/mediaServiceFactory");
@@ -94,6 +96,7 @@ function formatWordDeckReadyReport(summary, doctorReport) {
         ? summary.levels.flatMap((level) => {
             const audit = summary.completion.readingCoverageAuditByLevel[`N${level}`];
             const triage = summary.completion.readingGapTriageByLevel?.[`N${level}`];
+            const wordAudio = summary.completion.wordAudioReviewByLevel?.[`N${level}`];
             if (!audit) {
                 return [];
             }
@@ -111,6 +114,9 @@ function formatWordDeckReadyReport(summary, doctorReport) {
                     : []),
                 ...(audit.sentenceOrthographyAudit
                     ? [`  sentence orthography review: ${audit.sentenceOrthographyAudit.suspiciousKanaOnlyCount} suspicious kana-only examples`]
+                    : []),
+                ...(wordAudio
+                    ? [`  word audio review: ${wordAudio.coveragePercent}% (${wordAudio.readyToReview}/${wordAudio.totalWords}) ready, ${wordAudio.missingAudio} missing, ${wordAudio.readingMismatch + wordAudio.policyMismatch + wordAudio.missingGeneratedReading + wordAudio.missingExpectedReading} flagged`]
                     : []),
                 ...(triage
                     ? [`  triage backlog: ${triage.editorialReviewItems} editorial review, ${triage.promoteCuratedExampleItems} promote curated example, ${triage.deferVariantItems} defer variant`]
@@ -160,6 +166,7 @@ async function main() {
     const config = loadConfig();
     const options = parseArgs(process.argv.slice(2));
     assertNoUnknownArgs("prepareWordDeck", options.unknownArgs);
+    const audioSourcePolicy = loadAudioSourcePolicy();
 
     const doctorReport = await buildDoctorReport({ config });
     if (!doctorReport.ready) {
@@ -212,6 +219,7 @@ async function main() {
     const exports = [];
     const readingCoverageAuditByLevel = {};
     const readingGapTriageByLevel = {};
+    const wordAudioReviewByLevel = {};
     for (const level of levels) {
         const result = await wordExportService.buildWordTsvForJlptLevel({
             levelNumber: level,
@@ -245,12 +253,27 @@ async function main() {
             readingCoverageAuditByLevel[`N${level}`].policyAudit = completionReport.policyAudit;
             readingCoverageAuditByLevel[`N${level}`].sentenceOrthographyAudit = completionReport.sentenceOrthographyAudit;
         }
+        if (audioSourcePolicy.releaseAudio.wordDeckAudioEnabled) {
+            const wordAudioReport = await buildWordAudioReviewReport({
+                wordTsv: result.tsv,
+                audioSourcePolicy,
+                audioService,
+                mediaRootDir: config.mediaRootDir,
+            });
+            wordAudioReviewByLevel[`N${level}`] = {
+                ...wordAudioReport.summary,
+                coveragePercent: wordAudioReport.summary.totalWords > 0
+                    ? Number(((wordAudioReport.summary.readyToReview / wordAudioReport.summary.totalWords) * 100).toFixed(1))
+                    : 0,
+            };
+        }
 
         exports.push({
             level,
             filePath,
             rows: result.rowCount,
             mediaKanji: result.mediaKanji,
+            mediaRefs: result.mediaRefs,
             governance: result.governance,
         });
     }
@@ -262,6 +285,7 @@ async function main() {
         mediaRootDir: config.mediaRootDir,
         packageConcurrency: concurrency,
         deckKind: "word",
+        referencedMedia: exports.flatMap((artifact) => artifact.mediaRefs || []),
     });
 
     const summary = {
@@ -285,6 +309,7 @@ async function main() {
             readingCoverageContract,
             readingCoverageAuditByLevel,
             readingGapTriageByLevel,
+            wordAudioReviewByLevel,
             trueAnimationCoverage: {
                 coveredKanji: deckPackage.mediaCounts.trueStrokeOrderAnimation,
                 totalKanji: [...new Set(exports.flatMap((artifact) => artifact.mediaKanji || []))].length,

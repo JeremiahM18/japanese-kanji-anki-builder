@@ -65,8 +65,8 @@ test("buildWordDeckCompletionReport combines canonical inventory and reading cov
             "日\t日\t日 （ひ） ／ day\tひ\t\tくん: ひ\t\t\t\t\t\t今日 （きょう） - today\t",
         ].join("\n"),
         wordTsv: [
-            "Word\tReading\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes",
-            "今日\tきょう\ttoday\tJLPT N5\tJLPT core + reading coverage\t今、日\t今: いま ／ 日: ひ\t\t\t",
+            "Word\tReading\tAudio\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes",
+            "今日\tきょう\t\ttoday\tJLPT N5\tJLPT core + reading coverage\t今、日\t今: いま ／ 日: ひ\t\t\t",
         ].join("\n"),
     });
 

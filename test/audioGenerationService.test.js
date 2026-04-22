@@ -5,8 +5,10 @@ const os = require("node:os");
 const path = require("node:path");
 
 const {
+    buildWordAudioSourceFileName,
     buildVoicevoxSpeakerLabel,
     formatVoicevoxGenerationSummary,
+    generateVoicevoxAudioForWordList,
     generateVoicevoxAudioForKanjiList,
     normalizeKanaReading,
     selectPreferredAudioReading,
@@ -96,6 +98,17 @@ test("buildVoicevoxSpeakerLabel resolves the configured speaker style", () => {
     ], 7);
 
     assert.equal(label, "女声1 / ノーマル");
+});
+
+test("buildWordAudioSourceFileName creates a stable host-word-reading stem", () => {
+    assert.equal(
+        buildWordAudioSourceFileName({
+            hostKanji: "時",
+            written: "時間",
+            reading: "じかん",
+        }),
+        "時-時間-じかん.wav"
+    );
 });
 
 test("writeAudioSourceSidecar stores provenance next to generated audio", () => {
@@ -244,6 +257,46 @@ test("generateVoicevoxAudioForKanjiList falls back to the policy speaker name wh
         const sidecar = JSON.parse(fs.readFileSync(path.join(rootDir, "audio", "日.json"), "utf-8"));
         assert.equal(sidecar.voice, "女声1");
         assert.equal(sidecar.reading, "ひ");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+test("generateVoicevoxAudioForWordList writes governed word-reading audio sidecars", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const summary = await generateVoicevoxAudioForWordList({
+            words: [{
+                written: "時間",
+                reading: "じかん",
+                hostKanji: "時",
+            }],
+            config: {
+                audioSourceDir: path.join(rootDir, "audio"),
+                exportConcurrency: 1,
+                voicevoxEngineUrl: "http://127.0.0.1:50021",
+            },
+            speakerId: 10005,
+            fallbackVoiceLabel: "女声1",
+            voicevoxClient: {
+                async listSpeakers() {
+                    return [{ name: "女声1", styles: [{ id: 10005, name: "ノーマル" }] }];
+                },
+                async synthesize({ text, speakerId }) {
+                    return Buffer.from(`${speakerId}:${text}`);
+                },
+            },
+        });
+
+        assert.equal(summary.generated, 1);
+        assert.equal(summary.failed, 0);
+        assert.equal(fs.existsSync(path.join(rootDir, "audio", "時-時間-じかん.wav")), true);
+        const sidecar = JSON.parse(fs.readFileSync(path.join(rootDir, "audio", "時-時間-じかん.json"), "utf-8"));
+        assert.equal(sidecar.category, "word-reading");
+        assert.equal(sidecar.text, "時間");
+        assert.equal(sidecar.reading, "じかん");
+        assert.equal(sidecar.voice, "女声1 / ノーマル");
     } finally {
         cleanupTempDir(rootDir);
     }

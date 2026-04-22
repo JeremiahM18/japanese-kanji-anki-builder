@@ -1,0 +1,109 @@
+const test = require("node:test");
+const assert = require("node:assert/strict");
+
+const { buildWordAudioReviewReport } = require("../src/services/wordAudioReviewService");
+const { loadAudioSourcePolicy } = require("../src/datasets/audioSourcePolicy");
+
+test("buildWordAudioReviewReport validates managed word-reading audio against built word rows", async () => {
+    const report = await buildWordAudioReviewReport({
+        wordTsv: [
+            "Word\tReading\tAudio\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes",
+            "時間\tじかん\t[sound:6642_時-word-reading-時間-じかん.wav]\ttime\tJLPT N5\tJLPT core + reading coverage\t時\t時: じ\t\t\t",
+            "子猫\tこねこ\t[sound:5B50_子-word-reading-子猫-こねこ.wav]\tkitten\tJLPT N5\tReading coverage support\t子\t子: こ\t\t\t",
+        ].join("\n"),
+        audioSourcePolicy: loadAudioSourcePolicy(),
+        audioService: {
+            async getManifest(kanji) {
+                if (kanji === "時") {
+                    return {
+                        assets: {
+                            audio: [{
+                                path: "audio/6642_時-word-reading-時間-じかん.wav",
+                                source: "voicevox-nemo",
+                                category: "word-reading",
+                                text: "時間",
+                                reading: "じかん",
+                                voice: "女声1 / ノーマル",
+                                locale: "ja-JP",
+                            }],
+                        },
+                    };
+                }
+                if (kanji === "子") {
+                    return {
+                        assets: {
+                            audio: [{
+                                path: "audio/5B50_子-word-reading-子猫-こねこ.wav",
+                                source: "voicevox-nemo",
+                                category: "word-reading",
+                                text: "子猫",
+                                reading: "こねこ",
+                                voice: "女声1 / ノーマル",
+                                locale: "ja-JP",
+                            }],
+                        },
+                    };
+                }
+                return null;
+            },
+        },
+        mediaRootDir: "C:/repo/data/media",
+    });
+
+    assert.equal(report.summary.totalWords, 2);
+    assert.equal(report.summary.readyToReview, 2);
+    assert.equal(report.summary.missingAudio, 0);
+    assert.equal(report.summary.readingMismatch, 0);
+    assert.equal(report.rows[0].status, "ready_to_review");
+});
+
+test("buildWordAudioReviewReport flags missing managed word-reading audio", async () => {
+    const report = await buildWordAudioReviewReport({
+        wordTsv: [
+            "Word\tReading\tAudio\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes",
+            "時間\tじかん\t\ttime\tJLPT N5\tJLPT core + reading coverage\t時\t時: じ\t\t\t",
+        ].join("\n"),
+        audioSourcePolicy: loadAudioSourcePolicy(),
+        audioService: {
+            async getManifest() {
+                return { assets: { audio: [] } };
+            },
+        },
+        mediaRootDir: "C:/repo/data/media",
+    });
+
+    assert.equal(report.summary.totalWords, 1);
+    assert.equal(report.summary.missingAudio, 1);
+    assert.equal(report.rows[0].status, "missing_audio");
+});
+
+test("buildWordAudioReviewReport does not treat kanji-reading audio as word audio", async () => {
+    const report = await buildWordAudioReviewReport({
+        wordTsv: [
+            "Word\tReading\tAudio\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes",
+            "日\tひ\t\tday\tJLPT N5\tJLPT core + reading coverage\t日\t日: ひ\t\t\t",
+        ].join("\n"),
+        audioSourcePolicy: loadAudioSourcePolicy(),
+        audioService: {
+            async getManifest() {
+                return {
+                    assets: {
+                        audio: [{
+                            path: "audio/65E5_日-kanji-reading-日-ひ.wav",
+                            source: "voicevox-nemo",
+                            category: "kanji-reading",
+                            text: "日",
+                            reading: "ひ",
+                            voice: "女声1 / ノーマル",
+                            locale: "ja-JP",
+                        }],
+                    },
+                };
+            },
+        },
+        mediaRootDir: "C:/repo/data/media",
+    });
+
+    assert.equal(report.summary.missingAudio, 1);
+    assert.equal(report.rows[0].status, "missing_audio");
+});

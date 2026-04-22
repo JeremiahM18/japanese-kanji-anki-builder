@@ -76,6 +76,7 @@ test("loadAnkiNoteSchema can load the shared word note contract", () => {
     assert.deepEqual(schema.fieldNames, [
         "Word",
         "Reading",
+        "Audio",
         "Meaning",
         "JLPTLevel",
         "CoverageRole",
@@ -328,8 +329,8 @@ test("buildWordTsvForJlptLevel leaves JLPTLevel blank for inferred-only explorat
 
     const [, row] = tsv.split(/\r?\n/);
     const columns = row.split("\t");
-    assert.equal(columns[3], "");
-    assert.equal(columns[4], "Inferred support word");
+    assert.equal(columns[4], "");
+    assert.equal(columns[5], "Inferred support word");
 });
 
 test("normalizeBreakdownReadingField strips internal reading prefixes for learner-facing output", () => {
@@ -861,9 +862,9 @@ test("buildWordTsvForJlptLevel prefers curated N5 word entries and suppresses un
 
     const lines = result.tsv.trim().split("\n");
     assert.equal(lines[0], loadAnkiNoteSchema("word").fieldNames.join("\t"));
-    assert.match(result.tsv, /^今日\tきょう\ttoday\tJLPT N5\t/m);
-    assert.match(result.tsv, /^今年\tことし\tthis year\tJLPT N5\t/m);
-    assert.match(result.tsv, /^先生\tせんせい\tteacher\tJLPT N5\t/m);
+    assert.match(result.tsv, /^今日\tきょう\t\ttoday\tJLPT N5\t/m);
+    assert.match(result.tsv, /^今年\tことし\t\tthis year\tJLPT N5\t/m);
+    assert.match(result.tsv, /^先生\tせんせい\t\tteacher\tJLPT N5\t/m);
     assert.doesNotMatch(result.tsv, /^今日\tこんにち\t/m);
     assert.doesNotMatch(result.tsv, /^先生\tせんしょう\t/m);
     assert.match(result.tsv, /Irregular reading\./);
@@ -906,7 +907,7 @@ test("buildWordTsvForJlptLevel excludes curated phrase-tagged entries from the d
         concurrency: 1,
     });
 
-    assert.match(result.tsv, /^山\tやま\tmountain\tJLPT N5\t/m);
+    assert.match(result.tsv, /^山\tやま\t\tmountain\tJLPT N5\t/m);
     assert.doesNotMatch(result.tsv, /^高い山\tたかいやま\thigh mountain\tJLPT N5\t/m);
 });
 
@@ -945,7 +946,7 @@ test("buildWordTsvForJlptLevel excludes stale compositional phrase entries even 
         concurrency: 1,
     });
 
-    assert.match(result.tsv, /^高い\tたかい\thigh \/ expensive\tJLPT N5\t/m);
+    assert.match(result.tsv, /^高い\tたかい\t\thigh \/ expensive\tJLPT N5\t/m);
     assert.doesNotMatch(result.tsv, /^高い山\tたかいやま\thigh mountain\tJLPT N5\t/m);
 });
 
@@ -1010,7 +1011,7 @@ test("buildWordTsvForJlptLevel includes explicit learner-facing coverage metadat
     });
 
     const lines = result.tsv.trim().split("\n");
-    assert.equal(lines[0], "Word\tReading\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes");
+    assert.equal(lines[0], "Word\tReading\tAudio\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes");
     assert.match(lines[1], /\tJLPT core \+ reading coverage\t/);
     assert.match(lines[1], /\t時\t/);
     assert.match(lines[1], /\t時: じ\t/);
@@ -1018,6 +1019,82 @@ test("buildWordTsvForJlptLevel includes explicit learner-facing coverage metadat
     assert.match(lines[1], /Stroke order/);
     assert.match(lines[1], /時\.gif/);
     assert.match(lines[1], /間\.gif/);
+});
+
+test("buildWordTsvForJlptLevel emits governed word audio when a managed word-reading asset exists", async () => {
+    const wordExportService = createWordExportService({
+        sentenceCorpus: [],
+        curatedStudyData: {},
+        wordStudyData: {
+            "時間|じかん": {
+                written: "時間",
+                reading: "じかん",
+                meaning: "time / hour",
+                jlpt: 5,
+                coverage: {
+                    role: "both",
+                    focusKanji: ["時"],
+                    coversReadings: {
+                        時: "じ",
+                    },
+                },
+            },
+        },
+    });
+
+    const result = await wordExportService.buildWordTsvForJlptLevel({
+        levelNumber: 5,
+        jlptOnlyJson: {
+            時: { jlpt: 5 },
+            間: { jlpt: 4 },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {
+                "時間|じかん": { written: "時間", reading: "じかん", jlpt: 5 },
+            },
+        },
+        kanjiApiClient: {
+            async getKanji(kanji) {
+                if (kanji === "時") {
+                    return { meanings: ["time"], on_readings: ["ジ"], kun_readings: ["とき"] };
+                }
+                return { meanings: ["interval"], on_readings: ["カン"], kun_readings: ["あいだ"] };
+            },
+            async getWords() {
+                return [];
+            },
+        },
+        audioService: {
+            async getManifest(kanji) {
+                if (kanji !== "時") {
+                    return null;
+                }
+                return {
+                    assets: {
+                        audio: [{
+                            path: "audio/6642_時-word-reading-時間-じかん.wav",
+                            category: "word-reading",
+                            text: "時間",
+                            reading: "じかん",
+                            voice: "女声1 / ノーマル",
+                            source: "voicevox-nemo",
+                            locale: "ja-JP",
+                        }],
+                    },
+                };
+            },
+        },
+        concurrency: 1,
+    });
+
+    const lines = result.tsv.trim().split("\n");
+    const columns = lines[1].split("\t");
+    assert.equal(columns[2], "[sound:6642_時-word-reading-時間-じかん.wav]");
+    assert.deepEqual(result.mediaRefs, [{
+        kind: "audio",
+        kanji: "時",
+        relativePath: "audio/6642_時-word-reading-時間-じかん.wav",
+    }]);
 });
 
 test("buildWordTsvForJlptLevel supports higher-level constituent kanji when support words fall back offline", async () => {
@@ -1143,7 +1220,7 @@ test("buildWordTsvForJlptLevel excludes standalone higher-level kanji from lower
     });
 
     assert.doesNotMatch(result.tsv, /^兄\tあに\tolder brother\t/m);
-    assert.match(result.tsv, /^子猫\tこねこ\tkitten\tJLPT N5\t/m);
+    assert.match(result.tsv, /^子猫\tこねこ\t\tkitten\tJLPT N5\t/m);
     assert.match(result.tsv, /JLPT N4 kanji/u);
 });
 
@@ -1186,7 +1263,7 @@ test("buildWordTsvForJlptLevel uses the canonical word-level contract before con
         concurrency: 1,
     });
 
-    assert.match(result.tsv, /^今年\tことし\tthis year\tJLPT N5\t/m);
+    assert.match(result.tsv, /^今年\tことし\t\tthis year\tJLPT N5\t/m);
     assert.deepEqual(result.governance, {
         rowCount: 1,
         canonicalRows: 1,
@@ -1243,6 +1320,6 @@ test("buildWordTsvForJlptLevel does not let a stale curated JLPT tag override th
     });
 
     assert.doesNotMatch(n4Result.tsv, /^今年\tことし\tthis year\tJLPT N4\t/m);
-    assert.match(n5Result.tsv, /^今年\tことし\tthis year\tJLPT N5\t/m);
+    assert.match(n5Result.tsv, /^今年\tことし\t\tthis year\tJLPT N5\t/m);
 });
 

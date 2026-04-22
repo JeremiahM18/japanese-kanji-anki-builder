@@ -162,6 +162,50 @@ async function collectPackageAssets({ kanjiList, mediaRootDir, strokeOrderServic
     };
 }
 
+async function collectExplicitReferencedAssets({ referencedMedia = [], mediaRootDir }) {
+    const assets = new Map();
+    const mediaCounts = createEmptyMediaCounts();
+
+    for (const reference of Array.isArray(referencedMedia) ? referencedMedia : []) {
+        const kanji = String(reference?.kanji || "").trim();
+        const relativePath = String(reference?.relativePath || "").trim();
+        const kind = String(reference?.kind || "").trim();
+        if (!kanji || !relativePath || !kind) {
+            continue;
+        }
+
+        const absolutePath = resolveManagedAssetAbsolutePath(mediaRootDir, kanji, relativePath);
+        if (!absolutePath || !fs.existsSync(absolutePath)) {
+            continue;
+        }
+
+        mediaCounts[kind] += 1;
+        if (kind === "strokeOrderAnimation") {
+            if (isTrueAnimatedStrokeOrderPath(relativePath)) {
+                mediaCounts.trueStrokeOrderAnimation += 1;
+            } else {
+                mediaCounts.svgStrokeOrderAnimationFallback += 1;
+            }
+        }
+
+        const fileName = path.basename(relativePath);
+        if (!assets.has(fileName)) {
+            assets.set(fileName, {
+                kind,
+                kanji,
+                fileName,
+                sourcePath: absolutePath,
+                relativePath,
+            });
+        }
+    }
+
+    return {
+        assets: [...assets.values()].sort((a, b) => a.fileName.localeCompare(b.fileName)),
+        mediaCounts,
+    };
+}
+
 function collectReferencedKanji({ exports, kanjiByLevel }) {
     const exportReferenced = (Array.isArray(exports) ? exports : [])
         .flatMap((artifact) => Array.isArray(artifact?.mediaKanji) ? artifact.mediaKanji : []);
@@ -184,6 +228,7 @@ async function buildDeckPackage({
     audioService = null,
     packageConcurrency = 8,
     deckKind = "kanji",
+    referencedMedia = [],
 }) {
     const packagePaths = buildDeckPackagePaths(outDir);
     ensureDir(packagePaths.rootDir);
@@ -209,8 +254,27 @@ async function buildDeckPackage({
         audioService,
         concurrency: packageConcurrency,
     });
+    const explicitReferencedAssets = await collectExplicitReferencedAssets({
+        referencedMedia,
+        mediaRootDir,
+    });
+    const mergedAssetMap = new Map(assets.map((asset) => [asset.fileName, asset]));
+    for (const asset of explicitReferencedAssets.assets) {
+        if (!mergedAssetMap.has(asset.fileName)) {
+            mergedAssetMap.set(asset.fileName, asset);
+        }
+    }
+    const mergedMediaCounts = {
+        strokeOrder: mediaCounts.strokeOrder + explicitReferencedAssets.mediaCounts.strokeOrder,
+        strokeOrderImage: mediaCounts.strokeOrderImage + explicitReferencedAssets.mediaCounts.strokeOrderImage,
+        strokeOrderAnimation: mediaCounts.strokeOrderAnimation + explicitReferencedAssets.mediaCounts.strokeOrderAnimation,
+        trueStrokeOrderAnimation: mediaCounts.trueStrokeOrderAnimation + explicitReferencedAssets.mediaCounts.trueStrokeOrderAnimation,
+        svgStrokeOrderAnimationFallback: mediaCounts.svgStrokeOrderAnimationFallback + explicitReferencedAssets.mediaCounts.svgStrokeOrderAnimationFallback,
+        audio: mediaCounts.audio + explicitReferencedAssets.mediaCounts.audio,
+    };
+    const mergedAssets = [...mergedAssetMap.values()].sort((a, b) => a.fileName.localeCompare(b.fileName));
 
-    await mapWithConcurrency(assets, packageConcurrency, async (asset) => {
+    await mapWithConcurrency(mergedAssets, packageConcurrency, async (asset) => {
         await copyFileIntoPackage(asset.sourcePath, path.join(packagePaths.mediaDir, asset.fileName));
     });
 
@@ -235,10 +299,10 @@ async function buildDeckPackage({
         mediaDir: packagePaths.mediaDir,
         readmePath: packagePaths.readmePath,
         exportCount: exports.length,
-        mediaAssetCount: assets.length,
-        mediaCounts,
+        mediaAssetCount: mergedAssets.length,
+        mediaCounts: mergedMediaCounts,
         ankiPackage,
-        assets,
+        assets: mergedAssets,
     };
 
     await fsp.writeFile(packagePaths.summaryPath, `${JSON.stringify(summary, null, 2)}\n`, "utf-8");

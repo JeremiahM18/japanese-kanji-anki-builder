@@ -7,6 +7,7 @@ const path = require("node:path");
 const {
     buildAudioFileCandidates,
     createAudioService,
+    findReusableManagedAudioAsset,
     selectBestAudioAsset,
 } = require("../src/services/audioService");
 const { createStrokeOrderService } = require("../src/services/strokeOrderService");
@@ -33,6 +34,20 @@ test("buildAudioFileCandidates includes kanji text and reading-based variants", 
     assert.equal(candidates.includes("日_にほん"), true);
 });
 
+test("buildAudioFileCandidates skips generic bare-kanji candidates for governed multi-kanji word imports", () => {
+    const candidates = buildAudioFileCandidates({
+        kanji: "時",
+        text: "時間",
+        reading: "じかん",
+        category: "word-reading",
+    });
+
+    assert.equal(candidates.includes("時"), false);
+    assert.equal(candidates.includes("時間"), true);
+    assert.equal(candidates.includes("時-時間"), true);
+    assert.equal(candidates.includes("時-時間-じかん"), true);
+});
+
 test("selectBestAudioAsset prefers kanji reading assets with matching preferences", () => {
     const best = selectBestAudioAsset([
         {
@@ -53,6 +68,31 @@ test("selectBestAudioAsset prefers kanji reading assets with matching preference
     });
 
     assert.equal(best.path, "audio/kanji.mp3");
+});
+
+test("findReusableManagedAudioAsset only reuses an exact category/text/reading match", () => {
+    const best = findReusableManagedAudioAsset([
+        {
+            path: "audio/65E5_日-kanji-reading-日-ひ.wav",
+            category: "kanji-reading",
+            text: "日",
+            reading: "ひ",
+            locale: "ja-JP",
+        },
+        {
+            path: "audio/6642_時-word-reading-時間-じかん.wav",
+            category: "word-reading",
+            text: "時間",
+            reading: "じかん",
+            locale: "ja-JP",
+        },
+    ], {
+        category: "word-reading",
+        text: "時間",
+        reading: "じかん",
+    });
+
+    assert.equal(best.path, "audio/6642_時-word-reading-時間-じかん.wav");
 });
 
 test("syncKanji imports audio into managed media storage", async () => {
@@ -370,6 +410,71 @@ test("syncKanji reuses existing managed audio assets without provider lookups", 
         assert.equal(result.acquisition.audio.length, 0);
         assert.equal(result.manifest.assets.audio.length, 1);
         assert.match(result.manifest.assets.audio[0].path, new RegExp("^audio/" + mediaId + "-kanji-reading-日"));
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+test("syncKanji imports managed word-reading audio even when kanji-reading audio already exists", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const mediaRootDir = path.join(rootDir, "media");
+        const mediaId = buildKanjiMediaId("時");
+        const baseDir = path.join(mediaRootDir, "kanji", "66", mediaId);
+        const audioSourceDir = path.join(rootDir, "sources");
+        fs.mkdirSync(path.join(baseDir, "audio"), { recursive: true });
+        fs.mkdirSync(audioSourceDir, { recursive: true });
+
+        fs.writeFileSync(path.join(baseDir, "audio", mediaId + "-kanji-reading-時-じ.wav"), Buffer.from("fake-kanji"));
+        fs.writeFileSync(path.join(baseDir, "manifest.json"), JSON.stringify({
+            kanji: "時",
+            version: 1,
+            updatedAt: "2026-01-01T00:00:00.000Z",
+            assets: {
+                strokeOrderImage: null,
+                strokeOrderAnimation: null,
+                audio: [{
+                    kind: "audio",
+                    path: "audio/" + mediaId + "-kanji-reading-時-じ.wav",
+                    mimeType: "audio/wav",
+                    source: "voicevox-nemo",
+                    category: "kanji-reading",
+                    text: "時",
+                    reading: "じ",
+                    locale: "ja-JP",
+                }],
+            },
+        }, null, 2), "utf-8");
+
+        fs.writeFileSync(path.join(audioSourceDir, "時-時間-じかん.wav"), Buffer.from("fake-word"));
+        fs.writeFileSync(path.join(audioSourceDir, "時-時間-じかん.json"), JSON.stringify({
+            source: "voicevox-nemo",
+            voice: "女声1 / ノーマル",
+            locale: "ja-JP",
+            category: "word-reading",
+            text: "時間",
+            reading: "じかん",
+        }, null, 2), "utf-8");
+
+        const audioService = createAudioService({
+            mediaRootDir,
+            audioSourceDir,
+        });
+
+        const result = await audioService.syncKanji("時", {
+            category: "word-reading",
+            text: "時間",
+            reading: "じかん",
+            voice: "女声1 / ノーマル",
+        });
+
+        const wordAsset = result.manifest.assets.audio.find((asset) => asset.category === "word-reading");
+        assert.equal(result.found.audio, true);
+        assert.equal(result.manifest.assets.audio.length, 2);
+        assert.ok(wordAsset);
+        assert.equal(wordAsset.text, "時間");
+        assert.equal(wordAsset.reading, "じかん");
     } finally {
         cleanupTempDir(rootDir);
     }

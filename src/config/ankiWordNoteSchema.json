@@ -4,6 +4,7 @@
   "fieldNames": [
     "Word",
     "Reading",
+    "Audio",
     "Meaning",
     "JLPTLevel",
     "CoverageRole",
@@ -163,6 +164,7 @@
     "{{FrontSide}}",
     "<hr id=\"answer\">",
     "{{#Reading}}<div class=\"word-reading\">{{Reading}}</div>{{/Reading}}",
+    "{{#Audio}}<div class=\"word-audio\">{{Audio}}</div>{{/Audio}}",
     "{{#Meaning}}<div class=\"word-meaning\">{{Meaning}}</div>{{/Meaning}}",
     "{{#JLPTLevel}}<div class=\"word-level\">{{JLPTLevel}}</div>{{/JLPTLevel}}",
     "{{#CoverageRole}}<div class=\"word-coverage\">{{CoverageRole}}</div>{{/CoverageRole}}",

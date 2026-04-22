@@ -194,6 +194,19 @@ function createLocalDirectoryProvider({
                     const buffer = await fsp.readFile(absolutePath);
                     const stats = await fsp.stat(absolutePath);
                     const sidecarMetadata = await readOptionalSidecarMetadata(absolutePath);
+                    const requestedCategory = typeof input?.category === "string" ? input.category : "";
+                    const requestedText = typeof input?.text === "string" ? input.text : "";
+                    const requestedReading = typeof input?.reading === "string" ? input.reading : "";
+
+                    if (requestedCategory && typeof sidecarMetadata?.category === "string" && sidecarMetadata.category !== requestedCategory) {
+                        continue;
+                    }
+                    if (requestedText && typeof sidecarMetadata?.text === "string" && sidecarMetadata.text !== requestedText) {
+                        continue;
+                    }
+                    if (requestedReading && typeof sidecarMetadata?.reading === "string" && sidecarMetadata.reading !== requestedReading) {
+                        continue;
+                    }
 
                     return {
                         absolutePath,

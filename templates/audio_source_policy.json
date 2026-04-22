@@ -11,9 +11,10 @@
     "requireVoiceMetadata": true,
     "requiredLocale": "ja-JP",
     "allowedCategories": [
-      "kanji-reading"
+      "kanji-reading",
+      "word-reading"
     ],
-    "wordDeckAudioEnabled": false,
+    "wordDeckAudioEnabled": true,
     "remoteAudioProvidersAllowed": false
   },
   "experimentalSourceIds": [

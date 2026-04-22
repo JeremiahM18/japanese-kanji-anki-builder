@@ -43,11 +43,15 @@ function normalizeTokenForFileName(value) {
         .replace(/^_+|_+$/g, "");
 }
 
-function buildAudioFileCandidates({ kanji, reading, text }) {
+function buildAudioFileCandidates({ kanji, reading, text, category = "kanji-reading" }) {
     const normalizedKanji = normalizeKanji(kanji);
     const normalizedReading = normalizeTokenForFileName(reading);
     const normalizedText = normalizeTokenForFileName(text);
-    const candidates = new Set(buildKanjiFileCandidates(normalizedKanji));
+    const candidates = new Set(
+        category === "word-reading"
+            ? []
+            : buildKanjiFileCandidates(normalizedKanji)
+    );
 
     for (const token of [normalizedText, normalizedReading]) {
         if (token) {
@@ -68,6 +72,8 @@ function buildAudioFileCandidates({ kanji, reading, text }) {
     if (normalizedText && normalizedReading) {
         candidates.add(`${normalizedText}_${normalizedReading}`);
         candidates.add(`${normalizedText}-${normalizedReading}`);
+        candidates.add(`${normalizedKanji}_${normalizedText}_${normalizedReading}`);
+        candidates.add(`${normalizedKanji}-${normalizedText}-${normalizedReading}`);
     }
 
     return [...candidates];
@@ -172,6 +178,28 @@ function mergeAudioMetadata(asset, requestedMetadata) {
     return merged;
 }
 
+function findReusableManagedAudioAsset(audioAssets, preferences = {}) {
+    const assets = Array.isArray(audioAssets) ? audioAssets : [];
+    const requestedCategory = cleanToken(preferences.category);
+    const requestedText = cleanToken(preferences.text);
+    const requestedReading = cleanToken(preferences.reading);
+
+    const scopedAssets = assets.filter((asset) => {
+        if (requestedCategory && cleanToken(asset?.category) !== requestedCategory) {
+            return false;
+        }
+        if (requestedText && cleanToken(asset?.text) !== requestedText) {
+            return false;
+        }
+        if (requestedReading && cleanToken(asset?.reading) !== requestedReading) {
+            return false;
+        }
+        return true;
+    });
+
+    return selectBestAudioAsset(scopedAssets, preferences);
+}
+
 function createAudioService({ mediaRootDir, audioSourceDir, providers = [], manifestCacheTtlMs = 30000, nowFn = Date.now }) {
     const resolvedProviders = [
         createLocalDirectoryProvider({
@@ -210,11 +238,12 @@ function createAudioService({ mediaRootDir, audioSourceDir, providers = [], mani
         };
 
         const existingManifest = await getManifest(normalizedKanji);
-        const existingAudioAsset = selectBestAudioAsset(existingManifest?.assets?.audio || [], normalizedMetadata);
+        const existingAudioAsset = findReusableManagedAudioAsset(existingManifest?.assets?.audio || [], normalizedMetadata);
         const audioLookup = managedAssetExists(mediaRootDir, normalizedKanji, existingAudioAsset?.path)
             ? { asset: null, attempts: [] }
             : await findAssetFromProvidersWithReport(resolvedProviders, {
                 kanji: normalizedKanji,
+                category: normalizedMetadata.category,
                 text: normalizedMetadata.text,
                 reading: normalizedMetadata.reading,
             }, providerMetrics);
@@ -291,6 +320,7 @@ module.exports = {
     AUDIO_EXTENSIONS,
     buildAudioFileCandidates,
     createAudioService,
+    findReusableManagedAudioAsset,
     findMatchingAudioAsset,
     normalizeTokenForFileName,
     scoreAudioAsset,

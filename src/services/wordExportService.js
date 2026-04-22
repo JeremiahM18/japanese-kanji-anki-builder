@@ -351,7 +351,16 @@ function buildCandidatePool({
             jlptWordLevelContract,
             fallbackLevel: levelNumber,
         }) === levelNumber)
-        .filter((entry) => !isLikelyPhraseCard(entry))
+        .filter((entry) => {
+            if (!isLikelyPhraseCard(entry)) {
+                return true;
+            }
+
+            return Number.isInteger(getCanonicalWordLevel({
+                candidate: entry,
+                jlptWordLevelContract,
+            }));
+        })
         .map(buildCuratedCandidate);
 
     pool.push(...curatedCandidates);

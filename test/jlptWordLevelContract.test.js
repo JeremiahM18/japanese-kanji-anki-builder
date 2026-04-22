@@ -83,7 +83,7 @@ test("loadJlptWordLevelContract rejects stale derived inventory counts", () => {
 test("tracked JLPT word contract keeps standalone higher-level kanji words in their own level", () => {
     const contract = loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json"));
 
-    assert.equal(contract.inventoryCounts["4"], 215);
+    assert.equal(contract.inventoryCounts["4"], 231);
     assert.equal(contract.inventoryCounts["5"], 339);
     assert.equal(contract.excludedCounts["5"], 13);
     assert.equal(getJlptWordLevel(contract, "安心|あんしん"), 4);
@@ -301,6 +301,22 @@ test("tracked JLPT word contract keeps standalone higher-level kanji words in th
     assert.equal(getJlptWordLevel(contract, "会場|かいじょう"), 4);
     assert.equal(getJlptWordLevel(contract, "色|いろ"), 4);
     assert.equal(getJlptWordLevel(contract, "人気|にんき"), 4);
+    assert.equal(getJlptWordLevel(contract, "悪口|わるくち"), 4);
+    assert.equal(getJlptWordLevel(contract, "開始|かいし"), 4);
+    assert.equal(getJlptWordLevel(contract, "楽しむ|たのしむ"), 4);
+    assert.equal(getJlptWordLevel(contract, "起こる|おこる"), 4);
+    assert.equal(getJlptWordLevel(contract, "歌手|かしゅ"), 4);
+    assert.equal(getJlptWordLevel(contract, "帰国|きこく"), 4);
+    assert.equal(getJlptWordLevel(contract, "仕事中|しごとちゅう"), 4);
+    assert.equal(getJlptWordLevel(contract, "住民|じゅうみん"), 4);
+    assert.equal(getJlptWordLevel(contract, "手伝う|てつだう"), 4);
+    assert.equal(getJlptWordLevel(contract, "買い物|かいもの"), 4);
+    assert.equal(getJlptWordLevel(contract, "有名人|ゆうめいじん"), 4);
+    assert.equal(getJlptWordLevel(contract, "青信号|あおしんごう"), 4);
+    assert.equal(getJlptWordLevel(contract, "赤信号|あかしんごう"), 4);
+    assert.equal(getJlptWordLevel(contract, "古本|ふるほん"), 4);
+    assert.equal(getJlptWordLevel(contract, "歩道|ほどう"), 4);
+    assert.equal(getJlptWordLevel(contract, "閉会|へいかい"), 4);
     assert.equal(getJlptWordLevel(contract, "五月|ごがつ"), 5);
     assert.equal(getJlptWordLevel(contract, "四月|しがつ"), 5);
     assert.equal(getJlptWordLevel(contract, "七日|なのか"), 5);

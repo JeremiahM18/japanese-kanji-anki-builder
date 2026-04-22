@@ -247,6 +247,37 @@ test("buildCandidatePool rejects phrase-like inferred candidates even when infer
     assert.equal(pool.some((candidate) => candidate.written === "高校"), true);
 });
 
+test("buildCandidatePool keeps governed canonical rows even when a stale phrase heuristic would flag them", () => {
+    const pool = buildCandidatePool({
+        inference: null,
+        sourceKanji: "買",
+        maxWordsPerKanji: 5,
+        minimumCandidateScore: 1,
+        wordStudyIndexes: buildWordStudyIndexes({
+            "買い物|かいもの": {
+                written: "買い物",
+                reading: "かいもの",
+                meaning: "shopping",
+                jlpt: 4,
+                tags: ["starter", "common", "n4"],
+            },
+        }),
+        jlptWordLevelContract: {
+            wordLevels: {
+                "買い物|かいもの": { written: "買い物", reading: "かいもの", jlpt: 4 },
+            },
+        },
+        levelNumber: 4,
+        jlptOnlyJson: {
+            買: { jlpt: 4 },
+            物: { jlpt: 4 },
+        },
+        includeInferred: false,
+    });
+
+    assert.equal(pool.some((candidate) => candidate.written === "買い物"), true);
+});
+
 test("classifyWordDeckEntry distinguishes canonical curated-only and inferred rows", () => {
     assert.equal(classifyWordDeckEntry({
         candidate: { written: "今年", pron: "ことし" },

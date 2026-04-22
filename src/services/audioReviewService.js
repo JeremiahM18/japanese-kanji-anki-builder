@@ -1,6 +1,7 @@
 const { buildJlptBuckets } = require("../datasets/sentenceCorpusCoverage");
 const { readManifestIfExists } = require("./mediaStore");
 const { selectBestAudioAsset } = require("./audioService");
+const { parseKanjiTsv } = require("./wordReadingCoverageService");
 
 function cleanString(value) {
     const normalized = String(value || "").trim();
@@ -126,6 +127,7 @@ function compareReviewRows(a, b) {
 async function buildAudioReviewReport({
     jlptOnlyJson = {},
     curatedStudyData = {},
+    kanjiTsv = "",
     mediaRootDir,
     audioSourcePolicy,
     levels = [5],
@@ -134,10 +136,18 @@ async function buildAudioReviewReport({
 }) {
     const releaseAudio = audioSourcePolicy.releaseAudio;
     const scope = buildKanjiScope({ jlptOnlyJson, levels, kanji, limit });
+    const kanjiExportRows = parseKanjiTsv(kanjiTsv);
+    const exportRowByKanji = new Map(
+        kanjiExportRows.map((row) => [cleanString(row?.Kanji || row?.kanji), row])
+    );
     const rows = await Promise.all(scope.map(async ({ kanji: targetKanji, level }) => {
         const curatedEntry = curatedStudyData?.[targetKanji] || null;
-        const expectedReading = cleanString(curatedEntry?.displayWord?.pron);
-        const displayWord = cleanString(curatedEntry?.displayWord?.written) || targetKanji;
+        const exportRow = exportRowByKanji.get(targetKanji) || null;
+        const expectedReading = cleanString(curatedEntry?.displayWord?.pron)
+            || cleanString(exportRow?.PrimaryReading || exportRow?.primaryReading);
+        const displayWord = cleanString(curatedEntry?.displayWord?.written)
+            || cleanString(exportRow?.DisplayWord || exportRow?.displayWord)
+            || targetKanji;
         const manifest = await readManifestIfExists(mediaRootDir, targetKanji);
         const asset = selectBestAudioAsset(manifest?.assets?.audio || [], {
             category: "kanji-reading",

@@ -141,6 +141,49 @@ test("buildAudioReviewReport marks audio without curated reading intent as missi
     }
 });
 
+test("buildAudioReviewReport falls back to the built kanji export reading when curated display pronunciation is absent", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        writeManifest(rootDir, "休", [{
+            kind: "audio",
+            path: "audio/4F11_休-kanji-reading-休-やすみ.wav",
+            mimeType: "audio/wav",
+            source: "voicevox-nemo",
+            category: "kanji-reading",
+            text: "休",
+            reading: "やすみ",
+            voice: "女声1 / ノーマル",
+            locale: "ja-JP",
+        }]);
+
+        const kanjiTsv = [
+            "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading",
+            "休\t休\t休 （やすみ） ／ rest / holiday\tやすみ",
+        ].join("\n");
+
+        const report = await buildAudioReviewReport({
+            jlptOnlyJson: {
+                休: { jlpt: 5 },
+            },
+            curatedStudyData: {
+                休: { displayWord: { written: "休" } },
+            },
+            kanjiTsv,
+            mediaRootDir: rootDir,
+            audioSourcePolicy: loadAudioSourcePolicy(),
+            levels: [5],
+        });
+
+        assert.equal(report.summary.readyToReview, 1);
+        assert.equal(report.summary.missingExpectedReading, 0);
+        assert.equal(report.rows[0].status, "ready_to_review");
+        assert.equal(report.rows[0].expectedReading, "やすみ");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
 test("formatAudioReviewReport renders a useful listening checklist", async () => {
     const rootDir = makeTempDir();
 

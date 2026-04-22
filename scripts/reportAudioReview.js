@@ -1,4 +1,5 @@
 const fs = require("node:fs");
+const path = require("node:path");
 
 const { loadConfig } = require("../src/config");
 const { loadAudioSourcePolicy } = require("../src/datasets/audioSourcePolicy");
@@ -47,9 +48,15 @@ async function main() {
 
     const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
     const curatedStudyData = loadCuratedStudyData(config.curatedStudyDataPath);
+    const primaryLevel = options.levels[0] || 5;
+    const kanjiTsvPath = path.join(config.buildOutDir, "exports", `jlpt-n${primaryLevel}.tsv`);
+    const kanjiTsv = fs.existsSync(kanjiTsvPath)
+        ? fs.readFileSync(kanjiTsvPath, "utf-8")
+        : "";
     const report = await buildAudioReviewReport({
         jlptOnlyJson,
         curatedStudyData,
+        kanjiTsv,
         mediaRootDir: config.mediaRootDir,
         audioSourcePolicy: policy,
         levels: options.levels,

@@ -197,7 +197,7 @@ Important word-deck rules:
 - curated word entries suppress uncurated alternate readings for the same written form
 - kanji breakdown panels on the back prefer curated kanji display words and meanings, and can use dedicated breakdown-only overrides for compound contexts so cards like `銀行`, `会社`, `会社員`, `昼ご飯`, `晩ご飯`, `午前`, `午後`, `時間`, `月曜日`, `学校`, `病院`, `郵便局`, `去年`, `来月`, `来週`, `夕方`, `元気`, and `仕事` stay learner-friendly without changing primary study forms such as `行く`
 - those breakdown panels now avoid leaking a full compound reading onto a single-kanji panel unless you intentionally curate that context, and they normalize internal reading labels into learner-facing `On:` / `Kun:` lines instead of surfacing raw `オン:` / `くん:` notation
-- `npm run data:audit:jlpt:words` audits the tracked starter word surface against that canonical word-level contract; today it intentionally reports canonical N5 coverage and zero canonical N4/N3/N2/N1 entries until tracked word curation expands
+- `npm run data:audit:jlpt:words` now audits the tracked starter word surface more honestly: it reports canonical starter coverage by level, curated-only starter entries, phrase-tagged starter exclusions, and contract drift so we can see how much of the default word deck surface is actually governed before widening N4+
 - use `--include-inferred` when you explicitly want to expand beyond curated words during exploration
 
 ### Lower-level build
@@ -483,6 +483,8 @@ Word build artifacts are written to `out/word-build`:
 - `exports/jlpt-n5-words.tsv`
 - `reports/word-deck-summary.json`
 - `build-summary.json`
+
+Word deck summaries now include governance counts for shipped rows, split into `canonicalRows`, `curatedOnlyRows`, and `inferredOnlyRows`, plus a per-level breakdown. That makes it much easier to tell whether a build is mostly contract-backed JLPT vocabulary or still leaning on curated-only or inferred support content.
 
 Import-ready packaging is written to:
 

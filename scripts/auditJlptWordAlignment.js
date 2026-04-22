@@ -36,6 +36,7 @@ function truncate(items, limit) {
 }
 
 function formatWordAlignmentReport({ contractPath, starterPath, audit }) {
+    const governance = audit.starterGovernance || {};
     const lines = [
         "JLPT Word Alignment Audit",
         "",
@@ -47,6 +48,19 @@ function formatWordAlignmentReport({ contractPath, starterPath, audit }) {
         `Contract entries: ${audit.contractEntryCount}`,
         `Starter counts: N5=${audit.starterCounts[5] || 0}, N4=${audit.starterCounts[4] || 0}, N3=${audit.starterCounts[3] || 0}, N2=${audit.starterCounts[2] || 0}, N1=${audit.starterCounts[1] || 0}`,
         `Contract counts: N5=${audit.contractCounts["5"] || 0}, N4=${audit.contractCounts["4"] || 0}, N3=${audit.contractCounts["3"] || 0}, N2=${audit.contractCounts["2"] || 0}, N1=${audit.contractCounts["1"] || 0}`,
+        "",
+        `Default-deck starter entries: ${governance.defaultDeckStarterCount || 0}`,
+        `Canonical starter entries: ${governance.canonicalStarterCount || 0} (${governance.overallCoverage || 0}% of the default starter deck surface)`,
+        `Curated-only starter entries: ${governance.curatedOnlyStarterCount || 0}`,
+        `Starter mismatches: ${governance.mismatchStarterCount || 0}`,
+        `Phrase-tagged starter exclusions: ${governance.excludedPhraseCount || 0}`,
+        "",
+        "Canonical starter coverage by level:",
+        `- N5: ${governance.canonicalStarterCounts?.[5] || 0}/${governance.defaultDeckStarterCounts?.[5] || 0} (${governance.coverageByLevel?.[5] || 0}%)`,
+        `- N4: ${governance.canonicalStarterCounts?.[4] || 0}/${governance.defaultDeckStarterCounts?.[4] || 0} (${governance.coverageByLevel?.[4] || 0}%)`,
+        `- N3: ${governance.canonicalStarterCounts?.[3] || 0}/${governance.defaultDeckStarterCounts?.[3] || 0} (${governance.coverageByLevel?.[3] || 0}%)`,
+        `- N2: ${governance.canonicalStarterCounts?.[2] || 0}/${governance.defaultDeckStarterCounts?.[2] || 0} (${governance.coverageByLevel?.[2] || 0}%)`,
+        `- N1: ${governance.canonicalStarterCounts?.[1] || 0}/${governance.defaultDeckStarterCounts?.[1] || 0} (${governance.coverageByLevel?.[1] || 0}%)`,
     ];
 
     if (!audit.valid) {

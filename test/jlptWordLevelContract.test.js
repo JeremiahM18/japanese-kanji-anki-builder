@@ -6,6 +6,7 @@ const path = require("node:path");
 
 const {
     auditWordStudyEntriesAgainstContract,
+    buildStarterWordGovernanceSummary,
     buildInventoryCountsFromWordLevels,
     buildJlptWordLevelContract,
     getJlptWordLevel,
@@ -86,4 +87,26 @@ test("buildInventoryCountsFromWordLevels totals all jlpt buckets", () => {
         4: 1,
         5: 2,
     });
+});
+
+test("buildStarterWordGovernanceSummary distinguishes canonical starter entries from curated-only and excluded ones", () => {
+    const summary = buildStarterWordGovernanceSummary({
+        "今日|きょう": { written: "今日", reading: "きょう", jlpt: 5, tags: ["starter"] },
+        "今年|ことし": { written: "今年", reading: "ことし", jlpt: 4, tags: ["starter"] },
+        "高い山|たかいやま": { written: "高い山", reading: "たかいやま", jlpt: 5, tags: ["starter", "phrase"] },
+    }, {
+        inventoryCounts: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 1 },
+        wordLevels: {
+            "今日|きょう": { written: "今日", reading: "きょう", jlpt: 5 },
+        },
+    });
+
+    assert.equal(summary.defaultDeckStarterCount, 2);
+    assert.equal(summary.canonicalStarterCount, 1);
+    assert.equal(summary.curatedOnlyStarterCount, 1);
+    assert.equal(summary.mismatchStarterCount, 0);
+    assert.equal(summary.excludedPhraseCount, 1);
+    assert.equal(summary.overallCoverage, 50);
+    assert.equal(summary.coverageByLevel[5], 100);
+    assert.equal(summary.coverageByLevel[4], 0);
 });

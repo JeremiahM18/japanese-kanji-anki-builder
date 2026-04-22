@@ -7,6 +7,7 @@ const {
     buildCandidatePool,
     buildBreakdownInference,
     buildWordStudyIndexes,
+    classifyWordDeckEntry,
     createWordExportService,
     getCanonicalWordLevel,
     hasExcludedWordCardTag,
@@ -217,6 +218,30 @@ test("buildCandidatePool rejects phrase-like inferred candidates even when infer
 
     assert.equal(pool.some((candidate) => candidate.written === "高い山"), false);
     assert.equal(pool.some((candidate) => candidate.written === "高校"), true);
+});
+
+test("classifyWordDeckEntry distinguishes canonical curated-only and inferred rows", () => {
+    assert.equal(classifyWordDeckEntry({
+        candidate: { written: "今年", pron: "ことし" },
+        curatedEntry: { written: "今年", reading: "ことし", jlpt: 5 },
+        jlptWordLevelContract: {
+            wordLevels: {
+                "今年|ことし": { written: "今年", reading: "ことし", jlpt: 5 },
+            },
+        },
+    }), "canonical");
+
+    assert.equal(classifyWordDeckEntry({
+        candidate: { written: "今年", pron: "ことし" },
+        curatedEntry: { written: "今年", reading: "ことし", jlpt: 5 },
+        jlptWordLevelContract: { wordLevels: {} },
+    }), "curatedOnly");
+
+    assert.equal(classifyWordDeckEntry({
+        candidate: { written: "高校", pron: "こうこう" },
+        curatedEntry: null,
+        jlptWordLevelContract: { wordLevels: {} },
+    }), "inferredOnly");
 });
 
 test("normalizeBreakdownReadingField strips internal reading prefixes for learner-facing output", () => {
@@ -849,6 +874,12 @@ test("buildWordTsvForJlptLevel uses the canonical word-level contract before con
     });
 
     assert.match(result.tsv, /^今年\tことし\tthis year\tJLPT N5\t/m);
+    assert.deepEqual(result.governance, {
+        rowCount: 1,
+        canonicalRows: 1,
+        curatedOnlyRows: 0,
+        inferredOnlyRows: 0,
+    });
 });
 
 test("buildWordTsvForJlptLevel does not let a stale curated JLPT tag override the canonical word contract", async () => {

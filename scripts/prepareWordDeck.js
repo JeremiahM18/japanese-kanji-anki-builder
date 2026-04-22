@@ -84,6 +84,9 @@ function formatWordDeckReadyReport(summary, doctorReport) {
         `Word mode: ${summary.settings.includeInferred ? "curated + inferred" : "curated only"}`,
         `Exports generated: ${summary.exports.length}`,
         `Word notes generated: ${summary.exports.reduce((total, item) => total + item.rows, 0)}`,
+        `Canonical word rows: ${summary.governance.canonicalRows}`,
+        `Curated-only word rows: ${summary.governance.curatedOnlyRows}`,
+        `Inferred-only word rows: ${summary.governance.inferredOnlyRows}`,
         `Unique referenced kanji: ${summary.referencedKanjiCount}`,
         `Unique packaged media files: ${summary.package.mediaAssetCount}`,
         "",
@@ -166,6 +169,7 @@ async function main() {
             filePath,
             rows: result.rowCount,
             mediaKanji: result.mediaKanji,
+            governance: result.governance,
         });
     }
 
@@ -183,6 +187,15 @@ async function main() {
         outDir: buildPaths.root,
         levels,
         exports,
+        governance: {
+            canonicalRows: exports.reduce((total, artifact) => total + (artifact.governance?.canonicalRows || 0), 0),
+            curatedOnlyRows: exports.reduce((total, artifact) => total + (artifact.governance?.curatedOnlyRows || 0), 0),
+            inferredOnlyRows: exports.reduce((total, artifact) => total + (artifact.governance?.inferredOnlyRows || 0), 0),
+            byLevel: Object.fromEntries(exports.map((artifact) => [
+                `N${artifact.level}`,
+                artifact.governance || { canonicalRows: 0, curatedOnlyRows: 0, inferredOnlyRows: 0, rowCount: artifact.rows },
+            ])),
+        },
         referencedKanjiCount: [...new Set(exports.flatMap((artifact) => artifact.mediaKanji || []))].length,
         package: deckPackage,
         settings: {

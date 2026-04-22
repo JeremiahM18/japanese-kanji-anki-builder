@@ -73,6 +73,20 @@ function buildJlptLabel(level) {
     return Number.isInteger(level) ? `JLPT N${level}` : "";
 }
 
+function classifyWordDeckEntry({ candidate, curatedEntry, jlptWordLevelContract }) {
+    const canonicalLevel = getCanonicalWordLevel({
+        candidate: curatedEntry || candidate,
+        jlptWordLevelContract,
+    });
+    if (Number.isInteger(canonicalLevel)) {
+        return "canonical";
+    }
+    if (curatedEntry) {
+        return "curatedOnly";
+    }
+    return "inferredOnly";
+}
+
 function pickBestExactSingleCandidate(inference, sourceKanji) {
     const exactMatches = (Array.isArray(inference?.candidates) ? inference.candidates : [])
         .filter((candidate) => candidate?.written === sourceKanji);
@@ -480,6 +494,29 @@ function createWordExportService({
 } = {}) {
     const wordStudyIndexes = buildWordStudyIndexes(wordStudyData);
 
+    function buildWordDeckGovernanceSummary(entries, jlptWordLevelContract) {
+        const counts = {
+            canonical: 0,
+            curatedOnly: 0,
+            inferredOnly: 0,
+        };
+
+        for (const entry of entries) {
+            counts[classifyWordDeckEntry({
+                candidate: entry?.candidate,
+                curatedEntry: entry?.curatedEntry,
+                jlptWordLevelContract,
+            })] += 1;
+        }
+
+        return {
+            rowCount: entries.length,
+            canonicalRows: counts.canonical,
+            curatedOnlyRows: counts.curatedOnly,
+            inferredOnlyRows: counts.inferredOnly,
+        };
+    }
+
     async function buildOfflineKanjiInference({ kanji, jlptEntry, strokeOrderService, audioService }) {
         const fallbackCard = await buildOfflineFallbackCard({
             kanji,
@@ -738,6 +775,7 @@ function createWordExportService({
             header: WORD_FIELD_NAMES.join("\t"),
             rows,
             mediaKanji: [...mediaKanji].sort(),
+            governance: buildWordDeckGovernanceSummary(sortedEntries, jlptWordLevelContract),
         };
     }
 
@@ -747,6 +785,7 @@ function createWordExportService({
             tsv: [result.header, ...result.rows].join("\n"),
             mediaKanji: result.mediaKanji,
             rowCount: result.rows.length,
+            governance: result.governance,
         };
     }
 
@@ -755,6 +794,7 @@ function createWordExportService({
         buildWordDeckForLevel,
         buildWordTsvForJlptLevel,
         buildCandidatePool,
+        classifyWordDeckEntry,
         buildWordKey,
         buildWordNotes,
         inferWordLevel,
@@ -769,6 +809,7 @@ const defaultWordExportService = createWordExportService();
 module.exports = {
     buildBreakdownInference,
     buildCandidatePool,
+    classifyWordDeckEntry,
     buildDisplayCandidate,
     buildJlptLabel,
     buildWordKey,

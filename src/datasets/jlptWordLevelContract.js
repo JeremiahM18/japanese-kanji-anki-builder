@@ -49,6 +49,95 @@ function buildInventoryCountsFromWordLevels(wordLevels = {}) {
     return counts;
 }
 
+function createLevelCounts() {
+    return {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+    };
+}
+
+function incrementLevelCount(counts, level) {
+    if (Number.isInteger(level) && counts[level] !== undefined) {
+        counts[level] += 1;
+    }
+}
+
+function entryMatchesContract(entry, contractEntry) {
+    return contractEntry
+        && contractEntry.written === entry?.written
+        && contractEntry.reading === entry?.reading
+        && contractEntry.jlpt === entry?.jlpt;
+}
+
+function hasPhraseTag(entry) {
+    return (Array.isArray(entry?.tags) ? entry.tags : [])
+        .map((tag) => String(tag || "").trim().toLowerCase())
+        .includes("phrase");
+}
+
+function buildStarterWordGovernanceSummary(wordStudyEntries = {}, contract = {}) {
+    const defaultDeckStarterCounts = createLevelCounts();
+    const canonicalStarterCounts = createLevelCounts();
+    const curatedOnlyStarterCounts = createLevelCounts();
+    const mismatchStarterCounts = createLevelCounts();
+    const excludedPhraseCounts = createLevelCounts();
+
+    for (const [key, entry] of Object.entries(wordStudyEntries || {})) {
+        const level = Number.isInteger(entry?.jlpt) ? entry.jlpt : null;
+        if (hasPhraseTag(entry)) {
+            incrementLevelCount(excludedPhraseCounts, level);
+            continue;
+        }
+
+        incrementLevelCount(defaultDeckStarterCounts, level);
+        const contractEntry = contract?.wordLevels?.[key];
+
+        if (!contractEntry) {
+            incrementLevelCount(curatedOnlyStarterCounts, level);
+            continue;
+        }
+
+        if (entryMatchesContract(entry, contractEntry)) {
+            incrementLevelCount(canonicalStarterCounts, level);
+            continue;
+        }
+
+        incrementLevelCount(mismatchStarterCounts, level);
+    }
+
+    const coverageByLevel = {};
+    for (const level of [5, 4, 3, 2, 1]) {
+        const starterCount = defaultDeckStarterCounts[level] || 0;
+        const canonicalCount = canonicalStarterCounts[level] || 0;
+        coverageByLevel[level] = starterCount > 0
+            ? Number(((canonicalCount / starterCount) * 100).toFixed(2))
+            : 0;
+    }
+
+    const defaultDeckStarterCount = Object.values(defaultDeckStarterCounts).reduce((sum, count) => sum + count, 0);
+    const canonicalStarterCount = Object.values(canonicalStarterCounts).reduce((sum, count) => sum + count, 0);
+
+    return {
+        defaultDeckStarterCount,
+        canonicalStarterCount,
+        curatedOnlyStarterCount: Object.values(curatedOnlyStarterCounts).reduce((sum, count) => sum + count, 0),
+        mismatchStarterCount: Object.values(mismatchStarterCounts).reduce((sum, count) => sum + count, 0),
+        excludedPhraseCount: Object.values(excludedPhraseCounts).reduce((sum, count) => sum + count, 0),
+        defaultDeckStarterCounts,
+        canonicalStarterCounts,
+        curatedOnlyStarterCounts,
+        mismatchStarterCounts,
+        excludedPhraseCounts,
+        coverageByLevel,
+        overallCoverage: defaultDeckStarterCount > 0
+            ? Number(((canonicalStarterCount / defaultDeckStarterCount) * 100).toFixed(2))
+            : 0,
+    };
+}
+
 function buildJlptWordLevelContract({ wordLevels = {}, version = 1 } = {}) {
     const counts = buildInventoryCountsFromWordLevels(wordLevels);
 
@@ -123,11 +212,13 @@ function auditWordStudyEntriesAgainstContract(wordStudyEntries = {}, contract = 
         unexpectedContractEntries,
         contractCounts: contract?.inventoryCounts || {},
         starterCounts: buildInventoryCountsFromWordLevels(wordStudyEntries),
+        starterGovernance: buildStarterWordGovernanceSummary(wordStudyEntries, contract),
     };
 }
 
 module.exports = {
     auditWordStudyEntriesAgainstContract,
+    buildStarterWordGovernanceSummary,
     buildInventoryCountsFromWordLevels,
     buildJlptWordLevelContract,
     getJlptWordLevel,

@@ -1,4 +1,8 @@
 const { katakanaToHiragana } = require('../utils/japanese');
+const {
+  buildGapOverrideKey,
+  loadWordReadingGapTriageOverrides,
+} = require('../datasets/wordReadingGapTriageOverrides');
 
 function normalizeReadingToken(value) {
   return katakanaToHiragana(String(value || ''))
@@ -321,6 +325,8 @@ function buildWordReadingGapTriage(report) {
     medium: 1,
     low: 2,
   };
+  const overridesByLevel = loadWordReadingGapTriageOverrides();
+  const levelOverrides = overridesByLevel[report.summary.levelLabel] || {};
 
   const items = report.kanji.flatMap((entry) => {
     const buildItem = (readingType, readingEntry) => {
@@ -339,6 +345,16 @@ function buildWordReadingGapTriage(report) {
         priority = 'low';
       }
 
+      const override = levelOverrides[buildGapOverrideKey({
+        kanji: entry.kanji,
+        readingType,
+        reading: readingEntry.reading,
+      })];
+      if (override) {
+        suggestedAction = override.suggestedAction;
+        priority = override.priority || priority;
+      }
+
       return {
         kanji: entry.kanji,
         displayWord: entry.displayWord || entry.kanji,
@@ -348,6 +364,7 @@ function buildWordReadingGapTriage(report) {
         gapKind: readingEntry.gapKind || 'distinct',
         priority,
         suggestedAction,
+        editorialNote: override?.note || '',
         curatedExampleCandidates: readingEntry.matchingExamples.map((example) => ({
           written: example.written,
           reading: example.reading,
@@ -479,6 +496,9 @@ function formatWordReadingGapTriage(triage, { maxItems = 50, includeVariants = f
     );
     lines.push(`  display anchor: ${item.displayWord}`);
     lines.push(`  curated candidates: ${candidateText}`);
+    if (item.editorialNote) {
+      lines.push(`  editorial note: ${item.editorialNote}`);
+    }
   }
 
   return lines.join('\n') + '\n';

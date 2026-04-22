@@ -154,12 +154,12 @@ test('buildWordReadingGapTriage classifies open reading gaps into actionable buc
     summary: { levelLabel: 'N5' },
     kanji: [
       {
-        kanji: '万',
-        displayWord: '万',
+        kanji: '外',
+        displayWord: '外',
         onCoverage: [],
         kunCoverage: [
           {
-            reading: 'よろず',
+            reading: 'ほか',
             status: 'missing_example',
             coverageSource: 'none',
             matchingExamples: [],
@@ -203,6 +203,38 @@ test('buildWordReadingGapTriage classifies open reading gaps into actionable buc
   assert.equal(triage.items[0].suggestedAction, 'editorial_review');
   assert.equal(triage.items[1].suggestedAction, 'promote_curated_example');
   assert.equal(triage.items[2].suggestedAction, 'defer_variant');
+});
+
+test('buildWordReadingGapTriage respects tracked editorial override dispositions', () => {
+  const report = {
+    summary: { levelLabel: 'N5' },
+    kanji: [
+      {
+        kanji: '万',
+        displayWord: '万',
+        onCoverage: [],
+        kunCoverage: [
+          {
+            reading: 'よろず',
+            status: 'missing_example',
+            coverageSource: 'none',
+            matchingExamples: [],
+            deckExamples: [],
+            gapKind: 'distinct',
+          },
+        ],
+      },
+    ],
+  };
+
+  const triage = buildWordReadingGapTriage(report);
+  assert.equal(triage.summary.highPriorityItems, 0);
+  assert.equal(triage.summary.lowPriorityItems, 1);
+  assert.equal(triage.summary.editorialReviewItems, 0);
+  assert.equal(triage.summary.deferVariantItems, 1);
+  assert.equal(triage.items[0].suggestedAction, 'defer_variant');
+  assert.equal(triage.items[0].priority, 'low');
+  assert.match(triage.items[0].editorialNote, /Archaic reading/);
 });
 
 test('formatWordReadingGapTriage renders a practical backlog summary', () => {

@@ -89,18 +89,53 @@ function buildWordDeckCompletionReport({
         levelLabel: `N${level}`,
     });
     const triage = buildWordReadingGapTriage(readingCoverage);
+    const readiness = buildWordDeckReadiness({
+        inventory,
+        readingCoverage: readingCoverage.summary,
+        triage: triage.summary,
+    });
 
     return {
         level,
         inventory,
         readingCoverage: readingCoverage.summary,
         triage: triage.summary,
+        readiness,
+    };
+}
+
+function buildWordDeckReadiness({ inventory, readingCoverage, triage }) {
+    const hasMissingStarterRows = (inventory?.missingEligibleCount || 0) > 0;
+    const hasActiveTriageItems = ((triage?.editorialReviewItems || 0) + (triage?.promoteCuratedExampleItems || 0)) > 0;
+    const allOpenItemsDeferred = (triage?.totalItems || 0) > 0
+        && (triage?.deferVariantItems || 0) === (triage?.totalItems || 0);
+    const readingCoveragePercent = (readingCoverage?.totalReadings || 0) > 0
+        ? Number((((readingCoverage?.coveredReadings || 0) / readingCoverage.totalReadings) * 100).toFixed(1))
+        : 0;
+
+    let status = "incomplete";
+    if (!hasMissingStarterRows && !hasActiveTriageItems) {
+        status = allOpenItemsDeferred ? "ready_with_deferred_variants" : "complete";
+    }
+
+    return {
+        status,
+        hasMissingStarterRows,
+        hasActiveTriageItems,
+        allOpenItemsDeferred,
+        readingCoveragePercent,
     };
 }
 
 function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
     const lines = [
         `Japanese Kanji Builder Word Deck Completion Audit (N${report.level})`,
+        "",
+        "Readiness:",
+        `- Status: ${report.readiness.status}`,
+        `- Active triage backlog cleared: ${report.readiness.hasActiveTriageItems ? "no" : "yes"}`,
+        `- Remaining open items are deferred variants only: ${report.readiness.allOpenItemsDeferred ? "yes" : "no"}`,
+        `- Reading coverage: ${report.readiness.readingCoveragePercent}%`,
         "",
         "Vocabulary coverage:",
         `- Canonical inventory rows: ${report.inventory.canonicalInventoryCount}`,
@@ -139,6 +174,7 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
 module.exports = {
     buildWordDeckCompletionReport,
     buildWordDeckInventorySummary,
+    buildWordDeckReadiness,
     formatWordDeckCompletionReport,
     hasPhraseTag,
 };

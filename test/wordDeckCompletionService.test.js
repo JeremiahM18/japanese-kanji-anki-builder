@@ -4,6 +4,7 @@ const assert = require("node:assert/strict");
 const {
     buildWordDeckCompletionReport,
     buildWordDeckInventorySummary,
+    buildWordDeckReadiness,
     formatWordDeckCompletionReport,
     hasPhraseTag,
 } = require("../src/services/wordDeckCompletionService");
@@ -60,8 +61,8 @@ test("buildWordDeckCompletionReport combines vocabulary and reading coverage int
         },
         kanjiTsv: [
             "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence",
-            "今\t今\t今 （いま） ／ now\tいま\tオン: コン\tくん: いま\t\t\t\t\t\t今日 （きょう） - today\t",
-            "日\t日\t日 （ひ） ／ day\tひ\tオン: ニチ\tくん: ひ\t\t\t\t\t\t今日 （きょう） - today\t",
+            "今\t今\t今 （いま） ／ now\tいま\t\tくん: いま\t\t\t\t\t\t今日 （きょう） - today\t",
+            "日\t日\t日 （ひ） ／ day\tひ\t\tくん: ひ\t\t\t\t\t\t今日 （きょう） - today\t",
         ].join("\n"),
         wordTsv: [
             "Word\tReading\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes",
@@ -72,11 +73,46 @@ test("buildWordDeckCompletionReport combines vocabulary and reading coverage int
     assert.equal(report.inventory.starterEligibleCount, 1);
     assert.equal(report.inventory.builtEligibleCount, 1);
     assert.equal(report.readingCoverage.coveredReadings, 2);
+    assert.equal(report.readiness.status, "complete");
+});
+
+test("buildWordDeckReadiness distinguishes deferred-variant readiness from active backlog", () => {
+    const readyWithDeferredVariants = buildWordDeckReadiness({
+        inventory: { missingEligibleCount: 0 },
+        readingCoverage: { totalReadings: 100, coveredReadings: 84 },
+        triage: {
+            totalItems: 12,
+            editorialReviewItems: 0,
+            promoteCuratedExampleItems: 0,
+            deferVariantItems: 12,
+        },
+    });
+    assert.equal(readyWithDeferredVariants.status, "ready_with_deferred_variants");
+    assert.equal(readyWithDeferredVariants.allOpenItemsDeferred, true);
+
+    const incomplete = buildWordDeckReadiness({
+        inventory: { missingEligibleCount: 0 },
+        readingCoverage: { totalReadings: 100, coveredReadings: 84 },
+        triage: {
+            totalItems: 3,
+            editorialReviewItems: 2,
+            promoteCuratedExampleItems: 0,
+            deferVariantItems: 1,
+        },
+    });
+    assert.equal(incomplete.status, "incomplete");
+    assert.equal(incomplete.hasActiveTriageItems, true);
 });
 
 test("formatWordDeckCompletionReport renders missing rows and phrase exclusions clearly", () => {
     const text = formatWordDeckCompletionReport({
         level: 5,
+        readiness: {
+            status: "ready_with_deferred_variants",
+            hasActiveTriageItems: false,
+            allOpenItemsDeferred: true,
+            readingCoveragePercent: 84.9,
+        },
         inventory: {
             canonicalInventoryCount: 3,
             starterEligibleCount: 2,
@@ -98,6 +134,8 @@ test("formatWordDeckCompletionReport renders missing rows and phrase exclusions 
         },
     });
 
+    assert.match(text, /Status: ready_with_deferred_variants/);
+    assert.match(text, /Remaining open items are deferred variants only: yes/);
     assert.match(text, /Built starter-eligible rows: 1 \(50%\)/);
     assert.match(text, /Missing starter-eligible N-level rows:/);
     assert.match(text, /赤い花 \(あかいはな\)/);

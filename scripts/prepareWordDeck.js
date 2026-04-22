@@ -53,6 +53,7 @@ function parseArgs(argv) {
         includeInferred: false,
         json: false,
         unknownArgs: [],
+        requireNoActiveTriage: false,
     };
 
     for (const arg of argv) {
@@ -60,6 +61,8 @@ function parseArgs(argv) {
             options.json = true;
         } else if (arg === "--include-inferred") {
             options.includeInferred = true;
+        } else if (arg === "--require-no-active-triage") {
+            options.requireNoActiveTriage = true;
         } else if (arg.startsWith("--levels=")) {
             options.levels = parseLevelsArgument(parseStringOption(arg, "levels"));
         } else if (arg.startsWith("--limit=")) {
@@ -99,6 +102,7 @@ function formatWordDeckReadyReport(summary, doctorReport) {
                 : 0;
 
             return [
+                `- N${level} readiness status: ${audit.readiness?.status || "incomplete"}`,
                 `- N${level} reading coverage: ${coveredPercent}% (${audit.coveredReadings}/${audit.totalReadings})`,
                 `  distinct missing targets: ${audit.distinctGapReadings}, variant-style gaps: ${audit.variantGapReadings}`,
                 ...(triage
@@ -227,6 +231,7 @@ async function main() {
             });
             readingCoverageAuditByLevel[`N${level}`] = completionReport.readingCoverage;
             readingGapTriageByLevel[`N${level}`] = completionReport.triage;
+            readingCoverageAuditByLevel[`N${level}`].readiness = completionReport.readiness;
         }
 
         exports.push({
@@ -281,6 +286,7 @@ async function main() {
             maxWordsPerKanji: Number.isFinite(options.maxWordsPerKanji) ? options.maxWordsPerKanji : null,
             minimumCandidateScore: Number.isFinite(options.minimumCandidateScore) ? options.minimumCandidateScore : 20,
             includeInferred: options.includeInferred,
+            requireNoActiveTriage: options.requireNoActiveTriage,
         },
     };
 
@@ -293,14 +299,18 @@ async function main() {
 
     if (options.json) {
         console.log(JSON.stringify({ doctor: doctorReport, build: summary }, null, 2));
-        if (!hasFullTrueAnimationCoverage) {
+        const hasActiveTriageBacklog = Object.values(summary.completion.readingGapTriageByLevel || {})
+            .some((triage) => ((triage?.editorialReviewItems || 0) + (triage?.promoteCuratedExampleItems || 0)) > 0);
+        if (!hasFullTrueAnimationCoverage || (options.requireNoActiveTriage && hasActiveTriageBacklog)) {
             process.exitCode = 1;
         }
         return;
     }
 
     process.stdout.write(formatWordDeckReadyReport(summary, doctorReport));
-    if (!hasFullTrueAnimationCoverage) {
+    const hasActiveTriageBacklog = Object.values(summary.completion.readingGapTriageByLevel || {})
+        .some((triage) => ((triage?.editorialReviewItems || 0) + (triage?.promoteCuratedExampleItems || 0)) > 0);
+    if (!hasFullTrueAnimationCoverage || (options.requireNoActiveTriage && hasActiveTriageBacklog)) {
         process.exitCode = 1;
     }
 }

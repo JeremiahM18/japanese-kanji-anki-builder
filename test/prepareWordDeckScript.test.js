@@ -32,6 +32,9 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
                     coveredReadings: 181,
                     distinctGapReadings: 147,
                     variantGapReadings: 16,
+                    readiness: {
+                        status: "incomplete",
+                    },
                 },
             },
             readingGapTriageByLevel: {
@@ -69,6 +72,7 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
     });
 
     assert.match(text, /N5 starter governance: 100% \(258\/258\)/);
+    assert.match(text, /N5 readiness status: incomplete/);
     assert.match(text, /N5 reading coverage: 52\.6% \(181\/344\)/);
     assert.match(text, /distinct missing targets: 147, variant-style gaps: 16/);
     assert.match(text, /triage backlog: 147 editorial review, 0 promote curated example, 16 defer variant/);

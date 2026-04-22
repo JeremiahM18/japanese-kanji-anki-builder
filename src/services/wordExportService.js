@@ -1,7 +1,12 @@
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { buildMeaningJP } = require("../inference/meaningInference");
 const { inferSentenceCandidates, scoreCorpusSentence } = require("../inference/sentenceInference");
-const { createExportService, formatExampleSentence } = require("./exportService");
+const {
+    createExportService,
+    formatAnkiAudioField,
+    formatAnkiStrokeOrderField,
+    formatExampleSentence,
+} = require("./exportService");
 const { buildOfflineFallbackCard } = require("./previewCardService");
 const { mapWithConcurrency } = require("../utils/concurrency");
 const { tsvEscape } = require("../utils/text");
@@ -681,13 +686,17 @@ function createWordExportService({
             onReading: fallbackCard.onReading,
             kunReading: fallbackCard.kunReading,
             strokeOrderPath: fallbackCard.media.strokeOrderPath,
-            strokeOrderField: fallbackCard.fields.strokeOrderField,
+            strokeOrderField: fallbackCard.fields?.strokeOrderField
+                || formatAnkiStrokeOrderField(fallbackCard.media.strokeOrderPath),
             strokeOrderImagePath: fallbackCard.media.strokeOrderImagePath,
-            strokeOrderImageField: fallbackCard.fields.strokeOrderImageField,
+            strokeOrderImageField: fallbackCard.fields?.strokeOrderImageField
+                || formatAnkiStrokeOrderField(fallbackCard.media.strokeOrderImagePath),
             strokeOrderAnimationPath: fallbackCard.media.strokeOrderAnimationPath,
-            strokeOrderAnimationField: fallbackCard.fields.strokeOrderAnimationField,
+            strokeOrderAnimationField: fallbackCard.fields?.strokeOrderAnimationField
+                || formatAnkiStrokeOrderField(fallbackCard.media.strokeOrderAnimationPath),
             audioPath: fallbackCard.media.audioPath,
-            audioField: fallbackCard.fields.audioField,
+            audioField: fallbackCard.fields?.audioField
+                || formatAnkiAudioField(fallbackCard.media.audioPath),
         };
     }
 

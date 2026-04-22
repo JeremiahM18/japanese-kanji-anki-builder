@@ -1003,6 +1003,60 @@ test("buildWordTsvForJlptLevel includes explicit learner-facing coverage metadat
     assert.match(lines[1], /\t時: じ ／ 間: かん\t/);
 });
 
+test("buildWordTsvForJlptLevel supports higher-level constituent kanji when support words fall back offline", async () => {
+    const wordExportService = createWordExportService({
+        sentenceCorpus: [],
+        curatedStudyData: {},
+        wordStudyData: {
+            "彼女|かのじょ": {
+                written: "彼女",
+                reading: "かのじょ",
+                meaning: "she / girlfriend",
+                jlpt: 5,
+                coverage: {
+                    role: "support",
+                    focusKanji: ["女"],
+                    coversReadings: {
+                        女: "じょ",
+                    },
+                },
+                exampleSentence: {
+                    japanese: "彼女は日本人です。",
+                    reading: "かのじょはにほんじんです。",
+                    english: "She is Japanese.",
+                },
+            },
+        },
+    });
+
+    const result = await wordExportService.buildWordTsvForJlptLevel({
+        levelNumber: 5,
+        jlptOnlyJson: {
+            女: { jlpt: 5, meanings: ["woman"], on_readings: ["ジョ"], kun_readings: ["おんな"] },
+            彼: { jlpt: 3, meanings: ["he"], on_readings: ["ヒ"], kun_readings: ["かれ"] },
+        },
+        kanjiApiClient: {
+            async getKanji(kanji) {
+                if (kanji === "彼") {
+                    throw new Error("offline only");
+                }
+                return { meanings: ["woman"], on_readings: ["ジョ"], kun_readings: ["おんな"] };
+            },
+            async getWords(kanji) {
+                if (kanji === "彼") {
+                    throw new Error("offline only");
+                }
+                return [];
+            },
+        },
+        concurrency: 1,
+    });
+
+    assert.match(result.tsv, /彼女/u);
+    assert.match(result.tsv, /Reading coverage support/u);
+    assert.match(result.tsv, /女: じょ/u);
+});
+
 test("buildWordTsvForJlptLevel uses the canonical word-level contract before constituent heuristics", async () => {
     const wordExportService = createWordExportService({
         sentenceCorpus: [],

@@ -173,6 +173,31 @@ test("tracked starter word data includes the second governed N4 completion batch
     assert.equal(starterEntries["特に|とくに"].coverage.coversReadings["特"], "とく");
 });
 
+test("tracked starter word data includes the third governed N4 completion batch", () => {
+    const starterEntries = loadWordStudyData({
+        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
+        localPath: null,
+    });
+
+    assert.equal(starterEntries["町|まち"].coverage.coversReadings["町"], "まち");
+    assert.equal(starterEntries["通う|かよう"].coverage.coversReadings["通"], "かよう");
+    assert.equal(starterEntries["通る|とおる"].coverage.coversReadings["通"], "とおる");
+    assert.equal(starterEntries["兄弟|きょうだい"].coverage.coversReadings["弟"], "だい");
+    assert.equal(starterEntries["書店|しょてん"].coverage.coversReadings["店"], "てん");
+    assert.equal(starterEntries["転ぶ|ころぶ"].coverage.coversReadings["転"], "ころぶ");
+    assert.equal(starterEntries["田|た"].coverage.coversReadings["田"], "た");
+    assert.equal(starterEntries["今度|こんど"].coverage.coversReadings["度"], "ど");
+    assert.equal(starterEntries["冬|ふゆ"].coverage.coversReadings["冬"], "ふゆ");
+    assert.equal(starterEntries["答える|こたえる"].coverage.coversReadings["答"], "こたえる");
+    assert.equal(starterEntries["答え|こたえ"].coverage.coversReadings["答"], "こたえ");
+    assert.equal(starterEntries["動く|うごく"].coverage.coversReadings["動"], "うごく");
+    assert.equal(starterEntries["動物|どうぶつ"].coverage.coversReadings["動"], "どう");
+    assert.equal(starterEntries["同じ|おなじ"].coverage.coversReadings["同"], "おなじ");
+    assert.equal(starterEntries["同時|どうじ"].coverage.coversReadings["同"], "どう");
+    assert.equal(starterEntries["忙しい|いそがしい"].coverage.coversReadings["忙"], "いそがしい");
+    assert.equal(starterEntries["夕食|ゆうしょく"].coverage.coversReadings["夕"], "ゆう");
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadWordStudyData({
         starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),

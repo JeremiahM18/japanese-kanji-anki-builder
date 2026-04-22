@@ -2503,6 +2503,14 @@
     "englishMeaning": "rest / holiday",
     "breakdownOverrides": [
       {
+        "matchWord": "休み時間",
+        "englishMeaning": "rest / holiday",
+        "displayWord": {
+          "written": "休",
+          "pron": "やすみ"
+        }
+      },
+      {
         "matchWord": "休日",
         "englishMeaning": "rest / holiday",
         "displayWord": {
@@ -8960,6 +8968,10 @@
   },
   "半": {
     "englishMeaning": "half",
+    "breakdownDisplayWord": {
+      "written": "半",
+      "pron": "はん"
+    },
     "breakdownOverrides": [],
     "source": "starter-curated",
     "tags": [
@@ -14477,7 +14489,16 @@
       "written": "大きい",
       "pron": "おおきい"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "大学",
+        "englishMeaning": "big / large",
+        "displayWord": {
+          "written": "大",
+          "pron": "だい"
+        }
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -16351,6 +16372,10 @@
   },
   "学": {
     "englishMeaning": "study / learning",
+    "breakdownDisplayWord": {
+      "written": "学",
+      "pron": "がく"
+    },
     "breakdownOverrides": [],
     "source": "starter-curated",
     "tags": [
@@ -18020,7 +18045,16 @@
       "written": "小さい",
       "pron": "ちいさい"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "小学校",
+        "englishMeaning": "small",
+        "displayWord": {
+          "written": "小",
+          "pron": "しょう"
+        }
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -30232,6 +30266,10 @@
   },
   "時": {
     "englishMeaning": "time / o'clock",
+    "breakdownDisplayWord": {
+      "written": "時",
+      "pron": "じ"
+    },
     "breakdownOverrides": [],
     "source": "starter-curated",
     "tags": [
@@ -51685,6 +51723,10 @@
   },
   "車": {
     "englishMeaning": "car / vehicle",
+    "breakdownDisplayWord": {
+      "written": "車",
+      "pron": "くるま"
+    },
     "breakdownOverrides": [],
     "source": "starter-curated",
     "tags": [

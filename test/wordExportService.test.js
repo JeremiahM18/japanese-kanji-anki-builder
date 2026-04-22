@@ -76,6 +76,9 @@ test("loadAnkiNoteSchema can load the shared word note contract", () => {
         "Reading",
         "Meaning",
         "JLPTLevel",
+        "CoverageRole",
+        "FocusKanji",
+        "CoversReading",
         "KanjiBreakdown",
         "ExampleSentence",
         "Notes",
@@ -270,6 +273,33 @@ test("buildBreakdownInference prefers curated display words for learner-facing k
     assert.equal(result.meaningJP, "大きい （おおきい） ／ big / large");
     assert.equal(result.onReading, "タイ、 ダイ");
     assert.equal(result.kunReading, "-おお.いに、 おお-、 おお.きい");
+});
+
+test("buildBreakdownInference prefers breakdown-specific display words inside compound contexts", () => {
+    const result = buildBreakdownInference({
+        kanji: "時",
+        inference: {
+            candidates: [{ written: "時", pron: "とき", gloss: "time / hour", score: 100 }],
+            primaryReading: "とき",
+            englishMeaning: "time / o'clock",
+            meaningJP: "時 （とき） ／ time / o'clock",
+            onReading: "オン: ジ",
+            kunReading: "くん: -どき、 とき",
+        },
+        curatedEntry: {
+            englishMeaning: "time / o'clock",
+            breakdownDisplayWord: { written: "時", pron: "じ" },
+        },
+        contextWord: "時間",
+        contextCandidate: {
+            written: "時間",
+            reading: "じかん",
+            meaning: "time / hour",
+        },
+    });
+
+    assert.equal(result.primaryReading, "じ");
+    assert.equal(result.meaningJP, "時 （じ） ／ time / o'clock");
 });
 
 test("buildBreakdownInference can use breakdown-only overrides for compound contexts", () => {
@@ -832,6 +862,62 @@ test("buildWordTsvForJlptLevel excludes stale compositional phrase entries even 
 
     assert.match(result.tsv, /^高い\tたかい\thigh \/ expensive\tJLPT N5\t/m);
     assert.doesNotMatch(result.tsv, /^高い山\tたかいやま\thigh mountain\tJLPT N5\t/m);
+});
+
+test("buildWordTsvForJlptLevel includes explicit learner-facing coverage metadata", async () => {
+    const wordExportService = createWordExportService({
+        sentenceCorpus: [],
+        curatedStudyData: {
+            時: {
+                englishMeaning: "time / o'clock",
+                breakdownDisplayWord: { written: "時", pron: "じ" },
+            },
+            間: {
+                englishMeaning: "time / interval",
+                breakdownEnglishMeaning: "interval / time",
+                breakdownDisplayWord: { written: "間", pron: "かん" },
+            },
+        },
+        wordStudyData: {
+            "時間|じかん": {
+                written: "時間",
+                reading: "じかん",
+                meaning: "time / hour",
+                jlpt: 5,
+            },
+        },
+    });
+
+    const result = await wordExportService.buildWordTsvForJlptLevel({
+        levelNumber: 5,
+        jlptOnlyJson: {
+            時: { jlpt: 5 },
+            間: { jlpt: 5 },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {
+                "時間|じかん": { written: "時間", reading: "じかん", jlpt: 5 },
+            },
+        },
+        kanjiApiClient: {
+            async getKanji(kanji) {
+                if (kanji === "時") {
+                    return { meanings: ["time"], on_readings: ["ジ"], kun_readings: ["とき"] };
+                }
+                return { meanings: ["interval"], on_readings: ["カン"], kun_readings: ["あいだ"] };
+            },
+            async getWords() {
+                return [];
+            },
+        },
+        concurrency: 1,
+    });
+
+    const lines = result.tsv.trim().split("\n");
+    assert.equal(lines[0], "Word\tReading\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes");
+    assert.match(lines[1], /\tJLPT core \+ reading coverage\t/);
+    assert.match(lines[1], /\t時、間\t/);
+    assert.match(lines[1], /\t時: じ ／ 間: かん\t/);
 });
 
 test("buildWordTsvForJlptLevel uses the canonical word-level contract before constituent heuristics", async () => {

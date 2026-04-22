@@ -31,17 +31,25 @@ function parseArgs(argv) {
 
 function parseWordTsv(tsv) {
     const lines = String(tsv || "").trim().split(/\r?\n/).filter(Boolean);
+    const header = lines[0]?.split("	") || [];
     const rows = [];
     for (const line of lines.slice(1)) {
         const cols = line.split("	");
+        const mapped = {};
+        for (let index = 0; index < header.length; index += 1) {
+            mapped[header[index]] = cols[index] || "";
+        }
         rows.push({
-            word: cols[0] || "",
-            reading: cols[1] || "",
-            meaning: cols[2] || "",
-            jlptLevel: cols[3] || "",
-            kanjiBreakdown: cols[4] || "",
-            exampleSentence: cols[5] || "",
-            notes: cols[6] || "",
+            word: mapped.Word || "",
+            reading: mapped.Reading || "",
+            meaning: mapped.Meaning || "",
+            jlptLevel: mapped.JLPTLevel || "",
+            coverageRole: mapped.CoverageRole || "",
+            focusKanji: mapped.FocusKanji || "",
+            coversReading: mapped.CoversReading || "",
+            kanjiBreakdown: mapped.KanjiBreakdown || "",
+            exampleSentence: mapped.ExampleSentence || "",
+            notes: mapped.Notes || "",
         });
     }
     return rows;

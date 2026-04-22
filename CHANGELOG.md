@@ -15,6 +15,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Upgraded the learner-facing word-card surface so word decks now expose `CoverageRole`, `FocusKanji`, and `CoversReading`, making it clear whether a card is core JLPT vocabulary, reading-coverage support, or both.
+- Tightened compound breakdown rendering on word cards so learner-facing study focus follows the written kanji order and context-specific reading forms such as `時 （じ）`, `学 （がく）`, `車 （くるま）`, `休 （やすみ）`, and `間 （かん）` survive into the exported card instead of weaker bare defaults.
 - Started the first governed N4 word batch in the tracked starter word pack and canonical word-level contract with `安心`, `急ぐ`, `海岸`, `世界`, `花見`, and `開く`, so N4 word governance is now real rather than still being reported as zero.
 - Expanded the JLPT word audit and word-deck build summary so they now report canonical starter coverage, curated-only starter rows, phrase-tagged starter exclusions, and shipped row governance splits (`canonicalRows`, `curatedOnlyRows`, `inferredOnlyRows`) instead of only reporting raw starter-versus-contract drift.
 - Tightened kanji inference so uncurated cards fall back to the bare kanji when the top ranked compound does not match the chosen English meaning, and kept curated `preferredWords` entries free to preserve intentional compound study hooks without letting `PrimaryReading` drift onto a different display form.

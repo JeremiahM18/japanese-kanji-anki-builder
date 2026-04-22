@@ -195,8 +195,9 @@ Important word-deck rules:
 - exported word-card JLPT labels now prefer the tracked [templates/jlpt_word_level_contract.json](templates/jlpt_word_level_contract.json) contract before any kanji-based fallback heuristic, so learner-facing labels use canonical word-level truth where the repo has it
 - the default word deck now aims at lexical study words, not compositional example phrases; curated entries tagged `phrase` and obvious phrase shapes such as `高い山` or `兄の部屋` are excluded from normal word-deck output
 - curated word entries suppress uncurated alternate readings for the same written form
+- word cards now explicitly tell the learner why a word is present with `CoverageRole`, `FocusKanji`, and `CoversReading` fields, so the back of the card can distinguish core JLPT vocabulary from reading-coverage support and show which kanji readings the word is reinforcing
 - kanji breakdown panels on the back prefer curated kanji display words and meanings, and can use dedicated breakdown-only overrides for compound contexts so cards like `銀行`, `会社`, `会社員`, `昼ご飯`, `晩ご飯`, `午前`, `午後`, `時間`, `月曜日`, `学校`, `病院`, `郵便局`, `去年`, `来月`, `来週`, `夕方`, `元気`, and `仕事` stay learner-friendly without changing primary study forms such as `行く`
-- those breakdown panels now avoid leaking a full compound reading onto a single-kanji panel unless you intentionally curate that context, and they normalize internal reading labels into learner-facing `On:` / `Kun:` lines instead of surfacing raw `オン:` / `くん:` notation
+- those breakdown panels now avoid leaking a full compound reading onto a single-kanji panel unless you intentionally curate that context, normalize internal reading labels into learner-facing `On:` / `Kun:` lines instead of surfacing raw `オン:` / `くん:` notation, and prefer context-specific readings like `時 （じ）`, `学 （がく）`, `車 （くるま）`, `休 （やすみ）`, and `間 （かん）` when the word actually teaches that reading
 - `npm run data:audit:jlpt:words` now audits the tracked starter word surface more honestly: it reports canonical starter coverage by level, curated-only starter entries, phrase-tagged starter exclusions, and contract drift so we can see how much of the default word deck surface is actually governed before widening N4+. The current baseline is `258/258` governed default-deck starter entries for N5 plus the first governed N4 batch of `6` entries.
 - use `--include-inferred` when you explicitly want to expand beyond curated words during exploration
 
@@ -406,6 +407,9 @@ The word deck exports fields such as:
 - `Reading`
 - `Meaning`
 - `JLPTLevel`
+- `CoverageRole`
+- `FocusKanji`
+- `CoversReading`
 - `KanjiBreakdown`
 - `ExampleSentence`
 - `Notes`
@@ -413,7 +417,10 @@ The word deck exports fields such as:
 Behavior:
 
 - the front shows the written study word with no furigana
-- the back shows the reading, English meaning, JLPT label, example sentence, and a compact kanji breakdown
+- the back shows the reading, English meaning, JLPT label, learner-facing study focus, example sentence, and a compact kanji breakdown
+- `CoverageRole` explains whether the card is carrying core JLPT vocabulary, reading coverage support, or both
+- `FocusKanji` lists the kanji this word is actively helping cover, in the same order the learner reads them in the word
+- `CoversReading` shows the specific per-kanji reading the word is reinforcing, such as `時: じ ／ 間: かん`
 - kanji breakdown panels prefer curated kanji display words and meanings, then fall back to bare-kanji meanings and reading lists; in compound contexts they avoid inheriting a whole-word reading unless you curate that override explicitly, so stroke-order study stays in the kanji deck and the word deck remains compact plus learner-clear
 - the shared Anki note schemas live in `src/config/ankiNoteSchema.json` and `src/config/ankiWordNoteSchema.json`, which are the single sources of truth for exported field order, note type metadata, and card template layout
 

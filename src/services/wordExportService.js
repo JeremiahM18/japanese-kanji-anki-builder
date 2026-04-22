@@ -69,6 +69,22 @@ function buildWordNotes(curatedEntry) {
     return String(curatedEntry?.notes || "").trim();
 }
 
+function summarizeCoverageRole(entry, jlptWordLevelContract) {
+    const classification = classifyWordDeckEntry({
+        candidate: entry?.candidate,
+        curatedEntry: entry?.curatedEntry,
+        jlptWordLevelContract,
+    });
+
+    if (classification === "canonical") {
+        return "JLPT core + reading coverage";
+    }
+    if (classification === "curatedOnly") {
+        return "Reading coverage support";
+    }
+    return "Inferred support word";
+}
+
 function buildJlptLabel(level) {
     return Number.isInteger(level) ? `JLPT N${level}` : "";
 }
@@ -310,6 +326,40 @@ function normalizeBreakdownReadingField(value, prefixPattern) {
     }
 
     return text.replace(prefixPattern, "").trim();
+}
+
+function extractPrimaryCoverageReading(breakdown = {}) {
+    const primary = String(breakdown?.primaryReading || "").trim();
+    if (primary) {
+        return primary;
+    }
+
+    const fallbackReading = String(breakdown?.onReading || breakdown?.kunReading || "").trim();
+    if (!fallbackReading) {
+        return "";
+    }
+
+    return fallbackReading.split("、")[0].trim();
+}
+
+function orderFocusKanjiForWord(candidate = {}, sourceKanji = new Set()) {
+    const focusSet = sourceKanji instanceof Set ? sourceKanji : new Set(sourceKanji || []);
+    const orderedConstituents = extractConstituentKanji(candidate?.written || "");
+    const ordered = [];
+
+    for (const kanji of orderedConstituents) {
+        if (focusSet.has(kanji) && !ordered.includes(kanji)) {
+            ordered.push(kanji);
+        }
+    }
+
+    for (const kanji of focusSet) {
+        if (!ordered.includes(kanji)) {
+            ordered.push(kanji);
+        }
+    }
+
+    return ordered;
 }
 
 function pickPreferredCandidate(existingCandidate, incomingCandidate, sentenceCorpus) {
@@ -752,10 +802,34 @@ function createWordExportService({
                 })
                 .filter(Boolean)
                 .join("");
+            const focusKanji = orderFocusKanjiForWord(entry.candidate, entry.sourceKanji);
+            const coversReading = focusKanji
+                .map((kanji) => {
+                    const inference = kanjiInferenceCache.get(kanji);
+                    if (!inference) {
+                        return "";
+                    }
+
+                    const breakdown = buildBreakdownInference({
+                        kanji,
+                        inference,
+                        curatedEntry: curatedStudyData?.[kanji] || null,
+                        contextWord: entry.candidate.written,
+                        contextCandidate: {
+                            written: entry.candidate.written,
+                            reading: entry.curatedEntry?.reading || entry.candidate.pron,
+                            meaning: entry.curatedEntry?.meaning || entry.candidate.gloss,
+                        },
+                    });
+                    const reading = extractPrimaryCoverageReading(breakdown);
+                    return reading ? `${kanji}: ${reading}` : kanji;
+                })
+                .filter(Boolean)
+                .join(" ／ ");
             const exampleSentence = formatExampleSentence(selectWordSentence({
                 candidate: entry.candidate,
                 curatedEntry: entry.curatedEntry,
-                sourceKanji: [...entry.sourceKanji][0] || "",
+                sourceKanji: focusKanji[0] || "",
                 constituentKanji,
                 sentenceCorpus,
             }));
@@ -765,6 +839,9 @@ function createWordExportService({
                 entry.curatedEntry?.reading || entry.candidate.pron,
                 entry.curatedEntry?.meaning || entry.candidate.gloss,
                 buildJlptLabel(entry.level),
+                summarizeCoverageRole(entry, jlptWordLevelContract),
+                focusKanji.join("、"),
+                coversReading,
                 breakdownHtml,
                 exampleSentence,
                 buildWordNotes(entry.curatedEntry),
@@ -824,6 +901,8 @@ module.exports = {
     inferWordLevel,
     isLikelyPhraseCard,
     isAllowedByCuratedWords,
+    extractPrimaryCoverageReading,
+    orderFocusKanjiForWord,
     normalizeBreakdownReadingField,
     pickBestExactSingleCandidate,
     pickPreferredCandidate,

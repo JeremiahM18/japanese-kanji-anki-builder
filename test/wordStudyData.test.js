@@ -5,7 +5,9 @@ const {
     buildWordCoverageContractSummary,
     loadWordStudyData,
     buildWordStudyEntryKey,
+    isStarterDerivedEntry,
     normalizeWordStudyData,
+    refreshStarterEntries,
 } = require("../src/datasets/wordStudyData");
 
 test("buildWordStudyEntryKey uses written and reading", () => {
@@ -98,6 +100,46 @@ test("buildWordCoverageContractSummary reports explicit reading-coverage trackin
     assert.equal(summary.explicitCoverageEntriesByLevel[5], 1);
     assert.equal(summary.explicitReadingTargetsByLevel[5], 2);
     assert.equal(summary.explicitCoveragePercentByLevel[5], 50);
+});
+
+test("word study dataset helpers detect and refresh starter-derived entries", () => {
+    assert.equal(isStarterDerivedEntry({ source: "word-study-data" }), true);
+    assert.equal(isStarterDerivedEntry({ tags: ["starter", "n4"] }), true);
+    assert.equal(isStarterDerivedEntry({ source: "manual-curation", tags: ["n4"] }), false);
+
+    const refreshed = refreshStarterEntries(
+        {
+            "計画|けいかく": {
+                written: "計画",
+                reading: "けいかく",
+                meaning: "plan",
+                source: "word-study-data",
+                tags: ["starter", "n4"],
+                jlpt: 4,
+            },
+        },
+        {
+            "計画|けいかく": {
+                written: "計画",
+                reading: "けいかく",
+                meaning: "old meaning",
+                source: "word-study-data",
+                tags: ["starter", "n4"],
+                jlpt: 4,
+            },
+            "自作|じさく": {
+                written: "自作",
+                reading: "じさく",
+                meaning: "self-made",
+                source: "manual-curation",
+                tags: ["n4"],
+                jlpt: 4,
+            },
+        },
+    );
+
+    assert.equal(refreshed["計画|けいかく"].meaning, "plan");
+    assert.equal(refreshed["自作|じさく"].meaning, "self-made");
 });
 
 test("tracked starter word data includes the first governed N4 starter entries", () => {
@@ -196,6 +238,42 @@ test("tracked starter word data includes the third governed N4 completion batch"
     assert.equal(starterEntries["同時|どうじ"].coverage.coversReadings["同"], "どう");
     assert.equal(starterEntries["忙しい|いそがしい"].coverage.coversReadings["忙"], "いそがしい");
     assert.equal(starterEntries["夕食|ゆうしょく"].coverage.coversReadings["夕"], "ゆう");
+});
+
+test("tracked starter word data includes the fourth governed N4 completion batch", () => {
+    const starterEntries = loadWordStudyData({
+        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
+        localPath: null,
+    });
+
+    assert.equal(starterEntries["以内|いない"].coverage.coversReadings["以"], "い");
+    assert.equal(starterEntries["入院|にゅういん"].coverage.coversReadings["院"], "いん");
+    assert.equal(starterEntries["運動|うんどう"].coverage.coversReadings["運"], "うん");
+    assert.equal(starterEntries["運ぶ|はこぶ"].coverage.coversReadings["運"], "はこぶ");
+    assert.equal(starterEntries["映る|うつる"].coverage.coversReadings["映"], "うつる");
+    assert.equal(starterEntries["英文|えいぶん"].coverage.coversReadings["英"], "えい");
+    assert.equal(starterEntries["家族|かぞく"].coverage.coversReadings["家"], "か");
+    assert.equal(starterEntries["歌う|うたう"].coverage.coversReadings["歌"], "うたう");
+    assert.equal(starterEntries["計画|けいかく"].coverage.coversReadings["計"], "けい");
+    assert.equal(starterEntries["計画|けいかく"].coverage.coversReadings["画"], "かく");
+    assert.equal(starterEntries["図書館|としょかん"].coverage.coversReadings["館"], "かん");
+    assert.equal(starterEntries["起こす|おこす"].coverage.coversReadings["起"], "おこす");
+    assert.equal(starterEntries["急に|きゅうに"].coverage.coversReadings["急"], "きゅう");
+    assert.equal(starterEntries["研究|けんきゅう"].coverage.coversReadings["研"], "けん");
+    assert.equal(starterEntries["研究|けんきゅう"].coverage.coversReadings["究"], "きゅう");
+    assert.equal(starterEntries["牛肉|ぎゅうにく"].coverage.coversReadings["牛"], "ぎゅう");
+    assert.equal(starterEntries["去る|さる"].coverage.coversReadings["去"], "さる");
+    assert.equal(starterEntries["建てる|たてる"].coverage.coversReadings["建"], "たて");
+    assert.equal(starterEntries["公立|こうりつ"].coverage.coversReadings["公"], "こう");
+    assert.equal(starterEntries["工場|こうじょう"].coverage.coversReadings["工"], "こう");
+    assert.equal(starterEntries["銀色|ぎんいろ"].coverage.coversReadings["銀"], "ぎん");
+    assert.equal(starterEntries["座席|ざせき"].coverage.coversReadings["座"], "ざ");
+    assert.equal(starterEntries["作文|さくぶん"].coverage.coversReadings["作"], "さ");
+    assert.equal(starterEntries["姉妹|しまい"].coverage.coversReadings["姉"], "し");
+    assert.equal(starterEntries["質問|しつもん"].coverage.coversReadings["質"], "しつ");
+    assert.equal(starterEntries["写真|しゃしん"].coverage.coversReadings["写"], "しゃ");
+    assert.equal(starterEntries["主人|しゅじん"].coverage.coversReadings["主"], "しゅ");
+    assert.equal(starterEntries["秋|あき"].coverage.coversReadings["秋"], "あき");
 });
 
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {

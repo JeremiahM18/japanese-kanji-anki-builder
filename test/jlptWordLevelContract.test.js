@@ -83,7 +83,7 @@ test("loadJlptWordLevelContract rejects stale derived inventory counts", () => {
 test("tracked JLPT word contract keeps standalone higher-level kanji words in their own level", () => {
     const contract = loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json"));
 
-    assert.equal(contract.inventoryCounts["4"], 76);
+    assert.equal(contract.inventoryCounts["4"], 102);
     assert.equal(contract.inventoryCounts["5"], 341);
     assert.equal(contract.excludedCounts["5"], 13);
     assert.equal(getJlptWordLevel(contract, "安心|あんしん"), 4);
@@ -162,6 +162,32 @@ test("tracked JLPT word contract keeps standalone higher-level kanji words in th
     assert.equal(getJlptWordLevel(contract, "同時|どうじ"), 4);
     assert.equal(getJlptWordLevel(contract, "忙しい|いそがしい"), 4);
     assert.equal(getJlptWordLevel(contract, "夕食|ゆうしょく"), 4);
+    assert.equal(getJlptWordLevel(contract, "以内|いない"), 4);
+    assert.equal(getJlptWordLevel(contract, "入院|にゅういん"), 4);
+    assert.equal(getJlptWordLevel(contract, "運動|うんどう"), 4);
+    assert.equal(getJlptWordLevel(contract, "運ぶ|はこぶ"), 4);
+    assert.equal(getJlptWordLevel(contract, "映る|うつる"), 4);
+    assert.equal(getJlptWordLevel(contract, "英文|えいぶん"), 4);
+    assert.equal(getJlptWordLevel(contract, "家族|かぞく"), 4);
+    assert.equal(getJlptWordLevel(contract, "歌う|うたう"), 4);
+    assert.equal(getJlptWordLevel(contract, "計画|けいかく"), 4);
+    assert.equal(getJlptWordLevel(contract, "図書館|としょかん"), 4);
+    assert.equal(getJlptWordLevel(contract, "起こす|おこす"), 4);
+    assert.equal(getJlptWordLevel(contract, "急に|きゅうに"), 4);
+    assert.equal(getJlptWordLevel(contract, "研究|けんきゅう"), 4);
+    assert.equal(getJlptWordLevel(contract, "牛肉|ぎゅうにく"), 4);
+    assert.equal(getJlptWordLevel(contract, "去る|さる"), 4);
+    assert.equal(getJlptWordLevel(contract, "建てる|たてる"), 4);
+    assert.equal(getJlptWordLevel(contract, "公立|こうりつ"), 4);
+    assert.equal(getJlptWordLevel(contract, "工場|こうじょう"), 4);
+    assert.equal(getJlptWordLevel(contract, "銀色|ぎんいろ"), 4);
+    assert.equal(getJlptWordLevel(contract, "座席|ざせき"), 4);
+    assert.equal(getJlptWordLevel(contract, "作文|さくぶん"), 4);
+    assert.equal(getJlptWordLevel(contract, "姉妹|しまい"), 4);
+    assert.equal(getJlptWordLevel(contract, "質問|しつもん"), 4);
+    assert.equal(getJlptWordLevel(contract, "写真|しゃしん"), 4);
+    assert.equal(getJlptWordLevel(contract, "主人|しゅじん"), 4);
+    assert.equal(getJlptWordLevel(contract, "秋|あき"), 4);
     assert.equal(getJlptWordLevel(contract, "五月|ごがつ"), 5);
     assert.equal(getJlptWordLevel(contract, "四月|しがつ"), 5);
     assert.equal(getJlptWordLevel(contract, "七日|なのか"), 5);

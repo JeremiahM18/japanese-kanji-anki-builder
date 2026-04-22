@@ -8,6 +8,7 @@ const { bootstrapWordStudyData } = require("../src/services/wordStudyBootstrapSe
 function parseArgs(argv) {
     return {
         merge: argv.includes("--merge"),
+        refreshStarter: argv.includes("--refresh-starter"),
         json: argv.includes("--json"),
     };
 }
@@ -19,12 +20,12 @@ function formatReport(summary) {
     lines.push(`Starter entries available: ${summary.starterEntries}`);
     lines.push(`Existing target entries: ${summary.existingEntries}`);
     lines.push(`Written target entries: ${summary.writtenEntries}`);
-    lines.push(`Mode: ${summary.merge ? "merge" : "initialize"}`);
+    lines.push(`Mode: ${summary.refreshStarter ? "refresh-starter" : summary.merge ? "merge" : "initialize"}`);
     lines.push(`Target file: ${summary.targetPath}`);
     lines.push("");
 
     if (!summary.changed) {
-        lines.push("No file changes were made because word study data already exists. Re-run with `--merge` to add starter entries.");
+        lines.push("No file changes were made because word study data already exists. Re-run with `--merge` to add starter entries or `--refresh-starter` to replace stale starter-derived entries.");
     } else {
         lines.push("Word study data is ready.");
         lines.push("Next steps:");
@@ -48,6 +49,7 @@ function main() {
         targetPath: config.wordStudyDataPath,
         starterPath,
         merge: options.merge,
+        refreshStarter: options.refreshStarter,
     });
 
     if (options.json) {

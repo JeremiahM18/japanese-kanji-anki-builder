@@ -143,15 +143,49 @@ function loadWordStudyDataFile(filePath) {
     return JSON.parse(fs.readFileSync(filePath, "utf-8"));
 }
 
+function isStarterDerivedEntry(entry) {
+    const source = String(entry?.source || "").trim().toLowerCase();
+    if (source === "word-study-data" || source === "starter-word-study") {
+        return true;
+    }
+
+    return Array.isArray(entry?.tags) && entry.tags.some((tag) => String(tag || "").trim().toLowerCase() === "starter");
+}
+
+function refreshStarterEntries(starterEntries = {}, existingEntries = {}) {
+    const refreshed = {};
+    const keys = new Set([
+        ...Object.keys(existingEntries || {}),
+        ...Object.keys(starterEntries || {}),
+    ]);
+
+    for (const key of keys) {
+        const starterEntry = starterEntries?.[key];
+        const existingEntry = existingEntries?.[key];
+
+        if (starterEntry && (!existingEntry || isStarterDerivedEntry(existingEntry))) {
+            refreshed[key] = starterEntry;
+            continue;
+        }
+
+        if (existingEntry) {
+            refreshed[key] = existingEntry;
+        }
+    }
+
+    return refreshed;
+}
+
 function loadWordStudyData({
     localPath,
     starterPath = path.resolve(process.cwd(), "templates", "starter_word_study_data.json"),
 } = {}) {
     const starterEntries = loadWordStudyDataFile(starterPath);
     const localEntries = loadWordStudyDataFile(localPath);
+    const refreshedLocalEntries = refreshStarterEntries(starterEntries, localEntries);
     return normalizeWordStudyData({
         ...starterEntries,
-        ...localEntries,
+        ...refreshedLocalEntries,
     });
 }
 
@@ -206,12 +240,14 @@ module.exports = {
     buildWordStudyEntryKey,
     cleanString,
     hasPhraseTag,
+    isStarterDerivedEntry,
     loadWordStudyData,
     normalizeTags,
     normalizeWordCoverage,
     normalizeWordStudyData,
     normalizeWordStudyEntry,
     normalizeWordStudySentence,
+    refreshStarterEntries,
     wordCoverageRoleSchema,
     wordStudyCoverageSchema,
     wordStudyDataSchema,

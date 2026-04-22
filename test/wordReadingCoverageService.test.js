@@ -1,10 +1,14 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const {
+  buildCoverageSourceSummary,
   buildWordReadingCoverageReport,
   normalizeReadingToken,
+  parseCoverageRole,
+  parseCoversReadingField,
   parseDelimitedReadingField,
   parseExampleEntries,
+  parseFocusKanjiField,
   parseKanjiTsv,
   parseWordTsv,
 } = require('../src/services/wordReadingCoverageService');
@@ -17,6 +21,17 @@ test('normalizeReadingToken normalizes katakana and dictionary punctuation', () 
 test('parseDelimitedReadingField splits on and kun readings cleanly', () => {
   assert.deepEqual(parseDelimitedReadingField('オン: ショウ、 ジョウ', 'オン: '), ['しょう', 'じょう']);
   assert.deepEqual(parseDelimitedReadingField('くん: -あ.がる、 うえ、 うえ', 'くん: '), ['あがる', 'うえ']);
+});
+
+test('word reading coverage metadata parsers understand learner-facing study-focus fields', () => {
+  assert.equal(parseCoverageRole('JLPT core + reading coverage'), 'core');
+  assert.equal(parseCoverageRole('Reading coverage support'), 'support');
+  assert.equal(parseCoverageRole('Inferred support word'), 'inferred');
+  assert.deepEqual(parseFocusKanjiField('時、間'), ['時', '間']);
+  assert.deepEqual(
+    [...parseCoversReadingField('時: じ ／ 間: かん').entries()],
+    [['時', 'じ'], ['間', 'かん']]
+  );
 });
 
 test('parseExampleEntries extracts curated word examples from notes', () => {
@@ -82,5 +97,43 @@ test('buildWordReadingCoverageReport counts a related word card as covered when 
   assert.equal(entry.kunCoverage[0].status, 'missing_word_card');
   assert.equal(entry.kunCoverage[1].status, 'covered');
   assert.equal(entry.kunCoverage[1].deckExamples[0].written, '後ろ');
+});
+
+test('buildWordReadingCoverageReport prefers explicit word-card reading coverage metadata over whole-word readings', () => {
+  const kanjiRows = parseKanjiTsv([
+    'Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence',
+    '今\t今\t今 （いま） ／ now\tいま\tオン: コン、 キン\tくん: いま\t\t\t\t\t\t今年 （ことし） - this year\t',
+    '日\t日\t日 （ひ） ／ day\tひ\tオン: ニチ\tくん: ひ\t\t\t\t\t\t今日 （きょう） - today\t',
+  ].join('\n'));
+
+  const wordRows = parseWordTsv([
+    'Word\tReading\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes',
+    '今日\tきょう\ttoday\tJLPT N5\tJLPT core + reading coverage\t今、日\t今: いま ／ 日: ひ\t<div>今</div>\t今日は図書館へ行きます。\t',
+  ].join('\n'));
+
+  const report = buildWordReadingCoverageReport({ kanjiRows, wordRows, levelLabel: 'N5' });
+  assert.equal(report.summary.coveredReadings, 2);
+  assert.equal(report.summary.coreCoveredReadings, 2);
+  assert.equal(report.summary.missingWordCardReadings, 0);
+  assert.equal(report.summary.missingExampleReadings, 3);
+  assert.equal(report.kanji[0].kunCoverage[0].status, 'covered');
+  assert.equal(report.kanji[0].kunCoverage[0].coverageSource, 'core');
+  assert.equal(report.kanji[1].kunCoverage[0].status, 'covered');
+  assert.equal(report.kanji[1].kunCoverage[0].coverageSource, 'core');
+});
+
+test('buildCoverageSourceSummary counts covered readings by learner-facing role', () => {
+  assert.deepEqual(buildCoverageSourceSummary([
+    { status: 'covered', coverageSource: 'core' },
+    { status: 'covered', coverageSource: 'support' },
+    { status: 'covered', coverageSource: 'inferred' },
+    { status: 'covered', coverageSource: 'unknown' },
+    { status: 'missing_word_card', coverageSource: 'core' },
+  ]), {
+    coreCoveredReadings: 1,
+    supportCoveredReadings: 1,
+    inferredCoveredReadings: 1,
+    unknownCoveredReadings: 1,
+  });
 });
 

@@ -62,6 +62,76 @@ test("buildInferenceForKanji prefers the learner-facing display pronunciation", 
     assert.equal(inference.primaryReading, "いく");
 });
 
+test("buildInferenceForKanji leaves primaryReading blank when the learner-facing display word falls back to bare kanji", async () => {
+    const exportService = createExportService({
+        inferenceEngine: {
+            hasFullyCuratedKanjiEntry() {
+                return false;
+            },
+            inferKanjiStudyData() {
+                return {
+                    displayWord: { written: "日", pron: "" },
+                    bestWord: { written: "日本", pron: "にほん" },
+                    meaningJP: "日 ／ day",
+                    notes: "日本 （にほん） - Japan",
+                    sentenceCandidates: [],
+                };
+            },
+        },
+    });
+
+    const inference = await exportService.buildInferenceForKanji({
+        kanji: "日",
+        kanjiApiClient: {
+            async getKanji() {
+                return { meanings: ["day"], on_readings: ["ニチ"], kun_readings: ["ひ"] };
+            },
+            async getWords() {
+                return [];
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+    });
+
+    assert.equal(inference.primaryReading, "");
+});
+
+test("buildInferenceForKanji preserves a curated preferred-word compound hook and its reading", async () => {
+    const exportService = createExportService({
+        inferenceEngine: {
+            hasFullyCuratedKanjiEntry() {
+                return false;
+            },
+            inferKanjiStudyData() {
+                return {
+                    displayWord: { written: "日本", pron: "にほん" },
+                    bestWord: { written: "日本", pron: "にほん" },
+                    meaningJP: "日本 （にほん） ／ sun / day marker",
+                    notes: "日本 （にほん） - Japan",
+                    sentenceCandidates: [],
+                };
+            },
+        },
+    });
+
+    const inference = await exportService.buildInferenceForKanji({
+        kanji: "日",
+        kanjiApiClient: {
+            async getKanji() {
+                return { meanings: ["day"], on_readings: ["ニチ"], kun_readings: ["ひ"] };
+            },
+            async getWords() {
+                return [];
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+    });
+
+    assert.equal(inference.primaryReading, "にほん");
+});
+
 test("buildInferenceForKanji reuses a single shared manifest lookup when available", async () => {
     let manifestCalls = 0;
     const exportService = createExportService({

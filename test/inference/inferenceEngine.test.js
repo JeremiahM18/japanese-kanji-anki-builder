@@ -731,6 +731,24 @@ test("chooseMeaningDisplayCandidate falls back to the bare kanji when only misma
     });
 });
 
+test("chooseMeaningDisplayCandidate keeps a compound hook when its gloss still matches the chosen meaning", () => {
+    const result = chooseMeaningDisplayCandidate({
+        kanji: "生",
+        englishMeaning: "life",
+        rankedCandidates: [
+            { written: "一生", pron: "いっしょう", gloss: "one's life", score: 120 },
+            { written: "生中", pron: "なまちゅう", gloss: "draft beer", score: 115 },
+        ],
+    });
+
+    assert.deepEqual(result, {
+        written: "一生",
+        pron: "いっしょう",
+        gloss: "one's life",
+        score: 120,
+    });
+});
+
 test("buildMeaningJP hides exact-match katakana-only readings that look non-learner-friendly", () => {
     const result = buildMeaningJP({ written: "七", pron: "チー" }, "seven");
 

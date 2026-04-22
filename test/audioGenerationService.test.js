@@ -67,12 +67,12 @@ test("selectPreferredAudioReading falls back to normalized kunyomi and onyomi", 
 test("buildVoicevoxSpeakerLabel resolves the configured speaker style", () => {
     const label = buildVoicevoxSpeakerLabel([
         {
-            name: "女性1",
+            name: "女声1",
             styles: [{ id: 7, name: "ノーマル" }],
         },
     ], 7);
 
-    assert.equal(label, "女性1 / ノーマル");
+    assert.equal(label, "女声1 / ノーマル");
 });
 
 test("writeAudioSourceSidecar stores provenance next to generated audio", () => {
@@ -85,7 +85,7 @@ test("writeAudioSourceSidecar stores provenance next to generated audio", () => 
         writeAudioSourceSidecar({
             outputPath,
             source: "voicevox-nemo",
-            voice: "女性1 / ノーマル",
+            voice: "女声1 / ノーマル",
             locale: "ja-JP",
             category: "kanji-reading",
             text: "日",
@@ -95,7 +95,7 @@ test("writeAudioSourceSidecar stores provenance next to generated audio", () => 
 
         const sidecar = JSON.parse(fs.readFileSync(path.join(rootDir, "日.json"), "utf-8"));
         assert.equal(sidecar.source, "voicevox-nemo");
-        assert.equal(sidecar.voice, "女性1 / ノーマル");
+        assert.equal(sidecar.voice, "女声1 / ノーマル");
         assert.equal(sidecar.reading, "にち");
     } finally {
         cleanupTempDir(rootDir);
@@ -118,7 +118,7 @@ test("generateVoicevoxAudioForKanjiList writes wav files with bounded concurrenc
                 curatedStudyDataPath: path.join(rootDir, "curated.json"),
                 voicevoxEngineUrl: "http://127.0.0.1:50021",
             },
-            speakerId: 1,
+            speakerId: 10005,
             concurrency: 2,
             sentenceCorpus: [],
             curatedStudyData: {},
@@ -143,7 +143,7 @@ test("generateVoicevoxAudioForKanjiList writes wav files with bounded concurrenc
             },
             voicevoxClient: {
                 async listSpeakers() {
-                    return [{ name: "女性1", styles: [{ id: 1, name: "ノーマル" }] }];
+                    return [{ name: "女声1", styles: [{ id: 10005, name: "ノーマル" }] }];
                 },
                 async synthesize({ text, speakerId }) {
                     return Buffer.from(`${speakerId}:${text}`);
@@ -154,11 +154,11 @@ test("generateVoicevoxAudioForKanjiList writes wav files with bounded concurrenc
         assert.equal(summary.generated, 2);
         assert.equal(summary.failed, 0);
         assert.equal(fs.existsSync(path.join(rootDir, "audio", "日.wav")), true);
-        assert.equal(fs.readFileSync(path.join(rootDir, "audio", "日.wav"), "utf-8"), "1:にほん");
-        assert.equal(fs.readFileSync(path.join(rootDir, "audio", "学.wav"), "utf-8"), "1:がっこう");
+        assert.equal(fs.readFileSync(path.join(rootDir, "audio", "日.wav"), "utf-8"), "10005:にほん");
+        assert.equal(fs.readFileSync(path.join(rootDir, "audio", "学.wav"), "utf-8"), "10005:がっこう");
         const sidecar = JSON.parse(fs.readFileSync(path.join(rootDir, "audio", "日.json"), "utf-8"));
         assert.equal(sidecar.source, "voicevox");
-        assert.equal(sidecar.voice, "女性1 / ノーマル");
+        assert.equal(sidecar.voice, "女声1 / ノーマル");
     } finally {
         cleanupTempDir(rootDir);
     }
@@ -180,8 +180,8 @@ test("generateVoicevoxAudioForKanjiList falls back to the policy speaker name wh
                 curatedStudyDataPath: path.join(rootDir, "curated.json"),
                 voicevoxEngineUrl: "http://127.0.0.1:50021",
             },
-            speakerId: 1,
-            fallbackVoiceLabel: "女性1",
+            speakerId: 10005,
+            fallbackVoiceLabel: "女声1",
             sentenceCorpus: [],
             curatedStudyData: {},
             kanjiApiClient: {
@@ -209,7 +209,7 @@ test("generateVoicevoxAudioForKanjiList falls back to the policy speaker name wh
 
         assert.equal(summary.generated, 1);
         const sidecar = JSON.parse(fs.readFileSync(path.join(rootDir, "audio", "日.json"), "utf-8"));
-        assert.equal(sidecar.voice, "女性1");
+        assert.equal(sidecar.voice, "女声1");
     } finally {
         cleanupTempDir(rootDir);
     }
@@ -226,11 +226,11 @@ test("formatVoicevoxGenerationSummary renders a readable generation report", () 
             { kanji: "学", status: "skipped" },
         ],
     }, {
-        speakerId: 1,
+        speakerId: 10005,
         audioSourceDir: "data/media_sources/audio",
     });
 
-    assert.match(text, /Speaker ID: 1/);
+    assert.match(text, /Speaker ID: 10005/);
     assert.match(text, /Generated: 1/);
     assert.match(text, /日: にほん \(best-word\)/);
 });

@@ -262,7 +262,7 @@ function createSmokeWorkspace(rootDir) {
                     category: "kanji-reading",
                     text: "日",
                     reading: "にち",
-                    voice: "女性1 / ノーマル",
+                    voice: "女声1 / ノーマル",
                     locale: "ja-JP",
                 },
             ],

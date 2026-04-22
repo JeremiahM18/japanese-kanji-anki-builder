@@ -17,15 +17,15 @@ test("describeVoicevoxError turns generic fetch failures into actionable guidanc
 test("findSpeakerByStyleId resolves the pinned style from speaker metadata", () => {
     const result = findSpeakerByStyleId([
         {
-            name: "女性1",
-            styles: [{ id: 1, name: "ノーマル" }],
+            name: "女声1",
+            styles: [{ id: 10005, name: "ノーマル" }],
         },
-    ], 1);
+    ], 10005);
 
     assert.deepEqual(result, {
-        speakerName: "女性1",
+        speakerName: "女声1",
         styleName: "ノーマル",
-        label: "女性1 / ノーマル",
+        label: "女声1 / ノーマル",
     });
 });
 
@@ -38,8 +38,8 @@ test("buildVoicevoxDoctorReport verifies the pinned release speaker when the eng
             async listSpeakers() {
                 return [
                     {
-                        name: "女性1",
-                        styles: [{ id: 1, name: "ノーマル" }],
+                        name: "女声1",
+                        styles: [{ id: 10005, name: "ノーマル" }],
                     },
                 ];
             },
@@ -49,7 +49,7 @@ test("buildVoicevoxDoctorReport verifies the pinned release speaker when the eng
     assert.equal(report.reachable, true);
     assert.equal(report.speakerVerified, true);
     assert.equal(report.ready, true);
-    assert.equal(report.actualSpeaker.label, "女性1 / ノーマル");
+    assert.equal(report.actualSpeaker.label, "女声1 / ノーマル");
 });
 
 test("buildVoicevoxDoctorReport reports a clear issue when the engine is unreachable", async () => {
@@ -80,7 +80,7 @@ test("buildVoicevoxDoctorReport flags the wrong installed speaker mapping", asyn
                 return [
                     {
                         name: "男性1",
-                        styles: [{ id: 1, name: "ノーマル" }],
+                        styles: [{ id: 10005, name: "ノーマル" }],
                     },
                 ];
             },
@@ -89,15 +89,15 @@ test("buildVoicevoxDoctorReport flags the wrong installed speaker mapping", asyn
 
     assert.equal(report.reachable, true);
     assert.equal(report.ready, false);
-    assert.match(report.error, /expected 女性1/);
+    assert.match(report.error, /expected 女声1/);
 });
 
 test("formatVoicevoxDoctorReport renders the release-audio preflight clearly", () => {
     const text = formatVoicevoxDoctorReport({
         engineUrl: "http://127.0.0.1:50021",
         primarySourceId: "voicevox-nemo",
-        expectedSpeakerId: 1,
-        expectedSpeakerName: "女性1",
+        expectedSpeakerId: 10005,
+        expectedSpeakerName: "女声1",
         reachable: false,
         speakerVerified: false,
         actualSpeaker: null,
@@ -107,7 +107,7 @@ test("formatVoicevoxDoctorReport renders the release-audio preflight clearly", (
         nextSteps: ["Start the local VOICEVOX Nemo engine."],
     });
 
-    assert.match(text, /Pinned release speaker: 女性1 \(style id 1\)/);
+    assert.match(text, /Pinned release speaker: 女声1 \(style id 10005\)/);
     assert.match(text, /Release voice ready: no/);
     assert.match(text, /Start the local VOICEVOX Nemo engine/);
 });

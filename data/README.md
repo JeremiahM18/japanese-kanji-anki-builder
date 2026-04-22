@@ -58,7 +58,7 @@ The canonical repo-side JLPT taxonomy contract lives in [../templates/jlpt_level
 
 The canonical repo-side JLPT word-level contract lives in [../templates/jlpt_word_level_contract.json](../templates/jlpt_word_level_contract.json). It currently governs the tracked starter N5 word surface only, which means N4 and above should still be treated as uncatalogued at the canonical word level until tracked curation expands there.
 
-The canonical repo-side release audio policy now lives in [../templates/audio_source_policy.json](../templates/audio_source_policy.json). Treat that file as the governing truth for shipped audio provenance and source discipline. The current release contract expects `voicevox-nemo` as the canonical shipped source, pins the release speaker to `女性1` (style id `1`), requires explicit voice and locale metadata in managed manifests, and forbids a remote audio provider for released decks.
+The canonical repo-side release audio policy now lives in [../templates/audio_source_policy.json](../templates/audio_source_policy.json). Treat that file as the governing truth for shipped audio provenance and source discipline. The current release contract expects `voicevox-nemo` as the canonical shipped source, pins the release speaker to `女声1` (style id `10005`), requires explicit voice and locale metadata in managed manifests, and forbids a remote audio provider for released decks.
 
 Before generating governed audio on a new machine, run `npm run doctor:voicevox`. That preflight verifies that the local VOICEVOX Nemo engine is reachable and that the pinned release speaker is actually installed, which is a much safer check than discovering a generic `fetch failed` during generation.
 
@@ -215,7 +215,7 @@ Generate audio from a local VOICEVOX engine:
 
 ```bash
 npm run media:voicevox -- --list-speakers
-npm run media:voicevox -- --level=5 --speaker-id=1 --concurrency=4
+npm run media:voicevox -- --level=5 --speaker-id=10005 --concurrency=4
 ```
 
 The VOICEVOX generator now writes a sidecar JSON file next to each generated audio file so later managed-media sync can preserve release provenance instead of flattening everything into a generic local-file import. For a normal release-oriented run, leave the default source id alone so it stays aligned with `audio_source_policy.json`.

@@ -32,7 +32,7 @@ function writeManifest(rootDir, kanji, audioAssets) {
     }, null, 2), "utf-8");
 }
 
-test("buildAudioPolicyAuditReport passes cleanly for policy-compliant VOICEVOX Nemo 女性1 audio", () => {
+test("buildAudioPolicyAuditReport passes cleanly for policy-compliant VOICEVOX Nemo 女声1 audio", () => {
     const rootDir = makeTempDir();
 
     try {
@@ -44,7 +44,7 @@ test("buildAudioPolicyAuditReport passes cleanly for policy-compliant VOICEVOX N
             category: "kanji-reading",
             text: "日",
             reading: "にち",
-            voice: "女性1 / ノーマル",
+            voice: "女声1 / ノーマル",
             locale: "ja-JP",
         }]);
 

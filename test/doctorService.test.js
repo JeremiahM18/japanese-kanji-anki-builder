@@ -79,8 +79,8 @@ test("buildDoctorReport summarizes readiness coverage and acquisition next steps
             buildVoicevoxDoctorReportFn: async () => ({
                 ready: false,
                 reachable: false,
-                expectedSpeakerId: 1,
-                expectedSpeakerName: "女性1",
+                expectedSpeakerId: 10005,
+                expectedSpeakerName: "女声1",
                 actualSpeaker: null,
                 error: "VOICEVOX engine is not reachable.",
                 nextSteps: ["Start the local VOICEVOX Nemo engine."],
@@ -175,8 +175,8 @@ test("buildDoctorReport distinguishes blocked tooling from missing tooling", asy
             buildVoicevoxDoctorReportFn: async () => ({
                 ready: false,
                 reachable: false,
-                expectedSpeakerId: 1,
-                expectedSpeakerName: "女性1",
+                expectedSpeakerId: 10005,
+                expectedSpeakerName: "女声1",
                 actualSpeaker: null,
                 error: "VOICEVOX engine is not reachable.",
                 nextSteps: ["Start the local VOICEVOX Nemo engine."],
@@ -272,8 +272,8 @@ test("formatDoctorReport produces a human-readable setup summary", () => {
         audio: {
             voicevox: {
                 reachable: false,
-                expectedSpeakerId: 1,
-                expectedSpeakerName: "女性1",
+                expectedSpeakerId: 10005,
+                expectedSpeakerName: "女声1",
                 actualSpeaker: null,
                 ready: false,
                 error: "VOICEVOX engine is not reachable.",
@@ -287,7 +287,7 @@ test("formatDoctorReport produces a human-readable setup summary", () => {
     assert.match(text, /Media acquisition readiness:/);
     assert.match(text, /Python: blocked \[optional\] for native \.apkg generation/);
     assert.match(text, /VOICEVOX release-audio preflight:/);
-    assert.match(text, /Pinned speaker: 女性1 \(style id 1\)/);
+    assert.match(text, /Pinned speaker: 女声1 \(style id 10005\)/);
     assert.match(text, /VOICEVOX engine is not reachable/);
     assert.match(text, /Level quality gates:/);
     assert.match(text, /REMOTE_AUDIO_BASE_URL/);

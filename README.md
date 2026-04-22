@@ -38,7 +38,7 @@ npm run deck:words:apkg -- --levels=5
 
 Audio is advisory by default in readiness scoring: a deck can be `ready` without audio, and audio coverage is reported separately in readiness output.
 
-The repo now treats shipped audio as a governed product surface instead of trusting the original ad hoc pipeline. The tracked [templates/audio_source_policy.json](templates/audio_source_policy.json) contract defines the current release expectation: use `VOICEVOX Nemo` as the canonical shipped source, pin the release voice to `女性1` (style id `1` on the current Nemo engine baseline), keep release audio single-source, require explicit `source` / `voice` / `locale` provenance in managed manifests, and leave word-deck audio disabled until it is intentionally productized.
+The repo now treats shipped audio as a governed product surface instead of trusting the original ad hoc pipeline. The tracked [templates/audio_source_policy.json](templates/audio_source_policy.json) contract defines the current release expectation: use `VOICEVOX Nemo` as the canonical shipped source, pin the release voice to `女声1` (style id `10005` on the current Nemo engine baseline), keep release audio single-source, require explicit `source` / `voice` / `locale` provenance in managed manifests, and leave word-deck audio disabled until it is intentionally productized.
 
 ## Core workflows
 
@@ -258,7 +258,7 @@ npm run media:import:stroke-order -- --input-dir=/path/to/files
 npm run media:import:kanjivg -- --input-dir=/path/to/extracted-kanjivg/kanji --level=4
 npm run media:import:audio -- --input-dir=/path/to/audio --level=5
 npm run media:voicevox -- --list-speakers
-npm run media:voicevox -- --level=5 --speaker-id=1 --concurrency=4
+npm run media:voicevox -- --level=5 --speaker-id=10005 --concurrency=4
 npm run media:sources -- --level=5 --limit=25
 npm run media:sync -- --level=5 --limit=25
 npm run media:report -- --limit=25
@@ -288,7 +288,7 @@ Recommended VOICEVOX flow:
 
 ```bash
 npm run media:voicevox -- --list-speakers
-npm run media:voicevox -- --level=5 --speaker-id=1 --concurrency=4
+npm run media:voicevox -- --level=5 --speaker-id=10005 --concurrency=4
 npm run media:sources -- --level=5 --limit=100
 npm run media:sync -- --level=5 --limit=100
 npm run data:audit:audio -- --json
@@ -297,7 +297,7 @@ npm run deck:readiness
 
 This assumes a local VOICEVOX engine is already running at `VOICEVOX_ENGINE_URL` or the default `http://127.0.0.1:50021`.
 
-`media:voicevox` now writes a provenance sidecar next to each generated audio file so the later managed-media import can preserve the intended release source, voice label, and locale instead of flattening everything into a generic local-file source. By default it now also falls back to the tracked release voice from `audio_source_policy.json` (`女性1`, style id `1`) when no explicit speaker override is provided, but you can still override that explicitly for experiments.
+`media:voicevox` now writes a provenance sidecar next to each generated audio file so the later managed-media import can preserve the intended release source, voice label, and locale instead of flattening everything into a generic local-file source. By default it now also falls back to the tracked release voice from `audio_source_policy.json` (`女声1`, style id `10005`) when no explicit speaker override is provided, but you can still override that explicitly for experiments.
 
 ## CI verification
 
@@ -383,7 +383,7 @@ Curated word study entries are keyed by `written|reading`, for example `今日|�
 
 Word-level JLPT truth is now tracked separately in [templates/jlpt_word_level_contract.json](templates/jlpt_word_level_contract.json). The export path prefers that contract for learner-facing JLPT labels on word cards, and `npm run data:audit:jlpt:words` checks that the tracked starter word dataset still matches it. The canonical contract now means “default-deck eligible” only: the current governed baseline is `342` canonical N5 word rows, `25` canonical N4 word rows, plus `13` tracked source-only phrase exclusions at N5. Standalone single-kanji words now stay in their own JLPT level, while lower-level decks can still include multi-kanji support words that reference higher-level constituent kanji and badge that cross-level context explicitly on the card.
 
-Release audio truth is now tracked separately in [templates/audio_source_policy.json](templates/audio_source_policy.json). Managed audio is only considered enterprise-grade when the manifest provenance matches that policy. The current contract expects a single shipped release source (`voicevox-nemo`), the pinned release speaker `女性1` (style id `1`), explicit voice and locale metadata, and no remote-audio release provider.
+Release audio truth is now tracked separately in [templates/audio_source_policy.json](templates/audio_source_policy.json). Managed audio is only considered enterprise-grade when the manifest provenance matches that policy. The current contract expects a single shipped release source (`voicevox-nemo`), the pinned release speaker `女声1` (style id `10005`), explicit voice and locale metadata, and no remote-audio release provider.
 
 Managed media is stored under:
 

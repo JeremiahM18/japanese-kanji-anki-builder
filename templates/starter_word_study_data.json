@@ -1395,6 +1395,17 @@
       "common",
       "n5"
     ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "午",
+        "前"
+      ],
+      "coversReadings": {
+        "午": "ご",
+        "前": "ぜん"
+      }
+    },
     "exampleSentence": {
       "japanese": "午前九時に学校へ行きます。",
       "reading": "ごぜんくじにがっこうへいきます。",
@@ -1605,6 +1616,17 @@
       "common",
       "n5"
     ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "今",
+        "月"
+      ],
+      "coversReadings": {
+        "今": "こん",
+        "月": "げつ"
+      }
+    },
     "exampleSentence": {
       "japanese": "今月は忙しいです。",
       "reading": "こんげつはいそがしいです。",
@@ -1879,6 +1901,35 @@
       "japanese": "四時に家へ帰ります。",
       "reading": "よじにいえへかえります。",
       "english": "I go home at four o'clock."
+    }
+  },
+  "四月|しがつ": {
+    "written": "四月",
+    "reading": "しがつ",
+    "meaning": "April",
+    "jlpt": 5,
+    "source": "starter-word",
+    "tags": [
+      "n5",
+      "starter",
+      "reading-coverage"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "四",
+        "月"
+      ],
+      "coversReadings": {
+        "四": "し",
+        "月": "がつ"
+      }
+    },
+    "notes": "Month-name pattern that reinforces 四 as し in a common calendar word.",
+    "exampleSentence": {
+      "japanese": "四月に新しいクラスが始まります。",
+      "reading": "しがつにあたらしいクラスがはじまります。",
+      "english": "A new class starts in April."
     }
   },
   "姉|あね": {
@@ -2380,6 +2431,15 @@
       "common",
       "n5"
     ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "上"
+      ],
+      "coversReadings": {
+        "上": "じょう"
+      }
+    },
     "exampleSentence": {
       "japanese": "姉は料理が上手です。",
       "reading": "あねはりょうりがじょうずです。",
@@ -2768,6 +2828,17 @@
       "common",
       "n5"
     ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "先",
+        "月"
+      ],
+      "coversReadings": {
+        "先": "せん",
+        "月": "げつ"
+      }
+    },
     "exampleSentence": {
       "japanese": "先月、新しい車を買いました。",
       "reading": "せんげつ、あたらしいくるまをかいました。",
@@ -4216,6 +4287,15 @@
       "common",
       "n5"
     ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "友"
+      ],
+      "coversReadings": {
+        "友": "ゆう"
+      }
+    },
     "exampleSentence": {
       "japanese": "友人と駅で会います。",
       "reading": "ゆうじんとえきであいます。",
@@ -4298,6 +4378,17 @@
       "common",
       "n5"
     ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "来",
+        "月"
+      ],
+      "coversReadings": {
+        "来": "らい",
+        "月": "げつ"
+      }
+    },
     "exampleSentence": {
       "japanese": "来月、日本へ行きます。",
       "reading": "らいげつ、にほんへいきます。",
@@ -4382,6 +4473,35 @@
       "japanese": "毎朝六時に起きます。",
       "reading": "まいあさろくじにおきます。",
       "english": "I get up at six every morning."
+    }
+  },
+  "五月|ごがつ": {
+    "written": "五月",
+    "reading": "ごがつ",
+    "meaning": "May",
+    "jlpt": 5,
+    "source": "starter-word",
+    "tags": [
+      "n5",
+      "starter",
+      "reading-coverage"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "五",
+        "月"
+      ],
+      "coversReadings": {
+        "五": "ご",
+        "月": "がつ"
+      }
+    },
+    "notes": "Useful month-name pattern for hearing 月 as がつ.",
+    "exampleSentence": {
+      "japanese": "五月はあたたかい日が多いです。",
+      "reading": "ごがつはあたたかいひがおおいです。",
+      "english": "There are many warm days in May."
     }
   },
   "話す|はなす": {

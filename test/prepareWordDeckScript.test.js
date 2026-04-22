@@ -1,5 +1,6 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const path = require("node:path");
 
 const { formatWordDeckReadyReport, resolveKanjiTsvPath } = require("../scripts/prepareWordDeck");
 
@@ -62,6 +63,6 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
 test("resolveKanjiTsvPath points word completion back to the kanji export for the same level", () => {
     assert.equal(
         resolveKanjiTsvPath("C:/repo/out/build", 5),
-        "C:\\repo\\out\\build\\exports\\jlpt-n5.tsv"
+        path.join("C:/repo/out/build", "exports", "jlpt-n5.tsv")
     );
 });

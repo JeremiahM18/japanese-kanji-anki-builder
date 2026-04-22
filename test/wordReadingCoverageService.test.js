@@ -154,12 +154,12 @@ test('buildWordReadingGapTriage classifies open reading gaps into actionable buc
     summary: { levelLabel: 'N5' },
     kanji: [
       {
-        kanji: '外',
-        displayWord: '外',
+        kanji: '未',
+        displayWord: '未',
         onCoverage: [],
         kunCoverage: [
           {
-            reading: 'ほか',
+            reading: 'ひつじ',
             status: 'missing_example',
             coverageSource: 'none',
             matchingExamples: [],

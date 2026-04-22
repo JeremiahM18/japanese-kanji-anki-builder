@@ -25,6 +25,16 @@
       "priority": "low",
       "note": "Too remote from the N5 learner surface to justify a support word."
     },
+    "外|kun|ほか": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Learners usually meet this meaning through kana or 他 rather than a dedicated 外 support card."
+    },
+    "金|on|こん": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Remaining こん compounds are too specialized or cross-level-heavy to justify a beginner support card."
+    },
     "行|on|あん": {
       "suggestedAction": "defer_variant",
       "priority": "low",
@@ -80,6 +90,16 @@
       "priority": "low",
       "note": "Low-value variant relative to the stronger 上 coverage already in deck."
     },
+    "食|kun|くらう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Rough colloquial reading that is not worth surfacing in the final N5 support deck."
+    },
+    "食|kun|はむ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Too marginal to justify a learner-facing support word once the stronger 食 readings are covered."
+    },
     "生|kun|なす": {
       "suggestedAction": "defer_variant",
       "priority": "low",
@@ -95,10 +115,30 @@
       "priority": "low",
       "note": "Too marginal for the active N5 completion backlog."
     },
+    "先|kun|まず": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "In learner-facing Japanese this is usually written in kana, so a kanji support card would mislead."
+    },
+    "千|kun|ち": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Low-value legacy reading that should not drive beginner backlog work."
+    },
     "中|kun|あたる": {
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "Legacy/obscure use that should not inflate the final N5 backlog."
+    },
+    "中|kun|うち": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "The everyday learner surface normally covers this through kana or 内-based words, not a dedicated 中 support card."
+    },
+    "長|kun|おさ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Title-style reading with weak payoff for the N5 support deck."
     },
     "読|on|とく": {
       "suggestedAction": "defer_variant",

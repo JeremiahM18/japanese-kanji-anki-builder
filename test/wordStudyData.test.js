@@ -204,6 +204,12 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
     assert.equal(starterEntries["女神|めがみ"].coverage.coversReadings["女"], "め");
     assert.equal(starterEntries["子年|ねどし"].coverage.coversReadings["子"], "ね");
     assert.equal(starterEntries["午年|うまどし"].coverage.coversReadings["午"], "うま");
+    assert.equal(starterEntries["天の川|あまのがわ"].coverage.coversReadings["天"], "あま");
+    assert.equal(starterEntries["天気雨|てんきあめ"].coverage.coversReadings["天"], "あめ");
+    assert.equal(starterEntries["河川|かせん"].coverage.coversReadings["川"], "せん");
+    assert.equal(starterEntries["白髪|しらが"].coverage.coversReadings["白"], "しら");
+    assert.equal(starterEntries["話|はなし"].coverage.coversReadings["話"], "はなし");
+    assert.equal(starterEntries["後れる|おくれる"].coverage.coversReadings["後"], "おくれる");
     assert.equal(starterEntries["手間|てま"].coverage.coversReadings["間"], "ま");
     assert.equal(starterEntries["白紙|はくし"].coverage.coversReadings["白"], "はく");
     assert.equal(starterEntries["音読|おんどく"].coverage.coversReadings["読"], "とう");

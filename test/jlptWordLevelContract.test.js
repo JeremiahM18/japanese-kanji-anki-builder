@@ -27,11 +27,15 @@ test("buildJlptWordLevelContract computes inventory counts from canonical word l
             "今日|きょう": { written: "今日", reading: "きょう", jlpt: 5 },
             "仕事|しごと": { written: "仕事", reading: "しごと", jlpt: 4 },
         },
+        excludedWordLevels: {
+            "高い山|たかいやま": { written: "高い山", reading: "たかいやま", jlpt: 5, exclusionReason: "phrase" },
+        },
     });
 
     assert.equal(contract.inventoryCounts["5"], 1);
     assert.equal(contract.inventoryCounts["4"], 1);
     assert.equal(contract.inventoryCounts["3"], 0);
+    assert.equal(contract.excludedCounts["5"], 1);
 });
 
 test("loadJlptWordLevelContract parses a tracked contract file", () => {
@@ -80,7 +84,8 @@ test("tracked JLPT word contract now includes the first governed N4 starter batc
     const contract = loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json"));
 
     assert.equal(contract.inventoryCounts["4"] >= 6, true);
-  assert.equal(contract.inventoryCounts["5"], 374);
+    assert.equal(contract.inventoryCounts["5"], 361);
+    assert.equal(contract.excludedCounts["5"], 13);
     assert.equal(getJlptWordLevel(contract, "安心|あんしん"), 4);
     assert.equal(getJlptWordLevel(contract, "急ぐ|いそぐ"), 4);
     assert.equal(getJlptWordLevel(contract, "海岸|かいがん"), 4);
@@ -189,6 +194,8 @@ test("tracked JLPT word contract now includes the first governed N4 starter batc
     assert.equal(getJlptWordLevel(contract, "生かす|いかす"), 5);
     assert.equal(getJlptWordLevel(contract, "眼鏡|めがね"), 5);
     assert.equal(getJlptWordLevel(contract, "断食|だんじき"), 5);
+    assert.equal(contract.excludedWordLevels["高い山|たかいやま"].exclusionReason, "phrase");
+    assert.equal(contract.excludedWordLevels["赤い花|あかいはな"].exclusionReason, "phrase");
 });
 
 test("auditWordStudyEntriesAgainstContract reports starter drift against the canonical word contract", () => {
@@ -246,6 +253,24 @@ test("buildStarterWordGovernanceSummary distinguishes canonical starter entries 
     assert.equal(summary.overallCoverage, 50);
     assert.equal(summary.coverageByLevel[5], 100);
     assert.equal(summary.coverageByLevel[4], 0);
+});
+
+test("auditWordStudyEntriesAgainstContract expects phrase-tagged starter rows in excluded contract entries", () => {
+    const audit = auditWordStudyEntriesAgainstContract({
+        "高い山|たかいやま": { written: "高い山", reading: "たかいやま", jlpt: 5, tags: ["starter", "phrase"] },
+    }, {
+        inventoryCounts: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 0 },
+        excludedCounts: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 1 },
+        wordLevels: {},
+        excludedWordLevels: {
+            "高い山|たかいやま": { written: "高い山", reading: "たかいやま", jlpt: 5, exclusionReason: "phrase" },
+        },
+    });
+
+    assert.equal(audit.valid, true);
+    assert.equal(audit.excludedContractEntryCount, 1);
+    assert.equal(audit.missingExcludedContractEntryCount, 0);
+    assert.equal(audit.unexpectedExcludedContractEntryCount, 0);
 });
 
 test("auditWordStudyEntriesAgainstContract includes reading-coverage contract tracking summary", () => {

@@ -46,9 +46,12 @@ function formatWordAlignmentReport({ contractPath, starterPath, audit }) {
         "",
         `Starter alignment: ${audit.valid ? "passing" : "failing"}`,
         `Tracked word entries: ${audit.entryCount}`,
-        `Contract entries: ${audit.contractEntryCount}`,
+        `Canonical contract entries: ${audit.canonicalContractEntryCount}`,
+        `Excluded source-only entries: ${audit.excludedContractEntryCount}`,
+        `Tracked contract entries: ${audit.contractEntryCount}`,
         `Starter counts: N5=${audit.starterCounts[5] || 0}, N4=${audit.starterCounts[4] || 0}, N3=${audit.starterCounts[3] || 0}, N2=${audit.starterCounts[2] || 0}, N1=${audit.starterCounts[1] || 0}`,
-        `Contract counts: N5=${audit.contractCounts["5"] || 0}, N4=${audit.contractCounts["4"] || 0}, N3=${audit.contractCounts["3"] || 0}, N2=${audit.contractCounts["2"] || 0}, N1=${audit.contractCounts["1"] || 0}`,
+        `Canonical contract counts: N5=${audit.contractCounts["5"] || 0}, N4=${audit.contractCounts["4"] || 0}, N3=${audit.contractCounts["3"] || 0}, N2=${audit.contractCounts["2"] || 0}, N1=${audit.contractCounts["1"] || 0}`,
+        `Excluded source counts: N5=${audit.excludedCounts["5"] || 0}, N4=${audit.excludedCounts["4"] || 0}, N3=${audit.excludedCounts["3"] || 0}, N2=${audit.excludedCounts["2"] || 0}, N1=${audit.excludedCounts["1"] || 0}`,
         "",
         `Default-deck starter entries: ${governance.defaultDeckStarterCount || 0}`,
         `Canonical starter entries: ${governance.canonicalStarterCount || 0} (${governance.overallCoverage || 0}% of the default starter deck surface)`,
@@ -76,7 +79,9 @@ function formatWordAlignmentReport({ contractPath, starterPath, audit }) {
             "",
             `Mismatches: ${audit.mismatchCount}`,
             `Missing contract entries: ${audit.missingContractEntryCount}`,
-            `Unexpected contract entries: ${audit.unexpectedContractEntryCount}`
+            `Missing excluded entries: ${audit.missingExcludedContractEntryCount}`,
+            `Unexpected contract entries: ${audit.unexpectedContractEntryCount}`,
+            `Unexpected excluded entries: ${audit.unexpectedExcludedContractEntryCount}`
         );
     }
 
@@ -109,7 +114,9 @@ function main() {
             ...audit,
             mismatches: truncate(audit.mismatches, options.limit),
             missingContractEntries: truncate(audit.missingContractEntries, options.limit),
+            missingExcludedContractEntries: truncate(audit.missingExcludedContractEntries, options.limit),
             unexpectedContractEntries: truncate(audit.unexpectedContractEntries, options.limit),
+            unexpectedExcludedContractEntries: truncate(audit.unexpectedExcludedContractEntries, options.limit),
         },
     };
 

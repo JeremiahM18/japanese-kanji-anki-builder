@@ -48,6 +48,11 @@ function normalizeTags(tags, fallback = ["curated"]) {
     return [...normalized].sort((a, b) => a.localeCompare(b));
 }
 
+function hasPhraseTag(entry) {
+    return normalizeTags(entry?.tags, [])
+        .includes("phrase");
+}
+
 function buildWordStudyEntryKey({ written, reading }) {
     const normalizedWritten = String(written ?? "").trim();
     const normalizedReading = String(reading ?? "").trim();
@@ -152,12 +157,18 @@ function loadWordStudyData({
 
 function buildWordCoverageContractSummary(wordStudyEntries = {}) {
     const levels = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    const excludedPhraseEntriesByLevel = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
     const explicitCoverageEntriesByLevel = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
     const explicitReadingTargetsByLevel = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
 
     for (const entry of Object.values(wordStudyEntries || {})) {
         const level = Number.isInteger(entry?.jlpt) ? entry.jlpt : null;
         if (!level || levels[level] === undefined) {
+            continue;
+        }
+
+        if (hasPhraseTag(entry)) {
+            excludedPhraseEntriesByLevel[level] += 1;
             continue;
         }
 
@@ -179,10 +190,12 @@ function buildWordCoverageContractSummary(wordStudyEntries = {}) {
 
     return {
         starterEntriesByLevel: levels,
+        excludedPhraseEntriesByLevel,
         explicitCoverageEntriesByLevel,
         explicitReadingTargetsByLevel,
         explicitCoveragePercentByLevel,
         totalStarterEntries: Object.values(levels).reduce((sum, count) => sum + count, 0),
+        totalExcludedPhraseEntries: Object.values(excludedPhraseEntriesByLevel).reduce((sum, count) => sum + count, 0),
         totalExplicitCoverageEntries: Object.values(explicitCoverageEntriesByLevel).reduce((sum, count) => sum + count, 0),
         totalExplicitReadingTargets: Object.values(explicitReadingTargetsByLevel).reduce((sum, count) => sum + count, 0),
     };
@@ -192,6 +205,7 @@ module.exports = {
     buildWordCoverageContractSummary,
     buildWordStudyEntryKey,
     cleanString,
+    hasPhraseTag,
     loadWordStudyData,
     normalizeTags,
     normalizeWordCoverage,

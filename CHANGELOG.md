@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Split the tracked N5 word contract so canonical inventory now means “default-deck eligible” only: `jlpt_word_level_contract.json` keeps `361` canonical N5 rows in `wordLevels`, moves the `13` phrase-tagged source rows into `excludedWordLevels` with `exclusionReason: "phrase"`, and validates both `inventoryCounts` and `excludedCounts`.
+- Updated the N5 word audits and readiness reports to surface tracked source-only exclusions alongside canonical inventory counts, which makes `deck:words:completion:n5`, `deck:words:ready`, and `data:audit:jlpt:words` report the true learner-facing canonical surface instead of mixing in excluded phrase rows.
+- Tightened the explicit reading-coverage contract denominator to the default-deck starter surface, so the current governed N5 baseline now reports `128/361` explicit contracts (`35.46%`) instead of inflating that ratio with excluded phrase rows.
 - Added `deck:words:triage:n5`, which turns the remaining N5 word-reading gaps into an actionable backlog of `editorial_review`, `promote_curated_example`, and `defer_variant` items instead of leaving the final stretch as one flat missing-reading count.
 - Added a tracked `word_reading_gap_triage_overrides.json` contract so obviously archaic or low-value N5 dictionary readings can be explicitly deferred without disappearing from the audit, making the final backlog reflect real learner-facing decisions instead of every raw distinct reading.
 - Added governed N5 support words `行き先`, `分かつ`, and `語らう` so the word deck can intentionally cover `行 -> ゆき`, `分 -> わかつ`, and `語 -> かたらう` without pretending the remaining weak dictionary forms still deserve active editorial work.

@@ -1,6 +1,6 @@
 const fs = require("node:fs");
 const { z } = require("zod");
-const { buildWordCoverageContractSummary } = require("./wordStudyData");
+const { buildWordCoverageContractSummary, hasPhraseTag } = require("./wordStudyData");
 
 const jlptLevelSchema = z.number().int().min(1).max(5);
 
@@ -10,16 +10,30 @@ const jlptWordLevelEntrySchema = z.object({
     jlpt: jlptLevelSchema,
 }).strict();
 
+const excludedWordLevelEntrySchema = jlptWordLevelEntrySchema.extend({
+    exclusionReason: z.string().min(1),
+}).strict();
+
+const serializedLevelCountsSchema = z.object({
+    "1": z.number().int().nonnegative(),
+    "2": z.number().int().nonnegative(),
+    "3": z.number().int().nonnegative(),
+    "4": z.number().int().nonnegative(),
+    "5": z.number().int().nonnegative(),
+});
+
 const jlptWordLevelContractSchema = z.object({
     version: z.number().int().min(1).default(1),
-    inventoryCounts: z.object({
-        "1": z.number().int().nonnegative(),
-        "2": z.number().int().nonnegative(),
-        "3": z.number().int().nonnegative(),
-        "4": z.number().int().nonnegative(),
-        "5": z.number().int().nonnegative(),
+    inventoryCounts: serializedLevelCountsSchema,
+    excludedCounts: serializedLevelCountsSchema.default({
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
     }),
     wordLevels: z.record(z.string().min(1), jlptWordLevelEntrySchema),
+    excludedWordLevels: z.record(z.string().min(1), excludedWordLevelEntrySchema).default({}),
 }).strict();
 
 function parseJlptWordLevelContract(value) {
@@ -27,7 +41,7 @@ function parseJlptWordLevelContract(value) {
 }
 
 function buildSerializedInventoryCounts(wordLevels = {}) {
-    const counts = buildInventoryCountsFromWordLevels(wordLevels);
+    const counts = buildInventoryCountsFromEntries(wordLevels);
     return {
         "1": counts[1],
         "2": counts[2],
@@ -37,10 +51,15 @@ function buildSerializedInventoryCounts(wordLevels = {}) {
     };
 }
 
+function buildSerializedExcludedCounts(wordLevels = {}) {
+    return buildSerializedInventoryCounts(wordLevels);
+}
+
 function loadJlptWordLevelContract(filePath) {
     const text = fs.readFileSync(filePath, "utf-8");
     const parsed = parseJlptWordLevelContract(JSON.parse(text));
     const expectedCounts = buildSerializedInventoryCounts(parsed.wordLevels);
+    const expectedExcludedCounts = buildSerializedExcludedCounts(parsed.excludedWordLevels);
 
     for (const level of ["1", "2", "3", "4", "5"]) {
         if (parsed.inventoryCounts[level] !== expectedCounts[level]) {
@@ -48,12 +67,23 @@ function loadJlptWordLevelContract(filePath) {
                 `JLPT word contract inventoryCounts.${level} is stale: expected ${expectedCounts[level]}, received ${parsed.inventoryCounts[level]}.`
             );
         }
+        if (parsed.excludedCounts[level] !== expectedExcludedCounts[level]) {
+            throw new Error(
+                `JLPT word contract excludedCounts.${level} is stale: expected ${expectedExcludedCounts[level]}, received ${parsed.excludedCounts[level]}.`
+            );
+        }
+    }
+
+    for (const key of Object.keys(parsed.wordLevels)) {
+        if (Object.prototype.hasOwnProperty.call(parsed.excludedWordLevels, key)) {
+            throw new Error(`JLPT word contract key ${key} cannot exist in both wordLevels and excludedWordLevels.`);
+        }
     }
 
     return parsed;
 }
 
-function buildInventoryCountsFromWordLevels(wordLevels = {}) {
+function buildInventoryCountsFromEntries(wordLevels = {}) {
     const counts = {
         1: 0,
         2: 0,
@@ -70,6 +100,10 @@ function buildInventoryCountsFromWordLevels(wordLevels = {}) {
     }
 
     return counts;
+}
+
+function buildInventoryCountsFromWordLevels(wordLevels = {}) {
+    return buildInventoryCountsFromEntries(wordLevels);
 }
 
 function createLevelCounts() {
@@ -93,12 +127,6 @@ function entryMatchesContract(entry, contractEntry) {
         && contractEntry.written === entry?.written
         && contractEntry.reading === entry?.reading
         && contractEntry.jlpt === entry?.jlpt;
-}
-
-function hasPhraseTag(entry) {
-    return (Array.isArray(entry?.tags) ? entry.tags : [])
-        .map((tag) => String(tag || "").trim().toLowerCase())
-        .includes("phrase");
 }
 
 function buildStarterWordGovernanceSummary(wordStudyEntries = {}, contract = {}) {
@@ -161,11 +189,13 @@ function buildStarterWordGovernanceSummary(wordStudyEntries = {}, contract = {})
     };
 }
 
-function buildJlptWordLevelContract({ wordLevels = {}, version = 1 } = {}) {
+function buildJlptWordLevelContract({ wordLevels = {}, excludedWordLevels = {}, version = 1 } = {}) {
     return parseJlptWordLevelContract({
         version,
         inventoryCounts: buildSerializedInventoryCounts(wordLevels),
+        excludedCounts: buildSerializedExcludedCounts(excludedWordLevels),
         wordLevels,
+        excludedWordLevels,
     });
 }
 
@@ -176,18 +206,27 @@ function getJlptWordLevel(contract = {}, key = "") {
 
 function auditWordStudyEntriesAgainstContract(wordStudyEntries = {}, contract = {}) {
     const contractEntries = contract?.wordLevels || {};
+    const excludedEntries = contract?.excludedWordLevels || {};
     const mismatches = [];
     const missingContractEntries = [];
+    const missingExcludedContractEntries = [];
 
     for (const [key, entry] of Object.entries(wordStudyEntries || {})) {
-        const contractEntry = contractEntries[key];
+        const phraseTagged = hasPhraseTag(entry);
+        const contractEntry = phraseTagged ? excludedEntries[key] : contractEntries[key];
+
         if (!contractEntry) {
-            missingContractEntries.push({
+            const target = {
                 key,
                 written: String(entry?.written || "").trim(),
                 reading: String(entry?.reading || "").trim(),
                 actualLevel: Number.isInteger(entry?.jlpt) ? entry.jlpt : null,
-            });
+            };
+            if (phraseTagged) {
+                missingExcludedContractEntries.push(target);
+            } else {
+                missingContractEntries.push(target);
+            }
             continue;
         }
 
@@ -195,37 +234,63 @@ function auditWordStudyEntriesAgainstContract(wordStudyEntries = {}, contract = 
             contractEntry.written !== entry?.written
             || contractEntry.reading !== entry?.reading
             || contractEntry.jlpt !== entry?.jlpt
+            || (phraseTagged && contractEntry.exclusionReason !== "phrase")
         ) {
             mismatches.push({
                 key,
+                scope: phraseTagged ? "excluded" : "canonical",
                 expected: contractEntry,
                 actual: {
                     written: String(entry?.written || "").trim(),
                     reading: String(entry?.reading || "").trim(),
                     jlpt: Number.isInteger(entry?.jlpt) ? entry.jlpt : null,
+                    exclusionReason: phraseTagged ? "phrase" : undefined,
                 },
             });
         }
     }
 
     const unexpectedContractEntries = Object.keys(contractEntries)
-        .filter((key) => !Object.prototype.hasOwnProperty.call(wordStudyEntries || {}, key))
+        .filter((key) => {
+            const entry = wordStudyEntries?.[key];
+            return !entry || hasPhraseTag(entry);
+        })
         .map((key) => ({
             key,
             ...contractEntries[key],
         }));
+    const unexpectedExcludedContractEntries = Object.keys(excludedEntries)
+        .filter((key) => {
+            const entry = wordStudyEntries?.[key];
+            return !entry || !hasPhraseTag(entry);
+        })
+        .map((key) => ({
+            key,
+            ...excludedEntries[key],
+        }));
 
     return {
-        valid: mismatches.length === 0 && missingContractEntries.length === 0 && unexpectedContractEntries.length === 0,
+        valid: mismatches.length === 0
+            && missingContractEntries.length === 0
+            && missingExcludedContractEntries.length === 0
+            && unexpectedContractEntries.length === 0
+            && unexpectedExcludedContractEntries.length === 0,
         entryCount: Object.keys(wordStudyEntries || {}).length,
-        contractEntryCount: Object.keys(contractEntries).length,
+        contractEntryCount: Object.keys(contractEntries).length + Object.keys(excludedEntries).length,
+        canonicalContractEntryCount: Object.keys(contractEntries).length,
+        excludedContractEntryCount: Object.keys(excludedEntries).length,
         mismatchCount: mismatches.length,
         missingContractEntryCount: missingContractEntries.length,
+        missingExcludedContractEntryCount: missingExcludedContractEntries.length,
         unexpectedContractEntryCount: unexpectedContractEntries.length,
+        unexpectedExcludedContractEntryCount: unexpectedExcludedContractEntries.length,
         mismatches,
         missingContractEntries,
+        missingExcludedContractEntries,
         unexpectedContractEntries,
+        unexpectedExcludedContractEntries,
         contractCounts: contract?.inventoryCounts || {},
+        excludedCounts: contract?.excludedCounts || {},
         starterCounts: buildInventoryCountsFromWordLevels(wordStudyEntries),
         starterGovernance: buildStarterWordGovernanceSummary(wordStudyEntries, contract),
         readingCoverageContract: buildWordCoverageContractSummary(wordStudyEntries),

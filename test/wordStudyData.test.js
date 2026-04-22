@@ -84,9 +84,17 @@ test("buildWordCoverageContractSummary reports explicit reading-coverage trackin
             meaning: "book",
             jlpt: 5,
         },
+        "高い山|たかいやま": {
+            written: "高い山",
+            reading: "たかいやま",
+            meaning: "high mountain",
+            jlpt: 5,
+            tags: ["starter", "phrase"],
+        },
     });
 
     assert.equal(summary.starterEntriesByLevel[5], 2);
+    assert.equal(summary.excludedPhraseEntriesByLevel[5], 1);
     assert.equal(summary.explicitCoverageEntriesByLevel[5], 1);
     assert.equal(summary.explicitReadingTargetsByLevel[5], 2);
     assert.equal(summary.explicitCoveragePercentByLevel[5], 50);

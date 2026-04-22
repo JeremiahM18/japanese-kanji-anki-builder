@@ -130,6 +130,7 @@ function formatWordDeckReadyReport(summary, doctorReport) {
         `- N5 starter governance: ${summary.completion.starterGovernance.coverageByLevel[5]}% (${summary.completion.starterGovernance.canonicalStarterCounts[5]}/${summary.completion.starterGovernance.defaultDeckStarterCounts[5]})`,
         `- N5 explicit reading-coverage contracts: ${summary.completion.readingCoverageContract.explicitCoveragePercentByLevel[5]}% (${summary.completion.readingCoverageContract.explicitCoverageEntriesByLevel[5]}/${summary.completion.readingCoverageContract.starterEntriesByLevel[5]})`,
         `- Canonical inventory counts: N5=${summary.completion.contractInventoryCounts["5"] || 0}, N4=${summary.completion.contractInventoryCounts["4"] || 0}, N3=${summary.completion.contractInventoryCounts["3"] || 0}, N2=${summary.completion.contractInventoryCounts["2"] || 0}, N1=${summary.completion.contractInventoryCounts["1"] || 0}`,
+        `- Tracked source-only exclusions: N5=${summary.completion.excludedContractCounts["5"] || 0}, N4=${summary.completion.excludedContractCounts["4"] || 0}, N3=${summary.completion.excludedContractCounts["3"] || 0}, N2=${summary.completion.excludedContractCounts["2"] || 0}, N1=${summary.completion.excludedContractCounts["1"] || 0}`,
         ...readingCoverageLines,
         `- True looping animation coverage: ${trueAnimationPercent}% (${trueAnimationCovered}/${trueAnimationTotal})`,
         `Unique referenced kanji: ${summary.referencedKanjiCount}`,
@@ -268,6 +269,7 @@ async function main() {
         },
         completion: {
             contractInventoryCounts: jlptWordLevelContract.inventoryCounts,
+            excludedContractCounts: jlptWordLevelContract.excludedCounts,
             starterGovernance,
             readingCoverageContract,
             readingCoverageAuditByLevel,

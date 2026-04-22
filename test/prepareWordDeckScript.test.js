@@ -15,7 +15,8 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
             inferredOnlyRows: 0,
         },
         completion: {
-            contractInventoryCounts: { "1": 0, "2": 0, "3": 0, "4": 6, "5": 271 },
+            contractInventoryCounts: { "1": 0, "2": 0, "3": 0, "4": 6, "5": 258 },
+            excludedContractCounts: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 13 },
             starterGovernance: {
                 coverageByLevel: { 5: 100 },
                 canonicalStarterCounts: { 5: 258 },
@@ -24,7 +25,7 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
             readingCoverageContract: {
                 explicitCoveragePercentByLevel: { 5: 3.69 },
                 explicitCoverageEntriesByLevel: { 5: 10 },
-                starterEntriesByLevel: { 5: 271 },
+                starterEntriesByLevel: { 5: 258 },
             },
             readingCoverageAuditByLevel: {
                 N5: {
@@ -78,7 +79,8 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
     assert.match(text, /triage backlog: 147 editorial review, 0 promote curated example, 16 defer variant/);
     assert.match(text, /True looping animation coverage: 100% \(166\/166\)/);
     assert.match(text, /True looping animation assets: 165/);
-    assert.match(text, /Canonical inventory counts: N5=271, N4=6/);
+    assert.match(text, /Canonical inventory counts: N5=258, N4=6/);
+    assert.match(text, /Tracked source-only exclusions: N5=13, N4=0/);
 });
 
 test("resolveKanjiTsvPath points word completion back to the kanji export for the same level", () => {

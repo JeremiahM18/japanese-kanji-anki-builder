@@ -6,15 +6,9 @@ const {
     buildWordDeckInventorySummary,
     buildWordDeckReadiness,
     formatWordDeckCompletionReport,
-    hasPhraseTag,
 } = require("../src/services/wordDeckCompletionService");
 
-test("hasPhraseTag detects phrase-tagged starter entries", () => {
-    assert.equal(hasPhraseTag({ tags: ["starter", "phrase"] }), true);
-    assert.equal(hasPhraseTag({ tags: ["starter", "core"] }), false);
-});
-
-test("buildWordDeckInventorySummary separates phrase exclusions from real eligible misses", () => {
+test("buildWordDeckInventorySummary keeps excluded phrase rows out of canonical inventory", () => {
     const summary = buildWordDeckInventorySummary({
         level: 5,
         starterEntries: {
@@ -26,7 +20,9 @@ test("buildWordDeckInventorySummary separates phrase exclusions from real eligib
             wordLevels: {
                 "今日|きょう": { written: "今日", reading: "きょう", jlpt: 5 },
                 "赤い花|あかいはな": { written: "赤い花", reading: "あかいはな", jlpt: 5 },
-                "高い山|たかいやま": { written: "高い山", reading: "たかいやま", jlpt: 5 },
+            },
+            excludedWordLevels: {
+                "高い山|たかいやま": { written: "高い山", reading: "たかいやま", jlpt: 5, exclusionReason: "phrase" },
             },
         },
         builtWordRows: [
@@ -34,16 +30,17 @@ test("buildWordDeckInventorySummary separates phrase exclusions from real eligib
         ],
     });
 
-    assert.equal(summary.canonicalInventoryCount, 3);
+    assert.equal(summary.canonicalInventoryCount, 2);
     assert.equal(summary.starterEligibleCount, 2);
     assert.equal(summary.builtEligibleCount, 1);
-    assert.equal(summary.phraseExcludedCount, 1);
+    assert.equal(summary.excludedSourceCount, 1);
     assert.equal(summary.missingEligibleCount, 1);
     assert.equal(summary.missingEligibleEntries[0].key, "赤い花|あかいはな");
-    assert.equal(summary.phraseExcludedEntries[0].key, "高い山|たかいやま");
+    assert.equal(summary.excludedSourceEntries[0].key, "高い山|たかいやま");
+    assert.equal(summary.excludedSourceEntries[0].exclusionReason, "phrase");
 });
 
-test("buildWordDeckCompletionReport combines vocabulary and reading coverage into one N-level audit", () => {
+test("buildWordDeckCompletionReport combines canonical inventory and reading coverage", () => {
     const report = buildWordDeckCompletionReport({
         level: 5,
         starterEntries: {
@@ -58,6 +55,7 @@ test("buildWordDeckCompletionReport combines vocabulary and reading coverage int
             wordLevels: {
                 "今日|きょう": { written: "今日", reading: "きょう", jlpt: 5 },
             },
+            excludedWordLevels: {},
         },
         kanjiTsv: [
             "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence",
@@ -104,7 +102,7 @@ test("buildWordDeckReadiness distinguishes deferred-variant readiness from activ
     assert.equal(incomplete.hasActiveTriageItems, true);
 });
 
-test("formatWordDeckCompletionReport renders missing rows and phrase exclusions clearly", () => {
+test("formatWordDeckCompletionReport renders missing rows and source-only exclusions clearly", () => {
     const text = formatWordDeckCompletionReport({
         level: 5,
         readiness: {
@@ -114,15 +112,15 @@ test("formatWordDeckCompletionReport renders missing rows and phrase exclusions 
             readingCoveragePercent: 84.9,
         },
         inventory: {
-            canonicalInventoryCount: 3,
+            canonicalInventoryCount: 2,
             starterEligibleCount: 2,
             builtEligibleCount: 1,
             starterEligibleCoveragePercent: 50,
-            phraseExcludedCount: 1,
+            excludedSourceCount: 1,
             missingEligibleCount: 1,
             extraBuiltCount: 0,
             missingEligibleEntries: [{ written: "赤い花", reading: "あかいはな" }],
-            phraseExcludedEntries: [{ written: "高い山", reading: "たかいやま" }],
+            excludedSourceEntries: [{ written: "高い山", reading: "たかいやま", exclusionReason: "phrase" }],
         },
         readingCoverage: {
             totalReadings: 10,
@@ -139,6 +137,6 @@ test("formatWordDeckCompletionReport renders missing rows and phrase exclusions 
     assert.match(text, /Built starter-eligible rows: 1 \(50%\)/);
     assert.match(text, /Missing starter-eligible N-level rows:/);
     assert.match(text, /赤い花 \(あかいはな\)/);
-    assert.match(text, /Phrase-tagged exclusions still in the canonical inventory:/);
-    assert.match(text, /高い山 \(たかいやま\)/);
+    assert.match(text, /Tracked source-only exclusions outside canonical inventory:/);
+    assert.match(text, /高い山 \(たかいやま\) — phrase/);
 });

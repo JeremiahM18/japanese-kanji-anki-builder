@@ -6,20 +6,24 @@ const {
 } = require("./wordReadingCoverageService");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 
-function hasPhraseTag(entry) {
-    return (Array.isArray(entry?.tags) ? entry.tags : [])
-        .map((tag) => String(tag || "").trim().toLowerCase())
-        .includes("phrase");
-}
-
 function buildWordDeckInventorySummary({ level, starterEntries, jlptWordLevelContract, builtWordRows }) {
-    const contractEntries = Object.entries(jlptWordLevelContract?.wordLevels || {})
+    const canonicalEntries = Object.entries(jlptWordLevelContract?.wordLevels || {})
         .filter(([, entry]) => entry?.jlpt === level)
         .map(([key, entry]) => ({
             key,
             written: String(entry?.written || "").trim(),
             reading: String(entry?.reading || "").trim(),
             jlpt: entry?.jlpt ?? null,
+            starterEntry: starterEntries?.[key] || null,
+        }));
+    const excludedEntries = Object.entries(jlptWordLevelContract?.excludedWordLevels || {})
+        .filter(([, entry]) => entry?.jlpt === level)
+        .map(([key, entry]) => ({
+            key,
+            written: String(entry?.written || "").trim(),
+            reading: String(entry?.reading || "").trim(),
+            jlpt: entry?.jlpt ?? null,
+            exclusionReason: String(entry?.exclusionReason || "").trim(),
             starterEntry: starterEntries?.[key] || null,
         }));
     const builtKeys = new Set(
@@ -29,11 +33,9 @@ function buildWordDeckInventorySummary({ level, starterEntries, jlptWordLevelCon
         }))
     );
 
-    const phraseExcludedEntries = contractEntries.filter((entry) => hasPhraseTag(entry.starterEntry));
-    const starterEligibleEntries = contractEntries.filter((entry) => !hasPhraseTag(entry.starterEntry));
+    const starterEligibleEntries = canonicalEntries;
     const builtEligibleEntries = starterEligibleEntries.filter((entry) => builtKeys.has(entry.key));
     const missingEligibleEntries = starterEligibleEntries.filter((entry) => !builtKeys.has(entry.key));
-    const missingContractEntries = contractEntries.filter((entry) => !builtKeys.has(entry.key));
     const builtExtraEntries = (Array.isArray(builtWordRows) ? builtWordRows : [])
         .map((row) => ({
             key: buildWordStudyEntryKey({
@@ -44,26 +46,25 @@ function buildWordDeckInventorySummary({ level, starterEntries, jlptWordLevelCon
             reading: String(row?.Reading || row?.reading || "").trim(),
             jlptLevel: String(row?.JLPTLevel || row?.jlptLevel || "").trim(),
         }))
-        .filter((entry) => !contractEntries.some((contractEntry) => contractEntry.key === entry.key));
+        .filter((entry) => !canonicalEntries.some((contractEntry) => contractEntry.key === entry.key))
+        .filter((entry) => !excludedEntries.some((contractEntry) => contractEntry.key === entry.key));
 
     return {
         level,
-        canonicalInventoryCount: contractEntries.length,
+        canonicalInventoryCount: canonicalEntries.length,
         starterEligibleCount: starterEligibleEntries.length,
         builtEligibleCount: builtEligibleEntries.length,
-        phraseExcludedCount: phraseExcludedEntries.length,
+        excludedSourceCount: excludedEntries.length,
         missingEligibleCount: missingEligibleEntries.length,
-        missingContractCount: missingContractEntries.length,
         extraBuiltCount: builtExtraEntries.length,
         starterEligibleCoveragePercent: starterEligibleEntries.length > 0
             ? Number(((builtEligibleEntries.length / starterEligibleEntries.length) * 100).toFixed(2))
             : 0,
-        canonicalInventoryCoveragePercent: contractEntries.length > 0
-            ? Number((((contractEntries.length - missingContractEntries.length) / contractEntries.length) * 100).toFixed(2))
+        canonicalInventoryCoveragePercent: canonicalEntries.length > 0
+            ? Number(((builtEligibleEntries.length / canonicalEntries.length) * 100).toFixed(2))
             : 0,
-        phraseExcludedEntries,
+        excludedSourceEntries: excludedEntries,
         missingEligibleEntries,
-        missingContractEntries,
         builtExtraEntries,
     };
 }
@@ -141,7 +142,7 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         `- Canonical inventory rows: ${report.inventory.canonicalInventoryCount}`,
         `- Starter-eligible rows: ${report.inventory.starterEligibleCount}`,
         `- Built starter-eligible rows: ${report.inventory.builtEligibleCount} (${report.inventory.starterEligibleCoveragePercent}%)`,
-        `- Phrase-tagged exclusions: ${report.inventory.phraseExcludedCount}`,
+        `- Tracked source-only exclusions: ${report.inventory.excludedSourceCount}`,
         `- Missing starter-eligible rows: ${report.inventory.missingEligibleCount}`,
         `- Built rows outside canonical inventory: ${report.inventory.extraBuiltCount}`,
         "",
@@ -161,10 +162,11 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         }
     }
 
-    if (report.inventory.phraseExcludedEntries.length > 0) {
-        lines.push("", "Phrase-tagged exclusions still in the canonical inventory:");
-        for (const entry of report.inventory.phraseExcludedEntries.slice(0, maxEntries)) {
-            lines.push(`- ${entry.written} (${entry.reading})`);
+    if (report.inventory.excludedSourceEntries.length > 0) {
+        lines.push("", "Tracked source-only exclusions outside canonical inventory:");
+        for (const entry of report.inventory.excludedSourceEntries.slice(0, maxEntries)) {
+            const reason = entry.exclusionReason ? ` — ${entry.exclusionReason}` : "";
+            lines.push(`- ${entry.written} (${entry.reading})${reason}`);
         }
     }
 
@@ -176,5 +178,4 @@ module.exports = {
     buildWordDeckInventorySummary,
     buildWordDeckReadiness,
     formatWordDeckCompletionReport,
-    hasPhraseTag,
 };

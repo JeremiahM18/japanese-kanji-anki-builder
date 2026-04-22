@@ -7,6 +7,7 @@ const { loadSentenceCorpus } = require("../src/datasets/sentenceCorpus");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const { loadWordStudyData } = require("../src/datasets/wordStudyData");
 const { loadJlptWordLevelContract } = require("../src/datasets/jlptWordLevelContract");
+const { loadJlptLevelContract } = require("../src/datasets/jlptLevelContract");
 const { buildWordCoverageContractSummary } = require("../src/datasets/wordStudyData");
 const { buildStarterWordGovernanceSummary } = require("../src/datasets/jlptWordLevelContract");
 const { buildWordDeckCompletionReport } = require("../src/services/wordDeckCompletionService");
@@ -105,6 +106,9 @@ function formatWordDeckReadyReport(summary, doctorReport) {
                 `- N${level} readiness status: ${audit.readiness?.status || "incomplete"}`,
                 `- N${level} reading coverage: ${coveredPercent}% (${audit.coveredReadings}/${audit.totalReadings})`,
                 `  distinct missing targets: ${audit.distinctGapReadings}, variant-style gaps: ${audit.variantGapReadings}`,
+                ...(audit.policyAudit
+                    ? [`  deck policy: ${audit.policyAudit.standaloneViolationCount} standalone wrong-level cards, ${audit.policyAudit.badgeViolationCount} missing labels`]
+                    : []),
                 ...(triage
                     ? [`  triage backlog: ${triage.editorialReviewItems} editorial review, ${triage.promoteCuratedExampleItems} promote curated example, ${triage.deferVariantItems} defer variant`]
                     : []),
@@ -165,6 +169,7 @@ async function main() {
     const buildPaths = buildOutputPaths(outDir);
     const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
     const jlptWordLevelContract = loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json"));
+    const jlptLevelContract = loadJlptLevelContract(path.join(process.cwd(), "templates", "jlpt_level_contract.json"));
     const sentenceCorpus = loadSentenceCorpus(config.sentenceCorpusPath);
     const curatedStudyData = loadCuratedStudyData(config.curatedStudyDataPath);
     const wordStudyData = loadWordStudyData({
@@ -227,12 +232,14 @@ async function main() {
                 level,
                 starterEntries: trackedStarterWordStudyData,
                 jlptWordLevelContract,
+                jlptLevelContract,
                 kanjiTsv: fs.readFileSync(kanjiTsvPath, "utf8"),
                 wordTsv: result.tsv,
             });
             readingCoverageAuditByLevel[`N${level}`] = completionReport.readingCoverage;
             readingGapTriageByLevel[`N${level}`] = completionReport.triage;
             readingCoverageAuditByLevel[`N${level}`].readiness = completionReport.readiness;
+            readingCoverageAuditByLevel[`N${level}`].policyAudit = completionReport.policyAudit;
         }
 
         exports.push({
@@ -303,7 +310,9 @@ async function main() {
         console.log(JSON.stringify({ doctor: doctorReport, build: summary }, null, 2));
         const hasActiveTriageBacklog = Object.values(summary.completion.readingGapTriageByLevel || {})
             .some((triage) => ((triage?.editorialReviewItems || 0) + (triage?.promoteCuratedExampleItems || 0)) > 0);
-        if (!hasFullTrueAnimationCoverage || (options.requireNoActiveTriage && hasActiveTriageBacklog)) {
+        const hasPolicyViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
+            .some((audit) => !audit?.policyAudit?.valid);
+        if (!hasFullTrueAnimationCoverage || hasPolicyViolations || (options.requireNoActiveTriage && hasActiveTriageBacklog)) {
             process.exitCode = 1;
         }
         return;
@@ -312,7 +321,9 @@ async function main() {
     process.stdout.write(formatWordDeckReadyReport(summary, doctorReport));
     const hasActiveTriageBacklog = Object.values(summary.completion.readingGapTriageByLevel || {})
         .some((triage) => ((triage?.editorialReviewItems || 0) + (triage?.promoteCuratedExampleItems || 0)) > 0);
-    if (!hasFullTrueAnimationCoverage || (options.requireNoActiveTriage && hasActiveTriageBacklog)) {
+    const hasPolicyViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
+        .some((audit) => !audit?.policyAudit?.valid);
+    if (!hasFullTrueAnimationCoverage || hasPolicyViolations || (options.requireNoActiveTriage && hasActiveTriageBacklog)) {
         process.exitCode = 1;
     }
 }

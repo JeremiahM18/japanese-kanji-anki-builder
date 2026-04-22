@@ -4,6 +4,7 @@ const assert = require("node:assert/strict");
 const {
     buildWordDeckCompletionReport,
     buildWordDeckInventorySummary,
+    buildWordDeckPolicyAudit,
     buildWordDeckReadiness,
     formatWordDeckCompletionReport,
 } = require("../src/services/wordDeckCompletionService");
@@ -84,6 +85,9 @@ test("buildWordDeckReadiness distinguishes deferred-variant readiness from activ
             promoteCuratedExampleItems: 0,
             deferVariantItems: 12,
         },
+        policyAudit: {
+            valid: true,
+        },
     });
     assert.equal(readyWithDeferredVariants.status, "ready_with_deferred_variants");
     assert.equal(readyWithDeferredVariants.allOpenItemsDeferred, true);
@@ -97,9 +101,82 @@ test("buildWordDeckReadiness distinguishes deferred-variant readiness from activ
             promoteCuratedExampleItems: 0,
             deferVariantItems: 1,
         },
+        policyAudit: {
+            valid: true,
+        },
     });
     assert.equal(incomplete.status, "incomplete");
     assert.equal(incomplete.hasActiveTriageItems, true);
+});
+
+test("buildWordDeckReadiness stays incomplete when deck policy violations remain", () => {
+    const report = buildWordDeckReadiness({
+        inventory: { missingEligibleCount: 0 },
+        readingCoverage: { totalReadings: 100, coveredReadings: 90 },
+        triage: {
+            totalItems: 0,
+            editorialReviewItems: 0,
+            promoteCuratedExampleItems: 0,
+            deferVariantItems: 0,
+        },
+        policyAudit: {
+            valid: false,
+        },
+    });
+
+    assert.equal(report.status, "incomplete");
+    assert.equal(report.hasPolicyViolations, true);
+});
+
+test("buildWordDeckPolicyAudit rejects standalone higher-level cards and missing constituent badges", () => {
+    const audit = buildWordDeckPolicyAudit({
+        level: 5,
+        wordRows: [
+            {
+                Word: "兄",
+                KanjiBreakdown: "<div></div>",
+            },
+            {
+                Word: "子猫",
+                KanjiBreakdown: "<div class=\"kanji-breakdown-item\">子</div>",
+            },
+        ],
+        jlptLevelContract: {
+            kanjiLevels: {
+                子: 5,
+                兄: 4,
+                猫: 4,
+            },
+        },
+    });
+
+    assert.equal(audit.valid, false);
+    assert.equal(audit.standaloneViolationCount, 1);
+    assert.equal(audit.badgeViolationCount, 1);
+    assert.equal(audit.standaloneViolations[0].word, "兄");
+    assert.equal(audit.badgeViolations[0].word, "子猫");
+    assert.equal(audit.badgeViolations[0].expectedLabel, "JLPT N4 kanji");
+});
+
+test("buildWordDeckPolicyAudit treats okurigana words as labeled support cases instead of standalone violations", () => {
+    const audit = buildWordDeckPolicyAudit({
+        level: 5,
+        wordRows: [
+            {
+                Word: "安い",
+                KanjiBreakdown: "<div class=\"kanji-level-badge\">JLPT N4 kanji</div>",
+            },
+        ],
+        jlptLevelContract: {
+            kanjiLevels: {
+                安: 4,
+            },
+        },
+    });
+
+    assert.equal(audit.valid, true);
+    assert.equal(audit.standaloneViolationCount, 0);
+    assert.equal(audit.badgeViolationCount, 0);
 });
 
 test("formatWordDeckCompletionReport renders missing rows and source-only exclusions clearly", () => {
@@ -122,6 +199,10 @@ test("formatWordDeckCompletionReport renders missing rows and source-only exclus
             missingEligibleEntries: [{ written: "赤い花", reading: "あかいはな" }],
             excludedSourceEntries: [{ written: "高い山", reading: "たかいやま", exclusionReason: "phrase" }],
         },
+        policyAudit: {
+            standaloneViolationCount: 0,
+            badgeViolationCount: 0,
+        },
         readingCoverage: {
             totalReadings: 10,
             coveredReadings: 4,
@@ -135,6 +216,8 @@ test("formatWordDeckCompletionReport renders missing rows and source-only exclus
     assert.match(text, /Status: ready_with_deferred_variants/);
     assert.match(text, /Remaining open items are deferred variants only: yes/);
     assert.match(text, /Built starter-eligible rows: 1 \(50%\)/);
+    assert.match(text, /Standalone wrong-level cards: 0/);
+    assert.match(text, /Missing cross-level\/outside-level badges: 0/);
     assert.match(text, /Missing starter-eligible N-level rows:/);
     assert.match(text, /赤い花 \(あかいはな\)/);
     assert.match(text, /Tracked source-only exclusions outside canonical inventory:/);

@@ -5,6 +5,83 @@ const {
     parseWordTsv,
 } = require("./wordReadingCoverageService");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
+const { HAN_CHAR_RE } = require("../utils/japanese");
+
+function extractConstituentKanji(text) {
+    return [...new Set(
+        Array.from(String(text || ""))
+            .filter((char) => HAN_CHAR_RE.test(char) && char !== "々")
+    )];
+}
+
+function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract }) {
+    const deckLevel = Number(level);
+    if (!jlptLevelContract?.kanjiLevels) {
+        return {
+            valid: true,
+            standaloneViolationCount: 0,
+            badgeViolationCount: 0,
+            standaloneViolations: [],
+            badgeViolations: [],
+        };
+    }
+
+    const standaloneViolations = [];
+    const badgeViolations = [];
+
+    for (const row of Array.isArray(wordRows) ? wordRows : []) {
+        const written = String(row?.Word || row?.word || "").trim();
+        const breakdown = String(row?.KanjiBreakdown || row?.kanjiBreakdown || "");
+        const writtenChars = Array.from(written);
+        const kanjiList = extractConstituentKanji(written);
+
+        if (kanjiList.length === 0) {
+            continue;
+        }
+
+        if (writtenChars.length === 1 && kanjiList.length === 1) {
+            const kanji = kanjiList[0];
+            const actualLevel = jlptLevelContract?.kanjiLevels?.[kanji] ?? null;
+
+            if (!Number.isInteger(actualLevel) || actualLevel !== deckLevel) {
+                standaloneViolations.push({
+                    word: written,
+                    kanji,
+                    actualLevel,
+                });
+            }
+            continue;
+        }
+
+        for (const kanji of kanjiList) {
+            const actualLevel = jlptLevelContract?.kanjiLevels?.[kanji] ?? null;
+            const expectedLabel = Number.isInteger(actualLevel)
+                ? (actualLevel === deckLevel ? "" : `JLPT N${actualLevel} kanji`)
+                : "Outside JLPT contract";
+
+            if (!expectedLabel) {
+                continue;
+            }
+
+            if (!breakdown.includes(expectedLabel)) {
+                badgeViolations.push({
+                    word: written,
+                    kanji,
+                    actualLevel,
+                    expectedLabel,
+                });
+            }
+        }
+    }
+
+    return {
+        valid: standaloneViolations.length === 0 && badgeViolations.length === 0,
+        standaloneViolationCount: standaloneViolations.length,
+        badgeViolationCount: badgeViolations.length,
+        standaloneViolations,
+        badgeViolations,
+    };
+}
 
 function buildWordDeckInventorySummary({ level, starterEntries, jlptWordLevelContract, builtWordRows }) {
     const canonicalEntries = Object.entries(jlptWordLevelContract?.wordLevels || {})
@@ -73,6 +150,7 @@ function buildWordDeckCompletionReport({
     level,
     starterEntries,
     jlptWordLevelContract,
+    jlptLevelContract,
     kanjiTsv,
     wordTsv,
 }) {
@@ -90,10 +168,16 @@ function buildWordDeckCompletionReport({
         levelLabel: `N${level}`,
     });
     const triage = buildWordReadingGapTriage(readingCoverage);
+    const policyAudit = buildWordDeckPolicyAudit({
+        level,
+        wordRows,
+        jlptLevelContract,
+    });
     const readiness = buildWordDeckReadiness({
         inventory,
         readingCoverage: readingCoverage.summary,
         triage: triage.summary,
+        policyAudit,
     });
 
     return {
@@ -101,21 +185,23 @@ function buildWordDeckCompletionReport({
         inventory,
         readingCoverage: readingCoverage.summary,
         triage: triage.summary,
+        policyAudit,
         readiness,
     };
 }
 
-function buildWordDeckReadiness({ inventory, readingCoverage, triage }) {
+function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudit }) {
     const hasMissingStarterRows = (inventory?.missingEligibleCount || 0) > 0;
     const hasActiveTriageItems = ((triage?.editorialReviewItems || 0) + (triage?.promoteCuratedExampleItems || 0)) > 0;
     const allOpenItemsDeferred = (triage?.totalItems || 0) > 0
         && (triage?.deferVariantItems || 0) === (triage?.totalItems || 0);
+    const hasPolicyViolations = !policyAudit?.valid;
     const readingCoveragePercent = (readingCoverage?.totalReadings || 0) > 0
         ? Number((((readingCoverage?.coveredReadings || 0) / readingCoverage.totalReadings) * 100).toFixed(1))
         : 0;
 
     let status = "incomplete";
-    if (!hasMissingStarterRows && !hasActiveTriageItems) {
+    if (!hasMissingStarterRows && !hasActiveTriageItems && !hasPolicyViolations) {
         status = allOpenItemsDeferred ? "ready_with_deferred_variants" : "complete";
     }
 
@@ -123,6 +209,7 @@ function buildWordDeckReadiness({ inventory, readingCoverage, triage }) {
         status,
         hasMissingStarterRows,
         hasActiveTriageItems,
+        hasPolicyViolations,
         allOpenItemsDeferred,
         readingCoveragePercent,
     };
@@ -145,6 +232,10 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         `- Tracked source-only exclusions: ${report.inventory.excludedSourceCount}`,
         `- Missing starter-eligible rows: ${report.inventory.missingEligibleCount}`,
         `- Built rows outside canonical inventory: ${report.inventory.extraBuiltCount}`,
+        "",
+        "Deck policy audit:",
+        `- Standalone wrong-level cards: ${report.policyAudit.standaloneViolationCount}`,
+        `- Missing cross-level/outside-level badges: ${report.policyAudit.badgeViolationCount}`,
         "",
         "Reading coverage:",
         `- Readings audited: ${report.readingCoverage.totalReadings}`,
@@ -176,6 +267,7 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
 module.exports = {
     buildWordDeckCompletionReport,
     buildWordDeckInventorySummary,
+    buildWordDeckPolicyAudit,
     buildWordDeckReadiness,
     formatWordDeckCompletionReport,
 };

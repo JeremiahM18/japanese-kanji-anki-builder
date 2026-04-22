@@ -33,6 +33,10 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
                     coveredReadings: 181,
                     distinctGapReadings: 147,
                     variantGapReadings: 16,
+                    policyAudit: {
+                        standaloneViolationCount: 0,
+                        badgeViolationCount: 0,
+                    },
                     readiness: {
                         status: "incomplete",
                     },
@@ -76,6 +80,7 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
     assert.match(text, /N5 readiness status: incomplete/);
     assert.match(text, /N5 reading coverage: 52\.6% \(181\/344\)/);
     assert.match(text, /distinct missing targets: 147, variant-style gaps: 16/);
+    assert.match(text, /deck policy: 0 standalone wrong-level cards, 0 missing labels/);
     assert.match(text, /triage backlog: 147 editorial review, 0 promote curated example, 16 defer variant/);
     assert.match(text, /True looping animation coverage: 100% \(166\/166\)/);
     assert.match(text, /True looping animation assets: 165/);

@@ -2544,6 +2544,32 @@
       "english": "Please look left and right before crossing the road."
     }
   },
+  "左折|させつ": {
+    "written": "左折",
+    "reading": "させつ",
+    "meaning": "left turn",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "左"
+      ],
+      "coversReadings": {
+        "左": "しゃ"
+      }
+    },
+    "notes": "Reading-coverage support word for the 左 -> しゃ pattern.",
+    "exampleSentence": {
+      "japanese": "次の交差点で左折します。",
+      "reading": "つぎのこうさてんでさせつします。",
+      "english": "I turn left at the next intersection."
+    }
+  },
   "座る|すわる": {
     "written": "座る",
     "reading": "すわる",
@@ -3259,6 +3285,32 @@
       "english": "I bumped my little finger on the desk."
     }
   },
+  "小川|おがわ": {
+    "written": "小川",
+    "reading": "おがわ",
+    "meaning": "stream / brook",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "小"
+      ],
+      "coversReadings": {
+        "小": "お"
+      }
+    },
+    "notes": "Reading-coverage support word for the 小 -> お pattern.",
+    "exampleSentence": {
+      "japanese": "公園の横に小川が流れています。",
+      "reading": "こうえんのよこにおがわがながれています。",
+      "english": "A small stream runs beside the park."
+    }
+  },
   "子年|ねどし": {
     "written": "子年",
     "reading": "ねどし",
@@ -3506,10 +3558,46 @@
       "common",
       "n5"
     ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "聞"
+      ],
+      "coversReadings": {
+        "聞": "もん"
+      }
+    },
+    "notes": "Core JLPT word that also covers the 聞 -> もん pattern.",
     "exampleSentence": {
       "japanese": "父は朝に新聞を読みます。",
       "reading": "ちちはあさにしんぶんをよみます。",
       "english": "My father reads the newspaper in the morning."
+    }
+  },
+  "母語|ぼご": {
+    "written": "母語",
+    "reading": "ぼご",
+    "meaning": "mother tongue / native language",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "母"
+      ],
+      "coversReadings": {
+        "母": "も"
+      }
+    },
+    "notes": "Reading-coverage support word for the 母 -> も pattern.",
+    "exampleSentence": {
+      "japanese": "私の母語は英語です。",
+      "reading": "わたしのぼごはえいごです。",
+      "english": "My native language is English."
     }
   },
   "人|ひと": {
@@ -5350,6 +5438,32 @@
       "english": "This pen is 100 yen."
     }
   },
+  "円高|えんだか": {
+    "written": "円高",
+    "reading": "えんだか",
+    "meaning": "strong yen",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "高"
+      ],
+      "coversReadings": {
+        "高": "だか"
+      }
+    },
+    "notes": "Reading-coverage support word for the 高 -> だか pattern.",
+    "exampleSentence": {
+      "japanese": "最近は円高が話題です。",
+      "reading": "さいきんはえんだかがわだいです。",
+      "english": "A strong yen has been a topic lately."
+    }
+  },
   "三百|さんびゃく": {
     "written": "三百",
     "reading": "さんびゃく",
@@ -6547,6 +6661,32 @@
       "english": "The teacher makes an important decision."
     }
   },
+  "下り|くだり": {
+    "written": "下り",
+    "reading": "くだり",
+    "meaning": "down train / outbound line",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "下"
+      ],
+      "coversReadings": {
+        "下": "くだり"
+      }
+    },
+    "notes": "Reading-coverage support word for the 下 -> くだり pattern.",
+    "exampleSentence": {
+      "japanese": "下りの電車に乗ります。",
+      "reading": "くだりのでんしゃにのります。",
+      "english": "I get on the outbound train."
+    }
+  },
   "上着|うわぎ": {
     "written": "上着",
     "reading": "うわぎ",
@@ -6596,6 +6736,32 @@
       "japanese": "山に上ります。",
       "reading": "やまにのぼります。",
       "english": "I climb the mountain."
+    }
+  },
+  "上り|のぼり": {
+    "written": "上り",
+    "reading": "のぼり",
+    "meaning": "up train / inbound line",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "上"
+      ],
+      "coversReadings": {
+        "上": "のぼり"
+      }
+    },
+    "notes": "Reading-coverage support word for the 上 -> のぼり pattern.",
+    "exampleSentence": {
+      "japanese": "上りの電車はもう来ました。",
+      "reading": "のぼりのでんしゃはもうきました。",
+      "english": "The inbound train has already arrived."
     }
   },
   "下る|くだる": {

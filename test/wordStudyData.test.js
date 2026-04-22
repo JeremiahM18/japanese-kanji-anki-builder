@@ -210,6 +210,14 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
     assert.equal(starterEntries["白髪|しらが"].coverage.coversReadings["白"], "しら");
     assert.equal(starterEntries["話|はなし"].coverage.coversReadings["話"], "はなし");
     assert.equal(starterEntries["後れる|おくれる"].coverage.coversReadings["後"], "おくれる");
+    assert.equal(starterEntries["上り|のぼり"].coverage.coversReadings["上"], "のぼり");
+    assert.equal(starterEntries["下り|くだり"].coverage.coversReadings["下"], "くだり");
+    assert.equal(starterEntries["左折|させつ"].coverage.coversReadings["左"], "しゃ");
+    assert.equal(starterEntries["新聞|しんぶん"].coverage.role, "both");
+    assert.equal(starterEntries["新聞|しんぶん"].coverage.coversReadings["聞"], "もん");
+    assert.equal(starterEntries["母語|ぼご"].coverage.coversReadings["母"], "も");
+    assert.equal(starterEntries["小川|おがわ"].coverage.coversReadings["小"], "お");
+    assert.equal(starterEntries["円高|えんだか"].coverage.coversReadings["高"], "だか");
     assert.equal(starterEntries["手間|てま"].coverage.coversReadings["間"], "ま");
     assert.equal(starterEntries["白紙|はくし"].coverage.coversReadings["白"], "はく");
     assert.equal(starterEntries["音読|おんどく"].coverage.coversReadings["読"], "とう");

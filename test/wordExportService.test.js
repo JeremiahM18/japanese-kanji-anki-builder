@@ -87,6 +87,8 @@ test("loadAnkiNoteSchema can load the shared word note contract", () => {
     ]);
     assert.match(schema.qfmt, /{{Word}}/);
     assert.match(schema.afmt, /Kanji Breakdown/);
+    assert.match(schema.css, /kanji-level-badge/);
+    assert.match(schema.css, /kanji-stroke-order/);
 });
 
 test("inferWordLevel uses the hardest constituent JLPT kanji", () => {
@@ -975,7 +977,7 @@ test("buildWordTsvForJlptLevel includes explicit learner-facing coverage metadat
         levelNumber: 5,
         jlptOnlyJson: {
             時: { jlpt: 5 },
-            間: { jlpt: 5 },
+            間: { jlpt: 4 },
         },
         jlptWordLevelContract: {
             wordLevels: {
@@ -993,14 +995,29 @@ test("buildWordTsvForJlptLevel includes explicit learner-facing coverage metadat
                 return [];
             },
         },
+        strokeOrderService: {
+            async getBestStrokeOrderPath(kanji) {
+                return `animations/${kanji}.gif`;
+            },
+            async getStrokeOrderImagePath(kanji) {
+                return `images/${kanji}.svg`;
+            },
+            async getStrokeOrderAnimationPath(kanji) {
+                return `animations/${kanji}.gif`;
+            },
+        },
         concurrency: 1,
     });
 
     const lines = result.tsv.trim().split("\n");
     assert.equal(lines[0], "Word\tReading\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes");
     assert.match(lines[1], /\tJLPT core \+ reading coverage\t/);
-    assert.match(lines[1], /\t時、間\t/);
-    assert.match(lines[1], /\t時: じ ／ 間: かん\t/);
+    assert.match(lines[1], /\t時\t/);
+    assert.match(lines[1], /\t時: じ\t/);
+    assert.match(lines[1], /JLPT N4 kanji/);
+    assert.match(lines[1], /Stroke order/);
+    assert.match(lines[1], /時\.gif/);
+    assert.match(lines[1], /間\.gif/);
 });
 
 test("buildWordTsvForJlptLevel supports higher-level constituent kanji when support words fall back offline", async () => {
@@ -1055,6 +1072,7 @@ test("buildWordTsvForJlptLevel supports higher-level constituent kanji when supp
     assert.match(result.tsv, /彼女/u);
     assert.match(result.tsv, /Reading coverage support/u);
     assert.match(result.tsv, /女: じょ/u);
+    assert.match(result.tsv, /JLPT N3 kanji/u);
 });
 
 test("buildWordTsvForJlptLevel uses the canonical word-level contract before constituent heuristics", async () => {

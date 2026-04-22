@@ -406,6 +406,22 @@ function buildExplicitCoverageReadings(entry = {}, focusKanji = []) {
         .join(" ／ ");
 }
 
+function buildConstituentLevelLabel({ kanji, deckLevel, jlptOnlyJson }) {
+    const actualLevel = Number.isInteger(jlptOnlyJson?.[kanji]?.jlpt)
+        ? jlptOnlyJson[kanji].jlpt
+        : null;
+
+    if (!actualLevel) {
+        return "Outside JLPT contract";
+    }
+
+    if (!Number.isInteger(deckLevel) || actualLevel === deckLevel) {
+        return "";
+    }
+
+    return `JLPT N${actualLevel} kanji`;
+}
+
 function resolveCoverageMetadata({ entry, kanjiInferenceCache, curatedStudyData }) {
     const explicitFocusKanji = Array.isArray(entry?.curatedEntry?.coverage?.focusKanji)
         ? entry.curatedEntry.coverage.focusKanji
@@ -611,18 +627,31 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null, contex
 
 function buildBreakdownHtmlItem({ kanji, inference, curatedEntry = null, contextWord = "", contextCandidate = null }) {
     const breakdown = buildBreakdownInference({ kanji, inference, curatedEntry, contextWord, contextCandidate });
+    const levelLabel = buildConstituentLevelLabel({
+        kanji,
+        deckLevel: contextCandidate?.deckLevel,
+        jlptOnlyJson: contextCandidate?.jlptOnlyJson,
+    });
     const readingLines = [
         breakdown.onReading ? `<div class="kanji-reading-line"><span class="kanji-reading-label">On:</span> ${breakdown.onReading}</div>` : "",
         breakdown.kunReading ? `<div class="kanji-reading-line"><span class="kanji-reading-label">Kun:</span> ${breakdown.kunReading}</div>` : "",
     ].filter(Boolean).join("");
+    const strokeOrderMarkup = breakdown.strokeOrderAnimationField
+        || breakdown.strokeOrderField
+        || breakdown.strokeOrderImageField
+        || "";
 
     return [
         '<div class="kanji-breakdown-item">',
         '<div class="kanji-breakdown-head">',
+        '<div class="kanji-breakdown-title">',
         `<span class="kanji-char">${kanji}</span>`,
+        levelLabel ? `<span class="kanji-level-badge">${levelLabel}</span>` : "",
+        "</div>",
         breakdown.primaryReading ? `<span class="kanji-primary">${breakdown.primaryReading}</span>` : "",
         "</div>",
         breakdown.meaningJP ? `<div class="kanji-meaning">${breakdown.meaningJP}</div>` : "",
+        strokeOrderMarkup ? `<div class="kanji-stroke-order"><div class="kanji-stroke-order-label">Stroke order</div>${strokeOrderMarkup}</div>` : "",
         readingLines,
         "</div>",
     ].join("");
@@ -894,6 +923,8 @@ function createWordExportService({
                             written: entry.candidate.written,
                             reading: entry.curatedEntry?.reading || entry.candidate.pron,
                             meaning: entry.curatedEntry?.meaning || entry.candidate.gloss,
+                            deckLevel: levelNumber,
+                            jlptOnlyJson,
                         },
                     });
                 })

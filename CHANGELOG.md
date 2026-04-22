@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Upgraded learner-facing word-card breakdowns so each constituent kanji now renders its stroke-order animation directly on the card and shows an explicit constituent-level badge like `JLPT N4 kanji` or `Outside JLPT contract` whenever that kanji sits outside the deck's current level.
 - Reclassified `赤い花` and `白い花` as phrase-tagged starter entries so the default N5 word deck contract treats them consistently with other compositional adjective+noun phrases instead of counting them as accidental missing vocab rows.
 - Updated the tracked N5 word-contract baseline to `273` canonical rows with `260/260` default-deck starter-eligible rows built, and tightened the reading audit to reflect the new support coverage coming from `七日`, `十日`, `五分`, `十分`, `四月`, and `五月`.
 - Raised tracked explicit N5 reading-contract coverage to `25/273` (`9.16%`) while the stricter live N5 reading audit now reports `185/344` covered readings (`53.8%`), `181` covered by JLPT-core rows, `4` by support rows, `143` distinct missing targets, and `16` lower-priority variant gaps.

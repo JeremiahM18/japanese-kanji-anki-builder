@@ -73,6 +73,8 @@ Important implications:
 - there is no artificial limit on how many words a kanji may need
 - multiple words for one kanji are valid when they cover different important readings
 - a word may exist because it is JLPT core, reading coverage support, or both
+- if a reading-support word for the current deck level needs constituent kanji from another JLPT level, keep the word in the current deck and label those constituent kanji with their actual JLPT level on the learner-facing card
+- if a constituent kanji is outside the tracked JLPT contract, label that explicitly on the learner-facing card instead of hiding it
 - phrase-like junk must not enter the normal default deck accidentally
 - if a phrase-like entry exists, it must be intentional, tagged, and justified
 
@@ -120,6 +122,8 @@ Prioritize:
 - natural example sentences
 - stable readings
 - clean breakdowns
+- explicit constituent-level labeling when a word uses kanji from outside the deck's JLPT level
+- visible stroke-order animation for every kanji shown in word-card breakdowns
 - notes that explain what to remember
 
 Avoid:

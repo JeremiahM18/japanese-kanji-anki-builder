@@ -60,7 +60,12 @@ async function main() {
         return;
     }
 
-    if (!Number.isInteger(options.speakerId ?? config.voicevoxSpeakerId)) {
+    const resolvedSpeakerId = options.speakerId
+        ?? config.voicevoxSpeakerId
+        ?? audioSourcePolicy.releaseAudio.primarySpeakerId;
+    const resolvedVoiceName = options.voiceName;
+
+    if (!Number.isInteger(resolvedSpeakerId)) {
         throw new Error("Missing VOICEVOX speaker id. Set VOICEVOX_SPEAKER_ID or pass --speaker-id=... .");
     }
 
@@ -85,18 +90,19 @@ async function main() {
     const summary = await generateVoicevoxAudioForKanjiList({
         kanjiList,
         config,
-        speakerId: options.speakerId ?? config.voicevoxSpeakerId,
+        speakerId: resolvedSpeakerId,
         concurrency: options.concurrency || config.exportConcurrency,
         overwrite: options.overwrite,
         sourceId: options.sourceId || audioSourcePolicy.releaseAudio.primarySourceId,
-        voiceLabel: options.voiceName,
+        voiceLabel: resolvedVoiceName,
+        fallbackVoiceLabel: audioSourcePolicy.releaseAudio.primarySpeakerName,
         locale: options.locale || audioSourcePolicy.releaseAudio.requiredLocale,
         kanjiApiClient,
         voicevoxClient,
     });
 
     process.stdout.write(formatVoicevoxGenerationSummary(summary, {
-        speakerId: options.speakerId ?? config.voicevoxSpeakerId,
+        speakerId: resolvedSpeakerId,
         audioSourceDir: config.audioSourceDir,
     }));
 }

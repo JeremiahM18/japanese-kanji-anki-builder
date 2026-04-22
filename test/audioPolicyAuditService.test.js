@@ -32,7 +32,7 @@ function writeManifest(rootDir, kanji, audioAssets) {
     }, null, 2), "utf-8");
 }
 
-test("buildAudioPolicyAuditReport passes cleanly for policy-compliant VOICEVOX Nemo audio", () => {
+test("buildAudioPolicyAuditReport passes cleanly for policy-compliant VOICEVOX Nemo 女性1 audio", () => {
     const rootDir = makeTempDir();
 
     try {
@@ -44,7 +44,7 @@ test("buildAudioPolicyAuditReport passes cleanly for policy-compliant VOICEVOX N
             category: "kanji-reading",
             text: "日",
             reading: "にち",
-            voice: "VOICEVOX Nemo / Calm",
+            voice: "女性1 / ノーマル",
             locale: "ja-JP",
         }]);
 
@@ -86,6 +86,35 @@ test("buildAudioPolicyAuditReport flags disallowed sources missing voice metadat
         assert.equal(report.remoteAudioViolation, true);
         assert.equal(report.violatingAssets.length, 1);
         assert.deepEqual(report.violatingAssets[0].violations, ["disallowed-source", "missing-voice"]);
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+test("buildAudioPolicyAuditReport flags audio from the wrong Nemo speaker", () => {
+    const rootDir = makeTempDir();
+
+    try {
+        writeManifest(rootDir, "日", [{
+            kind: "audio",
+            path: "audio/65E5_日-kanji-reading-日.wav",
+            mimeType: "audio/wav",
+            source: "voicevox-nemo",
+            category: "kanji-reading",
+            text: "日",
+            reading: "にち",
+            voice: "男性1 / ノーマル",
+            locale: "ja-JP",
+        }]);
+
+        const report = buildAudioPolicyAuditReport({
+            mediaRootDir: rootDir,
+            audioSourcePolicy: loadAudioSourcePolicy(),
+            remoteAudioBaseUrl: null,
+        });
+
+        assert.equal(report.valid, false);
+        assert.deepEqual(report.violatingAssets[0].violations, ["wrong-speaker"]);
     } finally {
         cleanupTempDir(rootDir);
     }

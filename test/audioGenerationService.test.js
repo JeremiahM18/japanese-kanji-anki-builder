@@ -67,12 +67,12 @@ test("selectPreferredAudioReading falls back to normalized kunyomi and onyomi", 
 test("buildVoicevoxSpeakerLabel resolves the configured speaker style", () => {
     const label = buildVoicevoxSpeakerLabel([
         {
-            name: "VOICEVOX Nemo",
-            styles: [{ id: 7, name: "Calm" }],
+            name: "女性1",
+            styles: [{ id: 7, name: "ノーマル" }],
         },
     ], 7);
 
-    assert.equal(label, "VOICEVOX Nemo / Calm");
+    assert.equal(label, "女性1 / ノーマル");
 });
 
 test("writeAudioSourceSidecar stores provenance next to generated audio", () => {
@@ -85,7 +85,7 @@ test("writeAudioSourceSidecar stores provenance next to generated audio", () => 
         writeAudioSourceSidecar({
             outputPath,
             source: "voicevox-nemo",
-            voice: "VOICEVOX Nemo / Calm",
+            voice: "女性1 / ノーマル",
             locale: "ja-JP",
             category: "kanji-reading",
             text: "日",
@@ -95,7 +95,7 @@ test("writeAudioSourceSidecar stores provenance next to generated audio", () => 
 
         const sidecar = JSON.parse(fs.readFileSync(path.join(rootDir, "日.json"), "utf-8"));
         assert.equal(sidecar.source, "voicevox-nemo");
-        assert.equal(sidecar.voice, "VOICEVOX Nemo / Calm");
+        assert.equal(sidecar.voice, "女性1 / ノーマル");
         assert.equal(sidecar.reading, "にち");
     } finally {
         cleanupTempDir(rootDir);
@@ -143,7 +143,7 @@ test("generateVoicevoxAudioForKanjiList writes wav files with bounded concurrenc
             },
             voicevoxClient: {
                 async listSpeakers() {
-                    return [{ name: "VOICEVOX Nemo", styles: [{ id: 1, name: "Calm" }] }];
+                    return [{ name: "女性1", styles: [{ id: 1, name: "ノーマル" }] }];
                 },
                 async synthesize({ text, speakerId }) {
                     return Buffer.from(`${speakerId}:${text}`);
@@ -158,7 +158,58 @@ test("generateVoicevoxAudioForKanjiList writes wav files with bounded concurrenc
         assert.equal(fs.readFileSync(path.join(rootDir, "audio", "学.wav"), "utf-8"), "1:がっこう");
         const sidecar = JSON.parse(fs.readFileSync(path.join(rootDir, "audio", "日.json"), "utf-8"));
         assert.equal(sidecar.source, "voicevox");
-        assert.equal(sidecar.voice, "VOICEVOX Nemo / Calm");
+        assert.equal(sidecar.voice, "女性1 / ノーマル");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+test("generateVoicevoxAudioForKanjiList falls back to the policy speaker name when speaker listing is unavailable", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const summary = await generateVoicevoxAudioForKanjiList({
+            kanjiList: ["日"],
+            config: {
+                audioSourceDir: path.join(rootDir, "audio"),
+                exportConcurrency: 1,
+                kanjiApiBaseUrl: "https://kanjiapi.dev",
+                cacheDir: path.join(rootDir, "cache"),
+                fetchTimeoutMs: 1000,
+                sentenceCorpusPath: path.join(rootDir, "sentence.json"),
+                curatedStudyDataPath: path.join(rootDir, "curated.json"),
+                voicevoxEngineUrl: "http://127.0.0.1:50021",
+            },
+            speakerId: 1,
+            fallbackVoiceLabel: "女性1",
+            sentenceCorpus: [],
+            curatedStudyData: {},
+            kanjiApiClient: {
+                async getKanji() {
+                    return { kun_readings: ["ひ"], on_readings: ["ニチ"] };
+                },
+                async getWords() {
+                    return [{ variants: [{ written: "日本", pronounced: "にほん" }], meanings: [{ glosses: ["Japan"] }] }];
+                },
+            },
+            inferenceEngine: {
+                inferKanjiStudyData() {
+                    return { bestWord: { written: "日本", pron: "にほん" } };
+                },
+            },
+            voicevoxClient: {
+                async listSpeakers() {
+                    throw new Error("engine unavailable");
+                },
+                async synthesize({ text, speakerId }) {
+                    return Buffer.from(`${speakerId}:${text}`);
+                },
+            },
+        });
+
+        assert.equal(summary.generated, 1);
+        const sidecar = JSON.parse(fs.readFileSync(path.join(rootDir, "audio", "日.json"), "utf-8"));
+        assert.equal(sidecar.voice, "女性1");
     } finally {
         cleanupTempDir(rootDir);
     }

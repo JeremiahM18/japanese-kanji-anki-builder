@@ -58,7 +58,7 @@ The canonical repo-side JLPT taxonomy contract lives in [../templates/jlpt_level
 
 The canonical repo-side JLPT word-level contract lives in [../templates/jlpt_word_level_contract.json](../templates/jlpt_word_level_contract.json). It currently governs the tracked starter N5 word surface only, which means N4 and above should still be treated as uncatalogued at the canonical word level until tracked curation expands there.
 
-The canonical repo-side release audio policy now lives in [../templates/audio_source_policy.json](../templates/audio_source_policy.json). Treat that file as the governing truth for shipped audio provenance and source discipline. The current release contract expects `voicevox-nemo` as the canonical shipped source, explicit voice and locale metadata in managed manifests, and no remote audio provider for released decks.
+The canonical repo-side release audio policy now lives in [../templates/audio_source_policy.json](../templates/audio_source_policy.json). Treat that file as the governing truth for shipped audio provenance and source discipline. The current release contract expects `voicevox-nemo` as the canonical shipped source, pins the release speaker to `女性1` (style id `1`), requires explicit voice and locale metadata in managed manifests, and forbids a remote audio provider for released decks.
 
 ## Curated kanji data
 

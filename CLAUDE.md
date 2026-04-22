@@ -60,6 +60,12 @@ The canonical taxonomy sources are:
 
 Do not bypass those contracts.
 
+For audio specifically:
+
+- do not trust the legacy audio pipeline
+- the current shipped audio contract is `VOICEVOX Nemo` with pinned release speaker `女性1` (style id `1`)
+- do not silently switch speakers, mix voices, or weaken provenance in a published deck
+
 ## Word Deck Truth Model
 
 Do not assume the word deck is just “best vocab words.”

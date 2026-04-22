@@ -4,6 +4,8 @@ const { z } = require("zod");
 
 const releaseAudioSchema = z.object({
     primarySourceId: z.string().min(1),
+    primarySpeakerId: z.number().int().nonnegative(),
+    primarySpeakerName: z.string().min(1),
     allowedSourceIds: z.array(z.string().min(1)).min(1),
     requireSingleSourcePerDeck: z.boolean().default(true),
     requireVoiceMetadata: z.boolean().default(true),

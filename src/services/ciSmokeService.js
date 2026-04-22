@@ -262,7 +262,7 @@ function createSmokeWorkspace(rootDir) {
                     category: "kanji-reading",
                     text: "日",
                     reading: "にち",
-                    voice: "VOICEVOX Nemo / Calm",
+                    voice: "女性1 / ノーマル",
                     locale: "ja-JP",
                 },
             ],

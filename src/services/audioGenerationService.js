@@ -108,6 +108,7 @@ async function generateVoicevoxAudioForKanjiList({
     sourceId = "voicevox",
     locale = "ja-JP",
     voiceLabel = "",
+    fallbackVoiceLabel = "",
     kanjiApiClient = createKanjiApiClient({
         baseUrl: config.kanjiApiBaseUrl,
         cacheDir: config.cacheDir,
@@ -121,11 +122,18 @@ async function generateVoicevoxAudioForKanjiList({
     inferenceEngine = createInferenceEngine({ sentenceCorpus, curatedStudyData }),
 }) {
     ensureDir(config.audioSourceDir);
+    let listedSpeakers = [];
+    if (typeof voicevoxClient.listSpeakers === "function") {
+        try {
+            listedSpeakers = await voicevoxClient.listSpeakers();
+        } catch {
+            listedSpeakers = [];
+        }
+    }
     const resolvedVoiceLabel = cleanVoiceLabel(voiceLabel)
-        || buildVoicevoxSpeakerLabel(
-            typeof voicevoxClient.listSpeakers === "function" ? await voicevoxClient.listSpeakers() : [],
-            speakerId
-        );
+        || (listedSpeakers.length > 0 ? buildVoicevoxSpeakerLabel(listedSpeakers, speakerId) : "")
+        || cleanVoiceLabel(fallbackVoiceLabel)
+        || buildVoicevoxSpeakerLabel([], speakerId);
 
     const summary = {
         totalKanji: kanjiList.length,

@@ -35,6 +35,7 @@ function buildAudioPolicyAuditReport({ mediaRootDir, audioSourcePolicy, remoteAu
     const releasePolicy = audioSourcePolicy.releaseAudio;
     const allowedSources = new Set(releasePolicy.allowedSourceIds || []);
     const allowedCategories = new Set(releasePolicy.allowedCategories || []);
+    const requiredSpeakerName = String(releasePolicy.primarySpeakerName || "").trim();
     const sourceCounts = {};
     const violatingAssets = [];
     const uniqueSources = new Set();
@@ -61,6 +62,8 @@ function buildAudioPolicyAuditReport({ mediaRootDir, audioSourcePolicy, remoteAu
             }
             if (releasePolicy.requireVoiceMetadata && !String(asset?.voice || "").trim()) {
                 violations.push("missing-voice");
+            } else if (requiredSpeakerName && !String(asset?.voice || "").startsWith(`${requiredSpeakerName} /`) && String(asset?.voice || "").trim() !== requiredSpeakerName) {
+                violations.push("wrong-speaker");
             }
             if (releasePolicy.requiredLocale && asset?.locale !== releasePolicy.requiredLocale) {
                 violations.push("wrong-locale");
@@ -111,6 +114,7 @@ function formatAudioPolicyAuditReport(report, policy) {
     lines.push(`Managed manifests scanned: ${report.manifestCount}`);
     lines.push(`Managed audio assets: ${report.totalAudioAssets}`);
     lines.push(`Allowed release source(s): ${(policy.releaseAudio.allowedSourceIds || []).join(", ")}`);
+    lines.push(`Required speaker: ${policy.releaseAudio.primarySpeakerName} (style id ${policy.releaseAudio.primarySpeakerId})`);
     lines.push(`Required locale: ${policy.releaseAudio.requiredLocale}`);
     lines.push(`Allowed categories: ${(policy.releaseAudio.allowedCategories || []).join(", ")}`);
     lines.push(`Remote audio configured: ${report.remoteAudioConfigured ? "yes" : "no"}`);

@@ -7,6 +7,7 @@ const { z } = require("zod");
 
 const {
     buildCacheFilePath,
+    buildLegacyCacheFilePath,
     buildTemporaryWritePath,
     createEmptyClientMetrics,
     createKanjiApiClient,
@@ -25,6 +26,12 @@ test("buildCacheFilePath shards cache entries into subdirectories", () => {
     const cachePath = buildCacheFilePath("cache-root", "kanji__E6_97_A5");
 
     assert.equal(cachePath, path.join("cache-root", "ka", "kanji__E6_97_A5.json"));
+});
+
+test("buildLegacyCacheFilePath resolves the historical root cache layout", () => {
+    const cachePath = buildLegacyCacheFilePath("cache-root", "kanji__E6_97_A5");
+
+    assert.equal(cachePath, path.join("cache-root", "kanji__E6_97_A5.json"));
 });
 
 test("buildTemporaryWritePath stays unique within the same millisecond", (t) => {
@@ -328,6 +335,48 @@ test("corrupted cache is discarded and refetched", async () => {
         const cachedText = fs.readFileSync(cacheFile, "utf-8");
         const cachedJson = JSON.parse(cachedText);
         assert.equal(cachedJson.kanji, "水");
+    } finally {
+        global.fetch = originalFetch;
+        cleanupTempDir(cacheDir);
+    }
+});
+
+test("legacy root cache is reused and migrated into the sharded cache layout", async () => {
+    const cacheDir = makeTempDir();
+    const originalFetch = global.fetch;
+
+    try {
+        const legacyFile = buildLegacyCacheFilePath(cacheDir, "kanji__E4_B8_8D");
+        fs.writeFileSync(legacyFile, JSON.stringify({
+            kanji: "不",
+            meanings: ["bad"],
+            on_readings: ["フ"],
+            kun_readings: [],
+        }, null, 2), "utf-8");
+
+        let fetchCalls = 0;
+        global.fetch = async () => {
+            fetchCalls += 1;
+            throw new Error("network should not be used when legacy cache exists");
+        };
+
+        const client = createKanjiApiClient({
+            baseUrl: "https://example.test",
+            cacheDir,
+            fetchTimeoutMs: 1000,
+        });
+
+        const result = await client.getKanji("不");
+        const metrics = client.getMetrics();
+        const shardedFile = buildCacheFilePath(cacheDir, "kanji__E4_B8_8D");
+
+        assert.equal(result.kanji, "不");
+        assert.equal(fetchCalls, 0);
+        assert.equal(metrics.cacheHits, 1);
+        assert.equal(metrics.cacheMisses, 0);
+        assert.equal(metrics.networkFetches, 0);
+        assert.equal(metrics.cacheWrites, 1);
+        assert.equal(fs.existsSync(shardedFile), true);
     } finally {
         global.fetch = originalFetch;
         cleanupTempDir(cacheDir);

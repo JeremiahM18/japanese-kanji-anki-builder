@@ -34,6 +34,10 @@ function buildCacheFilePath(cacheDir, cacheKey) {
     return path.join(cacheDir, shard, `${cacheKey}.json`);
 }
 
+function buildLegacyCacheFilePath(cacheDir, cacheKey) {
+    return path.join(cacheDir, `${cacheKey}.json`);
+}
+
 let tempWriteCounter = 0;
 
 function buildTemporaryWritePath(filePath) {
@@ -152,6 +156,7 @@ function createKanjiApiClient({ baseUrl, cacheDir, fetchTimeoutMs = 10000 }) {
         ensureDir(cacheDir);
 
         const filePath = buildCacheFilePath(cacheDir, cacheKey);
+        const legacyFilePath = buildLegacyCacheFilePath(cacheDir, cacheKey);
 
         try {
             const cached = await readJsonIfExists(filePath);
@@ -162,6 +167,23 @@ function createKanjiApiClient({ baseUrl, cacheDir, fetchTimeoutMs = 10000 }) {
         } catch (err) {
             if (err instanceof SyntaxError) {
                 await deleteFileIfExists(filePath);
+            } else {
+                throw err;
+            }
+        }
+
+        try {
+            const legacyCached = await readJsonIfExists(legacyFilePath);
+            if (legacyCached !== null) {
+                const validated = validatePayload(schema, legacyCached, `${label} legacy cache`, metrics);
+                await writeJsonAtomic(filePath, validated);
+                metrics.cacheHits += 1;
+                metrics.cacheWrites += 1;
+                return validated;
+            }
+        } catch (err) {
+            if (err instanceof SyntaxError) {
+                await deleteFileIfExists(legacyFilePath);
             } else {
                 throw err;
             }
@@ -224,6 +246,7 @@ function createKanjiApiClient({ baseUrl, cacheDir, fetchTimeoutMs = 10000 }) {
 
 module.exports = {
     buildCacheFilePath,
+    buildLegacyCacheFilePath,
     buildTemporaryWritePath,
     createEmptyClientMetrics,
     createKanjiApiClient,

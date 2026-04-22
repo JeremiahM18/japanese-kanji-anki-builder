@@ -1,9 +1,11 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const {
+  buildWordReadingGapTriage,
   classifyGapKind,
   buildCoverageSourceSummary,
   buildWordReadingCoverageReport,
+  formatWordReadingGapTriage,
   normalizeReadingToken,
   parseCoverageRole,
   parseCoversReadingField,
@@ -145,5 +147,105 @@ test('buildCoverageSourceSummary counts covered readings by learner-facing role'
     inferredCoveredReadings: 1,
     unknownCoveredReadings: 1,
   });
+});
+
+test('buildWordReadingGapTriage classifies open reading gaps into actionable buckets', () => {
+  const report = {
+    summary: { levelLabel: 'N5' },
+    kanji: [
+      {
+        kanji: '万',
+        displayWord: '万',
+        onCoverage: [],
+        kunCoverage: [
+          {
+            reading: 'よろず',
+            status: 'missing_example',
+            coverageSource: 'none',
+            matchingExamples: [],
+            deckExamples: [],
+            gapKind: 'distinct',
+          },
+        ],
+      },
+      {
+        kanji: '後',
+        displayWord: '後',
+        onCoverage: [],
+        kunCoverage: [
+          {
+            reading: 'うしろ',
+            status: 'missing_word_card',
+            coverageSource: 'none',
+            matchingExamples: [{ written: '後ろ', reading: 'うしろ', meaning: 'behind', source: 'notes' }],
+            deckExamples: [],
+            gapKind: 'distinct',
+          },
+          {
+            reading: 'あと',
+            status: 'missing_example',
+            coverageSource: 'none',
+            matchingExamples: [],
+            deckExamples: [],
+            gapKind: 'variant',
+          },
+        ],
+      },
+    ],
+  };
+
+  const triage = buildWordReadingGapTriage(report);
+  assert.equal(triage.summary.totalItems, 3);
+  assert.equal(triage.summary.highPriorityItems, 1);
+  assert.equal(triage.summary.mediumPriorityItems, 1);
+  assert.equal(triage.summary.lowPriorityItems, 1);
+  assert.equal(triage.summary.editorialReviewItems, 1);
+  assert.equal(triage.items[0].suggestedAction, 'editorial_review');
+  assert.equal(triage.items[1].suggestedAction, 'promote_curated_example');
+  assert.equal(triage.items[2].suggestedAction, 'defer_variant');
+});
+
+test('formatWordReadingGapTriage renders a practical backlog summary', () => {
+  const text = formatWordReadingGapTriage({
+    levelLabel: 'N5',
+    summary: {
+      totalItems: 2,
+      highPriorityItems: 1,
+      mediumPriorityItems: 1,
+      lowPriorityItems: 0,
+      editorialReviewItems: 1,
+      promoteCuratedExampleItems: 1,
+      deferVariantItems: 0,
+    },
+    items: [
+      {
+        kanji: '万',
+        displayWord: '万',
+        readingType: 'kun',
+        reading: 'よろず',
+        status: 'missing_example',
+        gapKind: 'distinct',
+        priority: 'high',
+        suggestedAction: 'editorial_review',
+        curatedExampleCandidates: [],
+      },
+      {
+        kanji: '後',
+        displayWord: '後',
+        readingType: 'kun',
+        reading: 'うしろ',
+        status: 'missing_word_card',
+        gapKind: 'distinct',
+        priority: 'medium',
+        suggestedAction: 'promote_curated_example',
+        curatedExampleCandidates: [{ written: '後ろ', reading: 'うしろ' }],
+      },
+    ],
+  }, { maxItems: 10 });
+
+  assert.match(text, /Word Reading Gap Triage \(N5\)/);
+  assert.match(text, /High priority \(editorial review\): 1/);
+  assert.match(text, /万 kun-reading よろず/);
+  assert.match(text, /curated candidates: 後ろ \(うしろ\)/);
 });
 

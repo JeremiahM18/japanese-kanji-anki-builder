@@ -315,6 +315,79 @@ function buildWordReadingCoverageReport({ kanjiRows, wordRows, levelLabel = 'N5'
   };
 }
 
+function buildWordReadingGapTriage(report) {
+  const priorityRanks = {
+    high: 0,
+    medium: 1,
+    low: 2,
+  };
+
+  const items = report.kanji.flatMap((entry) => {
+    const buildItem = (readingType, readingEntry) => {
+      if (readingEntry.status === 'covered') {
+        return null;
+      }
+
+      let suggestedAction = 'editorial_review';
+      let priority = 'high';
+
+      if (readingEntry.status === 'missing_word_card') {
+        suggestedAction = 'promote_curated_example';
+        priority = 'medium';
+      } else if (readingEntry.gapKind === 'variant') {
+        suggestedAction = 'defer_variant';
+        priority = 'low';
+      }
+
+      return {
+        kanji: entry.kanji,
+        displayWord: entry.displayWord || entry.kanji,
+        readingType,
+        reading: readingEntry.reading,
+        status: readingEntry.status,
+        gapKind: readingEntry.gapKind || 'distinct',
+        priority,
+        suggestedAction,
+        curatedExampleCandidates: readingEntry.matchingExamples.map((example) => ({
+          written: example.written,
+          reading: example.reading,
+          meaning: example.meaning,
+          source: example.source,
+        })),
+        deckExampleCandidates: readingEntry.deckExamples.map((example) => ({
+          written: example.written,
+          reading: example.reading,
+          coverageRole: example.coverageRole,
+          coverageRoleKind: example.coverageRoleKind,
+        })),
+      };
+    };
+
+    return [
+      ...entry.onCoverage.map((readingEntry) => buildItem('on', readingEntry)),
+      ...entry.kunCoverage.map((readingEntry) => buildItem('kun', readingEntry)),
+    ].filter(Boolean);
+  }).sort((a, b) => (
+    (priorityRanks[a.priority] ?? 99) - (priorityRanks[b.priority] ?? 99)
+    || a.kanji.localeCompare(b.kanji, 'ja')
+    || a.reading.localeCompare(b.reading, 'ja')
+  ));
+
+  return {
+    levelLabel: report.summary.levelLabel,
+    summary: {
+      totalItems: items.length,
+      highPriorityItems: items.filter((item) => item.priority === 'high').length,
+      mediumPriorityItems: items.filter((item) => item.priority === 'medium').length,
+      lowPriorityItems: items.filter((item) => item.priority === 'low').length,
+      editorialReviewItems: items.filter((item) => item.suggestedAction === 'editorial_review').length,
+      promoteCuratedExampleItems: items.filter((item) => item.suggestedAction === 'promote_curated_example').length,
+      deferVariantItems: items.filter((item) => item.suggestedAction === 'defer_variant').length,
+    },
+    items,
+  };
+}
+
 function formatCoverageBucket(label, entries) {
   if (entries.length === 0) {
     return `  - ${label}: none`;
@@ -376,13 +449,50 @@ function formatWordReadingCoverageReport(report, { maxKanji = 50 } = {}) {
   return lines.join('\n') + '\n';
 }
 
+function formatWordReadingGapTriage(triage, { maxItems = 50, includeVariants = false } = {}) {
+  const lines = [];
+  lines.push(`Japanese Kanji Builder Word Reading Gap Triage (${triage.levelLabel})`);
+  lines.push('');
+  lines.push(`Open gap items: ${triage.summary.totalItems}`);
+  lines.push(`  - High priority (editorial review): ${triage.summary.highPriorityItems}`);
+  lines.push(`  - Medium priority (promote curated example): ${triage.summary.mediumPriorityItems}`);
+  lines.push(`  - Low priority (defer variant): ${triage.summary.lowPriorityItems}`);
+  lines.push('');
+
+  const focusItems = triage.items
+    .filter((item) => includeVariants || item.priority !== 'low')
+    .slice(0, maxItems);
+
+  if (focusItems.length === 0) {
+    lines.push('No triage items remain for the current filter.');
+    return lines.join('\n') + '\n';
+  }
+
+  lines.push('Recommended backlog:');
+  for (const item of focusItems) {
+    const candidateText = item.curatedExampleCandidates.length > 0
+      ? item.curatedExampleCandidates.map((candidate) => `${candidate.written} (${candidate.reading})`).join(', ')
+      : 'none yet';
+    lines.push(
+      `- ${item.kanji} ${item.readingType}-reading ${item.reading} `
+      + `[${item.priority}; ${item.suggestedAction}; ${item.status}; ${item.gapKind}]`
+    );
+    lines.push(`  display anchor: ${item.displayWord}`);
+    lines.push(`  curated candidates: ${candidateText}`);
+  }
+
+  return lines.join('\n') + '\n';
+}
+
 module.exports = {
   buildCuratedExamplesForKanji,
   classifyGapKind,
   buildCoverageSourceSummary,
+  buildWordReadingGapTriage,
   buildReadingCoverageForKanji,
   buildWordDeckIndex,
   buildWordReadingCoverageReport,
+  formatWordReadingGapTriage,
   formatWordReadingCoverageReport,
   normalizeReadingToken,
   parseCoverageRole,

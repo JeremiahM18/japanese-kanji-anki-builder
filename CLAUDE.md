@@ -162,6 +162,7 @@ npm run deck:words:review:n5
 npm run deck:words:ready -- --levels=5
 npm run deck:words:completion:n5 -- --json
 npm run deck:words:reading-audit:n5
+npm run deck:words:triage:n5
 ```
 
 If you change exported word behavior, do not trust the deck summary alone. Cross-check:

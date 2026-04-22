@@ -5,13 +5,65 @@ const {
     parseWordTsv,
 } = require("./wordReadingCoverageService");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
-const { HAN_CHAR_RE } = require("../utils/japanese");
+const { HAN_CHAR_RE, katakanaToHiragana } = require("../utils/japanese");
 
 function extractConstituentKanji(text) {
     return [...new Set(
         Array.from(String(text || ""))
             .filter((char) => HAN_CHAR_RE.test(char) && char !== "々")
     )];
+}
+
+function extractExampleSentenceJapanese(exampleSentence) {
+    return String(exampleSentence || "")
+        .split(" ／ ")
+        .map((part) => part.trim())
+        .filter(Boolean)[0] || "";
+}
+
+function normalizeKanaSearchText(value) {
+    return katakanaToHiragana(String(value || ""))
+        .replace(/[^\p{Script=Hiragana}ー]/gu, "");
+}
+
+function buildWordDeckSentenceOrthographyAudit({ wordRows }) {
+    const flaggedRows = [];
+
+    for (const row of Array.isArray(wordRows) ? wordRows : []) {
+        const word = String(row?.Word || row?.word || "").trim();
+        const reading = String(row?.Reading || row?.reading || "").trim();
+        const japaneseSentence = extractExampleSentenceJapanese(
+            row?.ExampleSentence || row?.exampleSentence || ""
+        );
+        const kanjiList = extractConstituentKanji(word);
+
+        if (!word || !reading || !japaneseSentence || kanjiList.length === 0) {
+            continue;
+        }
+
+        if (kanjiList.some((kanji) => japaneseSentence.includes(kanji))) {
+            continue;
+        }
+
+        const normalizedReading = normalizeKanaSearchText(reading);
+        const normalizedJapaneseSentence = normalizeKanaSearchText(japaneseSentence);
+
+        if (!normalizedReading || !normalizedJapaneseSentence.includes(normalizedReading)) {
+            continue;
+        }
+
+        flaggedRows.push({
+            word,
+            reading,
+            sentence: japaneseSentence,
+            missingKanji: kanjiList,
+        });
+    }
+
+    return {
+        suspiciousKanaOnlyCount: flaggedRows.length,
+        flaggedRows,
+    };
 }
 
 function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract }) {
@@ -173,6 +225,9 @@ function buildWordDeckCompletionReport({
         wordRows,
         jlptLevelContract,
     });
+    const sentenceOrthographyAudit = buildWordDeckSentenceOrthographyAudit({
+        wordRows,
+    });
     const readiness = buildWordDeckReadiness({
         inventory,
         readingCoverage: readingCoverage.summary,
@@ -186,6 +241,7 @@ function buildWordDeckCompletionReport({
         readingCoverage: readingCoverage.summary,
         triage: triage.summary,
         policyAudit,
+        sentenceOrthographyAudit,
         readiness,
     };
 }
@@ -237,6 +293,9 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         `- Standalone wrong-level cards: ${report.policyAudit.standaloneViolationCount}`,
         `- Missing cross-level/outside-level badges: ${report.policyAudit.badgeViolationCount}`,
         "",
+        "Sentence orthography review:",
+        `- Suspicious kana-only examples: ${report.sentenceOrthographyAudit.suspiciousKanaOnlyCount}`,
+        "",
         "Reading coverage:",
         `- Readings audited: ${report.readingCoverage.totalReadings}`,
         `- Covered by word deck: ${report.readingCoverage.coveredReadings}`,
@@ -261,6 +320,13 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         }
     }
 
+    if (report.sentenceOrthographyAudit.flaggedRows.length > 0) {
+        lines.push("", "Suspicious kana-only example sentences:");
+        for (const row of report.sentenceOrthographyAudit.flaggedRows.slice(0, maxEntries)) {
+            lines.push(`- ${row.word} (${row.reading}) — ${row.sentence}`);
+        }
+    }
+
     return `${lines.join("\n")}\n`;
 }
 
@@ -268,6 +334,7 @@ module.exports = {
     buildWordDeckCompletionReport,
     buildWordDeckInventorySummary,
     buildWordDeckPolicyAudit,
+    buildWordDeckSentenceOrthographyAudit,
     buildWordDeckReadiness,
     formatWordDeckCompletionReport,
 };

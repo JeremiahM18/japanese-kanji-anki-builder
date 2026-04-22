@@ -5,6 +5,7 @@ const {
     buildWordDeckCompletionReport,
     buildWordDeckInventorySummary,
     buildWordDeckPolicyAudit,
+    buildWordDeckSentenceOrthographyAudit,
     buildWordDeckReadiness,
     formatWordDeckCompletionReport,
 } = require("../src/services/wordDeckCompletionService");
@@ -179,6 +180,32 @@ test("buildWordDeckPolicyAudit treats okurigana words as labeled support cases i
     assert.equal(audit.badgeViolationCount, 0);
 });
 
+test("buildWordDeckSentenceOrthographyAudit flags likely kana-only example regressions without failing natural kanji usage", () => {
+    const audit = buildWordDeckSentenceOrthographyAudit({
+        wordRows: [
+            {
+                Word: "猫",
+                Reading: "ねこ",
+                ExampleSentence: "白いねこがいます。 ／ しろいねこがいます。 ／ There is a white cat.",
+            },
+            {
+                Word: "白い",
+                Reading: "しろい",
+                ExampleSentence: "白い猫がいます。 ／ しろいねこがいます。 ／ There is a white cat.",
+            },
+            {
+                Word: "学校",
+                Reading: "がっこう",
+                ExampleSentence: "きょうは休みです。 ／ きょうはやすみです。 ／ Today is a day off.",
+            },
+        ],
+    });
+
+    assert.equal(audit.suspiciousKanaOnlyCount, 1);
+    assert.equal(audit.flaggedRows[0].word, "猫");
+    assert.equal(audit.flaggedRows[0].reading, "ねこ");
+});
+
 test("formatWordDeckCompletionReport renders missing rows and source-only exclusions clearly", () => {
     const text = formatWordDeckCompletionReport({
         level: 5,
@@ -203,6 +230,10 @@ test("formatWordDeckCompletionReport renders missing rows and source-only exclus
             standaloneViolationCount: 0,
             badgeViolationCount: 0,
         },
+        sentenceOrthographyAudit: {
+            suspiciousKanaOnlyCount: 1,
+            flaggedRows: [{ word: "猫", reading: "ねこ", sentence: "白いねこがいます。" }],
+        },
         readingCoverage: {
             totalReadings: 10,
             coveredReadings: 4,
@@ -218,8 +249,10 @@ test("formatWordDeckCompletionReport renders missing rows and source-only exclus
     assert.match(text, /Built starter-eligible rows: 1 \(50%\)/);
     assert.match(text, /Standalone wrong-level cards: 0/);
     assert.match(text, /Missing cross-level\/outside-level badges: 0/);
+    assert.match(text, /Suspicious kana-only examples: 1/);
     assert.match(text, /Missing starter-eligible N-level rows:/);
     assert.match(text, /赤い花 \(あかいはな\)/);
     assert.match(text, /Tracked source-only exclusions outside canonical inventory:/);
     assert.match(text, /高い山 \(たかいやま\) — phrase/);
+    assert.match(text, /猫 \(ねこ\) — 白いねこがいます。/);
 });

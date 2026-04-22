@@ -109,6 +109,9 @@ function formatWordDeckReadyReport(summary, doctorReport) {
                 ...(audit.policyAudit
                     ? [`  deck policy: ${audit.policyAudit.standaloneViolationCount} standalone wrong-level cards, ${audit.policyAudit.badgeViolationCount} missing labels`]
                     : []),
+                ...(audit.sentenceOrthographyAudit
+                    ? [`  sentence orthography review: ${audit.sentenceOrthographyAudit.suspiciousKanaOnlyCount} suspicious kana-only examples`]
+                    : []),
                 ...(triage
                     ? [`  triage backlog: ${triage.editorialReviewItems} editorial review, ${triage.promoteCuratedExampleItems} promote curated example, ${triage.deferVariantItems} defer variant`]
                     : []),
@@ -240,6 +243,7 @@ async function main() {
             readingGapTriageByLevel[`N${level}`] = completionReport.triage;
             readingCoverageAuditByLevel[`N${level}`].readiness = completionReport.readiness;
             readingCoverageAuditByLevel[`N${level}`].policyAudit = completionReport.policyAudit;
+            readingCoverageAuditByLevel[`N${level}`].sentenceOrthographyAudit = completionReport.sentenceOrthographyAudit;
         }
 
         exports.push({

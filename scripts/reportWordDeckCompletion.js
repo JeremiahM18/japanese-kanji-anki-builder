@@ -4,6 +4,7 @@ const path = require("node:path");
 const { loadConfig } = require("../src/config");
 const { loadWordStudyData } = require("../src/datasets/wordStudyData");
 const { loadJlptWordLevelContract } = require("../src/datasets/jlptWordLevelContract");
+const { loadJlptLevelContract } = require("../src/datasets/jlptLevelContract");
 const { invokeCliMain, assertNoUnknownArgs, collectUnknownArg, parseNumericOption } = require("../src/utils/cliArgs");
 const { buildWordDeckCompletionReport, formatWordDeckCompletionReport } = require("../src/services/wordDeckCompletionService");
 
@@ -63,11 +64,13 @@ async function main() {
         localPath: null,
     });
     const jlptWordLevelContract = loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json"));
+    const jlptLevelContract = loadJlptLevelContract(path.join(process.cwd(), "templates", "jlpt_level_contract.json"));
 
     const report = buildWordDeckCompletionReport({
         level,
         starterEntries,
         jlptWordLevelContract,
+        jlptLevelContract,
         kanjiTsv: fs.readFileSync(kanjiTsvPath, "utf8"),
         wordTsv: fs.readFileSync(wordTsvPath, "utf8"),
     });

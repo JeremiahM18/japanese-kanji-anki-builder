@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Tagged release workflow with artifact checksums and release-policy validation.
 - Checked-in branch protection and release process documentation treated as repository contracts.
 - Added a `curated:init -- --refresh-starter` workflow for refreshing stale starter-derived local curated kanji entries without overwriting non-starter local edits.
+- Added a tracked `jlpt_word_level_contract.json` plus `data:audit:jlpt:words` so learner-facing word-card JLPT labels can prefer canonical word-level truth where the repo has it, instead of relying only on constituent-kanji heuristics.
 
 ### Changed
 

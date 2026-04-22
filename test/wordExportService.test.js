@@ -6,6 +6,7 @@ const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const {
     buildBreakdownInference,
     createWordExportService,
+    getCanonicalWordLevel,
     hasExcludedWordCardTag,
     inferWordLevel,
     isLikelyPhraseCard,
@@ -88,6 +89,21 @@ test("inferWordLevel uses the hardest constituent JLPT kanji", () => {
             年: { jlpt: 4 },
         },
     }), 4);
+});
+
+test("getCanonicalWordLevel prefers the tracked word-level contract over kanji heuristics", () => {
+    assert.equal(getCanonicalWordLevel({
+        candidate: { written: "今年", pron: "ことし" },
+        jlptWordLevelContract: {
+            wordLevels: {
+                "今年|ことし": {
+                    written: "今年",
+                    reading: "ことし",
+                    jlpt: 5,
+                },
+            },
+        },
+    }), 5);
 });
 
 test("hasExcludedWordCardTag detects curated phrase exclusions", () => {
@@ -691,5 +707,47 @@ test("buildWordTsvForJlptLevel excludes stale compositional phrase entries even 
 
     assert.match(result.tsv, /^高い\tたかい\thigh \/ expensive\tJLPT N5\t/m);
     assert.doesNotMatch(result.tsv, /^高い山\tたかいやま\thigh mountain\tJLPT N5\t/m);
+});
+
+test("buildWordTsvForJlptLevel uses the canonical word-level contract before constituent heuristics", async () => {
+    const wordExportService = createWordExportService({
+        sentenceCorpus: [],
+        wordStudyData: {
+            "今年|ことし": {
+                written: "今年",
+                reading: "ことし",
+                meaning: "this year",
+                jlpt: 5,
+            },
+        },
+    });
+
+    const result = await wordExportService.buildWordTsvForJlptLevel({
+        levelNumber: 5,
+        jlptOnlyJson: {
+            今: { jlpt: 5 },
+            年: { jlpt: 4 },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {
+                "今年|ことし": {
+                    written: "今年",
+                    reading: "ことし",
+                    jlpt: 5,
+                },
+            },
+        },
+        kanjiApiClient: {
+            async getKanji() {
+                return { meanings: ["year"], on_readings: ["ネン"], kun_readings: ["とし"] };
+            },
+            async getWords() {
+                return [];
+            },
+        },
+        concurrency: 1,
+    });
+
+    assert.match(result.tsv, /^今年\tことし\tthis year\tJLPT N5\t/m);
 });
 

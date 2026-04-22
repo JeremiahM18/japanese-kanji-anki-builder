@@ -65,6 +65,7 @@ npm run media:init
 ```bash
 npm run curated:report -- --level=1 --limit=8
 npm run data:audit:jlpt
+npm run data:audit:jlpt:words
 npm run deck:preview -- --level=5 --limit=5
 npm run deck:review:n5
 npm run deck:words:review:n5
@@ -191,10 +192,12 @@ The word deck is a separate Anki note type focused on real study words such as `
 Important word-deck rules:
 
 - word identity is `written + reading`, and curated words tagged for a JLPT level are included even when their constituent kanji are outside that level's kanji slice
+- exported word-card JLPT labels now prefer the tracked [templates/jlpt_word_level_contract.json](templates/jlpt_word_level_contract.json) contract before any kanji-based fallback heuristic, so learner-facing labels use canonical word-level truth where the repo has it
 - the default word deck now aims at lexical study words, not compositional example phrases; curated entries tagged `phrase` and obvious phrase shapes such as `高い山` or `兄の部屋` are excluded from normal word-deck output
 - curated word entries suppress uncurated alternate readings for the same written form
 - kanji breakdown panels on the back prefer curated kanji display words and meanings, and can use dedicated breakdown-only overrides for compound contexts so cards like `銀行`, `会社`, `会社員`, `昼ご飯`, `晩ご飯`, `午前`, `午後`, `時間`, `月曜日`, `学校`, `病院`, `郵便局`, `去年`, `来月`, `来週`, `夕方`, `元気`, and `仕事` stay learner-friendly without changing primary study forms such as `行く`
 - those breakdown panels now avoid leaking a full compound reading onto a single-kanji panel unless you intentionally curate that context, and they normalize internal reading labels into learner-facing `On:` / `Kun:` lines instead of surfacing raw `オン:` / `くん:` notation
+- `npm run data:audit:jlpt:words` audits the tracked starter word surface against that canonical word-level contract; today it intentionally reports canonical N5 coverage and zero canonical N4/N3/N2/N1 entries until tracked word curation expands
 - use `--include-inferred` when you explicitly want to expand beyond curated words during exploration
 
 ### Lower-level build
@@ -308,6 +311,7 @@ The tagged workflow in [.github/workflows/release.yml](.github/workflows/release
 | `npm run corpus:init` | Create or merge starter sentence corpus data |
 | `npm run curated:init` | Create or merge starter curated kanji study data |
 | `npm run data:audit:jlpt` | Audit local JLPT data, tracked starter curation, and golden review placement against the tracked JLPT level contract |
+| `npm run data:audit:jlpt:words` | Audit tracked starter word study data against the tracked JLPT word-level contract |
 | `npm run data:sync:jlpt` | Rewrite the local ignored JLPT dataset so its `jlpt` levels match the tracked JLPT level contract |
 | `npm run data:verify:jlpt` | Verify the local JLPT kanji dataset against the canonical per-level inventory contract |
 | `npm run words:init` | Create or merge starter curated word study data |
@@ -335,6 +339,8 @@ Runtime curated kanji loading uses the tracked base starter pack plus any tracke
 JLPT level taxonomy is now governed by the tracked [templates/jlpt_level_contract.json](templates/jlpt_level_contract.json) contract rather than by a workstation-local assumption. Use `npm run data:audit:jlpt` when you want the full alignment picture across the local `kanji_jlpt_only.json`, tracked starter curation, and golden review placement, use `npm run data:verify:jlpt` when you only need to validate the local ignored dataset against that contract, and use `npm run data:sync:jlpt` when a workstation copy needs to be brought back into alignment.
 
 Curated word study entries are keyed by `written|reading`, for example `今日|きょう`, so the word deck can intentionally keep `今日 / きょう` while excluding `今日 / こんにち` unless you curate both.
+
+Word-level JLPT truth is now tracked separately in [templates/jlpt_word_level_contract.json](templates/jlpt_word_level_contract.json). The export path prefers that contract for learner-facing JLPT labels on word cards, and `npm run data:audit:jlpt:words` checks that the tracked starter word dataset still matches it. That contract currently covers the tracked starter N5 word surface; N4 and above still need canonical word-level curation before they should be treated as governed in the same way.
 
 Managed media is stored under:
 

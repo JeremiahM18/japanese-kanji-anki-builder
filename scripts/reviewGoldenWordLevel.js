@@ -7,6 +7,7 @@ const { createKanjiApiClient } = require("../src/clients/kanjiApiClient");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const { loadSentenceCorpus } = require("../src/datasets/sentenceCorpus");
 const { loadWordStudyData } = require("../src/datasets/wordStudyData");
+const { loadJlptWordLevelContract } = require("../src/datasets/jlptWordLevelContract");
 const { createMediaServices } = require("../src/services/mediaServiceFactory");
 const { evaluateGoldenWordReviewSet, formatGoldenReviewReport } = require("../src/services/goldenReviewService");
 const { createWordExportService } = require("../src/services/wordExportService");
@@ -66,6 +67,7 @@ async function main() {
 
     const expectations = JSON.parse(fs.readFileSync(reviewSetPath, "utf-8"));
     const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
+    const jlptWordLevelContract = loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json"));
     const sentenceCorpus = loadSentenceCorpus(config.sentenceCorpusPath);
     const curatedStudyData = loadCuratedStudyData(config.curatedStudyDataPath);
     const wordStudyData = loadWordStudyData({ localPath: config.wordStudyDataPath });
@@ -79,6 +81,7 @@ async function main() {
     const result = await wordExportService.buildWordTsvForJlptLevel({
         levelNumber: level,
         jlptOnlyJson,
+        jlptWordLevelContract,
         kanjiApiClient,
         strokeOrderService,
         audioService,

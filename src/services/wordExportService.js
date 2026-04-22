@@ -49,6 +49,15 @@ function inferWordLevel({ written, jlptOnlyJson, fallbackLevel = null }) {
     return Math.min(...constituentLevels);
 }
 
+function getCanonicalWordLevel({ candidate, jlptWordLevelContract }) {
+    const key = buildWordStudyEntryKey({
+        written: String(candidate?.written || "").trim(),
+        reading: String(candidate?.reading || candidate?.pron || "").trim(),
+    });
+    const entry = jlptWordLevelContract?.wordLevels?.[key];
+    return Number.isInteger(entry?.jlpt) ? entry.jlpt : null;
+}
+
 function buildWordKey(candidate) {
     return buildWordStudyEntryKey({
         written: String(candidate?.written || "").trim(),
@@ -157,7 +166,15 @@ function buildCuratedCandidate(entry) {
     };
 }
 
-function getCandidateLevel({ candidate, curatedEntry, jlptOnlyJson, fallbackLevel }) {
+function getCandidateLevel({ candidate, curatedEntry, jlptOnlyJson, jlptWordLevelContract, fallbackLevel }) {
+    const canonicalLevel = getCanonicalWordLevel({
+        candidate: curatedEntry || candidate,
+        jlptWordLevelContract,
+    });
+    if (Number.isInteger(canonicalLevel)) {
+        return canonicalLevel;
+    }
+
     if (Number.isInteger(curatedEntry?.jlpt)) {
         return curatedEntry.jlpt;
     }
@@ -205,6 +222,7 @@ function buildCandidatePool({
     maxWordsPerKanji,
     minimumCandidateScore,
     wordStudyIndexes,
+    jlptWordLevelContract,
     levelNumber,
     jlptOnlyJson,
     includeInferred = false,
@@ -215,6 +233,7 @@ function buildCandidatePool({
             candidate: entry,
             curatedEntry: entry,
             jlptOnlyJson,
+            jlptWordLevelContract,
             fallbackLevel: levelNumber,
         }) === levelNumber)
         .filter((entry) => !isLikelyPhraseCard(entry))
@@ -537,6 +556,7 @@ function createWordExportService({
     async function buildWordDeckForLevel({
         levelNumber,
         jlptOnlyJson,
+        jlptWordLevelContract = null,
         kanjiApiClient,
         strokeOrderService = null,
         audioService = null,
@@ -574,6 +594,7 @@ function createWordExportService({
                 maxWordsPerKanji,
                 minimumCandidateScore,
                 wordStudyIndexes,
+                jlptWordLevelContract,
                 levelNumber,
                 jlptOnlyJson,
                 includeInferred,
@@ -585,6 +606,7 @@ function createWordExportService({
                     candidate,
                     curatedEntry,
                     jlptOnlyJson,
+                    jlptWordLevelContract,
                     fallbackLevel: levelNumber,
                 });
 
@@ -622,6 +644,7 @@ function createWordExportService({
                 candidate,
                 curatedEntry,
                 jlptOnlyJson,
+                jlptWordLevelContract,
                 fallbackLevel: levelNumber,
             });
 
@@ -755,6 +778,7 @@ module.exports = {
     createWordExportService,
     defaultWordExportService,
     extractConstituentKanji,
+    getCanonicalWordLevel,
     hasExcludedWordCardTag,
     inferWordLevel,
     isLikelyPhraseCard,

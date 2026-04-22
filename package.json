@@ -21,6 +21,7 @@
     "curated:init": "node scripts/initCuratedStudyData.js",
     "data:verify:jlpt": "node scripts/verifyJlptInventory.js",
     "data:audit:jlpt": "node scripts/auditJlptAlignment.js",
+    "data:audit:jlpt:words": "node scripts/auditJlptWordAlignment.js",
     "data:sync:jlpt": "node scripts/syncJlptInventoryFromContract.js",
     "build:artifacts": "node scripts/buildArtifacts.js",
     "media:report": "node scripts/reportMediaCoverage.js",

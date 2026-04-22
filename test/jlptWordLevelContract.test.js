@@ -54,16 +54,41 @@ test("loadJlptWordLevelContract parses a tracked contract file", () => {
     }
 });
 
+test("loadJlptWordLevelContract rejects stale derived inventory counts", () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const filePath = path.join(rootDir, "jlpt_word_level_contract.json");
+        fs.writeFileSync(filePath, JSON.stringify({
+            version: 1,
+            inventoryCounts: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 99 },
+            wordLevels: {
+                "今日|きょう": { written: "今日", reading: "きょう", jlpt: 5 },
+            },
+        }), "utf-8");
+
+        assert.throws(
+            () => loadJlptWordLevelContract(filePath),
+            /inventoryCounts\.5 is stale/i,
+        );
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
 test("tracked JLPT word contract now includes the first governed N4 starter batch", () => {
     const contract = loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json"));
 
     assert.equal(contract.inventoryCounts["4"] >= 6, true);
+    assert.equal(contract.inventoryCounts["5"], 271);
     assert.equal(getJlptWordLevel(contract, "安心|あんしん"), 4);
     assert.equal(getJlptWordLevel(contract, "急ぐ|いそぐ"), 4);
     assert.equal(getJlptWordLevel(contract, "海岸|かいがん"), 4);
     assert.equal(getJlptWordLevel(contract, "世界|せかい"), 4);
     assert.equal(getJlptWordLevel(contract, "花見|はなみ"), 4);
     assert.equal(getJlptWordLevel(contract, "開く|ひらく"), 4);
+    assert.equal(getJlptWordLevel(contract, "七日|なのか"), 5);
+    assert.equal(getJlptWordLevel(contract, "十日|とおか"), 5);
 });
 
 test("auditWordStudyEntriesAgainstContract reports starter drift against the canonical word contract", () => {

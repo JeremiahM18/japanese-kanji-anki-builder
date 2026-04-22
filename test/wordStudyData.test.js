@@ -124,4 +124,7 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
     });
     assert.equal(starterEntries["休み時間|やすみじかん"].coverage.role, "support");
     assert.equal(starterEntries["時間|じかん"].coverage.coversReadings["間"], "かん");
+    assert.equal(starterEntries["五分|ごふん"].coverage.coversReadings["分"], "ふん");
+    assert.equal(starterEntries["七日|なのか"].coverage.coversReadings["七"], "なの");
+    assert.equal(starterEntries["十日|とおか"].coverage.coversReadings["十"], "とお");
 });

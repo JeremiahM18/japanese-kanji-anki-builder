@@ -26,9 +26,31 @@ function parseJlptWordLevelContract(value) {
     return jlptWordLevelContractSchema.parse(value);
 }
 
+function buildSerializedInventoryCounts(wordLevels = {}) {
+    const counts = buildInventoryCountsFromWordLevels(wordLevels);
+    return {
+        "1": counts[1],
+        "2": counts[2],
+        "3": counts[3],
+        "4": counts[4],
+        "5": counts[5],
+    };
+}
+
 function loadJlptWordLevelContract(filePath) {
     const text = fs.readFileSync(filePath, "utf-8");
-    return parseJlptWordLevelContract(JSON.parse(text));
+    const parsed = parseJlptWordLevelContract(JSON.parse(text));
+    const expectedCounts = buildSerializedInventoryCounts(parsed.wordLevels);
+
+    for (const level of ["1", "2", "3", "4", "5"]) {
+        if (parsed.inventoryCounts[level] !== expectedCounts[level]) {
+            throw new Error(
+                `JLPT word contract inventoryCounts.${level} is stale: expected ${expectedCounts[level]}, received ${parsed.inventoryCounts[level]}.`
+            );
+        }
+    }
+
+    return parsed;
 }
 
 function buildInventoryCountsFromWordLevels(wordLevels = {}) {
@@ -140,17 +162,9 @@ function buildStarterWordGovernanceSummary(wordStudyEntries = {}, contract = {})
 }
 
 function buildJlptWordLevelContract({ wordLevels = {}, version = 1 } = {}) {
-    const counts = buildInventoryCountsFromWordLevels(wordLevels);
-
     return parseJlptWordLevelContract({
         version,
-        inventoryCounts: {
-            "1": counts[1],
-            "2": counts[2],
-            "3": counts[3],
-            "4": counts[4],
-            "5": counts[5],
-        },
+        inventoryCounts: buildSerializedInventoryCounts(wordLevels),
         wordLevels,
     });
 }

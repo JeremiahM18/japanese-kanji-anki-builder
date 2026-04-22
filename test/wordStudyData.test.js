@@ -163,6 +163,10 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
     assert.equal(starterEntries["見える|みえる"].coverage.coversReadings["見"], "みえる");
     assert.equal(starterEntries["毎月|まいつき"].coverage.coversReadings["月"], "つき");
     assert.equal(starterEntries["名前|なまえ"].coverage.coversReadings["名"], "な");
+    assert.equal(starterEntries["男子|だんし"].coverage.coversReadings["男"], "だん");
+    assert.equal(starterEntries["手本|てほん"].coverage.coversReadings["本"], "もと");
+    assert.equal(starterEntries["母校|ぼこう"].coverage.coversReadings["母"], "ぼ");
+    assert.equal(starterEntries["雨天|うてん"].coverage.coversReadings["雨"], "う");
     assert.equal(starterEntries["四月|しがつ"].coverage.role, "support");
     assert.equal(starterEntries["四月|しがつ"].coverage.coversReadings["四"], "し");
     assert.equal(starterEntries["五月|ごがつ"].coverage.coversReadings["月"], "がつ");

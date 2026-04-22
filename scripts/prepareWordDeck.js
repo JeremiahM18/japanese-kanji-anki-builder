@@ -9,6 +9,7 @@ const { loadWordStudyData } = require("../src/datasets/wordStudyData");
 const { loadJlptWordLevelContract } = require("../src/datasets/jlptWordLevelContract");
 const { buildWordCoverageContractSummary } = require("../src/datasets/wordStudyData");
 const { buildStarterWordGovernanceSummary } = require("../src/datasets/jlptWordLevelContract");
+const { buildWordDeckCompletionReport } = require("../src/services/wordDeckCompletionService");
 const { buildSelectedKanjiByLevel, parseLevelsArgument } = require("../src/services/buildPipeline");
 const { buildDeckPackage } = require("../src/services/deckPackageService");
 const { createMediaServices } = require("../src/services/mediaServiceFactory");
@@ -35,6 +36,10 @@ function writeJson(filePath, value) {
 function writeText(filePath, value) {
     ensureDir(path.dirname(filePath));
     fs.writeFileSync(filePath, value, "utf-8");
+}
+
+function resolveKanjiTsvPath(buildOutDir, level) {
+    return path.join(buildOutDir, "exports", `jlpt-n${level}.tsv`);
 }
 
 function parseArgs(argv) {
@@ -76,6 +81,24 @@ function parseArgs(argv) {
 }
 
 function formatWordDeckReadyReport(summary, doctorReport) {
+    const readingCoverageLines = summary.completion.readingCoverageAuditByLevel
+        ? summary.levels.flatMap((level) => {
+            const audit = summary.completion.readingCoverageAuditByLevel[`N${level}`];
+            if (!audit) {
+                return [];
+            }
+
+            const coveredPercent = audit.totalReadings > 0
+                ? Number(((audit.coveredReadings / audit.totalReadings) * 100).toFixed(1))
+                : 0;
+
+            return [
+                `- N${level} reading coverage: ${coveredPercent}% (${audit.coveredReadings}/${audit.totalReadings})`,
+                `  distinct missing targets: ${audit.distinctGapReadings}, variant-style gaps: ${audit.variantGapReadings}`,
+            ];
+        })
+        : [];
+
     return [
         "Japanese Kanji Builder Word Deck Ready",
         "",
@@ -94,6 +117,7 @@ function formatWordDeckReadyReport(summary, doctorReport) {
         `- N5 starter governance: ${summary.completion.starterGovernance.coverageByLevel[5]}% (${summary.completion.starterGovernance.canonicalStarterCounts[5]}/${summary.completion.starterGovernance.defaultDeckStarterCounts[5]})`,
         `- N5 explicit reading-coverage contracts: ${summary.completion.readingCoverageContract.explicitCoveragePercentByLevel[5]}% (${summary.completion.readingCoverageContract.explicitCoverageEntriesByLevel[5]}/${summary.completion.readingCoverageContract.starterEntriesByLevel[5]})`,
         `- Canonical inventory counts: N5=${summary.completion.contractInventoryCounts["5"] || 0}, N4=${summary.completion.contractInventoryCounts["4"] || 0}, N3=${summary.completion.contractInventoryCounts["3"] || 0}, N2=${summary.completion.contractInventoryCounts["2"] || 0}, N1=${summary.completion.contractInventoryCounts["1"] || 0}`,
+        ...readingCoverageLines,
         `Unique referenced kanji: ${summary.referencedKanjiCount}`,
         `Unique packaged media files: ${summary.package.mediaAssetCount}`,
         "",
@@ -161,6 +185,7 @@ async function main() {
     });
 
     const exports = [];
+    const readingCoverageAuditByLevel = {};
     for (const level of levels) {
         const result = await wordExportService.buildWordTsvForJlptLevel({
             levelNumber: level,
@@ -177,6 +202,19 @@ async function main() {
         });
         const filePath = path.join(buildPaths.exportsDir, `jlpt-n${level}-words.tsv`);
         writeText(filePath, `${result.tsv}\n`);
+
+        const kanjiTsvPath = resolveKanjiTsvPath(config.buildOutDir, level);
+        if (fs.existsSync(kanjiTsvPath)) {
+            const completionReport = buildWordDeckCompletionReport({
+                level,
+                starterEntries: trackedStarterWordStudyData,
+                jlptWordLevelContract,
+                kanjiTsv: fs.readFileSync(kanjiTsvPath, "utf8"),
+                wordTsv: result.tsv,
+            });
+            readingCoverageAuditByLevel[`N${level}`] = completionReport.readingCoverage;
+        }
+
         exports.push({
             level,
             filePath,
@@ -213,6 +251,7 @@ async function main() {
             contractInventoryCounts: jlptWordLevelContract.inventoryCounts,
             starterGovernance,
             readingCoverageContract,
+            readingCoverageAuditByLevel,
         },
         referencedKanjiCount: [...new Set(exports.flatMap((artifact) => artifact.mediaKanji || []))].length,
         package: deckPackage,
@@ -247,4 +286,5 @@ module.exports = {
     formatWordDeckReadyReport,
     main,
     parseArgs,
+    resolveKanjiTsvPath,
 };

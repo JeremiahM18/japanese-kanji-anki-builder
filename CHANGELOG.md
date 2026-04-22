@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Reclassified `赤い花` and `白い花` as phrase-tagged starter entries so the default N5 word deck contract treats them consistently with other compositional adjective+noun phrases instead of counting them as accidental missing vocab rows.
 - Updated the tracked N5 word-contract baseline to `271` canonical rows with `258/258` default-deck starter-eligible rows built, and tightened the reading audit to reflect the new support coverage coming from `七日`, `十日`, `五分`, and `十分`.
+- Surfaced word-reading coverage directly in `deck:words:ready` and the stored word build summary so a successful N5 word build now shows the real reading-completeness signal (`181/344`, `52.6%` on the current baseline) instead of only the inventory-side `258/258` metric.
 - Upgraded the learner-facing word-card surface so word decks now expose `CoverageRole`, `FocusKanji`, and `CoversReading`, making it clear whether a card is core JLPT vocabulary, reading-coverage support, or both.
 - Tightened word-deck JLPT trust so inferred exploratory rows no longer receive learner-facing JLPT labels by default; exported labels now come only from the canonical word-level contract or an explicit curated JLPT tag.
 - Tightened compound breakdown rendering on word cards so learner-facing study focus follows the written kanji order and context-specific reading forms such as `時 （じ）`, `学 （がく）`, `車 （くるま）`, `休 （やすみ）`, and `間 （かん）` survive into the exported card instead of weaker bare defaults.

@@ -1,5 +1,6 @@
 const fs = require("node:fs");
 const { z } = require("zod");
+const { buildWordCoverageContractSummary } = require("./wordStudyData");
 
 const jlptLevelSchema = z.number().int().min(1).max(5);
 
@@ -213,6 +214,7 @@ function auditWordStudyEntriesAgainstContract(wordStudyEntries = {}, contract = 
         contractCounts: contract?.inventoryCounts || {},
         starterCounts: buildInventoryCountsFromWordLevels(wordStudyEntries),
         starterGovernance: buildStarterWordGovernanceSummary(wordStudyEntries, contract),
+        readingCoverageContract: buildWordCoverageContractSummary(wordStudyEntries),
     };
 }
 

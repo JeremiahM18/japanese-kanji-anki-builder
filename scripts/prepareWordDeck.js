@@ -7,6 +7,8 @@ const { loadSentenceCorpus } = require("../src/datasets/sentenceCorpus");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const { loadWordStudyData } = require("../src/datasets/wordStudyData");
 const { loadJlptWordLevelContract } = require("../src/datasets/jlptWordLevelContract");
+const { buildWordCoverageContractSummary } = require("../src/datasets/wordStudyData");
+const { buildStarterWordGovernanceSummary } = require("../src/datasets/jlptWordLevelContract");
 const { buildSelectedKanjiByLevel, parseLevelsArgument } = require("../src/services/buildPipeline");
 const { buildDeckPackage } = require("../src/services/deckPackageService");
 const { createMediaServices } = require("../src/services/mediaServiceFactory");
@@ -87,6 +89,11 @@ function formatWordDeckReadyReport(summary, doctorReport) {
         `Canonical word rows: ${summary.governance.canonicalRows}`,
         `Curated-only word rows: ${summary.governance.curatedOnlyRows}`,
         `Inferred-only word rows: ${summary.governance.inferredOnlyRows}`,
+        "",
+        "Word contract completion:",
+        `- N5 starter governance: ${summary.completion.starterGovernance.coverageByLevel[5]}% (${summary.completion.starterGovernance.canonicalStarterCounts[5]}/${summary.completion.starterGovernance.defaultDeckStarterCounts[5]})`,
+        `- N5 explicit reading-coverage contracts: ${summary.completion.readingCoverageContract.explicitCoveragePercentByLevel[5]}% (${summary.completion.readingCoverageContract.explicitCoverageEntriesByLevel[5]}/${summary.completion.readingCoverageContract.starterEntriesByLevel[5]})`,
+        `- Canonical inventory counts: N5=${summary.completion.contractInventoryCounts["5"] || 0}, N4=${summary.completion.contractInventoryCounts["4"] || 0}, N3=${summary.completion.contractInventoryCounts["3"] || 0}, N2=${summary.completion.contractInventoryCounts["2"] || 0}, N1=${summary.completion.contractInventoryCounts["1"] || 0}`,
         `Unique referenced kanji: ${summary.referencedKanjiCount}`,
         `Unique packaged media files: ${summary.package.mediaAssetCount}`,
         "",
@@ -122,6 +129,12 @@ async function main() {
     const wordStudyData = loadWordStudyData({
         localPath: config.wordStudyDataPath,
     });
+    const trackedStarterWordStudyData = loadWordStudyData({
+        starterPath: path.join(process.cwd(), "templates", "starter_word_study_data.json"),
+        localPath: null,
+    });
+    const starterGovernance = buildStarterWordGovernanceSummary(trackedStarterWordStudyData, jlptWordLevelContract);
+    const readingCoverageContract = buildWordCoverageContractSummary(trackedStarterWordStudyData);
     const kanjiApiClient = createKanjiApiClient({
         baseUrl: config.kanjiApiBaseUrl,
         cacheDir: config.cacheDir,
@@ -195,6 +208,11 @@ async function main() {
                 `N${artifact.level}`,
                 artifact.governance || { canonicalRows: 0, curatedOnlyRows: 0, inferredOnlyRows: 0, rowCount: artifact.rows },
             ])),
+        },
+        completion: {
+            contractInventoryCounts: jlptWordLevelContract.inventoryCounts,
+            starterGovernance,
+            readingCoverageContract,
         },
         referencedKanjiCount: [...new Set(exports.flatMap((artifact) => artifact.mediaKanji || []))].length,
         package: deckPackage,

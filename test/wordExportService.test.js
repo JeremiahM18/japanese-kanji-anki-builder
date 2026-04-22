@@ -10,10 +10,12 @@ const {
     classifyWordDeckEntry,
     createWordExportService,
     getCanonicalWordLevel,
+    getTrustedCandidateLevel,
     hasExcludedWordCardTag,
     inferWordLevel,
     isLikelyPhraseCard,
     normalizeBreakdownReadingField,
+    resolveCoverageMetadata,
 } = require("../src/services/wordExportService");
 
 test("buildWordTsvForJlptLevel ignores repetition marks in kanji breakdowns", async () => {
@@ -107,6 +109,24 @@ test("getCanonicalWordLevel prefers the tracked word-level contract over kanji h
                     reading: "ことし",
                     jlpt: 5,
                 },
+            },
+        },
+    }), 5);
+});
+
+test("getTrustedCandidateLevel refuses kanji-only heuristic JLPT labels for exported word cards", () => {
+    assert.equal(getTrustedCandidateLevel({
+        candidate: { written: "今年", pron: "ことし" },
+        curatedEntry: null,
+        jlptWordLevelContract: { wordLevels: {} },
+    }), null);
+
+    assert.equal(getTrustedCandidateLevel({
+        candidate: { written: "今日", pron: "きょう" },
+        curatedEntry: null,
+        jlptWordLevelContract: {
+            wordLevels: {
+                "今日|きょう": { written: "今日", reading: "きょう", jlpt: 5 },
             },
         },
     }), 5);
@@ -245,6 +265,69 @@ test("classifyWordDeckEntry distinguishes canonical curated-only and inferred ro
         curatedEntry: null,
         jlptWordLevelContract: { wordLevels: {} },
     }), "inferredOnly");
+});
+
+test("resolveCoverageMetadata prefers explicit reading-coverage contracts from curated word data", () => {
+    const metadata = resolveCoverageMetadata({
+        entry: {
+            candidate: { written: "今日", pron: "きょう" },
+            curatedEntry: {
+                written: "今日",
+                reading: "きょう",
+                meaning: "today",
+                coverage: {
+                    role: "both",
+                    focusKanji: ["今", "日"],
+                    coversReadings: {
+                        今: "いま",
+                        日: "ひ",
+                    },
+                },
+            },
+            sourceKanji: new Set(["今", "日"]),
+        },
+        kanjiInferenceCache: new Map(),
+        curatedStudyData: {},
+    });
+
+    assert.deepEqual(metadata, {
+        focusKanji: ["今", "日"],
+        coversReading: "今: いま ／ 日: ひ",
+    });
+});
+
+test("buildWordTsvForJlptLevel leaves JLPTLevel blank for inferred-only exploratory words", async () => {
+    const wordExportService = createWordExportService({
+        sentenceCorpus: [],
+        curatedStudyData: {},
+        wordStudyData: {},
+    });
+
+    const { tsv } = await wordExportService.buildWordTsvForJlptLevel({
+        levelNumber: 5,
+        jlptOnlyJson: {
+            日: { jlpt: 5 },
+        },
+        jlptWordLevelContract: { wordLevels: {} },
+        includeInferred: true,
+        kanjiApiClient: {
+            async getKanji() {
+                return { meanings: ["day"], on_readings: ["ニチ"], kun_readings: ["ひ"] };
+            },
+            async getWords() {
+                return [{
+                    variants: [{ written: "日", pronounced: "ひ", priorities: ["ichi1"] }],
+                    meanings: [{ glosses: ["day"] }],
+                }];
+            },
+        },
+        concurrency: 1,
+    });
+
+    const [, row] = tsv.split(/\r?\n/);
+    const columns = row.split("\t");
+    assert.equal(columns[3], "");
+    assert.equal(columns[4], "Inferred support word");
 });
 
 test("normalizeBreakdownReadingField strips internal reading prefixes for learner-facing output", () => {

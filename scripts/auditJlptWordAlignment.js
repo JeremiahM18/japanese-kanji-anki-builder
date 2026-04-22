@@ -37,6 +37,7 @@ function truncate(items, limit) {
 
 function formatWordAlignmentReport({ contractPath, starterPath, audit }) {
     const governance = audit.starterGovernance || {};
+    const coverageContract = audit.readingCoverageContract || {};
     const lines = [
         "JLPT Word Alignment Audit",
         "",
@@ -61,6 +62,13 @@ function formatWordAlignmentReport({ contractPath, starterPath, audit }) {
         `- N3: ${governance.canonicalStarterCounts?.[3] || 0}/${governance.defaultDeckStarterCounts?.[3] || 0} (${governance.coverageByLevel?.[3] || 0}%)`,
         `- N2: ${governance.canonicalStarterCounts?.[2] || 0}/${governance.defaultDeckStarterCounts?.[2] || 0} (${governance.coverageByLevel?.[2] || 0}%)`,
         `- N1: ${governance.canonicalStarterCounts?.[1] || 0}/${governance.defaultDeckStarterCounts?.[1] || 0} (${governance.coverageByLevel?.[1] || 0}%)`,
+        "",
+        "Explicit reading-coverage contract on starter words:",
+        `- N5: ${coverageContract.explicitCoverageEntriesByLevel?.[5] || 0}/${coverageContract.starterEntriesByLevel?.[5] || 0} entries (${coverageContract.explicitCoveragePercentByLevel?.[5] || 0}%), reading targets: ${coverageContract.explicitReadingTargetsByLevel?.[5] || 0}`,
+        `- N4: ${coverageContract.explicitCoverageEntriesByLevel?.[4] || 0}/${coverageContract.starterEntriesByLevel?.[4] || 0} entries (${coverageContract.explicitCoveragePercentByLevel?.[4] || 0}%), reading targets: ${coverageContract.explicitReadingTargetsByLevel?.[4] || 0}`,
+        `- N3: ${coverageContract.explicitCoverageEntriesByLevel?.[3] || 0}/${coverageContract.starterEntriesByLevel?.[3] || 0} entries (${coverageContract.explicitCoveragePercentByLevel?.[3] || 0}%), reading targets: ${coverageContract.explicitReadingTargetsByLevel?.[3] || 0}`,
+        `- N2: ${coverageContract.explicitCoverageEntriesByLevel?.[2] || 0}/${coverageContract.starterEntriesByLevel?.[2] || 0} entries (${coverageContract.explicitCoveragePercentByLevel?.[2] || 0}%), reading targets: ${coverageContract.explicitReadingTargetsByLevel?.[2] || 0}`,
+        `- N1: ${coverageContract.explicitCoverageEntriesByLevel?.[1] || 0}/${coverageContract.starterEntriesByLevel?.[1] || 0} entries (${coverageContract.explicitCoveragePercentByLevel?.[1] || 0}%), reading targets: ${coverageContract.explicitReadingTargetsByLevel?.[1] || 0}`,
     ];
 
     if (!audit.valid) {

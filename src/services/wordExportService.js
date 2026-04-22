@@ -70,6 +70,14 @@ function buildWordNotes(curatedEntry) {
 }
 
 function summarizeCoverageRole(entry, jlptWordLevelContract) {
+    const explicitRole = String(entry?.curatedEntry?.coverage?.role || "").trim().toLowerCase();
+    if (explicitRole === "both" || explicitRole === "core") {
+        return "JLPT core + reading coverage";
+    }
+    if (explicitRole === "support") {
+        return "Reading coverage support";
+    }
+
     const classification = classifyWordDeckEntry({
         candidate: entry?.candidate,
         curatedEntry: entry?.curatedEntry,
@@ -216,6 +224,22 @@ function getCandidateLevel({ candidate, curatedEntry, jlptOnlyJson, jlptWordLeve
     });
 }
 
+function getTrustedCandidateLevel({ candidate, curatedEntry, jlptWordLevelContract }) {
+    const canonicalLevel = getCanonicalWordLevel({
+        candidate: curatedEntry || candidate,
+        jlptWordLevelContract,
+    });
+    if (Number.isInteger(canonicalLevel)) {
+        return canonicalLevel;
+    }
+
+    if (Number.isInteger(curatedEntry?.jlpt)) {
+        return curatedEntry.jlpt;
+    }
+
+    return null;
+}
+
 function hasCuratedWrittenVariant(candidate, wordStudyIndexes) {
     const written = String(candidate?.written || "").trim();
     return (wordStudyIndexes.entriesByWritten.get(written) || []).length > 0;
@@ -360,6 +384,70 @@ function orderFocusKanjiForWord(candidate = {}, sourceKanji = new Set()) {
     }
 
     return ordered;
+}
+
+function buildExplicitCoverageReadings(entry = {}, focusKanji = []) {
+    const explicitReadings = entry?.curatedEntry?.coverage?.coversReadings || {};
+    if (!explicitReadings || Object.keys(explicitReadings).length === 0) {
+        return "";
+    }
+
+    return focusKanji
+        .map((kanji) => {
+            const reading = String(explicitReadings?.[kanji] || "").trim();
+            return reading ? `${kanji}: ${reading}` : "";
+        })
+        .filter(Boolean)
+        .join(" ／ ");
+}
+
+function resolveCoverageMetadata({ entry, kanjiInferenceCache, curatedStudyData }) {
+    const explicitFocusKanji = Array.isArray(entry?.curatedEntry?.coverage?.focusKanji)
+        ? entry.curatedEntry.coverage.focusKanji
+        : null;
+    const focusKanji = explicitFocusKanji && explicitFocusKanji.length > 0
+        ? orderFocusKanjiForWord(
+            { written: entry?.candidate?.written || "" },
+            new Set(explicitFocusKanji),
+        )
+        : orderFocusKanjiForWord(entry?.candidate, entry?.sourceKanji);
+
+    const explicitCoversReading = buildExplicitCoverageReadings(entry, focusKanji);
+    if (explicitCoversReading) {
+        return {
+            focusKanji,
+            coversReading: explicitCoversReading,
+        };
+    }
+
+    const coversReading = focusKanji
+        .map((kanji) => {
+            const inference = kanjiInferenceCache.get(kanji);
+            if (!inference) {
+                return "";
+            }
+
+            const breakdown = buildBreakdownInference({
+                kanji,
+                inference,
+                curatedEntry: curatedStudyData?.[kanji] || null,
+                contextWord: entry.candidate.written,
+                contextCandidate: {
+                    written: entry.candidate.written,
+                    reading: entry.curatedEntry?.reading || entry.candidate.pron,
+                    meaning: entry.curatedEntry?.meaning || entry.candidate.gloss,
+                },
+            });
+            const reading = extractPrimaryCoverageReading(breakdown);
+            return reading ? `${kanji}: ${reading}` : kanji;
+        })
+        .filter(Boolean)
+        .join(" ／ ");
+
+    return {
+        focusKanji,
+        coversReading,
+    };
 }
 
 function pickPreferredCandidate(existingCandidate, incomingCandidate, sentenceCorpus) {
@@ -802,46 +890,32 @@ function createWordExportService({
                 })
                 .filter(Boolean)
                 .join("");
-            const focusKanji = orderFocusKanjiForWord(entry.candidate, entry.sourceKanji);
-            const coversReading = focusKanji
-                .map((kanji) => {
-                    const inference = kanjiInferenceCache.get(kanji);
-                    if (!inference) {
-                        return "";
-                    }
-
-                    const breakdown = buildBreakdownInference({
-                        kanji,
-                        inference,
-                        curatedEntry: curatedStudyData?.[kanji] || null,
-                        contextWord: entry.candidate.written,
-                        contextCandidate: {
-                            written: entry.candidate.written,
-                            reading: entry.curatedEntry?.reading || entry.candidate.pron,
-                            meaning: entry.curatedEntry?.meaning || entry.candidate.gloss,
-                        },
-                    });
-                    const reading = extractPrimaryCoverageReading(breakdown);
-                    return reading ? `${kanji}: ${reading}` : kanji;
-                })
-                .filter(Boolean)
-                .join(" ／ ");
+            const coverageMetadata = resolveCoverageMetadata({
+                entry,
+                kanjiInferenceCache,
+                curatedStudyData,
+            });
             const exampleSentence = formatExampleSentence(selectWordSentence({
                 candidate: entry.candidate,
                 curatedEntry: entry.curatedEntry,
-                sourceKanji: focusKanji[0] || "",
+                sourceKanji: coverageMetadata.focusKanji[0] || "",
                 constituentKanji,
                 sentenceCorpus,
             }));
+            const trustedLevel = getTrustedCandidateLevel({
+                candidate: entry.candidate,
+                curatedEntry: entry.curatedEntry,
+                jlptWordLevelContract,
+            });
 
             rows.push([
                 entry.candidate.written,
                 entry.curatedEntry?.reading || entry.candidate.pron,
                 entry.curatedEntry?.meaning || entry.candidate.gloss,
-                buildJlptLabel(entry.level),
+                buildJlptLabel(trustedLevel),
                 summarizeCoverageRole(entry, jlptWordLevelContract),
-                focusKanji.join("、"),
-                coversReading,
+                coverageMetadata.focusKanji.join("、"),
+                coverageMetadata.coversReading,
                 breakdownHtml,
                 exampleSentence,
                 buildWordNotes(entry.curatedEntry),
@@ -875,6 +949,7 @@ function createWordExportService({
         buildWordKey,
         buildWordNotes,
         inferWordLevel,
+        getTrustedCandidateLevel,
         extractConstituentKanji,
         pickPreferredCandidate,
         selectWordSentence,
@@ -897,12 +972,14 @@ module.exports = {
     defaultWordExportService,
     extractConstituentKanji,
     getCanonicalWordLevel,
+    getTrustedCandidateLevel,
     hasExcludedWordCardTag,
     inferWordLevel,
     isLikelyPhraseCard,
     isAllowedByCuratedWords,
     extractPrimaryCoverageReading,
     orderFocusKanjiForWord,
+    resolveCoverageMetadata,
     normalizeBreakdownReadingField,
     pickBestExactSingleCandidate,
     pickPreferredCandidate,

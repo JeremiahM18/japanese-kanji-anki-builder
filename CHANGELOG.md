@@ -12,12 +12,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Checked-in branch protection and release process documentation treated as repository contracts.
 - Added a `curated:init -- --refresh-starter` workflow for refreshing stale starter-derived local curated kanji entries without overwriting non-starter local edits.
 - Added a tracked `jlpt_word_level_contract.json` plus `data:audit:jlpt:words` so learner-facing word-card JLPT labels can prefer canonical word-level truth where the repo has it, instead of relying only on constituent-kanji heuristics.
+- Added an explicit `coverage` contract to starter word entries so key N5 study words can track `role`, `focusKanji`, and `coversReadings` directly in data instead of relying only on runtime derivation.
 
 ### Changed
 
 - Upgraded the learner-facing word-card surface so word decks now expose `CoverageRole`, `FocusKanji`, and `CoversReading`, making it clear whether a card is core JLPT vocabulary, reading-coverage support, or both.
+- Tightened word-deck JLPT trust so inferred exploratory rows no longer receive learner-facing JLPT labels by default; exported labels now come only from the canonical word-level contract or an explicit curated JLPT tag.
 - Tightened compound breakdown rendering on word cards so learner-facing study focus follows the written kanji order and context-specific reading forms such as `時 （じ）`, `学 （がく）`, `車 （くるま）`, `休 （やすみ）`, and `間 （かん）` survive into the exported card instead of weaker bare defaults.
 - Tightened the word reading coverage audit so it now trusts exported `FocusKanji` and `CoversReading` metadata before falling back to whole-word heuristics, and it reports how much coverage is coming from JLPT-core words versus support words instead of flattening everything into one bucket.
+- Expanded the word-deck completion reporting so `deck:words:ready` and `data:audit:jlpt:words` now surface tracked starter governance coverage, explicit reading-coverage contract coverage, and canonical inventory counts before we claim N5 is complete.
+- Strengthened `.apkg` smoke verification so CI now checks collection table presence, Anki collection version, deck names, note field counts, and media manifest size instead of only checking zip presence and raw note count.
 - Started the first governed N4 word batch in the tracked starter word pack and canonical word-level contract with `安心`, `急ぐ`, `海岸`, `世界`, `花見`, and `開く`, so N4 word governance is now real rather than still being reported as zero.
 - Expanded the JLPT word audit and word-deck build summary so they now report canonical starter coverage, curated-only starter rows, phrase-tagged starter exclusions, and shipped row governance splits (`canonicalRows`, `curatedOnlyRows`, `inferredOnlyRows`) instead of only reporting raw starter-versus-contract drift.
 - Tightened kanji inference so uncurated cards fall back to the bare kanji when the top ranked compound does not match the chosen English meaning, and kept curated `preferredWords` entries free to preserve intentional compound study hooks without letting `PrimaryReading` drift onto a different display form.

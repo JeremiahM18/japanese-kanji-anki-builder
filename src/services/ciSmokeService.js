@@ -11,6 +11,7 @@ const { resolvePythonCommand } = require("./toolchainService");
 const { createWordExportService } = require("./wordExportService");
 const { runBuildPipeline } = require("./buildPipeline");
 const { ensureDir } = require("../utils/fs");
+const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 
 function writeJson(filePath, value) {
     ensureDir(path.dirname(filePath));
@@ -298,9 +299,10 @@ function assertPathExists(filePath) {
     assert.equal(fs.existsSync(filePath), true, `Expected path to exist: ${filePath}`);
 }
 
-function verifyAnkiPackage(summary) {
+function verifyAnkiPackage(summary, { deckKind = "kanji", levels = [] } = {}) {
     const apkgPath = summary?.package?.ankiPackage?.filePath;
     const noteCount = summary?.package?.ankiPackage?.noteCount || 0;
+    const mediaFileCount = summary?.package?.ankiPackage?.mediaFileCount || 0;
     if (!apkgPath) {
         assert.equal(summary?.package?.ankiPackage?.skipped, true);
         return {
@@ -321,26 +323,51 @@ function verifyAnkiPackage(summary) {
     }
 
     assertPathExists(apkgPath);
+    const expectedDeckNames = (Array.isArray(levels) ? levels : []).map((level) => (
+        deckKind === "word"
+            ? `Japanese Kanji Builder::Word Deck::JLPT N${level}`
+            : `Japanese Kanji Builder::JLPT N${level}`
+    ));
+    const expectedFieldCount = loadAnkiNoteSchema(deckKind).fieldNames.length;
     const inspectScript = [
-        "import sqlite3, sys, tempfile, zipfile",
+        "import json, sqlite3, sys, tempfile, zipfile",
         "apkg_path = sys.argv[1]",
         "expected_notes = int(sys.argv[2])",
+        "expected_field_count = int(sys.argv[3])",
+        "expected_media_count = int(sys.argv[4])",
+        "expected_decks = set(json.loads(sys.argv[5]))",
         "with tempfile.TemporaryDirectory() as temp_dir:",
         "    with zipfile.ZipFile(apkg_path, 'r') as archive:",
         "        names = set(archive.namelist())",
         "        assert 'collection.anki2' in names",
         "        assert 'media' in names",
+        "        media_map = json.loads(archive.read('media').decode('utf-8'))",
+        "        assert len(media_map) == expected_media_count, f'media count mismatch: {len(media_map)} != {expected_media_count}'",
         "        archive.extract('collection.anki2', temp_dir)",
         "    conn = sqlite3.connect(f'{temp_dir}/collection.anki2')",
         "    try:",
+        "        tables = {row[0] for row in conn.execute(\"SELECT name FROM sqlite_master WHERE type='table'\")}",
+        "        required_tables = {'col', 'notes', 'cards', 'revlog', 'graves'}",
+        "        assert required_tables.issubset(tables), f'missing tables: {sorted(required_tables - tables)}'",
+        "        col = conn.execute('SELECT ver, models, decks FROM col LIMIT 1;').fetchone()",
+        "        assert col is not None, 'missing collection metadata row'",
+        "        assert col[0] == 11, f'unexpected Anki collection version: {col[0]}'",
+        "        decks = json.loads(col[2])",
+        "        actual_decks = {value.get('name') for value in decks.values()}",
+        "        assert expected_decks.issubset(actual_decks), f'deck names missing: {sorted(expected_decks - actual_decks)}'",
         "        note_count = conn.execute('SELECT count(*) FROM notes;').fetchone()[0]",
+        "        first_note = conn.execute('SELECT flds FROM notes ORDER BY id LIMIT 1;').fetchone()",
+        "        if expected_notes > 0:",
+        "            assert first_note is not None, 'expected notes but collection is empty'",
+        "            actual_field_count = len(first_note[0].split('\\x1f'))",
+        "            assert actual_field_count == expected_field_count, f'field count mismatch: {actual_field_count} != {expected_field_count}'",
         "    finally:",
         "        conn.close()",
         "    assert note_count == expected_notes, f'note count mismatch: {note_count} != {expected_notes}'",
     ].join("\n");
     const inspectResult = spawnSync(
         python.command,
-        [...python.argsPrefix, "-c", inspectScript, apkgPath, String(noteCount)],
+        [...python.argsPrefix, "-c", inspectScript, apkgPath, String(noteCount), String(expectedFieldCount), String(mediaFileCount), JSON.stringify(expectedDeckNames)],
         { encoding: "utf8" }
     );
     assert.equal(inspectResult.status, 0, inspectResult.stderr || inspectResult.stdout || "Python .apkg inspection failed");
@@ -438,8 +465,8 @@ async function runCiSmoke({
                 nextSteps: doctorReport.nextSteps,
             },
             packageVerification: {
-                kanji: verifyAnkiPackage(kanjiSummary),
-                word: verifyAnkiPackage({ package: wordPackage }),
+                kanji: verifyAnkiPackage(kanjiSummary, { deckKind: "kanji", levels: [5] }),
+                word: verifyAnkiPackage({ package: wordPackage }, { deckKind: "word", levels: [5] }),
             },
         };
     } finally {

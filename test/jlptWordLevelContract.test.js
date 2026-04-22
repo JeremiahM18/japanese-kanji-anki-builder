@@ -122,3 +122,30 @@ test("buildStarterWordGovernanceSummary distinguishes canonical starter entries 
     assert.equal(summary.coverageByLevel[5], 100);
     assert.equal(summary.coverageByLevel[4], 0);
 });
+
+test("auditWordStudyEntriesAgainstContract includes reading-coverage contract tracking summary", () => {
+    const audit = auditWordStudyEntriesAgainstContract({
+        "今日|きょう": {
+            written: "今日",
+            reading: "きょう",
+            jlpt: 5,
+            coverage: {
+                role: "both",
+                focusKanji: ["今", "日"],
+                coversReadings: {
+                    今: "いま",
+                    日: "ひ",
+                },
+            },
+        },
+    }, {
+        inventoryCounts: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 1 },
+        wordLevels: {
+            "今日|きょう": { written: "今日", reading: "きょう", jlpt: 5 },
+        },
+    });
+
+    assert.equal(audit.readingCoverageContract.totalExplicitCoverageEntries, 1);
+    assert.equal(audit.readingCoverageContract.totalExplicitReadingTargets, 2);
+    assert.equal(audit.readingCoverageContract.explicitCoveragePercentByLevel[5], 100);
+});

@@ -1260,12 +1260,38 @@
         }
       },
       "notes": "Reading-coverage support word for the common 山 -> さん pattern.",
-      "exampleSentence": {
-        "japanese": "その島には大きい火山があります。",
-        "reading": "そのしまにはおおきいかざんがあります。",
-        "english": "There is a large volcano on that island."
+    "exampleSentence": {
+      "japanese": "その島には大きい火山があります。",
+      "reading": "そのしまにはおおきいかざんがあります。",
+      "english": "There is a large volcano on that island."
+    }
+  },
+  "火照る|ほてる": {
+    "written": "火照る",
+    "reading": "ほてる",
+    "meaning": "to feel hot / to flush",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "火"
+      ],
+      "coversReadings": {
+        "火": "ほ"
       }
     },
+    "notes": "Reading-coverage support word for the 火 -> ほ pattern.",
+    "exampleSentence": {
+      "japanese": "走った後で顔が火照っています。",
+      "reading": "はしったあとでかおがほてっています。",
+      "english": "My face feels hot after running."
+    }
+  },
   "外す|はずす": {
     "written": "外す",
     "reading": "はずす",
@@ -2391,6 +2417,32 @@
       "japanese": "その船の行方が気になります。",
       "reading": "そのふねのゆくえがきになります。",
       "english": "I'm curious about where that ship is headed."
+    }
+  },
+  "断食|だんじき": {
+    "written": "断食",
+    "reading": "だんじき",
+    "meaning": "fasting",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "食"
+      ],
+      "coversReadings": {
+        "食": "じき"
+      }
+    },
+    "notes": "Reading-coverage support word for the 食 -> じき pattern.",
+    "exampleSentence": {
+      "japanese": "今日は健康のために断食をしています。",
+      "reading": "きょうはけんこうのためにだんじきをしています。",
+      "english": "Today I am fasting for my health."
     }
   },
   "行う|おこなう": {
@@ -3846,6 +3898,32 @@
       "english": "Fish live in the water."
     }
   },
+  "生かす|いかす": {
+    "written": "生かす",
+    "reading": "いかす",
+    "meaning": "to make use of / to keep alive",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "生"
+      ],
+      "coversReadings": {
+        "生": "いかす"
+      }
+    },
+    "notes": "Reading-coverage support word for the 生 -> いかす pattern.",
+    "exampleSentence": {
+      "japanese": "経験を仕事に生かしたいです。",
+      "reading": "けいけんをしごとにいかしたいです。",
+      "english": "I want to make use of my experience in my work."
+    }
+  },
   "生地|きじ": {
     "written": "生地",
     "reading": "きじ",
@@ -4811,6 +4889,32 @@
       "japanese": "部屋の電気をつけます。",
       "reading": "へやのでんきをつけます。",
       "english": "I turn on the room light."
+    }
+  },
+  "眼鏡|めがね": {
+    "written": "眼鏡",
+    "reading": "めがね",
+    "meaning": "glasses / eyeglasses",
+    "jlpt": 5,
+    "tags": [
+      "starter",
+      "common",
+      "n5"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "金"
+      ],
+      "coversReadings": {
+        "金": "がね"
+      }
+    },
+    "notes": "Reading-coverage support word for the 金 -> がね pattern. The word uses higher-level kanji, which the card labels explicitly for learners.",
+    "exampleSentence": {
+      "japanese": "新しい眼鏡を買いました。",
+      "reading": "あたらしいめがねをかいました。",
+      "english": "I bought new glasses."
     }
   },
   "電車|でんしゃ": {

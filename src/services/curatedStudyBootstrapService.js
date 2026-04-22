@@ -1,8 +1,10 @@
 const fs = require("node:fs");
 
 const {
+    isStarterDerivedEntry,
     mergeCuratedStudyData,
     normalizeCuratedStudyData,
+    refreshStarterEntries,
     resolveTrackedStarterPaths,
 } = require("../datasets/curatedStudyData");
 
@@ -15,39 +17,6 @@ function readJsonObject(filePath) {
     }
 
     return parsed;
-}
-
-function isStarterDerivedEntry(entry) {
-    const source = String(entry?.source || "").trim().toLowerCase();
-    if (source === "starter-curated") {
-        return true;
-    }
-
-    return Array.isArray(entry?.tags) && entry.tags.some((tag) => String(tag || "").trim().toLowerCase() === "starter");
-}
-
-function refreshStarterEntries(starterEntries = {}, existingEntries = {}) {
-    const refreshed = {};
-    const keys = new Set([
-        ...Object.keys(existingEntries || {}),
-        ...Object.keys(starterEntries || {}),
-    ]);
-
-    for (const key of keys) {
-        const starterEntry = starterEntries?.[key];
-        const existingEntry = existingEntries?.[key];
-
-        if (starterEntry && (!existingEntry || isStarterDerivedEntry(existingEntry))) {
-            refreshed[key] = starterEntry;
-            continue;
-        }
-
-        if (existingEntry) {
-            refreshed[key] = existingEntry;
-        }
-    }
-
-    return refreshed;
 }
 
 function bootstrapCuratedStudyData({

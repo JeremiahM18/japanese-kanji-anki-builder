@@ -268,6 +268,39 @@ function mergeCuratedStudyData(starterEntries = {}, localEntries = {}) {
     return merged;
 }
 
+function isStarterDerivedEntry(entry) {
+    const source = String(entry?.source || "").trim().toLowerCase();
+    if (source === "starter-curated") {
+        return true;
+    }
+
+    return Array.isArray(entry?.tags) && entry.tags.some((tag) => String(tag || "").trim().toLowerCase() === "starter");
+}
+
+function refreshStarterEntries(starterEntries = {}, existingEntries = {}) {
+    const refreshed = {};
+    const keys = new Set([
+        ...Object.keys(existingEntries || {}),
+        ...Object.keys(starterEntries || {}),
+    ]);
+
+    for (const key of keys) {
+        const starterEntry = starterEntries?.[key];
+        const existingEntry = existingEntries?.[key];
+
+        if (starterEntry && (!existingEntry || isStarterDerivedEntry(existingEntry))) {
+            refreshed[key] = starterEntry;
+            continue;
+        }
+
+        if (existingEntry) {
+            refreshed[key] = existingEntry;
+        }
+    }
+
+    return refreshed;
+}
+
 function loadCuratedStudyData(
     curatedStudyDataPath,
     {
@@ -278,7 +311,8 @@ function loadCuratedStudyData(
     const starterEntries = resolveTrackedStarterPaths({ starterPath, starterPaths })
         .reduce((mergedEntries, entryPath) => mergeCuratedStudyData(mergedEntries, loadCuratedStudyDataFile(entryPath)), {});
     const localEntries = loadCuratedStudyDataFile(curatedStudyDataPath);
-    return normalizeCuratedStudyData(mergeCuratedStudyData(starterEntries, localEntries));
+    const refreshedLocalEntries = refreshStarterEntries(starterEntries, localEntries);
+    return normalizeCuratedStudyData(mergeCuratedStudyData(starterEntries, refreshedLocalEntries));
 }
 
 module.exports = {
@@ -289,6 +323,7 @@ module.exports = {
     curatedStudyDataSchema,
     loadCuratedStudyData,
     loadCuratedStudyDataFile,
+    isStarterDerivedEntry,
     mergeCuratedEntry,
     mergeCuratedStudyData,
     normalizeCuratedDisplayWord,
@@ -299,5 +334,6 @@ module.exports = {
     normalizeOrderedStringArray,
     normalizeStringArray,
     normalizeTags,
+    refreshStarterEntries,
     resolveTrackedStarterPaths,
 };

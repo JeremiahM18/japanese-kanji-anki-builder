@@ -5,11 +5,13 @@ const os = require("node:os");
 const path = require("node:path");
 
 const {
+    isStarterDerivedEntry,
     loadCuratedStudyData,
     mergeCuratedEntry,
     mergeCuratedStudyData,
     normalizeCuratedEntry,
     normalizeCuratedStudyData,
+    refreshStarterEntries,
     resolveTrackedStarterPaths,
 } = require("../src/datasets/curatedStudyData");
 
@@ -196,4 +198,83 @@ test("loadCuratedStudyData merges multiple tracked starter files before local ov
     assert.equal(result.日.englishMeaning, "day / sun");
     assert.equal(result.本.englishMeaning, "book / origin");
     assert.deepEqual(result.本.preferredWords, ["本屋"]);
+});
+
+test("loadCuratedStudyData refreshes stale starter-derived local entries while preserving real local overrides", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "curated-study-"));
+    const filePath = path.join(dir, "curated_study_data.json");
+    const starterPath = path.join(dir, "starter_curated_study_data.json");
+
+    fs.writeFileSync(starterPath, JSON.stringify({
+        強: {
+            englishMeaning: "strong / force",
+            displayWord: { written: "強い", pron: "つよい" },
+            source: "starter-curated",
+            tags: ["starter", "n4"],
+            notes: "強い （つよい） - strong",
+        },
+        日: {
+            englishMeaning: "day / sun",
+            displayWord: { written: "日", pron: "ひ" },
+            source: "starter-curated",
+            tags: ["starter", "n5"],
+            notes: "日本 （にほん） - Japan",
+        },
+    }), "utf-8");
+
+    fs.writeFileSync(filePath, JSON.stringify({
+        強: {
+            englishMeaning: "strong / force",
+            displayWord: { written: "強", pron: "きょう" },
+            source: "starter-curated",
+            tags: ["starter", "n4"],
+            notes: "勉強 （べんきょう） - study",
+        },
+        日: {
+            englishMeaning: "day / sun",
+            displayWord: { written: "日本", pron: "にほん" },
+            source: "manual-curated",
+            tags: ["curated"],
+            notes: "日本 （にほん） - Japan",
+        },
+    }), "utf-8");
+
+    const result = loadCuratedStudyData(filePath, { starterPath });
+
+    assert.deepEqual(result.強.displayWord, { written: "強い", pron: "つよい" });
+    assert.deepEqual(result.日.displayWord, { written: "日本", pron: "にほん" });
+});
+
+test("dataset helpers detect and refresh starter-derived entries", () => {
+    assert.equal(isStarterDerivedEntry({ source: "starter-curated" }), true);
+    assert.equal(isStarterDerivedEntry({ tags: ["starter", "n5"] }), true);
+    assert.equal(isStarterDerivedEntry({ source: "manual-curated", tags: ["curated"] }), false);
+
+    const refreshed = refreshStarterEntries(
+        {
+            五: {
+                englishMeaning: "five",
+                displayWord: { written: "五", pron: "ご" },
+                source: "starter-curated",
+                tags: ["starter", "n5"],
+            },
+        },
+        {
+            五: {
+                englishMeaning: "five",
+                displayWord: { written: "五つ", pron: "いつつ" },
+                source: "starter-curated",
+                tags: ["starter", "n5"],
+            },
+            日: {
+                englishMeaning: "sun / day",
+                displayWord: { written: "日本", pron: "にほん" },
+                source: "manual-curated",
+                tags: ["curated"],
+            },
+        }
+    );
+
+    assert.deepEqual(refreshed.五.displayWord, { written: "五", pron: "ご" });
+    assert.deepEqual(refreshed.日.displayWord, { written: "日本", pron: "にほん" });
 });

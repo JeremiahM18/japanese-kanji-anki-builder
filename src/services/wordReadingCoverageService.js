@@ -156,6 +156,30 @@ function readingMatchesExample(targetReading, exampleReading) {
     || (target.length >= 2 && example.includes(target));
 }
 
+function classifyGapKind(reading, coveredReadings = []) {
+  const target = normalizeReadingToken(reading);
+  if (!target) {
+    return 'distinct';
+  }
+
+  const normalizedCovered = [...new Set((Array.isArray(coveredReadings) ? coveredReadings : [])
+    .map((entry) => normalizeReadingToken(entry))
+    .filter(Boolean))];
+
+  if (normalizedCovered.some((covered) => covered === target)) {
+    return 'covered';
+  }
+
+  const isVariant = normalizedCovered.some((covered) => (
+    covered.startsWith(target)
+    || target.startsWith(covered)
+    || covered.endsWith(target)
+    || target.endsWith(covered)
+  ));
+
+  return isVariant ? 'variant' : 'distinct';
+}
+
 function buildWordDeckIndex(wordRows) {
   return wordRows.map((row) => ({
     written: String(row.Word || '').trim(),
@@ -233,6 +257,17 @@ function buildReadingCoverageForKanji(row, wordDeckIndex) {
 
   const onCoverage = onReadings.map(evaluateReading);
   const kunCoverage = kunReadings.map(evaluateReading);
+  const coveredReadings = [...onCoverage, ...kunCoverage]
+    .filter((entry) => entry.status === 'covered')
+    .map((entry) => entry.reading);
+
+  for (const entry of [...onCoverage, ...kunCoverage]) {
+    if (entry.status === 'covered') {
+      entry.gapKind = 'covered';
+      continue;
+    }
+    entry.gapKind = classifyGapKind(entry.reading, coveredReadings);
+  }
 
   return {
     kanji,
@@ -270,6 +305,8 @@ function buildWordReadingCoverageReport({ kanjiRows, wordRows, levelLabel = 'N5'
     ...sourceSummary,
     missingWordCardReadings: allReadings.filter((entry) => entry.status === 'missing_word_card').length,
     missingExampleReadings: allReadings.filter((entry) => entry.status === 'missing_example').length,
+    variantGapReadings: allReadings.filter((entry) => entry.status !== 'covered' && entry.gapKind === 'variant').length,
+    distinctGapReadings: allReadings.filter((entry) => entry.status !== 'covered' && entry.gapKind === 'distinct').length,
   };
 
   return {
@@ -289,7 +326,10 @@ function formatCoverageBucket(label, entries) {
     const sourceSuffix = entry.status === 'covered' && entry.coverageSource !== 'none'
       ? `:${entry.coverageSource}`
       : '';
-    return `${entry.reading} [${entry.status}${sourceSuffix}]${examples ? ` -> ${examples}` : ''}`;
+    const gapSuffix = entry.status !== 'covered' && entry.gapKind && entry.gapKind !== 'covered'
+      ? `:${entry.gapKind}`
+      : '';
+    return `${entry.reading} [${entry.status}${sourceSuffix}${gapSuffix}]${examples ? ` -> ${examples}` : ''}`;
   }).join(' | ');
 }
 
@@ -305,14 +345,18 @@ function formatWordReadingCoverageReport(report, { maxKanji = 50 } = {}) {
   lines.push(`  - Covered by inferred support words: ${report.summary.inferredCoveredReadings}`);
   lines.push(`Curated example exists but missing from word deck: ${report.summary.missingWordCardReadings}`);
   lines.push(`No curated example yet: ${report.summary.missingExampleReadings}`);
+  lines.push(`  - Distinct missing reading targets: ${report.summary.distinctGapReadings}`);
+  lines.push(`  - Variant-style gaps to review later: ${report.summary.variantGapReadings}`);
   lines.push('');
 
   const focus = report.kanji
     .filter((entry) => [...entry.onCoverage, ...entry.kunCoverage].some((reading) => reading.status !== 'covered'))
     .sort((a, b) => {
-      const aMissing = [...a.onCoverage, ...a.kunCoverage].filter((reading) => reading.status !== 'covered').length;
-      const bMissing = [...b.onCoverage, ...b.kunCoverage].filter((reading) => reading.status !== 'covered').length;
-      return bMissing - aMissing || a.kanji.localeCompare(b.kanji, 'ja');
+      const aMissing = [...a.onCoverage, ...a.kunCoverage].filter((reading) => reading.status !== 'covered');
+      const bMissing = [...b.onCoverage, ...b.kunCoverage].filter((reading) => reading.status !== 'covered');
+      const aDistinct = aMissing.filter((reading) => reading.gapKind === 'distinct').length;
+      const bDistinct = bMissing.filter((reading) => reading.gapKind === 'distinct').length;
+      return bDistinct - aDistinct || bMissing.length - aMissing.length || a.kanji.localeCompare(b.kanji, 'ja');
     })
     .slice(0, maxKanji);
 
@@ -334,6 +378,7 @@ function formatWordReadingCoverageReport(report, { maxKanji = 50 } = {}) {
 
 module.exports = {
   buildCuratedExamplesForKanji,
+  classifyGapKind,
   buildCoverageSourceSummary,
   buildReadingCoverageForKanji,
   buildWordDeckIndex,

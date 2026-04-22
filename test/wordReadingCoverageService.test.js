@@ -1,6 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const {
+  classifyGapKind,
   buildCoverageSourceSummary,
   buildWordReadingCoverageReport,
   normalizeReadingToken,
@@ -16,6 +17,11 @@ const {
 test('normalizeReadingToken normalizes katakana and dictionary punctuation', () => {
   assert.equal(normalizeReadingToken('オン: ショウ'), 'しょう');
   assert.equal(normalizeReadingToken('くん: -あ.がる'), 'あがる');
+});
+
+test('classifyGapKind distinguishes distinct missing readings from covered variants', () => {
+  assert.equal(classifyGapKind('たか', ['たかい']), 'variant');
+  assert.equal(classifyGapKind('しょう', ['じょう', 'うえ']), 'distinct');
 });
 
 test('parseDelimitedReadingField splits on and kun readings cleanly', () => {
@@ -116,10 +122,14 @@ test('buildWordReadingCoverageReport prefers explicit word-card reading coverage
   assert.equal(report.summary.coreCoveredReadings, 2);
   assert.equal(report.summary.missingWordCardReadings, 0);
   assert.equal(report.summary.missingExampleReadings, 3);
+  assert.equal(report.summary.distinctGapReadings, 3);
+  assert.equal(report.summary.variantGapReadings, 0);
   assert.equal(report.kanji[0].kunCoverage[0].status, 'covered');
   assert.equal(report.kanji[0].kunCoverage[0].coverageSource, 'core');
   assert.equal(report.kanji[1].kunCoverage[0].status, 'covered');
   assert.equal(report.kanji[1].kunCoverage[0].coverageSource, 'core');
+  assert.equal(report.kanji[0].onCoverage[0].gapKind, 'distinct');
+  assert.equal(report.kanji[0].onCoverage[1].gapKind, 'distinct');
 });
 
 test('buildCoverageSourceSummary counts covered readings by learner-facing role', () => {

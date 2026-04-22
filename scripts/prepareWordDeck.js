@@ -89,6 +89,7 @@ function formatWordDeckReadyReport(summary, doctorReport) {
     const readingCoverageLines = summary.completion.readingCoverageAuditByLevel
         ? summary.levels.flatMap((level) => {
             const audit = summary.completion.readingCoverageAuditByLevel[`N${level}`];
+            const triage = summary.completion.readingGapTriageByLevel?.[`N${level}`];
             if (!audit) {
                 return [];
             }
@@ -100,6 +101,9 @@ function formatWordDeckReadyReport(summary, doctorReport) {
             return [
                 `- N${level} reading coverage: ${coveredPercent}% (${audit.coveredReadings}/${audit.totalReadings})`,
                 `  distinct missing targets: ${audit.distinctGapReadings}, variant-style gaps: ${audit.variantGapReadings}`,
+                ...(triage
+                    ? [`  triage backlog: ${triage.editorialReviewItems} editorial review, ${triage.promoteCuratedExampleItems} promote curated example, ${triage.deferVariantItems} defer variant`]
+                    : []),
             ];
         })
         : [];
@@ -194,6 +198,7 @@ async function main() {
 
     const exports = [];
     const readingCoverageAuditByLevel = {};
+    const readingGapTriageByLevel = {};
     for (const level of levels) {
         const result = await wordExportService.buildWordTsvForJlptLevel({
             levelNumber: level,
@@ -221,6 +226,7 @@ async function main() {
                 wordTsv: result.tsv,
             });
             readingCoverageAuditByLevel[`N${level}`] = completionReport.readingCoverage;
+            readingGapTriageByLevel[`N${level}`] = completionReport.triage;
         }
 
         exports.push({
@@ -260,6 +266,7 @@ async function main() {
             starterGovernance,
             readingCoverageContract,
             readingCoverageAuditByLevel,
+            readingGapTriageByLevel,
             trueAnimationCoverage: {
                 coveredKanji: deckPackage.mediaCounts.trueStrokeOrderAnimation,
                 totalKanji: [...new Set(exports.flatMap((artifact) => artifact.mediaKanji || []))].length,

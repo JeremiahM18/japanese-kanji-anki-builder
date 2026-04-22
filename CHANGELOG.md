@@ -39,6 +39,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Changed
 
 - Expanded the learner-facing N5 golden word review to cover risky support-word cards such as `眼鏡`, `断食`, `西瓜`, `火照る`, `生かす`, and `生ビール`, so cross-level and outside-contract breakdowns are now protected by review expectations instead of only by schema/data tests.
+- Expanded `deck:words:ready` so the main N5 word build summary now surfaces the triage backlog alongside reading coverage, making the final `39` editorial-review gaps and `16` deferred variants visible in the same readiness surface as vocabulary completion and animation coverage.
 - Upgraded learner-facing word-card breakdowns so each constituent kanji now renders its stroke-order animation directly on the card and shows an explicit constituent-level badge like `JLPT N4 kanji` or `Outside JLPT contract` whenever that kanji sits outside the deck's current level.
 - Tightened `deck:words:ready` so the word-deck readiness report now surfaces true looping animation coverage explicitly and the script exits non-zero if any kanji referenced by the built word deck lacks a true looping animation asset.
 - Reclassified `赤い花` and `白い花` as phrase-tagged starter entries so the default N5 word deck contract treats them consistently with other compositional adjective+noun phrases instead of counting them as accidental missing vocab rows.

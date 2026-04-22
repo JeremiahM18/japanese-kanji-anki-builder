@@ -1,4 +1,9 @@
-const { buildWordReadingCoverageReport, parseKanjiTsv, parseWordTsv } = require("./wordReadingCoverageService");
+const {
+    buildWordReadingCoverageReport,
+    buildWordReadingGapTriage,
+    parseKanjiTsv,
+    parseWordTsv,
+} = require("./wordReadingCoverageService");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 
 function hasPhraseTag(entry) {
@@ -83,11 +88,13 @@ function buildWordDeckCompletionReport({
         wordRows,
         levelLabel: `N${level}`,
     });
+    const triage = buildWordReadingGapTriage(readingCoverage);
 
     return {
         level,
         inventory,
         readingCoverage: readingCoverage.summary,
+        triage: triage.summary,
     };
 }
 

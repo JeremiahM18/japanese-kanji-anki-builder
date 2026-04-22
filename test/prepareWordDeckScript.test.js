@@ -34,6 +34,13 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
                     variantGapReadings: 16,
                 },
             },
+            readingGapTriageByLevel: {
+                N5: {
+                    editorialReviewItems: 147,
+                    promoteCuratedExampleItems: 0,
+                    deferVariantItems: 16,
+                },
+            },
             trueAnimationCoverage: {
                 coveredKanji: 166,
                 totalKanji: 166,
@@ -64,6 +71,7 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
     assert.match(text, /N5 starter governance: 100% \(258\/258\)/);
     assert.match(text, /N5 reading coverage: 52\.6% \(181\/344\)/);
     assert.match(text, /distinct missing targets: 147, variant-style gaps: 16/);
+    assert.match(text, /triage backlog: 147 editorial review, 0 promote curated example, 16 defer variant/);
     assert.match(text, /True looping animation coverage: 100% \(166\/166\)/);
     assert.match(text, /True looping animation assets: 165/);
     assert.match(text, /Canonical inventory counts: N5=271, N4=6/);

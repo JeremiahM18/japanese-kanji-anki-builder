@@ -577,7 +577,7 @@ test("buildBreakdownInference suppresses katakana-only exact-match primaries", (
     assert.equal(result.meaningJP, "二 ／ two");
 });
 
-test("starter curated data provides learner-friendly N5 breakdown fallbacks", () => {
+test("starter curated data provides learner-friendly kanji breakdown fallbacks", () => {
     const curatedStudyData = loadCuratedStudyData();
 
     assert.deepEqual(curatedStudyData["中"].displayWord, { written: "中", pron: "なか" });
@@ -607,7 +607,7 @@ test("starter curated data provides learner-friendly N5 breakdown fallbacks", ()
     assert.deepEqual(curatedStudyData["社"].displayWord, { written: "社", pron: "しゃ" });
     assert.deepEqual(curatedStudyData["銀"].displayWord, { written: "銀行", pron: "ぎんこう" });
     assert.deepEqual(curatedStudyData["銀"].breakdownDisplayWord, { written: "銀", pron: "ぎん" });
-    assert.deepEqual(curatedStudyData["強"].displayWord, { written: "強", pron: "きょう" });
+    assert.deepEqual(curatedStudyData["強"].displayWord, { written: "強い", pron: "つよい" });
     assert.deepEqual(curatedStudyData["題"].displayWord, { written: "題", pron: "だい" });
     assert.deepEqual(curatedStudyData["忙"].displayWord, { written: "忙しい", pron: "いそがしい" });
     assert.deepEqual(curatedStudyData["行"].breakdownDisplayWord, { written: "行", pron: "こう" });

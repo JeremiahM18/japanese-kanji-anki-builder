@@ -90,6 +90,7 @@ Curated word study entries define exact study targets for the word deck.
 Key rule:
 
 - word identity is `written|reading`
+- use the `phrase` tag for curated entries that are useful as examples or references but should stay out of the default JLPT word deck, such as compositional phrases built from easier words
 
 That lets the deck intentionally keep `今日|きょう` while excluding `今日|こんにち` unless you explicitly curate both.
 

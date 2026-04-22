@@ -4,7 +4,9 @@ function normalizeText(value) {
 
 function normalizeForCompare(value) {
     return normalizeText(value)
+        .replace(/<[^>]+>/g, " ")
         .replace(/:\s+/g, ":")
+        .replace(/\s+/g, " ")
         .toLowerCase();
 }
 

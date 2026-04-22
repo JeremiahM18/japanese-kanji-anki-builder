@@ -133,7 +133,7 @@ test("evaluateGoldenWordReviewSet ignores spacing after reading labels in breakd
                 word: "休み",
                 reading: "やすみ",
                 meaning: "holiday / day off",
-                kanjiBreakdown: "休み （やすみ） ／ holiday / day off ... On: オン: キュウ",
+                kanjiBreakdown: "休み （やすみ） ／ holiday / day off ... <span class=\"kanji-reading-label\">On:</span> キュウ",
                 exampleSentence: "日曜日は休みです。",
                 notes: "",
             },
@@ -141,7 +141,7 @@ test("evaluateGoldenWordReviewSet ignores spacing after reading labels in breakd
         expectations: [
             {
                 word: "休み",
-                breakdownIncludes: ["休み （やすみ）", "オン:キュウ"],
+                breakdownIncludes: ["休み （やすみ）", "On:キュウ"],
             },
         ],
     });

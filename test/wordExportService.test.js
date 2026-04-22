@@ -3,7 +3,14 @@ const assert = require("node:assert/strict");
 
 const { loadAnkiNoteSchema } = require("../src/config/ankiNoteSchema");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
-const { buildBreakdownInference, createWordExportService, inferWordLevel } = require("../src/services/wordExportService");
+const {
+    buildBreakdownInference,
+    createWordExportService,
+    hasExcludedWordCardTag,
+    inferWordLevel,
+    isLikelyPhraseCard,
+    normalizeBreakdownReadingField,
+} = require("../src/services/wordExportService");
 
 test("buildWordTsvForJlptLevel ignores repetition marks in kanji breakdowns", async () => {
     const wordExportService = createWordExportService({
@@ -83,6 +90,24 @@ test("inferWordLevel uses the hardest constituent JLPT kanji", () => {
     }), 4);
 });
 
+test("hasExcludedWordCardTag detects curated phrase exclusions", () => {
+    assert.equal(hasExcludedWordCardTag({ tags: ["starter", "phrase", "n5"] }), true);
+    assert.equal(hasExcludedWordCardTag({ tags: ["starter", "common", "n5"] }), false);
+});
+
+test("isLikelyPhraseCard detects compositional phrase shapes that should stay out of the default word deck", () => {
+    assert.equal(isLikelyPhraseCard({ written: "高い山" }), true);
+    assert.equal(isLikelyPhraseCard({ written: "川の近く" }), true);
+    assert.equal(isLikelyPhraseCard({ written: "兄の部屋" }), true);
+    assert.equal(isLikelyPhraseCard({ written: "学校" }), false);
+    assert.equal(isLikelyPhraseCard({ written: "病院" }), false);
+});
+
+test("normalizeBreakdownReadingField strips internal reading prefixes for learner-facing output", () => {
+    assert.equal(normalizeBreakdownReadingField("オン: キュウ", /^(on|オン)\s*:\s*/i), "キュウ");
+    assert.equal(normalizeBreakdownReadingField("くん: やす.む", /^(kun|くん)\s*:\s*/i), "やす.む");
+});
+
 test("buildBreakdownInference prefers curated display words for learner-facing kanji panels", () => {
     const result = buildBreakdownInference({
         kanji: "大",
@@ -102,6 +127,8 @@ test("buildBreakdownInference prefers curated display words for learner-facing k
 
     assert.equal(result.primaryReading, "おおきい");
     assert.equal(result.meaningJP, "大きい （おおきい） ／ big / large");
+    assert.equal(result.onReading, "タイ、 ダイ");
+    assert.equal(result.kunReading, "-おお.いに、 おお-、 おお.きい");
 });
 
 test("buildBreakdownInference can use breakdown-only overrides for compound contexts", () => {
@@ -586,5 +613,83 @@ test("buildWordTsvForJlptLevel prefers curated N5 word entries and suppresses un
     assert.match(result.tsv, /Irregular reading\./);
     assert.match(result.tsv, /今日は図書館へ行きます/);
     assert.match(result.tsv, /kanji-breakdown-item/);
+});
+
+test("buildWordTsvForJlptLevel excludes curated phrase-tagged entries from the default word deck", async () => {
+    const wordExportService = createWordExportService({
+        sentenceCorpus: [],
+        wordStudyData: {
+            "高い山|たかいやま": {
+                written: "高い山",
+                reading: "たかいやま",
+                meaning: "high mountain",
+                jlpt: 5,
+                tags: ["starter", "phrase", "n5"],
+            },
+            "山|やま": {
+                written: "山",
+                reading: "やま",
+                meaning: "mountain",
+                jlpt: 5,
+                tags: ["starter", "n5"],
+            },
+        },
+    });
+
+    const result = await wordExportService.buildWordTsvForJlptLevel({
+        levelNumber: 5,
+        jlptOnlyJson: { 山: { jlpt: 5 } },
+        kanjiApiClient: {
+            async getKanji() {
+                return { meanings: ["mountain"], on_readings: ["サン"], kun_readings: ["やま"] };
+            },
+            async getWords() {
+                return [];
+            },
+        },
+        concurrency: 1,
+    });
+
+    assert.match(result.tsv, /^山\tやま\tmountain\tJLPT N5\t/m);
+    assert.doesNotMatch(result.tsv, /^高い山\tたかいやま\thigh mountain\tJLPT N5\t/m);
+});
+
+test("buildWordTsvForJlptLevel excludes stale compositional phrase entries even without the phrase tag", async () => {
+    const wordExportService = createWordExportService({
+        sentenceCorpus: [],
+        wordStudyData: {
+            "高い山|たかいやま": {
+                written: "高い山",
+                reading: "たかいやま",
+                meaning: "high mountain",
+                jlpt: 5,
+                tags: ["starter", "n5"],
+            },
+            "高い|たかい": {
+                written: "高い",
+                reading: "たかい",
+                meaning: "high / expensive",
+                jlpt: 5,
+                tags: ["starter", "n5"],
+            },
+        },
+    });
+
+    const result = await wordExportService.buildWordTsvForJlptLevel({
+        levelNumber: 5,
+        jlptOnlyJson: { 高: { jlpt: 5 }, 山: { jlpt: 5 } },
+        kanjiApiClient: {
+            async getKanji() {
+                return { meanings: ["high"], on_readings: ["コウ"], kun_readings: ["たか.い"] };
+            },
+            async getWords() {
+                return [];
+            },
+        },
+        concurrency: 1,
+    });
+
+    assert.match(result.tsv, /^高い\tたかい\thigh \/ expensive\tJLPT N5\t/m);
+    assert.doesNotMatch(result.tsv, /^高い山\tたかいやま\thigh mountain\tJLPT N5\t/m);
 });
 

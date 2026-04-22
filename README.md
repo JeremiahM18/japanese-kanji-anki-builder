@@ -191,9 +191,10 @@ The word deck is a separate Anki note type focused on real study words such as `
 Important word-deck rules:
 
 - word identity is `written + reading`, and curated words tagged for a JLPT level are included even when their constituent kanji are outside that level's kanji slice
+- the default word deck now aims at lexical study words, not compositional example phrases; curated entries tagged `phrase` and obvious phrase shapes such as `高い山` or `兄の部屋` are excluded from normal word-deck output
 - curated word entries suppress uncurated alternate readings for the same written form
 - kanji breakdown panels on the back prefer curated kanji display words and meanings, and can use dedicated breakdown-only overrides for compound contexts so cards like `銀行`, `会社`, `会社員`, `昼ご飯`, `晩ご飯`, `午前`, `午後`, `時間`, `月曜日`, `学校`, `病院`, `郵便局`, `去年`, `来月`, `来週`, `夕方`, `元気`, and `仕事` stay learner-friendly without changing primary study forms such as `行く`
-- those breakdown panels now avoid leaking a full compound reading onto a single-kanji panel unless you intentionally curate that context, so compounds like `映画`, `銀行`, `郵便局`, `青い空`, and `夜空` stay readable instead of teaching the wrong sub-reading
+- those breakdown panels now avoid leaking a full compound reading onto a single-kanji panel unless you intentionally curate that context, and they normalize internal reading labels into learner-facing `On:` / `Kun:` lines instead of surfacing raw `オン:` / `くん:` notation
 - use `--include-inferred` when you explicitly want to expand beyond curated words during exploration
 
 ### Lower-level build

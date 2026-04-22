@@ -10,9 +10,31 @@ const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 
 const WORD_FIELD_NAMES = loadAnkiNoteSchema("word").fieldNames;
+const EXCLUDED_WORD_CARD_TAGS = new Set(["phrase"]);
+const PHRASE_ENDING_RE = /(の近く|の部屋|の友だち|の下)$/u;
+const ADJECTIVE_NOUN_PHRASE_RE = /\p{Script=Hiragana}*い[\p{Script=Han}々]+$/u;
 
 function extractConstituentKanji(text) {
     return [...new Set(Array.from(String(text ?? "")).filter((char) => HAN_CHAR_RE.test(char) && char !== "々"))];
+}
+
+function hasExcludedWordCardTag(entry) {
+    return (Array.isArray(entry?.tags) ? entry.tags : [])
+        .map((tag) => String(tag || "").trim().toLowerCase())
+        .some((tag) => EXCLUDED_WORD_CARD_TAGS.has(tag));
+}
+
+function isLikelyPhraseCard(candidate) {
+    const written = String(candidate?.written || "").trim();
+    if (!written) {
+        return false;
+    }
+
+    if (PHRASE_ENDING_RE.test(written)) {
+        return true;
+    }
+
+    return ADJECTIVE_NOUN_PHRASE_RE.test(written) && extractConstituentKanji(written).length >= 2;
 }
 
 function inferWordLevel({ written, jlptOnlyJson, fallbackLevel = null }) {
@@ -96,6 +118,10 @@ function buildWordStudyIndexes(wordStudyData = {}) {
     const entriesByKanji = new Map();
 
     for (const entry of Object.values(wordStudyData || {})) {
+        if (hasExcludedWordCardTag(entry)) {
+            continue;
+        }
+
         const key = buildWordStudyEntryKey(entry);
         exactEntries.set(key, entry);
 
@@ -191,6 +217,7 @@ function buildCandidatePool({
             jlptOnlyJson,
             fallbackLevel: levelNumber,
         }) === levelNumber)
+        .filter((entry) => !isLikelyPhraseCard(entry))
         .map(buildCuratedCandidate);
 
     pool.push(...curatedCandidates);
@@ -200,7 +227,7 @@ function buildCandidatePool({
     }
 
     const displayCandidate = buildDisplayCandidate(inference, sourceKanji);
-    if (displayCandidate && isAllowedByCuratedWords(displayCandidate, wordStudyIndexes)) {
+    if (displayCandidate && !isLikelyPhraseCard(displayCandidate) && isAllowedByCuratedWords(displayCandidate, wordStudyIndexes)) {
         pool.push(displayCandidate);
     }
 
@@ -210,6 +237,7 @@ function buildCandidatePool({
         .filter((candidate) => candidate.written.length > 0)
         .filter((candidate) => candidate.written !== sourceKanji)
         .filter((candidate) => (candidate.corpusSupportScore || 0) > 0 || (candidate.variant?.priorities?.length || 0) > 0)
+        .filter((candidate) => !isLikelyPhraseCard(candidate))
         .filter((candidate) => isAllowedByCuratedWords(candidate, wordStudyIndexes));
 
     const scopedCandidates = Number.isFinite(maxWordsPerKanji)
@@ -240,6 +268,15 @@ function buildWordSupportScore(candidate, sentenceCorpus) {
     }
 
     return score;
+}
+
+function normalizeBreakdownReadingField(value, prefixPattern) {
+    const text = String(value || "").trim();
+    if (!text) {
+        return "";
+    }
+
+    return text.replace(prefixPattern, "").trim();
 }
 
 function pickPreferredCandidate(existingCandidate, incomingCandidate, sentenceCorpus) {
@@ -388,8 +425,8 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null, contex
     return {
         primaryReading: contextDisplayWord?.pron || curatedDisplayWord?.pron || (useExactCandidate ? exactPron : ""),
         meaningJP: buildMeaningJP(displayWord, englishMeaning),
-        onReading: inference?.onReading || "",
-        kunReading: inference?.kunReading || "",
+        onReading: normalizeBreakdownReadingField(inference?.onReading, /^(on|オン)\s*:\s*/i),
+        kunReading: normalizeBreakdownReadingField(inference?.kunReading, /^(kun|くん)\s*:\s*/i),
         strokeOrderField: inference?.strokeOrderField || "",
         strokeOrderImageField: inference?.strokeOrderImageField || "",
         strokeOrderAnimationField: inference?.strokeOrderAnimationField || "",
@@ -578,6 +615,9 @@ function createWordExportService({
 
         for (const curatedEntry of wordStudyIndexes.exactEntries.values()) {
             const candidate = buildCuratedCandidate(curatedEntry);
+            if (isLikelyPhraseCard(candidate)) {
+                continue;
+            }
             const assignedLevel = getCandidateLevel({
                 candidate,
                 curatedEntry,
@@ -715,8 +755,11 @@ module.exports = {
     createWordExportService,
     defaultWordExportService,
     extractConstituentKanji,
+    hasExcludedWordCardTag,
     inferWordLevel,
+    isLikelyPhraseCard,
     isAllowedByCuratedWords,
+    normalizeBreakdownReadingField,
     pickBestExactSingleCandidate,
     pickPreferredCandidate,
     selectWordSentence,

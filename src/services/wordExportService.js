@@ -18,6 +18,7 @@ const { findManagedWordAudioAsset } = require("./wordAudioService");
 const WORD_FIELD_NAMES = loadAnkiNoteSchema("word").fieldNames;
 const EXCLUDED_WORD_CARD_TAGS = new Set(["phrase"]);
 const PHRASE_ENDING_RE = /(の近く|の部屋|の友だち|の下)$/u;
+const LEXICALIZED_USAGE_SUFFIX_RE = /[\p{Script=Han}々]い方$/u;
 const ADJECTIVE_NOUN_PHRASE_RE = /\p{Script=Hiragana}*い[\p{Script=Han}々]+$/u;
 
 function extractConstituentKanji(text) {
@@ -38,6 +39,10 @@ function isLikelyPhraseCard(candidate) {
 
     if (PHRASE_ENDING_RE.test(written)) {
         return true;
+    }
+
+    if (LEXICALIZED_USAGE_SUFFIX_RE.test(written)) {
+        return false;
     }
 
     return ADJECTIVE_NOUN_PHRASE_RE.test(written) && extractConstituentKanji(written).length >= 2;

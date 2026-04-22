@@ -4,7 +4,9 @@ const assert = require("node:assert/strict");
 const { loadAnkiNoteSchema } = require("../src/config/ankiNoteSchema");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const {
+    buildCandidatePool,
     buildBreakdownInference,
+    buildWordStudyIndexes,
     createWordExportService,
     getCanonicalWordLevel,
     hasExcludedWordCardTag,
@@ -117,6 +119,104 @@ test("isLikelyPhraseCard detects compositional phrase shapes that should stay ou
     assert.equal(isLikelyPhraseCard({ written: "兄の部屋" }), true);
     assert.equal(isLikelyPhraseCard({ written: "学校" }), false);
     assert.equal(isLikelyPhraseCard({ written: "病院" }), false);
+});
+
+test("buildCandidatePool stays curated-only unless inferred words are explicitly enabled", () => {
+    const pool = buildCandidatePool({
+        inference: {
+            displayWord: { written: "今", pron: "いま" },
+            primaryReading: "いま",
+            englishMeaning: "now",
+            meaningJP: "今 （いま） ／ now",
+            candidates: [
+                {
+                    written: "今日",
+                    pron: "きょう",
+                    gloss: "today",
+                    score: 120,
+                    corpusSupportScore: 40,
+                    variant: { priorities: ["ichi1"] },
+                },
+                {
+                    written: "今月",
+                    pron: "こんげつ",
+                    gloss: "this month",
+                    score: 110,
+                    corpusSupportScore: 30,
+                    variant: { priorities: ["ichi1"] },
+                },
+            ],
+        },
+        sourceKanji: "今",
+        maxWordsPerKanji: 5,
+        minimumCandidateScore: 1,
+        wordStudyIndexes: buildWordStudyIndexes({
+            "今年|ことし": {
+                written: "今年",
+                reading: "ことし",
+                meaning: "this year",
+                jlpt: 5,
+            },
+        }),
+        jlptWordLevelContract: null,
+        levelNumber: 5,
+        jlptOnlyJson: {
+            今: { jlpt: 5 },
+            日: { jlpt: 5 },
+            月: { jlpt: 5 },
+            年: { jlpt: 4 },
+        },
+        includeInferred: false,
+    });
+
+    assert.deepEqual(
+        pool.map((candidate) => `${candidate.written}|${candidate.pron}`),
+        ["今年|ことし"]
+    );
+});
+
+test("buildCandidatePool rejects phrase-like inferred candidates even when inference is enabled", () => {
+    const pool = buildCandidatePool({
+        inference: {
+            displayWord: { written: "高", pron: "たか" },
+            primaryReading: "たか",
+            englishMeaning: "high",
+            meaningJP: "高 （たか） ／ high",
+            candidates: [
+                {
+                    written: "高い山",
+                    pron: "たかいやま",
+                    gloss: "high mountain",
+                    score: 140,
+                    corpusSupportScore: 50,
+                    variant: { priorities: ["ichi1"] },
+                },
+                {
+                    written: "高校",
+                    pron: "こうこう",
+                    gloss: "high school",
+                    score: 130,
+                    corpusSupportScore: 45,
+                    variant: { priorities: ["ichi1"] },
+                },
+            ],
+        },
+        sourceKanji: "高",
+        maxWordsPerKanji: 5,
+        minimumCandidateScore: 1,
+        wordStudyIndexes: buildWordStudyIndexes({}),
+        jlptWordLevelContract: null,
+        levelNumber: 5,
+        jlptOnlyJson: {
+            高: { jlpt: 5 },
+            山: { jlpt: 5 },
+            校: { jlpt: 5 },
+        },
+        includeInferred: true,
+    });
+
+    assert.equal(pool.some((candidate) => candidate.written === "高い山"), false);
+    assert.equal(pool.some((candidate) => candidate.written === "高校"), true);
 });
 
 test("normalizeBreakdownReadingField strips internal reading prefixes for learner-facing output", () => {
@@ -749,5 +849,56 @@ test("buildWordTsvForJlptLevel uses the canonical word-level contract before con
     });
 
     assert.match(result.tsv, /^今年\tことし\tthis year\tJLPT N5\t/m);
+});
+
+test("buildWordTsvForJlptLevel does not let a stale curated JLPT tag override the canonical word contract", async () => {
+    const wordExportService = createWordExportService({
+        sentenceCorpus: [],
+        wordStudyData: {
+            "今年|ことし": {
+                written: "今年",
+                reading: "ことし",
+                meaning: "this year",
+                jlpt: 4,
+            },
+        },
+    });
+
+    const sharedOptions = {
+        jlptOnlyJson: {
+            今: { jlpt: 5 },
+            年: { jlpt: 4 },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {
+                "今年|ことし": {
+                    written: "今年",
+                    reading: "ことし",
+                    jlpt: 5,
+                },
+            },
+        },
+        kanjiApiClient: {
+            async getKanji() {
+                return { meanings: ["year"], on_readings: ["ネン"], kun_readings: ["とし"] };
+            },
+            async getWords() {
+                return [];
+            },
+        },
+        concurrency: 1,
+    };
+
+    const n4Result = await wordExportService.buildWordTsvForJlptLevel({
+        ...sharedOptions,
+        levelNumber: 4,
+    });
+    const n5Result = await wordExportService.buildWordTsvForJlptLevel({
+        ...sharedOptions,
+        levelNumber: 5,
+    });
+
+    assert.doesNotMatch(n4Result.tsv, /^今年\tことし\tthis year\tJLPT N4\t/m);
+    assert.match(n5Result.tsv, /^今年\tことし\tthis year\tJLPT N5\t/m);
 });
 

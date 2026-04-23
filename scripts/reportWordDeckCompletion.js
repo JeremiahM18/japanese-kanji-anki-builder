@@ -7,6 +7,7 @@ const { loadJlptWordLevelContract } = require("../src/datasets/jlptWordLevelCont
 const { loadJlptLevelContract } = require("../src/datasets/jlptLevelContract");
 const { invokeCliMain, assertNoUnknownArgs, collectUnknownArg, parseNumericOption } = require("../src/utils/cliArgs");
 const { buildWordDeckCompletionReport, formatWordDeckCompletionReport } = require("../src/services/wordDeckCompletionService");
+const { buildCoverageLevels } = require("../src/services/wordDeckCoverageScopeService");
 
 function parseArgs(argv) {
     const options = {
@@ -33,6 +34,18 @@ function parseArgs(argv) {
 
 function resolveWordTsvPath(level) {
     return path.join(process.cwd(), "out", "word-build", "exports", `jlpt-n${level}-words.tsv`);
+}
+
+function loadCoverageWordTsvByLevel(level) {
+    const wordTsvByLevel = {};
+    for (const coverageLevel of buildCoverageLevels(level)) {
+        const wordTsvPath = resolveWordTsvPath(coverageLevel);
+        if (!fs.existsSync(wordTsvPath)) {
+            throw new Error(`Missing cumulative coverage word TSV at ${wordTsvPath}. Run npm run deck:words:ready -- --levels=${coverageLevel} first.`);
+        }
+        wordTsvByLevel[coverageLevel] = fs.readFileSync(wordTsvPath, "utf8");
+    }
+    return wordTsvByLevel;
 }
 
 function resolveKanjiTsvPath(config, level) {
@@ -73,6 +86,7 @@ async function main() {
         jlptLevelContract,
         kanjiTsv: fs.readFileSync(kanjiTsvPath, "utf8"),
         wordTsv: fs.readFileSync(wordTsvPath, "utf8"),
+        coverageWordTsvByLevel: loadCoverageWordTsvByLevel(level),
     });
 
     if (options.json) {
@@ -95,6 +109,7 @@ if (require.main === module) {
 module.exports = {
     main,
     parseArgs,
+    loadCoverageWordTsvByLevel,
     resolveKanjiTsvPath,
     resolveWordTsvPath,
 };

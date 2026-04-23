@@ -7,8 +7,8 @@ const {
   buildWordReadingGapTriage,
   formatWordReadingGapTriage,
   parseKanjiTsv,
-  parseWordTsv,
 } = require('../src/services/wordReadingCoverageService');
+const { buildCoverageWordRows, buildCoverageLevels } = require('../src/services/wordDeckCoverageScopeService');
 
 function parseArgs(argv) {
   const options = {
@@ -44,6 +44,18 @@ function resolveWordTsvPath(level) {
   return path.join(process.cwd(), 'out', 'word-build', 'exports', `jlpt-n${level}-words.tsv`);
 }
 
+function loadCoverageWordTsvByLevel(level) {
+  const wordTsvByLevel = {};
+  for (const coverageLevel of buildCoverageLevels(level)) {
+    const wordTsvPath = resolveWordTsvPath(coverageLevel);
+    if (!fs.existsSync(wordTsvPath)) {
+      throw new Error(`Missing cumulative coverage word TSV at ${wordTsvPath}. Run npm run deck:words:ready -- --levels=${coverageLevel} first.`);
+    }
+    wordTsvByLevel[coverageLevel] = fs.readFileSync(wordTsvPath, 'utf8');
+  }
+  return wordTsvByLevel;
+}
+
 async function main() {
   const options = parseArgs(process.argv.slice(2));
   assertNoUnknownArgs('deck:words:triage', options.unknownArgs);
@@ -65,10 +77,13 @@ async function main() {
   }
 
   const kanjiRows = parseKanjiTsv(fs.readFileSync(kanjiTsvPath, 'utf8'));
-  const wordRows = parseWordTsv(fs.readFileSync(wordTsvPath, 'utf8'));
+  const coverageScope = buildCoverageWordRows({
+    level,
+    wordTsvByLevel: loadCoverageWordTsvByLevel(level),
+  });
   const coverageReport = buildWordReadingCoverageReport({
     kanjiRows,
-    wordRows,
+    wordRows: coverageScope.wordRows,
     levelLabel: `N${level}`,
   });
   const triage = buildWordReadingGapTriage(coverageReport);
@@ -94,6 +109,7 @@ if (require.main === module) {
 module.exports = {
   main,
   parseArgs,
+  loadCoverageWordTsvByLevel,
   resolveKanjiTsvPath,
   resolveWordTsvPath,
 };

@@ -12,6 +12,7 @@ const { loadAudioSourcePolicy } = require("../src/datasets/audioSourcePolicy");
 const { buildWordCoverageContractSummary } = require("../src/datasets/wordStudyData");
 const { buildStarterWordGovernanceSummary } = require("../src/datasets/jlptWordLevelContract");
 const { buildWordDeckCompletionReport } = require("../src/services/wordDeckCompletionService");
+const { buildCoverageLevels } = require("../src/services/wordDeckCoverageScopeService");
 const { buildWordAudioReviewReport } = require("../src/services/wordAudioReviewService");
 const { buildSelectedKanjiByLevel, parseLevelsArgument } = require("../src/services/buildPipeline");
 const { buildDeckPackage } = require("../src/services/deckPackageService");
@@ -43,6 +44,27 @@ function writeText(filePath, value) {
 
 function resolveKanjiTsvPath(buildOutDir, level) {
     return path.join(buildOutDir, "exports", `jlpt-n${level}.tsv`);
+}
+
+function resolveWordTsvPath(outDir, level) {
+    return path.join(outDir, "exports", `jlpt-n${level}-words.tsv`);
+}
+
+function loadCoverageWordTsvByLevel({ level, outDir, currentWordTsvByLevel }) {
+    const wordTsvByLevel = {};
+    for (const coverageLevel of buildCoverageLevels(level)) {
+        if (typeof currentWordTsvByLevel[coverageLevel] === "string") {
+            wordTsvByLevel[coverageLevel] = currentWordTsvByLevel[coverageLevel];
+            continue;
+        }
+
+        const wordTsvPath = resolveWordTsvPath(outDir, coverageLevel);
+        if (!fs.existsSync(wordTsvPath)) {
+            throw new Error(`Missing cumulative coverage word TSV at ${wordTsvPath}. Run npm run deck:words:ready -- --levels=${coverageLevel} first.`);
+        }
+        wordTsvByLevel[coverageLevel] = fs.readFileSync(wordTsvPath, "utf8");
+    }
+    return wordTsvByLevel;
 }
 
 function parseArgs(argv) {
@@ -108,6 +130,10 @@ function formatWordDeckReadyReport(summary, doctorReport) {
             return [
                 `- N${level} readiness status: ${audit.readiness?.status || "incomplete"}`,
                 `- N${level} reading coverage: ${coveredPercent}% (${audit.coveredReadings}/${audit.totalReadings})`,
+                ...(audit.coverageLabel ? [`  coverage counted from decks: ${audit.coverageLabel}`] : []),
+                ...(typeof audit.priorLevelCoveredReadings === "number"
+                    ? [`  covered by earlier decks: ${audit.priorLevelCoveredReadings}, covered by this deck level: ${audit.currentLevelCoveredReadings || 0}`]
+                    : []),
                 `  distinct missing targets: ${audit.distinctGapReadings}, variant-style gaps: ${audit.variantGapReadings}`,
                 ...(audit.policyAudit
                     ? [`  deck policy: ${audit.policyAudit.standaloneViolationCount} standalone wrong-level cards, ${audit.policyAudit.badgeViolationCount} missing labels`]
@@ -217,6 +243,7 @@ async function main() {
     });
 
     const exports = [];
+    const currentWordTsvByLevel = {};
     const readingCoverageAuditByLevel = {};
     const readingGapTriageByLevel = {};
     const wordAudioReviewByLevel = {};
@@ -236,6 +263,7 @@ async function main() {
         });
         const filePath = path.join(buildPaths.exportsDir, `jlpt-n${level}-words.tsv`);
         writeText(filePath, `${result.tsv}\n`);
+        currentWordTsvByLevel[level] = result.tsv;
 
         const kanjiTsvPath = resolveKanjiTsvPath(config.buildOutDir, level);
         if (fs.existsSync(kanjiTsvPath)) {
@@ -246,6 +274,11 @@ async function main() {
                 jlptLevelContract,
                 kanjiTsv: fs.readFileSync(kanjiTsvPath, "utf8"),
                 wordTsv: result.tsv,
+                coverageWordTsvByLevel: loadCoverageWordTsvByLevel({
+                    level,
+                    outDir: buildPaths.root,
+                    currentWordTsvByLevel,
+                }),
             });
             readingCoverageAuditByLevel[`N${level}`] = completionReport.readingCoverage;
             readingGapTriageByLevel[`N${level}`] = completionReport.triage;
@@ -369,4 +402,6 @@ module.exports = {
     main,
     parseArgs,
     resolveKanjiTsvPath,
+    resolveWordTsvPath,
+    loadCoverageWordTsvByLevel,
 };

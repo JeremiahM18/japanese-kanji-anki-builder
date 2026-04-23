@@ -31,8 +31,11 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
                 N5: {
                     totalReadings: 344,
                     coveredReadings: 181,
+                    priorLevelCoveredReadings: 0,
+                    currentLevelCoveredReadings: 181,
                     distinctGapReadings: 147,
                     variantGapReadings: 16,
+                    coverageLabel: "N5",
                     policyAudit: {
                         standaloneViolationCount: 0,
                         badgeViolationCount: 0,
@@ -82,6 +85,8 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
     assert.match(text, /N5 starter governance: 100% \(258\/258\)/);
     assert.match(text, /N5 readiness status: incomplete/);
     assert.match(text, /N5 reading coverage: 52\.6% \(181\/344\)/);
+    assert.match(text, /covered by earlier decks: 0/);
+    assert.match(text, /covered by this deck level: 181/);
     assert.match(text, /distinct missing targets: 147, variant-style gaps: 16/);
     assert.match(text, /deck policy: 0 standalone wrong-level cards, 0 missing labels/);
     assert.match(text, /sentence orthography review: 2 suspicious kana-only examples/);

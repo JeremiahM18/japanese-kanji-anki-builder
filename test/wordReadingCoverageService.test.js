@@ -134,6 +134,34 @@ test('buildWordReadingCoverageReport prefers explicit word-card reading coverage
   assert.equal(report.kanji[0].onCoverage[1].gapKind, 'distinct');
 });
 
+test('buildWordReadingCoverageReport counts earlier-deck coverage so higher levels do not need duplicate readings', () => {
+  const kanjiRows = parseKanjiTsv([
+    'Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence',
+    '会\t会う\t会う ／ meet\tあう\tオン: カイ\tくん: あ.う\t\t\t\t\t\t会う （あう） - meet\t',
+  ].join('\n'));
+
+  const wordRows = [
+    {
+      Word: '会う',
+      Reading: 'あう',
+      JLPTLevel: 'JLPT N5',
+      CoverageRole: 'JLPT core + reading coverage',
+      FocusKanji: '会',
+      CoversReading: '会: あう',
+      SourceDeckLevel: 'N5',
+      SourceDeckLevelNumber: 5,
+    },
+  ];
+
+  const report = buildWordReadingCoverageReport({ kanjiRows, wordRows, levelLabel: 'N4' });
+  assert.equal(report.summary.coveredReadings, 1);
+  assert.equal(report.summary.priorLevelCoveredReadings, 1);
+  assert.equal(report.summary.currentLevelCoveredReadings, 0);
+  assert.deepEqual(report.summary.coverageLevels, [5]);
+  assert.equal(report.summary.coverageLabel, 'N5');
+  assert.equal(report.kanji[0].kunCoverage[0].status, 'covered');
+});
+
 test('buildCoverageSourceSummary counts covered readings by learner-facing role', () => {
   assert.deepEqual(buildCoverageSourceSummary([
     { status: 'covered', coverageSource: 'core' },

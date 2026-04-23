@@ -4,6 +4,7 @@ const {
     parseKanjiTsv,
     parseWordTsv,
 } = require("./wordReadingCoverageService");
+const { buildCoverageWordRows } = require("./wordDeckCoverageScopeService");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 const { HAN_CHAR_RE, katakanaToHiragana } = require("../utils/japanese");
 
@@ -205,9 +206,17 @@ function buildWordDeckCompletionReport({
     jlptLevelContract,
     kanjiTsv,
     wordTsv,
+    coverageWordTsvByLevel = null,
 }) {
     const kanjiRows = parseKanjiTsv(kanjiTsv);
     const wordRows = parseWordTsv(wordTsv);
+    const coverageScope = coverageWordTsvByLevel
+        ? buildCoverageWordRows({ level, wordTsvByLevel: coverageWordTsvByLevel })
+        : {
+            coverageLevels: [level],
+            coverageLabel: `N${level}`,
+            wordRows,
+        };
     const inventory = buildWordDeckInventorySummary({
         level,
         starterEntries,
@@ -216,7 +225,7 @@ function buildWordDeckCompletionReport({
     });
     const readingCoverage = buildWordReadingCoverageReport({
         kanjiRows,
-        wordRows,
+        wordRows: coverageScope.wordRows,
         levelLabel: `N${level}`,
     });
     const triage = buildWordReadingGapTriage(readingCoverage);
@@ -239,6 +248,10 @@ function buildWordDeckCompletionReport({
         level,
         inventory,
         readingCoverage: readingCoverage.summary,
+        coverageScope: {
+            levels: coverageScope.coverageLevels,
+            label: coverageScope.coverageLabel,
+        },
         triage: triage.summary,
         policyAudit,
         sentenceOrthographyAudit,
@@ -280,6 +293,7 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         `- Active triage backlog cleared: ${report.readiness.hasActiveTriageItems ? "no" : "yes"}`,
         `- Remaining open items are deferred variants only: ${report.readiness.allOpenItemsDeferred ? "yes" : "no"}`,
         `- Reading coverage: ${report.readiness.readingCoveragePercent}%`,
+        `- Coverage counted from decks: ${report.coverageScope?.label || `N${report.level}`}`,
         "",
         "Vocabulary coverage:",
         `- Canonical inventory rows: ${report.inventory.canonicalInventoryCount}`,
@@ -301,6 +315,8 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         `- Covered by word deck: ${report.readingCoverage.coveredReadings}`,
         `- Covered by JLPT core words: ${report.readingCoverage.coreCoveredReadings}`,
         `- Covered by reading-support words: ${report.readingCoverage.supportCoveredReadings}`,
+        `- Covered by earlier decks: ${report.readingCoverage.priorLevelCoveredReadings || 0}`,
+        `- Covered by this deck level: ${report.readingCoverage.currentLevelCoveredReadings || 0}`,
         `- Curated example exists but missing from word deck: ${report.readingCoverage.missingWordCardReadings}`,
         `- No curated example yet: ${report.readingCoverage.missingExampleReadings}`,
     ];

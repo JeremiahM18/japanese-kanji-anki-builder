@@ -68,12 +68,67 @@ test("buildWordDeckCompletionReport combines canonical inventory and reading cov
             "Word\tReading\tAudio\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes",
             "今日\tきょう\t\ttoday\tJLPT N5\tJLPT core + reading coverage\t今、日\t今: いま ／ 日: ひ\t\t\t",
         ].join("\n"),
+        coverageWordTsvByLevel: {
+            5: [
+                "Word\tReading\tAudio\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes",
+                "今日\tきょう\t\ttoday\tJLPT N5\tJLPT core + reading coverage\t今、日\t今: いま ／ 日: ひ\t\t\t",
+            ].join("\n"),
+        },
     });
 
     assert.equal(report.inventory.starterEligibleCount, 1);
     assert.equal(report.inventory.builtEligibleCount, 1);
     assert.equal(report.readingCoverage.coveredReadings, 2);
+    assert.equal(report.coverageScope.label, "N5");
     assert.equal(report.readiness.status, "complete");
+});
+
+test("buildWordDeckCompletionReport reuses easier-deck coverage before asking for duplicate higher-level rows", () => {
+    const report = buildWordDeckCompletionReport({
+        level: 4,
+        starterEntries: {
+            "会費|かいひ": {
+                written: "会費",
+                reading: "かいひ",
+                jlpt: 4,
+                tags: ["starter", "support"],
+            },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {
+                "会費|かいひ": { written: "会費", reading: "かいひ", jlpt: 4 },
+            },
+            excludedWordLevels: {},
+        },
+        jlptLevelContract: {
+            kanjiLevels: {
+                会: 4,
+            },
+        },
+        kanjiTsv: [
+            "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence",
+            "会\t会う\t会う ／ meet\tあう\tオン: カイ\tくん: あ.う\t\t\t\t\t\t会う （あう） - meet\t",
+        ].join("\n"),
+        wordTsv: [
+            "Word\tReading\tAudio\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes",
+            "会費\tかいひ\t\tmembership fee\tJLPT N4\tReading coverage support\t会\t会: かい\t\t\t",
+        ].join("\n"),
+        coverageWordTsvByLevel: {
+            5: [
+                "Word\tReading\tAudio\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes",
+                "会う\tあう\t\tmeet\tJLPT N5\tJLPT core + reading coverage\t会\t会: あう\t\t\t",
+            ].join("\n"),
+            4: [
+                "Word\tReading\tAudio\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes",
+                "会費\tかいひ\t\tmembership fee\tJLPT N4\tReading coverage support\t会\t会: かい\t\t\t",
+            ].join("\n"),
+        },
+    });
+
+    assert.equal(report.readingCoverage.coveredReadings, 2);
+    assert.equal(report.readingCoverage.priorLevelCoveredReadings, 1);
+    assert.equal(report.readingCoverage.currentLevelCoveredReadings, 1);
+    assert.equal(report.coverageScope.label, "N5 + N4");
 });
 
 test("buildWordDeckReadiness distinguishes deferred-variant readiness from active backlog", () => {
@@ -215,6 +270,9 @@ test("formatWordDeckCompletionReport renders missing rows and source-only exclus
             allOpenItemsDeferred: true,
             readingCoveragePercent: 84.9,
         },
+        coverageScope: {
+            label: "N5 + N4",
+        },
         inventory: {
             canonicalInventoryCount: 2,
             starterEligibleCount: 2,
@@ -239,17 +297,22 @@ test("formatWordDeckCompletionReport renders missing rows and source-only exclus
             coveredReadings: 4,
             coreCoveredReadings: 4,
             supportCoveredReadings: 0,
+            priorLevelCoveredReadings: 1,
+            currentLevelCoveredReadings: 3,
             missingWordCardReadings: 0,
             missingExampleReadings: 6,
         },
     });
 
     assert.match(text, /Status: ready_with_deferred_variants/);
+    assert.match(text, /Coverage counted from decks: N5 \+ N4/);
     assert.match(text, /Remaining open items are deferred variants only: yes/);
     assert.match(text, /Built starter-eligible rows: 1 \(50%\)/);
     assert.match(text, /Standalone wrong-level cards: 0/);
     assert.match(text, /Missing cross-level\/outside-level badges: 0/);
     assert.match(text, /Suspicious kana-only examples: 1/);
+    assert.match(text, /Covered by earlier decks: 1/);
+    assert.match(text, /Covered by this deck level: 3/);
     assert.match(text, /Missing starter-eligible N-level rows:/);
     assert.match(text, /赤い花 \(あかいはな\)/);
     assert.match(text, /Tracked source-only exclusions outside canonical inventory:/);

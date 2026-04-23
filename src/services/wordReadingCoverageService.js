@@ -77,6 +77,16 @@ function parseCoverageRole(value) {
   return 'unknown';
 }
 
+function parseDeckLevel(value) {
+  const match = String(value || '').match(/N?(\d)/i);
+  if (!match) {
+    return null;
+  }
+
+  const level = Number(match[1]);
+  return Number.isInteger(level) ? level : null;
+}
+
 function parseFocusKanjiField(value) {
   return String(value || '')
     .split('、')
@@ -191,6 +201,9 @@ function buildWordDeckIndex(wordRows) {
     normalizedReading: normalizeReadingToken(String(row.Reading || '').trim()),
     coverageRole: String(row.CoverageRole || '').trim(),
     coverageRoleKind: parseCoverageRole(row.CoverageRole),
+    deckLevel: Number.isInteger(row.SourceDeckLevelNumber)
+      ? row.SourceDeckLevelNumber
+      : parseDeckLevel(row.SourceDeckLevel || row.JLPTLevel),
     focusKanji: parseFocusKanjiField(row.FocusKanji),
     coverageReadings: parseCoversReadingField(row.CoversReading),
   }));
@@ -215,6 +228,7 @@ function buildReadingCoverageForKanji(row, wordDeckIndex) {
         source: 'deck',
         coverageRole: deckEntry.coverageRole,
         coverageRoleKind: deckEntry.coverageRoleKind,
+        deckLevel: deckEntry.deckLevel,
       }));
     const fallbackDeckExamples = explicitDeckExamples.length > 0
       ? []
@@ -229,6 +243,7 @@ function buildReadingCoverageForKanji(row, wordDeckIndex) {
           source: 'deck',
           coverageRole: deckEntry.coverageRole,
           coverageRoleKind: deckEntry.coverageRoleKind,
+          deckLevel: deckEntry.deckLevel,
         }));
     const deckExamples = explicitDeckExamples.length > 0 ? explicitDeckExamples : fallbackDeckExamples;
 
@@ -296,17 +311,39 @@ function buildCoverageSourceSummary(allReadings = []) {
 }
 
 function buildWordReadingCoverageReport({ kanjiRows, wordRows, levelLabel = 'N5' }) {
+  const targetLevel = parseDeckLevel(levelLabel);
   const wordDeckIndex = buildWordDeckIndex(wordRows);
   const coverage = kanjiRows.map((row) => buildReadingCoverageForKanji(row, wordDeckIndex));
   const allReadings = coverage.flatMap((entry) => [...entry.onCoverage, ...entry.kunCoverage]);
   const sourceSummary = buildCoverageSourceSummary(allReadings);
+  const priorLevelCoveredReadings = allReadings.filter((entry) => (
+    entry.status === 'covered'
+      && Number.isInteger(targetLevel)
+      && entry.deckExamples.some((example) => Number.isInteger(example.deckLevel) && example.deckLevel > targetLevel)
+  )).length;
+  const currentLevelCoveredReadings = allReadings.filter((entry) => (
+    entry.status === 'covered'
+      && (
+        !Number.isInteger(targetLevel)
+        || entry.deckExamples.some((example) => example.deckLevel === targetLevel)
+      )
+  )).length;
+  const coverageLevels = [...new Set(wordDeckIndex
+    .map((entry) => entry.deckLevel)
+    .filter((value) => Number.isInteger(value))
+  )].sort((a, b) => b - a);
 
   const summary = {
     levelLabel,
+    targetLevel,
+    coverageLevels,
+    coverageLabel: coverageLevels.map((level) => `N${level}`).join(' + '),
     kanjiCount: coverage.length,
     totalReadings: allReadings.length,
     coveredReadings: allReadings.filter((entry) => entry.status === 'covered').length,
     ...sourceSummary,
+    priorLevelCoveredReadings,
+    currentLevelCoveredReadings,
     missingWordCardReadings: allReadings.filter((entry) => entry.status === 'missing_word_card').length,
     missingExampleReadings: allReadings.filter((entry) => entry.status === 'missing_example').length,
     variantGapReadings: allReadings.filter((entry) => entry.status !== 'covered' && entry.gapKind === 'variant').length,
@@ -428,11 +465,18 @@ function formatWordReadingCoverageReport(report, { maxKanji = 50 } = {}) {
   lines.push(`Japanese Kanji Builder Word Reading Coverage Audit (${report.summary.levelLabel})`);
   lines.push('');
   lines.push(`Kanji audited: ${report.summary.kanjiCount}`);
+  if (report.summary.coverageLabel) {
+    lines.push(`Coverage counted from decks: ${report.summary.coverageLabel}`);
+  }
   lines.push(`Readings audited: ${report.summary.totalReadings}`);
   lines.push(`Covered by word deck: ${report.summary.coveredReadings}`);
   lines.push(`  - Covered by JLPT core words: ${report.summary.coreCoveredReadings}`);
   lines.push(`  - Covered by reading-support words: ${report.summary.supportCoveredReadings}`);
   lines.push(`  - Covered by inferred support words: ${report.summary.inferredCoveredReadings}`);
+  if (typeof report.summary.priorLevelCoveredReadings === 'number') {
+    lines.push(`  - Covered by earlier decks: ${report.summary.priorLevelCoveredReadings}`);
+    lines.push(`  - Covered by this deck level: ${report.summary.currentLevelCoveredReadings}`);
+  }
   lines.push(`Curated example exists but missing from word deck: ${report.summary.missingWordCardReadings}`);
   lines.push(`No curated example yet: ${report.summary.missingExampleReadings}`);
   lines.push(`  - Distinct missing reading targets: ${report.summary.distinctGapReadings}`);
@@ -517,6 +561,7 @@ module.exports = {
   normalizeReadingToken,
   parseCoverageRole,
   parseCoversReadingField,
+  parseDeckLevel,
   parseDelimitedReadingField,
   parseExampleEntries,
   parseFocusKanjiField,

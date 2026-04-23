@@ -466,6 +466,27 @@ test("tracked starter word data includes the eleventh governed N4 completion bat
     assert.equal(starterEntries["閉会|へいかい"].coverage.coversReadings["閉"], "へい");
 });
 
+test("tracked starter word data includes the twelfth governed N4 completion batch", () => {
+    const starterEntries = loadWordStudyData({
+        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
+        localPath: null,
+    });
+
+    assert.equal(starterEntries["悪人|あくにん"].coverage.coversReadings["悪"], "あく");
+    assert.equal(starterEntries["開会|かいかい"].coverage.coversReadings["開"], "かい");
+    assert.equal(starterEntries["楽器|がっき"].coverage.coversReadings["楽"], "がく");
+    assert.equal(starterEntries["画家|がか"].coverage.coversReadings["画"], "が");
+    assert.equal(starterEntries["映す|うつす"].coverage.coversReadings["映"], "うつす");
+    assert.equal(starterEntries["家庭|かてい"].coverage.coversReadings["家"], "か");
+    assert.equal(starterEntries["家賃|やちん"].coverage.coversReadings["家"], "や");
+    assert.equal(starterEntries["館内|かんない"].coverage.coversReadings["館"], "かん");
+    assert.equal(starterEntries["帰宅|きたく"].coverage.coversReadings["帰"], "き");
+    assert.equal(starterEntries["急行|きゅうこう"].coverage.coversReadings["急"], "きゅう");
+    assert.equal(starterEntries["魚屋|さかなや"].coverage.coversReadings["魚"], "ざかな");
+    assert.equal(starterEntries["花屋|はなや"].coverage.coversReadings["花"], "はな");
+    assert.equal(starterEntries["本音|ほんね"].coverage.coversReadings["音"], "ね");
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadWordStudyData({
         starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),

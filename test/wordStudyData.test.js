@@ -551,6 +551,25 @@ test("tracked starter word data includes the fifteenth governed N4 completion ba
     assert.equal(starterEntries["別に|べつに"].coverage.coversReadings["別"], "べつ");
 });
 
+test("tracked starter word data includes the sixteenth governed N4 completion batch", () => {
+    const starterEntries = loadWordStudyData({
+        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
+        localPath: null,
+    });
+
+    assert.equal(starterEntries["中止|ちゅうし"].coverage.coversReadings["止"], "し");
+    assert.equal(starterEntries["出発|しゅっぱつ"].coverage.coversReadings["発"], "はつ");
+    assert.equal(starterEntries["普通|ふつう"].coverage.coversReadings["通"], "つう");
+    assert.equal(starterEntries["通り|とおり"].coverage.coversReadings["通"], "とおり");
+    assert.equal(starterEntries["空く|あく"].coverage.coversReadings["空"], "あく");
+    assert.equal(starterEntries["空ける|あける"].coverage.coversReadings["空"], "あける");
+    assert.equal(starterEntries["切れる|きれる"].coverage.coversReadings["切"], "きれる");
+    assert.equal(starterEntries["交代|こうたい"].coverage.coversReadings["代"], "たい");
+    assert.equal(starterEntries["代わり|かわり"].coverage.coversReadings["代"], "かわり");
+    assert.equal(starterEntries["広告|こうこく"].coverage.coversReadings["広"], "こう");
+    assert.equal(starterEntries["広がる|ひろがる"].coverage.coversReadings["広"], "ひろがる");
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadWordStudyData({
         starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),

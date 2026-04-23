@@ -607,6 +607,22 @@ test("tracked starter word data includes the eighteenth governed N4 completion b
     assert.equal(starterEntries["用いる|もちいる"].coverage.coversReadings["用"], "もちいる");
 });
 
+test("tracked starter word data includes the nineteenth governed N4 completion batch", () => {
+    const starterEntries = loadWordStudyData({
+        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
+        localPath: null,
+    });
+
+    assert.equal(starterEntries["開く|あく"].coverage.coversReadings["開"], "あく");
+    assert.equal(starterEntries["問い|とい"].coverage.coversReadings["問"], "とい");
+    assert.equal(starterEntries["問屋|とんや"].coverage.coversReadings["問"], "とん");
+    assert.equal(starterEntries["手強い|てごわい"].coverage.coversReadings["強"], "こわい");
+    assert.equal(starterEntries["観音開き|かんのんびらき"].coverage.coversReadings["開"], "びらき");
+    assert.equal(starterEntries["夏毛|なつげ"].coverage.coversReadings["夏"], "げ");
+    assert.equal(starterEntries["音信|いんしん"].coverage.coversReadings["音"], "いん");
+    assert.equal(starterEntries["明朝|みょうちょう"].coverage.coversReadings["明"], "みょう");
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadWordStudyData({
         starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),

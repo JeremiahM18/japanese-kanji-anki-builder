@@ -512,6 +512,25 @@ test("tracked starter word data includes the thirteenth governed N4 completion b
     assert.equal(starterEntries["音色|ねいろ"].coverage.coversReadings["色"], "いろ");
 });
 
+test("tracked starter word data includes the fourteenth governed N4 completion batch", () => {
+    const starterEntries = loadWordStudyData({
+        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
+        localPath: null,
+    });
+
+    assert.equal(starterEntries["悪夢|あくむ"].coverage.coversReadings["悪"], "あく");
+    assert.equal(starterEntries["近づく|ちかづく"].coverage.coversReadings["近"], "ちか");
+    assert.equal(starterEntries["寝坊|ねぼう"].coverage.coversReadings["寝"], "ね");
+    assert.equal(starterEntries["仕方|しかた"].coverage.coversReadings["方"], "かた");
+    assert.equal(starterEntries["勉強中|べんきょうちゅう"].coverage.coversReadings["勉"], "べん");
+    assert.equal(starterEntries["勉強中|べんきょうちゅう"].coverage.coversReadings["強"], "きょう");
+    assert.equal(starterEntries["会費|かいひ"].coverage.coversReadings["会"], "かい");
+    assert.equal(starterEntries["売上|うりあげ"].coverage.coversReadings["売"], "うり");
+    assert.equal(starterEntries["開店|かいてん"].coverage.coversReadings["開"], "かい");
+    assert.equal(starterEntries["映画館|えいがかん"].coverage.coversReadings["映"], "えい");
+    assert.equal(starterEntries["映画館|えいがかん"].coverage.coversReadings["館"], "かん");
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadWordStudyData({
         starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),

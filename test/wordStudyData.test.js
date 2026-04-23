@@ -487,6 +487,31 @@ test("tracked starter word data includes the twelfth governed N4 completion batc
     assert.equal(starterEntries["本音|ほんね"].coverage.coversReadings["音"], "ね");
 });
 
+test("tracked starter word data includes the thirteenth governed N4 completion batch", () => {
+    const starterEntries = loadWordStudyData({
+        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
+        localPath: null,
+    });
+
+    assert.equal(starterEntries["会計|かいけい"].coverage.coversReadings["計"], "けい");
+    assert.equal(starterEntries["帰り道|かえりみち"].coverage.coversReadings["帰"], "かえり");
+    assert.equal(starterEntries["帰り道|かえりみち"].coverage.coversReadings["道"], "みち");
+    assert.equal(starterEntries["元々|もともと"].coverage.coversReadings["元"], "もと");
+    assert.equal(starterEntries["元日|がんじつ"].coverage.coversReadings["元"], "がん");
+    assert.equal(starterEntries["住まい|すまい"].coverage.coversReadings["住"], "すまい");
+    assert.equal(starterEntries["寝室|しんしつ"].coverage.coversReadings["寝"], "しん");
+    assert.equal(starterEntries["新年|しんねん"].coverage.coversReadings["新"], "しん");
+    assert.equal(starterEntries["閉店|へいてん"].coverage.coversReadings["閉"], "へい");
+    assert.equal(starterEntries["使い道|つかいみち"].coverage.coversReadings["使"], "つかい");
+    assert.equal(starterEntries["使い道|つかいみち"].coverage.coversReadings["道"], "みち");
+    assert.equal(starterEntries["夏服|なつふく"].coverage.coversReadings["服"], "ふく");
+    assert.equal(starterEntries["近道|ちかみち"].coverage.coversReadings["近"], "ちか");
+    assert.equal(starterEntries["売店|ばいてん"].coverage.coversReadings["売"], "ばい");
+    assert.equal(starterEntries["売店|ばいてん"].coverage.coversReadings["店"], "てん");
+    assert.equal(starterEntries["音色|ねいろ"].coverage.coversReadings["音"], "ね");
+    assert.equal(starterEntries["音色|ねいろ"].coverage.coversReadings["色"], "いろ");
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadWordStudyData({
         starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),

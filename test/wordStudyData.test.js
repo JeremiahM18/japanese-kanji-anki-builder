@@ -531,6 +531,26 @@ test("tracked starter word data includes the fourteenth governed N4 completion b
     assert.equal(starterEntries["映画館|えいがかん"].coverage.coversReadings["館"], "かん");
 });
 
+test("tracked starter word data includes the fifteenth governed N4 completion batch", () => {
+    const starterEntries = loadWordStudyData({
+        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
+        localPath: null,
+    });
+
+    assert.equal(starterEntries["明ける|あける"].coverage.coversReadings["明"], "あける");
+    assert.equal(starterEntries["説明|せつめい"].coverage.coversReadings["明"], "めい");
+    assert.equal(starterEntries["目的|もくてき"].coverage.coversReadings["目"], "もく");
+    assert.equal(starterEntries["方法|ほうほう"].coverage.coversReadings["方"], "ほう");
+    assert.equal(starterEntries["立てる|たてる"].coverage.coversReadings["立"], "たてる");
+    assert.equal(starterEntries["国立|こくりつ"].coverage.coversReadings["立"], "りつ");
+    assert.equal(starterEntries["立場|たちば"].coverage.coversReadings["立"], "たち");
+    assert.equal(starterEntries["閉じる|とじる"].coverage.coversReadings["閉"], "とじる");
+    assert.equal(starterEntries["旅|たび"].coverage.coversReadings["旅"], "たび");
+    assert.equal(starterEntries["文化|ぶんか"].coverage.coversReadings["文"], "ぶん");
+    assert.equal(starterEntries["問題|もんだい"].coverage.coversReadings["問"], "もん");
+    assert.equal(starterEntries["別に|べつに"].coverage.coversReadings["別"], "べつ");
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadWordStudyData({
         starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),

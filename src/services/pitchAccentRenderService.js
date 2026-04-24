@@ -65,14 +65,14 @@ function buildPitchAccentSvg({ accent, moras }) {
         return "";
     }
 
-    const pointSpacing = 44;
-    const leftPadding = 20;
-    const topPadding = 10;
-    const labelTop = 82;
-    const highY = topPadding + 10;
-    const lowY = topPadding + 46;
+    const pointSpacing = 30;
+    const leftPadding = 16;
+    const topPadding = 8;
+    const labelTop = 58;
+    const highY = topPadding + 8;
+    const lowY = topPadding + 34;
     const width = leftPadding * 2 + pointSpacing * moraList.length;
-    const height = 124;
+    const height = 78;
     const points = levels.map((level, index) => ({
         x: leftPadding + pointSpacing * index,
         y: level === "high" ? highY : lowY,
@@ -82,15 +82,15 @@ function buildPitchAccentSvg({ accent, moras }) {
         const isTrailingParticle = index === points.length - 1;
         const fill = isTrailingParticle ? "#ffffff" : "#111111";
         const stroke = "#111111";
-        return `<circle cx="${point.x}" cy="${point.y}" r="7" fill="${fill}" stroke="${stroke}" stroke-width="3"/>`;
+        return `<circle cx="${point.x}" cy="${point.y}" r="5" fill="${fill}" stroke="${stroke}" stroke-width="2.5"/>`;
     }).join("");
     const labels = moraList.map((mora, index) => (
         `<text x="${points[index].x}" y="${labelTop}" text-anchor="middle" class="pitch-mora">${escapeHtml(mora)}</text>`
     )).join("");
 
     return [
-        `<svg class="pitch-contour" viewBox="0 0 ${width} ${height}" role="img" aria-label="Pitch accent contour ${accent}" xmlns="http://www.w3.org/2000/svg">`,
-        `<polyline points="${polyline}" fill="none" stroke="#111111" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`,
+        `<svg class="pitch-contour" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="Pitch accent contour ${accent}" xmlns="http://www.w3.org/2000/svg">`,
+        `<polyline points="${polyline}" fill="none" stroke="#111111" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`,
         circles,
         labels,
         "</svg>",

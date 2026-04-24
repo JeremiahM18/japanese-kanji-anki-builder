@@ -33,6 +33,7 @@ test("buildPitchAccentHtml renders a learner-facing SVG graph and caption", () =
 
     assert.match(html, /class="pitch-accent-visual"/);
     assert.match(html, /<svg class="pitch-contour"/);
+    assert.match(html, /width="122" height="78"/);
     assert.match(html, /Pitch: 1 \[atamadaka\]/);
     assert.match(html, />あ<\/text>/);
     assert.match(html, />と<\/text>/);

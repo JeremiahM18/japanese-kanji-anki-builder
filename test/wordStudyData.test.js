@@ -258,6 +258,7 @@ test("tracked starter word data includes the third governed N4 completion batch"
     assert.equal(starterEntries["答え|こたえ"].coverage.coversReadings["答"], "こたえ");
     assert.equal(starterEntries["動く|うごく"].coverage.coversReadings["動"], "うごく");
     assert.equal(starterEntries["動物|どうぶつ"].coverage.coversReadings["動"], "どう");
+    assert.equal(starterEntries["動物|どうぶつ"].coverage.coversReadings["物"], "ぶつ");
     assert.equal(starterEntries["同じ|おなじ"].coverage.coversReadings["同"], "おなじ");
     assert.equal(starterEntries["同時|どうじ"].coverage.coversReadings["同"], "どう");
     assert.equal(starterEntries["忙しい|いそがしい"].coverage.coversReadings["忙"], "いそがしい");
@@ -278,6 +279,7 @@ test("tracked starter word data includes the fourth governed N4 completion batch
     assert.equal(starterEntries["計画|けいかく"].coverage.coversReadings["計"], "けい");
     assert.equal(starterEntries["計画|けいかく"].coverage.coversReadings["画"], "かく");
     assert.equal(starterEntries["図書館|としょかん"].coverage.coversReadings["館"], "かん");
+    assert.equal(starterEntries["図書館|としょかん"].coverage.coversReadings["図"], "と");
     assert.equal(starterEntries["起こす|おこす"].coverage.coversReadings["起"], "おこす");
     assert.equal(starterEntries["急に|きゅうに"].coverage.coversReadings["急"], "きゅう");
     assert.equal(starterEntries["研究|けんきゅう"].coverage.coversReadings["研"], "けん");
@@ -314,6 +316,7 @@ test("tracked starter word data includes the fifth governed N4 completion batch"
     assert.equal(starterEntries["昼|ひる"].coverage.coversReadings["昼"], "ひる");
     assert.equal(starterEntries["注意|ちゅうい"].coverage.coversReadings["注"], "ちゅう");
     assert.equal(starterEntries["注文|ちゅうもん"].coverage.coversReadings["注"], "ちゅう");
+    assert.equal(starterEntries["注文|ちゅうもん"].coverage.coversReadings["文"], "もん");
     assert.equal(starterEntries["茶色|ちゃいろ"].coverage.coversReadings["茶"], "ちゃ");
     assert.equal(starterEntries["町長|ちょうちょう"].coverage.coversReadings["町"], "ちょう");
     assert.equal(starterEntries["鳥|とり"].coverage.coversReadings["鳥"], "とり");
@@ -358,6 +361,7 @@ test("tracked starter word data includes the seventh governed N4 completion batc
     assert.equal(starterEntries["会員|かいいん"].coverage.coversReadings["員"], "いん");
     assert.equal(starterEntries["会議室|かいぎしつ"].coverage.coversReadings["室"], "しつ");
     assert.equal(starterEntries["住所|じゅうしょ"].coverage.coversReadings["住"], "じゅう");
+    assert.equal(starterEntries["住所|じゅうしょ"].coverage.coversReadings["所"], "しょ");
     assert.equal(starterEntries["作る|つくる"].coverage.coversReadings["作"], "つくる");
     assert.equal(starterEntries["借りる|かりる"].coverage.coversReadings["借"], "かりる");
     assert.equal(starterEntries["場所|ばしょ"].coverage.coversReadings["場"], "ば");
@@ -418,6 +422,7 @@ test("tracked starter word data includes the ninth governed N4 completion batch"
     assert.equal(starterEntries["所|ところ"].coverage.coversReadings["所"], "ところ");
     assert.equal(starterEntries["少し|すこし"].coverage.coversReadings["少"], "すこし");
     assert.equal(starterEntries["景色|けしき"].coverage.coversReadings["色"], "しき");
+    assert.equal(starterEntries["景色|けしき"].readingBreakdown, "<ruby>景<rt>け</rt></ruby><ruby>色<rt>しき</rt></ruby>");
     assert.equal(starterEntries["親|おや"].coverage.coversReadings["親"], "おや");
     assert.equal(starterEntries["早い|はやい"].coverage.coversReadings["早"], "はやい");
     assert.equal(starterEntries["走る|はしる"].coverage.coversReadings["走"], "はしる");
@@ -439,6 +444,7 @@ test("tracked starter word data includes the tenth governed N4 completion batch"
     assert.equal(starterEntries["事情|じじょう"].coverage.coversReadings["事"], "じ");
     assert.equal(starterEntries["集中|しゅうちゅう"].coverage.coversReadings["集"], "しゅう");
     assert.equal(starterEntries["会場|かいじょう"].coverage.coversReadings["会"], "かい");
+    assert.equal(starterEntries["会場|かいじょう"].coverage.coversReadings["場"], "じょう");
     assert.equal(starterEntries["色|いろ"].coverage.coversReadings["色"], "いろ");
     assert.equal(starterEntries["人気|にんき"].coverage.coversReadings["人"], "にん");
     assert.equal(starterEntries["人気|にんき"].coverage.coversReadings["気"], "き");
@@ -512,6 +518,7 @@ test("tracked starter word data includes the fourteenth governed N4 completion b
     assert.equal(starterEntries["悪夢|あくむ"].coverage.coversReadings["悪"], "あく");
     assert.equal(starterEntries["近づく|ちかづく"].coverage.coversReadings["近"], "ちか");
     assert.equal(starterEntries["寝坊|ねぼう"].coverage.coversReadings["寝"], "ね");
+    assert.equal(starterEntries["寝坊|ねぼう"].readingBreakdown, "<ruby>寝<rt>ね</rt></ruby><ruby>坊<rt>ぼう</rt></ruby>");
     assert.equal(starterEntries["仕方|しかた"].coverage.coversReadings["方"], "かた");
     assert.equal(starterEntries["勉強中|べんきょうちゅう"].coverage.coversReadings["勉"], "べん");
     assert.equal(starterEntries["勉強中|べんきょうちゅう"].coverage.coversReadings["強"], "きょう");
@@ -528,6 +535,7 @@ test("tracked starter word data includes the fifteenth governed N4 completion ba
     assert.equal(starterEntries["明ける|あける"].coverage.coversReadings["明"], "あける");
     assert.equal(starterEntries["説明|せつめい"].coverage.coversReadings["明"], "めい");
     assert.equal(starterEntries["目的|もくてき"].coverage.coversReadings["目"], "もく");
+    assert.equal(starterEntries["目的|もくてき"].readingBreakdown, "<ruby>目<rt>もく</rt></ruby><ruby>的<rt>てき</rt></ruby>");
     assert.equal(starterEntries["方法|ほうほう"].coverage.coversReadings["方"], "ほう");
     assert.equal(starterEntries["立てる|たてる"].coverage.coversReadings["立"], "たてる");
     assert.equal(starterEntries["国立|こくりつ"].coverage.coversReadings["立"], "りつ");
@@ -597,6 +605,7 @@ test("tracked starter word data includes the nineteenth governed N4 completion b
     assert.equal(starterEntries["夏毛|なつげ"].coverage.coversReadings["夏"], "げ");
     assert.equal(starterEntries["音信|いんしん"].coverage.coversReadings["音"], "いん");
     assert.equal(starterEntries["明朝|みょうちょう"].coverage.coversReadings["明"], "みょう");
+    assert.equal(starterEntries["明朝|みょうちょう"].coverage.coversReadings["朝"], "ちょう");
 });
 
 test("tracked starter word data includes the twentieth governed N4 completion batch", () => {
@@ -656,6 +665,7 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
     assert.equal(starterEntries["二時|にじ"].coverage.coversReadings["二"], "じ");
     assert.equal(starterEntries["地下|ちか"].coverage.coversReadings["下"], "か");
     assert.equal(starterEntries["上下|じょうげ"].coverage.coversReadings["下"], "げ");
+    assert.equal(starterEntries["下手|へた"].coverage.coversReadings["手"], "た");
     assert.equal(starterEntries["外す|はずす"].coverage.coversReadings["外"], "はずす");
     assert.equal(starterEntries["入学|にゅうがく"].coverage.coversReadings["入"], "にゅう");
     assert.equal(starterEntries["大変|たいへん"].coverage.coversReadings["大"], "たい");
@@ -745,6 +755,7 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
     assert.equal(starterEntries["上昇|じょうしょう"].coverage.coversReadings["上"], "しょう");
     assert.equal(starterEntries["行方|ゆくえ"].coverage.coversReadings["行"], "ゆく");
     assert.equal(starterEntries["生地|きじ"].coverage.coversReadings["生"], "き");
+    assert.equal(starterEntries["生地|きじ"].coverage.coversReadings["地"], "じ");
     assert.equal(starterEntries["生やす|はやす"].coverage.coversReadings["生"], "はやす");
     assert.equal(starterEntries["火照る|ほてる"].coverage.coversReadings["火"], "ほ");
     assert.equal(starterEntries["生かす|いかす"].coverage.coversReadings["生"], "いかす");

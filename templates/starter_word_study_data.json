@@ -689,7 +689,17 @@
       "japanese": "私は歌が下手です。",
       "reading": "わたしはうたがへたです。",
       "english": "I am bad at singing."
-    }
+    },
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "手"
+      ],
+      "coversReadings": {
+        "手": "た"
+      }
+    },
+    "notes": "Reading-coverage support word for the 手 -> た pattern."
   },
   "下町|したまち": {
     "written": "下町",
@@ -3970,13 +3980,15 @@
     "coverage": {
       "role": "support",
       "focusKanji": [
-        "生"
+        "生",
+        "地"
       ],
       "coversReadings": {
-        "生": "き"
+        "生": "き",
+        "地": "じ"
       }
     },
-    "notes": "Reading-coverage support word for the 生 -> き pattern.",
+    "notes": "Reading-coverage support word for the 生 -> き and 地 -> じ patterns.",
     "exampleSentence": {
       "japanese": "この生地はやわらかくて着やすいです。",
       "reading": "このきじはやわらかくてきやすいです。",
@@ -8634,13 +8646,15 @@
     "coverage": {
       "role": "support",
       "focusKanji": [
-        "動"
+        "動",
+        "物"
       ],
       "coversReadings": {
-        "動": "どう"
+        "動": "どう",
+        "物": "ぶつ"
       }
     },
-    "notes": "Common N4 support word that covers the 動 -> どう reading.",
+    "notes": "Common N4 support word that covers the 動 -> どう and 物 -> ぶつ readings.",
     "exampleSentence": {
       "japanese": "子どもたちは動物の本を読むのが好きです。",
       "reading": "こどもたちはどうぶつのほんをよむのがすきです。",
@@ -9000,13 +9014,15 @@
     "coverage": {
       "role": "both",
       "focusKanji": [
+        "図",
         "館"
       ],
       "coversReadings": {
+        "図": "と",
         "館": "かん"
       }
     },
-    "notes": "Common N4 study word that also covers the 館 -> かん reading.",
+    "notes": "Common N4 study word that also covers the 図 -> と and 館 -> かん readings.",
     "exampleSentence": {
       "japanese": "午後は図書館で研究の本を読みます。",
       "reading": "ごごはとしょかんでけんきゅうのほんをよみます。",
@@ -9782,13 +9798,15 @@
     "coverage": {
       "role": "support",
       "focusKanji": [
-        "注"
+        "注",
+        "文"
       ],
       "coversReadings": {
-        "注": "ちゅう"
+        "注": "ちゅう",
+        "文": "もん"
       }
     },
-    "notes": "Common N4 support word that reinforces the 注 -> ちゅう reading.",
+    "notes": "Common N4 support word that reinforces the 注 -> ちゅう and 文 -> もん readings.",
     "exampleSentence": {
       "japanese": "店でラーメンを注文しました。",
       "reading": "みせでらーめんをちゅうもんしました。",
@@ -10644,13 +10662,15 @@
     "coverage": {
       "role": "support",
       "focusKanji": [
-        "住"
+        "住",
+        "所"
       ],
       "coversReadings": {
-        "住": "じゅう"
+        "住": "じゅう",
+        "所": "しょ"
       }
     },
-    "notes": "Common N4 support word that covers the 住 -> じゅう reading.",
+    "notes": "Common N4 support word that covers the 住 -> じゅう and 所 -> しょ readings.",
     "exampleSentence": {
       "japanese": "申込書に住所と電話番号を書いてください。",
       "reading": "もうしこみしょにじゅうしょとでんわばんごうをかいてください。",
@@ -11903,6 +11923,7 @@
       }
     },
     "notes": "Common N4 support word that covers the 色 -> しき reading.",
+    "readingBreakdown": "<ruby>景<rt>け</rt></ruby><ruby>色<rt>しき</rt></ruby>",
     "exampleSentence": {
       "japanese": "山の上からきれいな景色が見えました。",
       "reading": "やまのうえからきれいなけしきがみえました。",
@@ -12312,13 +12333,15 @@
     "coverage": {
       "role": "support",
       "focusKanji": [
-        "会"
+        "会",
+        "場"
       ],
       "coversReadings": {
-        "会": "かい"
+        "会": "かい",
+        "場": "じょう"
       }
     },
-    "notes": "Common N4 support word that covers the 会 -> かい reading.",
+    "notes": "Common N4 support word that covers the 会 -> かい and 場 -> じょう readings.",
     "exampleSentence": {
       "japanese": "会場は駅から歩いて五分の所です。",
       "reading": "かいじょうはえきからあるいてごふんのところです。",
@@ -13555,6 +13578,7 @@
       }
     },
     "notes": "Common N4 support word that covers the 寝 -> ね reading.",
+    "readingBreakdown": "<ruby>寝<rt>ね</rt></ruby><ruby>坊<rt>ぼう</rt></ruby>",
     "exampleSentence": {
       "japanese": "今日は寝坊して学校へ急ぎました。",
       "reading": "きょうはねぼうしてがっこうへいそぎました。",
@@ -13795,6 +13819,7 @@
       }
     },
     "notes": "Common N4 study word that also covers the 目 -> もく reading.",
+    "readingBreakdown": "<ruby>目<rt>もく</rt></ruby><ruby>的<rt>てき</rt></ruby>",
     "exampleSentence": {
       "japanese": "旅行の目的をはっきり決めました。",
       "reading": "りょこうのもくてきをはっきりきめました。",
@@ -15062,13 +15087,15 @@
     "coverage": {
       "role": "support",
       "focusKanji": [
-        "明"
+        "明",
+        "朝"
       ],
       "coversReadings": {
-        "明": "みょう"
+        "明": "みょう",
+        "朝": "ちょう"
       }
     },
-    "notes": "Common N4 support word that covers the 明 -> みょう reading.",
+    "notes": "Common N4 support word that covers the 明 -> みょう and 朝 -> ちょう readings.",
     "exampleSentence": {
       "japanese": "明朝は六時に駅で待ち合わせます。",
       "reading": "みょうちょうはろくじにえきでまちあわせます。",

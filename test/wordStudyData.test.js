@@ -633,6 +633,31 @@ test("tracked starter word data includes the twentieth governed N4 completion ba
     assert.equal(starterEntries["売買|ばいばい"].coverage.coversReadings["買"], "ばい");
 });
 
+test("tracked starter word data includes the twenty-first governed N4 completion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assert.equal(starterEntries["商品|しょうひん"].coverage.coversReadings["品"], "ひん");
+    assert.equal(starterEntries["多忙|たぼう"].coverage.coversReadings["忙"], "ぼう");
+    assert.equal(starterEntries["特色|とくしょく"].coverage.coversReadings["色"], "しょく");
+    assert.equal(starterEntries["早朝|そうちょう"].coverage.coversReadings["早"], "そう");
+    assert.equal(starterEntries["郵送|ゆうそう"].coverage.coversReadings["送"], "そう");
+    assert.equal(starterEntries["通知|つうち"].coverage.coversReadings["知"], "ち");
+    assert.equal(starterEntries["白鳥|はくちょう"].coverage.coversReadings["鳥"], "ちょう");
+    assert.equal(starterEntries["荷物|にもつ"].coverage.coversReadings["物"], "もつ");
+    assert.equal(starterEntries["貴重|きちょう"].coverage.coversReadings["重"], "ちょう");
+    assert.equal(starterEntries["期待|きたい"].coverage.coversReadings["待"], "たい");
+    assert.equal(starterEntries["水田|すいでん"].coverage.coversReadings["田"], "でん");
+    assert.equal(starterEntries["回答|かいとう"].coverage.coversReadings["答"], "とう");
+    assert.equal(starterEntries["度々|たびたび"].coverage.coversReadings["度"], "たび");
+    assert.equal(starterEntries["空き地|あきち"].coverage.coversReadings["空"], "あき");
+    assert.equal(starterEntries["悪者|わるもの"].coverage.coversReadings["者"], "もの");
+    assert.equal(starterEntries["貸切|かしきり"].coverage.coversReadings["切"], "きり");
+    assert.equal(starterEntries["昼飯|ひるめし"].coverage.coversReadings["飯"], "めし");
+    assert.equal(starterEntries["早速|さっそく"].coverage.coversReadings["早"], "さっ");
+    assert.equal(starterEntries["支度|したく"].coverage.coversReadings["度"], "たく");
+    assert.equal(starterEntries["過去|かこ"].coverage.coversReadings["去"], "こ");
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

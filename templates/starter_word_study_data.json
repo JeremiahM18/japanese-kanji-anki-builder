@@ -4482,16 +4482,26 @@
     "written": "待つ",
     "reading": "まつ",
     "meaning": "wait",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "core",
-      "n5"
+      "n4"
     ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "待"
+      ],
+      "coversReadings": {
+        "待": "まつ"
+      }
+    },
+    "notes": "Core N4 study word that also covers the 待 -> まつ reading.",
     "exampleSentence": {
-      "japanese": "駅で友だちを待ちます。",
-      "reading": "えきでともだちをまちます。",
-      "english": "I wait for my friend at the station."
+      "japanese": "駅で友だちを待っています。",
+      "reading": "えきでともだちをまっています。",
+      "english": "I am waiting for my friend at the station."
     }
   },
   "台所|だいどころ": {
@@ -6226,16 +6236,26 @@
     "written": "忙しい",
     "reading": "いそがしい",
     "meaning": "busy",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
-      "common",
-      "n5"
+      "core",
+      "n4"
     ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "忙"
+      ],
+      "coversReadings": {
+        "忙": "いそがしい"
+      }
+    },
+    "notes": "Core N4 study word that also covers the 忙 -> いそがしい reading.",
     "exampleSentence": {
-      "japanese": "今日はとても忙しいです。",
-      "reading": "きょうはとてもいそがしいです。",
-      "english": "I am very busy today."
+      "japanese": "今週は仕事が多くてとても忙しいです。",
+      "reading": "こんしゅうはしごとがおおくてとてもいそがしいです。",
+      "english": "This week I am very busy because I have a lot of work."
     }
   },
   "北|きた": {
@@ -6695,16 +6715,26 @@
     "written": "郵便局",
     "reading": "ゆうびんきょく",
     "meaning": "post office",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "局"
+      ],
+      "coversReadings": {
+        "局": "きょく"
+      }
+    },
+    "notes": "Common N4 support word that covers the 局 -> きょく reading.",
     "exampleSentence": {
-      "japanese": "郵便局で手紙を出します。",
-      "reading": "ゆうびんきょくでてがみをだします。",
-      "english": "I mail a letter at the post office."
+      "japanese": "昼休みに郵便局へ荷物を出しに行きます。",
+      "reading": "ひるやすみにゆうびんきょくへにもつをだしにいきます。",
+      "english": "I am going to the post office during lunch to send a package."
     }
   },
   "夕方|ゆうがた": {
@@ -8713,32 +8743,6 @@
       "english": "Doing two things at the same time is difficult."
     }
   },
-  "忙しい|いそがしい": {
-    "written": "忙しい",
-    "reading": "いそがしい",
-    "meaning": "busy",
-    "jlpt": 4,
-    "tags": [
-      "starter",
-      "core",
-      "n4"
-    ],
-    "coverage": {
-      "role": "both",
-      "focusKanji": [
-        "忙"
-      ],
-      "coversReadings": {
-        "忙": "いそがしい"
-      }
-    },
-    "notes": "Core N4 study word that also covers the 忙 -> いそがしい reading.",
-    "exampleSentence": {
-      "japanese": "今週は仕事が多くてとても忙しいです。",
-      "reading": "こんしゅうはしごとがおおくてとてもいそがしいです。",
-      "english": "This week I am very busy because I have a lot of work."
-    }
-  },
   "夕食|ゆうしょく": {
     "written": "夕食",
     "reading": "ゆうしょく",
@@ -9445,32 +9449,6 @@
       "japanese": "秋になると公園の木が赤くなります。",
       "reading": "あきになるとこうえんのきがあかくなります。",
       "english": "In autumn the trees in the park turn red."
-    }
-  },
-  "待つ|まつ": {
-    "written": "待つ",
-    "reading": "まつ",
-    "meaning": "wait",
-    "jlpt": 4,
-    "tags": [
-      "starter",
-      "core",
-      "n4"
-    ],
-    "coverage": {
-      "role": "both",
-      "focusKanji": [
-        "待"
-      ],
-      "coversReadings": {
-        "待": "まつ"
-      }
-    },
-    "notes": "Core N4 study word that also covers the 待 -> まつ reading.",
-    "exampleSentence": {
-      "japanese": "駅で友だちを待っています。",
-      "reading": "えきでともだちをまっています。",
-      "english": "I am waiting for my friend at the station."
     }
   },
   "待ち合わせ|まちあわせ": {
@@ -10439,32 +10417,6 @@
       "japanese": "近所に新しい店ができました。",
       "reading": "きんじょにあたらしいみせができました。",
       "english": "A new shop opened in the neighborhood."
-    }
-  },
-  "郵便局|ゆうびんきょく": {
-    "written": "郵便局",
-    "reading": "ゆうびんきょく",
-    "meaning": "post office",
-    "jlpt": 4,
-    "tags": [
-      "starter",
-      "common",
-      "n4"
-    ],
-    "coverage": {
-      "role": "support",
-      "focusKanji": [
-        "局"
-      ],
-      "coversReadings": {
-        "局": "きょく"
-      }
-    },
-    "notes": "Common N4 support word that covers the 局 -> きょく reading.",
-    "exampleSentence": {
-      "japanese": "昼休みに郵便局へ荷物を出しに行きます。",
-      "reading": "ひるやすみにゆうびんきょくへにもつをだしにいきます。",
-      "english": "I am going to the post office during lunch to send a package."
     }
   },
   "自由|じゆう": {
@@ -15778,6 +15730,526 @@
       "japanese": "中古の本を売買する店があります。",
       "reading": "ちゅうこのほんをばいばいするみせがあります。",
       "english": "There is a shop that buys and sells used books."
+    }
+  },
+  "商品|しょうひん": {
+    "written": "商品",
+    "reading": "しょうひん",
+    "meaning": "product / goods",
+    "jlpt": 4,
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "品"
+      ],
+      "coversReadings": {
+        "品": "ひん"
+      }
+    },
+    "notes": "Common N4 support word that covers the 品 -> ひん reading.",
+    "exampleSentence": {
+      "japanese": "この商品は人気があります。",
+      "reading": "このしょうひんはにんきがあります。",
+      "english": "This product is popular."
+    }
+  },
+  "多忙|たぼう": {
+    "written": "多忙",
+    "reading": "たぼう",
+    "meaning": "very busy",
+    "jlpt": 4,
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "忙"
+      ],
+      "coversReadings": {
+        "忙": "ぼう"
+      }
+    },
+    "notes": "Common N4 support word that covers the 忙 -> ぼう reading.",
+    "exampleSentence": {
+      "japanese": "彼は多忙な毎日を送っています。",
+      "reading": "かれはたぼうなまいにちをおくっています。",
+      "english": "He is spending very busy days."
+    }
+  },
+  "特色|とくしょく": {
+    "written": "特色",
+    "reading": "とくしょく",
+    "meaning": "special feature / characteristic",
+    "jlpt": 4,
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "色"
+      ],
+      "coversReadings": {
+        "色": "しょく"
+      }
+    },
+    "notes": "Common N4 support word that covers the 色 -> しょく reading.",
+    "exampleSentence": {
+      "japanese": "この学校には特色があります。",
+      "reading": "このがっこうにはとくしょくがあります。",
+      "english": "This school has a special feature."
+    }
+  },
+  "早朝|そうちょう": {
+    "written": "早朝",
+    "reading": "そうちょう",
+    "meaning": "early morning",
+    "jlpt": 4,
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "早"
+      ],
+      "coversReadings": {
+        "早": "そう"
+      }
+    },
+    "notes": "Common N4 support word that covers the 早 -> そう reading.",
+    "exampleSentence": {
+      "japanese": "早朝に公園を散歩しました。",
+      "reading": "そうちょうにこうえんをさんぽしました。",
+      "english": "I took a walk in the park early in the morning."
+    }
+  },
+  "郵送|ゆうそう": {
+    "written": "郵送",
+    "reading": "ゆうそう",
+    "meaning": "mailing / sending by post",
+    "jlpt": 4,
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "送"
+      ],
+      "coversReadings": {
+        "送": "そう"
+      }
+    },
+    "notes": "Common N4 support word that covers the 送 -> そう reading.",
+    "exampleSentence": {
+      "japanese": "書類を郵送しました。",
+      "reading": "しょるいをゆうそうしました。",
+      "english": "I mailed the documents."
+    }
+  },
+  "通知|つうち": {
+    "written": "通知",
+    "reading": "つうち",
+    "meaning": "notice / notification",
+    "jlpt": 4,
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "知"
+      ],
+      "coversReadings": {
+        "知": "ち"
+      }
+    },
+    "notes": "Common N4 support word that covers the 知 -> ち reading.",
+    "exampleSentence": {
+      "japanese": "学校から通知が来ました。",
+      "reading": "がっこうからつうちがきました。",
+      "english": "A notice came from the school."
+    }
+  },
+  "白鳥|はくちょう": {
+    "written": "白鳥",
+    "reading": "はくちょう",
+    "meaning": "swan",
+    "jlpt": 4,
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "鳥"
+      ],
+      "coversReadings": {
+        "鳥": "ちょう"
+      }
+    },
+    "notes": "Common N4 support word that covers the 鳥 -> ちょう reading.",
+    "exampleSentence": {
+      "japanese": "白鳥が湖を泳いでいます。",
+      "reading": "はくちょうがみずうみをおよいでいます。",
+      "english": "A swan is swimming in the lake."
+    }
+  },
+  "荷物|にもつ": {
+    "written": "荷物",
+    "reading": "にもつ",
+    "meaning": "luggage / baggage",
+    "jlpt": 4,
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "物"
+      ],
+      "coversReadings": {
+        "物": "もつ"
+      }
+    },
+    "notes": "Common N4 support word that covers the 物 -> もつ reading.",
+    "exampleSentence": {
+      "japanese": "荷物を駅まで運びました。",
+      "reading": "にもつをえきまではこびました。",
+      "english": "I carried the luggage to the station."
+    }
+  },
+  "貴重|きちょう": {
+    "written": "貴重",
+    "reading": "きちょう",
+    "meaning": "valuable / precious",
+    "jlpt": 4,
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "重"
+      ],
+      "coversReadings": {
+        "重": "ちょう"
+      }
+    },
+    "notes": "Common N4 support word that covers the 重 -> ちょう reading.",
+    "exampleSentence": {
+      "japanese": "これは貴重な資料です。",
+      "reading": "これはきちょうなしりょうです。",
+      "english": "This is valuable material."
+    }
+  },
+  "期待|きたい": {
+    "written": "期待",
+    "reading": "きたい",
+    "meaning": "expectation / anticipation",
+    "jlpt": 4,
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "待"
+      ],
+      "coversReadings": {
+        "待": "たい"
+      }
+    },
+    "notes": "Common N4 support word that covers the 待 -> たい reading.",
+    "exampleSentence": {
+      "japanese": "明日の発表を期待しています。",
+      "reading": "あしたのはっぴょうをきたいしています。",
+      "english": "I am looking forward to tomorrow's presentation."
+    }
+  },
+  "水田|すいでん": {
+    "written": "水田",
+    "reading": "すいでん",
+    "meaning": "rice paddy",
+    "jlpt": 4,
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "田"
+      ],
+      "coversReadings": {
+        "田": "でん"
+      }
+    },
+    "notes": "Common N4 support word that covers the 田 -> でん reading.",
+    "exampleSentence": {
+      "japanese": "水田に水が入っています。",
+      "reading": "すいでんにみずがはいっています。",
+      "english": "There is water in the rice paddy."
+    }
+  },
+  "回答|かいとう": {
+    "written": "回答",
+    "reading": "かいとう",
+    "meaning": "answer / response",
+    "jlpt": 4,
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "答"
+      ],
+      "coversReadings": {
+        "答": "とう"
+      }
+    },
+    "notes": "Common N4 support word that covers the 答 -> とう reading.",
+    "exampleSentence": {
+      "japanese": "質問に回答してください。",
+      "reading": "しつもんにかいとうしてください。",
+      "english": "Please answer the question."
+    }
+  },
+  "度々|たびたび": {
+    "written": "度々",
+    "reading": "たびたび",
+    "meaning": "often / repeatedly",
+    "jlpt": 4,
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "度"
+      ],
+      "coversReadings": {
+        "度": "たび"
+      }
+    },
+    "notes": "Common N4 support word that covers the 度 -> たび reading.",
+    "exampleSentence": {
+      "japanese": "彼は度々この店に来ます。",
+      "reading": "かれはたびたびこのみせにきます。",
+      "english": "He often comes to this shop."
+    }
+  },
+  "空き地|あきち": {
+    "written": "空き地",
+    "reading": "あきち",
+    "meaning": "vacant lot",
+    "jlpt": 4,
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "空"
+      ],
+      "coversReadings": {
+        "空": "あき"
+      }
+    },
+    "notes": "Common N4 support word that covers the 空 -> あき reading.",
+    "exampleSentence": {
+      "japanese": "子どもたちは空き地で遊びます。",
+      "reading": "こどもたちはあきちであそびます。",
+      "english": "The children play in the vacant lot."
+    }
+  },
+  "悪者|わるもの": {
+    "written": "悪者",
+    "reading": "わるもの",
+    "meaning": "villain / bad person",
+    "jlpt": 4,
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "者"
+      ],
+      "coversReadings": {
+        "者": "もの"
+      }
+    },
+    "notes": "Common N4 support word that covers the 者 -> もの reading.",
+    "exampleSentence": {
+      "japanese": "物語の悪者は最後に負けました。",
+      "reading": "ものがたりのわるものはさいごにまけました。",
+      "english": "The villain in the story lost at the end."
+    }
+  },
+  "貸切|かしきり": {
+    "written": "貸切",
+    "reading": "かしきり",
+    "meaning": "reserved / private booking",
+    "jlpt": 4,
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "切"
+      ],
+      "coversReadings": {
+        "切": "きり"
+      }
+    },
+    "notes": "Common N4 support word that covers the 切 -> きり reading.",
+    "exampleSentence": {
+      "japanese": "今日は店が貸切です。",
+      "reading": "きょうはみせがかしきりです。",
+      "english": "The shop is reserved today."
+    }
+  },
+  "昼飯|ひるめし": {
+    "written": "昼飯",
+    "reading": "ひるめし",
+    "meaning": "lunch",
+    "jlpt": 4,
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "飯"
+      ],
+      "coversReadings": {
+        "飯": "めし"
+      }
+    },
+    "notes": "Common N4 support word that covers the 飯 -> めし reading.",
+    "exampleSentence": {
+      "japanese": "昼飯を早めに食べました。",
+      "reading": "ひるめしをはやめにたべました。",
+      "english": "I ate lunch early."
+    }
+  },
+  "早速|さっそく": {
+    "written": "早速",
+    "reading": "さっそく",
+    "meaning": "right away / immediately",
+    "jlpt": 4,
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "早"
+      ],
+      "coversReadings": {
+        "早": "さっ"
+      }
+    },
+    "notes": "Common N4 support word that covers the 早 -> さっ reading.",
+    "exampleSentence": {
+      "japanese": "早速、宿題を始めます。",
+      "reading": "さっそく、しゅくだいをはじめます。",
+      "english": "I will start the homework right away."
+    }
+  },
+  "支度|したく": {
+    "written": "支度",
+    "reading": "したく",
+    "meaning": "preparation / getting ready",
+    "jlpt": 4,
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "度"
+      ],
+      "coversReadings": {
+        "度": "たく"
+      }
+    },
+    "notes": "Common N4 support word that covers the 度 -> たく reading.",
+    "exampleSentence": {
+      "japanese": "出発の支度をしましょう。",
+      "reading": "しゅっぱつのしたくをしましょう。",
+      "english": "Let's get ready for departure."
+    }
+  },
+  "過去|かこ": {
+    "written": "過去",
+    "reading": "かこ",
+    "meaning": "the past",
+    "jlpt": 4,
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "去"
+      ],
+      "coversReadings": {
+        "去": "こ"
+      }
+    },
+    "notes": "Common N4 support word that covers the 去 -> こ reading.",
+    "exampleSentence": {
+      "japanese": "過去の経験から学びました。",
+      "reading": "かこのけいけんからまなびました。",
+      "english": "I learned from past experience."
     }
   }
 }

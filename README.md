@@ -84,7 +84,7 @@ Current tracked word inventory:
 
 - N5 canonical word rows: `339`
 - N5 source-only phrase exclusions: `13`
-- N4 canonical word rows: `344`
+- N4 canonical word rows: `364`
 - N4 cumulative reading coverage: run `npm run deck:words:ready -- --levels=4 --require-no-active-triage` for the live value
 
 Run live commands for current coverage. Do not rely on README numbers for release decisions.

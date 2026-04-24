@@ -113,6 +113,15 @@ For governed listening review, use `npm run media:review:audio -- --level=5 --li
 
 For the new accessibility lane, use `npm run deck:review:accessibility -- --deck-kind=kanji` or `npm run deck:review:accessibility -- --deck-kind=word` after building the current deck artifacts. This review checks the actual note schema and current packaged output for Japanese-capable font support, textual redundancy, answer-side audio visibility when audio ships, and contrast on key text classes before manual Anki review.
 
+The current product-hardening docs now live in:
+
+- [docs/product-exit-criteria.md](docs/product-exit-criteria.md)
+- [docs/accessibility-checklist.md](docs/accessibility-checklist.md)
+- [docs/content-style-guide.md](docs/content-style-guide.md)
+- [docs/compatibility-matrix.md](docs/compatibility-matrix.md)
+- [docs/release-qa-checklist.md](docs/release-qa-checklist.md)
+- [NOTICE.md](NOTICE.md)
+
 ### Check setup and readiness
 
 ```bash

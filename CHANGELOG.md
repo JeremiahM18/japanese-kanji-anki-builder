@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added [docs/compatibility-matrix.md](docs/compatibility-matrix.md), [docs/release-qa-checklist.md](docs/release-qa-checklist.md), and [NOTICE.md](NOTICE.md) so the product now has an explicit compatibility contract, a manual release QA checklist, and a release-attribution surface instead of leaving those expectations implicit.
 - Added the first explicit enterprise-style product hardening docs: [docs/product-exit-criteria.md](docs/product-exit-criteria.md), [docs/accessibility-checklist.md](docs/accessibility-checklist.md), and [docs/content-style-guide.md](docs/content-style-guide.md), so release quality, accessibility review, and editorial decisions now have a tracked home instead of living only in repo history and code comments.
 - Added `npm run deck:review:accessibility`, a first deterministic accessibility audit for built kanji and word deck outputs. It checks Japanese-capable font coverage, textual redundancy, answer-side audio visibility when audio ships, stroke-order or breakdown visibility, and contrast on key text classes before manual Anki review.
 - Added a nineteenth deliberate N4 completion batch of governed learner-facing words: `開く`, `問い`, `問屋`, `手強い`, `観音開き`, `夏毛`, `音信`, and `明朝`, which raises canonical N4 word inventory to `318` rows, keeps starter governance at `318/318`, and moves the live cumulative N4 reading audit to `345/651` covered readings (`53.0%`) with `141` of those readings now covered by explicit support words.

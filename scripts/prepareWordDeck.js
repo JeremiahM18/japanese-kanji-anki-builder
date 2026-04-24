@@ -143,6 +143,9 @@ function formatWordDeckReadyReport(summary, doctorReport) {
                 ...(audit.sentenceOrthographyAudit
                     ? [`  sentence orthography review: ${audit.sentenceOrthographyAudit.suspiciousKanaOnlyCount} suspicious kana-only examples`]
                     : []),
+                ...(audit.readingBreakdownAudit
+                    ? [`  reading breakdown review: ${audit.readingBreakdownAudit.missingMixedBreakdownCount} mixed-script blanks, ${audit.readingBreakdownAudit.fragmentedLiteralBreakdownCount} fragmented kana segments`]
+                    : []),
                 ...(wordAudio
                     ? [`  word audio review: ${wordAudio.coveragePercent}% (${wordAudio.readyToReview}/${wordAudio.totalWords}) ready, ${wordAudio.missingAudio} missing, ${wordAudio.readingMismatch + wordAudio.policyMismatch + wordAudio.missingGeneratedReading + wordAudio.missingExpectedReading} flagged`]
                     : []),
@@ -298,6 +301,7 @@ async function main() {
             readingCoverageAuditByLevel[`N${level}`].readiness = completionReport.readiness;
             readingCoverageAuditByLevel[`N${level}`].policyAudit = completionReport.policyAudit;
             readingCoverageAuditByLevel[`N${level}`].sentenceOrthographyAudit = completionReport.sentenceOrthographyAudit;
+            readingCoverageAuditByLevel[`N${level}`].readingBreakdownAudit = completionReport.readingBreakdownAudit;
             pitchAccentReviewByLevel[`N${level}`] = completionReport.pitchAccentAudit;
         }
         if (audioSourcePolicy.releaseAudio.wordDeckAudioEnabled) {
@@ -389,7 +393,9 @@ async function main() {
             .some((triage) => ((triage?.editorialReviewItems || 0) + (triage?.promoteCuratedExampleItems || 0)) > 0);
         const hasPolicyViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
             .some((audit) => !audit?.policyAudit?.valid);
-        if (!hasFullTrueAnimationCoverage || hasPolicyViolations || (options.requireNoActiveTriage && hasActiveTriageBacklog)) {
+        const hasReadingBreakdownViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
+            .some((audit) => !audit?.readingBreakdownAudit?.valid);
+        if (!hasFullTrueAnimationCoverage || hasPolicyViolations || hasReadingBreakdownViolations || (options.requireNoActiveTriage && hasActiveTriageBacklog)) {
             process.exitCode = 1;
         }
         return;
@@ -400,7 +406,9 @@ async function main() {
         .some((triage) => ((triage?.editorialReviewItems || 0) + (triage?.promoteCuratedExampleItems || 0)) > 0);
     const hasPolicyViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
         .some((audit) => !audit?.policyAudit?.valid);
-    if (!hasFullTrueAnimationCoverage || hasPolicyViolations || (options.requireNoActiveTriage && hasActiveTriageBacklog)) {
+    const hasReadingBreakdownViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
+        .some((audit) => !audit?.readingBreakdownAudit?.valid);
+    if (!hasFullTrueAnimationCoverage || hasPolicyViolations || hasReadingBreakdownViolations || (options.requireNoActiveTriage && hasActiveTriageBacklog)) {
         process.exitCode = 1;
     }
 }

@@ -6,7 +6,7 @@ const {
 } = require("./wordReadingCoverageService");
 const { buildCoverageWordRows } = require("./wordDeckCoverageScopeService");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
-const { HAN_CHAR_RE, katakanaToHiragana } = require("../utils/japanese");
+const { HAN_CHAR_RE, isKanaOnly, katakanaToHiragana } = require("../utils/japanese");
 
 function extractConstituentKanji(text) {
     return [...new Set(
@@ -115,6 +115,56 @@ function buildWordDeckPitchAccentAudit({ wordRows, starterEntries = {}, wordPitc
         annotatedRows,
         missingRows,
         ungovernedRows,
+    };
+}
+
+function hasKanaLiteralFragmentation(readingBreakdown) {
+    const parts = String(readingBreakdown || "")
+        .split("／")
+        .map((part) => part.trim())
+        .filter(Boolean);
+
+    let previousWasLiteralKana = false;
+    for (const part of parts) {
+        const hasLabel = part.includes("=");
+        const isLiteralKana = !hasLabel && isKanaOnly(part);
+        if (previousWasLiteralKana && isLiteralKana) {
+            return true;
+        }
+        previousWasLiteralKana = isLiteralKana;
+    }
+
+    return false;
+}
+
+function buildWordDeckReadingBreakdownAudit({ wordRows }) {
+    const missingMixedRows = [];
+    const fragmentedLiteralRows = [];
+
+    for (const row of Array.isArray(wordRows) ? wordRows : []) {
+        const word = String(row?.Word || row?.word || "").trim();
+        const reading = String(row?.Reading || row?.reading || "").trim();
+        const readingBreakdown = String(row?.ReadingBreakdown || row?.readingBreakdown || "").trim();
+        const chars = Array.from(word);
+        const hasKanji = chars.some((char) => HAN_CHAR_RE.test(char) && char !== "々");
+        const hasKana = chars.some((char) => isKanaOnly(char));
+
+        if (hasKanji && hasKana && !readingBreakdown) {
+            missingMixedRows.push({ word, reading });
+            continue;
+        }
+
+        if (readingBreakdown && hasKanaLiteralFragmentation(readingBreakdown)) {
+            fragmentedLiteralRows.push({ word, reading, readingBreakdown });
+        }
+    }
+
+    return {
+        valid: missingMixedRows.length === 0 && fragmentedLiteralRows.length === 0,
+        missingMixedBreakdownCount: missingMixedRows.length,
+        fragmentedLiteralBreakdownCount: fragmentedLiteralRows.length,
+        missingMixedRows,
+        fragmentedLiteralRows,
     };
 }
 
@@ -294,11 +344,15 @@ function buildWordDeckCompletionReport({
         starterEntries,
         wordPitchAccentData,
     });
+    const readingBreakdownAudit = buildWordDeckReadingBreakdownAudit({
+        wordRows,
+    });
     const readiness = buildWordDeckReadiness({
         inventory,
         readingCoverage: readingCoverage.summary,
         triage: triage.summary,
         policyAudit,
+        readingBreakdownAudit,
     });
 
     return {
@@ -313,22 +367,24 @@ function buildWordDeckCompletionReport({
         policyAudit,
         sentenceOrthographyAudit,
         pitchAccentAudit,
+        readingBreakdownAudit,
         readiness,
     };
 }
 
-function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudit }) {
+function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudit, readingBreakdownAudit = null }) {
     const hasMissingStarterRows = (inventory?.missingEligibleCount || 0) > 0;
     const hasActiveTriageItems = ((triage?.editorialReviewItems || 0) + (triage?.promoteCuratedExampleItems || 0)) > 0;
     const allOpenItemsDeferred = (triage?.totalItems || 0) > 0
         && (triage?.deferVariantItems || 0) === (triage?.totalItems || 0);
     const hasPolicyViolations = !policyAudit?.valid;
+    const hasReadingBreakdownViolations = readingBreakdownAudit ? !readingBreakdownAudit.valid : false;
     const readingCoveragePercent = (readingCoverage?.totalReadings || 0) > 0
         ? Number((((readingCoverage?.coveredReadings || 0) / readingCoverage.totalReadings) * 100).toFixed(1))
         : 0;
 
     let status = "incomplete";
-    if (!hasMissingStarterRows && !hasActiveTriageItems && !hasPolicyViolations) {
+    if (!hasMissingStarterRows && !hasActiveTriageItems && !hasPolicyViolations && !hasReadingBreakdownViolations) {
         status = allOpenItemsDeferred ? "ready_with_deferred_variants" : "complete";
     }
 
@@ -337,6 +393,7 @@ function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudi
         hasMissingStarterRows,
         hasActiveTriageItems,
         hasPolicyViolations,
+        hasReadingBreakdownViolations,
         allOpenItemsDeferred,
         readingCoveragePercent,
     };
@@ -367,6 +424,10 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         "",
         "Sentence orthography review:",
         `- Suspicious kana-only examples: ${report.sentenceOrthographyAudit.suspiciousKanaOnlyCount}`,
+        "",
+        "Reading breakdown review:",
+        `- Mixed kanji/kana rows missing breakdowns: ${report.readingBreakdownAudit?.missingMixedBreakdownCount || 0}`,
+        `- Fragmented kana-only breakdown segments: ${report.readingBreakdownAudit?.fragmentedLiteralBreakdownCount || 0}`,
         "",
         "Reading coverage:",
         `- Readings audited: ${report.readingCoverage.totalReadings}`,
@@ -401,6 +462,20 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         }
     }
 
+    if ((report.readingBreakdownAudit?.missingMixedRows || []).length > 0) {
+        lines.push("", "Mixed kanji/kana rows missing reading breakdowns:");
+        for (const row of report.readingBreakdownAudit.missingMixedRows.slice(0, maxEntries)) {
+            lines.push(`- ${row.word} (${row.reading})`);
+        }
+    }
+
+    if ((report.readingBreakdownAudit?.fragmentedLiteralRows || []).length > 0) {
+        lines.push("", "Fragmented kana-only reading breakdown segments:");
+        for (const row of report.readingBreakdownAudit.fragmentedLiteralRows.slice(0, maxEntries)) {
+            lines.push(`- ${row.word} (${row.reading}) — ${row.readingBreakdown}`);
+        }
+    }
+
     return `${lines.join("\n")}\n`;
 }
 
@@ -409,6 +484,7 @@ module.exports = {
     buildWordDeckInventorySummary,
     buildWordDeckPitchAccentAudit,
     buildWordDeckPolicyAudit,
+    buildWordDeckReadingBreakdownAudit,
     buildWordDeckSentenceOrthographyAudit,
     buildWordDeckReadiness,
     formatWordDeckCompletionReport,

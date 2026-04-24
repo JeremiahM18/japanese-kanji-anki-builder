@@ -573,6 +573,12 @@
       "sourceReading": "しごと",
       "sourceAccent": "0"
     },
+    "仕事中|しごとちゅう": {
+      "pattern": "5 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "仕事中",
+      "generatedReading": "しごとちゅう"
+    },
     "仕方|しかた": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -683,6 +689,12 @@
       "sourceWord": "会話",
       "sourceReading": "かいわ",
       "sourceAccent": "0"
+    },
+    "会議室|かいぎしつ": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "会議室",
+      "generatedReading": "かいぎしつ"
     },
     "会費|かいひ": {
       "pattern": "0 [heiban]",
@@ -1192,6 +1204,12 @@
       "sourceReading": "べんきょう",
       "sourceAccent": "0"
     },
+    "勉強中|べんきょうちゅう": {
+      "pattern": "4 [odaka] / 1 [atamadaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "べんきょうちゅう",
+      "generatedReading": "べんきょおちゅう"
+    },
     "動く|うごく": {
       "pattern": "2 [nakadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -1452,6 +1470,12 @@
       "sourceReading": "しな",
       "sourceAccent": "0"
     },
+    "問|もん": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "もん",
+      "generatedReading": "もん"
+    },
     "問い|とい": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -1619,6 +1643,12 @@
       "sourceWord": "夏服",
       "sourceReading": "なつふく",
       "sourceAccent": "0"
+    },
+    "夏毛|なつげ": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "夏毛",
+      "generatedReading": "なつげ"
     },
     "夕方|ゆうがた": {
       "pattern": "0 [heiban]",

@@ -784,11 +784,18 @@ function buildWordReadingBreakdown({
 
     const written = String(candidate?.written || "").trim();
     const reading = String(curatedEntry?.reading || candidate?.pron || "").trim();
+    if (!written && !reading) {
+        return "";
+    }
+
     const units = buildReadingBreakdownUnits(written);
     const kanjiUnits = units.filter((unit) => unit.kind === "kanji");
     const hasKanaLiteral = units.some((unit) => unit.kind === "literal" && isKanaOnly(unit.char));
-    if (kanjiUnits.length === 0 || (kanjiUnits.length < 2 && !hasKanaLiteral)) {
-        return "";
+    if (kanjiUnits.length === 0) {
+        return escapeHtml(reading || written);
+    }
+    if (kanjiUnits.length < 2 && !hasKanaLiteral) {
+        return formatRubyChunk(written, reading);
     }
 
     const coverageReadings = curatedEntry?.coverage?.coversReadings || {};
@@ -801,11 +808,11 @@ function buildWordReadingBreakdown({
     });
 
     if (!segments) {
-        return "";
+        return formatRubyChunk(written, reading);
     }
 
     if (segments.length < 2) {
-        return "";
+        return formatRubyChunk(written, reading);
     }
 
     return formatReadingBreakdownSegmentsAsRuby(segments);

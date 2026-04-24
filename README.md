@@ -388,11 +388,11 @@ Word card fields include:
 - `ExampleSentence`
 - `Notes`
 
-The front of a word card shows the written study word without furigana. The back shows reading, reading breakdown, audio, verified pitch accent when available, meaning, JLPT label, coverage role, example sentence, notes, and a constituent kanji breakdown.
+The front of a word card shows the written study word without furigana. The back uses `ReadingBreakdown` as the primary reading surface, then shows audio, verified pitch accent when available, meaning, JLPT label, coverage role, example sentence, notes, and a constituent kanji breakdown.
 
-`ReadingBreakdown` segments the word reading into learner-facing pieces, for example `学校` as `学=がっ ／ 校=こう` or `食べ物` as `食べ=たべ ／ 物=もの`. Kana runs attach to the nearest kanji-bearing segment, and redundant one-piece breakdowns are suppressed. Irregular compounds use curated overrides instead of unsafe automatic segmentation.
+`ReadingBreakdown` is required for every shipped word card. Kanji words render learner-facing ruby furigana, kana-only words render the kana reading in the same position, and whole-word ruby fallback is used when safe segmentation is not available. Irregular compounds use curated overrides instead of unsafe automatic segmentation.
 
-`PitchAccent` is a dedicated pronunciation field. In exported word cards it renders a learner-facing Tokyo pitch contour graph with mora labels and a small source pattern caption. Leave it blank unless the accent pattern comes from a product-approved source in `templates/word_pitch_accent_data.json` or an explicitly curated override.
+`PitchAccent` is a dedicated pronunciation field. In exported word cards it renders a learner-facing Tokyo pitch contour graph with mora labels and no redundant source-pattern caption. Leave it blank unless the accent pattern comes from a product-approved source in `templates/word_pitch_accent_data.json` or an explicitly curated override.
 
 `KanjiBreakdown` includes constituent meanings, readings, stroke-order animation, and cross-level badges such as `JLPT N4 kanji`.
 

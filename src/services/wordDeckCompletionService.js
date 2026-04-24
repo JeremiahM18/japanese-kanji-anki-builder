@@ -119,6 +119,7 @@ function buildWordDeckPitchAccentAudit({ wordRows, starterEntries = {}, wordPitc
 }
 
 function buildWordDeckReadingBreakdownAudit({ wordRows }) {
+    const missingRows = [];
     const missingMixedRows = [];
     const nonRubyRows = [];
 
@@ -130,8 +131,11 @@ function buildWordDeckReadingBreakdownAudit({ wordRows }) {
         const hasKanji = chars.some((char) => HAN_CHAR_RE.test(char) && char !== "々");
         const hasKana = chars.some((char) => isKanaOnly(char));
 
-        if (hasKanji && hasKana && !readingBreakdown) {
-            missingMixedRows.push({ word, reading });
+        if (!readingBreakdown) {
+            missingRows.push({ word, reading });
+            if (hasKanji && hasKana) {
+                missingMixedRows.push({ word, reading });
+            }
             continue;
         }
 
@@ -141,9 +145,11 @@ function buildWordDeckReadingBreakdownAudit({ wordRows }) {
     }
 
     return {
-        valid: missingMixedRows.length === 0 && nonRubyRows.length === 0,
+        valid: missingRows.length === 0 && nonRubyRows.length === 0,
+        missingBreakdownCount: missingRows.length,
         missingMixedBreakdownCount: missingMixedRows.length,
         nonRubyBreakdownCount: nonRubyRows.length,
+        missingRows,
         missingMixedRows,
         nonRubyRows,
     };
@@ -158,10 +164,7 @@ function hasJapaneseKanji(value) {
 }
 
 function needsReadingBreakdown(row) {
-    const chars = Array.from(String(row?.Word || row?.word || ""));
-    const kanjiCount = chars.filter((char) => HAN_CHAR_RE.test(char) && char !== "々").length;
-    const hasKana = chars.some((char) => isKanaOnly(char));
-    return kanjiCount >= 2 || (kanjiCount > 0 && hasKana);
+    return String(row?.Word || row?.word || "").trim().length > 0;
 }
 
 function buildFieldCoverage({ rows, key, label, fieldName, required, appliesTo = () => true, maxMissingRows = 20 }) {
@@ -530,6 +533,7 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         `- Suspicious kana-only examples: ${report.sentenceOrthographyAudit.suspiciousKanaOnlyCount}`,
         "",
         "Reading breakdown review:",
+        `- Rows missing reading breakdowns: ${report.readingBreakdownAudit?.missingBreakdownCount || 0}`,
         `- Mixed kanji/kana rows missing breakdowns: ${report.readingBreakdownAudit?.missingMixedBreakdownCount || 0}`,
         `- Non-ruby kanji breakdowns: ${report.readingBreakdownAudit?.nonRubyBreakdownCount || 0}`,
         "",
@@ -570,9 +574,9 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         }
     }
 
-    if ((report.readingBreakdownAudit?.missingMixedRows || []).length > 0) {
-        lines.push("", "Mixed kanji/kana rows missing reading breakdowns:");
-        for (const row of report.readingBreakdownAudit.missingMixedRows.slice(0, maxEntries)) {
+    if ((report.readingBreakdownAudit?.missingRows || []).length > 0) {
+        lines.push("", "Rows missing reading breakdowns:");
+        for (const row of report.readingBreakdownAudit.missingRows.slice(0, maxEntries)) {
             lines.push(`- ${row.word} (${row.reading})`);
         }
     }

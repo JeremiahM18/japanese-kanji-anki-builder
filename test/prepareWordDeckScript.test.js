@@ -54,7 +54,7 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
                         requiredMissingCount: 0,
                         fields: {
                             reading: { label: "reading", readyCount: 258, totalCount: 258 },
-                            readingBreakdown: { label: "furigana breakdown", readyCount: 140, totalCount: 140 },
+                            readingBreakdown: { label: "furigana breakdown", readyCount: 258, totalCount: 258 },
                             audio: { label: "audio", readyCount: 258, totalCount: 258 },
                             pitchAccent: { label: "pitch accent", readyCount: 258, totalCount: 258 },
                             meaning: { label: "meaning", readyCount: 258, totalCount: 258 },
@@ -125,9 +125,9 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
     assert.match(text, /distinct missing targets: 147, variant-style gaps: 16/);
     assert.match(text, /deck policy: 0 standalone wrong-level cards, 0 missing labels/);
     assert.match(text, /sentence orthography review: 2 suspicious kana-only examples/);
-    assert.match(text, /reading breakdown review: 0 mixed-script blanks, 0 non-ruby breakdowns/);
+    assert.match(text, /reading breakdown review: 0 blanks, 0 non-ruby kanji breakdowns/);
     assert.match(text, /card back review: 100% \(2500\/2500\) required fields ready, 0 missing/);
-    assert.match(text, /card back fields: reading 258\/258, furigana breakdown 140\/140, audio 258\/258/);
+    assert.match(text, /card back fields: reading 258\/258, furigana breakdown 258\/258, audio 258\/258/);
     assert.match(text, /pitch accent review: 0% \(0\/258\) annotated, 258 missing, 0 ungoverned, field present/);
     assert.match(text, /triage backlog: 147 editorial review, 0 promote curated example, 16 defer variant/);
     assert.match(text, /True looping animation coverage: 100% \(166\/166\)/);

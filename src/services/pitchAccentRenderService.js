@@ -106,7 +106,7 @@ function buildPitchAccentHtml({ pattern, reading }) {
     }
 
     if (moras.length === 0 || accents.length === 0) {
-        return `<div class="pitch-accent-fallback">Pitch: ${escapeHtml(trimmedPattern)}</div>`;
+        return "";
     }
 
     const diagrams = accents.map((accent, index) => [
@@ -119,7 +119,6 @@ function buildPitchAccentHtml({ pattern, reading }) {
     return [
         "<div class=\"pitch-accent-visual\">",
         diagrams,
-        `<div class="pitch-accent-caption">Pitch: ${escapeHtml(trimmedPattern)}</div>`,
         "</div>",
     ].join("");
 }

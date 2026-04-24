@@ -107,3 +107,35 @@ test("buildWordAudioReviewReport does not treat kanji-reading audio as word audi
     assert.equal(report.summary.missingAudio, 1);
     assert.equal(report.rows[0].status, "missing_audio");
 });
+
+test("buildWordAudioReviewReport requires exact word-reading asset identity", async () => {
+    const report = await buildWordAudioReviewReport({
+        wordTsv: [
+            "Word\tReading\tAudio\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes",
+            "下手\tへた\t\tunskillful\tJLPT N5\tReading coverage support\t手\t手: て\t\t\t",
+        ].join("\n"),
+        audioSourcePolicy: loadAudioSourcePolicy(),
+        audioService: {
+            async getManifest() {
+                return {
+                    assets: {
+                        audio: [{
+                            path: "audio/624B_手-word-reading-手-て.wav",
+                            source: "voicevox-nemo",
+                            category: "word-reading",
+                            text: "手",
+                            reading: "て",
+                            voice: "女声1 / ノーマル",
+                            locale: "ja-JP",
+                        }],
+                    },
+                };
+            },
+        },
+        mediaRootDir: "C:/repo/data/media",
+    });
+
+    assert.equal(report.summary.missingAudio, 1);
+    assert.equal(report.summary.readingMismatch, 0);
+    assert.equal(report.rows[0].status, "missing_audio");
+});

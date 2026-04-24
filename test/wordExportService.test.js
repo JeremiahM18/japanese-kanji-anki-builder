@@ -141,7 +141,12 @@ test("buildWordReadingBreakdown renders learner-facing furigana breakdowns", () 
     assert.equal(buildWordReadingBreakdown({
         candidate: { written: "今日", pron: "きょう" },
         kanjiInferenceCache,
-    }), "");
+    }), "<ruby>今日<rt>きょう</rt></ruby>");
+
+    assert.equal(buildWordReadingBreakdown({
+        candidate: { written: "ここ", pron: "ここ" },
+        kanjiInferenceCache,
+    }), "ここ");
 
     assert.equal(buildWordReadingBreakdown({
         candidate: { written: "今日", pron: "きょう" },
@@ -1247,7 +1252,7 @@ test("buildWordTsvForJlptLevel emits governed word audio when a managed word-rea
     const lines = result.tsv.trim().split("\n");
     const columns = lines[1].split("\t");
     assert.equal(columns[3], "[sound:6642_時-word-reading-時間-じかん.wav]");
-    assert.equal(columns[4], "<div class=\"pitch-accent-fallback\">Pitch: じ＼かん [atamadaka]</div>");
+    assert.equal(columns[4], "");
     assert.deepEqual(result.mediaRefs, [{
         kind: "audio",
         kanji: "時",
@@ -1310,7 +1315,8 @@ test("buildWordTsvForJlptLevel renders governed pitch accents as contour graphs"
     const lines = result.tsv.trim().split("\n");
     assert.match(lines[1], /class="pitch-accent-visual"/);
     assert.match(lines[1], /class="pitch-contour"/);
-    assert.match(lines[1], /Pitch: 1 \[atamadaka\]/);
+    assert.doesNotMatch(lines[1], /Pitch:/);
+    assert.doesNotMatch(lines[1], /atamadaka/);
     assert.match(lines[1], />あ<\/text>/);
     assert.match(lines[1], />と<\/text>/);
     assert.match(lines[1], />で<\/text>/);

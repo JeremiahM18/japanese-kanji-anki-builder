@@ -86,13 +86,19 @@ async function readAudioManifest({ kanji, audioService = null, mediaRootDir = ""
 }
 
 async function findManagedWordAudioAsset({ written, reading, focusKanji = [], audioService = null, mediaRootDir = "" }) {
+    const expectedWritten = cleanString(written);
+    const expectedReading = cleanString(reading);
     for (const kanji of buildWordAudioCandidateKanji({ written, focusKanji })) {
         const manifest = await readAudioManifest({ kanji, audioService, mediaRootDir });
-        const candidateAssets = (manifest?.assets?.audio || []).filter((asset) => asset?.category === "word-reading");
+        const candidateAssets = (manifest?.assets?.audio || []).filter((asset) => (
+            asset?.category === "word-reading"
+            && cleanString(asset?.text) === expectedWritten
+            && cleanString(asset?.reading) === expectedReading
+        ));
         const asset = selectBestAudioAsset(candidateAssets, {
             category: "word-reading",
-            text: written,
-            reading,
+            text: expectedWritten,
+            reading: expectedReading,
         });
         if (asset) {
             return {

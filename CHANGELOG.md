@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 Checkpoint metrics in older bullets describe the state at that checkpoint. Use the ready/audit commands for current release decisions.
 
+### Changed
+
+- Changed word-card pronunciation display so `ReadingBreakdown` is the only learner-facing reading surface and `PitchAccent` renders as a graph without redundant caption text.
+
 ### Added
 
 - Added a twenty-first deliberate N4 completion batch of governed learner-facing words: `商品`, `多忙`, `特色`, `早朝`, `郵送`, `通知`, `白鳥`, `荷物`, `貴重`, `期待`, `水田`, `回答`, `度々`, `空き地`, `悪者`, `貸切`, `昼飯`, `早速`, `支度`, and `過去`, which raises canonical N4 word inventory to `364` rows and moves the current cumulative N4 reading audit to `401/651` covered readings (`61.6%`).

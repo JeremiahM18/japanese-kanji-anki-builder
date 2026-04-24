@@ -106,8 +106,10 @@ test("buildWordDeckReadingBreakdownAudit flags mixed-script blanks and non-ruby 
     });
 
     assert.equal(audit.valid, false);
+    assert.equal(audit.missingBreakdownCount, 1);
     assert.equal(audit.missingMixedBreakdownCount, 1);
     assert.equal(audit.nonRubyBreakdownCount, 1);
+    assert.equal(audit.missingRows[0].word, "生まれる");
     assert.equal(audit.missingMixedRows[0].word, "生まれる");
     assert.equal(audit.nonRubyRows[0].word, "友だち");
 });
@@ -471,8 +473,10 @@ test("formatWordDeckCompletionReport renders missing rows and source-only exclus
             flaggedRows: [{ word: "猫", reading: "ねこ", sentence: "白いねこがいます。" }],
         },
         readingBreakdownAudit: {
+            missingBreakdownCount: 1,
             missingMixedBreakdownCount: 1,
             nonRubyBreakdownCount: 1,
+            missingRows: [{ word: "生まれる", reading: "うまれる" }],
             missingMixedRows: [{ word: "生まれる", reading: "うまれる" }],
             nonRubyRows: [{ word: "友だち", reading: "ともだち", readingBreakdown: "友=とも ／ だち" }],
         },
@@ -509,6 +513,7 @@ test("formatWordDeckCompletionReport renders missing rows and source-only exclus
     assert.match(text, /Standalone wrong-level cards: 0/);
     assert.match(text, /Missing cross-level\/outside-level badges: 0/);
     assert.match(text, /Suspicious kana-only examples: 1/);
+    assert.match(text, /Rows missing reading breakdowns: 1/);
     assert.match(text, /Mixed kanji\/kana rows missing breakdowns: 1/);
     assert.match(text, /Non-ruby kanji breakdowns: 1/);
     assert.match(text, /Required back-side fields: 118\/120 \(2 missing\)/);

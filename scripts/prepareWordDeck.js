@@ -145,7 +145,7 @@ function formatWordDeckReadyReport(summary, doctorReport) {
                     ? [`  sentence orthography review: ${audit.sentenceOrthographyAudit.suspiciousKanaOnlyCount} suspicious kana-only examples`]
                     : []),
                 ...(audit.readingBreakdownAudit
-                    ? [`  reading breakdown review: ${audit.readingBreakdownAudit.missingMixedBreakdownCount} mixed-script blanks, ${audit.readingBreakdownAudit.nonRubyBreakdownCount} non-ruby breakdowns`]
+                    ? [`  reading breakdown review: ${audit.readingBreakdownAudit.missingBreakdownCount || 0} blanks, ${audit.readingBreakdownAudit.nonRubyBreakdownCount} non-ruby kanji breakdowns`]
                     : []),
                 ...(cardBackAudit
                     ? [

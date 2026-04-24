@@ -116,53 +116,110 @@ function getWordDeckStudyOrderKey(entry, { levelNumber, seed = DEFAULT_WORD_DECK
     ].join("|"));
 }
 
-function sortWordDeckEntriesForStudy(entries, { levelNumber, seed = DEFAULT_WORD_DECK_ORDER_SEED } = {}) {
+function hasWordStudyTag(entry, tag) {
+    return (Array.isArray(entry?.curatedEntry?.tags) ? entry.curatedEntry.tags : [])
+        .some((value) => String(value || "").trim().toLowerCase() === tag);
+}
+
+function countOutsideLevelKanji(entry, { levelNumber, jlptOnlyJson } = {}) {
+    return extractConstituentKanji(entry?.candidate?.written)
+        .filter((kanji) => {
+            const kanjiLevel = jlptOnlyJson?.[kanji]?.jlpt;
+            return Number.isInteger(kanjiLevel) && kanjiLevel !== levelNumber;
+        })
+        .length;
+}
+
+function getWordDeckCurriculumScore(entry, { levelNumber, jlptOnlyJson } = {}) {
+    const written = String(entry?.candidate?.written || "");
+    const constituentKanji = extractConstituentKanji(written);
+    const role = String(entry?.curatedEntry?.coverage?.role || "").trim().toLowerCase();
+    const commonOrCore = hasWordStudyTag(entry, "common") || hasWordStudyTag(entry, "core");
+    const outsideLevelKanji = countOutsideLevelKanji(entry, { levelNumber, jlptOnlyJson });
+
+    let score = 0;
+    score += commonOrCore ? 0 : 12;
+    score += role === "support" ? 18 : 0;
+    score += Math.max(0, constituentKanji.length - 1) * 8;
+    score += outsideLevelKanji * 10;
+    score += Math.max(0, written.length - 3) * 3;
+
+    return score;
+}
+
+function getWordDeckCurriculumTier(entry, options = {}) {
+    const score = getWordDeckCurriculumScore(entry, options);
+    if (score <= 5) {
+        return 0;
+    }
+    if (score <= 16) {
+        return 1;
+    }
+    if (score <= 28) {
+        return 2;
+    }
+    return 3;
+}
+
+function sortWordDeckEntriesForStudy(entries, { levelNumber, jlptOnlyJson, seed = DEFAULT_WORD_DECK_ORDER_SEED } = {}) {
     const buckets = new Map();
 
     for (const entry of entries || []) {
-        const groupKey = getWordDeckStudyGroupKey(entry);
+        const tier = getWordDeckCurriculumTier(entry, { levelNumber, jlptOnlyJson });
+        const groupKey = `${tier}|${getWordDeckStudyGroupKey(entry)}`;
         if (!buckets.has(groupKey)) {
-            buckets.set(groupKey, []);
+            buckets.set(groupKey, { tier, entries: [] });
         }
-        buckets.get(groupKey).push(entry);
+        buckets.get(groupKey).entries.push(entry);
     }
 
     const orderedBuckets = [...buckets.entries()]
         .map(([groupKey, bucket]) => ({
+            tier: bucket.tier,
             groupKey,
-            bucket: [...bucket].sort((a, b) => (
-                getWordDeckStudyOrderKey(a, { levelNumber, seed }) - getWordDeckStudyOrderKey(b, { levelNumber, seed })
+            bucket: [...bucket.entries].sort((a, b) => (
+                getWordDeckCurriculumScore(a, { levelNumber, jlptOnlyJson })
+                - getWordDeckCurriculumScore(b, { levelNumber, jlptOnlyJson })
+                || getWordDeckStudyOrderKey(a, { levelNumber, seed }) - getWordDeckStudyOrderKey(b, { levelNumber, seed })
                 || compareWordDeckAuditOrder(a, b)
             )),
         }))
         .sort((a, b) => (
-            hashStringToUint32(`${seed}|N${levelNumber || ""}|group|${a.groupKey}`)
+            a.tier - b.tier
+            || hashStringToUint32(`${seed}|N${levelNumber || ""}|group|${a.groupKey}`)
             - hashStringToUint32(`${seed}|N${levelNumber || ""}|group|${b.groupKey}`)
             || String(a.groupKey).localeCompare(String(b.groupKey))
         ));
 
     const ordered = [];
-    let remaining = orderedBuckets.reduce((sum, item) => sum + item.bucket.length, 0);
-    let round = 0;
-    while (remaining > 0) {
-        const roundBuckets = [...orderedBuckets].sort((a, b) => (
-            hashStringToUint32(`${seed}|N${levelNumber || ""}|round|${round}|${a.groupKey}`)
-            - hashStringToUint32(`${seed}|N${levelNumber || ""}|round|${round}|${b.groupKey}`)
-            || String(a.groupKey).localeCompare(String(b.groupKey))
-        ));
+    for (const tier of [...new Set(orderedBuckets.map((item) => item.tier))].sort((a, b) => a - b)) {
+        const tierBuckets = orderedBuckets.filter((item) => item.tier === tier);
+        let remaining = tierBuckets.reduce((sum, item) => sum + item.bucket.length, 0);
+        let round = 0;
+        while (remaining > 0) {
+            const roundBuckets = [...tierBuckets].sort((a, b) => (
+                hashStringToUint32(`${seed}|N${levelNumber || ""}|tier|${tier}|round|${round}|${a.groupKey}`)
+                - hashStringToUint32(`${seed}|N${levelNumber || ""}|tier|${tier}|round|${round}|${b.groupKey}`)
+                || String(a.groupKey).localeCompare(String(b.groupKey))
+            ));
 
-        for (const item of roundBuckets) {
-            const entry = item.bucket.shift();
-            if (!entry) {
-                continue;
+            for (const item of roundBuckets) {
+                const entry = item.bucket.shift();
+                if (!entry) {
+                    continue;
+                }
+                ordered.push(entry);
+                remaining -= 1;
             }
-            ordered.push(entry);
-            remaining -= 1;
+            round += 1;
         }
-        round += 1;
     }
 
     return ordered;
+}
+
+function formatPitchAccent(curatedEntry) {
+    return String(curatedEntry?.pitchAccent || "").trim();
 }
 
 function buildWordNotes(curatedEntry) {
@@ -1258,7 +1315,7 @@ function createWordExportService({
         const mediaKanji = new Set();
         const mediaRefs = [];
         const sortedEntries = [...wordCandidates.values()].sort(compareWordDeckAuditOrder);
-        const studyEntries = sortWordDeckEntriesForStudy(sortedEntries, { levelNumber });
+        const studyEntries = sortWordDeckEntriesForStudy(sortedEntries, { levelNumber, jlptOnlyJson });
 
         for (const entry of studyEntries) {
             const constituentKanji = extractConstituentKanji(entry.candidate.written);
@@ -1323,6 +1380,7 @@ function createWordExportService({
                 entry.curatedEntry?.reading || entry.candidate.pron,
                 readingBreakdown,
                 wordAudio.audioField,
+                formatPitchAccent(entry.curatedEntry),
                 entry.curatedEntry?.meaning || entry.candidate.gloss,
                 buildJlptLabel(trustedLevel),
                 summarizeCoverageRole(entry, jlptWordLevelContract),
@@ -1397,6 +1455,8 @@ module.exports = {
     extractConstituentKanji,
     getCanonicalWordLevel,
     getTrustedCandidateLevel,
+    getWordDeckCurriculumScore,
+    getWordDeckCurriculumTier,
     getWordDeckStudyGroupKey,
     hasExcludedWordCardTag,
     inferWordLevel,

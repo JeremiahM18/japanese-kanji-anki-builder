@@ -362,6 +362,8 @@ Word card fields include:
 - `Word`
 - `Reading`
 - `ReadingBreakdown`
+- `Audio`
+- `PitchAccent`
 - `Meaning`
 - `JLPTLevel`
 - `CoverageRole`
@@ -370,11 +372,12 @@ Word card fields include:
 - `KanjiBreakdown`
 - `ExampleSentence`
 - `Notes`
-- `Audio`
 
-The front of a word card shows the written study word without furigana. The back shows reading, reading breakdown, meaning, JLPT label, coverage role, example sentence, notes, audio, and a constituent kanji breakdown.
+The front of a word card shows the written study word without furigana. The back shows reading, reading breakdown, audio, verified pitch accent when available, meaning, JLPT label, coverage role, example sentence, notes, and a constituent kanji breakdown.
 
 `ReadingBreakdown` segments the word reading into learner-facing pieces, for example `学校` as `学=がっ ／ 校=こう` or `食べ物` as `食=た ／ べ ／ 物=もの`. Irregular compounds use curated overrides instead of unsafe automatic segmentation.
+
+`PitchAccent` is a dedicated pronunciation field. Leave it blank unless the accent pattern comes from a verified source with product-approved provenance.
 
 `KanjiBreakdown` includes constituent meanings, readings, stroke-order animation, and cross-level badges such as `JLPT N4 kanji`.
 

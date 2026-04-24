@@ -14,6 +14,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added a twenty-second deliberate N4 completion batch of governed learner-facing support words: `弟子`, `喫茶店`, `一切`, `持ち主`, `風向き`, `献立`, `新手`, `代物`, `面目`, `通行止め`, `室町`, and `仕業`, which raises canonical N4 word inventory to `376` rows, moves cumulative N4 reading coverage to `413/651` readings (`63.4%`), and keeps card-back proof at `100%` after pitch import plus governed word-audio sync.
 - Added a twenty-first deliberate N4 completion batch of governed learner-facing words: `商品`, `多忙`, `特色`, `早朝`, `郵送`, `通知`, `白鳥`, `荷物`, `貴重`, `期待`, `水田`, `回答`, `度々`, `空き地`, `悪者`, `貸切`, `昼飯`, `早速`, `支度`, and `過去`, which raises canonical N4 word inventory to `364` rows and moves the current cumulative N4 reading audit to `401/651` covered readings (`61.6%`).
 - Added the final five N4 word pitch-accent entries from governed VOICEVOX Nemo accent queries, then extended N4 Kanjium-backed pitch coverage for the new batch, bringing tracked N4 word pitch coverage to `364/364` while keeping VOICEVOX-derived entries source-labeled separately from Kanjium dictionary data.
 - Added a dedicated word-card `ReadingBreakdown` field that segments safe multi-kanji readings into learner-facing pieces, supports curated overrides for irregular compounds, and renders the breakdown separately from both whole-word reading and kanji coverage metadata.

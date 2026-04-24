@@ -658,6 +658,24 @@ test("tracked starter word data includes the twenty-first governed N4 completion
     assert.equal(starterEntries["過去|かこ"].coverage.coversReadings["去"], "こ");
 });
 
+test("tracked starter word data includes the twenty-second governed N4 completion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assert.equal(starterEntries["弟子|でし"].coverage.coversReadings["弟"], "で");
+    assert.equal(starterEntries["喫茶店|きっさてん"].coverage.coversReadings["茶"], "さ");
+    assert.equal(starterEntries["一切|いっさい"].coverage.coversReadings["切"], "さい");
+    assert.equal(starterEntries["持ち主|もちぬし"].coverage.coversReadings["主"], "ぬし");
+    assert.equal(starterEntries["風向き|かざむき"].coverage.coversReadings["風"], "かざ");
+    assert.equal(starterEntries["献立|こんだて"].coverage.coversReadings["立"], "だて");
+    assert.equal(starterEntries["新手|あらて"].coverage.coversReadings["新"], "あら");
+    assert.equal(starterEntries["代物|しろもの"].coverage.coversReadings["代"], "しろ");
+    assert.equal(starterEntries["面目|めんぼく"].coverage.coversReadings["目"], "ぼく");
+    assert.equal(starterEntries["通行止め|つうこうどめ"].coverage.coversReadings["止"], "どめ");
+    assert.equal(starterEntries["室町|むろまち"].coverage.coversReadings["室"], "むろ");
+    assert.equal(starterEntries["仕業|しわざ"].coverage.coversReadings["業"], "わざ");
+    assert.equal(starterEntries["通行止め|つうこうどめ"].readingBreakdown, "<ruby>通<rt>つう</rt></ruby><ruby>行<rt>こう</rt></ruby><ruby>止<rt>ど</rt></ruby>め");
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

@@ -62,6 +62,8 @@ The canonical repo-side release audio policy now lives in [../templates/audio_so
 
 Before generating governed audio on a new machine, run `npm run doctor:voicevox`. That preflight verifies that the local VOICEVOX Nemo engine is reachable and that the pinned release speaker is actually installed, which is a much safer check than discovering a generic `fetch failed` during generation.
 
+The canonical repo-side stroke-order source policy now lives in [../templates/stroke_order_source_policy.json](../templates/stroke_order_source_policy.json). Treat it as the governing truth for static image and animation provenance. The current release contract allows local/KanjiVG-style static images, allows the configured GitHub-backed animation mirrors, forbids remote static-image providers, and preserves source ids in managed manifests. Run `npm run data:audit:stroke-order -- --json` after changing media providers or importing stroke-order assets.
+
 ## Curated kanji data
 
 Curated kanji entries are where the product locks in learner-facing choices that should not be left to generic inference.

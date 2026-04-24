@@ -219,6 +219,7 @@ npm run media:import:stroke-order -- --input-dir=/path/to/files
 npm run media:import:kanjivg -- --input-dir=/path/to/extracted-kanjivg/kanji --level=4
 npm run media:sync -- --level=5 --limit=25
 npm run media:report:animations -- --level=5 --limit=25
+npm run data:audit:stroke-order -- --json
 ```
 
 Managed animation priority:
@@ -228,6 +229,7 @@ Managed animation priority:
 3. local source files
 
 True animation coverage requires real looping animation assets. Static images and SVG fallbacks do not satisfy that rule.
+Stroke-order release provenance is governed by `templates/stroke_order_source_policy.json`; run the audit before treating new media as release-ready.
 
 ### Audio
 

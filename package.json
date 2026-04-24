@@ -23,6 +23,7 @@
     "data:audit:jlpt": "node scripts/auditJlptAlignment.js",
     "data:audit:jlpt:words": "node scripts/auditJlptWordAlignment.js",
     "data:audit:audio": "node scripts/auditAudioPolicy.js",
+    "data:audit:stroke-order": "node scripts/auditStrokeOrderPolicy.js",
     "media:review:audio": "node scripts/reportAudioReview.js",
     "media:review:word-audio": "node scripts/reportWordAudioReview.js",
     "doctor:voicevox": "node scripts/doctorVoicevox.js",

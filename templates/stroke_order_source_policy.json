@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "releaseStrokeOrder": {
+    "allowedImageSourceIds": [
+      "local-filesystem",
+      "kanjivg"
+    ],
+    "allowedAnimationSourceIds": [
+      "remote-stroke-order-animation",
+      "remote-stroke-order-animation-animcjk",
+      "local-filesystem"
+    ],
+    "requireSingleImageSourcePerDeck": false,
+    "requireSingleAnimationSourcePerDeck": false,
+    "remoteImageProvidersAllowed": false,
+    "remoteAnimationProvidersAllowed": true,
+    "sourceNotes": {
+      "local-filesystem": "Local operator-provided source files. Release use requires source-folder provenance review before import.",
+      "kanjivg": "KanjiVG-derived static SVG stroke-order images. KanjiVG assets are distributed under the Creative Commons Attribution-Share Alike 3.0 license.",
+      "remote-stroke-order-animation": "Configured GitHub raw mirror for kanji.gif stroke-order GIF animations. Treat as an approved mirror only while license/provenance remains documented.",
+      "remote-stroke-order-animation-animcjk": "Configured GitHub raw mirror for AnimCJK SVG animations. Treat as fallback animation source with source attribution preserved in manifests."
+    }
+  }
+}

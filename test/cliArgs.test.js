@@ -7,6 +7,7 @@ const { parseArgs: parsePreviewArgs } = require("../scripts/previewDeck");
 const { parseArgs: parseReadinessArgs } = require("../scripts/reportDeckReadiness");
 const { parseArgs: parseSyncArgs } = require("../scripts/syncMedia");
 const { parseArgs: parsePrepareArgs } = require("../scripts/prepareDeck");
+const { parseArgs: parseImportKanjiVgArgs } = require("../scripts/importKanjiVgStrokeOrder");
 
 test("syncMedia parseArgs accepts --levels alias for one level", () => {
     const options = parseSyncArgs(["--levels=5", "--limit=79"]);
@@ -25,6 +26,14 @@ test("syncMedia parseArgs records unsupported flags", () => {
 
 test("syncMedia parseArgs rejects multi-level alias input", () => {
     assert.throws(() => parseSyncArgs(["--levels=5,4"]), /one level at a time/);
+});
+
+test("importKanjiVg parseArgs accepts explicit kanji outside JLPT inventory", () => {
+    const options = parseImportKanjiVgArgs(["--input-dir=downloads/kanjivg", "--kanji=椅,瓜", "--json"]);
+
+    assert.equal(options.inputDir, "downloads/kanjivg");
+    assert.deepEqual(options.kanji, ["椅", "瓜"]);
+    assert.equal(options.json, true);
 });
 
 test("prepareDeck parseArgs records unsupported flags, json mode, and strict override", () => {

@@ -5,11 +5,13 @@ const { invokeCliMain } = require("../src/utils/cliArgs");
 const { loadConfig } = require("../src/config");
 const { parseLevelsArgument } = require("../src/services/mediaSourceReportService");
 const { importKanjiVgDirectory } = require("../src/services/kanjiVgImportService");
+const { parseCsvOption } = require("../src/utils/cliArgs");
 
 function parseArgs(argv) {
     const options = {
         inputDir: null,
         levels: null,
+        kanji: [],
         limit: null,
         json: argv.includes("--json"),
     };
@@ -17,6 +19,8 @@ function parseArgs(argv) {
     for (const arg of argv) {
         if (arg.startsWith("--input-dir=")) {
             options.inputDir = arg.split("=")[1];
+        } else if (arg.startsWith("--kanji=")) {
+            options.kanji = parseCsvOption(arg, "kanji");
         } else if (arg.startsWith("--levels=")) {
             options.levels = parseLevelsArgument(arg.split("=")[1]);
         } else if (arg.startsWith("--level=")) {
@@ -29,10 +33,12 @@ function parseArgs(argv) {
     return options;
 }
 
-function selectKanjiList(jlptOnlyJson, levels, limit) {
-    let kanjiList = Object.entries(jlptOnlyJson || {})
-        .filter(([, value]) => !Array.isArray(levels) || levels.length === 0 || levels.includes(Number(value?.jlpt)))
-        .map(([kanji]) => kanji);
+function selectKanjiList(jlptOnlyJson, levels, limit, explicitKanji = []) {
+    let kanjiList = Array.isArray(explicitKanji) && explicitKanji.length > 0
+        ? explicitKanji
+        : Object.entries(jlptOnlyJson || {})
+            .filter(([, value]) => !Array.isArray(levels) || levels.length === 0 || levels.includes(Number(value?.jlpt)))
+            .map(([kanji]) => kanji);
 
     if (Number.isFinite(limit) && limit > 0) {
         kanjiList = kanjiList.slice(0, limit);
@@ -83,7 +89,7 @@ async function main() {
     }
 
     const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
-    const kanjiList = selectKanjiList(jlptOnlyJson, options.levels, options.limit);
+    const kanjiList = selectKanjiList(jlptOnlyJson, options.levels, options.limit, options.kanji);
     const summary = await importKanjiVgDirectory({
         inputDir: path.resolve(options.inputDir),
         kanjiList,

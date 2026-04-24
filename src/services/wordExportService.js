@@ -21,6 +21,7 @@ const PHRASE_ENDING_RE = /(の近く|の部屋|の友だち|の下)$/u;
 const LEXICALIZED_USAGE_SUFFIX_RE = /[\p{Script=Han}々]い方$/u;
 const ADJECTIVE_NOUN_PHRASE_RE = /\p{Script=Hiragana}*い[\p{Script=Han}々]+$/u;
 const READING_SEPARATOR = " ／ ";
+const DEFAULT_WORD_DECK_ORDER_SEED = "jkb-word-deck-study-order-v1";
 
 function extractConstituentKanji(text) {
     return [...new Set(Array.from(String(text ?? "")).filter((char) => HAN_CHAR_RE.test(char) && char !== "々"))];
@@ -75,6 +76,93 @@ function buildWordKey(candidate) {
         written: String(candidate?.written || "").trim(),
         reading: String(candidate?.pron || "").trim(),
     });
+}
+
+function hashStringToUint32(value) {
+    let hash = 2166136261;
+    for (const char of String(value ?? "")) {
+        hash ^= char.codePointAt(0);
+        hash = Math.imul(hash, 16777619);
+    }
+    return hash >>> 0;
+}
+
+function compareWordDeckAuditOrder(a, b) {
+    return (
+        (b.candidate.score || 0) - (a.candidate.score || 0)
+        || a.candidate.written.length - b.candidate.written.length
+        || a.candidate.written.localeCompare(b.candidate.written)
+        || a.candidate.pron.localeCompare(b.candidate.pron)
+    );
+}
+
+function getWordDeckStudyGroupKey(entry) {
+    const sourceKanji = Array.from(entry?.sourceKanji || []).filter(Boolean);
+    if (sourceKanji.length > 0) {
+        return sourceKanji[0];
+    }
+
+    const constituentKanji = extractConstituentKanji(entry?.candidate?.written);
+    return constituentKanji[0] || String(entry?.candidate?.written || "");
+}
+
+function getWordDeckStudyOrderKey(entry, { levelNumber, seed = DEFAULT_WORD_DECK_ORDER_SEED } = {}) {
+    const candidate = entry?.candidate || {};
+    return hashStringToUint32([
+        seed,
+        `N${levelNumber || ""}`,
+        String(candidate.written || ""),
+        String(candidate.pron || ""),
+    ].join("|"));
+}
+
+function sortWordDeckEntriesForStudy(entries, { levelNumber, seed = DEFAULT_WORD_DECK_ORDER_SEED } = {}) {
+    const buckets = new Map();
+
+    for (const entry of entries || []) {
+        const groupKey = getWordDeckStudyGroupKey(entry);
+        if (!buckets.has(groupKey)) {
+            buckets.set(groupKey, []);
+        }
+        buckets.get(groupKey).push(entry);
+    }
+
+    const orderedBuckets = [...buckets.entries()]
+        .map(([groupKey, bucket]) => ({
+            groupKey,
+            bucket: [...bucket].sort((a, b) => (
+                getWordDeckStudyOrderKey(a, { levelNumber, seed }) - getWordDeckStudyOrderKey(b, { levelNumber, seed })
+                || compareWordDeckAuditOrder(a, b)
+            )),
+        }))
+        .sort((a, b) => (
+            hashStringToUint32(`${seed}|N${levelNumber || ""}|group|${a.groupKey}`)
+            - hashStringToUint32(`${seed}|N${levelNumber || ""}|group|${b.groupKey}`)
+            || String(a.groupKey).localeCompare(String(b.groupKey))
+        ));
+
+    const ordered = [];
+    let remaining = orderedBuckets.reduce((sum, item) => sum + item.bucket.length, 0);
+    let round = 0;
+    while (remaining > 0) {
+        const roundBuckets = [...orderedBuckets].sort((a, b) => (
+            hashStringToUint32(`${seed}|N${levelNumber || ""}|round|${round}|${a.groupKey}`)
+            - hashStringToUint32(`${seed}|N${levelNumber || ""}|round|${round}|${b.groupKey}`)
+            || String(a.groupKey).localeCompare(String(b.groupKey))
+        ));
+
+        for (const item of roundBuckets) {
+            const entry = item.bucket.shift();
+            if (!entry) {
+                continue;
+            }
+            ordered.push(entry);
+            remaining -= 1;
+        }
+        round += 1;
+    }
+
+    return ordered;
 }
 
 function buildWordNotes(curatedEntry) {
@@ -1169,14 +1257,10 @@ function createWordExportService({
         const rows = [];
         const mediaKanji = new Set();
         const mediaRefs = [];
-        const sortedEntries = [...wordCandidates.values()].sort((a, b) => (
-            (b.candidate.score || 0) - (a.candidate.score || 0)
-            || a.candidate.written.length - b.candidate.written.length
-            || a.candidate.written.localeCompare(b.candidate.written)
-            || a.candidate.pron.localeCompare(b.candidate.pron)
-        ));
+        const sortedEntries = [...wordCandidates.values()].sort(compareWordDeckAuditOrder);
+        const studyEntries = sortWordDeckEntriesForStudy(sortedEntries, { levelNumber });
 
-        for (const entry of sortedEntries) {
+        for (const entry of studyEntries) {
             const constituentKanji = extractConstituentKanji(entry.candidate.written);
             const breakdownHtml = constituentKanji
                 .map((kanji) => {
@@ -1256,6 +1340,10 @@ function createWordExportService({
             mediaKanji: [...mediaKanji].sort(),
             mediaRefs,
             governance: buildWordDeckGovernanceSummary(sortedEntries, jlptWordLevelContract),
+            studyOrder: {
+                seed: DEFAULT_WORD_DECK_ORDER_SEED,
+                strategy: "deterministic-interleaved-shuffle",
+            },
         };
     }
 
@@ -1267,6 +1355,7 @@ function createWordExportService({
             mediaRefs: result.mediaRefs,
             rowCount: result.rows.length,
             governance: result.governance,
+            studyOrder: result.studyOrder,
         };
     }
 
@@ -1285,6 +1374,7 @@ function createWordExportService({
         extractConstituentKanji,
         pickPreferredCandidate,
         selectWordSentence,
+        sortWordDeckEntriesForStudy,
     };
 }
 
@@ -1301,11 +1391,13 @@ module.exports = {
     buildWordReadingBreakdown,
     buildWordStudyIndexes,
     buildWordSupportScore,
+    compareWordDeckAuditOrder,
     createWordExportService,
     defaultWordExportService,
     extractConstituentKanji,
     getCanonicalWordLevel,
     getTrustedCandidateLevel,
+    getWordDeckStudyGroupKey,
     hasExcludedWordCardTag,
     inferWordLevel,
     isStandaloneKanjiOutsideDeckLevel,
@@ -1318,5 +1410,6 @@ module.exports = {
     pickBestExactSingleCandidate,
     pickPreferredCandidate,
     selectWordSentence,
+    sortWordDeckEntriesForStudy,
 };
 

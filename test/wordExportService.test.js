@@ -12,11 +12,13 @@ const {
     createWordExportService,
     getCanonicalWordLevel,
     getTrustedCandidateLevel,
+    getWordDeckStudyGroupKey,
     hasExcludedWordCardTag,
     inferWordLevel,
     isLikelyPhraseCard,
     normalizeBreakdownReadingField,
     resolveCoverageMetadata,
+    sortWordDeckEntriesForStudy,
 } = require("../src/services/wordExportService");
 
 test("buildWordTsvForJlptLevel ignores repetition marks in kanji breakdowns", async () => {
@@ -335,6 +337,31 @@ test("classifyWordDeckEntry distinguishes canonical curated-only and inferred ro
         curatedEntry: null,
         jlptWordLevelContract: { wordLevels: {} },
     }), "inferredOnly");
+});
+
+test("sortWordDeckEntriesForStudy interleaves focus kanji with a stable seeded order", () => {
+    const entries = [
+        { candidate: { written: "一日", pron: "ついたち", score: 100 }, sourceKanji: new Set(["日"]) },
+        { candidate: { written: "二日", pron: "ふつか", score: 100 }, sourceKanji: new Set(["日"]) },
+        { candidate: { written: "一月", pron: "いちがつ", score: 100 }, sourceKanji: new Set(["月"]) },
+        { candidate: { written: "今月", pron: "こんげつ", score: 100 }, sourceKanji: new Set(["月"]) },
+        { candidate: { written: "火曜日", pron: "かようび", score: 100 }, sourceKanji: new Set(["火"]) },
+        { candidate: { written: "火山", pron: "かざん", score: 100 }, sourceKanji: new Set(["火"]) },
+    ];
+
+    const firstPass = sortWordDeckEntriesForStudy(entries, { levelNumber: 5, seed: "test-seed" });
+    const secondPass = sortWordDeckEntriesForStudy(entries, { levelNumber: 5, seed: "test-seed" });
+    const groupedOrder = entries.map((entry) => entry.candidate.written);
+    const studyOrder = firstPass.map((entry) => entry.candidate.written);
+
+    assert.deepEqual(studyOrder, secondPass.map((entry) => entry.candidate.written));
+    assert.notDeepEqual(studyOrder, groupedOrder);
+    for (let index = 1; index < firstPass.length; index += 1) {
+        assert.notEqual(
+            getWordDeckStudyGroupKey(firstPass[index - 1]),
+            getWordDeckStudyGroupKey(firstPass[index]),
+        );
+    }
 });
 
 test("resolveCoverageMetadata prefers explicit reading-coverage contracts from curated word data", () => {

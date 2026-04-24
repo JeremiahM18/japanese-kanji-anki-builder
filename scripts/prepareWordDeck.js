@@ -6,6 +6,7 @@ const { createKanjiApiClient } = require("../src/clients/kanjiApiClient");
 const { loadSentenceCorpus } = require("../src/datasets/sentenceCorpus");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const { loadWordStudyData } = require("../src/datasets/wordStudyData");
+const { loadWordPitchAccentData } = require("../src/datasets/wordPitchAccentData");
 const { loadJlptWordLevelContract } = require("../src/datasets/jlptWordLevelContract");
 const { loadJlptLevelContract } = require("../src/datasets/jlptLevelContract");
 const { loadAudioSourcePolicy } = require("../src/datasets/audioSourcePolicy");
@@ -146,7 +147,12 @@ function formatWordDeckReadyReport(summary, doctorReport) {
                     ? [`  word audio review: ${wordAudio.coveragePercent}% (${wordAudio.readyToReview}/${wordAudio.totalWords}) ready, ${wordAudio.missingAudio} missing, ${wordAudio.readingMismatch + wordAudio.policyMismatch + wordAudio.missingGeneratedReading + wordAudio.missingExpectedReading} flagged`]
                     : []),
                 ...(pitchAccent
-                    ? [`  pitch accent review: ${pitchAccent.coveragePercent}% (${pitchAccent.annotatedWords}/${pitchAccent.totalWords}) annotated, ${pitchAccent.missingPitchAccent} missing, field ${pitchAccent.fieldPresent ? "present" : "missing"}`]
+                    ? [
+                        `  pitch accent review: ${pitchAccent.coveragePercent}% (${pitchAccent.annotatedWords}/${pitchAccent.totalWords}) annotated, ${pitchAccent.missingPitchAccent} missing, ${pitchAccent.ungovernedPitchAccent || 0} ungoverned, field ${pitchAccent.fieldPresent ? "present" : "missing"}`,
+                        ...((pitchAccent.sourceCounts && Object.keys(pitchAccent.sourceCounts).length > 0)
+                            ? [`  pitch accent sources: ${Object.entries(pitchAccent.sourceCounts).sort((a, b) => a[0].localeCompare(b[0])).map(([sourceId, count]) => `${sourceId}=${count}`).join(", ")}`]
+                            : []),
+                    ]
                     : []),
                 ...(triage
                     ? [`  triage backlog: ${triage.editorialReviewItems} editorial review, ${triage.promoteCuratedExampleItems} promote curated example, ${triage.deferVariantItems} defer variant`]
@@ -215,6 +221,7 @@ async function main() {
     const wordStudyData = loadWordStudyData({
         localPath: config.wordStudyDataPath,
     });
+    const wordPitchAccentData = loadWordPitchAccentData(path.join(process.cwd(), "templates", "word_pitch_accent_data.json"));
     const trackedStarterWordStudyData = loadWordStudyData({
         starterPath: path.join(process.cwd(), "templates", "starter_word_study_data.json"),
         localPath: null,
@@ -227,7 +234,7 @@ async function main() {
         fetchTimeoutMs: config.fetchTimeoutMs,
     });
     const { strokeOrderService, audioService } = createMediaServices(config);
-    const wordExportService = createWordExportService({ sentenceCorpus, curatedStudyData, wordStudyData });
+    const wordExportService = createWordExportService({ sentenceCorpus, curatedStudyData, wordStudyData, wordPitchAccentData });
     const levels = options.levels || [5];
     const concurrency = Number.isFinite(options.concurrency) ? options.concurrency : config.exportConcurrency;
     const selectedKanjiByLevel = buildSelectedKanjiByLevel({
@@ -279,6 +286,7 @@ async function main() {
                 jlptLevelContract,
                 kanjiTsv: fs.readFileSync(kanjiTsvPath, "utf8"),
                 wordTsv: result.tsv,
+                wordPitchAccentData,
                 coverageWordTsvByLevel: loadCoverageWordTsvByLevel({
                     level,
                     outDir: buildPaths.root,

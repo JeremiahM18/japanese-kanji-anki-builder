@@ -48,6 +48,8 @@
     "media:report:animations:n1": "node scripts/reportMissingManagedAnimations.js --level=1 --limit=100",
     "media:voicevox": "node scripts/generateVoicevoxAudio.js",
     "media:voicevox:words": "node scripts/generateWordVoicevoxAudio.js",
+    "data:import:pitch:kanjium": "node scripts/importKanjiumPitchAccents.js",
+    "data:import:pitch:voicevox": "node scripts/importVoicevoxPitchAccents.js",
     "media:sync:words": "node scripts/syncWordAudio.js",
     "deck:review:n5": "node scripts/reviewGoldenLevel.js --level=5",
     "deck:review:accessibility": "node scripts/reportAccessibilityChecklist.js",

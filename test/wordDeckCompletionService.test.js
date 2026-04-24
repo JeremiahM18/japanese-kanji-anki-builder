@@ -58,8 +58,26 @@ test("buildWordDeckPitchAccentAudit reports learner-facing pitch coverage from b
     assert.equal(audit.missingPitchAccent, 1);
     assert.equal(audit.coveragePercent, 50);
     assert.deepEqual(audit.annotatedRows, [
-        { word: "雨", reading: "あめ", pitchAccent: "あ＼め [atamadaka]" },
+        { word: "雨", reading: "あめ", pitchAccent: "あ＼め [atamadaka]", sourceId: "" },
     ]);
+    assert.equal(audit.ungovernedPitchAccent, 1);
+});
+
+test("buildWordDeckPitchAccentAudit reports governed pitch accent sources", () => {
+    const audit = buildWordDeckPitchAccentAudit({
+        wordRows: [
+            { Word: "雨", Reading: "あめ", PitchAccent: "1 [atamadaka]" },
+        ],
+        wordPitchAccentData: {
+            entries: {
+                "雨|あめ": { pattern: "1 [atamadaka]", sourceId: "kanjium-cc-by-sa-4.0" },
+            },
+        },
+    });
+
+    assert.equal(audit.annotatedWords, 1);
+    assert.equal(audit.ungovernedPitchAccent, 0);
+    assert.deepEqual(audit.sourceCounts, { "kanjium-cc-by-sa-4.0": 1 });
 });
 
 test("buildWordDeckPitchAccentAudit flags old word TSVs without the PitchAccent field", () => {

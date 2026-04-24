@@ -67,10 +67,12 @@ function buildWordDeckSentenceOrthographyAudit({ wordRows }) {
     };
 }
 
-function buildWordDeckPitchAccentAudit({ wordRows }) {
+function buildWordDeckPitchAccentAudit({ wordRows, starterEntries = {}, wordPitchAccentData = {} }) {
     const rows = Array.isArray(wordRows) ? wordRows : [];
     const annotatedRows = [];
     const missingRows = [];
+    const sourceCounts = {};
+    const ungovernedRows = [];
     let fieldPresent = rows.length === 0;
 
     for (const row of rows) {
@@ -81,9 +83,18 @@ function buildWordDeckPitchAccentAudit({ wordRows }) {
         const pitchAccent = String(row?.PitchAccent || row?.pitchAccent || "").trim();
         const word = String(row?.Word || row?.word || "").trim();
         const reading = String(row?.Reading || row?.reading || "").trim();
+        const key = buildWordStudyEntryKey({ written: word, reading });
 
         if (pitchAccent) {
-            annotatedRows.push({ word, reading, pitchAccent });
+            const pitchEntry = wordPitchAccentData?.entries?.[key] || null;
+            const starterEntry = starterEntries?.[key] || null;
+            const sourceId = String(pitchEntry?.sourceId || starterEntry?.pitchAccentSource || "").trim();
+            if (sourceId) {
+                sourceCounts[sourceId] = (sourceCounts[sourceId] || 0) + 1;
+            } else {
+                ungovernedRows.push({ word, reading, pitchAccent });
+            }
+            annotatedRows.push({ word, reading, pitchAccent, sourceId: sourceId || "" });
             continue;
         }
 
@@ -96,11 +107,14 @@ function buildWordDeckPitchAccentAudit({ wordRows }) {
         totalWords: rows.length,
         annotatedWords: annotatedRows.length,
         missingPitchAccent: missingRows.length,
+        sourceCounts,
+        ungovernedPitchAccent: ungovernedRows.length,
         coveragePercent: rows.length > 0
             ? Number(((annotatedRows.length / rows.length) * 100).toFixed(1))
             : 0,
         annotatedRows,
         missingRows,
+        ungovernedRows,
     };
 }
 
@@ -243,6 +257,7 @@ function buildWordDeckCompletionReport({
     jlptLevelContract,
     kanjiTsv,
     wordTsv,
+    wordPitchAccentData = {},
     coverageWordTsvByLevel = null,
 }) {
     const kanjiRows = parseKanjiTsv(kanjiTsv);
@@ -276,6 +291,8 @@ function buildWordDeckCompletionReport({
     });
     const pitchAccentAudit = buildWordDeckPitchAccentAudit({
         wordRows,
+        starterEntries,
+        wordPitchAccentData,
     });
     const readiness = buildWordDeckReadiness({
         inventory,

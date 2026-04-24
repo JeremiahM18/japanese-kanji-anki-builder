@@ -28,6 +28,7 @@ const wordStudyEntrySchema = z.object({
     notes: z.string().min(1).optional(),
     readingBreakdown: z.string().min(1).optional(),
     pitchAccent: z.string().min(1).optional(),
+    pitchAccentSource: z.string().min(1).optional(),
     exampleSentence: wordStudySentenceSchema.optional(),
     coverage: wordStudyCoverageSchema.optional(),
 });
@@ -121,6 +122,7 @@ function normalizeWordStudyEntry(entry) {
         notes: cleanString(entry?.notes),
         readingBreakdown: cleanString(entry?.readingBreakdown),
         pitchAccent: cleanString(entry?.pitchAccent),
+        pitchAccentSource: cleanString(entry?.pitchAccentSource),
         exampleSentence: normalizeWordStudySentence(entry?.exampleSentence),
         coverage: normalizeWordCoverage(entry?.coverage),
     });

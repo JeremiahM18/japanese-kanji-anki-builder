@@ -343,6 +343,16 @@ Optional `.env` settings:
 - `REMOTE_AUDIO_BASE_URL`
 - `MEDIA_MANIFEST_CACHE_TTL_MS`
 
+## Pitch Accent Provenance
+
+Word-card pitch accent data is source-governed separately from the starter vocabulary contract:
+
+- `templates/word_pitch_accent_data.json` stores pitch patterns and source IDs.
+- `npm run data:import:pitch:kanjium -- --levels=5` imports dictionary-backed matches from `downloads/kanjium/accents.txt`.
+- `npm run data:import:pitch:voicevox -- --levels=5 --allow-reading-fallback` fills remaining generated pronunciation guidance from the local VOICEVOX Nemo engine.
+
+Kanjium-derived entries are dictionary data under CC BY-SA 4.0 and must keep attribution in release notes. VOICEVOX-derived entries are generated accent-query results and are tracked with a different source ID; they are not described as dictionary-verified.
+
 ## Deck Model
 
 Kanji card fields include:
@@ -377,7 +387,7 @@ The front of a word card shows the written study word without furigana. The back
 
 `ReadingBreakdown` segments the word reading into learner-facing pieces, for example `学校` as `学=がっ ／ 校=こう` or `食べ物` as `食=た ／ べ ／ 物=もの`. Irregular compounds use curated overrides instead of unsafe automatic segmentation.
 
-`PitchAccent` is a dedicated pronunciation field. Leave it blank unless the accent pattern comes from a verified source with product-approved provenance.
+`PitchAccent` is a dedicated pronunciation field. Leave it blank unless the accent pattern comes from a product-approved source in `templates/word_pitch_accent_data.json` or an explicitly curated override.
 
 `KanjiBreakdown` includes constituent meanings, readings, stroke-order animation, and cross-level badges such as `JLPT N4 kanji`.
 

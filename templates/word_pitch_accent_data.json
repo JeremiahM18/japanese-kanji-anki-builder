@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "sources": {
+    "kanjium-cc-by-sa-4.0": {
+      "name": "Kanjium pitch accent database",
+      "license": "CC BY-SA 4.0",
+      "url": "https://github.com/mifunetoshiro/kanjium",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "attribution": "Pitch accent data derived from Kanjium by mifunetoshiro.",
+      "notes": "Imported from data/source_files/raw/accents.txt with exact word-reading matching and conservative written-form variants."
+    },
+    "voicevox-nemo-accent-query": {
+      "name": "VOICEVOX Nemo accent query",
+      "license": "VOICEVOX Nemo terms",
+      "url": "https://voicevox.hiroshiba.jp/nemo/",
+      "attribution": "Accent analysis generated with VOICEVOX Nemo.",
+      "notes": "Used only for entries not covered by the dictionary source. Written queries must match the expected reading; reading-query fallback is explicitly marked."
+    },
+    "voicevox-nemo-reading-query": {
+      "name": "VOICEVOX Nemo reading accent query",
+      "license": "VOICEVOX Nemo terms",
+      "url": "https://voicevox.hiroshiba.jp/nemo/",
+      "attribution": "Accent analysis generated with VOICEVOX Nemo from the governed card reading.",
+      "notes": "Fallback for entries where the written form is ambiguous or not recognized by the engine. This is generated pronunciation guidance, not dictionary verification."
+    }
+  },
+  "entries": {}
+}

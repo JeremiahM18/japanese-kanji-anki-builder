@@ -13,6 +13,7 @@ const { tsvEscape } = require("../utils/text");
 const { HAN_CHAR_RE, KATAKANA_ONLY_RE, isKanaOnly, katakanaToHiragana } = require("../utils/japanese");
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
+const { resolveWordPitchAccent } = require("../datasets/wordPitchAccentData");
 const { findManagedWordAudioAsset } = require("./wordAudioService");
 
 const WORD_FIELD_NAMES = loadAnkiNoteSchema("word").fieldNames;
@@ -218,8 +219,19 @@ function sortWordDeckEntriesForStudy(entries, { levelNumber, jlptOnlyJson, seed 
     return ordered;
 }
 
-function formatPitchAccent(curatedEntry) {
-    return String(curatedEntry?.pitchAccent || "").trim();
+function formatPitchAccent({ candidate, curatedEntry, wordPitchAccentData }) {
+    const explicitPitchAccent = String(curatedEntry?.pitchAccent || "").trim();
+    if (explicitPitchAccent) {
+        return explicitPitchAccent;
+    }
+
+    const pitchAccent = resolveWordPitchAccent({
+        written: candidate?.written,
+        reading: curatedEntry?.reading || candidate?.pron,
+        wordPitchAccentData,
+    });
+
+    return String(pitchAccent?.pattern || "").trim();
 }
 
 function buildWordNotes(curatedEntry) {
@@ -1068,6 +1080,7 @@ function createWordExportService({
     sentenceCorpus = [],
     curatedStudyData = {},
     wordStudyData = {},
+    wordPitchAccentData = {},
     inferenceEngine = createInferenceEngine({ sentenceCorpus, curatedStudyData }),
     kanjiExportService = createExportService({ inferenceEngine }),
 } = {}) {
@@ -1380,7 +1393,11 @@ function createWordExportService({
                 entry.curatedEntry?.reading || entry.candidate.pron,
                 readingBreakdown,
                 wordAudio.audioField,
-                formatPitchAccent(entry.curatedEntry),
+                formatPitchAccent({
+                    candidate: entry.candidate,
+                    curatedEntry: entry.curatedEntry,
+                    wordPitchAccentData,
+                }),
                 entry.curatedEntry?.meaning || entry.candidate.gloss,
                 buildJlptLabel(trustedLevel),
                 summarizeCoverageRole(entry, jlptWordLevelContract),

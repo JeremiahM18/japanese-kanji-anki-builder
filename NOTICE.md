@@ -12,6 +12,16 @@ When VOICEVOX Nemo audio is shipped, release artifacts and release notes should 
 
 Follow the current pinned source, speaker, and locale contract defined in the tracked audio policy.
 
+## Pitch accent attribution
+
+Current shipped pitch accent policy is governed by `templates/word_pitch_accent_data.json`.
+
+Kanjium-derived pitch accent entries are derived from the Kanjium pitch accent database by mifunetoshiro and are licensed under CC BY-SA 4.0. Release artifacts that include those entries should include attribution equivalent to:
+
+`Pitch accent data derived from Kanjium by mifunetoshiro, licensed under CC BY-SA 4.0`
+
+VOICEVOX Nemo accent-query entries are generated pronunciation guidance and should be credited consistently with VOICEVOX Nemo usage.
+
 ## Additional release responsibility
 
 Before publishing a release artifact, confirm:

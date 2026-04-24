@@ -99,7 +99,7 @@ test("loadAnkiNoteSchema can load the shared word note contract", () => {
     assert.match(schema.css, /kanji-stroke-order/);
 });
 
-test("buildWordReadingBreakdown aligns multi-kanji readings without furigana", () => {
+test("buildWordReadingBreakdown renders learner-facing furigana breakdowns", () => {
     const kanjiInferenceCache = new Map([
         ["学", { onReading: "オン: ガク", kunReading: "くん: まな.ぶ" }],
         ["校", { onReading: "オン: コウ" }],
@@ -116,27 +116,27 @@ test("buildWordReadingBreakdown aligns multi-kanji readings without furigana", (
     assert.equal(buildWordReadingBreakdown({
         candidate: { written: "学校", pron: "がっこう" },
         kanjiInferenceCache,
-    }), "学=がっ ／ 校=こう");
+    }), "<ruby>学<rt>がっ</rt></ruby><ruby>校<rt>こう</rt></ruby>");
 
     assert.equal(buildWordReadingBreakdown({
         candidate: { written: "食べ物", pron: "たべもの" },
         kanjiInferenceCache,
-    }), "食べ=たべ ／ 物=もの");
+    }), "<ruby>食<rt>た</rt></ruby>べ<ruby>物<rt>もの</rt></ruby>");
 
     assert.equal(buildWordReadingBreakdown({
         candidate: { written: "友だち", pron: "ともだち" },
         kanjiInferenceCache,
-    }), "友=とも ／ だち");
+    }), "<ruby>友<rt>とも</rt></ruby>だち");
 
     assert.equal(buildWordReadingBreakdown({
         candidate: { written: "生まれる", pron: "うまれる" },
         kanjiInferenceCache,
-    }), "生=う ／ まれる");
+    }), "<ruby>生<rt>う</rt></ruby>まれる");
 
     assert.equal(buildWordReadingBreakdown({
         candidate: { written: "山の上", pron: "やまのうえ" },
         kanjiInferenceCache,
-    }), "山の=やまの ／ 上=うえ");
+    }), "<ruby>山<rt>やま</rt></ruby>の<ruby>上<rt>うえ</rt></ruby>");
 
     assert.equal(buildWordReadingBreakdown({
         candidate: { written: "今日", pron: "きょう" },
@@ -147,7 +147,7 @@ test("buildWordReadingBreakdown aligns multi-kanji readings without furigana", (
         candidate: { written: "今日", pron: "きょう" },
         curatedEntry: { readingBreakdown: "今+日=きょう" },
         kanjiInferenceCache,
-    }), "今+日=きょう");
+    }), "<ruby>今日<rt>きょう</rt></ruby>");
 });
 
 test("inferWordLevel uses the hardest constituent JLPT kanji", () => {
@@ -1161,7 +1161,7 @@ test("buildWordTsvForJlptLevel includes explicit learner-facing coverage metadat
 
     const lines = result.tsv.trim().split("\n");
     assert.equal(lines[0], "Word\tReading\tReadingBreakdown\tAudio\tPitchAccent\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes");
-    assert.match(lines[1], /\t時=じ ／ 間=かん\t/);
+    assert.match(lines[1], /\t<ruby>時<rt>じ<\/rt><\/ruby><ruby>間<rt>かん<\/rt><\/ruby>\t/);
     assert.match(lines[1], /\tJLPT core \+ reading coverage\t/);
     assert.match(lines[1], /\t時\t/);
     assert.match(lines[1], /\t時: じ\t/);

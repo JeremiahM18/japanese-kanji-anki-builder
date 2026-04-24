@@ -14,7 +14,7 @@ const { HAN_CHAR_RE, KATAKANA_ONLY_RE, isKanaOnly, katakanaToHiragana } = requir
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 const { resolveWordPitchAccent } = require("../datasets/wordPitchAccentData");
-const { buildPitchAccentHtml } = require("./pitchAccentRenderService");
+const { buildPitchAccentHtml, escapeHtml } = require("./pitchAccentRenderService");
 const { findManagedWordAudioAsset } = require("./wordAudioService");
 
 const WORD_FIELD_NAMES = loadAnkiNoteSchema("word").fieldNames;
@@ -22,7 +22,6 @@ const EXCLUDED_WORD_CARD_TAGS = new Set(["phrase"]);
 const PHRASE_ENDING_RE = /(の近く|の部屋|の友だち|の下)$/u;
 const LEXICALIZED_USAGE_SUFFIX_RE = /[\p{Script=Han}々]い方$/u;
 const ADJECTIVE_NOUN_PHRASE_RE = /\p{Script=Hiragana}*い[\p{Script=Han}々]+$/u;
-const READING_SEPARATOR = " ／ ";
 const DEFAULT_WORD_DECK_ORDER_SEED = "jkb-word-deck-study-order-v1";
 
 function extractConstituentKanji(text) {
@@ -745,79 +744,43 @@ function alignReadingBreakdownUnits({ units, reading, kanjiInferenceCache, curat
     return align(0, 0);
 }
 
-function coalesceLiteralReadingSegments(segments) {
-    const coalesced = [];
-    let pendingPrefix = null;
-
-    for (const segment of Array.isArray(segments) ? segments : []) {
-        const surface = String(segment?.surface || segment?.label || segment?.reading || "");
-        const reading = String(segment?.reading || "");
-
-        if (segment?.kind === "literal") {
-            const literalSegment = { surface, reading };
-            if (coalesced.length === 0) {
-                pendingPrefix = {
-                    surface: `${pendingPrefix?.surface || ""}${literalSegment.surface}`,
-                    reading: `${pendingPrefix?.reading || ""}${literalSegment.reading}`,
-                };
-                continue;
-            }
-
-            const previous = coalesced[coalesced.length - 1];
-            previous.label = `${previous.label}${literalSegment.surface}`;
-            previous.reading = `${previous.reading}${literalSegment.reading}`;
-            continue;
-        }
-
-        const nextSegment = {
-            label: `${pendingPrefix?.surface || ""}${segment.label || surface}`,
-            reading: `${pendingPrefix?.reading || ""}${reading}`,
-            kind: segment?.kind || "kanji",
-        };
-        pendingPrefix = null;
-        coalesced.push(nextSegment);
+function formatRubyChunk(surface, reading) {
+    const base = String(surface || "").replace(/\+/g, "").trim();
+    const rt = String(reading || "").trim();
+    if (!base) {
+        return "";
     }
-
-    if (pendingPrefix && coalesced.length > 0) {
-        const previous = coalesced[coalesced.length - 1];
-        previous.label = `${previous.label}${pendingPrefix.surface}`;
-        previous.reading = `${previous.reading}${pendingPrefix.reading}`;
+    if (!rt) {
+        return escapeHtml(base);
     }
-
-    return coalesced;
+    return `<ruby>${escapeHtml(base)}<rt>${escapeHtml(rt)}</rt></ruby>`;
 }
 
-function groupLiteralReadingSegments(segments) {
-    const grouped = [];
-
-    for (const segment of Array.isArray(segments) ? segments : []) {
-        const surface = String(segment?.surface || segment?.label || segment?.reading || "");
-        const reading = String(segment?.reading || "");
-
-        if (segment?.kind === "literal") {
-            const previous = grouped[grouped.length - 1];
-            if (previous?.kind === "literal") {
-                previous.reading = `${previous.reading}${reading}`;
-                continue;
+function formatLegacyReadingBreakdownAsRuby(readingBreakdown) {
+    return String(readingBreakdown || "")
+        .split("／")
+        .map((part) => part.trim())
+        .filter(Boolean)
+        .map((part) => {
+            const equalsIndex = part.indexOf("=");
+            if (equalsIndex === -1) {
+                return escapeHtml(part);
             }
-            grouped.push({ label: "", reading, kind: "literal" });
-            continue;
-        }
-
-        grouped.push({
-            label: segment.label || surface,
-            reading,
-            kind: segment?.kind || "kanji",
-        });
-    }
-
-    return grouped;
+            return formatRubyChunk(part.slice(0, equalsIndex), part.slice(equalsIndex + 1));
+        })
+        .join("");
 }
 
-function formatReadingBreakdownSegments(segments) {
+function formatReadingBreakdownSegmentsAsRuby(segments) {
     return (Array.isArray(segments) ? segments : [])
-        .map((segment) => (segment.label ? `${segment.label}=${segment.reading}` : segment.reading))
-        .join(READING_SEPARATOR);
+        .map((segment) => {
+            const surface = String(segment?.surface || segment?.label || segment?.reading || "");
+            if (segment?.kind === "literal") {
+                return escapeHtml(surface);
+            }
+            return formatRubyChunk(surface, segment?.reading || "");
+        })
+        .join("");
 }
 
 function buildWordReadingBreakdown({
@@ -828,7 +791,7 @@ function buildWordReadingBreakdown({
 }) {
     const curatedBreakdown = String(curatedEntry?.readingBreakdown || "").trim();
     if (curatedBreakdown) {
-        return curatedBreakdown;
+        return formatLegacyReadingBreakdownAsRuby(curatedBreakdown);
     }
 
     const written = String(candidate?.written || "").trim();
@@ -853,14 +816,11 @@ function buildWordReadingBreakdown({
         return "";
     }
 
-    const learnerSegments = kanjiUnits.length === 1 && hasKanaLiteral
-        ? groupLiteralReadingSegments(segments)
-        : coalesceLiteralReadingSegments(segments);
-    if (learnerSegments.length < 2) {
+    if (segments.length < 2) {
         return "";
     }
 
-    return formatReadingBreakdownSegments(learnerSegments);
+    return formatReadingBreakdownSegmentsAsRuby(segments);
 }
 
 function extractPrimaryCoverageReading(breakdown = {}) {

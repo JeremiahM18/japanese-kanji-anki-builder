@@ -94,21 +94,21 @@ test("buildWordDeckPitchAccentAudit flags old word TSVs without the PitchAccent 
     assert.equal(audit.annotatedWords, 0);
 });
 
-test("buildWordDeckReadingBreakdownAudit flags mixed-script blanks and fragmented kana crumbs", () => {
+test("buildWordDeckReadingBreakdownAudit flags mixed-script blanks and non-ruby kanji breakdowns", () => {
     const audit = buildWordDeckReadingBreakdownAudit({
         wordRows: [
             { Word: "生まれる", Reading: "うまれる", ReadingBreakdown: "" },
-            { Word: "友だち", Reading: "ともだち", ReadingBreakdown: "友=とも ／ だ ／ ち" },
-            { Word: "食べ物", Reading: "たべもの", ReadingBreakdown: "食べ=たべ ／ 物=もの" },
-            { Word: "学校", Reading: "がっこう", ReadingBreakdown: "学=がっ ／ 校=こう" },
+            { Word: "友だち", Reading: "ともだち", ReadingBreakdown: "友=とも ／ だち" },
+            { Word: "食べ物", Reading: "たべもの", ReadingBreakdown: "<ruby>食<rt>た</rt></ruby>べ<ruby>物<rt>もの</rt></ruby>" },
+            { Word: "学校", Reading: "がっこう", ReadingBreakdown: "<ruby>学<rt>がっ</rt></ruby><ruby>校<rt>こう</rt></ruby>" },
         ],
     });
 
     assert.equal(audit.valid, false);
     assert.equal(audit.missingMixedBreakdownCount, 1);
-    assert.equal(audit.fragmentedLiteralBreakdownCount, 1);
+    assert.equal(audit.nonRubyBreakdownCount, 1);
     assert.equal(audit.missingMixedRows[0].word, "生まれる");
-    assert.equal(audit.fragmentedLiteralRows[0].word, "友だち");
+    assert.equal(audit.nonRubyRows[0].word, "友だち");
 });
 
 test("buildWordDeckCompletionReport combines canonical inventory and reading coverage", () => {
@@ -387,9 +387,9 @@ test("formatWordDeckCompletionReport renders missing rows and source-only exclus
         },
         readingBreakdownAudit: {
             missingMixedBreakdownCount: 1,
-            fragmentedLiteralBreakdownCount: 1,
+            nonRubyBreakdownCount: 1,
             missingMixedRows: [{ word: "生まれる", reading: "うまれる" }],
-            fragmentedLiteralRows: [{ word: "友だち", reading: "ともだち", readingBreakdown: "友=とも ／ だ ／ ち" }],
+            nonRubyRows: [{ word: "友だち", reading: "ともだち", readingBreakdown: "友=とも ／ だち" }],
         },
         readingCoverage: {
             totalReadings: 10,
@@ -411,7 +411,7 @@ test("formatWordDeckCompletionReport renders missing rows and source-only exclus
     assert.match(text, /Missing cross-level\/outside-level badges: 0/);
     assert.match(text, /Suspicious kana-only examples: 1/);
     assert.match(text, /Mixed kanji\/kana rows missing breakdowns: 1/);
-    assert.match(text, /Fragmented kana-only breakdown segments: 1/);
+    assert.match(text, /Non-ruby kanji breakdowns: 1/);
     assert.match(text, /Covered by earlier decks: 1/);
     assert.match(text, /Covered by this deck level: 3/);
     assert.match(text, /Missing starter-eligible N-level rows:/);
@@ -420,5 +420,5 @@ test("formatWordDeckCompletionReport renders missing rows and source-only exclus
     assert.match(text, /高い山 \(たかいやま\) — phrase/);
     assert.match(text, /猫 \(ねこ\) — 白いねこがいます。/);
     assert.match(text, /生まれる \(うまれる\)/);
-    assert.match(text, /友だち \(ともだち\) — 友=とも ／ だ ／ ち/);
+    assert.match(text, /友だち \(ともだち\) — 友=とも ／ だち/);
 });

@@ -45,7 +45,7 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
                     },
                     readingBreakdownAudit: {
                         missingMixedBreakdownCount: 0,
-                        fragmentedLiteralBreakdownCount: 0,
+                        nonRubyBreakdownCount: 0,
                     },
                     readiness: {
                         status: "incomplete",
@@ -105,7 +105,7 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
     assert.match(text, /distinct missing targets: 147, variant-style gaps: 16/);
     assert.match(text, /deck policy: 0 standalone wrong-level cards, 0 missing labels/);
     assert.match(text, /sentence orthography review: 2 suspicious kana-only examples/);
-    assert.match(text, /reading breakdown review: 0 mixed-script blanks, 0 fragmented kana segments/);
+    assert.match(text, /reading breakdown review: 0 mixed-script blanks, 0 non-ruby breakdowns/);
     assert.match(text, /pitch accent review: 0% \(0\/258\) annotated, 258 missing, 0 ungoverned, field present/);
     assert.match(text, /triage backlog: 147 editorial review, 0 promote curated example, 16 defer variant/);
     assert.match(text, /True looping animation coverage: 100% \(166\/166\)/);

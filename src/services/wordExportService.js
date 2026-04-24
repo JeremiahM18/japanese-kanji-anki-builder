@@ -756,21 +756,6 @@ function formatRubyChunk(surface, reading) {
     return `<ruby>${escapeHtml(base)}<rt>${escapeHtml(rt)}</rt></ruby>`;
 }
 
-function formatLegacyReadingBreakdownAsRuby(readingBreakdown) {
-    return String(readingBreakdown || "")
-        .split("／")
-        .map((part) => part.trim())
-        .filter(Boolean)
-        .map((part) => {
-            const equalsIndex = part.indexOf("=");
-            if (equalsIndex === -1) {
-                return escapeHtml(part);
-            }
-            return formatRubyChunk(part.slice(0, equalsIndex), part.slice(equalsIndex + 1));
-        })
-        .join("");
-}
-
 function formatReadingBreakdownSegmentsAsRuby(segments) {
     return (Array.isArray(segments) ? segments : [])
         .map((segment) => {
@@ -791,7 +776,10 @@ function buildWordReadingBreakdown({
 }) {
     const curatedBreakdown = String(curatedEntry?.readingBreakdown || "").trim();
     if (curatedBreakdown) {
-        return formatLegacyReadingBreakdownAsRuby(curatedBreakdown);
+        if (!curatedBreakdown.includes("<ruby>")) {
+            throw new Error(`Curated readingBreakdown for ${candidate?.written || "word"} must use ruby furigana markup`);
+        }
+        return curatedBreakdown;
     }
 
     const written = String(candidate?.written || "").trim();

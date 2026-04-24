@@ -22,13 +22,14 @@ function supportsTestIsolationFlag(version = process.versions.node) {
     return major >= 24;
 }
 
-function buildNodeTestArgs(version = process.versions.node) {
+function buildNodeTestArgs(version = process.versions.node, passthroughArgs = []) {
     const args = ["--test"];
 
     if (supportsTestIsolationFlag(version)) {
         args.push("--test-isolation=none");
     }
 
+    args.push(...passthroughArgs);
     args.push(...findTestFiles());
     return args;
 }
@@ -60,7 +61,7 @@ function findTestFiles(rootDir = TEST_ROOT_DIR) {
 }
 
 function main() {
-    const args = buildNodeTestArgs();
+    const args = buildNodeTestArgs(process.versions.node, process.argv.slice(2));
     const result = spawnSync(process.execPath, args, {
         stdio: "inherit",
     });

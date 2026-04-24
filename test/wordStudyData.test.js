@@ -64,6 +64,28 @@ test("normalizeWordStudyData keeps explicit reading-coverage contracts", () => {
     });
 });
 
+test("normalizeWordStudyData rejects legacy non-ruby reading breakdowns", () => {
+    assert.throws(() => normalizeWordStudyData({
+        today: {
+            written: "今日",
+            reading: "きょう",
+            meaning: "today",
+            readingBreakdown: "今+日=きょう",
+        },
+    }), /readingBreakdown must use ruby furigana markup/);
+
+    const normalized = normalizeWordStudyData({
+        today: {
+            written: "今日",
+            reading: "きょう",
+            meaning: "today",
+            readingBreakdown: "<ruby>今日<rt>きょう</rt></ruby>",
+        },
+    });
+
+    assert.equal(normalized["今日|きょう"].readingBreakdown, "<ruby>今日<rt>きょう</rt></ruby>");
+});
+
 test("buildWordCoverageContractSummary reports explicit reading-coverage tracking by level", () => {
     const summary = buildWordCoverageContractSummary({
         "今日|きょう": {

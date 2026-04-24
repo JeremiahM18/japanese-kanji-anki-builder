@@ -26,7 +26,11 @@ const wordStudyEntrySchema = z.object({
     tags: z.array(z.string()).default(["curated"]),
     jlpt: z.number().int().min(1).max(5).optional(),
     notes: z.string().min(1).optional(),
-    readingBreakdown: z.string().min(1).optional(),
+    readingBreakdown: z.string().min(1)
+        .refine((value) => value.includes("<ruby>"), {
+            message: "readingBreakdown must use ruby furigana markup",
+        })
+        .optional(),
     pitchAccent: z.string().min(1).optional(),
     pitchAccentSource: z.string().min(1).optional(),
     exampleSentence: wordStudySentenceSchema.optional(),

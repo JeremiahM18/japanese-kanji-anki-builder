@@ -145,9 +145,15 @@ test("buildWordReadingBreakdown renders learner-facing furigana breakdowns", () 
 
     assert.equal(buildWordReadingBreakdown({
         candidate: { written: "今日", pron: "きょう" },
-        curatedEntry: { readingBreakdown: "今+日=きょう" },
+        curatedEntry: { readingBreakdown: "<ruby>今日<rt>きょう</rt></ruby>" },
         kanjiInferenceCache,
     }), "<ruby>今日<rt>きょう</rt></ruby>");
+
+    assert.throws(() => buildWordReadingBreakdown({
+        candidate: { written: "今日", pron: "きょう" },
+        curatedEntry: { readingBreakdown: "今+日=きょう" },
+        kanjiInferenceCache,
+    }), /must use ruby furigana markup/);
 });
 
 test("inferWordLevel uses the hardest constituent JLPT kanji", () => {

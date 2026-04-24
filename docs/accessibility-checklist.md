@@ -1,6 +1,6 @@
 # Accessibility Checklist
 
-This checklist is the first accessibility lane for the generated Anki decks.
+Accessibility review covers generated Anki decks.
 
 ## Automated review
 
@@ -22,7 +22,7 @@ The automated review currently checks:
 
 ## Manual review
 
-Automation is necessary but not sufficient. Review the built decks in Anki and check:
+Automation is required but incomplete. Review the built decks in Anki and check:
 
 - Keyboard-only navigation works for card reveal, audio replay, and deck browsing.
 - Screen-reader users can understand the card without relying on color or image-only cues.
@@ -31,7 +31,7 @@ Automation is necessary but not sufficient. Review the built decks in Anki and c
 - Stroke-order media does not become the only way to understand a card.
 - Audio is never the only teaching channel for pronunciation.
 - Example sentences remain readable on desktop and mobile Anki clients.
-- Any risky support word still feels understandable for the intended learner level.
+- Support words remain understandable for the intended learner level.
 
 ## Red flags
 
@@ -46,10 +46,10 @@ Treat these as blockers or near-blockers:
 
 ## Scope
 
-This checklist is intentionally conservative. It does not yet replace:
+This checklist does not replace:
 
 - a full screen-reader audit
 - full AnkiDroid / AnkiMobile compatibility testing
 - a formal WCAG conformance review
 
-Those should come later as the product matures.
+Add those gates when the release scope requires them.

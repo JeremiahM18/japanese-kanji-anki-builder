@@ -1,6 +1,6 @@
 # Branch Protection Baseline
 
-Use this document as the source of truth for the `main` branch protection settings in GitHub.
+This document defines required `main` branch protection settings in GitHub.
 
 ## Required repository settings
 
@@ -27,6 +27,6 @@ Mark these checks as required on `main`:
 
 ## Ownership expectation
 
-Changes to workflow, packaging, shared schema, services, test harnesses, or contributor process files should request code-owner review before merge.
+Changes to workflow, packaging, shared schema, services, test harnesses, or contributor process files require code-owner review before merge.
 
-For changes that affect JLPT taxonomy, starter curation, golden review placement, or deck-membership logic, the expected local verification bar also includes `npm run data:audit:jlpt` before merge.
+Changes that affect JLPT taxonomy, starter curation, golden review placement, or deck-membership logic also require `npm run data:audit:jlpt` before merge.

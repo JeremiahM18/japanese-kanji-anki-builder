@@ -1,10 +1,10 @@
 # Product Exit Criteria
 
-This repo now treats each deck milestone as a product checkpoint, not just a successful script run.
+Deck milestones require product review. A passing script is not sufficient.
 
 ## Quality pillars
 
-Each release checkpoint should be evaluated across these areas:
+Evaluate each release checkpoint across:
 
 - Core value
 - User experience
@@ -16,27 +16,27 @@ Each release checkpoint should be evaluated across these areas:
 
 ## Kanji deck exit criteria
 
-A kanji level is ready to ship only when all of the following are true:
+A kanji level ships only when all criteria are true:
 
 - Canonical JLPT taxonomy is governed by tracked contracts.
 - Golden review coverage for that shipped level is complete.
 - `npm run deck:ready -- --levels=<level>` passes with `0` export fallback issues.
 - Stroke-order animation coverage is `100%`.
 - Any shipped audio is governed, audited, and review-clean.
-- Accessibility review is clean enough to support a manual Anki review pass.
+- Accessibility review has no unresolved blocker.
 
 ## Word deck exit criteria
 
-A word level is ready to ship only when all of the following are true:
+A word level ships only when all criteria are true:
 
 - Canonical word contract rows are fully built for the level.
 - No standalone wrong-level cards ship in the deck.
 - Cross-level or outside-contract constituent kanji are visibly labeled.
 - Reading coverage is reported honestly against the cumulative lower-level scope.
 - Active triage is either resolved or intentionally deferred.
-- Sentence orthography review is clean enough to support manual editorial review.
+- Sentence orthography review has no unresolved blocker.
 - Any shipped audio is governed, audited, and review-clean.
-- Accessibility review is clean enough to support a manual Anki review pass.
+- Accessibility review has no unresolved blocker.
 
 ## Current product posture
 
@@ -47,7 +47,7 @@ A word level is ready to ship only when all of the following are true:
 
 ## Required gates before shipping
 
-Use these commands as the minimum exit bar:
+Minimum automated gate:
 
 ```bash
 npm test
@@ -60,15 +60,15 @@ npm run deck:review:accessibility -- --deck-kind=word
 npm run release:gate
 ```
 
-Add the relevant level-specific review commands for the deck you are shipping.
+Add level-specific review commands for the deck being shipped.
 
 ## What still requires manual review
 
-These areas cannot be trusted from automation alone:
+Manual review is required for:
 
 - listening review in Anki
 - keyboard-only card navigation
 - screen-reader behavior
 - zoom / resized text behavior
 - mobile readability
-- “does this feel like a good learner card?” editorial judgment
+- editorial judgment

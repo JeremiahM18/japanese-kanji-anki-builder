@@ -1,6 +1,6 @@
 # Compatibility Matrix
 
-This document defines the intended compatibility surface for shipped deck artifacts.
+This document defines the supported compatibility surface for shipped deck artifacts.
 
 ## Supported artifact types
 
@@ -29,7 +29,7 @@ This document defines the intended compatibility surface for shipped deck artifa
 | AnkiDroid | Sanity-check target | Needs periodic manual review, not yet a formal gate |
 | AnkiMobile | Sanity-check target | Needs periodic manual review, not yet a formal gate |
 
-## Required verification before calling a deck release-ready
+## Required release verification
 
 - import succeeds on supported Anki desktop targets
 - card templates render without clipped core content
@@ -37,7 +37,7 @@ This document defines the intended compatibility surface for shipped deck artifa
 - governed audio plays correctly where audio is shipped
 - word-card cross-level badges remain visible and understandable
 
-## Known non-goals today
+## Non-goals
 
 - formal screen-reader certification across every Anki client
 - guaranteed visual parity across all community Anki add-ons
@@ -45,4 +45,4 @@ This document defines the intended compatibility surface for shipped deck artifa
 
 ## How to use this matrix
 
-Treat this as the support contract for release notes and QA. If a new platform or client matters enough to mention publicly, add it here and define the expected validation level instead of assuming it is covered implicitly.
+Use this matrix for release notes and QA scope. Add a platform here before claiming support for it.

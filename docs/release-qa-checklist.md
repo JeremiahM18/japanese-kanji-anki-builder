@@ -1,6 +1,6 @@
 # Release QA Checklist
 
-Use this checklist after automated gates pass and before calling a deck milestone release-ready.
+Run this checklist after automated gates pass and before marking a deck milestone release-ready.
 
 ## Build verification
 
@@ -15,21 +15,19 @@ Use this checklist after automated gates pass and before calling a deck mileston
 
 - Import the current N5 kanji deck into Anki.
 - Import the current N4 kanji deck into Anki.
-- Review a representative sample of:
-  - beginner anchors
-  - compound-backed anchors
-  - audio-bearing cards
-  - cards with stroke-order media
-- Confirm there are no obviously weak fronts, clipped fields, or broken media.
+- Review beginner anchors.
+- Review compound-backed anchors.
+- Review audio-bearing cards.
+- Review cards with stroke-order media.
+- Confirm there are no weak fronts, clipped fields, or broken media.
 
 ## Word deck manual spot review
 
 - Import the current N5 word deck into Anki.
-- Review a representative sample of:
-  - beginner core words
-  - support words
-  - cross-level constituent-kanji words
-  - audio-bearing word cards
+- Review beginner core words.
+- Review support words.
+- Review cross-level constituent-kanji words.
+- Review audio-bearing word cards.
 - Confirm cross-level badges are visible and understandable.
 - Confirm example sentences, notes, and breakdown panels remain readable.
 
@@ -42,16 +40,16 @@ Use this checklist after automated gates pass and before calling a deck mileston
 
 ## Platform sanity checks
 
-- Windows Anki desktop import
-- macOS Anki desktop import when available
-- one mobile sanity check on AnkiDroid or AnkiMobile when the release meaningfully changes card layout or media behavior
+- Windows Anki desktop import.
+- macOS Anki desktop import when available.
+- One mobile sanity check on AnkiDroid or AnkiMobile when the release changes card layout or media behavior.
 
 ## Audio release checks
 
-- run the relevant audio review command
-- listen to a representative sample
-- confirm no wrong readings, clipping, or obviously awkward generated audio
+- Run the relevant audio review command.
+- Listen to a representative sample.
+- Confirm no wrong readings, clipping, or unusable generated audio.
 
 ## Exit rule
 
-Do not call a milestone shipped just because scripts pass. A release is ready only when the automated gates and this manual checklist both come back clean enough for learner trust.
+Do not ship on automation alone. A release is ready only when automated gates pass and manual QA has no unresolved blocker.

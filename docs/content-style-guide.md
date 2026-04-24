@@ -1,21 +1,21 @@
 # Content Style Guide
 
-This guide defines how learner-facing cards should be curated across kanji and word decks.
+This guide defines card curation rules for kanji and word decks.
 
 ## Primary principle
 
-Optimize for learner trust, not raw coverage.
+Prioritize accurate learner value over coverage metrics.
 
 That means:
 
-- prefer clear teaching anchors over dictionary exhaustiveness
-- allow common, recognizable support words when they expand coverage cleanly
-- avoid junky, archaic, or forced entries just to move a metric
+- Prefer clear teaching anchors over dictionary exhaustiveness.
+- Use common or recognizable support words when they expand coverage.
+- Reject archaic, forced, or low-value entries added only to move a metric.
 
 ## Kanji card style
 
-- Use the strongest learner-facing display form, not the most literal dictionary headword.
-- Prefer real, memorable anchors when a bare kanji is a weak teaching surface.
+- Use the clearest learner-facing display form, not the most literal dictionary headword.
+- Prefer real anchors when a bare kanji is a weak teaching surface.
 - Keep readings, notes, and examples aligned with the actual card front.
 - Avoid exposing internal notation or raw fallback text to learners.
 
@@ -30,25 +30,26 @@ That means:
 
 Use this priority order:
 
-1. strong teaching value
-2. commonness or recognizability
-3. clean reading-coverage gain
-4. low confusion and low duplication
+1. Teaching value
+2. Commonness or recognizability
+3. Reading-coverage gain
+4. Low confusion risk
+5. Low duplication
 
-A support word does not need to be the perfect introductory anchor for the kanji. It does need to be common, defensible, and worth a learner seeing on a card.
+A support word does not need to be the primary kanji anchor. It must be common, defensible, and useful on a study card.
 
 ## Sentence orthography
 
-- Prefer the strongest learner-facing written form in the full Japanese example sentence.
+- Prefer the clearest learner-facing written form in the full Japanese example sentence.
 - Do not force kanji everywhere. Natural kana-preferred Japanese is still allowed.
-- Suspicious kana-only examples should be flagged for editorial review, not hard-failed automatically.
+- Flag suspicious kana-only examples for editorial review. Do not hard-fail natural kana usage automatically.
 
 ## Meaning and notes
 
 - Keep English glosses concise and stable.
-- Prefer meaning text that helps a learner recognize the word quickly.
+- Use meaning text that identifies the word quickly.
 - Use notes to explain why the word is present when the purpose is not obvious.
-- If a card would confuse a beginner, it is not good enough.
+- Reject cards that introduce avoidable beginner confusion.
 
 ## Audio
 

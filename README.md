@@ -97,6 +97,8 @@ npm run deck:words:apkg -- --levels=5
 ```bash
 npm test
 npm run lint
+npm run deck:review:accessibility -- --deck-kind=kanji
+npm run deck:review:accessibility -- --deck-kind=word
 npm run ci:smoke
 npm run release:gate
 ```
@@ -109,6 +111,8 @@ For audio-policy work, run `npm run doctor:voicevox` first so the repo can confi
 
 For governed listening review, use `npm run media:review:audio -- --level=5 --limit=25` after syncing a generated batch. This checklist reports which kanji audio rows are ready to review, which are missing managed audio, which have reading mismatches, and which violate the tracked audio policy, so listening passes stay tied to the same learner-facing reading contract the kanji cards use.
 
+For the new accessibility lane, use `npm run deck:review:accessibility -- --deck-kind=kanji` or `npm run deck:review:accessibility -- --deck-kind=word` after building the current deck artifacts. This review checks the actual note schema and current packaged output for Japanese-capable font support, textual redundancy, answer-side audio visibility when audio ships, and contrast on key text classes before manual Anki review.
+
 ### Check setup and readiness
 
 ```bash
@@ -120,6 +124,7 @@ npm run deck:readiness:global
 
 - `doctor` checks required datasets, optional local study data, media folders, managed media coverage, local toolchain readiness, and next steps.
 - `doctor:voicevox` verifies that the local VOICEVOX Nemo engine is reachable, that the pinned release speaker exists on this machine, and that governed audio generation is safe to run.
+- `deck:review:accessibility` performs the first deterministic accessibility audit for the built kanji or word deck and points to the manual checklist for the parts that still need human review.
 - `media:review:audio` builds a governed review queue for managed kanji audio, checking expected learner-facing readings, generated readings, and release-policy provenance before you spend time listening in Anki.
 - `deck:readiness` shows the global per-level readiness report across N5 through N1.
 - `deck:readiness:global` is an explicit alias for the same all-level readiness report when you want the command name to say exactly what it does.
@@ -142,7 +147,7 @@ npm run curated:init -- --refresh-starter
 npm run words:init -- --merge
 ```
 
-These commands create or extend local ignored datasets so the decks are usable before you build out full coverage. Use `--merge` when you want to add newly tracked starter entries without disturbing local customizations. Use `--refresh-starter` when tracked starter entries have improved and you want to replace stale starter-derived local copies while preserving non-starter local work. The tracked starter packs now carry complete N5 and N4 kanji curation, the first six N3 kanji starter batches, the first tracked N1 starter batch of 8 kanji, a `339`-row governed N5 canonical word contract plus `13` tracked source-only phrase exclusions, and an expanded governed N4 starter word surface of `244` entries. Editor-local workspace files such as `.vscode/`, `.code-workspace`, and `.history/` are also ignored so local tooling does not dirty the repo.
+These commands create or extend local ignored datasets so the decks are usable before you build out full coverage. Use `--merge` when you want to add newly tracked starter entries without disturbing local customizations. Use `--refresh-starter` when tracked starter entries have improved and you want to replace stale starter-derived local copies while preserving non-starter local work. The tracked starter packs now carry complete N5 and N4 kanji curation, the first six N3 kanji starter batches, the first tracked N1 starter batch of 8 kanji, a `339`-row governed N5 canonical word contract plus `13` tracked source-only phrase exclusions, and an expanded governed N4 starter word surface of `318` entries. Editor-local workspace files such as `.vscode/`, `.code-workspace`, and `.history/` are also ignored so local tooling does not dirty the repo.
 
 The runtime now also protects against stale starter-derived local kanji entries silently weakening builds: `loadCuratedStudyData` refreshes tracked starter-derived local rows in memory before previews, reviews, and deck builds, while still preserving true local custom entries. `npm run curated:init -- --refresh-starter` is still useful when you want the ignored local file itself rewritten to match the latest tracked starter contract, but the build path no longer depends on that manual step to stay learner-facing accurate.
 

@@ -35,3 +35,13 @@ test("release process doc aligns tag naming with package version", () => {
     assert.equal(releaseProcess.includes("Create Git tags as `v<package.json version>`"), true);
     assert.equal(releaseProcess.includes("CHANGELOG.md"), true);
 });
+
+test("product hardening docs exist for exit criteria, accessibility, and content style", () => {
+    const exitCriteria = readRepoFile(path.join("docs", "product-exit-criteria.md"));
+    const accessibilityChecklist = readRepoFile(path.join("docs", "accessibility-checklist.md"));
+    const contentStyleGuide = readRepoFile(path.join("docs", "content-style-guide.md"));
+
+    assert.equal(exitCriteria.includes("Product Exit Criteria"), true);
+    assert.equal(accessibilityChecklist.includes("Accessibility Checklist"), true);
+    assert.equal(contentStyleGuide.includes("Content Style Guide"), true);
+});

@@ -49,6 +49,7 @@
     "media:voicevox:words": "node scripts/generateWordVoicevoxAudio.js",
     "media:sync:words": "node scripts/syncWordAudio.js",
     "deck:review:n5": "node scripts/reviewGoldenLevel.js --level=5",
+    "deck:review:accessibility": "node scripts/reportAccessibilityChecklist.js",
     "deck:review:coverage": "node scripts/reportGoldenReviewCoverage.js",
     "deck:apkg": "python scripts/buildApkg.py",
     "media:import:kanjivg": "node scripts/importKanjiVgStrokeOrder.js",

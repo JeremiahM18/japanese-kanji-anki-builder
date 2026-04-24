@@ -713,7 +713,7 @@ function alignReadingBreakdownUnits({ units, reading, kanjiInferenceCache, curat
                 return null;
             }
             const rest = align(unitIndex + 1, readingIndex + literal.length);
-            const result = rest ? [{ label: "", reading: literal, kind: "literal" }, ...rest] : null;
+            const result = rest ? [{ label: "", surface: unit.char, reading: literal, kind: "literal" }, ...rest] : null;
             memo.set(memoKey, result);
             return result;
         }
@@ -732,7 +732,7 @@ function alignReadingBreakdownUnits({ units, reading, kanjiInferenceCache, curat
             }
             const rest = align(unitIndex + 1, readingIndex + candidate.length);
             if (rest) {
-                const result = [{ label: unit.char, reading: candidate, kind: "kanji" }, ...rest];
+                const result = [{ label: unit.char, surface: unit.char, reading: candidate, kind: "kanji" }, ...rest];
                 memo.set(memoKey, result);
                 return result;
             }
@@ -743,6 +743,48 @@ function alignReadingBreakdownUnits({ units, reading, kanjiInferenceCache, curat
     }
 
     return align(0, 0);
+}
+
+function coalesceLiteralReadingSegments(segments) {
+    const coalesced = [];
+    let pendingPrefix = null;
+
+    for (const segment of Array.isArray(segments) ? segments : []) {
+        const surface = String(segment?.surface || segment?.label || segment?.reading || "");
+        const reading = String(segment?.reading || "");
+
+        if (segment?.kind === "literal") {
+            const literalSegment = { surface, reading };
+            if (coalesced.length === 0) {
+                pendingPrefix = {
+                    surface: `${pendingPrefix?.surface || ""}${literalSegment.surface}`,
+                    reading: `${pendingPrefix?.reading || ""}${literalSegment.reading}`,
+                };
+                continue;
+            }
+
+            const previous = coalesced[coalesced.length - 1];
+            previous.label = `${previous.label}${literalSegment.surface}`;
+            previous.reading = `${previous.reading}${literalSegment.reading}`;
+            continue;
+        }
+
+        const nextSegment = {
+            label: `${pendingPrefix?.surface || ""}${segment.label || surface}`,
+            reading: `${pendingPrefix?.reading || ""}${reading}`,
+            kind: segment?.kind || "kanji",
+        };
+        pendingPrefix = null;
+        coalesced.push(nextSegment);
+    }
+
+    if (pendingPrefix && coalesced.length > 0) {
+        const previous = coalesced[coalesced.length - 1];
+        previous.label = `${previous.label}${pendingPrefix.surface}`;
+        previous.reading = `${previous.reading}${pendingPrefix.reading}`;
+    }
+
+    return coalesced;
 }
 
 function formatReadingBreakdownSegments(segments) {
@@ -780,7 +822,16 @@ function buildWordReadingBreakdown({
         coverageReadings,
     });
 
-    return segments ? formatReadingBreakdownSegments(segments) : "";
+    if (!segments) {
+        return "";
+    }
+
+    const learnerSegments = coalesceLiteralReadingSegments(segments);
+    if (learnerSegments.length < 2) {
+        return "";
+    }
+
+    return formatReadingBreakdownSegments(learnerSegments);
 }
 
 function extractPrimaryCoverageReading(breakdown = {}) {

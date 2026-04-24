@@ -385,7 +385,7 @@ Word card fields include:
 
 The front of a word card shows the written study word without furigana. The back shows reading, reading breakdown, audio, verified pitch accent when available, meaning, JLPT label, coverage role, example sentence, notes, and a constituent kanji breakdown.
 
-`ReadingBreakdown` segments the word reading into learner-facing pieces, for example `学校` as `学=がっ ／ 校=こう` or `食べ物` as `食=た ／ べ ／ 物=もの`. Irregular compounds use curated overrides instead of unsafe automatic segmentation.
+`ReadingBreakdown` segments the word reading into learner-facing pieces, for example `学校` as `学=がっ ／ 校=こう` or `食べ物` as `食べ=たべ ／ 物=もの`. Kana runs attach to the nearest kanji-bearing segment, and redundant one-piece breakdowns are suppressed. Irregular compounds use curated overrides instead of unsafe automatic segmentation.
 
 `PitchAccent` is a dedicated pronunciation field. In exported word cards it renders a learner-facing Tokyo pitch contour graph with mora labels and a small source pattern caption. Leave it blank unless the accent pattern comes from a product-approved source in `templates/word_pitch_accent_data.json` or an explicitly curated override.
 

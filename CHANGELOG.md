@@ -42,6 +42,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Changed
 
 - Changed word-card pitch accent rendering from raw numeric labels into learner-facing SVG pitch-contour diagrams with mora labels, while preserving the numeric pattern as a small caption for auditability.
+- Changed word-card reading breakdowns so kana runs no longer appear as standalone crumbs; kana now attaches to the nearest kanji-bearing segment, and redundant one-piece breakdowns like `友だち=ともだち` are suppressed.
 - Changed word deck study order from a plain deterministic shuffle to a deterministic curriculum order: simple common/core cards appear before complex support cards, while focus-kanji buckets are still interleaved inside each tier to avoid sequential reading drills.
 - Improved the word note schema baseline for Japanese accessibility by replacing the old `Arial` base font stack with a Japanese-capable stack and darkening the secondary JLPT-level text color so the shipped word card starts from a stronger readable baseline.
 - Changed word-reading coverage to track cumulatively across easier decks instead of treating each JLPT word deck in isolation. N4 now counts readings already satisfied by N5, N3 will count N5+N4+N3, and so on, which removes pressure to duplicate support words just to satisfy a higher-level audit. The current live N4 cumulative reading audit is `372/651` (`57.1%`), with `66` readings already covered by N5 and `345` covered by the N4 deck itself.

@@ -84,19 +84,28 @@ async function copyFileIntoPackage(sourcePath, destinationPath) {
     await fsp.copyFile(sourcePath, destinationPath);
 }
 
-function buildPackageAssetCandidatesFromManifest(manifest, kanji) {
+function filterPackageAssetCandidates(candidates, assetKinds) {
+    if (!Array.isArray(assetKinds) || assetKinds.length === 0) {
+        return candidates;
+    }
+
+    const allowedKinds = new Set(assetKinds);
+    return candidates.filter((entry) => allowedKinds.has(entry.kind));
+}
+
+function buildPackageAssetCandidatesFromManifest(manifest, kanji, { assetKinds = null } = {}) {
     const bestStrokeOrderPath = manifest?.assets?.strokeOrderAnimation?.path || manifest?.assets?.strokeOrderImage?.path || "";
     const bestAudioPath = selectBestAudioAsset(manifest?.assets?.audio || [], {
         category: "kanji-reading",
         text: kanji,
     })?.path || "";
 
-    return [
+    return filterPackageAssetCandidates([
         { kind: "strokeOrder", relativePath: bestStrokeOrderPath },
         { kind: "strokeOrderImage", relativePath: manifest?.assets?.strokeOrderImage?.path || "" },
         { kind: "strokeOrderAnimation", relativePath: manifest?.assets?.strokeOrderAnimation?.path || "" },
         { kind: "audio", relativePath: bestAudioPath },
-    ].filter((entry) => entry.relativePath);
+    ], assetKinds).filter((entry) => entry.relativePath);
 }
 
 async function readManagedManifest({ kanji, mediaRootDir, strokeOrderService, audioService }) {
@@ -114,14 +123,14 @@ async function readManagedManifest({ kanji, mediaRootDir, strokeOrderService, au
     return readManifestIfExists(mediaRootDir, kanji);
 }
 
-async function collectPackageAssets({ kanjiList, mediaRootDir, strokeOrderService = null, audioService = null, concurrency = 8 }) {
+async function collectPackageAssets({ kanjiList, mediaRootDir, strokeOrderService = null, audioService = null, concurrency = 8, assetKinds = null }) {
     const assets = new Map();
     const mediaCounts = createEmptyMediaCounts();
     const selectedKanji = [...new Set((Array.isArray(kanjiList) ? kanjiList : []).filter(Boolean))];
 
     const assetGroups = await mapWithConcurrency(selectedKanji, concurrency, async (kanji) => {
         const manifest = await readManagedManifest({ kanji, mediaRootDir, strokeOrderService, audioService });
-        return buildPackageAssetCandidatesFromManifest(manifest, kanji).map((candidate) => ({
+        return buildPackageAssetCandidatesFromManifest(manifest, kanji, { assetKinds }).map((candidate) => ({
             ...candidate,
             kanji,
         }));
@@ -247,12 +256,16 @@ async function buildDeckPackage({
     });
 
     const selectedKanji = collectReferencedKanji({ exports, kanjiByLevel });
+    const kanjiAssetKinds = deckKind === "word"
+        ? ["strokeOrder", "strokeOrderAnimation"]
+        : null;
     const { assets, mediaCounts } = await collectPackageAssets({
         kanjiList: selectedKanji,
         mediaRootDir,
         strokeOrderService,
         audioService,
         concurrency: packageConcurrency,
+        assetKinds: kanjiAssetKinds,
     });
     const explicitReferencedAssets = await collectExplicitReferencedAssets({
         referencedMedia,
@@ -288,8 +301,8 @@ async function buildDeckPackage({
 
     await fsp.writeFile(packagePaths.readmePath, buildImportGuide({
         exportCount: exports.length,
-        mediaAssetCount: assets.length,
-        mediaCounts,
+        mediaAssetCount: mergedAssets.length,
+        mediaCounts: mergedMediaCounts,
         ankiPackage,
     }), "utf-8");
 

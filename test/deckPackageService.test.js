@@ -1,0 +1,135 @@
+const test = require("node:test");
+const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const os = require("node:os");
+const path = require("node:path");
+
+const {
+    buildDeckPackage,
+    buildPackageAssetCandidatesFromManifest,
+} = require("../src/services/deckPackageService");
+const {
+    ensureMediaLayout,
+    writeManifest,
+} = require("../src/services/mediaStore");
+
+function makeTempDir() {
+    return fs.mkdtempSync(path.join(os.tmpdir(), "deck-package-service-test-"));
+}
+
+test("buildPackageAssetCandidatesFromManifest can restrict kanji media to rendered word-deck assets", () => {
+    const manifest = {
+        assets: {
+            strokeOrderImage: { path: "images/65E5_日-stroke-order.png" },
+            strokeOrderAnimation: { path: "animations/65E5_日-stroke-order.gif" },
+            audio: [
+                { path: "audio/65E5_日-word-reading-日本-にほん.wav", category: "word-reading", text: "日本" },
+                { path: "audio/65E5_日-kanji-reading-日-ひ.wav", category: "kanji-reading", text: "日" },
+            ],
+        },
+    };
+
+    assert.deepEqual(
+        buildPackageAssetCandidatesFromManifest(manifest, "日").map((asset) => asset.kind),
+        ["strokeOrder", "strokeOrderImage", "strokeOrderAnimation", "audio"]
+    );
+    assert.deepEqual(
+        buildPackageAssetCandidatesFromManifest(manifest, "日", {
+            assetKinds: ["strokeOrder", "strokeOrderAnimation"],
+        }),
+        [
+            { kind: "strokeOrder", relativePath: "animations/65E5_日-stroke-order.gif" },
+            { kind: "strokeOrderAnimation", relativePath: "animations/65E5_日-stroke-order.gif" },
+        ]
+    );
+});
+
+test("word deck packaging includes explicit word audio but prunes static images and kanji-reading audio", async () => {
+    const rootDir = makeTempDir();
+    const mediaRootDir = path.join(rootDir, "media-root");
+    const outDir = path.join(rootDir, "out");
+    const exportPath = path.join(rootDir, "jlpt-n5-words.tsv");
+    fs.writeFileSync(exportPath, "Word\tReading\tMeaning\n日本\tにほん\tJapan\n", "utf-8");
+
+    const layout = ensureMediaLayout(mediaRootDir, "日");
+    fs.writeFileSync(path.join(layout.imagesDir, "65E5_日-stroke-order.png"), "image");
+    fs.writeFileSync(path.join(layout.animationsDir, "65E5_日-stroke-order.gif"), "animation");
+    fs.writeFileSync(path.join(layout.audioDir, "65E5_日-kanji-reading-日-ひ.wav"), "kanji-audio");
+    fs.writeFileSync(path.join(layout.audioDir, "65E5_日-word-reading-日本-にほん.wav"), "word-audio");
+
+    await writeManifest(mediaRootDir, {
+        kanji: "日",
+        version: 1,
+        updatedAt: new Date().toISOString(),
+        assets: {
+            strokeOrderImage: {
+                kind: "image",
+                path: "images/65E5_日-stroke-order.png",
+                mimeType: "image/png",
+                source: "fixture",
+            },
+            strokeOrderAnimation: {
+                kind: "animation",
+                path: "animations/65E5_日-stroke-order.gif",
+                mimeType: "image/gif",
+                source: "fixture",
+            },
+            audio: [
+                {
+                    kind: "audio",
+                    path: "audio/65E5_日-kanji-reading-日-ひ.wav",
+                    mimeType: "audio/wav",
+                    source: "fixture",
+                    category: "kanji-reading",
+                    text: "日",
+                    reading: "ひ",
+                },
+                {
+                    kind: "audio",
+                    path: "audio/65E5_日-word-reading-日本-にほん.wav",
+                    mimeType: "audio/wav",
+                    source: "fixture",
+                    category: "word-reading",
+                    text: "日本",
+                    reading: "にほん",
+                },
+            ],
+        },
+    });
+
+    const summary = await buildDeckPackage({
+        outDir,
+        exports: [{
+            level: 5,
+            filePath: exportPath,
+            rows: 1,
+            mediaKanji: ["日"],
+        }],
+        kanjiByLevel: { 5: ["日"] },
+        mediaRootDir,
+        deckKind: "word",
+        referencedMedia: [{
+            kind: "audio",
+            kanji: "日",
+            relativePath: "audio/65E5_日-word-reading-日本-にほん.wav",
+        }],
+    });
+
+    assert.deepEqual(summary.mediaCounts, {
+        strokeOrder: 1,
+        strokeOrderImage: 0,
+        strokeOrderAnimation: 1,
+        trueStrokeOrderAnimation: 1,
+        svgStrokeOrderAnimationFallback: 0,
+        audio: 1,
+    });
+    assert.equal(summary.mediaAssetCount, 2);
+    assert.equal(fs.existsSync(path.join(summary.mediaDir, "65E5_日-stroke-order.gif")), true);
+    assert.equal(fs.existsSync(path.join(summary.mediaDir, "65E5_日-word-reading-日本-にほん.wav")), true);
+    assert.equal(fs.existsSync(path.join(summary.mediaDir, "65E5_日-stroke-order.png")), false);
+    assert.equal(fs.existsSync(path.join(summary.mediaDir, "65E5_日-kanji-reading-日-ひ.wav")), false);
+
+    const guide = fs.readFileSync(summary.readmePath, "utf-8");
+    assert.match(guide, /Unique media files included: 2/);
+    assert.match(guide, /- Audio fields: 1/);
+});

@@ -1,5 +1,6 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const path = require("node:path");
 
 const {
     buildWordCoverageContractSummary,
@@ -9,6 +10,19 @@ const {
     normalizeWordStudyData,
     refreshStarterEntries,
 } = require("../src/datasets/wordStudyData");
+
+const STARTER_WORD_STUDY_DATA_PATH = path.resolve(process.cwd(), "templates", "starter_word_study_data.json");
+let trackedStarterWordEntriesCache = null;
+
+function loadTrackedStarterWordEntries() {
+    if (!trackedStarterWordEntriesCache) {
+        trackedStarterWordEntriesCache = loadWordStudyData({
+            starterPath: STARTER_WORD_STUDY_DATA_PATH,
+            localPath: null,
+        });
+    }
+    return trackedStarterWordEntriesCache;
+}
 
 test("buildWordStudyEntryKey uses written and reading", () => {
     assert.equal(buildWordStudyEntryKey({ written: "今日", reading: "きょう" }), "今日|きょう");
@@ -165,10 +179,7 @@ test("word study dataset helpers detect and refresh starter-derived entries", ()
 });
 
 test("tracked starter word data includes the first governed N4 starter entries", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.equal(starterEntries["安心|あんしん"].jlpt, 4);
     assert.deepEqual(starterEntries["安心|あんしん"].tags, ["common", "n4", "starter"]);
@@ -181,10 +192,7 @@ test("tracked starter word data includes the first governed N4 starter entries",
 });
 
 test("tracked starter word data includes the first promoted N4 completion batch", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.equal(starterEntries["文|ぶん"].jlpt, 4);
     assert.deepEqual(starterEntries["文|ぶん"].coverage, {
@@ -211,10 +219,7 @@ test("tracked starter word data includes the first promoted N4 completion batch"
 });
 
 test("tracked starter word data includes the second governed N4 completion batch", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.equal(starterEntries["不便|ふべん"].coverage.coversReadings["不"], "ふ");
     assert.equal(starterEntries["歌|うた"].coverage.coversReadings["歌"], "うた");
@@ -238,10 +243,7 @@ test("tracked starter word data includes the second governed N4 completion batch
 });
 
 test("tracked starter word data includes the third governed N4 completion batch", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.equal(starterEntries["町|まち"].coverage.coversReadings["町"], "まち");
     assert.equal(starterEntries["通う|かよう"].coverage.coversReadings["通"], "かよう");
@@ -263,10 +265,7 @@ test("tracked starter word data includes the third governed N4 completion batch"
 });
 
 test("tracked starter word data includes the fourth governed N4 completion batch", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.equal(starterEntries["以内|いない"].coverage.coversReadings["以"], "い");
     assert.equal(starterEntries["入院|にゅういん"].coverage.coversReadings["院"], "いん");
@@ -299,10 +298,7 @@ test("tracked starter word data includes the fourth governed N4 completion batch
 });
 
 test("tracked starter word data includes the fifth governed N4 completion batch", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.equal(starterEntries["待つ|まつ"].coverage.coversReadings["待"], "まつ");
     assert.equal(starterEntries["待ち合わせ|まちあわせ"].coverage.coversReadings["待"], "まち");
@@ -327,10 +323,7 @@ test("tracked starter word data includes the fifth governed N4 completion batch"
 });
 
 test("tracked starter word data includes the sixth governed N4 completion batch", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.equal(starterEntries["親切|しんせつ"].coverage.coversReadings["親"], "しん");
     assert.equal(starterEntries["親切|しんせつ"].coverage.coversReadings["切"], "せつ");
@@ -357,10 +350,7 @@ test("tracked starter word data includes the sixth governed N4 completion batch"
 });
 
 test("tracked starter word data includes the seventh governed N4 completion batch", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.equal(starterEntries["不足|ふそく"].coverage.coversReadings["足"], "そく");
     assert.equal(starterEntries["主に|おもに"].coverage.coversReadings["主"], "おも");
@@ -385,10 +375,7 @@ test("tracked starter word data includes the seventh governed N4 completion batc
 });
 
 test("tracked starter word data includes the eighth governed N4 completion batch", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.equal(starterEntries["悪い|わるい"].coverage.coversReadings["悪"], "わるい");
     assert.equal(starterEntries["医者|いしゃ"].coverage.coversReadings["医"], "い");
@@ -415,10 +402,7 @@ test("tracked starter word data includes the eighth governed N4 completion batch
 });
 
 test("tracked starter word data includes the ninth governed N4 completion batch", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.equal(starterEntries["空|から"].coverage.coversReadings["空"], "から");
     assert.equal(starterEntries["元|もと"].coverage.coversReadings["元"], "もと");
@@ -443,10 +427,7 @@ test("tracked starter word data includes the ninth governed N4 completion batch"
 });
 
 test("tracked starter word data includes the tenth governed N4 completion batch", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.equal(starterEntries["屋|や"].coverage.coversReadings["屋"], "や");
     assert.equal(starterEntries["社会|しゃかい"].coverage.coversReadings["社"], "しゃ");
@@ -464,10 +445,7 @@ test("tracked starter word data includes the tenth governed N4 completion batch"
 });
 
 test("tracked starter word data includes the eleventh governed N4 completion batch", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.equal(starterEntries["悪口|わるくち"].coverage.coversReadings["悪"], "わる");
     assert.equal(starterEntries["開始|かいし"].coverage.coversReadings["開"], "かい");
@@ -489,10 +467,7 @@ test("tracked starter word data includes the eleventh governed N4 completion bat
 });
 
 test("tracked starter word data includes the twelfth governed N4 completion batch", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.equal(starterEntries["悪人|あくにん"].coverage.coversReadings["悪"], "あく");
     assert.equal(starterEntries["開会|かいかい"].coverage.coversReadings["開"], "かい");
@@ -510,10 +485,7 @@ test("tracked starter word data includes the twelfth governed N4 completion batc
 });
 
 test("tracked starter word data includes the thirteenth governed N4 completion batch", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.equal(starterEntries["会計|かいけい"].coverage.coversReadings["計"], "けい");
     assert.equal(starterEntries["帰り道|かえりみち"].coverage.coversReadings["帰"], "かえり");
@@ -535,10 +507,7 @@ test("tracked starter word data includes the thirteenth governed N4 completion b
 });
 
 test("tracked starter word data includes the fourteenth governed N4 completion batch", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.equal(starterEntries["悪夢|あくむ"].coverage.coversReadings["悪"], "あく");
     assert.equal(starterEntries["近づく|ちかづく"].coverage.coversReadings["近"], "ちか");
@@ -554,10 +523,7 @@ test("tracked starter word data includes the fourteenth governed N4 completion b
 });
 
 test("tracked starter word data includes the fifteenth governed N4 completion batch", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.equal(starterEntries["明ける|あける"].coverage.coversReadings["明"], "あける");
     assert.equal(starterEntries["説明|せつめい"].coverage.coversReadings["明"], "めい");
@@ -574,10 +540,7 @@ test("tracked starter word data includes the fifteenth governed N4 completion ba
 });
 
 test("tracked starter word data includes the sixteenth governed N4 completion batch", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.equal(starterEntries["中止|ちゅうし"].coverage.coversReadings["止"], "し");
     assert.equal(starterEntries["出発|しゅっぱつ"].coverage.coversReadings["発"], "はつ");
@@ -593,10 +556,7 @@ test("tracked starter word data includes the sixteenth governed N4 completion ba
 });
 
 test("tracked starter word data includes the seventeenth governed N4 completion batch", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.equal(starterEntries["家計|かけい"].coverage.coversReadings["家"], "け");
     assert.equal(starterEntries["飲料|いんりょう"].coverage.coversReadings["飲"], "いん");
@@ -611,10 +571,7 @@ test("tracked starter word data includes the seventeenth governed N4 completion 
 });
 
 test("tracked starter word data includes the eighteenth governed N4 completion batch", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.equal(starterEntries["教わる|おそわる"].coverage.coversReadings["教"], "おそわる");
     assert.equal(starterEntries["強まる|つよまる"].coverage.coversReadings["強"], "つよまる");
@@ -630,10 +587,7 @@ test("tracked starter word data includes the eighteenth governed N4 completion b
 });
 
 test("tracked starter word data includes the nineteenth governed N4 completion batch", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.equal(starterEntries["開く|あく"].coverage.coversReadings["開"], "あく");
     assert.equal(starterEntries["問い|とい"].coverage.coversReadings["問"], "とい");
@@ -646,10 +600,7 @@ test("tracked starter word data includes the nineteenth governed N4 completion b
 });
 
 test("tracked starter word data includes the twentieth governed N4 completion batch", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.equal(starterEntries["強引|ごういん"].coverage.coversReadings["強"], "ごう");
     assert.equal(starterEntries["建設|けんせつ"].coverage.coversReadings["建"], "けん");
@@ -674,10 +625,7 @@ test("tracked starter word data includes the twentieth governed N4 completion ba
 });
 
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
-    const starterEntries = loadWordStudyData({
-        starterPath: require("node:path").resolve(process.cwd(), "templates", "starter_word_study_data.json"),
-        localPath: null,
-    });
+    const starterEntries = loadTrackedStarterWordEntries();
 
     assert.deepEqual(starterEntries["今日|きょう"].coverage, {
         role: "both",

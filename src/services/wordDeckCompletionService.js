@@ -149,6 +149,116 @@ function buildWordDeckReadingBreakdownAudit({ wordRows }) {
     };
 }
 
+function hasFieldValue(row, fieldName) {
+    return String(row?.[fieldName] || "").trim().length > 0;
+}
+
+function hasJapaneseKanji(value) {
+    return Array.from(String(value || "")).some((char) => HAN_CHAR_RE.test(char) && char !== "々");
+}
+
+function needsReadingBreakdown(row) {
+    const chars = Array.from(String(row?.Word || row?.word || ""));
+    const kanjiCount = chars.filter((char) => HAN_CHAR_RE.test(char) && char !== "々").length;
+    const hasKana = chars.some((char) => isKanaOnly(char));
+    return kanjiCount >= 2 || (kanjiCount > 0 && hasKana);
+}
+
+function buildFieldCoverage({ rows, key, label, fieldName, required, appliesTo = () => true, maxMissingRows = 20 }) {
+    let readyCount = 0;
+    let totalCount = 0;
+    let missingCount = 0;
+    const missingRows = [];
+
+    for (const row of rows) {
+        if (!appliesTo(row)) {
+            continue;
+        }
+
+        totalCount += 1;
+        if (hasFieldValue(row, fieldName)) {
+            readyCount += 1;
+            continue;
+        }
+
+        missingCount += 1;
+        if (missingRows.length < maxMissingRows) {
+            missingRows.push({
+                word: String(row?.Word || row?.word || "").trim(),
+                reading: String(row?.Reading || row?.reading || "").trim(),
+            });
+        }
+    }
+
+    return {
+        key,
+        label,
+        fieldName,
+        required,
+        readyCount,
+        totalCount,
+        missingCount,
+        coveragePercent: totalCount > 0
+            ? Number(((readyCount / totalCount) * 100).toFixed(1))
+            : 100,
+        missingRows,
+    };
+}
+
+function buildWordDeckCardBackAudit({ wordRows, maxMissingRows = 20 }) {
+    const rows = Array.isArray(wordRows) ? wordRows : [];
+    const fieldRules = [
+        { key: "reading", label: "reading", fieldName: "Reading", required: true },
+        {
+            key: "readingBreakdown",
+            label: "furigana breakdown",
+            fieldName: "ReadingBreakdown",
+            required: true,
+            appliesTo: needsReadingBreakdown,
+        },
+        { key: "audio", label: "audio", fieldName: "Audio", required: true },
+        { key: "pitchAccent", label: "pitch accent", fieldName: "PitchAccent", required: true },
+        { key: "meaning", label: "meaning", fieldName: "Meaning", required: true },
+        { key: "jlptLevel", label: "JLPT label", fieldName: "JLPTLevel", required: true },
+        { key: "coverageRole", label: "coverage role", fieldName: "CoverageRole", required: true },
+        { key: "focusKanji", label: "study focus", fieldName: "FocusKanji", required: true },
+        { key: "coversReading", label: "covered reading", fieldName: "CoversReading", required: true },
+        {
+            key: "kanjiBreakdown",
+            label: "kanji breakdown",
+            fieldName: "KanjiBreakdown",
+            required: true,
+            appliesTo: (row) => hasJapaneseKanji(row?.Word || row?.word),
+        },
+        { key: "exampleSentence", label: "example sentence", fieldName: "ExampleSentence", required: true },
+        { key: "notes", label: "notes", fieldName: "Notes", required: false },
+    ];
+    const fields = Object.fromEntries(
+        fieldRules.map((rule) => [rule.key, buildFieldCoverage({ rows, maxMissingRows, ...rule })])
+    );
+    const requiredFields = Object.values(fields).filter((field) => field.required);
+    const requiredMissingRows = requiredFields.flatMap((field) => field.missingRows.map((row) => ({
+        ...row,
+        field: field.label,
+    })));
+    const requiredReadyCount = requiredFields.reduce((total, field) => total + field.readyCount, 0);
+    const requiredTotalCount = requiredFields.reduce((total, field) => total + field.totalCount, 0);
+    const requiredMissingCount = requiredFields.reduce((total, field) => total + field.missingCount, 0);
+
+    return {
+        valid: requiredMissingCount === 0,
+        totalRows: rows.length,
+        requiredReadyCount,
+        requiredTotalCount,
+        requiredMissingCount,
+        requiredCoveragePercent: requiredTotalCount > 0
+            ? Number(((requiredReadyCount / requiredTotalCount) * 100).toFixed(1))
+            : 100,
+        fields,
+        requiredMissingRows,
+    };
+}
+
 function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract }) {
     const deckLevel = Number(level);
     if (!jlptLevelContract?.kanjiLevels) {
@@ -328,12 +438,16 @@ function buildWordDeckCompletionReport({
     const readingBreakdownAudit = buildWordDeckReadingBreakdownAudit({
         wordRows,
     });
+    const cardBackAudit = buildWordDeckCardBackAudit({
+        wordRows,
+    });
     const readiness = buildWordDeckReadiness({
         inventory,
         readingCoverage: readingCoverage.summary,
         triage: triage.summary,
         policyAudit,
         readingBreakdownAudit,
+        cardBackAudit,
     });
 
     return {
@@ -349,23 +463,25 @@ function buildWordDeckCompletionReport({
         sentenceOrthographyAudit,
         pitchAccentAudit,
         readingBreakdownAudit,
+        cardBackAudit,
         readiness,
     };
 }
 
-function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudit, readingBreakdownAudit = null }) {
+function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudit, readingBreakdownAudit = null, cardBackAudit = null }) {
     const hasMissingStarterRows = (inventory?.missingEligibleCount || 0) > 0;
     const hasActiveTriageItems = ((triage?.editorialReviewItems || 0) + (triage?.promoteCuratedExampleItems || 0)) > 0;
     const allOpenItemsDeferred = (triage?.totalItems || 0) > 0
         && (triage?.deferVariantItems || 0) === (triage?.totalItems || 0);
     const hasPolicyViolations = !policyAudit?.valid;
     const hasReadingBreakdownViolations = readingBreakdownAudit ? !readingBreakdownAudit.valid : false;
+    const hasCardBackViolations = cardBackAudit ? !cardBackAudit.valid : false;
     const readingCoveragePercent = (readingCoverage?.totalReadings || 0) > 0
         ? Number((((readingCoverage?.coveredReadings || 0) / readingCoverage.totalReadings) * 100).toFixed(1))
         : 0;
 
     let status = "incomplete";
-    if (!hasMissingStarterRows && !hasActiveTriageItems && !hasPolicyViolations && !hasReadingBreakdownViolations) {
+    if (!hasMissingStarterRows && !hasActiveTriageItems && !hasPolicyViolations && !hasReadingBreakdownViolations && !hasCardBackViolations) {
         status = allOpenItemsDeferred ? "ready_with_deferred_variants" : "complete";
     }
 
@@ -375,9 +491,16 @@ function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudi
         hasActiveTriageItems,
         hasPolicyViolations,
         hasReadingBreakdownViolations,
+        hasCardBackViolations,
         allOpenItemsDeferred,
         readingCoveragePercent,
     };
+}
+
+function formatCardBackFieldCoverage(cardBackAudit) {
+    return Object.values(cardBackAudit?.fields || {})
+        .map((field) => `${field.label} ${field.readyCount}/${field.totalCount}`)
+        .join(", ");
 }
 
 function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
@@ -409,6 +532,10 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         "Reading breakdown review:",
         `- Mixed kanji/kana rows missing breakdowns: ${report.readingBreakdownAudit?.missingMixedBreakdownCount || 0}`,
         `- Non-ruby kanji breakdowns: ${report.readingBreakdownAudit?.nonRubyBreakdownCount || 0}`,
+        "",
+        "Card back review:",
+        `- Required back-side fields: ${report.cardBackAudit?.requiredReadyCount || 0}/${report.cardBackAudit?.requiredTotalCount || 0} (${report.cardBackAudit?.requiredMissingCount || 0} missing)`,
+        `- Field coverage: ${formatCardBackFieldCoverage(report.cardBackAudit)}`,
         "",
         "Reading coverage:",
         `- Readings audited: ${report.readingCoverage.totalReadings}`,
@@ -457,10 +584,18 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         }
     }
 
+    if ((report.cardBackAudit?.requiredMissingRows || []).length > 0) {
+        lines.push("", "Required card-back field gaps:");
+        for (const row of report.cardBackAudit.requiredMissingRows.slice(0, maxEntries)) {
+            lines.push(`- ${row.word} (${row.reading}) — ${row.field}`);
+        }
+    }
+
     return `${lines.join("\n")}\n`;
 }
 
 module.exports = {
+    buildWordDeckCardBackAudit,
     buildWordDeckCompletionReport,
     buildWordDeckInventorySummary,
     buildWordDeckPitchAccentAudit,
@@ -468,5 +603,6 @@ module.exports = {
     buildWordDeckReadingBreakdownAudit,
     buildWordDeckSentenceOrthographyAudit,
     buildWordDeckReadiness,
+    formatCardBackFieldCoverage,
     formatWordDeckCompletionReport,
 };

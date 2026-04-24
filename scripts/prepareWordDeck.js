@@ -12,7 +12,7 @@ const { loadJlptLevelContract } = require("../src/datasets/jlptLevelContract");
 const { loadAudioSourcePolicy } = require("../src/datasets/audioSourcePolicy");
 const { buildWordCoverageContractSummary } = require("../src/datasets/wordStudyData");
 const { buildStarterWordGovernanceSummary } = require("../src/datasets/jlptWordLevelContract");
-const { buildWordDeckCompletionReport } = require("../src/services/wordDeckCompletionService");
+const { buildWordDeckCompletionReport, formatCardBackFieldCoverage } = require("../src/services/wordDeckCompletionService");
 const { buildCoverageLevels } = require("../src/services/wordDeckCoverageScopeService");
 const { buildWordAudioReviewReport } = require("../src/services/wordAudioReviewService");
 const { buildSelectedKanjiByLevel, parseLevelsArgument } = require("../src/services/buildPipeline");
@@ -121,6 +121,7 @@ function formatWordDeckReadyReport(summary, doctorReport) {
             const triage = summary.completion.readingGapTriageByLevel?.[`N${level}`];
             const wordAudio = summary.completion.wordAudioReviewByLevel?.[`N${level}`];
             const pitchAccent = summary.completion.pitchAccentReviewByLevel?.[`N${level}`];
+            const cardBackAudit = audit.cardBackAudit;
             if (!audit) {
                 return [];
             }
@@ -145,6 +146,12 @@ function formatWordDeckReadyReport(summary, doctorReport) {
                     : []),
                 ...(audit.readingBreakdownAudit
                     ? [`  reading breakdown review: ${audit.readingBreakdownAudit.missingMixedBreakdownCount} mixed-script blanks, ${audit.readingBreakdownAudit.nonRubyBreakdownCount} non-ruby breakdowns`]
+                    : []),
+                ...(cardBackAudit
+                    ? [
+                        `  card back review: ${cardBackAudit.requiredCoveragePercent}% (${cardBackAudit.requiredReadyCount}/${cardBackAudit.requiredTotalCount}) required fields ready, ${cardBackAudit.requiredMissingCount} missing`,
+                        `  card back fields: ${formatCardBackFieldCoverage(cardBackAudit)}`,
+                    ]
                     : []),
                 ...(wordAudio
                     ? [`  word audio review: ${wordAudio.coveragePercent}% (${wordAudio.readyToReview}/${wordAudio.totalWords}) ready, ${wordAudio.missingAudio} missing, ${wordAudio.readingMismatch + wordAudio.policyMismatch + wordAudio.missingGeneratedReading + wordAudio.missingExpectedReading} flagged`]
@@ -302,6 +309,7 @@ async function main() {
             readingCoverageAuditByLevel[`N${level}`].policyAudit = completionReport.policyAudit;
             readingCoverageAuditByLevel[`N${level}`].sentenceOrthographyAudit = completionReport.sentenceOrthographyAudit;
             readingCoverageAuditByLevel[`N${level}`].readingBreakdownAudit = completionReport.readingBreakdownAudit;
+            readingCoverageAuditByLevel[`N${level}`].cardBackAudit = completionReport.cardBackAudit;
             pitchAccentReviewByLevel[`N${level}`] = completionReport.pitchAccentAudit;
         }
         if (audioSourcePolicy.releaseAudio.wordDeckAudioEnabled) {
@@ -395,7 +403,9 @@ async function main() {
             .some((audit) => !audit?.policyAudit?.valid);
         const hasReadingBreakdownViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
             .some((audit) => !audit?.readingBreakdownAudit?.valid);
-        if (!hasFullTrueAnimationCoverage || hasPolicyViolations || hasReadingBreakdownViolations || (options.requireNoActiveTriage && hasActiveTriageBacklog)) {
+        const hasCardBackViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
+            .some((audit) => audit?.cardBackAudit && !audit.cardBackAudit.valid);
+        if (!hasFullTrueAnimationCoverage || hasPolicyViolations || hasReadingBreakdownViolations || hasCardBackViolations || (options.requireNoActiveTriage && hasActiveTriageBacklog)) {
             process.exitCode = 1;
         }
         return;
@@ -408,7 +418,9 @@ async function main() {
         .some((audit) => !audit?.policyAudit?.valid);
     const hasReadingBreakdownViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
         .some((audit) => !audit?.readingBreakdownAudit?.valid);
-    if (!hasFullTrueAnimationCoverage || hasPolicyViolations || hasReadingBreakdownViolations || (options.requireNoActiveTriage && hasActiveTriageBacklog)) {
+    const hasCardBackViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
+        .some((audit) => audit?.cardBackAudit && !audit.cardBackAudit.valid);
+    if (!hasFullTrueAnimationCoverage || hasPolicyViolations || hasReadingBreakdownViolations || hasCardBackViolations || (options.requireNoActiveTriage && hasActiveTriageBacklog)) {
         process.exitCode = 1;
     }
 }

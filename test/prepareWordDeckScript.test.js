@@ -47,6 +47,26 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
                         missingMixedBreakdownCount: 0,
                         nonRubyBreakdownCount: 0,
                     },
+                    cardBackAudit: {
+                        requiredCoveragePercent: 100,
+                        requiredReadyCount: 2500,
+                        requiredTotalCount: 2500,
+                        requiredMissingCount: 0,
+                        fields: {
+                            reading: { label: "reading", readyCount: 258, totalCount: 258 },
+                            readingBreakdown: { label: "furigana breakdown", readyCount: 140, totalCount: 140 },
+                            audio: { label: "audio", readyCount: 258, totalCount: 258 },
+                            pitchAccent: { label: "pitch accent", readyCount: 258, totalCount: 258 },
+                            meaning: { label: "meaning", readyCount: 258, totalCount: 258 },
+                            jlptLevel: { label: "JLPT label", readyCount: 258, totalCount: 258 },
+                            coverageRole: { label: "coverage role", readyCount: 258, totalCount: 258 },
+                            focusKanji: { label: "study focus", readyCount: 258, totalCount: 258 },
+                            coversReading: { label: "covered reading", readyCount: 258, totalCount: 258 },
+                            kanjiBreakdown: { label: "kanji breakdown", readyCount: 258, totalCount: 258 },
+                            exampleSentence: { label: "example sentence", readyCount: 258, totalCount: 258 },
+                            notes: { label: "notes", readyCount: 20, totalCount: 258 },
+                        },
+                    },
                     readiness: {
                         status: "incomplete",
                     },
@@ -106,6 +126,8 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
     assert.match(text, /deck policy: 0 standalone wrong-level cards, 0 missing labels/);
     assert.match(text, /sentence orthography review: 2 suspicious kana-only examples/);
     assert.match(text, /reading breakdown review: 0 mixed-script blanks, 0 non-ruby breakdowns/);
+    assert.match(text, /card back review: 100% \(2500\/2500\) required fields ready, 0 missing/);
+    assert.match(text, /card back fields: reading 258\/258, furigana breakdown 140\/140, audio 258\/258/);
     assert.match(text, /pitch accent review: 0% \(0\/258\) annotated, 258 missing, 0 ungoverned, field present/);
     assert.match(text, /triage backlog: 147 editorial review, 0 promote curated example, 16 defer variant/);
     assert.match(text, /True looping animation coverage: 100% \(166\/166\)/);

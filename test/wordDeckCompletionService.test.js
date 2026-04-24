@@ -2,6 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const {
+    buildWordDeckCardBackAudit,
     buildWordDeckCompletionReport,
     buildWordDeckInventorySummary,
     buildWordDeckPitchAccentAudit,
@@ -111,6 +112,67 @@ test("buildWordDeckReadingBreakdownAudit flags mixed-script blanks and non-ruby 
     assert.equal(audit.nonRubyRows[0].word, "友だち");
 });
 
+test("buildWordDeckCardBackAudit proves required learner-facing back fields", () => {
+    const audit = buildWordDeckCardBackAudit({
+        wordRows: [
+            {
+                Word: "食べ物",
+                Reading: "たべもの",
+                ReadingBreakdown: "<ruby>食<rt>た</rt></ruby>べ<ruby>物<rt>もの</rt></ruby>",
+                Audio: "[sound:food.wav]",
+                PitchAccent: "<div>Pitch: 0 [heiban]</div>",
+                Meaning: "food",
+                JLPTLevel: "JLPT N5",
+                CoverageRole: "JLPT core + reading coverage",
+                FocusKanji: "食、物",
+                CoversReading: "食: た ／ 物: もの",
+                KanjiBreakdown: "<div>食</div><div>物</div>",
+                ExampleSentence: "食べ物があります。 ／ たべものがあります。 ／ There is food.",
+                Notes: "",
+            },
+            {
+                Word: "生まれる",
+                Reading: "うまれる",
+                ReadingBreakdown: "",
+                Audio: "",
+                PitchAccent: "",
+                Meaning: "to be born",
+                JLPTLevel: "JLPT N5",
+                CoverageRole: "Reading coverage support",
+                FocusKanji: "生",
+                CoversReading: "生: う",
+                KanjiBreakdown: "<div>生</div>",
+                ExampleSentence: "赤ちゃんが生まれます。 ／ あかちゃんがうまれます。 ／ A baby is born.",
+                Notes: "",
+            },
+        ],
+    });
+
+    assert.equal(audit.valid, false);
+    assert.equal(audit.totalRows, 2);
+    assert.equal(audit.fields.reading.readyCount, 2);
+    assert.equal(audit.fields.readingBreakdown.readyCount, 1);
+    assert.equal(audit.fields.readingBreakdown.totalCount, 2);
+    assert.equal(audit.fields.audio.missingCount, 1);
+    assert.equal(audit.fields.notes.required, false);
+    assert.equal(audit.requiredMissingRows.some((row) => row.word === "生まれる" && row.field === "audio"), true);
+});
+
+test("buildWordDeckCardBackAudit keeps capped samples separate from validity counts", () => {
+    const audit = buildWordDeckCardBackAudit({
+        maxMissingRows: 1,
+        wordRows: [
+            { Word: "雨", Reading: "あめ" },
+            { Word: "飴", Reading: "あめ" },
+        ],
+    });
+
+    assert.equal(audit.valid, false);
+    assert.equal(audit.fields.audio.missingCount, 2);
+    assert.equal(audit.fields.audio.missingRows.length, 1);
+    assert.ok(audit.requiredMissingCount > audit.requiredMissingRows.length);
+});
+
 test("buildWordDeckCompletionReport combines canonical inventory and reading coverage", () => {
     const report = buildWordDeckCompletionReport({
         level: 5,
@@ -134,13 +196,13 @@ test("buildWordDeckCompletionReport combines canonical inventory and reading cov
             "日\t日\t日 （ひ） ／ day\tひ\t\tくん: ひ\t\t\t\t\t\t今日 （きょう） - today\t",
         ].join("\n"),
         wordTsv: [
-            "Word\tReading\tAudio\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes",
-            "今日\tきょう\t\ttoday\tJLPT N5\tJLPT core + reading coverage\t今、日\t今: いま ／ 日: ひ\t\t\t",
+            "Word\tReading\tReadingBreakdown\tAudio\tPitchAccent\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes",
+            "今日\tきょう\t<ruby>今日<rt>きょう</rt></ruby>\t[sound:today.wav]\t<div>Pitch: 1 [atamadaka]</div>\ttoday\tJLPT N5\tJLPT core + reading coverage\t今、日\t今: いま ／ 日: ひ\t<div>今</div><div>日</div>\t今日は休みです。 ／ きょうはやすみです。 ／ Today is a day off.\t",
         ].join("\n"),
         coverageWordTsvByLevel: {
             5: [
-                "Word\tReading\tAudio\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes",
-                "今日\tきょう\t\ttoday\tJLPT N5\tJLPT core + reading coverage\t今、日\t今: いま ／ 日: ひ\t\t\t",
+                "Word\tReading\tReadingBreakdown\tAudio\tPitchAccent\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes",
+                "今日\tきょう\t<ruby>今日<rt>きょう</rt></ruby>\t[sound:today.wav]\t<div>Pitch: 1 [atamadaka]</div>\ttoday\tJLPT N5\tJLPT core + reading coverage\t今、日\t今: いま ／ 日: ひ\t<div>今</div><div>日</div>\t今日は休みです。 ／ きょうはやすみです。 ／ Today is a day off.\t",
             ].join("\n"),
         },
     });
@@ -149,8 +211,9 @@ test("buildWordDeckCompletionReport combines canonical inventory and reading cov
     assert.equal(report.inventory.builtEligibleCount, 1);
     assert.equal(report.readingCoverage.coveredReadings, 2);
     assert.equal(report.coverageScope.label, "N5");
-    assert.equal(report.pitchAccentAudit.fieldPresent, false);
+    assert.equal(report.pitchAccentAudit.fieldPresent, true);
     assert.equal(report.readingBreakdownAudit.valid, true);
+    assert.equal(report.cardBackAudit.valid, true);
     assert.equal(report.readiness.status, "complete");
 });
 
@@ -277,6 +340,28 @@ test("buildWordDeckReadiness stays incomplete when reading breakdown audit fails
     assert.equal(report.hasReadingBreakdownViolations, true);
 });
 
+test("buildWordDeckReadiness stays incomplete when card back fields are missing", () => {
+    const report = buildWordDeckReadiness({
+        inventory: { missingEligibleCount: 0 },
+        readingCoverage: { totalReadings: 100, coveredReadings: 90 },
+        triage: {
+            totalItems: 0,
+            editorialReviewItems: 0,
+            promoteCuratedExampleItems: 0,
+            deferVariantItems: 0,
+        },
+        policyAudit: {
+            valid: true,
+        },
+        cardBackAudit: {
+            valid: false,
+        },
+    });
+
+    assert.equal(report.status, "incomplete");
+    assert.equal(report.hasCardBackViolations, true);
+});
+
 test("buildWordDeckPolicyAudit rejects standalone higher-level cards and missing constituent badges", () => {
     const audit = buildWordDeckPolicyAudit({
         level: 5,
@@ -391,6 +476,20 @@ test("formatWordDeckCompletionReport renders missing rows and source-only exclus
             missingMixedRows: [{ word: "生まれる", reading: "うまれる" }],
             nonRubyRows: [{ word: "友だち", reading: "ともだち", readingBreakdown: "友=とも ／ だち" }],
         },
+        cardBackAudit: {
+            requiredReadyCount: 118,
+            requiredTotalCount: 120,
+            requiredMissingCount: 2,
+            fields: {
+                reading: { label: "reading", readyCount: 10, totalCount: 10 },
+                readingBreakdown: { label: "furigana breakdown", readyCount: 2, totalCount: 3 },
+                audio: { label: "audio", readyCount: 9, totalCount: 10 },
+            },
+            requiredMissingRows: [
+                { word: "生まれる", reading: "うまれる", field: "furigana breakdown" },
+                { word: "雨", reading: "あめ", field: "audio" },
+            ],
+        },
         readingCoverage: {
             totalReadings: 10,
             coveredReadings: 4,
@@ -412,6 +511,8 @@ test("formatWordDeckCompletionReport renders missing rows and source-only exclus
     assert.match(text, /Suspicious kana-only examples: 1/);
     assert.match(text, /Mixed kanji\/kana rows missing breakdowns: 1/);
     assert.match(text, /Non-ruby kanji breakdowns: 1/);
+    assert.match(text, /Required back-side fields: 118\/120 \(2 missing\)/);
+    assert.match(text, /Field coverage: reading 10\/10, furigana breakdown 2\/3, audio 9\/10/);
     assert.match(text, /Covered by earlier decks: 1/);
     assert.match(text, /Covered by this deck level: 3/);
     assert.match(text, /Missing starter-eligible N-level rows:/);
@@ -421,4 +522,6 @@ test("formatWordDeckCompletionReport renders missing rows and source-only exclus
     assert.match(text, /猫 \(ねこ\) — 白いねこがいます。/);
     assert.match(text, /生まれる \(うまれる\)/);
     assert.match(text, /友だち \(ともだち\) — 友=とも ／ だち/);
+    assert.match(text, /生まれる \(うまれる\) — furigana breakdown/);
+    assert.match(text, /雨 \(あめ\) — audio/);
 });

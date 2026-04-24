@@ -56,7 +56,7 @@ Guidance:
 
 The canonical repo-side JLPT taxonomy contract lives in [../templates/jlpt_level_contract.json](../templates/jlpt_level_contract.json). The local `kanji_jlpt_only.json` file is still required at runtime, but it is now treated as a workstation copy that must align to that tracked contract.
 
-The canonical repo-side JLPT word-level contract lives in [../templates/jlpt_word_level_contract.json](../templates/jlpt_word_level_contract.json). It currently governs the tracked starter N5 word surface only, which means N4 and above should still be treated as uncatalogued at the canonical word level until tracked curation expands there.
+The canonical repo-side JLPT word-level contract lives in [../templates/jlpt_word_level_contract.json](../templates/jlpt_word_level_contract.json). It governs the tracked starter N5 and N4 word surfaces, with higher levels still treated as uncatalogued until tracked curation expands there.
 
 The canonical repo-side release audio policy now lives in [../templates/audio_source_policy.json](../templates/audio_source_policy.json). Treat that file as the governing truth for shipped audio provenance and source discipline. The current release contract expects `voicevox-nemo` as the canonical shipped source, pins the release speaker to `女声1` (style id `10005`), requires explicit voice and locale metadata in managed manifests, and forbids a remote audio provider for released decks.
 
@@ -218,6 +218,8 @@ Generate audio from a local VOICEVOX engine:
 ```bash
 npm run media:voicevox -- --list-speakers
 npm run media:voicevox -- --level=5 --speaker-id=10005 --concurrency=4
+npm run media:voicevox:words -- --level=5 --speaker-id=10005
+npm run media:sync:words -- --level=5
 ```
 
 The VOICEVOX generator now writes a sidecar JSON file next to each generated audio file so later managed-media sync can preserve release provenance instead of flattening everything into a generic local-file import. For a normal release-oriented run, leave the default source id alone so it stays aligned with `audio_source_policy.json`.

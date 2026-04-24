@@ -78,12 +78,14 @@ Word decks:
 | N5 word | `ready_with_deferred_variants` |
 | N4 word | Active completion work |
 | N5 word audio | Governed and reviewable |
+| N4 word media | Audio, pitch accent, card-back fields, and looping animations are ready; reading coverage is still incomplete |
 
 Current tracked word inventory:
 
 - N5 canonical word rows: `339`
 - N5 source-only phrase exclusions: `13`
 - N4 canonical word rows: `344`
+- N4 cumulative reading coverage: run `npm run deck:words:ready -- --levels=4 --require-no-active-triage` for the live value
 
 Run live commands for current coverage. Do not rely on README numbers for release decisions.
 
@@ -181,6 +183,9 @@ Word readiness reports:
 - active triage backlog
 - deck-policy violations
 - sentence orthography review
+- reading-breakdown review
+- card-back field readiness
+- pitch-accent review
 - true looping animation coverage
 - word-audio review where enabled
 
@@ -348,8 +353,8 @@ Optional `.env` settings:
 Word-card pitch accent data is source-governed separately from the starter vocabulary contract:
 
 - `templates/word_pitch_accent_data.json` stores pitch patterns and source IDs.
-- `npm run data:import:pitch:kanjium -- --levels=5` imports dictionary-backed matches from `downloads/kanjium/accents.txt`.
-- `npm run data:import:pitch:voicevox -- --levels=5 --allow-reading-fallback` fills remaining generated pronunciation guidance from the local VOICEVOX Nemo engine.
+- `npm run data:import:pitch:kanjium -- --levels=5` imports dictionary-backed matches from `downloads/kanjium/accents.txt`; use `--levels=4` for N4.
+- `npm run data:import:pitch:voicevox -- --levels=5 --allow-reading-fallback` fills remaining generated pronunciation guidance from the local VOICEVOX Nemo engine; use `--levels=4` for N4.
 
 Kanjium-derived entries are dictionary data under CC BY-SA 4.0 and must keep attribution in release notes. VOICEVOX-derived entries are generated accent-query results and are tracked with a different source ID; they are not described as dictionary-verified.
 

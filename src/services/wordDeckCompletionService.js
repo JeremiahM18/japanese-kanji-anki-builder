@@ -67,6 +67,43 @@ function buildWordDeckSentenceOrthographyAudit({ wordRows }) {
     };
 }
 
+function buildWordDeckPitchAccentAudit({ wordRows }) {
+    const rows = Array.isArray(wordRows) ? wordRows : [];
+    const annotatedRows = [];
+    const missingRows = [];
+    let fieldPresent = rows.length === 0;
+
+    for (const row of rows) {
+        if (Object.prototype.hasOwnProperty.call(row, "PitchAccent")) {
+            fieldPresent = true;
+        }
+
+        const pitchAccent = String(row?.PitchAccent || row?.pitchAccent || "").trim();
+        const word = String(row?.Word || row?.word || "").trim();
+        const reading = String(row?.Reading || row?.reading || "").trim();
+
+        if (pitchAccent) {
+            annotatedRows.push({ word, reading, pitchAccent });
+            continue;
+        }
+
+        missingRows.push({ word, reading });
+    }
+
+    return {
+        valid: fieldPresent,
+        fieldPresent,
+        totalWords: rows.length,
+        annotatedWords: annotatedRows.length,
+        missingPitchAccent: missingRows.length,
+        coveragePercent: rows.length > 0
+            ? Number(((annotatedRows.length / rows.length) * 100).toFixed(1))
+            : 0,
+        annotatedRows,
+        missingRows,
+    };
+}
+
 function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract }) {
     const deckLevel = Number(level);
     if (!jlptLevelContract?.kanjiLevels) {
@@ -237,6 +274,9 @@ function buildWordDeckCompletionReport({
     const sentenceOrthographyAudit = buildWordDeckSentenceOrthographyAudit({
         wordRows,
     });
+    const pitchAccentAudit = buildWordDeckPitchAccentAudit({
+        wordRows,
+    });
     const readiness = buildWordDeckReadiness({
         inventory,
         readingCoverage: readingCoverage.summary,
@@ -255,6 +295,7 @@ function buildWordDeckCompletionReport({
         triage: triage.summary,
         policyAudit,
         sentenceOrthographyAudit,
+        pitchAccentAudit,
         readiness,
     };
 }
@@ -349,6 +390,7 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
 module.exports = {
     buildWordDeckCompletionReport,
     buildWordDeckInventorySummary,
+    buildWordDeckPitchAccentAudit,
     buildWordDeckPolicyAudit,
     buildWordDeckSentenceOrthographyAudit,
     buildWordDeckReadiness,

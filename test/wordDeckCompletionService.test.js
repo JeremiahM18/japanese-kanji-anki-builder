@@ -4,6 +4,7 @@ const assert = require("node:assert/strict");
 const {
     buildWordDeckCompletionReport,
     buildWordDeckInventorySummary,
+    buildWordDeckPitchAccentAudit,
     buildWordDeckPolicyAudit,
     buildWordDeckSentenceOrthographyAudit,
     buildWordDeckReadiness,
@@ -40,6 +41,38 @@ test("buildWordDeckInventorySummary keeps excluded phrase rows out of canonical 
     assert.equal(summary.missingEligibleEntries[0].key, "赤い花|あかいはな");
     assert.equal(summary.excludedSourceEntries[0].key, "高い山|たかいやま");
     assert.equal(summary.excludedSourceEntries[0].exclusionReason, "phrase");
+});
+
+test("buildWordDeckPitchAccentAudit reports learner-facing pitch coverage from built rows", () => {
+    const audit = buildWordDeckPitchAccentAudit({
+        wordRows: [
+            { Word: "雨", Reading: "あめ", PitchAccent: "あ＼め [atamadaka]" },
+            { Word: "飴", Reading: "あめ", PitchAccent: "" },
+        ],
+    });
+
+    assert.equal(audit.valid, true);
+    assert.equal(audit.fieldPresent, true);
+    assert.equal(audit.totalWords, 2);
+    assert.equal(audit.annotatedWords, 1);
+    assert.equal(audit.missingPitchAccent, 1);
+    assert.equal(audit.coveragePercent, 50);
+    assert.deepEqual(audit.annotatedRows, [
+        { word: "雨", reading: "あめ", pitchAccent: "あ＼め [atamadaka]" },
+    ]);
+});
+
+test("buildWordDeckPitchAccentAudit flags old word TSVs without the PitchAccent field", () => {
+    const audit = buildWordDeckPitchAccentAudit({
+        wordRows: [
+            { Word: "雨", Reading: "あめ" },
+        ],
+    });
+
+    assert.equal(audit.valid, false);
+    assert.equal(audit.fieldPresent, false);
+    assert.equal(audit.totalWords, 1);
+    assert.equal(audit.annotatedWords, 0);
 });
 
 test("buildWordDeckCompletionReport combines canonical inventory and reading coverage", () => {
@@ -80,6 +113,7 @@ test("buildWordDeckCompletionReport combines canonical inventory and reading cov
     assert.equal(report.inventory.builtEligibleCount, 1);
     assert.equal(report.readingCoverage.coveredReadings, 2);
     assert.equal(report.coverageScope.label, "N5");
+    assert.equal(report.pitchAccentAudit.fieldPresent, false);
     assert.equal(report.readiness.status, "complete");
 });
 

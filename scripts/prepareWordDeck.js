@@ -119,6 +119,7 @@ function formatWordDeckReadyReport(summary, doctorReport) {
             const audit = summary.completion.readingCoverageAuditByLevel[`N${level}`];
             const triage = summary.completion.readingGapTriageByLevel?.[`N${level}`];
             const wordAudio = summary.completion.wordAudioReviewByLevel?.[`N${level}`];
+            const pitchAccent = summary.completion.pitchAccentReviewByLevel?.[`N${level}`];
             if (!audit) {
                 return [];
             }
@@ -143,6 +144,9 @@ function formatWordDeckReadyReport(summary, doctorReport) {
                     : []),
                 ...(wordAudio
                     ? [`  word audio review: ${wordAudio.coveragePercent}% (${wordAudio.readyToReview}/${wordAudio.totalWords}) ready, ${wordAudio.missingAudio} missing, ${wordAudio.readingMismatch + wordAudio.policyMismatch + wordAudio.missingGeneratedReading + wordAudio.missingExpectedReading} flagged`]
+                    : []),
+                ...(pitchAccent
+                    ? [`  pitch accent review: ${pitchAccent.coveragePercent}% (${pitchAccent.annotatedWords}/${pitchAccent.totalWords}) annotated, ${pitchAccent.missingPitchAccent} missing, field ${pitchAccent.fieldPresent ? "present" : "missing"}`]
                     : []),
                 ...(triage
                     ? [`  triage backlog: ${triage.editorialReviewItems} editorial review, ${triage.promoteCuratedExampleItems} promote curated example, ${triage.deferVariantItems} defer variant`]
@@ -247,6 +251,7 @@ async function main() {
     const readingCoverageAuditByLevel = {};
     const readingGapTriageByLevel = {};
     const wordAudioReviewByLevel = {};
+    const pitchAccentReviewByLevel = {};
     for (const level of levels) {
         const result = await wordExportService.buildWordTsvForJlptLevel({
             levelNumber: level,
@@ -285,6 +290,7 @@ async function main() {
             readingCoverageAuditByLevel[`N${level}`].readiness = completionReport.readiness;
             readingCoverageAuditByLevel[`N${level}`].policyAudit = completionReport.policyAudit;
             readingCoverageAuditByLevel[`N${level}`].sentenceOrthographyAudit = completionReport.sentenceOrthographyAudit;
+            pitchAccentReviewByLevel[`N${level}`] = completionReport.pitchAccentAudit;
         }
         if (audioSourcePolicy.releaseAudio.wordDeckAudioEnabled) {
             const wordAudioReport = await buildWordAudioReviewReport({
@@ -343,6 +349,7 @@ async function main() {
             readingCoverageAuditByLevel,
             readingGapTriageByLevel,
             wordAudioReviewByLevel,
+            pitchAccentReviewByLevel,
             trueAnimationCoverage: {
                 coveredKanji: deckPackage.mediaCounts.trueStrokeOrderAnimation,
                 totalKanji: [...new Set(exports.flatMap((artifact) => artifact.mediaKanji || []))].length,

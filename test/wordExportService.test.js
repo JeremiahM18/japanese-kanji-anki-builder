@@ -108,6 +108,7 @@ test("buildWordReadingBreakdown aligns multi-kanji readings without furigana", (
         ["今", { onReading: "オン: コン", kunReading: "くん: いま" }],
         ["日", { onReading: "オン: ニチ、 ジツ", kunReading: "くん: ひ、 -び、 -か" }],
         ["友", { kunReading: "くん: とも" }],
+        ["生", { onReading: "オン: セイ、 ショウ", kunReading: "くん: い.きる、 う.まれる、 なま" }],
         ["山", { kunReading: "くん: やま" }],
         ["上", { kunReading: "くん: うえ" }],
     ]);
@@ -125,7 +126,12 @@ test("buildWordReadingBreakdown aligns multi-kanji readings without furigana", (
     assert.equal(buildWordReadingBreakdown({
         candidate: { written: "友だち", pron: "ともだち" },
         kanjiInferenceCache,
-    }), "");
+    }), "友=とも ／ だち");
+
+    assert.equal(buildWordReadingBreakdown({
+        candidate: { written: "生まれる", pron: "うまれる" },
+        kanjiInferenceCache,
+    }), "生=う ／ まれる");
 
     assert.equal(buildWordReadingBreakdown({
         candidate: { written: "山の上", pron: "やまのうえ" },

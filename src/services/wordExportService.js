@@ -787,6 +787,33 @@ function coalesceLiteralReadingSegments(segments) {
     return coalesced;
 }
 
+function groupLiteralReadingSegments(segments) {
+    const grouped = [];
+
+    for (const segment of Array.isArray(segments) ? segments : []) {
+        const surface = String(segment?.surface || segment?.label || segment?.reading || "");
+        const reading = String(segment?.reading || "");
+
+        if (segment?.kind === "literal") {
+            const previous = grouped[grouped.length - 1];
+            if (previous?.kind === "literal") {
+                previous.reading = `${previous.reading}${reading}`;
+                continue;
+            }
+            grouped.push({ label: "", reading, kind: "literal" });
+            continue;
+        }
+
+        grouped.push({
+            label: segment.label || surface,
+            reading,
+            kind: segment?.kind || "kanji",
+        });
+    }
+
+    return grouped;
+}
+
 function formatReadingBreakdownSegments(segments) {
     return (Array.isArray(segments) ? segments : [])
         .map((segment) => (segment.label ? `${segment.label}=${segment.reading}` : segment.reading))
@@ -826,7 +853,9 @@ function buildWordReadingBreakdown({
         return "";
     }
 
-    const learnerSegments = coalesceLiteralReadingSegments(segments);
+    const learnerSegments = kanjiUnits.length === 1 && hasKanaLiteral
+        ? groupLiteralReadingSegments(segments)
+        : coalesceLiteralReadingSegments(segments);
     if (learnerSegments.length < 2) {
         return "";
     }

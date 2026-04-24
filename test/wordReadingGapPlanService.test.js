@@ -4,9 +4,12 @@ const assert = require('node:assert/strict');
 const {
   buildSuggestedWordCandidates,
   candidateReadingAlignsWithTarget,
+  classifySuggestionQuality,
   buildWordReadingGapPlan,
   formatWordReadingGapPlan,
   scoreSuggestedCandidate,
+  suggestionMeetsOnlyFilter,
+  suggestionMeetsQuality,
   scoreReadingPracticality,
   scoreGapPlanItem,
 } = require('../src/services/wordReadingGapPlanService');
@@ -148,7 +151,109 @@ test('buildSuggestedWordCandidates ranks tracked sentence-backed words and surfa
   assert.equal(candidates[0].action, 'extend_existing_word_contract');
   assert.match(candidates[0].reason, /already tracked/);
   assert.match(candidates[0].reason, /label cross-level kanji 染=N2/);
+  assert.equal(candidates[0].quality, 'strong');
   assert.equal(candidates.some((candidate) => candidate.written === '水汚れ'), false);
+});
+
+test('buildSuggestedWordCandidates can filter to strong contract-extension wins', () => {
+  const item = {
+    kanji: '所',
+    reading: 'しょ',
+  };
+  const candidates = buildSuggestedWordCandidates(item, {
+    only: 'contract-extensions',
+    minSuggestionQuality: 'strong',
+    targetLevel: 4,
+    jlptOnlyJson: {
+      所: { jlpt: 4 },
+      場: { jlpt: 4 },
+    },
+    wordStudyEntries: {
+      '場所|ばしょ': {
+        written: '場所',
+        reading: 'ばしょ',
+        meaning: 'place',
+        tags: ['starter', 'common', 'n4'],
+      },
+    },
+    candidateRows: [
+      { written: '場所', reading: 'ばしょ', meaning: 'place', source: 'tracked_word' },
+      { written: '急所', reading: 'きゅうしょ', meaning: 'vital point', source: 'kanjiapi_cache', priorityCount: 2 },
+    ],
+  });
+
+  assert.deepEqual(candidates.map((candidate) => candidate.written), ['場所']);
+  assert.equal(candidates[0].action, 'extend_existing_word_contract');
+});
+
+test('buildWordReadingGapPlan filters contract-extension items', () => {
+  const plan = buildWordReadingGapPlan({
+    levelLabel: 'N4',
+    summary: { totalItems: 2 },
+    items: [
+      {
+        kanji: '所',
+        displayWord: '所',
+        readingType: 'on',
+        reading: 'しょ',
+        priority: 'high',
+        suggestedAction: 'editorial_review',
+        status: 'missing_example',
+        gapKind: 'distinct',
+        curatedExampleCandidates: [],
+        deckExampleCandidates: [],
+      },
+      {
+        kanji: '悪',
+        displayWord: '悪い',
+        readingType: 'on',
+        reading: 'お',
+        priority: 'high',
+        suggestedAction: 'editorial_review',
+        status: 'missing_example',
+        gapKind: 'distinct',
+        curatedExampleCandidates: [],
+        deckExampleCandidates: [],
+      },
+    ],
+  }, {
+    candidateRows: [
+      { written: '場所', reading: 'ばしょ', meaning: 'place', source: 'tracked_word' },
+      { written: '嫌悪', reading: 'けんお', meaning: 'dislike', source: 'kanjiapi_cache', priorityCount: 2 },
+    ],
+    jlptOnlyJson: {
+      所: { jlpt: 4 },
+      場: { jlpt: 4 },
+      悪: { jlpt: 4 },
+      嫌: { jlpt: 1 },
+    },
+    only: 'contract-extensions',
+    targetLevel: 4,
+    wordStudyEntries: {
+      '場所|ばしょ': {
+        written: '場所',
+        reading: 'ばしょ',
+        meaning: 'place',
+        tags: ['starter', 'common', 'n4'],
+      },
+    },
+  });
+
+  assert.equal(plan.summary.only, 'contract-extensions');
+  assert.equal(plan.items.length, 1);
+  assert.equal(plan.items[0].kanji, '所');
+  assert.equal(plan.items[0].suggestedWordCandidates[0].action, 'extend_existing_word_contract');
+});
+
+test('suggestion quality helpers classify and filter candidate confidence', () => {
+  assert.equal(classifySuggestionQuality({ action: 'extend_existing_word_contract', score: 90, sentenceCount: 0 }), 'strong');
+  assert.equal(classifySuggestionQuality({ action: 'add_governed_support_word', score: 120, sentenceCount: 1 }), 'strong');
+  assert.equal(classifySuggestionQuality({ action: 'add_governed_support_word', score: 90, sentenceCount: 0 }), 'review');
+  assert.equal(classifySuggestionQuality({ action: 'add_governed_support_word', score: 60, sentenceCount: 0 }), 'weak');
+  assert.equal(suggestionMeetsQuality({ quality: 'review' }, 'strong'), false);
+  assert.equal(suggestionMeetsQuality({ quality: 'strong' }, 'review'), true);
+  assert.equal(suggestionMeetsOnlyFilter({ action: 'extend_existing_word_contract' }, 'contract-extensions'), true);
+  assert.equal(suggestionMeetsOnlyFilter({ action: 'add_governed_support_word' }, 'contract-extensions'), false);
 });
 
 test('scoreSuggestedCandidate rewards sentence-backed exact readings over raw cache hits', () => {
@@ -227,6 +332,11 @@ test('formatWordReadingGapPlan renders a batching-oriented queue', () => {
       deferredHiddenItems: 0,
       suggestedCandidateItems: 1,
       suggestedCandidateCount: 1,
+      strongSuggestionItems: 1,
+      reviewSuggestionItems: 0,
+      weakSuggestionItems: 0,
+      only: 'contract-extensions',
+      minSuggestionQuality: 'strong',
       coveredReadings: 345,
       totalReadings: 651,
       coveragePercent: 52.99539170506912,
@@ -246,7 +356,7 @@ test('formatWordReadingGapPlan renders a batching-oriented queue', () => {
         score: 335,
         reason: 'curated example already exists; distinct reading target',
         candidateSummary: '後ろ (うしろ)',
-        suggestedCandidateSummary: '後方 (うしろ) [add_governed_support_word; score 100; sentence-backed]',
+        suggestedCandidateSummary: '後方 (うしろ) [strong; add_governed_support_word; score 100; sentence-backed]',
       },
     ],
     kanjiClusters: [
@@ -264,5 +374,7 @@ test('formatWordReadingGapPlan renders a batching-oriented queue', () => {
   assert.match(text, /Recommended next batch \(1 item\)/);
   assert.match(text, /後 kun-reading うしろ/);
   assert.match(text, /suggested words: 後方/);
+  assert.match(text, /Filter: contract-extensions/);
+  assert.match(text, /Minimum suggestion quality: strong/);
   assert.match(text, /Highest-density kanji clusters/);
 });

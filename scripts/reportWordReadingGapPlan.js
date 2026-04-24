@@ -27,6 +27,8 @@ function parseArgs(argv) {
     level: 5,
     limit: 50,
     minSuggestionScore: 50,
+    only: 'all',
+    quality: 'weak',
     suggestions: 5,
     unknownArgs: [],
   };
@@ -46,6 +48,10 @@ function parseArgs(argv) {
       options.suggestions = parseNumericOption(arg, 'suggestions');
     } else if (arg.startsWith('--min-suggestion-score=')) {
       options.minSuggestionScore = parseNumericOption(arg, 'min-suggestion-score');
+    } else if (arg.startsWith('--only=')) {
+      options.only = String(arg.split('=')[1] || '').trim();
+    } else if (arg.startsWith('--quality=')) {
+      options.quality = String(arg.split('=')[1] || '').trim();
     } else {
       collectUnknownArg(options, arg);
     }
@@ -169,6 +175,12 @@ async function main() {
   if (!Number.isInteger(minSuggestionScore)) {
     throw new Error('Word reading gap plan min suggestion score must be an integer.');
   }
+  if (!['all', 'contract-extensions'].includes(options.only)) {
+    throw new Error('Word reading gap plan --only must be one of: all, contract-extensions.');
+  }
+  if (!['weak', 'review', 'strong'].includes(options.quality)) {
+    throw new Error('Word reading gap plan --quality must be one of: weak, review, strong.');
+  }
 
   const config = loadConfig();
   const kanjiTsvPath = resolveKanjiTsvPath(config, level);
@@ -211,7 +223,9 @@ async function main() {
     jlptOnlyJson,
     limit,
     minSuggestionScore,
+    minSuggestionQuality: options.quality,
     maxSuggestionsPerItem: suggestions,
+    only: options.only,
     sentenceCorpus,
     targetLevel: level,
     wordStudyEntries,

@@ -41,6 +41,12 @@ const SUGGESTION_SOURCE_SCORE = {
   kanjiapi_cache: 30,
 };
 
+const SUGGESTION_QUALITY_RANK = {
+  weak: 0,
+  review: 1,
+  strong: 2,
+};
+
 function getReadingLength(reading) {
   return Array.from(reading || '').length;
 }
@@ -294,6 +300,40 @@ function scoreSuggestedCandidate(candidate, item, {
   };
 }
 
+function classifySuggestionQuality(suggestion) {
+  if (!suggestion) {
+    return 'weak';
+  }
+
+  if (
+    suggestion.action === 'extend_existing_word_contract'
+    || suggestion.score >= 140
+    || (suggestion.sentenceCount > 0 && suggestion.score >= 110)
+  ) {
+    return 'strong';
+  }
+
+  if (suggestion.score >= 80) {
+    return 'review';
+  }
+
+  return 'weak';
+}
+
+function suggestionMeetsQuality(suggestion, minimumQuality = 'weak') {
+  const minimumRank = SUGGESTION_QUALITY_RANK[minimumQuality] ?? SUGGESTION_QUALITY_RANK.weak;
+  const suggestionRank = SUGGESTION_QUALITY_RANK[suggestion?.quality] ?? SUGGESTION_QUALITY_RANK.weak;
+  return suggestionRank >= minimumRank;
+}
+
+function suggestionMeetsOnlyFilter(suggestion, only = 'all') {
+  if (only === 'contract-extensions') {
+    return suggestion?.action === 'extend_existing_word_contract';
+  }
+
+  return true;
+}
+
 function buildSuggestionReason(scored) {
   const reasons = [];
 
@@ -325,6 +365,8 @@ function buildSuggestedWordCandidates(item, {
   candidateRows = [],
   jlptOnlyJson = {},
   minSuggestionScore = 50,
+  minSuggestionQuality = 'weak',
+  only = 'all',
   targetLevel = null,
   sentenceCorpus = [],
   wordStudyEntries = {},
@@ -366,8 +408,15 @@ function buildSuggestedWordCandidates(item, {
       outsideJlptKanji: scored.outsideJlptKanji,
       scoreBreakdown: scored.contributions,
     };
+    suggestion.quality = classifySuggestionQuality(suggestion);
 
     if (suggestion.score < minSuggestionScore) {
+      continue;
+    }
+    if (!suggestionMeetsQuality(suggestion, minSuggestionQuality)) {
+      continue;
+    }
+    if (!suggestionMeetsOnlyFilter(suggestion, only)) {
       continue;
     }
 
@@ -434,7 +483,7 @@ function formatSuggestedCandidates(item) {
   return candidates
     .map((candidate) => {
       const reason = candidate.reason ? `; ${candidate.reason}` : '';
-      return `${candidate.written} (${candidate.reading}) [${candidate.action}; score ${candidate.score}${reason}]`;
+      return `${candidate.written} (${candidate.reading}) [${candidate.quality}; ${candidate.action}; score ${candidate.score}${reason}]`;
     })
     .join(' | ');
 }
@@ -509,7 +558,9 @@ function buildWordReadingGapPlan(triage, {
   includeDeferred = false,
   limit = 50,
   minSuggestionScore = 50,
+  minSuggestionQuality = 'weak',
   maxSuggestionsPerItem = 5,
+  only = 'all',
   sentenceCorpus = [],
   targetLevel = null,
   wordStudyEntries = {},
@@ -519,6 +570,8 @@ function buildWordReadingGapPlan(triage, {
     jlptOnlyJson,
     maxSuggestionsPerItem,
     minSuggestionScore,
+    minSuggestionQuality,
+    only,
     sentenceCorpus,
     targetLevel,
     wordStudyEntries,
@@ -532,6 +585,7 @@ function buildWordReadingGapPlan(triage, {
       };
     })
     .filter((item) => includeDeferred || item.suggestedAction !== 'defer_variant')
+    .filter((item) => (only === 'contract-extensions' ? item.suggestedWordCandidates.length > 0 : true))
     .sort(comparePlanItems)
     .map((item, index) => ({ ...item, rank: index + 1 }));
 
@@ -552,6 +606,11 @@ function buildWordReadingGapPlan(triage, {
       deferredHiddenItems,
       suggestedCandidateItems: sourceItems.filter((item) => item.suggestedWordCandidates.length > 0).length,
       suggestedCandidateCount: sourceItems.reduce((sum, item) => sum + item.suggestedWordCandidates.length, 0),
+      strongSuggestionItems: sourceItems.filter((item) => item.suggestedWordCandidates.some((candidate) => candidate.quality === 'strong')).length,
+      reviewSuggestionItems: sourceItems.filter((item) => item.suggestedWordCandidates.some((candidate) => candidate.quality === 'review')).length,
+      weakSuggestionItems: sourceItems.filter((item) => item.suggestedWordCandidates.some((candidate) => candidate.quality === 'weak')).length,
+      only,
+      minSuggestionQuality,
       coveredReadings: coverageSummary.coveredReadings,
       totalReadings: coverageSummary.totalReadings,
       coveragePercent: coverageSummary.totalReadings > 0
@@ -591,6 +650,13 @@ function formatWordReadingGapPlan(plan) {
   lines.push(`  - Deferred variants hidden: ${plan.summary.deferredHiddenItems}`);
   lines.push(`  - Items with suggested candidates: ${plan.summary.suggestedCandidateItems}`);
   lines.push(`  - Suggested candidates shown: ${plan.summary.suggestedCandidateCount}`);
+  lines.push(`  - Strong suggestion items: ${plan.summary.strongSuggestionItems}`);
+  if (plan.summary.only && plan.summary.only !== 'all') {
+    lines.push(`  - Filter: ${plan.summary.only}`);
+  }
+  if (plan.summary.minSuggestionQuality && plan.summary.minSuggestionQuality !== 'weak') {
+    lines.push(`  - Minimum suggestion quality: ${plan.summary.minSuggestionQuality}`);
+  }
   lines.push('');
 
   if (plan.items.length === 0) {
@@ -627,9 +693,12 @@ function formatWordReadingGapPlan(plan) {
 module.exports = {
   buildSuggestedWordCandidates,
   candidateReadingAlignsWithTarget,
+  classifySuggestionQuality,
   buildKanjiClusters,
   buildWordReadingGapPlan,
   formatWordReadingGapPlan,
+  suggestionMeetsOnlyFilter,
+  suggestionMeetsQuality,
   scoreSuggestedCandidate,
   scoreReadingPracticality,
   scoreGapPlanItem,

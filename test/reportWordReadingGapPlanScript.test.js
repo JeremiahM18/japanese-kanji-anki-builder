@@ -14,6 +14,8 @@ test('parseArgs supports gap-plan level, limit, deferred, and json options', () 
     '--limit=25',
     '--suggestions=3',
     '--min-suggestion-score=60',
+    '--only=contract-extensions',
+    '--quality=strong',
     '--include-deferred',
     '--json',
   ]), {
@@ -22,6 +24,8 @@ test('parseArgs supports gap-plan level, limit, deferred, and json options', () 
     level: 4,
     limit: 25,
     minSuggestionScore: 60,
+    only: 'contract-extensions',
+    quality: 'strong',
     suggestions: 3,
     unknownArgs: [],
   });

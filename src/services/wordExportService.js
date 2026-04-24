@@ -10,7 +10,7 @@ const {
 const { buildOfflineFallbackCard } = require("./previewCardService");
 const { mapWithConcurrency } = require("../utils/concurrency");
 const { tsvEscape } = require("../utils/text");
-const { HAN_CHAR_RE, KATAKANA_ONLY_RE } = require("../utils/japanese");
+const { HAN_CHAR_RE, KATAKANA_ONLY_RE, isKanaOnly, katakanaToHiragana } = require("../utils/japanese");
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 const { findManagedWordAudioAsset } = require("./wordAudioService");
@@ -20,6 +20,7 @@ const EXCLUDED_WORD_CARD_TAGS = new Set(["phrase"]);
 const PHRASE_ENDING_RE = /(の近く|の部屋|の友だち|の下)$/u;
 const LEXICALIZED_USAGE_SUFFIX_RE = /[\p{Script=Han}々]い方$/u;
 const ADJECTIVE_NOUN_PHRASE_RE = /\p{Script=Hiragana}*い[\p{Script=Han}々]+$/u;
+const READING_SEPARATOR = " ／ ";
 
 function extractConstituentKanji(text) {
     return [...new Set(Array.from(String(text ?? "")).filter((char) => HAN_CHAR_RE.test(char) && char !== "々"))];
@@ -420,6 +421,202 @@ function normalizeBreakdownReadingField(value, prefixPattern) {
     }
 
     return text.replace(prefixPattern, "").trim();
+}
+
+function normalizeWordReadingToken(value) {
+    return katakanaToHiragana(String(value || ""))
+        .replace(/^おん:/, "")
+        .replace(/^くん:/, "")
+        .replace(/[\s・･]/g, "")
+        .replace(/[.\-]/g, "")
+        .replace(/…/g, "")
+        .trim();
+}
+
+function splitReadingList(value) {
+    return [...new Set(
+        String(value || "")
+            .split(/[、,]/u)
+            .flatMap((entry) => {
+                const normalized = normalizeWordReadingToken(entry);
+                const preOkurigana = String(entry || "").includes(".")
+                    ? normalizeWordReadingToken(String(entry || "").split(".")[0])
+                    : "";
+                return [normalized, preOkurigana];
+            })
+            .filter(Boolean)
+    )];
+}
+
+function buildReadingSurfaceVariants(reading) {
+    const normalized = normalizeWordReadingToken(reading);
+    if (!normalized) {
+        return [];
+    }
+
+    const variants = new Set([normalized]);
+    const firstChar = Array.from(normalized)[0] || "";
+    const rest = Array.from(normalized).slice(1).join("");
+    const rendakuMap = {
+        か: ["が"],
+        き: ["ぎ"],
+        く: ["ぐ"],
+        け: ["げ"],
+        こ: ["ご"],
+        さ: ["ざ"],
+        し: ["じ"],
+        す: ["ず"],
+        せ: ["ぜ"],
+        そ: ["ぞ"],
+        た: ["だ"],
+        ち: ["ぢ", "じ"],
+        つ: ["づ", "ず"],
+        て: ["で"],
+        と: ["ど"],
+        は: ["ば", "ぱ"],
+        ひ: ["び", "ぴ"],
+        ふ: ["ぶ", "ぷ"],
+        へ: ["べ", "ぺ"],
+        ほ: ["ぼ", "ぽ"],
+    };
+
+    for (const voiced of rendakuMap[firstChar] || []) {
+        variants.add(`${voiced}${rest}`);
+    }
+
+    if (normalized.endsWith("く") || normalized.endsWith("つ")) {
+        variants.add(`${normalized.slice(0, -1)}っ`);
+    }
+    if (normalized.endsWith("ち") && normalized.length > 1) {
+        variants.add(normalized.slice(0, -1));
+    }
+
+    return [...variants].filter(Boolean);
+}
+
+function collectKanjiReadingCandidates({ kanji, inference, curatedEntry = null, coverageReadings = {} }) {
+    const readings = [];
+
+    if (coverageReadings?.[kanji]) {
+        readings.push(coverageReadings[kanji]);
+    }
+    if (curatedEntry?.displayWord?.pron && curatedEntry?.displayWord?.written === kanji) {
+        readings.push(curatedEntry.displayWord.pron);
+    }
+    if (curatedEntry?.breakdownDisplayWord?.pron && curatedEntry?.breakdownDisplayWord?.written === kanji) {
+        readings.push(curatedEntry.breakdownDisplayWord.pron);
+    }
+    readings.push(...splitReadingList(normalizeBreakdownReadingField(inference?.onReading, /^(on|オン)\s*:\s*/i)));
+    readings.push(...splitReadingList(normalizeBreakdownReadingField(inference?.kunReading, /^(kun|くん)\s*:\s*/i)));
+    if (inference?.primaryReading) {
+        readings.push(inference.primaryReading);
+    }
+
+    return [...new Set(readings.flatMap((reading) => buildReadingSurfaceVariants(reading)))]
+        .sort((a, b) => b.length - a.length || a.localeCompare(b));
+}
+
+function buildReadingBreakdownUnits(written) {
+    return Array.from(String(written || "")).map((char) => ({
+        char,
+        kind: HAN_CHAR_RE.test(char) || char === "々" ? "kanji" : "literal",
+    }));
+}
+
+function alignReadingBreakdownUnits({ units, reading, kanjiInferenceCache, curatedStudyData = {}, coverageReadings = {} }) {
+    const normalizedReading = normalizeWordReadingToken(reading);
+    const memo = new Map();
+
+    function align(unitIndex, readingIndex) {
+        const memoKey = `${unitIndex}:${readingIndex}`;
+        if (memo.has(memoKey)) {
+            return memo.get(memoKey);
+        }
+
+        if (unitIndex >= units.length) {
+            const result = readingIndex === normalizedReading.length ? [] : null;
+            memo.set(memoKey, result);
+            return result;
+        }
+
+        const unit = units[unitIndex];
+        const remaining = normalizedReading.slice(readingIndex);
+
+        if (unit.kind === "literal") {
+            const literal = normalizeWordReadingToken(unit.char);
+            if (!literal || !remaining.startsWith(literal)) {
+                memo.set(memoKey, null);
+                return null;
+            }
+            const rest = align(unitIndex + 1, readingIndex + literal.length);
+            const result = rest ? [{ label: "", reading: literal, kind: "literal" }, ...rest] : null;
+            memo.set(memoKey, result);
+            return result;
+        }
+
+        const inference = kanjiInferenceCache?.get(unit.char);
+        const candidates = collectKanjiReadingCandidates({
+            kanji: unit.char,
+            inference,
+            curatedEntry: curatedStudyData?.[unit.char] || null,
+            coverageReadings,
+        });
+
+        for (const candidate of candidates) {
+            if (!candidate || !remaining.startsWith(candidate)) {
+                continue;
+            }
+            const rest = align(unitIndex + 1, readingIndex + candidate.length);
+            if (rest) {
+                const result = [{ label: unit.char, reading: candidate, kind: "kanji" }, ...rest];
+                memo.set(memoKey, result);
+                return result;
+            }
+        }
+
+        memo.set(memoKey, null);
+        return null;
+    }
+
+    return align(0, 0);
+}
+
+function formatReadingBreakdownSegments(segments) {
+    return (Array.isArray(segments) ? segments : [])
+        .map((segment) => (segment.label ? `${segment.label}=${segment.reading}` : segment.reading))
+        .join(READING_SEPARATOR);
+}
+
+function buildWordReadingBreakdown({
+    candidate,
+    curatedEntry = null,
+    kanjiInferenceCache,
+    curatedStudyData = {},
+}) {
+    const curatedBreakdown = String(curatedEntry?.readingBreakdown || "").trim();
+    if (curatedBreakdown) {
+        return curatedBreakdown;
+    }
+
+    const written = String(candidate?.written || "").trim();
+    const reading = String(curatedEntry?.reading || candidate?.pron || "").trim();
+    const units = buildReadingBreakdownUnits(written);
+    const kanjiUnits = units.filter((unit) => unit.kind === "kanji");
+    const hasKanaLiteral = units.some((unit) => unit.kind === "literal" && isKanaOnly(unit.char));
+    if (kanjiUnits.length === 0 || (kanjiUnits.length < 2 && !hasKanaLiteral)) {
+        return "";
+    }
+
+    const coverageReadings = curatedEntry?.coverage?.coversReadings || {};
+    const segments = alignReadingBreakdownUnits({
+        units,
+        reading,
+        kanjiInferenceCache,
+        curatedStudyData,
+        coverageReadings,
+    });
+
+    return segments ? formatReadingBreakdownSegments(segments) : "";
 }
 
 function extractPrimaryCoverageReading(breakdown = {}) {
@@ -1030,10 +1227,17 @@ function createWordExportService({
                 jlptWordLevelContract,
             });
             mediaRefs.push(...wordAudio.mediaRefs);
+            const readingBreakdown = buildWordReadingBreakdown({
+                candidate: entry.candidate,
+                curatedEntry: entry.curatedEntry,
+                kanjiInferenceCache,
+                curatedStudyData,
+            });
 
             rows.push([
                 entry.candidate.written,
                 entry.curatedEntry?.reading || entry.candidate.pron,
+                readingBreakdown,
                 wordAudio.audioField,
                 entry.curatedEntry?.meaning || entry.candidate.gloss,
                 buildJlptLabel(trustedLevel),
@@ -1074,6 +1278,7 @@ function createWordExportService({
         classifyWordDeckEntry,
         buildWordKey,
         buildWordNotes,
+        buildWordReadingBreakdown,
         inferWordLevel,
         getTrustedCandidateLevel,
         isStandaloneKanjiOutsideDeckLevel,
@@ -1093,6 +1298,7 @@ module.exports = {
     buildJlptLabel,
     buildWordKey,
     buildWordNotes,
+    buildWordReadingBreakdown,
     buildWordStudyIndexes,
     buildWordSupportScore,
     createWordExportService,

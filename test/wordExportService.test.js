@@ -6,6 +6,7 @@ const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const {
     buildCandidatePool,
     buildBreakdownInference,
+    buildWordReadingBreakdown,
     buildWordStudyIndexes,
     classifyWordDeckEntry,
     createWordExportService,
@@ -76,6 +77,7 @@ test("loadAnkiNoteSchema can load the shared word note contract", () => {
     assert.deepEqual(schema.fieldNames, [
         "Word",
         "Reading",
+        "ReadingBreakdown",
         "Audio",
         "Meaning",
         "JLPTLevel",
@@ -87,9 +89,42 @@ test("loadAnkiNoteSchema can load the shared word note contract", () => {
         "Notes",
     ]);
     assert.match(schema.qfmt, /{{Word}}/);
+    assert.match(schema.afmt, /ReadingBreakdown/);
     assert.match(schema.afmt, /Kanji Breakdown/);
     assert.match(schema.css, /kanji-level-badge/);
     assert.match(schema.css, /kanji-stroke-order/);
+});
+
+test("buildWordReadingBreakdown aligns multi-kanji readings without furigana", () => {
+    const kanjiInferenceCache = new Map([
+        ["学", { onReading: "オン: ガク", kunReading: "くん: まな.ぶ" }],
+        ["校", { onReading: "オン: コウ" }],
+        ["食", { kunReading: "くん: た.べる、 く.う" }],
+        ["物", { onReading: "オン: ブツ、 モツ", kunReading: "くん: もの" }],
+        ["今", { onReading: "オン: コン", kunReading: "くん: いま" }],
+        ["日", { onReading: "オン: ニチ、 ジツ", kunReading: "くん: ひ、 -び、 -か" }],
+    ]);
+
+    assert.equal(buildWordReadingBreakdown({
+        candidate: { written: "学校", pron: "がっこう" },
+        kanjiInferenceCache,
+    }), "学=がっ ／ 校=こう");
+
+    assert.equal(buildWordReadingBreakdown({
+        candidate: { written: "食べ物", pron: "たべもの" },
+        kanjiInferenceCache,
+    }), "食=た ／ べ ／ 物=もの");
+
+    assert.equal(buildWordReadingBreakdown({
+        candidate: { written: "今日", pron: "きょう" },
+        kanjiInferenceCache,
+    }), "");
+
+    assert.equal(buildWordReadingBreakdown({
+        candidate: { written: "今日", pron: "きょう" },
+        curatedEntry: { readingBreakdown: "今+日=きょう" },
+        kanjiInferenceCache,
+    }), "今+日=きょう");
 });
 
 test("inferWordLevel uses the hardest constituent JLPT kanji", () => {
@@ -361,8 +396,8 @@ test("buildWordTsvForJlptLevel leaves JLPTLevel blank for inferred-only explorat
 
     const [, row] = tsv.split(/\r?\n/);
     const columns = row.split("\t");
-    assert.equal(columns[4], "");
-    assert.equal(columns[5], "Inferred support word");
+    assert.equal(columns[5], "");
+    assert.equal(columns[6], "Inferred support word");
 });
 
 test("normalizeBreakdownReadingField strips internal reading prefixes for learner-facing output", () => {
@@ -894,9 +929,9 @@ test("buildWordTsvForJlptLevel prefers curated N5 word entries and suppresses un
 
     const lines = result.tsv.trim().split("\n");
     assert.equal(lines[0], loadAnkiNoteSchema("word").fieldNames.join("\t"));
-    assert.match(result.tsv, /^今日\tきょう\t\ttoday\tJLPT N5\t/m);
-    assert.match(result.tsv, /^今年\tことし\t\tthis year\tJLPT N5\t/m);
-    assert.match(result.tsv, /^先生\tせんせい\t\tteacher\tJLPT N5\t/m);
+    assert.match(result.tsv, /^今日\tきょう\t[^\t]*\t\ttoday\tJLPT N5\t/m);
+    assert.match(result.tsv, /^今年\tことし\t[^\t]*\t\tthis year\tJLPT N5\t/m);
+    assert.match(result.tsv, /^先生\tせんせい\t[^\t]*\t\tteacher\tJLPT N5\t/m);
     assert.doesNotMatch(result.tsv, /^今日\tこんにち\t/m);
     assert.doesNotMatch(result.tsv, /^先生\tせんしょう\t/m);
     assert.match(result.tsv, /Irregular reading\./);
@@ -939,7 +974,7 @@ test("buildWordTsvForJlptLevel excludes curated phrase-tagged entries from the d
         concurrency: 1,
     });
 
-    assert.match(result.tsv, /^山\tやま\t\tmountain\tJLPT N5\t/m);
+    assert.match(result.tsv, /^山\tやま\t[^\t]*\t\tmountain\tJLPT N5\t/m);
     assert.doesNotMatch(result.tsv, /^高い山\tたかいやま\thigh mountain\tJLPT N5\t/m);
 });
 
@@ -978,7 +1013,7 @@ test("buildWordTsvForJlptLevel excludes stale compositional phrase entries even 
         concurrency: 1,
     });
 
-    assert.match(result.tsv, /^高い\tたかい\t\thigh \/ expensive\tJLPT N5\t/m);
+    assert.match(result.tsv, /^高い\tたかい\t[^\t]*\t\thigh \/ expensive\tJLPT N5\t/m);
     assert.doesNotMatch(result.tsv, /^高い山\tたかいやま\thigh mountain\tJLPT N5\t/m);
 });
 
@@ -1043,7 +1078,8 @@ test("buildWordTsvForJlptLevel includes explicit learner-facing coverage metadat
     });
 
     const lines = result.tsv.trim().split("\n");
-    assert.equal(lines[0], "Word\tReading\tAudio\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes");
+    assert.equal(lines[0], "Word\tReading\tReadingBreakdown\tAudio\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes");
+    assert.match(lines[1], /\t時=じ ／ 間=かん\t/);
     assert.match(lines[1], /\tJLPT core \+ reading coverage\t/);
     assert.match(lines[1], /\t時\t/);
     assert.match(lines[1], /\t時: じ\t/);
@@ -1121,7 +1157,7 @@ test("buildWordTsvForJlptLevel emits governed word audio when a managed word-rea
 
     const lines = result.tsv.trim().split("\n");
     const columns = lines[1].split("\t");
-    assert.equal(columns[2], "[sound:6642_時-word-reading-時間-じかん.wav]");
+    assert.equal(columns[3], "[sound:6642_時-word-reading-時間-じかん.wav]");
     assert.deepEqual(result.mediaRefs, [{
         kind: "audio",
         kanji: "時",
@@ -1252,7 +1288,7 @@ test("buildWordTsvForJlptLevel excludes standalone higher-level kanji from lower
     });
 
     assert.doesNotMatch(result.tsv, /^兄\tあに\tolder brother\t/m);
-    assert.match(result.tsv, /^子猫\tこねこ\t\tkitten\tJLPT N5\t/m);
+    assert.match(result.tsv, /^子猫\tこねこ\t[^\t]*\t\tkitten\tJLPT N5\t/m);
     assert.match(result.tsv, /JLPT N4 kanji/u);
 });
 
@@ -1295,7 +1331,7 @@ test("buildWordTsvForJlptLevel uses the canonical word-level contract before con
         concurrency: 1,
     });
 
-    assert.match(result.tsv, /^今年\tことし\t\tthis year\tJLPT N5\t/m);
+    assert.match(result.tsv, /^今年\tことし\t[^\t]*\t\tthis year\tJLPT N5\t/m);
     assert.deepEqual(result.governance, {
         rowCount: 1,
         canonicalRows: 1,
@@ -1352,6 +1388,6 @@ test("buildWordTsvForJlptLevel does not let a stale curated JLPT tag override th
     });
 
     assert.doesNotMatch(n4Result.tsv, /^今年\tことし\tthis year\tJLPT N4\t/m);
-    assert.match(n5Result.tsv, /^今年\tことし\t\tthis year\tJLPT N5\t/m);
+    assert.match(n5Result.tsv, /^今年\tことし\t[^\t]*\t\tthis year\tJLPT N5\t/m);
 });
 

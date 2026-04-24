@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added a dedicated word-card `ReadingBreakdown` field that segments safe multi-kanji readings into learner-facing pieces, supports curated overrides for irregular compounds, and renders the breakdown separately from both whole-word reading and kanji coverage metadata.
 - Added [docs/compatibility-matrix.md](docs/compatibility-matrix.md), [docs/release-qa-checklist.md](docs/release-qa-checklist.md), and [NOTICE.md](NOTICE.md) so the product now has an explicit compatibility contract, a manual release QA checklist, and a release-attribution surface instead of leaving those expectations implicit.
 - Added the first explicit enterprise-style product hardening docs: [docs/product-exit-criteria.md](docs/product-exit-criteria.md), [docs/accessibility-checklist.md](docs/accessibility-checklist.md), and [docs/content-style-guide.md](docs/content-style-guide.md), so release quality, accessibility review, and editorial decisions now have a tracked home instead of living only in repo history and code comments.
 - Added `npm run deck:review:accessibility`, a first deterministic accessibility audit for built kanji and word deck outputs. It checks Japanese-capable font coverage, textual redundancy, answer-side audio visibility when audio ships, stroke-order or breakdown visibility, and contrast on key text classes before manual Anki review.

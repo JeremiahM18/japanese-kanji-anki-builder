@@ -26,6 +26,7 @@ const wordStudyEntrySchema = z.object({
     tags: z.array(z.string()).default(["curated"]),
     jlpt: z.number().int().min(1).max(5).optional(),
     notes: z.string().min(1).optional(),
+    readingBreakdown: z.string().min(1).optional(),
     exampleSentence: wordStudySentenceSchema.optional(),
     coverage: wordStudyCoverageSchema.optional(),
 });
@@ -117,6 +118,7 @@ function normalizeWordStudyEntry(entry) {
         tags: normalizeTags(entry?.tags),
         jlpt: Number.isInteger(entry?.jlpt) ? entry.jlpt : undefined,
         notes: cleanString(entry?.notes),
+        readingBreakdown: cleanString(entry?.readingBreakdown),
         exampleSentence: normalizeWordStudySentence(entry?.exampleSentence),
         coverage: normalizeWordCoverage(entry?.coverage),
     });

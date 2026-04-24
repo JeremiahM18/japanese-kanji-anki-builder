@@ -25,6 +25,8 @@ That means:
 - Lower-level decks may include multi-kanji support words that reference higher-level constituent kanji.
 - Any higher-level or outside-contract constituent kanji must be visibly labeled on the card.
 - Reading coverage is cumulative across easier decks. Do not duplicate support words at harder levels if the reading is already taught well in an easier deck.
+- Multi-kanji words should expose a learner-facing reading breakdown when the reading can be segmented safely.
+- Irregular compounds require curated reading-breakdown overrides instead of false per-kanji slices.
 
 ## Support-word selection
 

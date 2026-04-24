@@ -387,7 +387,7 @@ The front of a word card shows the written study word without furigana. The back
 
 `ReadingBreakdown` segments the word reading into learner-facing pieces, for example `学校` as `学=がっ ／ 校=こう` or `食べ物` as `食=た ／ べ ／ 物=もの`. Irregular compounds use curated overrides instead of unsafe automatic segmentation.
 
-`PitchAccent` is a dedicated pronunciation field. Leave it blank unless the accent pattern comes from a product-approved source in `templates/word_pitch_accent_data.json` or an explicitly curated override.
+`PitchAccent` is a dedicated pronunciation field. In exported word cards it renders a learner-facing Tokyo pitch contour graph with mora labels and a small source pattern caption. Leave it blank unless the accent pattern comes from a product-approved source in `templates/word_pitch_accent_data.json` or an explicitly curated override.
 
 `KanjiBreakdown` includes constituent meanings, readings, stroke-order animation, and cross-level badges such as `JLPT N4 kanji`.
 

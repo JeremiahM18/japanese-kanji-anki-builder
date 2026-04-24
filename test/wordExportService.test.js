@@ -1222,12 +1222,73 @@ test("buildWordTsvForJlptLevel emits governed word audio when a managed word-rea
     const lines = result.tsv.trim().split("\n");
     const columns = lines[1].split("\t");
     assert.equal(columns[3], "[sound:6642_時-word-reading-時間-じかん.wav]");
-    assert.equal(columns[4], "じ＼かん [atamadaka]");
+    assert.equal(columns[4], "<div class=\"pitch-accent-fallback\">Pitch: じ＼かん [atamadaka]</div>");
     assert.deepEqual(result.mediaRefs, [{
         kind: "audio",
         kanji: "時",
         relativePath: "audio/6642_時-word-reading-時間-じかん.wav",
     }]);
+});
+
+test("buildWordTsvForJlptLevel renders governed pitch accents as contour graphs", async () => {
+    const wordExportService = createWordExportService({
+        sentenceCorpus: [],
+        curatedStudyData: {},
+        wordPitchAccentData: {
+            entries: {
+                "後で|あとで": {
+                    pattern: "1 [atamadaka]",
+                    sourceId: "voicevox-nemo-accent-query",
+                },
+            },
+        },
+        wordStudyData: {
+            "後で|あとで": {
+                written: "後で",
+                reading: "あとで",
+                meaning: "later / afterwards",
+                jlpt: 5,
+                coverage: {
+                    role: "both",
+                    focusKanji: ["後"],
+                    coversReadings: {
+                        後: "あとで",
+                    },
+                },
+            },
+        },
+    });
+
+    const result = await wordExportService.buildWordTsvForJlptLevel({
+        levelNumber: 5,
+        jlptOnlyJson: {
+            後: { jlpt: 5 },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {
+                "後で|あとで": { written: "後で", reading: "あとで", jlpt: 5 },
+            },
+        },
+        kanjiApiClient: {
+            async getKanji() {
+                return { meanings: ["behind"], on_readings: ["ゴ"], kun_readings: ["あと"] };
+            },
+            async getWords() {
+                return [];
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+        concurrency: 1,
+    });
+
+    const lines = result.tsv.trim().split("\n");
+    assert.match(lines[1], /class="pitch-accent-visual"/);
+    assert.match(lines[1], /class="pitch-contour"/);
+    assert.match(lines[1], /Pitch: 1 \[atamadaka\]/);
+    assert.match(lines[1], />あ<\/text>/);
+    assert.match(lines[1], />と<\/text>/);
+    assert.match(lines[1], />で<\/text>/);
 });
 
 test("buildWordTsvForJlptLevel supports higher-level constituent kanji when support words fall back offline", async () => {

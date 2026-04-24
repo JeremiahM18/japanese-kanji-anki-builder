@@ -14,6 +14,7 @@ const { HAN_CHAR_RE, KATAKANA_ONLY_RE, isKanaOnly, katakanaToHiragana } = requir
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 const { resolveWordPitchAccent } = require("../datasets/wordPitchAccentData");
+const { buildPitchAccentHtml } = require("./pitchAccentRenderService");
 const { findManagedWordAudioAsset } = require("./wordAudioService");
 
 const WORD_FIELD_NAMES = loadAnkiNoteSchema("word").fieldNames;
@@ -222,7 +223,10 @@ function sortWordDeckEntriesForStudy(entries, { levelNumber, jlptOnlyJson, seed 
 function formatPitchAccent({ candidate, curatedEntry, wordPitchAccentData }) {
     const explicitPitchAccent = String(curatedEntry?.pitchAccent || "").trim();
     if (explicitPitchAccent) {
-        return explicitPitchAccent;
+        return buildPitchAccentHtml({
+            pattern: explicitPitchAccent,
+            reading: curatedEntry?.reading || candidate?.pron,
+        });
     }
 
     const pitchAccent = resolveWordPitchAccent({
@@ -231,7 +235,10 @@ function formatPitchAccent({ candidate, curatedEntry, wordPitchAccentData }) {
         wordPitchAccentData,
     });
 
-    return String(pitchAccent?.pattern || "").trim();
+    return buildPitchAccentHtml({
+        pattern: pitchAccent?.pattern,
+        reading: curatedEntry?.reading || candidate?.pron,
+    });
 }
 
 function buildWordNotes(curatedEntry) {

@@ -644,8 +644,7 @@ test("download export sets attachment headers and includes Anki-ready media fiel
         assert.equal(cols.length, 14);
         assert.equal(cols[1], "日本");
         assert.equal(cols[3], "にほん");
-        assert.match(cols[4], /日: JLPT N5/);
-        assert.match(cols[4], /本: JLPT N5/);
+        assert.equal(cols[4], "");
         assert.equal(cols[5], "オン: ニチ");
         assert.equal(cols[6], "くん: ひ");
         assert.equal(cols[7], '<img src="65E5_日-stroke-order.gif" />');

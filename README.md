@@ -380,7 +380,7 @@ Kanji card fields include:
 - `StrokeOrderAnimation`
 - `Audio`
 
-The front of a kanji card shows only the target kanji. The back shows the learner-facing display word and reading, then `StudyWordKanji` labels every kanji in that display word with its JLPT level or `outside JLPT`. Audio is selected from the same learner-facing display reading.
+The front of a kanji card shows only the target kanji. The back shows the learner-facing display word and reading, then `StudyWordKanji` labels only off-level or outside-JLPT kanji in that display word. Same-level kanji are suppressed to avoid duplicating the deck level. Audio is selected from the same learner-facing display reading.
 
 Word card fields include:
 

@@ -42,9 +42,9 @@ Run this checklist after automated gates pass and before marking a deck mileston
 - Import the current N5 word deck into Anki.
 - Review beginner core words.
 - Review support words.
-- Review constituent-kanji labels, including same-level, cross-level, and outside-JLPT kanji.
+- Review constituent-kanji labels, including cross-level and outside-JLPT kanji.
 - Review audio-bearing word cards.
-- Confirm constituent badges are visible and understandable.
+- Confirm constituent badges are visible and understandable without repeating same-level kanji in kanji decks.
 - Confirm example sentences, notes, and breakdown panels remain readable.
 
 ## Accessibility pass

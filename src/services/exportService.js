@@ -127,8 +127,13 @@ function buildKanjiLevelLookup({ jlptOnlyJson = {}, targetKanji = "", targetJlpt
     return lookup;
 }
 
-function formatStudyWordKanjiLabels(displayWord, kanjiLevelLookup = new Map()) {
+function formatStudyWordKanjiLabels(displayWord, kanjiLevelLookup = new Map(), { currentLevel = null } = {}) {
+    const deckLevel = Number(currentLevel);
     return extractConstituentKanji(displayWord)
+        .filter((kanji) => {
+            const level = kanjiLevelLookup.get(kanji);
+            return !(Number.isInteger(deckLevel) && level === deckLevel);
+        })
         .map((kanji) => {
             const level = kanjiLevelLookup.get(kanji);
             const label = Number.isInteger(level) ? `JLPT N${level}` : "outside JLPT";
@@ -219,10 +224,10 @@ function shouldUseLocalJlptEntry({ inferenceEngine, kanji, jlptEntry }) {
     );
 }
 
-function buildInferredRow({ kanji, inferred, kanjiInfo, kradMap, pickMainComponent, mediaFields, kanjiLevelLookup }) {
+function buildInferredRow({ kanji, inferred, kanjiInfo, kradMap, pickMainComponent, mediaFields, kanjiLevelLookup, currentLevel = null }) {
     const displayWord = selectDisplayWord({ kanji, displayWord: inferred.displayWord, bestWord: inferred.bestWord });
     const primaryReading = selectPrimaryReading(inferred);
-    const studyWordKanji = formatStudyWordKanjiLabels(displayWord, kanjiLevelLookup);
+    const studyWordKanji = formatStudyWordKanjiLabels(displayWord, kanjiLevelLookup, { currentLevel });
     const onReading = labelOnReading(kanjiInfo?.on_readings);
     const kunReading = labelKunReading(kanjiInfo?.kun_readings);
     const components = kradMap.get(kanji) || [];
@@ -247,8 +252,8 @@ function buildInferredRow({ kanji, inferred, kanjiInfo, kradMap, pickMainCompone
     ]);
 }
 
-function buildFallbackRow({ fallbackCard, kanjiLevelLookup }) {
-    const studyWordKanji = formatStudyWordKanjiLabels(fallbackCard.displayWord, kanjiLevelLookup);
+function buildFallbackRow({ fallbackCard, kanjiLevelLookup, currentLevel = null }) {
+    const studyWordKanji = formatStudyWordKanjiLabels(fallbackCard.displayWord, kanjiLevelLookup, { currentLevel });
 
     return formatTsvRow([
         fallbackCard.kanji,
@@ -294,6 +299,7 @@ function createExportService({
                 targetKanji: kanji,
                 targetJlptEntry: jlptEntry,
             });
+            const currentLevel = Number(jlptEntry?.jlpt);
             const [kanjiInfo, words, mediaFields] = await Promise.all([
                 useLocalJlptEntry
                     ? Promise.resolve(jlptEntry)
@@ -332,6 +338,7 @@ function createExportService({
                 pickMainComponent,
                 mediaFields,
                 kanjiLevelLookup,
+                currentLevel,
             });
             recordProfileTiming(exportProfile, "formatting", formattingStartedAt);
             return row;
@@ -361,7 +368,7 @@ function createExportService({
                     error: error instanceof Error ? error.message : String(error),
                 });
 
-                return buildFallbackRow({ fallbackCard, kanjiLevelLookup });
+                return buildFallbackRow({ fallbackCard, kanjiLevelLookup, currentLevel: Number(jlptEntry?.jlpt) });
             } catch (fallbackError) {
                 appendExportIssue(exportIssues, {
                     kanji,
@@ -405,12 +412,13 @@ function createExportService({
             targetKanji: kanji,
             targetJlptEntry: jlptEntry,
         });
+        const currentLevel = Number(jlptEntry?.jlpt);
 
         return {
             ...inferred,
             displayWordText,
             primaryReading: selectPrimaryReading(inferred),
-            studyWordKanji: formatStudyWordKanjiLabels(displayWordText, kanjiLevelLookup),
+            studyWordKanji: formatStudyWordKanjiLabels(displayWordText, kanjiLevelLookup, { currentLevel }),
             onReading,
             kunReading,
             strokeOrderPath: mediaFields.strokeOrderPath,

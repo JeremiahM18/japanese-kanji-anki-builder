@@ -304,8 +304,15 @@ test('formatWordReadingGapTriage renders a practical backlog summary', () => {
   }, { maxItems: 10 });
 
   assert.match(text, /Word Reading Gap Triage \(N5\)/);
-  assert.match(text, /High priority \(editorial review\): 1/);
+  assert.match(text, /Review needed before card work: 1/);
+  assert.match(text, /Actionable curated learner candidates: 1/);
+  assert.match(text, /Deferred variants or low learner value: 0/);
+  assert.match(text, /create cards only for common, learner-friendly, useful words/);
+  assert.match(text, /Review-needed items are not automatic card work/);
+  assert.doesNotMatch(text, /High priority \(editorial review\)/);
   assert.match(text, /万 kun-reading よろず/);
+  assert.match(text, /review-needed; review learner-card value before card work/);
+  assert.match(text, /curated candidates: none yet \(review only; no card work without common learner-friendly evidence\)/);
   assert.match(text, /curated candidates: 後ろ \(うしろ\)/);
 });
 

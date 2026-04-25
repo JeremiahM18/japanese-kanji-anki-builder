@@ -129,7 +129,7 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
     assert.match(text, /card back review: 100% \(2500\/2500\) required fields ready, 0 missing/);
     assert.match(text, /card back fields: reading 258\/258, furigana breakdown 258\/258, audio 258\/258/);
     assert.match(text, /pitch accent review: 0% \(0\/258\) annotated, 258 missing, 0 ungoverned, field present/);
-    assert.match(text, /triage backlog: 147 editorial review, 0 promote curated example, 16 defer variant/);
+    assert.match(text, /triage backlog: 147 review-needed before card work, 0 actionable curated candidates, 16 deferred variants or low learner value/);
     assert.match(text, /True looping animation coverage: 100% \(166\/166\)/);
     assert.match(text, /True looping animation assets: 165/);
     assert.match(text, /Canonical inventory counts: N5=258, N4=6/);

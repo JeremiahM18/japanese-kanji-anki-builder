@@ -165,7 +165,7 @@ function formatWordDeckReadyReport(summary, doctorReport) {
                     ]
                     : []),
                 ...(triage
-                    ? [`  triage backlog: ${triage.editorialReviewItems} editorial review, ${triage.promoteCuratedExampleItems} promote curated example, ${triage.deferVariantItems} defer variant`]
+                    ? [`  triage backlog: ${triage.editorialReviewItems} review-needed before card work, ${triage.promoteCuratedExampleItems} actionable curated candidates, ${triage.deferVariantItems} deferred variants or low learner value`]
                     : []),
             ];
         })

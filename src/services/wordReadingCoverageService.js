@@ -511,13 +511,26 @@ function formatWordReadingCoverageReport(report, { maxKanji = 50 } = {}) {
 }
 
 function formatWordReadingGapTriage(triage, { maxItems = 50, includeVariants = false } = {}) {
+  const actionLabels = {
+    editorial_review: 'review learner-card value before card work',
+    promote_curated_example: 'promote curated learner candidate',
+    defer_variant: 'defer or leave uncovered',
+  };
+  const priorityLabels = {
+    high: 'review-needed',
+    medium: 'actionable-candidate',
+    low: 'deferred-low-value',
+  };
   const lines = [];
   lines.push(`Japanese Kanji Builder Word Reading Gap Triage (${triage.levelLabel})`);
   lines.push('');
   lines.push(`Open gap items: ${triage.summary.totalItems}`);
-  lines.push(`  - High priority (editorial review): ${triage.summary.highPriorityItems}`);
-  lines.push(`  - Medium priority (promote curated example): ${triage.summary.mediumPriorityItems}`);
-  lines.push(`  - Low priority (defer variant): ${triage.summary.lowPriorityItems}`);
+  lines.push(`  - Review needed before card work: ${triage.summary.highPriorityItems}`);
+  lines.push(`  - Actionable curated learner candidates: ${triage.summary.mediumPriorityItems}`);
+  lines.push(`  - Deferred variants or low learner value: ${triage.summary.lowPriorityItems}`);
+  lines.push('');
+  lines.push('Product rule: create cards only for common, learner-friendly, useful words. If no good learner card exists, leave the reading uncovered or deferred.');
+  lines.push('Review-needed items are not automatic card work; they need learner-value evidence first.');
   lines.push('');
 
   const focusItems = triage.items
@@ -529,14 +542,16 @@ function formatWordReadingGapTriage(triage, { maxItems = 50, includeVariants = f
     return lines.join('\n') + '\n';
   }
 
-  lines.push('Recommended backlog:');
+  lines.push('Learner-card review queue:');
   for (const item of focusItems) {
     const candidateText = item.curatedExampleCandidates.length > 0
       ? item.curatedExampleCandidates.map((candidate) => `${candidate.written} (${candidate.reading})`).join(', ')
-      : 'none yet';
+      : item.suggestedAction === 'editorial_review'
+        ? 'none yet (review only; no card work without common learner-friendly evidence)'
+        : 'none yet';
     lines.push(
       `- ${item.kanji} ${item.readingType}-reading ${item.reading} `
-      + `[${item.priority}; ${item.suggestedAction}; ${item.status}; ${item.gapKind}]`
+      + `[${priorityLabels[item.priority] || item.priority}; ${actionLabels[item.suggestedAction] || item.suggestedAction}; ${item.status}; ${item.gapKind}]`
     );
     lines.push(`  display anchor: ${item.displayWord}`);
     lines.push(`  curated candidates: ${candidateText}`);

@@ -1,5 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
 
 const {
     buildGoldenCoverageRows,
@@ -7,6 +9,12 @@ const {
     buildStarterCuratedBuckets,
 } = require("../src/datasets/goldenReviewCoverage");
 const { parseArgs } = require("../scripts/reportGoldenReviewCoverage");
+
+const templatesDir = path.join(__dirname, "..", "templates");
+
+function loadTemplateJson(fileName) {
+    return JSON.parse(fs.readFileSync(path.join(templatesDir, fileName), "utf8"));
+}
 
 test("buildStarterCuratedBuckets keeps only starter-curated jlpt kanji", () => {
     const buckets = buildStarterCuratedBuckets({
@@ -73,6 +81,19 @@ test("buildGoldenReviewCoverageSummary aggregates overall coverage", () => {
     assert.equal(summary.goldenCoveredKanji, 2);
     assert.equal(summary.missingKanji, 1);
     assert.equal(summary.coverageRatio, 0.6667);
+});
+
+test("tracked N3 golden review coverage protects every starter-curated kanji", () => {
+    const summary = buildGoldenReviewCoverageSummary({
+        starterCuratedData: loadTemplateJson("starter_curated_study_data.json"),
+        goldenReviewSets: {
+            3: loadTemplateJson("golden_n3_review_set.json"),
+        },
+        levels: [3],
+    });
+
+    assert.equal(summary.coverageRatio, 1);
+    assert.equal(summary.missingKanji, 0);
 });
 
 test("reportGoldenReviewCoverage parseArgs accepts level and limit", () => {

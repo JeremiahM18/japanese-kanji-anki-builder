@@ -52,7 +52,7 @@ Local ignored files under `data/` are workspace inputs, not product truth. Use a
 Kanji decks:
 
 - Each shipped kanji belongs to the tracked JLPT kanji contract.
-- N5 and N4 kanji are fully protected by golden review coverage.
+- N5, N4, and N3 kanji are fully protected by golden review coverage.
 - `deck:ready` fails on export fallbacks unless `--allow-export-fallbacks` is explicit.
 - Stroke-order images and animations are separate readiness surfaces.
 - Audio is governed by policy and required for kanji deck readiness.

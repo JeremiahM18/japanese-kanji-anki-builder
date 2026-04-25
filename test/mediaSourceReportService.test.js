@@ -89,7 +89,7 @@ test("buildMediaSourceReport treats SVG image fallback as image-only coverage", 
     }
 });
 
-test("buildPreferredFileNames surfaces accepted Commons filename variants", () => {
+test("buildPreferredFileNames surfaces accepted local filename variants", () => {
     assert.deepEqual(
         buildPreferredFileNames(["円", "円-bw", "円-jbw"], [".png", ".webp"], 6),
         ["円.png", "円.webp", "円-bw.png", "円-bw.webp", "円-jbw.png", "円-jbw.webp"],

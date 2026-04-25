@@ -105,7 +105,7 @@ function formatMissingManagedAnimationsReport(report) {
     }
 
     lines.push("");
-    lines.push("Next step: use `npm run media:plan:stroke-order -- --animation-only --discover --level=<n> --limit=<count>` to plan only the missing animations, then fetch or import those files and rerun this report.");
+    lines.push("Next step: configure the approved GitHub animation mirror or add reviewed local animation files, then run `npm run media:sync -- --level=<n>` and rerun this report.");
     return `${lines.join("\n")}\n`;
 }
 

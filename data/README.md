@@ -140,7 +140,7 @@ The intended stroke-order animation priority is:
 2. `REMOTE_STROKE_ORDER_ANIMCJK_BASE_URL`
 3. local imported files
 
-Wikimedia Commons is still useful for static images and targeted fallback acquisition, but it is no longer the recommended primary animation workflow.
+Use official KanjiVG static SVG imports, configured GitHub animation mirrors, or reviewed local source files with provenance captured in managed manifests.
 
 ### Stroke-order naming
 
@@ -194,10 +194,9 @@ npm run media:sync -- --level=5 --limit=25
 npm run media:sync -- --kanji=日,本,学
 ```
 
-Import free stroke-order assets:
+Import reviewed local stroke-order assets:
 
 ```bash
-npm run media:plan:stroke-order -- --level=5 --limit=25
 npm run media:import:stroke-order -- --input-dir=/path/to/downloaded/files
 ```
 

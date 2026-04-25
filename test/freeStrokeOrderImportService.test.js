@@ -17,7 +17,7 @@ function cleanupTempDir(dir) {
     fs.rmSync(dir, { recursive: true, force: true });
 }
 
-test("classifyStrokeOrderFile recognizes Wikimedia-style image and animation names", () => {
+test("classifyStrokeOrderFile recognizes accepted local image and animation names", () => {
     const imageLookup = new Map([["日-bw", "日"]]);
     const animationLookup = new Map([["日-order", "日"]]);
 

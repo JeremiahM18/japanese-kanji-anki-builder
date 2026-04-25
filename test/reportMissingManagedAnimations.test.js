@@ -73,5 +73,5 @@ test("formatMissingManagedAnimationsReport highlights the remaining animation qu
     assert.match(text, /- 彪 \(N1, static stroke-order present via kanjivg\)/);
     assert.match(text, /- 舜 \(N1, no managed stroke-order asset yet\)/);
     assert.match(text, /Showing 2 of 3 missing true-animation rows/);
-    assert.match(text, /--animation-only --discover --level=<n>/);
+    assert.match(text, /approved GitHub animation mirror/);
 });

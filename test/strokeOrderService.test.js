@@ -34,14 +34,14 @@ test("buildKanjiFileCandidates includes kanji and codepoint variants", () => {
     assert.deepEqual(buildKanjiFileCandidates("日"), ["日", "65E5", "U+65E5", "65e5", "u+65e5"]);
 });
 
-test("buildKanjiVgStrokeOrderCandidates includes Commons KanjiVG variants", () => {
+test("buildKanjiVgStrokeOrderCandidates includes KanjiVG source variants", () => {
     assert.deepEqual(buildKanjiVgStrokeOrderCandidates("今"), [
         "今 - U+04ECA- KanjiVG stroke order",
         "今 - U+04ECA (Kaisho) - KanjiVG stroke order",
     ]);
 });
 
-test("buildStrokeOrderImageCandidates includes Wikimedia and KanjiVG image variants", () => {
+test("buildStrokeOrderImageCandidates includes local and KanjiVG image variants", () => {
     const candidates = buildStrokeOrderImageCandidates("円");
     assert.ok(candidates.includes("円-bw"));
     assert.ok(candidates.includes("円-jbw"));
@@ -49,7 +49,7 @@ test("buildStrokeOrderImageCandidates includes Wikimedia and KanjiVG image varia
     assert.ok(candidates.includes("円 - U+05186- KanjiVG stroke order"));
 });
 
-test("buildStrokeOrderAnimationCandidates includes Commons and KanjiVG animation variants", () => {
+test("buildStrokeOrderAnimationCandidates includes local animation filename variants", () => {
     const candidates = buildStrokeOrderAnimationCandidates("四");
     assert.ok(candidates.includes("四-order"));
     assert.ok(candidates.includes("四-calligraphic-order"));
@@ -83,7 +83,7 @@ test("findMatchingAsset resolves a local stroke-order source file", async () => 
     }
 });
 
-test("findMatchingAsset resolves KanjiVG and alternate Commons image file names", async () => {
+test("findMatchingAsset resolves KanjiVG and alternate local image file names", async () => {
     const rootDir = makeTempDir();
 
     try {
@@ -114,7 +114,7 @@ test("findMatchingAsset resolves KanjiVG and alternate Commons image file names"
 });
 
 
-test("findMatchingAsset resolves calligraphic Commons animation names", async () => {
+test("findMatchingAsset resolves calligraphic local animation names", async () => {
     const rootDir = makeTempDir();
 
     try {
@@ -165,7 +165,7 @@ test("syncKanji keeps KanjiVG SVGs as static image coverage only", async () => {
     }
 });
 
-test("syncKanji imports Wikimedia-style image and animation assets into the media store", async () => {
+test("syncKanji imports local image and animation assets into the media store", async () => {
     const rootDir = makeTempDir();
 
     try {

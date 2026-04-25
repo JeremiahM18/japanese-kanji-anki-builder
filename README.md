@@ -216,10 +216,6 @@ Planner output is advisory. A suggested card still needs canonical contract cove
 
 ```bash
 npm run media:plan -- --level=5 --limit=25
-npm run media:plan:stroke-order -- --level=5 --limit=25
-npm run media:plan:stroke-order -- --animation-only --discover --level=5 --limit=25
-npm run media:discover:stroke-order -- --level=5 --limit=10
-npm run media:fetch:stroke-order -- --animation-only --level=5 --limit=20 --file-limit=4
 npm run media:import:stroke-order -- --input-dir=/path/to/files
 npm run media:import:kanjivg -- --input-dir=/path/to/extracted-kanjivg/kanji --level=4
 npm run media:sync -- --level=5 --limit=25
@@ -233,7 +229,7 @@ Managed animation priority:
 2. `REMOTE_STROKE_ORDER_ANIMCJK_BASE_URL`
 3. local source files
 
-True animation coverage requires real looping animation assets. Static images and SVG fallbacks do not satisfy that rule.
+True animation coverage requires real looping animation assets. Static images and SVG fallbacks do not satisfy that rule. Use the configured GitHub animation mirrors or reviewed local source files.
 Stroke-order release provenance is governed by `templates/stroke_order_source_policy.json`; run the audit before treating new media as release-ready.
 
 ### Audio

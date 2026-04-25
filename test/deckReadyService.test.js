@@ -1,13 +1,13 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { formatDeckReadyReport } = require("../src/services/deckReadyService");
+const { buildExportedMediaCompleteness, formatDeckReadyReport, hasMissingRequiredExportMedia } = require("../src/services/deckReadyService");
 
 test("formatDeckReadyReport summarizes packaged media and readiness", () => {
     const text = formatDeckReadyReport({
         outDir: "C:/repo/out/build",
         levels: [5, 4],
-        exports: [{ level: 5 }, { level: 4 }],
+        exports: [{ level: 5, rows: 1 }, { level: 4, rows: 1 }],
         package: {
             rootDir: "C:/repo/out/build/package",
             exportCount: 2,
@@ -55,8 +55,11 @@ test("formatDeckReadyReport summarizes packaged media and readiness", () => {
     assert.match(text, /Japanese Kanji Builder Deck Ready/);
     assert.match(text, /Unique packaged media files: 3/);
     assert.match(text, /Stroke-order animation fields: 2/);
+    assert.match(text, /Exported card media completeness:/);
+    assert.match(text, /Audio fields: 1\/2/);
     assert.match(text, /Media source readiness:/);
     assert.match(text, /Audio source: not ready/);
+    assert.match(text, /Managed manifest coverage snapshot:/);
     assert.match(text, /Full media coverage: 25.0%/);
     assert.match(text, /Export fallback issues: 0/);
     assert.match(text, /Level quality gates:/);
@@ -68,7 +71,7 @@ test("formatDeckReadyReport recommends configuring acquisition when no media was
     const text = formatDeckReadyReport({
         outDir: "C:/repo/out/build",
         levels: [5],
-        exports: [{ level: 5 }],
+        exports: [{ level: 5, rows: 1 }],
         package: {
             rootDir: "C:/repo/out/build/package",
             exportCount: 1,
@@ -99,7 +102,7 @@ test("formatDeckReadyReport keeps audio sections visible because audio is requir
     const text = formatDeckReadyReport({
         outDir: "C:/repo/out/build",
         levels: [5],
-        exports: [{ level: 5 }],
+        exports: [{ level: 5, rows: 1 }],
         package: {
             rootDir: "C:/repo/out/build/package",
             exportCount: 1,
@@ -123,7 +126,7 @@ test("formatDeckReadyReport keeps single-level next steps scoped to the built de
     const text = formatDeckReadyReport({
         outDir: "C:/repo/out/build",
         levels: [5],
-        exports: [{ level: 5 }],
+        exports: [{ level: 5, rows: 79 }],
         package: {
             rootDir: "C:/repo/out/build/package",
             exportCount: 1,
@@ -132,7 +135,7 @@ test("formatDeckReadyReport keeps single-level next steps scoped to the built de
                 strokeOrder: 79,
                 strokeOrderImage: 79,
                 strokeOrderAnimation: 79,
-                audio: 0,
+                audio: 79,
             },
         },
         coverage: {
@@ -166,11 +169,64 @@ test("formatDeckReadyReport keeps single-level next steps scoped to the built de
     assert.doesNotMatch(text, /raise JLPT N3 above the quality gate before calling this deck truly ready/i);
 });
 
+test("formatDeckReadyReport blocks readiness when exported cards are missing required audio fields", () => {
+    const summary = {
+        outDir: "C:/repo/out/build",
+        levels: [5],
+        exports: [{ level: 5, rows: 80 }],
+        package: {
+            rootDir: "C:/repo/out/build/package",
+            exportCount: 1,
+            mediaAssetCount: 228,
+            mediaCounts: {
+                strokeOrder: 80,
+                strokeOrderImage: 80,
+                strokeOrderAnimation: 80,
+                audio: 68,
+            },
+        },
+        coverage: {
+            strokeOrder: 1,
+            trueAnimation: 1,
+            audio: 1,
+            fullMedia: 1,
+        },
+        exportIssues: { count: 0, warnings: 0, errors: 0 },
+    };
+    const text = formatDeckReadyReport(summary, {
+        quality: {
+            levelReadiness: {
+                overallReady: false,
+                weakestLevels: [{ level: 3 }],
+                levels: [
+                    { level: 5, ready: true, readinessScore: 1 },
+                    { level: 3, ready: false, readinessScore: 0 },
+                ],
+            },
+        },
+    });
+
+    assert.deepEqual(buildExportedMediaCompleteness(summary), {
+        totalRows: 80,
+        strokeOrder: 80,
+        strokeOrderImage: 80,
+        strokeOrderAnimation: 80,
+        audio: 68,
+    });
+    assert.equal(hasMissingRequiredExportMedia(summary), true);
+    assert.match(text, /Audio fields: 68\/80/);
+    assert.match(text, /Managed manifest coverage snapshot:/);
+    assert.match(text, /Audio coverage: 100.0%/);
+    assert.match(text, /N5: needs work; 100.0% checks passing; exported media incomplete/);
+    assert.match(text, /add exact managed media for every exported kanji card/i);
+    assert.doesNotMatch(text, /this deck is ready/i);
+});
+
 test("formatDeckReadyReport elevates export fallbacks to the next step", () => {
     const text = formatDeckReadyReport({
         outDir: "C:/repo/out/build",
         levels: [4],
-        exports: [{ level: 4 }],
+        exports: [{ level: 4, rows: 20 }],
         package: {
             rootDir: "C:/repo/out/build/package",
             exportCount: 1,
@@ -179,7 +235,7 @@ test("formatDeckReadyReport elevates export fallbacks to the next step", () => {
                 strokeOrder: 20,
                 strokeOrderImage: 20,
                 strokeOrderAnimation: 20,
-                audio: 0,
+                audio: 20,
             },
         },
         coverage: {

@@ -31,7 +31,7 @@ npm run deck:words:ready -- --levels=5
 npm run deck:words:apkg -- --levels=5
 ```
 
-Kanji deck readiness requires governed audio and full media coverage. A level with missing managed audio must not be treated as ready.
+Kanji deck readiness requires governed audio and complete exported media fields. A level with missing exact primary-reading audio must not be treated as ready even if the managed manifest inventory reports audio coverage.
 
 ## Source Of Truth
 
@@ -53,9 +53,11 @@ Kanji decks:
 
 - Each shipped kanji belongs to the tracked JLPT kanji contract.
 - N5, N4, and N3 kanji are fully protected by golden review coverage.
+- The kanji deck learning target is the individual kanji. `DisplayWord` is the target kanji itself, and `PrimaryReading` is the learner-facing reading for that kanji.
+- Compound words belong in notes, examples, and word decks; they must not replace the kanji-card anchor.
 - `deck:ready` fails on export fallbacks unless `--allow-export-fallbacks` is explicit.
 - Stroke-order images and animations are separate readiness surfaces.
-- Audio is governed by policy and required for kanji deck readiness.
+- Audio is governed by policy and required for kanji deck readiness. Exported kanji cards must use exact audio for the target kanji and exported primary reading.
 
 Word decks:
 
@@ -73,8 +75,9 @@ Word decks:
 
 | Surface | Status |
 | --- | --- |
-| N5 kanji | Ready, golden-reviewed |
-| N4 kanji | Ready, golden-reviewed |
+| N5 kanji | Golden-reviewed; blocked from ready status until exact exported audio is complete |
+| N4 kanji | Golden-reviewed; blocked from ready status until exact exported audio is complete |
+| N3 kanji | Golden-reviewed; blocked from ready status until exact exported media and audio are complete |
 | N5 word | `ready_with_deferred_variants` |
 | N4 word | Active completion work |
 | N5 word audio | Governed and reviewable |
@@ -170,7 +173,7 @@ npm run deck:ready -- --levels=5
 npm run deck:apkg -- --levels=5
 ```
 
-`deck:ready` validates setup, syncs media, builds exports, packages files under `out/build/package`, rebuilds from a clean package directory, reports media and quality status, and fails on export fallbacks by default.
+`deck:ready` validates setup, syncs media, builds exports, packages files under `out/build/package`, rebuilds from a clean package directory, reports managed manifest coverage and exported card media completeness, and fails on export fallbacks by default. Exported card media completeness is the release-critical signal for kanji deck media readiness.
 
 Use `--allow-export-fallbacks` only for an explicitly degraded local artifact.
 
@@ -380,7 +383,7 @@ Kanji card fields include:
 - `StrokeOrderAnimation`
 - `Audio`
 
-The front of a kanji card shows only the target kanji. The back shows the learner-facing display word and reading, then `StudyWordKanji` labels only off-level or outside-JLPT kanji in that display word. Same-level kanji are suppressed to avoid duplicating the deck level. Audio is selected from the same learner-facing display reading.
+The front of a kanji card shows only the target kanji. The back shows the target kanji as `DisplayWord` and the primary kanji reading in `PrimaryReading`. `StudyWordKanji` is normally blank for kanji cards because same-level target labels are suppressed; compounds and study words belong in notes, examples, and word decks. Audio is selected only when managed media has an exact `kanji-reading` asset for the target kanji and exported primary reading.
 
 Word card fields include:
 

@@ -3,10 +3,12 @@ const { performance } = require("node:perf_hooks");
 
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
+const { buildMeaningJP } = require("../inference/meaningInference");
 const { buildOfflineFallbackCard } = require("./offlineKanjiFallback");
 const { selectBestAudioAsset } = require("./audioService");
 const { mapWithConcurrency } = require("../utils/concurrency");
 const { labelKunReading, labelOnReading, tsvEscape } = require("../utils/text");
+const { katakanaToHiragana } = require("../utils/japanese");
 
 const ANKI_FIELD_NAMES = loadAnkiNoteSchema().fieldNames;
 const MAX_INFERENCE_EXAMPLES = 3;
@@ -110,6 +112,101 @@ function extractConstituentKanji(text) {
     return [...new Set(String(text || "").match(/\p{Script=Han}/gu) || [])];
 }
 
+function normalizeReading(value) {
+    return katakanaToHiragana(String(value || ""))
+        .replace(/[.・]/g, "")
+        .replace(/-/g, "")
+        .replace(/\s+/g, "")
+        .trim();
+}
+
+function hasOnlyTargetKanji(value, kanji) {
+    const kanjiChars = extractConstituentKanji(value);
+    return kanjiChars.length > 0 && kanjiChars.every((char) => char === kanji);
+}
+
+function selectReadingFromKanjiInfo({ kanjiInfo, contextReading = "" }) {
+    const normalizedContext = normalizeReading(contextReading);
+    const readings = [
+        ...(Array.isArray(kanjiInfo?.kun_readings) ? kanjiInfo.kun_readings : []),
+        ...(Array.isArray(kanjiInfo?.on_readings) ? kanjiInfo.on_readings : []),
+    ].map(normalizeReading).filter(Boolean);
+
+    if (normalizedContext) {
+        const contextual = readings
+            .filter((reading) => normalizedContext.includes(reading))
+            .sort((a, b) => b.length - a.length)[0];
+        if (contextual) {
+            return contextual;
+        }
+    }
+
+    return readings[0] || "";
+}
+
+function selectKanjiPrimaryReading({ kanji, curatedEntry = null, inferred = null, kanjiInfo = null }) {
+    const breakdownWord = curatedEntry?.breakdownDisplayWord?.written;
+    const breakdownPron = curatedEntry?.breakdownDisplayWord?.pron;
+    if (breakdownPron && hasOnlyTargetKanji(breakdownWord, kanji)) {
+        return String(breakdownPron).trim();
+    }
+
+    const curatedWord = curatedEntry?.displayWord?.written;
+    const curatedPron = curatedEntry?.displayWord?.pron;
+    if (curatedPron && hasOnlyTargetKanji(curatedWord, kanji)) {
+        return String(curatedPron).trim();
+    }
+
+    const inferredWord = inferred?.displayWord?.written;
+    const inferredPron = inferred?.displayWord?.pron;
+    if (inferredPron && hasOnlyTargetKanji(inferredWord, kanji)) {
+        return String(inferredPron).trim();
+    }
+
+    return selectReadingFromKanjiInfo({
+        kanjiInfo,
+        contextReading: curatedPron || inferredPron || inferred?.bestWord?.pron || "",
+    });
+}
+
+function extractEnglishMeaningFromMeaningJP(value) {
+    const parts = String(value || "").split("／");
+    return String(parts.length > 1 ? parts.slice(1).join("／") : "").trim();
+}
+
+function selectExactKanjiAudioAsset(audioAssets, { kanji, reading = "" } = {}) {
+    const normalizedReading = String(reading || "").trim();
+    const selected = selectBestAudioAsset(audioAssets || [], {
+        category: "kanji-reading",
+        text: kanji,
+        reading: normalizedReading,
+    });
+
+    if (!selected || !normalizedReading) {
+        return selected || null;
+    }
+
+    return String(selected.reading || "").trim() === normalizedReading ? selected : null;
+}
+
+function buildKanjiDeckInference({ kanji, inferred, kanjiInfo, curatedEntry = null }) {
+    const primaryReading = selectKanjiPrimaryReading({ kanji, curatedEntry, inferred, kanjiInfo });
+    const englishMeaning = String(
+        inferred?.englishMeaning
+        || extractEnglishMeaningFromMeaningJP(inferred?.meaningJP)
+        || ""
+    ).trim();
+    const displayWord = { written: String(kanji || "").trim(), pron: primaryReading };
+
+    return {
+        ...inferred,
+        displayWord,
+        displayWordText: displayWord.written,
+        primaryReading,
+        meaningJP: buildMeaningJP(displayWord, englishMeaning),
+    };
+}
+
 function buildKanjiLevelLookup({ jlptOnlyJson = {}, targetKanji = "", targetJlptEntry = null } = {}) {
     const lookup = new Map();
     for (const [kanji, entry] of Object.entries(jlptOnlyJson || {})) {
@@ -184,9 +281,8 @@ async function resolveManagedMediaFields({ kanji, strokeOrderService, audioServi
         const imagePath = manifest?.assets?.strokeOrderImage?.path || "";
         const animationPath = manifest?.assets?.strokeOrderAnimation?.path || "";
         const bestPath = animationPath || imagePath || "";
-        const audioPath = selectBestAudioAsset(manifest?.assets?.audio || [], {
-            category: "kanji-reading",
-            text: kanji,
+        const audioPath = selectExactKanjiAudioAsset(manifest?.assets?.audio || [], {
+            kanji,
             reading: audioReading,
         })?.path || "";
 
@@ -225,8 +321,8 @@ function shouldUseLocalJlptEntry({ inferenceEngine, kanji, jlptEntry }) {
 }
 
 function buildInferredRow({ kanji, inferred, kanjiInfo, kradMap, pickMainComponent, mediaFields, kanjiLevelLookup, currentLevel = null }) {
-    const displayWord = selectDisplayWord({ kanji, displayWord: inferred.displayWord, bestWord: inferred.bestWord });
-    const primaryReading = selectPrimaryReading(inferred);
+    const displayWord = inferred.displayWordText || selectDisplayWord({ kanji, displayWord: inferred.displayWord, bestWord: inferred.bestWord });
+    const primaryReading = inferred.primaryReading || selectPrimaryReading(inferred);
     const studyWordKanji = formatStudyWordKanjiLabels(displayWord, kanjiLevelLookup, { currentLevel });
     const onReading = labelOnReading(kanjiInfo?.on_readings);
     const kunReading = labelKunReading(kanjiInfo?.kun_readings);
@@ -293,32 +389,39 @@ function createExportService({
         try {
             const skipWordFetch = shouldSkipWordFetch(inferenceEngine, kanji);
             const useLocalJlptEntry = shouldUseLocalJlptEntry({ inferenceEngine, kanji, jlptEntry });
-            const audioReading = String(curatedStudyData?.[kanji]?.displayWord?.pron || "").trim();
+            const curatedEntry = curatedStudyData?.[kanji] || null;
             const kanjiLevelLookup = buildKanjiLevelLookup({
                 jlptOnlyJson,
                 targetKanji: kanji,
                 targetJlptEntry: jlptEntry,
             });
             const currentLevel = Number(jlptEntry?.jlpt);
-            const [kanjiInfo, words, mediaFields] = await Promise.all([
+            const [kanjiInfo, words] = await Promise.all([
                 useLocalJlptEntry
                     ? Promise.resolve(jlptEntry)
                     : measureAsync(exportProfile, "getKanji", () => kanjiApiClient.getKanji(kanji)),
                 skipWordFetch
                     ? Promise.resolve([])
                     : measureAsync(exportProfile, "getWords", () => kanjiApiClient.getWords(kanji)),
-                measureAsync(exportProfile, "media", () => resolveManagedMediaFields({ kanji, strokeOrderService, audioService, audioReading })),
             ]);
 
             const inferenceStartedAt = exportProfile ? performance.now() : NaN;
-            const inferred = inferenceEngine.inferKanjiStudyData({
+            const rawInferred = inferenceEngine.inferKanjiStudyData({
                 kanji,
                 kanjiInfo,
                 words,
                 maxExamples: MAX_INFERENCE_EXAMPLES,
                 maxSentences: MAX_INFERENCE_SENTENCES,
             });
+            const inferred = buildKanjiDeckInference({ kanji, inferred: rawInferred, kanjiInfo, curatedEntry });
             recordProfileTiming(exportProfile, "inference", inferenceStartedAt);
+
+            const mediaFields = await measureAsync(exportProfile, "media", () => resolveManagedMediaFields({
+                kanji,
+                strokeOrderService,
+                audioService,
+                audioReading: inferred.primaryReading,
+            }));
 
             if (exportProfile) {
                 exportProfile.rows += 1;
@@ -389,24 +492,30 @@ function createExportService({
     async function buildInferenceForKanji({ kanji, jlptEntry = null, jlptOnlyJson = {}, kanjiApiClient, strokeOrderService, audioService }) {
         const skipWordFetch = shouldSkipWordFetch(inferenceEngine, kanji);
         const useLocalJlptEntry = shouldUseLocalJlptEntry({ inferenceEngine, kanji, jlptEntry });
-        const audioReading = String(curatedStudyData?.[kanji]?.displayWord?.pron || "").trim();
-        const [kanjiInfo, words, mediaFields] = await Promise.all([
+        const curatedEntry = curatedStudyData?.[kanji] || null;
+        const [kanjiInfo, words] = await Promise.all([
             useLocalJlptEntry ? Promise.resolve(jlptEntry) : kanjiApiClient.getKanji(kanji),
             skipWordFetch ? Promise.resolve([]) : kanjiApiClient.getWords(kanji),
-            resolveManagedMediaFields({ kanji, strokeOrderService, audioService, audioReading }),
         ]);
 
-        const inferred = inferenceEngine.inferKanjiStudyData({
+        const rawInferred = inferenceEngine.inferKanjiStudyData({
             kanji,
             kanjiInfo,
             words,
             maxExamples: MAX_INFERENCE_EXAMPLES,
             maxSentences: MAX_INFERENCE_SENTENCES,
         });
+        const inferred = buildKanjiDeckInference({ kanji, inferred: rawInferred, kanjiInfo, curatedEntry });
+        const mediaFields = await resolveManagedMediaFields({
+            kanji,
+            strokeOrderService,
+            audioService,
+            audioReading: inferred.primaryReading,
+        });
 
         const onReading = labelOnReading(kanjiInfo?.on_readings);
         const kunReading = labelKunReading(kanjiInfo?.kun_readings);
-        const displayWordText = selectDisplayWord({ kanji, displayWord: inferred.displayWord, bestWord: inferred.bestWord });
+        const displayWordText = inferred.displayWordText;
         const kanjiLevelLookup = buildKanjiLevelLookup({
             jlptOnlyJson,
             targetKanji: kanji,
@@ -417,7 +526,7 @@ function createExportService({
         return {
             ...inferred,
             displayWordText,
-            primaryReading: selectPrimaryReading(inferred),
+            primaryReading: inferred.primaryReading,
             studyWordKanji: formatStudyWordKanjiLabels(displayWordText, kanjiLevelLookup, { currentLevel }),
             onReading,
             kunReading,

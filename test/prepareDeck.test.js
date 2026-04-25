@@ -11,6 +11,8 @@ test("shouldFailDeckReady fails selected decks with incomplete required audio", 
     const summary = {
         levels: [3],
         coverage: { audio: 0.01, fullMedia: 0.01 },
+        exports: [{ level: 3, rows: 10 }],
+        package: { mediaCounts: { strokeOrder: 10, strokeOrderImage: 10, strokeOrderAnimation: 10, audio: 9 } },
         exportIssues: { count: 0 },
     };
     const doctorReport = {
@@ -33,6 +35,8 @@ test("shouldFailDeckReady ignores unrelated global level failures", () => {
     const summary = {
         levels: [5],
         coverage: { audio: 1, fullMedia: 1 },
+        exports: [{ level: 5, rows: 10 }],
+        package: { mediaCounts: { strokeOrder: 10, strokeOrderImage: 10, strokeOrderAnimation: 10, audio: 10 } },
         exportIssues: { count: 0 },
     };
     const doctorReport = {
@@ -55,6 +59,8 @@ test("shouldFailDeckReady still fails export fallbacks unless explicitly allowed
     const summary = {
         levels: [5],
         coverage: { audio: 1, fullMedia: 1 },
+        exports: [{ level: 5, rows: 10 }],
+        package: { mediaCounts: { strokeOrder: 10, strokeOrderImage: 10, strokeOrderAnimation: 10, audio: 10 } },
         exportIssues: { count: 1 },
     };
     const doctorReport = {

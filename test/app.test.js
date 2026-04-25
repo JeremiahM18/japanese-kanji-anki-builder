@@ -120,7 +120,7 @@ function buildFixtureContext() {
                         source: "fixture",
                         category: "kanji-reading",
                         text: "日",
-                        reading: "にち",
+                        reading: "ひ",
                         locale: "ja-JP",
                     },
                 ],
@@ -440,7 +440,8 @@ test("inference route exposes curated and corpus-backed study output", async () 
         assert.equal(json.status, "ok");
         assert.equal(json.inference.bestWord.written, "日本");
         assert.equal(json.inference.englishMeaning, "sun / day marker");
-        assert.equal(json.inference.primaryReading, "にほん");
+        assert.equal(json.inference.displayWordText, "日");
+        assert.equal(json.inference.primaryReading, "ひ");
         assert.equal(json.inference.notes, "日本 （にほん） - Japan ／ curated-note");
         assert.equal(json.inference.strokeOrderPath, "animations/65E5_日-stroke-order.gif");
         assert.equal(json.inference.strokeOrderField, '<img src="65E5_日-stroke-order.gif" />');
@@ -642,8 +643,8 @@ test("download export sets attachment headers and includes Anki-ready media fiel
         assert.equal(lines.length, 2);
         assert.equal(lines[0], "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence");
         assert.equal(cols.length, 14);
-        assert.equal(cols[1], "日本");
-        assert.equal(cols[3], "にほん");
+        assert.equal(cols[1], "日");
+        assert.equal(cols[3], "ひ");
         assert.equal(cols[4], "");
         assert.equal(cols[5], "オン: ニチ");
         assert.equal(cols[6], "くん: ひ");

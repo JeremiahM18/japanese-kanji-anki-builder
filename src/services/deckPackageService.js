@@ -123,17 +123,19 @@ async function readManagedManifest({ kanji, mediaRootDir, strokeOrderService, au
     return readManifestIfExists(mediaRootDir, kanji);
 }
 
-async function collectPackageAssets({ kanjiList, mediaRootDir, strokeOrderService = null, audioService = null, concurrency = 8, assetKinds = null }) {
+async function collectPackageAssets({ kanjiList, mediaRootDir, strokeOrderService = null, audioService = null, concurrency = 8, assetKinds = null, referencedFileNames = null }) {
     const assets = new Map();
     const mediaCounts = createEmptyMediaCounts();
     const selectedKanji = [...new Set((Array.isArray(kanjiList) ? kanjiList : []).filter(Boolean))];
 
     const assetGroups = await mapWithConcurrency(selectedKanji, concurrency, async (kanji) => {
         const manifest = await readManagedManifest({ kanji, mediaRootDir, strokeOrderService, audioService });
-        return buildPackageAssetCandidatesFromManifest(manifest, kanji, { assetKinds }).map((candidate) => ({
-            ...candidate,
-            kanji,
-        }));
+        return buildPackageAssetCandidatesFromManifest(manifest, kanji, { assetKinds })
+            .filter((candidate) => !referencedFileNames || referencedFileNames.has(path.basename(candidate.relativePath)))
+            .map((candidate) => ({
+                ...candidate,
+                kanji,
+            }));
     });
 
     for (const candidates of assetGroups) {
@@ -169,6 +171,28 @@ async function collectPackageAssets({ kanjiList, mediaRootDir, strokeOrderServic
         assets: [...assets.values()].sort((a, b) => a.fileName.localeCompare(b.fileName)),
         mediaCounts,
     };
+}
+
+function collectReferencedMediaFileNames(exports = []) {
+    const fileNames = new Set();
+    const mediaRefRe = /(?:src="|\[sound:)([^"\]]+)/g;
+
+    for (const artifact of Array.isArray(exports) ? exports : []) {
+        const filePath = artifact?.filePath;
+        if (!filePath || !fs.existsSync(filePath)) {
+            continue;
+        }
+
+        const text = fs.readFileSync(filePath, "utf-8");
+        for (const match of text.matchAll(mediaRefRe)) {
+            const fileName = path.basename(String(match[1] || "").trim());
+            if (fileName) {
+                fileNames.add(fileName);
+            }
+        }
+    }
+
+    return fileNames;
 }
 
 async function collectExplicitReferencedAssets({ referencedMedia = [], mediaRootDir }) {
@@ -259,6 +283,9 @@ async function buildDeckPackage({
     const kanjiAssetKinds = deckKind === "word"
         ? ["strokeOrder", "strokeOrderAnimation"]
         : null;
+    const referencedMediaFileNames = deckKind === "kanji"
+        ? collectReferencedMediaFileNames(exports)
+        : null;
     const { assets, mediaCounts } = await collectPackageAssets({
         kanjiList: selectedKanji,
         mediaRootDir,
@@ -266,6 +293,7 @@ async function buildDeckPackage({
         audioService,
         concurrency: packageConcurrency,
         assetKinds: kanjiAssetKinds,
+        referencedFileNames: referencedMediaFileNames,
     });
     const explicitReferencedAssets = await collectExplicitReferencedAssets({
         referencedMedia,
@@ -327,6 +355,7 @@ module.exports = {
     buildDeckPackagePaths,
     buildImportGuide,
     buildPackageAssetCandidatesFromManifest,
+    collectReferencedMediaFileNames,
     collectPackageAssets,
     collectReferencedKanji,
     createEmptyMediaCounts,

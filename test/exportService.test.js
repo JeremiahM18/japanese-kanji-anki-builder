@@ -47,7 +47,7 @@ test("formatStudyWordKanjiLabels suppresses current-level kanji for kanji deck w
     );
 });
 
-test("buildInferenceForKanji prefers the learner-facing display pronunciation", async () => {
+test("buildInferenceForKanji keeps the target kanji as the learner-facing anchor", async () => {
     const exportService = createExportService({
         inferenceEngine: {
             hasFullyCuratedKanjiEntry() {
@@ -83,10 +83,12 @@ test("buildInferenceForKanji prefers the learner-facing display pronunciation", 
         },
     });
 
+    assert.equal(inference.displayWordText, "行");
     assert.equal(inference.primaryReading, "いく");
+    assert.equal(inference.meaningJP, "行 （いく） ／ go");
 });
 
-test("buildInferenceForKanji leaves primaryReading blank when the learner-facing display word falls back to bare kanji", async () => {
+test("buildInferenceForKanji keeps primaryReading visible when the display word is bare kanji", async () => {
     const exportService = createExportService({
         inferenceEngine: {
             hasFullyCuratedKanjiEntry() {
@@ -106,6 +108,7 @@ test("buildInferenceForKanji leaves primaryReading blank when the learner-facing
 
     const inference = await exportService.buildInferenceForKanji({
         kanji: "日",
+        jlptEntry: { meanings: ["day"], on_readings: ["ニチ"], kun_readings: ["ひ"], jlpt: 5 },
         kanjiApiClient: {
             async getKanji() {
                 return { meanings: ["day"], on_readings: ["ニチ"], kun_readings: ["ひ"] };
@@ -116,16 +119,14 @@ test("buildInferenceForKanji leaves primaryReading blank when the learner-facing
         },
         strokeOrderService: null,
         audioService: null,
-        jlptOnlyJson: {
-            日: { jlpt: 5 },
-            本: { jlpt: 5 },
-        },
     });
 
-    assert.equal(inference.primaryReading, "");
+    assert.equal(inference.displayWordText, "日");
+    assert.equal(inference.meaningJP, "日 （ひ） ／ day");
+    assert.equal(inference.primaryReading, "ひ");
 });
 
-test("buildInferenceForKanji preserves a curated preferred-word compound hook and its reading", async () => {
+test("buildInferenceForKanji rejects compound words as kanji deck anchors", async () => {
     const exportService = createExportService({
         inferenceEngine: {
             hasFullyCuratedKanjiEntry() {
@@ -135,6 +136,7 @@ test("buildInferenceForKanji preserves a curated preferred-word compound hook an
                 return {
                     displayWord: { written: "日本", pron: "にほん" },
                     bestWord: { written: "日本", pron: "にほん" },
+                    englishMeaning: "sun / day marker",
                     meaningJP: "日本 （にほん） ／ sun / day marker",
                     notes: "日本 （にほん） - Japan",
                     sentenceCandidates: [],
@@ -145,6 +147,7 @@ test("buildInferenceForKanji preserves a curated preferred-word compound hook an
 
     const inference = await exportService.buildInferenceForKanji({
         kanji: "日",
+        jlptEntry: { meanings: ["day"], on_readings: ["ニチ"], kun_readings: ["ひ"], jlpt: 5 },
         kanjiApiClient: {
             async getKanji() {
                 return { meanings: ["day"], on_readings: ["ニチ"], kun_readings: ["ひ"] };
@@ -161,7 +164,222 @@ test("buildInferenceForKanji preserves a curated preferred-word compound hook an
         },
     });
 
-    assert.equal(inference.primaryReading, "にほん");
+    assert.equal(inference.displayWordText, "日");
+    assert.equal(inference.primaryReading, "ひ");
+    assert.equal(inference.meaningJP, "日 （ひ） ／ sun / day marker");
+    assert.equal(inference.studyWordKanji, "");
+});
+
+test("buildInferenceForKanji uses curated single-kanji breakdown readings before compound word readings", async () => {
+    const exportService = createExportService({
+        curatedStudyData: {
+            車: {
+                displayWord: { written: "電車", pron: "でんしゃ" },
+                breakdownDisplayWord: { written: "車", pron: "くるま" },
+            },
+        },
+        inferenceEngine: {
+            hasFullyCuratedKanjiEntry() {
+                return true;
+            },
+            inferKanjiStudyData() {
+                return {
+                    displayWord: { written: "電車", pron: "でんしゃ" },
+                    bestWord: { written: "電車", pron: "でんしゃ" },
+                    englishMeaning: "car / vehicle",
+                    meaningJP: "電車 （でんしゃ） ／ car / vehicle",
+                    notes: "電車 （でんしゃ） - train ／ 車 （くるま） - car",
+                    sentenceCandidates: [],
+                };
+            },
+        },
+    });
+
+    const inference = await exportService.buildInferenceForKanji({
+        kanji: "車",
+        jlptEntry: { meanings: ["car"], on_readings: ["シャ"], kun_readings: ["くるま"], jlpt: 5 },
+        kanjiApiClient: {
+            async getKanji() {
+                throw new Error("should use local JLPT data");
+            },
+            async getWords() {
+                throw new Error("should skip word fetch");
+            },
+        },
+        strokeOrderService: {
+            async getManifest() {
+                return {
+                    assets: {
+                        strokeOrderImage: null,
+                        strokeOrderAnimation: { path: "animations/8ECA_車-stroke-order.gif" },
+                        audio: [{
+                            path: "audio/8ECA_車-kanji-reading-車-くるま.wav",
+                            category: "kanji-reading",
+                            text: "車",
+                            reading: "くるま",
+                            locale: "ja-JP",
+                        }],
+                    },
+                };
+            },
+        },
+        audioService: null,
+    });
+
+    assert.equal(inference.displayWordText, "車");
+    assert.equal(inference.primaryReading, "くるま");
+    assert.equal(inference.meaningJP, "車 （くるま） ／ car / vehicle");
+    assert.equal(inference.audioPath, "audio/8ECA_車-kanji-reading-車-くるま.wav");
+});
+
+test("buildInferenceForKanji does not attach mismatched compound audio to a kanji card", async () => {
+    const exportService = createExportService({
+        curatedStudyData: {
+            車: {
+                displayWord: { written: "電車", pron: "でんしゃ" },
+                breakdownDisplayWord: { written: "車", pron: "くるま" },
+            },
+        },
+        inferenceEngine: {
+            hasFullyCuratedKanjiEntry() {
+                return true;
+            },
+            inferKanjiStudyData() {
+                return {
+                    displayWord: { written: "電車", pron: "でんしゃ" },
+                    bestWord: { written: "電車", pron: "でんしゃ" },
+                    englishMeaning: "car / vehicle",
+                    meaningJP: "電車 （でんしゃ） ／ car / vehicle",
+                    notes: "電車 （でんしゃ） - train ／ 車 （くるま） - car",
+                    sentenceCandidates: [],
+                };
+            },
+        },
+    });
+
+    const inference = await exportService.buildInferenceForKanji({
+        kanji: "車",
+        jlptEntry: { meanings: ["car"], on_readings: ["シャ"], kun_readings: ["くるま"], jlpt: 5 },
+        kanjiApiClient: {
+            async getKanji() {
+                throw new Error("should use local JLPT data");
+            },
+            async getWords() {
+                throw new Error("should skip word fetch");
+            },
+        },
+        strokeOrderService: {
+            async getManifest() {
+                return {
+                    assets: {
+                        strokeOrderImage: null,
+                        strokeOrderAnimation: { path: "animations/8ECA_車-stroke-order.gif" },
+                        audio: [{
+                            path: "audio/8ECA_車-kanji-reading-車-でんしゃ.wav",
+                            category: "kanji-reading",
+                            text: "車",
+                            reading: "でんしゃ",
+                            locale: "ja-JP",
+                        }],
+                    },
+                };
+            },
+        },
+        audioService: null,
+    });
+
+    assert.equal(inference.displayWordText, "車");
+    assert.equal(inference.primaryReading, "くるま");
+    assert.equal(inference.audioPath, "");
+    assert.equal(inference.audioField, "");
+});
+
+test("buildInferenceForKanji infers a kanji reading from kanji data when curated data only has a compound", async () => {
+    const exportService = createExportService({
+        curatedStudyData: {
+            天: {
+                displayWord: { written: "天気", pron: "てんき" },
+            },
+        },
+        inferenceEngine: {
+            hasFullyCuratedKanjiEntry() {
+                return true;
+            },
+            inferKanjiStudyData() {
+                return {
+                    displayWord: { written: "天気", pron: "てんき" },
+                    bestWord: { written: "天気", pron: "てんき" },
+                    englishMeaning: "weather / sky",
+                    meaningJP: "天気 （てんき） ／ weather / sky",
+                    notes: "天気 （てんき） - weather",
+                    sentenceCandidates: [],
+                };
+            },
+        },
+    });
+
+    const inference = await exportService.buildInferenceForKanji({
+        kanji: "天",
+        jlptEntry: { meanings: ["heaven"], on_readings: ["テン"], kun_readings: ["あま"], jlpt: 5 },
+        kanjiApiClient: {
+            async getKanji() {
+                throw new Error("should use local JLPT data");
+            },
+            async getWords() {
+                throw new Error("should skip word fetch");
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+    });
+
+    assert.equal(inference.displayWordText, "天");
+    assert.equal(inference.primaryReading, "てん");
+    assert.equal(inference.meaningJP, "天 （てん） ／ weather / sky");
+});
+
+test("buildInferenceForKanji preserves single-kanji words with okurigana as primary readings", async () => {
+    const exportService = createExportService({
+        curatedStudyData: {
+            見: {
+                displayWord: { written: "見る", pron: "みる" },
+            },
+        },
+        inferenceEngine: {
+            hasFullyCuratedKanjiEntry() {
+                return true;
+            },
+            inferKanjiStudyData() {
+                return {
+                    displayWord: { written: "見る", pron: "みる" },
+                    bestWord: { written: "見る", pron: "みる" },
+                    englishMeaning: "see / watch",
+                    meaningJP: "見る （みる） ／ see / watch",
+                    notes: "見る （みる） - see / watch",
+                    sentenceCandidates: [],
+                };
+            },
+        },
+    });
+
+    const inference = await exportService.buildInferenceForKanji({
+        kanji: "見",
+        jlptEntry: { meanings: ["see"], on_readings: ["ケン"], kun_readings: ["み.る"], jlpt: 5 },
+        kanjiApiClient: {
+            async getKanji() {
+                throw new Error("should use local JLPT data");
+            },
+            async getWords() {
+                throw new Error("should skip word fetch");
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+    });
+
+    assert.equal(inference.displayWordText, "見");
+    assert.equal(inference.primaryReading, "みる");
+    assert.equal(inference.meaningJP, "見 （みる） ／ see / watch");
 });
 
 test("buildInferenceForKanji reuses a single shared manifest lookup when available", async () => {
@@ -173,10 +391,10 @@ test("buildInferenceForKanji reuses a single shared manifest lookup when availab
             },
             inferKanjiStudyData() {
                 return {
-                    displayWord: { written: "日", pron: "にち" },
-                    bestWord: { written: "日", pron: "にち" },
-                    meaningJP: "日 （にち） ／ day",
-                    notes: "日 （にち） - day",
+                    displayWord: { written: "日", pron: "ひ" },
+                    bestWord: { written: "日", pron: "ひ" },
+                    meaningJP: "日 （ひ） ／ day",
+                    notes: "日 （ひ） - day",
                     sentenceCandidates: [],
                 };
             },
@@ -204,6 +422,7 @@ test("buildInferenceForKanji reuses a single shared manifest lookup when availab
                             path: "audio/65E5_日-kanji-reading-日.mp3",
                             category: "kanji-reading",
                             text: "日",
+                            reading: "ひ",
                             locale: "ja-JP",
                         }],
                     },
@@ -224,7 +443,7 @@ test("buildInferenceForKanji reuses a single shared manifest lookup when availab
     assert.equal(inference.audioPath, "audio/65E5_日-kanji-reading-日.mp3");
 });
 
-test("buildInferenceForKanji selects audio matching the curated display reading", async () => {
+test("buildInferenceForKanji selects audio matching the kanji primary reading", async () => {
     const exportService = createExportService({
         curatedStudyData: {
             側: {
@@ -273,10 +492,10 @@ test("buildInferenceForKanji selects audio matching the curated display reading"
                                 locale: "ja-JP",
                             },
                             {
-                                path: "audio/5074_側-kanji-reading-側-はんたいがわ.wav",
+                                path: "audio/5074_側-kanji-reading-側-がわ.wav",
                                 category: "kanji-reading",
                                 text: "側",
-                                reading: "はんたいがわ",
+                                reading: "がわ",
                                 locale: "ja-JP",
                             },
                         ],
@@ -287,8 +506,10 @@ test("buildInferenceForKanji selects audio matching the curated display reading"
         audioService: null,
     });
 
-    assert.equal(inference.audioPath, "audio/5074_側-kanji-reading-側-はんたいがわ.wav");
-    assert.equal(inference.audioField, "[sound:5074_側-kanji-reading-側-はんたいがわ.wav]");
+    assert.equal(inference.displayWordText, "側");
+    assert.equal(inference.primaryReading, "がわ");
+    assert.equal(inference.audioPath, "audio/5074_側-kanji-reading-側-がわ.wav");
+    assert.equal(inference.audioField, "[sound:5074_側-kanji-reading-側-がわ.wav]");
 });
 
 test("buildRowForKanji skips word fetch for fully curated kanji cards", async () => {
@@ -350,9 +571,9 @@ test("buildRowForKanji skips word fetch for fully curated kanji cards", async ()
     const cols = row.split("	");
     assert.equal(wordFetchCalled, false);
     assert.equal(cols[0], "日");
-    assert.equal(cols[1], "日本");
-    assert.equal(cols[2], "日本 （にほん） ／ Japan");
-    assert.equal(cols[3], "にほん");
+    assert.equal(cols[1], "日");
+    assert.equal(cols[2], "日 （ひ） ／ Japan");
+    assert.equal(cols[3], "ひ");
     assert.equal(cols[4], "");
     assert.equal(cols[12], "日本 （にほん） - Japan");
     assert.equal(cols[13], "日本へ行きます。 ／ にほんへいきます。 ／ I will go to Japan.");
@@ -416,9 +637,9 @@ test("buildRowForKanji uses local JLPT data and skips remote fetches for fully c
     assert.equal(wordFetchCalled, false);
     assert.equal(kanjiFetchCalled, false);
     assert.equal(cols[0], "日");
-    assert.equal(cols[1], "日本");
-    assert.equal(cols[2], "日本 （にほん） ／ Japan");
-    assert.equal(cols[3], "にほん");
+    assert.equal(cols[1], "日");
+    assert.equal(cols[2], "日 （ひ） ／ Japan");
+    assert.equal(cols[3], "ひ");
     assert.equal(cols[4], "");
     assert.equal(cols[5], "オン: ニチ");
     assert.equal(cols[6], "くん: ひ");
@@ -715,8 +936,8 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
     const cols = lines[1].split("\t");
     assert.equal(cols[0], "日");
     assert.equal(cols[1], "日");
-    assert.equal(cols[2], "日 ／ day");
-    assert.equal(cols[3], "");
+    assert.equal(cols[2], "日 （ひ） ／ day");
+    assert.equal(cols[3], "ひ");
     assert.equal(cols[4], "");
     assert.equal(cols[5], "オン: ニチ、 ジツ");
     assert.equal(cols[6], "くん: ひ、 び、 か");

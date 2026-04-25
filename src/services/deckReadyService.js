@@ -6,6 +6,38 @@ function formatPercent(value) {
     return `${((value || 0) * 100).toFixed(1)}%`;
 }
 
+function countExportRows(exports = []) {
+    return (Array.isArray(exports) ? exports : []).reduce((sum, artifact) => (
+        sum + (Number.isFinite(artifact?.rows) ? artifact.rows : 0)
+    ), 0);
+}
+
+function buildExportedMediaCompleteness(summary) {
+    const packageSummary = summary?.package || {};
+    const mediaCounts = packageSummary.mediaCounts || {};
+    const totalRows = countExportRows(summary?.exports);
+
+    return {
+        totalRows,
+        strokeOrder: Number.isFinite(mediaCounts.strokeOrder) ? mediaCounts.strokeOrder : 0,
+        strokeOrderImage: Number.isFinite(mediaCounts.strokeOrderImage) ? mediaCounts.strokeOrderImage : 0,
+        strokeOrderAnimation: Number.isFinite(mediaCounts.strokeOrderAnimation) ? mediaCounts.strokeOrderAnimation : 0,
+        audio: Number.isFinite(mediaCounts.audio) ? mediaCounts.audio : 0,
+    };
+}
+
+function hasMissingRequiredExportMedia(summary) {
+    const completeness = buildExportedMediaCompleteness(summary);
+    if (completeness.totalRows <= 0) {
+        return false;
+    }
+
+    return completeness.strokeOrder < completeness.totalRows
+        || completeness.strokeOrderImage < completeness.totalRows
+        || completeness.strokeOrderAnimation < completeness.totalRows
+        || completeness.audio < completeness.totalRows;
+}
+
 function formatDeckReadyReport(summary, doctorReport = null) {
     const packageSummary = summary.package || {};
     const mediaCounts = packageSummary.mediaCounts || {
@@ -23,6 +55,8 @@ function formatDeckReadyReport(summary, doctorReport = null) {
     const selectedWeakestLevel = selectedReadinessRows.length > 0
         ? [...selectedReadinessRows].sort((a, b) => a.readinessScore - b.readinessScore || b.level - a.level)[0]
         : null;
+    const exportedMedia = buildExportedMediaCompleteness(summary);
+    const missingRequiredExportMedia = hasMissingRequiredExportMedia(summary);
 
     const lines = [];
     lines.push("Japanese Kanji Builder Deck Ready");
@@ -43,6 +77,14 @@ function formatDeckReadyReport(summary, doctorReport = null) {
     if (audioEnabled) {
         lines.push(`- Audio fields: ${formatCount(mediaCounts.audio)}`);
     }
+    if (exportedMedia.totalRows > 0) {
+        lines.push("");
+        lines.push("Exported card media completeness:");
+        lines.push(`- Stroke-order fields: ${formatCount(exportedMedia.strokeOrder)}/${formatCount(exportedMedia.totalRows)}`);
+        lines.push(`- Stroke-order image fields: ${formatCount(exportedMedia.strokeOrderImage)}/${formatCount(exportedMedia.totalRows)}`);
+        lines.push(`- Stroke-order animation fields: ${formatCount(exportedMedia.strokeOrderAnimation)}/${formatCount(exportedMedia.totalRows)}`);
+        lines.push(`- Audio fields: ${formatCount(exportedMedia.audio)}/${formatCount(exportedMedia.totalRows)}`);
+    }
 
     if (packageSummary.ankiPackage?.skipped) {
         lines.push("");
@@ -58,7 +100,7 @@ function formatDeckReadyReport(summary, doctorReport = null) {
     }
 
     lines.push("");
-    lines.push("Coverage snapshot:");
+    lines.push("Managed manifest coverage snapshot:");
     lines.push(`- Stroke-order coverage: ${formatPercent(summary.coverage?.strokeOrder || 0)}`);
     lines.push(`- Animation coverage: ${formatPercent(summary.coverage?.trueAnimation || 0)}`);
     if (audioEnabled) {
@@ -80,7 +122,9 @@ function formatDeckReadyReport(summary, doctorReport = null) {
         lines.push("Level quality gates:");
         lines.push(`- Overall quality gate: ${levelReadiness.overallReady ? "passing" : "failing"}`);
         for (const row of selectedReadinessRows) {
-            lines.push(`- N${row.level}: ${row.ready ? "ready" : "needs work"}; ${(row.readinessScore * 100).toFixed(1)}% checks passing`);
+            const rowReady = row.ready && !missingRequiredExportMedia;
+            const mediaNote = row.ready && missingRequiredExportMedia ? "; exported media incomplete" : "";
+            lines.push(`- N${row.level}: ${rowReady ? "ready" : "needs work"}; ${(row.readinessScore * 100).toFixed(1)}% checks passing${mediaNote}`);
         }
     }
 
@@ -89,6 +133,8 @@ function formatDeckReadyReport(summary, doctorReport = null) {
         lines.push("Next step: inspect `reports/export-issues.json` and either fix the missing curated/local data or rerun with `--allow-export-fallbacks` only if you intentionally accept those fallback cards.");
     } else if ((packageSummary.mediaAssetCount || 0) === 0) {
         lines.push("Next step: add local media sources or configure remote fallback providers, then rerun `npm run deck:ready`.");
+    } else if (missingRequiredExportMedia) {
+        lines.push("Next step: add exact managed media for every exported kanji card, especially missing primary-reading audio, then rerun `npm run deck:ready`.");
     } else if (selectedWeakestLevel && !selectedWeakestLevel.ready) {
         lines.push(`Next step: raise JLPT N${selectedWeakestLevel.level} above the quality gate before calling this deck truly ready.`);
     } else if (levelReadiness && !levelReadiness.overallReady) {
@@ -108,5 +154,7 @@ function formatDeckReadyReport(summary, doctorReport = null) {
 }
 
 module.exports = {
+    buildExportedMediaCompleteness,
     formatDeckReadyReport,
+    hasMissingRequiredExportMedia,
 };

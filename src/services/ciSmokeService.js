@@ -174,6 +174,39 @@ function createMockKanjiApiClient() {
 }
 
 function createStubMediaServices() {
+    const manifest = {
+        kanji: "日",
+        version: 1,
+        updatedAt: "2026-01-01T00:00:00.000Z",
+        assets: {
+            strokeOrderImage: {
+                kind: "image",
+                path: "images/65E5_日-stroke-order.svg",
+                mimeType: "image/svg+xml",
+                source: "local-filesystem",
+            },
+            strokeOrderAnimation: {
+                kind: "animation",
+                path: "animations/65E5_日-stroke-order.gif",
+                mimeType: "image/gif",
+                source: "local-filesystem",
+            },
+            audio: [
+                {
+                    kind: "audio",
+                    path: "audio/65E5_日-kanji-reading-日.mp3",
+                    mimeType: "audio/mpeg",
+                    source: "voicevox-nemo",
+                    category: "kanji-reading",
+                    text: "日",
+                    reading: "ひ",
+                    voice: "女声1 / ノーマル",
+                    locale: "ja-JP",
+                },
+            ],
+        },
+    };
+
     return {
         strokeOrderService: {
             async getBestStrokeOrderPath() {
@@ -186,7 +219,7 @@ function createStubMediaServices() {
                 return "animations/65E5_日-stroke-order.gif";
             },
             async getManifest() {
-                return null;
+                return manifest;
             },
             getProviderMetrics() {
                 return {
@@ -199,6 +232,9 @@ function createStubMediaServices() {
         audioService: {
             async getBestAudioPath() {
                 return "audio/65E5_日-kanji-reading-日.mp3";
+            },
+            async getManifest() {
+                return manifest;
             },
             getProviderMetrics() {
                 return {
@@ -261,7 +297,7 @@ function createSmokeWorkspace(rootDir) {
                     source: "voicevox-nemo",
                     category: "kanji-reading",
                     text: "日",
-                    reading: "にち",
+                    reading: "ひ",
                     voice: "女声1 / ノーマル",
                     locale: "ja-JP",
                 },

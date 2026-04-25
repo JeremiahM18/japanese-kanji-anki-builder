@@ -133,3 +133,76 @@ test("word deck packaging includes explicit word audio but prunes static images 
     assert.match(guide, /Unique media files included: 2/);
     assert.match(guide, /- Audio fields: 1/);
 });
+
+test("kanji deck packaging copies only media referenced by exported card fields", async () => {
+    const rootDir = makeTempDir();
+    const mediaRootDir = path.join(rootDir, "media-root");
+    const outDir = path.join(rootDir, "out");
+    const exportPath = path.join(rootDir, "jlpt-n5.tsv");
+    fs.writeFileSync(
+        exportPath,
+        [
+            "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence",
+            "車\t車\t車 （くるま） ／ car\tくるま\t\tオン: シャ\tくん: くるま\t<img src=\"8ECA_車-stroke-order.gif\" />\t<img src=\"8ECA_車-stroke-order.png\" />\t<img src=\"8ECA_車-stroke-order.gif\" />\t\t車\t電車 （でんしゃ） - train\t",
+        ].join("\n"),
+        "utf-8"
+    );
+
+    const layout = ensureMediaLayout(mediaRootDir, "車");
+    fs.writeFileSync(path.join(layout.imagesDir, "8ECA_車-stroke-order.png"), "image");
+    fs.writeFileSync(path.join(layout.animationsDir, "8ECA_車-stroke-order.gif"), "animation");
+    fs.writeFileSync(path.join(layout.audioDir, "8ECA_車-kanji-reading-車-でんしゃ.wav"), "wrong-audio");
+
+    await writeManifest(mediaRootDir, {
+        kanji: "車",
+        version: 1,
+        updatedAt: new Date().toISOString(),
+        assets: {
+            strokeOrderImage: {
+                kind: "image",
+                path: "images/8ECA_車-stroke-order.png",
+                mimeType: "image/png",
+                source: "fixture",
+            },
+            strokeOrderAnimation: {
+                kind: "animation",
+                path: "animations/8ECA_車-stroke-order.gif",
+                mimeType: "image/gif",
+                source: "fixture",
+            },
+            audio: [{
+                kind: "audio",
+                path: "audio/8ECA_車-kanji-reading-車-でんしゃ.wav",
+                mimeType: "audio/wav",
+                source: "fixture",
+                category: "kanji-reading",
+                text: "車",
+                reading: "でんしゃ",
+            }],
+        },
+    });
+
+    const summary = await buildDeckPackage({
+        outDir,
+        exports: [{
+            level: 5,
+            filePath: exportPath,
+            rows: 1,
+        }],
+        kanjiByLevel: { 5: ["車"] },
+        mediaRootDir,
+        deckKind: "kanji",
+    });
+
+    assert.deepEqual(summary.mediaCounts, {
+        strokeOrder: 1,
+        strokeOrderImage: 1,
+        strokeOrderAnimation: 1,
+        trueStrokeOrderAnimation: 1,
+        svgStrokeOrderAnimationFallback: 0,
+        audio: 0,
+    });
+    assert.equal(fs.existsSync(path.join(summary.mediaDir, "8ECA_車-stroke-order.gif")), true);
+    assert.equal(fs.existsSync(path.join(summary.mediaDir, "8ECA_車-stroke-order.png")), true);
+    assert.equal(fs.existsSync(path.join(summary.mediaDir, "8ECA_車-kanji-reading-車-でんしゃ.wav")), false);
+});

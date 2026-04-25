@@ -1,7 +1,7 @@
 const { loadConfig } = require("../src/config");
 const { parseLevelsArgument, runBuildPipeline } = require("../src/services/buildPipeline");
 const { buildDoctorReport, formatDoctorReport } = require("../src/services/doctorService");
-const { formatDeckReadyReport } = require("../src/services/deckReadyService");
+const { formatDeckReadyReport, hasMissingRequiredExportMedia } = require("../src/services/deckReadyService");
 const { assertNoUnknownArgs, collectUnknownArg, parseNumericOption, parseStringOption, invokeCliMain } = require("../src/utils/cliArgs");
 
 function parseArgs(argv) {
@@ -92,7 +92,7 @@ function hasSelectedLevelReadinessFailure({ summary, doctorReport }) {
 
 function hasSelectedMediaCoverageFailure(summary) {
     const coverage = summary?.coverage || {};
-    return (
+    return hasMissingRequiredExportMedia(summary) || (
         typeof coverage.audio === "number"
         && typeof coverage.fullMedia === "number"
         && (coverage.audio < 1 || coverage.fullMedia < 1)

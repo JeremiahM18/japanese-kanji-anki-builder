@@ -128,8 +128,8 @@ test("buildPreviewCards uses local JLPT data for fully curated cards when the AP
     assert.equal(wordFetchCalled, false);
     assert.equal(cards.length, 1);
     assert.equal(cards[0].previewMode, "full-inference");
-    assert.equal(cards[0].displayWord, "世の中");
-    assert.equal(cards[0].primaryReading, "よのなか");
+    assert.equal(cards[0].displayWord, "世");
+    assert.equal(cards[0].primaryReading, "よ");
     assert.match(cards[0].onReading, /オン: セ/);
     assert.match(cards[0].exampleSentence, /世の中は広いです/);
 });

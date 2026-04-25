@@ -58,11 +58,14 @@ npm run data:audit:audio -- --json
 npm run deck:review:accessibility -- --deck-kind=kanji
 npm run deck:review:accessibility -- --deck-kind=word
 npm run product:artifacts:n5
+npm run product:artifacts:kanji:n5:preflight
 npm run product:readiness:n5
 npm run release:gate
 ```
 
 `product:artifacts:n5` validates fresh N5 word TSV generation from tracked templates only. It excludes ignored local word, sentence, JLPT, cache, and media inputs, disables network inference, checks the word schema header, verifies canonical N5 row counts, rejects curated-only and inferred-only shipped rows, and repeats the build to prove deterministic output. It does not yet certify tracked-source kanji TSVs, fresh `.apkg` artifacts, managed media packaging, or manual QA.
+
+`product:artifacts:kanji:n5:preflight` reports whether tracked templates are sufficient to certify fresh N5 kanji TSV generation without ignored local `data/` inputs. It currently reports that certification is blocked because rich kanji readings, component/radical source data, and rich-source provenance are not tracked release contracts yet.
 
 `product:readiness:n5` is the current automated N5 product checkpoint. It runs the JLPT kanji audit, JLPT word audit, governed audio provenance audit, tracked-source N5 word TSV artifact checkpoint, N5 kanji golden review, and N5 word golden review. It does not certify tracked-source kanji TSVs, fresh `.apkg` product artifacts, manual Anki import review, mobile QA, screen-reader QA, or listening QA.
 

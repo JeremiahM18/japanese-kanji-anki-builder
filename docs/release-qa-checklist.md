@@ -9,6 +9,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 - `npm run deck:review:accessibility -- --deck-kind=kanji`
 - `npm run deck:review:accessibility -- --deck-kind=word`
 - `npm run product:artifacts:n5` when N5 word ships
+- `npm run product:artifacts:kanji:n5:preflight` when N5 kanji ships
 - `npm run product:readiness:n5` when N5 ships
 - `npm run ci:smoke`
 - `npm run release:gate`
@@ -20,6 +21,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 - Run the golden review command for each shipped kanji level, such as `npm run deck:review:n5`.
 - Run the golden review command for each shipped word level when one exists, such as `npm run deck:words:review:n5`.
 - Run `npm run product:artifacts:n5` for an N5 word release. It proves the N5 word TSV can be regenerated from tracked templates only, but it does not validate kanji TSVs, `.apkg` files, or media packages.
+- Run `npm run product:artifacts:kanji:n5:preflight` for an N5 kanji release. It currently reports tracked-source kanji TSV certification as blocked until rich kanji readings, component/radical source data, and provenance are tracked release contracts.
 - Run `npm run product:readiness:n5` for an N5 release. It combines the current automated N5 audits and golden reviews, but it does not replace fresh artifact generation or manual QA.
 - Run the deck readiness command for each shipped kanji or word surface.
 - Confirm tracked-source coverage, provenance, and known limitations match the intended release.

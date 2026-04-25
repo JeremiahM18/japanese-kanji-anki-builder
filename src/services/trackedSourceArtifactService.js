@@ -34,6 +34,64 @@ const N5_TRACKED_SOURCE_ARTIFACT_SCOPE = Object.freeze({
     followUp: "Add tracked rich kanji source data and managed media provenance before extending this checkpoint to kanji TSV and .apkg artifacts.",
 });
 
+const N5_TRACKED_SOURCE_KANJI_PREFLIGHT_SCOPE = Object.freeze({
+    type: "n5-tracked-source-kanji-preflight",
+    level: 5,
+    validates: [
+        "tracked source availability for N5 kanji TSV certification",
+        "JLPT kanji inventory count from tracked contract",
+        "absence of silent certification when rich kanji source data is still local-only",
+    ],
+    doesNotValidate: [
+        "fresh tracked-source kanji TSV generation",
+        "fresh .apkg product artifacts",
+        "managed media packaging or listening QA",
+        "manual Anki import review",
+        "mobile or screen-reader QA",
+    ],
+    sourceBoundary: "Inspects tracked templates only; ignored local data/ kanji, KRAD, cache, and media inputs are not read.",
+    followUp: "Track rich kanji readings, meanings, component data, and provenance before requiring tracked-source kanji TSV certification in product readiness.",
+});
+
+const TRACKED_KANJI_CERTIFICATION_REQUIREMENTS = Object.freeze([
+    {
+        id: "jlpt-level",
+        label: "tracked JLPT kanji level",
+        trackedToday: true,
+        source: "templates/jlpt_level_contract.json",
+    },
+    {
+        id: "meaning",
+        label: "learner-facing kanji meaning",
+        trackedToday: true,
+        source: "templates/starter_curated_study_data*.json",
+    },
+    {
+        id: "on-readings",
+        label: "explicit on-yomi readings",
+        trackedToday: false,
+        source: "currently derived from local kanji input or API fallback",
+    },
+    {
+        id: "kun-readings",
+        label: "explicit kun-yomi readings",
+        trackedToday: false,
+        source: "currently derived from local kanji input or API fallback",
+    },
+    {
+        id: "components",
+        label: "component/radical source data",
+        trackedToday: false,
+        source: "currently derived from local KRAD-style input",
+    },
+    {
+        id: "rich-source-provenance",
+        label: "rich kanji source provenance",
+        trackedToday: false,
+        source: "no tracked release contract yet",
+    },
+]);
+
 function sha256Text(text) {
     return crypto.createHash("sha256").update(String(text || ""), "utf8").digest("hex");
 }
@@ -73,10 +131,24 @@ function buildDefaultTrackedSourcePaths({ cwd = process.cwd() } = {}) {
     return {
         jlptLevelContractPath: path.join(templateDir, "jlpt_level_contract.json"),
         jlptWordLevelContractPath: path.join(templateDir, "jlpt_word_level_contract.json"),
+        starterCuratedStudyDataPath: path.join(templateDir, "starter_curated_study_data.json"),
         starterSentenceCorpusPath: path.join(templateDir, "starter_sentence_corpus.json"),
         starterWordStudyDataPath: path.join(templateDir, "starter_word_study_data.json"),
         wordPitchAccentDataPath: path.join(templateDir, "word_pitch_accent_data.json"),
     };
+}
+
+function countKanjiByLevel(jlptLevelContract = {}, level = 5) {
+    return Object.values(jlptLevelContract.kanjiLevels || {})
+        .filter((entryLevel) => Number(entryLevel) === Number(level))
+        .length;
+}
+
+function countCuratedMeaningsForLevel(jlptLevelContract = {}, curatedStudyData = {}, level = 5) {
+    return Object.entries(jlptLevelContract.kanjiLevels || {})
+        .filter(([, entryLevel]) => Number(entryLevel) === Number(level))
+        .filter(([kanji]) => Boolean(curatedStudyData[kanji]?.englishMeaning))
+        .length;
 }
 
 function evaluateWordArtifact({
@@ -127,6 +199,73 @@ function evaluateWordArtifact({
     };
 }
 
+function evaluateTrackedSourceKanjiPreflight({
+    jlptLevelContract = {},
+    curatedStudyData = {},
+    level = 5,
+} = {}) {
+    const expectedKanji = jlptLevelContract.inventoryCounts?.[String(level)] || 0;
+    const contractKanji = countKanjiByLevel(jlptLevelContract, level);
+    const curatedMeanings = countCuratedMeaningsForLevel(jlptLevelContract, curatedStudyData, level);
+    const missingRequirements = TRACKED_KANJI_CERTIFICATION_REQUIREMENTS
+        .filter((requirement) => !requirement.trackedToday);
+    const failures = [];
+
+    if (contractKanji !== expectedKanji) {
+        failures.push(`tracked JLPT N${level} kanji count ${contractKanji} did not match inventory count ${expectedKanji}`);
+    }
+
+    return {
+        passed: failures.length === 0,
+        certifiable: failures.length === 0 && missingRequirements.length === 0,
+        failures,
+        blockers: missingRequirements.map((requirement) => ({
+            id: requirement.id,
+            label: requirement.label,
+            currentSource: requirement.source,
+        })),
+        requirements: TRACKED_KANJI_CERTIFICATION_REQUIREMENTS.map((requirement) => ({ ...requirement })),
+        counts: {
+            expectedKanji,
+            contractKanji,
+            curatedMeanings,
+            missingTrackedRequirements: missingRequirements.length,
+        },
+    };
+}
+
+function buildTrackedSourceKanjiPreflight({
+    level = 5,
+    cwd = process.cwd(),
+    paths = buildDefaultTrackedSourcePaths({ cwd }),
+} = {}) {
+    if (level !== 5) {
+        throw new Error("Tracked-source kanji preflight currently supports N5 only.");
+    }
+
+    const jlptLevelContract = loadJlptLevelContract(paths.jlptLevelContractPath);
+    const curatedStudyData = loadCuratedStudyData(null, {
+        starterPath: paths.starterCuratedStudyDataPath,
+    });
+    const evaluation = evaluateTrackedSourceKanjiPreflight({
+        jlptLevelContract,
+        curatedStudyData,
+        level,
+    });
+
+    return {
+        generatedAt: new Date().toISOString(),
+        passed: evaluation.passed,
+        certifiable: evaluation.certifiable,
+        scope: N5_TRACKED_SOURCE_KANJI_PREFLIGHT_SCOPE,
+        sourceFiles: {
+            jlptLevelContractPath: paths.jlptLevelContractPath,
+            starterCuratedStudyDataPath: paths.starterCuratedStudyDataPath,
+        },
+        kanji: evaluation,
+    };
+}
+
 async function buildTrackedSourceWordArtifact({
     level = 5,
     cwd = process.cwd(),
@@ -143,7 +282,9 @@ async function buildTrackedSourceWordArtifact({
     const jlptWordLevelContract = loadJlptWordLevelContract(paths.jlptWordLevelContractPath);
     const jlptOnlyJson = buildJlptOnlyJsonFromContract(jlptLevelContract);
     const sentenceCorpus = loadSentenceCorpus(paths.starterSentenceCorpusPath);
-    const curatedStudyData = loadCuratedStudyData(null);
+    const curatedStudyData = loadCuratedStudyData(null, {
+        starterPath: paths.starterCuratedStudyDataPath,
+    });
     const wordStudyData = loadWordStudyData({
         localPath: null,
         starterPath: paths.starterWordStudyDataPath,
@@ -211,6 +352,47 @@ async function buildTrackedSourceWordArtifact({
     };
 }
 
+function formatTrackedSourceKanjiPreflightReport(report = {}) {
+    const lines = [
+        "Japanese Kanji Builder N5 Tracked-Source Kanji Preflight",
+        "",
+        `Preflight result: ${report.passed ? "complete" : "failing"}`,
+        `Tracked-source kanji TSV certifiable: ${report.certifiable ? "yes" : "no"}`,
+        `Scope: ${report.scope?.type || "unknown"}`,
+        `Source boundary: ${report.scope?.sourceBoundary || "not specified"}`,
+        "",
+        "Tracked inventory:",
+        `- expected N5 kanji: ${report.kanji?.counts?.expectedKanji || 0}`,
+        `- contract N5 kanji: ${report.kanji?.counts?.contractKanji || 0}`,
+        `- starter curated meanings: ${report.kanji?.counts?.curatedMeanings || 0}`,
+        "",
+        "Certification requirements:",
+        ...(report.kanji?.requirements || []).map((requirement) => `- ${requirement.trackedToday ? "tracked" : "blocked"}: ${requirement.label} (${requirement.source})`),
+    ];
+
+    if (Array.isArray(report.kanji?.failures) && report.kanji.failures.length > 0) {
+        lines.push("", "Failures:", ...report.kanji.failures.map((failure) => `- ${failure}`));
+    }
+
+    if (Array.isArray(report.kanji?.blockers) && report.kanji.blockers.length > 0) {
+        lines.push(
+            "",
+            "Certification blockers:",
+            ...report.kanji.blockers.map((blocker) => `- ${blocker.label}: ${blocker.currentSource}`)
+        );
+    }
+
+    lines.push(
+        "",
+        "Does not validate:",
+        ...(report.scope?.doesNotValidate || []).map((item) => `- ${item}`),
+        "",
+        `Follow-up: ${report.scope?.followUp || "not specified"}`
+    );
+
+    return `${lines.join("\n")}\n`;
+}
+
 function formatTrackedSourceArtifactReport(report = {}) {
     const lines = [
         "Japanese Kanji Builder N5 Tracked-Source Artifact Checkpoint",
@@ -246,11 +428,15 @@ function formatTrackedSourceArtifactReport(report = {}) {
 
 module.exports = {
     N5_TRACKED_SOURCE_ARTIFACT_SCOPE,
+    N5_TRACKED_SOURCE_KANJI_PREFLIGHT_SCOPE,
     buildDefaultTrackedSourcePaths,
     buildJlptOnlyJsonFromContract,
+    buildTrackedSourceKanjiPreflight,
     buildTrackedSourceWordArtifact,
     createNetworkDisabledKanjiApiClient,
+    evaluateTrackedSourceKanjiPreflight,
     evaluateWordArtifact,
     formatTrackedSourceArtifactReport,
+    formatTrackedSourceKanjiPreflightReport,
     parseTsvHeader,
 };

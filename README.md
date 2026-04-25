@@ -102,11 +102,14 @@ npm run data:audit:audio -- --json
 npm run deck:review:accessibility -- --deck-kind=kanji
 npm run deck:review:accessibility -- --deck-kind=word
 npm run product:artifacts:n5
+npm run product:artifacts:kanji:n5:preflight
 npm run product:readiness:n5
 npm run release:gate
 ```
 
 `product:artifacts:n5` builds a fresh N5 word TSV from tracked templates only, with network inference disabled and ignored local `data/` word, sentence, JLPT, cache, and media inputs excluded. It validates schema, canonical row count, canonical-only governance, and deterministic repeated output. It does not yet certify tracked-source kanji TSVs, `.apkg` files, or managed media packages.
+
+`product:artifacts:kanji:n5:preflight` inspects tracked templates and reports whether N5 kanji TSV certification is possible without ignored local `data/` inputs. It currently reports `certifiable: no` because explicit on-yomi, kun-yomi, component/radical source data, and rich-source provenance are not yet tracked as product contracts. Use `-- --require-certifiable` only when those contracts exist and the command is expected to fail closed.
 
 `product:readiness:n5` runs the current automated N5 product checkpoint: JLPT kanji and word audits, governed audio provenance, tracked-source N5 word TSV generation, and N5 kanji and word golden reviews. It still does not validate tracked-source kanji TSVs, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA.
 
@@ -290,6 +293,7 @@ Repository governance:
 | `npm run ci:smoke` | Build deterministic smoke artifacts |
 | `npm run release:gate` | Validate smoke-fixture release artifact contracts |
 | `npm run product:artifacts:n5` | Build and validate the tracked-source N5 word TSV artifact |
+| `npm run product:artifacts:kanji:n5:preflight` | Report whether tracked-source N5 kanji TSV certification is possible |
 | `npm run product:readiness:n5` | Run the automated N5 product readiness checkpoint |
 | `npm run doctor` | Check setup, coverage, readiness, and next steps |
 | `npm run doctor:voicevox` | Verify local governed VOICEVOX setup |

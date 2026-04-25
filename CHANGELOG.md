@@ -20,6 +20,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added `npm run product:artifacts:kanji:n5:preflight`, a tracked-template diagnostic that reports N5 kanji TSV certification as blocked until rich kanji readings, component/radical source data, and provenance become tracked release contracts.
 - Added `npm run product:artifacts:n5`, a tracked-source N5 word TSV checkpoint that disables network inference and ignored local workspace inputs, then verifies schema, canonical row count, canonical-only governance, and deterministic repeated output while explicitly excluding kanji TSV, `.apkg`, media, and manual QA certification.
 - Added `npm run product:readiness:n5`, an automated N5 product checkpoint that runs JLPT kanji and word audits, governed audio provenance, tracked-source N5 word TSV generation, and N5 kanji and word golden reviews while explicitly excluding tracked-source kanji TSV, `.apkg`, manual Anki, mobile, screen-reader, and listening QA certification.
 - Added a twenty-ninth deliberate N4 completion batch of governed learner-facing support words: `京阪`, `緑青`, `験担ぎ`, `店子`, `仮字`, `相部屋`, `創世記`, `大社`, `転寝`, `裏切り`, `夜通し`, and `赤銅`, raising canonical N4 word inventory to `475` rows and N4 reading coverage to `78.8%` (`513/651`) with `100%` card-back, audio, pitch, and true-looping animation readiness.

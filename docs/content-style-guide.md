@@ -17,13 +17,14 @@ That means:
 - Use the clearest learner-facing display form, not the most literal dictionary headword.
 - Prefer real anchors when a bare kanji is a weak teaching surface.
 - Keep readings, notes, and examples aligned with the actual card front.
+- Label every kanji in the learner-facing display form with its JLPT level or outside-JLPT status on the answer side.
 - Avoid exposing internal notation or raw fallback text to learners.
 
 ## Word card style
 
 - Standalone single-kanji words stay in their own JLPT level.
 - Lower-level decks may include multi-kanji support words that reference higher-level constituent kanji.
-- Any higher-level or outside-contract constituent kanji must be visibly labeled on the card.
+- Constituent kanji must be visibly labeled on the card, including same-level, higher-level, and outside-JLPT kanji.
 - Reading coverage is cumulative across easier decks. Do not duplicate support words at harder levels if the reading is already taught well in an easier deck.
 - Every shipped word card must expose a learner-facing reading breakdown on the answer side.
 - Kanji words use ruby furigana; kana-only words render kana in the same reading-breakdown position.

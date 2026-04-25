@@ -372,12 +372,15 @@ Kanji card fields include:
 - `DisplayWord`
 - `MeaningJP`
 - `PrimaryReading`
+- `StudyWordKanji`
 - `OnReading`
 - `KunReading`
 - `StrokeOrder`
 - `StrokeOrderImage`
 - `StrokeOrderAnimation`
 - `Audio`
+
+The front of a kanji card shows only the target kanji. The back shows the learner-facing display word and reading, then `StudyWordKanji` labels every kanji in that display word with its JLPT level or `outside JLPT`. Audio is selected from the same learner-facing display reading.
 
 Word card fields include:
 

@@ -11,6 +11,7 @@ const { labelKunReading, labelOnReading, tsvEscape } = require("../utils/text");
 const ANKI_FIELD_NAMES = loadAnkiNoteSchema().fieldNames;
 const MAX_INFERENCE_EXAMPLES = 3;
 const MAX_INFERENCE_SENTENCES = 3;
+const HAN_CHAR_RE = /\p{Script=Han}/u;
 
 function createEmptyExportProfile() {
     return {
@@ -105,6 +106,37 @@ function selectDisplayWord({ kanji, displayWord, bestWord }) {
     return String(kanji ?? "").trim();
 }
 
+function extractConstituentKanji(text) {
+    return [...new Set(String(text || "").match(/\p{Script=Han}/gu) || [])];
+}
+
+function buildKanjiLevelLookup({ jlptOnlyJson = {}, targetKanji = "", targetJlptEntry = null } = {}) {
+    const lookup = new Map();
+    for (const [kanji, entry] of Object.entries(jlptOnlyJson || {})) {
+        const level = Number(entry?.jlpt);
+        if (HAN_CHAR_RE.test(kanji) && Number.isInteger(level)) {
+            lookup.set(kanji, level);
+        }
+    }
+
+    const targetLevel = Number(targetJlptEntry?.jlpt);
+    if (targetKanji && Number.isInteger(targetLevel) && !lookup.has(targetKanji)) {
+        lookup.set(targetKanji, targetLevel);
+    }
+
+    return lookup;
+}
+
+function formatStudyWordKanjiLabels(displayWord, kanjiLevelLookup = new Map()) {
+    return extractConstituentKanji(displayWord)
+        .map((kanji) => {
+            const level = kanjiLevelLookup.get(kanji);
+            const label = Number.isInteger(level) ? `JLPT N${level}` : "outside JLPT";
+            return `<span class="kanji-level-badge">${kanji}: ${label}</span>`;
+        })
+        .join(" ");
+}
+
 function formatTsvRow(fields) {
     return fields.map(tsvEscape).join("\t");
 }
@@ -187,9 +219,10 @@ function shouldUseLocalJlptEntry({ inferenceEngine, kanji, jlptEntry }) {
     );
 }
 
-function buildInferredRow({ kanji, inferred, kanjiInfo, kradMap, pickMainComponent, mediaFields }) {
+function buildInferredRow({ kanji, inferred, kanjiInfo, kradMap, pickMainComponent, mediaFields, kanjiLevelLookup }) {
     const displayWord = selectDisplayWord({ kanji, displayWord: inferred.displayWord, bestWord: inferred.bestWord });
     const primaryReading = selectPrimaryReading(inferred);
+    const studyWordKanji = formatStudyWordKanjiLabels(displayWord, kanjiLevelLookup);
     const onReading = labelOnReading(kanjiInfo?.on_readings);
     const kunReading = labelKunReading(kanjiInfo?.kun_readings);
     const components = kradMap.get(kanji) || [];
@@ -201,6 +234,7 @@ function buildInferredRow({ kanji, inferred, kanjiInfo, kradMap, pickMainCompone
         displayWord,
         inferred.meaningJP,
         primaryReading,
+        studyWordKanji,
         onReading,
         kunReading,
         formatAnkiStrokeOrderField(mediaFields.strokeOrderPath),
@@ -213,12 +247,15 @@ function buildInferredRow({ kanji, inferred, kanjiInfo, kradMap, pickMainCompone
     ]);
 }
 
-function buildFallbackRow({ fallbackCard }) {
+function buildFallbackRow({ fallbackCard, kanjiLevelLookup }) {
+    const studyWordKanji = formatStudyWordKanjiLabels(fallbackCard.displayWord, kanjiLevelLookup);
+
     return formatTsvRow([
         fallbackCard.kanji,
         fallbackCard.displayWord,
         fallbackCard.meaningJP,
         fallbackCard.primaryReading,
+        studyWordKanji,
         fallbackCard.onReading,
         fallbackCard.kunReading,
         formatAnkiStrokeOrderField(fallbackCard.media.strokeOrderPath),
@@ -246,11 +283,17 @@ function createExportService({
         audioService,
         exportProfile = null,
         exportIssues = null,
+        jlptOnlyJson = {},
     }) {
         try {
             const skipWordFetch = shouldSkipWordFetch(inferenceEngine, kanji);
             const useLocalJlptEntry = shouldUseLocalJlptEntry({ inferenceEngine, kanji, jlptEntry });
             const audioReading = String(curatedStudyData?.[kanji]?.displayWord?.pron || "").trim();
+            const kanjiLevelLookup = buildKanjiLevelLookup({
+                jlptOnlyJson,
+                targetKanji: kanji,
+                targetJlptEntry: jlptEntry,
+            });
             const [kanjiInfo, words, mediaFields] = await Promise.all([
                 useLocalJlptEntry
                     ? Promise.resolve(jlptEntry)
@@ -288,6 +331,7 @@ function createExportService({
                 kradMap,
                 pickMainComponent,
                 mediaFields,
+                kanjiLevelLookup,
             });
             recordProfileTiming(exportProfile, "formatting", formattingStartedAt);
             return row;
@@ -303,6 +347,11 @@ function createExportService({
                     strokeOrderService,
                     audioService,
                 });
+                const kanjiLevelLookup = buildKanjiLevelLookup({
+                    jlptOnlyJson,
+                    targetKanji: kanji,
+                    targetJlptEntry: jlptEntry,
+                });
 
                 appendExportIssue(exportIssues, {
                     kanji,
@@ -312,7 +361,7 @@ function createExportService({
                     error: error instanceof Error ? error.message : String(error),
                 });
 
-                return buildFallbackRow({ fallbackCard });
+                return buildFallbackRow({ fallbackCard, kanjiLevelLookup });
             } catch (fallbackError) {
                 appendExportIssue(exportIssues, {
                     kanji,
@@ -330,7 +379,7 @@ function createExportService({
         }
     }
 
-    async function buildInferenceForKanji({ kanji, jlptEntry = null, kanjiApiClient, strokeOrderService, audioService }) {
+    async function buildInferenceForKanji({ kanji, jlptEntry = null, jlptOnlyJson = {}, kanjiApiClient, strokeOrderService, audioService }) {
         const skipWordFetch = shouldSkipWordFetch(inferenceEngine, kanji);
         const useLocalJlptEntry = shouldUseLocalJlptEntry({ inferenceEngine, kanji, jlptEntry });
         const audioReading = String(curatedStudyData?.[kanji]?.displayWord?.pron || "").trim();
@@ -350,11 +399,18 @@ function createExportService({
 
         const onReading = labelOnReading(kanjiInfo?.on_readings);
         const kunReading = labelKunReading(kanjiInfo?.kun_readings);
+        const displayWordText = selectDisplayWord({ kanji, displayWord: inferred.displayWord, bestWord: inferred.bestWord });
+        const kanjiLevelLookup = buildKanjiLevelLookup({
+            jlptOnlyJson,
+            targetKanji: kanji,
+            targetJlptEntry: jlptEntry,
+        });
 
         return {
             ...inferred,
-            displayWordText: selectDisplayWord({ kanji, displayWord: inferred.displayWord, bestWord: inferred.bestWord }),
+            displayWordText,
             primaryReading: selectPrimaryReading(inferred),
+            studyWordKanji: formatStudyWordKanjiLabels(displayWordText, kanjiLevelLookup),
             onReading,
             kunReading,
             strokeOrderPath: mediaFields.strokeOrderPath,
@@ -404,6 +460,7 @@ function createExportService({
                 audioService,
                 exportProfile,
                 exportIssues,
+                jlptOnlyJson,
             })
         );
 
@@ -418,6 +475,7 @@ function createExportService({
         formatAnkiAudioField,
         formatAnkiStrokeOrderField,
         formatExampleSentence,
+        formatStudyWordKanjiLabels,
     };
 }
 
@@ -427,5 +485,6 @@ module.exports = {
     formatAnkiAudioField,
     formatAnkiStrokeOrderField,
     formatExampleSentence,
+    formatStudyWordKanjiLabels,
 };
 

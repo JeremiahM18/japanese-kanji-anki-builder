@@ -32,6 +32,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 - Import the current N4 kanji deck into Anki.
 - Review beginner anchors.
 - Review compound-backed anchors.
+- Confirm display-word kanji labels are visible and understandable.
 - Review audio-bearing cards.
 - Review cards with stroke-order media.
 - Confirm there are no weak fronts, clipped fields, or broken media.
@@ -41,9 +42,9 @@ Run this checklist after automated gates pass and before marking a deck mileston
 - Import the current N5 word deck into Anki.
 - Review beginner core words.
 - Review support words.
-- Review cross-level constituent-kanji words.
+- Review constituent-kanji labels, including same-level, cross-level, and outside-JLPT kanji.
 - Review audio-bearing word cards.
-- Confirm cross-level badges are visible and understandable.
+- Confirm constituent badges are visible and understandable.
 - Confirm example sentences, notes, and breakdown panels remain readable.
 
 ## Accessibility pass

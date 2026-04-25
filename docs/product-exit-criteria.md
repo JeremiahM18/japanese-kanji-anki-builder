@@ -31,7 +31,7 @@ A word level ships only when all criteria are true:
 
 - Canonical word contract rows are fully built for the level.
 - No standalone wrong-level cards ship in the deck.
-- Cross-level or outside-contract constituent kanji are visibly labeled.
+- Constituent kanji are visibly labeled with JLPT level or outside-JLPT status.
 - Reading coverage is reported honestly against the cumulative lower-level scope.
 - Active triage is either resolved or intentionally deferred.
 - Sentence orthography review has no unresolved blocker.

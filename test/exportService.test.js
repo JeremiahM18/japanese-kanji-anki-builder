@@ -284,6 +284,12 @@ test("buildRowForKanji skips word fetch for fully curated kanji cards", async ()
 
     const row = await exportService.buildRowForKanji({
         kanji: "日",
+        jlptEntry: {
+            jlpt: 5,
+            meanings: ["day"],
+            on_readings: ["ニチ"],
+            kun_readings: ["ひ"],
+        },
         kradMap: new Map([["日", ["日"]]]),
         pickMainComponent(components) {
             return components[0] || "";
@@ -311,8 +317,10 @@ test("buildRowForKanji skips word fetch for fully curated kanji cards", async ()
     assert.equal(cols[1], "日本");
     assert.equal(cols[2], "日本 （にほん） ／ Japan");
     assert.equal(cols[3], "にほん");
-    assert.equal(cols[11], "日本 （にほん） - Japan");
-    assert.equal(cols[12], "日本へ行きます。 ／ にほんへいきます。 ／ I will go to Japan.");
+    assert.match(cols[4], /日: JLPT N5/);
+    assert.match(cols[4], /本: outside JLPT/);
+    assert.equal(cols[12], "日本 （にほん） - Japan");
+    assert.equal(cols[13], "日本へ行きます。 ／ にほんへいきます。 ／ I will go to Japan.");
 });
 
 test("buildRowForKanji uses local JLPT data and skips remote fetches for fully curated kanji cards", async () => {
@@ -372,10 +380,12 @@ test("buildRowForKanji uses local JLPT data and skips remote fetches for fully c
     assert.equal(cols[1], "日本");
     assert.equal(cols[2], "日本 （にほん） ／ Japan");
     assert.equal(cols[3], "にほん");
-    assert.equal(cols[4], "オン: ニチ");
-    assert.equal(cols[5], "くん: ひ");
-    assert.equal(cols[11], "日本 （にほん） - Japan");
-    assert.equal(cols[12], "日本へ行きます。 ／ にほんへいきます。 ／ I will go to Japan.");
+    assert.match(cols[4], /日: JLPT N5/);
+    assert.match(cols[4], /本: outside JLPT/);
+    assert.equal(cols[5], "オン: ニチ");
+    assert.equal(cols[6], "くん: ひ");
+    assert.equal(cols[12], "日本 （にほん） - Japan");
+    assert.equal(cols[13], "日本へ行きます。 ／ にほんへいきます。 ／ I will go to Japan.");
 });
 
 test("buildRowForKanji records export profiling timings and row counts", async () => {
@@ -662,22 +672,23 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
     const lines = tsv.trim().split("\n");
 
     assert.equal(lines.length, 2);
-    assert.equal(lines[0], "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence");
+    assert.equal(lines[0], "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence");
 
     const cols = lines[1].split("\t");
     assert.equal(cols[0], "日");
     assert.equal(cols[1], "日");
     assert.equal(cols[2], "日 ／ day");
     assert.equal(cols[3], "");
-    assert.equal(cols[4], "オン: ニチ、 ジツ");
-    assert.equal(cols[5], "くん: ひ、 び、 か");
-    assert.equal(cols[6], '<img src="65E5_日-stroke-order.gif" />');
-    assert.equal(cols[7], '<img src="65E5_日-stroke-order.svg" />');
-    assert.equal(cols[8], '<img src="65E5_日-stroke-order.gif" />');
-    assert.equal(cols[9], "[sound:65E5_日-kanji-reading-日.mp3]");
-    assert.equal(cols[10], "日");
-    assert.equal(cols[11], "日本 （にほん） - Japan ／ 日よう日 （にちようび） - Sunday");
-    assert.equal(cols[12], '「日本」を勉強します。 ／ 「にほん」をべんきょうします。 ／ I study the word "日本".');
+    assert.equal(cols[4], '<span class="kanji-level-badge">日: JLPT N5</span>');
+    assert.equal(cols[5], "オン: ニチ、 ジツ");
+    assert.equal(cols[6], "くん: ひ、 び、 か");
+    assert.equal(cols[7], '<img src="65E5_日-stroke-order.gif" />');
+    assert.equal(cols[8], '<img src="65E5_日-stroke-order.svg" />');
+    assert.equal(cols[9], '<img src="65E5_日-stroke-order.gif" />');
+    assert.equal(cols[10], "[sound:65E5_日-kanji-reading-日.mp3]");
+    assert.equal(cols[11], "日");
+    assert.equal(cols[12], "日本 （にほん） - Japan ／ 日よう日 （にちようび） - Sunday");
+    assert.equal(cols[13], '「日本」を勉強します。 ／ 「にほん」をべんきょうします。 ／ I study the word "日本".');
 });
 
 
@@ -742,10 +753,11 @@ test("buildRowForKanji falls back to local data instead of leaking raw timeout e
     assert.equal(cols[0], "主");
     assert.equal(cols[1], "主");
     assert.equal(cols[2], "主 （おも） ／ main / primary");
-    assert.equal(cols[4], "オン: シュ");
-    assert.equal(cols[5], "くん: ぬし、 おも");
-    assert.equal(cols[11], "主 （おも） - main / primary");
-    assert.equal(cols[12], "主な理由を説明してください。 ／ おもなりゆうをせつめいしてください。 ／ Please explain the main reason.");
+    assert.equal(cols[4], '<span class="kanji-level-badge">主: JLPT N4</span>');
+    assert.equal(cols[5], "オン: シュ");
+    assert.equal(cols[6], "くん: ぬし、 おも");
+    assert.equal(cols[12], "主 （おも） - main / primary");
+    assert.equal(cols[13], "主な理由を説明してください。 ／ おもなりゆうをせつめいしてください。 ／ Please explain the main reason.");
     assert.deepEqual(exportIssues, [{
         kanji: "主",
         level: 4,

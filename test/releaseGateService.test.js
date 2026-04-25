@@ -4,7 +4,7 @@ const path = require("node:path");
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { runReleaseGate } = require("../src/services/releaseGateService");
+const { RELEASE_GATE_SCOPE, runReleaseGate } = require("../src/services/releaseGateService");
 const { runCiSmoke } = require("../src/services/ciSmokeService");
 
 test("runReleaseGate verifies deterministic artifact contracts", async () => {
@@ -24,6 +24,10 @@ test("runReleaseGate verifies deterministic artifact contracts", async () => {
 
         assert.equal(report.smoke.kanjiExports, 1);
         assert.equal(report.smoke.wordRows, 1);
+        assert.equal(report.validationScope.type, "smoke-fixture");
+        assert.deepEqual(report.validationScope, RELEASE_GATE_SCOPE);
+        assert.equal(report.validationScope.doesNotValidate.includes("public product deck readiness"), true);
+        assert.equal(report.validationScope.doesNotValidate.includes("level golden review benchmarks"), true);
         assert.equal(report.audioPolicy.valid, true);
         assert.deepEqual(report.audioPolicy.uniqueSources, ["voicevox-nemo"]);
         assert.equal(fs.existsSync(path.join(tempRoot, "out", "build", "exports", "jlpt-n5.tsv")), true);

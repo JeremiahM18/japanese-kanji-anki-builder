@@ -104,7 +104,7 @@ npm run deck:review:accessibility -- --deck-kind=word
 npm run release:gate
 ```
 
-Add level-specific review commands for the surface being changed.
+`release:gate` validates deterministic smoke-fixture artifacts and packaging contracts. It does not certify public product deck readiness. Add level-specific readiness, golden review, accessibility, provenance, and manual QA commands for the surface being changed.
 
 ## Core Workflows
 
@@ -260,7 +260,7 @@ GitHub Actions verification:
 
 - Ubuntu lint and full test matrix on Node 18, 20, and 22.
 - Cross-platform smoke matrix on Ubuntu, Windows, and macOS for Node 18 and 22.
-- Ubuntu release gate on Node 22 with native `.apkg` packaging validation.
+- Ubuntu release smoke gate on Node 22 with native `.apkg` packaging validation for fixture artifacts.
 
 Release process:
 
@@ -282,7 +282,7 @@ Repository governance:
 | `npm test` | Run the full test suite |
 | `npm run lint` | Run ESLint |
 | `npm run ci:smoke` | Build deterministic smoke artifacts |
-| `npm run release:gate` | Validate release artifact contracts |
+| `npm run release:gate` | Validate smoke-fixture release artifact contracts |
 | `npm run doctor` | Check setup, coverage, readiness, and next steps |
 | `npm run doctor:voicevox` | Verify local governed VOICEVOX setup |
 | `npm run deck:readiness` | Report per-level quality gates |

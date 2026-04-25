@@ -60,7 +60,7 @@ npm run deck:review:accessibility -- --deck-kind=word
 npm run release:gate
 ```
 
-Add level-specific review commands for the deck being shipped.
+`release:gate` validates smoke-fixture artifacts and packaging contracts. It does not certify public product deck readiness. Add level-specific review commands for the deck being shipped, including `npm run deck:words:review:n5` for an N5 word release.
 
 ## What still requires manual review
 

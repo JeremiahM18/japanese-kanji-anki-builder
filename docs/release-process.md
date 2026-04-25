@@ -11,8 +11,8 @@ This document defines tagged release procedure.
 
 ## Release checklist
 
-1. Confirm `npm test`, `npm run lint`, `npm run ci:smoke`, and `npm run release:gate` are green on the release commit.
-2. Run the manual [release QA checklist](release-qa-checklist.md), including the current accessibility review and Anki spot-review expectations.
+1. Confirm `npm test`, `npm run lint`, `npm run ci:smoke`, and `npm run release:gate` are green on the release commit. `release:gate` validates smoke-fixture artifacts and packaging contracts; it does not certify public product deck readiness.
+2. Run the manual [release QA checklist](release-qa-checklist.md), including the current level-specific golden review, accessibility review, and Anki spot-review expectations.
 3. Confirm the intended release still matches the [compatibility matrix](compatibility-matrix.md).
 4. Confirm [CHANGELOG.md](../CHANGELOG.md) includes the exact released version and date.
 5. Confirm [NOTICE.md](../NOTICE.md) reflects required shipped attribution.

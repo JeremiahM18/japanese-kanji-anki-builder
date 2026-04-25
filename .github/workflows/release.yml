@@ -94,7 +94,10 @@ jobs:
             .release-smoke/out
             .release-gate/out
             CHANGELOG.md
+            NOTICE.md
+            docs/compatibility-matrix.md
             docs/branch-protection.md
             docs/release-process.md
+            docs/release-qa-checklist.md
             release-artifacts.sha256
           if-no-files-found: error

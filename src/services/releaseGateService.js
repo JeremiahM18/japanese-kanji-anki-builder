@@ -8,6 +8,23 @@ const { buildAudioPolicyAuditReport } = require("./audioPolicyAuditService");
 const { buildToolchainStatus, getBlockedTools, getMissingPackagingTools } = require("./toolchainService");
 const { runCiSmoke } = require("./ciSmokeService");
 
+const RELEASE_GATE_SCOPE = Object.freeze({
+    type: "smoke-fixture",
+    validates: [
+        "deterministic CI smoke fixture exports",
+        "smoke fixture package contracts",
+        "smoke fixture audio provenance policy",
+        "optional smoke fixture .apkg packaging when --require-apkg-tools is set",
+    ],
+    doesNotValidate: [
+        "public product deck readiness",
+        "tracked-source N5/N4 deck coverage",
+        "level golden review benchmarks",
+        "manual Anki import or learner UX review",
+    ],
+    followUp: "Run level-specific readiness, golden review, accessibility, provenance, and manual QA checks before public release.",
+});
+
 function assertPathExists(filePath) {
     assert.equal(fs.existsSync(filePath), true, `Expected path to exist: ${filePath}`);
 }
@@ -41,6 +58,7 @@ function buildReleaseGateReport({ smokeSummary, toolchainStatus, requireApkgTool
     return {
         generatedAt: new Date().toISOString(),
         requireApkgTools,
+        validationScope: RELEASE_GATE_SCOPE,
         toolchain: toolchainStatus,
         smoke: {
             rootDir: smokeSummary.rootDir,
@@ -127,6 +145,7 @@ async function runReleaseGate({
 }
 
 module.exports = {
+    RELEASE_GATE_SCOPE,
     assertPackageSummary,
     assertPathExists,
     assertTsvHeaderMatches,

@@ -11,6 +11,15 @@ Run this checklist after automated gates pass and before marking a deck mileston
 - `npm run ci:smoke`
 - `npm run release:gate`
 
+`release:gate` is smoke-fixture validation. It does not replace level-specific product checks.
+
+## Product readiness checks
+
+- Run the golden review command for each shipped kanji level, such as `npm run deck:review:n5`.
+- Run the golden review command for each shipped word level when one exists, such as `npm run deck:words:review:n5`.
+- Run the deck readiness command for each shipped kanji or word surface.
+- Confirm tracked-source coverage, provenance, and known limitations match the intended release.
+
 ## Kanji deck manual spot review
 
 - Import the current N5 kanji deck into Anki.

@@ -923,6 +923,28 @@ test("tracked starter word data includes the twenty-ninth governed N4 completion
     ]);
 });
 
+test("tracked starter word data includes the thirtieth governed N4 completion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["品切れ|しなぎれ", "切", "ぎれ"],
+        ["以て|もって", "以", "もって"],
+        ["止す|よす", "止", "よす"],
+        ["止める|やめる", "止", "やめる"],
+        ["病む|やむ", "病", "やむ"],
+        ["空かす|すかす", "空", "すかす"],
+        ["手作り|てづくり", "作", "づくり"],
+        ["閉ざす|とざす", "閉", "とざす"],
+        ["明るむ|あかるむ", "明", "あかるむ"],
+        ["自ずと|おのずと", "自", "おのずと"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["品切れ|しなぎれ", "<ruby>品<rt>しな</rt></ruby><ruby>切<rt>ぎ</rt></ruby>れ"],
+        ["手作り|てづくり", "<ruby>手<rt>て</rt></ruby><ruby>作<rt>づく</rt></ruby>り"],
+        ["自ずと|おのずと", "<ruby>自<rt>おの</rt></ruby>ずと"],
+    ]);
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

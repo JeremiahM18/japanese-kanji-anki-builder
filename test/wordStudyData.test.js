@@ -778,6 +778,27 @@ test("tracked starter word data includes the twenty-seventh governed N4 completi
     assert.equal(starterEntries["病み付き|やみつき"].readingBreakdown, "<ruby>病<rt>や</rt></ruby>み<ruby>付<rt>つ</rt></ruby>き");
 });
 
+test("tracked starter word data includes the twenty-eighth governed N4 completion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assert.equal(starterEntries["京|みやこ"].coverage.coversReadings["京"], "みやこ");
+    assert.equal(starterEntries["南京|なんきん"].coverage.coversReadings["京"], "きん");
+    assert.equal(starterEntries["明朝|みんちょう"].coverage.coversReadings["明"], "みん");
+    assert.equal(starterEntries["法度|はっと"].coverage.coversReadings["度"], "と");
+    assert.equal(starterEntries["自業自得|じごうじとく"].coverage.coversReadings["業"], "ごう");
+    assert.equal(starterEntries["愛猫|あいびょう"].coverage.coversReadings["猫"], "びょう");
+    assert.equal(starterEntries["主人|あるじ"].coverage.coversReadings["主"], "あるじ");
+    assert.equal(starterEntries["病|やまい"].coverage.coversReadings["病"], "やまい");
+    assert.equal(starterEntries["会わせる|あわせる"].coverage.coversReadings["会"], "あわせる");
+    assert.equal(starterEntries["開ける|ひらける"].coverage.coversReadings["開"], "ひらける");
+    assert.equal(starterEntries["究める|きわめる"].coverage.coversReadings["究"], "きわめる");
+    assert.equal(starterEntries["計らう|はからう"].coverage.coversReadings["計"], "はからう");
+    assert.equal(starterEntries["試みる|こころみる"].coverage.coversReadings["試"], "こころみる");
+    assert.equal(starterEntries["正す|ただす"].coverage.coversReadings["正"], "ただす");
+    assert.equal(starterEntries["足す|たす"].coverage.coversReadings["足"], "たす");
+    assert.equal(starterEntries["主人|あるじ"].readingBreakdown, "<ruby>主人<rt>あるじ</rt></ruby>");
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

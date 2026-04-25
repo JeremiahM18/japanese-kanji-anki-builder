@@ -152,6 +152,7 @@ async function buildAudioReviewReport({
         const asset = selectBestAudioAsset(manifest?.assets?.audio || [], {
             category: "kanji-reading",
             text: targetKanji,
+            reading: expectedReading,
         });
         const actualReading = cleanString(asset?.reading);
         const policyIssues = buildPolicyIssues({ asset, releaseAudio });

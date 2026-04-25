@@ -192,6 +192,73 @@ test("buildInferenceForKanji reuses a single shared manifest lookup when availab
     assert.equal(inference.audioPath, "audio/65E5_日-kanji-reading-日.mp3");
 });
 
+test("buildInferenceForKanji selects audio matching the curated display reading", async () => {
+    const exportService = createExportService({
+        curatedStudyData: {
+            側: {
+                displayWord: { written: "反対側", pron: "はんたいがわ" },
+            },
+        },
+        inferenceEngine: {
+            hasFullyCuratedKanjiEntry() {
+                return true;
+            },
+            inferKanjiStudyData() {
+                return {
+                    displayWord: { written: "反対側", pron: "はんたいがわ" },
+                    bestWord: null,
+                    meaningJP: "反対側 （はんたいがわ） ／ side / opposite side",
+                    notes: "反対側 （はんたいがわ） - opposite side",
+                    sentenceCandidates: [],
+                };
+            },
+        },
+    });
+
+    const inference = await exportService.buildInferenceForKanji({
+        kanji: "側",
+        jlptEntry: { meanings: ["side"], on_readings: ["ソク"], kun_readings: ["がわ"], jlpt: 3 },
+        kanjiApiClient: {
+            async getKanji() {
+                throw new Error("should use local JLPT data");
+            },
+            async getWords() {
+                throw new Error("should skip word fetch");
+            },
+        },
+        strokeOrderService: {
+            async getManifest() {
+                return {
+                    assets: {
+                        strokeOrderImage: null,
+                        strokeOrderAnimation: { path: "animations/5074_側-stroke-order.gif" },
+                        audio: [
+                            {
+                                path: "audio/5074_側-kanji-reading-側-そば.wav",
+                                category: "kanji-reading",
+                                text: "側",
+                                reading: "そば",
+                                locale: "ja-JP",
+                            },
+                            {
+                                path: "audio/5074_側-kanji-reading-側-はんたいがわ.wav",
+                                category: "kanji-reading",
+                                text: "側",
+                                reading: "はんたいがわ",
+                                locale: "ja-JP",
+                            },
+                        ],
+                    },
+                };
+            },
+        },
+        audioService: null,
+    });
+
+    assert.equal(inference.audioPath, "audio/5074_側-kanji-reading-側-はんたいがわ.wav");
+    assert.equal(inference.audioField, "[sound:5074_側-kanji-reading-側-はんたいがわ.wav]");
+});
+
 test("buildRowForKanji skips word fetch for fully curated kanji cards", async () => {
     let wordFetchCalled = false;
     const exportService = createExportService({

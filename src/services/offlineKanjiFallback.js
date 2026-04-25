@@ -144,7 +144,7 @@ function buildOfflineReadingFields(jlptEntry) {
     };
 }
 
-async function resolveOfflineMedia({ kanji, strokeOrderService, audioService }) {
+async function resolveOfflineMedia({ kanji, strokeOrderService, audioService, audioReading = "" }) {
     const [strokeOrderImagePath, strokeOrderAnimationPath, strokeOrderPath, audioPath] = await Promise.all([
         typeof strokeOrderService?.getStrokeOrderImagePath === "function"
             ? strokeOrderService.getStrokeOrderImagePath(kanji)
@@ -156,7 +156,7 @@ async function resolveOfflineMedia({ kanji, strokeOrderService, audioService }) 
             ? strokeOrderService.getBestStrokeOrderPath(kanji)
             : Promise.resolve(""),
         typeof audioService?.getBestAudioPath === "function"
-            ? audioService.getBestAudioPath(kanji, { category: "kanji-reading", text: kanji })
+            ? audioService.getBestAudioPath(kanji, { category: "kanji-reading", text: kanji, reading: audioReading })
             : Promise.resolve(""),
     ]);
 
@@ -183,7 +183,7 @@ async function buildOfflineFallbackCard({
     const displayWord = selectOfflineDisplayWord({ kanji, curatedEntry, sentenceCandidate });
     const primaryReading = selectOfflinePrimaryReading({ displayWord, sentenceCandidate });
     const readingFields = buildOfflineReadingFields(jlptEntry);
-    const media = await resolveOfflineMedia({ kanji, strokeOrderService, audioService });
+    const media = await resolveOfflineMedia({ kanji, strokeOrderService, audioService, audioReading: primaryReading });
 
     return {
         kanji,

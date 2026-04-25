@@ -137,7 +137,7 @@ async function resolveStrokeOrderFields(strokeOrderService, kanji) {
     };
 }
 
-async function resolveManagedMediaFields({ kanji, strokeOrderService, audioService }) {
+async function resolveManagedMediaFields({ kanji, strokeOrderService, audioService, audioReading = "" }) {
     const manifestProvider = typeof strokeOrderService?.getManifest === "function"
         ? strokeOrderService
         : (typeof audioService?.getManifest === "function" ? audioService : null);
@@ -150,6 +150,7 @@ async function resolveManagedMediaFields({ kanji, strokeOrderService, audioServi
         const audioPath = selectBestAudioAsset(manifest?.assets?.audio || [], {
             category: "kanji-reading",
             text: kanji,
+            reading: audioReading,
         })?.path || "";
 
         return {
@@ -163,7 +164,7 @@ async function resolveManagedMediaFields({ kanji, strokeOrderService, audioServi
     const [strokeOrderFields, audioPath] = await Promise.all([
         resolveStrokeOrderFields(strokeOrderService, kanji),
         typeof audioService?.getBestAudioPath === "function"
-            ? audioService.getBestAudioPath(kanji, { category: "kanji-reading", text: kanji })
+            ? audioService.getBestAudioPath(kanji, { category: "kanji-reading", text: kanji, reading: audioReading })
             : Promise.resolve(""),
     ]);
 
@@ -249,6 +250,7 @@ function createExportService({
         try {
             const skipWordFetch = shouldSkipWordFetch(inferenceEngine, kanji);
             const useLocalJlptEntry = shouldUseLocalJlptEntry({ inferenceEngine, kanji, jlptEntry });
+            const audioReading = String(curatedStudyData?.[kanji]?.displayWord?.pron || "").trim();
             const [kanjiInfo, words, mediaFields] = await Promise.all([
                 useLocalJlptEntry
                     ? Promise.resolve(jlptEntry)
@@ -256,7 +258,7 @@ function createExportService({
                 skipWordFetch
                     ? Promise.resolve([])
                     : measureAsync(exportProfile, "getWords", () => kanjiApiClient.getWords(kanji)),
-                measureAsync(exportProfile, "media", () => resolveManagedMediaFields({ kanji, strokeOrderService, audioService })),
+                measureAsync(exportProfile, "media", () => resolveManagedMediaFields({ kanji, strokeOrderService, audioService, audioReading })),
             ]);
 
             const inferenceStartedAt = exportProfile ? performance.now() : NaN;
@@ -331,10 +333,11 @@ function createExportService({
     async function buildInferenceForKanji({ kanji, jlptEntry = null, kanjiApiClient, strokeOrderService, audioService }) {
         const skipWordFetch = shouldSkipWordFetch(inferenceEngine, kanji);
         const useLocalJlptEntry = shouldUseLocalJlptEntry({ inferenceEngine, kanji, jlptEntry });
+        const audioReading = String(curatedStudyData?.[kanji]?.displayWord?.pron || "").trim();
         const [kanjiInfo, words, mediaFields] = await Promise.all([
             useLocalJlptEntry ? Promise.resolve(jlptEntry) : kanjiApiClient.getKanji(kanji),
             skipWordFetch ? Promise.resolve([]) : kanjiApiClient.getWords(kanji),
-            resolveManagedMediaFields({ kanji, strokeOrderService, audioService }),
+            resolveManagedMediaFields({ kanji, strokeOrderService, audioService, audioReading }),
         ]);
 
         const inferred = inferenceEngine.inferKanjiStudyData({

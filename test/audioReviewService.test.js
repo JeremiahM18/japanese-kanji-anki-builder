@@ -184,6 +184,56 @@ test("buildAudioReviewReport falls back to the built kanji export reading when c
     }
 });
 
+test("buildAudioReviewReport selects the managed asset matching the expected reading", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        writeManifest(rootDir, "側", [
+            {
+                kind: "audio",
+                path: "audio/5074_側-kanji-reading-側-そば.wav",
+                mimeType: "audio/wav",
+                source: "voicevox-nemo",
+                category: "kanji-reading",
+                text: "側",
+                reading: "そば",
+                voice: "女声1 / ノーマル",
+                locale: "ja-JP",
+            },
+            {
+                kind: "audio",
+                path: "audio/5074_側-kanji-reading-側-はんたいがわ.wav",
+                mimeType: "audio/wav",
+                source: "voicevox-nemo",
+                category: "kanji-reading",
+                text: "側",
+                reading: "はんたいがわ",
+                voice: "女声1 / ノーマル",
+                locale: "ja-JP",
+            },
+        ]);
+
+        const report = await buildAudioReviewReport({
+            jlptOnlyJson: {
+                側: { jlpt: 3 },
+            },
+            curatedStudyData: {
+                側: { displayWord: { written: "反対側", pron: "はんたいがわ" } },
+            },
+            mediaRootDir: rootDir,
+            audioSourcePolicy: loadAudioSourcePolicy(),
+            levels: [3],
+        });
+
+        assert.equal(report.summary.readyToReview, 1);
+        assert.equal(report.summary.readingMismatch, 0);
+        assert.equal(report.rows[0].actualReading, "はんたいがわ");
+        assert.match(report.rows[0].audioPath, /はんたいがわ/);
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
 test("formatAudioReviewReport renders a useful listening checklist", async () => {
     const rootDir = makeTempDir();
 

@@ -42,6 +42,7 @@ A word level ships only when all criteria are true:
 
 - N5 kanji: stabilized
 - N4 kanji: stabilized
+- N3 kanji: stabilized
 - N5 word: stabilized and `ready_with_deferred_variants`
 - N4 word: active completion work, not yet ready
 

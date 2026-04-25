@@ -42,7 +42,7 @@ Tracked contracts define release behavior:
 - Audio source policy: [templates/audio_source_policy.json](templates/audio_source_policy.json)
 - Kanji note schema: [src/config/ankiNoteSchema.json](src/config/ankiNoteSchema.json)
 - Word note schema: [src/config/ankiWordNoteSchema.json](src/config/ankiWordNoteSchema.json)
-- Golden kanji review sets: [templates/golden_n5_review_set.json](templates/golden_n5_review_set.json), [templates/golden_n4_review_set.json](templates/golden_n4_review_set.json)
+- Golden kanji review sets: [templates/golden_n5_review_set.json](templates/golden_n5_review_set.json), [templates/golden_n4_review_set.json](templates/golden_n4_review_set.json), [templates/golden_n3_review_set.json](templates/golden_n3_review_set.json)
 - Golden word review sets: [templates/golden_n5_word_review_set.json](templates/golden_n5_word_review_set.json)
 
 Local ignored files under `data/` are workspace inputs, not product truth. Use audits to verify them against tracked contracts.
@@ -75,6 +75,7 @@ Word decks:
 | --- | --- |
 | N5 kanji | Ready, golden-reviewed |
 | N4 kanji | Ready, golden-reviewed |
+| N3 kanji | Ready, golden-reviewed |
 | N5 word | `ready_with_deferred_variants` |
 | N4 word | Active completion work |
 | N5 word audio | Governed and reviewable |

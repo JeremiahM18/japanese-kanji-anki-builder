@@ -945,6 +945,26 @@ test("tracked starter word data includes the thirtieth governed N4 completion ba
     ]);
 });
 
+test("tracked starter word data includes the thirty-first governed N4 support batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["急く|せく", "急", "せく"],
+        ["寝かす|ねかす", "寝", "ねかす"],
+        ["転げる|ころげる", "転", "ころげる"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["急く|せく", "support"],
+        ["寝かす|ねかす", "support"],
+        ["転げる|ころげる", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["急く|せく", "<ruby>急<rt>せ</rt></ruby>く"],
+        ["寝かす|ねかす", "<ruby>寝<rt>ね</rt></ruby>かす"],
+        ["転げる|ころげる", "<ruby>転<rt>ころ</rt></ruby>げる"],
+    ]);
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

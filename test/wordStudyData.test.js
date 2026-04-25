@@ -965,6 +965,23 @@ test("tracked starter word data includes the thirty-first governed N4 support ba
     ]);
 });
 
+test("tracked starter word data includes the thirty-second governed N4 support batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["建つ|たつ", "建", "たつ"],
+        ["行き止まり|いきどまり", "止", "どまり"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["建つ|たつ", "support"],
+        ["行き止まり|いきどまり", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["建つ|たつ", "<ruby>建<rt>た</rt></ruby>つ"],
+        ["行き止まり|いきどまり", "<ruby>行<rt>い</rt></ruby>き<ruby>止<rt>ど</rt></ruby>まり"],
+    ]);
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

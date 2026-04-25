@@ -621,11 +621,25 @@
       "sourceReading": "しわざ",
       "sourceAccent": "0"
     },
+    "代える|かえる": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "代える",
+      "sourceReading": "かえる",
+      "sourceAccent": "0"
+    },
     "代わり|かわり": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "代わり",
       "sourceReading": "かわり",
+      "sourceAccent": "0"
+    },
+    "代わる|かわる": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "代わる",
+      "sourceReading": "かわる",
       "sourceAccent": "0"
     },
     "代物|しろもの": {
@@ -1287,6 +1301,13 @@
       "sourceQuery": "べんきょうちゅう",
       "generatedReading": "べんきょおちゅう"
     },
+    "動かす|うごかす": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "動かす",
+      "sourceReading": "うごかす",
+      "sourceAccent": "3"
+    },
     "動く|うごく": {
       "pattern": "2 [nakadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -1352,6 +1373,13 @@
       "sourceId": "voicevox-nemo-accent-query",
       "sourceQuery": "十時",
       "generatedReading": "じゅうじ"
+    },
+    "千代|ちよ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "千代",
+      "sourceReading": "ちよ",
+      "sourceAccent": "1"
     },
     "千円|せんえん": {
       "pattern": "0 [heiban]",
@@ -1705,6 +1733,13 @@
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "売る",
       "sourceReading": "うる",
+      "sourceAccent": "0"
+    },
+    "売れる|うれる": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "売れる",
+      "sourceReading": "うれる",
       "sourceAccent": "0"
     },
     "売上|うりあげ": {
@@ -3364,6 +3399,13 @@
       "sourceReading": "あるく",
       "sourceAccent": "2"
     },
+    "歩む|あゆむ": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "歩む",
+      "sourceReading": "あゆむ",
+      "sourceAccent": "2"
+    },
     "歩合|ぶあい": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -3489,6 +3531,13 @@
       "sourceWord": "河川",
       "sourceReading": "かせん",
       "sourceAccent": "1"
+    },
+    "注ぐ|そそぐ": {
+      "pattern": "0 [heiban] / 2 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "注ぐ",
+      "sourceReading": "そそぐ",
+      "sourceAccent": "0,2"
     },
     "注ぐ|つぐ": {
       "pattern": "0 [heiban]",
@@ -3775,6 +3824,13 @@
       "sourceReading": "がか",
       "sourceAccent": "0"
     },
+    "病み付き|やみつき": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "病み付き",
+      "sourceReading": "やみつき",
+      "sourceAccent": "0"
+    },
     "病気|びょうき": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -3829,6 +3885,13 @@
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "白紙",
       "sourceReading": "はくし",
+      "sourceAccent": "0"
+    },
+    "白銀|しろがね": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "白銀",
+      "sourceReading": "しろがね",
       "sourceAccent": "0"
     },
     "白髪|しらが": {
@@ -3906,6 +3969,20 @@
       "sourceWord": "着く",
       "sourceReading": "つく",
       "sourceAccent": "1,2"
+    },
+    "着ける|つける": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "着ける",
+      "sourceReading": "つける",
+      "sourceAccent": "2"
+    },
+    "着せる|きせる": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "着せる",
+      "sourceReading": "きせる",
+      "sourceAccent": "0"
     },
     "着る|きる": {
       "pattern": "0 [heiban]",
@@ -4667,6 +4744,13 @@
       "sourceReading": "あし",
       "sourceAccent": "2"
     },
+    "足りる|たりる": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "足りる",
+      "sourceReading": "たりる",
+      "sourceAccent": "0"
+    },
     "足る|たる": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -4681,11 +4765,32 @@
       "sourceReading": "あしもと",
       "sourceAccent": "3"
     },
+    "身代わり|みがわり": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "身代わり",
+      "sourceReading": "みがわり",
+      "sourceAccent": "0"
+    },
     "車|くるま": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "車",
       "sourceReading": "くるま",
+      "sourceAccent": "0"
+    },
+    "転がす|ころがす": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "転がす",
+      "sourceReading": "ころがす",
+      "sourceAccent": "0"
+    },
+    "転がる|ころがる": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "転がる",
+      "sourceReading": "ころがる",
       "sourceAccent": "0"
     },
     "転ぶ|ころぶ": {
@@ -4743,6 +4848,13 @@
       "sourceWord": "通う",
       "sourceReading": "かよう",
       "sourceAccent": "0"
+    },
+    "通す|とおす": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "通す",
+      "sourceReading": "とおす",
+      "sourceAccent": "1"
     },
     "通り|とおり": {
       "pattern": "3 [odaka]",

@@ -383,7 +383,7 @@ Kanji card fields include:
 - `StrokeOrderAnimation`
 - `Audio`
 
-The front of a kanji card shows only the target kanji. The back shows the target kanji as `DisplayWord` and the primary kanji reading in `PrimaryReading`. `StudyWordKanji` is normally blank for kanji cards because same-level target labels are suppressed; compounds and study words belong in notes, examples, and word decks. Audio is selected only when managed media has an exact `kanji-reading` asset for the target kanji and exported primary reading.
+The front of a kanji card shows only the target kanji. The back shows the target kanji as `DisplayWord` and the primary kanji reading in `PrimaryReading`. `StudyWordKanji` is blank for kanji cards because the learning target is the individual kanji; compounds and study words belong in notes, examples, and word decks. The build pipeline rejects kanji exports that replace the target-kanji anchor with a compound or omit the primary reading. Audio is selected only when managed media has an exact `kanji-reading` asset for the target kanji and exported primary reading.
 
 Word card fields include:
 

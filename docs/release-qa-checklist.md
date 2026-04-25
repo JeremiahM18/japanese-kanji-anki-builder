@@ -30,9 +30,9 @@ Run this checklist after automated gates pass and before marking a deck mileston
 
 - Import the current N5 kanji deck into Anki.
 - Import the current N4 kanji deck into Anki.
-- Review beginner anchors.
-- Review compound-backed anchors.
-- Confirm display-word kanji labels are visible and understandable.
+- Confirm each card front is the individual target kanji.
+- Confirm each card back shows the same target kanji as `DisplayWord` plus the learner-facing `PrimaryReading`.
+- Confirm compounds appear only in notes, examples, or word decks.
 - Review audio-bearing cards.
 - Review cards with stroke-order media.
 - Confirm there are no weak fronts, clipped fields, or broken media.

@@ -1,45 +1,51 @@
 const { pickMainComponent } = require("../datasets/kradfile");
 const { buildMeaningJP } = require("../inference/meaningInference");
 const { labelKunReading, labelOnReading } = require("../utils/text");
+const { katakanaToHiragana } = require("../utils/japanese");
 
-function selectOfflineDisplayWord({ kanji, curatedEntry, sentenceCandidate }) {
-    const displayWritten = String(curatedEntry?.displayWord?.written || "").trim();
-    if (displayWritten) {
-        return {
-            written: displayWritten,
-            pron: String(curatedEntry?.displayWord?.pron || "").trim(),
-        };
-    }
-
-    const preferredWord = String(curatedEntry?.preferredWords?.[0] || "").trim();
-    if (preferredWord) {
-        return {
-            written: preferredWord,
-            pron: "",
-        };
-    }
-
-    const sentenceWritten = String(sentenceCandidate?.written || "").trim();
-    if (sentenceWritten) {
-        return {
-            written: sentenceWritten,
-            pron: "",
-        };
-    }
-
-    return {
-        written: String(kanji || "").trim(),
-        pron: "",
-    };
+function normalizeOfflineReading(value) {
+    return katakanaToHiragana(String(value || ""))
+        .replace(/[.・]/g, "")
+        .replace(/-/g, "")
+        .replace(/\s+/g, "")
+        .trim();
 }
 
-function selectOfflinePrimaryReading({ displayWord }) {
-    const displayPron = String(displayWord?.pron || "").trim();
-    if (displayPron) {
-        return displayPron;
+function hasOnlyTargetKanji(value, kanji) {
+    const kanjiChars = String(value || "").match(/\p{Script=Han}/gu) || [];
+    return kanjiChars.length > 0 && kanjiChars.every((char) => char === kanji);
+}
+
+function selectFallbackReadingFromJlptEntry(jlptEntry) {
+    const readings = [
+        ...(Array.isArray(jlptEntry?.kun_readings) ? jlptEntry.kun_readings : []),
+        ...(Array.isArray(jlptEntry?.on_readings) ? jlptEntry.on_readings : []),
+    ].map(normalizeOfflineReading).filter(Boolean);
+
+    return readings[0] || "";
+}
+
+function selectOfflinePrimaryReading({ kanji, curatedEntry, jlptEntry }) {
+    const breakdownWord = curatedEntry?.breakdownDisplayWord?.written;
+    const breakdownPron = curatedEntry?.breakdownDisplayWord?.pron;
+    if (breakdownPron && hasOnlyTargetKanji(breakdownWord, kanji)) {
+        return String(breakdownPron).trim();
     }
 
-    return "";
+    const displayWord = curatedEntry?.displayWord?.written;
+    const displayPron = curatedEntry?.displayWord?.pron;
+    if (displayPron && hasOnlyTargetKanji(displayWord, kanji)) {
+        return String(displayPron).trim();
+    }
+
+    return selectFallbackReadingFromJlptEntry(jlptEntry);
+}
+
+function selectOfflineDisplayWord({ kanji, curatedEntry, jlptEntry }) {
+    return {
+        written: String(kanji || "").trim(),
+        pron: selectOfflinePrimaryReading({ kanji, curatedEntry, jlptEntry }),
+    };
 }
 
 function buildOfflineSentenceCandidate(kanji, curatedEntry, sentenceCorpus) {
@@ -88,8 +94,8 @@ function buildOfflineSentenceCandidate(kanji, curatedEntry, sentenceCorpus) {
     };
 }
 
-function buildOfflineMeaning({ kanji, curatedEntry, sentenceCandidate, jlptEntry }) {
-    const displayWord = selectOfflineDisplayWord({ kanji, curatedEntry, sentenceCandidate });
+function buildOfflineMeaning({ kanji, curatedEntry, jlptEntry }) {
+    const displayWord = selectOfflineDisplayWord({ kanji, curatedEntry, jlptEntry });
     const englishMeaning = String(curatedEntry?.englishMeaning || "").trim();
 
     if (displayWord?.written && englishMeaning) {
@@ -180,8 +186,8 @@ async function buildOfflineFallbackCard({
 }) {
     const curatedEntry = curatedStudyData?.[kanji] || null;
     const sentenceCandidate = buildOfflineSentenceCandidate(kanji, curatedEntry, sentenceCorpus);
-    const displayWord = selectOfflineDisplayWord({ kanji, curatedEntry, sentenceCandidate });
-    const primaryReading = selectOfflinePrimaryReading({ displayWord, sentenceCandidate });
+    const displayWord = selectOfflineDisplayWord({ kanji, curatedEntry, jlptEntry });
+    const primaryReading = displayWord.pron;
     const readingFields = buildOfflineReadingFields(jlptEntry);
     const media = await resolveOfflineMedia({ kanji, strokeOrderService, audioService, audioReading: primaryReading });
 

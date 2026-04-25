@@ -386,6 +386,10 @@ test("runBuildPipeline reports export fallback issues instead of writing raw err
     fs.writeFileSync(curatedStudyDataPath, `${JSON.stringify({
         龘: {
             englishMeaning: "test meaning",
+            breakdownDisplayWord: {
+                written: "龘",
+                pron: "おも",
+            },
             preferredWords: ["龘"],
             notes: "龘 （おも） - test meaning",
             exampleSentence: {
@@ -487,6 +491,10 @@ test("runBuildPipeline records when export fallback ratio exceeds a configured t
     fs.writeFileSync(curatedStudyDataPath, `${JSON.stringify({
         龘: {
             englishMeaning: "test meaning",
+            breakdownDisplayWord: {
+                written: "龘",
+                pron: "おも",
+            },
             preferredWords: ["龘"],
             notes: "龘 （おも） - test meaning",
             exampleSentence: {

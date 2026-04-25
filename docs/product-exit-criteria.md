@@ -20,6 +20,7 @@ A kanji level ships only when all criteria are true:
 
 - Canonical JLPT taxonomy is governed by tracked contracts.
 - Golden review coverage for that shipped level is complete.
+- Exported cards preserve the individual-kanji learning contract: `DisplayWord` equals the target kanji, `PrimaryReading` is present, and compound words do not replace the card anchor.
 - `npm run deck:ready -- --levels=<level>` passes with `0` export fallback issues.
 - Exported card media completeness is `100%` for stroke-order fields, stroke-order image fields, stroke-order animation fields, and audio fields.
 - Stroke-order animation coverage is `100%`.

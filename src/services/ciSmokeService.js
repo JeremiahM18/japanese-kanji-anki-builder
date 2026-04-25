@@ -50,6 +50,10 @@ function buildFixtureDataset() {
             日: {
                 englishMeaning: "day / sun",
                 notes: "Curated smoke-test note",
+                breakdownDisplayWord: {
+                    written: "日",
+                    pron: "ひ",
+                },
                 displayWord: {
                     written: "日本",
                     pron: "にほん",

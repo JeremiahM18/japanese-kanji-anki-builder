@@ -12,6 +12,7 @@ const { loadSentenceCorpus, normalizeSentenceCorpus } = require("../datasets/sen
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { buildDeckPackage } = require("./deckPackageService");
 const { createExportService } = require("./exportService");
+const { assertKanjiDeckContract, buildKanjiDeckContractReport } = require("./kanjiDeckContractService");
 const { ensureMediaRoot } = require("./mediaStore");
 const { createMediaServices } = require("./mediaServiceFactory");
 const { selectKanjiForSync, syncMediaForKanjiList } = require("./mediaSync");
@@ -361,6 +362,7 @@ async function runBuildPipeline({
             concurrency: effectiveConcurrency,
             exportIssues,
         });
+        assertKanjiDeckContract(buildKanjiDeckContractReport({ tsv, level }));
         const filePath = path.join(buildPaths.exportsDir, `jlpt-n${level}.tsv`);
         writeTextFile(filePath, `${tsv}\n`);
         exports.push({

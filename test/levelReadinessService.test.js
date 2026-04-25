@@ -44,7 +44,7 @@ test("buildLevelReadinessReport evaluates per-level quality gates", () => {
         },
         mediaCoverage: {
             levels: [
-                { level: 5, totalKanji: 10, strokeOrderCovered: 10, audioCovered: 9, fullMediaCovered: 8, strokeOrderCoverageRatio: 1, audioCoverageRatio: 0.9, fullMediaCoverageRatio: 0.8, sampleMissing: [] },
+                { level: 5, totalKanji: 10, strokeOrderCovered: 10, audioCovered: 10, fullMediaCovered: 10, strokeOrderCoverageRatio: 1, audioCoverageRatio: 1, fullMediaCoverageRatio: 1, sampleMissing: [] },
                 { level: 4, totalKanji: 10, strokeOrderCovered: 2, audioCovered: 0, fullMediaCovered: 0, strokeOrderCoverageRatio: 0.2, audioCoverageRatio: 0, fullMediaCoverageRatio: 0, sampleMissing: [{ kanji: "不", missingStrokeOrder: true, missingAudio: true }] },
             ],
         },
@@ -81,7 +81,7 @@ test("buildLevelReadinessReport evaluates per-level quality gates", () => {
     assert.equal(report.levels[1].level, 5);
     assert.equal(report.levels[1].ready, true);
     assert.equal(report.weakestLevels[0].level, 4);
-    assert.equal(report.weakestLevels[0].failingChecks.includes("audio coverage"), false);
+    assert.equal(report.weakestLevels[0].failingChecks.includes("audio coverage"), true);
     assert.equal(report.weakestLevels[0].qualityFailingChecks.includes("local meaning coverage"), true);
     assert.equal(report.levels[0].cardQuality.failingChecks.includes("contextual notes coverage"), true);
 });
@@ -133,14 +133,16 @@ test("formatLevelReadinessReport renders thresholds and weakest levels", () => {
     assert.match(text, /Card quality diagnostics:/);
     assert.match(text, /Weakest levels:/);
     assert.match(text, /N4: 20.0% checks passing/);
-    assert.match(text, /Optional audio diagnostics: not required for ready/);
-    assert.match(text, /Optional audio: audio 0.0%, full media 0.0%/);
+    assert.match(text, /Audio readiness requirements:/);
+    assert.match(text, /Audio coverage target: 100.0%/);
+    assert.match(text, /Full media coverage target: 100.0%/);
+    assert.match(text, /Required media: audio 0.0%, full media 0.0%/);
     assert.match(text, /Failing checks: sentence coverage/);
     assert.match(text, /Card quality: readings 80.0%, meanings 60.0%, examples 50.0%, contextual notes 40.0%, generic fallback notes 60.0%/);
     assert.match(text, /Quality checks: local meaning coverage, local example coverage/);
 });
 
-test("buildLevelReadinessReport keeps audio out of required gates by default", () => {
+test("buildLevelReadinessReport requires audio and full media by default", () => {
     const report = buildLevelReadinessReport({
         sentenceCoverage: { levels: [{ level: 5, totalKanji: 10, coveredKanji: 10, coverageRatio: 1, sampleMissing: [] }] },
         curatedCoverage: { levels: [{ level: 5, totalKanji: 10, curatedKanji: 7, coverageRatio: 0.7, sampleMissing: [] }] },
@@ -150,8 +152,9 @@ test("buildLevelReadinessReport keeps audio out of required gates by default", (
         thresholds: buildDefaultQualityThresholds(),
     });
 
-    assert.equal(report.overallReady, true);
-    assert.equal(report.levels[0].failingChecks.includes("audio coverage"), false);
+    assert.equal(report.overallReady, false);
+    assert.equal(report.levels[0].failingChecks.includes("audio coverage"), true);
+    assert.equal(report.levels[0].failingChecks.includes("full media coverage"), true);
 });
 
 

@@ -298,7 +298,7 @@ test("formatDoctorReport produces a human-readable setup summary", () => {
     assert.match(text, /C:\/repo\/data\/kanji_jlpt_only\.json/);
 });
 
-test("formatDoctorReport hides audio sections when audio is disabled", () => {
+test("formatDoctorReport keeps audio coverage visible because audio is required", () => {
     const text = formatDoctorReport({
         ready: true,
         status: {
@@ -340,7 +340,7 @@ test("formatDoctorReport hides audio sections when audio is disabled", () => {
         nextSteps: ["Keep improving stroke order."],
     });
 
-    assert.doesNotMatch(text, /Audio media:/);
-    assert.doesNotMatch(text, /full media/);
+    assert.match(text, /Managed audio media: 0.0%/);
+    assert.match(text, /Managed full media coverage: 0.0%/);
     assert.match(text, /Card quality: readings 100.0%, meanings 100.0%, examples 80.0%, contextual notes 80.0%, generic fallback notes 20.0%/);
 });

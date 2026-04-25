@@ -1,11 +1,10 @@
-function buildDefaultQualityThresholds({ audioEnabled = true, audioRequired = false } = {}) {
+function buildDefaultQualityThresholds() {
     return {
         sentenceCoverage: 0.9,
         curatedCoverage: 0.6,
         strokeOrderCoverage: 0.9,
-        audioCoverage: audioEnabled ? 0.75 : null,
-        fullMediaCoverage: audioEnabled ? 0.75 : null,
-        audioRequired,
+        audioCoverage: 1,
+        fullMediaCoverage: 1,
     };
 }
 
@@ -87,10 +86,10 @@ function buildLevelReadinessReport({
             buildCheck({ label: "sentence coverage", actual: sentenceRow.coverageRatio || 0, threshold: thresholds.sentenceCoverage }),
             buildCheck({ label: "curated coverage", actual: curatedRow.coverageRatio || 0, threshold: thresholds.curatedCoverage }),
             buildCheck({ label: "stroke-order coverage", actual: mediaRow.strokeOrderCoverageRatio || 0, threshold: thresholds.strokeOrderCoverage }),
-            (thresholds.audioRequired && thresholds.audioCoverage !== null && thresholds.audioCoverage !== undefined)
+            (thresholds.audioCoverage !== null && thresholds.audioCoverage !== undefined)
                 ? buildCheck({ label: "audio coverage", actual: mediaRow.audioCoverageRatio || 0, threshold: thresholds.audioCoverage })
                 : null,
-            (thresholds.audioRequired && thresholds.fullMediaCoverage !== null && thresholds.fullMediaCoverage !== undefined)
+            (thresholds.fullMediaCoverage !== null && thresholds.fullMediaCoverage !== undefined)
                 ? buildCheck({ label: "full media coverage", actual: mediaRow.fullMediaCoverageRatio || 0, threshold: thresholds.fullMediaCoverage })
                 : null,
         ].filter(Boolean);
@@ -203,7 +202,7 @@ function formatLevelReadinessReport(report) {
 
     if (report.thresholds.audioCoverage !== null && report.thresholds.audioCoverage !== undefined) {
         lines.push("");
-        lines.push(`Optional audio diagnostics:${report.thresholds.audioRequired ? " required" : " not required for ready"}`);
+        lines.push("Audio readiness requirements:");
         lines.push(`- Audio coverage target: ${formatPercent(report.thresholds.audioCoverage)}`);
         lines.push(`- Full media coverage target: ${formatPercent(report.thresholds.fullMediaCoverage)}`);
     }
@@ -230,7 +229,7 @@ function formatLevelReadinessReport(report) {
         ];
         lines.push(`  ${metricParts.join(", ")}`);
         if (report.thresholds.audioCoverage !== null && report.thresholds.audioCoverage !== undefined) {
-            lines.push(`  Optional audio: audio ${formatPercent(row.metrics.audioCoverage)}, full media ${formatPercent(row.metrics.fullMediaCoverage)}`);
+            lines.push(`  Required media: audio ${formatPercent(row.metrics.audioCoverage)}, full media ${formatPercent(row.metrics.fullMediaCoverage)}`);
         }
         lines.push(`  ${formatCardQualityMetricsLine(row.cardQuality.metrics)}`);
         if (row.failingChecks.length > 0) {

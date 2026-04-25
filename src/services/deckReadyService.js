@@ -17,7 +17,7 @@ function formatDeckReadyReport(summary, doctorReport = null) {
     const exportIssues = summary.exportIssues || { count: 0, warnings: 0, errors: 0 };
     const exportIssuesPath = summary.reports?.exportIssuesPath || "reports/export-issues.json";
     const levelReadiness = doctorReport?.quality?.levelReadiness || null;
-    const audioEnabled = doctorReport?.status?.audioEnabled !== false;
+    const audioEnabled = true;
     const selectedLevels = Array.isArray(summary.levels) ? summary.levels : [];
     const selectedReadinessRows = levelReadiness?.levels?.filter((entry) => selectedLevels.includes(entry.level)) || [];
     const selectedWeakestLevel = selectedReadinessRows.length > 0
@@ -51,9 +51,9 @@ function formatDeckReadyReport(summary, doctorReport = null) {
 
     if (doctorReport?.status?.mediaReadiness) {
         lines.push("");
-        lines.push("Acquisition readiness:");
+        lines.push("Media source readiness:");
         for (const entry of doctorReport.status.mediaReadiness) {
-            lines.push(`- ${entry.label}: ${entry.ready ? "ready" : "not ready"}`);
+            lines.push(`- ${entry.label} source: ${entry.ready ? "ready" : "not ready"}`);
         }
     }
 

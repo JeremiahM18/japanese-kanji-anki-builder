@@ -55,7 +55,8 @@ test("formatDeckReadyReport summarizes packaged media and readiness", () => {
     assert.match(text, /Japanese Kanji Builder Deck Ready/);
     assert.match(text, /Unique packaged media files: 3/);
     assert.match(text, /Stroke-order animation fields: 2/);
-    assert.match(text, /Audio: not ready/);
+    assert.match(text, /Media source readiness:/);
+    assert.match(text, /Audio source: not ready/);
     assert.match(text, /Full media coverage: 25.0%/);
     assert.match(text, /Export fallback issues: 0/);
     assert.match(text, /Level quality gates:/);
@@ -94,7 +95,7 @@ test("formatDeckReadyReport recommends configuring acquisition when no media was
     assert.match(text, /add local media sources or configure remote fallback providers/i);
 });
 
-test("formatDeckReadyReport hides audio sections when audio is disabled", () => {
+test("formatDeckReadyReport keeps audio sections visible because audio is required", () => {
     const text = formatDeckReadyReport({
         outDir: "C:/repo/out/build",
         levels: [5],
@@ -112,9 +113,9 @@ test("formatDeckReadyReport hides audio sections when audio is disabled", () => 
         quality: { levelReadiness: { overallReady: false, weakestLevels: [{ level: 5 }], levels: [{ level: 5, ready: false, readinessScore: 0.6 }] } },
     });
 
-    assert.doesNotMatch(text, /Audio fields:/);
-    assert.doesNotMatch(text, /Audio coverage:/);
-    assert.doesNotMatch(text, /Full media coverage:/);
+    assert.match(text, /Audio fields: 0/);
+    assert.match(text, /Audio coverage: 0.0%/);
+    assert.match(text, /Full media coverage: 0.0%/);
 });
 
 

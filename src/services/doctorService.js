@@ -62,7 +62,7 @@ function describeMediaReadiness({ label, localDir, remoteBaseUrl, remoteEnvVar, 
 
 function buildDoctorStatus(config, { buildToolchainStatusFn = buildToolchainStatus } = {}) {
     return {
-        audioEnabled: config.enableAudio !== false,
+        audioEnabled: true,
         required: [
             describePathStatus(config.jlptJsonPath, { label: "JLPT dataset", required: true }),
             describePathStatus(config.kradfilePath, { label: "KRADFILE", required: true }),
@@ -74,7 +74,7 @@ function buildDoctorStatus(config, { buildToolchainStatusFn = buildToolchainStat
         mediaSources: [
             describePathStatus(config.strokeOrderImageSourceDir, { label: "Stroke-order images", required: false, kind: "directory" }),
             describePathStatus(config.strokeOrderAnimationSourceDir, { label: "Stroke-order animations", required: false, kind: "directory" }),
-            ...(config.enableAudio === false ? [] : [describePathStatus(config.audioSourceDir, { label: "Audio sources", required: false, kind: "directory" })]),
+            describePathStatus(config.audioSourceDir, { label: "Audio sources", required: false, kind: "directory" }),
         ],
         mediaReadiness: [
             describeMediaReadiness({
@@ -90,12 +90,12 @@ function buildDoctorStatus(config, { buildToolchainStatusFn = buildToolchainStat
                 remoteFallbackBaseUrls: [config.remoteStrokeOrderAnimCjkBaseUrl],
                 remoteEnvVar: "REMOTE_STROKE_ORDER_ANIMATION_BASE_URL or REMOTE_STROKE_ORDER_ANIMCJK_BASE_URL",
             }),
-            ...(config.enableAudio === false ? [] : [describeMediaReadiness({
+            describeMediaReadiness({
                 label: "Audio",
                 localDir: config.audioSourceDir,
                 remoteBaseUrl: config.remoteAudioBaseUrl,
                 remoteEnvVar: "REMOTE_AUDIO_BASE_URL",
-            })]),
+            }),
         ],
         toolchain: buildToolchainStatusFn(),
     };
@@ -142,12 +142,10 @@ async function buildDoctorReport({
             mediaCoverage,
             cardQuality,
             levels: [5, 4, 3, 2, 1],
-            thresholds: buildDefaultQualityThresholds({ audioEnabled: config.enableAudio !== false }),
+            thresholds: buildDefaultQualityThresholds(),
         })
         : null;
-    const voicevox = config.enableAudio !== false
-        ? await buildVoicevoxDoctorReportFn({ config })
-        : null;
+    const voicevox = await buildVoicevoxDoctorReportFn({ config });
 
     const missingRequiredTools = getMissingRequiredTools(status.toolchain);
     const missingPackagingTools = getMissingPackagingTools(status.toolchain);
@@ -334,10 +332,8 @@ function formatDoctorReport(report) {
         if (report.coverage.media) {
             lines.push(`- Managed stroke-order media: ${formatPercent(report.coverage.media.strokeOrderCoverageRatio)} (${report.coverage.media.strokeOrderCovered}/${report.coverage.media.totalKanji} kanji)`);
             lines.push(`- Managed animation media: ${formatPercent(report.coverage.media.trueAnimationCoverageRatio)} (${report.coverage.media.trueAnimationCovered}/${report.coverage.media.totalKanji} kanji)`);
-            if (report.status.audioEnabled) {
-                lines.push(`- Managed audio media: ${formatPercent(report.coverage.media.audioCoverageRatio)} (${report.coverage.media.audioCovered}/${report.coverage.media.totalKanji} kanji)`);
-                lines.push(`- Managed full media coverage: ${formatPercent(report.coverage.media.fullMediaCoverageRatio)} (${report.coverage.media.fullMediaCovered}/${report.coverage.media.totalKanji} kanji)`);
-            }
+            lines.push(`- Managed audio media: ${formatPercent(report.coverage.media.audioCoverageRatio)} (${report.coverage.media.audioCovered}/${report.coverage.media.totalKanji} kanji)`);
+            lines.push(`- Managed full media coverage: ${formatPercent(report.coverage.media.fullMediaCoverageRatio)} (${report.coverage.media.fullMediaCovered}/${report.coverage.media.totalKanji} kanji)`);
         }
     }
 

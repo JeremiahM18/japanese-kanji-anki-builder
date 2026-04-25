@@ -31,10 +31,16 @@ async function main() {
 
     if (options.json) {
         console.log(JSON.stringify(readiness, null, 2));
+        if (!readiness.overallReady) {
+            process.exitCode = 1;
+        }
         return;
     }
 
     process.stdout.write(formatLevelReadinessReport(readiness));
+    if (!readiness.overallReady) {
+        process.exitCode = 1;
+    }
 }
 
 if (require.main === module) {

@@ -79,9 +79,33 @@ async function main() {
         process.stdout.write(formatDeckReadyReport(summary, doctorReport));
     }
 
-    if (!options.allowExportFallbacks && (summary.exportIssues?.count || 0) > 0) {
+    if (shouldFailDeckReady({ summary, doctorReport, allowExportFallbacks: options.allowExportFallbacks })) {
         process.exitCode = 1;
     }
+}
+
+function hasSelectedLevelReadinessFailure({ summary, doctorReport }) {
+    const selectedLevels = new Set(Array.isArray(summary?.levels) ? summary.levels : []);
+    const rows = doctorReport?.quality?.levelReadiness?.levels || [];
+    return rows.some((row) => selectedLevels.has(row.level) && !row.ready);
+}
+
+function hasSelectedMediaCoverageFailure(summary) {
+    const coverage = summary?.coverage || {};
+    return (
+        typeof coverage.audio === "number"
+        && typeof coverage.fullMedia === "number"
+        && (coverage.audio < 1 || coverage.fullMedia < 1)
+    );
+}
+
+function shouldFailDeckReady({ summary, doctorReport, allowExportFallbacks = false }) {
+    if (!allowExportFallbacks && (summary?.exportIssues?.count || 0) > 0) {
+        return true;
+    }
+
+    return hasSelectedLevelReadinessFailure({ summary, doctorReport })
+        || hasSelectedMediaCoverageFailure(summary);
 }
 
 if (require.main === module) {
@@ -93,6 +117,9 @@ if (require.main === module) {
 
 
 module.exports = {
+    hasSelectedLevelReadinessFailure,
+    hasSelectedMediaCoverageFailure,
     main,
     parseArgs,
+    shouldFailDeckReady,
 };

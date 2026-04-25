@@ -31,7 +31,7 @@ npm run deck:words:ready -- --levels=5
 npm run deck:words:apkg -- --levels=5
 ```
 
-Audio does not block the default kanji deck `ready` state. Audio coverage is reported separately and must pass the audio policy before it ships.
+Kanji deck readiness requires governed audio and full media coverage. A level with missing managed audio must not be treated as ready.
 
 ## Source Of Truth
 
@@ -55,7 +55,7 @@ Kanji decks:
 - N5 and N4 kanji are fully protected by golden review coverage.
 - `deck:ready` fails on export fallbacks unless `--allow-export-fallbacks` is explicit.
 - Stroke-order images and animations are separate readiness surfaces.
-- Audio is governed by policy before it is treated as releasable.
+- Audio is governed by policy and required for kanji deck readiness.
 
 Word decks:
 

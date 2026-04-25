@@ -1185,27 +1185,18 @@ test("buildWordTsvForJlptLevel includes explicit learner-facing coverage metadat
 test("buildWordTsvForJlptLevel keeps contextual compound readings aligned across word metadata", async () => {
     const wordExportService = createWordExportService({
         sentenceCorpus: [],
-        curatedStudyData: {
-            公: {
-                englishMeaning: "public / official",
-                displayWord: { written: "公園", pron: "こうえん" },
-                breakdownOverrides: [{
-                    matchWord: "公園",
-                    englishMeaning: "public / official",
-                    displayWord: { written: "公", pron: "こう" },
-                }],
-            },
-            園: {
-                englishMeaning: "garden / park",
-                breakdownDisplayWord: { written: "園", pron: "えん" },
-                breakdownEnglishMeaning: "garden / park",
-            },
-        },
+        curatedStudyData: {},
         wordStudyData: {
             "公園|こうえん": {
                 written: "公園",
                 reading: "こうえん",
                 meaning: "park",
+                jlpt: 5,
+            },
+            "学生|がくせい": {
+                written: "学生",
+                reading: "がくせい",
+                meaning: "student",
                 jlpt: 5,
             },
         },
@@ -1216,10 +1207,13 @@ test("buildWordTsvForJlptLevel keeps contextual compound readings aligned across
         jlptOnlyJson: {
             公: { jlpt: 4 },
             園: { jlpt: 3 },
+            学: { jlpt: 5 },
+            生: { jlpt: 5 },
         },
         jlptWordLevelContract: {
             wordLevels: {
                 "公園|こうえん": { written: "公園", reading: "こうえん", jlpt: 5 },
+                "学生|がくせい": { written: "学生", reading: "がくせい", jlpt: 5 },
             },
         },
         kanjiApiClient: {
@@ -1227,7 +1221,13 @@ test("buildWordTsvForJlptLevel keeps contextual compound readings aligned across
                 if (kanji === "公") {
                     return { meanings: ["public", "official"], on_readings: ["ク", "コウ"], kun_readings: ["おおやけ"] };
                 }
-                return { meanings: ["garden", "park"], on_readings: ["エン"], kun_readings: ["その"] };
+                if (kanji === "園") {
+                    return { meanings: ["garden", "park"], on_readings: ["エン"], kun_readings: ["その"] };
+                }
+                if (kanji === "学") {
+                    return { meanings: ["study", "learning"], on_readings: ["ガク"], kun_readings: ["まな.ぶ"] };
+                }
+                return { meanings: ["life", "birth"], on_readings: ["ショウ", "セイ"], kun_readings: ["い.きる"] };
             },
             async getWords() {
                 return [];
@@ -1238,14 +1238,20 @@ test("buildWordTsvForJlptLevel keeps contextual compound readings aligned across
         concurrency: 1,
     });
 
-    const [, row] = result.tsv.trim().split("\n");
-    const columns = row.split("\t");
+    const rowsByWord = new Map(result.tsv.trim().split("\n").slice(1).map((row) => {
+        const columns = row.split("\t");
+        return [columns[0], columns];
+    }));
+    const koenColumns = rowsByWord.get("公園");
+    const gakuseiColumns = rowsByWord.get("学生");
 
-    assert.equal(columns[0], "公園");
-    assert.equal(columns[2], "<ruby>公<rt>こう</rt></ruby><ruby>園<rt>えん</rt></ruby>");
-    assert.equal(columns[9], "公: こう ／ 園: えん");
-    assert.match(columns[10], /公 （こう）/u);
-    assert.match(columns[10], /園 （えん）/u);
+    assert.equal(koenColumns[2], "<ruby>公<rt>こう</rt></ruby><ruby>園<rt>えん</rt></ruby>");
+    assert.equal(koenColumns[9], "公: こう ／ 園: えん");
+    assert.match(koenColumns[10], /公 （こう）/u);
+    assert.match(koenColumns[10], /園 （えん）/u);
+    assert.equal(gakuseiColumns[2], "<ruby>学<rt>がく</rt></ruby><ruby>生<rt>せい</rt></ruby>");
+    assert.equal(gakuseiColumns[9], "学: がく ／ 生: せい");
+    assert.match(gakuseiColumns[10], /生 （せい）/u);
 });
 
 test("buildWordTsvForJlptLevel emits governed word audio when a managed word-reading asset exists", async () => {

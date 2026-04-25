@@ -818,6 +818,58 @@ function buildWordReadingBreakdown({
     return formatReadingBreakdownSegmentsAsRuby(segments);
 }
 
+function buildContextualKanjiReadingMap({
+    candidate,
+    curatedEntry = null,
+    kanjiInferenceCache,
+    curatedStudyData = {},
+}) {
+    const written = String(candidate?.written || "").trim();
+    const reading = String(curatedEntry?.reading || candidate?.pron || "").trim();
+    const units = buildReadingBreakdownUnits(written);
+    const kanjiUnits = units.filter((unit) => unit.kind === "kanji" && HAN_CHAR_RE.test(unit.char));
+
+    if (kanjiUnits.length < 2 || !reading) {
+        return new Map();
+    }
+
+    const segments = alignReadingBreakdownUnits({
+        units,
+        reading,
+        kanjiInferenceCache,
+        curatedStudyData,
+        coverageReadings: curatedEntry?.coverage?.coversReadings || {},
+    });
+    if (!segments) {
+        return new Map();
+    }
+
+    const readings = new Map();
+    const ambiguous = new Set();
+
+    for (const segment of segments) {
+        if (segment?.kind !== "kanji" || !HAN_CHAR_RE.test(segment.label || "")) {
+            continue;
+        }
+
+        const kanji = segment.label;
+        const segmentReading = String(segment.reading || "").trim();
+        if (!segmentReading || ambiguous.has(kanji)) {
+            continue;
+        }
+
+        if (readings.has(kanji) && readings.get(kanji) !== segmentReading) {
+            readings.delete(kanji);
+            ambiguous.add(kanji);
+            continue;
+        }
+
+        readings.set(kanji, segmentReading);
+    }
+
+    return readings;
+}
+
 function extractPrimaryCoverageReading(breakdown = {}) {
     const primary = String(breakdown?.primaryReading || "").trim();
     if (primary) {
@@ -883,7 +935,7 @@ function buildConstituentLevelLabel({ kanji, deckLevel, jlptOnlyJson }) {
     return `JLPT N${actualLevel} kanji`;
 }
 
-function resolveCoverageMetadata({ entry, kanjiInferenceCache, curatedStudyData }) {
+function resolveCoverageMetadata({ entry, kanjiInferenceCache, curatedStudyData, contextualKanjiReadings = new Map() }) {
     const explicitFocusKanji = Array.isArray(entry?.curatedEntry?.coverage?.focusKanji)
         ? entry.curatedEntry.coverage.focusKanji
         : null;
@@ -919,8 +971,12 @@ function resolveCoverageMetadata({ entry, kanjiInferenceCache, curatedStudyData 
                     reading: entry.curatedEntry?.reading || entry.candidate.pron,
                     meaning: entry.curatedEntry?.meaning || entry.candidate.gloss,
                 },
+                contextKanjiReading: contextualKanjiReadings.get(kanji) || "",
             });
-            const reading = extractPrimaryCoverageReading(breakdown);
+            const contextualReading = String(contextualKanjiReadings.get(kanji) || "").trim();
+            const reading = breakdown.primaryReading
+                ? extractPrimaryCoverageReading(breakdown)
+                : (contextualReading || extractPrimaryCoverageReading(breakdown));
             return reading ? `${kanji}: ${reading}` : kanji;
         })
         .filter(Boolean)
@@ -1004,7 +1060,7 @@ function selectWordSentence({ candidate, curatedEntry, sourceKanji, constituentK
     } : null;
 }
 
-function buildBreakdownInference({ kanji, inference, curatedEntry = null, contextWord = "", contextCandidate = null }) {
+function buildBreakdownInference({ kanji, inference, curatedEntry = null, contextWord = "", contextCandidate = null, contextKanjiReading = "" }) {
     const exactCandidate = pickBestExactSingleCandidate(inference, kanji);
     const exactPron = String(exactCandidate?.pron || "").trim();
     const inferredPrimaryReading = String(inference?.primaryReading || "").trim();
@@ -1056,13 +1112,18 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null, contex
     const curatedDisplayWord = (useBreakdownOverrides && breakdownOverrideMatchesContext
         ? breakdownOverrideDisplayWord
         : (defaultCuratedDisplayWordAllowed ? defaultCuratedDisplayWord : null));
+    const contextualKanjiReading = String(contextKanjiReading || "").trim();
+    const contextualDisplayWord = !contextDisplayWord && !curatedDisplayWord && contextualKanjiReading
+        ? { written: kanji, pron: contextualKanjiReading }
+        : null;
     const useExactCandidate = !contextDisplayWord
         && !curatedDisplayWord
+        && !contextualDisplayWord
         && exactCandidate?.written === kanji
         && exactPron
         && !KATAKANA_ONLY_RE.test(exactPron)
         && exactPron === inferredPrimaryReading;
-    const displayWord = contextDisplayWord || curatedDisplayWord || (useExactCandidate
+    const displayWord = contextDisplayWord || curatedDisplayWord || contextualDisplayWord || (useExactCandidate
         ? { written: kanji, pron: exactPron }
         : { written: kanji, pron: "" });
     const englishMeaning = String(
@@ -1076,7 +1137,7 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null, contex
     ).trim();
 
     return {
-        primaryReading: contextDisplayWord?.pron || curatedDisplayWord?.pron || (useExactCandidate ? exactPron : ""),
+        primaryReading: contextDisplayWord?.pron || curatedDisplayWord?.pron || contextualDisplayWord?.pron || (useExactCandidate ? exactPron : ""),
         meaningJP: buildMeaningJP(displayWord, englishMeaning),
         onReading: normalizeBreakdownReadingField(inference?.onReading, /^(on|オン)\s*:\s*/i),
         kunReading: normalizeBreakdownReadingField(inference?.kunReading, /^(kun|くん)\s*:\s*/i),
@@ -1086,8 +1147,8 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null, contex
     };
 }
 
-function buildBreakdownHtmlItem({ kanji, inference, curatedEntry = null, contextWord = "", contextCandidate = null }) {
-    const breakdown = buildBreakdownInference({ kanji, inference, curatedEntry, contextWord, contextCandidate });
+function buildBreakdownHtmlItem({ kanji, inference, curatedEntry = null, contextWord = "", contextCandidate = null, contextKanjiReading = "" }) {
+    const breakdown = buildBreakdownInference({ kanji, inference, curatedEntry, contextWord, contextCandidate, contextKanjiReading });
     const levelLabel = buildConstituentLevelLabel({
         kanji,
         deckLevel: contextCandidate?.deckLevel,
@@ -1374,6 +1435,12 @@ function createWordExportService({
 
         for (const entry of studyEntries) {
             const constituentKanji = extractConstituentKanji(entry.candidate.written);
+            const contextualKanjiReadings = buildContextualKanjiReadingMap({
+                candidate: entry.candidate,
+                curatedEntry: entry.curatedEntry,
+                kanjiInferenceCache,
+                curatedStudyData,
+            });
             const breakdownHtml = constituentKanji
                 .map((kanji) => {
                     mediaKanji.add(kanji);
@@ -1393,6 +1460,7 @@ function createWordExportService({
                             deckLevel: levelNumber,
                             jlptOnlyJson,
                         },
+                        contextKanjiReading: contextualKanjiReadings.get(kanji) || "",
                     });
                 })
                 .filter(Boolean)
@@ -1401,6 +1469,7 @@ function createWordExportService({
                 entry,
                 kanjiInferenceCache,
                 curatedStudyData,
+                contextualKanjiReadings,
             });
             const exampleSentence = formatExampleSentence(selectWordSentence({
                 candidate: entry.candidate,
@@ -1506,6 +1575,7 @@ module.exports = {
     buildWordKey,
     buildWordNotes,
     buildWordReadingBreakdown,
+    buildContextualKanjiReadingMap,
     buildWordStudyIndexes,
     buildWordSupportScore,
     compareWordDeckAuditOrder,

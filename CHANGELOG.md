@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Fixed
 
+- Aligned compound word metadata so unambiguous contextual kanji readings from `ReadingBreakdown` can fill `CoversReading` and kanji breakdown panels when no explicit curated reading is present.
 - Made `release:gate` report that it validates smoke-fixture artifacts rather than public product deck readiness, and aligned release docs with that scope.
 - Fixed the N5 word golden review set so it follows the tracked word-level contract, expects the current governed `休み` example, and keeps `公園` accountable for the contextual `公 （こう）` breakdown.
 

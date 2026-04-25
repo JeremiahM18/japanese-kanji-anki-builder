@@ -1182,6 +1182,72 @@ test("buildWordTsvForJlptLevel includes explicit learner-facing coverage metadat
     assert.match(lines[1], /間\.gif/);
 });
 
+test("buildWordTsvForJlptLevel keeps contextual compound readings aligned across word metadata", async () => {
+    const wordExportService = createWordExportService({
+        sentenceCorpus: [],
+        curatedStudyData: {
+            公: {
+                englishMeaning: "public / official",
+                displayWord: { written: "公園", pron: "こうえん" },
+                breakdownOverrides: [{
+                    matchWord: "公園",
+                    englishMeaning: "public / official",
+                    displayWord: { written: "公", pron: "こう" },
+                }],
+            },
+            園: {
+                englishMeaning: "garden / park",
+                breakdownDisplayWord: { written: "園", pron: "えん" },
+                breakdownEnglishMeaning: "garden / park",
+            },
+        },
+        wordStudyData: {
+            "公園|こうえん": {
+                written: "公園",
+                reading: "こうえん",
+                meaning: "park",
+                jlpt: 5,
+            },
+        },
+    });
+
+    const result = await wordExportService.buildWordTsvForJlptLevel({
+        levelNumber: 5,
+        jlptOnlyJson: {
+            公: { jlpt: 4 },
+            園: { jlpt: 3 },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {
+                "公園|こうえん": { written: "公園", reading: "こうえん", jlpt: 5 },
+            },
+        },
+        kanjiApiClient: {
+            async getKanji(kanji) {
+                if (kanji === "公") {
+                    return { meanings: ["public", "official"], on_readings: ["ク", "コウ"], kun_readings: ["おおやけ"] };
+                }
+                return { meanings: ["garden", "park"], on_readings: ["エン"], kun_readings: ["その"] };
+            },
+            async getWords() {
+                return [];
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+        concurrency: 1,
+    });
+
+    const [, row] = result.tsv.trim().split("\n");
+    const columns = row.split("\t");
+
+    assert.equal(columns[0], "公園");
+    assert.equal(columns[2], "<ruby>公<rt>こう</rt></ruby><ruby>園<rt>えん</rt></ruby>");
+    assert.equal(columns[9], "公: こう ／ 園: えん");
+    assert.match(columns[10], /公 （こう）/u);
+    assert.match(columns[10], /園 （えん）/u);
+});
+
 test("buildWordTsvForJlptLevel emits governed word audio when a managed word-reading asset exists", async () => {
     const wordExportService = createWordExportService({
         sentenceCorpus: [],

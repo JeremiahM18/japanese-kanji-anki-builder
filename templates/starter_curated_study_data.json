@@ -5686,7 +5686,16 @@
       "written": "公園",
       "pron": "こうえん"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "公園",
+        "englishMeaning": "public / official",
+        "displayWord": {
+          "written": "公",
+          "pron": "こう"
+        }
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",

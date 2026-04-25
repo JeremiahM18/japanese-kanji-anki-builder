@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 Checkpoint metrics in older bullets describe the state at that checkpoint. Use the ready/audit commands for current release decisions.
 
+### Fixed
+
+- Fixed the N5 word golden review set so it follows the tracked word-level contract, expects the current governed `休み` example, and keeps `公園` accountable for the contextual `公 （こう）` breakdown.
+
 ### Changed
 
 - Changed word-card pronunciation display so `ReadingBreakdown` is the only learner-facing reading surface and `PitchAccent` renders as a graph without redundant caption text.

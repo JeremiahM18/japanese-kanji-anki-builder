@@ -1,0 +1,85 @@
+const test = require("node:test");
+const assert = require("node:assert/strict");
+
+const {
+    N5_PRODUCT_READINESS_COMMANDS,
+    buildProductReadinessPlan,
+    buildSpawnOptions,
+    formatProductReadinessReport,
+    runProductReadinessGate,
+} = require("../src/services/productReadinessService");
+
+test("buildProductReadinessPlan defines the N5 automated product checkpoint", () => {
+    const plan = buildProductReadinessPlan({ level: 5 });
+
+    assert.equal(plan.scope.type, "n5-product-readiness-checkpoint");
+    assert.equal(plan.scope.doesNotValidate.includes("fresh isolated TSV or .apkg product artifacts"), true);
+    assert.deepEqual(plan.commands.map((command) => command.id), [
+        "kanji-contract-audit",
+        "word-contract-audit",
+        "audio-provenance-audit",
+        "n5-kanji-golden-review",
+        "n5-word-golden-review",
+    ]);
+});
+
+test("buildProductReadinessPlan rejects unsupported levels", () => {
+    assert.throws(() => buildProductReadinessPlan({ level: 4 }), /supports N5 only/);
+});
+
+test("runProductReadinessGate passes when all checkpoint commands pass", () => {
+    const calls = [];
+    const report = runProductReadinessGate({
+        runCommandFn(command, args, options) {
+            calls.push([command, ...args].join(" "));
+            assert.equal(options.shell, process.platform === "win32");
+            return { status: 0, stdout: "ok", stderr: "" };
+        },
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.checks.length, N5_PRODUCT_READINESS_COMMANDS.length);
+    assert.equal(calls.some((call) => call.includes("deck:words:review:n5")), true);
+});
+
+test("buildSpawnOptions supports nested npm scripts on Windows and large audit output", () => {
+    const options = buildSpawnOptions("repo");
+
+    assert.equal(options.cwd, "repo");
+    assert.equal(options.encoding, "utf8");
+    assert.equal(options.shell, process.platform === "win32");
+    assert.equal(options.maxBuffer >= 20 * 1024 * 1024, true);
+});
+
+test("runProductReadinessGate fails when any checkpoint command fails", () => {
+    const report = runProductReadinessGate({
+        runCommandFn(command, args) {
+            if (args.includes("deck:words:review:n5")) {
+                return { status: 1, stdout: "word review failed", stderr: "golden drift" };
+            }
+            return { status: 0, stdout: "ok", stderr: "" };
+        },
+    });
+
+    assert.equal(report.passed, false);
+    const failed = report.checks.find((check) => check.id === "n5-word-golden-review");
+    assert.equal(failed.passed, false);
+    assert.match(failed.stderrTail, /golden drift/);
+});
+
+test("formatProductReadinessReport states scope and exclusions", () => {
+    const text = formatProductReadinessReport({
+        passed: true,
+        scope: buildProductReadinessPlan({ level: 5 }).scope,
+        checks: [{
+            label: "N5 word golden review",
+            command: "npm run deck:words:review:n5",
+            passed: true,
+        }],
+    });
+
+    assert.match(text, /N5 Product Readiness Checkpoint/);
+    assert.match(text, /Overall result: passing/);
+    assert.match(text, /Does not validate:/);
+    assert.match(text, /fresh isolated TSV or \.apkg product artifacts/);
+});

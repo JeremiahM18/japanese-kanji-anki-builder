@@ -57,8 +57,11 @@ npm run data:audit:jlpt:words
 npm run data:audit:audio -- --json
 npm run deck:review:accessibility -- --deck-kind=kanji
 npm run deck:review:accessibility -- --deck-kind=word
+npm run product:readiness:n5
 npm run release:gate
 ```
+
+`product:readiness:n5` is the current automated N5 product checkpoint. It runs the JLPT kanji audit, JLPT word audit, governed audio provenance audit, N5 kanji golden review, and N5 word golden review. It does not certify fresh isolated TSV or `.apkg` product artifacts, tracked-source-only artifact generation, manual Anki import review, mobile QA, screen-reader QA, or listening QA.
 
 `release:gate` validates smoke-fixture artifacts and packaging contracts. It does not certify public product deck readiness. Add level-specific review commands for the deck being shipped, including `npm run deck:words:review:n5` for an N5 word release.
 

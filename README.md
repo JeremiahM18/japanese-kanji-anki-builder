@@ -101,8 +101,11 @@ npm run data:audit:jlpt:words
 npm run data:audit:audio -- --json
 npm run deck:review:accessibility -- --deck-kind=kanji
 npm run deck:review:accessibility -- --deck-kind=word
+npm run product:readiness:n5
 npm run release:gate
 ```
+
+`product:readiness:n5` runs the current automated N5 product checkpoint: JLPT kanji and word audits, governed audio provenance, and N5 kanji and word golden reviews. It still does not validate fresh tracked-source TSV or `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA.
 
 `release:gate` validates deterministic smoke-fixture artifacts and packaging contracts. It does not certify public product deck readiness. Add level-specific readiness, golden review, accessibility, provenance, and manual QA commands for the surface being changed.
 
@@ -283,6 +286,7 @@ Repository governance:
 | `npm run lint` | Run ESLint |
 | `npm run ci:smoke` | Build deterministic smoke artifacts |
 | `npm run release:gate` | Validate smoke-fixture release artifact contracts |
+| `npm run product:readiness:n5` | Run the automated N5 product readiness checkpoint |
 | `npm run doctor` | Check setup, coverage, readiness, and next steps |
 | `npm run doctor:voicevox` | Verify local governed VOICEVOX setup |
 | `npm run deck:readiness` | Report per-level quality gates |

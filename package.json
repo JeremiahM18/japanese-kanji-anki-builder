@@ -74,6 +74,7 @@
     "deck:words:gap-plan:n1": "node scripts/reportWordReadingGapPlan.js --level=1",
     "ci:smoke": "node scripts/ciSmoke.js",
     "release:gate": "node scripts/releaseGate.js",
+    "product:artifacts:n5": "node scripts/trackedSourceArtifacts.js --level=5",
     "product:readiness:n5": "node scripts/productReadiness.js --level=5",
     "deck:review:n3": "node scripts/reviewGoldenLevel.js --level=3",
     "bench:build": "node scripts/benchmarkBuild.js",

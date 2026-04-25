@@ -13,11 +13,12 @@ test("buildProductReadinessPlan defines the N5 automated product checkpoint", ()
     const plan = buildProductReadinessPlan({ level: 5 });
 
     assert.equal(plan.scope.type, "n5-product-readiness-checkpoint");
-    assert.equal(plan.scope.doesNotValidate.includes("fresh isolated TSV or .apkg product artifacts"), true);
+    assert.equal(plan.scope.doesNotValidate.includes("tracked-source kanji TSV or .apkg product artifacts"), true);
     assert.deepEqual(plan.commands.map((command) => command.id), [
         "kanji-contract-audit",
         "word-contract-audit",
         "audio-provenance-audit",
+        "n5-tracked-source-word-artifact",
         "n5-kanji-golden-review",
         "n5-word-golden-review",
     ]);
@@ -40,6 +41,7 @@ test("runProductReadinessGate passes when all checkpoint commands pass", () => {
     assert.equal(report.passed, true);
     assert.equal(report.checks.length, N5_PRODUCT_READINESS_COMMANDS.length);
     assert.equal(calls.some((call) => call.includes("deck:words:review:n5")), true);
+    assert.equal(calls.some((call) => call.includes("product:artifacts:n5")), true);
 });
 
 test("buildSpawnOptions supports nested npm scripts on Windows and large audit output", () => {
@@ -81,5 +83,5 @@ test("formatProductReadinessReport states scope and exclusions", () => {
     assert.match(text, /N5 Product Readiness Checkpoint/);
     assert.match(text, /Overall result: passing/);
     assert.match(text, /Does not validate:/);
-    assert.match(text, /fresh isolated TSV or \.apkg product artifacts/);
+    assert.match(text, /tracked-source kanji TSV or \.apkg product artifacts/);
 });

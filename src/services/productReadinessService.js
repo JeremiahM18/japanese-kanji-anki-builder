@@ -7,17 +7,17 @@ const N5_PRODUCT_READINESS_SCOPE = Object.freeze({
         "JLPT kanji contract, starter, and golden-review alignment",
         "JLPT word contract and starter alignment",
         "managed audio provenance policy",
+        "tracked-source N5 word TSV artifact generation",
         "N5 kanji golden review benchmark",
         "N5 word golden review benchmark",
     ],
     doesNotValidate: [
-        "fresh isolated TSV or .apkg product artifacts",
-        "tracked-source-only artifact generation",
+        "tracked-source kanji TSV or .apkg product artifacts",
         "manual Anki import review",
         "mobile, screen-reader, or listening QA",
     ],
     sourceBoundary: "Uses existing review and audit commands. Some checks still read required workspace inputs such as local JLPT data and managed media.",
-    followUp: "Add an isolated tracked-source artifact gate before calling an N5 public release fully certified.",
+    followUp: "Add tracked-source kanji TSV and .apkg artifact gates before calling an N5 public release fully certified.",
 });
 
 const N5_PRODUCT_READINESS_COMMANDS = Object.freeze([
@@ -38,6 +38,12 @@ const N5_PRODUCT_READINESS_COMMANDS = Object.freeze([
         label: "Audio provenance audit",
         command: "npm",
         args: ["run", "data:audit:audio", "--", "--json"],
+    }),
+    Object.freeze({
+        id: "n5-tracked-source-word-artifact",
+        label: "N5 tracked-source word TSV artifact",
+        command: "npm",
+        args: ["run", "product:artifacts:n5"],
     }),
     Object.freeze({
         id: "n5-kanji-golden-review",

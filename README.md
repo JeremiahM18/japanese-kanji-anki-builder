@@ -19,7 +19,7 @@ The repository produces deterministic TSV exports and optional `.apkg` packages,
 npm install
 npm run doctor
 npm run doctor:voicevox
-npm run deck:readiness:global
+npm run deck:readiness
 npm run corpus:init
 npm run curated:init
 npm run words:init
@@ -114,12 +114,11 @@ Add level-specific review commands for the surface being changed.
 npm run doctor
 npm run doctor:voicevox
 npm run deck:readiness
-npm run deck:readiness:global
 ```
 
 - `doctor` checks datasets, local files, media folders, managed media, tooling, and next steps.
 - `doctor:voicevox` verifies the local VOICEVOX Nemo engine and pinned release speaker.
-- `deck:readiness` and `deck:readiness:global` report per-level deck readiness.
+- `deck:readiness` reports per-level deck readiness.
 
 ### Bootstrap Local Data
 

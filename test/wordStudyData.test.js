@@ -783,6 +783,7 @@ test("tracked starter word data includes the twenty-eighth governed N4 completio
 
     assert.equal(starterEntries["京|みやこ"].coverage.coversReadings["京"], "みやこ");
     assert.equal(starterEntries["南京|なんきん"].coverage.coversReadings["京"], "きん");
+    assert.equal(starterEntries["北京|ペキン"].coverage.coversReadings["京"], "キン");
     assert.equal(starterEntries["明朝|みんちょう"].coverage.coversReadings["明"], "みん");
     assert.equal(starterEntries["法度|はっと"].coverage.coversReadings["度"], "と");
     assert.equal(starterEntries["自業自得|じごうじとく"].coverage.coversReadings["業"], "ごう");
@@ -796,6 +797,7 @@ test("tracked starter word data includes the twenty-eighth governed N4 completio
     assert.equal(starterEntries["試みる|こころみる"].coverage.coversReadings["試"], "こころみる");
     assert.equal(starterEntries["正す|ただす"].coverage.coversReadings["正"], "ただす");
     assert.equal(starterEntries["足す|たす"].coverage.coversReadings["足"], "たす");
+    assert.equal(starterEntries["北京|ペキン"].readingBreakdown, "<ruby>北<rt>ペ</rt></ruby><ruby>京<rt>キン</rt></ruby>");
     assert.equal(starterEntries["主人|あるじ"].readingBreakdown, "<ruby>主人<rt>あるじ</rt></ruby>");
 });
 

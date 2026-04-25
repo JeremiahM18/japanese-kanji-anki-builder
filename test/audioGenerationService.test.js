@@ -302,6 +302,47 @@ test("generateVoicevoxAudioForWordList writes governed word-reading audio sideca
     }
 });
 
+test("generateVoicevoxAudioForWordList preserves katakana display readings while synthesizing normalized kana", async () => {
+    const rootDir = makeTempDir();
+    const synthesized = [];
+
+    try {
+        const summary = await generateVoicevoxAudioForWordList({
+            words: [{
+                written: "北京",
+                reading: "ペキン",
+                hostKanji: "京",
+            }],
+            config: {
+                audioSourceDir: path.join(rootDir, "audio"),
+                exportConcurrency: 1,
+                voicevoxEngineUrl: "http://127.0.0.1:50021",
+            },
+            speakerId: 10005,
+            fallbackVoiceLabel: "女声1",
+            voicevoxClient: {
+                async listSpeakers() {
+                    return [{ name: "女声1", styles: [{ id: 10005, name: "ノーマル" }] }];
+                },
+                async synthesize({ text, speakerId }) {
+                    synthesized.push({ text, speakerId });
+                    return Buffer.from(`${speakerId}:${text}`);
+                },
+            },
+        });
+
+        assert.equal(summary.generated, 1);
+        assert.equal(summary.results[0].reading, "ペキン");
+        assert.deepEqual(synthesized, [{ text: "ぺきん", speakerId: 10005 }]);
+        assert.equal(fs.existsSync(path.join(rootDir, "audio", "京-北京-ペキン.wav")), true);
+        const sidecar = JSON.parse(fs.readFileSync(path.join(rootDir, "audio", "京-北京-ペキン.json"), "utf-8"));
+        assert.equal(sidecar.reading, "ペキン");
+        assert.match(sidecar.notes, /synthesized reading ぺきん/);
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
 test("formatVoicevoxGenerationSummary renders a readable generation report", () => {
     const text = formatVoicevoxGenerationSummary({
         totalKanji: 2,

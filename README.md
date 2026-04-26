@@ -75,9 +75,9 @@ Word decks:
 
 | Surface | Status |
 | --- | --- |
-| N5 kanji | Golden-reviewed; blocked from ready status until exact exported audio is complete |
-| N4 kanji | Golden-reviewed; blocked from ready status until exact exported audio is complete |
-| N3 kanji | Golden-reviewed; blocked from ready status until exact exported media and audio are complete |
+| N5 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
+| N4 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
+| N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
 | N5 word | `ready_with_deferred_variants` |
 | N4 word | Active completion work |
 | N5 word audio | Governed and reviewable |
@@ -375,6 +375,7 @@ Kanji card fields include:
 - `DisplayWord`
 - `MeaningJP`
 - `PrimaryReading`
+- `KanjiMeanings`
 - `StudyWordKanji`
 - `OnReading`
 - `KunReading`
@@ -383,7 +384,7 @@ Kanji card fields include:
 - `StrokeOrderAnimation`
 - `Audio`
 
-The front of a kanji card shows only the target kanji. The back starts with `PrimaryReading` plus the learner-facing meaning from `MeaningJP`, so the learner sees the reading and meaning for the individual kanji before secondary reference fields. `DisplayWord` remains an exported contract field and must equal the target kanji, but it is not repeated as a visible card-back study word. `StudyWordKanji` is blank for kanji cards because the learning target is the individual kanji; compounds and study words belong in notes, examples, and word decks. The build pipeline rejects kanji exports that replace the target-kanji anchor with a compound or omit the primary reading. Audio is selected only when managed media has an exact `kanji-reading` asset for the target kanji and exported primary reading.
+The front of a kanji card shows only the target kanji. The back starts with `PrimaryReading` plus the learner-facing meaning associated with that reading from `MeaningJP`. Broader kanji meanings live separately in `KanjiMeanings`; they must not be collapsed into the primary-reading line. `DisplayWord` remains an exported contract field and must equal the target kanji, but it is not repeated as a visible card-back study word. `StudyWordKanji` is blank for kanji cards because the learning target is the individual kanji; compounds and study words belong in notes, examples, and word decks. The build pipeline rejects kanji exports that replace the target-kanji anchor with a compound or omit the primary reading. Audio is selected only when managed media has an exact `kanji-reading` asset for the target kanji and exported primary reading.
 
 Word card fields include:
 

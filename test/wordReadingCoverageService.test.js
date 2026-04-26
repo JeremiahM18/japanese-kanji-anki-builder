@@ -63,8 +63,8 @@ test('parseExampleEntries extracts curated word examples from notes', () => {
 
 test('buildWordReadingCoverageReport distinguishes covered, missing word, and missing example readings', () => {
   const kanjiRows = parseKanjiTsv([
-    'Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence',
-    '上\t上\t上 ／ up\tうえ\t\tオン: ジョウ\tくん: うえ、 あ.がる\t\t\t\t\t\t上手 （じょうず） - skillful ／ 上がる （あがる） - go up\t',
+    'Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence',
+    '上\t上\tup\tうえ\tup\t\tオン: ジョウ\tくん: うえ、 あ.がる\t\t\t\t\t\t上手 （じょうず） - skillful ／ 上がる （あがる） - go up\t',
   ].join('\n'));
 
   const wordRows = parseWordTsv([
@@ -88,8 +88,8 @@ test('buildWordReadingCoverageReport distinguishes covered, missing word, and mi
 
 test('buildWordReadingCoverageReport counts a related word card as covered when the reading matches', () => {
   const kanjiRows = parseKanjiTsv([
-    'Kanji	DisplayWord	MeaningJP	PrimaryReading	StudyWordKanji	OnReading	KunReading	StrokeOrder	StrokeOrderImage	StrokeOrderAnimation	Audio	Radical	Notes	ExampleSentence',
-    '後	後	後 ／ after	あと		オン: ゴ	くん: あと、 うし.ろ						後ろ （うしろ） - behind / back	',
+    'Kanji	DisplayWord	MeaningJP	PrimaryReading	KanjiMeanings	StudyWordKanji	OnReading	KunReading	StrokeOrder	StrokeOrderImage	StrokeOrderAnimation	Audio	Radical	Notes	ExampleSentence',
+    '後	後	after	あと	after		オン: ゴ	くん: あと、 うし.ろ						後ろ （うしろ） - behind / back	',
   ].join('\n'));
 
   const wordRows = parseWordTsv([
@@ -109,9 +109,9 @@ test('buildWordReadingCoverageReport counts a related word card as covered when 
 
 test('buildWordReadingCoverageReport prefers explicit word-card reading coverage metadata over whole-word readings', () => {
   const kanjiRows = parseKanjiTsv([
-    'Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence',
-    '今\t今\t今 （いま） ／ now\tいま\t\tオン: コン、 キン\tくん: いま\t\t\t\t\t\t今年 （ことし） - this year\t',
-    '日\t日\t日 （ひ） ／ day\tひ\t\tオン: ニチ\tくん: ひ\t\t\t\t\t\t今日 （きょう） - today\t',
+    'Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence',
+    '今\t今\tnow\tいま\tnow\t\tオン: コン、 キン\tくん: いま\t\t\t\t\t\t今年 （ことし） - this year\t',
+    '日\t日\tday\tひ\tday\t\tオン: ニチ\tくん: ひ\t\t\t\t\t\t今日 （きょう） - today\t',
   ].join('\n'));
 
   const wordRows = parseWordTsv([
@@ -136,8 +136,8 @@ test('buildWordReadingCoverageReport prefers explicit word-card reading coverage
 
 test('buildWordReadingCoverageReport counts earlier-deck coverage so higher levels do not need duplicate readings', () => {
   const kanjiRows = parseKanjiTsv([
-    'Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence',
-    '会\t会う\t会う ／ meet\tあう\t\tオン: カイ\tくん: あ.う\t\t\t\t\t\t会う （あう） - meet\t',
+    'Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence',
+    '会\t会う\tmeet\tあう\tmeet\t\tオン: カイ\tくん: あ.う\t\t\t\t\t\t会う （あう） - meet\t',
   ].join('\n'));
 
   const wordRows = [

@@ -166,7 +166,7 @@ test("buildInferenceForKanji rejects compound words as kanji deck anchors", asyn
 
     assert.equal(inference.displayWordText, "日");
     assert.equal(inference.primaryReading, "ひ");
-    assert.equal(inference.meaningJP, "sun / day marker");
+    assert.equal(inference.meaningJP, "day");
     assert.equal(inference.studyWordKanji, "");
 });
 
@@ -228,8 +228,55 @@ test("buildInferenceForKanji uses curated single-kanji breakdown readings before
 
     assert.equal(inference.displayWordText, "車");
     assert.equal(inference.primaryReading, "くるま");
-    assert.equal(inference.meaningJP, "car / vehicle");
+    assert.equal(inference.meaningJP, "car");
+    assert.equal(inference.kanjiMeanings, "car");
     assert.equal(inference.audioPath, "audio/8ECA_車-kanji-reading-車-くるま.wav");
+});
+
+test("buildInferenceForKanji separates primary-reading gloss from broader kanji meanings", async () => {
+    const exportService = createExportService({
+        curatedStudyData: {
+            外: {
+                displayWord: { written: "外", pron: "そと" },
+                notes: "外 （そと） - outside ／ 外国 （がいこく） - foreign country",
+            },
+        },
+        inferenceEngine: {
+            hasFullyCuratedKanjiEntry() {
+                return true;
+            },
+            inferKanjiStudyData() {
+                return {
+                    displayWord: { written: "外", pron: "そと" },
+                    bestWord: { written: "外国", pron: "がいこく" },
+                    englishMeaning: "outside / foreign",
+                    meaningJP: "外 （そと） ／ outside / foreign",
+                    notes: "外 （そと） - outside ／ 外国 （がいこく） - foreign country",
+                    sentenceCandidates: [],
+                };
+            },
+        },
+    });
+
+    const inference = await exportService.buildInferenceForKanji({
+        kanji: "外",
+        jlptEntry: { meanings: ["outside", "foreign"], on_readings: ["ガイ"], kun_readings: ["そと"], jlpt: 5 },
+        kanjiApiClient: {
+            async getKanji() {
+                throw new Error("should use local JLPT data");
+            },
+            async getWords() {
+                throw new Error("should skip word fetch");
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+    });
+
+    assert.equal(inference.displayWordText, "外");
+    assert.equal(inference.primaryReading, "そと");
+    assert.equal(inference.meaningJP, "outside");
+    assert.equal(inference.kanjiMeanings, "outside / foreign");
 });
 
 test("buildInferenceForKanji does not attach mismatched compound audio to a kanji card", async () => {
@@ -335,7 +382,7 @@ test("buildInferenceForKanji infers a kanji reading from kanji data when curated
 
     assert.equal(inference.displayWordText, "天");
     assert.equal(inference.primaryReading, "てん");
-    assert.equal(inference.meaningJP, "weather / sky");
+    assert.equal(inference.meaningJP, "heaven");
 });
 
 test("buildInferenceForKanji preserves single-kanji words with okurigana as primary readings", async () => {
@@ -572,11 +619,12 @@ test("buildRowForKanji skips word fetch for fully curated kanji cards", async ()
     assert.equal(wordFetchCalled, false);
     assert.equal(cols[0], "日");
     assert.equal(cols[1], "日");
-    assert.equal(cols[2], "Japan");
+    assert.equal(cols[2], "day");
     assert.equal(cols[3], "ひ");
-    assert.equal(cols[4], "");
-    assert.equal(cols[12], "日本 （にほん） - Japan");
-    assert.equal(cols[13], "日本へ行きます。 ／ にほんへいきます。 ／ I will go to Japan.");
+    assert.equal(cols[4], "day");
+    assert.equal(cols[5], "");
+    assert.equal(cols[13], "日本 （にほん） - Japan");
+    assert.equal(cols[14], "日本へ行きます。 ／ にほんへいきます。 ／ I will go to Japan.");
 });
 
 test("buildRowForKanji uses local JLPT data and skips remote fetches for fully curated kanji cards", async () => {
@@ -638,13 +686,14 @@ test("buildRowForKanji uses local JLPT data and skips remote fetches for fully c
     assert.equal(kanjiFetchCalled, false);
     assert.equal(cols[0], "日");
     assert.equal(cols[1], "日");
-    assert.equal(cols[2], "Japan");
+    assert.equal(cols[2], "day");
     assert.equal(cols[3], "ひ");
-    assert.equal(cols[4], "");
-    assert.equal(cols[5], "オン: ニチ");
-    assert.equal(cols[6], "くん: ひ");
-    assert.equal(cols[12], "日本 （にほん） - Japan");
-    assert.equal(cols[13], "日本へ行きます。 ／ にほんへいきます。 ／ I will go to Japan.");
+    assert.equal(cols[4], "day");
+    assert.equal(cols[5], "");
+    assert.equal(cols[6], "オン: ニチ");
+    assert.equal(cols[7], "くん: ひ");
+    assert.equal(cols[13], "日本 （にほん） - Japan");
+    assert.equal(cols[14], "日本へ行きます。 ／ にほんへいきます。 ／ I will go to Japan.");
 });
 
 test("buildRowForKanji records export profiling timings and row counts", async () => {
@@ -931,23 +980,24 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
     const lines = tsv.trim().split("\n");
 
     assert.equal(lines.length, 2);
-    assert.equal(lines[0], "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence");
+    assert.equal(lines[0], "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence");
 
     const cols = lines[1].split("\t");
     assert.equal(cols[0], "日");
     assert.equal(cols[1], "日");
     assert.equal(cols[2], "day");
     assert.equal(cols[3], "ひ");
-    assert.equal(cols[4], "");
-    assert.equal(cols[5], "オン: ニチ、 ジツ");
-    assert.equal(cols[6], "くん: ひ、 び、 か");
-    assert.equal(cols[7], '<img src="65E5_日-stroke-order.gif" />');
-    assert.equal(cols[8], '<img src="65E5_日-stroke-order.svg" />');
-    assert.equal(cols[9], '<img src="65E5_日-stroke-order.gif" />');
-    assert.equal(cols[10], "[sound:65E5_日-kanji-reading-日.mp3]");
-    assert.equal(cols[11], "日");
-    assert.equal(cols[12], "日本 （にほん） - Japan ／ 日よう日 （にちようび） - Sunday");
-    assert.equal(cols[13], '「日本」を勉強します。 ／ 「にほん」をべんきょうします。 ／ I study the word "日本".');
+    assert.equal(cols[4], "day / sun");
+    assert.equal(cols[5], "");
+    assert.equal(cols[6], "オン: ニチ、 ジツ");
+    assert.equal(cols[7], "くん: ひ、 び、 か");
+    assert.equal(cols[8], '<img src="65E5_日-stroke-order.gif" />');
+    assert.equal(cols[9], '<img src="65E5_日-stroke-order.svg" />');
+    assert.equal(cols[10], '<img src="65E5_日-stroke-order.gif" />');
+    assert.equal(cols[11], "[sound:65E5_日-kanji-reading-日.mp3]");
+    assert.equal(cols[12], "日");
+    assert.equal(cols[13], "日本 （にほん） - Japan ／ 日よう日 （にちようび） - Sunday");
+    assert.equal(cols[14], '「日本」を勉強します。 ／ 「にほん」をべんきょうします。 ／ I study the word "日本".');
 });
 
 
@@ -1012,11 +1062,11 @@ test("buildRowForKanji falls back to local data instead of leaking raw timeout e
     assert.equal(cols[0], "主");
     assert.equal(cols[1], "主");
     assert.equal(cols[2], "main / primary");
-    assert.equal(cols[4], "");
-    assert.equal(cols[5], "オン: シュ");
-    assert.equal(cols[6], "くん: ぬし、 おも");
-    assert.equal(cols[12], "主 （おも） - main / primary");
-    assert.equal(cols[13], "主な理由を説明してください。 ／ おもなりゆうをせつめいしてください。 ／ Please explain the main reason.");
+    assert.equal(cols[5], "");
+    assert.equal(cols[6], "オン: シュ");
+    assert.equal(cols[7], "くん: ぬし、 おも");
+    assert.equal(cols[13], "主 （おも） - main / primary");
+    assert.equal(cols[14], "主な理由を説明してください。 ／ おもなりゆうをせつめいしてください。 ／ Please explain the main reason.");
     assert.deepEqual(exportIssues, [{
         kanji: "主",
         level: 4,

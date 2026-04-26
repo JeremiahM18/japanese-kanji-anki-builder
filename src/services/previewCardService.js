@@ -65,6 +65,7 @@ async function buildPreviewCards({
                 previewMode: "full-inference",
                 displayWord: inference.displayWordText,
                 meaningJP: inference.meaningJP,
+                kanjiMeanings: inference.kanjiMeanings,
                 primaryReading: inference.primaryReading,
                 onReading: inference.onReading,
                 kunReading: inference.kunReading,

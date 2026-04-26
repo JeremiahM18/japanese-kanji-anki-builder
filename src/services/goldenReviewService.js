@@ -27,6 +27,13 @@ function buildReviewReadingText(card = {}) {
     return normalizeText(card.reading);
 }
 
+function buildReviewMeaningText(card = {}) {
+    return [card.meaningJP, card.kanjiMeanings]
+        .map((value) => normalizeText(value))
+        .filter(Boolean)
+        .join(" ／ ");
+}
+
 function evaluateExpectation(card, expectation) {
     const failures = [];
     const genericFallback = "Offline preview built from local data only.";
@@ -46,7 +53,11 @@ function evaluateExpectation(card, expectation) {
     if (!normalizeText(card.meaningJP)) {
         failures.push("meaning is empty");
     }
+    if (!normalizeText(card.kanjiMeanings)) {
+        failures.push("kanji meanings are empty");
+    }
     const reviewReading = buildReviewReadingText(card);
+    const reviewMeaning = buildReviewMeaningText(card);
     if (!reviewReading) {
         failures.push("reading is empty");
     }
@@ -63,7 +74,7 @@ function evaluateExpectation(card, expectation) {
     if (Array.isArray(expectation.readingIncludes) && !includesAll(reviewReading, expectation.readingIncludes)) {
         failures.push(`reading did not include: ${expectation.readingIncludes.join(", ")}`);
     }
-    if (Array.isArray(expectation.meaningIncludes) && !includesAll(card.meaningJP, expectation.meaningIncludes)) {
+    if (Array.isArray(expectation.meaningIncludes) && !includesAll(reviewMeaning, expectation.meaningIncludes)) {
         failures.push(`meaning did not include: ${expectation.meaningIncludes.join(", ")}`);
     }
     if (Array.isArray(expectation.exampleIncludes) && !includesAll(card.exampleSentence, expectation.exampleIncludes)) {
@@ -181,6 +192,7 @@ function formatGoldenReviewReport(report, { title = "Japanese Kanji Builder Gold
 }
 
 module.exports = {
+    buildReviewMeaningText,
     buildReviewReadingText,
     evaluateGoldenReviewSet,
     evaluateGoldenWordReviewSet,

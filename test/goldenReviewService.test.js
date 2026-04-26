@@ -1,14 +1,15 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { buildReviewReadingText, evaluateGoldenReviewSet, evaluateGoldenWordReviewSet, formatGoldenReviewReport } = require("../src/services/goldenReviewService");
+const { buildReviewMeaningText, buildReviewReadingText, evaluateGoldenReviewSet, evaluateGoldenWordReviewSet, formatGoldenReviewReport } = require("../src/services/goldenReviewService");
 
 test("evaluateGoldenReviewSet passes when cards meet expectations", () => {
     const report = evaluateGoldenReviewSet({
         cards: [
             {
                 kanji: "日",
-                meaningJP: "日本 ／ day",
+                meaningJP: "day",
+                kanjiMeanings: "day / sun",
                 onReading: "オン: ニチ",
                 kunReading: "くん: ひ",
                 notes: "Used in 日本 and 日曜日.",
@@ -27,6 +28,13 @@ test("evaluateGoldenReviewSet passes when cards meet expectations", () => {
 
     assert.equal(report.passed, true);
     assert.equal(report.failedCount, 0);
+});
+
+test("buildReviewMeaningText reviews primary gloss and broader kanji meanings separately", () => {
+    assert.equal(buildReviewMeaningText({
+        meaningJP: "outside",
+        kanjiMeanings: "outside / foreign",
+    }), "outside ／ outside / foreign");
 });
 
 test("evaluateGoldenReviewSet reports targeted failures", () => {

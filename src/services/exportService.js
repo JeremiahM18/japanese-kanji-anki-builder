@@ -173,6 +173,89 @@ function extractEnglishMeaningFromMeaningJP(value) {
     return String(parts.length > 1 ? parts.slice(1).join("／") : "").trim();
 }
 
+function splitMeaningList(value) {
+    return String(value || "")
+        .split("/")
+        .map((meaning) => meaning.trim())
+        .filter(Boolean);
+}
+
+function formatKanjiMeanings({ kanjiInfo, fallbackMeaning = "", curatedEntry = null } = {}) {
+    const meaningSet = new Set(splitMeaningList(curatedEntry?.englishMeaning));
+    const kanjiInfoMeanings = Array.isArray(kanjiInfo?.meanings)
+        ? kanjiInfo.meanings.map((meaning) => String(meaning || "").trim()).filter(Boolean)
+        : [];
+
+    for (const meaning of kanjiInfoMeanings) {
+        meaningSet.add(meaning);
+    }
+
+    if (meaningSet.size === 0) {
+        for (const meaning of splitMeaningList(fallbackMeaning)) {
+            meaningSet.add(meaning);
+        }
+    }
+
+    return [...meaningSet].join(" / ");
+}
+
+function parseNoteGlossEntries(notes) {
+    return String(notes || "")
+        .split("／")
+        .map((entry) => {
+            const match = entry.trim().match(/^(?<written>.+?)\s*（(?<reading>[^）]+)）\s*-\s*(?<meaning>.+)$/u);
+            if (!match?.groups) {
+                return null;
+            }
+
+            return {
+                written: match.groups.written.trim(),
+                reading: match.groups.reading.trim(),
+                meaning: match.groups.meaning.trim(),
+            };
+        })
+        .filter(Boolean);
+}
+
+function selectPrimaryReadingMeaning({ kanji, primaryReading, curatedEntry = null, inferred = null, kanjiInfo = null }) {
+    const normalizedPrimaryReading = normalizeReading(primaryReading);
+    const noteEntries = [
+        ...parseNoteGlossEntries(curatedEntry?.notes),
+        ...parseNoteGlossEntries(inferred?.notes),
+    ];
+    const matchingNote = noteEntries.find((entry) => (
+        normalizeReading(entry.reading) === normalizedPrimaryReading
+        && hasOnlyTargetKanji(entry.written, kanji)
+    ));
+
+    if (matchingNote?.meaning) {
+        return matchingNote.meaning;
+    }
+
+    const candidates = [
+        curatedEntry?.breakdownDisplayWord,
+        curatedEntry?.displayWord,
+        inferred?.displayWord,
+        inferred?.bestWord,
+    ];
+    const hasMatchingPrimarySurface = candidates.some((candidate) => (
+        candidate
+        && normalizeReading(candidate.pron) === normalizedPrimaryReading
+        && hasOnlyTargetKanji(candidate.written, kanji)
+    ));
+    const inferredMeaning = String(
+        inferred?.englishMeaning
+        || extractEnglishMeaningFromMeaningJP(inferred?.meaningJP)
+        || ""
+    ).trim();
+
+    if (hasMatchingPrimarySurface && inferredMeaning) {
+        return inferredMeaning;
+    }
+
+    return String((Array.isArray(kanjiInfo?.meanings) ? kanjiInfo.meanings[0] : "") || inferredMeaning).trim();
+}
+
 function selectExactKanjiAudioAsset(audioAssets, { kanji, reading = "" } = {}) {
     const normalizedReading = String(reading || "").trim();
     const selected = selectBestAudioAsset(audioAssets || [], {
@@ -190,11 +273,19 @@ function selectExactKanjiAudioAsset(audioAssets, { kanji, reading = "" } = {}) {
 
 function buildKanjiDeckInference({ kanji, inferred, kanjiInfo, curatedEntry = null }) {
     const primaryReading = selectKanjiPrimaryReading({ kanji, curatedEntry, inferred, kanjiInfo });
-    const englishMeaning = String(
+    const inferredMeaning = String(
         inferred?.englishMeaning
         || extractEnglishMeaningFromMeaningJP(inferred?.meaningJP)
         || ""
     ).trim();
+    const primaryReadingMeaning = selectPrimaryReadingMeaning({
+        kanji,
+        primaryReading,
+        curatedEntry,
+        inferred,
+        kanjiInfo,
+    });
+    const kanjiMeanings = formatKanjiMeanings({ kanjiInfo, fallbackMeaning: inferredMeaning, curatedEntry });
     const displayWord = { written: String(kanji || "").trim(), pron: primaryReading };
 
     return {
@@ -202,7 +293,8 @@ function buildKanjiDeckInference({ kanji, inferred, kanjiInfo, curatedEntry = nu
         displayWord,
         displayWordText: displayWord.written,
         primaryReading,
-        meaningJP: englishMeaning,
+        meaningJP: primaryReadingMeaning,
+        kanjiMeanings,
     };
 }
 
@@ -334,6 +426,7 @@ function buildInferredRow({ kanji, inferred, kanjiInfo, kradMap, pickMainCompone
         displayWord,
         inferred.meaningJP,
         primaryReading,
+        inferred.kanjiMeanings,
         studyWordKanji,
         onReading,
         kunReading,
@@ -355,6 +448,7 @@ function buildFallbackRow({ fallbackCard, kanjiLevelLookup, currentLevel = null 
         fallbackCard.displayWord,
         fallbackCard.meaningJP,
         fallbackCard.primaryReading,
+        fallbackCard.kanjiMeanings || fallbackCard.meaningJP,
         studyWordKanji,
         fallbackCard.onReading,
         fallbackCard.kunReading,
@@ -526,6 +620,7 @@ function createExportService({
             ...inferred,
             displayWordText,
             primaryReading: inferred.primaryReading,
+            kanjiMeanings: inferred.kanjiMeanings,
             studyWordKanji: formatStudyWordKanjiLabels(displayWordText, kanjiLevelLookup, { currentLevel }),
             onReading,
             kunReading,

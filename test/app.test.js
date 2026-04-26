@@ -478,10 +478,10 @@ test("inference route stays aligned with build rows for fixture sentence candida
 
         assert.equal(json.inference.displayWordText, cols[1]);
         assert.equal(json.inference.primaryReading, cols[3]);
-        assert.equal(json.inference.notes, cols[12]);
+        assert.equal(json.inference.notes, cols[13]);
         assert.equal(
             `${sentence.japanese} ／ ${sentence.reading} ／ ${sentence.english}`,
-            cols[13]
+            cols[14]
         );
     });
 });
@@ -641,20 +641,20 @@ test("download export sets attachment headers and includes Anki-ready media fiel
         const cols = lines[1].split("\t");
 
         assert.equal(lines.length, 2);
-        assert.equal(lines[0], "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence");
-        assert.equal(cols.length, 14);
+        assert.equal(lines[0], "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence");
+        assert.equal(cols.length, 15);
         assert.equal(cols[1], "日");
         assert.equal(cols[3], "ひ");
-        assert.equal(cols[4], "");
-        assert.equal(cols[5], "オン: ニチ");
-        assert.equal(cols[6], "くん: ひ");
-        assert.equal(cols[7], '<img src="65E5_日-stroke-order.gif" />');
-        assert.equal(cols[8], '<img src="65E5_日-stroke-order.svg" />');
-        assert.equal(cols[9], '<img src="65E5_日-stroke-order.gif" />');
-        assert.equal(cols[10], "[sound:65E5_日-kanji-reading-日.mp3]");
-        assert.match(cols[12], /curated-note/);
-        assert.match(cols[13], /日本は島国です/);
-        assert.match(cols[13], /Japan is an island nation/);
+        assert.equal(cols[5], "");
+        assert.equal(cols[6], "オン: ニチ");
+        assert.equal(cols[7], "くん: ひ");
+        assert.equal(cols[8], '<img src="65E5_日-stroke-order.gif" />');
+        assert.equal(cols[9], '<img src="65E5_日-stroke-order.svg" />');
+        assert.equal(cols[10], '<img src="65E5_日-stroke-order.gif" />');
+        assert.equal(cols[11], "[sound:65E5_日-kanji-reading-日.mp3]");
+        assert.match(cols[13], /curated-note/);
+        assert.match(cols[14], /日本は島国です/);
+        assert.match(cols[14], /Japan is an island nation/);
     });
 
     const exportLogs = fixture.loggerCalls.filter(

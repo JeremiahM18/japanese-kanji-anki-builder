@@ -108,6 +108,16 @@ function buildOfflineMeaning({ kanji, curatedEntry, jlptEntry }) {
     return String(kanji || "").trim();
 }
 
+function buildOfflineKanjiMeanings({ kanji, jlptEntry, fallbackMeaning }) {
+    const meanings = Array.isArray(jlptEntry?.meanings)
+        ? jlptEntry.meanings.map((meaning) => String(meaning || "").trim()).filter(Boolean)
+        : [];
+
+    return meanings.length > 0
+        ? meanings.join(" / ")
+        : String(fallbackMeaning || kanji || "").trim();
+}
+
 function buildOfflineNotes({ kanji, curatedEntry, sentenceCandidate, jlptEntry }) {
     const curatedNotes = String(curatedEntry?.notes || "").trim();
     if (curatedNotes) {
@@ -184,6 +194,7 @@ async function buildOfflineFallbackCard({
     const primaryReading = displayWord.pron;
     const readingFields = buildOfflineReadingFields(jlptEntry);
     const media = await resolveOfflineMedia({ kanji, strokeOrderService, audioService, audioReading: primaryReading });
+    const meaningJP = buildOfflineMeaning({ kanji, curatedEntry, jlptEntry });
 
     return {
         kanji,
@@ -191,7 +202,8 @@ async function buildOfflineFallbackCard({
         previewMode: "offline-local-fallback",
         displayWord: displayWord.written,
         primaryReading,
-        meaningJP: buildOfflineMeaning({ kanji, curatedEntry, jlptEntry }),
+        meaningJP,
+        kanjiMeanings: buildOfflineKanjiMeanings({ kanji, jlptEntry, fallbackMeaning: meaningJP }),
         onReading: readingFields.onReading,
         kunReading: readingFields.kunReading,
         radical: pickMainComponent(kradMap.get(kanji) || []),

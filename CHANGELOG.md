@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Fixed
 
+- Split kanji card meaning output so the primary-reading line carries only the meaning associated with that reading, while broader reviewed kanji meanings live in a separate `KanjiMeanings` field and golden reviews validate both surfaces.
 - Restored the kanji deck learning contract so kanji cards export the individual target kanji plus its primary reading, reject compound-word anchors, package only media actually referenced by exported fields, and fail `deck:ready` when exported kanji cards are missing exact primary-reading audio.
 - Aligned compound word metadata so unambiguous contextual kanji readings from `ReadingBreakdown` can fill `CoversReading` and kanji breakdown panels when no explicit curated reading is present.
 - Made `release:gate` report that it validates smoke-fixture artifacts rather than public product deck readiness, and aligned release docs with that scope.

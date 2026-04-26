@@ -20,7 +20,7 @@ A kanji level ships only when all criteria are true:
 
 - Canonical JLPT taxonomy is governed by tracked contracts.
 - Golden review coverage for that shipped level is complete.
-- Exported cards preserve the individual-kanji learning contract: `DisplayWord` equals the target kanji, `PrimaryReading` is present, and compound words do not replace the card anchor.
+- Exported cards preserve the individual-kanji learning contract: `DisplayWord` equals the target kanji, `PrimaryReading` is present, `MeaningJP` is the meaning associated with that primary reading, `KanjiMeanings` carries broader kanji meanings, and compound words do not replace the card anchor.
 - `npm run deck:ready -- --levels=<level>` passes with `0` export fallback issues.
 - Exported card media completeness is `100%` for stroke-order fields, stroke-order image fields, stroke-order animation fields, and audio fields.
 - Stroke-order animation coverage is `100%`.
@@ -42,9 +42,9 @@ A word level ships only when all criteria are true:
 
 ## Current product posture
 
-- N5 kanji: golden-reviewed, blocked from ready status until exact exported audio is complete
-- N4 kanji: golden-reviewed, blocked from ready status until exact exported audio is complete
-- N3 kanji: golden-reviewed, blocked from ready status until exact exported media and audio are complete
+- N5 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio
+- N4 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio
+- N3 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio
 - N5 word: stabilized and `ready_with_deferred_variants`
 - N4 word: active completion work, not yet ready
 

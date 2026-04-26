@@ -64,6 +64,35 @@ test("evaluateGoldenReviewSet reports targeted failures", () => {
     assert.equal(report.results[0].failures.includes("notes still use the generic offline fallback"), true);
 });
 
+test("evaluateGoldenReviewSet requires reading expectations to protect the primary reading", () => {
+    const report = evaluateGoldenReviewSet({
+        cards: [
+            {
+                kanji: "並",
+                primaryReading: "ならぶ",
+                meaningJP: "line up",
+                kanjiMeanings: "line up / side by side",
+                onReading: "ヘイ、 ホウ",
+                kunReading: "な.み、 なら.ぶ",
+                notes: "並ぶ （ならぶ） - line up",
+                exampleSentence: "人が並んでいます。 ／ ひとがならんでいます。 ／ People are lined up.",
+            },
+        ],
+        expectations: [
+            {
+                kanji: "並",
+                readingIncludes: ["ヘイ"],
+                meaningIncludes: ["line"],
+                notesIncludes: ["並ぶ"],
+                exampleIncludes: ["並んで"],
+            },
+        ],
+    });
+
+    assert.equal(report.passed, false);
+    assert.equal(report.results[0].failures.includes("primary reading did not include: ヘイ"), true);
+});
+
 test("formatGoldenReviewReport renders a readable benchmark summary", () => {
     const text = formatGoldenReviewReport({
         totalCards: 2,

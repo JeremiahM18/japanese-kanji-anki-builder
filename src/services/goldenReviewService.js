@@ -74,6 +74,13 @@ function evaluateExpectation(card, expectation) {
     if (Array.isArray(expectation.readingIncludes) && !includesAll(reviewReading, expectation.readingIncludes)) {
         failures.push(`reading did not include: ${expectation.readingIncludes.join(", ")}`);
     }
+    if (
+        Array.isArray(expectation.readingIncludes)
+        && normalizeText(card.primaryReading)
+        && !includesAll(card.primaryReading, expectation.readingIncludes)
+    ) {
+        failures.push(`primary reading did not include: ${expectation.readingIncludes.join(", ")}`);
+    }
     if (Array.isArray(expectation.meaningIncludes) && !includesAll(reviewMeaning, expectation.meaningIncludes)) {
         failures.push(`meaning did not include: ${expectation.meaningIncludes.join(", ")}`);
     }

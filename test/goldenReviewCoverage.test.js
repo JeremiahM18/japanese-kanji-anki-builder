@@ -96,6 +96,20 @@ test("tracked N3 golden review coverage protects every starter-curated kanji", (
     assert.equal(summary.missingKanji, 0);
 });
 
+test("tracked N2 golden review coverage is expanding from the initial sample", () => {
+    const summary = buildGoldenReviewCoverageSummary({
+        starterCuratedData: loadTemplateJson("starter_curated_study_data.json"),
+        goldenReviewSets: {
+            2: loadTemplateJson("golden_n2_review_set.json"),
+        },
+        levels: [2],
+    });
+
+    assert.equal(summary.starterCuratedKanji, 366);
+    assert.equal(summary.goldenCoveredKanji, 60);
+    assert.equal(summary.missingKanji, 306);
+});
+
 test("reportGoldenReviewCoverage parseArgs accepts level and limit", () => {
     const options = parseArgs(["--level=4", "--limit=10"]);
 

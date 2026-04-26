@@ -47,6 +47,16 @@ test("formatKanjiMeanings removes duplicate and radical-index gloss noise", () =
     );
 });
 
+test("formatKanjiMeanings removes unsafe low-value dictionary gloss noise", () => {
+    assert.equal(
+        formatKanjiMeanings({
+            kanjiInfo: { meanings: ["dirty", "defile", "disgrace", "pollute", "rape"] },
+            curatedEntry: { englishMeaning: "dirty" },
+        }),
+        "dirty / defile / disgrace / pollute"
+    );
+});
+
 test("formatStudyWordKanjiLabels suppresses current-level kanji for kanji deck warnings", () => {
     const levels = new Map([
         ["日", 5],

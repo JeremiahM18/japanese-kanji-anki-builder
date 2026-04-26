@@ -182,7 +182,9 @@ function splitMeaningList(value) {
 
 function isNoisyKanjiMeaning(meaning) {
     const text = String(meaning || "").trim();
-    return /\bradical\b/i.test(text) || /\bno\.\s*\d+/i.test(text);
+    return /\bradical\b/i.test(text)
+        || /\bno\.\s*\d+/i.test(text)
+        || /^rape$/i.test(text);
 }
 
 function formatKanjiMeanings({ kanjiInfo, fallbackMeaning = "", curatedEntry = null } = {}) {

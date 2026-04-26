@@ -56,8 +56,8 @@ test("buildOfflineFallbackCard uses local data when inference is unavailable", a
     assert.equal(card.displayWord, "学");
     assert.equal(card.meaningJP, "school");
     assert.equal(card.primaryReading, "まな");
-    assert.match(card.onReading, /オン: ガク/);
-    assert.match(card.kunReading, /くん: まな.ぶ/);
+    assert.match(card.onReading, /ガク/);
+    assert.match(card.kunReading, /まな.ぶ/);
     assert.match(card.exampleSentence, /学校へ行きます/);
 });
 
@@ -130,7 +130,7 @@ test("buildPreviewCards uses local JLPT data for fully curated cards when the AP
     assert.equal(cards[0].previewMode, "full-inference");
     assert.equal(cards[0].displayWord, "世");
     assert.equal(cards[0].primaryReading, "よ");
-    assert.match(cards[0].onReading, /オン: セ/);
+    assert.match(cards[0].onReading, /セ/);
     assert.match(cards[0].exampleSentence, /世の中は広いです/);
 });
 

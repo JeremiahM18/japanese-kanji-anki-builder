@@ -143,7 +143,7 @@ test("kanji deck packaging copies only media referenced by exported card fields"
         exportPath,
         [
             "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tAudio\tRadical\tNotes\tExampleSentence",
-            "車\t車\t車 （くるま） ／ car\tくるま\t\tオン: シャ\tくん: くるま\t<img src=\"8ECA_車-stroke-order.gif\" />\t\t車\t電車 （でんしゃ） - train\t",
+            "車\t車\t車 （くるま） ／ car\tくるま\t\tシャ\tくるま\t<img src=\"8ECA_車-stroke-order.gif\" />\t\t車\t電車 （でんしゃ） - train\t",
         ].join("\n"),
         "utf-8"
     );
@@ -216,7 +216,7 @@ test("kanji deck packaging copies the exact referenced primary-reading audio", a
         exportPath,
         [
             "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tAudio\tRadical\tNotes\tExampleSentence",
-            "車\t車\tcar\tくるま\t\tオン: シャ\tくん: くるま\t\t[sound:8ECA_車-kanji-reading-車-くるま.wav]\t車\t\t",
+            "車\t車\tcar\tくるま\t\tシャ\tくるま\t\t[sound:8ECA_車-kanji-reading-車-くるま.wav]\t車\t\t",
         ].join("\n"),
         "utf-8"
     );

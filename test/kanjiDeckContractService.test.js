@@ -14,7 +14,7 @@ test("buildKanjiDeckContractReport accepts individual-kanji card anchors", () =>
         level: 5,
         tsv: [
             HEADER,
-            "車\t車\tcar\tくるま\tcar\t\tオン: シャ\tくん: くるま\t<img src=\"8ECA.gif\" />\t<img src=\"8ECA.png\" />\t[sound:8ECA_車-kanji-reading-車-くるま.wav]\t車\t電車 （でんしゃ） - train\t電車で行きます。",
+            "車\t車\tcar\tくるま\tcar\t\tシャ\tくるま\t<img src=\"8ECA.gif\" />\t[sound:8ECA_車-kanji-reading-車-くるま.wav]\t車\t電車 （でんしゃ） - train\t電車で行きます。",
         ].join("\n"),
     });
 
@@ -29,7 +29,7 @@ test("buildKanjiDeckContractReport rejects compound kanji-deck anchors", () => {
         level: 5,
         tsv: [
             HEADER,
-            "車\t電車\ttrain\tでんしゃ\tcar\t車: JLPT N5\tオン: シャ\tくん: くるま\t\t\t[sound:8ECA_車-kanji-reading-電車-でんしゃ.wav]\t車\ttrain context\t電車で行きます。",
+            "車\t電車\ttrain\tでんしゃ\tcar\t車: JLPT N5\tシャ\tくるま\t\t[sound:8ECA_車-kanji-reading-電車-でんしゃ.wav]\t車\ttrain context\t電車で行きます。",
         ].join("\n"),
     });
 
@@ -46,7 +46,7 @@ test("buildKanjiDeckContractReport rejects missing primary readings product-wide
         level: 3,
         tsv: [
             HEADER,
-            "誕\t誕\tbirth\t\tbirth\t\tオン: タン\t\t\t\t\t言\t誕生日 （たんじょうび） - birthday\t誕生日を祝います。",
+            "誕\t誕\tbirth\t\tbirth\t\tタン\t\t\t\t言\t誕生日 （たんじょうび） - birthday\t誕生日を祝います。",
         ].join("\n"),
     });
     const text = formatKanjiDeckContractReport(report);

@@ -110,7 +110,14 @@ function buildOfflineMeaning({ kanji, curatedEntry, jlptEntry }) {
 
 function buildOfflineKanjiMeanings({ kanji, jlptEntry, fallbackMeaning }) {
     const meanings = Array.isArray(jlptEntry?.meanings)
-        ? jlptEntry.meanings.map((meaning) => String(meaning || "").trim()).filter(Boolean)
+        ? jlptEntry.meanings
+            .map((meaning) => String(meaning || "").trim())
+            .filter((meaning, index, list) => (
+                meaning
+                && !/\bradical\b/i.test(meaning)
+                && !/\bno\.\s*\d+/i.test(meaning)
+                && list.findIndex((candidate) => candidate.toLowerCase() === meaning.toLowerCase()) === index
+            ))
         : [];
 
     return meanings.length > 0

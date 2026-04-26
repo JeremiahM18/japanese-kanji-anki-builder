@@ -37,7 +37,7 @@ test("buildOfflineSentenceCandidate prefers corpus entries with readings and bet
 test("buildOfflineReading formats JLPT readings", () => {
     assert.equal(
         buildOfflineReading({ on_readings: ["ガク"], kun_readings: ["まな.ぶ"] }),
-        "オン: ガク ／ くん: まな.ぶ"
+        "ガク ／ まな.ぶ"
     );
 });
 

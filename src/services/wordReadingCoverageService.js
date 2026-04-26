@@ -16,11 +16,15 @@ function normalizeReadingToken(value) {
 
 function parseDelimitedReadingField(fieldValue, prefix) {
   const raw = String(fieldValue || '').trim();
-  if (!raw || !raw.startsWith(prefix)) {
+  if (!raw) {
     return [];
   }
 
-  return [...new Set(raw.slice(prefix.length)
+  const content = prefix && raw.startsWith(prefix)
+    ? raw.slice(prefix.length)
+    : raw;
+
+  return [...new Set(content
     .split('、')
     .map((entry) => normalizeReadingToken(entry))
     .filter(Boolean))];

@@ -6,7 +6,7 @@ const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 const { buildOfflineFallbackCard } = require("./offlineKanjiFallback");
 const { selectBestAudioAsset } = require("./audioService");
 const { mapWithConcurrency } = require("../utils/concurrency");
-const { labelKunReading, labelOnReading, tsvEscape } = require("../utils/text");
+const { labelKunReading, labelOnReading, normalizeText, tsvEscape } = require("../utils/text");
 const { katakanaToHiragana } = require("../utils/japanese");
 
 const ANKI_FIELD_NAMES = loadAnkiNoteSchema().fieldNames;
@@ -180,23 +180,44 @@ function splitMeaningList(value) {
         .filter(Boolean);
 }
 
+function isNoisyKanjiMeaning(meaning) {
+    const text = String(meaning || "").trim();
+    return /\bradical\b/i.test(text) || /\bno\.\s*\d+/i.test(text);
+}
+
 function formatKanjiMeanings({ kanjiInfo, fallbackMeaning = "", curatedEntry = null } = {}) {
-    const meaningSet = new Set(splitMeaningList(curatedEntry?.englishMeaning));
+    const meaningMap = new Map();
+    const addMeaning = (meaning, { allowNoise = false } = {}) => {
+        const text = String(meaning || "").trim();
+        const key = normalizeText(text);
+        if (!text || meaningMap.has(key)) {
+            return;
+        }
+        if (!allowNoise && isNoisyKanjiMeaning(text)) {
+            return;
+        }
+        meaningMap.set(key, text);
+    };
+
+    for (const meaning of splitMeaningList(curatedEntry?.englishMeaning)) {
+        addMeaning(meaning, { allowNoise: true });
+    }
+
     const kanjiInfoMeanings = Array.isArray(kanjiInfo?.meanings)
         ? kanjiInfo.meanings.map((meaning) => String(meaning || "").trim()).filter(Boolean)
         : [];
 
     for (const meaning of kanjiInfoMeanings) {
-        meaningSet.add(meaning);
+        addMeaning(meaning);
     }
 
-    if (meaningSet.size === 0) {
+    if (meaningMap.size === 0) {
         for (const meaning of splitMeaningList(fallbackMeaning)) {
-            meaningSet.add(meaning);
+            addMeaning(meaning, { allowNoise: true });
         }
     }
 
-    return [...meaningSet].join(" / ");
+    return [...meaningMap.values()].join(" / ");
 }
 
 function parseNoteGlossEntries(notes) {
@@ -709,6 +730,7 @@ function createExportService({
         formatAnkiAudioField,
         formatAnkiStrokeOrderField,
         formatExampleSentence,
+        formatKanjiMeanings,
         formatNotesWithRuby,
         formatRubyText,
         formatStudyWordKanjiLabels,
@@ -721,6 +743,7 @@ module.exports = {
     formatAnkiAudioField,
     formatAnkiStrokeOrderField,
     formatExampleSentence,
+    formatKanjiMeanings,
     formatNotesWithRuby,
     formatRubyText,
     formatStudyWordKanjiLabels,

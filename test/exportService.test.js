@@ -6,6 +6,7 @@ const {
     createExportService,
     formatAnkiAudioField,
     formatAnkiStrokeOrderField,
+    formatKanjiMeanings,
     formatNotesWithRuby,
     formatStudyWordKanjiLabels,
 } = require("../src/services/exportService");
@@ -33,6 +34,16 @@ test("formatNotesWithRuby renders note example readings as ruby", () => {
     assert.equal(
         formatNotesWithRuby("外 （そと） - outside ／ 外国 （がいこく） - foreign country"),
         "<ruby>外<rt>そと</rt></ruby> - outside ／ <ruby>外国<rt>がいこく</rt></ruby> - foreign country"
+    );
+});
+
+test("formatKanjiMeanings removes duplicate and radical-index gloss noise", () => {
+    assert.equal(
+        formatKanjiMeanings({
+            kanjiInfo: { meanings: ["two", "two radical (no. 7)", "Two"] },
+            curatedEntry: { englishMeaning: "two" },
+        }),
+        "two"
     );
 });
 
@@ -698,8 +709,8 @@ test("buildRowForKanji uses local JLPT data and skips remote fetches for fully c
     assert.equal(cols[3], "ひ");
     assert.equal(cols[4], "day");
     assert.equal(cols[5], "");
-    assert.equal(cols[6], "オン: ニチ");
-    assert.equal(cols[7], "くん: ひ");
+    assert.equal(cols[6], "ニチ");
+    assert.equal(cols[7], "ひ");
     assert.equal(cols[11], "<ruby>日本<rt>にほん</rt></ruby> - Japan");
     assert.equal(cols[12], "日本へ行きます。 ／ にほんへいきます。 ／ I will go to Japan.");
 });
@@ -997,8 +1008,8 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
     assert.equal(cols[3], "ひ");
     assert.equal(cols[4], "day / sun");
     assert.equal(cols[5], "");
-    assert.equal(cols[6], "オン: ニチ、 ジツ");
-    assert.equal(cols[7], "くん: ひ、 び、 か");
+    assert.equal(cols[6], "ニチ、 ジツ");
+    assert.equal(cols[7], "ひ、 び、 か");
     assert.equal(cols[8], '<img src="65E5_日-stroke-order.gif" />');
     assert.equal(cols[9], "[sound:65E5_日-kanji-reading-日.mp3]");
     assert.equal(cols[10], "日");
@@ -1069,8 +1080,8 @@ test("buildRowForKanji falls back to local data instead of leaking raw timeout e
     assert.equal(cols[1], "主");
     assert.equal(cols[2], "main / primary");
     assert.equal(cols[5], "");
-    assert.equal(cols[6], "オン: シュ");
-    assert.equal(cols[7], "くん: ぬし、 おも");
+    assert.equal(cols[6], "シュ");
+    assert.equal(cols[7], "ぬし、 おも");
     assert.equal(cols[11], "<ruby>主<rt>おも</rt></ruby> - main / primary");
     assert.equal(cols[12], "主な理由を説明してください。 ／ おもなりゆうをせつめいしてください。 ／ Please explain the main reason.");
     assert.deepEqual(exportIssues, [{

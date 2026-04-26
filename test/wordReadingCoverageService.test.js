@@ -28,7 +28,9 @@ test('classifyGapKind distinguishes distinct missing readings from covered varia
 
 test('parseDelimitedReadingField splits on and kun readings cleanly', () => {
   assert.deepEqual(parseDelimitedReadingField('オン: ショウ、 ジョウ', 'オン: '), ['しょう', 'じょう']);
+  assert.deepEqual(parseDelimitedReadingField('ショウ、 ジョウ', 'オン: '), ['しょう', 'じょう']);
   assert.deepEqual(parseDelimitedReadingField('くん: -あ.がる、 うえ、 うえ', 'くん: '), ['あがる', 'うえ']);
+  assert.deepEqual(parseDelimitedReadingField('-あ.がる、 うえ、 うえ', 'くん: '), ['あがる', 'うえ']);
 });
 
 test('word reading coverage metadata parsers understand learner-facing study-focus fields', () => {

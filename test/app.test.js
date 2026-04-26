@@ -646,8 +646,8 @@ test("download export sets attachment headers and includes Anki-ready media fiel
         assert.equal(cols[1], "日");
         assert.equal(cols[3], "ひ");
         assert.equal(cols[5], "");
-        assert.equal(cols[6], "オン: ニチ");
-        assert.equal(cols[7], "くん: ひ");
+        assert.equal(cols[6], "ニチ");
+        assert.equal(cols[7], "ひ");
         assert.equal(cols[8], '<img src="65E5_日-stroke-order.gif" />');
         assert.equal(cols[9], "[sound:65E5_日-kanji-reading-日.mp3]");
         assert.match(cols[11], /curated-note/);

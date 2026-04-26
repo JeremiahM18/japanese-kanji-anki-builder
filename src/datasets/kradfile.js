@@ -21,9 +21,8 @@ function loadKradMap(kradfilePath) {
 }
 
 function pickMainComponent(components) {
-    // Deterministic: first component in KRADFILE line
     if (!components || components.length === 0) return "";
-    return components[0];
+    return components.filter(Boolean).join(" / ");
 }
 
 module.exports = {

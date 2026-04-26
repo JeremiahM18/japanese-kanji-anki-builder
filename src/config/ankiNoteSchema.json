@@ -72,7 +72,7 @@
     "{{#OnReading}}<div class=\"reading reading-full\">On-yomi: {{OnReading}}</div>{{/OnReading}}",
     "{{#KunReading}}<div class=\"reading reading-full\">Kun-yomi: {{KunReading}}</div>{{/KunReading}}",
     "<div class=\"media\">{{StrokeOrder}}</div>",
-    "<div class=\"meta\">Radical: {{Radical}}</div>",
+    "<div class=\"meta\">Radicals: {{Radical}}</div>",
     "<div class=\"notes\">{{Notes}}</div>",
     "<div class=\"example\">{{ExampleSentence}}</div>",
     "<div class=\"audio\">{{Audio}}</div>"

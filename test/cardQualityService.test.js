@@ -49,7 +49,7 @@ test("buildOfflineMeaning prefers curated wording and learner-facing meaning", (
             null,
             "学"
         ),
-        "学 （まな） ／ school"
+        "school"
     );
 });
 

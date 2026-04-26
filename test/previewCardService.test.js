@@ -54,7 +54,7 @@ test("buildOfflineFallbackCard uses local data when inference is unavailable", a
 
     assert.equal(card.previewMode, "offline-local-fallback");
     assert.equal(card.displayWord, "学");
-    assert.equal(card.meaningJP, "学 （まな） ／ school");
+    assert.equal(card.meaningJP, "school");
     assert.equal(card.primaryReading, "まな");
     assert.match(card.onReading, /オン: ガク/);
     assert.match(card.kunReading, /くん: まな.ぶ/);

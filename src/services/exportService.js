@@ -3,7 +3,6 @@ const { performance } = require("node:perf_hooks");
 
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
-const { buildMeaningJP } = require("../inference/meaningInference");
 const { buildOfflineFallbackCard } = require("./offlineKanjiFallback");
 const { selectBestAudioAsset } = require("./audioService");
 const { mapWithConcurrency } = require("../utils/concurrency");
@@ -203,7 +202,7 @@ function buildKanjiDeckInference({ kanji, inferred, kanjiInfo, curatedEntry = nu
         displayWord,
         displayWordText: displayWord.written,
         primaryReading,
-        meaningJP: buildMeaningJP(displayWord, englishMeaning),
+        meaningJP: englishMeaning,
     };
 }
 

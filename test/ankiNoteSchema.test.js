@@ -27,9 +27,10 @@ test("loadAnkiNoteSchema returns a stable shared note contract", () => {
     ]);
     assert.match(schema.css, /study-word/);
     assert.equal(schema.qfmt, "<div class=\"study-word\">{{Kanji}}</div>");
+    assert.match(schema.afmt, /Primary reading/);
     assert.match(schema.afmt, /Other kanji:/);
-    assert.match(schema.afmt, /On-yomi:/);
-    assert.match(schema.afmt, /Kun-yomi:/);
+    assert.match(schema.afmt, /音読み \(on reading\)/);
+    assert.match(schema.afmt, /訓読み \(kun reading\)/);
     assert.match(schema.afmt, /Radicals:/);
 });
 

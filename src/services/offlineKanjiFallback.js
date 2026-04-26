@@ -1,5 +1,4 @@
 const { pickMainComponent } = require("../datasets/kradfile");
-const { buildMeaningJP } = require("../inference/meaningInference");
 const { labelKunReading, labelOnReading } = require("../utils/text");
 const { katakanaToHiragana } = require("../utils/japanese");
 
@@ -95,12 +94,7 @@ function buildOfflineSentenceCandidate(kanji, curatedEntry, sentenceCorpus) {
 }
 
 function buildOfflineMeaning({ kanji, curatedEntry, jlptEntry }) {
-    const displayWord = selectOfflineDisplayWord({ kanji, curatedEntry, jlptEntry });
     const englishMeaning = String(curatedEntry?.englishMeaning || "").trim();
-
-    if (displayWord?.written && englishMeaning) {
-        return buildMeaningJP(displayWord, englishMeaning);
-    }
 
     if (englishMeaning) {
         return englishMeaning;
@@ -111,7 +105,7 @@ function buildOfflineMeaning({ kanji, curatedEntry, jlptEntry }) {
         return jlptMeanings.join(", ");
     }
 
-    return displayWord?.written || String(kanji || "").trim();
+    return String(kanji || "").trim();
 }
 
 function buildOfflineNotes({ kanji, curatedEntry, sentenceCandidate, jlptEntry }) {

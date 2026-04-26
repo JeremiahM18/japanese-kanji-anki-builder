@@ -31,7 +31,8 @@ Run this checklist after automated gates pass and before marking a deck mileston
 - Import the current N5 kanji deck into Anki.
 - Import the current N4 kanji deck into Anki.
 - Confirm each card front is the individual target kanji.
-- Confirm each card back shows the same target kanji as `DisplayWord` plus the learner-facing `PrimaryReading`.
+- Confirm each card back starts with the learner-facing `PrimaryReading` plus its meaning.
+- Confirm `DisplayWord` remains the target kanji in the TSV contract but is not repeated as a visible card-back study word.
 - Confirm compounds appear only in notes, examples, or word decks.
 - Review audio-bearing cards.
 - Review cards with stroke-order media.

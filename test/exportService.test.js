@@ -85,7 +85,7 @@ test("buildInferenceForKanji keeps the target kanji as the learner-facing anchor
 
     assert.equal(inference.displayWordText, "行");
     assert.equal(inference.primaryReading, "いく");
-    assert.equal(inference.meaningJP, "行 （いく） ／ go");
+    assert.equal(inference.meaningJP, "go");
 });
 
 test("buildInferenceForKanji keeps primaryReading visible when the display word is bare kanji", async () => {
@@ -122,7 +122,7 @@ test("buildInferenceForKanji keeps primaryReading visible when the display word 
     });
 
     assert.equal(inference.displayWordText, "日");
-    assert.equal(inference.meaningJP, "日 （ひ） ／ day");
+    assert.equal(inference.meaningJP, "day");
     assert.equal(inference.primaryReading, "ひ");
 });
 
@@ -166,7 +166,7 @@ test("buildInferenceForKanji rejects compound words as kanji deck anchors", asyn
 
     assert.equal(inference.displayWordText, "日");
     assert.equal(inference.primaryReading, "ひ");
-    assert.equal(inference.meaningJP, "日 （ひ） ／ sun / day marker");
+    assert.equal(inference.meaningJP, "sun / day marker");
     assert.equal(inference.studyWordKanji, "");
 });
 
@@ -228,7 +228,7 @@ test("buildInferenceForKanji uses curated single-kanji breakdown readings before
 
     assert.equal(inference.displayWordText, "車");
     assert.equal(inference.primaryReading, "くるま");
-    assert.equal(inference.meaningJP, "車 （くるま） ／ car / vehicle");
+    assert.equal(inference.meaningJP, "car / vehicle");
     assert.equal(inference.audioPath, "audio/8ECA_車-kanji-reading-車-くるま.wav");
 });
 
@@ -335,7 +335,7 @@ test("buildInferenceForKanji infers a kanji reading from kanji data when curated
 
     assert.equal(inference.displayWordText, "天");
     assert.equal(inference.primaryReading, "てん");
-    assert.equal(inference.meaningJP, "天 （てん） ／ weather / sky");
+    assert.equal(inference.meaningJP, "weather / sky");
 });
 
 test("buildInferenceForKanji preserves single-kanji words with okurigana as primary readings", async () => {
@@ -379,7 +379,7 @@ test("buildInferenceForKanji preserves single-kanji words with okurigana as prim
 
     assert.equal(inference.displayWordText, "見");
     assert.equal(inference.primaryReading, "みる");
-    assert.equal(inference.meaningJP, "見 （みる） ／ see / watch");
+    assert.equal(inference.meaningJP, "see / watch");
 });
 
 test("buildInferenceForKanji reuses a single shared manifest lookup when available", async () => {
@@ -572,7 +572,7 @@ test("buildRowForKanji skips word fetch for fully curated kanji cards", async ()
     assert.equal(wordFetchCalled, false);
     assert.equal(cols[0], "日");
     assert.equal(cols[1], "日");
-    assert.equal(cols[2], "日 （ひ） ／ Japan");
+    assert.equal(cols[2], "Japan");
     assert.equal(cols[3], "ひ");
     assert.equal(cols[4], "");
     assert.equal(cols[12], "日本 （にほん） - Japan");
@@ -638,7 +638,7 @@ test("buildRowForKanji uses local JLPT data and skips remote fetches for fully c
     assert.equal(kanjiFetchCalled, false);
     assert.equal(cols[0], "日");
     assert.equal(cols[1], "日");
-    assert.equal(cols[2], "日 （ひ） ／ Japan");
+    assert.equal(cols[2], "Japan");
     assert.equal(cols[3], "ひ");
     assert.equal(cols[4], "");
     assert.equal(cols[5], "オン: ニチ");
@@ -936,7 +936,7 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
     const cols = lines[1].split("\t");
     assert.equal(cols[0], "日");
     assert.equal(cols[1], "日");
-    assert.equal(cols[2], "日 （ひ） ／ day");
+    assert.equal(cols[2], "day");
     assert.equal(cols[3], "ひ");
     assert.equal(cols[4], "");
     assert.equal(cols[5], "オン: ニチ、 ジツ");
@@ -1011,7 +1011,7 @@ test("buildRowForKanji falls back to local data instead of leaking raw timeout e
     assert.equal(row.includes("ERROR:"), false);
     assert.equal(cols[0], "主");
     assert.equal(cols[1], "主");
-    assert.equal(cols[2], "主 （おも） ／ main / primary");
+    assert.equal(cols[2], "main / primary");
     assert.equal(cols[4], "");
     assert.equal(cols[5], "オン: シュ");
     assert.equal(cols[6], "くん: ぬし、 おも");

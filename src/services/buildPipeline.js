@@ -5,7 +5,7 @@ const { createKanjiApiClient } = require("../clients/kanjiApiClient");
 const { buildCuratedStudySummary } = require("../datasets/curatedStudyCoverage");
 const { loadCuratedStudyData, normalizeCuratedStudyData } = require("../datasets/curatedStudyData");
 const { loadJlptOnlyJson } = require("../datasets/jlptOnlyJson");
-const { loadKradMap, pickMainComponent } = require("../datasets/kradfile");
+const { loadGovernedComponentMap, pickMainComponent } = require("../datasets/kradfile");
 const { buildMediaCoverageSummary } = require("../datasets/mediaCoverage");
 const { buildCoverageSummary } = require("../datasets/sentenceCorpusCoverage");
 const { loadSentenceCorpus, normalizeSentenceCorpus } = require("../datasets/sentenceCorpus");
@@ -226,7 +226,7 @@ async function runBuildPipeline({
     buildCuratedStudySummaryFn = buildCuratedStudySummary,
     loadSentenceCorpusFn = loadSentenceCorpus,
     loadCuratedStudyDataFn = loadCuratedStudyData,
-    loadKradMapFn = loadKradMap,
+    loadKradMapFn = loadGovernedComponentMap,
     syncMediaForKanjiListFn = syncMediaForKanjiList,
     selectKanjiForSyncFn = selectKanjiForSync,
     buildDeckPackageFn = buildDeckPackage,
@@ -237,8 +237,11 @@ async function runBuildPipeline({
     if (!fs.existsSync(config.jlptJsonPath)) {
         throw new Error(`Missing JLPT JSON file at ${config.jlptJsonPath}`);
     }
-    if (!fs.existsSync(config.kradfilePath)) {
-        throw new Error(`Missing KRADFILE at ${config.kradfilePath}`);
+    if (!config.kanjiComponentContractPath && !config.kradfilePath) {
+        throw new Error("Missing kanji component source configuration.");
+    }
+    if (!fs.existsSync(config.kanjiComponentContractPath || "") && !fs.existsSync(config.kradfilePath || "")) {
+        throw new Error(`Missing kanji component contract at ${config.kanjiComponentContractPath} and KRADFILE at ${config.kradfilePath}`);
     }
 
     const mode = "write";
@@ -268,7 +271,12 @@ async function runBuildPipeline({
     const datasetLoadStartedAt = Date.now();
     const sentenceCorpus = loadSentenceCorpusFn(config.sentenceCorpusPath);
     const curatedStudyData = loadCuratedStudyDataFn(config.curatedStudyDataPath);
-    const kradMap = loadKradMapFn(config.kradfilePath);
+    const kradMap = loadKradMapFn === loadGovernedComponentMap
+        ? loadKradMapFn({
+            kanjiComponentContractPath: config.kanjiComponentContractPath,
+            kradfilePath: config.kradfilePath,
+        })
+        : loadKradMapFn(config.kradfilePath);
     capturePhaseTiming(timingsMs, "datasetLoad", datasetLoadStartedAt);
 
     ensureMediaRootFn(config.mediaRootDir);

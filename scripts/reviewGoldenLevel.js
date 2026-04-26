@@ -5,7 +5,7 @@ const { invokeCliMain } = require("../src/utils/cliArgs");
 const { loadConfig } = require("../src/config");
 const { createKanjiApiClient } = require("../src/clients/kanjiApiClient");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
-const { loadKradMap } = require("../src/datasets/kradfile");
+const { loadGovernedComponentMap } = require("../src/datasets/kradfile");
 const { loadSentenceCorpus } = require("../src/datasets/sentenceCorpus");
 const { createMediaServices } = require("../src/services/mediaServiceFactory");
 const { buildPreviewCards } = require("../src/services/previewCardService");
@@ -42,8 +42,8 @@ async function main() {
     if (!fs.existsSync(config.jlptJsonPath)) {
         throw new Error("Missing JLPT JSON file at " + config.jlptJsonPath);
     }
-    if (!fs.existsSync(config.kradfilePath)) {
-        throw new Error("Missing KRADFILE at " + config.kradfilePath);
+    if (!fs.existsSync(config.kanjiComponentContractPath || "") && !fs.existsSync(config.kradfilePath || "")) {
+        throw new Error(`Missing kanji component contract at ${config.kanjiComponentContractPath} and KRADFILE at ${config.kradfilePath}`);
     }
     if (!fs.existsSync(reviewSetPath)) {
         throw new Error("Missing golden review set at " + reviewSetPath);
@@ -53,7 +53,10 @@ async function main() {
     const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
     const sentenceCorpus = loadSentenceCorpus(config.sentenceCorpusPath);
     const curatedStudyData = loadCuratedStudyData(config.curatedStudyDataPath);
-    const kradMap = loadKradMap(config.kradfilePath);
+    const kradMap = loadGovernedComponentMap({
+        kanjiComponentContractPath: config.kanjiComponentContractPath,
+        kradfilePath: config.kradfilePath,
+    });
     const kanjiApiClient = createKanjiApiClient({
         baseUrl: config.kanjiApiBaseUrl,
         cacheDir: config.cacheDir,

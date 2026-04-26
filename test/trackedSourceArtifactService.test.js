@@ -72,6 +72,12 @@ test("evaluateTrackedSourceKanjiPreflight blocks certification without rich trac
             公: { englishMeaning: "public" },
             園: { englishMeaning: "garden" },
         },
+        componentContract: {
+            components: {
+                公: ["八", "ム"],
+                園: ["囗", "袁"],
+            },
+        },
         level: 5,
     });
 
@@ -82,8 +88,9 @@ test("evaluateTrackedSourceKanjiPreflight blocks certification without rich trac
     assert.equal(report.counts.curatedMeanings, 2);
     assert.deepEqual(
         report.blockers.map((blocker) => blocker.id),
-        ["on-readings", "kun-readings", "components", "rich-source-provenance"]
+        ["on-readings", "kun-readings", "rich-source-provenance"]
     );
+    assert.equal(report.counts.componentContractKanji, 2);
 });
 
 test("buildTrackedSourceKanjiPreflight reports N5 kanji source blockers without local data", () => {
@@ -96,7 +103,8 @@ test("buildTrackedSourceKanjiPreflight reports N5 kanji source blockers without 
     assert.equal(report.kanji.counts.contractKanji, 80);
     assert.equal(report.kanji.blockers.some((blocker) => blocker.id === "on-readings"), true);
     assert.equal(report.kanji.blockers.some((blocker) => blocker.id === "kun-readings"), true);
-    assert.equal(report.kanji.blockers.some((blocker) => blocker.id === "components"), true);
+    assert.equal(report.kanji.blockers.some((blocker) => blocker.id === "components"), false);
+    assert.equal(report.kanji.counts.componentContractKanji, 80);
 });
 
 test("buildTrackedSourceWordArtifact builds N5 word TSV without local workspace data", async () => {
@@ -155,12 +163,13 @@ test("formatTrackedSourceKanjiPreflightReport states blocked certification scope
                 expectedKanji: 80,
                 contractKanji: 80,
                 curatedMeanings: 80,
+                componentContractKanji: 80,
             },
             requirements: [
                 {
-                    label: "explicit on-yomi readings",
-                    trackedToday: false,
-                    source: "currently derived from local kanji input or API fallback",
+                    label: "component/radical source data",
+                    trackedToday: true,
+                    source: "templates/kanji_component_contract.json",
                 },
             ],
             blockers: [
@@ -174,6 +183,7 @@ test("formatTrackedSourceKanjiPreflightReport states blocked certification scope
 
     assert.match(text, /Tracked-Source Kanji Preflight/);
     assert.match(text, /Tracked-source kanji TSV certifiable: no/);
-    assert.match(text, /explicit on-yomi readings/);
+    assert.match(text, /component\/radical source data/);
+    assert.match(text, /component contract entries: 80/);
     assert.match(text, /ignored local data\/ kanji, KRAD, cache, and media inputs are not read/);
 });

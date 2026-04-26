@@ -112,7 +112,7 @@ npm run release:gate
 
 `product:artifacts:n5` builds a fresh N5 word TSV from tracked templates only, with network inference disabled and ignored local `data/` word, sentence, JLPT, cache, and media inputs excluded. It validates schema, canonical row count, canonical-only governance, and deterministic repeated output. It does not yet certify tracked-source kanji TSVs, `.apkg` files, or managed media packages.
 
-`product:artifacts:kanji:n5:preflight` inspects tracked templates and reports whether N5 kanji TSV certification is possible without ignored local `data/` inputs. It currently reports `certifiable: no` because explicit on-yomi, kun-yomi, component/radical source data, and rich-source provenance are not yet tracked as product contracts. Use `-- --require-certifiable` only when those contracts exist and the command is expected to fail closed.
+`product:artifacts:kanji:n5:preflight` inspects tracked templates and reports whether N5 kanji TSV certification is possible without ignored local `data/` inputs. It currently reports `certifiable: no` because explicit on-yomi, kun-yomi, and rich-source provenance are not yet tracked as product contracts. Component/radical source data is tracked in `templates/kanji_component_contract.json`. Use `-- --require-certifiable` only when the remaining contracts exist and the command is expected to fail closed.
 
 `product:readiness:n5` runs the current automated N5 product checkpoint: JLPT kanji and word audits, governed audio provenance, tracked-source N5 word TSV generation, and N5 kanji and word golden reviews. It still does not validate tracked-source kanji TSVs, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA.
 
@@ -331,7 +331,7 @@ Repository governance:
 Expected ignored workspace data:
 
 - `data/kanji_jlpt_only.json`
-- `data/KRADFILE`
+- `data/KRADFILE` as a local fallback only; governed deck builds prefer `templates/kanji_component_contract.json`
 - `data/sentence_corpus.json`
 - `data/curated_study_data.json`
 - `data/word_study_data.json`

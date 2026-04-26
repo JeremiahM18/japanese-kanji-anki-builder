@@ -21,7 +21,7 @@ const {
 } = require("./toolchainService");
 
 function describePathStatus(filePath, { label, required, kind = "file" }) {
-    const exists = fs.existsSync(filePath);
+    const exists = Boolean(filePath && fs.existsSync(filePath));
     let entryCount = null;
 
     if (exists && kind === "directory") {
@@ -35,6 +35,23 @@ function describePathStatus(filePath, { label, required, kind = "file" }) {
         kind,
         exists,
         entryCount,
+    };
+}
+
+function describeKanjiComponentSourceStatus(config) {
+    const contractPath = config.kanjiComponentContractPath || "";
+    const kradfilePath = config.kradfilePath || "";
+    const contractExists = Boolean(contractPath && fs.existsSync(contractPath));
+    const kradfileExists = Boolean(kradfilePath && fs.existsSync(kradfilePath));
+
+    return {
+        label: "Kanji component contract",
+        path: contractExists ? contractPath : contractPath || kradfilePath,
+        fallbackPath: kradfilePath,
+        required: true,
+        kind: "file",
+        exists: contractExists || kradfileExists,
+        source: contractExists ? "tracked-contract" : (kradfileExists ? "local-kradfile-fallback" : "missing"),
     };
 }
 
@@ -65,7 +82,7 @@ function buildDoctorStatus(config, { buildToolchainStatusFn = buildToolchainStat
         audioEnabled: true,
         required: [
             describePathStatus(config.jlptJsonPath, { label: "JLPT dataset", required: true }),
-            describePathStatus(config.kradfilePath, { label: "KRADFILE", required: true }),
+            describeKanjiComponentSourceStatus(config),
         ],
         optionalDatasets: [
             describePathStatus(config.sentenceCorpusPath, { label: "Sentence corpus", required: false }),
@@ -156,7 +173,7 @@ async function buildDoctorReport({
         nextSteps.push(`Add the JLPT dataset at ${config.jlptJsonPath}.`);
     }
     if (!status.required[1].exists) {
-        nextSteps.push(`Add KRADFILE at ${config.kradfilePath}.`);
+        nextSteps.push(`Add the tracked kanji component contract at ${config.kanjiComponentContractPath} or KRADFILE at ${config.kradfilePath}.`);
     }
     if (requiredReady && !status.optionalDatasets[0].exists) {
         nextSteps.push(`Add an optional sentence corpus at ${config.sentenceCorpusPath} to improve example selection.`);

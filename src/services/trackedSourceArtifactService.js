@@ -3,6 +3,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
+const { countComponentCoverageForLevel, loadKanjiComponentContract } = require("../datasets/kanjiComponentContract");
 const { loadCuratedStudyData } = require("../datasets/curatedStudyData");
 const { loadJlptLevelContract } = require("../datasets/jlptLevelContract");
 const { loadJlptWordLevelContract } = require("../datasets/jlptWordLevelContract");
@@ -50,47 +51,51 @@ const N5_TRACKED_SOURCE_KANJI_PREFLIGHT_SCOPE = Object.freeze({
         "mobile or screen-reader QA",
     ],
     sourceBoundary: "Inspects tracked templates only; ignored local data/ kanji, KRAD, cache, and media inputs are not read.",
-    followUp: "Track rich kanji readings, meanings, component data, and provenance before requiring tracked-source kanji TSV certification in product readiness.",
+    followUp: "Track rich kanji readings and source provenance before requiring tracked-source kanji TSV certification in product readiness.",
 });
 
-const TRACKED_KANJI_CERTIFICATION_REQUIREMENTS = Object.freeze([
-    {
-        id: "jlpt-level",
-        label: "tracked JLPT kanji level",
-        trackedToday: true,
-        source: "templates/jlpt_level_contract.json",
-    },
-    {
-        id: "meaning",
-        label: "learner-facing kanji meaning",
-        trackedToday: true,
-        source: "templates/starter_curated_study_data*.json",
-    },
-    {
-        id: "on-readings",
-        label: "explicit on-yomi readings",
-        trackedToday: false,
-        source: "currently derived from local kanji input or API fallback",
-    },
-    {
-        id: "kun-readings",
-        label: "explicit kun-yomi readings",
-        trackedToday: false,
-        source: "currently derived from local kanji input or API fallback",
-    },
-    {
-        id: "components",
-        label: "component/radical source data",
-        trackedToday: false,
-        source: "currently derived from local KRAD-style input",
-    },
-    {
-        id: "rich-source-provenance",
-        label: "rich kanji source provenance",
-        trackedToday: false,
-        source: "no tracked release contract yet",
-    },
-]);
+function buildTrackedKanjiCertificationRequirements({ componentsTracked = false } = {}) {
+    return [
+        {
+            id: "jlpt-level",
+            label: "tracked JLPT kanji level",
+            trackedToday: true,
+            source: "templates/jlpt_level_contract.json",
+        },
+        {
+            id: "meaning",
+            label: "learner-facing kanji meaning",
+            trackedToday: true,
+            source: "templates/starter_curated_study_data*.json",
+        },
+        {
+            id: "on-readings",
+            label: "explicit on-yomi readings",
+            trackedToday: false,
+            source: "currently derived from local kanji input or API fallback",
+        },
+        {
+            id: "kun-readings",
+            label: "explicit kun-yomi readings",
+            trackedToday: false,
+            source: "currently derived from local kanji input or API fallback",
+        },
+        {
+            id: "components",
+            label: "component/radical source data",
+            trackedToday: componentsTracked,
+            source: componentsTracked
+                ? "templates/kanji_component_contract.json"
+                : "currently derived from local KRAD-style input",
+        },
+        {
+            id: "rich-source-provenance",
+            label: "rich kanji source provenance",
+            trackedToday: false,
+            source: "no tracked release contract yet",
+        },
+    ];
+}
 
 function sha256Text(text) {
     return crypto.createHash("sha256").update(String(text || ""), "utf8").digest("hex");
@@ -135,6 +140,7 @@ function buildDefaultTrackedSourcePaths({ cwd = process.cwd() } = {}) {
         starterSentenceCorpusPath: path.join(templateDir, "starter_sentence_corpus.json"),
         starterWordStudyDataPath: path.join(templateDir, "starter_word_study_data.json"),
         wordPitchAccentDataPath: path.join(templateDir, "word_pitch_accent_data.json"),
+        kanjiComponentContractPath: path.join(templateDir, "kanji_component_contract.json"),
     };
 }
 
@@ -202,12 +208,19 @@ function evaluateWordArtifact({
 function evaluateTrackedSourceKanjiPreflight({
     jlptLevelContract = {},
     curatedStudyData = {},
+    componentContract = null,
     level = 5,
 } = {}) {
     const expectedKanji = jlptLevelContract.inventoryCounts?.[String(level)] || 0;
     const contractKanji = countKanjiByLevel(jlptLevelContract, level);
     const curatedMeanings = countCuratedMeaningsForLevel(jlptLevelContract, curatedStudyData, level);
-    const missingRequirements = TRACKED_KANJI_CERTIFICATION_REQUIREMENTS
+    const componentCoverage = componentContract
+        ? countComponentCoverageForLevel({ componentContract, jlptLevelContract, level })
+        : { expected: contractKanji, covered: 0, missing: contractKanji };
+    const requirements = buildTrackedKanjiCertificationRequirements({
+        componentsTracked: componentCoverage.expected > 0 && componentCoverage.missing === 0,
+    });
+    const missingRequirements = requirements
         .filter((requirement) => !requirement.trackedToday);
     const failures = [];
 
@@ -224,11 +237,12 @@ function evaluateTrackedSourceKanjiPreflight({
             label: requirement.label,
             currentSource: requirement.source,
         })),
-        requirements: TRACKED_KANJI_CERTIFICATION_REQUIREMENTS.map((requirement) => ({ ...requirement })),
+        requirements: requirements.map((requirement) => ({ ...requirement })),
         counts: {
             expectedKanji,
             contractKanji,
             curatedMeanings,
+            componentContractKanji: componentCoverage.covered,
             missingTrackedRequirements: missingRequirements.length,
         },
     };
@@ -247,9 +261,11 @@ function buildTrackedSourceKanjiPreflight({
     const curatedStudyData = loadCuratedStudyData(null, {
         starterPath: paths.starterCuratedStudyDataPath,
     });
+    const componentContract = loadKanjiComponentContract(paths.kanjiComponentContractPath);
     const evaluation = evaluateTrackedSourceKanjiPreflight({
         jlptLevelContract,
         curatedStudyData,
+        componentContract,
         level,
     });
 
@@ -261,6 +277,7 @@ function buildTrackedSourceKanjiPreflight({
         sourceFiles: {
             jlptLevelContractPath: paths.jlptLevelContractPath,
             starterCuratedStudyDataPath: paths.starterCuratedStudyDataPath,
+            kanjiComponentContractPath: paths.kanjiComponentContractPath,
         },
         kanji: evaluation,
     };
@@ -365,6 +382,7 @@ function formatTrackedSourceKanjiPreflightReport(report = {}) {
         `- expected N5 kanji: ${report.kanji?.counts?.expectedKanji || 0}`,
         `- contract N5 kanji: ${report.kanji?.counts?.contractKanji || 0}`,
         `- starter curated meanings: ${report.kanji?.counts?.curatedMeanings || 0}`,
+        `- component contract entries: ${report.kanji?.counts?.componentContractKanji || 0}`,
         "",
         "Certification requirements:",
         ...(report.kanji?.requirements || []).map((requirement) => `- ${requirement.trackedToday ? "tracked" : "blocked"}: ${requirement.label} (${requirement.source})`),

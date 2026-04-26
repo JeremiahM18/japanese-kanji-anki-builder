@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { loadKanjiComponentMap } = require("./kanjiComponentContract");
 
 function loadKradMap(kradfilePath) {
     const txt = fs.readFileSync(kradfilePath, 'utf-8');
@@ -25,7 +26,20 @@ function pickMainComponent(components) {
     return components.filter(Boolean).join(" / ");
 }
 
+function loadGovernedComponentMap({ kanjiComponentContractPath = "", kradfilePath = "" } = {}) {
+    if (kanjiComponentContractPath && fs.existsSync(kanjiComponentContractPath)) {
+        return loadKanjiComponentMap(kanjiComponentContractPath);
+    }
+
+    if (kradfilePath && fs.existsSync(kradfilePath)) {
+        return loadKradMap(kradfilePath);
+    }
+
+    throw new Error(`Missing kanji component contract at ${kanjiComponentContractPath || "(not configured)"} and KRADFILE at ${kradfilePath || "(not configured)"}`);
+}
+
 module.exports = {
+    loadGovernedComponentMap,
     loadKradMap,
     pickMainComponent,
 };

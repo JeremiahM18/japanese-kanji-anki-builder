@@ -5,7 +5,7 @@ const { logger } = require("./logger");
 const { createKanjiApiClient } = require("./clients/kanjiApiClient");
 const { loadCuratedStudyData } = require("./datasets/curatedStudyData");
 const { loadJlptOnlyJson } = require("./datasets/jlptOnlyJson");
-const { loadKradMap, pickMainComponent } = require("./datasets/kradfile");
+const { loadGovernedComponentMap, pickMainComponent } = require("./datasets/kradfile");
 const { loadSentenceCorpus } = require("./datasets/sentenceCorpus");
 const { ensureMediaRoot } = require("./services/mediaStore");
 const { createMediaServices } = require("./services/mediaServiceFactory");
@@ -158,7 +158,7 @@ async function buildRuntime({
     loadConfigFn = loadConfig,
     createKanjiApiClientFn = createKanjiApiClient,
     loadCuratedStudyDataFn = loadCuratedStudyData,
-    loadKradMapFn = loadKradMap,
+    loadKradMapFn = loadGovernedComponentMap,
     loadSentenceCorpusFn = loadSentenceCorpus,
     ensureMediaRootFn = ensureMediaRoot,
     createMediaServicesFn = createMediaServices,
@@ -171,12 +171,20 @@ async function buildRuntime({
     if (!fs.existsSync(config.jlptJsonPath)) {
         throw new Error(`Missing JLPT JSON file at ${config.jlptJsonPath}`);
     }
-    if (!fs.existsSync(config.kradfilePath)) {
-        throw new Error(`Missing KRADFILE at ${config.kradfilePath}`);
+    if (!config.kanjiComponentContractPath && !config.kradfilePath) {
+        throw new Error("Missing kanji component source configuration.");
+    }
+    if (!fs.existsSync(config.kanjiComponentContractPath || "") && !fs.existsSync(config.kradfilePath || "")) {
+        throw new Error(`Missing kanji component contract at ${config.kanjiComponentContractPath} and KRADFILE at ${config.kradfilePath}`);
     }
 
     const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
-    const kradMap = loadKradMapFn(config.kradfilePath);
+    const kradMap = loadKradMapFn === loadGovernedComponentMap
+        ? loadKradMapFn({
+            kanjiComponentContractPath: config.kanjiComponentContractPath,
+            kradfilePath: config.kradfilePath,
+        })
+        : loadKradMapFn(config.kradfilePath);
     const sentenceCorpus = loadSentenceCorpusFn(config.sentenceCorpusPath);
     const curatedStudyData = loadCuratedStudyDataFn(config.curatedStudyDataPath);
 

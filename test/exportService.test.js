@@ -298,6 +298,58 @@ test("buildInferenceForKanji separates primary-reading gloss from broader kanji 
     assert.equal(inference.kanjiMeanings, "outside / foreign");
 });
 
+test("buildInferenceForKanji prefers curated learner meaning over noisy kanji glosses for compound study words", async () => {
+    const exportService = createExportService({
+        curatedStudyData: {
+            刊: {
+                englishMeaning: "publish / issue",
+                displayWord: { written: "週刊", pron: "しゅうかん" },
+                notes: "週刊 （しゅうかん） - weekly publication ／ 刊行 （かんこう） - publication",
+                exampleSentence: {
+                    japanese: "その雑誌は毎週刊行されます。",
+                    reading: "そのざっしはまいしゅうかんこうされます。",
+                    english: "That magazine is published every week.",
+                },
+            },
+        },
+        inferenceEngine: {
+            hasFullyCuratedKanjiEntry() {
+                return true;
+            },
+            inferKanjiStudyData() {
+                return {
+                    displayWord: { written: "週刊", pron: "しゅうかん" },
+                    bestWord: { written: "週刊", pron: "しゅうかん" },
+                    englishMeaning: "publish / issue",
+                    meaningJP: "週刊 （しゅうかん） ／ publish / issue",
+                    notes: "週刊 （しゅうかん） - weekly publication ／ 刊行 （かんこう） - publication",
+                    sentenceCandidates: [],
+                };
+            },
+        },
+    });
+
+    const inference = await exportService.buildInferenceForKanji({
+        kanji: "刊",
+        jlptEntry: { meanings: ["carve", "publish", "issue"], on_readings: ["カン"], kun_readings: [], jlpt: 2 },
+        kanjiApiClient: {
+            async getKanji() {
+                throw new Error("should use local JLPT data");
+            },
+            async getWords() {
+                throw new Error("should skip word fetch");
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+    });
+
+    assert.equal(inference.displayWordText, "刊");
+    assert.equal(inference.primaryReading, "かん");
+    assert.equal(inference.meaningJP, "publish / issue");
+    assert.equal(inference.kanjiMeanings, "publish / issue / carve");
+});
+
 test("buildInferenceForKanji does not attach mismatched compound audio to a kanji card", async () => {
     const exportService = createExportService({
         curatedStudyData: {

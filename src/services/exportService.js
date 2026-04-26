@@ -300,6 +300,11 @@ function selectPrimaryReadingMeaning({ kanji, primaryReading, curatedEntry = nul
         return inferredMeaning;
     }
 
+    const curatedMeaning = String(curatedEntry?.englishMeaning || "").trim();
+    if (curatedMeaning) {
+        return curatedMeaning;
+    }
+
     return String((Array.isArray(kanjiInfo?.meanings) ? kanjiInfo.meanings[0] : "") || inferredMeaning).trim();
 }
 

@@ -1,51 +1,8 @@
-const { buildMeaningJP, pickBestEnglishMeaning } = require("../inference/meaningInference");
 const { labelReading } = require("../utils/text");
-
-function buildOfflineSentenceCandidate(kanji, curatedEntry, sentenceCorpus) {
-    if (curatedEntry?.exampleSentence) {
-        return {
-            type: "curated",
-            japanese: curatedEntry.exampleSentence.japanese,
-            reading: curatedEntry.exampleSentence.reading || "",
-            english: curatedEntry.exampleSentence.english,
-            written: curatedEntry.preferredWords?.[0] || kanji,
-            source: curatedEntry.exampleSentence.source || "curated-study-data",
-        };
-    }
-
-    const matches = (Array.isArray(sentenceCorpus) ? sentenceCorpus : [])
-        .filter((entry) => entry.kanji === kanji)
-        .sort((a, b) => {
-            const aReading = a.reading ? 1 : 0;
-            const bReading = b.reading ? 1 : 0;
-            const readingDiff = bReading - aReading;
-            if (readingDiff !== 0) {
-                return readingDiff;
-            }
-
-            const aFreq = Number.isInteger(a.frequencyRank) ? a.frequencyRank : Number.MAX_SAFE_INTEGER;
-            const bFreq = Number.isInteger(b.frequencyRank) ? b.frequencyRank : Number.MAX_SAFE_INTEGER;
-            if (aFreq !== bFreq) {
-                return aFreq - bFreq;
-            }
-
-            return String(a.japanese || "").length - String(b.japanese || "").length;
-        });
-
-    if (matches.length === 0) {
-        return null;
-    }
-
-    const best = matches[0];
-    return {
-        type: "corpus",
-        japanese: best.japanese,
-        reading: best.reading || "",
-        english: best.english,
-        written: best.written || kanji,
-        source: best.source || "local-corpus",
-    };
-}
+const {
+    buildOfflineMeaning: buildFallbackOfflineMeaning,
+    buildOfflineSentenceCandidate,
+} = require("./offlineKanjiFallback");
 
 function buildOfflineReading(jlptEntry) {
     if (!jlptEntry || typeof jlptEntry !== "object") {
@@ -55,17 +12,8 @@ function buildOfflineReading(jlptEntry) {
     return labelReading(jlptEntry.on_readings, jlptEntry.kun_readings);
 }
 
-function buildOfflineMeaning(jlptEntry, curatedEntry, sentenceCandidate, kanji) {
-    const displayWord = curatedEntry?.displayWord?.written
-        ? { written: curatedEntry.displayWord.written, pron: curatedEntry.displayWord.pron || "" }
-        : { written: curatedEntry?.preferredWords?.[0] || sentenceCandidate?.written || "", pron: "" };
-    const englishMeaning = curatedEntry?.englishMeaning || pickBestEnglishMeaning(jlptEntry?.meanings || []);
-
-    if (displayWord?.written && englishMeaning) {
-        return buildMeaningJP(displayWord, englishMeaning);
-    }
-
-    return englishMeaning || displayWord?.written || (kanji || "");
+function buildOfflineMeaning(jlptEntry, curatedEntry, _sentenceCandidate, kanji) {
+    return buildFallbackOfflineMeaning({ kanji, curatedEntry, jlptEntry });
 }
 
 function summarizeLevel(level, levelKanji, jlptOnlyJson, sentenceCorpus, curatedStudyData) {

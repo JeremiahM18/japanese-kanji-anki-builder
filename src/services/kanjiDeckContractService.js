@@ -142,5 +142,4 @@ module.exports = {
     assertKanjiDeckContract,
     buildKanjiDeckContractReport,
     formatKanjiDeckContractReport,
-    parseKanjiExportTsv,
 };

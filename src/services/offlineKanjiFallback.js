@@ -197,7 +197,7 @@ async function buildOfflineFallbackCard({
         previewMode: "offline-local-fallback",
         displayWord: displayWord.written,
         primaryReading,
-        meaningJP: buildOfflineMeaning({ kanji, curatedEntry, sentenceCandidate, jlptEntry }),
+        meaningJP: buildOfflineMeaning({ kanji, curatedEntry, jlptEntry }),
         onReading: readingFields.onReading,
         kunReading: readingFields.kunReading,
         radical: pickMainComponent(kradMap.get(kanji) || []),
@@ -215,11 +215,6 @@ async function buildOfflineFallbackCard({
 module.exports = {
     buildOfflineFallbackCard,
     buildOfflineMeaning,
-    buildOfflineNotes,
-    buildOfflineReadingFields,
     buildOfflineSentenceCandidate,
-    resolveOfflineMedia,
-    selectOfflineDisplayWord,
-    selectOfflinePrimaryReading,
 };
 

@@ -7,7 +7,7 @@ const {
     formatKanjiDeckContractReport,
 } = require("../src/services/kanjiDeckContractService");
 
-const HEADER = "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tAudio\tRadical\tNotes\tExampleSentence";
+const HEADER = "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tAudio\tRadical\tNotes\tExampleSentence";
 
 test("buildKanjiDeckContractReport accepts individual-kanji card anchors", () => {
     const report = buildKanjiDeckContractReport({

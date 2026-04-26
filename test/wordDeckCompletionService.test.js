@@ -193,9 +193,9 @@ test("buildWordDeckCompletionReport combines canonical inventory and reading cov
             excludedWordLevels: {},
         },
         kanjiTsv: [
-            "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tAudio\tRadical\tNotes\tExampleSentence",
-            "今\t今\tnow\tいま\tnow\t\t\tくん: いま\t\t\t\t\t今日 （きょう） - today\t",
-            "日\t日\tday\tひ\tday\t\t\tくん: ひ\t\t\t\t\t今日 （きょう） - today\t",
+            "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tAudio\tRadical\tNotes\tExampleSentence",
+            "今\t今\tnow\tいま\tnow\t\t\tくん: いま\t\t\t\t今日 （きょう） - today\t",
+            "日\t日\tday\tひ\tday\t\t\tくん: ひ\t\t\t\t今日 （きょう） - today\t",
         ].join("\n"),
         wordTsv: [
             "Word\tReading\tReadingBreakdown\tAudio\tPitchAccent\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes",
@@ -242,8 +242,8 @@ test("buildWordDeckCompletionReport reuses easier-deck coverage before asking fo
             },
         },
         kanjiTsv: [
-            "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tAudio\tRadical\tNotes\tExampleSentence",
-            "会\t会う\tmeet\tあう\tmeet\t\tオン: カイ\tくん: あ.う\t\t\t\t\t会う （あう） - meet\t",
+            "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tAudio\tRadical\tNotes\tExampleSentence",
+            "会\t会う\tmeet\tあう\tmeet\t\tオン: カイ\tくん: あ.う\t\t\t\t会う （あう） - meet\t",
         ].join("\n"),
         wordTsv: [
             "Word\tReading\tAudio\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes",

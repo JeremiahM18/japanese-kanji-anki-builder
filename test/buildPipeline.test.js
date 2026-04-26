@@ -288,10 +288,10 @@ test("runBuildPipeline writes exports reports summary and an import-ready packag
 
     assert.deepEqual(summary.levels, [5]);
     assert.equal(summary.mediaSync.skipped, true);
-    assert.equal(summary.package.mediaAssetCount, 3);
+    assert.equal(summary.package.mediaAssetCount, 2);
     assert.deepEqual(summary.package.mediaCounts, {
         strokeOrder: 1,
-        strokeOrderImage: 1,
+        strokeOrderImage: 0,
         strokeOrderAnimation: 0,
         trueStrokeOrderAnimation: 0,
         svgStrokeOrderAnimationFallback: 0,
@@ -301,21 +301,21 @@ test("runBuildPipeline writes exports reports summary and an import-ready packag
     assert.equal(fs.existsSync(path.join(outDir, "reports", "media-sync.json")), true);
     assert.equal(fs.existsSync(path.join(outDir, "build-summary.json")), true);
     assert.equal(fs.existsSync(path.join(outDir, "package", "exports", "jlpt-n5.tsv")), true);
-    assert.equal(fs.existsSync(path.join(outDir, "package", "media", "65E5_日-stroke-order.svg")), true);
+    assert.equal(fs.existsSync(path.join(outDir, "package", "media", "65E5_日-stroke-order.svg")), false);
     assert.equal(fs.existsSync(path.join(outDir, "package", "media", "65E5_日-stroke-order.gif")), true);
     assert.equal(fs.existsSync(path.join(outDir, "package", "media", "65E5_日-kanji-reading-日.mp3")), true);
     assert.equal(fs.existsSync(path.join(outDir, "package", "IMPORT.txt")), true);
 
     const tsv = fs.readFileSync(path.join(outDir, "exports", "jlpt-n5.tsv"), "utf-8");
-    assert.match(tsv, /^Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tAudio\tRadical\tNotes\tExampleSentence/m);
+    assert.match(tsv, /^Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tAudio\tRadical\tNotes\tExampleSentence/m);
     assert.match(tsv, /^日\t/m);
 
     const storedSummary = JSON.parse(fs.readFileSync(path.join(outDir, "build-summary.json"), "utf-8"));
     assert.equal(storedSummary.exports.length, 1);
-    assert.equal(storedSummary.package.mediaAssetCount, 3);
+    assert.equal(storedSummary.package.mediaAssetCount, 2);
     assert.deepEqual(storedSummary.package.mediaCounts, {
         strokeOrder: 1,
-        strokeOrderImage: 1,
+        strokeOrderImage: 0,
         strokeOrderAnimation: 0,
         trueStrokeOrderAnimation: 0,
         svgStrokeOrderAnimationFallback: 0,

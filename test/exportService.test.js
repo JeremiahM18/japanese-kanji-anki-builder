@@ -631,8 +631,8 @@ test("buildRowForKanji skips word fetch for fully curated kanji cards", async ()
     assert.equal(cols[3], "ひ");
     assert.equal(cols[4], "day");
     assert.equal(cols[5], "");
-    assert.equal(cols[12], "<ruby>日本<rt>にほん</rt></ruby> - Japan");
-    assert.equal(cols[13], "日本へ行きます。 ／ にほんへいきます。 ／ I will go to Japan.");
+    assert.equal(cols[11], "<ruby>日本<rt>にほん</rt></ruby> - Japan");
+    assert.equal(cols[12], "日本へ行きます。 ／ にほんへいきます。 ／ I will go to Japan.");
 });
 
 test("buildRowForKanji uses local JLPT data and skips remote fetches for fully curated kanji cards", async () => {
@@ -700,8 +700,8 @@ test("buildRowForKanji uses local JLPT data and skips remote fetches for fully c
     assert.equal(cols[5], "");
     assert.equal(cols[6], "オン: ニチ");
     assert.equal(cols[7], "くん: ひ");
-    assert.equal(cols[12], "<ruby>日本<rt>にほん</rt></ruby> - Japan");
-    assert.equal(cols[13], "日本へ行きます。 ／ にほんへいきます。 ／ I will go to Japan.");
+    assert.equal(cols[11], "<ruby>日本<rt>にほん</rt></ruby> - Japan");
+    assert.equal(cols[12], "日本へ行きます。 ／ にほんへいきます。 ／ I will go to Japan.");
 });
 
 test("buildRowForKanji records export profiling timings and row counts", async () => {
@@ -988,7 +988,7 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
     const lines = tsv.trim().split("\n");
 
     assert.equal(lines.length, 2);
-    assert.equal(lines[0], "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tAudio\tRadical\tNotes\tExampleSentence");
+    assert.equal(lines[0], "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tAudio\tRadical\tNotes\tExampleSentence");
 
     const cols = lines[1].split("\t");
     assert.equal(cols[0], "日");
@@ -1000,11 +1000,10 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
     assert.equal(cols[6], "オン: ニチ、 ジツ");
     assert.equal(cols[7], "くん: ひ、 び、 か");
     assert.equal(cols[8], '<img src="65E5_日-stroke-order.gif" />');
-    assert.equal(cols[9], '<img src="65E5_日-stroke-order.svg" />');
-    assert.equal(cols[10], "[sound:65E5_日-kanji-reading-日.mp3]");
-    assert.equal(cols[11], "日");
-    assert.equal(cols[12], "<ruby>日本<rt>にほん</rt></ruby> - Japan ／ <ruby>日よう日<rt>にちようび</rt></ruby> - Sunday");
-    assert.equal(cols[13], '「日本」を勉強します。 ／ 「にほん」をべんきょうします。 ／ I study the word "日本".');
+    assert.equal(cols[9], "[sound:65E5_日-kanji-reading-日.mp3]");
+    assert.equal(cols[10], "日");
+    assert.equal(cols[11], "<ruby>日本<rt>にほん</rt></ruby> - Japan ／ <ruby>日よう日<rt>にちようび</rt></ruby> - Sunday");
+    assert.equal(cols[12], '「日本」を勉強します。 ／ 「にほん」をべんきょうします。 ／ I study the word "日本".');
 });
 
 
@@ -1072,8 +1071,8 @@ test("buildRowForKanji falls back to local data instead of leaking raw timeout e
     assert.equal(cols[5], "");
     assert.equal(cols[6], "オン: シュ");
     assert.equal(cols[7], "くん: ぬし、 おも");
-    assert.equal(cols[12], "<ruby>主<rt>おも</rt></ruby> - main / primary");
-    assert.equal(cols[13], "主な理由を説明してください。 ／ おもなりゆうをせつめいしてください。 ／ Please explain the main reason.");
+    assert.equal(cols[11], "<ruby>主<rt>おも</rt></ruby> - main / primary");
+    assert.equal(cols[12], "主な理由を説明してください。 ／ おもなりゆうをせつめいしてください。 ／ Please explain the main reason.");
     assert.deepEqual(exportIssues, [{
         kanji: "主",
         level: 4,

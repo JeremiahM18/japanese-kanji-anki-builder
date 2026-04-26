@@ -34,6 +34,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 - Confirm each card back starts with the learner-facing `PrimaryReading` plus only the meaning associated with that reading.
 - Confirm broader kanji meanings are shown separately and are not collapsed into the primary-reading line.
 - Confirm there is only one learner-facing stroke-order animation field and it loops correctly.
+- Confirm static stroke-order images are not exported as separate kanji note fields.
 - Confirm example words in notes use ruby/furigana rather than parenthetical reading splits.
 - Confirm `DisplayWord` remains the target kanji in the TSV contract but is not repeated as a visible card-back study word.
 - Confirm compounds appear only in notes, examples, or word decks.

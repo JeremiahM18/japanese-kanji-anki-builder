@@ -19,7 +19,6 @@ test("loadAnkiNoteSchema returns a stable shared note contract", () => {
         "OnReading",
         "KunReading",
         "StrokeOrder",
-        "StrokeOrderImage",
         "Audio",
         "Radical",
         "Notes",

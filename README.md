@@ -56,7 +56,7 @@ Kanji decks:
 - The kanji deck learning target is the individual kanji. `DisplayWord` is the target kanji itself, and `PrimaryReading` is the learner-facing reading for that kanji.
 - Compound words belong in notes, examples, and word decks; they must not replace the kanji-card anchor.
 - `deck:ready` fails on export fallbacks unless `--allow-export-fallbacks` is explicit.
-- Stroke-order images and animations are separate readiness surfaces.
+- Static stroke-order images and looping animations are separate managed-media readiness surfaces.
 - Audio is governed by policy and required for kanji deck readiness. Exported kanji cards must use exact audio for the target kanji and exported primary reading.
 
 Word decks:
@@ -380,10 +380,9 @@ Kanji card fields include:
 - `OnReading`
 - `KunReading`
 - `StrokeOrder`
-- `StrokeOrderImage`
 - `Audio`
 
-The front of a kanji card shows only the target kanji. The back starts with `PrimaryReading` plus the learner-facing meaning associated with that reading from `MeaningJP`. Broader kanji meanings live separately in `KanjiMeanings`; they must not be collapsed into the primary-reading line. `StrokeOrder` is the single learner-facing looping stroke-order animation field; `StrokeOrderImage` remains a static media/source contract field and is not repeated on the card back. `DisplayWord` remains an exported contract field and must equal the target kanji, but it is not repeated as a visible card-back study word. `StudyWordKanji` is blank for kanji cards because the learning target is the individual kanji; compounds and study words belong in ruby-formatted notes, examples, and word decks. The build pipeline rejects kanji exports that replace the target-kanji anchor with a compound or omit the primary reading. Audio is selected only when managed media has an exact `kanji-reading` asset for the target kanji and exported primary reading.
+The front of a kanji card shows only the target kanji. The back starts with `PrimaryReading` plus the learner-facing meaning associated with that reading from `MeaningJP`. Broader kanji meanings live separately in `KanjiMeanings`; they must not be collapsed into the primary-reading line. `StrokeOrder` is the single learner-facing looping stroke-order animation field; static stroke-order images remain managed media/provenance inputs but are not exported as Anki note fields. `DisplayWord` remains an exported contract field and must equal the target kanji, but it is not repeated as a visible card-back study word. `StudyWordKanji` is blank for kanji cards because the learning target is the individual kanji; compounds and study words belong in ruby-formatted notes, examples, and word decks. The build pipeline rejects kanji exports that replace the target-kanji anchor with a compound or omit the primary reading. Audio is selected only when managed media has an exact `kanji-reading` asset for the target kanji and exported primary reading.
 
 Word card fields include:
 

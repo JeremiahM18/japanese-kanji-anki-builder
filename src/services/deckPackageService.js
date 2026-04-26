@@ -51,7 +51,7 @@ function buildImportGuide({ exportCount, mediaAssetCount, mediaCounts, ankiPacka
         `Exports included: ${exportCount}`,
         `Unique media files included: ${mediaAssetCount}`,
         `- Stroke-order field references: ${mediaCounts.strokeOrder}`,
-        `- Stroke-order images: ${mediaCounts.strokeOrderImage}`,
+        ...(mediaCounts.strokeOrderImage > 0 ? [`- Stroke-order static image package assets: ${mediaCounts.strokeOrderImage}`] : []),
         ...(mediaCounts.strokeOrderAnimation > 0 ? [`- Stroke-order animation package assets: ${mediaCounts.strokeOrderAnimation}`] : []),
         `- Audio fields: ${mediaCounts.audio}`,
         ...(ankiPackage?.filePath ? [
@@ -297,7 +297,7 @@ async function buildDeckPackage({
     const selectedKanji = collectReferencedKanji({ exports, kanjiByLevel });
     const kanjiAssetKinds = deckKind === "word"
         ? ["strokeOrder", "strokeOrderAnimation"]
-        : ["strokeOrder", "strokeOrderImage", "audio"];
+        : ["strokeOrder", "audio"];
     const referencedMediaFileNames = deckKind === "kanji"
         ? collectReferencedMediaFileNames(exports)
         : null;

@@ -22,7 +22,7 @@ A kanji level ships only when all criteria are true:
 - Golden review coverage for that shipped level is complete.
 - Exported cards preserve the individual-kanji learning contract: `DisplayWord` equals the target kanji, `PrimaryReading` is present, `MeaningJP` is the meaning associated with that primary reading, `KanjiMeanings` carries broader kanji meanings, and compound words do not replace the card anchor.
 - `npm run deck:ready -- --levels=<level>` passes with `0` export fallback issues.
-- Exported card media completeness is `100%` for stroke-order fields, stroke-order image fields, stroke-order animation fields, and audio fields.
+- Exported card media completeness is `100%` for the single learner-facing looping stroke-order field, static stroke-order image field, and audio field.
 - Stroke-order animation coverage is `100%`.
 - Audio is governed, audited, review-clean, and exact for the exported target kanji plus primary reading.
 - Accessibility review has no unresolved blocker.

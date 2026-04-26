@@ -20,7 +20,6 @@ test("loadAnkiNoteSchema returns a stable shared note contract", () => {
         "KunReading",
         "StrokeOrder",
         "StrokeOrderImage",
-        "StrokeOrderAnimation",
         "Audio",
         "Radical",
         "Notes",

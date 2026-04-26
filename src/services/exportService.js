@@ -217,6 +217,32 @@ function parseNoteGlossEntries(notes) {
         .filter(Boolean);
 }
 
+function formatRubyText(written, reading) {
+    const safeWritten = String(written || "").trim();
+    const safeReading = String(reading || "").trim();
+    if (!safeWritten || !safeReading) {
+        return safeWritten;
+    }
+
+    return `<ruby>${safeWritten}<rt>${safeReading}</rt></ruby>`;
+}
+
+function formatNotesWithRuby(notes) {
+    return String(notes || "")
+        .split("／")
+        .map((entry) => {
+            const trimmed = entry.trim();
+            const match = trimmed.match(/^(?<written>.+?)\s*（(?<reading>[^）]+)）\s*-\s*(?<meaning>.+)$/u);
+            if (!match?.groups) {
+                return trimmed;
+            }
+
+            return `${formatRubyText(match.groups.written, match.groups.reading)} - ${match.groups.meaning.trim()}`;
+        })
+        .filter(Boolean)
+        .join(" ／ ");
+}
+
 function selectPrimaryReadingMeaning({ kanji, primaryReading, curatedEntry = null, inferred = null, kanjiInfo = null }) {
     const normalizedPrimaryReading = normalizeReading(primaryReading);
     const noteEntries = [
@@ -432,10 +458,9 @@ function buildInferredRow({ kanji, inferred, kanjiInfo, kradMap, pickMainCompone
         kunReading,
         formatAnkiStrokeOrderField(mediaFields.strokeOrderPath),
         formatAnkiStrokeOrderField(mediaFields.strokeOrderImagePath),
-        formatAnkiStrokeOrderField(mediaFields.strokeOrderAnimationPath),
         formatAnkiAudioField(mediaFields.audioPath),
         radical,
-        inferred.notes,
+        formatNotesWithRuby(inferred.notes),
         exampleSentence,
     ]);
 }
@@ -454,10 +479,9 @@ function buildFallbackRow({ fallbackCard, kanjiLevelLookup, currentLevel = null 
         fallbackCard.kunReading,
         formatAnkiStrokeOrderField(fallbackCard.media.strokeOrderPath),
         formatAnkiStrokeOrderField(fallbackCard.media.strokeOrderImagePath),
-        formatAnkiStrokeOrderField(fallbackCard.media.strokeOrderAnimationPath),
         formatAnkiAudioField(fallbackCard.media.audioPath),
         fallbackCard.radical,
-        fallbackCard.notes,
+        formatNotesWithRuby(fallbackCard.notes),
         fallbackCard.exampleSentence,
     ]);
 }
@@ -622,6 +646,7 @@ function createExportService({
             primaryReading: inferred.primaryReading,
             kanjiMeanings: inferred.kanjiMeanings,
             studyWordKanji: formatStudyWordKanjiLabels(displayWordText, kanjiLevelLookup, { currentLevel }),
+            notes: formatNotesWithRuby(inferred.notes),
             onReading,
             kunReading,
             strokeOrderPath: mediaFields.strokeOrderPath,
@@ -686,6 +711,8 @@ function createExportService({
         formatAnkiAudioField,
         formatAnkiStrokeOrderField,
         formatExampleSentence,
+        formatNotesWithRuby,
+        formatRubyText,
         formatStudyWordKanjiLabels,
     };
 }
@@ -696,6 +723,8 @@ module.exports = {
     formatAnkiAudioField,
     formatAnkiStrokeOrderField,
     formatExampleSentence,
+    formatNotesWithRuby,
+    formatRubyText,
     formatStudyWordKanjiLabels,
 };
 

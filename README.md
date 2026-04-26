@@ -381,10 +381,9 @@ Kanji card fields include:
 - `KunReading`
 - `StrokeOrder`
 - `StrokeOrderImage`
-- `StrokeOrderAnimation`
 - `Audio`
 
-The front of a kanji card shows only the target kanji. The back starts with `PrimaryReading` plus the learner-facing meaning associated with that reading from `MeaningJP`. Broader kanji meanings live separately in `KanjiMeanings`; they must not be collapsed into the primary-reading line. `DisplayWord` remains an exported contract field and must equal the target kanji, but it is not repeated as a visible card-back study word. `StudyWordKanji` is blank for kanji cards because the learning target is the individual kanji; compounds and study words belong in notes, examples, and word decks. The build pipeline rejects kanji exports that replace the target-kanji anchor with a compound or omit the primary reading. Audio is selected only when managed media has an exact `kanji-reading` asset for the target kanji and exported primary reading.
+The front of a kanji card shows only the target kanji. The back starts with `PrimaryReading` plus the learner-facing meaning associated with that reading from `MeaningJP`. Broader kanji meanings live separately in `KanjiMeanings`; they must not be collapsed into the primary-reading line. `StrokeOrder` is the single learner-facing looping stroke-order animation field; `StrokeOrderImage` remains a static media/source contract field and is not repeated on the card back. `DisplayWord` remains an exported contract field and must equal the target kanji, but it is not repeated as a visible card-back study word. `StudyWordKanji` is blank for kanji cards because the learning target is the individual kanji; compounds and study words belong in ruby-formatted notes, examples, and word decks. The build pipeline rejects kanji exports that replace the target-kanji anchor with a compound or omit the primary reading. Audio is selected only when managed media has an exact `kanji-reading` asset for the target kanji and exported primary reading.
 
 Word card fields include:
 

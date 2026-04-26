@@ -34,7 +34,6 @@ function hasMissingRequiredExportMedia(summary) {
 
     return completeness.strokeOrder < completeness.totalRows
         || completeness.strokeOrderImage < completeness.totalRows
-        || completeness.strokeOrderAnimation < completeness.totalRows
         || completeness.audio < completeness.totalRows;
 }
 
@@ -73,7 +72,6 @@ function formatDeckReadyReport(summary, doctorReport = null) {
     lines.push("Packaged media by field:");
     lines.push(`- Stroke-order field references: ${formatCount(mediaCounts.strokeOrder)}`);
     lines.push(`- Stroke-order images: ${formatCount(mediaCounts.strokeOrderImage)}`);
-    lines.push(`- Stroke-order animation fields: ${formatCount(mediaCounts.strokeOrderAnimation)}`);
     if (audioEnabled) {
         lines.push(`- Audio fields: ${formatCount(mediaCounts.audio)}`);
     }
@@ -82,7 +80,6 @@ function formatDeckReadyReport(summary, doctorReport = null) {
         lines.push("Exported card media completeness:");
         lines.push(`- Stroke-order fields: ${formatCount(exportedMedia.strokeOrder)}/${formatCount(exportedMedia.totalRows)}`);
         lines.push(`- Stroke-order image fields: ${formatCount(exportedMedia.strokeOrderImage)}/${formatCount(exportedMedia.totalRows)}`);
-        lines.push(`- Stroke-order animation fields: ${formatCount(exportedMedia.strokeOrderAnimation)}/${formatCount(exportedMedia.totalRows)}`);
         lines.push(`- Audio fields: ${formatCount(exportedMedia.audio)}/${formatCount(exportedMedia.totalRows)}`);
     }
 

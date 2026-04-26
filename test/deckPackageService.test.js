@@ -142,8 +142,8 @@ test("kanji deck packaging copies only media referenced by exported card fields"
     fs.writeFileSync(
         exportPath,
         [
-            "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence",
-            "車\t車\t車 （くるま） ／ car\tくるま\t\tオン: シャ\tくん: くるま\t<img src=\"8ECA_車-stroke-order.gif\" />\t<img src=\"8ECA_車-stroke-order.png\" />\t<img src=\"8ECA_車-stroke-order.gif\" />\t\t車\t電車 （でんしゃ） - train\t",
+            "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tAudio\tRadical\tNotes\tExampleSentence",
+            "車\t車\t車 （くるま） ／ car\tくるま\t\tオン: シャ\tくん: くるま\t<img src=\"8ECA_車-stroke-order.gif\" />\t<img src=\"8ECA_車-stroke-order.png\" />\t\t車\t電車 （でんしゃ） - train\t",
         ].join("\n"),
         "utf-8"
     );
@@ -197,8 +197,8 @@ test("kanji deck packaging copies only media referenced by exported card fields"
     assert.deepEqual(summary.mediaCounts, {
         strokeOrder: 1,
         strokeOrderImage: 1,
-        strokeOrderAnimation: 1,
-        trueStrokeOrderAnimation: 1,
+        strokeOrderAnimation: 0,
+        trueStrokeOrderAnimation: 0,
         svgStrokeOrderAnimationFallback: 0,
         audio: 0,
     });
@@ -215,7 +215,7 @@ test("kanji deck packaging copies the exact referenced primary-reading audio", a
     fs.writeFileSync(
         exportPath,
         [
-            "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence",
+            "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tAudio\tRadical\tNotes\tExampleSentence",
             "車\t車\tcar\tくるま\t\tオン: シャ\tくん: くるま\t\t\t\t[sound:8ECA_車-kanji-reading-車-くるま.wav]\t車\t\t",
         ].join("\n"),
         "utf-8"

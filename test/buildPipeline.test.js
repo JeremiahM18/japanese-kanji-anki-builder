@@ -292,8 +292,8 @@ test("runBuildPipeline writes exports reports summary and an import-ready packag
     assert.deepEqual(summary.package.mediaCounts, {
         strokeOrder: 1,
         strokeOrderImage: 1,
-        strokeOrderAnimation: 1,
-        trueStrokeOrderAnimation: 1,
+        strokeOrderAnimation: 0,
+        trueStrokeOrderAnimation: 0,
         svgStrokeOrderAnimationFallback: 0,
         audio: 1,
     });
@@ -307,7 +307,7 @@ test("runBuildPipeline writes exports reports summary and an import-ready packag
     assert.equal(fs.existsSync(path.join(outDir, "package", "IMPORT.txt")), true);
 
     const tsv = fs.readFileSync(path.join(outDir, "exports", "jlpt-n5.tsv"), "utf-8");
-    assert.match(tsv, /^Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence/m);
+    assert.match(tsv, /^Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tAudio\tRadical\tNotes\tExampleSentence/m);
     assert.match(tsv, /^日\t/m);
 
     const storedSummary = JSON.parse(fs.readFileSync(path.join(outDir, "build-summary.json"), "utf-8"));
@@ -316,8 +316,8 @@ test("runBuildPipeline writes exports reports summary and an import-ready packag
     assert.deepEqual(storedSummary.package.mediaCounts, {
         strokeOrder: 1,
         strokeOrderImage: 1,
-        strokeOrderAnimation: 1,
-        trueStrokeOrderAnimation: 1,
+        strokeOrderAnimation: 0,
+        trueStrokeOrderAnimation: 0,
         svgStrokeOrderAnimationFallback: 0,
         audio: 1,
     });

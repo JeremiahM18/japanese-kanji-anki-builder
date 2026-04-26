@@ -146,10 +146,5 @@ async function runReleaseGate({
 
 module.exports = {
     RELEASE_GATE_SCOPE,
-    assertPackageSummary,
-    assertPathExists,
-    assertTsvHeaderMatches,
-    buildReleaseGateReport,
-    parseTsvHeader,
     runReleaseGate,
 };

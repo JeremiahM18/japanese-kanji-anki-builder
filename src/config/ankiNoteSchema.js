@@ -58,7 +58,5 @@ function loadAnkiNoteSchema(kind = "kanji") {
 }
 
 module.exports = {
-    ANKI_NOTE_SCHEMA_PATH: NOTE_SCHEMA_PATHS.kanji,
-    NOTE_SCHEMA_PATHS,
     loadAnkiNoteSchema,
 };

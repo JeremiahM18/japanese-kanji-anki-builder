@@ -352,13 +352,5 @@ async function buildDeckPackage({
 
 module.exports = {
     buildDeckPackage,
-    buildDeckPackagePaths,
-    buildImportGuide,
     buildPackageAssetCandidatesFromManifest,
-    collectReferencedMediaFileNames,
-    collectPackageAssets,
-    collectReferencedKanji,
-    createEmptyMediaCounts,
-    readManagedManifest,
-    resolveManagedAssetAbsolutePath,
 };

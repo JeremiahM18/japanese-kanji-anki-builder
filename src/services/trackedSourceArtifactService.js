@@ -429,14 +429,11 @@ function formatTrackedSourceArtifactReport(report = {}) {
 module.exports = {
     N5_TRACKED_SOURCE_ARTIFACT_SCOPE,
     N5_TRACKED_SOURCE_KANJI_PREFLIGHT_SCOPE,
-    buildDefaultTrackedSourcePaths,
     buildJlptOnlyJsonFromContract,
     buildTrackedSourceKanjiPreflight,
     buildTrackedSourceWordArtifact,
-    createNetworkDisabledKanjiApiClient,
     evaluateTrackedSourceKanjiPreflight,
     evaluateWordArtifact,
     formatTrackedSourceArtifactReport,
     formatTrackedSourceKanjiPreflightReport,
-    parseTsvHeader,
 };

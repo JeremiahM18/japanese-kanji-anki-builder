@@ -206,3 +206,89 @@ test("kanji deck packaging copies only media referenced by exported card fields"
     assert.equal(fs.existsSync(path.join(summary.mediaDir, "8ECA_車-stroke-order.png")), true);
     assert.equal(fs.existsSync(path.join(summary.mediaDir, "8ECA_車-kanji-reading-車-でんしゃ.wav")), false);
 });
+
+test("kanji deck packaging copies the exact referenced primary-reading audio", async () => {
+    const rootDir = makeTempDir();
+    const mediaRootDir = path.join(rootDir, "media-root");
+    const outDir = path.join(rootDir, "out");
+    const exportPath = path.join(rootDir, "jlpt-n5.tsv");
+    fs.writeFileSync(
+        exportPath,
+        [
+            "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tStrokeOrderImage\tStrokeOrderAnimation\tAudio\tRadical\tNotes\tExampleSentence",
+            "車\t車\tcar\tくるま\t\tオン: シャ\tくん: くるま\t\t\t\t[sound:8ECA_車-kanji-reading-車-くるま.wav]\t車\t\t",
+        ].join("\n"),
+        "utf-8"
+    );
+
+    const layout = ensureMediaLayout(mediaRootDir, "車");
+    fs.writeFileSync(path.join(layout.imagesDir, "8ECA_車-stroke-order.png"), "image");
+    fs.writeFileSync(path.join(layout.animationsDir, "8ECA_車-stroke-order.gif"), "animation");
+    fs.writeFileSync(path.join(layout.audioDir, "8ECA_車-kanji-reading-車-くるま.wav"), "primary-audio");
+    fs.writeFileSync(path.join(layout.audioDir, "8ECA_車-kanji-reading-車-でんしゃ.wav"), "alternate-audio");
+
+    await writeManifest(mediaRootDir, {
+        kanji: "車",
+        version: 1,
+        updatedAt: new Date().toISOString(),
+        assets: {
+            strokeOrderImage: {
+                kind: "image",
+                path: "images/8ECA_車-stroke-order.png",
+                mimeType: "image/png",
+                source: "fixture",
+            },
+            strokeOrderAnimation: {
+                kind: "animation",
+                path: "animations/8ECA_車-stroke-order.gif",
+                mimeType: "image/gif",
+                source: "fixture",
+            },
+            audio: [
+                {
+                    kind: "audio",
+                    path: "audio/8ECA_車-kanji-reading-車-でんしゃ.wav",
+                    mimeType: "audio/wav",
+                    source: "fixture",
+                    category: "kanji-reading",
+                    text: "車",
+                    reading: "でんしゃ",
+                },
+                {
+                    kind: "audio",
+                    path: "audio/8ECA_車-kanji-reading-車-くるま.wav",
+                    mimeType: "audio/wav",
+                    source: "fixture",
+                    category: "kanji-reading",
+                    text: "車",
+                    reading: "くるま",
+                },
+            ],
+        },
+    });
+
+    const summary = await buildDeckPackage({
+        outDir,
+        exports: [{
+            level: 5,
+            filePath: exportPath,
+            rows: 1,
+        }],
+        kanjiByLevel: { 5: ["車"] },
+        mediaRootDir,
+        deckKind: "kanji",
+    });
+
+    assert.deepEqual(summary.mediaCounts, {
+        strokeOrder: 0,
+        strokeOrderImage: 0,
+        strokeOrderAnimation: 0,
+        trueStrokeOrderAnimation: 0,
+        svgStrokeOrderAnimationFallback: 0,
+        audio: 1,
+    });
+    assert.equal(fs.existsSync(path.join(summary.mediaDir, "8ECA_車-stroke-order.gif")), false);
+    assert.equal(fs.existsSync(path.join(summary.mediaDir, "8ECA_車-stroke-order.png")), false);
+    assert.equal(fs.existsSync(path.join(summary.mediaDir, "8ECA_車-kanji-reading-車-くるま.wav")), true);
+    assert.equal(fs.existsSync(path.join(summary.mediaDir, "8ECA_車-kanji-reading-車-でんしゃ.wav")), false);
+});

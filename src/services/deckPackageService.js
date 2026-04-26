@@ -108,6 +108,18 @@ function buildPackageAssetCandidatesFromManifest(manifest, kanji, { assetKinds =
     ], assetKinds).filter((entry) => entry.relativePath);
 }
 
+function buildReferencedPackageAssetCandidatesFromManifest(manifest, { assetKinds = null } = {}) {
+    const bestStrokeOrderPath = manifest?.assets?.strokeOrderAnimation?.path || manifest?.assets?.strokeOrderImage?.path || "";
+    const audioAssets = Array.isArray(manifest?.assets?.audio) ? manifest.assets.audio : [];
+
+    return filterPackageAssetCandidates([
+        { kind: "strokeOrder", relativePath: bestStrokeOrderPath },
+        { kind: "strokeOrderImage", relativePath: manifest?.assets?.strokeOrderImage?.path || "" },
+        { kind: "strokeOrderAnimation", relativePath: manifest?.assets?.strokeOrderAnimation?.path || "" },
+        ...audioAssets.map((asset) => ({ kind: "audio", relativePath: asset?.path || "" })),
+    ], assetKinds).filter((entry) => entry.relativePath);
+}
+
 async function readManagedManifest({ kanji, mediaRootDir, strokeOrderService, audioService }) {
     const manifestProvider = typeof strokeOrderService?.getManifest === "function"
         ? strokeOrderService
@@ -130,7 +142,10 @@ async function collectPackageAssets({ kanjiList, mediaRootDir, strokeOrderServic
 
     const assetGroups = await mapWithConcurrency(selectedKanji, concurrency, async (kanji) => {
         const manifest = await readManagedManifest({ kanji, mediaRootDir, strokeOrderService, audioService });
-        return buildPackageAssetCandidatesFromManifest(manifest, kanji, { assetKinds })
+        const candidates = referencedFileNames
+            ? buildReferencedPackageAssetCandidatesFromManifest(manifest, { assetKinds })
+            : buildPackageAssetCandidatesFromManifest(manifest, kanji, { assetKinds });
+        return candidates
             .filter((candidate) => !referencedFileNames || referencedFileNames.has(path.basename(candidate.relativePath)))
             .map((candidate) => ({
                 ...candidate,

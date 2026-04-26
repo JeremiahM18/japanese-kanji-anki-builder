@@ -36,6 +36,30 @@ function parseArgs(argv) {
     return options;
 }
 
+function readKanjiTsvForLevels({ buildOutDir, levels }) {
+    const sections = [];
+
+    for (const level of parseLevelsArgument(levels)) {
+        const kanjiTsvPath = path.join(buildOutDir, "exports", `jlpt-n${level}.tsv`);
+        if (!fs.existsSync(kanjiTsvPath)) {
+            continue;
+        }
+
+        const content = fs.readFileSync(kanjiTsvPath, "utf-8").trim();
+        if (!content) {
+            continue;
+        }
+
+        if (sections.length === 0) {
+            sections.push(content);
+        } else {
+            sections.push(content.split(/\r?\n/).slice(1).join("\n"));
+        }
+    }
+
+    return sections.filter(Boolean).join("\n");
+}
+
 async function main() {
     const options = parseArgs(process.argv.slice(2));
     assertNoUnknownArgs("reportAudioReview", options.unknownArgs);
@@ -48,11 +72,10 @@ async function main() {
 
     const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
     const curatedStudyData = loadCuratedStudyData(config.curatedStudyDataPath);
-    const primaryLevel = options.levels[0] || 5;
-    const kanjiTsvPath = path.join(config.buildOutDir, "exports", `jlpt-n${primaryLevel}.tsv`);
-    const kanjiTsv = fs.existsSync(kanjiTsvPath)
-        ? fs.readFileSync(kanjiTsvPath, "utf-8")
-        : "";
+    const kanjiTsv = readKanjiTsvForLevels({
+        buildOutDir: config.buildOutDir,
+        levels: options.levels,
+    });
     const report = await buildAudioReviewReport({
         jlptOnlyJson,
         curatedStudyData,
@@ -82,4 +105,5 @@ if (require.main === module) {
 module.exports = {
     main,
     parseArgs,
+    readKanjiTsvForLevels,
 };

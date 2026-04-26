@@ -143,10 +143,10 @@ async function buildAudioReviewReport({
     const rows = await Promise.all(scope.map(async ({ kanji: targetKanji, level }) => {
         const curatedEntry = curatedStudyData?.[targetKanji] || null;
         const exportRow = exportRowByKanji.get(targetKanji) || null;
-        const expectedReading = cleanString(curatedEntry?.displayWord?.pron)
-            || cleanString(exportRow?.PrimaryReading || exportRow?.primaryReading);
-        const displayWord = cleanString(curatedEntry?.displayWord?.written)
-            || cleanString(exportRow?.DisplayWord || exportRow?.displayWord)
+        const expectedReading = cleanString(exportRow?.PrimaryReading || exportRow?.primaryReading)
+            || cleanString(curatedEntry?.displayWord?.pron);
+        const displayWord = cleanString(exportRow?.DisplayWord || exportRow?.displayWord)
+            || cleanString(curatedEntry?.displayWord?.written)
             || targetKanji;
         const manifest = await readManifestIfExists(mediaRootDir, targetKanji);
         const asset = selectBestAudioAsset(manifest?.assets?.audio || [], {

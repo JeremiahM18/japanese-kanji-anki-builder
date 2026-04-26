@@ -141,7 +141,7 @@ test("buildAudioReviewReport marks audio without curated reading intent as missi
     }
 });
 
-test("buildAudioReviewReport falls back to the built kanji export reading when curated display pronunciation is absent", async () => {
+test("buildAudioReviewReport uses the built kanji export reading", async () => {
     const rootDir = makeTempDir();
 
     try {
@@ -184,51 +184,59 @@ test("buildAudioReviewReport falls back to the built kanji export reading when c
     }
 });
 
-test("buildAudioReviewReport selects the managed asset matching the expected reading", async () => {
+test("buildAudioReviewReport selects audio matching exported primary reading instead of compound study word", async () => {
     const rootDir = makeTempDir();
 
     try {
-        writeManifest(rootDir, "側", [
+        writeManifest(rootDir, "仏", [
             {
                 kind: "audio",
-                path: "audio/5074_側-kanji-reading-側-そば.wav",
+                path: "audio/4ECF_仏-kanji-reading-仏-ほとけ.wav",
                 mimeType: "audio/wav",
                 source: "voicevox-nemo",
                 category: "kanji-reading",
-                text: "側",
-                reading: "そば",
+                text: "仏",
+                reading: "ほとけ",
                 voice: "女声1 / ノーマル",
                 locale: "ja-JP",
             },
             {
                 kind: "audio",
-                path: "audio/5074_側-kanji-reading-側-はんたいがわ.wav",
+                path: "audio/4ECF_仏-kanji-reading-仏-ぶっきょう.wav",
                 mimeType: "audio/wav",
                 source: "voicevox-nemo",
                 category: "kanji-reading",
-                text: "側",
-                reading: "はんたいがわ",
+                text: "仏",
+                reading: "ぶっきょう",
                 voice: "女声1 / ノーマル",
                 locale: "ja-JP",
             },
         ]);
 
+        const kanjiTsv = [
+            "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading",
+            "仏\t仏\tBuddha\tほとけ",
+        ].join("\n");
+
         const report = await buildAudioReviewReport({
             jlptOnlyJson: {
-                側: { jlpt: 3 },
+                仏: { jlpt: 2 },
             },
             curatedStudyData: {
-                側: { displayWord: { written: "反対側", pron: "はんたいがわ" } },
+                仏: { displayWord: { written: "仏教", pron: "ぶっきょう" } },
             },
+            kanjiTsv,
             mediaRootDir: rootDir,
             audioSourcePolicy: loadAudioSourcePolicy(),
-            levels: [3],
+            levels: [2],
         });
 
         assert.equal(report.summary.readyToReview, 1);
         assert.equal(report.summary.readingMismatch, 0);
-        assert.equal(report.rows[0].actualReading, "はんたいがわ");
-        assert.match(report.rows[0].audioPath, /はんたいがわ/);
+        assert.equal(report.rows[0].displayWord, "仏");
+        assert.equal(report.rows[0].expectedReading, "ほとけ");
+        assert.equal(report.rows[0].actualReading, "ほとけ");
+        assert.match(report.rows[0].audioPath, /ほとけ/);
     } finally {
         cleanupTempDir(rootDir);
     }

@@ -29,9 +29,10 @@ test("normalizeKanaReading converts katakana and strips dictionary punctuation",
     assert.equal(normalizeKanaReading("ひと.つ"), "ひとつ");
 });
 
-test("selectPreferredAudioReading prefers the learner-facing display pronunciation", () => {
+test("selectPreferredAudioReading prefers the exported primary reading", () => {
     const selected = selectPreferredAudioReading({
         inferenceResult: {
+            primaryReading: "ひ",
             displayWord: { written: "日", pron: "ひ" },
             bestWord: { pron: "にほん" },
         },
@@ -42,7 +43,24 @@ test("selectPreferredAudioReading prefers the learner-facing display pronunciati
     });
 
     assert.equal(selected.text, "ひ");
-    assert.equal(selected.source, "display-word");
+    assert.equal(selected.source, "primary-reading");
+});
+
+test("selectPreferredAudioReading does not replace primary reading with compound display pronunciation", () => {
+    const selected = selectPreferredAudioReading({
+        inferenceResult: {
+            primaryReading: "ほとけ",
+            displayWord: { written: "仏教", pron: "ぶっきょう" },
+            bestWord: { written: "仏教", pron: "ぶっきょう" },
+        },
+        kanjiInfo: {
+            kun_readings: ["ほとけ"],
+            on_readings: ["ブツ"],
+        },
+    });
+
+    assert.equal(selected.text, "ほとけ");
+    assert.equal(selected.source, "primary-reading");
 });
 
 test("selectPreferredAudioReading uses the best word only when it matches the learner-facing display form", () => {
@@ -174,10 +192,12 @@ test("generateVoicevoxAudioForKanjiList writes wav files with bounded concurrenc
                 inferKanjiStudyData({ kanji }) {
                     return kanji === "日"
                         ? {
+                            primaryReading: "ひ",
                             displayWord: { written: "日", pron: "ひ" },
                             bestWord: { written: "日本", pron: "にほん" },
                         }
                         : {
+                            primaryReading: "まなぶ",
                             displayWord: { written: "学", pron: "" },
                             bestWord: { written: "学校", pron: "がっこう" },
                         };

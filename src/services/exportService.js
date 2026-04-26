@@ -743,6 +743,7 @@ function createExportService({
 }
 
 module.exports = {
+    buildKanjiDeckInference,
     createEmptyExportProfile,
     createExportService,
     formatAnkiAudioField,

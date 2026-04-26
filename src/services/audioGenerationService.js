@@ -6,6 +6,7 @@ const { createVoicevoxClient } = require("../clients/voicevoxClient");
 const { loadCuratedStudyData } = require("../datasets/curatedStudyData");
 const { loadSentenceCorpus } = require("../datasets/sentenceCorpus");
 const { createInferenceEngine } = require("../inference/inferenceEngine");
+const { buildKanjiDeckInference } = require("./exportService");
 const { normalizeTokenForFileName } = require("./audioService");
 const { mapWithConcurrency } = require("../utils/concurrency");
 const { ensureDir } = require("../utils/fs");
@@ -20,12 +21,17 @@ function normalizeKanaReading(value) {
 }
 
 function selectPreferredAudioReading({ inferenceResult, kanjiInfo }) {
+    const primaryReading = normalizeKanaReading(inferenceResult?.primaryReading);
     const displayWritten = String(inferenceResult?.displayWord?.written || "").trim();
     const displayPron = normalizeKanaReading(inferenceResult?.displayWord?.pron);
     const bestWritten = String(inferenceResult?.bestWord?.written || "").trim();
     const bestPron = normalizeKanaReading(inferenceResult?.bestWord?.pron);
 
     const ranked = [
+        {
+            source: "primary-reading",
+            text: primaryReading,
+        },
         {
             source: "display-word",
             text: displayPron,
@@ -179,12 +185,18 @@ async function generateVoicevoxAudioForKanjiList({
                 kanjiApiClient.getKanji(kanji),
                 kanjiApiClient.getWords(kanji),
             ]);
-            const inferenceResult = inferenceEngine.inferKanjiStudyData({
+            const rawInferenceResult = inferenceEngine.inferKanjiStudyData({
                 kanji,
                 kanjiInfo,
                 words,
                 maxExamples: 3,
                 maxSentences: 3,
+            });
+            const inferenceResult = buildKanjiDeckInference({
+                kanji,
+                inferred: rawInferenceResult,
+                kanjiInfo,
+                curatedEntry: curatedStudyData?.[kanji] || null,
             });
             const preferredReading = selectPreferredAudioReading({ inferenceResult, kanjiInfo });
 

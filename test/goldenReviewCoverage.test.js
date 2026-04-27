@@ -106,8 +106,8 @@ test("tracked N2 golden review coverage is expanding from the initial sample", (
     });
 
     assert.equal(summary.starterCuratedKanji, 366);
-    assert.equal(summary.goldenCoveredKanji, 250);
-    assert.equal(summary.missingKanji, 116);
+    assert.equal(summary.goldenCoveredKanji, 275);
+    assert.equal(summary.missingKanji, 91);
 });
 
 test("reportGoldenReviewCoverage parseArgs accepts level and limit", () => {

@@ -64,6 +64,25 @@ test("tracked N2 parked review entries use individual-kanji primary anchors", ()
     assert.deepEqual(starterData["帯"].displayWord, { written: "帯", pron: "おび" });
 });
 
+test("tracked N2 review entries avoid compound-led primary anchors and noisy meanings", () => {
+    const starterPath = path.join(templatesDir, "starter_curated_study_data.json");
+    const starterData = JSON.parse(fs.readFileSync(starterPath, "utf8"));
+
+    assert.deepEqual(starterData["滴"].displayWord, { written: "滴", pron: "しずく" });
+    assert.equal(starterData["滴"].exampleSentence.japanese, "葉の先に小さな滴が光っていました。");
+    assert.deepEqual(starterData["湯"].displayWord, { written: "湯", pron: "ゆ" });
+    assert.equal(starterData["湯"].exampleSentence.japanese, "カップに湯を注いでください。");
+    assert.deepEqual(starterData["灯"].displayWord, { written: "灯り", pron: "あかり" });
+    assert.equal(starterData["灯"].exampleSentence.japanese, "暗い道に家の灯りが見えました。");
+    assert.deepEqual(starterData["筒"].displayWord, { written: "筒", pron: "つつ" });
+    assert.equal(starterData["筒"].exampleSentence.japanese, "紙を丸めて筒の形にしました。");
+
+    assert.deepEqual(starterData["底"].blockedMeanings, ["bottom price", "kind", "sort"]);
+    assert.deepEqual(starterData["灯"].blockedMeanings, ["counter for lights"]);
+    assert.deepEqual(starterData["筒"].blockedMeanings, ["gun barrel", "sleeve"]);
+    assert.deepEqual(starterData["貯"].blockedMeanings, ["wear mustache"]);
+});
+
 test("tracked starter curated N1 batch entries keep required learner-facing quality metadata", () => {
     const starterPaths = getTrackedN1BatchPaths();
     const finalBatchPath = starterPaths.at(-1);

@@ -20818,6 +20818,11 @@
       "底力"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "bottom price",
+      "kind",
+      "sort"
+    ],
     "blockedSentencePhrases": [],
     "notes": "底 （そこ） - bottom ／ 海底 （かいてい） - seabed ／ 底力 （そこぢから） - hidden strength",
     "alternativeNotes": [],
@@ -38774,8 +38779,8 @@
   "湯": {
     "englishMeaning": "hot water",
     "displayWord": {
-      "written": "お湯",
-      "pron": "おゆ"
+      "written": "湯",
+      "pron": "ゆ"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -38785,16 +38790,17 @@
     ],
     "jlpt": 2,
     "preferredWords": [
+      "湯",
       "お湯",
       "湯気"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "お湯 （おゆ） - hot water ／ 湯気 （ゆげ） - steam",
+    "notes": "湯 （ゆ） - hot water ／ お湯 （おゆ） - hot water ／ 湯気 （ゆげ） - steam",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "カップにお湯を注いでください。",
-      "reading": "カップにおゆをそそいでください。",
+      "japanese": "カップに湯を注いでください。",
+      "reading": "カップにゆをそそいでください。",
       "english": "Please pour hot water into the cup.",
       "source": "starter-curated",
       "tags": [
@@ -39221,8 +39227,8 @@
   "滴": {
     "englishMeaning": "drop / drip",
     "displayWord": {
-      "written": "水滴",
-      "pron": "すいてき"
+      "written": "滴",
+      "pron": "しずく"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -39232,17 +39238,18 @@
     ],
     "jlpt": 2,
     "preferredWords": [
+      "滴",
       "水滴",
       "滴る"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "水滴 （すいてき） - water droplet ／ 滴る （したたる） - to drip",
+    "notes": "滴 （しずく） - drop / droplet ／ 水滴 （すいてき） - water droplet ／ 滴る （したたる） - to drip",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "窓に小さな水滴がついていました。",
-      "reading": "まどにちいさなすいてきがついていました。",
-      "english": "Small water droplets were on the window.",
+      "japanese": "葉の先に小さな滴が光っていました。",
+      "reading": "はのさきにちいさなしずくがひかっていました。",
+      "english": "A small droplet was shining at the tip of the leaf.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -40045,8 +40052,8 @@
   "灯": {
     "englishMeaning": "light / lamp",
     "displayWord": {
-      "written": "電灯",
-      "pron": "でんとう"
+      "written": "灯り",
+      "pron": "あかり"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -40056,17 +40063,20 @@
     ],
     "jlpt": 2,
     "preferredWords": [
-      "電灯",
-      "灯り"
+      "灯り",
+      "電灯"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "counter for lights"
+    ],
     "blockedSentencePhrases": [],
-    "notes": "電灯 （でんとう） - electric light ／ 灯り （あかり） - light",
+    "notes": "灯り （あかり） - light ／ 電灯 （でんとう） - electric light",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "暗くなったので電灯をつけました。",
-      "reading": "くらくなったのででんとうをつけました。",
-      "english": "It got dark, so I turned on the light.",
+      "japanese": "暗い道に家の灯りが見えました。",
+      "reading": "くらいみちにいえのあかりがみえました。",
+      "english": "I could see the light of a house on the dark road.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -46227,8 +46237,8 @@
   "筒": {
     "englishMeaning": "tube / cylinder",
     "displayWord": {
-      "written": "封筒",
-      "pron": "ふうとう"
+      "written": "筒",
+      "pron": "つつ"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -46238,17 +46248,21 @@
     ],
     "jlpt": 2,
     "preferredWords": [
-      "封筒",
-      "筒"
+      "筒",
+      "封筒"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "gun barrel",
+      "sleeve"
+    ],
     "blockedSentencePhrases": [],
-    "notes": "封筒 （ふうとう） - envelope ／ 筒 （つつ） - tube / cylinder",
+    "notes": "筒 （つつ） - tube / cylinder ／ 封筒 （ふうとう） - envelope",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "書類を封筒に入れて郵便局へ持って行きました。",
-      "reading": "しょるいをふうとうにいれてゆうびんきょくへもっていきました。",
-      "english": "I put the documents in an envelope and took them to the post office.",
+      "japanese": "紙を丸めて筒の形にしました。",
+      "reading": "かみをまるめてつつのかたちにしました。",
+      "english": "I rolled the paper into the shape of a tube.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -51224,6 +51238,9 @@
       "貯水"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "wear mustache"
+    ],
     "blockedSentencePhrases": [],
     "notes": "貯金 （ちょきん） - savings ／ 貯蔵 （ちょぞう） - storage ／ 貯水 （ちょすい） - stored water",
     "alternativeNotes": [],

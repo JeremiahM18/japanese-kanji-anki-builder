@@ -9,6 +9,7 @@ const {
     formatExampleSentence,
     formatKanjiMeanings,
     formatNotesWithRuby,
+    formatRubyText,
     formatStudyWordKanjiLabels,
 } = require("../src/services/exportService");
 
@@ -57,6 +58,27 @@ test("formatNotesWithRuby renders note example readings as ruby", () => {
     assert.equal(
         formatNotesWithRuby("外 （そと） - outside ／ 外国 （がいこく） - foreign country"),
         "<ruby>外<rt>そと</rt></ruby> - outside ／ <ruby>外国<rt>がいこく</rt></ruby> - foreign country"
+    );
+});
+
+test("formatRubyText keeps okurigana outside ruby", () => {
+    assert.equal(
+        formatRubyText("走る", "はしる"),
+        "<ruby>走<rt>はし</rt></ruby>る"
+    );
+});
+
+test("formatRubyText keeps kana prefixes and inflection kana outside ruby", () => {
+    assert.equal(
+        formatRubyText("取り出す", "とりだす"),
+        "<ruby>取<rt>と</rt></ruby>り<ruby>出<rt>だ</rt></ruby>す"
+    );
+});
+
+test("formatRubyText keeps katakana loanword spans outside ruby", () => {
+    assert.equal(
+        formatRubyText("バス停", "ばすてい"),
+        "バス<ruby>停<rt>てい</rt></ruby>"
     );
 });
 
@@ -1158,7 +1180,7 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
     assert.equal(cols[8], '<img src="65E5_日-stroke-order.gif" />');
     assert.equal(cols[9], "[sound:65E5_日-kanji-reading-日.mp3]");
     assert.equal(cols[10], "日");
-    assert.equal(cols[11], "<ruby>日本<rt>にほん</rt></ruby> - Japan ／ <ruby>日よう日<rt>にちようび</rt></ruby> - Sunday");
+    assert.equal(cols[11], "<ruby>日本<rt>にほん</rt></ruby> - Japan ／ <ruby>日<rt>にち</rt></ruby>よう<ruby>日<rt>び</rt></ruby> - Sunday");
     assert.equal(cols[12], '「日本」を勉強します。 ／ 「にほん」をべんきょうします。 ／ I study the word "日本".');
 });
 

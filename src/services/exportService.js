@@ -283,6 +283,42 @@ function parseNoteGlossEntries(notes) {
         .filter(Boolean);
 }
 
+function tokenizeKanjiRubySurface(written) {
+    const tokens = [];
+    let current = "";
+    let currentIsKanji = null;
+
+    for (const char of Array.from(String(written || ""))) {
+        const isKanji = HAN_CHAR_RE.test(char);
+        if (current && isKanji !== currentIsKanji) {
+            tokens.push({ text: current, isKanji: currentIsKanji });
+            current = "";
+        }
+        current += char;
+        currentIsKanji = isKanji;
+    }
+
+    if (current) {
+        tokens.push({ text: current, isKanji: currentIsKanji });
+    }
+
+    return tokens;
+}
+
+function matchLiteralReading(reading, cursor, literal) {
+    const exact = String(literal || "");
+    if (reading.startsWith(exact, cursor)) {
+        return exact.length;
+    }
+
+    const hiragana = katakanaToHiragana(exact);
+    if (hiragana !== exact && reading.startsWith(hiragana, cursor)) {
+        return hiragana.length;
+    }
+
+    return -1;
+}
+
 function formatRubyText(written, reading) {
     const safeWritten = String(written || "").trim();
     const safeReading = String(reading || "").trim();
@@ -290,7 +326,51 @@ function formatRubyText(written, reading) {
         return safeWritten;
     }
 
-    return `<ruby>${safeWritten}<rt>${safeReading}</rt></ruby>`;
+    const tokens = tokenizeKanjiRubySurface(safeWritten);
+    if (tokens.length <= 1) {
+        return `<ruby>${safeWritten}<rt>${safeReading}</rt></ruby>`;
+    }
+
+    let cursor = 0;
+    const rendered = [];
+
+    for (let index = 0; index < tokens.length; index += 1) {
+        const token = tokens[index];
+
+        if (!token.isKanji) {
+            const literalLength = matchLiteralReading(safeReading, cursor, token.text);
+            if (literalLength < 0) {
+                return `<ruby>${safeWritten}<rt>${safeReading}</rt></ruby>`;
+            }
+            cursor += literalLength;
+            rendered.push(token.text);
+            continue;
+        }
+
+        const nextLiteral = tokens.slice(index + 1).find((candidate) => !candidate.isKanji);
+        const nextLiteralText = nextLiteral?.text || "";
+        const exactNextIndex = nextLiteralText ? safeReading.indexOf(nextLiteralText, cursor) : -1;
+        const hiraganaNext = nextLiteralText ? katakanaToHiragana(nextLiteralText) : "";
+        const hiraganaNextIndex = hiraganaNext && hiraganaNext !== nextLiteralText
+            ? safeReading.indexOf(hiraganaNext, cursor)
+            : -1;
+        const nextIndexCandidates = [exactNextIndex, hiraganaNextIndex]
+            .filter((candidate) => candidate >= cursor);
+        const nextIndex = nextIndexCandidates.length
+            ? Math.min(...nextIndexCandidates)
+            : safeReading.length;
+        const tokenReading = safeReading.slice(cursor, nextIndex);
+        if (!tokenReading) {
+            return `<ruby>${safeWritten}<rt>${safeReading}</rt></ruby>`;
+        }
+
+        rendered.push(`<ruby>${token.text}<rt>${tokenReading}</rt></ruby>`);
+        cursor = nextIndex;
+    }
+
+    return cursor === safeReading.length
+        ? rendered.join("")
+        : `<ruby>${safeWritten}<rt>${safeReading}</rt></ruby>`;
 }
 
 function formatNotesWithRuby(notes) {

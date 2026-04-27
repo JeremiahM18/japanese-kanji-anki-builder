@@ -4,6 +4,7 @@ function normalizeText(value) {
 
 function normalizeForCompare(value) {
     return normalizeText(value)
+        .replace(/<ruby>(.*?)<rt>.*?<\/rt><\/ruby>/gu, "$1")
         .replace(/<[^>]+>/g, " ")
         .replace(/:\s+/g, ":")
         .replace(/\s+/g, " ")

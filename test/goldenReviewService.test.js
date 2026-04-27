@@ -93,6 +93,34 @@ test("evaluateGoldenReviewSet requires reading expectations to protect the prima
     assert.equal(report.results[0].failures.includes("primary reading did not include: ヘイ"), true);
 });
 
+test("evaluateGoldenReviewSet compares ruby notes by visible surface text", () => {
+    const report = evaluateGoldenReviewSet({
+        cards: [
+            {
+                kanji: "走",
+                primaryReading: "はしる",
+                meaningJP: "run",
+                kanjiMeanings: "run",
+                onReading: "ソウ",
+                kunReading: "はし.る",
+                notes: "<ruby>走<rt>はし</rt></ruby>る - run ／ <ruby>競走<rt>きょうそう</rt></ruby> - race",
+                exampleSentence: "道を走ります。 ／ みちをはしります。 ／ I run on the road.",
+            },
+        ],
+        expectations: [
+            {
+                kanji: "走",
+                readingIncludes: ["はしる"],
+                meaningIncludes: ["run"],
+                notesIncludes: ["走る", "競走"],
+                exampleIncludes: ["走ります"],
+            },
+        ],
+    });
+
+    assert.equal(report.passed, true);
+});
+
 test("formatGoldenReviewReport renders a readable benchmark summary", () => {
     const text = formatGoldenReviewReport({
         totalCards: 2,

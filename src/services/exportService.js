@@ -13,6 +13,7 @@ const ANKI_FIELD_NAMES = loadAnkiNoteSchema().fieldNames;
 const MAX_INFERENCE_EXAMPLES = 3;
 const MAX_INFERENCE_SENTENCES = 3;
 const HAN_CHAR_RE = /\p{Script=Han}/u;
+const KATAKANA_TOKEN_RE = /[\p{Script=Katakana}ー]+/gu;
 
 function createEmptyExportProfile() {
     return {
@@ -55,10 +56,42 @@ function formatExampleSentence(sentence) {
         return "";
     }
 
-    return [sentence.japanese, sentence.reading, sentence.english]
+    const japanese = String(sentence.japanese ?? "").trim();
+    const reading = preserveKatakanaInSentenceReading(japanese, sentence.reading);
+
+    return [japanese, reading, sentence.english]
         .map((value) => String(value ?? "").trim())
         .filter(Boolean)
         .join(" ／ ");
+}
+
+function escapeRegExp(value) {
+    return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function preserveKatakanaInSentenceReading(japanese, reading) {
+    let normalizedReading = String(reading ?? "").trim();
+    if (!normalizedReading) {
+        return "";
+    }
+
+    for (const token of [...new Set(String(japanese || "").match(KATAKANA_TOKEN_RE) || [])]) {
+        if (normalizedReading.includes(token)) {
+            continue;
+        }
+
+        const hiraganaToken = katakanaToHiragana(token);
+        if (!hiraganaToken || hiraganaToken === token) {
+            continue;
+        }
+
+        normalizedReading = normalizedReading.replace(
+            new RegExp(escapeRegExp(hiraganaToken), "gu"),
+            token
+        );
+    }
+
+    return normalizedReading;
 }
 
 function formatAnkiAudioField(audioPath) {

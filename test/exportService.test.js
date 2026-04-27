@@ -6,6 +6,7 @@ const {
     createExportService,
     formatAnkiAudioField,
     formatAnkiStrokeOrderField,
+    formatExampleSentence,
     formatKanjiMeanings,
     formatNotesWithRuby,
     formatStudyWordKanjiLabels,
@@ -27,6 +28,28 @@ test("formatAnkiStrokeOrderField keeps animated GIF references Anki can render",
     assert.equal(
         formatAnkiStrokeOrderField("animations/4E00_一-stroke-order.gif"),
         '<img src="4E00_一-stroke-order.gif" />'
+    );
+});
+
+test("formatExampleSentence preserves katakana in the reading surface", () => {
+    assert.equal(
+        formatExampleSentence({
+            japanese: "朝はいつもパンとコーヒーを飲みます。",
+            reading: "あさはいつもぱんとこーひーをのみます。",
+            english: "I always drink coffee and eat bread in the morning.",
+        }),
+        "朝はいつもパンとコーヒーを飲みます。 ／ あさはいつもパンとコーヒーをのみます。 ／ I always drink coffee and eat bread in the morning."
+    );
+});
+
+test("formatExampleSentence leaves existing katakana readings unchanged", () => {
+    assert.equal(
+        formatExampleSentence({
+            japanese: "メールの内容を確認してください。",
+            reading: "メールのないようをかくにんしてください。",
+            english: "Please check the contents of the email.",
+        }),
+        "メールの内容を確認してください。 ／ メールのないようをかくにんしてください。 ／ Please check the contents of the email."
     );
 });
 

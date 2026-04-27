@@ -86,6 +86,11 @@ test("tracked N2 review entries avoid compound-led primary anchors and noisy mea
     assert.equal(starterData["辺"].notes, "辺 （へん） - area / side ／ この辺 （このへん） - around here ／ 周辺 （しゅうへん） - surrounding area ／ 海辺 （うみべ） - seaside");
     assert.deepEqual(starterData["符"].displayWord, { written: "符", pron: "ふ" });
     assert.deepEqual(starterData["符"].breakdownDisplayWord, { written: "符", pron: "ぷ" });
+    assert.deepEqual(starterData["浴"].displayWord, { written: "浴びる", pron: "あびる" });
+    assert.deepEqual(starterData["絡"].displayWord, { written: "絡む", pron: "からむ" });
+    assert.deepEqual(starterData["綿"].displayWord, { written: "綿", pron: "わた" });
+    assert.deepEqual(starterData["輪"].displayWord, { written: "輪", pron: "わ" });
+    assert.deepEqual(starterData["零"].displayWord, { written: "零", pron: "れい" });
 
     assert.deepEqual(starterData["匹"].blockedMeanings, ["equal", "head", "roll of cloth"]);
     assert.deepEqual(starterData["底"].blockedMeanings, ["bottom price", "kind", "sort"]);
@@ -115,6 +120,7 @@ test("tracked N2 review entries avoid compound-led primary anchors and noisy mea
     assert.deepEqual(starterData["符"].blockedMeanings, ["charm", "mark", "tally"]);
     assert.deepEqual(starterData["編"].blockedMeanings, ["braid", "completed poem", "part of a book", "plait", "twist"]);
     assert.deepEqual(starterData["膚"].blockedMeanings, ["body", "disposition", "grain", "texture"]);
+    assert.deepEqual(starterData["領"].blockedMeanings, ["collar"]);
 });
 
 test("tracked starter curated N1 batch entries keep required learner-facing quality metadata", () => {

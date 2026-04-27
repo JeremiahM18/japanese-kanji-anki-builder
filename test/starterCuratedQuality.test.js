@@ -398,6 +398,7 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.deepEqual(curatedStudyData["虹"].displayWord, { written: "虹", pron: "にじ" });
     assert.equal(curatedStudyData["蛇"].englishMeaning, "snake");
     assert.deepEqual(curatedStudyData["菊"].preferredWords, ["菊", "菊花", "白菊"]);
+    assert.deepEqual(curatedStudyData["茄"].breakdownDisplayWord, { written: "茄", pron: "なす" });
     assert.equal(curatedStudyData["苗"].exampleSentence.japanese, "田んぼに新しい苗が並んで植えられた。");
     assert.deepEqual(curatedStudyData["瞬"].displayWord, { written: "一瞬", pron: "いっしゅん" });
     assert.equal(curatedStudyData["瞭"].notes, "明瞭 （めいりょう） - clear / definite ／ 瞭然 （りょうぜん） - obvious / evident ／ 不明瞭 （ふめいりょう） - unclear");

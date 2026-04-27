@@ -76,11 +76,30 @@ test("tracked N2 review entries avoid compound-led primary anchors and noisy mea
     assert.equal(starterData["灯"].exampleSentence.japanese, "暗い道に家の灯りが見えました。");
     assert.deepEqual(starterData["筒"].displayWord, { written: "筒", pron: "つつ" });
     assert.equal(starterData["筒"].exampleSentence.japanese, "紙を丸めて筒の形にしました。");
+    assert.deepEqual(starterData["板"].displayWord, { written: "板", pron: "いた" });
+    assert.equal(starterData["板"].exampleSentence.japanese, "古い板を使って棚を作りました。");
+    assert.deepEqual(starterData["筆"].displayWord, { written: "筆", pron: "ふで" });
+    assert.equal(starterData["筆"].exampleSentence.japanese, "筆で大きな字を書きました。");
 
+    assert.deepEqual(starterData["匹"].blockedMeanings, ["equal", "head", "roll of cloth"]);
     assert.deepEqual(starterData["底"].blockedMeanings, ["bottom price", "kind", "sort"]);
     assert.deepEqual(starterData["灯"].blockedMeanings, ["counter for lights"]);
     assert.deepEqual(starterData["筒"].blockedMeanings, ["gun barrel", "sleeve"]);
     assert.deepEqual(starterData["貯"].blockedMeanings, ["wear mustache"]);
+    assert.deepEqual(starterData["比"].blockedMeanings, ["Philippines", "race"]);
+    assert.deepEqual(starterData["波"].blockedMeanings, ["Poland", "billows", "waves"]);
+    assert.deepEqual(starterData["般"].blockedMeanings, ["carrier", "carry"]);
+    assert.deepEqual(starterData["薄"].blockedMeanings, ["pampas grass", "weak (tea)"]);
+    assert.deepEqual(starterData["被"].blockedMeanings, [
+        "be exposed (film)",
+        "brood over",
+        "cover",
+        "put on",
+        "receiving",
+        "shelter",
+        "veil",
+        "wear",
+    ]);
 });
 
 test("tracked starter curated N1 batch entries keep required learner-facing quality metadata", () => {

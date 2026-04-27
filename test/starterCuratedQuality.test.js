@@ -315,6 +315,10 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
 test("resolved tracked N1 batch entries keep selected learner-facing editorial choices stable", () => {
     const curatedStudyData = loadCuratedStudyData(path.join(process.cwd(), "data", "curated_study_data.json"));
 
+    assert.deepEqual(curatedStudyData["渥"].displayWord, { written: "渥い", pron: "あつい" });
+    assert.equal(curatedStudyData["渥"].exampleSentence.japanese, "先生から渥い支援を受けた。");
+    assert.ok(!curatedStudyData["慰"].notes.includes("慰问"));
+
     assert.deepEqual(curatedStudyData["賀"].displayWord, { written: "年賀状", pron: "ねんがじょう" });
     assert.deepEqual(curatedStudyData["購"].displayWord, { written: "購入", pron: "こうにゅう" });
     assert.deepEqual(curatedStudyData["謝"].preferredWords, ["感謝", "謝罪", "謝る"]);

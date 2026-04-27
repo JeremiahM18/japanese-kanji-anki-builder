@@ -8337,6 +8337,12 @@
       "募金"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "campaign",
+      "enlist",
+      "gather (contributions)",
+      "grow violent"
+    ],
     "blockedSentencePhrases": [],
     "notes": "募集 （ぼしゅう） - recruitment ／ 応募 （おうぼ） - application ／ 募金 （ぼきん） - fundraising",
     "alternativeNotes": [],
@@ -20265,6 +20271,9 @@
       "値幅"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "hanging scroll"
+    ],
     "blockedSentencePhrases": [],
     "notes": "幅 （はば） - width ／ 横幅 （よこはば） - width across ／ 値幅 （ねはば） - price range",
     "alternativeNotes": [],
@@ -20897,6 +20906,12 @@
       "都道府県"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "borough",
+      "govt office",
+      "representative body",
+      "storehouse"
+    ],
     "blockedSentencePhrases": [],
     "notes": "政府 （せいふ） - government ／ 都道府県 （とどうふけん） - prefectures",
     "alternativeNotes": [],
@@ -30581,6 +30596,10 @@
       "普段"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "Prussia",
+      "wide(ly)"
+    ],
     "blockedSentencePhrases": [],
     "notes": "普通 （ふつう） - ordinary / normal ／ 普段 （ふだん） - usually",
     "alternativeNotes": [],
@@ -31061,6 +31080,14 @@
       "暴れる"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "cruelty",
+      "force",
+      "fret",
+      "outburst",
+      "outrage",
+      "rave"
+    ],
     "blockedSentencePhrases": [],
     "notes": "暴力 （ぼうりょく） - violence ／ 暴れる （あばれる） - to act violently",
     "alternativeNotes": [],
@@ -36736,6 +36763,12 @@
       "沸かす"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "breed",
+      "ferment",
+      "seethe",
+      "uproar"
+    ],
     "blockedSentencePhrases": [],
     "notes": "沸く （わく） - to boil ／ 沸かす （わかす） - to boil something",
     "alternativeNotes": [],
@@ -46169,6 +46202,11 @@
       "切符"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "charm",
+      "mark",
+      "tally"
+    ],
     "blockedSentencePhrases": [],
     "notes": "切符 （きっぷ） - ticket",
     "alternativeNotes": [],
@@ -46546,8 +46584,8 @@
   "粉": {
     "englishMeaning": "powder / flour",
     "displayWord": {
-      "written": "小麦粉",
-      "pron": "こむぎこ"
+      "written": "粉",
+      "pron": "こな"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -46557,17 +46595,17 @@
     ],
     "jlpt": 2,
     "preferredWords": [
-      "小麦粉",
-      "粉"
+      "粉",
+      "小麦粉"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "小麦粉 （こむぎこ） - flour ／ 粉 （こな） - powder",
+    "notes": "粉 （こな） - powder ／ 小麦粉 （こむぎこ） - flour",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "ケーキを作るために小麦粉を買いました。",
-      "reading": "ケーキをつくるためにこむぎこをかいました。",
-      "english": "I bought flour to make a cake.",
+      "japanese": "白い粉が机の上にこぼれました。",
+      "reading": "しろいこながつくえのうえにこぼれました。",
+      "english": "White powder spilled onto the desk.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -47302,6 +47340,13 @@
       "編み物"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "braid",
+      "completed poem",
+      "part of a book",
+      "plait",
+      "twist"
+    ],
     "blockedSentencePhrases": [],
     "notes": "編集 （へんしゅう） - editing ／ 編み物 （あみもの） - knitting",
     "alternativeNotes": [],
@@ -48369,6 +48414,12 @@
       "皮膚炎"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "body",
+      "disposition",
+      "grain",
+      "texture"
+    ],
     "blockedSentencePhrases": [],
     "notes": "皮膚 （ひふ） - skin ／ 皮膚科 （ひふか） - dermatology ／ 皮膚炎 （ひふえん） - dermatitis",
     "alternativeNotes": [],
@@ -52256,8 +52307,8 @@
   "辺": {
     "englishMeaning": "area / vicinity",
     "displayWord": {
-      "written": "この辺",
-      "pron": "このへん"
+      "written": "辺",
+      "pron": "へん"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -52267,13 +52318,14 @@
     ],
     "jlpt": 2,
     "preferredWords": [
+      "辺",
       "この辺",
       "周辺",
       "海辺"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "この辺 （このへん） - around here ／ 周辺 （しゅうへん） - surrounding area ／ 海辺 （うみべ） - seaside",
+    "notes": "辺 （へん） - area / side ／ この辺 （このへん） - around here ／ 周辺 （しゅうへん） - surrounding area ／ 海辺 （うみべ） - seaside",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "この辺には静かな公園が多いです。",

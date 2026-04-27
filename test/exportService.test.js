@@ -275,6 +275,53 @@ test("buildInferenceForKanji uses curated single-kanji breakdown readings before
     assert.equal(inference.audioPath, "audio/8ECA_車-kanji-reading-車-くるま.wav");
 });
 
+test("buildInferenceForKanji prefers kanji-card display readings over word-deck breakdown readings", async () => {
+    const exportService = createExportService({
+        curatedStudyData: {
+            符: {
+                displayWord: { written: "符", pron: "ふ" },
+                breakdownDisplayWord: { written: "符", pron: "ぷ" },
+                englishMeaning: "sign / token",
+                notes: "切符 （きっぷ） - ticket",
+            },
+        },
+        inferenceEngine: {
+            hasFullyCuratedKanjiEntry() {
+                return true;
+            },
+            inferKanjiStudyData() {
+                return {
+                    displayWord: { written: "符", pron: "ふ" },
+                    bestWord: { written: "切符", pron: "きっぷ" },
+                    englishMeaning: "sign / token",
+                    meaningJP: "符 （ふ） ／ sign / token",
+                    notes: "切符 （きっぷ） - ticket",
+                    sentenceCandidates: [],
+                };
+            },
+        },
+    });
+
+    const inference = await exportService.buildInferenceForKanji({
+        kanji: "符",
+        jlptEntry: { meanings: ["sign", "token"], on_readings: ["フ"], kun_readings: [], jlpt: 2 },
+        kanjiApiClient: {
+            async getKanji() {
+                throw new Error("should use local JLPT data");
+            },
+            async getWords() {
+                throw new Error("should skip word fetch");
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+    });
+
+    assert.equal(inference.displayWordText, "符");
+    assert.equal(inference.primaryReading, "ふ");
+    assert.equal(inference.meaningJP, "sign / token");
+});
+
 test("buildInferenceForKanji separates primary-reading gloss from broader kanji meanings", async () => {
     const exportService = createExportService({
         curatedStudyData: {

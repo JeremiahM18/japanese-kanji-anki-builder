@@ -80,6 +80,12 @@ test("tracked N2 review entries avoid compound-led primary anchors and noisy mea
     assert.equal(starterData["板"].exampleSentence.japanese, "古い板を使って棚を作りました。");
     assert.deepEqual(starterData["筆"].displayWord, { written: "筆", pron: "ふで" });
     assert.equal(starterData["筆"].exampleSentence.japanese, "筆で大きな字を書きました。");
+    assert.deepEqual(starterData["粉"].displayWord, { written: "粉", pron: "こな" });
+    assert.equal(starterData["粉"].exampleSentence.japanese, "白い粉が机の上にこぼれました。");
+    assert.deepEqual(starterData["辺"].displayWord, { written: "辺", pron: "へん" });
+    assert.equal(starterData["辺"].notes, "辺 （へん） - area / side ／ この辺 （このへん） - around here ／ 周辺 （しゅうへん） - surrounding area ／ 海辺 （うみべ） - seaside");
+    assert.deepEqual(starterData["符"].displayWord, { written: "符", pron: "ふ" });
+    assert.deepEqual(starterData["符"].breakdownDisplayWord, { written: "符", pron: "ぷ" });
 
     assert.deepEqual(starterData["匹"].blockedMeanings, ["equal", "head", "roll of cloth"]);
     assert.deepEqual(starterData["底"].blockedMeanings, ["bottom price", "kind", "sort"]);
@@ -100,6 +106,15 @@ test("tracked N2 review entries avoid compound-led primary anchors and noisy mea
         "veil",
         "wear",
     ]);
+    assert.deepEqual(starterData["募"].blockedMeanings, ["campaign", "enlist", "gather (contributions)", "grow violent"]);
+    assert.deepEqual(starterData["幅"].blockedMeanings, ["hanging scroll"]);
+    assert.deepEqual(starterData["府"].blockedMeanings, ["borough", "govt office", "representative body", "storehouse"]);
+    assert.deepEqual(starterData["普"].blockedMeanings, ["Prussia", "wide(ly)"]);
+    assert.deepEqual(starterData["暴"].blockedMeanings, ["cruelty", "force", "fret", "outburst", "outrage", "rave"]);
+    assert.deepEqual(starterData["沸"].blockedMeanings, ["breed", "ferment", "seethe", "uproar"]);
+    assert.deepEqual(starterData["符"].blockedMeanings, ["charm", "mark", "tally"]);
+    assert.deepEqual(starterData["編"].blockedMeanings, ["braid", "completed poem", "part of a book", "plait", "twist"]);
+    assert.deepEqual(starterData["膚"].blockedMeanings, ["body", "disposition", "grain", "texture"]);
 });
 
 test("tracked starter curated N1 batch entries keep required learner-facing quality metadata", () => {

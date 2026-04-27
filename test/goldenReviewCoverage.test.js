@@ -8,6 +8,7 @@ const {
     buildGoldenReviewCoverageSummary,
     buildStarterCuratedBuckets,
 } = require("../src/datasets/goldenReviewCoverage");
+const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const { parseArgs } = require("../scripts/reportGoldenReviewCoverage");
 
 const templatesDir = path.join(__dirname, "..", "templates");
@@ -108,6 +109,22 @@ test("tracked N2 golden review coverage protects every starter-curated kanji", (
     assert.equal(summary.starterCuratedKanji, 366);
     assert.equal(summary.goldenCoveredKanji, 366);
     assert.equal(summary.missingKanji, 0);
+});
+
+test("tracked N1 golden review coverage reports the started review queue against batch files", () => {
+    const summary = buildGoldenReviewCoverageSummary({
+        starterCuratedData: loadCuratedStudyData(path.join(__dirname, "..", "data", "__tracked_starter_only__.json"), {
+            starterPath: path.join(templatesDir, "starter_curated_study_data.json"),
+        }),
+        goldenReviewSets: {
+            1: loadTemplateJson("golden_n1_review_set.json"),
+        },
+        levels: [1],
+    });
+
+    assert.equal(summary.starterCuratedKanji, 1231);
+    assert.equal(summary.goldenCoveredKanji, 8);
+    assert.equal(summary.missingKanji, 1223);
 });
 
 test("reportGoldenReviewCoverage parseArgs accepts level and limit", () => {

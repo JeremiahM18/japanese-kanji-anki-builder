@@ -45,6 +45,7 @@ A word level ships only when all criteria are true:
 - N5 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio
 - N4 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio
 - N3 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio
+- N1 kanji: golden review started; not ready because exact primary-reading audio is missing from exported cards
 - N5 word: stabilized and `ready_with_deferred_variants`
 - N4 word: active completion work, not yet ready
 

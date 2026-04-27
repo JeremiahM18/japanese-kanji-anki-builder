@@ -2,6 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const { invokeCliMain, assertNoUnknownArgs, collectUnknownArg } = require("../src/utils/cliArgs");
+const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const { buildGoldenReviewCoverageSummary } = require("../src/datasets/goldenReviewCoverage");
 
 function parseArgs(argv) {
@@ -33,7 +34,9 @@ function main() {
     assertNoUnknownArgs("reportGoldenReviewCoverage", options.unknownArgs);
 
     const templatesDir = path.join(process.cwd(), "templates");
-    const starterCuratedData = loadJson(path.join(templatesDir, "starter_curated_study_data.json"));
+    const starterCuratedData = loadCuratedStudyData(path.join(process.cwd(), "data", "__tracked_starter_only__.json"), {
+        starterPath: path.join(templatesDir, "starter_curated_study_data.json"),
+    });
     const levels = Number.isInteger(options.level) ? [options.level] : [4, 5];
     const goldenReviewSets = Object.fromEntries(
         levels.map((level) => [

@@ -53,6 +53,7 @@
     "deck:apkg": "python scripts/buildApkg.py",
     "media:import:kanjivg": "node scripts/importKanjiVgStrokeOrder.js",
     "deck:review:n4": "node scripts/reviewGoldenLevel.js --level=4",
+    "deck:review:n1": "node scripts/reviewGoldenLevel.js --level=1",
     "deck:words:ready": "node scripts/prepareWordDeck.js",
     "words:init": "node scripts/initWordStudyData.js",
     "deck:words:apkg": "python scripts/buildApkg.py --deck-kind=word --out-dir=out/word-build",

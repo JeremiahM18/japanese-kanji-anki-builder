@@ -42,7 +42,7 @@ Tracked contracts define release behavior:
 - Audio source policy: [templates/audio_source_policy.json](templates/audio_source_policy.json)
 - Kanji note schema: [src/config/ankiNoteSchema.json](src/config/ankiNoteSchema.json)
 - Word note schema: [src/config/ankiWordNoteSchema.json](src/config/ankiWordNoteSchema.json)
-- Golden kanji review sets: [templates/golden_n5_review_set.json](templates/golden_n5_review_set.json), [templates/golden_n4_review_set.json](templates/golden_n4_review_set.json)
+- Golden kanji review sets: [templates/golden_n5_review_set.json](templates/golden_n5_review_set.json), [templates/golden_n4_review_set.json](templates/golden_n4_review_set.json), [templates/golden_n3_review_set.json](templates/golden_n3_review_set.json), [templates/golden_n2_review_set.json](templates/golden_n2_review_set.json), [templates/golden_n1_review_set.json](templates/golden_n1_review_set.json)
 - Golden word review sets: [templates/golden_n5_word_review_set.json](templates/golden_n5_word_review_set.json)
 
 Local ignored files under `data/` are workspace inputs, not product truth. Use audits to verify them against tracked contracts.
@@ -53,6 +53,7 @@ Kanji decks:
 
 - Each shipped kanji belongs to the tracked JLPT kanji contract.
 - N5, N4, and N3 kanji are fully protected by golden review coverage.
+- N1 kanji golden review coverage has started but is partial. N1 must not be treated as ready until golden coverage, exact primary-reading audio, and level readiness all pass.
 - The kanji deck learning target is the individual kanji. `DisplayWord` is the target kanji itself, and `PrimaryReading` is the learner-facing reading for that kanji.
 - Compound words belong in notes, examples, and word decks; they must not replace the kanji-card anchor.
 - `deck:ready` fails on export fallbacks unless `--allow-export-fallbacks` is explicit.
@@ -78,6 +79,7 @@ Word decks:
 | N5 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
 | N4 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
 | N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
+| N1 kanji | Golden review started; not ready because exact primary-reading audio is missing from exported cards |
 | N5 word | `ready_with_deferred_variants` |
 | N4 word | Active completion work |
 | N5 word audio | Governed and reviewable |
@@ -160,6 +162,9 @@ npm run deck:preview -- --level=5 --limit=5
 npm run deck:preview -- --kanji=日,本,学
 npm run deck:review:n5
 npm run deck:review:n4
+npm run deck:review:n3
+npm run deck:review:n2
+npm run deck:review:n1
 npm run deck:review:coverage
 npm run deck:words:review:n5
 ```

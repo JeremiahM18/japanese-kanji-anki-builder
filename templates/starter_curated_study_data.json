@@ -10249,8 +10249,8 @@
   "召": {
     "englishMeaning": "summon / eat or wear politely",
     "displayWord": {
-      "written": "召し上がる",
-      "pron": "めしあがる"
+      "written": "召す",
+      "pron": "めす"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -10260,13 +10260,19 @@
     ],
     "jlpt": 2,
     "preferredWords": [
+      "召す",
       "召し上がる",
       "お召し物",
       "召集"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "buy",
+      "catch (cold)",
+      "seduce"
+    ],
     "blockedSentencePhrases": [],
-    "notes": "召し上がる （めしあがる） - eat / drink politely ／ お召し物 （おめしもの） - clothes / outfit politely ／ 召集 （しょうしゅう） - summons / gathering",
+    "notes": "召す （めす） - eat / wear politely ／ 召し上がる （めしあがる） - eat / drink politely ／ 召集 （しょうしゅう） - summons / gathering",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "どうぞ温かいうちに召し上がってください。",
@@ -11908,10 +11914,10 @@
     }
   },
   "喫": {
-    "englishMeaning": "consume / enjoy drinking",
+    "englishMeaning": "consume / take in",
     "displayWord": {
-      "written": "喫茶店",
-      "pron": "きっさてん"
+      "written": "喫",
+      "pron": "きつ"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -11926,6 +11932,9 @@
       "満喫"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "receive (a blow)"
+    ],
     "blockedSentencePhrases": [],
     "notes": "喫茶店 （きっさてん） - coffee shop ／ 喫煙 （きつえん） - smoking ／ 満喫 （まんきつ） - fully enjoy",
     "alternativeNotes": [],
@@ -18897,8 +18906,8 @@
   "岸": {
     "englishMeaning": "shore / bank",
     "displayWord": {
-      "written": "海岸",
-      "pron": "かいがん"
+      "written": "岸",
+      "pron": "きし"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -18908,18 +18917,19 @@
     ],
     "jlpt": 2,
     "preferredWords": [
+      "岸",
       "海岸",
       "岸辺",
       "対岸"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "海岸 （かいがん） - coast / seashore ／ 岸辺 （きしべ） - shore / waterside ／ 対岸 （たいがん） - opposite bank",
+    "notes": "岸 （きし） - shore / bank ／ 海岸 （かいがん） - coast / seashore ／ 対岸 （たいがん） - opposite bank",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "夏になると海岸にたくさんの人が集まります。",
-      "reading": "なつになるとかいがんにたくさんのひとがあつまります。",
-      "english": "In summer, many people gather at the beach.",
+      "japanese": "川の岸に小さな花が咲いています。",
+      "reading": "かわのきしにちいさなはながさいています。",
+      "english": "Small flowers are blooming on the riverbank.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -20073,8 +20083,8 @@
   "帯": {
     "englishMeaning": "belt / carry",
     "displayWord": {
-      "written": "携帯",
-      "pron": "けいたい"
+      "written": "帯",
+      "pron": "おび"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -20084,18 +20094,19 @@
     ],
     "jlpt": 2,
     "preferredWords": [
-      "携帯",
+      "帯",
       "帯びる",
-      "熱帯"
+      "熱帯",
+      "携帯"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "携帯 （けいたい） - carry / mobile phone ／ 帯びる （おびる） - carry / be tinged with ／ 熱帯 （ねったい） - tropics",
+    "notes": "帯 （おび） - belt / sash ／ 帯びる （おびる） - carry / be tinged with ／ 熱帯 （ねったい） - tropics",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "外出するときは携帯を必ず持って行きます。",
-      "reading": "がいしゅつするときはけいたいをかならずもっていきます。",
-      "english": "When I go out, I always take my phone with me.",
+      "japanese": "着物の帯をきれいに結びました。",
+      "reading": "きもののおびをきれいにむすびました。",
+      "english": "I tied the kimono sash neatly.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -34247,6 +34258,12 @@
       "北極"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "10**48",
+      "electric poles",
+      "poles",
+      "settlement"
+    ],
     "blockedSentencePhrases": [],
     "notes": "極めて （きわめて） - extremely ／ 北極 （ほっきょく） - North Pole",
     "alternativeNotes": [],
@@ -36882,8 +36899,8 @@
   "泉": {
     "englishMeaning": "spring / fountain",
     "displayWord": {
-      "written": "温泉",
-      "pron": "おんせん"
+      "written": "泉",
+      "pron": "いずみ"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -36893,17 +36910,18 @@
     ],
     "jlpt": 2,
     "preferredWords": [
+      "泉",
       "温泉",
-      "泉"
+      "源泉"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "温泉 （おんせん） - hot spring ／ 泉 （いずみ） - spring / fountain",
+    "notes": "泉 （いずみ） - spring / fountain ／ 温泉 （おんせん） - hot spring ／ 源泉 （げんせん） - source / spring",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "週末に温泉へ行く予定です。",
-      "reading": "しゅうまつにおんせんへいくよていです。",
-      "english": "I plan to go to a hot spring this weekend.",
+      "japanese": "森の奥に小さな泉があります。",
+      "reading": "もりのおくにちいさないずみがあります。",
+      "english": "There is a small spring deep in the forest.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -44508,10 +44526,10 @@
     }
   },
   "省": {
-    "englishMeaning": "government ministry / save / omit",
+    "englishMeaning": "omit / save / reflect / ministry",
     "displayWord": {
-      "written": "反省",
-      "pron": "はんせい"
+      "written": "省く",
+      "pron": "はぶく"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -44521,17 +44539,19 @@
     ],
     "jlpt": 2,
     "preferredWords": [
+      "省く",
       "反省",
-      "省エネ"
+      "省エネ",
+      "省庁"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "反省 （はんせい） - reflection / reconsideration ／ 省エネ （しょうえね） - energy saving",
+    "notes": "省く （はぶく） - omit / save ／ 反省 （はんせい） - reflection / reconsideration ／ 省エネ （しょうえね） - energy saving",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "失敗の原因を反省して次に生かします。",
-      "reading": "しっぱいのげんいんをはんせいしてつぎにいかします。",
-      "english": "I will reflect on the cause of the failure and use it next time.",
+      "japanese": "時間を省くために手順を短くしました。",
+      "reading": "じかんをはぶくためにてじゅんをみじかくしました。",
+      "english": "I shortened the steps to save time.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -46315,6 +46335,9 @@
       "管"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "drunken talk"
+    ],
     "blockedSentencePhrases": [],
     "notes": "管理 （かんり） - management ／ 管 （くだ） - pipe / tube",
     "alternativeNotes": [],
@@ -48462,8 +48485,8 @@
   "舟": {
     "englishMeaning": "boat",
     "displayWord": {
-      "written": "小舟",
-      "pron": "こぶね"
+      "written": "舟",
+      "pron": "ふね"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -48473,18 +48496,18 @@
     ],
     "jlpt": 2,
     "preferredWords": [
-      "小舟",
       "舟",
+      "小舟",
       "舟遊び"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "小舟 （こぶね） - small boat ／ 舟 （ふね） - boat ／ 舟遊び （ふなあそび） - boating",
+    "notes": "舟 （ふね） - boat ／ 小舟 （こぶね） - small boat ／ 舟遊び （ふなあそび） - boating",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "湖に小舟が静かに浮かんでいました。",
-      "reading": "みずうみにこぶねがしずかにうかんでいました。",
-      "english": "A small boat was floating quietly on the lake.",
+      "japanese": "湖に舟が静かに浮かんでいました。",
+      "reading": "みずうみにふねがしずかにうかんでいました。",
+      "english": "A boat was floating quietly on the lake.",
       "source": "starter-curated",
       "tags": [
         "example",

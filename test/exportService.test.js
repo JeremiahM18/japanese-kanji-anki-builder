@@ -57,6 +57,19 @@ test("formatKanjiMeanings removes unsafe low-value dictionary gloss noise", () =
     );
 });
 
+test("formatKanjiMeanings applies curated blocked dictionary glosses", () => {
+    assert.equal(
+        formatKanjiMeanings({
+            kanjiInfo: { meanings: ["extreme", "10**48", "electric poles", "highest rank"] },
+            curatedEntry: {
+                englishMeaning: "extreme / very",
+                blockedMeanings: ["10**48", "electric poles"],
+            },
+        }),
+        "extreme / very / highest rank"
+    );
+});
+
 test("formatStudyWordKanjiLabels suppresses current-level kanji for kanji deck warnings", () => {
     const levels = new Map([
         ["日", 5],

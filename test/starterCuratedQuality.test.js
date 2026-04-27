@@ -49,6 +49,21 @@ test("tracked starter curated N3-N5 entries keep required learner-facing quality
     }
 });
 
+test("tracked N2 parked review entries use individual-kanji primary anchors", () => {
+    const starterPath = path.join(templatesDir, "starter_curated_study_data.json");
+    const starterData = JSON.parse(fs.readFileSync(starterPath, "utf8"));
+
+    assert.deepEqual(starterData["岸"].displayWord, { written: "岸", pron: "きし" });
+    assert.equal(starterData["岸"].exampleSentence.japanese, "川の岸に小さな花が咲いています。");
+    assert.deepEqual(starterData["喫"].displayWord, { written: "喫", pron: "きつ" });
+    assert.match(starterData["喫"].notes, /喫茶店/);
+    assert.deepEqual(starterData["舟"].displayWord, { written: "舟", pron: "ふね" });
+    assert.deepEqual(starterData["召"].displayWord, { written: "召す", pron: "めす" });
+    assert.deepEqual(starterData["省"].displayWord, { written: "省く", pron: "はぶく" });
+    assert.deepEqual(starterData["泉"].displayWord, { written: "泉", pron: "いずみ" });
+    assert.deepEqual(starterData["帯"].displayWord, { written: "帯", pron: "おび" });
+});
+
 test("tracked starter curated N1 batch entries keep required learner-facing quality metadata", () => {
     const starterPaths = getTrackedN1BatchPaths();
     const finalBatchPath = starterPaths.at(-1);

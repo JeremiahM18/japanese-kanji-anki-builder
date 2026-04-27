@@ -187,12 +187,22 @@ function isNoisyKanjiMeaning(meaning) {
         || /^rape$/i.test(text);
 }
 
+function buildBlockedMeaningSet(curatedEntry = null) {
+    return new Set((Array.isArray(curatedEntry?.blockedMeanings) ? curatedEntry.blockedMeanings : [])
+        .map((meaning) => normalizeText(meaning))
+        .filter(Boolean));
+}
+
 function formatKanjiMeanings({ kanjiInfo, fallbackMeaning = "", curatedEntry = null } = {}) {
     const meaningMap = new Map();
+    const blockedMeanings = buildBlockedMeaningSet(curatedEntry);
     const addMeaning = (meaning, { allowNoise = false } = {}) => {
         const text = String(meaning || "").trim();
         const key = normalizeText(text);
         if (!text || meaningMap.has(key)) {
+            return;
+        }
+        if (blockedMeanings.has(key)) {
             return;
         }
         if (!allowNoise && isNoisyKanjiMeaning(text)) {

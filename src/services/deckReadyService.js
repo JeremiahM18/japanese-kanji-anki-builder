@@ -134,9 +134,9 @@ function formatDeckReadyReport(summary, doctorReport = null) {
     } else if (levelReadiness && !levelReadiness.overallReady) {
         const globalWeakest = levelReadiness.weakestLevels?.[0];
         if (globalWeakest) {
-            lines.push(`Next step: this deck is ready, but the project-wide quality gate is still blocked by JLPT N${globalWeakest.level}. Use \`npm run deck:readiness:global\` to track the remaining levels.`);
+            lines.push(`Next step: this deck is ready, but the project-wide quality gate is still blocked by JLPT N${globalWeakest.level}. Use \`npm run deck:readiness\` to track the remaining levels.`);
         } else {
-            lines.push("Next step: this deck is ready, but the project-wide quality gate is still failing. Use `npm run deck:readiness:global` to track the remaining levels.");
+            lines.push("Next step: this deck is ready, but the project-wide quality gate is still failing. Use `npm run deck:readiness` to track the remaining levels.");
         }
     } else if (packageSummary.ankiPackage?.filePath) {
         lines.push("Next step: import the generated `.apkg` file into Anki.");

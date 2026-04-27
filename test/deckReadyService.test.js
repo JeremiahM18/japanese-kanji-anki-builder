@@ -167,6 +167,8 @@ test("formatDeckReadyReport keeps single-level next steps scoped to the built de
     });
 
     assert.match(text, /this deck is ready, but the project-wide quality gate is still blocked by JLPT N3/i);
+    assert.match(text, /npm run deck:readiness/);
+    assert.doesNotMatch(text, /deck:readiness:global/);
     assert.doesNotMatch(text, /raise JLPT N3 above the quality gate before calling this deck truly ready/i);
 });
 

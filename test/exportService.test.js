@@ -275,14 +275,14 @@ test("buildInferenceForKanji uses curated single-kanji breakdown readings before
     assert.equal(inference.audioPath, "audio/8ECA_車-kanji-reading-車-くるま.wav");
 });
 
-test("buildInferenceForKanji prefers kanji-card display readings over word-deck breakdown readings", async () => {
+test("buildInferenceForKanji keeps the curated kanji primary reading ahead of display examples", async () => {
     const exportService = createExportService({
         curatedStudyData: {
-            符: {
-                displayWord: { written: "符", pron: "ふ" },
-                breakdownDisplayWord: { written: "符", pron: "ぷ" },
-                englishMeaning: "sign / token",
-                notes: "切符 （きっぷ） - ticket",
+            行: {
+                displayWord: { written: "行く", pron: "いく" },
+                breakdownDisplayWord: { written: "行", pron: "こう" },
+                englishMeaning: "go / conduct",
+                notes: "行 （こう） - conduct ／ 行く （いく） - go",
             },
         },
         inferenceEngine: {
@@ -291,11 +291,11 @@ test("buildInferenceForKanji prefers kanji-card display readings over word-deck 
             },
             inferKanjiStudyData() {
                 return {
-                    displayWord: { written: "符", pron: "ふ" },
-                    bestWord: { written: "切符", pron: "きっぷ" },
-                    englishMeaning: "sign / token",
-                    meaningJP: "符 （ふ） ／ sign / token",
-                    notes: "切符 （きっぷ） - ticket",
+                    displayWord: { written: "行く", pron: "いく" },
+                    bestWord: { written: "行く", pron: "いく" },
+                    englishMeaning: "go / conduct",
+                    meaningJP: "行く （いく） ／ go / conduct",
+                    notes: "行 （こう） - conduct ／ 行く （いく） - go",
                     sentenceCandidates: [],
                 };
             },
@@ -303,8 +303,8 @@ test("buildInferenceForKanji prefers kanji-card display readings over word-deck 
     });
 
     const inference = await exportService.buildInferenceForKanji({
-        kanji: "符",
-        jlptEntry: { meanings: ["sign", "token"], on_readings: ["フ"], kun_readings: [], jlpt: 2 },
+        kanji: "行",
+        jlptEntry: { meanings: ["going", "journey"], on_readings: ["コウ", "ギョウ"], kun_readings: ["い.く"], jlpt: 5 },
         kanjiApiClient: {
             async getKanji() {
                 throw new Error("should use local JLPT data");
@@ -317,9 +317,9 @@ test("buildInferenceForKanji prefers kanji-card display readings over word-deck 
         audioService: null,
     });
 
-    assert.equal(inference.displayWordText, "符");
-    assert.equal(inference.primaryReading, "ふ");
-    assert.equal(inference.meaningJP, "sign / token");
+    assert.equal(inference.displayWordText, "行");
+    assert.equal(inference.primaryReading, "こう");
+    assert.equal(inference.meaningJP, "conduct");
 });
 
 test("buildInferenceForKanji separates primary-reading gloss from broader kanji meanings", async () => {

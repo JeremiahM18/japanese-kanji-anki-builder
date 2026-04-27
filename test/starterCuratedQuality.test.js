@@ -85,7 +85,14 @@ test("tracked N2 review entries avoid compound-led primary anchors and noisy mea
     assert.deepEqual(starterData["辺"].displayWord, { written: "辺", pron: "へん" });
     assert.equal(starterData["辺"].notes, "辺 （へん） - area / side ／ この辺 （このへん） - around here ／ 周辺 （しゅうへん） - surrounding area ／ 海辺 （うみべ） - seaside");
     assert.deepEqual(starterData["符"].displayWord, { written: "符", pron: "ふ" });
-    assert.deepEqual(starterData["符"].breakdownDisplayWord, { written: "符", pron: "ぷ" });
+    assert.deepEqual(starterData["符"].breakdownDisplayWord, { written: "符", pron: "ふ" });
+    assert.deepEqual(starterData["符"].breakdownOverrides, [
+        {
+            matchWord: "切符",
+            displayWord: { written: "符", pron: "ぷ" },
+            englishMeaning: "sign / token",
+        },
+    ]);
     assert.deepEqual(starterData["浴"].displayWord, { written: "浴びる", pron: "あびる" });
     assert.deepEqual(starterData["絡"].displayWord, { written: "絡む", pron: "からむ" });
     assert.deepEqual(starterData["綿"].displayWord, { written: "綿", pron: "わた" });

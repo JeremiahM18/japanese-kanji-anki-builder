@@ -46189,9 +46189,18 @@
     },
     "breakdownDisplayWord": {
       "written": "符",
-      "pron": "ぷ"
+      "pron": "ふ"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "切符",
+        "displayWord": {
+          "written": "符",
+          "pron": "ぷ"
+        },
+        "englishMeaning": "sign / token"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n2",

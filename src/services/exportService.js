@@ -144,16 +144,16 @@ function selectReadingFromKanjiInfo({ kanjiInfo, contextReading = "" }) {
 }
 
 function selectKanjiPrimaryReading({ kanji, curatedEntry = null, inferred = null, kanjiInfo = null }) {
-    const curatedWord = curatedEntry?.displayWord?.written;
-    const curatedPron = curatedEntry?.displayWord?.pron;
-    if (curatedPron && hasOnlyTargetKanji(curatedWord, kanji)) {
-        return String(curatedPron).trim();
-    }
-
     const breakdownWord = curatedEntry?.breakdownDisplayWord?.written;
     const breakdownPron = curatedEntry?.breakdownDisplayWord?.pron;
     if (breakdownPron && hasOnlyTargetKanji(breakdownWord, kanji)) {
         return String(breakdownPron).trim();
+    }
+
+    const curatedWord = curatedEntry?.displayWord?.written;
+    const curatedPron = curatedEntry?.displayWord?.pron;
+    if (curatedPron && hasOnlyTargetKanji(curatedWord, kanji)) {
+        return String(curatedPron).trim();
     }
 
     const inferredWord = inferred?.displayWord?.written;

@@ -825,7 +825,14 @@ test("starter curated data provides learner-friendly kanji breakdown fallbacks",
     assert.deepEqual(curatedStudyData["起"].displayWord, { written: "起きる", pron: "おきる" });
     assert.deepEqual(curatedStudyData["寝"].breakdownDisplayWord, { written: "寝る", pron: "ねる" });
     assert.equal(curatedStudyData["寝"].breakdownEnglishMeaning, "sleep / go to bed");
-    assert.deepEqual(curatedStudyData["符"].breakdownDisplayWord, { written: "符", pron: "ぷ" });
+    assert.deepEqual(curatedStudyData["符"].breakdownDisplayWord, { written: "符", pron: "ふ" });
+    assert.deepEqual(curatedStudyData["符"].breakdownOverrides, [
+        {
+            matchWord: "切符",
+            displayWord: { written: "符", pron: "ぷ" },
+            englishMeaning: "sign / token",
+        },
+    ]);
     assert.equal(curatedStudyData["符"].breakdownEnglishMeaning, "sign / token");
     assert.deepEqual(curatedStudyData["切"].breakdownDisplayWord, { written: "切る", pron: "きる" });
     assert.equal(curatedStudyData["切"].breakdownEnglishMeaning, "cut");

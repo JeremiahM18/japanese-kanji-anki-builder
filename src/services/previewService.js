@@ -24,7 +24,7 @@ function formatPreviewCard(card) {
     lines.push(`Primary reading: ${card.primaryReading || "n/a"}`);
     lines.push(`On-yomi: ${card.onReading || "n/a"}`);
     lines.push(`Kun-yomi: ${card.kunReading || "n/a"}`);
-    lines.push(`Radicals: ${card.radical || "n/a"}`);
+    lines.push(`Parts: ${card.radical || "n/a"}`);
     lines.push(`Stroke order: ${formatMediaState(card.media.strokeOrderPath)}`);
     lines.push(`Stroke-order image: ${formatMediaState(card.media.strokeOrderImagePath)}`);
     lines.push(`Stroke-order animation: ${formatMediaState(card.media.strokeOrderAnimationPath)}`);

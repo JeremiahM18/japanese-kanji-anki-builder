@@ -89,7 +89,7 @@
     "{{#OnReading}}<div class=\"reading reading-full\"><span class=\"field-label\">音読み (on reading)</span>{{OnReading}}</div>{{/OnReading}}",
     "{{#KunReading}}<div class=\"reading reading-full\"><span class=\"field-label\">訓読み (kun reading)</span>{{KunReading}}</div>{{/KunReading}}",
     "{{#StrokeOrder}}<div class=\"media\">{{StrokeOrder}}</div>{{/StrokeOrder}}",
-    "<div class=\"meta\">Radicals: {{Radical}}</div>",
+    "<div class=\"meta\">Parts: {{Radical}}</div>",
     "<div class=\"notes\">{{Notes}}</div>",
     "<div class=\"example\">{{ExampleSentence}}</div>",
     "<div class=\"audio\">{{Audio}}</div>"

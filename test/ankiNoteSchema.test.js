@@ -31,7 +31,7 @@ test("loadAnkiNoteSchema returns a stable shared note contract", () => {
     assert.match(schema.afmt, /Other kanji:/);
     assert.match(schema.afmt, /音読み \(on reading\)/);
     assert.match(schema.afmt, /訓読み \(kun reading\)/);
-    assert.match(schema.afmt, /Radicals:/);
+    assert.match(schema.afmt, /Parts:/);
 });
 
 test("export TSV header stays aligned with the shared note schema", async () => {

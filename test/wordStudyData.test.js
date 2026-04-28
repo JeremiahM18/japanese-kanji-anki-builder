@@ -725,9 +725,6 @@ test("tracked starter word data includes the nineteenth governed N4 completion b
         ["問い|とい", "問", "とい"],
         ["問屋|とんや", "問", "とん"],
         ["手強い|てごわい", "強", "こわい"],
-        ["観音開き|かんのんびらき", "開", "びらき"],
-        ["夏毛|なつげ", "夏", "げ"],
-        ["音信|いんしん", "音", "いん"],
         ["明朝|みょうちょう", "明", "みょう"],
         ["明朝|みょうちょう", "朝", "ちょう"],
     ]);
@@ -911,7 +908,6 @@ test("tracked starter word data includes the twenty-seventh governed N4 completi
     assertCoverageReadings(starterEntries, [
         ["千代|ちよ", "代", "よ"],
         ["病み付き|やみつき", "病", "やみ"],
-        ["白銀|しろがね", "銀", "しろがね"],
         ["足りる|たりる", "足", "たりる"],
         ["注ぐ|そそぐ", "注", "そそぐ"],
         ["通す|とおす", "通", "とおす"],
@@ -936,18 +932,14 @@ test("tracked starter word data includes the twenty-eighth governed N4 completio
 
     assertCoverageReadings(starterEntries, [
         ["京|みやこ", "京", "みやこ"],
-        ["南京|なんきん", "京", "きん"],
         ["北京|ペキン", "京", "キン"],
-        ["明朝|みんちょう", "明", "みん"],
         ["法度|はっと", "度", "と"],
         ["自業自得|じごうじとく", "業", "ごう"],
-        ["愛猫|あいびょう", "猫", "びょう"],
         ["主人|あるじ", "主", "あるじ"],
         ["病|やまい", "病", "やまい"],
         ["会わせる|あわせる", "会", "あわせる"],
         ["開ける|ひらける", "開", "ひらける"],
         ["究める|きわめる", "究", "きわめる"],
-        ["計らう|はからう", "計", "はからう"],
         ["試みる|こころみる", "試", "こころみる"],
         ["正す|ただす", "正", "ただす"],
         ["足す|たす", "足", "たす"],
@@ -964,16 +956,12 @@ test("tracked starter word data includes the twenty-ninth governed N4 completion
     assertCoverageReadings(starterEntries, [
         ["京阪|けいはん", "京", "けい"],
         ["緑青|ろくしょう", "青", "しょう"],
-        ["験担ぎ|げんかつぎ", "験", "げん"],
         ["店子|たなこ", "店", "たな"],
         ["仮字|かな", "字", "な"],
         ["相部屋|あいべや", "部", "べ"],
         ["創世記|そうせいき", "世", "そう"],
-        ["大社|おおやしろ", "社", "やしろ"],
-        ["転寝|うたたね", "転", "うたた"],
         ["裏切り|うらぎり", "切", "ぎり"],
         ["夜通し|よどおし", "通", "どおし"],
-        ["赤銅|しゃくどう", "赤", "しゃく"],
     ]);
     assertReadingBreakdowns(starterEntries, [
         ["夜通し|よどおし", "<ruby>夜<rt>よ</rt></ruby><ruby>通<rt>どお</rt></ruby>し"],
@@ -992,13 +980,10 @@ test("tracked starter word data includes the thirtieth governed N4 completion ba
         ["空かす|すかす", "空", "すかす"],
         ["手作り|てづくり", "作", "づくり"],
         ["閉ざす|とざす", "閉", "とざす"],
-        ["明るむ|あかるむ", "明", "あかるむ"],
-        ["自ずと|おのずと", "自", "おのずと"],
     ]);
     assertReadingBreakdowns(starterEntries, [
         ["品切れ|しなぎれ", "<ruby>品<rt>しな</rt></ruby><ruby>切<rt>ぎ</rt></ruby>れ"],
         ["手作り|てづくり", "<ruby>手<rt>て</rt></ruby><ruby>作<rt>づく</rt></ruby>り"],
-        ["自ずと|おのずと", "<ruby>自<rt>おの</rt></ruby>ずと"],
     ]);
 });
 
@@ -1006,19 +991,13 @@ test("tracked starter word data includes the thirty-first governed N4 support ba
     const starterEntries = loadTrackedStarterWordEntries();
 
     assertCoverageReadings(starterEntries, [
-        ["急く|せく", "急", "せく"],
         ["寝かす|ねかす", "寝", "ねかす"],
-        ["転げる|ころげる", "転", "ころげる"],
     ]);
     assertCoverageRoles(starterEntries, [
-        ["急く|せく", "support"],
         ["寝かす|ねかす", "support"],
-        ["転げる|ころげる", "support"],
     ]);
     assertReadingBreakdowns(starterEntries, [
-        ["急く|せく", "<ruby>急<rt>せ</rt></ruby>く"],
         ["寝かす|ねかす", "<ruby>寝<rt>ね</rt></ruby>かす"],
-        ["転げる|ころげる", "<ruby>転<rt>ころ</rt></ruby>げる"],
     ]);
 });
 

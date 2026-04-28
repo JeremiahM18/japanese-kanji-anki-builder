@@ -95,7 +95,7 @@ test("tracked JLPT word contract keeps standalone higher-level kanji words in th
         "十|じゅう",
     ];
 
-    assert.equal(contract.inventoryCounts["4"], 490);
+    assert.equal(contract.inventoryCounts["4"], 474);
     assert.equal(contract.excludedCounts["5"], 13);
     for (const key of n5StandaloneNumberWords) {
         assert.equal(getJlptWordLevel(contract, key), 5);
@@ -517,13 +517,8 @@ test("tracked JLPT word contract keeps standalone higher-level kanji words in th
     assert.equal(getJlptWordLevel(contract, "問い|とい"), 4);
     assert.equal(getJlptWordLevel(contract, "問屋|とんや"), 4);
     assert.equal(getJlptWordLevel(contract, "手強い|てごわい"), 4);
-    assert.equal(getJlptWordLevel(contract, "観音開き|かんのんびらき"), 4);
-    assert.equal(getJlptWordLevel(contract, "夏毛|なつげ"), 4);
-    assert.equal(getJlptWordLevel(contract, "音信|いんしん"), 4);
     assert.equal(getJlptWordLevel(contract, "明朝|みょうちょう"), 4);
-    assert.equal(getJlptWordLevel(contract, "急く|せく"), 4);
     assert.equal(getJlptWordLevel(contract, "寝かす|ねかす"), 4);
-    assert.equal(getJlptWordLevel(contract, "転げる|ころげる"), 4);
     assert.equal(getJlptWordLevel(contract, "建つ|たつ"), 4);
     assert.equal(getJlptWordLevel(contract, "行き止まり|いきどまり"), 4);
     assert.equal(contract.excludedWordLevels["高い山|たかいやま"].exclusionReason, "phrase");

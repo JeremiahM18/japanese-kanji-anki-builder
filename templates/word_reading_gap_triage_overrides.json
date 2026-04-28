@@ -206,6 +206,86 @@
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "Marked as a missing curated candidate by fallback heuristics, but not a good learner-facing N4 support target."
+    },
+    "夏|on|げ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "夏毛 is too niche to justify an N4 learner card; leave this reading uncovered unless a more useful word emerges."
+    },
+    "音|on|いん": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "音信 is formal/low-frequency and not useful enough for the N4 word deck."
+    },
+    "開|kun|びらき": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "観音開き is a narrow household term and should not drive N4 word coverage."
+    },
+    "京|on|きん": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "南京 is a proper-noun/specialized reading, not a useful N4 vocabulary target."
+    },
+    "銀|kun|しろがね": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "白銀 is literary/low-frequency compared with stronger learner-facing silver vocabulary."
+    },
+    "社|kun|やしろ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "大社 as おおやしろ is too specialized for the N4 word deck and can mislead learners."
+    },
+    "赤|on|しゃく": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "赤銅 is a specialist alloy term and should not be taught just to cover 赤 -> しゃく."
+    },
+    "猫|on|びょう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "愛猫 is not common enough for N4 and mainly exists to force 猫 -> びょう coverage."
+    },
+    "明|on|みん": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "明朝 as Mincho/Ming is specialist knowledge, not a useful N4 vocabulary target."
+    },
+    "計|kun|はからう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "計らう is formal enough to defer; do not keep it as an N4 support card just to cover 計 -> はからう."
+    },
+    "験|on|げん": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "験担ぎ is a useful expression but not an N4 learner anchor; catch 験 -> げん later through a stronger higher-level word such as 経験."
+    },
+    "転|kun|うたた": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "転寝 is an uncommon kanji spelling for うたた寝 and should not be used to force N4 reading coverage."
+    },
+    "明|kun|あかるむ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "明るむ is not useful enough for an N4 support card compared with core 明るい/明ける vocabulary."
+    },
+    "自|kun|おのずと": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "自ずと is formal/adverbial and should not be kept as an N4 support card just to cover 自 -> おのずと."
+    },
+    "急|kun|せく": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "急く is lower learner value than core 急ぐ/急に usage and should not drive N4 coverage."
+    },
+    "転|kun|ころげる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "転げる is redundant with stronger N4 motion words such as 転ぶ/転がる and should not be kept just for coverage."
     }
   }
 }

@@ -173,13 +173,34 @@ function buildCandidateLevelSummary(candidate, { jlptOnlyJson = {}, targetLevel 
   };
 }
 
-function candidateReadingAlignsWithTarget(candidate, item) {
+function getRubyReadingsForKanji(readingBreakdown, targetKanji) {
+  const readings = [];
+  const rubyPattern = /<ruby>(.*?)<rt>(.*?)<\/rt><\/ruby>/g;
+  let match;
+  while ((match = rubyPattern.exec(String(readingBreakdown || ''))) !== null) {
+    const written = String(match[1] || '').replace(/<[^>]+>/g, '');
+    if (written.includes(targetKanji)) {
+      readings.push(normalizeReadingToken(match[2]));
+    }
+  }
+  return readings.filter(Boolean);
+}
+
+function candidateReadingAlignsWithTarget(candidate, item, trackedEntry = null) {
   const written = String(candidate?.written || '');
   const targetKanji = String(item?.kanji || '');
   const targetReading = normalizeReadingToken(item?.reading || '');
   const candidateReading = normalizeReadingToken(candidate?.reading || '');
   if (!written || !targetKanji || !targetReading || !candidateReading || !written.includes(targetKanji)) {
     return false;
+  }
+
+  const rubyReadings = getRubyReadingsForKanji(
+    candidate?.readingBreakdown || trackedEntry?.readingBreakdown,
+    targetKanji
+  );
+  if (rubyReadings.length > 0) {
+    return rubyReadings.some((reading) => reading === targetReading);
   }
 
   if (candidateReading === targetReading) {
@@ -199,7 +220,7 @@ function candidateReadingAlignsWithTarget(candidate, item) {
     return candidateReading.endsWith(targetReading);
   }
   if (previousIsKanji && nextIsKanji) {
-    return candidateReading.includes(targetReading);
+    return false;
   }
 
   // Mixed kana/Latin context is too ambiguous for automatic planning.
@@ -382,7 +403,7 @@ function buildSuggestedWordCandidates(item, {
     if (isLikelyPhraseCard(candidate)) {
       continue;
     }
-    if (!candidateReadingAlignsWithTarget(candidate, item)) {
+    if (!candidateReadingAlignsWithTarget(candidate, item, wordStudyEntries[candidate.key])) {
       continue;
     }
 

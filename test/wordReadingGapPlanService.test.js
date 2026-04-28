@@ -293,6 +293,16 @@ test('candidateReadingAlignsWithTarget rejects mixed-script false positives', ()
     { written: '去年', reading: 'こぞ' },
     { kanji: '去', reading: 'こ' }
   ), true);
+  assert.equal(candidateReadingAlignsWithTarget(
+    { written: '映画館', reading: 'えいがかん' },
+    { kanji: '画', reading: 'え' },
+    { readingBreakdown: '<ruby>映<rt>えい</rt></ruby><ruby>画<rt>が</rt></ruby><ruby>館<rt>かん</rt></ruby>' }
+  ), false);
+  assert.equal(candidateReadingAlignsWithTarget(
+    { written: '台所', reading: 'だいどころ' },
+    { kanji: '所', reading: 'どころ' },
+    { readingBreakdown: '<ruby>台<rt>だい</rt></ruby><ruby>所<rt>どころ</rt></ruby>' }
+  ), true);
 });
 
 test('buildWordReadingGapPlan can include deferred variants explicitly', () => {

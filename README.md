@@ -52,8 +52,8 @@ Local ignored files under `data/` are workspace inputs, not product truth. Use a
 Kanji decks:
 
 - Each shipped kanji belongs to the tracked JLPT kanji contract.
-- N5, N4, and N3 kanji are fully protected by golden review coverage.
-- N1 kanji golden review coverage has started but is partial. N1 must not be treated as ready until golden coverage, exact primary-reading audio, and level readiness all pass.
+- N5, N4, N3, and N2 kanji are fully protected by golden review coverage.
+- N1 kanji golden review coverage is partial: `268/1231` reviewed as of the current baseline. N1 must not be treated as ready until golden coverage, exact primary-reading audio, and level readiness all pass.
 - The kanji deck learning target is the individual kanji. `DisplayWord` is the target kanji itself, and `PrimaryReading` is the learner-facing reading for that kanji.
 - Compound words belong in notes, examples, and word decks; they must not replace the kanji-card anchor.
 - `deck:ready` fails on export fallbacks unless `--allow-export-fallbacks` is explicit.
@@ -68,7 +68,7 @@ Word decks:
 - Standalone single-kanji words stay in their own JLPT level.
 - Lower-level decks may include multi-kanji support words containing higher-level or outside-JLPT constituent kanji.
 - Cross-level and outside-JLPT constituent kanji must be visibly labeled on the card.
-- Reading coverage is cumulative across easier decks. N4 does not duplicate readings already taught by N5 unless there is an explicit editorial reason.
+- Reading coverage is scoped to the selected word-product levels. A higher-level word card can cover a lower-level reading target when those levels are built together.
 - Track reading-coverage intent with `coverage.role`, `coverage.focusKanji`, and `coverage.coversReadings` when the card exists for coverage.
 - Sentence orthography review is advisory. It flags likely kana-only regressions without banning natural kana usage.
 
@@ -79,18 +79,18 @@ Word decks:
 | N5 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
 | N4 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
 | N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
-| N1 kanji | Golden review started; not ready because exact primary-reading audio is missing from exported cards |
-| N5 word | Golden review and governance passing; strict readiness blocked on missing standalone-number audio and pitch accents |
-| N4 word | Active completion work |
-| N5 word audio | Governed and reviewable for existing rows; 9 standalone-number word rows still need governed audio and pitch accent assets |
-| N4 word media | Audio, pitch accent, card-back fields, and looping animations are ready; reading coverage is still incomplete |
+| N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
+| N1 kanji | Golden review partial at `268/1231`; not ready because exact primary-reading audio is missing from exported cards |
+| N5 word | `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, and looping animations are complete for shipped rows |
+| N4 word | `ready_with_deferred_variants` when built with N5 as the selected word-product scope; audio, pitch accent, card-back fields, and looping animations are complete for shipped rows |
 
 Current tracked word inventory:
 
 - N5 canonical word rows: `348`
 - N5 source-only phrase exclusions: `13`
 - N4 canonical word rows: `474`
-- N4 cumulative reading coverage: run `npm run deck:words:ready -- --levels=4 --require-no-active-triage` for the live value
+- Current N5+N4 word rows: `822`
+- N5+N4 word readiness: run `npm run deck:words:ready -- --levels=5,4 --require-no-active-triage` for the live value
 
 Run live commands for current coverage. Do not rely on README numbers for release decisions.
 

@@ -22,7 +22,7 @@ A kanji level ships only when all criteria are true:
 - Golden review coverage for that shipped level is complete.
 - Exported cards preserve the individual-kanji learning contract: `DisplayWord` equals the target kanji, `PrimaryReading` is present, `MeaningJP` is the meaning associated with that primary reading, `KanjiMeanings` carries broader kanji meanings, curated `blockedMeanings` suppresses low-value dictionary glosses, and compound words do not replace the card anchor.
 - `npm run deck:ready -- --levels=<level>` passes with `0` export fallback issues.
-- Exported card media completeness is `100%` for the single learner-facing looping stroke-order field, static stroke-order image field, and audio field.
+- Exported card media completeness is `100%` for the single learner-facing looping stroke-order field and audio field.
 - Stroke-order animation coverage is `100%`.
 - Audio is governed, audited, review-clean, and exact for the exported target kanji plus primary reading.
 - Accessibility review has no unresolved blocker.
@@ -34,7 +34,7 @@ A word level ships only when all criteria are true:
 - Canonical word contract rows are fully built for the level.
 - No standalone wrong-level cards ship in the deck.
 - Constituent kanji are visibly labeled with JLPT level or outside-JLPT status.
-- Reading coverage is reported honestly against the cumulative lower-level scope.
+- Reading coverage is reported honestly against the selected word-product level scope, including whether a target is covered by an earlier, same-level, or harder selected deck.
 - Active triage is either resolved or intentionally deferred.
 - Sentence orthography review has no unresolved blocker.
 - Any shipped audio is governed, audited, and review-clean.
@@ -45,9 +45,10 @@ A word level ships only when all criteria are true:
 - N5 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio
 - N4 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio
 - N3 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio
-- N1 kanji: golden review started; not ready because exact primary-reading audio is missing from exported cards
+- N2 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio
+- N1 kanji: golden review partial at `268/1231`; not ready because exact primary-reading audio is missing from exported cards
 - N5 word: stabilized and `ready_with_deferred_variants`
-- N4 word: active completion work, not yet ready
+- N4 word: stabilized as `ready_with_deferred_variants` when built with N5 as the selected word-product scope
 
 ## Required gates before shipping
 

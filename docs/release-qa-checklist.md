@@ -28,8 +28,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 
 ## Kanji deck manual spot review
 
-- Import the current N5 kanji deck into Anki.
-- Import the current N4 kanji deck into Anki.
+- Import each kanji level being shipped into Anki. Current ready local kanji levels are N5, N4, N3, and N2. N1 is not ready until exact primary-reading audio and full golden coverage pass.
 - Confirm each card front is the individual target kanji.
 - Confirm each card back starts with the learner-facing `PrimaryReading` plus only the meaning associated with that reading.
 - Confirm broader kanji meanings are shown separately and are not collapsed into the primary-reading line.
@@ -44,7 +43,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 
 ## Word deck manual spot review
 
-- Import the current N5 word deck into Anki.
+- Import each word level being shipped into Anki. Current ready-with-deferred-variants local word levels are N5 and N4 when N4 is built with N5 as the selected word-product scope.
 - Review beginner core words.
 - Review support words.
 - Review constituent-kanji labels, including cross-level and outside-JLPT kanji.

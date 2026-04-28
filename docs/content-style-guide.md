@@ -14,10 +14,12 @@ That means:
 
 ## Kanji card style
 
-- Use the clearest learner-facing display form, not the most literal dictionary headword.
-- Prefer real anchors when a bare kanji is a weak teaching surface.
-- Keep readings, notes, and examples aligned with the actual card front.
-- Label every kanji in the learner-facing display form with its JLPT level or outside-JLPT status on the answer side.
+- The front is the single target kanji only.
+- `DisplayWord` is the target kanji.
+- `PrimaryReading` is the learner-facing reading for that individual kanji.
+- `MeaningJP` is the meaning tied to `PrimaryReading`; broader meanings belong in `KanjiMeanings`.
+- Keep notes and examples aligned with the target kanji, but do not let a compound word become the learner anchor.
+- Leave `StudyWordKanji` blank for kanji cards.
 - Avoid exposing internal notation or raw fallback text to learners.
 
 ## Word card style
@@ -25,7 +27,7 @@ That means:
 - Standalone single-kanji words stay in their own JLPT level.
 - Lower-level decks may include multi-kanji support words that reference higher-level constituent kanji.
 - Constituent kanji must be visibly labeled on the card, including same-level, higher-level, and outside-JLPT kanji.
-- Reading coverage is cumulative across easier decks. Do not duplicate support words at harder levels if the reading is already taught well in an easier deck.
+- Reading coverage is scoped to the selected word-product levels. Do not duplicate support words if the reading is already taught well in another selected deck unless there is a clear editorial reason.
 - Every shipped word card must expose a learner-facing reading breakdown on the answer side.
 - Kanji words use ruby furigana; kana-only words render kana in the same reading-breakdown position.
 - Irregular compounds require curated reading-breakdown overrides or whole-word ruby fallback instead of false per-kanji slices.

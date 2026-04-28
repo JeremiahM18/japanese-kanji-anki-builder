@@ -1,10 +1,22 @@
 const { buildWordStudyEntryKey } = require('../datasets/wordStudyData');
 const { parseWordTsv } = require('./wordReadingCoverageService');
 
-function buildCoverageLevels(level) {
+function normalizeCoverageLevels(levels) {
+  return [...new Set((Array.isArray(levels) ? levels : [])
+    .map((value) => Number(value))
+    .filter((value) => Number.isInteger(value) && value >= 1 && value <= 5)
+  )].sort((a, b) => b - a);
+}
+
+function buildCoverageLevels(level, { availableLevels = null } = {}) {
   const targetLevel = Number(level);
   if (!Number.isInteger(targetLevel) || targetLevel < 1 || targetLevel > 5) {
     throw new Error('Word deck coverage level must be 1-5.');
+  }
+
+  const scopedLevels = normalizeCoverageLevels(availableLevels);
+  if (scopedLevels.length > 0) {
+    return scopedLevels;
   }
 
   return [5, 4, 3, 2, 1].filter((candidateLevel) => candidateLevel >= targetLevel);
@@ -14,8 +26,8 @@ function buildCoverageLabel(levels = []) {
   return levels.map((level) => `N${level}`).join(' + ');
 }
 
-function buildCoverageWordRows({ level, wordTsvByLevel = {} }) {
-  const coverageLevels = buildCoverageLevels(level);
+function buildCoverageWordRows({ level, wordTsvByLevel = {}, availableLevels = null }) {
+  const coverageLevels = buildCoverageLevels(level, { availableLevels });
   const mergedRows = new Map();
 
   for (const coverageLevel of coverageLevels) {
@@ -52,4 +64,5 @@ module.exports = {
   buildCoverageLabel,
   buildCoverageLevels,
   buildCoverageWordRows,
+  normalizeCoverageLevels,
 };

@@ -403,11 +403,12 @@ function buildWordDeckCompletionReport({
     wordTsv,
     wordPitchAccentData = {},
     coverageWordTsvByLevel = null,
+    coverageLevels = null,
 }) {
     const kanjiRows = parseKanjiTsv(kanjiTsv);
     const wordRows = parseWordTsv(wordTsv);
     const coverageScope = coverageWordTsvByLevel
-        ? buildCoverageWordRows({ level, wordTsvByLevel: coverageWordTsvByLevel })
+        ? buildCoverageWordRows({ level, wordTsvByLevel: coverageWordTsvByLevel, availableLevels: coverageLevels })
         : {
             coverageLevels: [level],
             coverageLabel: `N${level}`,

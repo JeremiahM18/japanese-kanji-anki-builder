@@ -51,9 +51,9 @@ function resolveWordTsvPath(outDir, level) {
     return path.join(outDir, "exports", `jlpt-n${level}-words.tsv`);
 }
 
-function loadCoverageWordTsvByLevel({ level, outDir, currentWordTsvByLevel }) {
+function loadCoverageWordTsvByLevel({ level, outDir, currentWordTsvByLevel, coverageLevels = null }) {
     const wordTsvByLevel = {};
-    for (const coverageLevel of buildCoverageLevels(level)) {
+    for (const coverageLevel of buildCoverageLevels(level, { availableLevels: coverageLevels })) {
         if (typeof currentWordTsvByLevel[coverageLevel] === "string") {
             wordTsvByLevel[coverageLevel] = currentWordTsvByLevel[coverageLevel];
             continue;
@@ -135,7 +135,7 @@ function formatWordDeckReadyReport(summary, doctorReport) {
                 `- N${level} reading coverage: ${coveredPercent}% (${audit.coveredReadings}/${audit.totalReadings})`,
                 ...(audit.coverageLabel ? [`  coverage counted from decks: ${audit.coverageLabel}`] : []),
                 ...(typeof audit.priorLevelCoveredReadings === "number"
-                    ? [`  covered by earlier decks: ${audit.priorLevelCoveredReadings}, covered by this deck level: ${audit.currentLevelCoveredReadings || 0}`]
+                    ? [`  covered by earlier decks: ${audit.priorLevelCoveredReadings}, covered by this deck level: ${audit.currentLevelCoveredReadings || 0}${audit.laterLevelCoveredReadings > 0 ? `, covered by harder decks: ${audit.laterLevelCoveredReadings}` : ""}`]
                     : []),
                 `  distinct missing targets: ${audit.distinctGapReadings}, variant-style gaps: ${audit.variantGapReadings}`,
                 ...(audit.policyAudit
@@ -287,6 +287,18 @@ async function main() {
         writeText(filePath, `${result.tsv}\n`);
         currentWordTsvByLevel[level] = result.tsv;
 
+        exports.push({
+            level,
+            filePath,
+            rows: result.rowCount,
+            mediaKanji: result.mediaKanji,
+            mediaRefs: result.mediaRefs,
+            governance: result.governance,
+        });
+    }
+
+    for (const level of levels) {
+        const resultTsv = currentWordTsvByLevel[level];
         const kanjiTsvPath = resolveKanjiTsvPath(config.buildOutDir, level);
         if (fs.existsSync(kanjiTsvPath)) {
             const completionReport = buildWordDeckCompletionReport({
@@ -295,13 +307,15 @@ async function main() {
                 jlptWordLevelContract,
                 jlptLevelContract,
                 kanjiTsv: fs.readFileSync(kanjiTsvPath, "utf8"),
-                wordTsv: result.tsv,
+                wordTsv: resultTsv,
                 wordPitchAccentData,
                 coverageWordTsvByLevel: loadCoverageWordTsvByLevel({
                     level,
                     outDir: buildPaths.root,
                     currentWordTsvByLevel,
+                    coverageLevels: levels,
                 }),
+                coverageLevels: levels,
             });
             readingCoverageAuditByLevel[`N${level}`] = completionReport.readingCoverage;
             readingGapTriageByLevel[`N${level}`] = completionReport.triage;
@@ -314,7 +328,7 @@ async function main() {
         }
         if (audioSourcePolicy.releaseAudio.wordDeckAudioEnabled) {
             const wordAudioReport = await buildWordAudioReviewReport({
-                wordTsv: result.tsv,
+                wordTsv: resultTsv,
                 audioSourcePolicy,
                 audioService,
                 mediaRootDir: config.mediaRootDir,
@@ -326,15 +340,6 @@ async function main() {
                     : 0,
             };
         }
-
-        exports.push({
-            level,
-            filePath,
-            rows: result.rowCount,
-            mediaKanji: result.mediaKanji,
-            mediaRefs: result.mediaRefs,
-            governance: result.governance,
-        });
     }
 
     const deckPackage = await buildDeckPackage({

@@ -332,6 +332,11 @@ function buildWordReadingCoverageReport({ kanjiRows, wordRows, levelLabel = 'N5'
         || entry.deckExamples.some((example) => example.deckLevel === targetLevel)
       )
   )).length;
+  const laterLevelCoveredReadings = allReadings.filter((entry) => (
+    entry.status === 'covered'
+      && Number.isInteger(targetLevel)
+      && entry.deckExamples.some((example) => Number.isInteger(example.deckLevel) && example.deckLevel < targetLevel)
+  )).length;
   const coverageLevels = [...new Set(wordDeckIndex
     .map((entry) => entry.deckLevel)
     .filter((value) => Number.isInteger(value))
@@ -348,6 +353,7 @@ function buildWordReadingCoverageReport({ kanjiRows, wordRows, levelLabel = 'N5'
     ...sourceSummary,
     priorLevelCoveredReadings,
     currentLevelCoveredReadings,
+    laterLevelCoveredReadings,
     missingWordCardReadings: allReadings.filter((entry) => entry.status === 'missing_word_card').length,
     missingExampleReadings: allReadings.filter((entry) => entry.status === 'missing_example').length,
     variantGapReadings: allReadings.filter((entry) => entry.status !== 'covered' && entry.gapKind === 'variant').length,
@@ -480,6 +486,9 @@ function formatWordReadingCoverageReport(report, { maxKanji = 50 } = {}) {
   if (typeof report.summary.priorLevelCoveredReadings === 'number') {
     lines.push(`  - Covered by earlier decks: ${report.summary.priorLevelCoveredReadings}`);
     lines.push(`  - Covered by this deck level: ${report.summary.currentLevelCoveredReadings}`);
+    if (report.summary.laterLevelCoveredReadings > 0) {
+      lines.push(`  - Covered by harder decks: ${report.summary.laterLevelCoveredReadings}`);
+    }
   }
   lines.push(`Curated example exists but missing from word deck: ${report.summary.missingWordCardReadings}`);
   lines.push(`No curated example yet: ${report.summary.missingExampleReadings}`);

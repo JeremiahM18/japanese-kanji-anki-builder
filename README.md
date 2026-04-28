@@ -18,22 +18,17 @@ The repository produces deterministic TSV exports and optional `.apkg` packages,
 ```bash
 npm install
 npm run doctor
-npm run doctor:voicevox
-npm run deck:readiness
 npm run corpus:init
 npm run curated:init
 npm run words:init
 npm run media:init
-npm run deck:preview -- --level=5 --limit=5
 npm run deck:ready -- --levels=5
-npm run deck:apkg -- --levels=5
 npm run deck:words:ready -- --levels=5
-npm run deck:words:apkg -- --levels=5
 ```
 
 Kanji deck readiness requires governed audio and complete exported media fields. A level with missing exact primary-reading audio must not be treated as ready even if the managed manifest inventory reports audio coverage.
 
-Native `.apkg` commands require the Python packaging toolchain. If packaging is blocked on a workstation, use the `deck:ready` output and package directory for review, and run `.apkg` packaging in a supported environment before release.
+Use the workflow sections below for preview, `.apkg`, media, audio, and release commands. Native `.apkg` commands require the Python packaging toolchain. If packaging is blocked on a workstation, use the readiness output and package directory for review, and run `.apkg` packaging in a supported environment before release.
 
 ## Source Of Truth
 
@@ -295,7 +290,7 @@ Repository governance:
 - [.github/CODEOWNERS](.github/CODEOWNERS)
 - [CLAUDE.md](CLAUDE.md)
 
-## Common Commands
+## Command Reference
 
 | Command | Purpose |
 | --- | --- |

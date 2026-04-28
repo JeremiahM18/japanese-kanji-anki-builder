@@ -171,6 +171,10 @@ test("evaluateGoldenWordReviewSet validates word cards and breakdown content", (
                 word: "今日",
                 reading: "きょう",
                 meaning: "today",
+                jlptLevel: "JLPT N5",
+                coverageRole: "JLPT core + reading coverage",
+                focusKanji: "今、日",
+                coversReading: "今: いま ／ 日: ひ",
                 kanjiBreakdown: "今 （いま） ／ now ... 日 （ひ） ／ day / sun",
                 exampleSentence: "今日は図書館へ行きます。",
                 notes: "",
@@ -181,6 +185,10 @@ test("evaluateGoldenWordReviewSet validates word cards and breakdown content", (
                 word: "今日",
                 readingIncludes: ["きょう"],
                 meaningIncludes: ["today"],
+                jlptLevelIncludes: ["JLPT N5"],
+                coverageRoleIncludes: ["JLPT core"],
+                focusIncludes: ["今", "日"],
+                coversReadingIncludes: ["今: いま", "日: ひ"],
                 breakdownIncludes: ["今 （いま）", "日 （ひ）"],
                 exampleIncludes: ["図書館へ行きます"],
             },
@@ -191,6 +199,77 @@ test("evaluateGoldenWordReviewSet validates word cards and breakdown content", (
     assert.equal(report.passedCount, 1);
 });
 
+test("evaluateGoldenWordReviewSet can require every generated word to have a golden expectation", () => {
+    const report = evaluateGoldenWordReviewSet({
+        rows: [
+            {
+                word: "今日",
+                reading: "きょう",
+                meaning: "today",
+                jlptLevel: "JLPT N5",
+                coverageRole: "JLPT core + reading coverage",
+                focusKanji: "今、日",
+                coversReading: "今: いま ／ 日: ひ",
+                kanjiBreakdown: "今 （いま） ／ now ... 日 （ひ） ／ day / sun",
+                exampleSentence: "今日は図書館へ行きます。",
+                notes: "",
+            },
+            {
+                word: "明日",
+                reading: "あした",
+                meaning: "tomorrow",
+                jlptLevel: "JLPT N5",
+                coverageRole: "JLPT core + reading coverage",
+                focusKanji: "明、日",
+                coversReading: "明: あ ／ 日: ひ",
+                kanjiBreakdown: "明 （あ） ／ bright ... 日 （ひ） ／ day / sun",
+                exampleSentence: "明日学校へ行きます。",
+                notes: "",
+            },
+        ],
+        expectations: [
+            {
+                word: "今日",
+                readingIncludes: ["きょう"],
+            },
+        ],
+        requireAllRows: true,
+    });
+
+    assert.equal(report.passed, false);
+    assert.deepEqual(report.missingExpectationWords, ["明日"]);
+    assert.match(formatGoldenReviewReport(report), /missing expectations for generated words: 明日/);
+});
+
+test("evaluateGoldenWordReviewSet reports duplicate and stale word expectations", () => {
+    const report = evaluateGoldenWordReviewSet({
+        rows: [
+            {
+                word: "今日",
+                reading: "きょう",
+                meaning: "today",
+                jlptLevel: "JLPT N5",
+                coverageRole: "JLPT core + reading coverage",
+                focusKanji: "今、日",
+                coversReading: "今: いま ／ 日: ひ",
+                kanjiBreakdown: "今 （いま） ／ now ... 日 （ひ） ／ day / sun",
+                exampleSentence: "今日は図書館へ行きます。",
+                notes: "",
+            },
+        ],
+        expectations: [
+            { word: "今日", readingIncludes: ["きょう"] },
+            { word: "今日", readingIncludes: ["きょう"] },
+            { word: "昨日", readingIncludes: ["きのう"] },
+        ],
+        requireAllRows: true,
+    });
+
+    assert.equal(report.passed, false);
+    assert.deepEqual(report.duplicateExpectationWords, ["今日"]);
+    assert.deepEqual(report.extraExpectationWords, ["昨日"]);
+});
+
 test("evaluateGoldenWordReviewSet ignores spacing after reading labels in breakdown checks", () => {
     const report = evaluateGoldenWordReviewSet({
         rows: [
@@ -198,6 +277,10 @@ test("evaluateGoldenWordReviewSet ignores spacing after reading labels in breakd
                 word: "休み",
                 reading: "やすみ",
                 meaning: "holiday / day off",
+                jlptLevel: "JLPT N5",
+                coverageRole: "JLPT core + reading coverage",
+                focusKanji: "休",
+                coversReading: "休: やすみ",
                 kanjiBreakdown: "休み （やすみ） ／ holiday / day off ... <span class=\"kanji-reading-label\">On:</span> キュウ",
                 exampleSentence: "日曜日は休みです。",
                 notes: "",

@@ -96,7 +96,7 @@ async function main() {
         includeInferred: false,
     });
     const rows = parseWordTsv(result.tsv);
-    const report = evaluateGoldenWordReviewSet({ rows, expectations });
+    const report = evaluateGoldenWordReviewSet({ rows, expectations, requireAllRows: true });
 
     if (options.json) {
         console.log(JSON.stringify({ report, rows }, null, 2));

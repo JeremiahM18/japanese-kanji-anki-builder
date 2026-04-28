@@ -123,12 +123,36 @@ function evaluateWordExpectation(row, expectation) {
     if (!normalizeText(row.exampleSentence)) {
         failures.push("example sentence is empty");
     }
+    if (!normalizeText(row.jlptLevel)) {
+        failures.push("JLPT level is empty");
+    }
+    if (!normalizeText(row.coverageRole)) {
+        failures.push("coverage role is empty");
+    }
+    if (!normalizeText(row.focusKanji)) {
+        failures.push("focus kanji is empty");
+    }
+    if (!normalizeText(row.coversReading)) {
+        failures.push("covered reading is empty");
+    }
 
     if (Array.isArray(expectation.readingIncludes) && !includesAll(row.reading, expectation.readingIncludes)) {
         failures.push(`reading did not include: ${expectation.readingIncludes.join(", ")}`);
     }
     if (Array.isArray(expectation.meaningIncludes) && !includesAll(row.meaning, expectation.meaningIncludes)) {
         failures.push(`meaning did not include: ${expectation.meaningIncludes.join(", ")}`);
+    }
+    if (Array.isArray(expectation.jlptLevelIncludes) && !includesAll(row.jlptLevel, expectation.jlptLevelIncludes)) {
+        failures.push(`JLPT level did not include: ${expectation.jlptLevelIncludes.join(", ")}`);
+    }
+    if (Array.isArray(expectation.coverageRoleIncludes) && !includesAll(row.coverageRole, expectation.coverageRoleIncludes)) {
+        failures.push(`coverage role did not include: ${expectation.coverageRoleIncludes.join(", ")}`);
+    }
+    if (Array.isArray(expectation.focusIncludes) && !includesAll(row.focusKanji, expectation.focusIncludes)) {
+        failures.push(`focus kanji did not include: ${expectation.focusIncludes.join(", ")}`);
+    }
+    if (Array.isArray(expectation.coversReadingIncludes) && !includesAll(row.coversReading, expectation.coversReadingIncludes)) {
+        failures.push(`covered reading did not include: ${expectation.coversReadingIncludes.join(", ")}`);
     }
     if (Array.isArray(expectation.breakdownIncludes) && !includesAll(row.kanjiBreakdown, expectation.breakdownIncludes)) {
         failures.push(`breakdown did not include: ${expectation.breakdownIncludes.join(", ")}`);
@@ -148,6 +172,20 @@ function evaluateWordExpectation(row, expectation) {
     };
 }
 
+function findDuplicateValues(values = []) {
+    const seen = new Set();
+    const duplicates = new Set();
+
+    for (const value of values) {
+        if (seen.has(value)) {
+            duplicates.add(value);
+        }
+        seen.add(value);
+    }
+
+    return [...duplicates].sort();
+}
+
 function evaluateGoldenReviewSet({ cards = [], expectations = [] } = {}) {
     const cardsByKanji = new Map((Array.isArray(cards) ? cards : []).map((card) => [card.kanji, card]));
     const results = (Array.isArray(expectations) ? expectations : []).map((expectation) => evaluateExpectation(cardsByKanji.get(expectation.kanji), expectation));
@@ -162,16 +200,40 @@ function evaluateGoldenReviewSet({ cards = [], expectations = [] } = {}) {
     };
 }
 
-function evaluateGoldenWordReviewSet({ rows = [], expectations = [] } = {}) {
+function evaluateGoldenWordReviewSet({ rows = [], expectations = [], requireAllRows = false } = {}) {
     const rowsByWord = new Map((Array.isArray(rows) ? rows : []).map((row) => [row.word, row]));
     const results = (Array.isArray(expectations) ? expectations : []).map((expectation) => evaluateWordExpectation(rowsByWord.get(expectation.word), expectation));
     const passedCount = results.filter((result) => result.passed).length;
+    const expectationWords = (Array.isArray(expectations) ? expectations : []).map((expectation) => expectation.word);
+    const duplicateExpectationWords = findDuplicateValues(expectationWords);
+    const rowWords = (Array.isArray(rows) ? rows : []).map((row) => row.word);
+    const rowWordSet = new Set(rowWords);
+    const expectationWordSet = new Set(expectationWords);
+    const missingExpectationWords = requireAllRows
+        ? rowWords.filter((word) => !expectationWordSet.has(word)).sort()
+        : [];
+    const extraExpectationWords = expectationWords.filter((word) => !rowWordSet.has(word)).sort();
+    const coverageFailures = [];
+
+    if (duplicateExpectationWords.length > 0) {
+        coverageFailures.push(`duplicate expectations: ${duplicateExpectationWords.join(", ")}`);
+    }
+    if (missingExpectationWords.length > 0) {
+        coverageFailures.push(`missing expectations for generated words: ${missingExpectationWords.join(", ")}`);
+    }
+    if (extraExpectationWords.length > 0) {
+        coverageFailures.push(`expectations for missing generated words: ${extraExpectationWords.join(", ")}`);
+    }
 
     return {
         totalCards: results.length,
         passedCount,
         failedCount: results.length - passedCount,
-        passed: results.length > 0 && passedCount === results.length,
+        passed: results.length > 0 && passedCount === results.length && coverageFailures.length === 0,
+        coverageFailures,
+        missingExpectationWords,
+        extraExpectationWords,
+        duplicateExpectationWords,
         results,
     };
 }
@@ -184,6 +246,14 @@ function formatGoldenReviewReport(report, { title = "Japanese Kanji Builder Gold
     lines.push(`Passed: ${report.passedCount}`);
     lines.push(`Failed: ${report.failedCount}`);
     lines.push(`Overall result: ${report.passed ? "passing" : "failing"}`);
+
+    if (Array.isArray(report.coverageFailures) && report.coverageFailures.length > 0) {
+        lines.push("");
+        lines.push("Coverage failures:");
+        for (const failure of report.coverageFailures) {
+            lines.push(`- ${failure}`);
+        }
+    }
 
     for (const result of report.results || []) {
         const label = result.kanji || result.word || "entry";

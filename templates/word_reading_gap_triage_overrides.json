@@ -286,6 +286,476 @@
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "転げる is redundant with stronger N4 motion words such as 転ぶ/転がる and should not be kept just for coverage."
+    },
+    "発|kun|あばく": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "発く is a rare spelling for あばく; the useful learner word is 暴く, so do not add an N4 発 card for this reading."
+    },
+    "飲|on|おん": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "No learner-friendly N4 word uses 飲 as おん; useful 飲 vocabulary is already covered through のむ/のみ and 飲料 as いん."
+    },
+    "夏|on|が": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "夏 as が appears in specialist or seasonal compounds, not useful N4 vocabulary."
+    },
+    "花|on|け": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "花 as け is too marginal for N4; keep useful 花 readings in learner-facing words such as 花 and 花見."
+    },
+    "画|on|え": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "画 as え should not be forced through compounds like 映画; the learner-facing word for picture is 絵."
+    },
+    "画|on|かい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "No common N4 support word cleanly teaches 画 -> かい; keep stronger 画 coverage through 映画, 画家, and 計画."
+    },
+    "楽|on|ごう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "楽 -> ごう is not useful N4 vocabulary; keep N4 focused on 楽しい, 楽しむ, 楽器, and 気楽."
+    },
+    "究|on|く": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "究 -> く is not a learner-friendly N4 target; useful coverage is already through 研究 and 究める."
+    },
+    "近|on|こん": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "近 -> こん is not useful enough for N4 compared with 近い, 近所, 最近, and 近道."
+    },
+    "公|on|く": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "公 -> く does not have a clean learner-facing N4 support word; keep 公 coverage through 公園, 公立, and おおやけ."
+    },
+    "工|on|ぐ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "工 -> ぐ is marginal for N4; 工場 and 工夫 already cover useful learner vocabulary."
+    },
+    "事|on|ず": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "事 -> ず is low-value for N4; useful 事 coverage is こと and じ in 事情."
+    },
+    "主|on|す": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "主 -> す is not a useful N4 support target; keep learner-facing 主 coverage through 主人, 主に, and 持ち主."
+    },
+    "習|on|じゅ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "習 -> じゅ is not useful enough for N4; core vocabulary already covers 習う and 練習."
+    },
+    "住|on|ちゅう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "住 -> ちゅう is too marginal for N4; useful 住 coverage is すむ, 住所, 住民, and 住まい."
+    },
+    "住|on|ぢゅう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "住 -> ぢゅう is historical/variant-style and should not drive an N4 card."
+    },
+    "場|on|ちょう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "場 -> ちょう has no useful N4 support word; 場所 and 会場 are the learner-facing targets."
+    },
+    "着|on|じゃく": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "着 -> じゃく appears in higher-level/formal compounds and should not be forced into N4."
+    },
+    "発|on|ほつ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "発 -> ほつ is better caught through higher-level compounds; N4 should keep 発 focused on 出発 and 発つ."
+    },
+    "病|on|へい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "病 -> へい belongs to higher-level words such as 疾病, not N4 learner vocabulary."
+    },
+    "品|on|ほん": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "品 -> ほん is not a useful N4 target; keep 品 through しな, 商品, and 品切れ."
+    },
+    "歩|on|ふ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "歩 -> ふ is not a clean N4 support target; useful 歩 vocabulary is 歩く and higher-level compounds can handle other readings."
+    },
+    "忙|on|もう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "忙 -> もう has no useful N4 learner word; 忙しい and 多忙 cover the practical surface."
+    },
+    "野|on|しょ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "野 -> しょ is not useful N4 vocabulary; keep 野 focused on 野菜 and 野原."
+    },
+    "立|on|りっとる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "The liter-related reading is not a useful kanji-reading support target for the N4 word deck."
+    },
+    "力|on|りい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "力 -> りい is not learner-friendly N4 vocabulary; keep useful 力 coverage through ちから, りき, and りょく."
+    },
+    "悪|kun|ああ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "悪 -> ああ is not a practical N4 word-deck target."
+    },
+    "悪|kun|あし": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "悪し is literary/formal compared with useful N4 悪い and 悪口."
+    },
+    "館|kun|たて": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "館 -> たて is not useful N4 vocabulary; leave 館 covered through 図書館, 映画館, and 館内."
+    },
+    "起|kun|たつ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "起 -> たつ is not a practical N4 support target; useful 起 vocabulary is 起きる, 起こる, 起こす, and 起立."
+    },
+    "姉|kun|はは": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "姉 -> はは is not learner-friendly N4 vocabulary; keep 姉 focused on あね and 姉妹."
+    },
+    "止|kun|さす": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "止 -> さす is not useful enough for N4 and risks confusion with 差す/刺す."
+    },
+    "質|kun|もと": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "質 -> もと is not practical N4 vocabulary; keep 質 covered through 質問 and 質屋."
+    },
+    "秋|kun|とき": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "秋 -> とき is a literary/seasonal reading and should not drive an N4 word card."
+    },
+    "終|kun|つい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "終 -> つい is better handled as kana/adverbial usage, not a useful N4 kanji support word."
+    },
+    "寝|kun|いぬ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "寝 -> いぬ is archaic and not suitable for N4; keep 寝 covered through 寝る, 寝室, 寝坊, and 寝かす."
+    },
+    "図|kun|え": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "図 -> え is not a clean N4 target; the learner-facing word for picture is 絵, while 図 is covered through 地図 and 図書館."
+    },
+    "台|kun|われ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "台 -> われ is not useful N4 vocabulary; keep 台 coverage through 台, 台所, and 台風."
+    },
+    "注|kun|さす": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "注 -> さす is not a useful N4 support target and overlaps with more common 差す/指す/刺す surfaces."
+    },
+    "度|kun|たい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "度 -> たい is not practical N4 vocabulary; keep 度 covered through 今度, 支度, 法度, and 度々."
+    },
+    "道|kun|いう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "道 -> いう is not useful N4 vocabulary; keep 道 covered through みち, 道具, 神道, and related common words."
+    },
+    "肉|kun|しし": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "肉 -> しし is old/literary and should not be an N4 word-deck target."
+    },
+    "文|kun|あや": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "文 -> あや is literary compared with useful N4 文/作文/英文 coverage."
+    },
+    "悪|kun|にくむ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Do not teach にくむ through 悪; the useful modern word is 憎む, while N4 悪 coverage stays with 悪い and 悪口."
+    },
+    "医|kun|くすし": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "医 -> くすし is archaic and not useful for N4; 医者 covers the practical word surface."
+    },
+    "英|kun|はなぶさ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "英 -> はなぶさ is name/literary-like and not N4 learner vocabulary; keep 英 through 英文 and English-related words."
+    },
+    "画|kun|えがく": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "画く is an uncommon spelling for えがく compared with 描く; do not add it as N4 support."
+    },
+    "画|kun|かぎる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "画 -> かぎる is too marginal for N4 and should not drive support-card creation."
+    },
+    "画|kun|はかる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "画 -> はかる is not a useful N4 word target; keep はかる covered by stronger kanji/word surfaces."
+    },
+    "会|kun|あつまる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Do not teach あつまる through 会; the useful modern word is 集まる, already covered in N4."
+    },
+    "楽|kun|このむ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "楽 -> このむ is not useful N4 vocabulary; keep 楽 focused on 楽しい, 楽しむ, 楽器, and 気楽."
+    },
+    "館|kun|やかた": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "館 -> やかた is not useful N4 vocabulary compared with 図書館, 映画館, and 館内."
+    },
+    "帰|kun|おくる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "帰 -> おくる is not a useful N4 target; keep 帰 through 帰る, 帰す, 帰宅, and 帰国."
+    },
+    "帰|kun|とつぐ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "帰 -> とつぐ is specialized and should not be introduced as an N4 support card."
+    },
+    "局|kun|つぼね": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "局 -> つぼね is historical/specialized; keep 局 covered through 郵便局."
+    },
+    "験|kun|あかし": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "験 -> あかし is not useful enough for N4; avoid forcing rare spellings for reading coverage."
+    },
+    "験|kun|しるし": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "験 -> しるし is not a practical N4 learner word; keep 験 coverage through stronger later vocabulary."
+    },
+    "験|kun|ためし": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "験 -> ためし is not a useful N4 support card; 試し/試す carry the modern learner-facing surface."
+    },
+    "験|kun|ためす": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "験 -> ためす is not a useful N4 support card; 試す is already the learner-facing word."
+    },
+    "使|kun|づかい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "使 -> づかい only appears cleanly in compound suffix-style words and is not useful enough to force into N4; keep 使 through 使う and 使い方."
+    },
+    "思|kun|おぼす": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "思す is honorific/literary and not N4 learner vocabulary; 思う and 思い出す carry the practical word surface."
+    },
+    "止|kun|とどめる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "止める as とどめる is not a useful N4 target compared with 止まる, 止める, 中止, and 通行止め."
+    },
+    "事|kun|つかう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "事 -> つかう is historical/specialized and would confuse learners with the useful modern word 使う."
+    },
+    "事|kun|つかえる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "事 -> つかえる is not practical N4 vocabulary; do not add it over useful 事 coverage through こと and 事情."
+    },
+    "質|kun|ただす": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "質す is a formal/rare spelling for ただす and not learner-friendly N4 vocabulary; 質 stays covered through 質問 and 質屋."
+    },
+    "質|kun|わりふ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "質 -> わりふ is historical and not useful for the N4 word deck."
+    },
+    "終|kun|ついに": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "終に is an uncommon kanji spelling for ついに; the useful learner-facing form is kana, while 終 is covered through 終わる and 終える."
+    },
+    "住|kun|すまう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "住まう is more literary/formal than N4 needs; practical 住 coverage is 住む, 住所, 住民, and 住まい."
+    },
+    "寝|kun|みたまや": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "寝 -> みたまや is historical/specialized and not appropriate N4 vocabulary."
+    },
+    "寝|kun|やめる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "寝 -> やめる is not a practical N4 word target; do not confuse it with useful やめる surfaces such as 止める/辞める."
+    },
+    "図|kun|はかる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "図る is useful later/formal vocabulary but not necessary for N4; keep 図 focused on 地図 and 図書館."
+    },
+    "多|kun|まさに": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "多 -> まさに is not a useful N4 support target; 多 should stay anchored to 多い and common compounds."
+    },
+    "多|kun|まさる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "多 -> まさる is not useful N4 vocabulary and should not be forced for reading coverage."
+    },
+    "体|kun|かたち": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "体 -> かたち is an alternate/literary surface; N4 learners should meet 形 for かたち and 体 through からだ/たい."
+    },
+    "台|kun|うてな": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "台 -> うてな is archaic/literary and not N4 learner vocabulary."
+    },
+    "台|kun|つかさ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "台 -> つかさ is historical/name-like and not useful for the N4 word deck."
+    },
+    "転|kun|うつる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "転る/転つる is not the useful modern learner surface for うつる; do not add it over 移る/映る-style vocabulary."
+    },
+    "転|kun|くるめく": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "転 -> くるめく is obscure and not useful N4 vocabulary; keep 転 with 転ぶ, 転がる, 転がす, and 自転車."
+    },
+    "転|kun|まろぶ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "転ぶ as まろぶ is archaic; N4 should keep the modern reading ころぶ."
+    },
+    "発|kun|おこる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "発る as おこる is not useful N4 vocabulary; learners need 起こる/起きる instead."
+    },
+    "発|kun|つかわす": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "発 -> つかわす is specialized and not useful for N4; do not confuse it with 使う/遣わす."
+    },
+    "発|kun|はなつ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "発つ as はなつ is not the learner-facing spelling for はなつ; 放つ can be handled later if useful."
+    },
+    "閉|kun|たてる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "閉てる is old/rare for たてる; N4 should keep 閉 through 閉める and 閉まる."
+    },
+    "別|kun|わける": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "別ける is a less useful spelling than 分ける for わける; keep N4 別 anchored to 別, 別れる, and 特別."
+    },
+    "勉|kun|つとめる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "勉める is uncommon/formal compared with 勤める/努める; 勉 should stay focused on 勉強."
+    },
+    "忙|kun|おそれる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "忙 -> おそれる is not useful N4 vocabulary and would conflict with stronger 恐れる-style vocabulary."
+    },
+    "忙|kun|せわしい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "忙しい as せわしい is a lower-value alternate reading for N4; keep 忙 anchored to 忙しい as いそがしい and 多忙."
+    },
+    "明|kun|あからむ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "明らむ is uncommon and not useful N4 vocabulary; stronger 明 coverage already exists through 明るい, 明ける, 明かす, 明らか, and 説明."
+    },
+    "悪|kun|いずくに": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "悪 -> いずくに is classical/obsolete and should not be an N4 word-deck target."
+    },
+    "画|kun|はかりごと": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "画 -> はかりごと is too literary/specialized for N4; do not add it over useful 画 vocabulary such as 映画, 画家, and 計画."
+    },
+    "思|kun|おもえらく": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "思えらく is classical/literary and not useful N4 vocabulary."
+    },
+    "自|kun|おのずから": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "自ずから is formal/literary and not necessary for N4; keep 自 through 自転車, 自由, 自然, and 自ら."
+    },
+    "悪|kun|いずくんぞ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "悪 -> いずくんぞ is classical/obsolete and not a useful learner-facing N4 word."
+    },
+    "忙|kun|うれえるさま": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "忙 -> うれえるさま is not a modern learner-facing N4 word target."
     }
   }
 }

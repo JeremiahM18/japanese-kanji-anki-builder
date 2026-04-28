@@ -4774,6 +4774,7 @@
   "台所|だいどころ": {
     "written": "台所",
     "reading": "だいどころ",
+    "readingBreakdown": "<ruby>台<rt>だい</rt></ruby><ruby>所<rt>どころ</rt></ruby>",
     "meaning": "kitchen",
     "jlpt": 5,
     "tags": [
@@ -4781,6 +4782,18 @@
       "common",
       "n5"
     ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "台",
+        "所"
+      ],
+      "coversReadings": {
+        "台": "だい",
+        "所": "どころ"
+      }
+    },
+    "notes": "Common N5 kitchen word that also covers 台 -> だい and the contextual 所 -> どころ reading while labeling both N4 constituent kanji.",
     "exampleSentence": {
       "japanese": "台所で母が料理を作ります。",
       "reading": "だいどころでははがりょうりをつくります。",

@@ -1398,6 +1398,10 @@ function createWordExportService({
 
             const key = buildWordKey(candidate);
             if (wordCandidates.has(key)) {
+                const existing = wordCandidates.get(key);
+                if (!existing.curatedEntry) {
+                    existing.curatedEntry = curatedEntry;
+                }
                 continue;
             }
 

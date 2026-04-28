@@ -33,6 +33,8 @@ npm run deck:words:apkg -- --levels=5
 
 Kanji deck readiness requires governed audio and complete exported media fields. A level with missing exact primary-reading audio must not be treated as ready even if the managed manifest inventory reports audio coverage.
 
+Native `.apkg` commands require the Python packaging toolchain. If packaging is blocked on a workstation, use the `deck:ready` output and package directory for review, and run `.apkg` packaging in a supported environment before release.
+
 ## Source Of Truth
 
 Tracked contracts define release behavior:
@@ -166,6 +168,7 @@ npm run deck:review:n3
 npm run deck:review:n2
 npm run deck:review:n1
 npm run deck:review:coverage
+npm run deck:review:coverage -- --level=1
 npm run deck:words:review:n5
 ```
 
@@ -195,7 +198,7 @@ Word readiness reports:
 - canonical inventory counts
 - source-only exclusions
 - explicit reading-coverage contract counts
-- cumulative reading coverage
+- selected-level reading coverage
 - active triage backlog
 - deck-policy violations
 - sentence orthography review

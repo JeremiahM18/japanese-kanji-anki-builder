@@ -144,6 +144,9 @@ function formatWordDeckReadyReport(summary, doctorReport) {
                 ...(audit.sentenceOrthographyAudit
                     ? [`  sentence orthography review: ${audit.sentenceOrthographyAudit.suspiciousKanaOnlyCount} suspicious kana-only examples`]
                     : []),
+                ...(audit.exampleReadingAlignmentAudit
+                    ? [`  example reading alignment: ${audit.exampleReadingAlignmentAudit.mismatchedExampleReadingCount} mismatches`]
+                    : []),
                 ...(audit.readingBreakdownAudit
                     ? [`  reading breakdown review: ${audit.readingBreakdownAudit.missingBreakdownCount || 0} blanks, ${audit.readingBreakdownAudit.nonRubyBreakdownCount} non-ruby kanji breakdowns`]
                     : []),
@@ -322,6 +325,7 @@ async function main() {
             readingCoverageAuditByLevel[`N${level}`].readiness = completionReport.readiness;
             readingCoverageAuditByLevel[`N${level}`].policyAudit = completionReport.policyAudit;
             readingCoverageAuditByLevel[`N${level}`].sentenceOrthographyAudit = completionReport.sentenceOrthographyAudit;
+            readingCoverageAuditByLevel[`N${level}`].exampleReadingAlignmentAudit = completionReport.exampleReadingAlignmentAudit;
             readingCoverageAuditByLevel[`N${level}`].readingBreakdownAudit = completionReport.readingBreakdownAudit;
             readingCoverageAuditByLevel[`N${level}`].cardBackAudit = completionReport.cardBackAudit;
             pitchAccentReviewByLevel[`N${level}`] = completionReport.pitchAccentAudit;
@@ -410,7 +414,9 @@ async function main() {
             .some((audit) => !audit?.readingBreakdownAudit?.valid);
         const hasCardBackViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
             .some((audit) => audit?.cardBackAudit && !audit.cardBackAudit.valid);
-        if (!hasFullTrueAnimationCoverage || hasPolicyViolations || hasReadingBreakdownViolations || hasCardBackViolations || (options.requireNoActiveTriage && hasActiveTriageBacklog)) {
+        const hasExampleReadingAlignmentViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
+            .some((audit) => audit?.exampleReadingAlignmentAudit && !audit.exampleReadingAlignmentAudit.valid);
+        if (!hasFullTrueAnimationCoverage || hasPolicyViolations || hasReadingBreakdownViolations || hasCardBackViolations || hasExampleReadingAlignmentViolations || (options.requireNoActiveTriage && hasActiveTriageBacklog)) {
             process.exitCode = 1;
         }
         return;
@@ -425,7 +431,9 @@ async function main() {
         .some((audit) => !audit?.readingBreakdownAudit?.valid);
     const hasCardBackViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
         .some((audit) => audit?.cardBackAudit && !audit.cardBackAudit.valid);
-    if (!hasFullTrueAnimationCoverage || hasPolicyViolations || hasReadingBreakdownViolations || hasCardBackViolations || (options.requireNoActiveTriage && hasActiveTriageBacklog)) {
+    const hasExampleReadingAlignmentViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
+        .some((audit) => audit?.exampleReadingAlignmentAudit && !audit.exampleReadingAlignmentAudit.valid);
+    if (!hasFullTrueAnimationCoverage || hasPolicyViolations || hasReadingBreakdownViolations || hasCardBackViolations || hasExampleReadingAlignmentViolations || (options.requireNoActiveTriage && hasActiveTriageBacklog)) {
         process.exitCode = 1;
     }
 }

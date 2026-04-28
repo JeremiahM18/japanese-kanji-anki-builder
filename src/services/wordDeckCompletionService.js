@@ -22,6 +22,13 @@ function extractExampleSentenceJapanese(exampleSentence) {
         .filter(Boolean)[0] || "";
 }
 
+function extractExampleSentenceReading(exampleSentence) {
+    return String(exampleSentence || "")
+        .split(" ／ ")
+        .map((part) => part.trim())
+        .filter(Boolean)[1] || "";
+}
+
 function normalizeKanaSearchText(value) {
     return katakanaToHiragana(String(value || ""))
         .replace(/[^\p{Script=Hiragana}ー]/gu, "");
@@ -63,6 +70,46 @@ function buildWordDeckSentenceOrthographyAudit({ wordRows }) {
 
     return {
         suspiciousKanaOnlyCount: flaggedRows.length,
+        flaggedRows,
+    };
+}
+
+function buildWordDeckExampleReadingAlignmentAudit({ wordRows }) {
+    const flaggedRows = [];
+
+    for (const row of Array.isArray(wordRows) ? wordRows : []) {
+        const word = String(row?.Word || row?.word || "").trim();
+        const reading = String(row?.Reading || row?.reading || "").trim();
+        const exampleSentence = row?.ExampleSentence || row?.exampleSentence || "";
+        const japaneseSentence = extractExampleSentenceJapanese(exampleSentence);
+        const readingSentence = extractExampleSentenceReading(exampleSentence);
+
+        if (!word || !reading || !japaneseSentence || !readingSentence) {
+            continue;
+        }
+
+        if (!japaneseSentence.includes(word)) {
+            continue;
+        }
+
+        const normalizedReading = normalizeKanaSearchText(reading);
+        const normalizedReadingSentence = normalizeKanaSearchText(readingSentence);
+
+        if (!normalizedReading || normalizedReadingSentence.includes(normalizedReading)) {
+            continue;
+        }
+
+        flaggedRows.push({
+            word,
+            reading,
+            sentence: japaneseSentence,
+            sentenceReading: readingSentence,
+        });
+    }
+
+    return {
+        valid: flaggedRows.length === 0,
+        mismatchedExampleReadingCount: flaggedRows.length,
         flaggedRows,
     };
 }
@@ -434,6 +481,9 @@ function buildWordDeckCompletionReport({
     const sentenceOrthographyAudit = buildWordDeckSentenceOrthographyAudit({
         wordRows,
     });
+    const exampleReadingAlignmentAudit = buildWordDeckExampleReadingAlignmentAudit({
+        wordRows,
+    });
     const pitchAccentAudit = buildWordDeckPitchAccentAudit({
         wordRows,
         starterEntries,
@@ -452,6 +502,7 @@ function buildWordDeckCompletionReport({
         policyAudit,
         readingBreakdownAudit,
         cardBackAudit,
+        exampleReadingAlignmentAudit,
     });
 
     return {
@@ -465,6 +516,7 @@ function buildWordDeckCompletionReport({
         triage: triage.summary,
         policyAudit,
         sentenceOrthographyAudit,
+        exampleReadingAlignmentAudit,
         pitchAccentAudit,
         readingBreakdownAudit,
         cardBackAudit,
@@ -472,7 +524,7 @@ function buildWordDeckCompletionReport({
     };
 }
 
-function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudit, readingBreakdownAudit = null, cardBackAudit = null }) {
+function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudit, readingBreakdownAudit = null, cardBackAudit = null, exampleReadingAlignmentAudit = null }) {
     const hasMissingStarterRows = (inventory?.missingEligibleCount || 0) > 0;
     const hasActiveTriageItems = ((triage?.editorialReviewItems || 0) + (triage?.promoteCuratedExampleItems || 0)) > 0;
     const allOpenItemsDeferred = (triage?.totalItems || 0) > 0
@@ -480,12 +532,13 @@ function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudi
     const hasPolicyViolations = !policyAudit?.valid;
     const hasReadingBreakdownViolations = readingBreakdownAudit ? !readingBreakdownAudit.valid : false;
     const hasCardBackViolations = cardBackAudit ? !cardBackAudit.valid : false;
+    const hasExampleReadingAlignmentViolations = exampleReadingAlignmentAudit ? !exampleReadingAlignmentAudit.valid : false;
     const readingCoveragePercent = (readingCoverage?.totalReadings || 0) > 0
         ? Number((((readingCoverage?.coveredReadings || 0) / readingCoverage.totalReadings) * 100).toFixed(1))
         : 0;
 
     let status = "incomplete";
-    if (!hasMissingStarterRows && !hasActiveTriageItems && !hasPolicyViolations && !hasReadingBreakdownViolations && !hasCardBackViolations) {
+    if (!hasMissingStarterRows && !hasActiveTriageItems && !hasPolicyViolations && !hasReadingBreakdownViolations && !hasCardBackViolations && !hasExampleReadingAlignmentViolations) {
         status = allOpenItemsDeferred ? "ready_with_deferred_variants" : "complete";
     }
 
@@ -496,6 +549,7 @@ function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudi
         hasPolicyViolations,
         hasReadingBreakdownViolations,
         hasCardBackViolations,
+        hasExampleReadingAlignmentViolations,
         allOpenItemsDeferred,
         readingCoveragePercent,
     };
@@ -532,6 +586,7 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         "",
         "Sentence orthography review:",
         `- Suspicious kana-only examples: ${report.sentenceOrthographyAudit.suspiciousKanaOnlyCount}`,
+        `- Example reading mismatches: ${report.exampleReadingAlignmentAudit?.mismatchedExampleReadingCount || 0}`,
         "",
         "Reading breakdown review:",
         `- Rows missing reading breakdowns: ${report.readingBreakdownAudit?.missingBreakdownCount || 0}`,
@@ -575,6 +630,13 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         }
     }
 
+    if ((report.exampleReadingAlignmentAudit?.flaggedRows || []).length > 0) {
+        lines.push("", "Example reading mismatches:");
+        for (const row of report.exampleReadingAlignmentAudit.flaggedRows.slice(0, maxEntries)) {
+            lines.push(`- ${row.word} (${row.reading}) — ${row.sentence} ／ ${row.sentenceReading}`);
+        }
+    }
+
     if ((report.readingBreakdownAudit?.missingRows || []).length > 0) {
         lines.push("", "Rows missing reading breakdowns:");
         for (const row of report.readingBreakdownAudit.missingRows.slice(0, maxEntries)) {
@@ -603,6 +665,7 @@ module.exports = {
     buildWordDeckCardBackAudit,
     buildWordDeckCompletionReport,
     buildWordDeckInventorySummary,
+    buildWordDeckExampleReadingAlignmentAudit,
     buildWordDeckPitchAccentAudit,
     buildWordDeckPolicyAudit,
     buildWordDeckReadingBreakdownAudit,

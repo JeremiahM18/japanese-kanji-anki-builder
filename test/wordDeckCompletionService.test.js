@@ -4,6 +4,7 @@ const assert = require("node:assert/strict");
 const {
     buildWordDeckCardBackAudit,
     buildWordDeckCompletionReport,
+    buildWordDeckExampleReadingAlignmentAudit,
     buildWordDeckInventorySummary,
     buildWordDeckPitchAccentAudit,
     buildWordDeckPolicyAudit,
@@ -364,6 +365,24 @@ test("buildWordDeckReadiness stays incomplete when card back fields are missing"
     assert.equal(report.hasCardBackViolations, true);
 });
 
+test("buildWordDeckReadiness stays incomplete when example readings mismatch the card reading", () => {
+    const report = buildWordDeckReadiness({
+        inventory: { missingEligibleCount: 0 },
+        readingCoverage: { coveredReadings: 1, totalReadings: 1 },
+        triage: { totalItems: 0, editorialReviewItems: 0, promoteCuratedExampleItems: 0, deferVariantItems: 0 },
+        policyAudit: { valid: true },
+        readingBreakdownAudit: { valid: true },
+        cardBackAudit: { valid: true },
+        exampleReadingAlignmentAudit: {
+            valid: false,
+            mismatchedExampleReadingCount: 1,
+        },
+    });
+
+    assert.equal(report.status, "incomplete");
+    assert.equal(report.hasExampleReadingAlignmentViolations, true);
+});
+
 test("buildWordDeckPolicyAudit rejects standalone higher-level cards and missing constituent badges", () => {
     const audit = buildWordDeckPolicyAudit({
         level: 5,
@@ -439,6 +458,48 @@ test("buildWordDeckSentenceOrthographyAudit flags likely kana-only example regre
     assert.equal(audit.suspiciousKanaOnlyCount, 1);
     assert.equal(audit.flaggedRows[0].word, "猫");
     assert.equal(audit.flaggedRows[0].reading, "ねこ");
+});
+
+test("buildWordDeckExampleReadingAlignmentAudit catches mismatched exact word readings", () => {
+    const audit = buildWordDeckExampleReadingAlignmentAudit({
+        wordRows: [
+            {
+                Word: "何",
+                Reading: "なに",
+                ExampleSentence: "これは何ですか。 ／ これはなんですか。 ／ What is this?",
+            },
+            {
+                Word: "何ですか",
+                Reading: "なんですか",
+                ExampleSentence: "これは何ですか。 ／ これはなんですか。 ／ What is this?",
+            },
+            {
+                Word: "食べる",
+                Reading: "たべる",
+                ExampleSentence: "パンを食べます。 ／ パンをたべます。 ／ I eat bread.",
+            },
+        ],
+    });
+
+    assert.equal(audit.valid, false);
+    assert.equal(audit.mismatchedExampleReadingCount, 1);
+    assert.equal(audit.flaggedRows[0].word, "何");
+    assert.equal(audit.flaggedRows[0].sentenceReading, "これはなんですか。");
+});
+
+test("buildWordDeckExampleReadingAlignmentAudit treats preserved katakana loanword readings as aligned", () => {
+    const audit = buildWordDeckExampleReadingAlignmentAudit({
+        wordRows: [
+            {
+                Word: "生ビール",
+                Reading: "なまびーる",
+                ExampleSentence: "父は店で生ビールを飲みました。 ／ ちちはみせでなまビールをのみました。 ／ My father drank draft beer.",
+            },
+        ],
+    });
+
+    assert.equal(audit.valid, true);
+    assert.equal(audit.mismatchedExampleReadingCount, 0);
 });
 
 test("formatWordDeckCompletionReport renders missing rows and source-only exclusions clearly", () => {

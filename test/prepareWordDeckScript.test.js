@@ -43,6 +43,9 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
                     sentenceOrthographyAudit: {
                         suspiciousKanaOnlyCount: 2,
                     },
+                    exampleReadingAlignmentAudit: {
+                        mismatchedExampleReadingCount: 0,
+                    },
                     readingBreakdownAudit: {
                         missingMixedBreakdownCount: 0,
                         nonRubyBreakdownCount: 0,
@@ -125,6 +128,7 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
     assert.match(text, /distinct missing targets: 147, variant-style gaps: 16/);
     assert.match(text, /deck policy: 0 standalone wrong-level cards, 0 missing labels/);
     assert.match(text, /sentence orthography review: 2 suspicious kana-only examples/);
+    assert.match(text, /example reading alignment: 0 mismatches/);
     assert.match(text, /reading breakdown review: 0 blanks, 0 non-ruby kanji breakdowns/);
     assert.match(text, /card back review: 100% \(2500\/2500\) required fields ready, 0 missing/);
     assert.match(text, /card back fields: reading 258\/258, furigana breakdown 258\/258, audio 258\/258/);

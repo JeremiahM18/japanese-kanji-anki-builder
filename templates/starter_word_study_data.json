@@ -150,6 +150,18 @@
       "common",
       "n4"
     ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "安",
+        "心"
+      ],
+      "coversReadings": {
+        "安": "あん",
+        "心": "しん"
+      }
+    },
+    "notes": "Core N4 study word that also covers the 安 -> あん and 心 -> しん readings.",
     "exampleSentence": {
       "japanese": "家族から電話があって安心しました。",
       "reading": "かぞくからでんわがあってあんしんしました。",
@@ -427,6 +439,18 @@
       "common",
       "n5"
     ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "飲",
+        "物"
+      ],
+      "coversReadings": {
+        "飲": "のみ",
+        "物": "もの"
+      }
+    },
+    "notes": "Core N5 study word that also covers the 飲 -> のみ and 物 -> もの readings.",
     "exampleSentence": {
       "japanese": "冷たい飲み物がほしいです。",
       "reading": "つめたいのみものがほしいです。",
@@ -3865,10 +3889,12 @@
     "coverage": {
       "role": "both",
       "focusKanji": [
-        "上"
+        "上",
+        "手"
       ],
       "coversReadings": {
-        "上": "じょう"
+        "上": "じょう",
+        "手": "ず"
       }
     },
     "exampleSentence": {
@@ -7448,7 +7474,7 @@
       "starter",
       "reading-coverage"
     ],
-    "notes": "Reading-coverage support word for the common 名 -> めい pattern.",
+    "notes": "Reading-coverage support word for the common 有 -> ゆう and 名 -> めい readings.",
     "exampleSentence": {
       "japanese": "その店は有名です。",
       "reading": "そのみせはゆうめいです。",
@@ -7457,9 +7483,11 @@
     "coverage": {
       "role": "support",
       "focusKanji": [
+        "有",
         "名"
       ],
       "coversReadings": {
+        "有": "ゆう",
         "名": "めい"
       }
     }
@@ -8454,13 +8482,15 @@
     "coverage": {
       "role": "support",
       "focusKanji": [
+        "台",
         "風"
       ],
       "coversReadings": {
+        "台": "たい",
         "風": "ふう"
       }
     },
-    "notes": "Common N4 support word that covers the 風 -> ふう reading.",
+    "notes": "Common N4 support word that covers the 台 -> たい and 風 -> ふう readings.",
     "exampleSentence": {
       "japanese": "台風の前に窓をしっかり閉めました。",
       "reading": "たいふうのまえにまどをしっかりしめました。",
@@ -8844,13 +8874,15 @@
     "coverage": {
       "role": "support",
       "focusKanji": [
+        "兄",
         "弟"
       ],
       "coversReadings": {
+        "兄": "きょう",
         "弟": "だい"
       }
     },
-    "notes": "Common N4 support word that covers the 弟 -> だい reading.",
+    "notes": "Common N4 support word that covers the 兄 -> きょう and 弟 -> だい readings.",
     "exampleSentence": {
       "japanese": "兄弟で同じ学校に通っています。",
       "reading": "きょうだいでおなじがっこうにかよっています。",
@@ -9736,13 +9768,15 @@
     "coverage": {
       "role": "support",
       "focusKanji": [
-        "姉"
+        "姉",
+        "妹"
       ],
       "coversReadings": {
-        "姉": "し"
+        "姉": "し",
+        "妹": "まい"
       }
     },
-    "notes": "Common N4 support word that covers the 姉 -> し reading.",
+    "notes": "Common N4 support word that covers the 姉 -> し and 妹 -> まい readings.",
     "exampleSentence": {
       "japanese": "あの姉妹は二人とも歌が上手です。",
       "reading": "あのしまいはふたりともうたがじょうずです。",
@@ -9788,13 +9822,15 @@
     "coverage": {
       "role": "support",
       "focusKanji": [
-        "写"
+        "写",
+        "真"
       ],
       "coversReadings": {
-        "写": "しゃ"
+        "写": "しゃ",
+        "真": "しん"
       }
     },
-    "notes": "Common N4 support word that covers the 写 -> しゃ reading.",
+    "notes": "Common N4 support word that covers the 写 -> しゃ and 真 -> しん readings.",
     "exampleSentence": {
       "japanese": "旅行の写真を家族に見せました。",
       "reading": "りょこうのしゃしんをかぞくにみせました。",
@@ -10022,13 +10058,15 @@
     "coverage": {
       "role": "support",
       "focusKanji": [
-        "地"
+        "地",
+        "図"
       ],
       "coversReadings": {
-        "地": "ち"
+        "地": "ち",
+        "図": "ず"
       }
     },
-    "notes": "Common N4 support word that covers the 地 -> ち reading.",
+    "notes": "Common N4 support word that covers the 地 -> ち and 図 -> ず readings.",
     "exampleSentence": {
       "japanese": "地図を見ながら新しい店を探しました。",
       "reading": "ちずをみながらあたらしいみせをさがしました。",
@@ -13960,9 +13998,9 @@
     },
     "notes": "Common N4 support word that covers the 方 -> かた reading.",
     "exampleSentence": {
-      "japanese": "この機械の使い方と直し方を教わりました。",
-      "reading": "このきかいのつかいかたとなおしかたをおそわりました。",
-      "english": "I was taught how to use and fix this machine."
+      "japanese": "先生に勉強の仕方を教わりました。",
+      "reading": "せんせいにべんきょうのしかたをおそわりました。",
+      "english": "I learned how to study from the teacher."
     }
   },
   "勉強中|べんきょうちゅう": {

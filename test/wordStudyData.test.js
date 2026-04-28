@@ -241,6 +241,31 @@ test("tracked starter word data includes the first governed N4 starter entries",
     assert.equal(starterEntries["開く|ひらく"].jlpt, 4);
 });
 
+test("common starter words label all governed constituent readings", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["安心|あんしん", "安", "あん"],
+        ["安心|あんしん", "心", "しん"],
+        ["飲み物|のみもの", "飲", "のみ"],
+        ["飲み物|のみもの", "物", "もの"],
+        ["上手|じょうず", "上", "じょう"],
+        ["上手|じょうず", "手", "ず"],
+        ["有名|ゆうめい", "有", "ゆう"],
+        ["有名|ゆうめい", "名", "めい"],
+        ["台風|たいふう", "台", "たい"],
+        ["台風|たいふう", "風", "ふう"],
+        ["兄弟|きょうだい", "兄", "きょう"],
+        ["兄弟|きょうだい", "弟", "だい"],
+        ["姉妹|しまい", "姉", "し"],
+        ["姉妹|しまい", "妹", "まい"],
+        ["写真|しゃしん", "写", "しゃ"],
+        ["写真|しゃしん", "真", "しん"],
+        ["地図|ちず", "地", "ち"],
+        ["地図|ちず", "図", "ず"],
+    ]);
+});
+
 test("tracked starter word data includes the first promoted N4 completion batch", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

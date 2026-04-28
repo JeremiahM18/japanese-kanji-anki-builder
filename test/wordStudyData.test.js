@@ -14,6 +14,19 @@ const {
 const STARTER_WORD_STUDY_DATA_PATH = path.resolve(process.cwd(), "templates", "starter_word_study_data.json");
 let trackedStarterWordEntriesCache = null;
 
+const N5_STANDALONE_NUMBER_WORDS = [
+    { key: "一|いち", kanji: "一", reading: "いち", meaning: "one" },
+    { key: "二|に", kanji: "二", reading: "に", meaning: "two" },
+    { key: "三|さん", kanji: "三", reading: "さん", meaning: "three" },
+    { key: "四|よん", kanji: "四", reading: "よん", meaning: "four" },
+    { key: "五|ご", kanji: "五", reading: "ご", meaning: "five" },
+    { key: "六|ろく", kanji: "六", reading: "ろく", meaning: "six" },
+    { key: "七|なな", kanji: "七", reading: "なな", meaning: "seven" },
+    { key: "八|はち", kanji: "八", reading: "はち", meaning: "eight" },
+    { key: "九|きゅう", kanji: "九", reading: "きゅう", meaning: "nine" },
+    { key: "十|じゅう", kanji: "十", reading: "じゅう", meaning: "ten" },
+];
+
 function loadTrackedStarterWordEntries() {
     if (!trackedStarterWordEntriesCache) {
         trackedStarterWordEntriesCache = loadWordStudyData({
@@ -41,6 +54,25 @@ function assertReadingBreakdowns(starterEntries, rows) {
         assert.equal(starterEntries[key].readingBreakdown, breakdown);
     }
 }
+
+test("tracked starter word data governs N5 standalone number words as a family", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    for (const { key, kanji, reading, meaning } of N5_STANDALONE_NUMBER_WORDS) {
+        const entry = starterEntries[key];
+
+        assert.equal(entry?.written, kanji);
+        assert.equal(entry?.reading, reading);
+        assert.equal(entry?.meaning, meaning);
+        assert.equal(entry?.jlpt, 5);
+        assert.equal(entry?.coverage?.role, "both");
+        assert.deepEqual(entry?.coverage?.focusKanji, [kanji]);
+        assert.equal(entry?.coverage?.coversReadings?.[kanji], reading);
+        assert.equal(entry?.tags?.includes("core"), true);
+        assert.equal(entry?.tags?.includes("n5"), true);
+        assert.match(entry?.notes || "", /standalone number form/);
+    }
+});
 
 test("buildWordStudyEntryKey uses written and reading", () => {
     assert.equal(buildWordStudyEntryKey({ written: "今日", reading: "きょう" }), "今日|きょう");
@@ -1003,8 +1035,28 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
         ["今月|こんげつ", "今", "こん"],
         ["友人|ゆうじん", "友", "ゆう"],
         ["月曜日|げつようび", "月", "げつ"],
+        ["火曜日|かようび", "火", "か"],
+        ["火曜日|かようび", "日", "び"],
         ["中|なか", "中", "なか"],
         ["下さい|ください", "下", "くださる"],
+        ["外国|がいこく", "外", "がい"],
+        ["外国|がいこく", "国", "こく"],
+        ["金曜日|きんようび", "金", "きん"],
+        ["九時|くじ", "九", "く"],
+        ["高校|こうこう", "高", "こう"],
+        ["七時|しちじ", "七", "しち"],
+        ["食事|しょくじ", "食", "しょく"],
+        ["電車|でんしゃ", "車", "しゃ"],
+        ["電話|でんわ", "話", "わ"],
+        ["土曜日|どようび", "土", "ど"],
+        ["東京|とうきょう", "東", "とう"],
+        ["読書|どくしょ", "読", "どく"],
+        ["読書|どくしょ", "書", "しょ"],
+        ["毎日|まいにち", "日", "にち"],
+        ["木曜日|もくようび", "木", "もく"],
+        ["来年|らいねん", "年", "ねん"],
+        ["一人|ひとり", "人", "り"],
+        ["上着|うわぎ", "上", "うわ"],
     ]);
     assertCoverageRoles(starterEntries, [
         ["有名|ゆうめい", "support"],
@@ -1109,7 +1161,7 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
         ["新聞|しんぶん", "both"],
     ]);
     assertCoverageReadings(starterEntries, [
-        ["新聞|しんぶん", "聞", "もん"],
+        ["新聞|しんぶん", "聞", "ぶん"],
         ["母語|ぼご", "母", "も"],
         ["小川|おがわ", "小", "お"],
         ["小雨|こさめ", "小", "さ"],

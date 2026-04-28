@@ -80,16 +80,16 @@ Word decks:
 | N4 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
 | N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
 | N1 kanji | Golden review started; not ready because exact primary-reading audio is missing from exported cards |
-| N5 word | `ready_with_deferred_variants` |
+| N5 word | Golden review and governance passing; strict readiness blocked on missing standalone-number audio and pitch accents |
 | N4 word | Active completion work |
-| N5 word audio | Governed and reviewable |
+| N5 word audio | Governed and reviewable for existing rows; 9 standalone-number word rows still need governed audio and pitch accent assets |
 | N4 word media | Audio, pitch accent, card-back fields, and looping animations are ready; reading coverage is still incomplete |
 
 Current tracked word inventory:
 
-- N5 canonical word rows: `339`
+- N5 canonical word rows: `348`
 - N5 source-only phrase exclusions: `13`
-- N4 canonical word rows: `364`
+- N4 canonical word rows: `490`
 - N4 cumulative reading coverage: run `npm run deck:words:ready -- --levels=4 --require-no-active-triage` for the live value
 
 Run live commands for current coverage. Do not rely on README numbers for release decisions.

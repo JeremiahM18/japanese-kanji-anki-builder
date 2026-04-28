@@ -5,6 +5,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const { loadAnkiNoteSchema } = require("../src/config/ankiNoteSchema");
+const { loadJlptWordLevelContract } = require("../src/datasets/jlptWordLevelContract");
 const {
     N5_TRACKED_SOURCE_ARTIFACT_SCOPE,
     N5_TRACKED_SOURCE_KANJI_PREFLIGHT_SCOPE,
@@ -109,6 +110,8 @@ test("buildTrackedSourceKanjiPreflight reports N5 kanji source blockers without 
 
 test("buildTrackedSourceWordArtifact builds N5 word TSV without local workspace data", async () => {
     const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "kanji-tracked-source-word-"));
+    const contract = loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json"));
+    const expectedN5Rows = contract.inventoryCounts["5"];
 
     try {
         const report = await buildTrackedSourceWordArtifact({
@@ -117,8 +120,8 @@ test("buildTrackedSourceWordArtifact builds N5 word TSV without local workspace 
 
         assert.equal(report.passed, true);
         assert.equal(report.scope, N5_TRACKED_SOURCE_ARTIFACT_SCOPE);
-        assert.equal(report.word.rowCount, 339);
-        assert.equal(report.word.governance.canonicalRows, 339);
+        assert.equal(report.word.rowCount, expectedN5Rows);
+        assert.equal(report.word.governance.canonicalRows, expectedN5Rows);
         assert.equal(report.word.governance.curatedOnlyRows, 0);
         assert.equal(report.word.governance.inferredOnlyRows, 0);
         assert.equal(report.word.deterministic, true);
@@ -137,11 +140,11 @@ test("formatTrackedSourceArtifactReport states source boundary and exclusions", 
             wordTsvPath: "out/product-readiness/n5-tracked-source/exports/jlpt-n5-words.tsv",
         },
         word: {
-            rowCount: 339,
+            rowCount: 123,
             deterministic: true,
             sha256: "abc",
             governance: {
-                canonicalRows: 339,
+                canonicalRows: 123,
                 curatedOnlyRows: 0,
                 inferredOnlyRows: 0,
             },

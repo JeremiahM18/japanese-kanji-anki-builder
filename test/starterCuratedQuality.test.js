@@ -374,6 +374,7 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["詩"].exampleSentence.english, "I read a short poem aloud.");
     assert.deepEqual(curatedStudyData["瞳"].displayWord, { written: "瞳", pron: "ひとみ" });
     assert.equal(curatedStudyData["謹"].englishMeaning, "be respectful / be humble / reverent");
+    assert.equal(curatedStudyData["吟"].englishMeaning, "recite / examine carefully");
     assert.deepEqual(curatedStudyData["跳"].preferredWords, ["跳ぶ", "跳ねる", "跳躍"]);
     assert.equal(curatedStudyData["軸"].exampleSentence.japanese, "話の軸が最後までぶれなかった。");
     assert.deepEqual(curatedStudyData["穴"].displayWord, { written: "穴", pron: "あな" });

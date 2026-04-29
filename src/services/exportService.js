@@ -226,6 +226,22 @@ function buildBlockedMeaningSet(curatedEntry = null) {
         .filter(Boolean));
 }
 
+function buildBlockedReadingSet(curatedEntry = null) {
+    return new Set((Array.isArray(curatedEntry?.blockedReadings) ? curatedEntry.blockedReadings : [])
+        .map((reading) => normalizeReading(reading))
+        .filter(Boolean));
+}
+
+function filterBlockedReadings(readings, curatedEntry = null) {
+    const blockedReadings = buildBlockedReadingSet(curatedEntry);
+    if (blockedReadings.size === 0) {
+        return readings;
+    }
+
+    return (Array.isArray(readings) ? readings : [])
+        .filter((reading) => !blockedReadings.has(normalizeReading(reading)));
+}
+
 function formatKanjiMeanings({ kanjiInfo, fallbackMeaning = "", curatedEntry = null } = {}) {
     const meaningMap = new Map();
     const blockedMeanings = buildBlockedMeaningSet(curatedEntry);
@@ -588,12 +604,12 @@ function shouldUseLocalJlptEntry({ inferenceEngine, kanji, jlptEntry }) {
     );
 }
 
-function buildInferredRow({ kanji, inferred, kanjiInfo, kradMap, pickMainComponent, mediaFields, kanjiLevelLookup, currentLevel = null }) {
+function buildInferredRow({ kanji, inferred, kanjiInfo, curatedEntry = null, kradMap, pickMainComponent, mediaFields, kanjiLevelLookup, currentLevel = null }) {
     const displayWord = inferred.displayWordText || selectDisplayWord({ kanji, displayWord: inferred.displayWord, bestWord: inferred.bestWord });
     const primaryReading = inferred.primaryReading || selectPrimaryReading(inferred);
     const studyWordKanji = formatStudyWordKanjiLabels(displayWord, kanjiLevelLookup, { currentLevel });
-    const onReading = labelOnReading(kanjiInfo?.on_readings);
-    const kunReading = labelKunReading(kanjiInfo?.kun_readings);
+    const onReading = labelOnReading(filterBlockedReadings(kanjiInfo?.on_readings, curatedEntry));
+    const kunReading = labelKunReading(filterBlockedReadings(kanjiInfo?.kun_readings, curatedEntry));
     const components = kradMap.get(kanji) || [];
     const radical = pickMainComponent(components);
     const exampleSentence = formatExampleSentence(inferred.sentenceCandidates[0]);
@@ -706,6 +722,7 @@ function createExportService({
                 kradMap,
                 pickMainComponent,
                 mediaFields,
+                curatedEntry,
                 kanjiLevelLookup,
                 currentLevel,
             });
@@ -779,8 +796,8 @@ function createExportService({
             audioReading: inferred.primaryReading,
         });
 
-        const onReading = labelOnReading(kanjiInfo?.on_readings);
-        const kunReading = labelKunReading(kanjiInfo?.kun_readings);
+        const onReading = labelOnReading(filterBlockedReadings(kanjiInfo?.on_readings, curatedEntry));
+        const kunReading = labelKunReading(filterBlockedReadings(kanjiInfo?.kun_readings, curatedEntry));
         const displayWordText = inferred.displayWordText;
         const kanjiLevelLookup = buildKanjiLevelLookup({
             jlptOnlyJson,

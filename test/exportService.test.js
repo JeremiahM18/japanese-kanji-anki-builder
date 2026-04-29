@@ -615,6 +615,56 @@ test("buildInferenceForKanji preserves single-kanji words with okurigana as prim
     assert.equal(inference.meaningJP, "see / watch");
 });
 
+test("buildInferenceForKanji filters curated blocked readings from learner-facing labels", async () => {
+    const exportService = createExportService({
+        curatedStudyData: {
+            志: {
+                englishMeaning: "will / aspiration",
+                displayWord: { written: "志す", pron: "こころざす" },
+                blockedReadings: ["シリング"],
+                notes: "志す （こころざす） - to aspire to",
+            },
+        },
+        inferenceEngine: {
+            hasFullyCuratedKanjiEntry() {
+                return true;
+            },
+            inferKanjiStudyData() {
+                return {
+                    displayWord: { written: "志す", pron: "こころざす" },
+                    bestWord: { written: "志す", pron: "こころざす" },
+                    meaningJP: "志す （こころざす） ／ to aspire to",
+                    notes: "志す （こころざす） - to aspire to",
+                    sentenceCandidates: [],
+                };
+            },
+        },
+    });
+
+    const inference = await exportService.buildInferenceForKanji({
+        kanji: "志",
+        jlptEntry: {
+            jlpt: 1,
+            meanings: ["will", "aspiration", "shilling"],
+            on_readings: ["シ"],
+            kun_readings: ["こころざ.す", "こころざし", "シリング"],
+        },
+        kanjiApiClient: {
+            async getKanji() {
+                throw new Error("should use local JLPT data");
+            },
+            async getWords() {
+                throw new Error("should skip word fetch");
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+    });
+
+    assert.equal(inference.kunReading, "こころざ.す、 こころざし");
+    assert.equal(inference.onReading, "シ");
+});
+
 test("buildInferenceForKanji reuses a single shared manifest lookup when available", async () => {
     let manifestCalls = 0;
     const exportService = createExportService({

@@ -33,6 +33,7 @@ test("normalizeCuratedEntry canonicalizes metadata arrays and tags", () => {
         preferredWords: [" 日本 ", "日曜日", "日本"],
         blockedWords: [" 日中 ", "日中"],
         blockedMeanings: [" low-value ", "low-value"],
+        blockedReadings: [" シリング ", "シリング"],
         blockedSentencePhrases: ["rare", " rare "],
         alternativeNotes: [" note-b ", "note-a", "note-b"],
         notes: " curated-note ",
@@ -52,6 +53,7 @@ test("normalizeCuratedEntry canonicalizes metadata arrays and tags", () => {
     assert.deepEqual(result.preferredWords, ["日本", "日曜日"]);
     assert.deepEqual(result.blockedWords, ["日中"]);
     assert.deepEqual(result.blockedMeanings, ["low-value"]);
+    assert.deepEqual(result.blockedReadings, ["シリング"]);
     assert.deepEqual(result.blockedSentencePhrases, ["rare"]);
     assert.deepEqual(result.alternativeNotes, ["note-a", "note-b"]);
     assert.equal(result.exampleSentence.japanese, "日本は島国です。");

@@ -1,8 +1,17 @@
 # Japanese Kanji Anki Builder
 
-Build governed JLPT kanji and word decks for Anki.
+## About
 
-The repository produces deterministic TSV exports and optional `.apkg` packages, backed by tracked contracts, curated starter data, managed media, review benchmarks, and release gates.
+Japanese Kanji Anki Builder is a local Node.js build system for producing Anki-ready JLPT kanji and word decks from governed source data.
+
+It has two separate product surfaces:
+
+- Kanji decks teach individual kanji. The card front is the single target kanji, the back starts from the exported primary reading and learner-facing meaning, and compounds are limited to examples and support notes.
+- Word decks teach vocabulary by `written|reading`. They can include cross-level or outside-JLPT constituent kanji when the word is useful at the deck level, but those constituents must be labeled on the card.
+
+The repository treats deck output as a versioned build artifact rather than ad hoc generated content. Tracked JSON contracts define JLPT inventory, word eligibility, note schemas, media policy, and review expectations. Build scripts generate deterministic TSV exports and optional `.apkg` packages for Anki. Audit, review, readiness, and release-gate commands block schema drift, missing media, export fallbacks, unreviewed learner-facing content, and local-only data from being treated as release-ready.
+
+Ignored local files under `data/` are workspace inputs. They are not product truth unless a tracked contract or template promotes the data into the repository.
 
 ## Scope
 
@@ -42,15 +51,13 @@ Tracked contracts define release behavior:
 - Golden kanji review sets: [templates/golden_n5_review_set.json](templates/golden_n5_review_set.json), [templates/golden_n4_review_set.json](templates/golden_n4_review_set.json), [templates/golden_n3_review_set.json](templates/golden_n3_review_set.json), [templates/golden_n2_review_set.json](templates/golden_n2_review_set.json), [templates/golden_n1_review_set.json](templates/golden_n1_review_set.json)
 - Golden word review sets: [templates/golden_n5_word_review_set.json](templates/golden_n5_word_review_set.json)
 
-Local ignored files under `data/` are workspace inputs, not product truth. Use audits to verify them against tracked contracts.
-
 ## Product Rules
 
 Kanji decks:
 
 - Each shipped kanji belongs to the tracked JLPT kanji contract.
 - N5, N4, N3, and N2 kanji are fully protected by golden review coverage.
-- N1 kanji golden review coverage is partial: `268/1231` reviewed as of the current baseline. N1 must not be treated as ready until golden coverage, exact primary-reading audio, and level readiness all pass.
+- N1 kanji golden review coverage is partial: `448/1231` reviewed as of the current baseline. N1 must not be treated as ready until golden coverage, exact primary-reading audio, and level readiness all pass.
 - The kanji deck learning target is the individual kanji. `DisplayWord` is the target kanji itself, and `PrimaryReading` is the learner-facing reading for that kanji.
 - Compound words belong in notes, examples, and word decks; they must not replace the kanji-card anchor.
 - `deck:ready` fails on export fallbacks unless `--allow-export-fallbacks` is explicit.
@@ -77,9 +84,9 @@ Word decks:
 | N4 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
 | N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
 | N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
-| N1 kanji | Golden review partial at `268/1231`; not ready because exact primary-reading audio is missing from exported cards |
-| N5 word | `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, and looping animations are complete for shipped rows |
-| N4 word | `ready_with_deferred_variants` when built with N5 as the selected word-product scope; audio, pitch accent, card-back fields, and looping animations are complete for shipped rows |
+| N1 kanji | Golden review partial at `448/1231`; not ready because exact primary-reading audio is missing from exported cards |
+| N5 word | Golden-reviewed; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows |
+| N4 word | `ready_with_deferred_variants` when built with N5 as the selected word-product scope; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows |
 
 Current tracked word inventory:
 
@@ -87,6 +94,8 @@ Current tracked word inventory:
 - N5 source-only phrase exclusions: `13`
 - N4 canonical word rows: `474`
 - Current N5+N4 word rows: `822`
+- N5 word reading coverage: `83.7% (288/344)` when built alone
+- N4 word reading coverage: `78.6% (512/651)` when built with N5 as the selected word-product scope
 - N5+N4 word readiness: run `npm run deck:words:ready -- --levels=5,4 --require-no-active-triage` for the live value
 
 Run live commands for current coverage. Do not rely on README numbers for release decisions.
@@ -309,6 +318,9 @@ Repository governance:
 | `npm run deck:apkg` | Build kanji `.apkg` artifacts |
 | `npm run deck:review:n5` | Run the N5 kanji golden benchmark |
 | `npm run deck:review:n4` | Run the N4 kanji golden benchmark |
+| `npm run deck:review:n3` | Run the N3 kanji golden benchmark |
+| `npm run deck:review:n2` | Run the N2 kanji golden benchmark |
+| `npm run deck:review:n1` | Run the N1 kanji golden benchmark |
 | `npm run deck:review:coverage` | Audit golden-review coverage |
 | `npm run deck:words:ready` | Build and package word TSV artifacts |
 | `npm run deck:words:apkg` | Build word `.apkg` artifacts |

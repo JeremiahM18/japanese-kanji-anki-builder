@@ -21071,12 +21071,14 @@
     "jlpt": 1,
     "preferredWords": [
       "庶民",
-      "庶務",
-      "庶子"
+      "庶務"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "bastard"
+    ],
     "blockedSentencePhrases": [],
-    "notes": "庶民 （しょみん） - ordinary people ／ 庶務 （しょむ） - general affairs ／ 庶子 （しょし） - child born to a concubine",
+    "notes": "庶民 （しょみん） - ordinary people ／ 庶務 （しょむ） - general affairs",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "その時代の庶民の暮らしを描いた展示が人気でした。",
@@ -22442,12 +22444,11 @@
     "jlpt": 1,
     "preferredWords": [
       "徐々に",
-      "徐行",
-      "徐音"
+      "徐行"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "徐々に （じょじょに） - gradually ／ 徐行 （じょこう） - slow driving ／ 徐音 （じょおん） - soft / slow tone",
+    "notes": "徐々に （じょじょに） - gradually ／ 徐行 （じょこう） - slow driving",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "雨は夕方になるにつれて徐々に弱くなりました。",
@@ -30791,7 +30792,7 @@
     }
   },
   "暑": {
-    "englishMeaning": "hot / गर्म",
+    "englishMeaning": "hot",
     "displayWord": {
       "written": "暑い",
       "pron": "あつい"
@@ -30808,6 +30809,9 @@
       "猛暑"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "गर्म"
+    ],
     "blockedSentencePhrases": [],
     "notes": "暑い （あつい） - hot ／ 猛暑 （もうしょ） - severe heat",
     "alternativeNotes": [],
@@ -44581,10 +44585,10 @@
     }
   },
   "盾": {
-    "englishMeaning": "shield / contradiction",
+    "englishMeaning": "shield",
     "displayWord": {
-      "written": "矛盾",
-      "pron": "むじゅん"
+      "written": "盾",
+      "pron": "たて"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -44594,17 +44598,20 @@
     ],
     "jlpt": 1,
     "preferredWords": [
-      "矛盾",
-      "盾"
+      "盾",
+      "矛盾"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "pretext"
+    ],
     "blockedSentencePhrases": [],
-    "notes": "矛盾 （むじゅん） - contradiction ／ 盾 （たて） - shield",
+    "notes": "盾 （たて） - shield ／ 矛盾 （むじゅん） - contradiction",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "彼の説明には少し矛盾があるように感じました。",
-      "reading": "かれのせつめいにはすこしむじゅんがあるようにかんじました。",
-      "english": "I felt there was a slight contradiction in his explanation.",
+      "japanese": "兵士は盾で身を守りました。",
+      "reading": "へいしはたてでみをまもりました。",
+      "english": "The soldier protected himself with a shield.",
       "source": "starter-curated",
       "tags": [
         "example",

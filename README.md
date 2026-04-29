@@ -2,14 +2,14 @@
 
 ## About
 
-Japanese Kanji Anki Builder is a local Node.js build system for producing Anki-ready JLPT kanji and word decks from governed source data.
+Japanese Kanji Anki Builder makes Anki study decks for Japanese learners. It builds JLPT kanji decks and JLPT vocabulary decks with readings, meanings, example sentences, notes, stroke-order animations, audio, pitch accent data for word cards, and labels for kanji that are above the current deck level or outside the tracked JLPT list.
 
-It has two separate product surfaces:
+The kanji decks and word decks are separate products:
 
-- Kanji decks teach individual kanji. The card front is the single target kanji, the back starts from the exported primary reading and learner-facing meaning, and compounds are limited to examples and support notes.
-- Word decks teach vocabulary by `written|reading`. They can include cross-level or outside-JLPT constituent kanji when the word is useful at the deck level, but those constituents must be labeled on the card.
+- Kanji decks teach one kanji at a time. The front of the card is only the target kanji. The back teaches that kanji's primary learner-facing reading and meaning, then uses words and sentences as support.
+- Word decks teach vocabulary by exact written form and reading, such as `学校|がっこう`. A useful word can appear even if it contains harder kanji, but the card must label those kanji instead of pretending they belong to the current level.
 
-The repository treats deck output as a versioned build artifact rather than ad hoc generated content. Tracked JSON contracts define JLPT inventory, word eligibility, note schemas, media policy, and review expectations. Build scripts generate deterministic TSV exports and optional `.apkg` packages for Anki. Audit, review, readiness, and release-gate commands block schema drift, missing media, export fallbacks, unreviewed learner-facing content, and local-only data from being treated as release-ready.
+The engineering goal is controlled output. The repository does not rely on silent fallbacks or untracked local edits for release-ready decks. Tracked JSON contracts define the JLPT kanji inventory, word eligibility, Anki note fields, media policy, and review expectations. Build scripts produce deterministic TSV exports and optional `.apkg` packages. Audit, review, readiness, and release-gate commands check for missing audio, missing stroke-order media, schema drift, bad labels, unreviewed learner-facing content, and generated content that has not been promoted into tracked source files.
 
 Ignored local files under `data/` are workspace inputs. They are not product truth unless a tracked contract or template promotes the data into the repository.
 

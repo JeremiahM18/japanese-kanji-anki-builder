@@ -328,7 +328,7 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["巡"].exampleSentence.english, "I walked along the riverside path that circles the area.");
     assert.equal(curatedStudyData["祉"].englishMeaning, "welfare / well-being");
     assert.deepEqual(curatedStudyData["素"].displayWord, { written: "素晴らしい", pron: "すばらしい" });
-    assert.equal(curatedStudyData["策"].notes, "対策 （たいさく） - countermeasure / step ／ 政策 （せいさく） - policy ／ 作戦 （さくせん） - strategy / operation");
+    assert.equal(curatedStudyData["策"].notes, "対策 （たいさく） - countermeasure / step ／ 政策 （せいさく） - policy ／ 方策 （ほうさく） - plan / measure");
     assert.equal(curatedStudyData["節"].exampleSentence.japanese, "この季節は朝晩が冷えます。");
     assert.deepEqual(curatedStudyData["紀"].preferredWords, ["世紀", "紀元", "紀行"]);
     assert.equal(curatedStudyData["統"].englishMeaning, "unite / control / govern");

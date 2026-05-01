@@ -8918,10 +8918,10 @@
     }
   },
   "升": {
-    "englishMeaning": "masu (measuring box) / square measure",
+    "englishMeaning": "masu (wooden measuring box)",
     "displayWord": {
-      "written": "一升",
-      "pron": "いっしょう"
+      "written": "升",
+      "pron": "ます"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -8931,13 +8931,17 @@
     ],
     "jlpt": 1,
     "preferredWords": [
+      "升",
       "一升",
       "升目",
       "升酒"
     ],
+    "blockedMeanings": [
+      "1.8 liter"
+    ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "一升 （いっしょう） - one sho / measure ／ 升目 （ますめ） - square grid / cell ／ 升酒 （ますざけ） - sake served in a wooden masu",
+    "notes": "升 （ます） - wooden measuring box ／ 一升 （いっしょう） - one sho / measure ／ 升酒 （ますざけ） - sake served in a wooden masu",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "祭りで升に入った酒を勧められました。",
@@ -11603,10 +11607,10 @@
     }
   },
   "唱": {
-    "englishMeaning": "chant / sing",
+    "englishMeaning": "chant / recite",
     "displayWord": {
-      "written": "合唱",
-      "pron": "がっしょう"
+      "written": "唱える",
+      "pron": "となえる"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -11616,18 +11620,18 @@
     ],
     "jlpt": 1,
     "preferredWords": [
-      "合唱",
       "唱える",
+      "合唱",
       "提唱"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "合唱 （がっしょう） - chorus / group singing ／ 唱える （となえる） - to chant / recite ／ 提唱 （ていしょう） - advocacy / proposal",
+    "notes": "唱える （となえる） - to chant / recite ／ 合唱 （がっしょう） - chorus / group singing ／ 提唱 （ていしょう） - advocacy / proposal",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "卒業式で全員が校歌を合唱しました。",
-      "reading": "そつぎょうしきでぜんいんがこうかをがっしょうしました。",
-      "english": "At the graduation ceremony, everyone sang the school song together.",
+      "japanese": "僧侶がお経を唱えました。",
+      "reading": "そうりょがおきょうをとなえました。",
+      "english": "The monk chanted a sutra.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -20738,6 +20742,9 @@
       "庄園",
       "庄"
     ],
+    "blockedMeanings": [
+      "level"
+    ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
     "notes": "庄屋 （しょうや） - village headman ／ 庄園 （しょうえん） - manor ／ 庄 （しょう） - village / manor",
@@ -22118,6 +22125,9 @@
       "表彰",
       "彰する",
       "彰明"
+    ],
+    "blockedMeanings": [
+      "patent"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
@@ -27342,10 +27352,10 @@
     }
   },
   "掌": {
-    "englishMeaning": "palm / grasp",
+    "englishMeaning": "palm",
     "displayWord": {
-      "written": "掌握",
-      "pron": "しょうあく"
+      "written": "掌",
+      "pron": "てのひら"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -27355,16 +27365,20 @@
     ],
     "jlpt": 1,
     "preferredWords": [
+      "掌",
       "掌握"
+    ],
+    "blockedMeanings": [
+      "palm of hand"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "掌握 （しょうあく） - grasp / control ／ 手のひら （てのひら） - palm",
+    "notes": "掌 （てのひら） - palm ／ 掌握 （しょうあく） - grasp / control",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "状況を完全に掌握するには時間が必要です。",
-      "reading": "じょうきょうをかんぜんにしょうあくするにはじかんがひつようです。",
-      "english": "It takes time to fully grasp the situation.",
+      "japanese": "掌に小さな傷ができました。",
+      "reading": "てのひらにちいさなきずができました。",
+      "english": "I got a small cut on my palm.",
       "source": "starter-curated",
       "tags": [
         "example",

@@ -186,6 +186,51 @@ function findDuplicateValues(values = []) {
     return [...duplicates].sort();
 }
 
+function buildWordReviewKey({ word = "", reading = "" } = {}) {
+    return `${normalizeForCompare(word)}|${normalizeForCompare(reading)}`;
+}
+
+function buildExpectedReadingText(expectation = {}) {
+    return (Array.isArray(expectation.readingIncludes) ? expectation.readingIncludes : [])
+        .map((reading) => normalizeText(reading))
+        .filter(Boolean)
+        .join(" / ");
+}
+
+function formatWordReviewLabel(word, reading = "") {
+    const normalizedWord = normalizeText(word);
+    const normalizedReading = normalizeText(reading);
+    return normalizedReading ? `${normalizedWord} (${normalizedReading})` : normalizedWord;
+}
+
+function wordRowMatchesExpectation(row = {}, expectation = {}) {
+    if (row.word !== expectation.word) {
+        return false;
+    }
+    if (!Array.isArray(expectation.readingIncludes) || expectation.readingIncludes.length === 0) {
+        return true;
+    }
+    return includesAll(row.reading, expectation.readingIncludes);
+}
+
+function findWordRowForExpectation(rows = [], expectation = {}) {
+    const candidates = rows.filter((row) => wordRowMatchesExpectation(row, expectation));
+    if (candidates.length === 1) {
+        return candidates[0];
+    }
+    if (candidates.length > 1) {
+        return {
+            word: expectation.word,
+            error: `ambiguous generated word rows: ${candidates.map((row) => `${row.word} (${row.reading})`).join(", ")}`,
+        };
+    }
+    return null;
+}
+
+function expectationMatchesWordRow(expectation = {}, row = {}) {
+    return wordRowMatchesExpectation(row, expectation);
+}
+
 function evaluateGoldenReviewSet({ cards = [], expectations = [] } = {}) {
     const cardsByKanji = new Map((Array.isArray(cards) ? cards : []).map((card) => [card.kanji, card]));
     const results = (Array.isArray(expectations) ? expectations : []).map((expectation) => evaluateExpectation(cardsByKanji.get(expectation.kanji), expectation));
@@ -201,18 +246,44 @@ function evaluateGoldenReviewSet({ cards = [], expectations = [] } = {}) {
 }
 
 function evaluateGoldenWordReviewSet({ rows = [], expectations = [], requireAllRows = false } = {}) {
-    const rowsByWord = new Map((Array.isArray(rows) ? rows : []).map((row) => [row.word, row]));
-    const results = (Array.isArray(expectations) ? expectations : []).map((expectation) => evaluateWordExpectation(rowsByWord.get(expectation.word), expectation));
+    const generatedRows = Array.isArray(rows) ? rows : [];
+    const reviewExpectations = Array.isArray(expectations) ? expectations : [];
+    const results = reviewExpectations.map((expectation) => {
+        const row = findWordRowForExpectation(generatedRows, expectation);
+        const result = evaluateWordExpectation(row, expectation);
+        if (row?.error) {
+            result.failures.push(row.error);
+            result.passed = false;
+        }
+        return result;
+    });
     const passedCount = results.filter((result) => result.passed).length;
-    const expectationWords = (Array.isArray(expectations) ? expectations : []).map((expectation) => expectation.word);
-    const duplicateExpectationWords = findDuplicateValues(expectationWords);
-    const rowWords = (Array.isArray(rows) ? rows : []).map((row) => row.word);
-    const rowWordSet = new Set(rowWords);
-    const expectationWordSet = new Set(expectationWords);
+    const expectationKeys = reviewExpectations.map((expectation) => buildWordReviewKey({
+        word: expectation.word,
+        reading: buildExpectedReadingText(expectation),
+    }));
+    const expectationLabelsByKey = new Map(reviewExpectations.map((expectation) => {
+        const readingText = buildExpectedReadingText(expectation);
+        return [
+            buildWordReviewKey({ word: expectation.word, reading: readingText }),
+            formatWordReviewLabel(expectation.word, readingText),
+        ];
+    }));
+    const duplicateExpectationWords = findDuplicateValues(expectationKeys)
+        .map((key) => expectationLabelsByKey.get(key) || key);
     const missingExpectationWords = requireAllRows
-        ? rowWords.filter((word) => !expectationWordSet.has(word)).sort()
+        ? generatedRows
+            .filter((row) => !reviewExpectations.some((expectation) => expectationMatchesWordRow(expectation, row)))
+            .map((row) => formatWordReviewLabel(row.word, row.reading))
+            .sort()
         : [];
-    const extraExpectationWords = expectationWords.filter((word) => !rowWordSet.has(word)).sort();
+    const extraExpectationWords = reviewExpectations
+        .filter((expectation) => !generatedRows.some((row) => expectationMatchesWordRow(expectation, row)))
+        .map((expectation) => {
+            const readingText = buildExpectedReadingText(expectation);
+            return formatWordReviewLabel(expectation.word, readingText);
+        })
+        .sort();
     const coverageFailures = [];
 
     if (duplicateExpectationWords.length > 0) {

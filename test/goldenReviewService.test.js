@@ -237,8 +237,8 @@ test("evaluateGoldenWordReviewSet can require every generated word to have a gol
     });
 
     assert.equal(report.passed, false);
-    assert.deepEqual(report.missingExpectationWords, ["明日"]);
-    assert.match(formatGoldenReviewReport(report), /missing expectations for generated words: 明日/);
+    assert.deepEqual(report.missingExpectationWords, ["明日 (あした)"]);
+    assert.match(formatGoldenReviewReport(report), /missing expectations for generated words: 明日 \(あした\)/);
 });
 
 test("evaluateGoldenWordReviewSet reports duplicate and stale word expectations", () => {
@@ -266,8 +266,8 @@ test("evaluateGoldenWordReviewSet reports duplicate and stale word expectations"
     });
 
     assert.equal(report.passed, false);
-    assert.deepEqual(report.duplicateExpectationWords, ["今日"]);
-    assert.deepEqual(report.extraExpectationWords, ["昨日"]);
+    assert.deepEqual(report.duplicateExpectationWords, ["今日 (きょう)"]);
+    assert.deepEqual(report.extraExpectationWords, ["昨日 (きのう)"]);
 });
 
 test("evaluateGoldenWordReviewSet ignores spacing after reading labels in breakdown checks", () => {

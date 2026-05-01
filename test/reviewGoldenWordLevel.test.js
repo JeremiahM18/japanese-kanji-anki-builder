@@ -2,6 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const { parseArgs, parseWordTsv } = require("../scripts/reviewGoldenWordLevel");
+const { evaluateGoldenWordReviewSet } = require("../src/services/goldenReviewService");
 
 test("parseArgs accepts level, json, and require-all review mode", () => {
     const options = parseArgs(["--level=4", "--json", "--require-all"]);
@@ -32,4 +33,53 @@ test("parseWordTsv maps word deck TSV rows into reviewable objects", () => {
         exampleSentence: "今日は図書館へ行きます。",
         notes: "Irregular reading.",
     });
+});
+
+test("golden word review matches duplicate written forms by reading expectation", () => {
+    const rows = [
+        {
+            word: "魚",
+            reading: "うお",
+            meaning: "fish",
+            jlptLevel: "JLPT N4",
+            coverageRole: "JLPT core + reading coverage",
+            focusKanji: "魚",
+            coversReading: "魚: うお",
+            kanjiBreakdown: "魚 （うお） ／ fish",
+            exampleSentence: "魚市場へ行きました。",
+            notes: "",
+        },
+        {
+            word: "魚",
+            reading: "さかな",
+            meaning: "fish",
+            jlptLevel: "JLPT N4",
+            coverageRole: "JLPT core + reading coverage",
+            focusKanji: "魚",
+            coversReading: "魚: さかな",
+            kanjiBreakdown: "魚 （さかな） ／ fish",
+            exampleSentence: "晩ご飯に魚を食べます。",
+            notes: "",
+        },
+    ];
+
+    const report = evaluateGoldenWordReviewSet({
+        rows,
+        expectations: [
+            {
+                word: "魚",
+                readingIncludes: ["さかな"],
+                meaningIncludes: ["fish"],
+                jlptLevelIncludes: ["JLPT N4"],
+                coverageRoleIncludes: ["JLPT core + reading coverage"],
+                focusIncludes: ["魚"],
+                coversReadingIncludes: ["魚: さかな"],
+                breakdownIncludes: ["魚 （さかな）", "fish"],
+                exampleIncludes: ["晩ご飯に魚を食べます。"],
+            },
+        ],
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.passedCount, 1);
 });

@@ -16,11 +16,14 @@ function parseArgs(argv) {
     const args = {
         json: false,
         level: null,
+        requireAllRows: false,
     };
 
     for (const arg of argv) {
         if (arg === "--json") {
             args.json = true;
+        } else if (arg === "--require-all") {
+            args.requireAllRows = true;
         } else if (arg.startsWith("--level=")) {
             args.level = Number(arg.split("=")[1]);
         }
@@ -59,8 +62,8 @@ async function main() {
     const options = parseArgs(process.argv.slice(2));
     const level = options.level;
 
-    if (![5].includes(level)) {
-        throw new Error("Golden word review level must currently be N5.");
+    if (!Number.isInteger(level) || level < 1 || level > 5) {
+        throw new Error("Golden word review level must be 1-5.");
     }
 
     const config = loadConfig();
@@ -96,7 +99,7 @@ async function main() {
         includeInferred: false,
     });
     const rows = parseWordTsv(result.tsv);
-    const report = evaluateGoldenWordReviewSet({ rows, expectations, requireAllRows: true });
+    const report = evaluateGoldenWordReviewSet({ rows, expectations, requireAllRows: options.requireAllRows });
 
     if (options.json) {
         console.log(JSON.stringify({ report, rows }, null, 2));

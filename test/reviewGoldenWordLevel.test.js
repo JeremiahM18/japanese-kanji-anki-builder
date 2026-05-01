@@ -1,7 +1,17 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { parseWordTsv } = require("../scripts/reviewGoldenWordLevel");
+const { parseArgs, parseWordTsv } = require("../scripts/reviewGoldenWordLevel");
+
+test("parseArgs accepts level, json, and require-all review mode", () => {
+    const options = parseArgs(["--level=4", "--json", "--require-all"]);
+
+    assert.deepEqual(options, {
+        json: true,
+        level: 4,
+        requireAllRows: true,
+    });
+});
 
 test("parseWordTsv maps word deck TSV rows into reviewable objects", () => {
     const rows = parseWordTsv([

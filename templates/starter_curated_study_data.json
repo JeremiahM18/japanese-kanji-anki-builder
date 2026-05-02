@@ -10882,7 +10882,7 @@
     }
   },
   "吐": {
-    "englishMeaning": "spit / vomit",
+    "englishMeaning": "exhale / spit / vomit",
     "displayWord": {
       "written": "吐く",
       "pron": "はく"
@@ -10901,7 +10901,7 @@
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "吐く （はく） - to spit / vomit ／ 吐き気 （はきけ） - nausea ／ 吐息 （といき） - sigh / breath",
+    "notes": "吐く （はく） - to exhale / spit / vomit ／ 吐き気 （はきけ） - nausea ／ 吐息 （といき） - sigh / breath",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "緊張して大きく息を吐きました。",
@@ -34391,7 +34391,7 @@
     }
   },
   "棟": {
-    "englishMeaning": "building block / ridge",
+    "englishMeaning": "building / ridgepole",
     "displayWord": {
       "written": "病棟",
       "pron": "びょうとう"
@@ -34406,6 +34406,9 @@
     "preferredWords": [
       "病棟",
       "一棟"
+    ],
+    "blockedMeanings": [
+      "building block"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],

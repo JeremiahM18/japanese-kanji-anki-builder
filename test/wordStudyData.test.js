@@ -811,7 +811,6 @@ test("tracked starter word data includes the twenty-third governed N4 completion
     assertCoverageReadings(starterEntries, [
         ["賃貸|ちんたい", "貸", "たい"],
         ["師弟|してい", "弟", "てい"],
-        ["嫌悪|けんお", "悪", "お"],
         ["義兄|ぎけい", "兄", "けい"],
         ["神道|しんとう", "道", "とう"],
         ["不器用|ぶきよう", "不", "ぶ"],
@@ -860,7 +859,6 @@ test("tracked starter word data includes the twenty-fifth governed N4 completion
         ["止まる|とどまる", "止", "とどまる"],
         ["新妻|にいづま", "新", "にい"],
         ["文|ふみ", "文", "ふみ"],
-        ["大字|おおあざ", "字", "あざ"],
         ["青写真|あおじゃしん", "写", "じゃ"],
         ["明かり|あかり", "明", "あかり"],
         ["公|おおやけ", "公", "おおやけ"],

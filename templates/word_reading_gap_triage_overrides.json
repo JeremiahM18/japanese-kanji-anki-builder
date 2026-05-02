@@ -212,6 +212,16 @@
       "priority": "low",
       "note": "仮字 is a rare alternate spelling of 仮名 and should not stay in the N4 word deck just to cover 字 -> な."
     },
+    "字|kun|あざ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "大字 is an administrative address term and should not stay in the N4 word deck just to cover 字 -> あざ."
+    },
+    "字|kun|あざな": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "字 as あざな is courtesy-name vocabulary and should not drive an N4 word card."
+    },
     "世|on|そう": {
       "suggestedAction": "defer_variant",
       "priority": "low",
@@ -241,6 +251,11 @@
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "Marked as a missing curated candidate by fallback heuristics, but not a good learner-facing N4 support target."
+    },
+    "悪|on|お": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "嫌悪 is abstract and centered on an N1 constituent; do not keep it in the N4 deck just to cover 悪 -> お."
     },
     "夏|on|げ": {
       "suggestedAction": "defer_variant",

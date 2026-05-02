@@ -202,6 +202,16 @@
     }
   },
   "N4": {
+    "字|kun|な": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "仮字 is a rare alternate spelling of 仮名 and should not stay in the N4 word deck just to cover 字 -> な."
+    },
+    "花|on|か": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "花火 reads 花 as はな and should cover 火 -> び; do not keep false 花 -> か coverage without a common N4 learner word."
+    },
     "悪|kun|にくい": {
       "suggestedAction": "defer_variant",
       "priority": "low",

@@ -891,7 +891,6 @@ test("tracked starter word data includes the twenty-sixth governed N4 completion
         ["終える|おえる", "終", "おえる"],
         ["集う|つどう", "集", "つどう"],
         ["計る|はかる", "計", "はかる"],
-        ["強いる|しいる", "強", "しいる"],
         ["空しい|むなしい", "空", "むなしい"],
         ["親しい|したしい", "親", "したしい"],
         ["親しむ|したしむ", "親", "したしむ"],
@@ -899,6 +898,18 @@ test("tracked starter word data includes the twenty-sixth governed N4 completion
     assertReadingBreakdowns(starterEntries, [
         ["重なる|かさなる", "<ruby>重<rt>かさ</rt></ruby>なる"],
     ]);
+});
+
+test("tracked starter word data keeps formal support words on harder decks", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assert.equal(starterEntries["問う|とう"].jlpt, 2);
+    assert.equal(starterEntries["問う|とう"].tags.includes("n2"), true);
+    assert.equal(starterEntries["問う|とう"].coverage.coversReadings["問"], "とう");
+
+    assert.equal(starterEntries["強いる|しいる"].jlpt, 1);
+    assert.equal(starterEntries["強いる|しいる"].tags.includes("n1"), true);
+    assert.equal(starterEntries["強いる|しいる"].coverage.coversReadings["強"], "しいる");
 });
 
 test("tracked starter word data includes the twenty-seventh governed N4 completion batch", () => {

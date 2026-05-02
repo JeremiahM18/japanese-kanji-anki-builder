@@ -25741,6 +25741,14 @@
           "pron": "じょ"
         },
         "englishMeaning": "place"
+      },
+      {
+        "matchWord": "場所",
+        "displayWord": {
+          "written": "所",
+          "pron": "しょ"
+        },
+        "englishMeaning": "place"
       }
     ],
     "source": "starter-curated",
@@ -30218,7 +30226,16 @@
         "written": "明るい",
         "pron": "あかるい"
       },
-      "breakdownOverrides": [],
+      "breakdownOverrides": [
+        {
+          "matchWord": "説明",
+          "displayWord": {
+            "written": "明",
+            "pron": "めい"
+          },
+          "englishMeaning": "bright / clear"
+        }
+      ],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -46216,7 +46233,16 @@
       "written": "空",
       "pron": "そら"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "空き地",
+        "displayWord": {
+          "written": "空",
+          "pron": "あき"
+        },
+        "englishMeaning": "empty / vacant"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -52163,7 +52189,16 @@
       "written": "足",
       "pron": "あし"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "不足",
+        "displayWord": {
+          "written": "足",
+          "pron": "そく"
+        },
+        "englishMeaning": "enough / add"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -55907,7 +55942,16 @@
       "written": "飯",
       "pron": "はん"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "昼飯",
+        "displayWord": {
+          "written": "飯",
+          "pron": "めし"
+        },
+        "englishMeaning": "meal / rice"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",

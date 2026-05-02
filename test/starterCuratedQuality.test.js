@@ -445,7 +445,7 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["範"].exampleSentence.japanese, "彼の行動は後輩の模範になっている。");
     assert.deepEqual(curatedStudyData["称"].displayWord, { written: "名称", pron: "めいしょう" });
     assert.equal(curatedStudyData["継"].notes, "中継 （ちゅうけい） - relay broadcast ／ 継続 （けいぞく） - continuation ／ 引き継ぐ （ひきつぐ） - take over");
-    assert.deepEqual(curatedStudyData["繊"].preferredWords, ["繊細", "繊維", "光ファイバー"]);
+    assert.deepEqual(curatedStudyData["繊"].preferredWords, ["繊細", "繊維"]);
     assert.equal(curatedStudyData["稔"].exampleSentence.english, "The field crops ripened well by autumn.");
     assert.deepEqual(curatedStudyData["窒"].displayWord, { written: "窒息", pron: "ちっそく" });
     assert.equal(curatedStudyData["竜"].englishMeaning, "dragon / tornado");

@@ -675,7 +675,16 @@
       "written": "主に",
       "pron": "おもに"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "主に",
+        "displayWord": {
+          "written": "主",
+          "pron": "おも"
+        },
+        "englishMeaning": "main / primary"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -3138,7 +3147,16 @@
   },
   "作": {
     "englishMeaning": "make / create",
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "作文",
+        "displayWord": {
+          "written": "作",
+          "pron": "さく"
+        },
+        "englishMeaning": "make / create"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -7143,7 +7161,16 @@
   },
   "別": {
     "englishMeaning": "separate / another",
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "別に",
+        "displayWord": {
+          "written": "別",
+          "pron": "べつ"
+        },
+        "englishMeaning": "separate / different"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -23446,7 +23473,16 @@
   },
   "急": {
     "englishMeaning": "hurry / sudden",
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "急に",
+        "displayWord": {
+          "written": "急",
+          "pron": "きゅう"
+        },
+        "englishMeaning": "sudden"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -55130,7 +55166,16 @@
       "written": "青い",
       "pron": "あおい"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "青春",
+        "displayWord": {
+          "written": "青",
+          "pron": "せい"
+        },
+        "englishMeaning": "blue / youth"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",

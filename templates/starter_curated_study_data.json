@@ -6938,6 +6938,14 @@
           "pron": "せつ"
         },
         "englishMeaning": "earnest / keen"
+      },
+      {
+        "matchWord": "貸切",
+        "displayWord": {
+          "written": "切",
+          "pron": "きり"
+        },
+        "englishMeaning": "cut off / reserve"
       }
     ],
     "source": "starter-curated",
@@ -14565,7 +14573,16 @@
       "written": "夜",
       "pron": "よる"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "夜通し",
+        "displayWord": {
+          "written": "夜",
+          "pron": "よ"
+        },
+        "englishMeaning": "night"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -23151,7 +23168,16 @@
       "written": "忙しい",
       "pron": "いそがしい"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "多忙",
+        "displayWord": {
+          "written": "忙",
+          "pron": "ぼう"
+        },
+        "englishMeaning": "busy"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -51723,7 +51749,16 @@
       "written": "貸す",
       "pron": "かす"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "貸切",
+        "displayWord": {
+          "written": "貸",
+          "pron": "かし"
+        },
+        "englishMeaning": "lend / rent"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -53122,7 +53157,16 @@
   },
   "通": {
     "englishMeaning": "go through / commute",
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "夜通し",
+        "displayWord": {
+          "written": "通",
+          "pron": "どおし"
+        },
+        "englishMeaning": "throughout"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",

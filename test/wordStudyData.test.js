@@ -817,8 +817,6 @@ test("tracked starter word data includes the twenty-third governed N4 completion
         ["神道|しんとう", "道", "とう"],
         ["不器用|ぶきよう", "不", "ぶ"],
         ["歩合|ぶあい", "歩", "ぶ"],
-        ["建立|こんりゅう", "建", "こん"],
-        ["建立|こんりゅう", "立", "りゅう"],
         ["給仕|きゅうじ", "仕", "じ"],
         ["今夕|こんせき", "夕", "せき"],
         ["心掛け|こころがけ", "心", "こころ"],
@@ -910,6 +908,11 @@ test("tracked starter word data keeps formal support words on harder decks", () 
     assert.equal(starterEntries["強いる|しいる"].jlpt, 1);
     assert.equal(starterEntries["強いる|しいる"].tags.includes("n1"), true);
     assert.equal(starterEntries["強いる|しいる"].coverage.coversReadings["強"], "しいる");
+
+    assert.equal(starterEntries["建立|こんりゅう"].jlpt, 1);
+    assert.equal(starterEntries["建立|こんりゅう"].tags.includes("n1"), true);
+    assert.equal(starterEntries["建立|こんりゅう"].coverage.coversReadings["建"], "こん");
+    assert.equal(starterEntries["建立|こんりゅう"].coverage.coversReadings["立"], "りゅう");
 });
 
 test("tracked starter word data includes the twenty-seventh governed N4 completion batch", () => {

@@ -15686,7 +15686,16 @@
       "written": "始まる",
       "pron": "はじまる"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "開始",
+        "displayWord": {
+          "written": "始",
+          "pron": "し"
+        },
+        "englishMeaning": "begin"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -17740,6 +17749,14 @@
         "displayWord": {
           "written": "寝",
           "pron": "しん"
+        },
+        "englishMeaning": "sleep"
+      },
+      {
+        "matchWord": "寝坊",
+        "displayWord": {
+          "written": "寝",
+          "pron": "ね"
         },
         "englishMeaning": "sleep"
       }
@@ -31653,7 +31670,16 @@
       "written": "書く",
       "pron": "かく"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "図書館",
+        "displayWord": {
+          "written": "書",
+          "pron": "しょ"
+        },
+        "englishMeaning": "write / book"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -41721,7 +41747,16 @@
       "written": "物",
       "pron": "もの"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "動物",
+        "displayWord": {
+          "written": "物",
+          "pron": "ぶつ"
+        },
+        "englishMeaning": "thing / object"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -52974,6 +53009,14 @@
           "pron": "きん"
         },
         "englishMeaning": "near / nearby"
+      },
+      {
+        "matchWord": "近道",
+        "displayWord": {
+          "written": "近",
+          "pron": "ちか"
+        },
+        "englishMeaning": "near / close"
       }
     ],
     "source": "starter-curated",
@@ -54549,6 +54592,14 @@
           "pron": "かい"
         },
         "englishMeaning": "open"
+      },
+      {
+        "matchWord": "開始",
+        "displayWord": {
+          "written": "開",
+          "pron": "かい"
+        },
+        "englishMeaning": "open / start"
       }
     ],
     "source": "starter-curated",

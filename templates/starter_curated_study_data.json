@@ -6980,6 +6980,14 @@
           "pron": "きり"
         },
         "englishMeaning": "cut off / reserve"
+      },
+      {
+        "matchWord": "品切れ",
+        "displayWord": {
+          "written": "切",
+          "pron": "ぎれ"
+        },
+        "englishMeaning": "cut / out of stock"
       }
     ],
     "source": "starter-curated",
@@ -20373,7 +20381,16 @@
   },
   "帰": {
     "englishMeaning": "return / go home",
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "帰り道",
+        "displayWord": {
+          "written": "帰り",
+          "pron": "かえり"
+        },
+        "englishMeaning": "return / way home"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -22070,7 +22087,16 @@
       "written": "強い",
       "pron": "つよい"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "手強い",
+        "displayWord": {
+          "written": "強",
+          "pron": "こわい"
+        },
+        "englishMeaning": "strong / formidable"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -54600,6 +54626,14 @@
           "pron": "かい"
         },
         "englishMeaning": "open / start"
+      },
+      {
+        "matchWord": "開会",
+        "displayWord": {
+          "written": "開",
+          "pron": "かい"
+        },
+        "englishMeaning": "open"
       }
     ],
     "source": "starter-curated",

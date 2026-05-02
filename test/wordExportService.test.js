@@ -663,6 +663,40 @@ test("buildBreakdownInference keeps okurigana display words in compound contexts
     assert.equal(result.meaningJP, "切る （きる） ／ cut");
 });
 
+test("buildBreakdownInference accepts context overrides with okurigana for the target kanji", () => {
+    const result = buildBreakdownInference({
+        kanji: "帰",
+        contextWord: "帰り道",
+        contextCandidate: {
+            written: "帰り道",
+            reading: "かえりみち",
+            meaning: "way home",
+        },
+        inference: {
+            candidates: [{ written: "帰", pron: "かえる", gloss: "return", score: 100 }],
+            primaryReading: "かえる",
+            englishMeaning: "return",
+            meaningJP: "帰る （かえる） ／ return",
+            onReading: "オン: キ",
+            kunReading: "くん: かえ.る",
+        },
+        curatedEntry: {
+            englishMeaning: "return / go home",
+            displayWord: { written: "帰る", pron: "かえる" },
+            breakdownOverrides: [
+                {
+                    matchWord: "帰り道",
+                    displayWord: { written: "帰り", pron: "かえり" },
+                    englishMeaning: "return / way home",
+                },
+            ],
+        },
+    });
+
+    assert.equal(result.primaryReading, "かえり");
+    assert.equal(result.meaningJP, "帰り （かえり） ／ return / way home");
+});
+
 test("buildBreakdownInference does not leak multi-kanji display words into single-kanji compound panels", () => {
     const result = buildBreakdownInference({
         kanji: "映",

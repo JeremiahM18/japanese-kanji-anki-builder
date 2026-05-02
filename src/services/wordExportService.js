@@ -1094,12 +1094,20 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null, contex
                 pron: String(curatedEntry?.breakdownDisplayWord?.pron || "").trim(),
             }
             : null);
+    const displayWordTargetsKanji = (displayWord) => {
+        if (!displayWord?.written) {
+            return false;
+        }
+        const displayKanji = extractConstituentKanji(displayWord.written);
+        return displayWord.written === kanji
+            || (displayKanji.length === 1 && displayKanji[0] === kanji);
+    };
     const breakdownOverrideMatchesContext = Boolean(breakdownOverrideDisplayWord)
-        && (breakdownOverrideDisplayWord.written === kanji
+        && (displayWordTargetsKanji(breakdownOverrideDisplayWord)
             || breakdownOverrideDisplayWord.written === String(contextWord || "").trim()
             || breakdownOverrideDisplayWord.written === String(contextCandidate?.written || "").trim());
     const contextOverrideMatchesContext = Boolean(contextOverrideDisplayWord)
-        && (contextOverrideDisplayWord.written === kanji
+        && (displayWordTargetsKanji(contextOverrideDisplayWord)
             || contextOverrideDisplayWord.written === String(contextWord || "").trim()
             || contextOverrideDisplayWord.written === String(contextCandidate?.written || "").trim());
     const defaultCuratedDisplayWord = curatedEntry?.displayWord?.written

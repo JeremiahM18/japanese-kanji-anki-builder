@@ -335,7 +335,7 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.deepEqual(curatedStudyData["縁"].displayWord, { written: "縁", pron: "えん" });
     assert.deepEqual(curatedStudyData["締"].preferredWords, ["締切", "引き締める", "取締"]);
     assert.equal(curatedStudyData["縮"].exampleSentence.english, "We shortened the meeting to thirty minutes.");
-    assert.deepEqual(curatedStudyData["納"].displayWord, { written: "納得", pron: "なっとく" });
+    assert.deepEqual(curatedStudyData["納"].displayWord, { written: "納入", pron: "のうにゅう" });
     assert.deepEqual(curatedStudyData["結"].preferredWords, ["結ぶ", "結婚", "結局"]);
     assert.equal(curatedStudyData["維"].notes, "維持 （いじ） - maintain / preserve ／ 繊維 （せんい） - fiber ／ 維新 （いしん） - restoration / reform");
     assert.equal(curatedStudyData["緩"].exampleSentence.japanese, "坂は頂上に近いほど緩やかになる。");

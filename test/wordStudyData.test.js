@@ -686,7 +686,7 @@ test("tracked starter word data includes the seventeenth governed N4 completion 
     const starterEntries = loadTrackedStarterWordEntries();
 
     assertCoverageReadings(starterEntries, [
-        ["家計|かけい", "家", "け"],
+        ["家計|かけい", "家", "か"],
         ["飲料|いんりょう", "飲", "いん"],
         ["開き|ひらき", "開", "ひらき"],
         ["気楽|きらく", "楽", "らく"],

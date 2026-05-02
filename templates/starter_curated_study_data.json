@@ -1644,7 +1644,16 @@
       "written": "京",
       "pron": "きょう"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "京阪",
+        "displayWord": {
+          "written": "京",
+          "pron": "けい"
+        },
+        "englishMeaning": "capital"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -17385,6 +17394,14 @@
           "pron": "か"
         },
         "englishMeaning": "specialist / person"
+      },
+      {
+        "matchWord": "家計",
+        "displayWord": {
+          "written": "家",
+          "pron": "か"
+        },
+        "englishMeaning": "house / home"
       }
     ],
     "source": "starter-curated",
@@ -21080,6 +21097,14 @@
     "breakdownOverrides": [
       {
         "matchWord": "閉店",
+        "displayWord": {
+          "written": "店",
+          "pron": "てん"
+        },
+        "englishMeaning": "shop / store"
+      },
+      {
+        "matchWord": "開店",
         "displayWord": {
           "written": "店",
           "pron": "てん"
@@ -54516,7 +54541,16 @@
       "written": "開ける",
       "pron": "あける"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "開店",
+        "displayWord": {
+          "written": "開",
+          "pron": "かい"
+        },
+        "englishMeaning": "open"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -56167,7 +56201,16 @@
       "written": "飲む",
       "pron": "のむ"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "飲料",
+        "displayWord": {
+          "written": "飲",
+          "pron": "いん"
+        },
+        "englishMeaning": "drink"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",

@@ -4,6 +4,23 @@ Platinum review is the final version 1 content-quality pass. It is stricter than
 
 Golden review means the exported card surface has been manually reviewed and is protected against regression. Platinum review means the card deserves to ship.
 
+## Golden vs platinum
+
+| Layer | Purpose | Proves | Does not prove |
+| --- | --- | --- | --- |
+| Golden | Stabilize current generated card output. | The reviewed export fields match the governed card contract and should not regress silently. | Final release quality, common/useful learner value, source-evidence review, or version 1 approval. |
+| Platinum | Lock version 1 content. | The card is accurate, useful, learner-friendly, sourced, governed, and should ship. | A replacement for golden export regression coverage. |
+
+Rules:
+
+- Golden comes first. It protects the generated card surface while product review is still moving.
+- Platinum comes last. It can keep, fix, defer, or remove cards.
+- A card can be golden-reviewed and still fail platinum.
+- A level can be golden-reviewed and still not be release-ready.
+- Do not use golden coverage as a substitute for platinum review.
+- Do not use platinum review as a substitute for golden regression coverage.
+- Empty platinum manifests fail intentionally.
+
 ## Product rule
 
 A card only becomes platinum when it is accurate, useful, learner-friendly, and governed. If a card is uncommon, awkward, too advanced for the level, misleading, or only present to chase reading coverage, remove or defer it instead of promoting it.

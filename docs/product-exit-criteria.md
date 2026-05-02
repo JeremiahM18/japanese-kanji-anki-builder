@@ -14,6 +14,17 @@ Evaluate each release checkpoint across:
 - Reliability and stability
 - Privacy, security, and licensing
 
+## Review layers
+
+Golden review and platinum review are separate gates.
+
+| Layer | Role in the product |
+| --- | --- |
+| Golden | Protects generated card output from regression. It checks learner-facing fields against the current governed contract. |
+| Platinum | Decides whether the card belongs in the version 1 release. It requires source evidence, explicit quality gates, and a keep/fix/defer/remove decision. |
+
+Golden coverage is required before a level can be trusted for ongoing work. Platinum coverage is required before a level is version-1 locked. Golden-reviewed does not mean release-ready.
+
 ## Kanji deck exit criteria
 
 A kanji level ships only when all criteria are true:

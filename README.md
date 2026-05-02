@@ -79,10 +79,12 @@ Word decks:
 - Track reading-coverage intent with `coverage.role`, `coverage.focusKanji`, and `coverage.coversReadings` when the card exists for coverage.
 - Sentence orthography review is advisory. It flags likely kana-only regressions without banning natural kana usage.
 
-Platinum review:
+Golden and platinum review:
 
-- Golden review protects reviewed output from regression.
+- Golden review protects reviewed generated output from regression. It checks that exported learner-facing fields match the current governed contract.
+- Golden review does not mean version 1 release approval.
 - Platinum review decides whether a card deserves to ship in version 1.
+- Platinum review requires source evidence, explicit quality gates, and a keep/fix/defer/remove decision.
 - Platinum review removes or defers noise instead of preserving cards that are uncommon, awkward, too advanced for the level, or only present to chase coverage.
 - Platinum review may improve source data and example sentences before promotion.
 - Platinum manifests are in progress. Only active `platinum` and `fixed_then_platinum` entries count as reviewed release coverage.

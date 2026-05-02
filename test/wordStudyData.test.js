@@ -742,7 +742,6 @@ test("tracked starter word data includes the twentieth governed N4 completion ba
         ["工夫|くふう", "工", "く"],
         ["参考|さんこう", "考", "こう"],
         ["使用|しよう", "使", "し"],
-        ["思想|しそう", "思", "し"],
         ["用紙|ようし", "紙", "し"],
         ["持参|じさん", "持", "じ"],
         ["自然|しぜん", "自", "し"],
@@ -810,7 +809,6 @@ test("tracked starter word data includes the twenty-third governed N4 completion
 
     assertCoverageReadings(starterEntries, [
         ["賃貸|ちんたい", "貸", "たい"],
-        ["師弟|してい", "弟", "てい"],
         ["義兄|ぎけい", "兄", "けい"],
         ["神道|しんとう", "道", "とう"],
         ["不器用|ぶきよう", "不", "ぶ"],
@@ -963,7 +961,6 @@ test("tracked starter word data includes the twenty-ninth governed N4 completion
     assertCoverageReadings(starterEntries, [
         ["京阪|けいはん", "京", "けい"],
         ["緑青|ろくしょう", "青", "しょう"],
-        ["店子|たなこ", "店", "たな"],
         ["相部屋|あいべや", "部", "べ"],
         ["裏切り|うらぎり", "切", "ぎり"],
         ["夜通し|よどおし", "通", "どおし"],

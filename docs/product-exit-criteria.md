@@ -50,7 +50,7 @@ A word level ships only when all criteria are true:
 - N2 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N1 kanji: golden review partial at `640/1231`; not ready because exact primary-reading audio is missing from exported cards
 - N5 word: golden-reviewed and `ready_with_deferred_variants`; platinum started at `12/348`
-- N4 word: golden review partial at `396/457` and stabilized as `ready_with_deferred_variants` when built with N5 as the selected word-product scope; platinum not started
+- N4 word: golden review partial at `408/455` and stabilized as `ready_with_deferred_variants` when built with N5 as the selected word-product scope; platinum not started
 
 ## Required gates before shipping
 

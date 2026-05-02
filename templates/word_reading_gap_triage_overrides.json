@@ -502,6 +502,11 @@
       "priority": "low",
       "note": "歩 -> ふ is not a clean N4 support target; useful 歩 vocabulary is 歩く and higher-level compounds can handle other readings."
     },
+    "歩|on|ぶ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "歩合 is a niche commission/rate word and should not stay in the N4 learner deck just to cover 歩 -> ぶ."
+    },
     "忙|on|もう": {
       "suggestedAction": "defer_variant",
       "priority": "low",
@@ -556,6 +561,11 @@
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "止 -> さす is not useful enough for N4 and risks confusion with 差す/刺す."
+    },
+    "止|kun|よす": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "よす is useful conversational Japanese, but the kanji-written 止す surface is uncommon enough to leave out of the N4 default word deck."
     },
     "質|kun|もと": {
       "suggestedAction": "defer_variant",

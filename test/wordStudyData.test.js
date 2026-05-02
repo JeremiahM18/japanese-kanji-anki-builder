@@ -812,7 +812,6 @@ test("tracked starter word data includes the twenty-third governed N4 completion
         ["義兄|ぎけい", "兄", "けい"],
         ["神道|しんとう", "道", "とう"],
         ["不器用|ぶきよう", "不", "ぶ"],
-        ["歩合|ぶあい", "歩", "ぶ"],
         ["給仕|きゅうじ", "仕", "じ"],
         ["心掛け|こころがけ", "心", "こころ"],
         ["真心|まごころ", "心", "ごころ"],
@@ -974,7 +973,6 @@ test("tracked starter word data includes the thirtieth governed N4 completion ba
     assertCoverageReadings(starterEntries, [
         ["品切れ|しなぎれ", "切", "ぎれ"],
         ["以て|もって", "以", "もって"],
-        ["止す|よす", "止", "よす"],
         ["止める|やめる", "止", "やめる"],
         ["病む|やむ", "病", "やむ"],
         ["空かす|すかす", "空", "すかす"],

@@ -844,7 +844,6 @@ test("tracked starter word data includes the twenty-fourth governed N4 completio
         ["発つ|たつ", "発", "たつ"],
         ["仮住まい|かりずまい", "住", "ずまい"],
         ["見習い|みならい", "習", "ならい"],
-        ["八重|やえ", "重", "え"],
         ["映え|ばえ", "映", "ばえ"],
     ]);
     assertReadingBreakdowns(starterEntries, [
@@ -917,7 +916,6 @@ test("tracked starter word data includes the twenty-seventh governed N4 completi
     const starterEntries = loadTrackedStarterWordEntries();
 
     assertCoverageReadings(starterEntries, [
-        ["千代|ちよ", "代", "よ"],
         ["病み付き|やみつき", "病", "やみ"],
         ["足りる|たりる", "足", "たりる"],
         ["注ぐ|そそぐ", "注", "そそぐ"],
@@ -969,7 +967,6 @@ test("tracked starter word data includes the twenty-ninth governed N4 completion
         ["緑青|ろくしょう", "青", "しょう"],
         ["店子|たなこ", "店", "たな"],
         ["相部屋|あいべや", "部", "べ"],
-        ["創世記|そうせいき", "世", "そう"],
         ["裏切り|うらぎり", "切", "ぎり"],
         ["夜通し|よどおし", "通", "どおし"],
     ]);

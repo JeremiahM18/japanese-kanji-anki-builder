@@ -96,7 +96,7 @@ test("tracked JLPT word contract keeps standalone higher-level kanji words in th
     ];
 
     assert.equal(contract.inventoryCounts["1"], 2);
-    assert.equal(contract.inventoryCounts["4"], 470);
+    assert.equal(contract.inventoryCounts["4"], 468);
     assert.equal(contract.excludedCounts["5"], 13);
     for (const key of n5StandaloneNumberWords) {
         assert.equal(getJlptWordLevel(contract, key), 5);

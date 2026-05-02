@@ -202,10 +202,20 @@
     }
   },
   "N4": {
+    "体|on|てい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "体裁 is treated by learner dictionaries as an N1 word and should not stay in the N4 deck just to cover 体 -> てい."
+    },
     "字|kun|な": {
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "仮字 is a rare alternate spelling of 仮名 and should not stay in the N4 word deck just to cover 字 -> な."
+    },
+    "夕|on|せき": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "今夕 is valid but too formal/written for an N4 learner card; 今夜 remains the useful common card for this meaning."
     },
     "花|on|か": {
       "suggestedAction": "defer_variant",

@@ -1,1 +1,591 @@
-[]
+[
+  {
+    "word": "本",
+    "status": "platinum",
+    "readingIncludes": [
+      "ほん"
+    ],
+    "meaningIncludes": [
+      "book"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "本"
+    ],
+    "coversReadingIncludes": [
+      "本: ほん"
+    ],
+    "breakdownIncludes": [
+      "本 （ほん）",
+      "book"
+    ],
+    "exampleIncludes": [
+      "日本語の本を読みます。"
+    ],
+    "reviewedAt": "2026-05-02",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
+      "N5 golden word expectation matched by npm run deck:words:review:n5.",
+      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "休む",
+    "status": "platinum",
+    "readingIncludes": [
+      "やすむ"
+    ],
+    "meaningIncludes": [
+      "to rest",
+      "take a break"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "休"
+    ],
+    "coversReadingIncludes": [
+      "休: やすむ"
+    ],
+    "breakdownIncludes": [
+      "休む （やすむ）",
+      "to rest / take a break"
+    ],
+    "exampleIncludes": [
+      "日曜日は家で休みます。"
+    ],
+    "reviewedAt": "2026-05-02",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
+      "N5 golden word expectation matched by npm run deck:words:review:n5.",
+      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "北",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "きた"
+    ],
+    "meaningIncludes": [
+      "north"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "北"
+    ],
+    "coversReadingIncludes": [
+      "北: きた"
+    ],
+    "breakdownIncludes": [
+      "北 （きた）",
+      "north"
+    ],
+    "exampleIncludes": [
+      "学校は駅の北にあります。"
+    ],
+    "reviewedAt": "2026-05-02",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
+      "N5 golden word expectation matched by npm run deck:words:review:n5 after the example update.",
+      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+    ],
+    "fixSummary": "Replaced the darker, less useful sky example with a direct location example: 学校は駅の北にあります。",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "外",
+    "status": "platinum",
+    "readingIncludes": [
+      "そと"
+    ],
+    "meaningIncludes": [
+      "outside"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "外"
+    ],
+    "coversReadingIncludes": [
+      "外: そと"
+    ],
+    "breakdownIncludes": [
+      "外 （そと）",
+      "outside"
+    ],
+    "exampleIncludes": [
+      "今日は外で昼ご飯を食べます。"
+    ],
+    "reviewedAt": "2026-05-02",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
+      "N5 golden word expectation matched by npm run deck:words:review:n5.",
+      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "土",
+    "status": "platinum",
+    "readingIncludes": [
+      "つち"
+    ],
+    "meaningIncludes": [
+      "soil",
+      "earth"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "土"
+    ],
+    "coversReadingIncludes": [
+      "土: つち"
+    ],
+    "breakdownIncludes": [
+      "土 （つち）",
+      "soil / earth"
+    ],
+    "exampleIncludes": [
+      "手に土がつきました。"
+    ],
+    "reviewedAt": "2026-05-02",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
+      "N5 golden word expectation matched by npm run deck:words:review:n5.",
+      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "生きる",
+    "status": "platinum",
+    "readingIncludes": [
+      "いきる"
+    ],
+    "meaningIncludes": [
+      "to live"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "生"
+    ],
+    "coversReadingIncludes": [
+      "生: いきる"
+    ],
+    "breakdownIncludes": [
+      "生きる （いきる）",
+      "to live"
+    ],
+    "exampleIncludes": [
+      "魚は水の中で生きています。"
+    ],
+    "reviewedAt": "2026-05-02",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
+      "N5 golden word expectation matched by npm run deck:words:review:n5.",
+      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "一",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "いち"
+    ],
+    "meaningIncludes": [
+      "one"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "一"
+    ],
+    "coversReadingIncludes": [
+      "一: いち"
+    ],
+    "breakdownIncludes": [
+      "一 （いち）",
+      "one"
+    ],
+    "exampleIncludes": [
+      "一から十まで言います。"
+    ],
+    "notesIncludes": [
+      "Common standalone number form for counting sequences and number ranges."
+    ],
+    "reviewedAt": "2026-05-02",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
+      "N5 golden word expectation matched by npm run deck:words:review:n5 after the example update.",
+      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+    ],
+    "fixSummary": "Simplified the example by removing 数字 so the sentence teaches the standalone number reading directly.",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "七",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "なな"
+    ],
+    "meaningIncludes": [
+      "seven"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "七"
+    ],
+    "coversReadingIncludes": [
+      "七: なな"
+    ],
+    "breakdownIncludes": [
+      "七 （なな）",
+      "seven"
+    ],
+    "exampleIncludes": [
+      "七から十まで言います。"
+    ],
+    "notesIncludes": [
+      "Common standalone number form for counting sequences and number ranges."
+    ],
+    "reviewedAt": "2026-05-02",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
+      "N5 golden word expectation matched by npm run deck:words:review:n5 after the example update.",
+      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+    ],
+    "fixSummary": "Simplified the example by removing 数字 so the sentence teaches the standalone number reading directly.",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "分かる",
+    "status": "platinum",
+    "readingIncludes": [
+      "わかる"
+    ],
+    "meaningIncludes": [
+      "understand"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "分"
+    ],
+    "coversReadingIncludes": [
+      "分: わかる"
+    ],
+    "breakdownIncludes": [
+      "分かる （わかる）",
+      "understand"
+    ],
+    "exampleIncludes": [
+      "日本語が少し分かります。"
+    ],
+    "reviewedAt": "2026-05-02",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
+      "N5 golden word expectation matched by npm run deck:words:review:n5.",
+      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "三つ",
+    "status": "platinum",
+    "readingIncludes": [
+      "みっつ"
+    ],
+    "meaningIncludes": [
+      "three things"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "三"
+    ],
+    "coversReadingIncludes": [
+      "三: みっつ"
+    ],
+    "breakdownIncludes": [
+      "三つ （みっつ）",
+      "three things"
+    ],
+    "exampleIncludes": [
+      "りんごを三つ買いました。"
+    ],
+    "reviewedAt": "2026-05-02",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
+      "N5 golden word expectation matched by npm run deck:words:review:n5.",
+      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "月",
+    "status": "platinum",
+    "readingIncludes": [
+      "つき"
+    ],
+    "meaningIncludes": [
+      "moon"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "月"
+    ],
+    "coversReadingIncludes": [
+      "月: つき"
+    ],
+    "breakdownIncludes": [
+      "月 （つき）",
+      "moon"
+    ],
+    "exampleIncludes": [
+      "今夜は月がきれいです。"
+    ],
+    "reviewedAt": "2026-05-02",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
+      "N5 golden word expectation matched by npm run deck:words:review:n5.",
+      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "下げる",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "さげる"
+    ],
+    "meaningIncludes": [
+      "to lower",
+      "hang down"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "下"
+    ],
+    "coversReadingIncludes": [
+      "下: さげる"
+    ],
+    "breakdownIncludes": [
+      "下げる （さげる）",
+      "to lower / hang down"
+    ],
+    "exampleIncludes": [
+      "手を下げてください。"
+    ],
+    "reviewedAt": "2026-05-02",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
+      "N5 golden word expectation matched by npm run deck:words:review:n5 after the example update.",
+      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+    ],
+    "fixSummary": "Replaced an awkward bag-under-chair example with the simpler learner-facing sentence 手を下げてください。",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  }
+]

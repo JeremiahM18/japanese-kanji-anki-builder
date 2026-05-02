@@ -2587,7 +2587,16 @@
       "written": "伝える",
       "pron": "つたえる"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "手伝う",
+        "displayWord": {
+          "written": "伝",
+          "pron": "つだ"
+        },
+        "englishMeaning": "help / assist"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n3",
@@ -5284,7 +5293,16 @@
       "written": "元",
       "pron": "げん"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "元々",
+        "displayWord": {
+          "written": "元",
+          "pron": "もと"
+        },
+        "englishMeaning": "origin / original state"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -25679,7 +25697,16 @@
       "written": "所",
       "pron": "ところ"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "近所",
+        "displayWord": {
+          "written": "所",
+          "pron": "じょ"
+        },
+        "englishMeaning": "place"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -51859,7 +51886,16 @@
   },
   "質": {
     "englishMeaning": "quality / question",
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "質屋",
+        "displayWord": {
+          "written": "質",
+          "pron": "しち"
+        },
+        "englishMeaning": "pawn / pledge"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -52687,6 +52723,14 @@
           "pron": "きん"
         },
         "englishMeaning": "near / recent"
+      },
+      {
+        "matchWord": "近所",
+        "displayWord": {
+          "written": "近",
+          "pron": "きん"
+        },
+        "englishMeaning": "near / nearby"
       }
     ],
     "source": "starter-curated",

@@ -22,6 +22,22 @@ Each platinum word card must pass all rules below:
 - Audio and pitch accent are present and governed by approved tracked sources.
 - The card does not depend on ignored local files, untracked generated content, or silent fallback behavior.
 
+## Kanji-card platinum rules
+
+Each platinum kanji card must pass all rules below:
+
+- The card belongs in the kanji-deck product and in the reviewed JLPT level.
+- The front/`Kanji` field is exactly one target kanji.
+- `DisplayWord` equals the target kanji. Compound words never become the learner anchor.
+- `PrimaryReading` is the learner-facing reading for that individual kanji.
+- `MeaningJP` is the meaning tied to that primary reading.
+- `KanjiMeanings` preserves the broader useful meaning list without low-value dictionary noise.
+- `StudyWordKanji` is blank for kanji cards.
+- Example words and sentences are support only; they must not override the individual-kanji anchor.
+- Exact kanji-reading audio is present for the target kanji and exported `PrimaryReading`.
+- Stroke-order media is present and governed by approved tracked sources.
+- The card does not depend on ignored local files, untracked generated content, or silent fallback behavior.
+
 ## Outcomes
 
 Every platinum pass decision must use one explicit outcome:
@@ -68,13 +84,52 @@ All gates must be `true`. `fixed_then_platinum` entries must also include `fixSu
 
 Deferred and removed entries must include `word`, `readingIncludes`, and `decisionReason`.
 
+Active platinum kanji entries must include:
+
+- `kanji`
+- `status`
+- `readingIncludes`
+- `meaningIncludes`
+- `kanjiMeaningsIncludes`
+- `levelIncludes`
+- `notesIncludes`
+- `exampleIncludes`
+- `reviewedAt`
+- `reviewer`
+- `sourceEvidence`
+- `qualityGates`
+
+Required kanji `qualityGates`:
+
+- `belongsInKanjiDeck`
+- `individualKanjiAnchor`
+- `displayWordIsTargetKanji`
+- `primaryReadingVerified`
+- `primaryMeaningVerified`
+- `broaderMeaningsVerified`
+- `exampleSupportOnly`
+- `studyWordSuppressed`
+- `levelPlacementVerified`
+- `audioExactPrimaryReading`
+- `strokeOrderVerified`
+- `noSilentFallback`
+
+All kanji gates must be `true`. `fixed_then_platinum` kanji entries must also include `fixSummary`.
+
+Deferred and removed kanji entries must include `kanji` and `decisionReason`.
+
 ## Commands
 
 ```bash
+npm run deck:platinum:n5
+npm run deck:platinum:n4
+npm run deck:platinum:n3
+npm run deck:platinum:n2
+npm run deck:platinum:n1
 npm run deck:words:platinum:n5
 npm run deck:words:platinum:n4
 ```
 
-The N5 command requires every generated N5 word card to have an active platinum entry. N4 is batch-based while the N4 word review is still in progress.
+The N5 kanji and N5 word commands require every generated N5 card to have an active platinum entry. Other levels are batch-based until their platinum passes are complete.
 
 The platinum command intentionally fails for an empty platinum manifest. Do not use golden coverage as a substitute for platinum review.

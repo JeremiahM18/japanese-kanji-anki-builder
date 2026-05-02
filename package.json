@@ -82,6 +82,11 @@
     "product:artifacts:kanji:n5:preflight": "node scripts/trackedSourceArtifacts.js --level=5 --surface=kanji-preflight",
     "product:readiness:n5": "node scripts/productReadiness.js --level=5",
     "deck:review:n3": "node scripts/reviewGoldenLevel.js --level=3",
+    "deck:platinum:n5": "node scripts/reviewPlatinumKanjiLevel.js --level=5 --require-all",
+    "deck:platinum:n4": "node scripts/reviewPlatinumKanjiLevel.js --level=4",
+    "deck:platinum:n3": "node scripts/reviewPlatinumKanjiLevel.js --level=3",
+    "deck:platinum:n2": "node scripts/reviewPlatinumKanjiLevel.js --level=2",
+    "deck:platinum:n1": "node scripts/reviewPlatinumKanjiLevel.js --level=1",
     "bench:build": "node scripts/benchmarkBuild.js",
     "bench:build:gate": "node scripts/benchmarkBuild.js --levels=5,4,3 --no-warmup --budget=default",
     "deck:review:n2": "node scripts/reviewGoldenLevel.js --level=2"

@@ -51,6 +51,7 @@ Tracked contracts define release behavior:
 - Golden kanji review sets: [templates/golden_n5_review_set.json](templates/golden_n5_review_set.json), [templates/golden_n4_review_set.json](templates/golden_n4_review_set.json), [templates/golden_n3_review_set.json](templates/golden_n3_review_set.json), [templates/golden_n2_review_set.json](templates/golden_n2_review_set.json), [templates/golden_n1_review_set.json](templates/golden_n1_review_set.json)
 - Golden word review sets: [templates/golden_n5_word_review_set.json](templates/golden_n5_word_review_set.json), [templates/golden_n4_word_review_set.json](templates/golden_n4_word_review_set.json)
 - Platinum review policy: [docs/platinum-review-policy.md](docs/platinum-review-policy.md)
+- Platinum kanji review sets: [templates/platinum_n5_review_set.json](templates/platinum_n5_review_set.json), [templates/platinum_n4_review_set.json](templates/platinum_n4_review_set.json), [templates/platinum_n3_review_set.json](templates/platinum_n3_review_set.json), [templates/platinum_n2_review_set.json](templates/platinum_n2_review_set.json), [templates/platinum_n1_review_set.json](templates/platinum_n1_review_set.json)
 - Platinum word review sets: [templates/platinum_n5_word_review_set.json](templates/platinum_n5_word_review_set.json), [templates/platinum_n4_word_review_set.json](templates/platinum_n4_word_review_set.json)
 
 ## Product Rules
@@ -84,19 +85,19 @@ Platinum review:
 - Platinum review decides whether a card deserves to ship in version 1.
 - Platinum review removes or defers noise instead of preserving cards that are uncommon, awkward, too advanced for the level, or only present to chase coverage.
 - Platinum review may improve source data and example sentences before promotion.
-- Current platinum manifests are scaffolds and must not be treated as completed release coverage until populated by reviewed entries.
+- Platinum manifests are in progress. Only active `platinum` and `fixed_then_platinum` entries count as reviewed release coverage.
 
 ## Current Baseline
 
 | Surface | Status |
 | --- | --- |
-| N5 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
-| N4 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
-| N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
-| N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
+| N5 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum started at `12/80` |
+| N4 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
+| N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
+| N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N1 kanji | Golden review partial at `640/1231`; not ready because exact primary-reading audio is missing from exported cards |
-| N5 word | Golden-reviewed; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows |
-| N4 word | Golden review partial at `312/471`; `ready_with_deferred_variants` when built with N5 as the selected word-product scope; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows |
+| N5 word | Golden-reviewed; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; platinum started at `12/348` |
+| N4 word | Golden review partial at `312/471`; `ready_with_deferred_variants` when built with N5 as the selected word-product scope; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; platinum not started |
 
 Current tracked word inventory:
 
@@ -132,7 +133,7 @@ npm run release:gate
 
 `product:artifacts:kanji:n5:preflight` inspects tracked templates and reports whether N5 kanji TSV certification is possible without ignored local `data/` inputs. It currently reports `certifiable: no` because explicit on-yomi, kun-yomi, and rich-source provenance are not yet tracked as product contracts. Component/radical source data is tracked in `templates/kanji_component_contract.json`. Use `-- --require-certifiable` only when the remaining contracts exist and the command is expected to fail closed.
 
-`product:readiness:n5` runs the current automated N5 product checkpoint: JLPT kanji and word audits, governed audio provenance, tracked-source N5 word TSV generation, and N5 kanji and word golden reviews. It still does not validate platinum review, tracked-source kanji TSVs, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA.
+`product:readiness:n5` runs the current automated N5 product checkpoint: JLPT kanji and word audits, governed audio provenance, tracked-source N5 word TSV generation, and N5 kanji and word golden reviews. It still does not validate platinum review, tracked-source kanji TSVs, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA. Run the applicable platinum command separately when a level is being version-1 locked.
 
 `release:gate` validates deterministic smoke-fixture artifacts and packaging contracts. It does not certify public product deck readiness. Add level-specific readiness, golden review, accessibility, provenance, and manual QA commands for the surface being changed.
 
@@ -183,10 +184,12 @@ npm run deck:review:n2
 npm run deck:review:n1
 npm run deck:review:coverage
 npm run deck:review:coverage -- --level=1
+node scripts/reviewPlatinumKanjiLevel.js --level=5
 npm run deck:words:review:n5
+node scripts/reviewPlatinumWordLevel.js --level=5
 ```
 
-Review commands protect learner-facing card output rather than raw field presence.
+Golden review protects learner-facing card output rather than raw field presence. Platinum review is the final release-quality pass. The `npm run deck:platinum:n5` and `npm run deck:words:platinum:n5` commands are full-level gates and fail until every generated N5 card has an active platinum entry.
 
 ### Build Kanji Decks
 
@@ -332,6 +335,11 @@ Repository governance:
 | `npm run deck:review:n2` | Run the N2 kanji golden benchmark |
 | `npm run deck:review:n1` | Run the N1 kanji golden benchmark |
 | `npm run deck:review:coverage` | Audit golden-review coverage |
+| `npm run deck:platinum:n5` | Run the N5 kanji platinum release-quality benchmark |
+| `npm run deck:platinum:n4` | Run the N4 kanji platinum release-quality benchmark |
+| `npm run deck:platinum:n3` | Run the N3 kanji platinum release-quality benchmark |
+| `npm run deck:platinum:n2` | Run the N2 kanji platinum release-quality benchmark |
+| `npm run deck:platinum:n1` | Run the N1 kanji platinum release-quality benchmark |
 | `npm run deck:words:ready` | Build and package word TSV artifacts |
 | `npm run deck:words:apkg` | Build word `.apkg` artifacts |
 | `npm run deck:words:review:n5` | Run the N5 word golden benchmark |

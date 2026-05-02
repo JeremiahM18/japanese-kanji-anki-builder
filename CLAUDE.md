@@ -54,9 +54,9 @@ That means:
 
 The canonical taxonomy sources are:
 
-- kanji levels: [templates/jlpt_level_contract.json](C:\Users\cover\Projects\Active\Fullstack\japanese_kanji_builder\templates\jlpt_level_contract.json)
-- word levels: [templates/jlpt_word_level_contract.json](C:\Users\cover\Projects\Active\Fullstack\japanese_kanji_builder\templates\jlpt_word_level_contract.json)
-- release audio source policy: [templates/audio_source_policy.json](C:\Users\cover\Projects\Active\Fullstack\japanese_kanji_builder\templates\audio_source_policy.json)
+- kanji levels: [templates/jlpt_level_contract.json](templates/jlpt_level_contract.json)
+- word levels: [templates/jlpt_word_level_contract.json](templates/jlpt_word_level_contract.json)
+- release audio source policy: [templates/audio_source_policy.json](templates/audio_source_policy.json)
 
 Do not bypass those contracts.
 
@@ -94,22 +94,23 @@ Use the explicit word coverage contract where possible:
 
 Do not rely on heuristics when tracked truth should exist.
 
-## N5 Before N4
+## Word Deck Sequencing
 
 Do not widen scope just because higher levels exist.
 
-Current sequencing rule:
+Current posture:
 
-- finish N5 properly before expanding N4 word work
-
-That means N4 is blocked until N5 word work is honest and measurable.
+- N5 word work is stabilized and should stay frozen except for regressions or explicit editorial decisions
+- N4 word work is active and must use the same governance bar as N5
+- higher word levels remain future work until their contracts and review gates are ready
 
 For word-deck expansion:
 
-- do not propose “let’s move on to N4” unless N5 gaps are clearly accounted for
-- prefer closing N5 reading-coverage and completion gaps first
+- do not duplicate rows just to move a metric
+- prefer useful, common, learner-friendly cards over raw coverage gain
+- keep reading coverage, labels, examples, audio, pitch accent, and card-back fields governed from the first batch
 
-## N5 Word Freeze And N4 Startup Rule
+## N5 Word Freeze And N4 Rule
 
 N5 word work is now stabilized.
 
@@ -174,7 +175,7 @@ Treat shipped audio as a governed product surface:
 - generated audio must preserve provenance into managed manifests instead of collapsing into generic `local-filesystem`
 - a release deck should use one canonical audio source, not a mix of engines or ad hoc imports
 - managed audio should carry explicit `source`, `voice`, and `locale` metadata
-- do not enable word-deck audio by default until the repo explicitly raises that product bar
+- word-deck audio is a governed shipped surface and must remain exact to the exported word-reading identity
 
 ## Required Audits And Validation
 
@@ -194,17 +195,23 @@ N5 kanji checks:
 ```bash
 npm run deck:review:n5
 npm run deck:review:coverage
+node scripts/reviewPlatinumKanjiLevel.js --level=5
 ```
+
+Use `npm run deck:platinum:n5` only when the full N5 kanji platinum manifest is expected to be complete.
 
 N5 word checks:
 
 ```bash
 npm run deck:words:review:n5
+node scripts/reviewPlatinumWordLevel.js --level=5
 npm run deck:words:ready -- --levels=5
 npm run deck:words:completion:n5 -- --json
 npm run deck:words:reading-audit:n5
 npm run deck:words:triage:n5
 ```
+
+Use `npm run deck:words:platinum:n5` only when the full N5 word platinum manifest is expected to be complete.
 
 N4 word startup checks:
 
@@ -230,10 +237,10 @@ Know which data is tracked and which is local.
 
 Tracked contract/source files include:
 
-- [templates/jlpt_level_contract.json](C:\Users\cover\Projects\Active\Fullstack\japanese_kanji_builder\templates\jlpt_level_contract.json)
-- [templates/jlpt_word_level_contract.json](C:\Users\cover\Projects\Active\Fullstack\japanese_kanji_builder\templates\jlpt_word_level_contract.json)
-- [templates/starter_curated_study_data.json](C:\Users\cover\Projects\Active\Fullstack\japanese_kanji_builder\templates\starter_curated_study_data.json)
-- [templates/starter_word_study_data.json](C:\Users\cover\Projects\Active\Fullstack\japanese_kanji_builder\templates\starter_word_study_data.json)
+- [templates/jlpt_level_contract.json](templates/jlpt_level_contract.json)
+- [templates/jlpt_word_level_contract.json](templates/jlpt_word_level_contract.json)
+- [templates/starter_curated_study_data.json](templates/starter_curated_study_data.json)
+- [templates/starter_word_study_data.json](templates/starter_word_study_data.json)
 - tracked `starter_curated_study_data_*.json` batch files
 
 Ignored local overlays include:

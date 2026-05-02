@@ -7,10 +7,10 @@ This folder holds the local datasets and media that make the repo usable on a re
 Required local datasets:
 
 - `kanji_jlpt_only.json` - JLPT kanji list by level
-- `KRADFILE` - kanji-to-component and radical mapping
 
 Optional but high-value local datasets:
 
+- `KRADFILE` - local fallback for kanji-to-component and radical mapping; governed builds prefer `templates/kanji_component_contract.json`
 - `sentence_corpus.json` - sentence corpus used for deterministic learner-facing example selection
 - `curated_study_data.json` - local kanji curation overrides for meanings, notes, preferred words, blocked words, and examples
 - `word_study_data.json` - local word-deck curation overrides keyed by `written|reading`, for example `今日|きょう`

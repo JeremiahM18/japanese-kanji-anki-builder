@@ -33,7 +33,7 @@ npm run lint
 npm test
 npm run ci:smoke
 npm run release:gate
-npm run build:artifacts -- --levels=5 --limit=1 --skip-media-sync
+npm run deck:package -- --levels=5 --limit=1 --skip-media-sync
 ```
 
 If your change affects corpus or curated data workflows, also run:
@@ -54,9 +54,9 @@ npm run media:sync -- --level=5 --limit=1
 
 ## Repository Governance
 
-- Keep [.github/CODEOWNERS](/C:/japanese_kanji_builder/.github/CODEOWNERS) aligned with the critical paths that need code-owner review.
-- Keep [docs/branch-protection.md](/C:/japanese_kanji_builder/docs/branch-protection.md) aligned with the exact required GitHub checks and branch protection rules for `main`.
-- Keep [docs/release-process.md](/C:/japanese_kanji_builder/docs/release-process.md) aligned with the tagged release workflow and artifact policy.
+- Keep [.github/CODEOWNERS](.github/CODEOWNERS) aligned with the critical paths that need code-owner review.
+- Keep [docs/branch-protection.md](docs/branch-protection.md) aligned with the exact required GitHub checks and branch protection rules for `main`.
+- Keep [docs/release-process.md](docs/release-process.md) aligned with the tagged release workflow and artifact policy.
 - When CI job names change, update the governance docs in the same commit so required-check policy does not drift.
 
 ## Pull Request Standard

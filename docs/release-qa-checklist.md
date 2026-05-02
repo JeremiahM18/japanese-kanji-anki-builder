@@ -20,6 +20,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 
 - Run the golden review command for each shipped kanji level, such as `npm run deck:review:n5`.
 - Run the golden review command for each shipped word level when one exists, such as `npm run deck:words:review:n5`.
+- Run the platinum review command for each version 1 locked kanji level after its platinum manifest is populated, such as `npm run deck:platinum:n5`.
 - Run the platinum review command for each version 1 locked word level after its platinum manifest is populated, such as `npm run deck:words:platinum:n5`.
 - Run `npm run product:artifacts:n5` for an N5 word release. It proves the N5 word TSV can be regenerated from tracked templates only, but it does not validate kanji TSVs, `.apkg` files, or media packages.
 - Run `npm run product:artifacts:kanji:n5:preflight` for an N5 kanji release. It currently reports tracked-source kanji TSV certification as blocked until rich kanji readings and provenance are tracked release contracts. Component/radical source data is tracked in `templates/kanji_component_contract.json`.
@@ -30,6 +31,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 ## Kanji deck manual spot review
 
 - Import each kanji level being shipped into Anki. Current ready local kanji levels are N5, N4, N3, and N2. N1 is not ready until exact primary-reading audio and full golden coverage pass.
+- Confirm platinum-reviewed cards preserve the individual-kanji anchor and do not ship weak, noisy, or compound-led teaching surfaces.
 - Confirm each card front is the individual target kanji.
 - Confirm each card back starts with the learner-facing `PrimaryReading` plus only the meaning associated with that reading.
 - Confirm broader kanji meanings are shown separately and are not collapsed into the primary-reading line.

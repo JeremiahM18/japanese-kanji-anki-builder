@@ -16594,7 +16594,16 @@
       "written": "安い",
       "pron": "やすい"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "安心",
+        "displayWord": {
+          "written": "安",
+          "pron": "あん"
+        },
+        "englishMeaning": "peace / calm"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",

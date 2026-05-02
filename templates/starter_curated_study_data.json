@@ -6158,7 +6158,16 @@
       "written": "写す",
       "pron": "うつす"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "写真",
+        "displayWord": {
+          "written": "写",
+          "pron": "しゃ"
+        },
+        "englishMeaning": "photograph / copy"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -20927,7 +20936,16 @@
       "pron": "みせ"
     },
     "breakdownEnglishMeaning": "shop / store",
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "閉店",
+        "displayWord": {
+          "written": "店",
+          "pron": "てん"
+        },
+        "englishMeaning": "shop / store"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -27381,7 +27399,16 @@
       "written": "授ける",
       "pron": "さずける"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "授業",
+        "displayWord": {
+          "written": "授",
+          "pron": "じゅ"
+        },
+        "englishMeaning": "instruct / teach"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n1",
@@ -51529,7 +51556,16 @@
   },
   "買": {
     "englishMeaning": "buy",
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "買い物",
+        "displayWord": {
+          "written": "買",
+          "pron": "かい"
+        },
+        "englishMeaning": "buying"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -53733,7 +53769,16 @@
       "written": "金",
       "pron": "かね"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "料金",
+        "displayWord": {
+          "written": "金",
+          "pron": "きん"
+        },
+        "englishMeaning": "money / charge"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -54098,7 +54143,16 @@
       "written": "閉める",
       "pron": "しめる"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "閉店",
+        "displayWord": {
+          "written": "閉",
+          "pron": "へい"
+        },
+        "englishMeaning": "closed / closing"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",

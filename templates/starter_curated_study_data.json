@@ -683,6 +683,14 @@
           "pron": "おも"
         },
         "englishMeaning": "main / primary"
+      },
+      {
+        "matchWord": "持ち主",
+        "displayWord": {
+          "written": "主",
+          "pron": "ぬし"
+        },
+        "englishMeaning": "owner / master"
       }
     ],
     "source": "starter-curated",
@@ -23525,6 +23533,14 @@
           "pron": "きゅう"
         },
         "englishMeaning": "sudden"
+      },
+      {
+        "matchWord": "急ぎ足",
+        "displayWord": {
+          "written": "急",
+          "pron": "いそぎ"
+        },
+        "englishMeaning": "hurry"
       }
     ],
     "source": "starter-curated",
@@ -52154,7 +52170,16 @@
       "written": "起きる",
       "pron": "おきる"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "起立",
+        "displayWord": {
+          "written": "起",
+          "pron": "き"
+        },
+        "englishMeaning": "rise / get up"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",

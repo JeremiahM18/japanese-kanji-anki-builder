@@ -718,6 +718,40 @@ test("buildBreakdownInference uses the current single-kanji word on word cards",
     assert.equal(result.meaningJP, "出す （だす） ／ to take out / put out");
 });
 
+test("buildBreakdownInference lets explicit overrides govern single-kanji word contexts", () => {
+    const result = buildBreakdownInference({
+        kanji: "赤",
+        contextWord: "赤ちゃん",
+        contextCandidate: {
+            written: "赤ちゃん",
+            reading: "あかちゃん",
+            meaning: "baby",
+        },
+        inference: {
+            candidates: [{ written: "赤", pron: "あか", gloss: "red", score: 100 }],
+            primaryReading: "あか",
+            englishMeaning: "red",
+            meaningJP: "赤 （あか） ／ red",
+            onReading: "オン: セキ、 シャク",
+            kunReading: "くん: あか、 あか.い",
+        },
+        curatedEntry: {
+            englishMeaning: "red",
+            displayWord: { written: "赤い", pron: "あかい" },
+            breakdownOverrides: [
+                {
+                    matchWord: "赤ちゃん",
+                    displayWord: { written: "赤", pron: "あか" },
+                    englishMeaning: "red",
+                },
+            ],
+        },
+    });
+
+    assert.equal(result.primaryReading, "あか");
+    assert.equal(result.meaningJP, "赤 （あか） ／ red");
+});
+
 test("buildBreakdownInference suppresses katakana-only exact-match primaries", () => {
     const result = buildBreakdownInference({
         kanji: "二",

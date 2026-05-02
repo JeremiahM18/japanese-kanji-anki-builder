@@ -1081,12 +1081,14 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null, contex
             && (matchWord === String(contextWord || "").trim()
                 || matchWord === String(contextCandidate?.written || "").trim());
     }) || null;
-    const breakdownOverrideDisplayWord = contextOverride?.displayWord?.written
+    const contextOverrideDisplayWord = contextOverride?.displayWord?.written
         ? {
             written: String(contextOverride.displayWord.written || "").trim(),
             pron: String(contextOverride?.displayWord?.pron || "").trim(),
         }
-        : (curatedEntry?.breakdownDisplayWord?.written
+        : null;
+    const breakdownOverrideDisplayWord = contextOverrideDisplayWord
+        || (curatedEntry?.breakdownDisplayWord?.written
             ? {
                 written: String(curatedEntry.breakdownDisplayWord.written || "").trim(),
                 pron: String(curatedEntry?.breakdownDisplayWord?.pron || "").trim(),
@@ -1096,6 +1098,10 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null, contex
         && (breakdownOverrideDisplayWord.written === kanji
             || breakdownOverrideDisplayWord.written === String(contextWord || "").trim()
             || breakdownOverrideDisplayWord.written === String(contextCandidate?.written || "").trim());
+    const contextOverrideMatchesContext = Boolean(contextOverrideDisplayWord)
+        && (contextOverrideDisplayWord.written === kanji
+            || contextOverrideDisplayWord.written === String(contextWord || "").trim()
+            || contextOverrideDisplayWord.written === String(contextCandidate?.written || "").trim());
     const defaultCuratedDisplayWord = curatedEntry?.displayWord?.written
         ? {
             written: String(curatedEntry.displayWord.written || "").trim(),
@@ -1123,11 +1129,15 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null, contex
         && exactPron
         && !KATAKANA_ONLY_RE.test(exactPron)
         && exactPron === inferredPrimaryReading;
-    const displayWord = contextDisplayWord || curatedDisplayWord || contextualDisplayWord || (useExactCandidate
+    const displayWord = (contextOverrideMatchesContext ? contextOverrideDisplayWord : null)
+        || contextDisplayWord
+        || curatedDisplayWord
+        || contextualDisplayWord
+        || (useExactCandidate
         ? { written: kanji, pron: exactPron }
         : { written: kanji, pron: "" });
     const englishMeaning = String(
-        ((useBreakdownOverrides && contextOverride?.englishMeaning) ? contextOverride.englishMeaning : "")
+        (((useBreakdownOverrides || contextOverrideMatchesContext) && contextOverride?.englishMeaning) ? contextOverride.englishMeaning : "")
         || ((useBreakdownOverrides && breakdownOverrideMatchesContext) ? curatedEntry?.breakdownEnglishMeaning : "")
         || (isSingleKanjiWordContext ? contextCandidate?.meaning || contextCandidate?.gloss || "" : "")
         || curatedEntry?.englishMeaning
@@ -1137,7 +1147,7 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null, contex
     ).trim();
 
     return {
-        primaryReading: contextDisplayWord?.pron || curatedDisplayWord?.pron || contextualDisplayWord?.pron || (useExactCandidate ? exactPron : ""),
+        primaryReading: displayWord.pron || "",
         meaningJP: buildMeaningJP(displayWord, englishMeaning),
         onReading: normalizeBreakdownReadingField(inference?.onReading, /^(on|オン)\s*:\s*/i),
         kunReading: normalizeBreakdownReadingField(inference?.kunReading, /^(kun|くん)\s*:\s*/i),

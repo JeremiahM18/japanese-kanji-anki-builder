@@ -436,7 +436,7 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.deepEqual(curatedStudyData["雛"].preferredWords, ["雛", "雛鳥", "雛人形"]);
     assert.equal(curatedStudyData["苑"].exampleSentence.japanese, "静かな苑を歩くと心が落ち着いた。");
     assert.deepEqual(curatedStudyData["秀"].displayWord, { written: "優秀", pron: "ゆうしゅう" });
-    assert.equal(curatedStudyData["秩"].notes, "秩序 （ちつじょ） - order ／ 整然 （せいぜん） - orderly ／ 秩序立てる （ちつじょだてる） - arrange systematically");
+    assert.equal(curatedStudyData["秩"].notes, "秩序 （ちつじょ） - order ／ 秩序立てる （ちつじょだてる） - arrange systematically");
     assert.deepEqual(curatedStudyData["稼"].preferredWords, ["稼ぐ", "稼働", "稼ぎ"]);
     assert.equal(curatedStudyData["稿"].exampleSentence.english, "I finally finished the manuscript before the deadline.");
     assert.deepEqual(curatedStudyData["穫"].displayWord, { written: "収穫", pron: "しゅうかく" });

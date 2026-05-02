@@ -748,7 +748,6 @@ test("tracked starter word data includes the twentieth governed N4 completion ba
         ["質屋|しちや", "質", "しち"],
         ["借用|しゃくよう", "借", "しゃく"],
         ["選手|せんしゅ", "手", "しゅ"],
-        ["秋分|しゅうぶん", "秋", "しゅう"],
         ["青春|せいしゅん", "青", "せい"],
         ["青春|せいしゅん", "春", "しゅん"],
         ["売買|ばいばい", "買", "ばい"],
@@ -812,7 +811,6 @@ test("tracked starter word data includes the twenty-third governed N4 completion
         ["義兄|ぎけい", "兄", "けい"],
         ["神道|しんとう", "道", "とう"],
         ["不器用|ぶきよう", "不", "ぶ"],
-        ["給仕|きゅうじ", "仕", "じ"],
         ["心掛け|こころがけ", "心", "こころ"],
         ["真心|まごころ", "心", "ごころ"],
         ["見通し|みとおし", "通", "とおし"],
@@ -957,7 +955,6 @@ test("tracked starter word data includes the twenty-ninth governed N4 completion
 
     assertCoverageReadings(starterEntries, [
         ["京阪|けいはん", "京", "けい"],
-        ["緑青|ろくしょう", "青", "しょう"],
         ["相部屋|あいべや", "部", "べ"],
         ["裏切り|うらぎり", "切", "ぎり"],
         ["夜通し|よどおし", "通", "どおし"],

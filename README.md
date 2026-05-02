@@ -97,16 +97,16 @@ Platinum review:
 | N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N1 kanji | Golden review partial at `640/1231`; not ready because exact primary-reading audio is missing from exported cards |
 | N5 word | Golden-reviewed; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; platinum started at `12/348` |
-| N4 word | Golden review partial at `408/455`; `ready_with_deferred_variants` when built with N5 as the selected word-product scope; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; platinum not started |
+| N4 word | Golden review partial at `420/452`; `ready_with_deferred_variants` when built with N5 as the selected word-product scope; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; platinum not started |
 
 Current tracked word inventory:
 
 - N5 canonical word rows: `348`
 - N5 source-only phrase exclusions: `13`
-- N4 canonical word rows: `455`
-- Current N5+N4 word rows: `803`
+- N4 canonical word rows: `452`
+- Current N5+N4 word rows: `800`
 - N5 word reading coverage: `83.7% (288/344)` when built alone
-- N4 word reading coverage: `75.3% (490/651)` when built with N5 as the selected word-product scope
+- N4 word reading coverage: `74.8% (487/651)` when built with N5 as the selected word-product scope
 - N5+N4 word readiness: run `npm run deck:words:ready -- --levels=5,4 --require-no-active-triage` for the live value
 
 Run live commands for current coverage. Do not rely on README numbers for release decisions.

@@ -97,7 +97,7 @@ Platinum review:
 | N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N1 kanji | Golden review partial at `640/1231`; not ready because exact primary-reading audio is missing from exported cards |
 | N5 word | Golden-reviewed; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; platinum started at `12/348` |
-| N4 word | Golden review partial at `312/471`; `ready_with_deferred_variants` when built with N5 as the selected word-product scope; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; platinum not started |
+| N4 word | Golden review partial at `324/471`; `ready_with_deferred_variants` when built with N5 as the selected word-product scope; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; platinum not started |
 
 Current tracked word inventory:
 

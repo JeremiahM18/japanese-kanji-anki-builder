@@ -2973,7 +2973,16 @@
       "written": "住む",
       "pron": "すむ"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "住所",
+        "displayWord": {
+          "written": "住",
+          "pron": "じゅう"
+        },
+        "englishMeaning": "live / reside"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -3269,6 +3278,14 @@
         "displayWord": {
           "written": "使",
           "pron": "し"
+        },
+        "englishMeaning": "use"
+      },
+      {
+        "matchWord": "使い道",
+        "displayWord": {
+          "written": "使",
+          "pron": "つかい"
         },
         "englishMeaning": "use"
       }
@@ -11820,7 +11837,16 @@
       "written": "問",
       "pron": "もん"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "問屋",
+        "displayWord": {
+          "written": "問",
+          "pron": "とん"
+        },
+        "englishMeaning": "wholesale"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -25809,6 +25835,14 @@
           "pron": "しょ"
         },
         "englishMeaning": "place"
+      },
+      {
+        "matchWord": "住所",
+        "displayWord": {
+          "written": "所",
+          "pron": "しょ"
+        },
+        "englishMeaning": "place"
       }
     ],
     "source": "starter-curated",
@@ -35553,7 +35587,16 @@
       "written": "歌",
       "pron": "うた"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "歌手",
+        "displayWord": {
+          "written": "歌",
+          "pron": "か"
+        },
+        "englishMeaning": "song / sing"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -35708,7 +35751,16 @@
         "written": "歩く",
         "pron": "あるく"
       },
-      "breakdownOverrides": [],
+      "breakdownOverrides": [
+        {
+          "matchWord": "歩道",
+          "displayWord": {
+            "written": "歩",
+            "pron": "ほ"
+          },
+          "englishMeaning": "walk"
+        }
+      ],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -52107,6 +52159,14 @@
           "pron": "あか"
         },
         "englishMeaning": "red"
+      },
+      {
+        "matchWord": "赤道",
+        "displayWord": {
+          "written": "赤",
+          "pron": "せき"
+        },
+        "englishMeaning": "red"
       }
     ],
     "source": "starter-curated",
@@ -53541,7 +53601,24 @@
       "written": "道",
       "pron": "みち"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "赤道",
+        "displayWord": {
+          "written": "道",
+          "pron": "どう"
+        },
+        "englishMeaning": "road / way"
+      },
+      {
+        "matchWord": "歩道",
+        "displayWord": {
+          "written": "道",
+          "pron": "どう"
+        },
+        "englishMeaning": "road / way"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",

@@ -49,7 +49,9 @@ Tracked contracts define release behavior:
 - Kanji note schema: [src/config/ankiNoteSchema.json](src/config/ankiNoteSchema.json)
 - Word note schema: [src/config/ankiWordNoteSchema.json](src/config/ankiWordNoteSchema.json)
 - Golden kanji review sets: [templates/golden_n5_review_set.json](templates/golden_n5_review_set.json), [templates/golden_n4_review_set.json](templates/golden_n4_review_set.json), [templates/golden_n3_review_set.json](templates/golden_n3_review_set.json), [templates/golden_n2_review_set.json](templates/golden_n2_review_set.json), [templates/golden_n1_review_set.json](templates/golden_n1_review_set.json)
-- Golden word review sets: [templates/golden_n5_word_review_set.json](templates/golden_n5_word_review_set.json)
+- Golden word review sets: [templates/golden_n5_word_review_set.json](templates/golden_n5_word_review_set.json), [templates/golden_n4_word_review_set.json](templates/golden_n4_word_review_set.json)
+- Platinum review policy: [docs/platinum-review-policy.md](docs/platinum-review-policy.md)
+- Platinum word review sets: [templates/platinum_n5_word_review_set.json](templates/platinum_n5_word_review_set.json), [templates/platinum_n4_word_review_set.json](templates/platinum_n4_word_review_set.json)
 
 ## Product Rules
 
@@ -57,7 +59,7 @@ Kanji decks:
 
 - Each shipped kanji belongs to the tracked JLPT kanji contract.
 - N5, N4, N3, and N2 kanji are fully protected by golden review coverage.
-- N1 kanji golden review coverage is partial: `448/1231` reviewed as of the current baseline. N1 must not be treated as ready until golden coverage, exact primary-reading audio, and level readiness all pass.
+- N1 kanji golden review coverage is partial: `640/1231` reviewed as of the current baseline. N1 must not be treated as ready until golden coverage, exact primary-reading audio, and level readiness all pass.
 - The kanji deck learning target is the individual kanji. `DisplayWord` is the target kanji itself, and `PrimaryReading` is the learner-facing reading for that kanji.
 - Compound words belong in notes, examples, and word decks; they must not replace the kanji-card anchor.
 - `deck:ready` fails on export fallbacks unless `--allow-export-fallbacks` is explicit.
@@ -76,6 +78,14 @@ Word decks:
 - Track reading-coverage intent with `coverage.role`, `coverage.focusKanji`, and `coverage.coversReadings` when the card exists for coverage.
 - Sentence orthography review is advisory. It flags likely kana-only regressions without banning natural kana usage.
 
+Platinum review:
+
+- Golden review protects reviewed output from regression.
+- Platinum review decides whether a card deserves to ship in version 1.
+- Platinum review removes or defers noise instead of preserving cards that are uncommon, awkward, too advanced for the level, or only present to chase coverage.
+- Platinum review may improve source data and example sentences before promotion.
+- Current platinum manifests are scaffolds and must not be treated as completed release coverage until populated by reviewed entries.
+
 ## Current Baseline
 
 | Surface | Status |
@@ -84,18 +94,18 @@ Word decks:
 | N4 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
 | N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
 | N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio |
-| N1 kanji | Golden review partial at `448/1231`; not ready because exact primary-reading audio is missing from exported cards |
+| N1 kanji | Golden review partial at `640/1231`; not ready because exact primary-reading audio is missing from exported cards |
 | N5 word | Golden-reviewed; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows |
-| N4 word | `ready_with_deferred_variants` when built with N5 as the selected word-product scope; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows |
+| N4 word | Golden review partial at `312/471`; `ready_with_deferred_variants` when built with N5 as the selected word-product scope; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows |
 
 Current tracked word inventory:
 
 - N5 canonical word rows: `348`
 - N5 source-only phrase exclusions: `13`
-- N4 canonical word rows: `472`
-- Current N5+N4 word rows: `820`
+- N4 canonical word rows: `471`
+- Current N5+N4 word rows: `819`
 - N5 word reading coverage: `83.7% (288/344)` when built alone
-- N4 word reading coverage: `78.5% (511/651)` when built with N5 as the selected word-product scope
+- N4 word reading coverage: `77.9% (507/651)` when built with N5 as the selected word-product scope
 - N5+N4 word readiness: run `npm run deck:words:ready -- --levels=5,4 --require-no-active-triage` for the live value
 
 Run live commands for current coverage. Do not rely on README numbers for release decisions.
@@ -122,7 +132,7 @@ npm run release:gate
 
 `product:artifacts:kanji:n5:preflight` inspects tracked templates and reports whether N5 kanji TSV certification is possible without ignored local `data/` inputs. It currently reports `certifiable: no` because explicit on-yomi, kun-yomi, and rich-source provenance are not yet tracked as product contracts. Component/radical source data is tracked in `templates/kanji_component_contract.json`. Use `-- --require-certifiable` only when the remaining contracts exist and the command is expected to fail closed.
 
-`product:readiness:n5` runs the current automated N5 product checkpoint: JLPT kanji and word audits, governed audio provenance, tracked-source N5 word TSV generation, and N5 kanji and word golden reviews. It still does not validate tracked-source kanji TSVs, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA.
+`product:readiness:n5` runs the current automated N5 product checkpoint: JLPT kanji and word audits, governed audio provenance, tracked-source N5 word TSV generation, and N5 kanji and word golden reviews. It still does not validate platinum review, tracked-source kanji TSVs, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA.
 
 `release:gate` validates deterministic smoke-fixture artifacts and packaging contracts. It does not certify public product deck readiness. Add level-specific readiness, golden review, accessibility, provenance, and manual QA commands for the surface being changed.
 
@@ -325,6 +335,8 @@ Repository governance:
 | `npm run deck:words:ready` | Build and package word TSV artifacts |
 | `npm run deck:words:apkg` | Build word `.apkg` artifacts |
 | `npm run deck:words:review:n5` | Run the N5 word golden benchmark |
+| `npm run deck:words:platinum:n5` | Run the N5 word platinum release-quality benchmark |
+| `npm run deck:words:platinum:n4` | Run the N4 word platinum release-quality benchmark |
 | `npm run deck:words:completion:n5` | Audit N5 word inventory and reading coverage |
 | `npm run deck:words:completion:n4` | Audit N4 word inventory and reading coverage |
 | `npm run deck:words:reading-audit:n4` | Audit N4 word reading coverage |

@@ -20,6 +20,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 
 - Run the golden review command for each shipped kanji level, such as `npm run deck:review:n5`.
 - Run the golden review command for each shipped word level when one exists, such as `npm run deck:words:review:n5`.
+- Run the platinum review command for each version 1 locked word level after its platinum manifest is populated, such as `npm run deck:words:platinum:n5`.
 - Run `npm run product:artifacts:n5` for an N5 word release. It proves the N5 word TSV can be regenerated from tracked templates only, but it does not validate kanji TSVs, `.apkg` files, or media packages.
 - Run `npm run product:artifacts:kanji:n5:preflight` for an N5 kanji release. It currently reports tracked-source kanji TSV certification as blocked until rich kanji readings and provenance are tracked release contracts. Component/radical source data is tracked in `templates/kanji_component_contract.json`.
 - Run `npm run product:readiness:n5` for an N5 release. It combines the current automated N5 audits and golden reviews, but it does not replace fresh artifact generation or manual QA.
@@ -44,6 +45,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 ## Word deck manual spot review
 
 - Import each word level being shipped into Anki. Current ready-with-deferred-variants local word levels are N5 and N4 when N4 is built with N5 as the selected word-product scope.
+- Confirm platinum-reviewed cards are useful, common enough, learner-friendly, and not present only for reading coverage.
 - Review beginner core words.
 - Review support words.
 - Review constituent-kanji labels, including cross-level and outside-JLPT kanji.

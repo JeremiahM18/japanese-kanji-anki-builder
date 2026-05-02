@@ -12,6 +12,7 @@ const N5_PRODUCT_READINESS_SCOPE = Object.freeze({
         "N5 word golden review benchmark",
     ],
     doesNotValidate: [
+        "platinum release-quality review",
         "tracked-source kanji TSV or .apkg product artifacts",
         "manual Anki import review",
         "mobile, screen-reader, or listening QA",

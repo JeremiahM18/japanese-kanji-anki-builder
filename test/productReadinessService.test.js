@@ -83,6 +83,7 @@ test("formatProductReadinessReport states scope and exclusions", () => {
     assert.match(text, /N5 Product Readiness Checkpoint/);
     assert.match(text, /Overall result: passing/);
     assert.match(text, /Does not validate:/);
+    assert.match(text, /platinum release-quality review/);
     assert.match(text, /tracked-source kanji TSV or \.apkg product artifacts/);
     assert.match(text, /manual Anki import review/);
     assert.match(text, /mobile, screen-reader, or listening QA/);

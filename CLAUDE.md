@@ -101,7 +101,7 @@ Do not widen scope just because higher levels exist.
 Current posture:
 
 - N5 word work is stabilized and should stay frozen except for regressions or explicit editorial decisions
-- N4 word work is active and must use the same governance bar as N5
+- N4 word work is golden-reviewed and should stay frozen except for regressions, platinum decisions, or explicit editorial decisions
 - higher word levels remain future work until their contracts and review gates are ready
 
 For word-deck expansion:
@@ -110,17 +110,18 @@ For word-deck expansion:
 - prefer useful, common, learner-friendly cards over raw coverage gain
 - keep reading coverage, labels, examples, audio, pitch accent, and card-back fields governed from the first batch
 
-## N5 Word Freeze And N4 Rule
+## N5/N4 Word Freeze
 
-N5 word work is now stabilized.
+N5 and N4 word work are now stabilized at the golden-review level.
 
 That means:
 
-- keep N5 word frozen except for regressions or explicit editorial decisions
-- do not churn N5 word rows just to move a metric once the active triage backlog is cleared
+- keep N5 and N4 word rows frozen except for regressions, platinum decisions, or explicit editorial decisions
+- do not churn word rows just to move a metric once the active triage backlog is cleared
 - use `npm run deck:words:ready -- --levels=5 --require-no-active-triage` as the normal N5 word guard before and after changes that could affect the shared word-deck pipeline
+- use `npm run deck:words:ready -- --levels=5,4 --require-no-active-triage` as the normal N4 word guard before and after changes that could affect the shared word-deck pipeline
 
-When N4 word work starts, use the full N5 contract from day one:
+N4 word work uses the same contract bar as N5:
 
 - no duplicate standalone higher-level kanji cards in lower-level word decks
 - cross-level or outside-contract constituent kanji must be visibly labeled on the learner-facing card
@@ -128,7 +129,7 @@ When N4 word work starts, use the full N5 contract from day one:
 - sentence orthography gets a soft editorial audit, not a hard simplistic rule
 - deck policy violations are hard-fail build issues, not just review notes
 
-Do not treat N4 word work as a looser experimental surface. Start it under the same policy bar that stabilized N5.
+Do not treat N4 word work as a looser experimental surface.
 
 ## What “Done” Means
 
@@ -213,10 +214,11 @@ npm run deck:words:triage:n5
 
 Use `npm run deck:words:platinum:n5` only when the full N5 word platinum manifest is expected to be complete.
 
-N4 word startup checks:
+N4 word guard checks:
 
 ```bash
-npm run deck:words:ready -- --levels=4
+npm run deck:words:review:n4
+npm run deck:words:ready -- --levels=5,4 --require-no-active-triage
 npm run deck:words:completion:n4 -- --json
 npm run deck:words:reading-audit:n4 -- --json
 npm run deck:words:triage:n4 -- --json

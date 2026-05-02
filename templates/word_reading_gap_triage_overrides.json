@@ -412,6 +412,11 @@
       "priority": "low",
       "note": "品 -> ほん is not a useful N4 target; keep 品 through しな, 商品, and 品切れ."
     },
+    "魚|kun|ざかな": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Clean ざかな support candidates are either lower learner value, such as 小魚/川魚, or rely on harder kanji such as 焼; do not force them into N4 just for coverage."
+    },
     "歩|on|ふ": {
       "suggestedAction": "defer_variant",
       "priority": "low",

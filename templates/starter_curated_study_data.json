@@ -3181,6 +3181,14 @@
           "pron": "さく"
         },
         "englishMeaning": "make / create"
+      },
+      {
+        "matchWord": "手作り",
+        "displayWord": {
+          "written": "作り",
+          "pron": "づくり"
+        },
+        "englishMeaning": "make / handmade"
       }
     ],
     "source": "starter-curated",
@@ -29705,7 +29713,16 @@
       "written": "新しい",
       "pron": "あたらしい"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "新手",
+        "displayWord": {
+          "written": "新",
+          "pron": "あら"
+        },
+        "englishMeaning": "new"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -29744,6 +29761,14 @@
         "displayWord": {
           "written": "方",
           "pron": "ほう"
+        },
+        "englishMeaning": "way / method"
+      },
+      {
+        "matchWord": "使い方",
+        "displayWord": {
+          "written": "方",
+          "pron": "かた"
         },
         "englishMeaning": "way / method"
       }
@@ -55706,6 +55731,14 @@
           "pron": "おん"
         },
         "englishMeaning": "sound"
+      },
+      {
+        "matchWord": "音色",
+        "displayWord": {
+          "written": "音",
+          "pron": "ね"
+        },
+        "englishMeaning": "sound / tone"
       }
     ],
     "source": "starter-curated",

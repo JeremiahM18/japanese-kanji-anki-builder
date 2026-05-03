@@ -52,8 +52,9 @@ Each platinum kanji card must pass all rules below:
 - The card belongs in the kanji-deck product and in the reviewed JLPT level.
 - The front/`Kanji` field is exactly one target kanji.
 - `DisplayWord` equals the target kanji. Compound words never become the learner anchor.
-- `PrimaryReading` is the learner-facing reading for that individual kanji.
+- `PrimaryReading` is the most learner-useful, level-appropriate reading for that individual kanji.
 - The chosen `PrimaryReading` has a recorded rationale, especially when the kanji has multiple valid readings.
+- The rationale must explain why the selected reading is the right learner-facing reading for this level. Do not choose a reading only because it appears first in a dictionary source or because matching audio already exists.
 - `MeaningJP` is the meaning tied to that primary reading.
 - `KanjiMeanings` preserves the broader useful meaning list without low-value dictionary noise.
 - `StudyWordKanji` is blank for kanji cards.

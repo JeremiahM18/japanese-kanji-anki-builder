@@ -16,8 +16,9 @@ That means:
 
 - The front is the single target kanji only.
 - `DisplayWord` is the target kanji.
-- `PrimaryReading` is the learner-facing reading for that individual kanji.
+- `PrimaryReading` is the most learner-useful, level-appropriate reading for that individual kanji.
 - `MeaningJP` is the meaning tied to `PrimaryReading`; broader meanings belong in `KanjiMeanings`.
+- Do not choose a kanji `PrimaryReading` only because it appears first in a dictionary source or because matching audio already exists. If the best learner-facing reading changes, exact audio must be regenerated for that reading.
 - Keep notes and examples aligned with the target kanji, but do not let a compound word become the learner anchor.
 - Leave `StudyWordKanji` blank for kanji cards.
 - Avoid exposing internal notation or raw fallback text to learners.

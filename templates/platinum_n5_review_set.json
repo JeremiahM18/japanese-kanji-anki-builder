@@ -2251,15 +2251,15 @@
     "kanji": "分",
     "status": "fixed_then_platinum",
     "readingIncludes": [
-      "ぶん"
+      "ふん"
     ],
     "meaningIncludes": [
-      "part"
+      "minute"
     ],
     "kanjiMeaningsIncludes": [
+      "minute",
       "part",
       "divide",
-      "minute",
       "understand"
     ],
     "levelIncludes": [
@@ -2279,17 +2279,17 @@
       {
         "type": "generated-surface",
         "source": "node scripts/previewDeck.js --kanji=分 --json",
-        "detail": "Generated card surface inspected for 分|ぶん: single-kanji anchor; Kanji and DisplayWord 分; PrimaryReading ぶん; MeaningJP part; KanjiMeanings part / divide / minute / understand; notes include 分, 五分, 分かる; example あと五分あります。; audio field includes 5206_分-kanji-reading-分-ぶん.wav; stroke-order field includes 5206_分-stroke-order.gif."
+        "detail": "Generated card surface inspected for 分|ふん: single-kanji anchor; Kanji and DisplayWord 分; PrimaryReading ふん; MeaningJP minute; KanjiMeanings minute / divide / part / understand; notes include 分, 五分, 分かる; example あと五分あります。; audio field includes 5206_分-kanji-reading-分-ふん.wav; stroke-order field includes 5206_分-stroke-order.gif."
       },
       {
         "type": "golden-review",
         "source": "npm run deck:review:n5",
-        "detail": "N5 golden review protects 分 with PrimaryReading ぶん, MeaningJP part, support notes, and example あと五分あります。."
+        "detail": "N5 golden review protects 分 with PrimaryReading ふん, MeaningJP minute, support notes, and example あと五分あります。."
       },
       {
         "type": "japanese-source",
         "source": "data/kanji_jlpt_only.json; templates/starter_curated_study_data.json; EDRDG KANJIDIC2 field model; Bunka Joyo Kanji table reference",
-        "detail": "Japanese/dictionary source review for 分|ぶん: data/kanji_jlpt_only.json lists on readings ブ/ブン/フン, kun readings わ.かつ/わ.かる/わ.かれる/わ.ける/わ.け, and meanings divide/minute/part/understand; tracked starter curation selects PrimaryReading ぶん, MeaningJP part, and KanjiMeanings part / divide / minute / understand. Platinum does not certify fresh tracked-source kanji TSV provenance; that remains covered by product:artifacts:kanji:n5:preflight."
+        "detail": "Japanese/dictionary source review for 分|ふん: data/kanji_jlpt_only.json lists on readings ブ/ブン/フン, kun readings わ.かつ/わ.かる/わ.かれる/わ.ける/わ.け, and meanings divide/minute/part/understand; Bunka Joyo examples include 三十分 and 五分 for フン/ブ time and unit use; tracked starter curation selects the N5 learner-useful PrimaryReading ふん, MeaningJP minute, and KanjiMeanings minute / divide / part / understand. Platinum does not certify fresh tracked-source kanji TSV provenance; that remains covered by product:artifacts:kanji:n5:preflight."
       },
       {
         "type": "media-audit",
@@ -2299,7 +2299,7 @@
       {
         "type": "audio-review",
         "source": "exported Audio field and managed media manifest",
-        "detail": "Audio artifact reviewed for 分|ぶん: exact kanji-reading audio 5206_分-kanji-reading-分-ぶん.wav; source voicevox-nemo; category kanji-reading; target 分; exported PrimaryReading ぶん; listening QA remains a separate release checklist item."
+        "detail": "Audio artifact reviewed for 分|ふん: exact kanji-reading audio 5206_分-kanji-reading-分-ふん.wav; source voicevox-nemo; category kanji-reading; target 分; exported PrimaryReading ふん; listening QA remains a separate release checklist item."
       },
       {
         "type": "stroke-order-review",
@@ -2309,7 +2309,7 @@
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Final product judgment for 分|ぶん: individual-kanji card for a learner, common/useful N5 target, support-only examples, no compound learner anchor, blank StudyWordKanji, and no silent fallback."
+        "detail": "Final product judgment for 分|ふん: individual-kanji card for a learner, common/useful N5 time-unit reading, support-only examples, no compound learner anchor, blank StudyWordKanji, and no silent fallback."
       }
     ],
     "qualityGates": {
@@ -2330,8 +2330,8 @@
       "audioArtifactVerified": true,
       "strokeOrderTargetVerified": true
     },
-    "primaryReadingRationale": "Uses ぶん as the learner-facing reading for the individual kanji 分 meaning part; minute and understand readings stay in support notes because they use different readings.",
-    "fixSummary": "Changed MeaningJP from part / minute to part so the primary meaning matches exported PrimaryReading ぶん; 五分 remains as support vocabulary for the minute reading."
+    "primaryReadingRationale": "Uses ふん as the most learner-useful N5 reading for the individual kanji 分 because beginner time expressions such as 五分 and 三十分 make the minute reading the practical first anchor; ぶん/part and わかる/understand stay in support notes and broader meanings.",
+    "fixSummary": "Corrected the earlier platinum choice from ぶん/part to ふん/minute so the N5 kanji card follows the learner-useful, level-appropriate primary-reading policy; ぶん and わかる remain support readings."
   },
   {
     "kanji": "前",

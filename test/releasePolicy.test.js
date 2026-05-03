@@ -54,3 +54,15 @@ test("product hardening docs exist for exit criteria, accessibility, and content
     assert.equal(releaseQaChecklist.includes("Release QA Checklist"), true);
     assert.equal(notice.includes("VOICEVOX Nemo"), true);
 });
+
+test("platinum review npm scripts are full-level release gates", () => {
+    const packageJson = JSON.parse(readRepoFile("package.json"));
+    const platinumScripts = Object.entries(packageJson.scripts)
+        .filter(([name, command]) => name.includes("platinum") && command.includes("reviewPlatinum"));
+
+    assert.ok(platinumScripts.length > 0, "Expected package.json to expose platinum review scripts");
+
+    for (const [name, command] of platinumScripts) {
+        assert.match(command, /--require-all(?:\s|$)/, `${name} must require full generated-level platinum coverage`);
+    }
+});

@@ -176,7 +176,16 @@
       "written": "上",
       "pron": "うえ"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "出来上がり",
+        "displayWord": {
+          "written": "上がり",
+          "pron": "あがり"
+        },
+        "englishMeaning": "rise / finish"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -6977,7 +6986,24 @@
       "written": "分",
       "pron": "ふん"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "半分",
+        "displayWord": {
+          "written": "分",
+          "pron": "ぶん"
+        },
+        "englishMeaning": "part / portion"
+      },
+      {
+        "matchWord": "十分",
+        "displayWord": {
+          "written": "分",
+          "pron": "ぷん"
+        },
+        "englishMeaning": "minute"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n5",
@@ -22809,7 +22835,24 @@
       "written": "後",
       "pron": "あと"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "午後",
+        "displayWord": {
+          "written": "後",
+          "pron": "ご"
+        },
+        "englishMeaning": "after / later"
+      },
+      {
+        "matchWord": "後半",
+        "displayWord": {
+          "written": "後",
+          "pron": "こう"
+        },
+        "englishMeaning": "later / latter"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -32853,6 +32896,14 @@
           "pron": "らい"
         },
         "englishMeaning": "next / come"
+      },
+      {
+        "matchWord": "出来上がり",
+        "displayWord": {
+          "written": "来",
+          "pron": "き"
+        },
+        "englishMeaning": "come / become"
       }
     ],
     "source": "starter-curated",
@@ -43504,17 +43555,34 @@
     }
   },
   "生": {
-    "englishMeaning": "life / birth",
+    "englishMeaning": "live / life / birth / raw",
+    "breakdownEnglishMeaning": "life / birth",
     "displayWord": {
       "written": "生きる",
       "pron": "いきる"
     },
-    "breakdownEnglishMeaning": "life / birth",
     "breakdownDisplayWord": {
       "written": "生",
       "pron": "せい"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "学生",
+        "displayWord": {
+          "written": "生",
+          "pron": "せい"
+        },
+        "englishMeaning": "student / life"
+      },
+      {
+        "matchWord": "先生",
+        "displayWord": {
+          "written": "生",
+          "pron": "せい"
+        },
+        "englishMeaning": "teacher / life"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -43528,6 +43596,9 @@
       "学生"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "genuine"
+    ],
     "blockedSentencePhrases": [],
     "notes": "生きる （いきる） - live ／ 学生 （がくせい） - student ／ 生まれる （うまれる） - be born",
     "alternativeNotes": [],
@@ -50166,7 +50237,7 @@
     }
   },
   "行": {
-    "englishMeaning": "go",
+    "englishMeaning": "go / carry out / line",
     "breakdownEnglishMeaning": "go / line",
     "displayWord": {
       "written": "行く",
@@ -50176,7 +50247,24 @@
       "written": "行",
       "pron": "こう"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "銀行",
+        "displayWord": {
+          "written": "行",
+          "pron": "こう"
+        },
+        "englishMeaning": "bank / line"
+      },
+      {
+        "matchWord": "行き先",
+        "displayWord": {
+          "written": "行",
+          "pron": "ゆき"
+        },
+        "englishMeaning": "destination / going"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -50190,6 +50278,14 @@
       "銀行"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "act",
+      "bank",
+      "conduct",
+      "going",
+      "journey",
+      "row"
+    ],
     "blockedSentencePhrases": [],
     "notes": "行く （いく） - go ／ 行きます （いきます） - go (polite) ／ 銀行 （ぎんこう） - bank",
     "alternativeNotes": [],
@@ -50529,6 +50625,9 @@
       "西口"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "Spain"
+    ],
     "blockedSentencePhrases": [],
     "notes": "西 （にし） - west ／ 西口 （にしぐち） - west entrance",
     "alternativeNotes": [],
@@ -50605,6 +50704,12 @@
       "見せる"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "chances",
+      "hopes",
+      "idea",
+      "opinion"
+    ],
     "blockedSentencePhrases": [],
     "notes": "見る （みる） - see / watch ／ 見える （みえる） - be visible ／ 見せる （みせる） - show",
     "alternativeNotes": [],

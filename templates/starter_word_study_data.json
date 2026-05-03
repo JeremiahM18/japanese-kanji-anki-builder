@@ -2334,6 +2334,17 @@
       "common",
       "n5"
     ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "午",
+        "後"
+      ],
+      "coversReadings": {
+        "午": "ご",
+        "後": "ご"
+      }
+    },
     "exampleSentence": {
       "japanese": "午後は図書館で本を読みます。",
       "reading": "ごごはとしょかんでほんをよみます。",
@@ -3574,10 +3585,12 @@
     "coverage": {
       "role": "both",
       "focusKanji": [
-        "十"
+        "十",
+        "分"
       ],
       "coversReadings": {
-        "十": "じゅっ"
+        "十": "じゅっ",
+        "分": "ぷん"
       }
     },
     "exampleSentence": {
@@ -6178,6 +6191,17 @@
       "common",
       "n5"
     ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "半",
+        "分"
+      ],
+      "coversReadings": {
+        "半": "はん",
+        "分": "ぶん"
+      }
+    },
     "exampleSentence": {
       "japanese": "ケーキを半分食べました。",
       "reading": "けーきをはんぶんたべました。",
@@ -7897,13 +7921,15 @@
     "coverage": {
       "role": "support",
       "focusKanji": [
+        "来",
         "上"
       ],
       "coversReadings": {
+        "来": "き",
         "上": "あがり"
       }
     },
-    "notes": "Reading-coverage support word for the 上 -> あがり pattern.",
+    "notes": "Reading-coverage support word for the 来 -> き and 上 -> あがり patterns.",
     "exampleSentence": {
       "japanese": "ケーキの出来上がりを待っています。",
       "reading": "けーきのできあがりをまっています。",

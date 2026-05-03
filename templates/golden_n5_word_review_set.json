@@ -4232,14 +4232,16 @@
       "JLPT core + reading coverage"
     ],
     "focusIncludes": [
-      "十"
+      "十",
+      "分"
     ],
     "coversReadingIncludes": [
-      "十: じゅっ"
+      "十: じゅっ",
+      "分: ぷん"
     ],
     "breakdownIncludes": [
       "十 （じゅう）",
-      "分 （ぶん）"
+      "分 （ぷん）"
     ],
     "exampleIncludes": [
       "駅まで十分かかります。"
@@ -4535,7 +4537,7 @@
     ],
     "breakdownIncludes": [
       "五 （ご）",
-      "分 （ぶん）"
+      "分 （ふん）"
     ],
     "exampleIncludes": [
       "駅まで五分で着きます。"
@@ -7626,7 +7628,7 @@
       "行: ゆき"
     ],
     "breakdownIncludes": [
-      "行 （こう）",
+      "行 （ゆき）",
       "先 （さき）"
     ],
     "exampleIncludes": [
@@ -7658,7 +7660,7 @@
       "後: こう"
     ],
     "breakdownIncludes": [
-      "後 （ご）",
+      "後 （こう）",
       "半 （はん）"
     ],
     "exampleIncludes": [
@@ -10128,21 +10130,23 @@
       "Reading coverage support"
     ],
     "focusIncludes": [
+      "来",
       "上"
     ],
     "coversReadingIncludes": [
+      "来: き",
       "上: あがり"
     ],
     "breakdownIncludes": [
       "出 （で）",
-      "来 （らい）",
-      "上 （うえ）"
+      "来 （き）",
+      "上がり （あがり）"
     ],
     "exampleIncludes": [
       "ケーキの出来上がりを待っています。"
     ],
     "notesIncludes": [
-      "Reading-coverage support word for the 上 -> あがり pattern."
+      "Reading-coverage support word for the 来 -> き and 上 -> あがり patterns."
     ]
   },
   {

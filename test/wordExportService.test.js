@@ -563,13 +563,16 @@ test("buildBreakdownInference can use breakdown-only overrides for compound cont
         curatedEntry: {
             englishMeaning: "go",
             displayWord: { written: "行く", pron: "いく" },
-            breakdownEnglishMeaning: "go / line",
-            breakdownDisplayWord: { written: "行", pron: "こう" },
+            breakdownOverrides: [{
+                matchWord: "銀行",
+                displayWord: { written: "行", pron: "こう" },
+                englishMeaning: "bank / line",
+            }],
         },
     });
 
     assert.equal(result.primaryReading, "こう");
-    assert.equal(result.meaningJP, "行 （こう） ／ go / line");
+    assert.equal(result.meaningJP, "行 （こう） ／ bank / line");
 });
 
 test("buildBreakdownInference limits multi-character breakdown overrides to matching word contexts", () => {
@@ -840,8 +843,17 @@ test("starter curated data provides learner-friendly kanji breakdown fallbacks",
     assert.deepEqual(curatedStudyData["強"].displayWord, { written: "強い", pron: "つよい" });
     assert.deepEqual(curatedStudyData["題"].displayWord, { written: "題", pron: "だい" });
     assert.deepEqual(curatedStudyData["忙"].displayWord, { written: "忙しい", pron: "いそがしい" });
+    assert.deepEqual(curatedStudyData["行"].displayWord, { written: "行く", pron: "いく" });
     assert.deepEqual(curatedStudyData["行"].breakdownDisplayWord, { written: "行", pron: "こう" });
     assert.equal(curatedStudyData["行"].breakdownEnglishMeaning, "go / line");
+    assert.deepEqual(
+        curatedStudyData["行"].breakdownOverrides.find((entry) => entry.matchWord === "銀行").displayWord,
+        { written: "行", pron: "こう" }
+    );
+    assert.deepEqual(
+        curatedStudyData["行"].breakdownOverrides.find((entry) => entry.matchWord === "行き先").displayWord,
+        { written: "行", pron: "ゆき" }
+    );
     assert.deepEqual(curatedStudyData["会"].breakdownDisplayWord, { written: "会", pron: "かい" });
     assert.deepEqual(curatedStudyData["店"].breakdownDisplayWord, { written: "店", pron: "みせ" });
     assert.equal(curatedStudyData["店"].breakdownEnglishMeaning, "shop / store");

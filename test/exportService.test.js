@@ -326,8 +326,14 @@ test("buildInferenceForKanji keeps the curated kanji primary reading ahead of di
             行: {
                 displayWord: { written: "行く", pron: "いく" },
                 breakdownDisplayWord: { written: "行", pron: "こう" },
-                englishMeaning: "go / conduct",
-                notes: "行 （こう） - conduct ／ 行く （いく） - go",
+                breakdownEnglishMeaning: "go / line",
+                breakdownOverrides: [{
+                    matchWord: "銀行",
+                    displayWord: { written: "行", pron: "こう" },
+                    englishMeaning: "bank / line",
+                }],
+                englishMeaning: "go / carry out / line",
+                notes: "行く （いく） - go ／ 銀行 （ぎんこう） - bank",
             },
         },
         inferenceEngine: {
@@ -363,8 +369,59 @@ test("buildInferenceForKanji keeps the curated kanji primary reading ahead of di
     });
 
     assert.equal(inference.displayWordText, "行");
-    assert.equal(inference.primaryReading, "こう");
-    assert.equal(inference.meaningJP, "conduct");
+    assert.equal(inference.primaryReading, "いく");
+    assert.equal(inference.meaningJP, "go");
+});
+
+test("buildInferenceForKanji lets explicit bare-kanji breakdown readings override bare display readings", async () => {
+    const exportService = createExportService({
+        curatedStudyData: {
+            間: {
+                displayWord: { written: "間", pron: "あいだ" },
+                breakdownDisplayWord: { written: "間", pron: "かん" },
+                englishMeaning: "time / interval",
+                notes: "時間 （じかん） - time ／ 間 （あいだ） - between",
+            },
+        },
+        inferenceEngine: {
+            inferKanjiStudyData() {
+                return {
+                    displayWord: { written: "間", pron: "あいだ" },
+                    bestWord: { written: "間", pron: "あいだ" },
+                    englishMeaning: "time / interval",
+                    meaningJP: "間 （あいだ） ／ time / interval",
+                    notes: "時間 （じかん） - time ／ 間 （あいだ） - between",
+                    exampleSentence: { japanese: "少し時間があります。", reading: "すこしじかんがあります。", english: "I have a little time." },
+                };
+            },
+        },
+        sentenceCorpus: [],
+    });
+
+    const inference = await exportService.buildInferenceForKanji({
+        kanji: "間",
+        jlptEntry: { jlpt: 5 },
+        jlptOnlyJson: { 間: { jlpt: 5 } },
+        kanjiApiClient: {
+            async getKanji() {
+                return {
+                    kanji: "間",
+                    meanings: ["time", "interval", "space"],
+                    kun_readings: ["あいだ", "ま"],
+                    on_readings: ["カン", "ケン"],
+                };
+            },
+            async getWords() {
+                return [];
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+    });
+
+    assert.equal(inference.displayWordText, "間");
+    assert.equal(inference.primaryReading, "かん");
+    assert.equal(inference.meaningJP, "time / interval");
 });
 
 test("buildInferenceForKanji separates primary-reading gloss from broader kanji meanings", async () => {

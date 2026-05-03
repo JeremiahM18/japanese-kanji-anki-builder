@@ -206,6 +206,6 @@ npm run deck:words:platinum:n5
 npm run deck:words:platinum:n4
 ```
 
-The N5 kanji and N5 word commands require every generated N5 card to have an active platinum entry. Other levels are batch-based until their platinum passes are complete.
+Each platinum command requires every generated card for that level and surface to have an active platinum entry.
 
 The platinum command intentionally fails for an empty platinum manifest. Do not use golden coverage as a substitute for platinum review.

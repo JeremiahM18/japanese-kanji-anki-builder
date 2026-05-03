@@ -217,6 +217,7 @@ function isNoisyKanjiMeaning(meaning) {
     const text = String(meaning || "").trim();
     return /\bradical\b/i.test(text)
         || /\bno\.\s*\d+/i.test(text)
+        || /^%$/i.test(text)
         || /^rape$/i.test(text);
 }
 

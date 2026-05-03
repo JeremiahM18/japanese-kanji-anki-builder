@@ -95,7 +95,7 @@ test("formatKanjiMeanings removes duplicate and radical-index gloss noise", () =
 test("formatKanjiMeanings removes unsafe low-value dictionary gloss noise", () => {
     assert.equal(
         formatKanjiMeanings({
-            kanjiInfo: { meanings: ["dirty", "defile", "disgrace", "pollute", "rape"] },
+            kanjiInfo: { meanings: ["dirty", "defile", "disgrace", "pollute", "rape", "%"] },
             curatedEntry: { englishMeaning: "dirty" },
         }),
         "dirty / defile / disgrace / pollute"

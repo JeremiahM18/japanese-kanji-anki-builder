@@ -165,10 +165,10 @@
     }
   },
   "竜": {
-    "englishMeaning": "dragon / tornado",
+    "englishMeaning": "dragon",
     "displayWord": {
-      "written": "竜巻",
-      "pron": "たつまき"
+      "written": "竜",
+      "pron": "りゅう"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -178,18 +178,22 @@
     ],
     "jlpt": 1,
     "preferredWords": [
-      "竜巻",
       "竜",
-      "恐竜"
+      "恐竜",
+      "竜巻"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "imperial",
+      "tornado"
+    ],
     "blockedSentencePhrases": [],
-    "notes": "竜巻 （たつまき） - tornado ／ 竜 （りゅう） - dragon ／ 恐竜 （きょうりゅう） - dinosaur",
+    "notes": "竜 （りゅう） - dragon ／ 恐竜 （きょうりゅう） - dinosaur ／ 竜巻 （たつまき） - tornado",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "遠くの平野で竜巻が発生した。",
-      "reading": "とおくのへいやでたつまきがはっせいした。",
-      "english": "A tornado formed on the distant plain.",
+      "japanese": "物語に大きな竜が登場した。",
+      "reading": "ものがたりにおおきなりゅうがとうじょうした。",
+      "english": "A large dragon appeared in the story.",
       "source": "starter-curated",
       "tags": [
         "example",

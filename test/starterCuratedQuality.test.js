@@ -448,7 +448,8 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.deepEqual(curatedStudyData["繊"].preferredWords, ["繊細", "繊維"]);
     assert.equal(curatedStudyData["稔"].exampleSentence.english, "The field crops ripened well by autumn.");
     assert.deepEqual(curatedStudyData["窒"].displayWord, { written: "窒息", pron: "ちっそく" });
-    assert.equal(curatedStudyData["竜"].englishMeaning, "dragon / tornado");
+    assert.equal(curatedStudyData["竜"].englishMeaning, "dragon");
+    assert.deepEqual(curatedStudyData["竜"].displayWord, { written: "竜", pron: "りゅう" });
     assert.deepEqual(curatedStudyData["簿"].preferredWords, ["名簿", "帳簿", "簿記"]);
     assert.equal(curatedStudyData["礎"].exampleSentence.japanese, "基礎がしっかりしていれば応用も利く。");
     assert.deepEqual(curatedStudyData["緊"].displayWord, { written: "緊張", pron: "きんちょう" });

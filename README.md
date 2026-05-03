@@ -180,6 +180,8 @@ Tracked starter files are the baseline. Local ignored files may add workspace ov
 ```bash
 npm run deck:preview -- --level=5 --limit=5
 npm run deck:preview -- --kanji=日,本,学
+npm run deck:platinum:batch -- --level=5 --limit=12
+npm run deck:platinum:batch -- --level=5 --kanji=父,生,男
 npm run deck:review:n5
 npm run deck:review:n4
 npm run deck:review:n3
@@ -192,7 +194,7 @@ npm run deck:words:review:n5
 node scripts/reviewPlatinumWordLevel.js --level=5
 ```
 
-Golden review protects learner-facing card output rather than raw field presence. Platinum review is the final release-quality pass. The `npm run deck:platinum:n5` and `npm run deck:words:platinum:n5` commands are full-level gates and fail until every generated N5 card has an active platinum entry.
+Golden review protects learner-facing card output rather than raw field presence. Platinum review is the final release-quality pass. `deck:platinum:batch` is a read-only pre-review report for kanji cards: it shows the generated surface, hard-rule checks, risk flags, current platinum status, and next missing queue before any manifest edits. The `npm run deck:platinum:n5` and `npm run deck:words:platinum:n5` commands are full-level gates and fail until every generated N5 card has an active platinum entry.
 
 ### Build Kanji Decks
 
@@ -331,6 +333,7 @@ Repository governance:
 | `npm run doctor:voicevox` | Verify local governed VOICEVOX setup |
 | `npm run deck:readiness` | Report per-level quality gates |
 | `npm run deck:preview` | Preview kanji cards |
+| `npm run deck:platinum:batch -- --level=5 --limit=12` | Build a read-only kanji platinum pre-review packet |
 | `npm run deck:ready` | Build and package kanji TSV artifacts |
 | `npm run deck:apkg` | Build kanji `.apkg` artifacts |
 | `npm run deck:review:n5` | Run the N5 kanji golden benchmark |

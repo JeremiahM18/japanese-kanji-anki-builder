@@ -452,4 +452,5 @@ module.exports = {
     REVIEW_ONLY_STATUSES,
     evaluatePlatinumKanjiReviewSet,
     formatPlatinumKanjiReviewReport,
+    validateGeneratedKanjiRow,
 };

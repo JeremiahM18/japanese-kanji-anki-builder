@@ -11,15 +11,29 @@ const REQUIRED_KANJI_QUALITY_GATES = Object.freeze([
     "belongsInKanjiDeck",
     "individualKanjiAnchor",
     "displayWordIsTargetKanji",
+    "japaneseVerified",
     "primaryReadingVerified",
     "primaryMeaningVerified",
     "broaderMeaningsVerified",
+    "exampleReleaseQuality",
     "exampleSupportOnly",
     "studyWordSuppressed",
     "levelPlacementVerified",
     "audioExactPrimaryReading",
+    "audioArtifactVerified",
     "strokeOrderVerified",
+    "strokeOrderTargetVerified",
     "noSilentFallback",
+]);
+
+const REQUIRED_KANJI_EVIDENCE_TYPES = Object.freeze([
+    "generated-surface",
+    "golden-review",
+    "japanese-source",
+    "media-audit",
+    "audio-review",
+    "stroke-order-review",
+    "manual-review",
 ]);
 
 const SINGLE_KANJI_RE = /^\p{Script=Han}$/u;
@@ -46,6 +60,16 @@ function normalizeStringArray(value) {
     return (Array.isArray(value) ? value : [])
         .map((entry) => normalizeText(entry))
         .filter(Boolean);
+}
+
+function normalizeEvidenceEntries(value) {
+    return (Array.isArray(value) ? value : [])
+        .filter((entry) => entry && typeof entry === "object" && !Array.isArray(entry))
+        .map((entry) => ({
+            type: normalizeText(entry.type),
+            source: normalizeText(entry.source),
+            detail: normalizeText(entry.detail),
+        }));
 }
 
 function findDuplicateValues(values = []) {
@@ -110,8 +134,24 @@ function validateActivePlatinumEntry(entry = {}) {
     if (!normalizeText(entry.reviewer)) {
         failures.push("reviewer is required");
     }
-    if (normalizeStringArray(entry.sourceEvidence).length === 0) {
-        failures.push("sourceEvidence must record what was checked");
+    if (!normalizeText(entry.primaryReadingRationale)) {
+        failures.push("primaryReadingRationale must explain why this individual-kanji reading was chosen");
+    }
+
+    const sourceEvidence = normalizeEvidenceEntries(entry.sourceEvidence);
+    if (sourceEvidence.length === 0) {
+        failures.push("sourceEvidence must contain structured evidence entries");
+    }
+    for (const evidence of sourceEvidence) {
+        if (!evidence.type || !evidence.source || !evidence.detail) {
+            failures.push("sourceEvidence entries must include type, source, and detail");
+        }
+    }
+    const evidenceTypes = new Set(sourceEvidence.map((evidence) => evidence.type));
+    for (const requiredType of REQUIRED_KANJI_EVIDENCE_TYPES) {
+        if (!evidenceTypes.has(requiredType)) {
+            failures.push(`sourceEvidence must include evidence type: ${requiredType}`);
+        }
     }
     if (entry.status === "fixed_then_platinum" && !normalizeText(entry.fixSummary)) {
         failures.push("fixed_then_platinum entries must include fixSummary");
@@ -132,6 +172,12 @@ function validateNonShippingEntry(entry = {}) {
 
     if (!SINGLE_KANJI_RE.test(normalizeText(entry.kanji))) {
         failures.push("kanji must be one target kanji");
+    }
+    if (!normalizeText(entry.reviewedAt)) {
+        failures.push("reviewedAt is required for deferred and removed entries");
+    }
+    if (!normalizeText(entry.reviewer)) {
+        failures.push("reviewer is required for deferred and removed entries");
     }
     if (!normalizeText(entry.decisionReason)) {
         failures.push("decisionReason is required for deferred and removed entries");
@@ -360,6 +406,7 @@ module.exports = {
     ACTIVE_PLATINUM_STATUSES,
     ALLOWED_PLATINUM_STATUSES,
     NON_SHIPPING_STATUSES,
+    REQUIRED_KANJI_EVIDENCE_TYPES,
     REQUIRED_KANJI_QUALITY_GATES,
     REVIEW_ONLY_STATUSES,
     evaluatePlatinumKanjiReviewSet,

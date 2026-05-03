@@ -2,6 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const {
+    REQUIRED_KANJI_EVIDENCE_TYPES,
     REQUIRED_KANJI_QUALITY_GATES,
     evaluatePlatinumKanjiReviewSet,
     formatPlatinumKanjiReviewReport,
@@ -41,9 +42,14 @@ function buildEntry(overrides = {}) {
         levelIncludes: ["N5"],
         notesIncludes: ["日", "日本"],
         exampleIncludes: ["雨の日です。"],
+        primaryReadingRationale: "Uses the common learner-facing kun reading ひ for the individual kanji 日.",
         reviewedAt: "2026-05-02",
         reviewer: "content-review",
-        sourceEvidence: ["Generated N5 kanji export, golden review, audio/stroke media audit, manual Japanese/product review."],
+        sourceEvidence: REQUIRED_KANJI_EVIDENCE_TYPES.map((type) => ({
+            type,
+            source: "test fixture",
+            detail: `Reviewed ${type} evidence for 日.`,
+        })),
         qualityGates: buildQualityGates(),
         ...overrides,
     };
@@ -96,6 +102,44 @@ test("evaluatePlatinumKanjiReviewSet rejects active entries with missing quality
     assert.match(report.results[0].failures.join("\n"), /quality gate must be true: individualKanjiAnchor/);
 });
 
+test("evaluatePlatinumKanjiReviewSet requires primary-reading rationale and structured evidence", () => {
+    const report = evaluatePlatinumKanjiReviewSet({
+        rows: [buildRow()],
+        entries: [
+            buildEntry({
+                primaryReadingRationale: "",
+                sourceEvidence: ["free text evidence is not enough"],
+            }),
+        ],
+    });
+
+    const failures = report.results[0].failures.join("\n");
+    assert.equal(report.passed, false);
+    assert.match(failures, /primaryReadingRationale must explain/);
+    assert.match(failures, /sourceEvidence must contain structured evidence entries/);
+    assert.match(failures, /sourceEvidence must include evidence type: japanese-source/);
+});
+
+test("evaluatePlatinumKanjiReviewSet requires every structured evidence type", () => {
+    const report = evaluatePlatinumKanjiReviewSet({
+        rows: [buildRow()],
+        entries: [
+            buildEntry({
+                sourceEvidence: REQUIRED_KANJI_EVIDENCE_TYPES
+                    .filter((type) => type !== "audio-review")
+                    .map((type) => ({
+                        type,
+                        source: "test fixture",
+                        detail: `Reviewed ${type} evidence for 日.`,
+                    })),
+            }),
+        ],
+    });
+
+    assert.equal(report.passed, false);
+    assert.match(report.results[0].failures.join("\n"), /sourceEvidence must include evidence type: audio-review/);
+});
+
 test("evaluatePlatinumKanjiReviewSet can require every generated kanji to be platinum reviewed", () => {
     const report = evaluatePlatinumKanjiReviewSet({
         rows: [
@@ -120,4 +164,20 @@ test("evaluatePlatinumKanjiReviewSet does not pass an empty platinum set by defa
 
     assert.equal(report.passed, false);
     assert.deepEqual(report.coverageFailures, ["no active platinum entries have been reviewed"]);
+});
+
+test("evaluatePlatinumKanjiReviewSet requires reviewer and date for non-shipping decisions", () => {
+    const report = evaluatePlatinumKanjiReviewSet({
+        rows: [],
+        entries: [{
+            kanji: "日",
+            status: "removed",
+            decisionReason: "Not appropriate for this surface.",
+        }],
+    });
+
+    const failures = report.results[0].failures.join("\n");
+    assert.equal(report.passed, false);
+    assert.match(failures, /reviewedAt is required/);
+    assert.match(failures, /reviewer is required/);
 });

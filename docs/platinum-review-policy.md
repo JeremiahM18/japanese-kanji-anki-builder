@@ -47,12 +47,14 @@ Each platinum kanji card must pass all rules below:
 - The front/`Kanji` field is exactly one target kanji.
 - `DisplayWord` equals the target kanji. Compound words never become the learner anchor.
 - `PrimaryReading` is the learner-facing reading for that individual kanji.
+- The chosen `PrimaryReading` has a recorded rationale, especially when the kanji has multiple valid readings.
 - `MeaningJP` is the meaning tied to that primary reading.
 - `KanjiMeanings` preserves the broader useful meaning list without low-value dictionary noise.
 - `StudyWordKanji` is blank for kanji cards.
 - Example words and sentences are support only; they must not override the individual-kanji anchor.
-- Exact kanji-reading audio is present for the target kanji and exported `PrimaryReading`.
-- Stroke-order media is present and governed by approved tracked sources.
+- Examples are natural enough for release and demonstrate support usage without changing the card anchor.
+- Exact kanji-reading audio is present, governed, and artifact-verified for the target kanji and exported `PrimaryReading`. Human listening QA remains part of the release checklist.
+- Stroke-order media is present, governed by approved tracked sources, and verified to show the reviewed target kanji.
 - The card does not depend on ignored local files, untracked generated content, or silent fallback behavior.
 
 ## Outcomes
@@ -111,29 +113,50 @@ Active platinum kanji entries must include:
 - `levelIncludes`
 - `notesIncludes`
 - `exampleIncludes`
+- `primaryReadingRationale`
 - `reviewedAt`
 - `reviewer`
 - `sourceEvidence`
 - `qualityGates`
+
+Kanji `sourceEvidence` must be an array of structured objects. Each object must include:
+
+- `type`
+- `source`
+- `detail`
+
+Active kanji entries must include all evidence types below:
+
+- `generated-surface`: the generated card surface was inspected.
+- `golden-review`: the golden regression expectation was checked.
+- `japanese-source`: reading and meaning were checked against a Japanese-language or dictionary source.
+- `media-audit`: governed media provenance was checked.
+- `audio-review`: generated audio artifact identity, provenance, and exact target-reading match were reviewed.
+- `stroke-order-review`: stroke-order media was visually checked for the reviewed target kanji.
+- `manual-review`: a final product judgment was made.
 
 Required kanji `qualityGates`:
 
 - `belongsInKanjiDeck`
 - `individualKanjiAnchor`
 - `displayWordIsTargetKanji`
+- `japaneseVerified`
 - `primaryReadingVerified`
 - `primaryMeaningVerified`
 - `broaderMeaningsVerified`
+- `exampleReleaseQuality`
 - `exampleSupportOnly`
 - `studyWordSuppressed`
 - `levelPlacementVerified`
 - `audioExactPrimaryReading`
+- `audioArtifactVerified`
 - `strokeOrderVerified`
+- `strokeOrderTargetVerified`
 - `noSilentFallback`
 
 All kanji gates must be `true`. `fixed_then_platinum` kanji entries must also include `fixSummary`.
 
-Deferred and removed kanji entries must include `kanji` and `decisionReason`.
+Deferred and removed kanji entries must include `kanji`, `reviewedAt`, `reviewer`, and `decisionReason`.
 
 ## Commands
 

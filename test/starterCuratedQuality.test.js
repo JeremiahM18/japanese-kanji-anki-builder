@@ -500,7 +500,9 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.deepEqual(curatedStudyData["養"].preferredWords, ["栄養", "養う", "養成"]);
     assert.equal(curatedStudyData["魅"].notes, "魅力 （みりょく） - charm / appeal ／ 魅了 （みりょう） - captivate ／ 魅惑 （みわく） - fascination / temptation");
     assert.deepEqual(curatedStudyData["詐"].displayWord, { written: "詐欺", pron: "さぎ" });
-    assert.equal(curatedStudyData["諒"].exampleSentence.english, "We obtained prior consent regarding the changes.");
+    assert.deepEqual(curatedStudyData["諒"].displayWord, { written: "諒解", pron: "りょうかい" });
+    assert.equal(curatedStudyData["諒"].exampleSentence.japanese, "変更点についてはご諒解ください。");
+    assert.equal(curatedStudyData["諒"].exampleSentence.english, "Please understand the changes.");
     assert.deepEqual(curatedStudyData["賠"].preferredWords, ["賠償", "賠責", "損害賠償"]);
     assert.equal(curatedStudyData["豪"].exampleSentence.japanese, "式典は予想以上に豪華だった。");
     assert.deepEqual(curatedStudyData["轄"].displayWord, { written: "管轄", pron: "かんかつ" });

@@ -180,6 +180,7 @@ function formatWordDeckReadyReport(summary, doctorReport) {
         `Output directory: ${summary.outDir}`,
         `Package directory: ${summary.package.rootDir}`,
         ...(summary.package.ankiPackage?.filePath ? [`Anki package: ${summary.package.ankiPackage.filePath}`] : []),
+        ...(summary.package.ankiPackage?.skipped ? [`Anki package status: skipped (${summary.package.ankiPackage.skipReason})`] : []),
         `Levels: ${summary.levels.map((level) => `N${level}`).join(", ")}`,
         `Word mode: ${summary.settings.includeInferred ? "curated + inferred" : "curated only"}`,
         `Exports generated: ${summary.exports.length}`,
@@ -206,7 +207,9 @@ function formatWordDeckReadyReport(summary, doctorReport) {
         `- SVG animation fallbacks: ${summary.package.mediaCounts.svgStrokeOrderAnimationFallback}`,
         ...(doctorReport.enableAudio ? [`- Audio fields: ${summary.package.mediaCounts.audio}`] : []),
         "",
-        "Next step: import the generated .apkg into Anki and review the new word cards alongside the kanji deck.",
+        summary.package.ankiPackage?.filePath
+            ? "Next step: import the generated .apkg into Anki and review the new word cards alongside the kanji deck."
+            : "Next step: import the TSV from the package exports folder, copy the packaged media into Anki's collection.media directory, and review the new word cards alongside the kanji deck.",
         "",
     ].join("\n");
 }

@@ -114,7 +114,11 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
                 svgStrokeOrderAnimationFallback: 0,
                 audio: 0,
             },
-            ankiPackage: { filePath: null },
+            ankiPackage: {
+                filePath: null,
+                skipped: true,
+                skipReason: "Python packaging blocked",
+            },
         },
         settings: {
             includeInferred: false,
@@ -141,6 +145,9 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
     assert.match(text, /True looping animation assets: 165/);
     assert.match(text, /Canonical inventory counts: N5=258, N4=6/);
     assert.match(text, /Tracked source-only exclusions: N5=13, N4=0/);
+    assert.match(text, /Anki package status: skipped \(Python packaging blocked\)/);
+    assert.match(text, /Next step: import the TSV from the package exports folder/);
+    assert.doesNotMatch(text, /import the generated \.apkg/);
 });
 
 test("resolveKanjiTsvPath points word completion back to the kanji export for the same level", () => {

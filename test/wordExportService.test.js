@@ -853,7 +853,8 @@ test("starter curated data provides learner-friendly kanji breakdown fallbacks",
     assert.deepEqual(curatedStudyData["曜"].breakdownDisplayWord, { written: "曜", pron: "よう" });
     assert.equal(curatedStudyData["曜"].breakdownEnglishMeaning, "weekday marker");
     assert.deepEqual(curatedStudyData["午"].breakdownDisplayWord, { written: "午", pron: "ご" });
-    assert.deepEqual(curatedStudyData["後"].breakdownDisplayWord, { written: "後", pron: "ご" });
+    assert.deepEqual(curatedStudyData["後"].displayWord, { written: "後", pron: "あと" });
+    assert.equal(curatedStudyData["後"].breakdownDisplayWord, undefined);
     assert.deepEqual(curatedStudyData["間"].breakdownDisplayWord, { written: "間", pron: "かん" });
     assert.deepEqual(curatedStudyData["電"].breakdownDisplayWord, { written: "電", pron: "でん" });
     assert.deepEqual(curatedStudyData["校"].breakdownDisplayWord, { written: "校", pron: "こう" });

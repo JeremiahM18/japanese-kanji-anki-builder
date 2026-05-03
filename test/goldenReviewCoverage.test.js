@@ -123,8 +123,8 @@ test("tracked N1 golden review coverage reports the started review queue against
     });
 
     assert.equal(summary.starterCuratedKanji, 1231);
-    assert.equal(summary.goldenCoveredKanji, 1084);
-    assert.equal(summary.missingKanji, 147);
+    assert.equal(summary.goldenCoveredKanji, 1096);
+    assert.equal(summary.missingKanji, 135);
 });
 
 test("reportGoldenReviewCoverage parseArgs accepts level and limit", () => {

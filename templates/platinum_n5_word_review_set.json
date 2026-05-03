@@ -1,7 +1,7 @@
 [
   {
     "word": "本",
-    "status": "needs_review",
+    "status": "platinum",
     "readingIncludes": [
       "ほん"
     ],
@@ -32,12 +32,83 @@
     ],
     "selectionRationale": "Common N5 noun for books and a useful everyday word; it belongs in the word deck as vocabulary, separate from the kanji-deck card for 本.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 本|ほん: word 本, reading ほん, meaning book, example 日本語の本を読みます。, audio word-reading-本-ほん, breakdown 本 （ほん） / book, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 本|ほん, reading ほん, meaning book, example 日本語の本を読みます。, breakdown 本 （ほん） / book, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%9C%AC",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%9C%AC verified 本|ほん, reading ほん, learner meaning book, and product review checked example 日本語の本を読みます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 本|ほん for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 本|ほん, reading ほん, sentence 日本語の本を読みます。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 本|ほん; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 本|ほん exact asset fragment word-reading-本-ほん for the exported word reading ほん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 本|ほん source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 本|ほん JLPT N5, JLPT core + reading coverage, focus 本, and covered readings 本: ほん."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 本|ほん common and learner-friendly for the N5 word deck, with accurate reading ほん, meaning book, and example 日本語の本を読みます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   },
   {
     "word": "休む",
-    "status": "needs_review",
+    "status": "platinum",
     "readingIncludes": [
       "やすむ"
     ],
@@ -68,12 +139,83 @@
     ],
     "selectionRationale": "Common N5 verb for resting or taking a break; useful immediately in learner conversation and schedule contexts.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 休む|やすむ: word 休む, reading やすむ, meaning to rest / take a break, example 日曜日は家で休みます。, audio word-reading-休む-やすむ, breakdown 休 （やす） ／ rest / take a day off, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 休む|やすむ, reading やすむ, meaning to rest / take a break, example 日曜日は家で休みます。, breakdown 休 （やす） ／ rest / take a day off, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BC%91%E3%82%80",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BC%91%E3%82%80 verified 休む|やすむ, reading やすむ, learner meaning to rest / take a break, and product review checked example 日曜日は家で休みます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 休む|やすむ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 休む|やすむ, reading やすむ, sentence 日曜日は家で休みます。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 休む|やすむ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 休む|やすむ exact asset fragment word-reading-休む-やすむ for the exported word reading やすむ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 休む|やすむ source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 休む|やすむ JLPT N5, JLPT core + reading coverage, focus 休, and covered readings 休: やすむ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 休む|やすむ common and learner-friendly for the N5 word deck, with accurate reading やすむ, meaning to rest / take a break, and example 日曜日は家で休みます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   },
   {
     "word": "北",
-    "status": "needs_review",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
       "きた"
     ],
@@ -105,13 +247,84 @@
     ],
     "selectionRationale": "Common direction word for north; useful for locations and directions at N5.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
+    "reviewer": "codex-platinum-review",
     "fixSummary": "Replaced the darker, less useful sky example with a direct location example: 学校は駅の北にあります。",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 北|きた: word 北, reading きた, meaning north, example 学校は駅の北にあります。, audio word-reading-北-きた, breakdown 北 （きた） / north, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 北|きた, reading きた, meaning north, example 学校は駅の北にあります。, breakdown 北 （きた） / north, and pitch label Pitch 1: 0 / Pitch 2: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8C%97",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8C%97 verified 北|きた, reading きた, learner meaning north, and product review checked example 学校は駅の北にあります。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 北|きた for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 北|きた, reading きた, sentence 学校は駅の北にあります。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 北|きた; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 北|きた exact asset fragment word-reading-北-きた for the exported word reading きた."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 北|きた source kanjium-cc-by-sa-4.0 pattern 0 [heiban] / 2 [odaka] and rendered label Pitch 1: 0 / Pitch 2: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 北|きた JLPT N5, JLPT core + reading coverage, focus 北, and covered readings 北: きた."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 北|きた common and learner-friendly for the N5 word deck, with accurate reading きた, meaning north, and example 学校は駅の北にあります。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   },
   {
     "word": "外",
-    "status": "needs_review",
+    "status": "platinum",
     "readingIncludes": [
       "そと"
     ],
@@ -142,8 +355,79 @@
     ],
     "selectionRationale": "Common location word for outside; useful for daily location and activity sentences at N5.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 外|そと: word 外, reading そと, meaning outside, example 今日は外で昼ご飯を食べます。, audio word-reading-外-そと, breakdown 外 （そと） / outside, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 外|そと, reading そと, meaning outside, example 今日は外で昼ご飯を食べます。, breakdown 外 （そと） / outside, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%A4%96",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%A4%96 verified 外|そと, reading そと, learner meaning outside, and product review checked example 今日は外で昼ご飯を食べます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 外|そと for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 外|そと, reading そと, sentence 今日は外で昼ご飯を食べます。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 外|そと; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 外|そと exact asset fragment word-reading-外-そと for the exported word reading そと."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 外|そと source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 外|そと JLPT N5, JLPT core + reading coverage, focus 外, and covered readings 外: そと."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 外|そと common and learner-friendly for the N5 word deck, with accurate reading そと, meaning outside, and example 今日は外で昼ご飯を食べます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   },
   {
     "word": "土",
@@ -179,8 +463,8 @@
     ],
     "selectionRationale": "Concrete everyday noun for soil or earth; useful for basic physical descriptions and supports the 土 reading without making it a kanji card.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Blocked by current-policy review: independent word-level sources classify 土|つち as later than N5 (JLearn lists JLPT N3; Nihoner lists JLPT N2). Keep as needs_review until level placement is corrected or separately justified."
   },
   {
     "word": "生きる",
@@ -214,8 +498,8 @@
     ],
     "selectionRationale": "Common verb meaning to live; useful foundational vocabulary and appropriate as a word-deck item.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Blocked by current-policy review: independent word-level source JLearn lists 生きる|いきる as JLPT N4, not N5. Keep as needs_review until level placement is corrected or separately justified."
   },
   {
     "word": "一",
@@ -250,9 +534,9 @@
     ],
     "selectionRationale": "Core number word for one; ships as vocabulary because the word deck teaches usable words/readings independently from the kanji deck.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
+    "reviewer": "codex-platinum-review",
     "fixSummary": "Simplified the example by removing 数字 so the sentence teaches the standalone number reading directly.",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "decisionReason": "Blocked by current-policy review: generated surface and vocabulary value are plausible, but the pitch-accent source is VOICEVOX generated, not dictionary-backed. Keep as needs_review until pitch is independently verified or release policy accepts this governed generated source for platinum."
   },
   {
     "word": "七",
@@ -287,9 +571,9 @@
     ],
     "selectionRationale": "Core number word for seven; なな is learner-friendly and useful for beginner counting contexts.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
+    "reviewer": "codex-platinum-review",
     "fixSummary": "Simplified the example by removing 数字 so the sentence teaches the standalone number reading directly.",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "decisionReason": "Blocked by current-policy review: generated surface and vocabulary value are plausible, but the pitch-accent source is VOICEVOX generated, not dictionary-backed. Keep as needs_review until pitch is independently verified or release policy accepts this governed generated source for platinum."
   },
   {
     "word": "分かる",
@@ -323,12 +607,12 @@
     ],
     "selectionRationale": "High-utility verb meaning to understand; common, learner-friendly, and essential for beginner communication.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Blocked by current-policy review: the generated KanjiBreakdown still renders 分 （わ） ／ minute for 分かる|わかる, which is misleading for the learner-facing word meaning understand. Fix the breakdown meaning before promotion."
   },
   {
     "word": "三つ",
-    "status": "needs_review",
+    "status": "platinum",
     "readingIncludes": [
       "みっつ"
     ],
@@ -358,8 +642,79 @@
     ],
     "selectionRationale": "Common counter expression for three things; useful N5 vocabulary and distinct from the bare kanji/number card.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 三つ|みっつ: word 三つ, reading みっつ, meaning three things, example りんごを三つ買いました。, audio word-reading-三つ-みっつ, breakdown 三 （みっ） ／ three, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 三つ|みっつ, reading みっつ, meaning three things, example りんごを三つ買いました。, breakdown 三 （みっ） ／ three, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%89%E3%81%A4",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%89%E3%81%A4 verified 三つ|みっつ, reading みっつ, learner meaning three things, and product review checked example りんごを三つ買いました。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 三つ|みっつ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 三つ|みっつ, reading みっつ, sentence りんごを三つ買いました。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 三つ|みっつ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 三つ|みっつ exact asset fragment word-reading-三つ-みっつ for the exported word reading みっつ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 三つ|みっつ source kanjium-cc-by-sa-4.0 pattern 3 [odaka] and rendered label Pitch 1: 3."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 三つ|みっつ JLPT N5, JLPT core + reading coverage, focus 三, and covered readings 三: みっつ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 三つ|みっつ common and learner-friendly for the N5 word deck, with accurate reading みっつ, meaning three things, and example りんごを三つ買いました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   },
   {
     "word": "月",
@@ -394,8 +749,8 @@
     ],
     "selectionRationale": "Common noun for moon/month context; useful basic vocabulary and appropriate as a word-deck item.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Blocked by current-policy review: independent word-level sources conflict with N5 placement for 月|つき as moon (JLearn lists JLPT N3; JLPTSensei lists JLPT N4). Keep as needs_review until level placement is corrected or separately justified."
   },
   {
     "word": "下げる",
@@ -430,13 +785,13 @@
     ],
     "selectionRationale": "Useful verb meaning to lower or reduce; belongs in the reviewed word level as a learner-facing vocabulary item.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
+    "reviewer": "codex-platinum-review",
     "fixSummary": "Replaced an awkward bag-under-chair example with the simpler learner-facing sentence 手を下げてください。",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "decisionReason": "Blocked by current-policy review: independent word-level source JLearn lists 下げる|さげる as JLPT N4, not N5. Keep as needs_review until level placement is corrected or separately justified."
   },
   {
     "word": "お母さん",
-    "status": "needs_review",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
       "おかあさん"
     ],
@@ -467,13 +822,84 @@
     ],
     "selectionRationale": "Common N5 family term for mother/mom; useful immediately in learner conversation, with the honorific word reading tracked separately from the kanji-panel segment.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
+    "reviewer": "codex-platinum-review",
     "fixSummary": "Corrected word-card segmentation so KanjiBreakdown follows the ReadingBreakdown ruby segment while CoversReading keeps the governed word-reading target.",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for お母さん|おかあさん: word お母さん, reading おかあさん, meaning mother / mom, example お母さんは台所で料理しています。, audio word-reading-お母さん-おかあさん, breakdown 母 （かあ） ／ mother, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects お母さん|おかあさん, reading おかあさん, meaning mother / mom, example お母さんは台所で料理しています。, breakdown 母 （かあ） ／ mother, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E3%81%8A%E6%AF%8D%E3%81%95%E3%82%93",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E3%81%8A%E6%AF%8D%E3%81%95%E3%82%93 verified お母さん|おかあさん, reading おかあさん, learner meaning mother / mom, and product review checked example お母さんは台所で料理しています。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists お母さん|おかあさん for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked お母さん|おかあさん, reading おかあさん, sentence お母さんは台所で料理しています。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked お母さん|おかあさん; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked お母さん|おかあさん exact asset fragment word-reading-お母さん-おかあさん for the exported word reading おかあさん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked お母さん|おかあさん source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked お母さん|おかあさん JLPT N5, JLPT core + reading coverage, focus 母, and covered readings 母: おかあさん."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged お母さん|おかあさん common and learner-friendly for the N5 word deck, with accurate reading おかあさん, meaning mother / mom, and example お母さんは台所で料理しています。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   },
   {
     "word": "お父さん",
-    "status": "needs_review",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
       "おとうさん"
     ],
@@ -504,13 +930,84 @@
     ],
     "selectionRationale": "Common N5 family term for father/dad; useful immediately in learner conversation, with the honorific word reading tracked separately from the kanji-panel segment.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
+    "reviewer": "codex-platinum-review",
     "fixSummary": "Corrected word-card segmentation so KanjiBreakdown follows the ReadingBreakdown ruby segment while CoversReading keeps the governed word-reading target.",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for お父さん|おとうさん: word お父さん, reading おとうさん, meaning father / dad, example お父さんは会社から帰りました。, audio word-reading-お父さん-おとうさん, breakdown 父 （とう） ／ father, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects お父さん|おとうさん, reading おとうさん, meaning father / dad, example お父さんは会社から帰りました。, breakdown 父 （とう） ／ father, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E3%81%8A%E7%88%B6%E3%81%95%E3%82%93",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E3%81%8A%E7%88%B6%E3%81%95%E3%82%93 verified お父さん|おとうさん, reading おとうさん, learner meaning father / dad, and product review checked example お父さんは会社から帰りました。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists お父さん|おとうさん for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked お父さん|おとうさん, reading おとうさん, sentence お父さんは会社から帰りました。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked お父さん|おとうさん; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked お父さん|おとうさん exact asset fragment word-reading-お父さん-おとうさん for the exported word reading おとうさん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked お父さん|おとうさん source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked お父さん|おとうさん JLPT N5, JLPT core + reading coverage, focus 父, and covered readings 父: おとうさん."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged お父さん|おとうさん common and learner-friendly for the N5 word deck, with accurate reading おとうさん, meaning father / dad, and example お父さんは会社から帰りました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   },
   {
     "word": "お茶",
-    "status": "needs_review",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
       "おちゃ"
     ],
@@ -540,13 +1037,84 @@
     ],
     "selectionRationale": "Common everyday N5 word for tea; the N4 constituent kanji is explicitly labeled while the word remains learner-useful at N5.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
+    "reviewer": "codex-platinum-review",
     "fixSummary": "Corrected word-card segmentation so KanjiBreakdown follows the ReadingBreakdown ruby segment while CoversReading keeps the governed word-reading target.",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for お茶|おちゃ: word お茶, reading おちゃ, meaning tea, example 食事の後でお茶を飲みます。, audio word-reading-お茶-おちゃ, breakdown 茶 （ちゃ） ／ tea, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects お茶|おちゃ, reading おちゃ, meaning tea, example 食事の後でお茶を飲みます。, breakdown 茶 （ちゃ） ／ tea, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E3%81%8A%E8%8C%B6",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E3%81%8A%E8%8C%B6 verified お茶|おちゃ, reading おちゃ, learner meaning tea, and product review checked example 食事の後でお茶を飲みます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists お茶|おちゃ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked お茶|おちゃ, reading おちゃ, sentence 食事の後でお茶を飲みます。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked お茶|おちゃ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked お茶|おちゃ exact asset fragment word-reading-お茶-おちゃ for the exported word reading おちゃ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked お茶|おちゃ source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked お茶|おちゃ JLPT N5, JLPT core + reading coverage, focus 茶, and covered readings 茶: おちゃ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged お茶|おちゃ common and learner-friendly for the N5 word deck, with accurate reading おちゃ, meaning tea, and example 食事の後でお茶を飲みます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   },
   {
     "word": "お金",
-    "status": "needs_review",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
       "おかね"
     ],
@@ -576,13 +1144,84 @@
     ],
     "selectionRationale": "Common N5 noun for money; high-frequency learner vocabulary and a practical everyday word.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
+    "reviewer": "codex-platinum-review",
     "fixSummary": "Corrected word-card segmentation so KanjiBreakdown follows the ReadingBreakdown ruby segment while CoversReading keeps the governed word-reading target.",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for お金|おかね: word お金, reading おかね, meaning money, example お金がありません。, audio word-reading-お金-おかね, breakdown 金 （かね） ／ money / gold, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects お金|おかね, reading おかね, meaning money, example お金がありません。, breakdown 金 （かね） ／ money / gold, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E3%81%8A%E9%87%91",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E3%81%8A%E9%87%91 verified お金|おかね, reading おかね, learner meaning money, and product review checked example お金がありません。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists お金|おかね for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked お金|おかね, reading おかね, sentence お金がありません。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked お金|おかね; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked お金|おかね exact asset fragment word-reading-お金-おかね for the exported word reading おかね."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked お金|おかね source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked お金|おかね JLPT N5, JLPT core + reading coverage, focus 金, and covered readings 金: おかね."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged お金|おかね common and learner-friendly for the N5 word deck, with accurate reading おかね, meaning money, and example お金がありません。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   },
   {
     "word": "ご飯",
-    "status": "needs_review",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
       "ごはん"
     ],
@@ -613,13 +1252,84 @@
     ],
     "selectionRationale": "Common N5 word for meals and cooked rice; the N4 constituent kanji is explicitly labeled while the word belongs in starter vocabulary.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
+    "reviewer": "codex-platinum-review",
     "fixSummary": "Corrected word-card segmentation so KanjiBreakdown follows the ReadingBreakdown ruby segment while CoversReading keeps the governed word-reading target.",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for ご飯|ごはん: word ご飯, reading ごはん, meaning meal / cooked rice, example ご飯を食べましょう。, audio word-reading-ご飯-ごはん, breakdown 飯 （はん） ／ meal / cooked rice, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects ご飯|ごはん, reading ごはん, meaning meal / cooked rice, example ご飯を食べましょう。, breakdown 飯 （はん） ／ meal / cooked rice, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E3%81%94%E9%A3%AF",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E3%81%94%E9%A3%AF verified ご飯|ごはん, reading ごはん, learner meaning meal / cooked rice, and product review checked example ご飯を食べましょう。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists ご飯|ごはん for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked ご飯|ごはん, reading ごはん, sentence ご飯を食べましょう。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked ご飯|ごはん; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked ご飯|ごはん exact asset fragment word-reading-ご飯-ごはん for the exported word reading ごはん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked ご飯|ごはん source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked ご飯|ごはん JLPT N5, JLPT core + reading coverage, focus 飯, and covered readings 飯: ごはん."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged ご飯|ごはん common and learner-friendly for the N5 word deck, with accurate reading ごはん, meaning meal / cooked rice, and example ご飯を食べましょう。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   },
   {
     "word": "一つ",
-    "status": "needs_review",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
       "ひとつ"
     ],
@@ -649,9 +1359,80 @@
     ],
     "selectionRationale": "Common N5 counter expression for one thing; useful for requests and quantities, with okurigana handled in the word reading.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
+    "reviewer": "codex-platinum-review",
     "fixSummary": "Corrected word-card segmentation so KanjiBreakdown follows the ReadingBreakdown ruby segment while CoversReading keeps the governed word-reading target.",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 一つ|ひとつ: word 一つ, reading ひとつ, meaning one thing, example りんごを一つください。, audio word-reading-一つ-ひとつ, breakdown 一 （ひと） ／ one, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 一つ|ひとつ, reading ひとつ, meaning one thing, example りんごを一つください。, breakdown 一 （ひと） ／ one, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%80%E3%81%A4",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%80%E3%81%A4 verified 一つ|ひとつ, reading ひとつ, learner meaning one thing, and product review checked example りんごを一つください。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 一つ|ひとつ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 一つ|ひとつ, reading ひとつ, sentence りんごを一つください。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 一つ|ひとつ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 一つ|ひとつ exact asset fragment word-reading-一つ-ひとつ for the exported word reading ひとつ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 一つ|ひとつ source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 一つ|ひとつ JLPT N5, JLPT core + reading coverage, focus 一, and covered readings 一: ひとつ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 一つ|ひとつ common and learner-friendly for the N5 word deck, with accurate reading ひとつ, meaning one thing, and example りんごを一つください。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   },
   {
     "word": "一万円",
@@ -689,12 +1470,12 @@
     ],
     "selectionRationale": "Common N5 money amount expression; useful for prices and everyday transactions, with each constituent reading shown clearly.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Blocked by current-policy review: the word is useful, but the pitch-accent source is VOICEVOX generated, not dictionary-backed. Keep as needs_review until pitch is independently verified or release policy accepts this governed generated source for platinum."
   },
   {
     "word": "一人",
-    "status": "needs_review",
+    "status": "platinum",
     "readingIncludes": [
       "ひとり"
     ],
@@ -726,12 +1507,83 @@
     ],
     "selectionRationale": "Core N5 counter/adverbial word for one person or alone; learner-useful despite the irregular 人 reading.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 一人|ひとり: word 一人, reading ひとり, meaning one person / alone, example 今日は一人で帰ります。, audio word-reading-一人-ひとり, breakdown 一 （ひと） ／ one / 人 （り） ／ person / people, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 一人|ひとり, reading ひとり, meaning one person / alone, example 今日は一人で帰ります。, breakdown 一 （ひと） ／ one / 人 （り） ／ person / people, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%80%E4%BA%BA",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%80%E4%BA%BA verified 一人|ひとり, reading ひとり, learner meaning one person / alone, and product review checked example 今日は一人で帰ります。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 一人|ひとり for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 一人|ひとり, reading ひとり, sentence 今日は一人で帰ります。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 一人|ひとり; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 一人|ひとり exact asset fragment word-reading-一人-ひとり for the exported word reading ひとり."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 一人|ひとり source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 一人|ひとり JLPT N5, JLPT core + reading coverage, focus 人, and covered readings 人: り."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 一人|ひとり common and learner-friendly for the N5 word deck, with accurate reading ひとり, meaning one person / alone, and example 今日は一人で帰ります。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   },
   {
     "word": "一日",
-    "status": "needs_review",
+    "status": "platinum",
     "readingIncludes": [
       "ついたち"
     ],
@@ -762,12 +1614,83 @@
     ],
     "selectionRationale": "Common N5 date word for the first day of the month; kept as a whole-word reading so it is not counted as fake per-kanji coverage.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 一日|ついたち: word 一日, reading ついたち, meaning the first day of the month, example 来月の一日に新しい仕事が始まります。, audio word-reading-一日-ついたち, breakdown 一日 （ついたち） ／ the first day of the month / 一日 （ついたち） ／ the first day of the month, labels JLPT N5 Reading coverage support."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 一日|ついたち, reading ついたち, meaning the first day of the month, example 来月の一日に新しい仕事が始まります。, breakdown 一日 （ついたち） ／ the first day of the month / 一日 （ついたち） ／ the first day of the month, and pitch label Pitch 1: 4."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%80%E6%97%A5-%E3%81%A4%E3%81%84%E3%81%9F%E3%81%A1",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%80%E6%97%A5-%E3%81%A4%E3%81%84%E3%81%9F%E3%81%A1 verified 一日|ついたち, reading ついたち, learner meaning the first day of the month, and product review checked example 来月の一日に新しい仕事が始まります。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 一日|ついたち for JLPT N5; product review confirmed the word belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 一日|ついたち, reading ついたち, sentence 来月の一日に新しい仕事が始まります。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 一日|ついたち; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 一日|ついたち exact asset fragment word-reading-一日-ついたち for the exported word reading ついたち."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 一日|ついたち source kanjium-cc-by-sa-4.0 pattern 4 [odaka] and rendered label Pitch 1: 4."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 一日|ついたち JLPT N5, Reading coverage support, focus 一, and covered readings 一日: ついたち."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 一日|ついたち common and learner-friendly for the N5 word deck, with accurate reading ついたち, meaning the first day of the month, and example 来月の一日に新しい仕事が始まります。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   },
   {
     "word": "一時",
-    "status": "needs_review",
+    "status": "platinum",
     "readingIncludes": [
       "いちじ"
     ],
@@ -799,8 +1722,79 @@
     ],
     "selectionRationale": "Core N5 time expression for one oclock; high utility for scheduling and beginner conversation.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 一時|いちじ: word 一時, reading いちじ, meaning one o'clock, example 一時に会いましょう。, audio word-reading-一時-いちじ, breakdown 一 （いち） ／ one / 時 （じ） ／ time / o'clock, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 一時|いちじ, reading いちじ, meaning one o'clock, example 一時に会いましょう。, breakdown 一 （いち） ／ one / 時 （じ） ／ time / o'clock, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%80%E6%99%82; MLC Japanese N5 time table https://www.mlcjapanese.co.jp/n5_01_02.html",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%80%E6%99%82; MLC Japanese N5 time table https://www.mlcjapanese.co.jp/n5_01_02.html verified 一時|いちじ, reading いちじ, learner meaning one o'clock, and product review checked example 一時に会いましょう。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 一時|いちじ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 一時|いちじ, reading いちじ, sentence 一時に会いましょう。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 一時|いちじ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 一時|いちじ exact asset fragment word-reading-一時-いちじ for the exported word reading いちじ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 一時|いちじ source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 一時|いちじ JLPT N5, JLPT core + reading coverage, focus 一、時, and covered readings 一: いち / 時: じ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 一時|いちじ common and learner-friendly for the N5 word deck, with accurate reading いちじ, meaning one o'clock, and example 一時に会いましょう。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   },
   {
     "word": "一時半",
@@ -839,8 +1833,8 @@
     ],
     "selectionRationale": "Core N5 time expression for half past one; high utility for scheduling and reinforces time-expression readings.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Blocked by current-policy review: the time expression is useful, but the pitch-accent source is VOICEVOX generated, not dictionary-backed. Keep as needs_review until pitch is independently verified or release policy accepts this governed generated source for platinum."
   },
   {
     "word": "一生",
@@ -876,7 +1870,7 @@
     ],
     "selectionRationale": "Useful support word for lifetime/whole life; included for learner vocabulary and the 生 -> しょう reading without forcing it as a core-only card.",
     "reviewedAt": "2026-05-03",
-    "reviewer": "codex-quarantine",
-    "decisionReason": "Quarantined after current-policy review: generated, golden, tracked starter, and local-cache evidence are not sufficient for word-deck platinum. Requires independently cited Japanese source review before promotion."
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Blocked by current-policy review: independent word-level sources classify 一生|いっしょう as JLPT N3. Keep as needs_review until level placement is corrected or the word is deferred out of the N5 product."
   }
 ]

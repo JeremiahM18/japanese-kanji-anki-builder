@@ -100,7 +100,7 @@ Golden and platinum review:
 | N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N1 kanji | Golden-reviewed at `1231/1231`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
-| N5 word | Golden-reviewed; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; word platinum has `0` active approvals and 24 quarantined `needs_review` entries pending independent source review |
+| N5 word | Golden-reviewed; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; word platinum has 14 active approvals and 10 blocked `needs_review` entries from the first current-policy review batch |
 | N4 word | Golden-reviewed at `452/452`; `ready_with_deferred_variants` when built with N5 as the selected word-product scope; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; word platinum has `0` entries and fails until all generated N4 words have active approvals |
 
 Current tracked word inventory:

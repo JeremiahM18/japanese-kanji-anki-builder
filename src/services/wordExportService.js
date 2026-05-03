@@ -900,7 +900,7 @@ function buildContextualKanjiReadingMap({
     const units = buildReadingBreakdownUnits(written);
     const kanjiUnits = units.filter((unit) => unit.kind === "kanji" && HAN_CHAR_RE.test(unit.char));
 
-    if (kanjiUnits.length < 2 || !reading) {
+    if (kanjiUnits.length === 0 || !reading) {
         return new Map();
     }
 
@@ -1002,6 +1002,18 @@ function buildExplicitCoverageReadings(entry = {}, focusKanji = []) {
         .join(" ／ ");
 }
 
+function buildWholeWordCoverageReading({ entry, kanji }) {
+    const written = String(entry?.candidate?.written || "").trim();
+    const reading = String(entry?.curatedEntry?.reading || entry?.candidate?.pron || "").trim();
+    const constituentKanji = extractConstituentKanji(written);
+
+    if (constituentKanji.length !== 1 || constituentKanji[0] !== kanji || !reading) {
+        return "";
+    }
+
+    return reading;
+}
+
 function buildConstituentLevelLabel({ kanji, deckLevel, jlptOnlyJson }) {
     const actualLevel = Number.isInteger(jlptOnlyJson?.[kanji]?.jlpt)
         ? jlptOnlyJson[kanji].jlpt
@@ -1062,8 +1074,9 @@ function resolveCoverageMetadata({ entry, kanjiInferenceCache, curatedStudyData,
                 contextKanjiReading: contextualKanjiReadings.get(kanji) || "",
             });
             const contextualReading = String(contextualKanjiReadings.get(kanji) || "").trim();
+            const wholeWordCoverageReading = buildWholeWordCoverageReading({ entry, kanji });
             const reading = breakdown.primaryReading
-                ? extractPrimaryCoverageReading(breakdown)
+                ? (wholeWordCoverageReading || extractPrimaryCoverageReading(breakdown))
                 : (contextualReading || extractPrimaryCoverageReading(breakdown));
             return reading ? `${kanji}: ${reading}` : kanji;
         })
@@ -1165,7 +1178,8 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null, contex
     const inferredPrimaryReading = String(inference?.primaryReading || "").trim();
     const contextWritten = String(contextCandidate?.written || "").trim();
     const constituentCount = extractConstituentKanji(contextWord).length;
-    const isSingleKanjiWordContext = constituentCount === 1
+    const isSingleKanjiWordContext = contextWritten === kanji
+        && constituentCount === 1
         && !contextWritten.includes("々")
         && extractConstituentKanji(contextWritten).length === 1
         && contextWritten.includes(kanji);

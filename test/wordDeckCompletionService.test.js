@@ -231,6 +231,28 @@ test("buildWordDeckKanjiBreakdownContextAudit checks okurigana ruby as constitue
     });
 });
 
+test("buildWordDeckKanjiBreakdownContextAudit checks single-kanji words with kana affixes", () => {
+    const audit = buildWordDeckKanjiBreakdownContextAudit({
+        wordRows: [
+            {
+                Word: "お茶",
+                Reading: "おちゃ",
+                ReadingBreakdown: "お<ruby>茶<rt>ちゃ</rt></ruby>",
+                KanjiBreakdown: "<div class=\"kanji-breakdown-item\"><span class=\"kanji-char\">茶</span><span class=\"kanji-primary\">おちゃ</span><div class=\"kanji-meaning\">お茶 （おちゃ） ／ tea</div></div>",
+            },
+        ],
+    });
+
+    assert.equal(audit.valid, false);
+    assert.deepEqual(audit.mismatchedRows[0], {
+        word: "お茶",
+        reading: "おちゃ",
+        kanji: "茶",
+        expectedReading: "ちゃ",
+        actualReading: "おちゃ",
+    });
+});
+
 test("buildWordDeckKanjiBreakdownContextAudit requires whole-word labels for non-decomposable ruby groups", () => {
     const audit = buildWordDeckKanjiBreakdownContextAudit({
         wordRows: [

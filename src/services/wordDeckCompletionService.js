@@ -348,16 +348,8 @@ function extractKanjiBreakdownPrimaryReadings(kanjiBreakdown) {
     return readings;
 }
 
-function kanjiBreakdownReadingMatchesContext({ kanji, expectedReading, actualReading, displaySurface }) {
-    if (actualReading === expectedReading) {
-        return true;
-    }
-
-    const surface = String(displaySurface || "").trim();
-    return surface !== kanji
-        && surface.includes(kanji)
-        && Array.from(surface).some((char) => isKanaOnly(char))
-        && String(actualReading || "").startsWith(String(expectedReading || ""));
+function kanjiBreakdownReadingMatchesContext({ expectedReading, actualReading }) {
+    return actualReading === expectedReading;
 }
 
 function buildWordDeckKanjiBreakdownContextAudit({ wordRows }) {
@@ -368,7 +360,7 @@ function buildWordDeckKanjiBreakdownContextAudit({ wordRows }) {
         const word = String(row?.Word || row?.word || "").trim();
         const reading = String(row?.Reading || row?.reading || "").trim();
         const constituentKanji = Array.from(word).filter((char) => HAN_CHAR_RE.test(char) && char !== "々");
-        if (constituentKanji.length < 2) {
+        if (constituentKanji.length === 0) {
             continue;
         }
 
@@ -395,10 +387,8 @@ function buildWordDeckKanjiBreakdownContextAudit({ wordRows }) {
             const breakdown = breakdownReadings.get(pair.kanji);
             const actualReading = breakdown?.reading || "";
             if (!kanjiBreakdownReadingMatchesContext({
-                kanji: pair.kanji,
                 expectedReading: pair.reading,
                 actualReading,
-                displaySurface: breakdown?.displaySurface || "",
             })) {
                 mismatchedRows.push({
                     word,

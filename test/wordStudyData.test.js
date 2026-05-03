@@ -960,7 +960,7 @@ test("tracked starter word data includes the twenty-ninth governed N4 completion
         ["夜通し|よどおし", "通", "どおし"],
     ]);
     assertReadingBreakdowns(starterEntries, [
-        ["夜通し|よどおし", "<ruby>夜<rt>よ</rt></ruby><ruby>通<rt>どお</rt></ruby>し"],
+        ["夜通し|よどおし", "<ruby>夜<rt>よ</rt></ruby><ruby>通し<rt>どおし</rt></ruby>"],
     ]);
 });
 
@@ -977,8 +977,8 @@ test("tracked starter word data includes the thirtieth governed N4 completion ba
         ["閉ざす|とざす", "閉", "とざす"],
     ]);
     assertReadingBreakdowns(starterEntries, [
-        ["品切れ|しなぎれ", "<ruby>品<rt>しな</rt></ruby><ruby>切<rt>ぎ</rt></ruby>れ"],
-        ["手作り|てづくり", "<ruby>手<rt>て</rt></ruby><ruby>作<rt>づく</rt></ruby>り"],
+        ["品切れ|しなぎれ", "<ruby>品<rt>しな</rt></ruby><ruby>切れ<rt>ぎれ</rt></ruby>"],
+        ["手作り|てづくり", "<ruby>手<rt>て</rt></ruby><ruby>作り<rt>づくり</rt></ruby>"],
     ]);
 });
 

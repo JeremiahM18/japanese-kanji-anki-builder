@@ -6,6 +6,7 @@ const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const {
     buildCandidatePool,
     buildBreakdownInference,
+    buildContextualKanjiReadingMap,
     buildWordReadingBreakdown,
     buildWordStudyIndexes,
     classifyWordDeckEntry,
@@ -698,6 +699,78 @@ test("buildBreakdownInference uses deterministic word-context readings before ge
     assert.equal(result.meaningJP, "車 （しゃ） ／ car / vehicle");
 });
 
+test("buildBreakdownInference keeps kana-affix word readings scoped to the kanji ruby segment", () => {
+    const contextualReadings = buildContextualKanjiReadingMap({
+        candidate: { written: "お母さん", pron: "おかあさん" },
+        curatedEntry: {
+            reading: "おかあさん",
+            readingBreakdown: "お<ruby>母<rt>かあ</rt></ruby>さん",
+        },
+        kanjiInferenceCache: new Map([
+            ["母", {
+                candidates: [{ written: "母", pron: "はは", gloss: "mother", score: 100 }],
+                primaryReading: "はは",
+                englishMeaning: "mother",
+                meaningJP: "母 （はは） ／ mother",
+                onReading: "オン: ボ",
+                kunReading: "くん: はは、 も",
+            }],
+        ]),
+        curatedStudyData: {},
+    });
+
+    const result = buildBreakdownInference({
+        kanji: "母",
+        contextWord: "お母さん",
+        contextCandidate: {
+            written: "お母さん",
+            reading: "おかあさん",
+            meaning: "mother / mom",
+        },
+        contextKanjiReading: contextualReadings.get("母") || "",
+        inference: {
+            candidates: [{ written: "母", pron: "はは", gloss: "mother", score: 100 }],
+            primaryReading: "はは",
+            englishMeaning: "mother",
+            meaningJP: "母 （はは） ／ mother",
+            onReading: "オン: ボ",
+            kunReading: "くん: はは、 も",
+        },
+        curatedEntry: {
+            englishMeaning: "mother",
+            displayWord: { written: "母", pron: "はは" },
+        },
+    });
+
+    assert.equal(contextualReadings.get("母"), "かあ");
+    assert.equal(result.primaryReading, "かあ");
+    assert.equal(result.meaningJP, "母 （かあ） ／ mother");
+});
+
+test("resolveCoverageMetadata keeps whole-word coverage separate from kanji breakdown context", () => {
+    const result = resolveCoverageMetadata({
+        entry: {
+            candidate: { written: "お茶", pron: "おちゃ" },
+            curatedEntry: { reading: "おちゃ" },
+            sourceKanji: new Set(["茶"]),
+        },
+        kanjiInferenceCache: new Map([
+            ["茶", {
+                candidates: [{ written: "茶", pron: "ちゃ", gloss: "tea", score: 100 }],
+                primaryReading: "ちゃ",
+                englishMeaning: "tea",
+                meaningJP: "茶 （ちゃ） ／ tea",
+                onReading: "オン: チャ",
+                kunReading: "",
+            }],
+        ]),
+        curatedStudyData: {},
+        contextualKanjiReadings: new Map([["茶", "ちゃ"]]),
+    });
+
+    assert.equal(result.coversReading, "茶: おちゃ");
+});
+
 test("buildBreakdownInference marks non-decomposable word readings as word scoped", () => {
     const result = buildBreakdownInference({
         kanji: "今",
@@ -821,7 +894,7 @@ test("buildBreakdownInference does not leak multi-kanji display words into singl
 });
 
 
-test("buildBreakdownInference uses the current single-kanji word on word cards", () => {
+test("buildBreakdownInference uses supplied context readings for okurigana word cards", () => {
     const result = buildBreakdownInference({
         kanji: "出",
         contextWord: "出す",
@@ -830,6 +903,7 @@ test("buildBreakdownInference uses the current single-kanji word on word cards",
             reading: "だす",
             meaning: "to take out / put out",
         },
+        contextKanjiReading: "だ",
         inference: {
             candidates: [{ written: "出", pron: "でる", gloss: "go out", score: 100 }],
             primaryReading: "でる",
@@ -843,8 +917,8 @@ test("buildBreakdownInference uses the current single-kanji word on word cards",
         },
     });
 
-    assert.equal(result.primaryReading, "だす");
-    assert.equal(result.meaningJP, "出す （だす） ／ to take out / put out");
+    assert.equal(result.primaryReading, "だ");
+    assert.equal(result.meaningJP, "出 （だ） ／ exit / go out");
 });
 
 test("buildBreakdownInference lets explicit overrides govern single-kanji word contexts", () => {

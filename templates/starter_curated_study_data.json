@@ -30164,6 +30164,7 @@
     ],
     "jlpt": 5,
     "preferredWords": [
+      "日",
       "日本",
       "日曜日"
     ],
@@ -30173,12 +30174,12 @@
     "blockedSentencePhrases": [
       "daytime"
     ],
-    "notes": "日本 （にほん） - Japan ／ 日曜日 （にちようび） - Sunday",
+    "notes": "日 （ひ） - day / sun ／ 日本 （にほん） - Japan ／ 日曜日 （にちようび） - Sunday",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "日本へ行きます。",
-      "reading": "にほんへいきます。",
-      "english": "I will go to Japan.",
+      "japanese": "今日はいい日です。",
+      "reading": "きょうはいいひです。",
+      "english": "Today is a good day.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -31964,17 +31965,17 @@
     ],
     "jlpt": 5,
     "preferredWords": [
-      "今月",
-      "月"
+      "月",
+      "今月"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "今月 （こんげつ） - this month ／ 月 （つき） - moon",
+    "notes": "月 （つき） - moon ／ 今月 （こんげつ） - this month",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "今月は忙しいです。",
-      "reading": "こんげつはいそがしいです。",
-      "english": "This month is busy.",
+      "japanese": "月がきれいです。",
+      "reading": "つきがきれいです。",
+      "english": "The moon is beautiful.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -32824,16 +32825,36 @@
   },
   "来": {
     "englishMeaning": "come",
-    "breakdownEnglishMeaning": "next / come",
     "displayWord": {
       "written": "来る",
       "pron": "くる"
     },
-    "breakdownDisplayWord": {
-      "written": "来",
-      "pron": "らい"
-    },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "来週",
+        "displayWord": {
+          "written": "来",
+          "pron": "らい"
+        },
+        "englishMeaning": "next / come"
+      },
+      {
+        "matchWord": "来月",
+        "displayWord": {
+          "written": "来",
+          "pron": "らい"
+        },
+        "englishMeaning": "next / come"
+      },
+      {
+        "matchWord": "来年",
+        "displayWord": {
+          "written": "来",
+          "pron": "らい"
+        },
+        "englishMeaning": "next / come"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",

@@ -351,6 +351,7 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["覧"].englishMeaning, "look / view / peruse");
     assert.deepEqual(curatedStudyData["聖"].preferredWords, ["神聖", "聖書", "聖地"]);
     assert.equal(curatedStudyData["紫"].exampleSentence.english, "The evening sky looked light purple.");
+    assert.deepEqual(curatedStudyData["呂"].preferredWords, ["風呂", "語呂", "律呂"]);
     assert.deepEqual(curatedStudyData["詠"].displayWord, { written: "詠う", pron: "うたう" });
     assert.deepEqual(curatedStudyData["票"].preferredWords, ["投票", "票", "伝票"]);
     assert.equal(curatedStudyData["禅"].notes, "禅 （ぜん） - Zen ／ 座禅 （ざぜん） - seated meditation ／ 禅寺 （ぜんでら） - Zen temple");
@@ -377,6 +378,8 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["謹"].englishMeaning, "be respectful / be humble / reverent");
     assert.equal(curatedStudyData["吟"].englishMeaning, "recite / examine carefully");
     assert.deepEqual(curatedStudyData["跳"].preferredWords, ["跳ぶ", "跳ねる", "跳躍"]);
+    assert.ok(curatedStudyData["廉"].blockedMeanings.includes("suspicion"));
+    assert.ok(curatedStudyData["露"].blockedMeanings.includes("Russia"));
     assert.equal(curatedStudyData["軸"].exampleSentence.japanese, "話の軸が最後までぶれなかった。");
     assert.deepEqual(curatedStudyData["穴"].displayWord, { written: "穴", pron: "あな" });
     assert.equal(curatedStudyData["笛"].notes, "笛 （ふえ） - flute ／ 汽笛 （きてき） - steam whistle ／ 口笛 （くちぶえ） - whistle");

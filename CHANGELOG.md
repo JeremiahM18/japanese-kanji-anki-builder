@@ -25,7 +25,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
-- Expanded tracked N1 kanji golden review coverage to `1168/1231` cards (`94.88%`), leaving `63` N1 cards before full golden coverage. N1 remains blocked until full golden coverage and exact primary-reading audio both pass.
+- Expanded tracked N1 kanji golden review coverage to `1180/1231` cards (`95.86%`), leaving `51` N1 cards before full golden coverage. N1 remains blocked until full golden coverage and exact primary-reading audio both pass.
 - Added a thirty-second deliberate N4 support batch with `建つ` and `行き止まり`, keeping the batch small and leaving weaker alternate-spelling or formal readings uncovered rather than treating coverage as the product goal.
 - Added a thirty-first deliberate N4 support batch with `急く`, `寝かす`, and `転げる`, keeping the batch small because the remaining N4 reading gaps are mostly weak, rare, or low-value candidates.
 - Added `npm run product:artifacts:kanji:n5:preflight`, a tracked-template diagnostic that reports N5 kanji TSV certification as blocked until rich kanji readings, component/radical source data, and provenance become tracked release contracts.

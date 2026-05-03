@@ -101,6 +101,9 @@ test("tracked N2 review entries avoid compound-led primary anchors and noisy mea
 
     assert.deepEqual(starterData["匹"].blockedMeanings, ["equal", "head", "roll of cloth"]);
     assert.deepEqual(starterData["土"].blockedMeanings, ["Turkey"]);
+    assert.deepEqual(starterData["中"].blockedMeanings, ["mean"]);
+    assert.deepEqual(starterData["休"].blockedMeanings, ["retire", "sleep"]);
+    assert.deepEqual(starterData["先"].blockedMeanings, ["precedence"]);
     assert.deepEqual(starterData["底"].blockedMeanings, ["bottom price", "kind", "sort"]);
     assert.deepEqual(starterData["灯"].blockedMeanings, ["counter for lights"]);
     assert.deepEqual(starterData["筒"].blockedMeanings, ["gun barrel", "sleeve"]);

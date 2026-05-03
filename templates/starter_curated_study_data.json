@@ -589,6 +589,9 @@
       "中"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "mean"
+    ],
     "blockedSentencePhrases": [],
     "notes": "中 （なか） - inside ／ 中を見る （なかをみる） - look inside",
     "alternativeNotes": [],
@@ -2576,6 +2579,10 @@
       "休日"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "retire",
+      "sleep"
+    ],
     "blockedSentencePhrases": [],
     "notes": "休み （やすみ） - day off ／ 休む （やすむ） - rest ／ 休み時間 （やすみじかん） - break time ／ 休日 （きゅうじつ） - holiday",
     "alternativeNotes": [],
@@ -5514,17 +5521,20 @@
     ],
     "jlpt": 5,
     "preferredWords": [
-      "先生",
-      "先"
+      "先",
+      "先生"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "precedence"
+    ],
     "blockedSentencePhrases": [],
-    "notes": "先生 （せんせい） - teacher ／ 先 （さき） - ahead",
+    "notes": "先 （さき） - ahead ／ 先生 （せんせい） - teacher",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "先生に質問します。",
-      "reading": "せんせいにしつもんします。",
-      "english": "I ask the teacher a question.",
+      "japanese": "先に行きます。",
+      "reading": "さきにいきます。",
+      "english": "I will go ahead.",
       "source": "starter-curated",
       "tags": [
         "example",

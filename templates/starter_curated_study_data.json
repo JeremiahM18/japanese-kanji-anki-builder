@@ -961,13 +961,11 @@
     ],
     "jlpt": 1,
     "preferredWords": [
-      "也",
-      "也う",
-      "然也"
+      "也"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "也 （なり） - classical copula / to be ／ 然也 （しかり） - that is so ／ 也う （なろう） - classical conjectural form",
+    "notes": "也 （なり） - classical copula / assertion particle",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "古文では「也」が断定を表すことがあります。",
@@ -6396,8 +6394,8 @@
   "冶": {
     "englishMeaning": "smelt / foundry work",
     "displayWord": {
-      "written": "鍛冶",
-      "pron": "かじ"
+      "written": "冶金",
+      "pron": "やきん"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -6407,18 +6405,18 @@
     ],
     "jlpt": 1,
     "preferredWords": [
-      "鍛冶",
       "冶金",
-      "製鉄"
+      "陶冶",
+      "鍛冶"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "鍛冶 （かじ） - blacksmithing ／ 冶金 （やきん） - metallurgy ／ 製鉄 （せいてつ） - iron manufacturing",
+    "notes": "冶金 （やきん） - metallurgy ／ 陶冶 （とうや） - cultivation / training ／ 鍛冶 （かじ） - blacksmithing",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "昔は町の鍛冶屋で農具を直してもらいました。",
-      "reading": "むかしはまちのかじやでのうぐをなおしてもらいました。",
-      "english": "In the past, people had farm tools repaired at the town blacksmith.",
+      "japanese": "大学で冶金について学びました。",
+      "reading": "だいがくでやきんについてまなびました。",
+      "english": "I studied metallurgy at university.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -8696,6 +8694,10 @@
       "三匁"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "(kokuji)",
+      "monme"
+    ],
     "blockedSentencePhrases": [],
     "notes": "匁 （もんめ） - old unit of weight ／ 匁量 （もんめりょう） - measured in monme ／ 三匁 （さんもんめ） - three monme",
     "alternativeNotes": [],

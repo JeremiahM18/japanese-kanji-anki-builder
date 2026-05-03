@@ -380,6 +380,10 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.deepEqual(curatedStudyData["跳"].preferredWords, ["跳ぶ", "跳ねる", "跳躍"]);
     assert.ok(curatedStudyData["廉"].blockedMeanings.includes("suspicion"));
     assert.ok(curatedStudyData["露"].blockedMeanings.includes("Russia"));
+    assert.deepEqual(curatedStudyData["倭"].preferredWords, ["倭", "倭人", "倭国"]);
+    assert.equal(curatedStudyData["倭"].exampleSentence.japanese, "倭という呼び名は古い時代の日本を表します。");
+    assert.ok(curatedStudyData["枠"].blockedMeanings.includes("(kokuji)"));
+    assert.equal(curatedStudyData["侑"].exampleSentence.japanese, "宴席で客に酒を侑めました。");
     assert.equal(curatedStudyData["軸"].exampleSentence.japanese, "話の軸が最後までぶれなかった。");
     assert.deepEqual(curatedStudyData["穴"].displayWord, { written: "穴", pron: "あな" });
     assert.equal(curatedStudyData["笛"].notes, "笛 （ふえ） - flute ／ 汽笛 （きてき） - steam whistle ／ 口笛 （くちぶえ） - whistle");

@@ -3451,7 +3451,7 @@
     }
   },
   "侑": {
-    "englishMeaning": "encourage / urge / help",
+    "englishMeaning": "offer food or drink / urge",
     "displayWord": {
       "written": "侑める",
       "pron": "すすめる"
@@ -3470,12 +3470,12 @@
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "侑める （すすめる） - urge / recommend ／ 侑酒 （ゆうしゅ） - serving sake ／ 侑食 （ゆうしょく） - serving food",
+    "notes": "侑める （すすめる） - offer food or drink / urge ／ 侑酒 （ゆうしゅ） - serving sake ／ 侑食 （ゆうしょく） - serving food",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "店員に侑められて新しい料理を頼みました。",
-      "reading": "てんいんにすすめられてあたらしいりょうりをたのみました。",
-      "english": "I ordered a new dish after the server recommended it.",
+      "japanese": "宴席で客に酒を侑めました。",
+      "reading": "えんせきできゃくにさけをすすめました。",
+      "english": "At the banquet, they offered sake to the guest.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -4375,7 +4375,7 @@
   "倭": {
     "englishMeaning": "Japan (old name)",
     "displayWord": {
-      "written": "大和",
+      "written": "倭",
       "pron": "やまと"
     },
     "breakdownOverrides": [],
@@ -4386,16 +4386,16 @@
     ],
     "jlpt": 1,
     "preferredWords": [
-      "大和",
+      "倭",
       "倭人",
       "倭国"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "大和 （やまと） - old name for Japan ／ 倭人 （わじん） - ancient Japanese people ／ 倭国 （わこく） - ancient Japan",
+    "notes": "倭 （やまと） - old name for Japan ／ 倭人 （わじん） - ancient Japanese people ／ 倭国 （わこく） - ancient Japan",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "大和という呼び名は古い時代の日本を表します。",
+      "japanese": "倭という呼び名は古い時代の日本を表します。",
       "reading": "やまとというよびなはふるいじだいのにほんをあらわします。",
       "english": "The name Yamato refers to Japan in ancient times.",
       "source": "starter-curated",
@@ -33136,6 +33136,12 @@
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
+    "blockedMeanings": [
+      "(kokuji)",
+      "bounding-box",
+      "spindle",
+      "spool"
+    ],
     "notes": "枠 （わく） - frame ／ 枠組み （わくぐみ） - framework",
     "alternativeNotes": [],
     "exampleSentence": {

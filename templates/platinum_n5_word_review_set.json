@@ -431,7 +431,7 @@
   },
   {
     "word": "土",
-    "status": "needs_review",
+    "status": "deferred",
     "readingIncludes": [
       "つち"
     ],
@@ -464,11 +464,11 @@
     "selectionRationale": "Concrete everyday noun for soil or earth; useful for basic physical descriptions and supports the 土 reading without making it a kanji card.",
     "reviewedAt": "2026-05-03",
     "reviewer": "codex-platinum-review",
-    "decisionReason": "Blocked by current-policy review: independent word-level sources classify 土|つち as later than N5 (JLearn lists JLPT N3; Nihoner lists JLPT N2). Keep as needs_review until level placement is corrected or separately justified."
+    "decisionReason": "Deferred out of the N5 word product: JLearn.net classifies 土|つち as JLPT N3 and Nihoner lists it later than N5, so N5 should not force this standalone word as reading coverage."
   },
   {
     "word": "生きる",
-    "status": "needs_review",
+    "status": "deferred",
     "readingIncludes": [
       "いきる"
     ],
@@ -499,11 +499,11 @@
     "selectionRationale": "Common verb meaning to live; useful foundational vocabulary and appropriate as a word-deck item.",
     "reviewedAt": "2026-05-03",
     "reviewer": "codex-platinum-review",
-    "decisionReason": "Blocked by current-policy review: independent word-level source JLearn lists 生きる|いきる as JLPT N4, not N5. Keep as needs_review until level placement is corrected or separately justified."
+    "decisionReason": "Deferred out of the N5 word product: JLearn.net classifies 生きる|いきる as JLPT N4, so the word is governed in the N4 word deck instead of being forced into N5."
   },
   {
     "word": "一",
-    "status": "needs_review",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
       "いち"
     ],
@@ -535,12 +535,83 @@
     "selectionRationale": "Core number word for one; ships as vocabulary because the word deck teaches usable words/readings independently from the kanji deck.",
     "reviewedAt": "2026-05-03",
     "reviewer": "codex-platinum-review",
-    "fixSummary": "Simplified the example by removing 数字 so the sentence teaches the standalone number reading directly.",
-    "decisionReason": "Blocked by current-policy review: generated surface and vocabulary value are plausible, but the pitch-accent source is VOICEVOX generated, not dictionary-backed. Keep as needs_review until pitch is independently verified or release policy accepts this governed generated source for platinum."
+    "fixSummary": "Replaced generated VOICEVOX pitch provenance with externally checked Wiktionary Japanese pronunciation evidence for 一|いち.",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 一|いち: word 一, reading いち, meaning one, example 一から十まで言います。, audio word-reading-一-いち, breakdown 一 （いち） / one, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 一|いち, reading いち, meaning one, example 一から十まで言います。, breakdown 一 （いち） / one, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%80 and Wiktionary Japanese pronunciation https://en.wiktionary.org/wiki/%E4%B8%80",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%80 verified 一|いち as JLPT N5 common word with reading いち and meaning one; Wiktionary Japanese pronunciation https://en.wiktionary.org/wiki/%E4%B8%80 verified Tokyo pitch accent for 一|いち; product review checked example 一から十まで言います。 for the shipped card."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 一|いち for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 一|いち, reading いち, sentence 一から十まで言います。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 一|いち; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 一|いち exact asset fragment word-reading-一-いち for the exported word reading いち."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 一|いち source wiktionary-ja-pronunciation pattern 2 [odaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 一|いち JLPT N5, JLPT core + reading coverage, focus 一, and covered readings 一: いち."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 一|いち common and learner-friendly for the N5 word deck, with accurate reading いち, meaning one, and example 一から十まで言います。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   },
   {
     "word": "七",
-    "status": "needs_review",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
       "なな"
     ],
@@ -572,12 +643,83 @@
     "selectionRationale": "Core number word for seven; なな is learner-friendly and useful for beginner counting contexts.",
     "reviewedAt": "2026-05-03",
     "reviewer": "codex-platinum-review",
-    "fixSummary": "Simplified the example by removing 数字 so the sentence teaches the standalone number reading directly.",
-    "decisionReason": "Blocked by current-policy review: generated surface and vocabulary value are plausible, but the pitch-accent source is VOICEVOX generated, not dictionary-backed. Keep as needs_review until pitch is independently verified or release policy accepts this governed generated source for platinum."
+    "fixSummary": "Replaced generated VOICEVOX pitch provenance with externally checked Wiktionary Japanese pronunciation evidence for 七|なな.",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 七|なな: word 七, reading なな, meaning seven, example 七から十まで言います。, audio word-reading-七-なな, breakdown 七 （なな） / seven, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 七|なな, reading なな, meaning seven, example 七から十まで言います。, breakdown 七 （なな） / seven, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%83 and Wiktionary Japanese pronunciation https://en.wiktionary.org/wiki/%E4%B8%83",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%83 verifies 七 as a common JLPT N5 number word and lists 七|なな as an alternate reading with meaning seven; Wiktionary Japanese pronunciation https://en.wiktionary.org/wiki/%E4%B8%83 verified 七|なな; product review checked example 七から十まで言います。 for the shipped card."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 七|なな for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 七|なな, reading なな, sentence 七から十まで言います。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 七|なな; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 七|なな exact asset fragment word-reading-七-なな for the exported word reading なな."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 七|なな source wiktionary-ja-pronunciation pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 七|なな JLPT N5, JLPT core + reading coverage, focus 七, and covered readings 七: なな."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 七|なな common and learner-friendly for the N5 word deck, with accurate reading なな, meaning seven, and example 七から十まで言います。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   },
   {
     "word": "分かる",
-    "status": "needs_review",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
       "わかる"
     ],
@@ -597,7 +739,7 @@
       "分: わかる"
     ],
     "breakdownIncludes": [
-      "分 （わ） ／ minute"
+      "分 （わ） ／ understand"
     ],
     "exampleIncludes": [
       "日本語が少し分かります。"
@@ -608,7 +750,79 @@
     "selectionRationale": "High-utility verb meaning to understand; common, learner-friendly, and essential for beginner communication.",
     "reviewedAt": "2026-05-03",
     "reviewer": "codex-platinum-review",
-    "decisionReason": "Blocked by current-policy review: the generated KanjiBreakdown still renders 分 （わ） ／ minute for 分かる|わかる, which is misleading for the learner-facing word meaning understand. Fix the breakdown meaning before promotion."
+    "fixSummary": "Added a context-specific 分かる breakdown override so the kanji panel renders 分 （わ） / understand instead of the misleading standalone minute meaning.",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 分かる|わかる: word 分かる, reading わかる, meaning understand, example 日本語が少し分かります。, audio word-reading-分かる-わかる, breakdown 分 （わ） / understand, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 分かる|わかる, reading わかる, meaning understand, example 日本語が少し分かります。, breakdown 分 （わ） / understand, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%88%86%E3%81%8B%E3%82%8B",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%88%86%E3%81%8B%E3%82%8B verified 分かる|わかる as JLPT N5 common word with reading わかる and meaning understand; product review checked example 日本語が少し分かります。 for the shipped card."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 分かる|わかる for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 分かる|わかる, reading わかる, sentence 日本語が少し分かります。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 分かる|わかる; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 分かる|わかる exact asset fragment word-reading-分かる-わかる for the exported word reading わかる."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 分かる|わかる source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 分かる|わかる JLPT N5, JLPT core + reading coverage, focus 分, and covered readings 分: わかる."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review and context-specific breakdown override",
+        "detail": "Manual review judged 分かる|わかる common and learner-friendly for the N5 word deck, with accurate reading わかる, meaning understand, and example 日本語が少し分かります。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   },
   {
     "word": "三つ",
@@ -718,7 +932,7 @@
   },
   {
     "word": "月",
-    "status": "needs_review",
+    "status": "deferred",
     "readingIncludes": [
       "つき"
     ],
@@ -750,11 +964,11 @@
     "selectionRationale": "Common noun for moon/month context; useful basic vocabulary and appropriate as a word-deck item.",
     "reviewedAt": "2026-05-03",
     "reviewer": "codex-platinum-review",
-    "decisionReason": "Blocked by current-policy review: independent word-level sources conflict with N5 placement for 月|つき as moon (JLearn lists JLPT N3; JLPTSensei lists JLPT N4). Keep as needs_review until level placement is corrected or separately justified."
+    "decisionReason": "Deferred out of the N5 word product: JLearn.net classifies 月|つき as JLPT N3 and another learner source places it later than N5, so N5 should rely on useful month/time words instead."
   },
   {
     "word": "下げる",
-    "status": "needs_review",
+    "status": "deferred",
     "readingIncludes": [
       "さげる"
     ],
@@ -786,8 +1000,7 @@
     "selectionRationale": "Useful verb meaning to lower or reduce; belongs in the reviewed word level as a learner-facing vocabulary item.",
     "reviewedAt": "2026-05-03",
     "reviewer": "codex-platinum-review",
-    "fixSummary": "Replaced an awkward bag-under-chair example with the simpler learner-facing sentence 手を下げてください。",
-    "decisionReason": "Blocked by current-policy review: independent word-level source JLearn lists 下げる|さげる as JLPT N4, not N5. Keep as needs_review until level placement is corrected or separately justified."
+    "decisionReason": "Deferred out of the N5 word product: JLearn.net classifies 下げる|さげる as JLPT N4, so the word is governed in the N4 word deck instead of being forced into N5."
   },
   {
     "word": "お母さん",
@@ -1471,7 +1684,7 @@
     "selectionRationale": "Common N5 money amount expression; useful for prices and everyday transactions, with each constituent reading shown clearly.",
     "reviewedAt": "2026-05-03",
     "reviewer": "codex-platinum-review",
-    "decisionReason": "Blocked by current-policy review: the word is useful, but the pitch-accent source is VOICEVOX generated, not dictionary-backed. Keep as needs_review until pitch is independently verified or release policy accepts this governed generated source for platinum."
+    "decisionReason": "Still blocked by current-policy review: the word is useful for N5 money expressions, but the pitch-accent source remains VOICEVOX generated. Do not promote until dictionary-backed pitch evidence is added or the pitch policy changes explicitly."
   },
   {
     "word": "一人",
@@ -1834,11 +2047,11 @@
     "selectionRationale": "Core N5 time expression for half past one; high utility for scheduling and reinforces time-expression readings.",
     "reviewedAt": "2026-05-03",
     "reviewer": "codex-platinum-review",
-    "decisionReason": "Blocked by current-policy review: the time expression is useful, but the pitch-accent source is VOICEVOX generated, not dictionary-backed. Keep as needs_review until pitch is independently verified or release policy accepts this governed generated source for platinum."
+    "decisionReason": "Still blocked by current-policy review: the time expression is useful for N5, but the pitch-accent source remains VOICEVOX generated. Do not promote until dictionary-backed pitch evidence is added or the pitch policy changes explicitly."
   },
   {
     "word": "一生",
-    "status": "needs_review",
+    "status": "deferred",
     "readingIncludes": [
       "いっしょう"
     ],
@@ -1871,6 +2084,6 @@
     "selectionRationale": "Useful support word for lifetime/whole life; included for learner vocabulary and the 生 -> しょう reading without forcing it as a core-only card.",
     "reviewedAt": "2026-05-03",
     "reviewer": "codex-platinum-review",
-    "decisionReason": "Blocked by current-policy review: independent word-level sources classify 一生|いっしょう as JLPT N3. Keep as needs_review until level placement is corrected or the word is deferred out of the N5 product."
+    "decisionReason": "Deferred out of the N5 word product: independent learner sources classify 一生|いっしょう as JLPT N3, so it is tracked as a later-level word rather than an N5 support card."
   }
 ]

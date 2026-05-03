@@ -9,6 +9,29 @@ function normalizeKana(value) {
     return katakanaToHiragana(String(value || "").trim());
 }
 
+function validateDeclaredPitchIdentity({
+    label = "pitch source",
+    word = "",
+    reading = "",
+    sourceEntry = null,
+    sourceAccents = [],
+} = {}) {
+    const failures = [];
+
+    if (String(sourceEntry?.sourceWord || "").trim() !== String(word || "").trim()) {
+        failures.push(`${label} sourceWord does not match the card word`);
+    }
+    if (normalizeKana(sourceEntry?.sourceReading) !== normalizeKana(reading)) {
+        failures.push(`${label} sourceReading does not match the card reading`);
+    }
+    const rawSourceAccents = parsePitchAccentPattern(sourceEntry?.sourceAccent || "");
+    if (!arraysMatch(rawSourceAccents, sourceAccents)) {
+        failures.push(`${label} sourceAccent does not match the governed pitch pattern`);
+    }
+
+    return failures;
+}
+
 function validateWordPitchAccentSource({
     word = "",
     reading = "",
@@ -30,16 +53,13 @@ function validateWordPitchAccentSource({
 
     const sourceAccents = parsePitchAccentPattern(pattern);
     if (sourceId === "kanjium-cc-by-sa-4.0") {
-        if (String(sourceEntry.sourceWord || "").trim() !== String(word || "").trim()) {
-            failures.push("Kanjium sourceWord does not match the card word");
-        }
-        if (normalizeKana(sourceEntry.sourceReading) !== normalizeKana(reading)) {
-            failures.push("Kanjium sourceReading does not match the card reading");
-        }
-        const rawSourceAccents = parsePitchAccentPattern(sourceEntry.sourceAccent || "");
-        if (!arraysMatch(rawSourceAccents, sourceAccents)) {
-            failures.push("Kanjium sourceAccent does not match the governed pitch pattern");
-        }
+        failures.push(...validateDeclaredPitchIdentity({
+            label: "Kanjium",
+            word,
+            reading,
+            sourceEntry,
+            sourceAccents,
+        }));
     } else if (sourceId === "voicevox-nemo-accent-query") {
         if (String(sourceEntry.sourceQuery || "").trim() !== String(word || "").trim()) {
             failures.push("VOICEVOX written query does not match the card word");
@@ -54,6 +74,13 @@ function validateWordPitchAccentSource({
         if (!String(sourceEntry.generatedReading || "").trim()) {
             failures.push("VOICEVOX reading-query generatedReading is missing");
         }
+    } else {
+        failures.push(...validateDeclaredPitchIdentity({
+            word,
+            reading,
+            sourceEntry,
+            sourceAccents,
+        }));
     }
 
     return failures;
@@ -61,5 +88,6 @@ function validateWordPitchAccentSource({
 
 module.exports = {
     arraysMatch,
+    validateDeclaredPitchIdentity,
     validateWordPitchAccentSource,
 };

@@ -460,10 +460,10 @@ function isStandaloneKanjiOutsideDeckLevel({ candidate, levelNumber, jlptOnlyJso
     const kanjiLevel = jlptOnlyJson?.[kanji]?.jlpt ?? null;
 
     if (!Number.isInteger(kanjiLevel)) {
-        return true;
+        return false;
     }
 
-    return kanjiLevel !== levelNumber;
+    return kanjiLevel < levelNumber;
 }
 
 function hasCuratedWrittenVariant(candidate, wordStudyIndexes) {

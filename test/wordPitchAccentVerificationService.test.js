@@ -18,6 +18,10 @@ const sources = {
         name: "VOICEVOX Nemo reading accent query",
         license: "VOICEVOX Nemo terms",
     },
+    "wiktionary-ja-pronunciation": {
+        name: "Wiktionary Japanese pronunciation entries",
+        license: "CC BY-SA 4.0 / GFDL",
+    },
 };
 
 test("validateWordPitchAccentSource accepts exact Kanjium word-reading evidence", () => {
@@ -52,6 +56,37 @@ test("validateWordPitchAccentSource rejects Kanjium source rows for a different 
     });
 
     assert.match(failures.join("\n"), /sourceWord does not match/);
+    assert.match(failures.join("\n"), /sourceAccent does not match/);
+});
+
+test("validateWordPitchAccentSource validates declared external source identity", () => {
+    assert.deepEqual(validateWordPitchAccentSource({
+        word: "一",
+        reading: "いち",
+        sources,
+        sourceEntry: {
+            pattern: "2 [odaka]",
+            sourceId: "wiktionary-ja-pronunciation",
+            sourceWord: "一",
+            sourceReading: "いち",
+            sourceAccent: "2",
+        },
+    }), []);
+
+    const failures = validateWordPitchAccentSource({
+        word: "七",
+        reading: "なな",
+        sources,
+        sourceEntry: {
+            pattern: "1 [atamadaka]",
+            sourceId: "wiktionary-ja-pronunciation",
+            sourceWord: "七",
+            sourceReading: "しち",
+            sourceAccent: "2",
+        },
+    });
+
+    assert.match(failures.join("\n"), /sourceReading does not match/);
     assert.match(failures.join("\n"), /sourceAccent does not match/);
 });
 

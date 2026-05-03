@@ -214,6 +214,31 @@
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "Low-value on-yomi for this deck stage."
+    },
+    "土|kun|つち": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "The standalone word 土|つち is governed as a later-level word, not an N5 support card; do not force N5 coverage just because the kanji is N5."
+    },
+    "生|kun|いきる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "生きる|いきる is governed in the N4 word deck; do not keep it in N5 just to close 生 reading coverage."
+    },
+    "生|on|しょう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Useful 生 -> しょう coverage such as 一生 belongs to a later word deck level; do not fake this with an N5 card."
+    },
+    "月|kun|つき": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "The standalone moon word 月|つき is governed as a later-level word; N5 already teaches useful 月 readings through month/time vocabulary."
+    },
+    "下|kun|さげる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "下げる|さげる is governed in the N4 word deck; do not keep it in N5 just to close 下 reading coverage."
     }
   },
   "N4": {

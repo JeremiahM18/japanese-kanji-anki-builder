@@ -22,6 +22,14 @@
       "url": "https://voicevox.hiroshiba.jp/nemo/",
       "attribution": "Accent analysis generated with VOICEVOX Nemo from the governed card reading.",
       "notes": "Fallback for entries where the written form is ambiguous or not recognized by the engine. This is generated pronunciation guidance, not dictionary verification."
+    },
+    "wiktionary-ja-pronunciation": {
+      "name": "Wiktionary Japanese pronunciation entries",
+      "license": "CC BY-SA 4.0 / GFDL",
+      "url": "https://en.wiktionary.org/wiki/Wiktionary:Copyrights",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "attribution": "Pronunciation and Tokyo pitch-accent evidence checked against Wiktionary Japanese entries.",
+      "notes": "Used for individually reviewed Japanese pronunciation sections; each entry stores exact sourceWord, sourceReading, and sourceAccent for validator binding."
     }
   },
   "entries": {
@@ -62,9 +70,10 @@
     },
     "一|いち": {
       "pattern": "2 [odaka]",
-      "sourceId": "voicevox-nemo-accent-query",
-      "sourceQuery": "一",
-      "generatedReading": "いち"
+      "sourceId": "wiktionary-ja-pronunciation",
+      "sourceWord": "一",
+      "sourceReading": "いち",
+      "sourceAccent": "2"
     },
     "一つ|ひとつ": {
       "pattern": "2 [nakadaka]",
@@ -122,9 +131,10 @@
     },
     "七|なな": {
       "pattern": "1 [atamadaka]",
-      "sourceId": "voicevox-nemo-accent-query",
-      "sourceQuery": "七",
-      "generatedReading": "なな"
+      "sourceId": "wiktionary-ja-pronunciation",
+      "sourceWord": "七",
+      "sourceReading": "なな",
+      "sourceAccent": "1"
     },
     "七つ|ななつ": {
       "pattern": "2 [nakadaka]",

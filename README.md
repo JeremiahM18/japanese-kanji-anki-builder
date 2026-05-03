@@ -72,7 +72,7 @@ Word decks:
 - Word identity is `written|reading`.
 - The canonical word contract means default-deck eligible.
 - Source-only phrase exclusions stay tracked but do not ship as default word cards.
-- Standalone single-kanji words stay in their own JLPT level.
+- Standalone single-kanji words ship only in their governed word level and must not leak into easier decks just because the kanji is already in scope.
 - Lower-level decks may include multi-kanji support words containing higher-level or outside-JLPT constituent kanji.
 - Cross-level and outside-JLPT constituent kanji must be visibly labeled on the card.
 - Reading coverage is scoped to the selected word-product levels. A higher-level word card can cover a lower-level reading target when those levels are built together.
@@ -100,19 +100,19 @@ Golden and platinum review:
 | N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N1 kanji | Golden-reviewed at `1231/1231`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
-| N5 word | Golden-reviewed; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; word platinum has 14 active approvals and 10 blocked `needs_review` entries from the first current-policy review batch |
-| N4 word | Golden-reviewed at `452/452`; `ready_with_deferred_variants` when built with N5 as the selected word-product scope; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; word platinum has `0` entries and fails until all generated N4 words have active approvals |
+| N5 word | Golden-reviewed at `343/343`; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; word platinum has 17 active approvals, 5 later-level deferred rows, and 2 blocked `needs_review` pitch-provenance rows |
+| N4 word | Golden-reviewed at `454/454`; `ready_with_deferred_variants` when built with N5 as the selected word-product scope; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; word platinum has `0` entries and fails until all generated N4 words have active approvals |
 
 Current tracked word inventory:
 
-- N5 canonical word rows: `348`
+- N5 canonical word rows: `343`
 - N5 source-only phrase exclusions: `13`
-- N4 canonical word rows: `452`
-- Current N5+N4 word rows: `800`
-- N5 word reading coverage: `83.1% (286/344)` when built alone
-- N5 word reading coverage: `83.4% (287/344)` when built with N4 as the selected word-product scope
+- N4 canonical word rows: `454`
+- Current N5+N4 word rows: `797`
+- N5 word reading coverage: `82% (282/344)` when built alone
+- N5 word reading coverage: `82.8% (285/344)` when built with N4 as the selected word-product scope
 - N4 word reading coverage: `74.5% (485/651)` when built with N5 as the selected word-product scope
-- N5+N4 word readiness: run `npm run deck:words:ready -- --levels=5,4 --require-no-active-triage` for the live value
+- N5+N4 word readiness: `ready_with_deferred_variants` for both levels under `npm run deck:words:ready -- --levels=5,4 --require-no-active-triage`
 
 Run live commands for current coverage. Do not rely on README numbers for release decisions.
 

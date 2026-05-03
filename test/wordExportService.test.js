@@ -1733,6 +1733,17 @@ test("buildWordTsvForJlptLevel excludes standalone higher-level kanji from lower
                     english: "A kitten is sleeping in the room.",
                 },
             },
+            "土|つち": {
+                written: "土",
+                reading: "つち",
+                meaning: "soil / earth",
+                jlpt: 4,
+                exampleSentence: {
+                    japanese: "手に土がつきました。",
+                    reading: "てにつちがつきました。",
+                    english: "Soil got on my hand.",
+                },
+            },
         },
     });
 
@@ -1755,6 +1766,11 @@ test("buildWordTsvForJlptLevel excludes standalone higher-level kanji from lower
                     reading: "こねこ",
                     jlpt: 5,
                 },
+                "土|つち": {
+                    written: "土",
+                    reading: "つち",
+                    jlpt: 4,
+                },
             },
         },
         kanjiApiClient: {
@@ -1774,9 +1790,45 @@ test("buildWordTsvForJlptLevel excludes standalone higher-level kanji from lower
         concurrency: 1,
     });
 
+    const n4Result = await wordExportService.buildWordTsvForJlptLevel({
+        levelNumber: 4,
+        jlptOnlyJson: {
+            土: { jlpt: 5, meanings: ["soil", "earth"], on_readings: ["ド"], kun_readings: ["つち"] },
+            兄: { jlpt: 4, meanings: ["older brother"], on_readings: ["キョウ"], kun_readings: ["あに"] },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {
+                "兄|あに": {
+                    written: "兄",
+                    reading: "あに",
+                    jlpt: 4,
+                },
+                "土|つち": {
+                    written: "土",
+                    reading: "つち",
+                    jlpt: 4,
+                },
+            },
+        },
+        kanjiApiClient: {
+            async getKanji(kanji) {
+                if (kanji === "土") {
+                    return { meanings: ["soil", "earth"], on_readings: ["ド"], kun_readings: ["つち"] };
+                }
+                return { meanings: ["older brother"], on_readings: ["キョウ"], kun_readings: ["あに"] };
+            },
+            async getWords() {
+                return [];
+            },
+        },
+        concurrency: 1,
+    });
+
     assert.doesNotMatch(result.tsv, /^兄\tあに\tolder brother\t/m);
     assert.match(result.tsv, /^子猫\tこねこ\t[^\t]*\t\t\tkitten\tJLPT N5\t/m);
     assert.match(result.tsv, /JLPT N4 kanji/u);
+    assert.match(n4Result.tsv, /^土\tつち\t[^\t]*\t\t\tsoil \/ earth\tJLPT N4\t/m);
+    assert.match(n4Result.tsv, /JLPT N5 kanji/u);
 });
 
 test("buildWordTsvForJlptLevel uses the canonical word-level contract before constituent heuristics", async () => {

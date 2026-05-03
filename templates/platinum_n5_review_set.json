@@ -2003,5 +2003,994 @@
       "strokeOrderTargetVerified": true
     },
     "primaryReadingRationale": "Uses はち as the common learner-facing on reading for the individual kanji 八 in number and time contexts; native readings stay support-only."
+  },
+  {
+    "kanji": "六",
+    "status": "platinum",
+    "readingIncludes": [
+      "ろく"
+    ],
+    "meaningIncludes": [
+      "six"
+    ],
+    "kanjiMeaningsIncludes": [
+      "six"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "六時",
+      "六つ"
+    ],
+    "exampleIncludes": [
+      "朝六時に起きます。"
+    ],
+    "reviewedAt": "2026-05-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "node scripts/previewDeck.js --kanji=六 --json",
+        "detail": "Generated card surface re-reviewed for 六|ろく: single-kanji anchor; DisplayWord 六; meaning six; notes include 六時, 六つ; example 朝六時に起きます。; audio includes kanji-reading-六-ろく; stroke-order field present."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:review:n5",
+        "detail": "N5 golden review protects 六|ろく, meaning six, notes, and example 朝六時に起きます。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "data/kanji_jlpt_only.json; templates/starter_curated_study_data.json; https://www.kanjipedia.jp/kanji/0007380200; Bunka Joyo Kanji reading index",
+        "detail": "Japanese source re-review for 六|ろく: Kanjipedia lists 音 ロク, 訓 む・むつ・むっつ・むい, and meaning six; tracked curation keeps ろく for number and time contexts. Platinum supports PrimaryReading ろく, MeaningJP six, and KanjiMeanings six."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed media manifest; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 六: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source is governed; static stroke-order image source is governed; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact re-reviewed for 六|ろく: exact kanji-reading audio kanji-reading-六-ろく; source voicevox-nemo; category kanji-reading; target 六; exported PrimaryReading ろく; listening QA remains separate."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 六: stroke-order animation shows target 六; visual target checked; source provenance governed; automated source policy cannot prove stroke sequence correctness by itself."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 六|ろく: individual-kanji card for a learner, primary reading re-reviewed against Japanese source evidence and N5 usefulness, support-only examples, no compound learner anchor, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "strokeOrderVerified": true,
+      "noSilentFallback": true,
+      "japaneseVerified": true,
+      "exampleReleaseQuality": true,
+      "audioArtifactVerified": true,
+      "strokeOrderTargetVerified": true
+    },
+    "primaryReadingRationale": "Uses ろく as the common learner-facing on reading for the individual kanji 六 in number and time contexts; native readings stay support-only."
+  },
+  {
+    "kanji": "円",
+    "status": "platinum",
+    "readingIncludes": [
+      "えん"
+    ],
+    "meaningIncludes": [
+      "yen"
+    ],
+    "kanjiMeaningsIncludes": [
+      "yen",
+      "circle",
+      "round"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "円",
+      "百円"
+    ],
+    "exampleIncludes": [
+      "このペンは百円です。"
+    ],
+    "reviewedAt": "2026-05-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "node scripts/previewDeck.js --kanji=円 --json",
+        "detail": "Generated card surface re-reviewed for 円|えん: single-kanji anchor; DisplayWord 円; meaning yen; notes include 円, 百円; example このペンは百円です。; audio includes kanji-reading-円-えん; stroke-order field present."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:review:n5",
+        "detail": "N5 golden review protects 円|えん, meaning yen, notes, and example このペンは百円です。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "data/kanji_jlpt_only.json; templates/starter_curated_study_data.json; https://www.kanjipedia.jp/kanji/0000436000; Bunka Joyo Kanji reading index",
+        "detail": "Japanese source re-review for 円|えん: Kanjipedia lists 音 エン, 訓 まるい, and meanings circle/round and Japanese currency unit yen; tracked curation keeps えん for yen/circle. Platinum supports PrimaryReading えん, MeaningJP yen, and KanjiMeanings yen / circle / round."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed media manifest; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 円: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source is governed; static stroke-order image source is governed; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact re-reviewed for 円|えん: exact kanji-reading audio kanji-reading-円-えん; source voicevox-nemo; category kanji-reading; target 円; exported PrimaryReading えん; listening QA remains separate."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 円: stroke-order animation shows target 円; visual target checked; source provenance governed; automated source policy cannot prove stroke sequence correctness by itself."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 円|えん: individual-kanji card for a learner, primary reading re-reviewed against Japanese source evidence and N5 usefulness, support-only examples, no compound learner anchor, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "strokeOrderVerified": true,
+      "noSilentFallback": true,
+      "japaneseVerified": true,
+      "exampleReleaseQuality": true,
+      "audioArtifactVerified": true,
+      "strokeOrderTargetVerified": true
+    },
+    "primaryReadingRationale": "Uses えん as the common learner-facing on reading for 円 in core money and shape contexts."
+  },
+  {
+    "kanji": "出",
+    "status": "platinum",
+    "readingIncludes": [
+      "でる"
+    ],
+    "meaningIncludes": [
+      "go out"
+    ],
+    "kanjiMeaningsIncludes": [
+      "exit",
+      "go out",
+      "come out",
+      "leave",
+      "put out"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "出る",
+      "出す",
+      "出口"
+    ],
+    "exampleIncludes": [
+      "七時に家を出ます。"
+    ],
+    "reviewedAt": "2026-05-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "node scripts/previewDeck.js --kanji=出 --json",
+        "detail": "Generated card surface re-reviewed for 出|でる: single-kanji anchor; DisplayWord 出; meaning go out; notes include 出る, 出す, 出口; example 七時に家を出ます。; audio includes kanji-reading-出-でる; stroke-order field present."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:review:n5",
+        "detail": "N5 golden review protects 出|でる, meaning go out, notes, and example 七時に家を出ます。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "data/kanji_jlpt_only.json; templates/starter_curated_study_data.json; https://www.kanjipedia.jp/kanji/0003214000/; Bunka Joyo Kanji reading index",
+        "detail": "Japanese source re-review for 出|でる: Kanjipedia lists 音 シュツ・スイ, 訓 でる・だす, and meaning go out/put out/appear; tracked curation keeps でる for the concrete go out reading. Platinum supports PrimaryReading でる, MeaningJP go out, and KanjiMeanings exit / go out / come out / leave / put out."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed media manifest; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 出: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source is governed; static stroke-order image source is governed; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact re-reviewed for 出|でる: exact kanji-reading audio kanji-reading-出-でる; source voicevox-nemo; category kanji-reading; target 出; exported PrimaryReading でる; listening QA remains separate."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 出: stroke-order animation shows target 出; visual target checked; source provenance governed; automated source policy cannot prove stroke sequence correctness by itself."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 出|でる: individual-kanji card for a learner, primary reading re-reviewed against Japanese source evidence and N5 usefulness, support-only examples, no compound learner anchor, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "strokeOrderVerified": true,
+      "noSilentFallback": true,
+      "japaneseVerified": true,
+      "exampleReleaseQuality": true,
+      "audioArtifactVerified": true,
+      "strokeOrderTargetVerified": true
+    },
+    "primaryReadingRationale": "Uses でる as the learner-facing kun reading for the individual kanji 出 meaning go out/come out; だす and シュツ contexts stay support-only."
+  },
+  {
+    "kanji": "分",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "ふん"
+    ],
+    "meaningIncludes": [
+      "minute"
+    ],
+    "kanjiMeaningsIncludes": [
+      "minute",
+      "divide",
+      "part",
+      "understand"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "分",
+      "五分",
+      "part",
+      "分かる"
+    ],
+    "exampleIncludes": [
+      "あと五分あります。"
+    ],
+    "reviewedAt": "2026-05-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "node scripts/previewDeck.js --kanji=分 --json",
+        "detail": "Generated card surface re-reviewed for 分|ふん: single-kanji anchor; DisplayWord 分; meaning minute; notes include 分, 五分, part, 分かる; example あと五分あります。; audio includes kanji-reading-分-ふん; stroke-order field present."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:review:n5",
+        "detail": "N5 golden review protects 分|ふん, meaning minute, notes, and example あと五分あります。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "data/kanji_jlpt_only.json; templates/starter_curated_study_data.json; https://www.kanjipedia.jp/kanji/0006175200; Bunka Joyo Kanji reading index",
+        "detail": "Japanese source re-review for 分|ふん: Kanjipedia lists 音 ブン・フン・ブ, 訓 わける・わかれる・わかる・わかつ, and includes unit meanings; tracked curation keeps ふん/minute as the N5 learner-facing time reading while ぶん and わかる stay support-only. Platinum supports PrimaryReading ふん, MeaningJP minute, and KanjiMeanings minute / divide / part / understand."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed media manifest; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 分: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source is governed; static stroke-order image source is governed; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact re-reviewed for 分|ふん: exact kanji-reading audio kanji-reading-分-ふん; source voicevox-nemo; category kanji-reading; target 分; exported PrimaryReading ふん; listening QA remains separate."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 分: stroke-order animation shows target 分; visual target checked; source provenance governed; automated source policy cannot prove stroke sequence correctness by itself."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 分|ふん: individual-kanji card for a learner, primary reading re-reviewed against Japanese source evidence and N5 usefulness, support-only examples, no compound learner anchor, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "strokeOrderVerified": true,
+      "noSilentFallback": true,
+      "japaneseVerified": true,
+      "exampleReleaseQuality": true,
+      "audioArtifactVerified": true,
+      "strokeOrderTargetVerified": true
+    },
+    "primaryReadingRationale": "Uses ふん as the most learner-useful N5 reading for the individual kanji 分 in minute/time contexts; part/divide/understand readings stay support-only.",
+    "fixSummary": "Keeps the earlier corrected 分 card shape: PrimaryReading ふん and MeaningJP minute, with 五分 as the reinforcing example and ぶん/わかる retained only as support readings."
+  },
+  {
+    "kanji": "前",
+    "status": "platinum",
+    "readingIncludes": [
+      "まえ"
+    ],
+    "meaningIncludes": [
+      "front"
+    ],
+    "kanjiMeaningsIncludes": [
+      "front",
+      "before",
+      "in front"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "前",
+      "駅の前"
+    ],
+    "exampleIncludes": [
+      "駅の前で待ちます。"
+    ],
+    "reviewedAt": "2026-05-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "node scripts/previewDeck.js --kanji=前 --json",
+        "detail": "Generated card surface re-reviewed for 前|まえ: single-kanji anchor; DisplayWord 前; meaning front; notes include 前, 駅の前; example 駅の前で待ちます。; audio includes kanji-reading-前-まえ; stroke-order field present."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:review:n5",
+        "detail": "N5 golden review protects 前|まえ, meaning front, notes, and example 駅の前で待ちます。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "data/kanji_jlpt_only.json; templates/starter_curated_study_data.json; https://www.kanjipedia.jp/kanji/0004135400/; Bunka Joyo Kanji reading index",
+        "detail": "Japanese source re-review for 前|まえ: Kanjipedia lists 音 ゼン, 訓 まえ, and meanings spatial front and temporal before; tracked curation keeps まえ for the concrete front/before reading. Platinum supports PrimaryReading まえ, MeaningJP front, and KanjiMeanings front / before / in front."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed media manifest; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 前: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source is governed; static stroke-order image source is governed; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact re-reviewed for 前|まえ: exact kanji-reading audio kanji-reading-前-まえ; source voicevox-nemo; category kanji-reading; target 前; exported PrimaryReading まえ; listening QA remains separate."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 前: stroke-order animation shows target 前; visual target checked; source provenance governed; automated source policy cannot prove stroke sequence correctness by itself."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 前|まえ: individual-kanji card for a learner, primary reading re-reviewed against Japanese source evidence and N5 usefulness, support-only examples, no compound learner anchor, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "strokeOrderVerified": true,
+      "noSilentFallback": true,
+      "japaneseVerified": true,
+      "exampleReleaseQuality": true,
+      "audioArtifactVerified": true,
+      "strokeOrderTargetVerified": true
+    },
+    "primaryReadingRationale": "Uses まえ as the concrete standalone learner-facing reading for the individual kanji 前 meaning front/before."
+  },
+  {
+    "kanji": "十",
+    "status": "platinum",
+    "readingIncludes": [
+      "じゅう"
+    ],
+    "meaningIncludes": [
+      "ten"
+    ],
+    "kanjiMeaningsIncludes": [
+      "ten"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "十時",
+      "十分"
+    ],
+    "exampleIncludes": [
+      "十時に店が開きます。"
+    ],
+    "reviewedAt": "2026-05-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "node scripts/previewDeck.js --kanji=十 --json",
+        "detail": "Generated card surface re-reviewed for 十|じゅう: single-kanji anchor; DisplayWord 十; meaning ten; notes include 十時, 十分; example 十時に店が開きます。; audio includes kanji-reading-十-じゅう; stroke-order field present."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:review:n5",
+        "detail": "N5 golden review protects 十|じゅう, meaning ten, notes, and example 十時に店が開きます。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "data/kanji_jlpt_only.json; templates/starter_curated_study_data.json; https://www.kanjipedia.jp/kanji/0003160000; Bunka Joyo Kanji reading index",
+        "detail": "Japanese source re-review for 十|じゅう: Kanjipedia lists 音 ジュウ・ジッ, 訓 とお・と, and meaning ten; tracked curation keeps じゅう for number and time contexts, with じゅっぷん kept as support. Platinum supports PrimaryReading じゅう, MeaningJP ten, and KanjiMeanings ten."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed media manifest; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 十: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source is governed; static stroke-order image source is governed; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact re-reviewed for 十|じゅう: exact kanji-reading audio kanji-reading-十-じゅう; source voicevox-nemo; category kanji-reading; target 十; exported PrimaryReading じゅう; listening QA remains separate."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 十: stroke-order animation shows target 十; visual target checked; source provenance governed; automated source policy cannot prove stroke sequence correctness by itself."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 十|じゅう: individual-kanji card for a learner, primary reading re-reviewed against Japanese source evidence and N5 usefulness, support-only examples, no compound learner anchor, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "strokeOrderVerified": true,
+      "noSilentFallback": true,
+      "japaneseVerified": true,
+      "exampleReleaseQuality": true,
+      "audioArtifactVerified": true,
+      "strokeOrderTargetVerified": true
+    },
+    "primaryReadingRationale": "Uses じゅう as the common learner-facing on reading for the individual kanji 十 in number and time contexts; alternate 十 readings stay support-only."
+  },
+  {
+    "kanji": "千",
+    "status": "platinum",
+    "readingIncludes": [
+      "せん"
+    ],
+    "meaningIncludes": [
+      "thousand"
+    ],
+    "kanjiMeaningsIncludes": [
+      "thousand"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "千円",
+      "千"
+    ],
+    "exampleIncludes": [
+      "千円を持っています。"
+    ],
+    "reviewedAt": "2026-05-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "node scripts/previewDeck.js --kanji=千 --json",
+        "detail": "Generated card surface re-reviewed for 千|せん: single-kanji anchor; DisplayWord 千; meaning thousand; notes include 千円, 千; example 千円を持っています。; audio includes kanji-reading-千-せん; stroke-order field present."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:review:n5",
+        "detail": "N5 golden review protects 千|せん, meaning thousand, notes, and example 千円を持っています。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "data/kanji_jlpt_only.json; templates/starter_curated_study_data.json; https://www.kanjipedia.jp/kanji/0004026200; Bunka Joyo Kanji reading index",
+        "detail": "Japanese source re-review for 千|せん: Kanjipedia lists 音 セン, 訓 ち, and meaning thousand; tracked curation keeps せん for number and money contexts. Platinum supports PrimaryReading せん, MeaningJP thousand, and KanjiMeanings thousand."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed media manifest; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 千: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source is governed; static stroke-order image source is governed; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact re-reviewed for 千|せん: exact kanji-reading audio kanji-reading-千-せん; source voicevox-nemo; category kanji-reading; target 千; exported PrimaryReading せん; listening QA remains separate."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 千: stroke-order animation shows target 千; visual target checked; source provenance governed; automated source policy cannot prove stroke sequence correctness by itself."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 千|せん: individual-kanji card for a learner, primary reading re-reviewed against Japanese source evidence and N5 usefulness, support-only examples, no compound learner anchor, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "strokeOrderVerified": true,
+      "noSilentFallback": true,
+      "japaneseVerified": true,
+      "exampleReleaseQuality": true,
+      "audioArtifactVerified": true,
+      "strokeOrderTargetVerified": true
+    },
+    "primaryReadingRationale": "Uses せん as the common learner-facing on reading for the individual kanji 千 in number and money contexts."
+  },
+  {
+    "kanji": "午",
+    "status": "platinum",
+    "readingIncludes": [
+      "ご"
+    ],
+    "meaningIncludes": [
+      "noon"
+    ],
+    "kanjiMeaningsIncludes": [
+      "noon",
+      "11AM-1PM"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "午前",
+      "午後"
+    ],
+    "exampleIncludes": [
+      "午前九時に出かけます。"
+    ],
+    "reviewedAt": "2026-05-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "node scripts/previewDeck.js --kanji=午 --json",
+        "detail": "Generated card surface re-reviewed for 午|ご: single-kanji anchor; DisplayWord 午; meaning noon; notes include 午前, 午後; example 午前九時に出かけます。; audio includes kanji-reading-午-ご; stroke-order field present."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:review:n5",
+        "detail": "N5 golden review protects 午|ご, meaning noon, notes, and example 午前九時に出かけます。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "data/kanji_jlpt_only.json; templates/starter_curated_study_data.json; https://www.kanjipedia.jp/kanji/0002089200; Bunka Joyo Kanji reading index",
+        "detail": "Japanese source re-review for 午|ご: Kanjipedia lists 音 ゴ, outside 訓 うま・ひる, and meanings noon/noonday and the seventh zodiac sign; tracked curation keeps ご for core N5 time words 午前 and 午後 while blocking zodiac-horse noise. Platinum supports PrimaryReading ご, MeaningJP noon, and KanjiMeanings noon / 11AM-1PM."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed media manifest; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 午: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source is governed; static stroke-order image source is governed; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact re-reviewed for 午|ご: exact kanji-reading audio kanji-reading-午-ご; source voicevox-nemo; category kanji-reading; target 午; exported PrimaryReading ご; listening QA remains separate."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 午: stroke-order animation shows target 午; visual target checked; source provenance governed; automated source policy cannot prove stroke sequence correctness by itself."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 午|ご: individual-kanji card for a learner, primary reading re-reviewed against Japanese source evidence and N5 usefulness, support-only examples, no compound learner anchor, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "strokeOrderVerified": true,
+      "noSilentFallback": true,
+      "japaneseVerified": true,
+      "exampleReleaseQuality": true,
+      "audioArtifactVerified": true,
+      "strokeOrderTargetVerified": true
+    },
+    "primaryReadingRationale": "Uses ご as the learner-facing on reading for the individual kanji 午 in core time contexts such as 午前 and 午後; zodiac/horse meanings stay blocked for this N5 card."
+  },
+  {
+    "kanji": "半",
+    "status": "platinum",
+    "readingIncludes": [
+      "はん"
+    ],
+    "meaningIncludes": [
+      "half"
+    ],
+    "kanjiMeaningsIncludes": [
+      "half",
+      "middle"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "一時半",
+      "半分"
+    ],
+    "exampleIncludes": [
+      "一時半に昼ご飯を食べます。"
+    ],
+    "reviewedAt": "2026-05-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "node scripts/previewDeck.js --kanji=半 --json",
+        "detail": "Generated card surface re-reviewed for 半|はん: single-kanji anchor; DisplayWord 半; meaning half; notes include 一時半, 半分; example 一時半に昼ご飯を食べます。; audio includes kanji-reading-半-はん; stroke-order field present."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:review:n5",
+        "detail": "N5 golden review protects 半|はん, meaning half, notes, and example 一時半に昼ご飯を食べます。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "data/kanji_jlpt_only.json; templates/starter_curated_study_data.json; https://www.kanjipedia.jp/kanji/0005726200; Bunka Joyo Kanji reading index",
+        "detail": "Japanese source re-review for 半|はん: Kanjipedia lists 音 ハン, 訓 なかば, and meanings half/middle; tracked curation keeps はん for time and fraction contexts while blocking low-value odd-number/part-prefix noise. Platinum supports PrimaryReading はん, MeaningJP half, and KanjiMeanings half / middle."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed media manifest; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 半: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source is governed; static stroke-order image source is governed; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact re-reviewed for 半|はん: exact kanji-reading audio kanji-reading-半-はん; source voicevox-nemo; category kanji-reading; target 半; exported PrimaryReading はん; listening QA remains separate."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 半: stroke-order animation shows target 半; visual target checked; source provenance governed; automated source policy cannot prove stroke sequence correctness by itself."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 半|はん: individual-kanji card for a learner, primary reading re-reviewed against Japanese source evidence and N5 usefulness, support-only examples, no compound learner anchor, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "strokeOrderVerified": true,
+      "noSilentFallback": true,
+      "japaneseVerified": true,
+      "exampleReleaseQuality": true,
+      "audioArtifactVerified": true,
+      "strokeOrderTargetVerified": true
+    },
+    "primaryReadingRationale": "Uses はん as the common learner-facing on reading for the individual kanji 半 in half and time contexts."
+  },
+  {
+    "kanji": "南",
+    "status": "platinum",
+    "readingIncludes": [
+      "みなみ"
+    ],
+    "meaningIncludes": [
+      "south"
+    ],
+    "kanjiMeaningsIncludes": [
+      "south"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "南",
+      "南口"
+    ],
+    "exampleIncludes": [
+      "南口にコンビニがあります。"
+    ],
+    "reviewedAt": "2026-05-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "node scripts/previewDeck.js --kanji=南 --json",
+        "detail": "Generated card surface re-reviewed for 南|みなみ: single-kanji anchor; DisplayWord 南; meaning south; notes include 南, 南口; example 南口にコンビニがあります。; audio includes kanji-reading-南-みなみ; stroke-order field present."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:review:n5",
+        "detail": "N5 golden review protects 南|みなみ, meaning south, notes, and example 南口にコンビニがあります。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "data/kanji_jlpt_only.json; templates/starter_curated_study_data.json; https://www.kanjipedia.jp/kanji/0005406400; Bunka Joyo Kanji reading index",
+        "detail": "Japanese source re-review for 南|みなみ: Kanjipedia lists 音 ナン・ナ, 訓 みなみ, and meaning south; tracked curation keeps みなみ as the concrete direction reading. Platinum supports PrimaryReading みなみ, MeaningJP south, and KanjiMeanings south."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed media manifest; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 南: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source is governed; static stroke-order image source is governed; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact re-reviewed for 南|みなみ: exact kanji-reading audio kanji-reading-南-みなみ; source voicevox-nemo; category kanji-reading; target 南; exported PrimaryReading みなみ; listening QA remains separate."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 南: stroke-order animation shows target 南; visual target checked; source provenance governed; automated source policy cannot prove stroke sequence correctness by itself."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 南|みなみ: individual-kanji card for a learner, primary reading re-reviewed against Japanese source evidence and N5 usefulness, support-only examples, no compound learner anchor, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "strokeOrderVerified": true,
+      "noSilentFallback": true,
+      "japaneseVerified": true,
+      "exampleReleaseQuality": true,
+      "audioArtifactVerified": true,
+      "strokeOrderTargetVerified": true
+    },
+    "primaryReadingRationale": "Uses みなみ as the concrete standalone learner-facing reading for the individual kanji 南 meaning south."
+  },
+  {
+    "kanji": "友",
+    "status": "platinum",
+    "readingIncludes": [
+      "とも"
+    ],
+    "meaningIncludes": [
+      "friend"
+    ],
+    "kanjiMeaningsIncludes": [
+      "friend"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "友だち",
+      "友だちと話す"
+    ],
+    "exampleIncludes": [
+      "友だちと映画を見ます。"
+    ],
+    "reviewedAt": "2026-05-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "node scripts/previewDeck.js --kanji=友 --json",
+        "detail": "Generated card surface re-reviewed for 友|とも: single-kanji anchor; DisplayWord 友; meaning friend; notes include 友だち, 友だちと話す; example 友だちと映画を見ます。; audio includes kanji-reading-友-とも; stroke-order field present."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:review:n5",
+        "detail": "N5 golden review protects 友|とも, meaning friend, notes, and example 友だちと映画を見ます。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "data/kanji_jlpt_only.json; templates/starter_curated_study_data.json; https://www.kanjipedia.jp/kanji/0006843100; Bunka Joyo Kanji reading index",
+        "detail": "Japanese source re-review for 友|とも: Kanjipedia lists 音 ユウ, 訓 とも, and meaning friend/companion; tracked curation keeps とも as the learner-facing reading in 友だち while the card anchor remains the individual kanji 友. Platinum supports PrimaryReading とも, MeaningJP friend, and KanjiMeanings friend."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed media manifest; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 友: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source is governed; static stroke-order image source is governed; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact re-reviewed for 友|とも: exact kanji-reading audio kanji-reading-友-とも; source voicevox-nemo; category kanji-reading; target 友; exported PrimaryReading とも; listening QA remains separate."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 友: stroke-order animation shows target 友; visual target checked; source provenance governed; automated source policy cannot prove stroke sequence correctness by itself."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 友|とも: individual-kanji card for a learner, primary reading re-reviewed against Japanese source evidence and N5 usefulness, support-only examples, no compound learner anchor, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "strokeOrderVerified": true,
+      "noSilentFallback": true,
+      "japaneseVerified": true,
+      "exampleReleaseQuality": true,
+      "audioArtifactVerified": true,
+      "strokeOrderTargetVerified": true
+    },
+    "primaryReadingRationale": "Uses とも as the learner-facing kun reading for the individual kanji 友 meaning friend; 友だち is support vocabulary, not the card anchor."
+  },
+  {
+    "kanji": "右",
+    "status": "platinum",
+    "readingIncludes": [
+      "みぎ"
+    ],
+    "meaningIncludes": [
+      "right"
+    ],
+    "kanjiMeaningsIncludes": [
+      "right"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "右",
+      "右手"
+    ],
+    "exampleIncludes": [
+      "次の角を右に曲がります。"
+    ],
+    "reviewedAt": "2026-05-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "node scripts/previewDeck.js --kanji=右 --json",
+        "detail": "Generated card surface re-reviewed for 右|みぎ: single-kanji anchor; DisplayWord 右; meaning right; notes include 右, 右手; example 次の角を右に曲がります。; audio includes kanji-reading-右-みぎ; stroke-order field present."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:review:n5",
+        "detail": "N5 golden review protects 右|みぎ, meaning right, notes, and example 次の角を右に曲がります。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "data/kanji_jlpt_only.json; templates/starter_curated_study_data.json; https://www.kanjipedia.jp/kanji/0000308000; Bunka Joyo Kanji reading index",
+        "detail": "Japanese source re-review for 右|みぎ: Kanjipedia lists 音 ウ・ユウ, 訓 みぎ, and meaning right/right side; tracked curation keeps みぎ as the concrete direction reading. Platinum supports PrimaryReading みぎ, MeaningJP right, and KanjiMeanings right."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed media manifest; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 右: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source is governed; static stroke-order image source is governed; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact re-reviewed for 右|みぎ: exact kanji-reading audio kanji-reading-右-みぎ; source voicevox-nemo; category kanji-reading; target 右; exported PrimaryReading みぎ; listening QA remains separate."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 右: stroke-order animation shows target 右; visual target checked; source provenance governed; automated source policy cannot prove stroke sequence correctness by itself."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 右|みぎ: individual-kanji card for a learner, primary reading re-reviewed against Japanese source evidence and N5 usefulness, support-only examples, no compound learner anchor, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "strokeOrderVerified": true,
+      "noSilentFallback": true,
+      "japaneseVerified": true,
+      "exampleReleaseQuality": true,
+      "audioArtifactVerified": true,
+      "strokeOrderTargetVerified": true
+    },
+    "primaryReadingRationale": "Uses みぎ as the concrete standalone learner-facing reading for the individual kanji 右 meaning right."
   }
 ]

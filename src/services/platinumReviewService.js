@@ -56,6 +56,24 @@ const REQUIRED_WORD_EVIDENCE_TYPES = Object.freeze([
     "manual-review",
 ]);
 
+const JAPANESE_SOURCE_MARKERS = Object.freeze([
+    "jmdict",
+    "jisho.org",
+    "weblio",
+    "goo辞書",
+    "デジタル大辞泉",
+    "大辞泉",
+    "大辞林",
+    "明鏡",
+    "新明解",
+    "三省堂",
+    "nhk",
+    "ojad",
+    "tatoeba",
+    "https://",
+    "http://",
+]);
+
 function normalizeText(value) {
     return String(value ?? "").trim();
 }
@@ -89,6 +107,23 @@ function normalizeStringArray(value) {
     return (Array.isArray(value) ? value : [])
         .map((entry) => normalizeText(entry))
         .filter(Boolean);
+}
+
+function validateJapaneseSourceEvidence(sourceEvidence = []) {
+    const japaneseEvidenceText = normalizeEvidenceEntries(sourceEvidence)
+        .filter((entry) => entry.type === "japanese-source")
+        .map((entry) => `${entry.source} ${entry.detail}`)
+        .join(" ")
+        .toLowerCase();
+
+    if (!japaneseEvidenceText) {
+        return [];
+    }
+
+    const hasVerifiableSource = JAPANESE_SOURCE_MARKERS.some((marker) => japaneseEvidenceText.includes(marker.toLowerCase()));
+    return hasVerifiableSource
+        ? []
+        : ["japanese-source evidence must cite a non-generated Japanese source; generated output, golden fixtures, tracked starter data, and local caches are not sufficient for platinum"];
 }
 
 function buildExpectedReadingText(entry = {}) {
@@ -202,6 +237,7 @@ function validateActivePlatinumEntry(entry = {}) {
             failures.push(`sourceEvidence must include evidence type: ${requiredType}`);
         }
     }
+    failures.push(...validateJapaneseSourceEvidence(sourceEvidence));
     if (entry.status === "fixed_then_platinum" && !normalizeText(entry.fixSummary)) {
         failures.push("fixed_then_platinum entries must include fixSummary");
     }

@@ -110,11 +110,12 @@ test("tracked populated word platinum manifests bind evidence to protected field
 
     for (const fileName of platinumFiles) {
         const entries = loadJson(path.join("templates", fileName));
-        if (entries.length === 0) {
+        const manifestActiveEntries = activeEntries(entries, ACTIVE_WORD_PLATINUM_STATUSES);
+        if (manifestActiveEntries.length === 0) {
             continue;
         }
 
-        const activeWordKeys = activeEntries(entries, ACTIVE_WORD_PLATINUM_STATUSES).map((entry) =>
+        const activeWordKeys = manifestActiveEntries.map((entry) =>
             buildWordStudyEntryKey({
                 written: entry.word,
                 reading: normalizeList(entry.readingIncludes)[0],
@@ -126,8 +127,8 @@ test("tracked populated word platinum manifests bind evidence to protected field
         }
 
         const report = evaluatePlatinumWordReviewSet({
-            rows: buildSyntheticWordRows(entries, wordPitchAccentData),
-            entries,
+            rows: buildSyntheticWordRows(manifestActiveEntries, wordPitchAccentData),
+            entries: manifestActiveEntries,
             wordPitchAccentData,
         });
 

@@ -46,7 +46,7 @@ function buildSourceEvidence() {
     const details = {
         "generated-surface": "Generated word-card surface inspected for 今日|きょう: word, reading, meaning today, example 今日は図書館へ行きます。, audio, and pitch accent fields.",
         "golden-review": "N5 golden word review protects 今日|きょう.",
-        "japanese-source": "Japanese dictionary-style source verified 今日|きょう, reading きょう, learner meaning today, and example 今日は図書館へ行きます。",
+        "japanese-source": "JMdict dictionary source verified 今日|きょう, reading きょう, learner meaning today, and example 今日は図書館へ行きます。",
         "level-contract": "templates/jlpt_word_level_contract.json lists 今日|きょう for JLPT N5.",
         "example-review": "Example review checked 今日|きょう, reading きょう, and sentence 今日は図書館へ行きます。",
         "media-audit": "Managed media provenance audit checked 今日|きょう.",
@@ -178,6 +178,23 @@ test("evaluatePlatinumWordReviewSet rejects source evidence that does not bind t
     assert.match(failures, /japanese-source evidence must explicitly support/);
     assert.match(failures, /audio-review evidence must explicitly support/);
     assert.match(failures, /label-review evidence must explicitly support/);
+});
+
+test("evaluatePlatinumWordReviewSet rejects local generated artifacts as Japanese source evidence", () => {
+    const sourceEvidence = buildSourceEvidence().map((entry) => entry.type === "japanese-source"
+        ? {
+            ...entry,
+            source: "templates/starter_word_study_data.json; templates/golden_n5_word_review_set.json; local KanjiAPI word cache where available",
+            detail: "Tracked local data says 今日|きょう has reading きょう, learner meaning today, and example 今日は図書館へ行きます。",
+        }
+        : entry);
+    const report = evaluateWordPlatinum({
+        rows: [buildRow()],
+        entries: [buildEntry({ sourceEvidence })],
+    });
+
+    assert.equal(report.passed, false);
+    assert.match(report.results[0].failures.join("\n"), /japanese-source evidence must cite a non-generated Japanese source/);
 });
 
 test("evaluatePlatinumWordReviewSet protects exact word audio and pitch accent expectations", () => {

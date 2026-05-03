@@ -108,8 +108,8 @@ Current tracked word inventory:
 - N5 source-only phrase exclusions: `13`
 - N4 canonical word rows: `452`
 - Current N5+N4 word rows: `800`
-- N5 word reading coverage: `83.7% (288/344)` when built alone
-- N4 word reading coverage: `74.8% (487/651)` when built with N5 as the selected word-product scope
+- N5 word reading coverage: `82.8% (285/344)` when built alone
+- N4 word reading coverage: `74.5% (485/651)` when built with N5 as the selected word-product scope
 - N5+N4 word readiness: run `npm run deck:words:ready -- --levels=5,4 --require-no-active-triage` for the live value
 
 Run live commands for current coverage. Do not rely on README numbers for release decisions.
@@ -450,7 +450,7 @@ The front of a word card shows the written study word without furigana. The back
 
 Word deck readiness verifies pitch accent accuracy against the governed source pattern. A word row with a non-empty `PitchAccent` field is not enough: the rendered pitch contour must decode to the same accent numbers as the tracked source entry, and the source entry must belong to the same written word and reading. Rows with missing, ungoverned, invalid, source/render-mismatched, or source-identity-mismatched pitch accent block readiness.
 
-`KanjiBreakdown` includes constituent meanings, readings, stroke-order animation, and cross-level badges such as `JLPT N4 kanji`.
+`KanjiBreakdown` includes constituent meanings, readings, stroke-order animation, and cross-level badges such as `JLPT N4 kanji`. Its readings are bound to `ReadingBreakdown`: safe per-kanji ruby drives the constituent reading (`電車` shows `車 -> しゃ`), while non-decomposable whole-word ruby is labeled as `word reading: ...` and `CoversReading` uses the whole written surface (`今日: きょう`) instead of pretending each kanji has that reading. Word readiness fails when a constituent panel drifts from deterministic ruby, when whole-word ruby is counted as a per-kanji reading, or when `FocusKanji` names a kanji that is not in the written word.
 
 ## Output Layout
 

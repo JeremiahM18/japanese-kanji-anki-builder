@@ -1,8 +1,29 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const os = require("node:os");
+const path = require("node:path");
 
 const { buildWordAudioReviewReport } = require("../src/services/wordAudioReviewService");
+const { findManagedWordAudioAsset } = require("../src/services/wordAudioService");
 const { loadAudioSourcePolicy } = require("../src/datasets/audioSourcePolicy");
+
+function writeManifest(rootDir, kanji, manifest) {
+    const mediaId = `${kanji.codePointAt(0).toString(16).toUpperCase()}_${kanji}`;
+    const dir = path.join(rootDir, "kanji", mediaId.slice(0, 2), mediaId);
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, "manifest.json"), JSON.stringify({
+        kanji,
+        version: 1,
+        updatedAt: "2026-01-01T00:00:00.000Z",
+        assets: {
+            strokeOrderImage: null,
+            strokeOrderAnimation: null,
+            audio: [],
+        },
+        ...manifest,
+    }));
+}
 
 test("buildWordAudioReviewReport validates managed word-reading audio against built word rows", async () => {
     const report = await buildWordAudioReviewReport({
@@ -138,4 +159,33 @@ test("buildWordAudioReviewReport requires exact word-reading asset identity", as
     assert.equal(report.summary.missingAudio, 1);
     assert.equal(report.summary.readingMismatch, 0);
     assert.equal(report.rows[0].status, "missing_audio");
+});
+
+test("findManagedWordAudioAsset can recover exact word audio from a non-focus manifest", async () => {
+    const mediaRootDir = fs.mkdtempSync(path.join(os.tmpdir(), "word-audio-"));
+    writeManifest(mediaRootDir, "金", {
+        assets: {
+            strokeOrderImage: null,
+            strokeOrderAnimation: null,
+            audio: [{
+                path: "audio/91D1_金-word-reading-眼鏡-めがね.wav",
+                source: "voicevox-nemo",
+                category: "word-reading",
+                text: "眼鏡",
+                reading: "めがね",
+                voice: "女声1 / ノーマル",
+                locale: "ja-JP",
+            }],
+        },
+    });
+
+    const result = await findManagedWordAudioAsset({
+        written: "眼鏡",
+        reading: "めがね",
+        focusKanji: ["鏡"],
+        mediaRootDir,
+    });
+
+    assert.equal(result.kanji, "金");
+    assert.equal(result.asset.path, "audio/91D1_金-word-reading-眼鏡-めがね.wav");
 });

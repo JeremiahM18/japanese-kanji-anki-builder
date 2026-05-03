@@ -1,6 +1,7 @@
 const {
     buildWordReadingCoverageReport,
     buildWordReadingGapTriage,
+    parseCoversReadingField,
     parseKanjiTsv,
     parseWordTsv,
 } = require("./wordReadingCoverageService");
@@ -272,6 +273,190 @@ function buildWordDeckReadingBreakdownAudit({ wordRows }) {
     };
 }
 
+function extractReadingBreakdownContexts(readingBreakdown) {
+    const contexts = [];
+    const rubyPattern = /<ruby>([^<]+)<rt>([^<]+)<\/rt><\/ruby>/g;
+    let match;
+
+    while ((match = rubyPattern.exec(String(readingBreakdown || ""))) !== null) {
+        const surface = String(match[1] || "").trim();
+        const reading = String(match[2] || "").trim();
+        const kanjiList = extractConstituentKanji(surface);
+        if (!surface || !reading || kanjiList.length === 0) {
+            continue;
+        }
+
+        if (kanjiList.length === 1 && !surface.includes("々")) {
+            contexts.push({
+                type: "single",
+                surface,
+                reading,
+                kanji: kanjiList[0],
+            });
+            continue;
+        }
+
+        if (kanjiList.length > 1) {
+            contexts.push({
+                type: "group",
+                surface,
+                reading,
+                kanjiList,
+            });
+        }
+    }
+
+    return contexts;
+}
+
+function extractReadingBreakdownKanjiReadings(readingBreakdown) {
+    return extractReadingBreakdownContexts(readingBreakdown)
+        .filter((context) => context.type === "single")
+        .map((context) => ({
+            kanji: context.kanji,
+            reading: context.reading,
+        }));
+}
+
+function normalizeKanjiBreakdownPrimaryReading(value) {
+    return String(value || "")
+        .replace(/^word reading:\s*/i, "")
+        .trim();
+}
+
+function extractKanjiBreakdownPrimaryReadings(kanjiBreakdown) {
+    const readings = new Map();
+    const itemPattern = /<span class="kanji-char">([^<]+)<\/span>([\s\S]*?)(?=<span class="kanji-char">|$)/g;
+    let match;
+
+    while ((match = itemPattern.exec(String(kanjiBreakdown || ""))) !== null) {
+        const kanji = String(match[1] || "").trim();
+        const body = String(match[2] || "");
+        const primaryMatch = body.match(/<span class="kanji-primary">([^<]*)<\/span>/);
+        const meaningMatch = body.match(/<div class="kanji-meaning">([^（／<]+)/);
+        if (kanji && primaryMatch) {
+            const rawReading = String(primaryMatch[1] || "").trim();
+            readings.set(kanji, {
+                rawReading,
+                reading: normalizeKanjiBreakdownPrimaryReading(rawReading),
+                scope: rawReading.toLowerCase().startsWith("word reading:") ? "word" : "kanji",
+                displaySurface: String(meaningMatch?.[1] || kanji).trim(),
+            });
+        }
+    }
+
+    return readings;
+}
+
+function kanjiBreakdownReadingMatchesContext({ kanji, expectedReading, actualReading, displaySurface }) {
+    if (actualReading === expectedReading) {
+        return true;
+    }
+
+    const surface = String(displaySurface || "").trim();
+    return surface !== kanji
+        && surface.includes(kanji)
+        && Array.from(surface).some((char) => isKanaOnly(char))
+        && String(actualReading || "").startsWith(String(expectedReading || ""));
+}
+
+function buildWordDeckKanjiBreakdownContextAudit({ wordRows }) {
+    const mismatchedRows = [];
+    const coverageMismatchedRows = [];
+
+    for (const row of Array.isArray(wordRows) ? wordRows : []) {
+        const word = String(row?.Word || row?.word || "").trim();
+        const reading = String(row?.Reading || row?.reading || "").trim();
+        const constituentKanji = Array.from(word).filter((char) => HAN_CHAR_RE.test(char) && char !== "々");
+        if (constituentKanji.length < 2) {
+            continue;
+        }
+
+        const contexts = extractReadingBreakdownContexts(row?.ReadingBreakdown || row?.readingBreakdown || "");
+        const readingPairs = extractReadingBreakdownKanjiReadings(row?.ReadingBreakdown || row?.readingBreakdown || "");
+        if (readingPairs.length === 0) {
+            const hasGroupContext = contexts.some((context) => context.type === "group");
+            if (!hasGroupContext) {
+                continue;
+            }
+        }
+
+        const readingCounts = new Map();
+        for (const pair of readingPairs) {
+            readingCounts.set(pair.kanji, (readingCounts.get(pair.kanji) || 0) + 1);
+        }
+
+        const breakdownReadings = extractKanjiBreakdownPrimaryReadings(row?.KanjiBreakdown || row?.kanjiBreakdown || "");
+        for (const pair of readingPairs) {
+            if (readingCounts.get(pair.kanji) !== 1 || !breakdownReadings.has(pair.kanji)) {
+                continue;
+            }
+
+            const breakdown = breakdownReadings.get(pair.kanji);
+            const actualReading = breakdown?.reading || "";
+            if (!kanjiBreakdownReadingMatchesContext({
+                kanji: pair.kanji,
+                expectedReading: pair.reading,
+                actualReading,
+                displaySurface: breakdown?.displaySurface || "",
+            })) {
+                mismatchedRows.push({
+                    word,
+                    reading,
+                    kanji: pair.kanji,
+                    expectedReading: pair.reading,
+                    actualReading,
+                });
+            }
+        }
+
+        const groupContexts = contexts.filter((context) => context.type === "group");
+        const coverageReadings = parseCoversReadingField(row?.CoversReading || row?.coversReading || "");
+        for (const group of groupContexts) {
+            for (const kanji of group.kanjiList) {
+                if (!breakdownReadings.has(kanji)) {
+                    continue;
+                }
+
+                const breakdown = breakdownReadings.get(kanji);
+                if (
+                    breakdown.scope !== "word"
+                    || breakdown.reading !== group.reading
+                    || breakdown.displaySurface !== group.surface
+                ) {
+                    mismatchedRows.push({
+                        word,
+                        reading,
+                        kanji,
+                        expectedReading: group.reading,
+                        actualReading: breakdown?.reading || "",
+                        expectedSurface: group.surface,
+                    });
+                }
+
+                if (coverageReadings.has(kanji)) {
+                    coverageMismatchedRows.push({
+                        word,
+                        reading,
+                        kanji,
+                        groupSurface: group.surface,
+                        groupReading: group.reading,
+                        actualCoverageReading: coverageReadings.get(kanji),
+                    });
+                }
+            }
+        }
+    }
+
+    const mismatchCount = mismatchedRows.length + coverageMismatchedRows.length;
+    return {
+        valid: mismatchCount === 0,
+        mismatchCount,
+        mismatchedRows,
+        coverageMismatchedRows,
+    };
+}
+
 function hasFieldValue(row, fieldName) {
     return String(row?.[fieldName] || "").trim().length > 0;
 }
@@ -386,22 +571,39 @@ function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract }) {
             valid: true,
             standaloneViolationCount: 0,
             badgeViolationCount: 0,
+            focusViolationCount: 0,
             standaloneViolations: [],
             badgeViolations: [],
+            focusViolations: [],
         };
     }
 
     const standaloneViolations = [];
     const badgeViolations = [];
+    const focusViolations = [];
 
     for (const row of Array.isArray(wordRows) ? wordRows : []) {
         const written = String(row?.Word || row?.word || "").trim();
         const breakdown = String(row?.KanjiBreakdown || row?.kanjiBreakdown || "");
         const writtenChars = Array.from(written);
         const kanjiList = extractConstituentKanji(written);
+        const focusKanji = String(row?.FocusKanji || row?.focusKanji || "")
+            .split("、")
+            .map((kanji) => kanji.trim())
+            .filter(Boolean);
 
         if (kanjiList.length === 0) {
             continue;
+        }
+
+        for (const kanji of focusKanji) {
+            if (!kanjiList.includes(kanji)) {
+                focusViolations.push({
+                    word: written,
+                    kanji,
+                    focusKanji: focusKanji.join("、"),
+                });
+            }
         }
 
         if (writtenChars.length === 1 && kanjiList.length === 1) {
@@ -440,11 +642,13 @@ function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract }) {
     }
 
     return {
-        valid: standaloneViolations.length === 0 && badgeViolations.length === 0,
+        valid: standaloneViolations.length === 0 && badgeViolations.length === 0 && focusViolations.length === 0,
         standaloneViolationCount: standaloneViolations.length,
         badgeViolationCount: badgeViolations.length,
+        focusViolationCount: focusViolations.length,
         standaloneViolations,
         badgeViolations,
+        focusViolations,
     };
 }
 
@@ -562,6 +766,9 @@ function buildWordDeckCompletionReport({
     const readingBreakdownAudit = buildWordDeckReadingBreakdownAudit({
         wordRows,
     });
+    const kanjiBreakdownContextAudit = buildWordDeckKanjiBreakdownContextAudit({
+        wordRows,
+    });
     const cardBackAudit = buildWordDeckCardBackAudit({
         wordRows,
     });
@@ -571,6 +778,7 @@ function buildWordDeckCompletionReport({
         triage: triage.summary,
         policyAudit,
         readingBreakdownAudit,
+        kanjiBreakdownContextAudit,
         cardBackAudit,
         exampleReadingAlignmentAudit,
         pitchAccentAudit,
@@ -590,18 +798,20 @@ function buildWordDeckCompletionReport({
         exampleReadingAlignmentAudit,
         pitchAccentAudit,
         readingBreakdownAudit,
+        kanjiBreakdownContextAudit,
         cardBackAudit,
         readiness,
     };
 }
 
-function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudit, readingBreakdownAudit = null, cardBackAudit = null, exampleReadingAlignmentAudit = null, pitchAccentAudit = null }) {
+function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudit, readingBreakdownAudit = null, kanjiBreakdownContextAudit = null, cardBackAudit = null, exampleReadingAlignmentAudit = null, pitchAccentAudit = null }) {
     const hasMissingStarterRows = (inventory?.missingEligibleCount || 0) > 0;
     const hasActiveTriageItems = ((triage?.editorialReviewItems || 0) + (triage?.promoteCuratedExampleItems || 0)) > 0;
     const allOpenItemsDeferred = (triage?.totalItems || 0) > 0
         && (triage?.deferVariantItems || 0) === (triage?.totalItems || 0);
     const hasPolicyViolations = !policyAudit?.valid;
     const hasReadingBreakdownViolations = readingBreakdownAudit ? !readingBreakdownAudit.valid : false;
+    const hasKanjiBreakdownContextViolations = kanjiBreakdownContextAudit ? !kanjiBreakdownContextAudit.valid : false;
     const hasCardBackViolations = cardBackAudit ? !cardBackAudit.valid : false;
     const hasExampleReadingAlignmentViolations = exampleReadingAlignmentAudit ? !exampleReadingAlignmentAudit.valid : false;
     const hasPitchAccentViolations = pitchAccentAudit ? !pitchAccentAudit.valid : false;
@@ -610,7 +820,7 @@ function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudi
         : 0;
 
     let status = "incomplete";
-    if (!hasMissingStarterRows && !hasActiveTriageItems && !hasPolicyViolations && !hasReadingBreakdownViolations && !hasCardBackViolations && !hasExampleReadingAlignmentViolations && !hasPitchAccentViolations) {
+    if (!hasMissingStarterRows && !hasActiveTriageItems && !hasPolicyViolations && !hasReadingBreakdownViolations && !hasKanjiBreakdownContextViolations && !hasCardBackViolations && !hasExampleReadingAlignmentViolations && !hasPitchAccentViolations) {
         status = allOpenItemsDeferred ? "ready_with_deferred_variants" : "complete";
     }
 
@@ -620,6 +830,7 @@ function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudi
         hasActiveTriageItems,
         hasPolicyViolations,
         hasReadingBreakdownViolations,
+        hasKanjiBreakdownContextViolations,
         hasCardBackViolations,
         hasExampleReadingAlignmentViolations,
         hasPitchAccentViolations,
@@ -656,6 +867,7 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         "Deck policy audit:",
         `- Standalone wrong-level cards: ${report.policyAudit.standaloneViolationCount}`,
         `- Missing cross-level/outside-level badges: ${report.policyAudit.badgeViolationCount}`,
+        `- Focus kanji outside written word: ${report.policyAudit.focusViolationCount || 0}`,
         "",
         "Sentence orthography review:",
         `- Suspicious kana-only examples: ${report.sentenceOrthographyAudit.suspiciousKanaOnlyCount}`,
@@ -665,6 +877,7 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         `- Rows missing reading breakdowns: ${report.readingBreakdownAudit?.missingBreakdownCount || 0}`,
         `- Mixed kanji/kana rows missing breakdowns: ${report.readingBreakdownAudit?.missingMixedBreakdownCount || 0}`,
         `- Non-ruby kanji breakdowns: ${report.readingBreakdownAudit?.nonRubyBreakdownCount || 0}`,
+        `- Kanji breakdown context mismatches: ${report.kanjiBreakdownContextAudit?.mismatchCount || 0}`,
         "",
         "Card back review:",
         `- Required back-side fields: ${report.cardBackAudit?.requiredReadyCount || 0}/${report.cardBackAudit?.requiredTotalCount || 0} (${report.cardBackAudit?.requiredMissingCount || 0} missing)`,
@@ -753,11 +966,27 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         }
     }
 
+    if ((report.kanjiBreakdownContextAudit?.mismatchedRows || []).length > 0) {
+        lines.push("", "Kanji breakdown context mismatches:");
+        for (const row of report.kanjiBreakdownContextAudit.mismatchedRows.slice(0, maxEntries)) {
+            const expectedSurface = row.expectedSurface ? `${row.expectedSurface} / ` : "";
+            lines.push(`- ${row.word} (${row.reading}) ${row.kanji}: expected ${expectedSurface}${row.expectedReading}, found ${row.actualReading || "(blank)"}`);
+        }
+    }
+
+    if ((report.kanjiBreakdownContextAudit?.coverageMismatchedRows || []).length > 0) {
+        lines.push("", "Coverage readings tied to non-decomposable ruby groups:");
+        for (const row of report.kanjiBreakdownContextAudit.coverageMismatchedRows.slice(0, maxEntries)) {
+            lines.push(`- ${row.word} (${row.reading}) ${row.kanji}: has ${row.actualCoverageReading}, but ${row.groupSurface} is read as ${row.groupReading}`);
+        }
+    }
+
     return `${lines.join("\n")}\n`;
 }
 
 module.exports = {
     buildWordDeckCardBackAudit,
+    buildWordDeckKanjiBreakdownContextAudit,
     buildWordDeckCompletionReport,
     buildWordDeckInventorySummary,
     buildWordDeckExampleReadingAlignmentAudit,

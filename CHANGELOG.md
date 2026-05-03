@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Fixed
 
+- Fixed word-card constituent readings so `KanjiBreakdown` now follows deterministic `ReadingBreakdown` context, labels non-decomposable whole-word readings as word readings, and rejects false per-kanji coverage claims.
 - Fixed N5 kanji primary-reading selection so curated individual-kanji display readings outrank word-breakdown support readings, keeping cards like `生|いきる` and `行|いく` anchored on the kanji deck purpose.
 - Fixed N5 word breakdown curation for `午後`, `半分`, `十分`, `五分`, `後半`, `行き先`, and `出来上がり` so word-card support readings stay accurate after the kanji primary-reading separation.
 - Fixed N5 kanji examples for `車|くるま` and `金|かね` so platinum cards demonstrate the exported primary reading instead of leading with support-only compound readings.

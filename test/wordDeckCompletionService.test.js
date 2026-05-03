@@ -6,6 +6,7 @@ const {
     buildWordDeckCompletionReport,
     buildWordDeckExampleReadingAlignmentAudit,
     buildWordDeckInventorySummary,
+    buildWordDeckKanjiBreakdownContextAudit,
     buildWordDeckPitchAccentAudit,
     buildWordDeckPolicyAudit,
     buildWordDeckReadingBreakdownAudit,
@@ -168,6 +169,98 @@ test("buildWordDeckReadingBreakdownAudit flags mixed-script blanks and non-ruby 
     assert.equal(audit.missingRows[0].word, "生まれる");
     assert.equal(audit.missingMixedRows[0].word, "生まれる");
     assert.equal(audit.nonRubyRows[0].word, "友だち");
+});
+
+test("buildWordDeckKanjiBreakdownContextAudit flags compound panels that drift from ruby readings", () => {
+    const audit = buildWordDeckKanjiBreakdownContextAudit({
+        wordRows: [
+            {
+                Word: "電車",
+                Reading: "でんしゃ",
+                ReadingBreakdown: "<ruby>電<rt>でん</rt></ruby><ruby>車<rt>しゃ</rt></ruby>",
+                KanjiBreakdown: [
+                    "<div class=\"kanji-breakdown-item\"><span class=\"kanji-char\">電</span><span class=\"kanji-primary\">でん</span></div>",
+                    "<div class=\"kanji-breakdown-item\"><span class=\"kanji-char\">車</span><span class=\"kanji-primary\">くるま</span></div>",
+                ].join(""),
+            },
+            {
+                Word: "食べ物",
+                Reading: "たべもの",
+                ReadingBreakdown: "<ruby>食<rt>た</rt></ruby>べ<ruby>物<rt>もの</rt></ruby>",
+                KanjiBreakdown: [
+                    "<div class=\"kanji-breakdown-item\"><span class=\"kanji-char\">食</span><span class=\"kanji-primary\">た</span></div>",
+                    "<div class=\"kanji-breakdown-item\"><span class=\"kanji-char\">物</span><span class=\"kanji-primary\">もの</span></div>",
+                ].join(""),
+            },
+        ],
+    });
+
+    assert.equal(audit.valid, false);
+    assert.equal(audit.mismatchCount, 1);
+    assert.deepEqual(audit.mismatchedRows[0], {
+        word: "電車",
+        reading: "でんしゃ",
+        kanji: "車",
+        expectedReading: "しゃ",
+        actualReading: "くるま",
+    });
+});
+
+test("buildWordDeckKanjiBreakdownContextAudit checks okurigana ruby as constituent context", () => {
+    const audit = buildWordDeckKanjiBreakdownContextAudit({
+        wordRows: [
+            {
+                Word: "手強い",
+                Reading: "てごわい",
+                ReadingBreakdown: "<ruby>手<rt>て</rt></ruby><ruby>強い<rt>ごわい</rt></ruby>",
+                KanjiBreakdown: [
+                    "<div class=\"kanji-breakdown-item\"><span class=\"kanji-char\">手</span><span class=\"kanji-primary\">て</span><div class=\"kanji-meaning\">手 （て） ／ hand</div></div>",
+                    "<div class=\"kanji-breakdown-item\"><span class=\"kanji-char\">強</span><span class=\"kanji-primary\">こわい</span><div class=\"kanji-meaning\">強い （こわい） ／ strong</div></div>",
+                ].join(""),
+            },
+        ],
+    });
+
+    assert.equal(audit.valid, false);
+    assert.deepEqual(audit.mismatchedRows[0], {
+        word: "手強い",
+        reading: "てごわい",
+        kanji: "強",
+        expectedReading: "ごわい",
+        actualReading: "こわい",
+    });
+});
+
+test("buildWordDeckKanjiBreakdownContextAudit requires whole-word labels for non-decomposable ruby groups", () => {
+    const audit = buildWordDeckKanjiBreakdownContextAudit({
+        wordRows: [
+            {
+                Word: "今日",
+                Reading: "きょう",
+                ReadingBreakdown: "<ruby>今日<rt>きょう</rt></ruby>",
+                CoversReading: "今日: きょう",
+                KanjiBreakdown: [
+                    "<div class=\"kanji-breakdown-item\"><span class=\"kanji-char\">今</span><span class=\"kanji-primary\">word reading: きょう</span><div class=\"kanji-meaning\">今日 （きょう） ／ today</div></div>",
+                    "<div class=\"kanji-breakdown-item\"><span class=\"kanji-char\">日</span><span class=\"kanji-primary\">word reading: きょう</span><div class=\"kanji-meaning\">今日 （きょう） ／ today</div></div>",
+                ].join(""),
+            },
+            {
+                Word: "一日",
+                Reading: "ついたち",
+                ReadingBreakdown: "<ruby>一日<rt>ついたち</rt></ruby>",
+                CoversReading: "一: いつ",
+                KanjiBreakdown: [
+                    "<div class=\"kanji-breakdown-item\"><span class=\"kanji-char\">一</span><span class=\"kanji-primary\">いち</span><div class=\"kanji-meaning\">一 （いち） ／ one</div></div>",
+                    "<div class=\"kanji-breakdown-item\"><span class=\"kanji-char\">日</span><span class=\"kanji-primary\">ひ</span><div class=\"kanji-meaning\">日 （ひ） ／ day</div></div>",
+                ].join(""),
+            },
+        ],
+    });
+
+    assert.equal(audit.valid, false);
+    assert.equal(audit.mismatchedRows.length, 2);
+    assert.equal(audit.coverageMismatchedRows.length, 1);
+    assert.equal(audit.coverageMismatchedRows[0].word, "一日");
 });
 
 test("buildWordDeckCardBackAudit proves required learner-facing back fields", () => {
@@ -490,6 +583,35 @@ test("buildWordDeckPolicyAudit rejects standalone higher-level cards and missing
     assert.equal(audit.standaloneViolations[0].word, "兄");
     assert.equal(audit.badgeViolations[0].word, "子猫");
     assert.equal(audit.badgeViolations[0].expectedLabel, "JLPT N4 kanji");
+    assert.equal(audit.focusViolationCount, 0);
+});
+
+test("buildWordDeckPolicyAudit rejects focus kanji that are not in the written word", () => {
+    const audit = buildWordDeckPolicyAudit({
+        level: 5,
+        wordRows: [
+            {
+                Word: "眼鏡",
+                FocusKanji: "金",
+                KanjiBreakdown: "<div class=\"kanji-level-badge\">JLPT N2 kanji</div>",
+            },
+        ],
+        jlptLevelContract: {
+            kanjiLevels: {
+                眼: 2,
+                鏡: 2,
+                金: 5,
+            },
+        },
+    });
+
+    assert.equal(audit.valid, false);
+    assert.equal(audit.focusViolationCount, 1);
+    assert.deepEqual(audit.focusViolations[0], {
+        word: "眼鏡",
+        kanji: "金",
+        focusKanji: "金",
+    });
 });
 
 test("buildWordDeckPolicyAudit treats okurigana words as labeled support cases instead of standalone violations", () => {

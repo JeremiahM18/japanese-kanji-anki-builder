@@ -299,10 +299,10 @@
         "一"
       ],
       "coversReadings": {
-        "一": "いつ"
+        "一日": "ついたち"
       }
     },
-    "notes": "Reading-coverage support word for the common 一 -> いつ date pattern.",
+    "notes": "Common date word with a whole-word reading; do not split it into false per-kanji readings.",
     "exampleSentence": {
       "japanese": "来月の一日に新しい仕事が始まります。",
       "reading": "らいげつのついたちにあたらしいしごとがはじまります。",
@@ -2835,8 +2835,7 @@
         "日"
       ],
       "coversReadings": {
-        "今": "いま",
-        "日": "ひ"
+        "今日": "きょう"
       }
     },
     "notes": "Irregular reading. Learn this as a whole word.",
@@ -3318,6 +3317,7 @@
   "時々|ときどき": {
     "written": "時々",
     "reading": "ときどき",
+    "readingBreakdown": "<ruby>時<rt>とき</rt></ruby><ruby>々<rt>どき</rt></ruby>",
     "meaning": "sometimes",
     "jlpt": 5,
     "tags": [
@@ -3418,13 +3418,15 @@
     "coverage": {
       "role": "both",
       "focusKanji": [
-        "七"
+        "七",
+        "日"
       ],
       "coversReadings": {
-        "七": "なの"
+        "七": "なの",
+        "日": "か"
       }
     },
-    "notes": "Important calendar and counter reading for 七.",
+    "notes": "Important calendar and counter reading for 七; also shows the 日 -> か date suffix.",
     "exampleSentence": {
       "japanese": "会議は七日にあります。",
       "reading": "かいぎはなのかにあります。",
@@ -5013,10 +5015,10 @@
         "日"
       ],
       "coversReadings": {
-        "日": "か"
+        "二日": "ふつか"
       }
     },
-    "notes": "Reading-coverage support word for the common 日 -> か date pattern.",
+    "notes": "Common date word with a whole-word reading; do not split it into false per-kanji readings.",
     "exampleSentence": {
       "japanese": "会議は二日にあります。",
       "reading": "かいぎはふつかにあります。",
@@ -5257,13 +5259,13 @@
     "coverage": {
       "role": "support",
       "focusKanji": [
-        "金"
+        "鏡"
       ],
       "coversReadings": {
-        "金": "がね"
+        "鏡": "がね"
       }
     },
-    "notes": "Reading-coverage support word for the 金 -> がね pattern. The word uses higher-level kanji, which the card labels explicitly for learners.",
+    "notes": "Reading-coverage support word for the 鏡 -> がね pattern. The word uses higher-level kanji, which the card labels explicitly for learners.",
     "exampleSentence": {
       "japanese": "新しい眼鏡を買いました。",
       "reading": "あたらしいめがねをかいました。",
@@ -13646,6 +13648,7 @@
   "元々|もともと": {
     "written": "元々",
     "reading": "もともと",
+    "readingBreakdown": "<ruby>元<rt>もと</rt></ruby><ruby>々<rt>もと</rt></ruby>",
     "meaning": "originally / by nature",
     "jlpt": 4,
     "tags": [
@@ -15417,10 +15420,10 @@
         "強"
       ],
       "coversReadings": {
-        "強": "こわい"
+        "強": "ごわい"
       }
     },
-    "notes": "Common N4 support word that covers the 強 -> こわい reading.",
+    "notes": "Common N4 support word that covers the 強 -> ごわい reading in 手強い.",
     "exampleSentence": {
       "japanese": "次の試合の相手はかなり手強いそうです。",
       "reading": "つぎのしあいのあいてはかなりてごわいそうです。",
@@ -15848,6 +15851,7 @@
   "少々|しょうしょう": {
     "written": "少々",
     "reading": "しょうしょう",
+    "readingBreakdown": "<ruby>少<rt>しょう</rt></ruby><ruby>々<rt>しょう</rt></ruby>",
     "meaning": "a little / a moment",
     "jlpt": 4,
     "tags": [
@@ -16370,6 +16374,7 @@
   "度々|たびたび": {
     "written": "度々",
     "reading": "たびたび",
+    "readingBreakdown": "<ruby>度<rt>たび</rt></ruby><ruby>々<rt>たび</rt></ruby>",
     "meaning": "often / repeatedly",
     "jlpt": 4,
     "tags": [
@@ -18646,10 +18651,10 @@
         "主"
       ],
       "coversReadings": {
-        "主": "あるじ"
+        "主人": "あるじ"
       }
     },
-    "notes": "Common N4 support word that covers the 主 -> あるじ reading; the whole-word ruby avoids a false per-kanji split.",
+    "notes": "Common N4 support word with a whole-word reading; the whole-word ruby avoids a false per-kanji split.",
     "exampleSentence": {
       "japanese": "この家の主人は親切な人です。",
       "reading": "このいえのあるじはしんせつなひとです。",

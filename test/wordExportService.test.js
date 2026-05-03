@@ -37,6 +37,9 @@ test("buildWordTsvForJlptLevel ignores repetition marks in kanji breakdowns", as
                 reading: "ときどき",
                 meaning: "sometimes",
                 jlpt: 5,
+                focusKanji: ["時"],
+                coversReadings: ["時: とき"],
+                readingBreakdown: "<ruby>時<rt>とき</rt></ruby><ruby>々<rt>どき</rt></ruby>",
                 exampleSentence: {
                     japanese: "時々公園で友だちに会います。",
                     reading: "ときどきこうえんでともだちにあいます。",
@@ -67,8 +70,9 @@ test("buildWordTsvForJlptLevel ignores repetition marks in kanji breakdowns", as
         concurrency: 1,
     });
 
-    assert.match(tsv, /時々 （ときどき）/u);
+    assert.match(tsv, /時 （とき）/u);
     assert.doesNotMatch(tsv, /class="kanji-char">々</u);
+    assert.doesNotMatch(tsv, /時々 （ときどき）/u);
 });
 
 test("loadAnkiNoteSchema can load the shared word note contract", () => {
@@ -666,6 +670,94 @@ test("buildBreakdownInference keeps okurigana display words in compound contexts
     assert.equal(result.meaningJP, "切る （きる） ／ cut");
 });
 
+test("buildBreakdownInference uses deterministic word-context readings before generic kanji fallbacks", () => {
+    const result = buildBreakdownInference({
+        kanji: "車",
+        contextWord: "電車",
+        contextCandidate: {
+            written: "電車",
+            reading: "でんしゃ",
+            meaning: "train",
+        },
+        contextKanjiReading: "しゃ",
+        inference: {
+            candidates: [{ written: "車", pron: "くるま", gloss: "car", score: 100 }],
+            primaryReading: "くるま",
+            englishMeaning: "car / vehicle",
+            meaningJP: "車 （くるま） ／ car / vehicle",
+            onReading: "オン: シャ",
+            kunReading: "くん: くるま",
+        },
+        curatedEntry: {
+            englishMeaning: "car / vehicle",
+            displayWord: { written: "車", pron: "くるま" },
+        },
+    });
+
+    assert.equal(result.primaryReading, "しゃ");
+    assert.equal(result.meaningJP, "車 （しゃ） ／ car / vehicle");
+});
+
+test("buildBreakdownInference marks non-decomposable word readings as word scoped", () => {
+    const result = buildBreakdownInference({
+        kanji: "今",
+        contextWord: "今日",
+        contextCandidate: {
+            written: "今日",
+            reading: "きょう",
+            meaning: "today",
+        },
+        contextReadingGroup: {
+            surface: "今日",
+            reading: "きょう",
+        },
+        inference: {
+            candidates: [{ written: "今", pron: "いま", gloss: "now", score: 100 }],
+            primaryReading: "いま",
+            englishMeaning: "now",
+            meaningJP: "今 （いま） ／ now",
+            onReading: "オン: コン",
+            kunReading: "くん: いま",
+        },
+        curatedEntry: {
+            englishMeaning: "now",
+            displayWord: { written: "今", pron: "いま" },
+        },
+    });
+
+    assert.equal(result.primaryReading, "きょう");
+    assert.equal(result.primaryReadingScope, "word");
+    assert.equal(result.meaningJP, "今日 （きょう） ／ today");
+});
+
+test("buildBreakdownInference does not treat repetition-mark words as single-kanji contexts", () => {
+    const result = buildBreakdownInference({
+        kanji: "時",
+        contextWord: "時々",
+        contextCandidate: {
+            written: "時々",
+            reading: "ときどき",
+            meaning: "sometimes",
+        },
+        contextKanjiReading: "とき",
+        inference: {
+            candidates: [],
+            primaryReading: "じ",
+            englishMeaning: "time",
+            meaningJP: "時 （じ） ／ time",
+            onReading: "オン: ジ",
+            kunReading: "くん: とき",
+        },
+        curatedEntry: {
+            englishMeaning: "time",
+            breakdownDisplayWord: { written: "時", pron: "じ" },
+        },
+    });
+
+    assert.equal(result.primaryReading, "とき");
+    assert.equal(result.meaningJP, "時 （とき） ／ time");
+});
+
 test("buildBreakdownInference accepts context overrides with okurigana for the target kanji", () => {
     const result = buildBreakdownInference({
         kanji: "帰",
@@ -852,7 +944,7 @@ test("starter curated data provides learner-friendly kanji breakdown fallbacks",
     );
     assert.deepEqual(
         curatedStudyData["行"].breakdownOverrides.find((entry) => entry.matchWord === "行き先").displayWord,
-        { written: "行", pron: "ゆき" }
+        { written: "行き", pron: "ゆき" }
     );
     assert.deepEqual(curatedStudyData["会"].breakdownDisplayWord, { written: "会", pron: "かい" });
     assert.deepEqual(curatedStudyData["店"].breakdownDisplayWord, { written: "店", pron: "みせ" });

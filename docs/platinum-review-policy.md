@@ -39,6 +39,7 @@ Each platinum word card must pass all rules below:
 - The learner-facing meaning is clear, useful, and not a dictionary dump.
 - The example sentence is natural, level-appropriate, and demonstrates the target word clearly.
 - The reading breakdown, furigana, constituent-kanji breakdown, and JLPT or outside-JLPT labels are correct.
+- Constituent readings are field-bound to the exported `ReadingBreakdown`. Safe per-kanji ruby may count as a kanji reading; whole-word ruby must be labeled as a word reading and must not be counted as a per-kanji coverage claim.
 - Higher-level or outside-JLPT kanji are allowed only when the word itself belongs now and the card labels those kanji visibly.
 - Exact word-reading audio is present, governed, and artifact-verified for the written word and exported reading. Human listening QA remains part of the release checklist.
 - Pitch accent is present, protected by explicit expectation text, tied to the same governed word-reading source entry, and the rendered card output matches that governed source pattern.

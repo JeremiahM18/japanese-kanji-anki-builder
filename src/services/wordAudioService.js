@@ -1,3 +1,5 @@
+const fsp = require("node:fs/promises");
+const path = require("node:path");
 const { HAN_CHAR_RE } = require("../utils/japanese");
 const { parseWordTsv } = require("./wordReadingCoverageService");
 const { selectBestAudioAsset } = require("./audioService");
@@ -85,6 +87,68 @@ async function readAudioManifest({ kanji, audioService = null, mediaRootDir = ""
     return readManifestIfExists(mediaRootDir, kanji);
 }
 
+async function listManifestPaths(mediaRootDir) {
+    const kanjiRoot = path.join(mediaRootDir || "", "kanji");
+    const results = [];
+    const queue = [kanjiRoot];
+
+    while (queue.length > 0) {
+        const current = queue.shift();
+        let entries = [];
+        try {
+            entries = await fsp.readdir(current, { withFileTypes: true });
+        } catch (err) {
+            if (err && err.code === "ENOENT") {
+                continue;
+            }
+            throw err;
+        }
+
+        for (const entry of entries) {
+            const fullPath = path.join(current, entry.name);
+            if (entry.isDirectory()) {
+                queue.push(fullPath);
+                continue;
+            }
+            if (entry.isFile() && entry.name === "manifest.json") {
+                results.push(fullPath);
+            }
+        }
+    }
+
+    return results.sort((a, b) => a.localeCompare(b));
+}
+
+async function findManagedWordAudioAssetInAnyManifest({ written, reading, mediaRootDir = "" }) {
+    if (!mediaRootDir) {
+        return { kanji: "", asset: null };
+    }
+
+    const expectedWritten = cleanString(written);
+    const expectedReading = cleanString(reading);
+    for (const manifestPath of await listManifestPaths(mediaRootDir)) {
+        const manifest = JSON.parse(await fsp.readFile(manifestPath, "utf8"));
+        const candidateAssets = (manifest?.assets?.audio || []).filter((asset) => (
+            asset?.category === "word-reading"
+            && cleanString(asset?.text) === expectedWritten
+            && cleanString(asset?.reading) === expectedReading
+        ));
+        const asset = selectBestAudioAsset(candidateAssets, {
+            category: "word-reading",
+            text: expectedWritten,
+            reading: expectedReading,
+        });
+        if (asset) {
+            return {
+                kanji: cleanString(manifest?.kanji),
+                asset,
+            };
+        }
+    }
+
+    return { kanji: "", asset: null };
+}
+
 async function findManagedWordAudioAsset({ written, reading, focusKanji = [], audioService = null, mediaRootDir = "" }) {
     const expectedWritten = cleanString(written);
     const expectedReading = cleanString(reading);
@@ -108,10 +172,7 @@ async function findManagedWordAudioAsset({ written, reading, focusKanji = [], au
         }
     }
 
-    return {
-        kanji: "",
-        asset: null,
-    };
+    return findManagedWordAudioAssetInAnyManifest({ written, reading, mediaRootDir });
 }
 
 module.exports = {
@@ -120,6 +181,8 @@ module.exports = {
     cleanString,
     extractConstituentKanji,
     findManagedWordAudioAsset,
+    findManagedWordAudioAssetInAnyManifest,
+    listManifestPaths,
     parseFocusKanjiField,
     selectWordAudioHostKanji,
 };

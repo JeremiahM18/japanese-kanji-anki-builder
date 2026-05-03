@@ -723,7 +723,7 @@ test("tracked starter word data includes the nineteenth governed N4 completion b
         ["開く|あく", "開", "あく"],
         ["問い|とい", "問", "とい"],
         ["問屋|とんや", "問", "とん"],
-        ["手強い|てごわい", "強", "こわい"],
+        ["手強い|てごわい", "強", "ごわい"],
         ["明朝|みょうちょう", "明", "みょう"],
         ["明朝|みょうちょう", "朝", "ちょう"],
     ]);
@@ -935,7 +935,7 @@ test("tracked starter word data includes the twenty-eighth governed N4 completio
         ["北京|ペキン", "京", "キン"],
         ["法度|はっと", "度", "と"],
         ["自業自得|じごうじとく", "業", "ごう"],
-        ["主人|あるじ", "主", "あるじ"],
+        ["主人|あるじ", "主人", "あるじ"],
         ["病|やまい", "病", "やまい"],
         ["会わせる|あわせる", "会", "あわせる"],
         ["開ける|ひらける", "開", "ひらける"],
@@ -1020,8 +1020,7 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
         role: "both",
         focusKanji: ["今", "日"],
         coversReadings: {
-            今: "いま",
-            日: "ひ",
+            今日: "きょう",
         },
     });
     assertCoverageRoles(starterEntries, [
@@ -1082,7 +1081,7 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
     ]);
     assertCoverageReadings(starterEntries, [
         ["中国|ちゅうごく", "中", "ちゅう"],
-        ["二日|ふつか", "日", "か"],
+        ["二日|ふつか", "二日", "ふつか"],
         ["二時|にじ", "二", "じ"],
         ["地下|ちか", "下", "か"],
         ["上下|じょうげ", "下", "げ"],
@@ -1116,7 +1115,7 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
         ["長男|ちょうなん", "男", "なん"],
         ["白米|はくまい", "白", "はく"],
         ["後半|こうはん", "後", "こう"],
-        ["一日|ついたち", "一", "いつ"],
+        ["一日|ついたち", "一日", "ついたち"],
         ["後ほど|のちほど", "後", "のち"],
         ["行事|ぎょうじ", "行", "ぎょう"],
         ["南北|なんぼく", "南", "なん"],
@@ -1184,7 +1183,7 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
         ["生やす|はやす", "生", "はやす"],
         ["火照る|ほてる", "火", "ほ"],
         ["生かす|いかす", "生", "いかす"],
-        ["眼鏡|めがね", "金", "がね"],
+        ["眼鏡|めがね", "鏡", "がね"],
         ["断食|だんじき", "食", "じき"],
         ["手間|てま", "間", "ま"],
         ["白紙|はくし", "白", "はく"],
@@ -1198,6 +1197,7 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
         ["四月|しがつ", "四", "し"],
         ["五月|ごがつ", "月", "がつ"],
         ["七日|なのか", "七", "なの"],
+        ["七日|なのか", "日", "か"],
         ["十日|とおか", "十", "とお"],
     ]);
 });

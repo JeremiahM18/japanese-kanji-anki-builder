@@ -51,6 +51,7 @@ A word level ships only when all criteria are true:
 - No standalone wrong-level cards ship in the deck.
 - Constituent kanji are visibly labeled with JLPT level or outside-JLPT status.
 - Reading coverage is reported honestly against the selected word-product level scope, including whether a target is covered by an earlier, same-level, or harder selected deck.
+- `ReadingBreakdown`, `CoversReading`, and `KanjiBreakdown` agree: safe per-kanji ruby can drive constituent readings, but whole-word ruby is labeled as word-level reading and is not counted as per-kanji coverage.
 - Active triage is either resolved or intentionally deferred.
 - Sentence orthography review has no unresolved blocker.
 - Any shipped audio is governed, audited, and review-clean.

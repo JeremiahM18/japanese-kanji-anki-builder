@@ -1,5 +1,10 @@
 {
   "N5": {
+    "一|on|いつ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Useful いつ compounds are later-level words such as 同一 or 統一; do not fake this from whole-word date readings like 一日（ついたち）."
+    },
     "円|kun|まど": {
       "suggestedAction": "defer_variant",
       "priority": "low",
@@ -35,6 +40,11 @@
       "priority": "low",
       "note": "Remaining こん compounds are too specialized or cross-level-heavy to justify a beginner support card."
     },
+    "金|kun|がね": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Useful forms such as 針金 or 引き金 belong in later word-deck levels; do not fake coverage with 眼鏡 because it does not contain 金."
+    },
     "行|on|あん": {
       "suggestedAction": "defer_variant",
       "priority": "low",
@@ -49,6 +59,11 @@
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "Name-specific/archaic reading; not productive for N5 study."
+    },
+    "時|kun|どき": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Visible in 時々 as iteration-mark rendaku, but not counted as a separate per-kanji support target."
     },
     "山|on|せん": {
       "suggestedAction": "defer_variant",
@@ -216,6 +231,11 @@
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "思想 is too abstract for the N4 learner deck; keep 思 anchored to 思う and defer this on-yomi until a stronger useful word belongs in scope."
+    },
+    "強|kun|こわい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "強飯 is too narrow for the N4 learner deck; 手強い should truthfully cover 強 -> ごわい, not fake 強 -> こわい."
     },
     "新|kun|にい": {
       "suggestedAction": "defer_variant",
@@ -451,6 +471,11 @@
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "主 -> す is not a useful N4 support target; keep learner-facing 主 coverage through 主人, 主に, and 持ち主."
+    },
+    "主|kun|あるじ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "主人（あるじ） is kept as a useful word, but its whole-word ruby must not be counted as a per-kanji reading split for 主."
     },
     "習|on|じゅ": {
       "suggestedAction": "defer_variant",

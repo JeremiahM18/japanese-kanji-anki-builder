@@ -27,6 +27,8 @@ Golden coverage is required before a level can be trusted for ongoing work. Plat
 
 Platinum evidence must name the specific card, exported reading, and learner-facing values being verified. A broad statement that a field was reviewed is not enough.
 
+For active word platinum, `japanese-source` evidence must cite a non-generated Japanese-language or dictionary source. Generated output, golden expectations, tracked starter templates, ignored local data, and local caches are internal evidence only; they do not satisfy Japanese-source verification by themselves.
+
 ## Kanji deck exit criteria
 
 A kanji level ships only when all criteria are true:
@@ -65,8 +67,8 @@ A word level ships only when all criteria are true:
 - N3 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N2 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N1 kanji: golden-reviewed at `1231/1231`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
-- N5 word: golden-reviewed and `ready_with_deferred_variants`; platinum sample manifest has 12 entries that must pass field-bound evidence validation before counting toward version 1
-- N4 word: golden-reviewed at `452/452` and stabilized as `ready_with_deferred_variants` when built with N5 as the selected word-product scope; platinum not started
+- N5 word: golden-reviewed and `ready_with_deferred_variants`; word platinum has `0` active approvals and 24 quarantined `needs_review` entries pending independent source review
+- N4 word: golden-reviewed at `452/452` and stabilized as `ready_with_deferred_variants` when built with N5 as the selected word-product scope; word platinum has `0` entries and fails until all generated N4 words have active approvals
 
 ## Required gates before shipping
 

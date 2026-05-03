@@ -85,6 +85,7 @@ Golden and platinum review:
 - Golden review does not mean version 1 release approval.
 - Platinum review decides whether a card deserves to ship in version 1.
 - Platinum review requires field-bound source evidence, explicit quality gates, and a keep/fix/defer/remove decision. Evidence that only says a field was "reviewed" is not enough; it must name the card, exported reading, and learner-facing values it supports.
+- Active word-card `japanese-source` evidence must cite a non-generated Japanese-language or dictionary source. Generated output, golden expectations, tracked starter templates, ignored local data, and local caches do not satisfy that evidence type by themselves.
 - Platinum review removes or defers noise instead of preserving cards that are uncommon, awkward, too advanced for the level, or only present to chase coverage.
 - Platinum review may improve source data and example sentences before promotion.
 - Platinum manifests are in progress. Only active `platinum` and `fixed_then_platinum` entries count as reviewed release coverage.
@@ -99,8 +100,8 @@ Golden and platinum review:
 | N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N1 kanji | Golden-reviewed at `1231/1231`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
-| N5 word | Golden-reviewed; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; platinum sample manifest has 12 entries that must pass the field-bound evidence gate before counting toward version 1 |
-| N4 word | Golden-reviewed at `452/452`; `ready_with_deferred_variants` when built with N5 as the selected word-product scope; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; platinum not started |
+| N5 word | Golden-reviewed; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; word platinum has `0` active approvals and 24 quarantined `needs_review` entries pending independent source review |
+| N4 word | Golden-reviewed at `452/452`; `ready_with_deferred_variants` when built with N5 as the selected word-product scope; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; word platinum has `0` entries and fails until all generated N4 words have active approvals |
 
 Current tracked word inventory:
 
@@ -108,7 +109,8 @@ Current tracked word inventory:
 - N5 source-only phrase exclusions: `13`
 - N4 canonical word rows: `452`
 - Current N5+N4 word rows: `800`
-- N5 word reading coverage: `82.8% (285/344)` when built alone
+- N5 word reading coverage: `83.1% (286/344)` when built alone
+- N5 word reading coverage: `83.4% (287/344)` when built with N4 as the selected word-product scope
 - N4 word reading coverage: `74.5% (485/651)` when built with N5 as the selected word-product scope
 - N5+N4 word readiness: run `npm run deck:words:ready -- --levels=5,4 --require-no-active-triage` for the live value
 

@@ -27,6 +27,8 @@ A card only becomes platinum when it is accurate, useful, learner-friendly, and 
 
 Platinum evidence is field-bound. A source entry that only says "reviewed" is not enough. The evidence text for an active card must explicitly name the reviewed word or kanji, the exported reading, and the learner-facing values it supports. Automated checks enforce that evidence is tied to the generated card surface; human review still owns the judgment that the cited source and final card are correct.
 
+For active word cards, `japanese-source` evidence must cite a non-generated Japanese-language or dictionary source. Generated output, golden review expectations, tracked starter templates, ignored local data, and local caches are useful internal evidence, but they are not Japanese-source verification by themselves.
+
 Existing platinum sample entries created before the current field-bound evidence gate are not trusted release coverage. Re-review them under the current rules before counting them toward version 1.
 
 ## Word-card platinum rules

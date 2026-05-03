@@ -1266,17 +1266,18 @@
     ],
     "jlpt": 5,
     "preferredWords": [
+      "二時",
       "二つ",
       "二人"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "二つ （ふたつ） - two things ／ 二人 （ふたり） - two people",
+    "notes": "二時 （にじ） - two o'clock ／ 二つ （ふたつ） - two things ／ 二人 （ふたり） - two people",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "りんごを二つ買いました。",
-      "reading": "りんごをふたつかいました。",
-      "english": "I bought two apples.",
+      "japanese": "二時に会います。",
+      "reading": "にじにあいます。",
+      "english": "I will meet at two o'clock.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -2550,7 +2551,11 @@
     }
   },
   "休": {
-    "englishMeaning": "rest / holiday",
+    "englishMeaning": "rest / take a day off",
+    "displayWord": {
+      "written": "休",
+      "pron": "やすむ"
+    },
     "breakdownOverrides": [
       {
         "matchWord": "休み時間",
@@ -2576,8 +2581,8 @@
     ],
     "jlpt": 5,
     "preferredWords": [
-      "休み",
       "休む",
+      "休み",
       "休み時間",
       "休日"
     ],
@@ -2587,12 +2592,12 @@
       "sleep"
     ],
     "blockedSentencePhrases": [],
-    "notes": "休み （やすみ） - day off ／ 休む （やすむ） - rest ／ 休み時間 （やすみじかん） - break time ／ 休日 （きゅうじつ） - holiday",
+    "notes": "休む （やすむ） - rest / take a day off ／ 休み （やすみ） - day off ／ 休み時間 （やすみじかん） - break time ／ 休日 （きゅうじつ） - holiday",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "日曜日は休みです。",
-      "reading": "にちようびはやすみです。",
-      "english": "Sunday is a day off.",
+      "japanese": "日曜日は休みます。",
+      "reading": "にちようびはやすみます。",
+      "english": "I take a day off on Sunday.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -3156,9 +3161,9 @@
     "notes": "何 （なに / なん） - what ／ 何ですか （なんですか） - what is it",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "これは何ですか。",
-      "reading": "これはなんですか。",
-      "english": "What is this?",
+      "japanese": "何をしますか。",
+      "reading": "なにをしますか。",
+      "english": "What will you do?",
       "source": "starter-curated",
       "tags": [
         "example",

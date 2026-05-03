@@ -12,6 +12,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 - Fixed N5 kanji primary-reading selection so curated individual-kanji display readings outrank word-breakdown support readings, keeping cards like `生|いきる` and `行|いく` anchored on the kanji deck purpose.
 - Fixed N5 word breakdown curation for `午後`, `半分`, `十分`, `五分`, `後半`, `行き先`, and `出来上がり` so word-card support readings stay accurate after the kanji primary-reading separation.
+- Fixed N5 kanji examples for `車|くるま` and `金|かね` so platinum cards demonstrate the exported primary reading instead of leading with support-only compound readings.
 - Updated README, product-exit, branch-protection, and NOTICE documentation so current N1 golden coverage, required CI checks, and governed media attribution match the repository state.
 - Removed the duplicate kanji-card stroke-order animation export field and changed kanji note examples to render word readings as ruby/furigana instead of parenthetical reading splits.
 - Removed the static stroke-order image field from kanji Anki exports while keeping static images in managed media provenance.
@@ -28,6 +29,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 ### Added
 
 - Added the next 12 N5 kanji platinum entries (`父`, `生`, `男`, `白`, `百`, `聞`, `行`, `西`, `見`, `話`, `語`, `読`), raising active N5 kanji platinum coverage to `72/80`.
+- Added the final 8 N5 kanji platinum entries (`車`, `金`, `長`, `間`, `雨`, `電`, `食`, `高`), completing active N5 kanji platinum coverage at `80/80`.
 - Completed tracked N1 kanji golden review coverage at `1231/1231` cards. N1 remains blocked until exact primary-reading audio passes readiness.
 - Added a thirty-second deliberate N4 support batch with `建つ` and `行き止まり`, keeping the batch small and leaving weaker alternate-spelling or formal readings uncovered rather than treating coverage as the product goal.
 - Added a thirty-first deliberate N4 support batch with `急く`, `寝かす`, and `転げる`, keeping the batch small because the remaining N4 reading gaps are mostly weak, rare, or low-value candidates.

@@ -1,4 +1,80 @@
-const { spawnSync } = require("node:child_process");
+const path = require("node:path");
+
+class CliExit extends Error {
+    constructor(code = 0) {
+        super(`CLI exited with status ${code}`);
+        this.code = code;
+    }
+}
+
+async function runCliMainInProcess({ main, args = [], cwd = process.cwd() } = {}) {
+    const originalCwd = process.cwd();
+    const originalArgv = process.argv;
+    const originalExit = process.exit;
+    const originalStdoutWrite = process.stdout.write;
+    const originalStderrWrite = process.stderr.write;
+    let stdout = "";
+    let stderr = "";
+    let status = 0;
+
+    process.argv = [process.execPath, "product-readiness-subcommand", ...args];
+    process.exit = (code = 0) => {
+        throw new CliExit(Number.isInteger(code) ? code : 0);
+    };
+    process.stdout.write = (chunk, encoding, callback) => {
+        stdout += String(chunk || "");
+        if (typeof encoding === "function") {
+            encoding();
+        } else if (typeof callback === "function") {
+            callback();
+        }
+        return true;
+    };
+    process.stderr.write = (chunk, encoding, callback) => {
+        stderr += String(chunk || "");
+        if (typeof encoding === "function") {
+            encoding();
+        } else if (typeof callback === "function") {
+            callback();
+        }
+        return true;
+    };
+
+    try {
+        if (cwd && cwd !== originalCwd) {
+            process.chdir(cwd);
+        }
+        await main();
+    } catch (error) {
+        if (error instanceof CliExit) {
+            status = error.code;
+        } else {
+            status = 1;
+            stderr += `${error.stack || error}\n`;
+        }
+    } finally {
+        if (process.cwd() !== originalCwd) {
+            process.chdir(originalCwd);
+        }
+        process.argv = originalArgv;
+        process.exit = originalExit;
+        process.stdout.write = originalStdoutWrite;
+        process.stderr.write = originalStderrWrite;
+    }
+
+    return {
+        status,
+        stdout,
+        stderr,
+    };
+}
+
+function buildScriptRunner(scriptPath, args = []) {
+    return ({ cwd = process.cwd() } = {}) => {
+        const { main } = require(path.resolve(__dirname, "..", "..", scriptPath));
+        return runCliMainInProcess({ main, args, cwd });
+    };
+}
 
 const N5_PRODUCT_READINESS_SCOPE = Object.freeze({
     type: "n5-product-readiness-checkpoint",
@@ -25,38 +101,50 @@ const N5_PRODUCT_READINESS_COMMANDS = Object.freeze([
     Object.freeze({
         id: "kanji-contract-audit",
         label: "Kanji contract audit",
-        command: "npm",
-        args: ["run", "data:audit:jlpt"],
+        displayCommand: "npm run data:audit:jlpt",
+        command: process.execPath,
+        args: [path.join("scripts", "auditJlptAlignment.js")],
+        runInProcess: buildScriptRunner("scripts/auditJlptAlignment.js"),
     }),
     Object.freeze({
         id: "word-contract-audit",
         label: "Word contract audit",
-        command: "npm",
-        args: ["run", "data:audit:jlpt:words"],
+        displayCommand: "npm run data:audit:jlpt:words",
+        command: process.execPath,
+        args: [path.join("scripts", "auditJlptWordAlignment.js")],
+        runInProcess: buildScriptRunner("scripts/auditJlptWordAlignment.js"),
     }),
     Object.freeze({
         id: "audio-provenance-audit",
         label: "Audio provenance audit",
-        command: "npm",
-        args: ["run", "data:audit:audio", "--", "--json"],
+        displayCommand: "npm run data:audit:audio -- --json",
+        command: process.execPath,
+        args: [path.join("scripts", "auditAudioPolicy.js"), "--json"],
+        runInProcess: buildScriptRunner("scripts/auditAudioPolicy.js", ["--json"]),
     }),
     Object.freeze({
         id: "n5-tracked-source-word-artifact",
         label: "N5 tracked-source word TSV artifact",
-        command: "npm",
-        args: ["run", "product:artifacts:n5"],
+        displayCommand: "npm run product:artifacts:n5",
+        command: process.execPath,
+        args: [path.join("scripts", "trackedSourceArtifacts.js"), "--level=5"],
+        runInProcess: buildScriptRunner("scripts/trackedSourceArtifacts.js", ["--level=5"]),
     }),
     Object.freeze({
         id: "n5-kanji-golden-review",
         label: "N5 kanji golden review",
-        command: "npm",
-        args: ["run", "deck:review:n5"],
+        displayCommand: "npm run deck:review:n5",
+        command: process.execPath,
+        args: [path.join("scripts", "reviewGoldenLevel.js"), "--level=5"],
+        runInProcess: buildScriptRunner("scripts/reviewGoldenLevel.js", ["--level=5"]),
     }),
     Object.freeze({
         id: "n5-word-golden-review",
         label: "N5 word golden review",
-        command: "npm",
-        args: ["run", "deck:words:review:n5"],
+        displayCommand: "npm run deck:words:review:n5",
+        command: process.execPath,
+        args: [path.join("scripts", "reviewGoldenWordLevel.js"), "--level=5", "--require-all"],
+        runInProcess: buildScriptRunner("scripts/reviewGoldenWordLevel.js", ["--level=5", "--require-all"]),
     }),
 ]);
 
@@ -90,7 +178,7 @@ function buildSpawnOptions(cwd) {
         cwd,
         encoding: "utf8",
         maxBuffer: 20 * 1024 * 1024,
-        shell: process.platform === "win32",
+        shell: false,
     };
 }
 
@@ -105,28 +193,26 @@ function buildProductReadinessPlan({ level = 5 } = {}) {
     };
 }
 
-function runProductReadinessGate({
+async function runProductReadinessGate({
     level = 5,
     cwd = process.cwd(),
-    runCommandFn = spawnSync,
+    runCommandFn = null,
 } = {}) {
     const plan = buildProductReadinessPlan({ level });
     const checks = [];
 
     for (const check of plan.commands) {
         const startedAt = Date.now();
-        const result = normalizeCommandResult(runCommandFn(
-            resolveCommand(check.command),
-            check.args,
-            buildSpawnOptions(cwd)
-        ));
+        const result = normalizeCommandResult(runCommandFn
+            ? runCommandFn(resolveCommand(check.command), check.args, buildSpawnOptions(cwd))
+            : await check.runInProcess({ cwd }));
         const durationMs = Date.now() - startedAt;
         const passed = result.status === 0 && !result.error;
 
         checks.push({
             id: check.id,
             label: check.label,
-            command: [check.command, ...check.args].join(" "),
+            command: check.displayCommand || [check.command, ...check.args].join(" "),
             passed,
             status: result.status,
             signal: result.signal,

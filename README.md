@@ -59,8 +59,8 @@ Tracked contracts define release behavior:
 Kanji decks:
 
 - Each shipped kanji belongs to the tracked JLPT kanji contract.
-- N5, N4, N3, and N2 kanji are fully protected by golden review coverage.
-- N1 kanji golden review coverage is complete: `1231/1231` reviewed. N1 must not be treated as ready until exact primary-reading audio and level readiness both pass.
+- N5, N4, N3, N2, and N1 kanji are fully protected by golden review coverage.
+- N1 kanji golden review coverage is complete: `1231/1231` reviewed. N1 can only be treated as ready when exact primary-reading audio and level readiness both pass.
 - The kanji deck learning target is the individual kanji. `DisplayWord` is the target kanji itself, and `PrimaryReading` is the learner-facing reading for that kanji.
 - Compound words belong in notes, examples, and word decks; they must not replace the kanji-card anchor.
 - `deck:ready` fails on export fallbacks unless `--allow-export-fallbacks` is explicit.
@@ -97,7 +97,7 @@ Golden and platinum review:
 | N4 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
-| N1 kanji | Golden-reviewed at `1231/1231`; not ready because exact primary-reading audio is missing from exported cards |
+| N1 kanji | Golden-reviewed at `1231/1231`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N5 word | Golden-reviewed; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; platinum started at `12/348` |
 | N4 word | Golden-reviewed at `452/452`; `ready_with_deferred_variants` when built with N5 as the selected word-product scope; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; platinum not started |
 

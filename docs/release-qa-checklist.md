@@ -30,7 +30,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 
 ## Kanji deck manual spot review
 
-- Import each kanji level being shipped into Anki. Current ready local kanji levels are N5, N4, N3, and N2. N1 is not ready until exact primary-reading audio and full golden coverage pass.
+- Import each kanji level being shipped into Anki. Current ready local kanji levels are N5, N4, N3, N2, and N1. Platinum review is still required before any level is version-1 locked.
 - Confirm platinum-reviewed cards preserve the individual-kanji anchor and do not ship weak, noisy, or compound-led teaching surfaces.
 - Confirm each card front is the individual target kanji.
 - Confirm each card back starts with the learner-facing `PrimaryReading` plus only the meaning associated with that reading.

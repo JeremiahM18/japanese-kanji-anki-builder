@@ -151,6 +151,154 @@ test("runBuildPipeline reuses the shared manifest lookup during packaging", asyn
     assert.equal(manifestCalls, 2);
 });
 
+test("runBuildPipeline exports audio from the audio manifest when the stroke-order manifest cache is stale", async () => {
+    const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "kanji-build-pipeline-stale-audio-cache-"));
+    const dataDir = path.join(tempRoot, "data");
+    const outDir = path.join(tempRoot, "out", "build");
+    const mediaRootDir = path.join(dataDir, "media");
+
+    fs.mkdirSync(dataDir, { recursive: true });
+
+    const jlptJsonPath = path.join(dataDir, "kanji_jlpt_only.json");
+    const kradfilePath = path.join(dataDir, "KRADFILE");
+    const sentenceCorpusPath = path.join(dataDir, "sentence_corpus.json");
+    const curatedStudyDataPath = path.join(dataDir, "curated_study_data.json");
+
+    fs.writeFileSync(jlptJsonPath, JSON.stringify({ 日: { jlpt: 5, meanings: ["day"], on_readings: ["ニチ"], kun_readings: ["ひ"] } }, null, 2) + "\n", "utf-8");
+    fs.writeFileSync(kradfilePath, "日 : 日\n", "utf-8");
+    fs.writeFileSync(sentenceCorpusPath, JSON.stringify([], null, 2) + "\n", "utf-8");
+    fs.writeFileSync(curatedStudyDataPath, JSON.stringify({}, null, 2) + "\n", "utf-8");
+
+    const staleStrokeOrderManifest = {
+        assets: {
+            strokeOrderImage: {
+                kind: "image",
+                path: "images/65E5_日-stroke-order.svg",
+                mimeType: "image/svg+xml",
+                source: "local-filesystem",
+            },
+            strokeOrderAnimation: {
+                kind: "animation",
+                path: "animations/65E5_日-stroke-order.gif",
+                mimeType: "image/gif",
+                source: "local-filesystem",
+            },
+            audio: [],
+        },
+    };
+    const freshAudioManifest = {
+        assets: {
+            strokeOrderImage: null,
+            strokeOrderAnimation: null,
+            audio: [{
+                kind: "audio",
+                path: "audio/65E5_日-kanji-reading-日-ひ.wav",
+                mimeType: "audio/wav",
+                source: "voicevox-nemo",
+                category: "kanji-reading",
+                text: "日",
+                reading: "ひ",
+                voice: "女声1 / ノーマル",
+                locale: "ja-JP",
+            }],
+        },
+    };
+
+    await runBuildPipeline({
+        config: {
+            jlptJsonPath,
+            kradfilePath,
+            sentenceCorpusPath,
+            curatedStudyDataPath,
+            mediaRootDir,
+            cacheDir: path.join(tempRoot, "cache"),
+            kanjiApiBaseUrl: "https://kanjiapi.dev",
+            fetchTimeoutMs: 10000,
+            exportConcurrency: 1,
+            buildOutDir: outDir,
+        },
+        outDir,
+        levels: [5],
+        limit: 1,
+        createKanjiApiClientFn: () => ({
+            async getKanji() {
+                throw new Error("should use the local JLPT entry");
+            },
+            async getWords() {
+                throw new Error("should skip word fetch for fully curated fixture");
+            },
+        }),
+        createInferenceEngineFn: () => ({
+            hasFullyCuratedKanjiEntry() {
+                return true;
+            },
+            inferKanjiStudyData() {
+                return {
+                    displayWord: { written: "日", pron: "ひ" },
+                    bestWord: { written: "日", pron: "ひ" },
+                    englishMeaning: "day",
+                    meaningJP: "日 （ひ） ／ day",
+                    notes: "日 （ひ） - day",
+                    sentenceCandidates: [{
+                        japanese: "今日は晴れです。",
+                        reading: "きょうははれです。",
+                        english: "It is sunny today.",
+                    }],
+                };
+            },
+        }),
+        createMediaServicesFn: () => ({
+            strokeOrderService: {
+                async getManifest() {
+                    return staleStrokeOrderManifest;
+                },
+            },
+            audioService: {
+                async getManifest() {
+                    return freshAudioManifest;
+                },
+            },
+        }),
+        syncMediaForKanjiListFn: async () => ({
+            results: [{
+                kanji: "日",
+                strokeOrder: { manifest: staleStrokeOrderManifest },
+                audio: { manifest: freshAudioManifest },
+            }],
+            summary: {
+                totalKanji: 1,
+                strokeOrder: { imageHits: 1, animationHits: 1, sourceCounts: { "local-filesystem": 2 } },
+                audio: { hits: 1, sourceCounts: { "voicevox-nemo": 1 } },
+                errors: [],
+            },
+        }),
+        buildMediaCoverageSummaryFn: async () => ({
+            levels: [{ level: 5, totalKanji: 1, strokeOrderCovered: 1, trueAnimationCovered: 1, audioCovered: 1, fullMediaCovered: 1 }],
+        }),
+        buildDeckPackageFn: async () => ({
+            rootDir: path.join(outDir, "package"),
+            exportsDir: path.join(outDir, "package", "exports"),
+            mediaDir: path.join(outDir, "package", "media"),
+            readmePath: path.join(outDir, "package", "IMPORT.txt"),
+            exportCount: 1,
+            mediaAssetCount: 2,
+            mediaCounts: {
+                strokeOrder: 1,
+                strokeOrderImage: 0,
+                strokeOrderAnimation: 0,
+                trueStrokeOrderAnimation: 0,
+                svgStrokeOrderAnimationFallback: 0,
+                audio: 1,
+            },
+            ankiPackage: { skipped: true, skipReason: "stubbed packaging" },
+        }),
+    });
+
+    const tsv = fs.readFileSync(path.join(outDir, "exports", "jlpt-n5.tsv"), "utf-8");
+    assert.match(tsv, /<img src="65E5_日-stroke-order\.gif" \/>/);
+    assert.match(tsv, /\[sound:65E5_日-kanji-reading-日-ひ\.wav\]/);
+});
+
 test("runBuildPipeline writes exports reports summary and an import-ready package", async () => {
     const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "kanji-build-pipeline-"));
     const dataDir = path.join(tempRoot, "data");

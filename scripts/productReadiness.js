@@ -25,7 +25,7 @@ function parseArgs(argv) {
 
 async function main() {
     const options = parseArgs(process.argv.slice(2));
-    const report = runProductReadinessGate({ level: options.level });
+    const report = await runProductReadinessGate({ level: options.level });
 
     if (options.json) {
         console.log(JSON.stringify(report, null, 2));

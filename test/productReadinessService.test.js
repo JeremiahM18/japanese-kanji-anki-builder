@@ -28,35 +28,35 @@ test("buildProductReadinessPlan rejects unsupported levels", () => {
     assert.throws(() => buildProductReadinessPlan({ level: 4 }), /supports N5 only/);
 });
 
-test("runProductReadinessGate passes when all checkpoint commands pass", () => {
+test("runProductReadinessGate passes when all checkpoint commands pass", async () => {
     const calls = [];
-    const report = runProductReadinessGate({
+    const report = await runProductReadinessGate({
         runCommandFn(command, args, options) {
             calls.push([command, ...args].join(" "));
-            assert.equal(options.shell, process.platform === "win32");
+            assert.equal(options.shell, false);
             return { status: 0, stdout: "ok", stderr: "" };
         },
     });
 
     assert.equal(report.passed, true);
     assert.equal(report.checks.length, N5_PRODUCT_READINESS_COMMANDS.length);
-    assert.equal(calls.some((call) => call.includes("deck:words:review:n5")), true);
-    assert.equal(calls.some((call) => call.includes("product:artifacts:n5")), true);
+    assert.equal(calls.some((call) => call.includes("reviewGoldenWordLevel.js")), true);
+    assert.equal(calls.some((call) => call.includes("trackedSourceArtifacts.js")), true);
 });
 
-test("buildSpawnOptions supports nested npm scripts on Windows and large audit output", () => {
+test("buildSpawnOptions avoids shell-specific subprocess failures and supports large audit output", () => {
     const options = buildSpawnOptions("repo");
 
     assert.equal(options.cwd, "repo");
     assert.equal(options.encoding, "utf8");
-    assert.equal(options.shell, process.platform === "win32");
+    assert.equal(options.shell, false);
     assert.equal(options.maxBuffer >= 20 * 1024 * 1024, true);
 });
 
-test("runProductReadinessGate fails when any checkpoint command fails", () => {
-    const report = runProductReadinessGate({
+test("runProductReadinessGate fails when any checkpoint command fails", async () => {
+    const report = await runProductReadinessGate({
         runCommandFn(command, args) {
-            if (args.includes("deck:words:review:n5")) {
+            if (args.some((arg) => String(arg).includes("reviewGoldenWordLevel.js"))) {
                 return { status: 1, stdout: "word review failed", stderr: "golden drift" };
             }
             return { status: 0, stdout: "ok", stderr: "" };

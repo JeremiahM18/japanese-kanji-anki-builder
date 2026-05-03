@@ -14,6 +14,28 @@ const {
     formatWordDeckCompletionReport,
 } = require("../src/services/wordDeckCompletionService");
 
+function buildPitchAccentData(entries = {}) {
+    return {
+        sources: {
+            "kanjium-cc-by-sa-4.0": {
+                name: "Kanjium pitch accent database",
+                license: "CC BY-SA 4.0",
+            },
+        },
+        entries,
+    };
+}
+
+function buildKanjiumPitchEntry({ pattern = "1 [atamadaka]", word = "雨", reading = "あめ", sourceAccent = "1" } = {}) {
+    return {
+        pattern,
+        sourceId: "kanjium-cc-by-sa-4.0",
+        sourceWord: word,
+        sourceReading: reading,
+        sourceAccent,
+    };
+}
+
 test("buildWordDeckInventorySummary keeps excluded phrase rows out of canonical inventory", () => {
     const summary = buildWordDeckInventorySummary({
         level: 5,
@@ -54,14 +76,14 @@ test("buildWordDeckPitchAccentAudit reports learner-facing pitch coverage from b
         ],
     });
 
-    assert.equal(audit.valid, true);
+    assert.equal(audit.valid, false);
     assert.equal(audit.fieldPresent, true);
     assert.equal(audit.totalWords, 2);
     assert.equal(audit.annotatedWords, 1);
     assert.equal(audit.missingPitchAccent, 1);
     assert.equal(audit.coveragePercent, 50);
     assert.deepEqual(audit.annotatedRows, [
-        { word: "雨", reading: "あめ", pitchAccent: "あ＼め [atamadaka]", sourceId: "" },
+        { word: "雨", reading: "あめ", pitchAccent: "あ＼め [atamadaka]", sourceId: "", sourcePattern: "", expectedAccents: [], renderedAccents: [] },
     ]);
     assert.equal(audit.ungovernedPitchAccent, 1);
 });
@@ -71,16 +93,49 @@ test("buildWordDeckPitchAccentAudit reports governed pitch accent sources", () =
         wordRows: [
             { Word: "雨", Reading: "あめ", PitchAccent: "1 [atamadaka]" },
         ],
-        wordPitchAccentData: {
-            entries: {
-                "雨|あめ": { pattern: "1 [atamadaka]", sourceId: "kanjium-cc-by-sa-4.0" },
-            },
-        },
+        wordPitchAccentData: buildPitchAccentData({
+            "雨|あめ": buildKanjiumPitchEntry(),
+        }),
     });
 
     assert.equal(audit.annotatedWords, 1);
     assert.equal(audit.ungovernedPitchAccent, 0);
+    assert.equal(audit.sourceMismatchPitchAccent, 0);
+    assert.equal(audit.invalidSourcePattern, 0);
+    assert.equal(audit.sourceIdentityIssues, 0);
+    assert.equal(audit.valid, true);
     assert.deepEqual(audit.sourceCounts, { "kanjium-cc-by-sa-4.0": 1 });
+});
+
+test("buildWordDeckPitchAccentAudit flags rendered pitch that disagrees with governed source pattern", () => {
+    const audit = buildWordDeckPitchAccentAudit({
+        wordRows: [
+            { Word: "雨", Reading: "あめ", PitchAccent: "<div aria-label=\"Pitch 1: 2\">あめ</div>" },
+        ],
+        wordPitchAccentData: buildPitchAccentData({
+            "雨|あめ": buildKanjiumPitchEntry(),
+        }),
+    });
+
+    assert.equal(audit.valid, false);
+    assert.equal(audit.sourceMismatchPitchAccent, 1);
+    assert.deepEqual(audit.sourceMismatchRows[0].expectedAccents, [1]);
+    assert.deepEqual(audit.sourceMismatchRows[0].renderedAccents, [2]);
+});
+
+test("buildWordDeckPitchAccentAudit flags governed source data that belongs to a different word-reading", () => {
+    const audit = buildWordDeckPitchAccentAudit({
+        wordRows: [
+            { Word: "雨", Reading: "あめ", PitchAccent: "<div aria-label=\"Pitch 1: 1\">あめ</div>" },
+        ],
+        wordPitchAccentData: buildPitchAccentData({
+            "雨|あめ": buildKanjiumPitchEntry({ word: "飴" }),
+        }),
+    });
+
+    assert.equal(audit.valid, false);
+    assert.equal(audit.sourceIdentityIssues, 1);
+    assert.match(audit.sourceIdentityRows[0].failures.join("\n"), /sourceWord does not match/);
 });
 
 test("buildWordDeckPitchAccentAudit flags old word TSVs without the PitchAccent field", () => {
@@ -208,6 +263,9 @@ test("buildWordDeckCompletionReport combines canonical inventory and reading cov
                 "今日\tきょう\t<ruby>今日<rt>きょう</rt></ruby>\t[sound:today.wav]\t<div>Pitch: 1 [atamadaka]</div>\ttoday\tJLPT N5\tJLPT core + reading coverage\t今、日\t今: いま ／ 日: ひ\t<div>今</div><div>日</div>\t今日は休みです。 ／ きょうはやすみです。 ／ Today is a day off.\t",
             ].join("\n"),
         },
+        wordPitchAccentData: buildPitchAccentData({
+            "今日|きょう": buildKanjiumPitchEntry({ word: "今日", reading: "きょう" }),
+        }),
     });
 
     assert.equal(report.inventory.starterEligibleCount, 1);
@@ -215,6 +273,8 @@ test("buildWordDeckCompletionReport combines canonical inventory and reading cov
     assert.equal(report.readingCoverage.coveredReadings, 2);
     assert.equal(report.coverageScope.label, "N5");
     assert.equal(report.pitchAccentAudit.fieldPresent, true);
+    assert.equal(report.pitchAccentAudit.sourceMismatchPitchAccent, 0);
+    assert.equal(report.pitchAccentAudit.sourceIdentityIssues, 0);
     assert.equal(report.readingBreakdownAudit.valid, true);
     assert.equal(report.cardBackAudit.valid, true);
     assert.equal(report.readiness.status, "complete");
@@ -381,6 +441,25 @@ test("buildWordDeckReadiness stays incomplete when example readings mismatch the
 
     assert.equal(report.status, "incomplete");
     assert.equal(report.hasExampleReadingAlignmentViolations, true);
+});
+
+test("buildWordDeckReadiness stays incomplete when pitch accent source verification fails", () => {
+    const report = buildWordDeckReadiness({
+        inventory: { missingEligibleCount: 0 },
+        readingCoverage: { coveredReadings: 1, totalReadings: 1 },
+        triage: { totalItems: 0, editorialReviewItems: 0, promoteCuratedExampleItems: 0, deferVariantItems: 0 },
+        policyAudit: { valid: true },
+        readingBreakdownAudit: { valid: true },
+        cardBackAudit: { valid: true },
+        exampleReadingAlignmentAudit: { valid: true },
+        pitchAccentAudit: {
+            valid: false,
+            sourceMismatchPitchAccent: 1,
+        },
+    });
+
+    assert.equal(report.status, "incomplete");
+    assert.equal(report.hasPitchAccentViolations, true);
 });
 
 test("buildWordDeckPolicyAudit rejects standalone higher-level cards and missing constituent badges", () => {
@@ -555,6 +634,23 @@ test("formatWordDeckCompletionReport renders missing rows and source-only exclus
                 { word: "雨", reading: "あめ", field: "audio" },
             ],
         },
+        pitchAccentAudit: {
+            annotatedWords: 9,
+            totalWords: 10,
+            missingPitchAccent: 1,
+            ungovernedPitchAccent: 0,
+            sourceMismatchPitchAccent: 1,
+            invalidSourcePattern: 0,
+            sourceMismatchRows: [
+                {
+                    word: "雨",
+                    reading: "あめ",
+                    sourcePattern: "1 [atamadaka]",
+                    expectedAccents: [1],
+                    renderedAccents: [2],
+                },
+            ],
+        },
         readingCoverage: {
             totalReadings: 10,
             coveredReadings: 4,
@@ -579,6 +675,8 @@ test("formatWordDeckCompletionReport renders missing rows and source-only exclus
     assert.match(text, /Non-ruby kanji breakdowns: 1/);
     assert.match(text, /Required back-side fields: 118\/120 \(2 missing\)/);
     assert.match(text, /Field coverage: reading 10\/10, furigana breakdown 2\/3, audio 9\/10/);
+    assert.match(text, /Pitch accent review:/);
+    assert.match(text, /Source\/render mismatches: 1/);
     assert.match(text, /Covered by earlier decks: 1/);
     assert.match(text, /Covered by this deck level: 3/);
     assert.match(text, /Missing starter-eligible N-level rows:/);
@@ -590,4 +688,5 @@ test("formatWordDeckCompletionReport renders missing rows and source-only exclus
     assert.match(text, /友だち \(ともだち\) — 友=とも ／ だち/);
     assert.match(text, /生まれる \(うまれる\) — furigana breakdown/);
     assert.match(text, /雨 \(あめ\) — audio/);
+    assert.match(text, /雨 \(あめ\) — expected 1 from 1 \[atamadaka\]; rendered 2/);
 });

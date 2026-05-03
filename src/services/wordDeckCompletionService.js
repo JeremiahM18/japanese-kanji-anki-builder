@@ -4,6 +4,11 @@ const {
     parseKanjiTsv,
     parseWordTsv,
 } = require("./wordReadingCoverageService");
+const {
+    extractRenderedPitchAccentPattern,
+    parsePitchAccentPattern,
+} = require("./pitchAccentRenderService");
+const { validateWordPitchAccentSource } = require("./wordPitchAccentVerificationService");
 const { buildCoverageWordRows } = require("./wordDeckCoverageScopeService");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 const { HAN_CHAR_RE, isKanaOnly, katakanaToHiragana } = require("../utils/japanese");
@@ -120,6 +125,9 @@ function buildWordDeckPitchAccentAudit({ wordRows, starterEntries = {}, wordPitc
     const missingRows = [];
     const sourceCounts = {};
     const ungovernedRows = [];
+    const sourceMismatchRows = [];
+    const invalidSourceRows = [];
+    const sourceIdentityRows = [];
     let fieldPresent = rows.length === 0;
 
     for (const row of rows) {
@@ -136,12 +144,63 @@ function buildWordDeckPitchAccentAudit({ wordRows, starterEntries = {}, wordPitc
             const pitchEntry = wordPitchAccentData?.entries?.[key] || null;
             const starterEntry = starterEntries?.[key] || null;
             const sourceId = String(pitchEntry?.sourceId || starterEntry?.pitchAccentSource || "").trim();
+            const sourcePattern = String(pitchEntry?.pattern || starterEntry?.pitchAccent || "").trim();
+            const expectedAccents = parsePitchAccentPattern(sourcePattern);
+            const renderedAccents = extractRenderedPitchAccentPattern(pitchAccent);
+            const sourceEntry = pitchEntry || (sourceId && sourcePattern ? {
+                pattern: sourcePattern,
+                sourceId,
+            } : null);
             if (sourceId) {
                 sourceCounts[sourceId] = (sourceCounts[sourceId] || 0) + 1;
             } else {
                 ungovernedRows.push({ word, reading, pitchAccent });
             }
-            annotatedRows.push({ word, reading, pitchAccent, sourceId: sourceId || "" });
+            if (sourceId && expectedAccents.length === 0) {
+                invalidSourceRows.push({ word, reading, sourceId, sourcePattern });
+            } else if (
+                sourceId
+                && (
+                    renderedAccents.length !== expectedAccents.length
+                    || renderedAccents.some((accent, index) => accent !== expectedAccents[index])
+                )
+            ) {
+                sourceMismatchRows.push({
+                    word,
+                    reading,
+                    pitchAccent,
+                    sourceId,
+                    sourcePattern,
+                    expectedAccents,
+                    renderedAccents,
+                });
+            }
+            if (sourceId) {
+                const sourceIdentityFailures = validateWordPitchAccentSource({
+                    word,
+                    reading,
+                    sourceEntry,
+                    sources: wordPitchAccentData?.sources || {},
+                });
+                if (sourceIdentityFailures.length > 0) {
+                    sourceIdentityRows.push({
+                        word,
+                        reading,
+                        sourceId,
+                        sourcePattern,
+                        failures: sourceIdentityFailures,
+                    });
+                }
+            }
+            annotatedRows.push({
+                word,
+                reading,
+                pitchAccent,
+                sourceId: sourceId || "",
+                sourcePattern,
+                expectedAccents,
+                renderedAccents,
+            });
             continue;
         }
 
@@ -149,19 +208,30 @@ function buildWordDeckPitchAccentAudit({ wordRows, starterEntries = {}, wordPitc
     }
 
     return {
-        valid: fieldPresent,
+        valid: fieldPresent
+            && missingRows.length === 0
+            && ungovernedRows.length === 0
+            && sourceMismatchRows.length === 0
+            && invalidSourceRows.length === 0
+            && sourceIdentityRows.length === 0,
         fieldPresent,
         totalWords: rows.length,
         annotatedWords: annotatedRows.length,
         missingPitchAccent: missingRows.length,
         sourceCounts,
         ungovernedPitchAccent: ungovernedRows.length,
+        sourceMismatchPitchAccent: sourceMismatchRows.length,
+        invalidSourcePattern: invalidSourceRows.length,
+        sourceIdentityIssues: sourceIdentityRows.length,
         coveragePercent: rows.length > 0
             ? Number(((annotatedRows.length / rows.length) * 100).toFixed(1))
             : 0,
         annotatedRows,
         missingRows,
         ungovernedRows,
+        sourceMismatchRows,
+        invalidSourceRows,
+        sourceIdentityRows,
     };
 }
 
@@ -503,6 +573,7 @@ function buildWordDeckCompletionReport({
         readingBreakdownAudit,
         cardBackAudit,
         exampleReadingAlignmentAudit,
+        pitchAccentAudit,
     });
 
     return {
@@ -524,7 +595,7 @@ function buildWordDeckCompletionReport({
     };
 }
 
-function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudit, readingBreakdownAudit = null, cardBackAudit = null, exampleReadingAlignmentAudit = null }) {
+function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudit, readingBreakdownAudit = null, cardBackAudit = null, exampleReadingAlignmentAudit = null, pitchAccentAudit = null }) {
     const hasMissingStarterRows = (inventory?.missingEligibleCount || 0) > 0;
     const hasActiveTriageItems = ((triage?.editorialReviewItems || 0) + (triage?.promoteCuratedExampleItems || 0)) > 0;
     const allOpenItemsDeferred = (triage?.totalItems || 0) > 0
@@ -533,12 +604,13 @@ function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudi
     const hasReadingBreakdownViolations = readingBreakdownAudit ? !readingBreakdownAudit.valid : false;
     const hasCardBackViolations = cardBackAudit ? !cardBackAudit.valid : false;
     const hasExampleReadingAlignmentViolations = exampleReadingAlignmentAudit ? !exampleReadingAlignmentAudit.valid : false;
+    const hasPitchAccentViolations = pitchAccentAudit ? !pitchAccentAudit.valid : false;
     const readingCoveragePercent = (readingCoverage?.totalReadings || 0) > 0
         ? Number((((readingCoverage?.coveredReadings || 0) / readingCoverage.totalReadings) * 100).toFixed(1))
         : 0;
 
     let status = "incomplete";
-    if (!hasMissingStarterRows && !hasActiveTriageItems && !hasPolicyViolations && !hasReadingBreakdownViolations && !hasCardBackViolations && !hasExampleReadingAlignmentViolations) {
+    if (!hasMissingStarterRows && !hasActiveTriageItems && !hasPolicyViolations && !hasReadingBreakdownViolations && !hasCardBackViolations && !hasExampleReadingAlignmentViolations && !hasPitchAccentViolations) {
         status = allOpenItemsDeferred ? "ready_with_deferred_variants" : "complete";
     }
 
@@ -550,6 +622,7 @@ function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudi
         hasReadingBreakdownViolations,
         hasCardBackViolations,
         hasExampleReadingAlignmentViolations,
+        hasPitchAccentViolations,
         allOpenItemsDeferred,
         readingCoveragePercent,
     };
@@ -596,6 +669,14 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         "Card back review:",
         `- Required back-side fields: ${report.cardBackAudit?.requiredReadyCount || 0}/${report.cardBackAudit?.requiredTotalCount || 0} (${report.cardBackAudit?.requiredMissingCount || 0} missing)`,
         `- Field coverage: ${formatCardBackFieldCoverage(report.cardBackAudit)}`,
+        "",
+        "Pitch accent review:",
+        `- Annotated rows: ${report.pitchAccentAudit?.annotatedWords || 0}/${report.pitchAccentAudit?.totalWords || 0}`,
+        `- Missing pitch accent: ${report.pitchAccentAudit?.missingPitchAccent || 0}`,
+        `- Ungoverned pitch accent: ${report.pitchAccentAudit?.ungovernedPitchAccent || 0}`,
+        `- Source/render mismatches: ${report.pitchAccentAudit?.sourceMismatchPitchAccent || 0}`,
+        `- Invalid source patterns: ${report.pitchAccentAudit?.invalidSourcePattern || 0}`,
+        `- Source identity issues: ${report.pitchAccentAudit?.sourceIdentityIssues || 0}`,
         "",
         "Reading coverage:",
         `- Readings audited: ${report.readingCoverage.totalReadings}`,
@@ -655,6 +736,20 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         lines.push("", "Required card-back field gaps:");
         for (const row of report.cardBackAudit.requiredMissingRows.slice(0, maxEntries)) {
             lines.push(`- ${row.word} (${row.reading}) — ${row.field}`);
+        }
+    }
+
+    if ((report.pitchAccentAudit?.sourceMismatchRows || []).length > 0) {
+        lines.push("", "Pitch accent source/render mismatches:");
+        for (const row of report.pitchAccentAudit.sourceMismatchRows.slice(0, maxEntries)) {
+            lines.push(`- ${row.word} (${row.reading}) — expected ${row.expectedAccents.join("/")} from ${row.sourcePattern}; rendered ${row.renderedAccents.join("/") || "(none)"}`);
+        }
+    }
+
+    if ((report.pitchAccentAudit?.sourceIdentityRows || []).length > 0) {
+        lines.push("", "Pitch accent source identity issues:");
+        for (const row of report.pitchAccentAudit.sourceIdentityRows.slice(0, maxEntries)) {
+            lines.push(`- ${row.word} (${row.reading}) — ${row.failures.join("; ")}`);
         }
     }
 

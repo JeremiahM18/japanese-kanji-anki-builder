@@ -1,0 +1,96 @@
+const test = require("node:test");
+const assert = require("node:assert/strict");
+
+const {
+    validateWordPitchAccentSource,
+} = require("../src/services/wordPitchAccentVerificationService");
+
+const sources = {
+    "kanjium-cc-by-sa-4.0": {
+        name: "Kanjium pitch accent database",
+        license: "CC BY-SA 4.0",
+    },
+    "voicevox-nemo-accent-query": {
+        name: "VOICEVOX Nemo accent query",
+        license: "VOICEVOX Nemo terms",
+    },
+    "voicevox-nemo-reading-query": {
+        name: "VOICEVOX Nemo reading accent query",
+        license: "VOICEVOX Nemo terms",
+    },
+};
+
+test("validateWordPitchAccentSource accepts exact Kanjium word-reading evidence", () => {
+    const failures = validateWordPitchAccentSource({
+        word: "生ビール",
+        reading: "なまびーる",
+        sources,
+        sourceEntry: {
+            pattern: "3 [nakadaka]",
+            sourceId: "kanjium-cc-by-sa-4.0",
+            sourceWord: "生ビール",
+            sourceReading: "なまビール",
+            sourceAccent: "3",
+        },
+    });
+
+    assert.deepEqual(failures, []);
+});
+
+test("validateWordPitchAccentSource rejects Kanjium source rows for a different word or accent", () => {
+    const failures = validateWordPitchAccentSource({
+        word: "雨",
+        reading: "あめ",
+        sources,
+        sourceEntry: {
+            pattern: "1 [atamadaka]",
+            sourceId: "kanjium-cc-by-sa-4.0",
+            sourceWord: "飴",
+            sourceReading: "あめ",
+            sourceAccent: "0",
+        },
+    });
+
+    assert.match(failures.join("\n"), /sourceWord does not match/);
+    assert.match(failures.join("\n"), /sourceAccent does not match/);
+});
+
+test("validateWordPitchAccentSource validates VOICEVOX written and reading query identity", () => {
+    assert.deepEqual(validateWordPitchAccentSource({
+        word: "一",
+        reading: "いち",
+        sources,
+        sourceEntry: {
+            pattern: "2 [odaka]",
+            sourceId: "voicevox-nemo-accent-query",
+            sourceQuery: "一",
+            generatedReading: "いち",
+        },
+    }), []);
+
+    assert.deepEqual(validateWordPitchAccentSource({
+        word: "公園の中",
+        reading: "こうえんのなか",
+        sources,
+        sourceEntry: {
+            pattern: "5 [odaka] / 1 [atamadaka]",
+            sourceId: "voicevox-nemo-reading-query",
+            sourceQuery: "こうえんのなか",
+            generatedReading: "こおえんのなか",
+        },
+    }), []);
+});
+
+test("validateWordPitchAccentSource rejects undeclared sources", () => {
+    const failures = validateWordPitchAccentSource({
+        word: "雨",
+        reading: "あめ",
+        sources,
+        sourceEntry: {
+            pattern: "1 [atamadaka]",
+            sourceId: "unknown-source",
+        },
+    });
+
+    assert.match(failures.join("\n"), /not declared/);
+});

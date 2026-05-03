@@ -37,7 +37,7 @@ Each platinum word card must pass all rules below:
 - The reading breakdown, furigana, constituent-kanji breakdown, and JLPT or outside-JLPT labels are correct.
 - Higher-level or outside-JLPT kanji are allowed only when the word itself belongs now and the card labels those kanji visibly.
 - Exact word-reading audio is present, governed, and artifact-verified for the written word and exported reading. Human listening QA remains part of the release checklist.
-- Pitch accent is present, protected by explicit expectation text, and tied to a governed pitch-accent source.
+- Pitch accent is present, protected by explicit expectation text, tied to the same governed word-reading source entry, and the rendered card output matches that governed source pattern.
 - The card does not depend on ignored local files, untracked generated content, or silent fallback behavior.
 
 ## Kanji-card platinum rules
@@ -104,7 +104,7 @@ Active word entries must include all evidence types below:
 - `example-review`: the example sentence and reading were checked for release quality.
 - `media-audit`: governed media provenance was checked.
 - `audio-review`: generated audio artifact identity, provenance, and exact word-reading match were reviewed.
-- `pitch-accent-review`: pitch-accent value and source were reviewed.
+- `pitch-accent-review`: pitch-accent value, source identity, and source-to-render match were reviewed.
 - `label-review`: JLPT/outside-JLPT labels, focus kanji, coverage role, and reading coverage were reviewed.
 - `manual-review`: a final product judgment was made.
 

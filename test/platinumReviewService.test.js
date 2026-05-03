@@ -12,13 +12,43 @@ function buildQualityGates(overrides = {}) {
     return Object.fromEntries(REQUIRED_WORD_QUALITY_GATES.map((gate) => [gate, overrides[gate] ?? true]));
 }
 
+function buildWordPitchAccentData(overrides = {}) {
+    const { ["今日|きょう"]: todayOverride = {}, ...extraEntries } = overrides;
+    return {
+        sources: {
+            "kanjium-cc-by-sa-4.0": {
+                name: "Kanjium pitch accent database",
+                license: "CC BY-SA 4.0",
+            },
+        },
+        entries: {
+            "今日|きょう": {
+                pattern: "0 [heiban]",
+                sourceId: "kanjium-cc-by-sa-4.0",
+                sourceWord: "今日",
+                sourceReading: "きょう",
+                sourceAccent: "0",
+                ...todayOverride,
+            },
+            ...extraEntries,
+        },
+    };
+}
+
+function evaluateWordPlatinum(options = {}) {
+    return evaluatePlatinumWordReviewSet({
+        wordPitchAccentData: buildWordPitchAccentData(),
+        ...options,
+    });
+}
+
 function buildRow(overrides = {}) {
     return {
         word: "今日",
         reading: "きょう",
         readingBreakdown: "<ruby>今日<rt>きょう</rt></ruby>",
         audio: "[sound:4ECA_今日-word-reading-今日-きょう.wav]",
-        pitchAccent: "<span>きょう: Heiban</span>",
+        pitchAccent: "<span aria-label=\"Pitch 1: 0\">きょう: Heiban</span>",
         meaning: "today",
         jlptLevel: "JLPT N5",
         coverageRole: "JLPT core + reading coverage",
@@ -43,7 +73,7 @@ function buildEntry(overrides = {}) {
         coversReadingIncludes: ["今: いま", "日: ひ"],
         breakdownIncludes: ["今 （いま）", "日 （ひ）"],
         exampleIncludes: ["今日は図書館へ行きます。"],
-        pitchAccentIncludes: ["Heiban"],
+        pitchAccentIncludes: ["Pitch 1: 0"],
         selectionRationale: "Common N5 time word that is useful immediately and belongs in the word deck.",
         reviewedAt: "2026-05-02",
         reviewer: "content-review",
@@ -58,7 +88,7 @@ function buildEntry(overrides = {}) {
 }
 
 test("evaluatePlatinumWordReviewSet passes active platinum entries with release gates and matching export fields", () => {
-    const report = evaluatePlatinumWordReviewSet({
+    const report = evaluateWordPlatinum({
         rows: [buildRow()],
         entries: [buildEntry()],
         requireAllRows: true,
@@ -70,7 +100,7 @@ test("evaluatePlatinumWordReviewSet passes active platinum entries with release 
 });
 
 test("evaluatePlatinumWordReviewSet rejects active entries with missing release-quality gates", () => {
-    const report = evaluatePlatinumWordReviewSet({
+    const report = evaluateWordPlatinum({
         rows: [buildRow()],
         entries: [
             buildEntry({
@@ -84,7 +114,7 @@ test("evaluatePlatinumWordReviewSet rejects active entries with missing release-
 });
 
 test("evaluatePlatinumWordReviewSet rejects active entries when media fields are not exported", () => {
-    const report = evaluatePlatinumWordReviewSet({
+    const report = evaluateWordPlatinum({
         rows: [buildRow({ audio: "", pitchAccent: "" })],
         entries: [buildEntry()],
     });
@@ -95,7 +125,7 @@ test("evaluatePlatinumWordReviewSet rejects active entries when media fields are
 });
 
 test("evaluatePlatinumWordReviewSet requires selection rationale and structured evidence", () => {
-    const report = evaluatePlatinumWordReviewSet({
+    const report = evaluateWordPlatinum({
         rows: [buildRow()],
         entries: [
             buildEntry({
@@ -113,11 +143,11 @@ test("evaluatePlatinumWordReviewSet requires selection rationale and structured 
 });
 
 test("evaluatePlatinumWordReviewSet protects exact word audio and pitch accent expectations", () => {
-    const report = evaluatePlatinumWordReviewSet({
+    const report = evaluateWordPlatinum({
         rows: [
             buildRow({
                 audio: "[sound:4ECA_今日-word-reading-今日-こんにち.wav]",
-                pitchAccent: "<span>きょう: Atamadaka</span>",
+                pitchAccent: "<span aria-label=\"Pitch 1: 1\">きょう: Atamadaka</span>",
             }),
         ],
         entries: [buildEntry()],
@@ -125,12 +155,40 @@ test("evaluatePlatinumWordReviewSet protects exact word audio and pitch accent e
 
     const failures = report.results[0].failures.join("\n");
     assert.equal(report.passed, false);
-    assert.match(failures, /pitch accent did not include: Heiban/);
+    assert.match(failures, /pitch accent did not include: Pitch 1: 0/);
+    assert.match(failures, /pitch accent rendered output did not match source pattern/);
     assert.match(failures, /audio field did not include exact word-reading asset fragment: word-reading-今日-きょう/);
 });
 
+test("evaluatePlatinumWordReviewSet requires governed pitch source data", () => {
+    const report = evaluatePlatinumWordReviewSet({
+        rows: [buildRow()],
+        entries: [buildEntry()],
+        wordPitchAccentData: { sources: {}, entries: {} },
+    });
+
+    assert.equal(report.passed, false);
+    assert.match(report.results[0].failures.join("\n"), /pitch accent source entry missing/);
+});
+
+test("evaluatePlatinumWordReviewSet rejects pitch source data that belongs to a different word-reading", () => {
+    const report = evaluateWordPlatinum({
+        rows: [buildRow()],
+        entries: [buildEntry()],
+        wordPitchAccentData: buildWordPitchAccentData({
+            "今日|きょう": {
+                sourceWord: "明日",
+            },
+        }),
+    });
+
+    assert.equal(report.passed, false);
+    assert.match(report.results[0].failures.join("\n"), /pitch accent source validation failed/);
+    assert.match(report.results[0].failures.join("\n"), /sourceWord does not match/);
+});
+
 test("evaluatePlatinumWordReviewSet keeps deferred and removed words out of the export", () => {
-    const passing = evaluatePlatinumWordReviewSet({
+    const passing = evaluateWordPlatinum({
         rows: [],
         entries: [
             {
@@ -145,7 +203,7 @@ test("evaluatePlatinumWordReviewSet keeps deferred and removed words out of the 
         allowEmpty: true,
     });
 
-    const failing = evaluatePlatinumWordReviewSet({
+    const failing = evaluateWordPlatinum({
         rows: [buildRow({ word: "難語", reading: "なんご" })],
         entries: [
             {
@@ -166,7 +224,7 @@ test("evaluatePlatinumWordReviewSet keeps deferred and removed words out of the 
 });
 
 test("evaluatePlatinumWordReviewSet can require every generated row to be platinum reviewed", () => {
-    const report = evaluatePlatinumWordReviewSet({
+    const report = evaluateWordPlatinum({
         rows: [
             buildRow(),
             buildRow({ word: "明日", reading: "あした" }),
@@ -182,7 +240,7 @@ test("evaluatePlatinumWordReviewSet can require every generated row to be platin
 });
 
 test("evaluatePlatinumWordReviewSet does not pass an empty platinum set by default", () => {
-    const report = evaluatePlatinumWordReviewSet({
+    const report = evaluateWordPlatinum({
         rows: [buildRow()],
         entries: [],
     });
@@ -192,7 +250,7 @@ test("evaluatePlatinumWordReviewSet does not pass an empty platinum set by defau
 });
 
 test("evaluatePlatinumWordReviewSet requires reviewer and date for non-shipping decisions", () => {
-    const report = evaluatePlatinumWordReviewSet({
+    const report = evaluateWordPlatinum({
         rows: [],
         entries: [{
             word: "難語",

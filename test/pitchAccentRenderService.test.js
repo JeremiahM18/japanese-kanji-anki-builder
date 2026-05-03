@@ -3,6 +3,7 @@ const assert = require("node:assert/strict");
 
 const {
     buildPitchAccentHtml,
+    extractRenderedPitchAccentPattern,
     getPitchLevels,
     parsePitchAccentPattern,
     splitMoras,
@@ -39,4 +40,15 @@ test("buildPitchAccentHtml renders a learner-facing SVG graph without redundant 
     assert.match(html, />あ<\/text>/);
     assert.match(html, />と<\/text>/);
     assert.match(html, />で<\/text>/);
+});
+
+test("extractRenderedPitchAccentPattern reads rendered pitch labels without SVG coordinate noise", () => {
+    const html = buildPitchAccentHtml({
+        pattern: "0 [heiban] / 2 [odaka]",
+        reading: "きた",
+    });
+
+    assert.deepEqual(extractRenderedPitchAccentPattern(html), [0, 2]);
+    assert.deepEqual(extractRenderedPitchAccentPattern("<div>Pitch: 1 [atamadaka]</div>"), [1]);
+    assert.deepEqual(extractRenderedPitchAccentPattern("2 [nakadaka]"), [2]);
 });

@@ -51,6 +51,7 @@ A word level ships only when all criteria are true:
 - Active triage is either resolved or intentionally deferred.
 - Sentence orthography review has no unresolved blocker.
 - Any shipped audio is governed, audited, and review-clean.
+- Pitch accent is governed and source-verified. A non-empty pitch field is not enough; the rendered contour must match the tracked source pattern, and that source entry must match the shipped written word and reading.
 - Accessibility review has no unresolved blocker.
 
 ## Current product posture

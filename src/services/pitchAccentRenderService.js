@@ -33,6 +33,30 @@ function parsePitchAccentPattern(pattern) {
     )];
 }
 
+function stripHtmlTags(value) {
+    return String(value || "")
+        .replace(/<[^>]+>/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
+function extractRenderedPitchAccentPattern(value) {
+    const text = String(value || "");
+    const ariaMatches = [...text.matchAll(/aria-label=["']Pitch\s+\d+\s*:\s*(\d+)["']/giu)]
+        .map((match) => Number(match[1]))
+        .filter((accent) => Number.isInteger(accent) && accent >= 0);
+
+    if (ariaMatches.length > 0) {
+        return ariaMatches;
+    }
+
+    if (/pitch-accent-visual|pitch-contour/iu.test(text)) {
+        return [];
+    }
+
+    return parsePitchAccentPattern(stripHtmlTags(text));
+}
+
 function getPitchLevels({ accent, moraCount }) {
     if (!Number.isInteger(accent) || accent < 0 || moraCount <= 0) {
         return [];
@@ -127,6 +151,7 @@ module.exports = {
     buildPitchAccentHtml,
     buildPitchAccentSvg,
     escapeHtml,
+    extractRenderedPitchAccentPattern,
     getPitchLevels,
     parsePitchAccentPattern,
     splitMoras,

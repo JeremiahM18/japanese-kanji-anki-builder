@@ -89,6 +89,9 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
                     annotatedWords: 0,
                     missingPitchAccent: 258,
                     ungovernedPitchAccent: 0,
+                    sourceMismatchPitchAccent: 0,
+                    invalidSourcePattern: 0,
+                    sourceIdentityIssues: 0,
                     coveragePercent: 0,
                     sourceCounts: {},
                 },
@@ -132,7 +135,7 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
     assert.match(text, /reading breakdown review: 0 blanks, 0 non-ruby kanji breakdowns/);
     assert.match(text, /card back review: 100% \(2500\/2500\) required fields ready, 0 missing/);
     assert.match(text, /card back fields: reading 258\/258, furigana breakdown 258\/258, audio 258\/258/);
-    assert.match(text, /pitch accent review: 0% \(0\/258\) annotated, 258 missing, 0 ungoverned, field present/);
+    assert.match(text, /pitch accent review: 0% \(0\/258\) annotated, 258 missing, 0 ungoverned, 0 source\/render mismatches, 0 invalid source patterns, 0 source identity issues, field present/);
     assert.match(text, /triage backlog: 147 review-needed before card work, 0 actionable curated candidates, 16 deferred variants or low learner value/);
     assert.match(text, /True looping animation coverage: 100% \(166\/166\)/);
     assert.match(text, /True looping animation assets: 165/);

@@ -1,4 +1,13 @@
 const { evaluateGoldenWordReviewSet } = require("./goldenReviewService");
+const {
+    extractRenderedPitchAccentPattern,
+    parsePitchAccentPattern,
+} = require("./pitchAccentRenderService");
+const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
+const {
+    arraysMatch,
+    validateWordPitchAccentSource,
+} = require("./wordPitchAccentVerificationService");
 
 const ACTIVE_PLATINUM_STATUSES = Object.freeze(["platinum", "fixed_then_platinum"]);
 const NON_SHIPPING_STATUSES = Object.freeze(["deferred", "removed"]);
@@ -254,7 +263,7 @@ function validateGeneratedPlatinumRow(row = {}) {
     return failures;
 }
 
-function evaluatePlatinumEntry({ rows = [], entry = {} } = {}) {
+function evaluatePlatinumEntry({ rows = [], entry = {}, wordPitchAccentData = {} } = {}) {
     const status = normalizeText(entry.status);
     const label = formatWordReviewLabel(entry.word, buildExpectedReadingText(entry));
     const failures = [];
@@ -287,6 +296,31 @@ function evaluatePlatinumEntry({ rows = [], entry = {} } = {}) {
                 const expectedAudioFragment = `word-reading-${entry.word}-${reading}`;
                 if (!normalizeText(row.audio).includes(expectedAudioFragment)) {
                     failures.push(`audio field did not include exact word-reading asset fragment: ${expectedAudioFragment}`);
+                }
+            }
+            const wordKey = buildWordStudyEntryKey({
+                written: entry.word,
+                reading: normalizeStringArray(entry.readingIncludes)[0] || row.reading,
+            });
+            const sourcePitchAccent = wordPitchAccentData?.entries?.[wordKey] || null;
+            const expectedAccents = parsePitchAccentPattern(sourcePitchAccent?.pattern || "");
+            const renderedAccents = extractRenderedPitchAccentPattern(row.pitchAccent);
+            if (!sourcePitchAccent?.sourceId) {
+                failures.push(`pitch accent source entry missing for reviewed word: ${wordKey}`);
+            } else if (expectedAccents.length === 0) {
+                failures.push(`pitch accent source pattern is invalid for reviewed word: ${wordKey}`);
+            } else if (!arraysMatch(renderedAccents, expectedAccents)) {
+                failures.push(`pitch accent rendered output did not match source pattern for ${wordKey}: expected ${expectedAccents.join("/")}, rendered ${renderedAccents.join("/") || "(none)"}`);
+            }
+            if (sourcePitchAccent?.sourceId) {
+                const sourceIdentityFailures = validateWordPitchAccentSource({
+                    word: entry.word,
+                    reading: normalizeStringArray(entry.readingIncludes)[0] || row.reading,
+                    sourceEntry: sourcePitchAccent,
+                    sources: wordPitchAccentData?.sources || {},
+                });
+                for (const failure of sourceIdentityFailures) {
+                    failures.push(`pitch accent source validation failed for ${wordKey}: ${failure}`);
                 }
             }
         }
@@ -335,6 +369,7 @@ function buildDuplicateActiveEntryLabels(activeEntries = []) {
 function evaluatePlatinumWordReviewSet({
     rows = [],
     entries = [],
+    wordPitchAccentData = {},
     requireAllRows = false,
     allowEmpty = false,
 } = {}) {
@@ -343,7 +378,7 @@ function evaluatePlatinumWordReviewSet({
     const activeEntries = reviewEntries.filter((entry) => ACTIVE_PLATINUM_STATUSES.includes(normalizeText(entry.status)));
     const nonShippingEntries = reviewEntries.filter((entry) => NON_SHIPPING_STATUSES.includes(normalizeText(entry.status)));
     const needsReviewEntries = reviewEntries.filter((entry) => REVIEW_ONLY_STATUSES.includes(normalizeText(entry.status)));
-    const results = reviewEntries.map((entry) => evaluatePlatinumEntry({ rows: generatedRows, entry }));
+    const results = reviewEntries.map((entry) => evaluatePlatinumEntry({ rows: generatedRows, entry, wordPitchAccentData }));
     const coverageFailures = [];
     const duplicateActiveEntries = buildDuplicateActiveEntryLabels(activeEntries);
     const missingPlatinumRows = requireAllRows

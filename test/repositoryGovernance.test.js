@@ -30,10 +30,14 @@ test("CODEOWNERS covers critical repository governance paths", () => {
 test("branch protection baseline names the required GitHub checks", () => {
     const branchProtection = readRepoFile(path.join("docs", "branch-protection.md"));
     const requiredChecks = [
+        "Verify Ubuntu Node 18",
         "Verify Ubuntu Node 20",
         "Verify Ubuntu Node 22",
+        "Smoke ubuntu-latest Node 18",
         "Smoke ubuntu-latest Node 22",
+        "Smoke windows-latest Node 18",
         "Smoke windows-latest Node 22",
+        "Smoke macos-latest Node 18",
         "Smoke macos-latest Node 22",
         "Release Gate Ubuntu Node 22",
     ];

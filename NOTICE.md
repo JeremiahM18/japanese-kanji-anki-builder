@@ -22,6 +22,14 @@ Kanjium-derived pitch accent entries are derived from the Kanjium pitch accent d
 
 VOICEVOX Nemo accent-query entries are generated pronunciation guidance and should be credited consistently with VOICEVOX Nemo usage.
 
+## Stroke-order attribution
+
+Current shipped stroke-order policy is governed by `templates/stroke_order_source_policy.json`.
+
+KanjiVG-derived static SVG stroke-order images are distributed under Creative Commons Attribution-Share Alike 3.0. Release artifacts that include KanjiVG-derived assets should include KanjiVG attribution and license notice.
+
+kanji.gif and AnimCJK animation mirrors are allowed release sources only while source attribution and provenance remain preserved in managed media manifests. Release artifacts that include those animations should include the corresponding upstream attribution from the manifest/source review.
+
 ## Additional release responsibility
 
 Before publishing a release artifact, confirm:

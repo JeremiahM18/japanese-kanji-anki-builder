@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Fixed
 
+- Updated README, product-exit, branch-protection, and NOTICE documentation so current N1 golden coverage, required CI checks, and governed media attribution match the repository state.
 - Removed the duplicate kanji-card stroke-order animation export field and changed kanji note examples to render word readings as ruby/furigana instead of parenthetical reading splits.
 - Removed the static stroke-order image field from kanji Anki exports while keeping static images in managed media provenance.
 - Split kanji card meaning output so the primary-reading line carries only the meaning associated with that reading, while broader reviewed kanji meanings live in a separate `KanjiMeanings` field and golden reviews validate both surfaces.
@@ -24,6 +25,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Expanded tracked N1 kanji golden review coverage to `1156/1231` cards (`93.91%`), leaving `75` N1 cards before full golden coverage. N1 remains blocked until full golden coverage and exact primary-reading audio both pass.
 - Added a thirty-second deliberate N4 support batch with `建つ` and `行き止まり`, keeping the batch small and leaving weaker alternate-spelling or formal readings uncovered rather than treating coverage as the product goal.
 - Added a thirty-first deliberate N4 support batch with `急く`, `寝かす`, and `転げる`, keeping the batch small because the remaining N4 reading gaps are mostly weak, rare, or low-value candidates.
 - Added `npm run product:artifacts:kanji:n5:preflight`, a tracked-template diagnostic that reports N5 kanji TSV certification as blocked until rich kanji readings, component/radical source data, and provenance become tracked release contracts.

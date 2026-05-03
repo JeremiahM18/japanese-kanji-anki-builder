@@ -2,6 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const {
+    REQUIRED_WORD_EVIDENCE_TYPES,
     REQUIRED_WORD_QUALITY_GATES,
     evaluatePlatinumWordReviewSet,
     formatPlatinumWordReviewReport,
@@ -16,7 +17,7 @@ function buildRow(overrides = {}) {
         word: "今日",
         reading: "きょう",
         readingBreakdown: "<ruby>今日<rt>きょう</rt></ruby>",
-        audio: "[sound:word-今日-きょう.wav]",
+        audio: "[sound:4ECA_今日-word-reading-今日-きょう.wav]",
         pitchAccent: "<span>きょう: Heiban</span>",
         meaning: "today",
         jlptLevel: "JLPT N5",
@@ -42,9 +43,15 @@ function buildEntry(overrides = {}) {
         coversReadingIncludes: ["今: いま", "日: ひ"],
         breakdownIncludes: ["今 （いま）", "日 （ひ）"],
         exampleIncludes: ["今日は図書館へ行きます。"],
+        pitchAccentIncludes: ["Heiban"],
+        selectionRationale: "Common N5 time word that is useful immediately and belongs in the word deck.",
         reviewedAt: "2026-05-02",
         reviewer: "content-review",
-        sourceEvidence: ["Project word contract, dictionary cross-check, generated card surface, audio/pitch/media audits."],
+        sourceEvidence: REQUIRED_WORD_EVIDENCE_TYPES.map((type) => ({
+            type,
+            source: "test fixture",
+            detail: `Reviewed ${type} evidence for 今日.`,
+        })),
         qualityGates: buildQualityGates(),
         ...overrides,
     };
@@ -87,6 +94,41 @@ test("evaluatePlatinumWordReviewSet rejects active entries when media fields are
     assert.match(report.results[0].failures.join("\n"), /pitch accent field is empty/);
 });
 
+test("evaluatePlatinumWordReviewSet requires selection rationale and structured evidence", () => {
+    const report = evaluatePlatinumWordReviewSet({
+        rows: [buildRow()],
+        entries: [
+            buildEntry({
+                selectionRationale: "",
+                sourceEvidence: ["free text evidence is not enough"],
+            }),
+        ],
+    });
+
+    const failures = report.results[0].failures.join("\n");
+    assert.equal(report.passed, false);
+    assert.match(failures, /selectionRationale must explain/);
+    assert.match(failures, /sourceEvidence must contain structured evidence entries/);
+    assert.match(failures, /sourceEvidence must include evidence type: pitch-accent-review/);
+});
+
+test("evaluatePlatinumWordReviewSet protects exact word audio and pitch accent expectations", () => {
+    const report = evaluatePlatinumWordReviewSet({
+        rows: [
+            buildRow({
+                audio: "[sound:4ECA_今日-word-reading-今日-こんにち.wav]",
+                pitchAccent: "<span>きょう: Atamadaka</span>",
+            }),
+        ],
+        entries: [buildEntry()],
+    });
+
+    const failures = report.results[0].failures.join("\n");
+    assert.equal(report.passed, false);
+    assert.match(failures, /pitch accent did not include: Heiban/);
+    assert.match(failures, /audio field did not include exact word-reading asset fragment: word-reading-今日-きょう/);
+});
+
 test("evaluatePlatinumWordReviewSet keeps deferred and removed words out of the export", () => {
     const passing = evaluatePlatinumWordReviewSet({
         rows: [],
@@ -95,6 +137,8 @@ test("evaluatePlatinumWordReviewSet keeps deferred and removed words out of the 
                 word: "難語",
                 status: "deferred",
                 readingIncludes: ["なんご"],
+                reviewedAt: "2026-05-02",
+                reviewer: "content-review",
                 decisionReason: "Not common or useful enough for the current level.",
             },
         ],
@@ -108,6 +152,8 @@ test("evaluatePlatinumWordReviewSet keeps deferred and removed words out of the 
                 word: "難語",
                 status: "deferred",
                 readingIncludes: ["なんご"],
+                reviewedAt: "2026-05-02",
+                reviewer: "content-review",
                 decisionReason: "Not common or useful enough for the current level.",
             },
         ],
@@ -143,4 +189,21 @@ test("evaluatePlatinumWordReviewSet does not pass an empty platinum set by defau
 
     assert.equal(report.passed, false);
     assert.deepEqual(report.coverageFailures, ["no active platinum entries have been reviewed"]);
+});
+
+test("evaluatePlatinumWordReviewSet requires reviewer and date for non-shipping decisions", () => {
+    const report = evaluatePlatinumWordReviewSet({
+        rows: [],
+        entries: [{
+            word: "難語",
+            status: "removed",
+            readingIncludes: ["なんご"],
+            decisionReason: "Not useful enough for the version 1 word deck.",
+        }],
+    });
+
+    const failures = report.results[0].failures.join("\n");
+    assert.equal(report.passed, false);
+    assert.match(failures, /reviewedAt is required/);
+    assert.match(failures, /reviewer is required/);
 });

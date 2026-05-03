@@ -36,7 +36,8 @@ Each platinum word card must pass all rules below:
 - The example sentence is natural, level-appropriate, and demonstrates the target word clearly.
 - The reading breakdown, furigana, constituent-kanji breakdown, and JLPT or outside-JLPT labels are correct.
 - Higher-level or outside-JLPT kanji are allowed only when the word itself belongs now and the card labels those kanji visibly.
-- Audio and pitch accent are present and governed by approved tracked sources.
+- Exact word-reading audio is present, governed, and artifact-verified for the written word and exported reading. Human listening QA remains part of the release checklist.
+- Pitch accent is present, protected by explicit expectation text, and tied to a governed pitch-accent source.
 - The card does not depend on ignored local files, untracked generated content, or silent fallback behavior.
 
 ## Kanji-card platinum rules
@@ -81,27 +82,56 @@ Active platinum word entries must include:
 - `coverageRoleIncludes`
 - `breakdownIncludes`
 - `exampleIncludes`
+- `pitchAccentIncludes`
+- `selectionRationale`
 - `reviewedAt`
 - `reviewer`
 - `sourceEvidence`
 - `qualityGates`
+
+Word `sourceEvidence` must be an array of structured objects. Each object must include:
+
+- `type`
+- `source`
+- `detail`
+
+Active word entries must include all evidence types below:
+
+- `generated-surface`: the generated word-card surface was inspected.
+- `golden-review`: the golden regression expectation was checked.
+- `japanese-source`: written form, reading, meaning, and example were checked against a Japanese-language or dictionary source.
+- `level-contract`: the word belongs in the reviewed word-product level.
+- `example-review`: the example sentence and reading were checked for release quality.
+- `media-audit`: governed media provenance was checked.
+- `audio-review`: generated audio artifact identity, provenance, and exact word-reading match were reviewed.
+- `pitch-accent-review`: pitch-accent value and source were reviewed.
+- `label-review`: JLPT/outside-JLPT labels, focus kanji, coverage role, and reading coverage were reviewed.
+- `manual-review`: a final product judgment was made.
 
 Required `qualityGates`:
 
 - `belongsInWordDeck`
 - `commonOrUseful`
 - `learnerFriendly`
+- `writtenFormVerified`
+- `readingVerified`
 - `japaneseVerified`
 - `meaningReleaseQuality`
 - `exampleReleaseQuality`
+- `exampleReadingVerified`
+- `breakdownVerified`
 - `levelPlacementVerified`
 - `labelsVerified`
+- `audioExactWordReading`
+- `audioArtifactVerified`
+- `pitchAccentVerified`
+- `pitchAccentSourceVerified`
 - `mediaProvenanceVerified`
 - `noSilentFallback`
 
 All gates must be `true`. `fixed_then_platinum` entries must also include `fixSummary`.
 
-Deferred and removed entries must include `word`, `readingIncludes`, and `decisionReason`.
+Deferred and removed word entries must include `word`, `readingIncludes`, `reviewedAt`, `reviewer`, and `decisionReason`.
 
 Active platinum kanji entries must include:
 

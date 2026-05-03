@@ -13,13 +13,34 @@ const REQUIRED_WORD_QUALITY_GATES = Object.freeze([
     "belongsInWordDeck",
     "commonOrUseful",
     "learnerFriendly",
+    "writtenFormVerified",
+    "readingVerified",
     "japaneseVerified",
     "meaningReleaseQuality",
     "exampleReleaseQuality",
+    "exampleReadingVerified",
+    "breakdownVerified",
     "levelPlacementVerified",
     "labelsVerified",
+    "audioExactWordReading",
+    "audioArtifactVerified",
+    "pitchAccentVerified",
+    "pitchAccentSourceVerified",
     "mediaProvenanceVerified",
     "noSilentFallback",
+]);
+
+const REQUIRED_WORD_EVIDENCE_TYPES = Object.freeze([
+    "generated-surface",
+    "golden-review",
+    "japanese-source",
+    "level-contract",
+    "example-review",
+    "media-audit",
+    "audio-review",
+    "pitch-accent-review",
+    "label-review",
+    "manual-review",
 ]);
 
 function normalizeText(value) {
@@ -35,15 +56,36 @@ function normalizeForCompare(value) {
         .toLowerCase();
 }
 
+function normalizeLiteralCompare(value) {
+    return normalizeText(value)
+        .replace(/\s+/g, " ")
+        .toLowerCase();
+}
+
 function includesAll(haystack, needles = []) {
     const normalizedHaystack = normalizeForCompare(haystack);
     return (Array.isArray(needles) ? needles : []).every((needle) => normalizedHaystack.includes(normalizeForCompare(needle)));
+}
+
+function includesAllLiteral(haystack, needles = []) {
+    const normalizedHaystack = normalizeLiteralCompare(haystack);
+    return (Array.isArray(needles) ? needles : []).every((needle) => normalizedHaystack.includes(normalizeLiteralCompare(needle)));
 }
 
 function normalizeStringArray(value) {
     return (Array.isArray(value) ? value : [])
         .map((entry) => normalizeText(entry))
         .filter(Boolean);
+}
+
+function normalizeEvidenceEntries(value) {
+    return (Array.isArray(value) ? value : [])
+        .filter((entry) => entry && typeof entry === "object" && !Array.isArray(entry))
+        .map((entry) => ({
+            type: normalizeText(entry.type),
+            source: normalizeText(entry.source),
+            detail: normalizeText(entry.detail),
+        }));
 }
 
 function buildExpectedReadingText(entry = {}) {
@@ -123,14 +165,33 @@ function validateActivePlatinumEntry(entry = {}) {
     if (normalizeStringArray(entry.exampleIncludes).length === 0) {
         failures.push("exampleIncludes must protect the release-quality example");
     }
+    if (normalizeStringArray(entry.pitchAccentIncludes).length === 0) {
+        failures.push("pitchAccentIncludes must protect the reviewed pitch accent");
+    }
     if (!/^\d{4}-\d{2}-\d{2}$/.test(normalizeText(entry.reviewedAt))) {
         failures.push("reviewedAt must be YYYY-MM-DD");
     }
     if (!normalizeText(entry.reviewer)) {
         failures.push("reviewer is required");
     }
-    if (normalizeStringArray(entry.sourceEvidence).length === 0) {
-        failures.push("sourceEvidence must record what was checked");
+    if (!normalizeText(entry.selectionRationale)) {
+        failures.push("selectionRationale must explain why this word ships in the reviewed level");
+    }
+
+    const sourceEvidence = normalizeEvidenceEntries(entry.sourceEvidence);
+    if (sourceEvidence.length === 0) {
+        failures.push("sourceEvidence must contain structured evidence entries");
+    }
+    for (const evidence of sourceEvidence) {
+        if (!evidence.type || !evidence.source || !evidence.detail) {
+            failures.push("sourceEvidence entries must include type, source, and detail");
+        }
+    }
+    const evidenceTypes = new Set(sourceEvidence.map((evidence) => evidence.type));
+    for (const requiredType of REQUIRED_WORD_EVIDENCE_TYPES) {
+        if (!evidenceTypes.has(requiredType)) {
+            failures.push(`sourceEvidence must include evidence type: ${requiredType}`);
+        }
     }
     if (entry.status === "fixed_then_platinum" && !normalizeText(entry.fixSummary)) {
         failures.push("fixed_then_platinum entries must include fixSummary");
@@ -154,6 +215,12 @@ function validateNonShippingEntry(entry = {}) {
     }
     if (normalizeStringArray(entry.readingIncludes).length === 0) {
         failures.push("readingIncludes must identify the deferred or removed row");
+    }
+    if (!normalizeText(entry.reviewedAt)) {
+        failures.push("reviewedAt is required for deferred and removed entries");
+    }
+    if (!normalizeText(entry.reviewer)) {
+        failures.push("reviewer is required for deferred and removed entries");
     }
     if (!normalizeText(entry.decisionReason)) {
         failures.push("decisionReason is required for deferred and removed entries");
@@ -212,6 +279,15 @@ function evaluatePlatinumEntry({ rows = [], entry = {} } = {}) {
             }
             if (fieldReport.coverageFailures?.length > 0) {
                 failures.push(...fieldReport.coverageFailures);
+            }
+            if (!includesAllLiteral(row.pitchAccent, entry.pitchAccentIncludes)) {
+                failures.push(`pitch accent did not include: ${normalizeStringArray(entry.pitchAccentIncludes).join(", ")}`);
+            }
+            for (const reading of normalizeStringArray(entry.readingIncludes)) {
+                const expectedAudioFragment = `word-reading-${entry.word}-${reading}`;
+                if (!normalizeText(row.audio).includes(expectedAudioFragment)) {
+                    failures.push(`audio field did not include exact word-reading asset fragment: ${expectedAudioFragment}`);
+                }
             }
         }
     } else if (NON_SHIPPING_STATUSES.includes(status)) {
@@ -350,6 +426,7 @@ module.exports = {
     ACTIVE_PLATINUM_STATUSES,
     ALLOWED_PLATINUM_STATUSES,
     NON_SHIPPING_STATUSES,
+    REQUIRED_WORD_EVIDENCE_TYPES,
     REQUIRED_WORD_QUALITY_GATES,
     REVIEW_ONLY_STATUSES,
     evaluatePlatinumWordReviewSet,

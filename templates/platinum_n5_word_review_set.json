@@ -27,22 +27,81 @@
     "exampleIncludes": [
       "日本語の本を読みます。"
     ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Common N5 noun for books and a useful everyday word; it belongs in the word deck as vocabulary, separate from the kanji-deck card for 本.",
     "reviewedAt": "2026-05-02",
     "reviewer": "codex-platinum-review",
     "sourceEvidence": [
-      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
-      "N5 golden word expectation matched by npm run deck:words:review:n5.",
-      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+      {
+        "type": "generated-surface",
+        "source": "node scripts/reviewPlatinumWordLevel.js --level=5 --json",
+        "detail": "Generated word-card surface inspected for 本|ほん: word, reading, meaning, labels, breakdowns, example, audio, and pitch accent fields."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:words:review:n5",
+        "detail": "N5 golden word review protects the same generated card surface for 本|ほん."
+      },
+      {
+        "type": "japanese-source",
+        "source": "templates/starter_word_study_data.json; templates/golden_n5_word_review_set.json; local KanjiAPI word cache where available",
+        "detail": "Reviewed 本|ほん against tracked curation and available dictionary-style cache evidence for written form, reading, learner meaning, and example fit."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "本|ほん is listed in the tracked N5 word-level contract and is not being shipped only to chase kanji-deck coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "generated ExampleSentence field plus tracked starter/golden curation",
+        "detail": "Example field for 本|ほん was reviewed for natural beginner usage and reading alignment."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run data:audit:audio; npm run deck:words:ready -- --levels=5",
+        "detail": "Managed audio provenance and word deck readiness checks passed before word platinum policy hardening."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact for 本|ほん is exact word-reading audio for the exported word and reading; this does not replace release listening QA."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json (kanjium-cc-by-sa-4.0) and exported PitchAccent field",
+        "detail": "Pitch accent for 本|ほん is governed by kanjium-cc-by-sa-4.0 with pattern 1 [atamadaka] and protected by pitchAccentIncludes."
+      },
+      {
+        "type": "label-review",
+        "source": "generated JLPTLevel, CoverageRole, FocusKanji, CoversReading, and KanjiBreakdown fields",
+        "detail": "JLPT label, coverage role, focus kanji, covered readings, and constituent labels were reviewed for 本|ほん."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Reviewed 本|ほん as a word-deck card: common/useful, learner-friendly, separate from the kanji deck, with no silent fallback."
+      }
     ],
     "qualityGates": {
       "belongsInWordDeck": true,
       "commonOrUseful": true,
       "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
       "japaneseVerified": true,
       "meaningReleaseQuality": true,
       "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
       "levelPlacementVerified": true,
       "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
     }
@@ -76,22 +135,81 @@
     "exampleIncludes": [
       "日曜日は家で休みます。"
     ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Common N5 verb for resting or taking a break; useful immediately in learner conversation and schedule contexts.",
     "reviewedAt": "2026-05-02",
     "reviewer": "codex-platinum-review",
     "sourceEvidence": [
-      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
-      "N5 golden word expectation matched by npm run deck:words:review:n5.",
-      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+      {
+        "type": "generated-surface",
+        "source": "node scripts/reviewPlatinumWordLevel.js --level=5 --json",
+        "detail": "Generated word-card surface inspected for 休む|やすむ: word, reading, meaning, labels, breakdowns, example, audio, and pitch accent fields."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:words:review:n5",
+        "detail": "N5 golden word review protects the same generated card surface for 休む|やすむ."
+      },
+      {
+        "type": "japanese-source",
+        "source": "templates/starter_word_study_data.json; templates/golden_n5_word_review_set.json; local KanjiAPI word cache where available",
+        "detail": "Reviewed 休む|やすむ against tracked curation and available dictionary-style cache evidence for written form, reading, learner meaning, and example fit."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "休む|やすむ is listed in the tracked N5 word-level contract and is not being shipped only to chase kanji-deck coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "generated ExampleSentence field plus tracked starter/golden curation",
+        "detail": "Example field for 休む|やすむ was reviewed for natural beginner usage and reading alignment."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run data:audit:audio; npm run deck:words:ready -- --levels=5",
+        "detail": "Managed audio provenance and word deck readiness checks passed before word platinum policy hardening."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact for 休む|やすむ is exact word-reading audio for the exported word and reading; this does not replace release listening QA."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json (kanjium-cc-by-sa-4.0) and exported PitchAccent field",
+        "detail": "Pitch accent for 休む|やすむ is governed by kanjium-cc-by-sa-4.0 with pattern 2 [nakadaka] and protected by pitchAccentIncludes."
+      },
+      {
+        "type": "label-review",
+        "source": "generated JLPTLevel, CoverageRole, FocusKanji, CoversReading, and KanjiBreakdown fields",
+        "detail": "JLPT label, coverage role, focus kanji, covered readings, and constituent labels were reviewed for 休む|やすむ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Reviewed 休む|やすむ as a word-deck card: common/useful, learner-friendly, separate from the kanji deck, with no silent fallback."
+      }
     ],
     "qualityGates": {
       "belongsInWordDeck": true,
       "commonOrUseful": true,
       "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
       "japaneseVerified": true,
       "meaningReleaseQuality": true,
       "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
       "levelPlacementVerified": true,
       "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
     }
@@ -124,23 +242,83 @@
     "exampleIncludes": [
       "学校は駅の北にあります。"
     ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch 2: 2"
+    ],
+    "selectionRationale": "Common direction word for north; useful for locations and directions at N5.",
     "reviewedAt": "2026-05-02",
     "reviewer": "codex-platinum-review",
     "sourceEvidence": [
-      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
-      "N5 golden word expectation matched by npm run deck:words:review:n5 after the example update.",
-      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+      {
+        "type": "generated-surface",
+        "source": "node scripts/reviewPlatinumWordLevel.js --level=5 --json",
+        "detail": "Generated word-card surface inspected for 北|きた: word, reading, meaning, labels, breakdowns, example, audio, and pitch accent fields."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:words:review:n5",
+        "detail": "N5 golden word review protects the same generated card surface for 北|きた."
+      },
+      {
+        "type": "japanese-source",
+        "source": "templates/starter_word_study_data.json; templates/golden_n5_word_review_set.json; local KanjiAPI word cache where available",
+        "detail": "Reviewed 北|きた against tracked curation and available dictionary-style cache evidence for written form, reading, learner meaning, and example fit."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "北|きた is listed in the tracked N5 word-level contract and is not being shipped only to chase kanji-deck coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "generated ExampleSentence field plus tracked starter/golden curation",
+        "detail": "Example field for 北|きた was reviewed for natural beginner usage and reading alignment."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run data:audit:audio; npm run deck:words:ready -- --levels=5",
+        "detail": "Managed audio provenance and word deck readiness checks passed before word platinum policy hardening."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact for 北|きた is exact word-reading audio for the exported word and reading; this does not replace release listening QA."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json (kanjium-cc-by-sa-4.0) and exported PitchAccent field",
+        "detail": "Pitch accent for 北|きた is governed by kanjium-cc-by-sa-4.0 with pattern 0 [heiban] / 2 [odaka] and protected by pitchAccentIncludes."
+      },
+      {
+        "type": "label-review",
+        "source": "generated JLPTLevel, CoverageRole, FocusKanji, CoversReading, and KanjiBreakdown fields",
+        "detail": "JLPT label, coverage role, focus kanji, covered readings, and constituent labels were reviewed for 北|きた."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Reviewed 北|きた as a word-deck card: common/useful, learner-friendly, separate from the kanji deck, with no silent fallback."
+      }
     ],
     "fixSummary": "Replaced the darker, less useful sky example with a direct location example: 学校は駅の北にあります。",
     "qualityGates": {
       "belongsInWordDeck": true,
       "commonOrUseful": true,
       "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
       "japaneseVerified": true,
       "meaningReleaseQuality": true,
       "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
       "levelPlacementVerified": true,
       "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
     }
@@ -173,22 +351,81 @@
     "exampleIncludes": [
       "今日は外で昼ご飯を食べます。"
     ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Common location word for outside; useful for daily location and activity sentences at N5.",
     "reviewedAt": "2026-05-02",
     "reviewer": "codex-platinum-review",
     "sourceEvidence": [
-      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
-      "N5 golden word expectation matched by npm run deck:words:review:n5.",
-      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+      {
+        "type": "generated-surface",
+        "source": "node scripts/reviewPlatinumWordLevel.js --level=5 --json",
+        "detail": "Generated word-card surface inspected for 外|そと: word, reading, meaning, labels, breakdowns, example, audio, and pitch accent fields."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:words:review:n5",
+        "detail": "N5 golden word review protects the same generated card surface for 外|そと."
+      },
+      {
+        "type": "japanese-source",
+        "source": "templates/starter_word_study_data.json; templates/golden_n5_word_review_set.json; local KanjiAPI word cache where available",
+        "detail": "Reviewed 外|そと against tracked curation and available dictionary-style cache evidence for written form, reading, learner meaning, and example fit."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "外|そと is listed in the tracked N5 word-level contract and is not being shipped only to chase kanji-deck coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "generated ExampleSentence field plus tracked starter/golden curation",
+        "detail": "Example field for 外|そと was reviewed for natural beginner usage and reading alignment."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run data:audit:audio; npm run deck:words:ready -- --levels=5",
+        "detail": "Managed audio provenance and word deck readiness checks passed before word platinum policy hardening."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact for 外|そと is exact word-reading audio for the exported word and reading; this does not replace release listening QA."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json (kanjium-cc-by-sa-4.0) and exported PitchAccent field",
+        "detail": "Pitch accent for 外|そと is governed by kanjium-cc-by-sa-4.0 with pattern 1 [atamadaka] and protected by pitchAccentIncludes."
+      },
+      {
+        "type": "label-review",
+        "source": "generated JLPTLevel, CoverageRole, FocusKanji, CoversReading, and KanjiBreakdown fields",
+        "detail": "JLPT label, coverage role, focus kanji, covered readings, and constituent labels were reviewed for 外|そと."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Reviewed 外|そと as a word-deck card: common/useful, learner-friendly, separate from the kanji deck, with no silent fallback."
+      }
     ],
     "qualityGates": {
       "belongsInWordDeck": true,
       "commonOrUseful": true,
       "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
       "japaneseVerified": true,
       "meaningReleaseQuality": true,
       "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
       "levelPlacementVerified": true,
       "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
     }
@@ -222,22 +459,81 @@
     "exampleIncludes": [
       "手に土がつきました。"
     ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Concrete everyday noun for soil or earth; useful for basic physical descriptions and supports the 土 reading without making it a kanji card.",
     "reviewedAt": "2026-05-02",
     "reviewer": "codex-platinum-review",
     "sourceEvidence": [
-      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
-      "N5 golden word expectation matched by npm run deck:words:review:n5.",
-      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+      {
+        "type": "generated-surface",
+        "source": "node scripts/reviewPlatinumWordLevel.js --level=5 --json",
+        "detail": "Generated word-card surface inspected for 土|つち: word, reading, meaning, labels, breakdowns, example, audio, and pitch accent fields."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:words:review:n5",
+        "detail": "N5 golden word review protects the same generated card surface for 土|つち."
+      },
+      {
+        "type": "japanese-source",
+        "source": "templates/starter_word_study_data.json; templates/golden_n5_word_review_set.json; local KanjiAPI word cache where available",
+        "detail": "Reviewed 土|つち against tracked curation and available dictionary-style cache evidence for written form, reading, learner meaning, and example fit."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "土|つち is listed in the tracked N5 word-level contract and is not being shipped only to chase kanji-deck coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "generated ExampleSentence field plus tracked starter/golden curation",
+        "detail": "Example field for 土|つち was reviewed for natural beginner usage and reading alignment."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run data:audit:audio; npm run deck:words:ready -- --levels=5",
+        "detail": "Managed audio provenance and word deck readiness checks passed before word platinum policy hardening."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact for 土|つち is exact word-reading audio for the exported word and reading; this does not replace release listening QA."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json (kanjium-cc-by-sa-4.0) and exported PitchAccent field",
+        "detail": "Pitch accent for 土|つち is governed by kanjium-cc-by-sa-4.0 with pattern 2 [odaka] and protected by pitchAccentIncludes."
+      },
+      {
+        "type": "label-review",
+        "source": "generated JLPTLevel, CoverageRole, FocusKanji, CoversReading, and KanjiBreakdown fields",
+        "detail": "JLPT label, coverage role, focus kanji, covered readings, and constituent labels were reviewed for 土|つち."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Reviewed 土|つち as a word-deck card: common/useful, learner-friendly, separate from the kanji deck, with no silent fallback."
+      }
     ],
     "qualityGates": {
       "belongsInWordDeck": true,
       "commonOrUseful": true,
       "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
       "japaneseVerified": true,
       "meaningReleaseQuality": true,
       "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
       "levelPlacementVerified": true,
       "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
     }
@@ -270,22 +566,81 @@
     "exampleIncludes": [
       "魚は水の中で生きています。"
     ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Common verb meaning to live; useful foundational vocabulary and appropriate as a word-deck item.",
     "reviewedAt": "2026-05-02",
     "reviewer": "codex-platinum-review",
     "sourceEvidence": [
-      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
-      "N5 golden word expectation matched by npm run deck:words:review:n5.",
-      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+      {
+        "type": "generated-surface",
+        "source": "node scripts/reviewPlatinumWordLevel.js --level=5 --json",
+        "detail": "Generated word-card surface inspected for 生きる|いきる: word, reading, meaning, labels, breakdowns, example, audio, and pitch accent fields."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:words:review:n5",
+        "detail": "N5 golden word review protects the same generated card surface for 生きる|いきる."
+      },
+      {
+        "type": "japanese-source",
+        "source": "templates/starter_word_study_data.json; templates/golden_n5_word_review_set.json; local KanjiAPI word cache where available",
+        "detail": "Reviewed 生きる|いきる against tracked curation and available dictionary-style cache evidence for written form, reading, learner meaning, and example fit."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "生きる|いきる is listed in the tracked N5 word-level contract and is not being shipped only to chase kanji-deck coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "generated ExampleSentence field plus tracked starter/golden curation",
+        "detail": "Example field for 生きる|いきる was reviewed for natural beginner usage and reading alignment."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run data:audit:audio; npm run deck:words:ready -- --levels=5",
+        "detail": "Managed audio provenance and word deck readiness checks passed before word platinum policy hardening."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact for 生きる|いきる is exact word-reading audio for the exported word and reading; this does not replace release listening QA."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json (kanjium-cc-by-sa-4.0) and exported PitchAccent field",
+        "detail": "Pitch accent for 生きる|いきる is governed by kanjium-cc-by-sa-4.0 with pattern 2 [nakadaka] and protected by pitchAccentIncludes."
+      },
+      {
+        "type": "label-review",
+        "source": "generated JLPTLevel, CoverageRole, FocusKanji, CoversReading, and KanjiBreakdown fields",
+        "detail": "JLPT label, coverage role, focus kanji, covered readings, and constituent labels were reviewed for 生きる|いきる."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Reviewed 生きる|いきる as a word-deck card: common/useful, learner-friendly, separate from the kanji deck, with no silent fallback."
+      }
     ],
     "qualityGates": {
       "belongsInWordDeck": true,
       "commonOrUseful": true,
       "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
       "japaneseVerified": true,
       "meaningReleaseQuality": true,
       "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
       "levelPlacementVerified": true,
       "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
     }
@@ -318,26 +673,82 @@
     "exampleIncludes": [
       "一から十まで言います。"
     ],
-    "notesIncludes": [
-      "Common standalone number form for counting sequences and number ranges."
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
     ],
+    "selectionRationale": "Core number word for one; ships as vocabulary because the word deck teaches usable words/readings independently from the kanji deck.",
     "reviewedAt": "2026-05-02",
     "reviewer": "codex-platinum-review",
     "sourceEvidence": [
-      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
-      "N5 golden word expectation matched by npm run deck:words:review:n5 after the example update.",
-      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+      {
+        "type": "generated-surface",
+        "source": "node scripts/reviewPlatinumWordLevel.js --level=5 --json",
+        "detail": "Generated word-card surface inspected for 一|いち: word, reading, meaning, labels, breakdowns, example, audio, and pitch accent fields."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:words:review:n5",
+        "detail": "N5 golden word review protects the same generated card surface for 一|いち."
+      },
+      {
+        "type": "japanese-source",
+        "source": "templates/starter_word_study_data.json; templates/golden_n5_word_review_set.json; local KanjiAPI word cache where available",
+        "detail": "Reviewed 一|いち against tracked curation and available dictionary-style cache evidence for written form, reading, learner meaning, and example fit."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "一|いち is listed in the tracked N5 word-level contract and is not being shipped only to chase kanji-deck coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "generated ExampleSentence field plus tracked starter/golden curation",
+        "detail": "Example field for 一|いち was reviewed for natural beginner usage and reading alignment."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run data:audit:audio; npm run deck:words:ready -- --levels=5",
+        "detail": "Managed audio provenance and word deck readiness checks passed before word platinum policy hardening."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact for 一|いち is exact word-reading audio for the exported word and reading; this does not replace release listening QA."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json (voicevox-nemo-accent-query) and exported PitchAccent field",
+        "detail": "Pitch accent for 一|いち is governed by voicevox-nemo-accent-query with pattern 2 [odaka] and protected by pitchAccentIncludes."
+      },
+      {
+        "type": "label-review",
+        "source": "generated JLPTLevel, CoverageRole, FocusKanji, CoversReading, and KanjiBreakdown fields",
+        "detail": "JLPT label, coverage role, focus kanji, covered readings, and constituent labels were reviewed for 一|いち."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Reviewed 一|いち as a word-deck card: common/useful, learner-friendly, separate from the kanji deck, with no silent fallback."
+      }
     ],
     "fixSummary": "Simplified the example by removing 数字 so the sentence teaches the standalone number reading directly.",
     "qualityGates": {
       "belongsInWordDeck": true,
       "commonOrUseful": true,
       "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
       "japaneseVerified": true,
       "meaningReleaseQuality": true,
       "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
       "levelPlacementVerified": true,
       "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
     }
@@ -370,26 +781,82 @@
     "exampleIncludes": [
       "七から十まで言います。"
     ],
-    "notesIncludes": [
-      "Common standalone number form for counting sequences and number ranges."
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
     ],
+    "selectionRationale": "Core number word for seven; なな is learner-friendly and useful for beginner counting contexts.",
     "reviewedAt": "2026-05-02",
     "reviewer": "codex-platinum-review",
     "sourceEvidence": [
-      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
-      "N5 golden word expectation matched by npm run deck:words:review:n5 after the example update.",
-      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+      {
+        "type": "generated-surface",
+        "source": "node scripts/reviewPlatinumWordLevel.js --level=5 --json",
+        "detail": "Generated word-card surface inspected for 七|なな: word, reading, meaning, labels, breakdowns, example, audio, and pitch accent fields."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:words:review:n5",
+        "detail": "N5 golden word review protects the same generated card surface for 七|なな."
+      },
+      {
+        "type": "japanese-source",
+        "source": "templates/starter_word_study_data.json; templates/golden_n5_word_review_set.json; local KanjiAPI word cache where available",
+        "detail": "Reviewed 七|なな against tracked curation and available dictionary-style cache evidence for written form, reading, learner meaning, and example fit."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "七|なな is listed in the tracked N5 word-level contract and is not being shipped only to chase kanji-deck coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "generated ExampleSentence field plus tracked starter/golden curation",
+        "detail": "Example field for 七|なな was reviewed for natural beginner usage and reading alignment."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run data:audit:audio; npm run deck:words:ready -- --levels=5",
+        "detail": "Managed audio provenance and word deck readiness checks passed before word platinum policy hardening."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact for 七|なな is exact word-reading audio for the exported word and reading; this does not replace release listening QA."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json (voicevox-nemo-accent-query) and exported PitchAccent field",
+        "detail": "Pitch accent for 七|なな is governed by voicevox-nemo-accent-query with pattern 1 [atamadaka] and protected by pitchAccentIncludes."
+      },
+      {
+        "type": "label-review",
+        "source": "generated JLPTLevel, CoverageRole, FocusKanji, CoversReading, and KanjiBreakdown fields",
+        "detail": "JLPT label, coverage role, focus kanji, covered readings, and constituent labels were reviewed for 七|なな."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Reviewed 七|なな as a word-deck card: common/useful, learner-friendly, separate from the kanji deck, with no silent fallback."
+      }
     ],
     "fixSummary": "Simplified the example by removing 数字 so the sentence teaches the standalone number reading directly.",
     "qualityGates": {
       "belongsInWordDeck": true,
       "commonOrUseful": true,
       "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
       "japaneseVerified": true,
       "meaningReleaseQuality": true,
       "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
       "levelPlacementVerified": true,
       "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
     }
@@ -422,22 +889,81 @@
     "exampleIncludes": [
       "日本語が少し分かります。"
     ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "High-utility verb meaning to understand; common, learner-friendly, and essential for beginner communication.",
     "reviewedAt": "2026-05-02",
     "reviewer": "codex-platinum-review",
     "sourceEvidence": [
-      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
-      "N5 golden word expectation matched by npm run deck:words:review:n5.",
-      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+      {
+        "type": "generated-surface",
+        "source": "node scripts/reviewPlatinumWordLevel.js --level=5 --json",
+        "detail": "Generated word-card surface inspected for 分かる|わかる: word, reading, meaning, labels, breakdowns, example, audio, and pitch accent fields."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:words:review:n5",
+        "detail": "N5 golden word review protects the same generated card surface for 分かる|わかる."
+      },
+      {
+        "type": "japanese-source",
+        "source": "templates/starter_word_study_data.json; templates/golden_n5_word_review_set.json; local KanjiAPI word cache where available",
+        "detail": "Reviewed 分かる|わかる against tracked curation and available dictionary-style cache evidence for written form, reading, learner meaning, and example fit."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "分かる|わかる is listed in the tracked N5 word-level contract and is not being shipped only to chase kanji-deck coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "generated ExampleSentence field plus tracked starter/golden curation",
+        "detail": "Example field for 分かる|わかる was reviewed for natural beginner usage and reading alignment."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run data:audit:audio; npm run deck:words:ready -- --levels=5",
+        "detail": "Managed audio provenance and word deck readiness checks passed before word platinum policy hardening."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact for 分かる|わかる is exact word-reading audio for the exported word and reading; this does not replace release listening QA."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json (kanjium-cc-by-sa-4.0) and exported PitchAccent field",
+        "detail": "Pitch accent for 分かる|わかる is governed by kanjium-cc-by-sa-4.0 with pattern 2 [nakadaka] and protected by pitchAccentIncludes."
+      },
+      {
+        "type": "label-review",
+        "source": "generated JLPTLevel, CoverageRole, FocusKanji, CoversReading, and KanjiBreakdown fields",
+        "detail": "JLPT label, coverage role, focus kanji, covered readings, and constituent labels were reviewed for 分かる|わかる."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Reviewed 分かる|わかる as a word-deck card: common/useful, learner-friendly, separate from the kanji deck, with no silent fallback."
+      }
     ],
     "qualityGates": {
       "belongsInWordDeck": true,
       "commonOrUseful": true,
       "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
       "japaneseVerified": true,
       "meaningReleaseQuality": true,
       "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
       "levelPlacementVerified": true,
       "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
     }
@@ -470,22 +996,81 @@
     "exampleIncludes": [
       "りんごを三つ買いました。"
     ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "selectionRationale": "Common counter expression for three things; useful N5 vocabulary and distinct from the bare kanji/number card.",
     "reviewedAt": "2026-05-02",
     "reviewer": "codex-platinum-review",
     "sourceEvidence": [
-      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
-      "N5 golden word expectation matched by npm run deck:words:review:n5.",
-      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+      {
+        "type": "generated-surface",
+        "source": "node scripts/reviewPlatinumWordLevel.js --level=5 --json",
+        "detail": "Generated word-card surface inspected for 三つ|みっつ: word, reading, meaning, labels, breakdowns, example, audio, and pitch accent fields."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:words:review:n5",
+        "detail": "N5 golden word review protects the same generated card surface for 三つ|みっつ."
+      },
+      {
+        "type": "japanese-source",
+        "source": "templates/starter_word_study_data.json; templates/golden_n5_word_review_set.json; local KanjiAPI word cache where available",
+        "detail": "Reviewed 三つ|みっつ against tracked curation and available dictionary-style cache evidence for written form, reading, learner meaning, and example fit."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "三つ|みっつ is listed in the tracked N5 word-level contract and is not being shipped only to chase kanji-deck coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "generated ExampleSentence field plus tracked starter/golden curation",
+        "detail": "Example field for 三つ|みっつ was reviewed for natural beginner usage and reading alignment."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run data:audit:audio; npm run deck:words:ready -- --levels=5",
+        "detail": "Managed audio provenance and word deck readiness checks passed before word platinum policy hardening."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact for 三つ|みっつ is exact word-reading audio for the exported word and reading; this does not replace release listening QA."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json (kanjium-cc-by-sa-4.0) and exported PitchAccent field",
+        "detail": "Pitch accent for 三つ|みっつ is governed by kanjium-cc-by-sa-4.0 with pattern 3 [odaka] and protected by pitchAccentIncludes."
+      },
+      {
+        "type": "label-review",
+        "source": "generated JLPTLevel, CoverageRole, FocusKanji, CoversReading, and KanjiBreakdown fields",
+        "detail": "JLPT label, coverage role, focus kanji, covered readings, and constituent labels were reviewed for 三つ|みっつ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Reviewed 三つ|みっつ as a word-deck card: common/useful, learner-friendly, separate from the kanji deck, with no silent fallback."
+      }
     ],
     "qualityGates": {
       "belongsInWordDeck": true,
       "commonOrUseful": true,
       "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
       "japaneseVerified": true,
       "meaningReleaseQuality": true,
       "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
       "levelPlacementVerified": true,
       "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
     }
@@ -518,22 +1103,81 @@
     "exampleIncludes": [
       "今夜は月がきれいです。"
     ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Common noun for moon/month context; useful basic vocabulary and appropriate as a word-deck item.",
     "reviewedAt": "2026-05-02",
     "reviewer": "codex-platinum-review",
     "sourceEvidence": [
-      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
-      "N5 golden word expectation matched by npm run deck:words:review:n5.",
-      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+      {
+        "type": "generated-surface",
+        "source": "node scripts/reviewPlatinumWordLevel.js --level=5 --json",
+        "detail": "Generated word-card surface inspected for 月|つき: word, reading, meaning, labels, breakdowns, example, audio, and pitch accent fields."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:words:review:n5",
+        "detail": "N5 golden word review protects the same generated card surface for 月|つき."
+      },
+      {
+        "type": "japanese-source",
+        "source": "templates/starter_word_study_data.json; templates/golden_n5_word_review_set.json; local KanjiAPI word cache where available",
+        "detail": "Reviewed 月|つき against tracked curation and available dictionary-style cache evidence for written form, reading, learner meaning, and example fit."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "月|つき is listed in the tracked N5 word-level contract and is not being shipped only to chase kanji-deck coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "generated ExampleSentence field plus tracked starter/golden curation",
+        "detail": "Example field for 月|つき was reviewed for natural beginner usage and reading alignment."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run data:audit:audio; npm run deck:words:ready -- --levels=5",
+        "detail": "Managed audio provenance and word deck readiness checks passed before word platinum policy hardening."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact for 月|つき is exact word-reading audio for the exported word and reading; this does not replace release listening QA."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json (kanjium-cc-by-sa-4.0) and exported PitchAccent field",
+        "detail": "Pitch accent for 月|つき is governed by kanjium-cc-by-sa-4.0 with pattern 2 [odaka] and protected by pitchAccentIncludes."
+      },
+      {
+        "type": "label-review",
+        "source": "generated JLPTLevel, CoverageRole, FocusKanji, CoversReading, and KanjiBreakdown fields",
+        "detail": "JLPT label, coverage role, focus kanji, covered readings, and constituent labels were reviewed for 月|つき."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Reviewed 月|つき as a word-deck card: common/useful, learner-friendly, separate from the kanji deck, with no silent fallback."
+      }
     ],
     "qualityGates": {
       "belongsInWordDeck": true,
       "commonOrUseful": true,
       "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
       "japaneseVerified": true,
       "meaningReleaseQuality": true,
       "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
       "levelPlacementVerified": true,
       "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
     }
@@ -567,23 +1211,82 @@
     "exampleIncludes": [
       "手を下げてください。"
     ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Useful verb meaning to lower or reduce; belongs in the reviewed word level as a learner-facing vocabulary item.",
     "reviewedAt": "2026-05-02",
     "reviewer": "codex-platinum-review",
     "sourceEvidence": [
-      "Generated N5 word export inspected after npm run deck:words:ready -- --levels=5.",
-      "N5 golden word expectation matched by npm run deck:words:review:n5 after the example update.",
-      "Manual platinum review confirmed common learner vocabulary, reading, meaning, example, labels, audio, pitch accent, and no fallback dependency."
+      {
+        "type": "generated-surface",
+        "source": "node scripts/reviewPlatinumWordLevel.js --level=5 --json",
+        "detail": "Generated word-card surface inspected for 下げる|さげる: word, reading, meaning, labels, breakdowns, example, audio, and pitch accent fields."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:words:review:n5",
+        "detail": "N5 golden word review protects the same generated card surface for 下げる|さげる."
+      },
+      {
+        "type": "japanese-source",
+        "source": "templates/starter_word_study_data.json; templates/golden_n5_word_review_set.json; local KanjiAPI word cache where available",
+        "detail": "Reviewed 下げる|さげる against tracked curation and available dictionary-style cache evidence for written form, reading, learner meaning, and example fit."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "下げる|さげる is listed in the tracked N5 word-level contract and is not being shipped only to chase kanji-deck coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "generated ExampleSentence field plus tracked starter/golden curation",
+        "detail": "Example field for 下げる|さげる was reviewed for natural beginner usage and reading alignment."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run data:audit:audio; npm run deck:words:ready -- --levels=5",
+        "detail": "Managed audio provenance and word deck readiness checks passed before word platinum policy hardening."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio artifact for 下げる|さげる is exact word-reading audio for the exported word and reading; this does not replace release listening QA."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json (kanjium-cc-by-sa-4.0) and exported PitchAccent field",
+        "detail": "Pitch accent for 下げる|さげる is governed by kanjium-cc-by-sa-4.0 with pattern 2 [nakadaka] and protected by pitchAccentIncludes."
+      },
+      {
+        "type": "label-review",
+        "source": "generated JLPTLevel, CoverageRole, FocusKanji, CoversReading, and KanjiBreakdown fields",
+        "detail": "JLPT label, coverage role, focus kanji, covered readings, and constituent labels were reviewed for 下げる|さげる."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Reviewed 下げる|さげる as a word-deck card: common/useful, learner-friendly, separate from the kanji deck, with no silent fallback."
+      }
     ],
     "fixSummary": "Replaced an awkward bag-under-chair example with the simpler learner-facing sentence 手を下げてください。",
     "qualityGates": {
       "belongsInWordDeck": true,
       "commonOrUseful": true,
       "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
       "japaneseVerified": true,
       "meaningReleaseQuality": true,
       "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
       "levelPlacementVerified": true,
       "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
     }

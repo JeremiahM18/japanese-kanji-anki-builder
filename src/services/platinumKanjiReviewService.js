@@ -1,4 +1,8 @@
 const ACTIVE_PLATINUM_STATUSES = Object.freeze(["platinum", "fixed_then_platinum"]);
+const {
+    normalizeEvidenceEntries,
+    validateEvidenceSnippets,
+} = require("./platinumEvidenceService");
 const NON_SHIPPING_STATUSES = Object.freeze(["deferred", "removed"]);
 const REVIEW_ONLY_STATUSES = Object.freeze(["needs_review"]);
 const ALLOWED_PLATINUM_STATUSES = Object.freeze([
@@ -60,16 +64,6 @@ function normalizeStringArray(value) {
     return (Array.isArray(value) ? value : [])
         .map((entry) => normalizeText(entry))
         .filter(Boolean);
-}
-
-function normalizeEvidenceEntries(value) {
-    return (Array.isArray(value) ? value : [])
-        .filter((entry) => entry && typeof entry === "object" && !Array.isArray(entry))
-        .map((entry) => ({
-            type: normalizeText(entry.type),
-            source: normalizeText(entry.source),
-            detail: normalizeText(entry.detail),
-        }));
 }
 
 function findDuplicateValues(values = []) {
@@ -234,6 +228,52 @@ function validateGeneratedKanjiRow(row = {}) {
     return failures;
 }
 
+function validateKanjiEvidenceBindings({ entry = {}, row = {} } = {}) {
+    const failures = [];
+    const kanji = normalizeText(entry.kanji);
+    const primaryReading = normalizeStringArray(entry.readingIncludes)[0] || row.primaryReading;
+    const exactAudioFragment = `kanji-reading-${kanji}-${primaryReading}`;
+    const sourceEvidence = entry.sourceEvidence || [];
+
+    failures.push(...validateEvidenceSnippets({
+        sourceEvidence,
+        type: "generated-surface",
+        label: "generated kanji surface",
+        snippets: [kanji, primaryReading, "single-kanji", "meaning", "notes", "example", "audio", "stroke-order"],
+    }));
+    failures.push(...validateEvidenceSnippets({
+        sourceEvidence,
+        type: "japanese-source",
+        label: "primary reading, primary meaning, and broader meanings",
+        snippets: [
+            kanji,
+            primaryReading,
+            ...normalizeStringArray(entry.meaningIncludes),
+            ...normalizeStringArray(entry.kanjiMeaningsIncludes),
+        ],
+    }));
+    failures.push(...validateEvidenceSnippets({
+        sourceEvidence,
+        type: "audio-review",
+        label: "exact kanji-reading audio",
+        snippets: [kanji, exactAudioFragment],
+    }));
+    failures.push(...validateEvidenceSnippets({
+        sourceEvidence,
+        type: "stroke-order-review",
+        label: "stroke-order target and provenance",
+        snippets: [kanji, "visual", "source"],
+    }));
+    failures.push(...validateEvidenceSnippets({
+        sourceEvidence,
+        type: "manual-review",
+        label: "final kanji-card product judgment",
+        snippets: [kanji, "individual-kanji", "learner"],
+    }));
+
+    return failures;
+}
+
 function evaluatePlatinumKanjiEntry({ rows = [], entry = {} } = {}) {
     const status = normalizeText(entry.status);
     const label = normalizeText(entry.kanji) || "(blank)";
@@ -252,6 +292,7 @@ function evaluatePlatinumKanjiEntry({ rows = [], entry = {} } = {}) {
             failures.push("active platinum kanji could not be generated");
         } else {
             failures.push(...validateGeneratedKanjiRow(row));
+            failures.push(...validateKanjiEvidenceBindings({ entry, row }));
             if (Array.isArray(entry.readingIncludes) && !includesAll(row.primaryReading, entry.readingIncludes)) {
                 failures.push(`primary reading did not include: ${entry.readingIncludes.join(", ")}`);
             }

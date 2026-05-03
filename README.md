@@ -84,7 +84,7 @@ Golden and platinum review:
 - Golden review protects reviewed generated output from regression. It checks that exported learner-facing fields match the current governed contract.
 - Golden review does not mean version 1 release approval.
 - Platinum review decides whether a card deserves to ship in version 1.
-- Platinum review requires source evidence, explicit quality gates, and a keep/fix/defer/remove decision.
+- Platinum review requires field-bound source evidence, explicit quality gates, and a keep/fix/defer/remove decision. Evidence that only says a field was "reviewed" is not enough; it must name the card, exported reading, and learner-facing values it supports.
 - Platinum review removes or defers noise instead of preserving cards that are uncommon, awkward, too advanced for the level, or only present to chase coverage.
 - Platinum review may improve source data and example sentences before promotion.
 - Platinum manifests are in progress. Only active `platinum` and `fixed_then_platinum` entries count as reviewed release coverage.
@@ -93,12 +93,12 @@ Golden and platinum review:
 
 | Surface | Status |
 | --- | --- |
-| N5 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum started at `12/80` |
+| N5 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum sample manifest has 12 entries that must pass the field-bound evidence gate before counting toward version 1 |
 | N4 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N1 kanji | Golden-reviewed at `1231/1231`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
-| N5 word | Golden-reviewed; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; platinum started at `12/348` |
+| N5 word | Golden-reviewed; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; platinum sample manifest has 12 entries that must pass the field-bound evidence gate before counting toward version 1 |
 | N4 word | Golden-reviewed at `452/452`; `ready_with_deferred_variants` when built with N5 as the selected word-product scope; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; platinum not started |
 
 Current tracked word inventory:
@@ -268,7 +268,8 @@ Managed animation priority:
 3. local source files
 
 True animation coverage requires real looping animation assets. Static images and SVG fallbacks do not satisfy that rule. Use the configured GitHub animation mirrors or reviewed local source files.
-Stroke-order release provenance is governed by `templates/stroke_order_source_policy.json`; run the audit before treating new media as release-ready.
+
+Stroke-order release provenance is governed by `templates/stroke_order_source_policy.json`; run the audit before treating new media as release-ready. The automated gate verifies approved source policy, managed manifests, and target-bound review evidence. It does not prove stroke-sequence correctness by itself. Platinum review must state that the stroke-order media was visually checked for the target kanji.
 
 ### Audio
 

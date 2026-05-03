@@ -22,6 +22,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 - Run the golden review command for each shipped word level when one exists, such as `npm run deck:words:review:n5`.
 - Run the platinum review command for each version 1 locked kanji level after its platinum manifest is populated, such as `npm run deck:platinum:n5`.
 - Run the platinum review command for each version 1 locked word level after its platinum manifest is populated, such as `npm run deck:words:platinum:n5`.
+- Confirm platinum evidence is field-bound: the evidence must name the card, exported reading, learner-facing values, exact audio identity, and source/provenance claim it supports.
 - Run `npm run product:artifacts:n5` for an N5 word release. It proves the N5 word TSV can be regenerated from tracked templates only, but it does not validate kanji TSVs, `.apkg` files, or media packages.
 - Run `npm run product:artifacts:kanji:n5:preflight` for an N5 kanji release. It currently reports tracked-source kanji TSV certification as blocked until rich kanji readings and provenance are tracked release contracts. Component/radical source data is tracked in `templates/kanji_component_contract.json`.
 - Run `npm run product:readiness:n5` for an N5 release. It combines the current automated N5 audits and golden reviews, but it does not replace fresh artifact generation or manual QA.
@@ -41,7 +42,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 - Confirm `DisplayWord` remains the target kanji in the TSV contract but is not repeated as a visible card-back study word.
 - Confirm compounds appear only in notes, examples, or word decks.
 - Review audio-bearing cards.
-- Review cards with stroke-order media.
+- Review cards with stroke-order media. Automated gates audit approved source provenance, but stroke-sequence correctness requires human visual review.
 - Confirm there are no weak fronts, clipped fields, or broken media.
 
 ## Word deck manual spot review

@@ -42,6 +42,27 @@ function evaluateWordPlatinum(options = {}) {
     });
 }
 
+function buildSourceEvidence() {
+    const details = {
+        "generated-surface": "Generated word-card surface inspected for 今日|きょう: word, reading, meaning today, example 今日は図書館へ行きます。, audio, and pitch accent fields.",
+        "golden-review": "N5 golden word review protects 今日|きょう.",
+        "japanese-source": "Japanese dictionary-style source verified 今日|きょう, reading きょう, learner meaning today, and example 今日は図書館へ行きます。",
+        "level-contract": "templates/jlpt_word_level_contract.json lists 今日|きょう for JLPT N5.",
+        "example-review": "Example review checked 今日|きょう, reading きょう, and sentence 今日は図書館へ行きます。",
+        "media-audit": "Managed media provenance audit checked 今日|きょう.",
+        "audio-review": "Audio review checked 今日|きょう exact asset fragment word-reading-今日-きょう.",
+        "pitch-accent-review": "Pitch accent review checked 今日|きょう source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0.",
+        "label-review": "Label review checked 今日|きょう JLPT N5, JLPT core, focus 今 and 日, and covered readings 今: いま and 日: ひ.",
+        "manual-review": "Manual review judged 今日|きょう common and learner-friendly.",
+    };
+
+    return REQUIRED_WORD_EVIDENCE_TYPES.map((type) => ({
+        type,
+        source: "test fixture source",
+        detail: details[type],
+    }));
+}
+
 function buildRow(overrides = {}) {
     return {
         word: "今日",
@@ -77,11 +98,7 @@ function buildEntry(overrides = {}) {
         selectionRationale: "Common N5 time word that is useful immediately and belongs in the word deck.",
         reviewedAt: "2026-05-02",
         reviewer: "content-review",
-        sourceEvidence: REQUIRED_WORD_EVIDENCE_TYPES.map((type) => ({
-            type,
-            source: "test fixture",
-            detail: `Reviewed ${type} evidence for 今日.`,
-        })),
+        sourceEvidence: buildSourceEvidence(),
         qualityGates: buildQualityGates(),
         ...overrides,
     };
@@ -140,6 +157,27 @@ test("evaluatePlatinumWordReviewSet requires selection rationale and structured 
     assert.match(failures, /selectionRationale must explain/);
     assert.match(failures, /sourceEvidence must contain structured evidence entries/);
     assert.match(failures, /sourceEvidence must include evidence type: pitch-accent-review/);
+});
+
+test("evaluatePlatinumWordReviewSet rejects source evidence that does not bind to reviewed field values", () => {
+    const report = evaluateWordPlatinum({
+        rows: [buildRow()],
+        entries: [
+            buildEntry({
+                sourceEvidence: REQUIRED_WORD_EVIDENCE_TYPES.map((type) => ({
+                    type,
+                    source: "dictionary source",
+                    detail: "Reviewed this field.",
+                })),
+            }),
+        ],
+    });
+
+    const failures = report.results[0].failures.join("\n");
+    assert.equal(report.passed, false);
+    assert.match(failures, /japanese-source evidence must explicitly support/);
+    assert.match(failures, /audio-review evidence must explicitly support/);
+    assert.match(failures, /label-review evidence must explicitly support/);
 });
 
 test("evaluatePlatinumWordReviewSet protects exact word audio and pitch accent expectations", () => {

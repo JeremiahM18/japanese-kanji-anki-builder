@@ -32,6 +32,24 @@ function buildRow(overrides = {}) {
     };
 }
 
+function buildSourceEvidence() {
+    const details = {
+        "generated-surface": "Generated card surface inspected for 日: single-kanji anchor, primary reading ひ, meaning, notes, example 雨の日です。, audio, and stroke-order fields.",
+        "golden-review": "N5 golden review protects 日.",
+        "japanese-source": "Japanese dictionary-style source verified 日 primary reading ひ, primary meaning day, and broader meanings day and sun.",
+        "media-audit": "Managed media provenance audit checked 日 audio and stroke-order source policy.",
+        "audio-review": "Audio review checked 日 exact asset fragment kanji-reading-日-ひ.",
+        "stroke-order-review": "Visual stroke-order review checked target 日 against source-policy governed media.",
+        "manual-review": "Manual review judged 日 as an individual-kanji learner card.",
+    };
+
+    return REQUIRED_KANJI_EVIDENCE_TYPES.map((type) => ({
+        type,
+        source: "test fixture source",
+        detail: details[type],
+    }));
+}
+
 function buildEntry(overrides = {}) {
     return {
         kanji: "日",
@@ -45,11 +63,7 @@ function buildEntry(overrides = {}) {
         primaryReadingRationale: "Uses the common learner-facing kun reading ひ for the individual kanji 日.",
         reviewedAt: "2026-05-02",
         reviewer: "content-review",
-        sourceEvidence: REQUIRED_KANJI_EVIDENCE_TYPES.map((type) => ({
-            type,
-            source: "test fixture",
-            detail: `Reviewed ${type} evidence for 日.`,
-        })),
+        sourceEvidence: buildSourceEvidence(),
         qualityGates: buildQualityGates(),
         ...overrides,
     };
@@ -118,6 +132,27 @@ test("evaluatePlatinumKanjiReviewSet requires primary-reading rationale and stru
     assert.match(failures, /primaryReadingRationale must explain/);
     assert.match(failures, /sourceEvidence must contain structured evidence entries/);
     assert.match(failures, /sourceEvidence must include evidence type: japanese-source/);
+});
+
+test("evaluatePlatinumKanjiReviewSet rejects source evidence that does not bind to reviewed field values", () => {
+    const report = evaluatePlatinumKanjiReviewSet({
+        rows: [buildRow()],
+        entries: [
+            buildEntry({
+                sourceEvidence: REQUIRED_KANJI_EVIDENCE_TYPES.map((type) => ({
+                    type,
+                    source: "dictionary source",
+                    detail: "Reviewed this field.",
+                })),
+            }),
+        ],
+    });
+
+    const failures = report.results[0].failures.join("\n");
+    assert.equal(report.passed, false);
+    assert.match(failures, /japanese-source evidence must explicitly support/);
+    assert.match(failures, /audio-review evidence must explicitly support/);
+    assert.match(failures, /stroke-order-review evidence must explicitly support/);
 });
 
 test("evaluatePlatinumKanjiReviewSet requires every structured evidence type", () => {

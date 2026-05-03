@@ -8,6 +8,10 @@ const {
     arraysMatch,
     validateWordPitchAccentSource,
 } = require("./wordPitchAccentVerificationService");
+const {
+    normalizeEvidenceEntries,
+    validateEvidenceSnippets,
+} = require("./platinumEvidenceService");
 
 const ACTIVE_PLATINUM_STATUSES = Object.freeze(["platinum", "fixed_then_platinum"]);
 const NON_SHIPPING_STATUSES = Object.freeze(["deferred", "removed"]);
@@ -87,16 +91,6 @@ function normalizeStringArray(value) {
         .filter(Boolean);
 }
 
-function normalizeEvidenceEntries(value) {
-    return (Array.isArray(value) ? value : [])
-        .filter((entry) => entry && typeof entry === "object" && !Array.isArray(entry))
-        .map((entry) => ({
-            type: normalizeText(entry.type),
-            source: normalizeText(entry.source),
-            detail: normalizeText(entry.detail),
-        }));
-}
-
 function buildExpectedReadingText(entry = {}) {
     return normalizeStringArray(entry.readingIncludes).join(" / ");
 }
@@ -171,6 +165,12 @@ function validateActivePlatinumEntry(entry = {}) {
     if (normalizeStringArray(entry.breakdownIncludes).length === 0) {
         failures.push("breakdownIncludes must protect the reading and kanji breakdown");
     }
+    if (normalizeStringArray(entry.focusIncludes).length === 0) {
+        failures.push("focusIncludes must protect the reviewed focus kanji");
+    }
+    if (normalizeStringArray(entry.coversReadingIncludes).length === 0) {
+        failures.push("coversReadingIncludes must protect the reviewed reading-coverage labels");
+    }
     if (normalizeStringArray(entry.exampleIncludes).length === 0) {
         failures.push("exampleIncludes must protect the release-quality example");
     }
@@ -212,6 +212,77 @@ function validateActivePlatinumEntry(entry = {}) {
             failures.push(`quality gate must be true: ${gate}`);
         }
     }
+
+    return failures;
+}
+
+function validateWordEvidenceBindings({ entry = {}, row = {}, sourcePitchAccent = null } = {}) {
+    const failures = [];
+    const readings = normalizeStringArray(entry.readingIncludes);
+    const reading = readings[0] || row.reading;
+    const wordLabel = `${entry.word}|${reading}`;
+    const expectedAudioFragment = `word-reading-${entry.word}-${reading}`;
+    const sourceEvidence = entry.sourceEvidence || [];
+
+    failures.push(...validateEvidenceSnippets({
+        sourceEvidence,
+        type: "generated-surface",
+        label: "generated word surface",
+        snippets: [wordLabel, "word", "reading", "meaning", "example", "audio"],
+    }));
+    failures.push(...validateEvidenceSnippets({
+        sourceEvidence,
+        type: "japanese-source",
+        label: "written form, reading, meaning, and example",
+        snippets: [wordLabel, ...readings, ...normalizeStringArray(entry.meaningIncludes), ...normalizeStringArray(entry.exampleIncludes)],
+    }));
+    failures.push(...validateEvidenceSnippets({
+        sourceEvidence,
+        type: "level-contract",
+        label: "word level placement",
+        snippets: [wordLabel, ...normalizeStringArray(entry.jlptLevelIncludes)],
+    }));
+    failures.push(...validateEvidenceSnippets({
+        sourceEvidence,
+        type: "example-review",
+        label: "example sentence and reading",
+        snippets: [wordLabel, ...readings, ...normalizeStringArray(entry.exampleIncludes)],
+    }));
+    failures.push(...validateEvidenceSnippets({
+        sourceEvidence,
+        type: "audio-review",
+        label: "exact word-reading audio",
+        snippets: [wordLabel, expectedAudioFragment],
+    }));
+    failures.push(...validateEvidenceSnippets({
+        sourceEvidence,
+        type: "pitch-accent-review",
+        label: "pitch accent source and rendered value",
+        snippets: [
+            wordLabel,
+            sourcePitchAccent?.sourceId,
+            sourcePitchAccent?.pattern,
+            ...normalizeStringArray(entry.pitchAccentIncludes),
+        ],
+    }));
+    failures.push(...validateEvidenceSnippets({
+        sourceEvidence,
+        type: "label-review",
+        label: "JLPT, coverage, focus, and reading labels",
+        snippets: [
+            wordLabel,
+            ...normalizeStringArray(entry.jlptLevelIncludes),
+            ...normalizeStringArray(entry.coverageRoleIncludes),
+            ...normalizeStringArray(entry.focusIncludes),
+            ...normalizeStringArray(entry.coversReadingIncludes),
+        ],
+    }));
+    failures.push(...validateEvidenceSnippets({
+        sourceEvidence,
+        type: "manual-review",
+        label: "final word-card product judgment",
+        snippets: [wordLabel, "common", "learner"],
+    }));
 
     return failures;
 }
@@ -303,6 +374,7 @@ function evaluatePlatinumEntry({ rows = [], entry = {}, wordPitchAccentData = {}
                 reading: normalizeStringArray(entry.readingIncludes)[0] || row.reading,
             });
             const sourcePitchAccent = wordPitchAccentData?.entries?.[wordKey] || null;
+            failures.push(...validateWordEvidenceBindings({ entry, row, sourcePitchAccent }));
             const expectedAccents = parsePitchAccentPattern(sourcePitchAccent?.pattern || "");
             const renderedAccents = extractRenderedPitchAccentPattern(row.pitchAccent);
             if (!sourcePitchAccent?.sourceId) {

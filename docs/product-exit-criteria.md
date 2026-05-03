@@ -21,9 +21,11 @@ Golden review and platinum review are separate gates.
 | Layer | Role in the product |
 | --- | --- |
 | Golden | Protects generated card output from regression. It checks learner-facing fields against the current governed contract. |
-| Platinum | Decides whether the card belongs in the version 1 release. It requires source evidence, explicit quality gates, and a keep/fix/defer/remove decision. |
+| Platinum | Decides whether the card belongs in the version 1 release. It requires field-bound source evidence, explicit quality gates, and a keep/fix/defer/remove decision. |
 
 Golden coverage is required before a level can be trusted for ongoing work. Platinum coverage is required before a level is version-1 locked. Golden-reviewed does not mean release-ready.
+
+Platinum evidence must name the specific card, exported reading, and learner-facing values being verified. A broad statement that a field was reviewed is not enough.
 
 ## Kanji deck exit criteria
 
@@ -36,6 +38,7 @@ A kanji level ships only when all criteria are true:
 - `npm run deck:ready -- --levels=<level>` passes with `0` export fallback issues.
 - Exported card media completeness is `100%` for the single learner-facing looping stroke-order field and audio field.
 - Stroke-order animation coverage is `100%`.
+- Stroke-order provenance is audited from approved sources. Stroke-sequence correctness is a human visual-review responsibility and must be recorded in platinum evidence.
 - Audio is governed, audited, review-clean, and exact for the exported target kanji plus primary reading.
 - Accessibility review has no unresolved blocker.
 
@@ -56,12 +59,12 @@ A word level ships only when all criteria are true:
 
 ## Current product posture
 
-- N5 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum started at `12/80`
+- N5 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum sample manifest has 12 entries that must pass field-bound evidence validation before counting toward version 1
 - N4 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N3 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N2 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N1 kanji: golden-reviewed at `1231/1231`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
-- N5 word: golden-reviewed and `ready_with_deferred_variants`; platinum started at `12/348`
+- N5 word: golden-reviewed and `ready_with_deferred_variants`; platinum sample manifest has 12 entries that must pass field-bound evidence validation before counting toward version 1
 - N4 word: golden-reviewed at `452/452` and stabilized as `ready_with_deferred_variants` when built with N5 as the selected word-product scope; platinum not started
 
 ## Required gates before shipping

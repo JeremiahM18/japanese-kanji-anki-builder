@@ -25,6 +25,8 @@ Rules:
 
 A card only becomes platinum when it is accurate, useful, learner-friendly, and governed. If a card is uncommon, awkward, too advanced for the level, misleading, or only present to chase reading coverage, remove or defer it instead of promoting it.
 
+Platinum evidence is field-bound. A source entry that only says "reviewed" is not enough. The evidence text for an active card must explicitly name the reviewed word or kanji, the exported reading, and the learner-facing values it supports. Automated checks enforce that evidence is tied to the generated card surface; human review still owns the judgment that the cited source and final card are correct.
+
 ## Word-card platinum rules
 
 Each platinum word card must pass all rules below:
@@ -38,6 +40,7 @@ Each platinum word card must pass all rules below:
 - Higher-level or outside-JLPT kanji are allowed only when the word itself belongs now and the card labels those kanji visibly.
 - Exact word-reading audio is present, governed, and artifact-verified for the written word and exported reading. Human listening QA remains part of the release checklist.
 - Pitch accent is present, protected by explicit expectation text, tied to the same governed word-reading source entry, and the rendered card output matches that governed source pattern.
+- Source evidence explicitly names the shipped written form, reading, meaning, example sentence, level/label claims, exact audio identity, and pitch-accent source pattern.
 - The card does not depend on ignored local files, untracked generated content, or silent fallback behavior.
 
 ## Kanji-card platinum rules
@@ -55,7 +58,8 @@ Each platinum kanji card must pass all rules below:
 - Example words and sentences are support only; they must not override the individual-kanji anchor.
 - Examples are natural enough for release and demonstrate support usage without changing the card anchor.
 - Exact kanji-reading audio is present, governed, and artifact-verified for the target kanji and exported `PrimaryReading`. Human listening QA remains part of the release checklist.
-- Stroke-order media is present, governed by approved tracked sources, and verified to show the reviewed target kanji.
+- Stroke-order media is present, governed by approved tracked sources, and visually verified to show the reviewed target kanji. The automated gate can verify source policy and target-bound evidence; it does not prove the stroke sequence is correct without human visual review.
+- Source evidence explicitly names the target kanji, exported primary reading, primary meaning, broader meanings, exact audio identity, and stroke-order target/provenance review.
 - The card does not depend on ignored local files, untracked generated content, or silent fallback behavior.
 
 ## Outcomes

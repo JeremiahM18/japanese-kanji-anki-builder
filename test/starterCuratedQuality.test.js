@@ -391,6 +391,10 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["漱"].exampleSentence.japanese, "食後に口を漱いでから席を立ちました。");
     assert.deepEqual(curatedStudyData["燎"].preferredWords, ["燎", "燎火", "燎原"]);
     assert.equal(curatedStudyData["燎"].exampleSentence.japanese, "夜祭りでは川辺に燎が並んでいました。");
+    assert.deepEqual(curatedStudyData["颯"].displayWord, { written: "颯", pron: "さつ" });
+    assert.equal(curatedStudyData["颯"].exampleSentence.japanese, "冷たい風が颯然と吹き抜けました。");
+    assert.deepEqual(curatedStudyData["凜"].displayWord, { written: "凜", pron: "りん" });
+    assert.ok(curatedStudyData["凜"].notes.includes("凜 （りん）"));
     assert.equal(curatedStudyData["軸"].exampleSentence.japanese, "話の軸が最後までぶれなかった。");
     assert.deepEqual(curatedStudyData["穴"].displayWord, { written: "穴", pron: "あな" });
     assert.equal(curatedStudyData["笛"].notes, "笛 （ふえ） - flute ／ 汽笛 （きてき） - steam whistle ／ 口笛 （くちぶえ） - whistle");

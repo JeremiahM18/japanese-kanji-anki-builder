@@ -320,6 +320,32 @@ test("buildWordDeckKanjiBreakdownContextAudit flags coverage readings that drift
     });
 });
 
+test("buildWordDeckKanjiBreakdownContextAudit flags duplicate-kanji coverage that matches no ruby context", () => {
+    const audit = buildWordDeckKanjiBreakdownContextAudit({
+        wordRows: [
+            {
+                Word: "日曜日",
+                Reading: "にちようび",
+                ReadingBreakdown: "<ruby>日<rt>にち</rt></ruby><ruby>曜<rt>よう</rt></ruby><ruby>日<rt>び</rt></ruby>",
+                CoversReading: "日: ひ",
+                KanjiBreakdown: [
+                    "<div class=\"kanji-breakdown-item\"><span class=\"kanji-char\">日</span><span class=\"kanji-primary\">ひ</span><div class=\"kanji-meaning\">日 （ひ） ／ day / sun</div></div>",
+                    "<div class=\"kanji-breakdown-item\"><span class=\"kanji-char\">曜</span><span class=\"kanji-primary\">よう</span><div class=\"kanji-meaning\">曜 （よう） ／ weekday marker</div></div>",
+                ].join(""),
+            },
+        ],
+    });
+
+    assert.equal(audit.valid, false);
+    assert.deepEqual(audit.coverageMismatchedRows[0], {
+        word: "日曜日",
+        reading: "にちようび",
+        kanji: "日",
+        expectedReading: "にち / び",
+        actualCoverageReading: "ひ",
+    });
+});
+
 test("buildWordDeckKanjiBreakdownContextAudit allows katakana coverage readings that match ruby context", () => {
     const audit = buildWordDeckKanjiBreakdownContextAudit({
         wordRows: [

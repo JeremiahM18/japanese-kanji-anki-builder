@@ -369,6 +369,13 @@ function kanjiBreakdownReadingMatchesContext({ expectedReading, actualReading })
     return actualReading === expectedReading;
 }
 
+function coverageReadingMatchesContext({ expectedReading, actualReading }) {
+    const expectedCoverageReading = normalizeKanaSearchText(expectedReading);
+    const normalizedActualCoverageReading = normalizeKanaSearchText(actualReading);
+    return normalizedActualCoverageReading === expectedCoverageReading
+        || normalizedActualCoverageReading.startsWith(expectedCoverageReading);
+}
+
 function buildWordDeckKanjiBreakdownContextAudit({ wordRows }) {
     const mismatchedRows = [];
     const coverageMismatchedRows = [];
@@ -419,12 +426,10 @@ function buildWordDeckKanjiBreakdownContextAudit({ wordRows }) {
 
             if (coverageReadings.has(pair.kanji)) {
                 const actualCoverageReading = coverageReadings.get(pair.kanji);
-                const expectedCoverageReading = normalizeKanaSearchText(pair.reading);
-                const normalizedActualCoverageReading = normalizeKanaSearchText(actualCoverageReading);
-                if (
-                    normalizedActualCoverageReading !== expectedCoverageReading
-                    && !normalizedActualCoverageReading.startsWith(expectedCoverageReading)
-                ) {
+                if (!coverageReadingMatchesContext({
+                    expectedReading: pair.reading,
+                    actualReading: actualCoverageReading,
+                })) {
                     coverageMismatchedRows.push({
                         word,
                         reading,
@@ -433,6 +438,29 @@ function buildWordDeckKanjiBreakdownContextAudit({ wordRows }) {
                         actualCoverageReading,
                     });
                 }
+            }
+        }
+
+        for (const [kanji, actualCoverageReading] of coverageReadings.entries()) {
+            const contextualReadings = readingPairs
+                .filter((pair) => pair.kanji === kanji)
+                .map((pair) => pair.reading);
+            if (contextualReadings.length <= 1) {
+                continue;
+            }
+
+            const matchesAnyContext = contextualReadings.some((expectedReading) => coverageReadingMatchesContext({
+                expectedReading,
+                actualReading: actualCoverageReading,
+            }));
+            if (!matchesAnyContext) {
+                coverageMismatchedRows.push({
+                    word,
+                    reading,
+                    kanji,
+                    expectedReading: contextualReadings.join(" / "),
+                    actualCoverageReading,
+                });
             }
         }
 

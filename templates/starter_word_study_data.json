@@ -5870,6 +5870,7 @@
   "日曜日|にちようび": {
     "written": "日曜日",
     "reading": "にちようび",
+    "readingBreakdown": "<ruby>日<rt>にち</rt></ruby><ruby>曜<rt>よう</rt></ruby><ruby>日<rt>び</rt></ruby>",
     "meaning": "Sunday",
     "jlpt": 5,
     "tags": [
@@ -5877,6 +5878,16 @@
       "common",
       "n5"
     ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "日"
+      ],
+      "coversReadings": {
+        "日": "にち"
+      }
+    },
+    "notes": "Core N5 weekday word; covers the contextual 日 -> にち reading in 日曜日 while the final 日 is read び in the same word.",
     "exampleSentence": {
       "japanese": "日曜日は家で休みます。",
       "reading": "にちようびはいえでやすみます。",

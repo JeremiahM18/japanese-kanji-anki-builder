@@ -22924,5 +22924,1312 @@
     "reviewedAt": "2026-05-04",
     "reviewer": "codex-platinum-review",
     "decisionReason": "Deferred from N5 because JLearn.net classifies 食う|くう as JLPT N3 and marks it as a male/rough verb with vulgar extended senses. N5 already teaches 食べる|たべる, so 食 -> くう should wait for a later word deck instead of being forced as beginner coverage."
+  },
+  {
+    "word": "食べ物",
+    "readingIncludes": [
+      "たべもの"
+    ],
+    "meaningIncludes": [
+      "food"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "食"
+    ],
+    "coversReadingIncludes": [
+      "食: た"
+    ],
+    "breakdownIncludes": [
+      "食 （た） ／ eat / food",
+      "物 （もの） ／ thing / item"
+    ],
+    "exampleIncludes": [
+      "日本の食べ物が好きです。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Pitch 2: 2"
+    ],
+    "selectionRationale": "Core beginner food vocabulary; common, immediately useful for preferences and meals, and it supports a real 食 -> た reading without making the compound subordinate to the kanji deck.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 食べ物|たべもの: word 食べ物, reading たべもの, meaning food, example 日本の食べ物が好きです。, audio word-reading-食べ物-たべもの, breakdown 食 （た） ／ eat / food / 物 （もの） ／ thing / item, labels JLPT N5 JLPT core + reading coverage, focus 食, covered readings 食: た, and pitch label Pitch 1: 3 / Pitch 2: 2."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 食べ物|たべもの, reading たべもの, meaning food, example 日本の食べ物が好きです。, breakdown 食 （た） ／ eat / food / 物 （もの） ／ thing / item, covered readings 食: た, and pitch label Pitch 1: 3 / Pitch 2: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%A3%9F%E3%81%B9%E7%89%A9",
+        "detail": "JLearn.net verified 食べ物|たべもの as common JLPT N5 noun meaning food. Product review checked 食べ物|たべもの, reading たべもの, learner meaning food, and example 日本の食べ物が好きです。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 食べ物|たべもの for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 食べ物|たべもの, reading たべもの, sentence 日本の食べ物が好きです。, reading line にほんのたべものがすきです。, English line I like Japanese food., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 食べ物|たべもの; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 食べ物|たべもの exact asset fragment word-reading-食べ物-たべもの for the exported word reading たべもの."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 食べ物|たべもの source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] / 2 [nakadaka] and rendered label Pitch 1: 3 / Pitch 2: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 食べ物|たべもの JLPT N5, JLPT core + reading coverage, focus 食, and covered readings 食: た."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 食べ物|たべもの common and learner-friendly for the N5 word deck, with accurate reading たべもの, meaning food, example 日本の食べ物が好きです。, and reviewed pitch handling Pitch 1: 3 / Pitch 2: 2."
+      }
+    ]
+  },
+  {
+    "word": "毎週",
+    "readingIncludes": [
+      "まいしゅう"
+    ],
+    "meaningIncludes": [
+      "every week"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "毎"
+    ],
+    "coversReadingIncludes": [
+      "毎: まい"
+    ],
+    "breakdownIncludes": [
+      "毎 （まい） ／ every",
+      "週 （しゅう） ／ week"
+    ],
+    "exampleIncludes": [
+      "毎週土曜日に図書館へ行きます。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Core time-frequency word for beginner scheduling; common and useful while safely labeling the outside-level 週 constituent.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 毎週|まいしゅう: word 毎週, reading まいしゅう, meaning every week, example 毎週土曜日に図書館へ行きます。, audio word-reading-毎週-まいしゅう, breakdown 毎 （まい） ／ every / 週 （しゅう） ／ week, labels JLPT N5 JLPT core + reading coverage, focus 毎, covered readings 毎: まい, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 毎週|まいしゅう, reading まいしゅう, meaning every week, example 毎週土曜日に図書館へ行きます。, breakdown 毎 （まい） ／ every / 週 （しゅう） ／ week, covered readings 毎: まい, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%AF%8E%E9%80%B1",
+        "detail": "JLearn.net verified 毎週|まいしゅう as common JLPT N5 temporal noun/adverbial noun meaning every week. Product review checked 毎週|まいしゅう, reading まいしゅう, learner meaning every week, and example 毎週土曜日に図書館へ行きます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 毎週|まいしゅう for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 毎週|まいしゅう, reading まいしゅう, sentence 毎週土曜日に図書館へ行きます。, reading line まいしゅうどようびにとしょかんへいきます。, English line I go to the library every Saturday., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 毎週|まいしゅう; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 毎週|まいしゅう exact asset fragment word-reading-毎週-まいしゅう for the exported word reading まいしゅう."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 毎週|まいしゅう source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 毎週|まいしゅう JLPT N5, JLPT core + reading coverage, focus 毎, and covered readings 毎: まい."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 毎週|まいしゅう common and learner-friendly for the N5 word deck, with accurate reading まいしゅう, meaning every week, example 毎週土曜日に図書館へ行きます。, and reviewed pitch handling Pitch 1: 0."
+      }
+    ]
+  },
+  {
+    "word": "勉強",
+    "readingIncludes": [
+      "べんきょう"
+    ],
+    "meaningIncludes": [
+      "study"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "勉",
+      "強"
+    ],
+    "coversReadingIncludes": [
+      "勉: べん",
+      "強: きょう"
+    ],
+    "breakdownIncludes": [
+      "勉 （べん） ／ study / effort",
+      "強 （きょう） ／ strong / force"
+    ],
+    "exampleIncludes": [
+      "毎日日本語を勉強します。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Essential beginner study vocabulary and suru-noun; common, learner-friendly, and useful for Japanese-learning contexts while labeling outside-level constituents.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 勉強|べんきょう: word 勉強, reading べんきょう, meaning study, example 毎日日本語を勉強します。, audio word-reading-勉強-べんきょう, breakdown 勉 （べん） ／ study / effort / 強 （きょう） ／ strong / force, labels JLPT N5 JLPT core + reading coverage, focus 勉、強, covered readings 勉: べん ／ 強: きょう, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 勉強|べんきょう, reading べんきょう, meaning study, example 毎日日本語を勉強します。, breakdown 勉 （べん） ／ study / effort / 強 （きょう） ／ strong / force, covered readings 勉: べん ／ 強: きょう, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8B%89%E5%BC%B7",
+        "detail": "JLearn.net verified 勉強|べんきょう as common JLPT N5 noun/suru-verb meaning study, with diligence/discount senses not used for this beginner card. Product review checked 勉強|べんきょう, reading べんきょう, learner meaning study, and example 毎日日本語を勉強します。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 勉強|べんきょう for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 勉強|べんきょう, reading べんきょう, sentence 毎日日本語を勉強します。, reading line まいにちにほんごをべんきょうします。, English line I study Japanese every day., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 勉強|べんきょう; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 勉強|べんきょう exact asset fragment word-reading-勉強-べんきょう for the exported word reading べんきょう."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 勉強|べんきょう source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 勉強|べんきょう JLPT N5, JLPT core + reading coverage, focus 勉、強, and covered readings 勉: べん ／ 強: きょう."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 勉強|べんきょう common and learner-friendly for the N5 word deck, with accurate reading べんきょう, meaning study, example 毎日日本語を勉強します。, and reviewed pitch handling Pitch 1: 0."
+      }
+    ]
+  },
+  {
+    "word": "台所",
+    "readingIncludes": [
+      "だいどころ"
+    ],
+    "meaningIncludes": [
+      "kitchen"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "台",
+      "所"
+    ],
+    "coversReadingIncludes": [
+      "台: だい",
+      "所: どころ"
+    ],
+    "breakdownIncludes": [
+      "台 （だい） ／ stand / platform",
+      "所 （どころ） ／ place"
+    ],
+    "exampleIncludes": [
+      "台所で母が料理を作ります。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common household word for kitchen; useful in beginner home and cooking contexts and already carries explicit contextual coverage for 台 and 所.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 台所|だいどころ: word 台所, reading だいどころ, meaning kitchen, example 台所で母が料理を作ります。, audio word-reading-台所-だいどころ, breakdown 台 （だい） ／ stand / platform / 所 （どころ） ／ place, labels JLPT N5 JLPT core + reading coverage, focus 台、所, covered readings 台: だい ／ 所: どころ, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 台所|だいどころ, reading だいどころ, meaning kitchen, example 台所で母が料理を作ります。, breakdown 台 （だい） ／ stand / platform / 所 （どころ） ／ place, covered readings 台: だい ／ 所: どころ, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8F%B0%E6%89%80",
+        "detail": "JLearn.net verified 台所|だいどころ as common JLPT N5 noun meaning kitchen; the financial-situation sense is not used for this beginner card. Product review checked 台所|だいどころ, reading だいどころ, learner meaning kitchen, and example 台所で母が料理を作ります。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 台所|だいどころ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 台所|だいどころ, reading だいどころ, sentence 台所で母が料理を作ります。, reading line だいどころでははがりょうりをつくります。, English line My mother cooks in the kitchen., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 台所|だいどころ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 台所|だいどころ exact asset fragment word-reading-台所-だいどころ for the exported word reading だいどころ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 台所|だいどころ source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 台所|だいどころ JLPT N5, JLPT core + reading coverage, focus 台、所, and covered readings 台: だい ／ 所: どころ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 台所|だいどころ common and learner-friendly for the N5 word deck, with accurate reading だいどころ, meaning kitchen, example 台所で母が料理を作ります。, and reviewed pitch handling Pitch 1: 0."
+      }
+    ],
+    "notesIncludes": [
+      "Common N5 kitchen word that also covers 台 -> だい and the contextual 所 -> どころ reading while labeling both N4 constituent kanji."
+    ]
+  },
+  {
+    "word": "右手",
+    "readingIncludes": [
+      "みぎて"
+    ],
+    "meaningIncludes": [
+      "right hand"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "右"
+    ],
+    "coversReadingIncludes": [
+      "右: みぎ"
+    ],
+    "breakdownIncludes": [
+      "右 （みぎ） ／ right",
+      "手 （て） ／ hand"
+    ],
+    "exampleIncludes": [
+      "右手で書いています。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Concrete everyday body/direction word; useful for beginner instructions and descriptions while keeping 手 labeled as an outside-level constituent.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 右手|みぎて: word 右手, reading みぎて, meaning right hand, example 右手で書いています。, audio word-reading-右手-みぎて, breakdown 右 （みぎ） ／ right / 手 （て） ／ hand, labels JLPT N5 JLPT core + reading coverage, focus 右, covered readings 右: みぎ, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 右手|みぎて, reading みぎて, meaning right hand, example 右手で書いています。, breakdown 右 （みぎ） ／ right / 手 （て） ／ hand, covered readings 右: みぎ, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8F%B3%E6%89%8B",
+        "detail": "JLearn.net verified 右手|みぎて as common noun meaning right hand and right-hand side. Product review checked 右手|みぎて, reading みぎて, learner meaning right hand, and example 右手で書いています。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 右手|みぎて for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 右手|みぎて, reading みぎて, sentence 右手で書いています。, reading line みぎてでかいています。, English line I write with my right hand., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 右手|みぎて; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 右手|みぎて exact asset fragment word-reading-右手-みぎて for the exported word reading みぎて."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 右手|みぎて source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 右手|みぎて JLPT N5, JLPT core + reading coverage, focus 右, and covered readings 右: みぎ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 右手|みぎて common and learner-friendly for the N5 word deck, with accurate reading みぎて, meaning right hand, example 右手で書いています。, and reviewed pitch handling Pitch 1: 0."
+      }
+    ]
+  },
+  {
+    "word": "飲み物",
+    "readingIncludes": [
+      "のみもの"
+    ],
+    "meaningIncludes": [
+      "drink",
+      "beverage"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "飲",
+      "物"
+    ],
+    "coversReadingIncludes": [
+      "飲: のみ",
+      "物: もの"
+    ],
+    "breakdownIncludes": [
+      "飲 （の） ／ drink",
+      "物 （もの） ／ thing / item"
+    ],
+    "exampleIncludes": [
+      "冷たい飲み物がほしいです。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Pitch 2: 2"
+    ],
+    "selectionRationale": "Core beginner drink/beverage vocabulary; common and useful for ordering, preferences, and needs while preserving contextual 飲 and 物 readings.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 飲み物|のみもの: word 飲み物, reading のみもの, meaning drink / beverage, example 冷たい飲み物がほしいです。, audio word-reading-飲み物-のみもの, breakdown 飲 （の） ／ drink / 物 （もの） ／ thing / item, labels JLPT N5 JLPT core + reading coverage, focus 飲、物, covered readings 飲: のみ ／ 物: もの, and pitch label Pitch 1: 3 / Pitch 2: 2."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 飲み物|のみもの, reading のみもの, meaning drink / beverage, example 冷たい飲み物がほしいです。, breakdown 飲 （の） ／ drink / 物 （もの） ／ thing / item, covered readings 飲: のみ ／ 物: もの, and pitch label Pitch 1: 3 / Pitch 2: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%A3%B2%E3%81%BF%E7%89%A9",
+        "detail": "JLearn.net verified 飲み物|のみもの as common JLPT N5 noun meaning drink / beverage. Product review checked 飲み物|のみもの, reading のみもの, learner meaning drink / beverage, and example 冷たい飲み物がほしいです。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 飲み物|のみもの for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 飲み物|のみもの, reading のみもの, sentence 冷たい飲み物がほしいです。, reading line つめたいのみものがほしいです。, English line I want a cold drink., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 飲み物|のみもの; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 飲み物|のみもの exact asset fragment word-reading-飲み物-のみもの for the exported word reading のみもの."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 飲み物|のみもの source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] / 2 [nakadaka] and rendered label Pitch 1: 3 / Pitch 2: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 飲み物|のみもの JLPT N5, JLPT core + reading coverage, focus 飲、物, and covered readings 飲: のみ ／ 物: もの."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 飲み物|のみもの common and learner-friendly for the N5 word deck, with accurate reading のみもの, meaning drink / beverage, example 冷たい飲み物がほしいです。, and reviewed pitch handling Pitch 1: 3 / Pitch 2: 2."
+      }
+    ],
+    "notesIncludes": [
+      "Core N5 study word that also covers the 飲 -> のみ and 物 -> もの readings."
+    ]
+  },
+  {
+    "word": "辞書",
+    "readingIncludes": [
+      "じしょ"
+    ],
+    "meaningIncludes": [
+      "dictionary"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "書"
+    ],
+    "coversReadingIncludes": [
+      "書: しょ"
+    ],
+    "breakdownIncludes": [
+      "辞 （じ） ／ quit / resign / dictionary word",
+      "書 （しょ） ／ write"
+    ],
+    "exampleIncludes": [
+      "新しい辞書を買いました。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Essential learner tool vocabulary; common and useful for Japanese study even though 辞 is higher-level and therefore must remain visibly labeled.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 辞書|じしょ: word 辞書, reading じしょ, meaning dictionary, example 新しい辞書を買いました。, audio word-reading-辞書-じしょ, breakdown 辞 （じ） ／ quit / resign / dictionary word / 書 （しょ） ／ write, labels JLPT N5 JLPT core + reading coverage, focus 書, covered readings 書: しょ, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 辞書|じしょ, reading じしょ, meaning dictionary, example 新しい辞書を買いました。, breakdown 辞 （じ） ／ quit / resign / dictionary word / 書 （しょ） ／ write, covered readings 書: しょ, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E8%BE%9E%E6%9B%B8",
+        "detail": "JLearn.net verified 辞書|じしょ as common JLPT N5 noun meaning dictionary / lexicon; the archaic resignation-letter sense is not used for this card. Product review checked 辞書|じしょ, reading じしょ, learner meaning dictionary, and example 新しい辞書を買いました。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 辞書|じしょ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 辞書|じしょ, reading じしょ, sentence 新しい辞書を買いました。, reading line あたらしいじしょをかいました。, English line I bought a new dictionary., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 辞書|じしょ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 辞書|じしょ exact asset fragment word-reading-辞書-じしょ for the exported word reading じしょ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 辞書|じしょ source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 辞書|じしょ JLPT N5, JLPT core + reading coverage, focus 書, and covered readings 書: しょ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 辞書|じしょ common and learner-friendly for the N5 word deck, with accurate reading じしょ, meaning dictionary, example 新しい辞書を買いました。, and reviewed pitch handling Pitch 1: 1."
+      }
+    ]
+  },
+  {
+    "word": "出口",
+    "readingIncludes": [
+      "でぐち"
+    ],
+    "meaningIncludes": [
+      "exit"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "出"
+    ],
+    "coversReadingIncludes": [
+      "出: で"
+    ],
+    "breakdownIncludes": [
+      "出 （で） ／ exit / go out",
+      "口 （ぐち） ／ mouth / opening"
+    ],
+    "exampleIncludes": [
+      "出口で友だちを待ちます。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Practical navigation word; common, learner-friendly, and useful immediately for signs, stations, stores, and directions while labeling 口.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 出口|でぐち: word 出口, reading でぐち, meaning exit, example 出口で友だちを待ちます。, audio word-reading-出口-でぐち, breakdown 出 （で） ／ exit / go out / 口 （ぐち） ／ mouth / opening, labels JLPT N5 JLPT core + reading coverage, focus 出, covered readings 出: で, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 出口|でぐち, reading でぐち, meaning exit, example 出口で友だちを待ちます。, breakdown 出 （で） ／ exit / go out / 口 （ぐち） ／ mouth / opening, covered readings 出: で, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%87%BA%E5%8F%A3",
+        "detail": "JLearn.net verified 出口|でぐち as common JLPT N5 noun meaning exit / gateway / way out. Product review checked 出口|でぐち, reading でぐち, learner meaning exit, and example 出口で友だちを待ちます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 出口|でぐち for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 出口|でぐち, reading でぐち, sentence 出口で友だちを待ちます。, reading line でぐちでともだちをまちます。, English line I will wait for my friend at the exit., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 出口|でぐち; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 出口|でぐち exact asset fragment word-reading-出口-でぐち for the exported word reading でぐち."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 出口|でぐち source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 出口|でぐち JLPT N5, JLPT core + reading coverage, focus 出, and covered readings 出: で."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 出口|でぐち common and learner-friendly for the N5 word deck, with accurate reading でぐち, meaning exit, example 出口で友だちを待ちます。, and reviewed pitch handling Pitch 1: 1."
+      }
+    ]
+  },
+  {
+    "word": "日曜日",
+    "readingIncludes": [
+      "にちようび"
+    ],
+    "meaningIncludes": [
+      "Sunday"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "日"
+    ],
+    "coversReadingIncludes": [
+      "日: にち"
+    ],
+    "breakdownIncludes": [
+      "日 （にち） ／ day",
+      "曜 （よう） ／ weekday marker"
+    ],
+    "exampleIncludes": [
+      "日曜日は家で休みます。"
+    ],
+    "status": "fixed_then_platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "selectionRationale": "Core weekday vocabulary; common N5 scheduling word approved only after fixing the false 日 -> ひ coverage to the real contextual 日 -> にち reading.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 日曜日|にちようび: word 日曜日, reading にちようび, meaning Sunday, example 日曜日は家で休みます。, audio word-reading-日曜日-にちようび, breakdown 日 （にち） ／ day / 曜 （よう） ／ weekday marker, labels JLPT N5 JLPT core + reading coverage, focus 日, covered readings 日: にち, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 日曜日|にちようび, reading にちようび, meaning Sunday, example 日曜日は家で休みます。, breakdown 日 （にち） ／ day / 曜 （よう） ／ weekday marker, covered readings 日: にち, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%97%A5%E6%9B%9C%E6%97%A5",
+        "detail": "JLearn.net verified 日曜日|にちようび as common JLPT N5 temporal noun meaning Sunday. Product review checked 日曜日|にちようび, reading にちようび, learner meaning Sunday, and example 日曜日は家で休みます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 日曜日|にちようび for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 日曜日|にちようび, reading にちようび, sentence 日曜日は家で休みます。, reading line にちようびはいえでやすみます。, English line I rest at home on Sunday., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 日曜日|にちようび; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 日曜日|にちようび exact asset fragment word-reading-日曜日-にちようび for the exported word reading にちようび."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 日曜日|にちようび source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] and rendered label Pitch 1: 3."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 日曜日|にちようび JLPT N5, JLPT core + reading coverage, focus 日, and covered readings 日: にち."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 日曜日|にちようび common and learner-friendly for the N5 word deck, with accurate reading にちようび, meaning Sunday, example 日曜日は家で休みます。, and reviewed pitch handling Pitch 1: 3."
+      }
+    ],
+    "notesIncludes": [
+      "final 日 is read び"
+    ],
+    "fixSummary": "Fixed the generated N5 word-card coverage and kanji breakdown for 日曜日|にちようび so it covers the contextual 日 -> にち reading instead of falsely anchoring the card to 日 -> ひ; the final 日 remains documented as び support context."
+  },
+  {
+    "word": "左手",
+    "readingIncludes": [
+      "ひだりて"
+    ],
+    "meaningIncludes": [
+      "left hand"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "左"
+    ],
+    "coversReadingIncludes": [
+      "左: ひだり"
+    ],
+    "breakdownIncludes": [
+      "左 （ひだり） ／ left",
+      "手 （て） ／ hand"
+    ],
+    "exampleIncludes": [
+      "左手でコップを持ちます。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Concrete everyday body/direction word; useful for beginner instructions and descriptions while keeping 手 labeled as an outside-level constituent.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 左手|ひだりて: word 左手, reading ひだりて, meaning left hand, example 左手でコップを持ちます。, audio word-reading-左手-ひだりて, breakdown 左 （ひだり） ／ left / 手 （て） ／ hand, labels JLPT N5 JLPT core + reading coverage, focus 左, covered readings 左: ひだり, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 左手|ひだりて, reading ひだりて, meaning left hand, example 左手でコップを持ちます。, breakdown 左 （ひだり） ／ left / 手 （て） ／ hand, covered readings 左: ひだり, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/Dictionary/Browse/1290900-hidarite-%E3%81%B2%E3%81%A0%E3%82%8A%E3%81%A6-%E5%B7%A6%E6%89%8B; goo辞書 https://dictionary.goo.ne.jp/word/%E5%B7%A6%E6%89%8B_%28%E3%81%B2%E3%81%A0%E3%82%8A%E3%81%A6%29/",
+        "detail": "JLearn.net and goo辞書 verified 左手|ひだりて as left hand / left-hand side. Product review checked 左手|ひだりて, reading ひだりて, learner meaning left hand, and example 左手でコップを持ちます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 左手|ひだりて for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 左手|ひだりて, reading ひだりて, sentence 左手でコップを持ちます。, reading line ひだりてでコップをもちます。, English line I hold the cup with my left hand., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 左手|ひだりて; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 左手|ひだりて exact asset fragment word-reading-左手-ひだりて for the exported word reading ひだりて."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 左手|ひだりて source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 左手|ひだりて JLPT N5, JLPT core + reading coverage, focus 左, and covered readings 左: ひだり."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 左手|ひだりて common and learner-friendly for the N5 word deck, with accurate reading ひだりて, meaning left hand, example 左手でコップを持ちます。, and reviewed pitch handling Pitch 1: 0."
+      }
+    ]
+  },
+  {
+    "word": "部屋",
+    "readingIncludes": [
+      "へや"
+    ],
+    "meaningIncludes": [
+      "room"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "部",
+      "屋"
+    ],
+    "coversReadingIncludes": [
+      "部: へ",
+      "屋: や"
+    ],
+    "breakdownIncludes": [
+      "部 （へ） ／ section / part",
+      "屋 （や） ／ shop / place"
+    ],
+    "exampleIncludes": [
+      "部屋で本を読みます。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Core home/location noun; common, learner-friendly, and useful for beginner room and apartment contexts while labeling outside-level constituents.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 部屋|へや: word 部屋, reading へや, meaning room, example 部屋で本を読みます。, audio word-reading-部屋-へや, breakdown 部 （へ） ／ section / part / 屋 （や） ／ shop / place, labels JLPT N5 JLPT core + reading coverage, focus 部、屋, covered readings 部: へ ／ 屋: や, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 部屋|へや, reading へや, meaning room, example 部屋で本を読みます。, breakdown 部 （へ） ／ section / part / 屋 （や） ／ shop / place, covered readings 部: へ ／ 屋: や, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%83%A8%E5%B1%8B",
+        "detail": "JLearn.net verified 部屋|へや as common JLPT N5 noun meaning room, with apartment-related senses secondary. Product review checked 部屋|へや, reading へや, learner meaning room, and example 部屋で本を読みます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 部屋|へや for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 部屋|へや, reading へや, sentence 部屋で本を読みます。, reading line へやでほんをよみます。, English line I read a book in my room., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 部屋|へや; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 部屋|へや exact asset fragment word-reading-部屋-へや for the exported word reading へや."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 部屋|へや source kanjium-cc-by-sa-4.0 pattern 2 [odaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 部屋|へや JLPT N5, JLPT core + reading coverage, focus 部、屋, and covered readings 部: へ ／ 屋: や."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 部屋|へや common and learner-friendly for the N5 word deck, with accurate reading へや, meaning room, example 部屋で本を読みます。, and reviewed pitch handling Pitch 1: 2."
+      }
+    ]
+  },
+  {
+    "word": "夕方",
+    "readingIncludes": [
+      "ゆうがた"
+    ],
+    "meaningIncludes": [
+      "evening"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "夕",
+      "方"
+    ],
+    "coversReadingIncludes": [
+      "夕: ゆう",
+      "方: がた"
+    ],
+    "breakdownIncludes": [
+      "夕 （ゆう） ／ evening",
+      "方 （がた） ／ direction / side"
+    ],
+    "exampleIncludes": [
+      "夕方に駅で友だちに会います。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Core time-of-day word; common and useful for beginner scheduling and daily-routine sentences while labeling outside-level constituents.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 夕方|ゆうがた: word 夕方, reading ゆうがた, meaning evening, example 夕方に駅で友だちに会います。, audio word-reading-夕方-ゆうがた, breakdown 夕 （ゆう） ／ evening / 方 （がた） ／ direction / side, labels JLPT N5 JLPT core + reading coverage, focus 夕、方, covered readings 夕: ゆう ／ 方: がた, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 夕方|ゆうがた, reading ゆうがた, meaning evening, example 夕方に駅で友だちに会います。, breakdown 夕 （ゆう） ／ evening / 方 （がた） ／ direction / side, covered readings 夕: ゆう ／ 方: がた, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%A4%95%E6%96%B9",
+        "detail": "JLearn.net verified 夕方|ゆうがた as common JLPT N5 temporal noun meaning evening / dusk. Product review checked 夕方|ゆうがた, reading ゆうがた, learner meaning evening, and example 夕方に駅で友だちに会います。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 夕方|ゆうがた for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 夕方|ゆうがた, reading ゆうがた, sentence 夕方に駅で友だちに会います。, reading line ゆうがたにえきでともだちにあいます。, English line I meet my friend at the station in the evening., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 夕方|ゆうがた; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 夕方|ゆうがた exact asset fragment word-reading-夕方-ゆうがた for the exported word reading ゆうがた."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 夕方|ゆうがた source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 夕方|ゆうがた JLPT N5, JLPT core + reading coverage, focus 夕、方, and covered readings 夕: ゆう ／ 方: がた."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 夕方|ゆうがた common and learner-friendly for the N5 word deck, with accurate reading ゆうがた, meaning evening, example 夕方に駅で友だちに会います。, and reviewed pitch handling Pitch 1: 0."
+      }
+    ]
   }
 ]

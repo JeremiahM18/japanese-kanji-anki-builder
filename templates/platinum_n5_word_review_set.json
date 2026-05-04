@@ -2085,5 +2085,758 @@
     "reviewedAt": "2026-05-03",
     "reviewer": "codex-platinum-review",
     "decisionReason": "Deferred out of the N5 word product: independent learner sources classify 一生|いっしょう as JLPT N3, so it is tracked as a later-level word rather than an N5 support card."
+  },
+  {
+    "word": "七つ",
+    "status": "platinum",
+    "readingIncludes": [
+      "ななつ"
+    ],
+    "meaningIncludes": [
+      "seven things"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "七"
+    ],
+    "coversReadingIncludes": [
+      "七: ななつ"
+    ],
+    "breakdownIncludes": [
+      "七 （なな） ／ seven"
+    ],
+    "exampleIncludes": [
+      "質問が七つあります。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Core N5 counter word for seven things; useful immediately with counts and quantity questions while keeping the word deck separate from the 七 kanji card.",
+    "reviewedAt": "2026-05-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 七つ|ななつ: word 七つ, reading ななつ, meaning seven things, example 質問が七つあります。, audio word-reading-七つ-ななつ, breakdown 七 （なな） ／ seven, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 七つ|ななつ, reading ななつ, meaning seven things, example 質問が七つあります。, breakdown 七 （なな） ／ seven, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%83%E3%81%A4",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%83%E3%81%A4 verified 七つ|ななつ, reading ななつ, learner meaning seven things, and product review checked example 質問が七つあります。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 七つ|ななつ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 七つ|ななつ, reading ななつ, sentence 質問が七つあります。, reading line しつもんがななつあります。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 七つ|ななつ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 七つ|ななつ exact asset fragment word-reading-七つ-ななつ for the exported word reading ななつ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 七つ|ななつ source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 七つ|ななつ JLPT N5, JLPT core + reading coverage, focus 七, and covered readings 七: ななつ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 七つ|ななつ common and learner-friendly for the N5 word deck, with accurate reading ななつ, meaning seven things, and example 質問が七つあります。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "七日",
+    "status": "platinum",
+    "readingIncludes": [
+      "なのか"
+    ],
+    "meaningIncludes": [
+      "seventh day",
+      "seven days"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "七、日"
+    ],
+    "coversReadingIncludes": [
+      "七: なの",
+      "日: か"
+    ],
+    "breakdownIncludes": [
+      "七 （なの） ／ seven",
+      "日 （か） ／ day / sun"
+    ],
+    "exampleIncludes": [
+      "会議は七日にあります。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Core N5 calendar word for the seventh day or seven days; useful for date comprehension and keeps the 七日 reading as a word-card vocabulary item.",
+    "reviewedAt": "2026-05-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 七日|なのか: word 七日, reading なのか, meaning seventh day / seven days, example 会議は七日にあります。, audio word-reading-七日-なのか, breakdown 七 （なの） ／ seven / 日 （か） ／ day / sun, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 七日|なのか, reading なのか, meaning seventh day / seven days, example 会議は七日にあります。, breakdown 七 （なの） ／ seven / 日 （か） ／ day / sun, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%83%E6%97%A5",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%83%E6%97%A5 verified 七日|なのか, reading なのか, learner meaning seventh day / seven days, and product review checked example 会議は七日にあります。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 七日|なのか for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 七日|なのか, reading なのか, sentence 会議は七日にあります。, reading line かいぎはなのかにあります。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 七日|なのか; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 七日|なのか exact asset fragment word-reading-七日-なのか for the exported word reading なのか."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 七日|なのか source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 七日|なのか JLPT N5, JLPT core + reading coverage, focus 七、日, and covered readings 七: なの / 日: か."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 七日|なのか common and learner-friendly for the N5 word deck, with accurate reading なのか, meaning seventh day / seven days, and example 会議は七日にあります。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "三人",
+    "status": "platinum",
+    "readingIncludes": [
+      "さんにん"
+    ],
+    "meaningIncludes": [
+      "three people"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "三、人"
+    ],
+    "coversReadingIncludes": [
+      "三: さん",
+      "人: にん"
+    ],
+    "breakdownIncludes": [
+      "三 （さん） ／ three people",
+      "人 （にん） ／ people counter"
+    ],
+    "exampleIncludes": [
+      "三人で映画を見ます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "selectionRationale": "Core people-counter vocabulary for three people; common, beginner-useful, and a clean word-deck card for 三 and 人 reading coverage.",
+    "reviewedAt": "2026-05-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 三人|さんにん: word 三人, reading さんにん, meaning three people, example 三人で映画を見ます。, audio word-reading-三人-さんにん, breakdown 三 （さん） ／ three people / 人 （にん） ／ people counter, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 三人|さんにん, reading さんにん, meaning three people, example 三人で映画を見ます。, breakdown 三 （さん） ／ three people / 人 （にん） ／ people counter, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%89%E4%BA%BA",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%89%E4%BA%BA verified 三人|さんにん, reading さんにん, learner meaning three people, and product review checked example 三人で映画を見ます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 三人|さんにん for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 三人|さんにん, reading さんにん, sentence 三人で映画を見ます。, reading line さんにんでえいがをみます。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 三人|さんにん; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 三人|さんにん exact asset fragment word-reading-三人-さんにん for the exported word reading さんにん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 三人|さんにん source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] and rendered label Pitch 1: 3."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 三人|さんにん JLPT N5, JLPT core + reading coverage, focus 三、人, and covered readings 三: さん / 人: にん."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 三人|さんにん common and learner-friendly for the N5 word deck, with accurate reading さんにん, meaning three people, and example 三人で映画を見ます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "三時",
+    "status": "platinum",
+    "readingIncludes": [
+      "さんじ"
+    ],
+    "meaningIncludes": [
+      "three o'clock"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "三、時"
+    ],
+    "coversReadingIncludes": [
+      "三: さん",
+      "時: じ"
+    ],
+    "breakdownIncludes": [
+      "三 （さん） ／ three",
+      "時 （じ） ／ time / o'clock"
+    ],
+    "exampleIncludes": [
+      "三時に図書館で会いましょう。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Core N5 time expression for three oclock; high-frequency scheduling vocabulary with clear constituent readings.",
+    "reviewedAt": "2026-05-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 三時|さんじ: word 三時, reading さんじ, meaning three o'clock, example 三時に図書館で会いましょう。, audio word-reading-三時-さんじ, breakdown 三 （さん） ／ three / 時 （じ） ／ time / o'clock, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 三時|さんじ, reading さんじ, meaning three o'clock, example 三時に図書館で会いましょう。, breakdown 三 （さん） ／ three / 時 （じ） ／ time / o'clock, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/Dictionary/Browse/1300520-sanji-%E3%81%95%E3%82%93%E3%81%98-%EF%BC%93%E6%99%82",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/Dictionary/Browse/1300520-sanji-%E3%81%95%E3%82%93%E3%81%98-%EF%BC%93%E6%99%82 verified 三時|さんじ, reading さんじ, learner meaning three o'clock, and product review checked example 三時に図書館で会いましょう。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 三時|さんじ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 三時|さんじ, reading さんじ, sentence 三時に図書館で会いましょう。, reading line さんじにとしょかんであいましょう。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 三時|さんじ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 三時|さんじ exact asset fragment word-reading-三時-さんじ for the exported word reading さんじ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 三時|さんじ source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 三時|さんじ JLPT N5, JLPT core + reading coverage, focus 三、時, and covered readings 三: さん / 時: じ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 三時|さんじ common and learner-friendly for the N5 word deck, with accurate reading さんじ, meaning three o'clock, and example 三時に図書館で会いましょう。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "三百",
+    "status": "platinum",
+    "readingIncludes": [
+      "さんびゃく"
+    ],
+    "meaningIncludes": [
+      "three hundred"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "百"
+    ],
+    "coversReadingIncludes": [
+      "百: びゃく"
+    ],
+    "breakdownIncludes": [
+      "三 （さん） ／ three",
+      "百 （びゃく） ／ hundred"
+    ],
+    "exampleIncludes": [
+      "この本は三百円です。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Useful beginner number word for 300 and a clean support card for the 百 -> びゃく reading without forcing a rare vocabulary item.",
+    "reviewedAt": "2026-05-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 三百|さんびゃく: word 三百, reading さんびゃく, meaning three hundred, example この本は三百円です。, audio word-reading-三百-さんびゃく, breakdown 三 （さん） ／ three / 百 （びゃく） ／ hundred, labels JLPT N5 Reading coverage support."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 三百|さんびゃく, reading さんびゃく, meaning three hundred, example この本は三百円です。, breakdown 三 （さん） ／ three / 百 （びゃく） ／ hundred, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%EF%BC%93%EF%BC%90%EF%BC%90",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%EF%BC%93%EF%BC%90%EF%BC%90 verified 三百|さんびゃく, reading さんびゃく, learner meaning three hundred, and product review checked example この本は三百円です。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 三百|さんびゃく for JLPT N5; product review confirmed the word belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 三百|さんびゃく, reading さんびゃく, sentence この本は三百円です。, reading line このほんはさんびゃくえんです。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 三百|さんびゃく; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 三百|さんびゃく exact asset fragment word-reading-三百-さんびゃく for the exported word reading さんびゃく."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 三百|さんびゃく source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 三百|さんびゃく JLPT N5, Reading coverage support, focus 百, and covered readings 百: びゃく."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 三百|さんびゃく common and learner-friendly for the N5 word deck, with accurate reading さんびゃく, meaning three hundred, and example この本は三百円です。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "上",
+    "status": "platinum",
+    "readingIncludes": [
+      "うえ"
+    ],
+    "meaningIncludes": [
+      "up",
+      "above"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "上"
+    ],
+    "coversReadingIncludes": [
+      "上: うえ"
+    ],
+    "breakdownIncludes": [
+      "上 （うえ） ／ up / above"
+    ],
+    "exampleIncludes": [
+      "机の上に本があります。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch 2: 2"
+    ],
+    "selectionRationale": "Core N5 location noun for above/on top; very common and useful in basic location sentences.",
+    "reviewedAt": "2026-05-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 上|うえ: word 上, reading うえ, meaning up / above, example 机の上に本があります。, audio word-reading-上-うえ, breakdown 上 （うえ） ／ up / above, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 上|うえ, reading うえ, meaning up / above, example 机の上に本があります。, breakdown 上 （うえ） ／ up / above, and pitch label Pitch 1: 0 / Pitch 2: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%8A",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%8A verified 上|うえ, reading うえ, learner meaning up / above, and product review checked example 机の上に本があります。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 上|うえ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 上|うえ, reading うえ, sentence 机の上に本があります。, reading line つくえのうえにほんがあります。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 上|うえ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 上|うえ exact asset fragment word-reading-上-うえ for the exported word reading うえ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 上|うえ source kanjium-cc-by-sa-4.0 pattern 0 [heiban] / 2 [odaka] and rendered label Pitch 1: 0 / Pitch 2: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 上|うえ JLPT N5, JLPT core + reading coverage, focus 上, and covered readings 上: うえ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 上|うえ common and learner-friendly for the N5 word deck, with accurate reading うえ, meaning up / above, and example 机の上に本があります。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "上げる",
+    "status": "platinum",
+    "readingIncludes": [
+      "あげる"
+    ],
+    "meaningIncludes": [
+      "to raise",
+      "lift"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "上"
+    ],
+    "coversReadingIncludes": [
+      "上: あげる"
+    ],
+    "breakdownIncludes": [
+      "上 （あ） ／ up / above"
+    ],
+    "exampleIncludes": [
+      "手を上げてください。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common learner-friendly verb for raising or lifting; the example is a basic classroom-style command and the card cleanly teaches the word reading.",
+    "reviewedAt": "2026-05-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 上げる|あげる: word 上げる, reading あげる, meaning to raise / lift, example 手を上げてください。, audio word-reading-上げる-あげる, breakdown 上 （あ） ／ up / above, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 上げる|あげる, reading あげる, meaning to raise / lift, example 手を上げてください。, breakdown 上 （あ） ／ up / above, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%8A%E3%81%92%E3%82%8B",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%8A%E3%81%92%E3%82%8B verified 上げる|あげる, reading あげる, learner meaning to raise / lift, and product review checked example 手を上げてください。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 上げる|あげる for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 上げる|あげる, reading あげる, sentence 手を上げてください。, reading line てをあげてください。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 上げる|あげる; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 上げる|あげる exact asset fragment word-reading-上げる-あげる for the exported word reading あげる."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 上げる|あげる source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 上げる|あげる JLPT N5, JLPT core + reading coverage, focus 上, and covered readings 上: あげる."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 上げる|あげる common and learner-friendly for the N5 word deck, with accurate reading あげる, meaning to raise / lift, and example 手を上げてください。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   }
 ]

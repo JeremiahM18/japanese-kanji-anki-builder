@@ -5,6 +5,7 @@ const { loadConfig } = require("../src/config");
 const { loadWordStudyData } = require("../src/datasets/wordStudyData");
 const { loadJlptWordLevelContract } = require("../src/datasets/jlptWordLevelContract");
 const { loadJlptLevelContract } = require("../src/datasets/jlptLevelContract");
+const { loadWordPitchAccentData } = require("../src/datasets/wordPitchAccentData");
 const { invokeCliMain, assertNoUnknownArgs, collectUnknownArg, parseNumericOption } = require("../src/utils/cliArgs");
 const { buildWordDeckCompletionReport, formatWordDeckCompletionReport } = require("../src/services/wordDeckCompletionService");
 const { buildCoverageLevels } = require("../src/services/wordDeckCoverageScopeService");
@@ -78,12 +79,14 @@ async function main() {
     });
     const jlptWordLevelContract = loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json"));
     const jlptLevelContract = loadJlptLevelContract(path.join(process.cwd(), "templates", "jlpt_level_contract.json"));
+    const wordPitchAccentData = loadWordPitchAccentData(path.join(process.cwd(), "templates", "word_pitch_accent_data.json"));
 
     const report = buildWordDeckCompletionReport({
         level,
         starterEntries,
         jlptWordLevelContract,
         jlptLevelContract,
+        wordPitchAccentData,
         kanjiTsv: fs.readFileSync(kanjiTsvPath, "utf8"),
         wordTsv: fs.readFileSync(wordTsvPath, "utf8"),
         coverageWordTsvByLevel: loadCoverageWordTsvByLevel(level),

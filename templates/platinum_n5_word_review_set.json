@@ -6738,5 +6738,1084 @@
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
     }
+  },
+  {
+    "word": "仕事",
+    "status": "platinum",
+    "readingIncludes": [
+      "しごと"
+    ],
+    "meaningIncludes": [
+      "work",
+      "job"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "仕",
+      "事"
+    ],
+    "coversReadingIncludes": [
+      "仕: し",
+      "事: ごと"
+    ],
+    "breakdownIncludes": [
+      "仕 （し） ／ service / work",
+      "事 （ごと） ／ matter / task"
+    ],
+    "exampleIncludes": [
+      "父は朝から仕事です。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Core N5 work/job noun with common everyday use; 仕 and 事 are visibly labeled as N4 kanji while the vocabulary belongs in the beginner word deck.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 仕事|しごと: word 仕事, reading しごと, meaning work / job, example 父は朝から仕事です。, audio 4ED5_仕-word-reading-仕事-しごと.wav, reading breakdown 仕 し 事 ごと, labels JLPT N5 JLPT core + reading coverage, focus 仕、事, covered readings 仕: し ／ 事: ごと."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review is present for 仕事|しごと, reading しごと, meaning work / job, and example 父は朝から仕事です。; this platinum entry separately protects current covered readings 仕: し ／ 事: ごと and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BB%95%E4%BA%8B",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BB%95%E4%BA%8B verified 仕事|しごと, reading しごと, source sense work, job, labor, business, task, assignment, occupation, employment, learner meaning work / job, and product review checked example 父は朝から仕事です。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 仕事|しごと for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 仕事|しごと, reading しごと, sentence 父は朝から仕事です。, reading line ちちはあさからしごとです。, English line My father is at work from the morning., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 仕事|しごと; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 仕事|しごと exact asset fragment word-reading-仕事-しごと for the exported word reading しごと."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 仕事|しごと source kanjium-cc-by-sa-4.0 (Kanjium pitch accent database; 仕事 / しごと) pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 仕事|しごと JLPT N5, JLPT core + reading coverage, focus 仕、事, covered readings 仕: し ／ 事: ごと, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 仕事|しごと common and learner-friendly for the N5 word deck, with accurate reading しごと, meaning work / job, and example 父は朝から仕事です。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "住む",
+    "status": "platinum",
+    "readingIncludes": [
+      "すむ"
+    ],
+    "meaningIncludes": [
+      "live",
+      "reside"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "住"
+    ],
+    "coversReadingIncludes": [
+      "住: すむ"
+    ],
+    "breakdownIncludes": [
+      "住 （す） ／ live / reside"
+    ],
+    "exampleIncludes": [
+      "東京に住んでいます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Core N5 verb for where someone lives; 住 is visibly labeled as N4 kanji while the word is basic learner vocabulary.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 住む|すむ: word 住む, reading すむ, meaning live / reside, example 東京に住んでいます。, audio 4F4F_住-word-reading-住む-すむ.wav, reading breakdown 住 す む, labels JLPT N5 JLPT core + reading coverage, focus 住, covered readings 住: すむ."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review is present for 住む|すむ, reading すむ, meaning live / reside, and example 東京に住んでいます。; this platinum entry separately protects current covered readings 住: すむ and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BD%8F%E3%82%80",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BD%8F%E3%82%80 verified 住む|すむ, reading すむ, source sense to live, to reside, to inhabit, to dwell, learner meaning live / reside, and product review checked example 東京に住んでいます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 住む|すむ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 住む|すむ, reading すむ, sentence 東京に住んでいます。, reading line とうきょうにすんでいます。, English line I live in Tokyo., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 住む|すむ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 住む|すむ exact asset fragment word-reading-住む-すむ for the exported word reading すむ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 住む|すむ source kanjium-cc-by-sa-4.0 (Kanjium pitch accent database; 住む / すむ) pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 住む|すむ JLPT N5, JLPT core + reading coverage, focus 住, covered readings 住: すむ, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 住む|すむ common and learner-friendly for the N5 word deck, with accurate reading すむ, meaning live / reside, and example 東京に住んでいます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "何時",
+    "status": "platinum",
+    "readingIncludes": [
+      "なんじ"
+    ],
+    "meaningIncludes": [
+      "what time"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "何",
+      "時"
+    ],
+    "coversReadingIncludes": [
+      "何: なん",
+      "時: じ"
+    ],
+    "breakdownIncludes": [
+      "何 （なん） ／ what",
+      "時 （じ） ／ time / o'clock"
+    ],
+    "exampleIncludes": [
+      "今、何時ですか。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Core N5 time question word with transparent 何 -> なん and 時 -> じ readings, useful for basic schedule and classroom questions.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 何時|なんじ: word 何時, reading なんじ, meaning what time, example 今、何時ですか。, audio 4F55_何-word-reading-何時-なんじ.wav, reading breakdown 何 なん 時 じ, labels JLPT N5 JLPT core + reading coverage, focus 何、時, covered readings 何: なん ／ 時: じ."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review is present for 何時|なんじ, reading なんじ, meaning what time, and example 今、何時ですか。; this platinum entry separately protects current covered readings 何: なん ／ 時: じ and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BD%95%E6%99%82-%E3%81%AA%E3%82%93%E3%81%98",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BD%95%E6%99%82-%E3%81%AA%E3%82%93%E3%81%98 verified 何時|なんじ, reading なんじ, source sense what time, which hour, learner meaning what time, and product review checked example 今、何時ですか。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 何時|なんじ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 何時|なんじ, reading なんじ, sentence 今、何時ですか。, reading line いま、なんじですか。, English line What time is it now?, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 何時|なんじ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 何時|なんじ exact asset fragment word-reading-何時-なんじ for the exported word reading なんじ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 何時|なんじ source kanjium-cc-by-sa-4.0 (Kanjium pitch accent database; 何時 / なんじ) pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 何時|なんじ JLPT N5, JLPT core + reading coverage, focus 何、時, covered readings 何: なん ／ 時: じ, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 何時|なんじ common and learner-friendly for the N5 word deck, with accurate reading なんじ, meaning what time, and example 今、何時ですか。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "元気",
+    "status": "platinum",
+    "readingIncludes": [
+      "げんき"
+    ],
+    "meaningIncludes": [
+      "healthy",
+      "energetic",
+      "well"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "気"
+    ],
+    "coversReadingIncludes": [
+      "気: き"
+    ],
+    "breakdownIncludes": [
+      "元 （げん） ／ origin / source",
+      "気 （き） ／ energy / spirit"
+    ],
+    "exampleIncludes": [
+      "今日は元気です。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Core N5 greeting and condition word; 元 is visibly labeled as N4 while 気 supplies the N5 focus reading in a useful beginner expression.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 元気|げんき: word 元気, reading げんき, meaning healthy / energetic / well, example 今日は元気です。, audio 6C17_気-word-reading-元気-げんき.wav, reading breakdown 元 げん 気 き, labels JLPT N5 JLPT core + reading coverage, focus 気, covered readings 気: き."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review is present for 元気|げんき, reading げんき, meaning healthy / energetic / well, and example 今日は元気です。; this platinum entry separately protects current covered readings 気: き and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%85%83%E6%B0%97",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%85%83%E6%B0%97 verified 元気|げんき, reading げんき, source sense lively, energetic, healthy, well, learner meaning healthy / energetic / well, and product review checked example 今日は元気です。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 元気|げんき for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 元気|げんき, reading げんき, sentence 今日は元気です。, reading line きょうはげんきです。, English line I am well today., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 元気|げんき; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 元気|げんき exact asset fragment word-reading-元気-げんき for the exported word reading げんき."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 元気|げんき source kanjium-cc-by-sa-4.0 (Kanjium pitch accent database; 元気 / げんき) pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 元気|げんき JLPT N5, JLPT core + reading coverage, focus 気, covered readings 気: き, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 元気|げんき common and learner-friendly for the N5 word deck, with accurate reading げんき, meaning healthy / energetic / well, and example 今日は元気です。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "先月",
+    "status": "platinum",
+    "readingIncludes": [
+      "せんげつ"
+    ],
+    "meaningIncludes": [
+      "last month"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "先",
+      "月"
+    ],
+    "coversReadingIncludes": [
+      "先: せん",
+      "月: げつ"
+    ],
+    "breakdownIncludes": [
+      "先 （せん） ／ ahead / previous",
+      "月 （げつ） ／ month / moon"
+    ],
+    "exampleIncludes": [
+      "先月、新しい車を買いました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Core N5 temporal noun/adverb for beginner past-time references, with transparent 先 -> せん and 月 -> げつ readings.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 先月|せんげつ: word 先月, reading せんげつ, meaning last month, example 先月、新しい車を買いました。, audio 5148_先-word-reading-先月-せんげつ.wav, reading breakdown 先 せん 月 げつ, labels JLPT N5 JLPT core + reading coverage, focus 先、月, covered readings 先: せん ／ 月: げつ."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review is present for 先月|せんげつ, reading せんげつ, meaning last month, and example 先月、新しい車を買いました。; this platinum entry separately protects current covered readings 先: せん ／ 月: げつ and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%85%88%E6%9C%88",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%85%88%E6%9C%88 verified 先月|せんげつ, reading せんげつ, source sense last month, learner meaning last month, and product review checked example 先月、新しい車を買いました。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 先月|せんげつ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 先月|せんげつ, reading せんげつ, sentence 先月、新しい車を買いました。, reading line せんげつ、あたらしいくるまをかいました。, English line Last month I bought a new car., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 先月|せんげつ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 先月|せんげつ exact asset fragment word-reading-先月-せんげつ for the exported word reading せんげつ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 先月|せんげつ source kanjium-cc-by-sa-4.0 (Kanjium pitch accent database; 先月 / せんげつ) pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 先月|せんげつ JLPT N5, JLPT core + reading coverage, focus 先、月, covered readings 先: せん ／ 月: げつ, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 先月|せんげつ common and learner-friendly for the N5 word deck, with accurate reading せんげつ, meaning last month, and example 先月、新しい車を買いました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "先週",
+    "status": "platinum",
+    "readingIncludes": [
+      "せんしゅう"
+    ],
+    "meaningIncludes": [
+      "last week"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "先"
+    ],
+    "coversReadingIncludes": [
+      "先: せん"
+    ],
+    "breakdownIncludes": [
+      "先 （せん） ／ ahead / previous",
+      "週 （しゅう） ／ week"
+    ],
+    "exampleIncludes": [
+      "先週はとても忙しかったです。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Core N5 temporal noun/adverb for beginner past-time references; 週 is visibly labeled as N4 while the word belongs now.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 先週|せんしゅう: word 先週, reading せんしゅう, meaning last week, example 先週はとても忙しかったです。, audio 5148_先-word-reading-先週-せんしゅう.wav, reading breakdown 先 せん 週 しゅう, labels JLPT N5 JLPT core + reading coverage, focus 先, covered readings 先: せん."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review is present for 先週|せんしゅう, reading せんしゅう, meaning last week, and example 先週はとても忙しかったです。; this platinum entry separately protects current covered readings 先: せん and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%85%88%E9%80%B1",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%85%88%E9%80%B1 verified 先週|せんしゅう, reading せんしゅう, source sense last week, the week before, learner meaning last week, and product review checked example 先週はとても忙しかったです。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 先週|せんしゅう for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 先週|せんしゅう, reading せんしゅう, sentence 先週はとても忙しかったです。, reading line せんしゅうはとてもいそがしかったです。, English line Last week was very busy., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 先週|せんしゅう; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 先週|せんしゅう exact asset fragment word-reading-先週-せんしゅう for the exported word reading せんしゅう."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 先週|せんしゅう source kanjium-cc-by-sa-4.0 (Kanjium pitch accent database; 先週 / せんしゅう) pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 先週|せんしゅう JLPT N5, JLPT core + reading coverage, focus 先, covered readings 先: せん, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 先週|せんしゅう common and learner-friendly for the N5 word deck, with accurate reading せんしゅう, meaning last week, and example 先週はとても忙しかったです。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "入る",
+    "status": "platinum",
+    "readingIncludes": [
+      "はいる"
+    ],
+    "meaningIncludes": [
+      "to enter",
+      "go in"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "入"
+    ],
+    "coversReadingIncludes": [
+      "入: はいる"
+    ],
+    "breakdownIncludes": [
+      "入 （はい） ／ enter / put in"
+    ],
+    "exampleIncludes": [
+      "教室に入る前にノックします。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Core N5 intransitive verb for entering or going in; the exported breakdown keeps the kanji constituent reading aligned with the word reading.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 入る|はいる: word 入る, reading はいる, meaning to enter / go in, example 教室に入る前にノックします。, audio 5165_入-word-reading-入る-はいる.wav, reading breakdown 入 はい る, labels JLPT N5 JLPT core + reading coverage, focus 入, covered readings 入: はいる."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review is present for 入る|はいる, reading はいる, meaning to enter / go in, and example 教室に入る前にノックします。; this platinum entry separately protects current covered readings 入: はいる and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%85%A5%E3%82%8B",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%85%A5%E3%82%8B verified 入る|はいる, reading はいる, source sense to enter, to go into, learner meaning to enter / go in, and product review checked example 教室に入る前にノックします。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 入る|はいる for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 入る|はいる, reading はいる, sentence 教室に入る前にノックします。, reading line きょうしつにはいるまえにノックします。, English line I knock before entering the classroom., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 入る|はいる; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 入る|はいる exact asset fragment word-reading-入る-はいる for the exported word reading はいる."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 入る|はいる source kanjium-cc-by-sa-4.0 (Kanjium pitch accent database; 入る / はいる) pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 入る|はいる JLPT N5, JLPT core + reading coverage, focus 入, covered readings 入: はいる, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 入る|はいる common and learner-friendly for the N5 word deck, with accurate reading はいる, meaning to enter / go in, and example 教室に入る前にノックします。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "入れる",
+    "status": "platinum",
+    "readingIncludes": [
+      "いれる"
+    ],
+    "meaningIncludes": [
+      "to put in",
+      "insert"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "入"
+    ],
+    "coversReadingIncludes": [
+      "入: いれる"
+    ],
+    "breakdownIncludes": [
+      "入 （い） ／ enter / put in"
+    ],
+    "exampleIncludes": [
+      "かばんに本を入れます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Core N5 transitive counterpart to 入る, useful for everyday container/bag actions and clearly distinct by written form and reading.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 入れる|いれる: word 入れる, reading いれる, meaning to put in / insert, example かばんに本を入れます。, audio 5165_入-word-reading-入れる-いれる.wav, reading breakdown 入 い れる, labels JLPT N5 JLPT core + reading coverage, focus 入, covered readings 入: いれる."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review is present for 入れる|いれる, reading いれる, meaning to put in / insert, and example かばんに本を入れます。; this platinum entry separately protects current covered readings 入: いれる and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%85%A5%E3%82%8C%E3%82%8B",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%85%A5%E3%82%8C%E3%82%8B verified 入れる|いれる, reading いれる, source sense to put in, to let in, to take in, to insert, learner meaning to put in / insert, and product review checked example かばんに本を入れます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 入れる|いれる for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 入れる|いれる, reading いれる, sentence かばんに本を入れます。, reading line かばんにほんをいれます。, English line I put the book into my bag., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 入れる|いれる; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 入れる|いれる exact asset fragment word-reading-入れる-いれる for the exported word reading いれる."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 入れる|いれる source kanjium-cc-by-sa-4.0 (Kanjium pitch accent database; 入れる / いれる) pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 入れる|いれる JLPT N5, JLPT core + reading coverage, focus 入, covered readings 入: いれる, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 入れる|いれる common and learner-friendly for the N5 word deck, with accurate reading いれる, meaning to put in / insert, and example かばんに本を入れます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "出す",
+    "status": "platinum",
+    "readingIncludes": [
+      "だす"
+    ],
+    "meaningIncludes": [
+      "to take out",
+      "put out"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "出"
+    ],
+    "coversReadingIncludes": [
+      "出: だす"
+    ],
+    "breakdownIncludes": [
+      "出 （だ） ／ exit / go out"
+    ],
+    "exampleIncludes": [
+      "かばんから本を出します。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Core N5 transitive verb for taking or putting something out, with exact 出 -> だ word-context support and a simple learner example.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 出す|だす: word 出す, reading だす, meaning to take out / put out, example かばんから本を出します。, audio 51FA_出-word-reading-出す-だす.wav, reading breakdown 出 だ す, labels JLPT N5 JLPT core + reading coverage, focus 出, covered readings 出: だす."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review is present for 出す|だす, reading だす, meaning to take out / put out, and example かばんから本を出します。; this platinum entry separately protects current covered readings 出: だす and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%87%BA%E3%81%99",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%87%BA%E3%81%99 verified 出す|だす, reading だす, source sense to take out, to get out, to put out, to reveal, to show, learner meaning to take out / put out, and product review checked example かばんから本を出します。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 出す|だす for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 出す|だす, reading だす, sentence かばんから本を出します。, reading line かばんからほんをだします。, English line I take a book out of my bag., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 出す|だす; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 出す|だす exact asset fragment word-reading-出す-だす for the exported word reading だす."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 出す|だす source kanjium-cc-by-sa-4.0 (Kanjium pitch accent database; 出す / だす) pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 出す|だす JLPT N5, JLPT core + reading coverage, focus 出, covered readings 出: だす, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 出す|だす common and learner-friendly for the N5 word deck, with accurate reading だす, meaning to take out / put out, and example かばんから本を出します。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "出る",
+    "status": "platinum",
+    "readingIncludes": [
+      "でる"
+    ],
+    "meaningIncludes": [
+      "to go out",
+      "leave"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "出"
+    ],
+    "coversReadingIncludes": [
+      "出: でる"
+    ],
+    "breakdownIncludes": [
+      "出 （で） ／ exit / go out"
+    ],
+    "exampleIncludes": [
+      "七時に家を出ます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Core N5 intransitive verb for leaving or going out, clearly paired with but distinct from 出す by reading and learner use.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 出る|でる: word 出る, reading でる, meaning to go out / leave, example 七時に家を出ます。, audio 51FA_出-word-reading-出る-でる.wav, reading breakdown 出 で る, labels JLPT N5 JLPT core + reading coverage, focus 出, covered readings 出: でる."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review is present for 出る|でる, reading でる, meaning to go out / leave, and example 七時に家を出ます。; this platinum entry separately protects current covered readings 出: でる and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%87%BA%E3%82%8B",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%87%BA%E3%82%8B verified 出る|でる, reading でる, source sense to leave, to exit, to go out, to come out, to get out, learner meaning to go out / leave, and product review checked example 七時に家を出ます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 出る|でる for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 出る|でる, reading でる, sentence 七時に家を出ます。, reading line しちじにいえをでます。, English line I leave home at seven., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 出る|でる; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 出る|でる exact asset fragment word-reading-出る-でる for the exported word reading でる."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 出る|でる source kanjium-cc-by-sa-4.0 (Kanjium pitch accent database; 出る / でる) pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 出る|でる JLPT N5, JLPT core + reading coverage, focus 出, covered readings 出: でる, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 出る|でる common and learner-friendly for the N5 word deck, with accurate reading でる, meaning to go out / leave, and example 七時に家を出ます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   }
 ]

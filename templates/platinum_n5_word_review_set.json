@@ -24231,5 +24231,822 @@
         "detail": "Manual review judged 夕方|ゆうがた common and learner-friendly for the N5 word deck, with accurate reading ゆうがた, meaning evening, example 夕方に駅で友だちに会います。, and reviewed pitch handling Pitch 1: 0."
       }
     ]
+  },
+  {
+    "word": "北口",
+    "readingIncludes": [
+      "きたぐち"
+    ],
+    "meaningIncludes": [
+      "north exit"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "北"
+    ],
+    "coversReadingIncludes": [
+      "北: きた"
+    ],
+    "breakdownIncludes": [
+      "北 （きた） ／ north",
+      "口 （ぐち） ／ mouth / opening"
+    ],
+    "exampleIncludes": [
+      "駅の北口で会いましょう。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 4",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Practical station/signage noun for beginner navigation; it completes the reviewed direction-plus-口 family while keeping generated pitch visibly labeled as unverified.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 北口|きたぐち: word 北口, reading きたぐち, meaning north exit, example 駅の北口で会いましょう。, audio word-reading-北口-きたぐち, breakdown 北 （きた） ／ north / 口 （ぐち） ／ mouth / opening, labels JLPT N5 JLPT core + reading coverage, focus 北, covered readings 北: きた and generated pitch label Generated pitch (unverified)."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 北口|きたぐち, reading きたぐち, meaning north exit, example 駅の北口で会いましょう。, breakdown 北 （きた） ／ north / 口 （ぐち） ／ mouth / opening, covered readings 北: きた, and pitch label Pitch 1: 4 / Generated pitch (unverified)."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8C%97%E5%8F%A3",
+        "detail": "JLearn.net verifies 北口|きたぐち as a common noun for north entrance; product review accepts the station-signage learner meaning north exit and checked example 駅の北口で会いましょう。 Reviewed word 北口|きたぐち, reading きたぐち, learner meaning north exit, and example 駅の北口で会いましょう。."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 北口|きたぐち for JLPT N5; product review confirmed 北口|きたぐち belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 北口|きたぐち, reading きたぐち, sentence 駅の北口で会いましょう。, reading line えきのきたぐちであいましょう。, English line Let's meet at the station's north exit., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 北口|きたぐち; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 北口|きたぐち exact asset fragment word-reading-北口-きたぐち for the exported word reading きたぐち."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 北口|きたぐち source voicevox-nemo-accent-query pattern 4 [odaka] and rendered label Pitch 1: 4 / Generated pitch (unverified). This is generated guidance, not dictionary-verified pitch."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 北口|きたぐち JLPT N5, JLPT core + reading coverage, focus 北, covered readings 北: きた, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 北口|きたぐち common and learner-friendly for the N5 word deck, with accurate reading きたぐち, meaning north exit, example 駅の北口で会いましょう。, and reviewed pitch handling Pitch 1: 4 / Generated pitch (unverified)."
+      }
+    ]
+  },
+  {
+    "word": "朝ご飯",
+    "readingIncludes": [
+      "あさごはん"
+    ],
+    "meaningIncludes": [
+      "breakfast"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "朝",
+      "飯"
+    ],
+    "coversReadingIncludes": [
+      "朝: あさ",
+      "飯: はん"
+    ],
+    "breakdownIncludes": [
+      "朝 （あさ） ／ morning",
+      "飯 （はん） ／ meal / rice"
+    ],
+    "exampleIncludes": [
+      "毎朝、朝ご飯を食べます。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "selectionRationale": "Core beginner meal vocabulary; common, immediately useful, and the outside-level kanji are visibly labeled on the N5 word card.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 朝ご飯|あさごはん: word 朝ご飯, reading あさごはん, meaning breakfast, example 毎朝、朝ご飯を食べます。, audio word-reading-朝ご飯-あさごはん, breakdown 朝 （あさ） ／ morning / 飯 （はん） ／ meal / rice, labels JLPT N5 JLPT core + reading coverage, focus 朝、飯, covered readings 朝: あさ ／ 飯: はん."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 朝ご飯|あさごはん, reading あさごはん, meaning breakfast, example 毎朝、朝ご飯を食べます。, breakdown 朝 （あさ） ／ morning / 飯 （はん） ／ meal / rice, covered readings 朝: あさ ／ 飯: はん, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%9C%9D%E3%81%94%E9%A3%AF",
+        "detail": "JLearn.net verifies 朝ご飯|あさごはん as JLPT N5, common, reading あさごはん, and breakfast; product review checked example 毎朝、朝ご飯を食べます。 Reviewed word 朝ご飯|あさごはん, reading あさごはん, learner meaning breakfast, and example 毎朝、朝ご飯を食べます。."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 朝ご飯|あさごはん for JLPT N5; product review confirmed 朝ご飯|あさごはん belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 朝ご飯|あさごはん, reading あさごはん, sentence 毎朝、朝ご飯を食べます。, reading line まいあさ、あさごはんをたべます。, English line I eat breakfast every morning., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 朝ご飯|あさごはん; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 朝ご飯|あさごはん exact asset fragment word-reading-朝ご飯-あさごはん for the exported word reading あさごはん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 朝ご飯|あさごはん source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] and rendered label Pitch 1: 3."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 朝ご飯|あさごはん JLPT N5, JLPT core + reading coverage, focus 朝、飯, covered readings 朝: あさ ／ 飯: はん, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 朝ご飯|あさごはん common and learner-friendly for the N5 word deck, with accurate reading あさごはん, meaning breakfast, example 毎朝、朝ご飯を食べます。, and reviewed pitch handling Pitch 1: 3."
+      }
+    ]
+  },
+  {
+    "word": "夜空",
+    "readingIncludes": [
+      "よぞら"
+    ],
+    "meaningIncludes": [
+      "night sky"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "夜",
+      "空"
+    ],
+    "coversReadingIncludes": [
+      "夜: よ",
+      "空: ぞら"
+    ],
+    "breakdownIncludes": [
+      "夜 （よ） ／ night",
+      "空 （ぞら） ／ sky / empty"
+    ],
+    "exampleIncludes": [
+      "夜空に月が見えます。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Common, concrete learner-friendly noun for describing scenery and weather/time contexts; useful enough to keep despite outside-level constituent kanji labels.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 夜空|よぞら: word 夜空, reading よぞら, meaning night sky, example 夜空に月が見えます。, audio word-reading-夜空-よぞら, breakdown 夜 （よ） ／ night / 空 （ぞら） ／ sky / empty, labels JLPT N5 JLPT core + reading coverage, focus 夜、空, covered readings 夜: よ ／ 空: ぞら."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 夜空|よぞら, reading よぞら, meaning night sky, example 夜空に月が見えます。, breakdown 夜 （よ） ／ night / 空 （ぞら） ／ sky / empty, covered readings 夜: よ ／ 空: ぞら, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%A4%9C%E7%A9%BA",
+        "detail": "JLearn.net verifies 夜空|よぞら as a common noun, reading よぞら, and night sky; product review checked example 夜空に月が見えます。 Reviewed word 夜空|よぞら, reading よぞら, learner meaning night sky, and example 夜空に月が見えます。."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 夜空|よぞら for JLPT N5; product review confirmed 夜空|よぞら belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 夜空|よぞら, reading よぞら, sentence 夜空に月が見えます。, reading line よぞらにつきがみえます。, English line I can see the moon in the night sky., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 夜空|よぞら; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 夜空|よぞら exact asset fragment word-reading-夜空-よぞら for the exported word reading よぞら."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 夜空|よぞら source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 夜空|よぞら JLPT N5, JLPT core + reading coverage, focus 夜、空, covered readings 夜: よ ／ 空: ぞら, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 夜空|よぞら common and learner-friendly for the N5 word deck, with accurate reading よぞら, meaning night sky, example 夜空に月が見えます。, and reviewed pitch handling Pitch 1: 1."
+      }
+    ]
+  },
+  {
+    "word": "土曜日",
+    "readingIncludes": [
+      "どようび"
+    ],
+    "meaningIncludes": [
+      "Saturday"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "土"
+    ],
+    "coversReadingIncludes": [
+      "土: ど"
+    ],
+    "breakdownIncludes": [
+      "土 （ど） ／ soil / earth",
+      "曜 （よう） ／ weekday marker",
+      "日 （び） ／ day / sun"
+    ],
+    "exampleIncludes": [
+      "土曜日に友だちと会います。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Core beginner weekday vocabulary; high-frequency schedule language and a real contextual 土 -> ど reading.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 土曜日|どようび: word 土曜日, reading どようび, meaning Saturday, example 土曜日に友だちと会います。, audio word-reading-土曜日-どようび, breakdown 土 （ど） ／ soil / earth / 曜 （よう） ／ weekday marker / 日 （び） ／ day / sun, labels JLPT N5 JLPT core + reading coverage, focus 土, covered readings 土: ど."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 土曜日|どようび, reading どようび, meaning Saturday, example 土曜日に友だちと会います。, breakdown 土 （ど） ／ soil / earth / 曜 （よう） ／ weekday marker / 日 （び） ／ day / sun, covered readings 土: ど, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%9C%9F%E6%9B%9C%E6%97%A5",
+        "detail": "JLearn.net verifies 土曜日|どようび as JLPT N5, common, reading どようび, and Saturday; product review checked example 土曜日に友だちと会います。 Reviewed word 土曜日|どようび, reading どようび, learner meaning Saturday, and example 土曜日に友だちと会います。."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 土曜日|どようび for JLPT N5; product review confirmed 土曜日|どようび belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 土曜日|どようび, reading どようび, sentence 土曜日に友だちと会います。, reading line どようびにともだちとあいます。, English line I meet a friend on Saturday., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 土曜日|どようび; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 土曜日|どようび exact asset fragment word-reading-土曜日-どようび for the exported word reading どようび."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 土曜日|どようび source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 土曜日|どようび JLPT N5, JLPT core + reading coverage, focus 土, covered readings 土: ど, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 土曜日|どようび common and learner-friendly for the N5 word deck, with accurate reading どようび, meaning Saturday, example 土曜日に友だちと会います。, and reviewed pitch handling Pitch 1: 2."
+      }
+    ]
+  },
+  {
+    "word": "切符",
+    "readingIncludes": [
+      "きっぷ"
+    ],
+    "meaningIncludes": [
+      "ticket"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "切",
+      "符"
+    ],
+    "coversReadingIncludes": [
+      "切: きっ",
+      "符: ぷ"
+    ],
+    "breakdownIncludes": [
+      "切 （きっ） ／ cut",
+      "符 （ぷ） ／ sign / token"
+    ],
+    "exampleIncludes": [
+      "駅で切符を買います。"
+    ],
+    "notesIncludes": [
+      "Learn this as a common whole word."
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Core travel vocabulary and useful beginner station language; approved as a whole word with higher-level kanji labels visible.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 切符|きっぷ: word 切符, reading きっぷ, meaning ticket, example 駅で切符を買います。, audio word-reading-切符-きっぷ, breakdown 切 （きっ） ／ cut / 符 （ぷ） ／ sign / token, labels JLPT N5 JLPT core + reading coverage, focus 切、符, covered readings 切: きっ ／ 符: ぷ, notes Learn this as a common whole word.."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 切符|きっぷ, reading きっぷ, meaning ticket, example 駅で切符を買います。, breakdown 切 （きっ） ／ cut / 符 （ぷ） ／ sign / token, covered readings 切: きっ ／ 符: ぷ, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%88%87%E7%AC%A6",
+        "detail": "JLearn.net verifies 切符|きっぷ as JLPT N5, common, reading きっぷ, and ticket; product review checked example 駅で切符を買います。 Reviewed word 切符|きっぷ, reading きっぷ, learner meaning ticket, and example 駅で切符を買います。."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 切符|きっぷ for JLPT N5; product review confirmed 切符|きっぷ belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 切符|きっぷ, reading きっぷ, sentence 駅で切符を買います。, reading line えきできっぷをかいます。, English line I buy a ticket at the station., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 切符|きっぷ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 切符|きっぷ exact asset fragment word-reading-切符-きっぷ for the exported word reading きっぷ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 切符|きっぷ source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 切符|きっぷ JLPT N5, JLPT core + reading coverage, focus 切、符, covered readings 切: きっ ／ 符: ぷ, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 切符|きっぷ common and learner-friendly for the N5 word deck, with accurate reading きっぷ, meaning ticket, example 駅で切符を買います。, and reviewed pitch handling Pitch 1: 0."
+      }
+    ]
+  },
+  {
+    "word": "分ける",
+    "readingIncludes": [
+      "わける"
+    ],
+    "meaningIncludes": [
+      "divide",
+      "separate"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "分"
+    ],
+    "coversReadingIncludes": [
+      "分: わける"
+    ],
+    "breakdownIncludes": [
+      "分 （わ） ／ minute"
+    ],
+    "exampleIncludes": [
+      "ケーキを二つに分けます。"
+    ],
+    "notesIncludes": [
+      "Reading-coverage support word for the common 分 -> わける pattern."
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Common everyday verb for dividing or sharing; useful and learner-friendly enough to ship as N5 reading-coverage support even though it is not treated as core JLPT N5 vocabulary by the cited dictionary.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 分ける|わける: word 分ける, reading わける, meaning divide / separate, example ケーキを二つに分けます。, audio word-reading-分ける-わける, breakdown 分 （わ） ／ minute, labels JLPT N5 Reading coverage support, focus 分, covered readings 分: わける, notes Reading-coverage support word for the common 分 -> わける pattern.."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 分ける|わける, reading わける, meaning divide / separate, example ケーキを二つに分けます。, breakdown 分 （わ） ／ minute, covered readings 分: わける, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%88%86%E3%81%91%E3%82%8B",
+        "detail": "JLearn.net verifies 分ける|わける as a common verb, reading わける, with divide and separate/share senses; product review checked example ケーキを二つに分けます。 Reviewed word 分ける|わける, reading わける, learner meaning divide / separate, and example ケーキを二つに分けます。."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 分ける|わける for JLPT N5; product review confirmed 分ける|わける belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 分ける|わける, reading わける, sentence ケーキを二つに分けます。, reading line ケーキをふたつにわけます。, English line I divide the cake into two pieces., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 分ける|わける; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 分ける|わける exact asset fragment word-reading-分ける-わける for the exported word reading わける."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 分ける|わける source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 分ける|わける JLPT N5, Reading coverage support, focus 分, covered readings 分: わける, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 分ける|わける common and learner-friendly for the N5 word deck, with accurate reading わける, meaning divide / separate, example ケーキを二つに分けます。, and reviewed pitch handling Pitch 1: 2."
+      }
+    ]
+  },
+  {
+    "word": "小雨",
+    "readingIncludes": [
+      "こさめ"
+    ],
+    "meaningIncludes": [
+      "light rain",
+      "drizzle"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "雨"
+    ],
+    "coversReadingIncludes": [
+      "雨: さめ"
+    ],
+    "breakdownIncludes": [
+      "小 （こ） ／ small",
+      "雨 （さめ） ／ rain"
+    ],
+    "exampleIncludes": [
+      "朝から小雨が降っています。"
+    ],
+    "notesIncludes": [
+      "Reading-coverage support word for the 雨 -> さめ pattern."
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Concrete common weather word; useful enough for learners and a truthful 雨 -> さめ support card rather than a forced rare reading.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 小雨|こさめ: word 小雨, reading こさめ, meaning light rain / drizzle, example 朝から小雨が降っています。, audio word-reading-小雨-こさめ, breakdown 小 （こ） ／ small / 雨 （さめ） ／ rain, labels JLPT N5 Reading coverage support, focus 雨, covered readings 雨: さめ, notes Reading-coverage support word for the 雨 -> さめ pattern.."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 小雨|こさめ, reading こさめ, meaning light rain / drizzle, example 朝から小雨が降っています。, breakdown 小 （こ） ／ small / 雨 （さめ） ／ rain, covered readings 雨: さめ, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%B0%8F%E9%9B%A8",
+        "detail": "JLearn.net verifies 小雨|こさめ as a common noun, reading こさめ, and light rain / drizzle; product review checked example 朝から小雨が降っています。 Reviewed word 小雨|こさめ, reading こさめ, learner meaning light rain / drizzle, and example 朝から小雨が降っています。."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 小雨|こさめ for JLPT N5; product review confirmed 小雨|こさめ belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 小雨|こさめ, reading こさめ, sentence 朝から小雨が降っています。, reading line あさからこさめがふっています。, English line A light rain has been falling since morning., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 小雨|こさめ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 小雨|こさめ exact asset fragment word-reading-小雨-こさめ for the exported word reading こさめ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 小雨|こさめ source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 小雨|こさめ JLPT N5, Reading coverage support, focus 雨, covered readings 雨: さめ, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 小雨|こさめ common and learner-friendly for the N5 word deck, with accurate reading こさめ, meaning light rain / drizzle, example 朝から小雨が降っています。, and reviewed pitch handling Pitch 1: 0."
+      }
+    ]
+  },
+  {
+    "word": "外れる",
+    "status": "deferred",
+    "readingIncludes": [
+      "はずれる"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because JLearn.net classifies 外れる|はずれる as JLPT N2. It is common, but N5 already has stronger 外 coverage through 外|そと and core compounds, so 外 -> はずれる should wait for the later word deck instead of being forced as beginner coverage."
+  },
+  {
+    "word": "休める",
+    "status": "deferred",
+    "readingIncludes": [
+      "やすめる"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because JLearn.net classifies 休める|やすめる as JLPT N1 and it is less beginner-friendly beside 休む|やすむ and 休み|やすみ. N5 should not keep it only to close 休 -> やすめる coverage."
+  },
+  {
+    "word": "生やす",
+    "status": "deferred",
+    "readingIncludes": [
+      "はやす"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because JLearn.net classifies 生やす|はやす as JLPT N1 and the grow/wear-a-beard sense is too narrow for a beginner anchor. N5 already teaches stronger 生 words such as 生まれる and 先生."
+  },
+  {
+    "word": "下す",
+    "status": "deferred",
+    "readingIncludes": [
+      "くだす"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because dictionary evidence defines 下す|くだす around formal decision, judgement, verdict, and order senses. That is useful later, but it is not a beginner word-card anchor and should not be kept only to close 下 -> くだす coverage."
+  },
+  {
+    "word": "海の水",
+    "status": "removed",
+    "readingIncludes": [
+      "うみのみず"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Removed from the default N5 word deck because 海の水|うみのみず is a transparent compositional phrase, not the dictionary word-card identity for seawater. Dictionary sources list 海水|かいすい for seawater/saltwater, and N5 already covers 水 -> みず through the stronger 水|みず card."
   }
 ]

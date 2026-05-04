@@ -11485,5 +11485,1304 @@
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
     }
+  },
+  {
+    "word": "白い",
+    "status": "platinum",
+    "readingIncludes": [
+      "しろい"
+    ],
+    "meaningIncludes": [
+      "white"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "白"
+    ],
+    "coversReadingIncludes": [
+      "白: しろい"
+    ],
+    "breakdownIncludes": [
+      "白 （しろ）",
+      "white"
+    ],
+    "exampleIncludes": [
+      "白い猫がいます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Core N5 adjective and useful everyday color word; it belongs as vocabulary with exact 白い|しろい audio and a simple concrete example.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 白い|しろい: word 白い, reading しろい, meaning white, example 白い猫がいます。, audio word-reading-白い-しろい, breakdown 白 （しろ）, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 白い|しろい, reading しろい, meaning white, example 白い猫がいます。, breakdown 白 （しろ）, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E7%99%BD%E3%81%84",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E7%99%BD%E3%81%84 verified 白い|しろい, reading しろい, common adjective meaning white; product review checked example 白い猫がいます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 白い|しろい for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 白い|しろい, reading しろい, sentence 白い猫がいます。, reading line しろいねこがいます。, English line There is a white cat."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 白い|しろい; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 白い|しろい exact asset fragment word-reading-白い-しろい for the exported word reading しろい."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 白い|しろい source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 白い|しろい JLPT N5, JLPT core + reading coverage, focus 白, and covered readings 白: しろい."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 白い|しろい common and learner-friendly for the N5 word deck, with accurate reading しろい, meaning white, and example 白い猫がいます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "西",
+    "status": "platinum",
+    "readingIncludes": [
+      "にし"
+    ],
+    "meaningIncludes": [
+      "west"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "西"
+    ],
+    "coversReadingIncludes": [
+      "西: にし"
+    ],
+    "breakdownIncludes": [
+      "西 （にし）",
+      "west"
+    ],
+    "exampleIncludes": [
+      "学校は町の西にあります。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common direction word and core N5 vocabulary; approved as a word-card item while keeping the kanji-deck 西 card conceptually separate.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 西|にし: word 西, reading にし, meaning west, example 学校は町の西にあります。, audio word-reading-西-にし, breakdown 西 （にし）, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 西|にし, reading にし, meaning west, example 学校は町の西にあります。, breakdown 西 （にし）, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E8%A5%BF",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E8%A5%BF verified 西|にし, reading にし, common noun meaning west; product review checked example 学校は町の西にあります。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 西|にし for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 西|にし, reading にし, sentence 学校は町の西にあります。, reading line がっこうはまちのにしにあります。, English line The school is in the west part of town."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 西|にし; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 西|にし exact asset fragment word-reading-西-にし for the exported word reading にし."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 西|にし source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 西|にし JLPT N5, JLPT core + reading coverage, focus 西, and covered readings 西: にし."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 西|にし common and learner-friendly for the N5 word deck, with accurate reading にし, meaning west, and example 学校は町の西にあります。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "来る",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "くる"
+    ],
+    "meaningIncludes": [
+      "to come"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "来"
+    ],
+    "coversReadingIncludes": [
+      "来: くる"
+    ],
+    "breakdownIncludes": [
+      "来 （く）",
+      "come"
+    ],
+    "exampleIncludes": [
+      "明日、友だちが家に来る。"
+    ],
+    "notesIncludes": [
+      "Irregular verb. Learn the reading together with the word."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Core N5 irregular verb and essential movement word; approved only after replacing the example so the card demonstrates 来る|くる directly instead of only the polite stem 来ます|きます.",
+    "fixSummary": "Changed the 来る|くる example from 友だちは明日、家に来ます。 / ともだちはあした、いえにきます。 to 明日、友だちが家に来る。 / あした、ともだちがいえにくる。 so the example contains the exact reviewed written-reading identity.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 来る|くる: word 来る, reading くる, meaning to come, example 明日、友だちが家に来る。, audio word-reading-来る-くる, note Irregular verb. Learn the reading together with the word, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 来る|くる, reading くる, meaning to come, example 明日、友だちが家に来る。, note text Irregular verb. Learn the reading together with the word, breakdown 来 （く）, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%9D%A5%E3%82%8B",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%9D%A5%E3%82%8B verified 来る|くる, reading くる, common irregular verb meaning to come; product review checked example 明日、友だちが家に来る。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 来る|くる for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 来る|くる, reading くる, sentence 明日、友だちが家に来る。, reading line あした、ともだちがいえにくる。, English line My friend will come to my house tomorrow."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 来る|くる; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 来る|くる exact asset fragment word-reading-来る-くる for the exported word reading くる."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 来る|くる source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 来る|くる JLPT N5, JLPT core + reading coverage, focus 来, and covered readings 来: くる."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 来る|くる common and learner-friendly for the N5 word deck after the exact-example fix, with accurate reading くる, meaning to come, and example 明日、友だちが家に来る。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "火",
+    "status": "platinum",
+    "readingIncludes": [
+      "ひ"
+    ],
+    "meaningIncludes": [
+      "fire"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "火"
+    ],
+    "coversReadingIncludes": [
+      "火: ひ"
+    ],
+    "breakdownIncludes": [
+      "火 （ひ）",
+      "fire"
+    ],
+    "exampleIncludes": [
+      "火を消してください。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Common concrete noun for fire and a useful N5 safety/everyday word; approved as vocabulary with exact 火|ひ audio, not as a kanji-deck anchor.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 火|ひ: word 火, reading ひ, meaning fire, example 火を消してください。, audio word-reading-火-ひ, breakdown 火 （ひ）, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 火|ひ, reading ひ, meaning fire, example 火を消してください。, breakdown 火 （ひ）, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E7%81%AB",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E7%81%AB verified 火|ひ, reading ひ, common noun meaning fire; product review checked example 火を消してください。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 火|ひ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 火|ひ, reading ひ, sentence 火を消してください。, reading line ひをけしてください。, English line Please put out the fire."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 火|ひ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 火|ひ exact asset fragment word-reading-火-ひ for the exported word reading ひ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 火|ひ source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 火|ひ JLPT N5, JLPT core + reading coverage, focus 火, and covered readings 火: ひ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 火|ひ common and learner-friendly for the N5 word deck, with accurate reading ひ, meaning fire, and example 火を消してください。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "六",
+    "status": "platinum",
+    "readingIncludes": [
+      "ろく"
+    ],
+    "meaningIncludes": [
+      "six"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "六"
+    ],
+    "coversReadingIncludes": [
+      "六: ろく"
+    ],
+    "breakdownIncludes": [
+      "六 （ろく）",
+      "six"
+    ],
+    "exampleIncludes": [
+      "数字を六から十まで言います。"
+    ],
+    "notesIncludes": [
+      "Common standalone number form for counting sequences and number ranges."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Core N5 number word and useful standalone numeric form; approved with the generated-pitch warning visible rather than treating unverified pitch as dictionary truth.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 六|ろく: word 六, reading ろく, meaning six, example 数字を六から十まで言います。, audio word-reading-六-ろく, note Common standalone number form for counting sequences and number ranges, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 六|ろく, reading ろく, meaning six, example 数字を六から十まで言います。, note text Common standalone number form for counting sequences and number ranges, breakdown 六 （ろく）, and pitch label Pitch 1: 2 with Generated pitch (unverified)."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%85%AD",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%85%AD verified 六|ろく, reading ろく, common numeric word meaning six; product review checked example 数字を六から十まで言います。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 六|ろく for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 六|ろく, reading ろく, sentence 数字を六から十まで言います。, reading line すうじをろくからじゅうまでいいます。, English line I say the numbers from six to ten."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 六|ろく; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 六|ろく exact asset fragment word-reading-六-ろく for the exported word reading ろく."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 六|ろく source voicevox-nemo-accent-query pattern 2 [odaka] and rendered label Pitch 1: 2 with Generated pitch (unverified); dictionary-backed pitch remains unverified."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 六|ろく JLPT N5, JLPT core + reading coverage, focus 六, and covered readings 六: ろく."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 六|ろく common and learner-friendly for the N5 word deck, with accurate reading ろく, meaning six, and example 数字を六から十まで言います。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "子ども",
+    "status": "platinum",
+    "readingIncludes": [
+      "こども"
+    ],
+    "meaningIncludes": [
+      "child"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "子"
+    ],
+    "coversReadingIncludes": [
+      "子: こども"
+    ],
+    "breakdownIncludes": [
+      "子 （こ）",
+      "child"
+    ],
+    "exampleIncludes": [
+      "子どもが公園で遊んでいます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Core N5 noun for child and a high-value learner word; approved for the mixed kanji-kana spelling 子ども with exact word-reading audio.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 子ども|こども: word 子ども, reading こども, meaning child, example 子どもが公園で遊んでいます。, audio word-reading-子ども-こども, breakdown 子 （こ）, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 子ども|こども, reading こども, meaning child, example 子どもが公園で遊んでいます。, breakdown 子 （こ）, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%AD%90%E4%BE%9B",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%AD%90%E4%BE%9B verified 子ども|こども as an alternate written form for こども, common noun meaning child; product review checked example 子どもが公園で遊んでいます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 子ども|こども for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 子ども|こども, reading こども, sentence 子どもが公園で遊んでいます。, reading line こどもがこうえんであそんでいます。, English line A child is playing in the park."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 子ども|こども; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 子ども|こども exact asset fragment word-reading-子ども-こども for the exported word reading こども."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 子ども|こども source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 子ども|こども JLPT N5, JLPT core + reading coverage, focus 子, and covered readings 子: こども."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 子ども|こども common and learner-friendly for the N5 word deck, with accurate reading こども, meaning child, and example 子どもが公園で遊んでいます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "南",
+    "status": "platinum",
+    "readingIncludes": [
+      "みなみ"
+    ],
+    "meaningIncludes": [
+      "south"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "南"
+    ],
+    "coversReadingIncludes": [
+      "南: みなみ"
+    ],
+    "breakdownIncludes": [
+      "南 （みなみ）",
+      "south"
+    ],
+    "exampleIncludes": [
+      "南の国へ行きたいです。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common direction word and useful N5 vocabulary; approved as a word-card item while keeping the kanji-deck 南 card conceptually separate.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 南|みなみ: word 南, reading みなみ, meaning south, example 南の国へ行きたいです。, audio word-reading-南-みなみ, breakdown 南 （みなみ）, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 南|みなみ, reading みなみ, meaning south, example 南の国へ行きたいです。, breakdown 南 （みなみ）, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8D%97",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8D%97 verified 南|みなみ, reading みなみ, common noun meaning south; product review checked example 南の国へ行きたいです。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 南|みなみ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 南|みなみ, reading みなみ, sentence 南の国へ行きたいです。, reading line みなみのくにへいきたいです。, English line I want to go to a southern country."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 南|みなみ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 南|みなみ exact asset fragment word-reading-南-みなみ for the exported word reading みなみ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 南|みなみ source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 南|みなみ JLPT N5, JLPT core + reading coverage, focus 南, and covered readings 南: みなみ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 南|みなみ common and learner-friendly for the N5 word deck, with accurate reading みなみ, meaning south, and example 南の国へ行きたいです。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "十",
+    "status": "platinum",
+    "readingIncludes": [
+      "じゅう"
+    ],
+    "meaningIncludes": [
+      "ten"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "十"
+    ],
+    "coversReadingIncludes": [
+      "十: じゅう"
+    ],
+    "breakdownIncludes": [
+      "十 （じゅう）",
+      "ten"
+    ],
+    "exampleIncludes": [
+      "数字を一から十まで言います。"
+    ],
+    "notesIncludes": [
+      "Common standalone number form for counting sequences and number ranges."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Core N5 number word and useful standalone numeric form; approved with the generated-pitch warning visible rather than treating unverified pitch as dictionary truth.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 十|じゅう: word 十, reading じゅう, meaning ten, example 数字を一から十まで言います。, audio word-reading-十-じゅう, note Common standalone number form for counting sequences and number ranges, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 十|じゅう, reading じゅう, meaning ten, example 数字を一から十まで言います。, note text Common standalone number form for counting sequences and number ranges, breakdown 十 （じゅう）, and pitch label Pitch 1: 1 with Generated pitch (unverified)."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8D%81",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8D%81 verified 十|じゅう, reading じゅう, common numeric word meaning ten; product review checked example 数字を一から十まで言います。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 十|じゅう for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 十|じゅう, reading じゅう, sentence 数字を一から十まで言います。, reading line すうじをいちからじゅうまでいいます。, English line I say the numbers from one to ten."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 十|じゅう; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 十|じゅう exact asset fragment word-reading-十-じゅう for the exported word reading じゅう."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 十|じゅう source voicevox-nemo-accent-query pattern 1 [atamadaka] and rendered label Pitch 1: 1 with Generated pitch (unverified); dictionary-backed pitch remains unverified."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 十|じゅう JLPT N5, JLPT core + reading coverage, focus 十, and covered readings 十: じゅう."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 十|じゅう common and learner-friendly for the N5 word deck, with accurate reading じゅう, meaning ten, and example 数字を一から十まで言います。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "聞く",
+    "status": "platinum",
+    "readingIncludes": [
+      "きく"
+    ],
+    "meaningIncludes": [
+      "to hear",
+      "listen",
+      "ask"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "聞"
+    ],
+    "coversReadingIncludes": [
+      "聞: きく"
+    ],
+    "breakdownIncludes": [
+      "聞 （き）",
+      "hear / listen"
+    ],
+    "exampleIncludes": [
+      "先生に日本語の読み方を聞きます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Core N5 verb with high learner value across hearing, listening, and asking; the shipped example demonstrates the common ask sense without hiding the other basic meanings.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 聞く|きく: word 聞く, reading きく, meaning to hear / listen / ask, example 先生に日本語の読み方を聞きます。, audio word-reading-聞く-きく, breakdown 聞 （き）, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 聞く|きく, reading きく, meaning to hear / listen / ask, example 先生に日本語の読み方を聞きます。, breakdown 聞 （き）, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E8%81%9E%E3%81%8F",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E8%81%9E%E3%81%8F verified 聞く|きく, reading きく, common verb meaning to hear, listen, and ask; product review checked example 先生に日本語の読み方を聞きます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 聞く|きく for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 聞く|きく, reading きく, sentence 先生に日本語の読み方を聞きます。, reading line せんせいににほんごのよみかたをききます。, English line I ask the teacher how to read it in Japanese."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 聞く|きく; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 聞く|きく exact asset fragment word-reading-聞く-きく for the exported word reading きく."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 聞く|きく source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 聞く|きく JLPT N5, JLPT core + reading coverage, focus 聞, and covered readings 聞: きく."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 聞く|きく common and learner-friendly for the N5 word deck, with accurate reading きく, meaning to hear / listen / ask, and example 先生に日本語の読み方を聞きます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "時々",
+    "status": "platinum",
+    "readingIncludes": [
+      "ときどき"
+    ],
+    "meaningIncludes": [
+      "sometimes"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "時"
+    ],
+    "coversReadingIncludes": [
+      "時: ときどき"
+    ],
+    "breakdownIncludes": [
+      "時 （とき）",
+      "time / o'clock"
+    ],
+    "exampleIncludes": [
+      "時々公園で友だちに会います。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch 2: 2"
+    ],
+    "selectionRationale": "Common N5 frequency adverb and useful everyday vocabulary; approved with the repetition-mark reading shown in ReadingBreakdown and only 時 treated as focus kanji.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 時々|ときどき: word 時々, reading ときどき, meaning sometimes, example 時々公園で友だちに会います。, audio word-reading-時々-ときどき, breakdown 時 （とき）, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 時々|ときどき, reading ときどき, meaning sometimes, example 時々公園で友だちに会います。, breakdown 時 （とき）, and pitch labels Pitch 1: 0 and Pitch 2: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%99%82%E3%80%85",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%99%82%E3%80%85 verified 時々|ときどき, reading ときどき, common adverb meaning sometimes; product review checked example 時々公園で友だちに会います。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 時々|ときどき for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 時々|ときどき, reading ときどき, sentence 時々公園で友だちに会います。, reading line ときどきこうえんでともだちにあいます。, English line I sometimes meet my friend at the park."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 時々|ときどき; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 時々|ときどき exact asset fragment word-reading-時々-ときどき for the exported word reading ときどき."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 時々|ときどき source kanjium-cc-by-sa-4.0 pattern 0 [heiban] / 2 [nakadaka] and rendered labels Pitch 1: 0 and Pitch 2: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 時々|ときどき JLPT N5, JLPT core + reading coverage, focus 時, and covered readings 時: ときどき."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 時々|ときどき common and learner-friendly for the N5 word deck, with accurate reading ときどき, meaning sometimes, and example 時々公園で友だちに会います。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "行く",
+    "status": "platinum",
+    "readingIncludes": [
+      "いく"
+    ],
+    "meaningIncludes": [
+      "to go"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "行"
+    ],
+    "coversReadingIncludes": [
+      "行: いく"
+    ],
+    "breakdownIncludes": [
+      "行 （い）",
+      "go"
+    ],
+    "exampleIncludes": [
+      "学校へ行きます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Core N5 movement verb and essential learner vocabulary; the polite-form example is natural and the exported audio still teaches the exact 行く|いく card identity.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 行く|いく: word 行く, reading いく, meaning to go, example 学校へ行きます。, audio word-reading-行く-いく, breakdown 行 （い）, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 行く|いく, reading いく, meaning to go, example 学校へ行きます。, breakdown 行 （い）, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E8%A1%8C%E3%81%8F",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E8%A1%8C%E3%81%8F verified 行く|いく, reading いく, common verb meaning to go; product review checked example 学校へ行きます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 行く|いく for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 行く|いく, reading いく, sentence 学校へ行きます。, reading line がっこうへいきます。, English line I go to school."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 行く|いく; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 行く|いく exact asset fragment word-reading-行く-いく for the exported word reading いく."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 行く|いく source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 行く|いく JLPT N5, JLPT core + reading coverage, focus 行, and covered readings 行: いく."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 行く|いく common and learner-friendly for the N5 word deck, with accurate reading いく, meaning to go, and example 学校へ行きます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "水",
+    "status": "platinum",
+    "readingIncludes": [
+      "みず"
+    ],
+    "meaningIncludes": [
+      "water"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "水"
+    ],
+    "coversReadingIncludes": [
+      "水: みず"
+    ],
+    "breakdownIncludes": [
+      "水 （みず）",
+      "water"
+    ],
+    "exampleIncludes": [
+      "水を一杯ください。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Core N5 noun and essential everyday word; approved as vocabulary with exact 水|みず audio and a practical request example.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 水|みず: word 水, reading みず, meaning water, example 水を一杯ください。, audio word-reading-水-みず, breakdown 水 （みず）, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 水|みず, reading みず, meaning water, example 水を一杯ください。, breakdown 水 （みず）, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%B0%B4",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%B0%B4 verified 水|みず, reading みず, common noun meaning water; product review checked example 水を一杯ください。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 水|みず for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 水|みず, reading みず, sentence 水を一杯ください。, reading line みずをいっぱいください。, English line Please give me a glass of water."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 水|みず; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 水|みず exact asset fragment word-reading-水-みず for the exported word reading みず."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 水|みず source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 水|みず JLPT N5, JLPT core + reading coverage, focus 水, and covered readings 水: みず."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 水|みず common and learner-friendly for the N5 word deck, with accurate reading みず, meaning water, and example 水を一杯ください。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   }
 ]

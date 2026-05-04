@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Fixed
 
+- Fixed the N5 word card for `来る|くる` so its example demonstrates the exact dictionary-form written-reading identity instead of only the polite stem `来ます|きます`.
 - Added learner-facing N5 word usage notes for `母|はは`, `後で|あとで`, and `女|おんな`, and corrected `女|おんな` from `woman / girl` to `woman / female` so the word card no longer teaches `girl` as the standalone meaning.
 - Fixed the tracked word platinum manifest test fixture so optional `notesIncludes` expectations are validated instead of silently dropping learner-facing notes from the synthetic review rows.
 - Fixed word-card coverage auditing so `CoversReading` must match the contextual `ReadingBreakdown` ruby segment while allowing normalized kana matches for katakana readings, preventing false coverage such as `二時` claiming `二 -> じ`.
@@ -35,6 +36,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added twelve source-checked N5 word platinum approvals (`白い`, `西`, `来る`, `火`, `六`, `子ども`, `南`, `十`, `聞く`, `時々`, `行く`, `水`), raising active N5 word platinum coverage to `117` cards after fixing `来る|くる` and keeping generated pitch visibly labeled for `六|ろく` and `十|じゅう`.
 - Added twelve source-checked N5 word platinum approvals (`友だち`, `母`, `車`, `読む`, `間`, `見える`, `後で`, `山`, `東`, `話す`, `女`, `長い`), raising active N5 word platinum coverage to `105` cards after fixing learner-facing usage notes where source review found ambiguity.
 - Added twelve source-checked N5 word platinum approvals (`生まれる`, `小さい`, `右`, `書く`, `国`, `日`, `左`, `雨`, `四`, `高い`, `川`, `食べる`), raising active N5 word platinum coverage to `93` cards while keeping single-kanji word rows tied to word-deck usefulness and exact `written|reading` evidence.
 - Added `deck:words:platinum:batch`, a read-only word platinum pre-review packet that surfaces exact written-reading identity, generated card fields, sentence lines, exact word audio, pitch source/render status, lookup links, risk flags, and suggested review steps before manifest edits.

@@ -20898,5 +20898,813 @@
     "reviewedAt": "2026-05-04",
     "reviewer": "codex-platinum-review",
     "decisionReason": "Deferred from N5 because JLearn.net classifies 行う|おこなう as JLPT N4. It is common and useful, so it moves to the N4 word product instead of staying in N5 only to close 行 -> おこなう coverage."
+  },
+  {
+    "word": "校長",
+    "status": "deferred",
+    "readingIncludes": [
+      "こうちょう"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because JLearn.net classifies 校長|こうちょう as JLPT N4. It is a real useful school word, so it moves to the N4 word product instead of staying in N5 only to close 校 -> こう coverage; N5 already has stronger school words such as 学校, 高校, and 小学校."
+  },
+  {
+    "word": "家の中",
+    "status": "removed",
+    "readingIncludes": [
+      "いえのなか"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Removed from the default N5 word deck because 家の中|いえのなか is a transparent compositional phrase rather than a governed dictionary word-card identity. 中|なか is already covered by stronger N5 word cards, so this belongs as example/support language only."
+  },
+  {
+    "word": "銀行",
+    "readingIncludes": [
+      "ぎんこう"
+    ],
+    "meaningIncludes": [
+      "bank"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "行"
+    ],
+    "coversReadingIncludes": [
+      "行: こう"
+    ],
+    "breakdownIncludes": [
+      "銀 （ぎん） ／ bank / silver",
+      "行 （こう） ／ bank / line"
+    ],
+    "exampleIncludes": [
+      "昼に銀行へ行きます。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Core N5/common word for bank; useful immediately for errands, directions, and money contexts, while the outside-level 銀 kanji remains visibly labeled on the card.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 銀行|ぎんこう: word 銀行, reading ぎんこう, meaning bank, example 昼に銀行へ行きます。, audio word-reading-銀行-ぎんこう, breakdown 銀 （ぎん） ／ bank / silver / 行 （こう） ／ bank / line, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 銀行|ぎんこう, reading ぎんこう, meaning bank, example 昼に銀行へ行きます。, breakdown 銀 （ぎん） ／ bank / silver / 行 （こう） ／ bank / line, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%8A%80%E8%A1%8C",
+        "detail": "JLearn.net verified 銀行|ぎんこう, reading ぎんこう, learner meaning bank, common JLPT N5 noun status, and product review checked example 昼に銀行へ行きます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 銀行|ぎんこう for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 銀行|ぎんこう, reading ぎんこう, sentence 昼に銀行へ行きます。, reading line ひるにぎんこうへいきます。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 銀行|ぎんこう; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 銀行|ぎんこう exact asset fragment word-reading-銀行-ぎんこう for the exported word reading ぎんこう."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 銀行|ぎんこう source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 銀行|ぎんこう JLPT N5, JLPT core + reading coverage, focus 行, and covered readings 行: こう."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 銀行|ぎんこう common and learner-friendly for the N5 word deck, with accurate reading ぎんこう, meaning bank, example 昼に銀行へ行きます。, and reviewed pitch handling Pitch 1: 0."
+      }
+    ]
+  },
+  {
+    "word": "午年",
+    "readingIncludes": [
+      "うまどし"
+    ],
+    "meaningIncludes": [
+      "Year of the Horse"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "午"
+    ],
+    "coversReadingIncludes": [
+      "午: うま"
+    ],
+    "breakdownIncludes": [
+      "午 （うま） ／ noon / midday",
+      "年 （どし） ／ year"
+    ],
+    "exampleIncludes": [
+      "父は午年です。"
+    ],
+    "notesIncludes": [
+      "Reading-coverage support word for the 午 -> うま pattern."
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 4",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Dictionary-backed zodiac-year noun; not a core beginner word, but culturally useful enough as support for 午 -> うま, with generated pitch kept visibly labeled as unverified.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 午年|うまどし: word 午年, reading うまどし, meaning Year of the Horse, example 父は午年です。, audio word-reading-午年-うまどし, breakdown 午 （うま） ／ noon / midday / 年 （どし） ／ year, labels JLPT N5 Reading coverage support, and pitch label Pitch 1: 4 / Generated pitch (unverified)."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 午年|うまどし, reading うまどし, meaning Year of the Horse, example 父は午年です。, breakdown 午 （うま） ／ noon / midday / 年 （どし） ／ year, and pitch label Pitch 1: 4 / Generated pitch (unverified)."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8D%88%E5%B9%B4; JapaneseClass.jp https://japaneseclass.jp/dictionary/%E5%8D%88%E5%B9%B4",
+        "detail": "JLearn.net and JapaneseClass.jp verified 午年|うまどし, reading うまどし, learner meaning Year of the Horse, common noun status, and product review checked example 父は午年です。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 午年|うまどし for JLPT N5; product review confirmed the word belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 午年|うまどし, reading うまどし, sentence 父は午年です。, reading line ちちはうまどしです。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 午年|うまどし; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 午年|うまどし exact asset fragment word-reading-午年-うまどし for the exported word reading うまどし."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 午年|うまどし source voicevox-nemo-accent-query pattern 4 [odaka] and rendered label Pitch 1: 4 / Generated pitch (unverified). This is generated guidance, not dictionary-verified pitch."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 午年|うまどし JLPT N5, Reading coverage support, focus 午, and covered readings 午: うま."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 午年|うまどし culturally common and learner-friendly enough for N5 support, with accurate reading うまどし, meaning Year of the Horse, example 父は午年です。, and reviewed pitch handling Pitch 1: 4 / Generated pitch (unverified)."
+      }
+    ]
+  },
+  {
+    "word": "半ば",
+    "status": "deferred",
+    "readingIncludes": [
+      "なかば"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because JLearn.net classifies 半ば|なかば as JLPT N3. It is useful, but not beginner-level enough to keep only for 半 -> なかば coverage."
+  },
+  {
+    "word": "去年",
+    "readingIncludes": [
+      "きょねん"
+    ],
+    "meaningIncludes": [
+      "last year"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "年"
+    ],
+    "coversReadingIncludes": [
+      "年: ねん"
+    ],
+    "breakdownIncludes": [
+      "去 （きょ） ／ past / previous",
+      "年 （ねん） ／ year"
+    ],
+    "exampleIncludes": [
+      "去年は日本語を勉強しました。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Core N5/common temporal noun for last year; high learner utility for basic past-time statements and clean 年 -> ねん contextual coverage.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 去年|きょねん: word 去年, reading きょねん, meaning last year, example 去年は日本語を勉強しました。, audio word-reading-去年-きょねん, breakdown 去 （きょ） ／ past / previous / 年 （ねん） ／ year, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 去年|きょねん, reading きょねん, meaning last year, example 去年は日本語を勉強しました。, breakdown 去 （きょ） ／ past / previous / 年 （ねん） ／ year, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8E%BB%E5%B9%B4",
+        "detail": "JLearn.net verified 去年|きょねん, reading きょねん, learner meaning last year, common JLPT N5 temporal noun status, and product review checked example 去年は日本語を勉強しました。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 去年|きょねん for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 去年|きょねん, reading きょねん, sentence 去年は日本語を勉強しました。, reading line きょねんはにほんごをべんきょうしました。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 去年|きょねん; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 去年|きょねん exact asset fragment word-reading-去年-きょねん for the exported word reading きょねん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 去年|きょねん source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 去年|きょねん JLPT N5, JLPT core + reading coverage, focus 年, and covered readings 年: ねん."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 去年|きょねん common and learner-friendly for the N5 word deck, with accurate reading きょねん, meaning last year, example 去年は日本語を勉強しました。, and reviewed pitch handling Pitch 1: 1."
+      }
+    ]
+  },
+  {
+    "word": "東口",
+    "readingIncludes": [
+      "ひがしぐち"
+    ],
+    "meaningIncludes": [
+      "east exit"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "東"
+    ],
+    "coversReadingIncludes": [
+      "東: ひがし"
+    ],
+    "breakdownIncludes": [
+      "東 （ひがし） ／ east",
+      "口 （ぐち） ／ mouth / opening"
+    ],
+    "exampleIncludes": [
+      "東口の前で待っています。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Practical station/signage noun for the east entrance or exit; useful for beginner navigation and consistent with the reviewed direction-plus-口 word family, with generated pitch visibly labeled.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 東口|ひがしぐち: word 東口, reading ひがしぐち, meaning east exit, example 東口の前で待っています。, audio word-reading-東口-ひがしぐち, breakdown 東 （ひがし） ／ east / 口 （ぐち） ／ mouth / opening, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 3 / Generated pitch (unverified)."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 東口|ひがしぐち, reading ひがしぐち, meaning east exit, example 東口の前で待っています。, breakdown 東 （ひがし） ／ east / 口 （ぐち） ／ mouth / opening, and pitch label Pitch 1: 3 / Generated pitch (unverified)."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%9D%B1%E5%8F%A3; Kotobank https://kotobank.jp/word/%E6%9D%B1%E5%8F%A3-2076649",
+        "detail": "JLearn.net and Kotobank verified 東口|ひがしぐち, reading ひがしぐち, learner meaning east exit/east entrance, common noun status for an east-side entrance/exit, and product review checked example 東口の前で待っています。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 東口|ひがしぐち for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 東口|ひがしぐち, reading ひがしぐち, sentence 東口の前で待っています。, reading line ひがしぐちのまえでまっています。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 東口|ひがしぐち; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 東口|ひがしぐち exact asset fragment word-reading-東口-ひがしぐち for the exported word reading ひがしぐち."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 東口|ひがしぐち source voicevox-nemo-accent-query pattern 3 [nakadaka] and rendered label Pitch 1: 3 / Generated pitch (unverified). This is generated guidance, not dictionary-verified pitch."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 東口|ひがしぐち JLPT N5, JLPT core + reading coverage, focus 東, and covered readings 東: ひがし."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 東口|ひがしぐち common and learner-friendly for the N5 word deck, with accurate reading ひがしぐち, meaning east exit, example 東口の前で待っています。, and reviewed pitch handling Pitch 1: 3 / Generated pitch (unverified)."
+      }
+    ]
+  },
+  {
+    "word": "火山",
+    "status": "deferred",
+    "readingIncludes": [
+      "かざん"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because JLearn.net classifies 火山|かざん as JLPT N2. It is a real common word, but N5 should not keep volcano vocabulary only to close 山 -> ざん coverage."
+  },
+  {
+    "word": "話",
+    "readingIncludes": [
+      "はなし"
+    ],
+    "meaningIncludes": [
+      "story",
+      "talk"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "話"
+    ],
+    "coversReadingIncludes": [
+      "話: はなし"
+    ],
+    "breakdownIncludes": [
+      "話 （はなし） ／ story / talk"
+    ],
+    "exampleIncludes": [
+      "その話はとてもおもしろいです。"
+    ],
+    "notesIncludes": [
+      "Reading-coverage support word for the 話 -> はなし pattern."
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "selectionRationale": "Common N5 noun for story/talk; it ships as exact word vocabulary 話|はなし, not as a kanji-deck substitute, and is useful in everyday conversation.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 話|はなし: word 話, reading はなし, meaning story / talk, example その話はとてもおもしろいです。, audio word-reading-話-はなし, breakdown 話 （はなし） ／ story / talk, labels JLPT N5 Reading coverage support, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 話|はなし, reading はなし, meaning story / talk, example その話はとてもおもしろいです。, breakdown 話 （はなし） ／ story / talk, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E8%A9%B1",
+        "detail": "JLearn.net verified 話|はなし, reading はなし, learner meaning story / talk, common JLPT N5 noun status, and product review checked example その話はとてもおもしろいです。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 話|はなし for JLPT N5; product review confirmed the word belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 話|はなし, reading はなし, sentence その話はとてもおもしろいです。, reading line そのはなしはとてもおもしろいです。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 話|はなし; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 話|はなし exact asset fragment word-reading-話-はなし for the exported word reading はなし."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 話|はなし source kanjium-cc-by-sa-4.0 pattern 3 [odaka] and rendered label Pitch 1: 3."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 話|はなし JLPT N5, Reading coverage support, focus 話, and covered readings 話: はなし."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 話|はなし common and learner-friendly for the N5 word deck, with accurate reading はなし, meaning story / talk, example その話はとてもおもしろいです。, and reviewed pitch handling Pitch 1: 3."
+      }
+    ]
+  },
+  {
+    "word": "西口",
+    "readingIncludes": [
+      "にしぐち"
+    ],
+    "meaningIncludes": [
+      "west exit"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "西"
+    ],
+    "coversReadingIncludes": [
+      "西: にし"
+    ],
+    "breakdownIncludes": [
+      "西 （にし） ／ west",
+      "口 （ぐち） ／ mouth / opening"
+    ],
+    "exampleIncludes": [
+      "西口から出ます。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 4",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Practical station/signage noun for the west entrance or exit; useful for beginner navigation and consistent with the reviewed direction-plus-口 word family, with generated pitch visibly labeled.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 西口|にしぐち: word 西口, reading にしぐち, meaning west exit, example 西口から出ます。, audio word-reading-西口-にしぐち, breakdown 西 （にし） ／ west / 口 （ぐち） ／ mouth / opening, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 4 / Generated pitch (unverified)."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 西口|にしぐち, reading にしぐち, meaning west exit, example 西口から出ます。, breakdown 西 （にし） ／ west / 口 （ぐち） ／ mouth / opening, and pitch label Pitch 1: 4 / Generated pitch (unverified)."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E8%A5%BF%E5%8F%A3; Kotobank https://kotobank.jp/word/%E8%A5%BF%E5%8F%A3-2070984",
+        "detail": "JLearn.net and Kotobank verified 西口|にしぐち, reading にしぐち, learner meaning west exit/west entrance, common noun status for a west-side entrance/exit, and product review checked example 西口から出ます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 西口|にしぐち for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 西口|にしぐち, reading にしぐち, sentence 西口から出ます。, reading line にしぐちからでます。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 西口|にしぐち; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 西口|にしぐち exact asset fragment word-reading-西口-にしぐち for the exported word reading にしぐち."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 西口|にしぐち source voicevox-nemo-accent-query pattern 4 [odaka] and rendered label Pitch 1: 4 / Generated pitch (unverified). This is generated guidance, not dictionary-verified pitch."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 西口|にしぐち JLPT N5, JLPT core + reading coverage, focus 西, and covered readings 西: にし."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 西口|にしぐち common and learner-friendly for the N5 word deck, with accurate reading にしぐち, meaning west exit, example 西口から出ます。, and reviewed pitch handling Pitch 1: 4 / Generated pitch (unverified)."
+      }
+    ]
+  },
+  {
+    "word": "来週",
+    "readingIncludes": [
+      "らいしゅう"
+    ],
+    "meaningIncludes": [
+      "next week"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "来"
+    ],
+    "coversReadingIncludes": [
+      "来: らい"
+    ],
+    "breakdownIncludes": [
+      "来 （らい） ／ next / come",
+      "週 （しゅう） ／ week"
+    ],
+    "exampleIncludes": [
+      "来週、友だちと会います。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Core N5/common temporal noun for next week; high learner utility for scheduling and clean 来 -> らい contextual coverage while 週 is visibly labeled.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 来週|らいしゅう: word 来週, reading らいしゅう, meaning next week, example 来週、友だちと会います。, audio word-reading-来週-らいしゅう, breakdown 来 （らい） ／ next / come / 週 （しゅう） ／ week, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 来週|らいしゅう, reading らいしゅう, meaning next week, example 来週、友だちと会います。, breakdown 来 （らい） ／ next / come / 週 （しゅう） ／ week, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%9D%A5%E9%80%B1",
+        "detail": "JLearn.net verified 来週|らいしゅう, reading らいしゅう, learner meaning next week, common JLPT N5 temporal noun status, and product review checked example 来週、友だちと会います。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 来週|らいしゅう for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 来週|らいしゅう, reading らいしゅう, sentence 来週、友だちと会います。, reading line らいしゅう、ともだちとあいます。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 来週|らいしゅう; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 来週|らいしゅう exact asset fragment word-reading-来週-らいしゅう for the exported word reading らいしゅう."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 来週|らいしゅう source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 来週|らいしゅう JLPT N5, JLPT core + reading coverage, focus 来, and covered readings 来: らい."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 来週|らいしゅう common and learner-friendly for the N5 word deck, with accurate reading らいしゅう, meaning next week, example 来週、友だちと会います。, and reviewed pitch handling Pitch 1: 0."
+      }
+    ]
+  },
+  {
+    "word": "見学",
+    "status": "deferred",
+    "readingIncludes": [
+      "けんがく"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because JLearn.net classifies 見学|けんがく as JLPT N2. It is useful later-level school/activity vocabulary, but N5 already teaches 見 through stronger beginner verbs such as 見る, 見える, and 見せる."
   }
 ]

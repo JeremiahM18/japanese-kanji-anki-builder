@@ -19887,5 +19887,1016 @@
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
     }
+  },
+  {
+    "word": "小学校",
+    "status": "platinum",
+    "readingIncludes": [
+      "しょうがっこう"
+    ],
+    "meaningIncludes": [
+      "elementary school"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "小",
+      "学",
+      "校"
+    ],
+    "coversReadingIncludes": [
+      "小: しょう",
+      "学: がっ",
+      "校: こう"
+    ],
+    "breakdownIncludes": [
+      "小 （しょう） ／ small",
+      "学 （がっ） ／ study / learning",
+      "校 （こう） ／ school campus"
+    ],
+    "exampleIncludes": [
+      "弟は小学校へ歩いて行きます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "selectionRationale": "Common school-life noun; kept in the N5 word product because it is learner-useful now and cleanly reinforces the school reading cluster 小 -> しょう / 学 -> がっ / 校 -> こう without inventing a weak support card.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 小学校|しょうがっこう: word 小学校, reading しょうがっこう, meaning elementary school, example 弟は小学校へ歩いて行きます。, audio word-reading-小学校-しょうがっこう, breakdown 小 （しょう） ／ small / 学 （がっ） ／ study / learning / 校 （こう） ／ school campus, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 小学校|しょうがっこう, reading しょうがっこう, meaning elementary school, example 弟は小学校へ歩いて行きます。, breakdown 小 （しょう） ／ small / 学 （がっ） ／ study / learning / 校 （こう） ／ school campus, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%B0%8F%E5%AD%A6%E6%A0%A1",
+        "detail": "JLearn.net verified 小学校|しょうがっこう, reading しょうがっこう, learner meaning elementary school, common noun status, and product review checked example 弟は小学校へ歩いて行きます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 小学校|しょうがっこう for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 小学校|しょうがっこう, reading しょうがっこう, sentence 弟は小学校へ歩いて行きます。, reading line おとうとはしょうがっこうへあるいていきます。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 小学校|しょうがっこう; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 小学校|しょうがっこう exact asset fragment word-reading-小学校-しょうがっこう for the exported word reading しょうがっこう."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 小学校|しょうがっこう source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] and rendered label Pitch 1: 3."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 小学校|しょうがっこう JLPT N5, JLPT core + reading coverage, focus 小、学、校, and covered readings 小: しょう / 学: がっ / 校: こう."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 小学校|しょうがっこう common and learner-friendly for the N5 word deck, with accurate reading しょうがっこう, meaning elementary school, example 弟は小学校へ歩いて行きます。, and reviewed pitch handling Pitch 1: 3."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "昼ご飯",
+    "status": "platinum",
+    "readingIncludes": [
+      "ひるごはん"
+    ],
+    "meaningIncludes": [
+      "lunch"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "昼",
+      "飯"
+    ],
+    "coversReadingIncludes": [
+      "昼: ひる",
+      "飯: はん"
+    ],
+    "breakdownIncludes": [
+      "昼 （ひる） ／ daytime / noon",
+      "飯 （はん） ／ meal / rice"
+    ],
+    "exampleIncludes": [
+      "友だちと昼ご飯を食べます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "selectionRationale": "Common beginner meal word for lunch; useful in everyday scheduling and food language, with outside-level constituent kanji visibly labeled on the card.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 昼ご飯|ひるごはん: word 昼ご飯, reading ひるごはん, meaning lunch, example 友だちと昼ご飯を食べます。, audio word-reading-昼ご飯-ひるごはん, breakdown 昼 （ひる） ／ daytime / noon / 飯 （はん） ／ meal / rice, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 昼ご飯|ひるごはん, reading ひるごはん, meaning lunch, example 友だちと昼ご飯を食べます。, breakdown 昼 （ひる） ／ daytime / noon / 飯 （はん） ／ meal / rice, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%98%BC%E3%81%94%E9%A3%AF",
+        "detail": "JLearn.net verified 昼ご飯|ひるごはん, reading ひるごはん, learner meaning lunch, common JLPT N5 noun status, and product review checked example 友だちと昼ご飯を食べます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 昼ご飯|ひるごはん for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 昼ご飯|ひるごはん, reading ひるごはん, sentence 友だちと昼ご飯を食べます。, reading line ともだちとひるごはんをたべます。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 昼ご飯|ひるごはん; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 昼ご飯|ひるごはん exact asset fragment word-reading-昼ご飯-ひるごはん for the exported word reading ひるごはん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 昼ご飯|ひるごはん source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] and rendered label Pitch 1: 3."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 昼ご飯|ひるごはん JLPT N5, JLPT core + reading coverage, focus 昼、飯, and covered readings 昼: ひる / 飯: はん."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 昼ご飯|ひるごはん common and learner-friendly for the N5 word deck, with accurate reading ひるごはん, meaning lunch, example 友だちと昼ご飯を食べます。, and reviewed pitch handling Pitch 1: 3."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "映画",
+    "status": "platinum",
+    "readingIncludes": [
+      "えいが"
+    ],
+    "meaningIncludes": [
+      "movie"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "映",
+      "画"
+    ],
+    "coversReadingIncludes": [
+      "映: えい",
+      "画: が"
+    ],
+    "breakdownIncludes": [
+      "映 （えい） ／ show / project",
+      "画 （が） ／ picture / drawing"
+    ],
+    "exampleIncludes": [
+      "友だちと映画を見ます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1",
+      "Pitch 2: 0"
+    ],
+    "selectionRationale": "Core beginner culture and leisure word; useful on its own, common in learner materials, and the card labels the outside-level constituent kanji instead of hiding them.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 映画|えいが: word 映画, reading えいが, meaning movie, example 友だちと映画を見ます。, audio word-reading-映画-えいが, breakdown 映 （えい） ／ show / project / 画 （が） ／ picture / drawing, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 1 / Pitch 2: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 映画|えいが, reading えいが, meaning movie, example 友だちと映画を見ます。, breakdown 映 （えい） ／ show / project / 画 （が） ／ picture / drawing, and pitch label Pitch 1: 1 / Pitch 2: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%98%A0%E7%94%BB",
+        "detail": "JLearn.net verified 映画|えいが, reading えいが, learner meaning movie, common JLPT N5 noun status, and product review checked example 友だちと映画を見ます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 映画|えいが for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 映画|えいが, reading えいが, sentence 友だちと映画を見ます。, reading line ともだちとえいがをみます。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 映画|えいが; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 映画|えいが exact asset fragment word-reading-映画-えいが for the exported word reading えいが."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 映画|えいが source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] / 0 [heiban] and rendered label Pitch 1: 1 / Pitch 2: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 映画|えいが JLPT N5, JLPT core + reading coverage, focus 映、画, and covered readings 映: えい / 画: が."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 映画|えいが common and learner-friendly for the N5 word deck, with accurate reading えいが, meaning movie, example 友だちと映画を見ます。, and reviewed pitch handling Pitch 1: 1 / Pitch 2: 0."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "本屋",
+    "status": "platinum",
+    "readingIncludes": [
+      "ほんや"
+    ],
+    "meaningIncludes": [
+      "bookstore"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "本"
+    ],
+    "coversReadingIncludes": [
+      "本: ほん"
+    ],
+    "breakdownIncludes": [
+      "本 （ほん） ／ book / base",
+      "屋 （や） ／ shop / place"
+    ],
+    "exampleIncludes": [
+      "駅前の本屋で辞書を買います。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Common everyday place noun for a bookstore; useful for directions and shopping language, and not just present for 本 -> ほん reading coverage.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 本屋|ほんや: word 本屋, reading ほんや, meaning bookstore, example 駅前の本屋で辞書を買います。, audio word-reading-本屋-ほんや, breakdown 本 （ほん） ／ book / base / 屋 （や） ／ shop / place, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 本屋|ほんや, reading ほんや, meaning bookstore, example 駅前の本屋で辞書を買います。, breakdown 本 （ほん） ／ book / base / 屋 （や） ／ shop / place, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%9C%AC%E5%B1%8B",
+        "detail": "JLearn.net verified 本屋|ほんや, reading ほんや, learner meaning bookstore, common noun status, and product review checked example 駅前の本屋で辞書を買います。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 本屋|ほんや for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 本屋|ほんや, reading ほんや, sentence 駅前の本屋で辞書を買います。, reading line えきまえのほんやでじしょをかいます。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 本屋|ほんや; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 本屋|ほんや exact asset fragment word-reading-本屋-ほんや for the exported word reading ほんや."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 本屋|ほんや source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 本屋|ほんや JLPT N5, JLPT core + reading coverage, focus 本, and covered readings 本: ほん."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 本屋|ほんや common and learner-friendly for the N5 word deck, with accurate reading ほんや, meaning bookstore, example 駅前の本屋で辞書を買います。, and reviewed pitch handling Pitch 1: 1."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "天の川",
+    "status": "platinum",
+    "readingIncludes": [
+      "あまのがわ"
+    ],
+    "meaningIncludes": [
+      "Milky Way"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "天"
+    ],
+    "coversReadingIncludes": [
+      "天: あま"
+    ],
+    "breakdownIncludes": [
+      "天 （あま） ／ weather / sky",
+      "川 （がわ） ／ river"
+    ],
+    "exampleIncludes": [
+      "夏の夜に天の川が見えました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "selectionRationale": "Dictionary-backed cultural/sky noun for the Milky Way; useful enough to teach the real 天 -> あま reading without pretending every 天 alternate reading deserves an N5 card.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 天の川|あまのがわ: word 天の川, reading あまのがわ, meaning Milky Way, example 夏の夜に天の川が見えました。, audio word-reading-天の川-あまのがわ, breakdown 天 （あま） ／ weather / sky / 川 （がわ） ／ river, labels JLPT N5 Reading coverage support, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 天の川|あまのがわ, reading あまのがわ, meaning Milky Way, example 夏の夜に天の川が見えました。, breakdown 天 （あま） ／ weather / sky / 川 （がわ） ／ river, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%A4%A9%E3%81%AE%E5%B7%9D; Bunpro https://bunpro.jp/vocabs/%E5%A4%A9%E3%81%AE%E5%B7%9D",
+        "detail": "JLearn.net and Bunpro verified 天の川|あまのがわ, reading あまのがわ, learner meaning Milky Way, common or N5 learner-word status, and product review checked example 夏の夜に天の川が見えました。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 天の川|あまのがわ for JLPT N5; product review confirmed the word belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 天の川|あまのがわ, reading あまのがわ, sentence 夏の夜に天の川が見えました。, reading line なつのよるにあまのがわがみえました。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 天の川|あまのがわ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 天の川|あまのがわ exact asset fragment word-reading-天の川-あまのがわ for the exported word reading あまのがわ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 天の川|あまのがわ source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] and rendered label Pitch 1: 3."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 天の川|あまのがわ JLPT N5, Reading coverage support, focus 天, and covered readings 天: あま."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 天の川|あまのがわ common and learner-friendly for the N5 word deck, with accurate reading あまのがわ, meaning Milky Way, example 夏の夜に天の川が見えました。, and reviewed pitch handling Pitch 1: 3."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "notesIncludes": [
+      "Reading-coverage support word for the 天 -> あま pattern."
+    ]
+  },
+  {
+    "word": "南口",
+    "status": "platinum",
+    "readingIncludes": [
+      "みなみぐち"
+    ],
+    "meaningIncludes": [
+      "south exit"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "南"
+    ],
+    "coversReadingIncludes": [
+      "南: みなみ"
+    ],
+    "breakdownIncludes": [
+      "南 （みなみ） ／ south",
+      "口 （ぐち） ／ mouth / opening"
+    ],
+    "exampleIncludes": [
+      "南口にコンビニがあります。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 5",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Useful real-world station/signage noun for the south exit; product review keeps it because direction-plus-entrance words are practical for beginner navigation, while generated pitch stays visibly labeled as unverified.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 南口|みなみぐち: word 南口, reading みなみぐち, meaning south exit, example 南口にコンビニがあります。, audio word-reading-南口-みなみぐち, breakdown 南 （みなみ） ／ south / 口 （ぐち） ／ mouth / opening, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 5 / Generated pitch (unverified)."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 南口|みなみぐち, reading みなみぐち, meaning south exit, example 南口にコンビニがあります。, breakdown 南 （みなみ） ／ south / 口 （ぐち） ／ mouth / opening, and pitch label Pitch 1: 5 / Generated pitch (unverified)."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8D%97%E5%8F%A3; Kotobank https://kotobank.jp/word/%E5%8D%97%E5%8F%A3-2085502",
+        "detail": "JLearn.net and Kotobank verified 南口|みなみぐち, reading みなみぐち, learner meaning south exit, noun status for a south-side entrance/exit, and product review checked example 南口にコンビニがあります。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 南口|みなみぐち for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 南口|みなみぐち, reading みなみぐち, sentence 南口にコンビニがあります。, reading line みなみぐちにこんびにがあります。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 南口|みなみぐち; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 南口|みなみぐち exact asset fragment word-reading-南口-みなみぐち for the exported word reading みなみぐち."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 南口|みなみぐち source voicevox-nemo-accent-query pattern 5 [odaka] and rendered label Pitch 1: 5 / Generated pitch (unverified). This is generated guidance, not dictionary-verified pitch."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 南口|みなみぐち JLPT N5, JLPT core + reading coverage, focus 南, and covered readings 南: みなみ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 南口|みなみぐち common and learner-friendly for the N5 word deck, with accurate reading みなみぐち, meaning south exit, example 南口にコンビニがあります。, and reviewed pitch handling Pitch 1: 5 / Generated pitch (unverified)."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "子猫",
+    "status": "platinum",
+    "readingIncludes": [
+      "こねこ"
+    ],
+    "meaningIncludes": [
+      "kitten"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "子"
+    ],
+    "coversReadingIncludes": [
+      "子: こ"
+    ],
+    "breakdownIncludes": [
+      "子 （こ） ／ child",
+      "猫 （ねこ） ／ cat"
+    ],
+    "exampleIncludes": [
+      "子猫が部屋で寝ています。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Common concrete noun for kitten; learner-friendly, useful in everyday description, and a better real word than approving a rare 子 reading support candidate.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 子猫|こねこ: word 子猫, reading こねこ, meaning kitten, example 子猫が部屋で寝ています。, audio word-reading-子猫-こねこ, breakdown 子 （こ） ／ child / 猫 （ねこ） ／ cat, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 子猫|こねこ, reading こねこ, meaning kitten, example 子猫が部屋で寝ています。, breakdown 子 （こ） ／ child / 猫 （ねこ） ／ cat, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%AD%90%E7%8C%AB; JapaneseClass.jp https://japaneseclass.jp/dictionary/%E5%AD%90%E7%8C%AB",
+        "detail": "JLearn.net and JapaneseClass.jp verified 子猫|こねこ, reading こねこ, learner meaning kitten, common noun status, and product review checked example 子猫が部屋で寝ています。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 子猫|こねこ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 子猫|こねこ, reading こねこ, sentence 子猫が部屋で寝ています。, reading line こねこがへやでねています。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 子猫|こねこ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 子猫|こねこ exact asset fragment word-reading-子猫-こねこ for the exported word reading こねこ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 子猫|こねこ source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 子猫|こねこ JLPT N5, JLPT core + reading coverage, focus 子, and covered readings 子: こ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 子猫|こねこ common and learner-friendly for the N5 word deck, with accurate reading こねこ, meaning kitten, example 子猫が部屋で寝ています。, and reviewed pitch handling Pitch 1: 2."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "新聞",
+    "status": "platinum",
+    "readingIncludes": [
+      "しんぶん"
+    ],
+    "meaningIncludes": [
+      "newspaper"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "聞"
+    ],
+    "coversReadingIncludes": [
+      "聞: ぶん"
+    ],
+    "breakdownIncludes": [
+      "新 （しん） ／ new",
+      "聞 （ぶん） ／ hear / listen"
+    ],
+    "exampleIncludes": [
+      "父は朝に新聞を読みます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Core N5/common noun for newspaper and a useful beginner reading word; it also cleanly covers the contextual 聞 -> ぶん reading without being coverage-only.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 新聞|しんぶん: word 新聞, reading しんぶん, meaning newspaper, example 父は朝に新聞を読みます。, audio word-reading-新聞-しんぶん, breakdown 新 （しん） ／ new / 聞 （ぶん） ／ hear / listen, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 新聞|しんぶん, reading しんぶん, meaning newspaper, example 父は朝に新聞を読みます。, breakdown 新 （しん） ／ new / 聞 （ぶん） ／ hear / listen, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%96%B0%E8%81%9E",
+        "detail": "JLearn.net verified 新聞|しんぶん, reading しんぶん, learner meaning newspaper, common JLPT N5 noun status, and product review checked example 父は朝に新聞を読みます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 新聞|しんぶん for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 新聞|しんぶん, reading しんぶん, sentence 父は朝に新聞を読みます。, reading line ちちはあさにしんぶんをよみます。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 新聞|しんぶん; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 新聞|しんぶん exact asset fragment word-reading-新聞-しんぶん for the exported word reading しんぶん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 新聞|しんぶん source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 新聞|しんぶん JLPT N5, JLPT core + reading coverage, focus 聞, and covered readings 聞: ぶん."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 新聞|しんぶん common and learner-friendly for the N5 word deck, with accurate reading しんぶん, meaning newspaper, example 父は朝に新聞を読みます。, and reviewed pitch handling Pitch 1: 0."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "notesIncludes": [
+      "Core JLPT word that also covers the 聞 -> ぶん pattern."
+    ]
+  },
+  {
+    "word": "目の前",
+    "status": "platinum",
+    "readingIncludes": [
+      "めのまえ"
+    ],
+    "meaningIncludes": [
+      "right in front",
+      "before your eyes"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "前"
+    ],
+    "coversReadingIncludes": [
+      "前: まえ"
+    ],
+    "breakdownIncludes": [
+      "目 （め） ／ eye / item",
+      "前 （まえ） ／ front / before"
+    ],
+    "exampleIncludes": [
+      "先生は目の前にいます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "selectionRationale": "Common lexicalized expression for right in front / before your eyes; phrase-shaped but dictionary-backed and learner-friendly enough to ship as an expression card.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 目の前|めのまえ: word 目の前, reading めのまえ, meaning right in front / before your eyes, example 先生は目の前にいます。, audio word-reading-目の前-めのまえ, breakdown 目 （め） ／ eye / item / 前 （まえ） ／ front / before, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 目の前|めのまえ, reading めのまえ, meaning right in front / before your eyes, example 先生は目の前にいます。, breakdown 目 （め） ／ eye / item / 前 （まえ） ／ front / before, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E7%9B%AE%E3%81%AE%E5%89%8D; JapaneseClass.jp https://japaneseclass.jp/dictionary/%E7%9B%AE%E3%81%AE%E5%89%8D",
+        "detail": "JLearn.net and JapaneseClass.jp verified 目の前|めのまえ, reading めのまえ, learner meanings right in front and before your eyes, common expression/noun status, and product review checked example 先生は目の前にいます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 目の前|めのまえ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 目の前|めのまえ, reading めのまえ, sentence 先生は目の前にいます。, reading line せんせいはめのまえにいます。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 目の前|めのまえ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 目の前|めのまえ exact asset fragment word-reading-目の前-めのまえ for the exported word reading めのまえ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 目の前|めのまえ source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] and rendered label Pitch 1: 3."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 目の前|めのまえ JLPT N5, JLPT core + reading coverage, focus 前, and covered readings 前: まえ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 目の前|めのまえ common and learner-friendly for the N5 word deck, with accurate reading めのまえ, meaning right in front / before your eyes, example 先生は目の前にいます。, and reviewed pitch handling Pitch 1: 3."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "母校",
+    "status": "deferred",
+    "readingIncludes": [
+      "ぼこう"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because JLearn.net classifies 母校|ぼこう as JLPT N1 and the word is too formal/specific to keep only for 母 -> ぼ coverage. It remains a real word, but N5 should not force alma mater language into the beginner deck."
+  },
+  {
+    "word": "駅の中",
+    "status": "removed",
+    "readingIncludes": [
+      "えきのなか"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Removed from the default N5 word deck because 駅の中|えきのなか is a transparent compositional phrase rather than a dictionary-backed word-card identity. 中|なか is already covered by stronger N5 word cards, so this belongs as example/support language only."
+  },
+  {
+    "word": "行う",
+    "status": "deferred",
+    "readingIncludes": [
+      "おこなう"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because JLearn.net classifies 行う|おこなう as JLPT N4. It is common and useful, so it moves to the N4 word product instead of staying in N5 only to close 行 -> おこなう coverage."
   }
 ]

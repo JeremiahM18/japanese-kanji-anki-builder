@@ -20,6 +20,7 @@ function parseArgs(argv) {
         requireSourceLevel: false,
         source: "",
         sourceLabel: "",
+        triage: "",
         unknownArgs: [],
     };
 
@@ -40,6 +41,8 @@ function parseArgs(argv) {
             options.source = String(arg.slice("--source=".length) || "").trim();
         } else if (arg.startsWith("--source-label=")) {
             options.sourceLabel = String(arg.slice("--source-label=".length) || "").trim();
+        } else if (arg.startsWith("--triage=")) {
+            options.triage = String(arg.slice("--triage=".length) || "").trim();
         } else {
             collectUnknownArg(options, arg);
         }
@@ -53,6 +56,30 @@ function resolveSourcePath(source) {
         throw new Error("Missing --source path. Provide a TSV, CSV, or JSON vocab source to inspect.");
     }
     return path.resolve(process.cwd(), source);
+}
+
+function resolveTriagePath(triagePath) {
+    const explicitPath = String(triagePath || "").trim();
+    if (explicitPath) {
+        return path.resolve(process.cwd(), explicitPath);
+    }
+
+    const defaultPath = path.resolve(process.cwd(), "templates", "word_inventory_expansion_triage.json");
+    return fs.existsSync(defaultPath) ? defaultPath : "";
+}
+
+function loadTriageDecisions({ triagePath, level, sourceLabel }) {
+    const resolvedPath = resolveTriagePath(triagePath);
+    if (!resolvedPath) {
+        return {};
+    }
+    if (!fs.existsSync(resolvedPath)) {
+        throw new Error(`Expansion triage file does not exist: ${resolvedPath}`);
+    }
+
+    const triage = JSON.parse(fs.readFileSync(resolvedPath, "utf8"));
+    const levelLabel = `N${level}`;
+    return triage?.[levelLabel]?.[sourceLabel] || triage?.[levelLabel]?._default || {};
 }
 
 async function main() {
@@ -72,6 +99,7 @@ async function main() {
     if (!fs.existsSync(sourcePath)) {
         throw new Error(`Candidate source does not exist: ${sourcePath}`);
     }
+    const sourceLabel = options.sourceLabel || path.basename(sourcePath);
 
     const sourceRows = parseCandidateSourceText(fs.readFileSync(sourcePath, "utf8"), {
         format: options.format,
@@ -82,7 +110,12 @@ async function main() {
         kanjiScope: options.kanjiScope,
         limit,
         requireSourceLevel: options.requireSourceLevel,
-        sourceLabel: options.sourceLabel || path.basename(sourcePath),
+        sourceLabel,
+        triageDecisions: loadTriageDecisions({
+            triagePath: options.triage,
+            level,
+            sourceLabel,
+        }),
         jlptLevelContract: loadJlptLevelContract(path.join(process.cwd(), "templates", "jlpt_level_contract.json")),
         jlptWordLevelContract: loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json")),
     });
@@ -103,7 +136,9 @@ if (require.main === module) {
 }
 
 module.exports = {
+    loadTriageDecisions,
     main,
     parseArgs,
     resolveSourcePath,
+    resolveTriagePath,
 };

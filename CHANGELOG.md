@@ -53,6 +53,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added a tracked read-only N5 word-inventory expansion triage file so large enhancement candidate batches can carry explicit keep/defer/reject reasons before any <=12-word promotion batch begins.
 - Added same-written warnings to the word inventory expansion report so review candidates that share a written form with an existing governed or excluded word are visible before any new card is promoted.
 - Added `deck:words:expansion-candidates`, a read-only post-coverage report that compares an explicit sourced vocabulary file against the governed word contract and surfaces extra word candidates without changing schemas, readiness, contracts, starter data, or generated deck output.
 - Added eight source-checked N5 word platinum approvals (`金曜日`, `子年`, `誕生日`, `水曜日`, `自転車`, `四月`, `左折`, `葉書`), raising active N5 word platinum coverage to `258` cards with `44` deferred/removed rows, `46` generated rows still missing platinum approval, and no `needs_review` blockers.

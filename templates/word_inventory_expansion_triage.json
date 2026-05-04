@@ -1,0 +1,192 @@
+{
+  "N5": {
+    "jlptstudy.net-n5": {
+      "後|あと": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Useful beginner time/reference noun that is distinct from existing 後で, 後ろ, 後ほど, and 後半 cards.",
+        "nextStep": "Source-check and promote only in a <=12-word enhancement batch if card-surface review passes."
+      },
+      "行く|ゆく": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Same written front as governed 行く|いく and the ゆく reading is a lower-value variant for this learner deck.",
+        "nextStep": "Do not promote unless a future product scope explicitly teaches alternate/literary readings."
+      },
+      "一日|いちにち": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful duration word, but it shares the written front with governed 一日|ついたち and must be reviewed as a deliberate duplicate-reading card.",
+        "nextStep": "Source-check carefully and promote only if the duplicate front is judged worth teaching."
+      },
+      "五日|いつか": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful date/duration vocabulary; should be treated as whole-word reading support, not fake per-kanji coverage.",
+        "nextStep": "Review with the date-word family and promote only in a <=12-word enhancement batch."
+      },
+      "大きな|おおきな": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Governed 大きい already teaches the beginner adjective; the prenominal form adds grammar value but not enough immediate kanji-word value.",
+        "nextStep": "Reconsider later if the word deck adds adjective form-family expansion."
+      },
+      "男の子|おとこのこ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Useful beginner word that pairs naturally with governed 女の子 and teaches boy through a safer exact word identity than standalone 男.",
+        "nextStep": "Source-check and promote only in a <=12-word enhancement batch if examples, audio, pitch, and breakdowns pass."
+      },
+      "大人|おとな": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Useful common learner word with N5 kanji; likely worth teaching as its own exact identity if source review confirms level fit.",
+        "nextStep": "Source-check and promote only in a <=12-word enhancement batch if card-surface review passes."
+      },
+      "九|く": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Same written front as governed 九|きゅう; useful く contexts are already better taught through words such as 九時.",
+        "nextStep": "Do not add a duplicate standalone number card for this enhancement pass."
+      },
+      "九日|ここのか": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful date/duration vocabulary; should be treated as a whole-word reading card.",
+        "nextStep": "Review with the date-word family and promote only in a <=12-word enhancement batch."
+      },
+      "さ来年|さらいねん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Source spelling is mixed-kana and weaker than the usual exact vocabulary identity for year-after-next; adding it would risk alternate-spelling clutter.",
+        "nextStep": "Do not promote this exact source row; review a better written form separately if needed."
+      },
+      "四|し": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Same written front as governed 四|よん; useful し contexts are already better taught through words such as 四月.",
+        "nextStep": "Do not add a duplicate standalone number card for this enhancement pass."
+      },
+      "七|しち": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Same written front as governed 七|なな; useful しち contexts are already better taught through words such as 七時.",
+        "nextStep": "Do not add a duplicate standalone number card for this enhancement pass."
+      },
+      "白|しろ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Useful color noun that complements governed 白い without creating a same-written duplicate card.",
+        "nextStep": "Source-check and promote only in a <=12-word enhancement batch if examples, audio, pitch, and breakdowns pass."
+      },
+      "千|せん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Useful standalone number word for a beginner kanji deck companion; complements governed 千円 without duplicating an existing exact identity.",
+        "nextStep": "Source-check and promote only in a <=12-word enhancement batch."
+      },
+      "小さな|ちいさな": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Governed 小さい already teaches the beginner adjective; the prenominal form is not urgent enough for enhancement promotion.",
+        "nextStep": "Reconsider later if the word deck adds adjective form-family expansion."
+      },
+      "出かける|でかける": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Useful common beginner verb with an N5 kanji and no same-written governed duplicate.",
+        "nextStep": "Source-check and promote only in a <=12-word enhancement batch if card-surface review passes."
+      },
+      "十|とお": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Same written front as governed 十|じゅう; useful とお is already better taught in 十日 rather than as a duplicate standalone number card.",
+        "nextStep": "Do not add a duplicate standalone number card for this enhancement pass."
+      },
+      "年|とし": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Useful common noun for year/age that complements existing time words such as 今年, 去年, 来年, and 毎年.",
+        "nextStep": "Source-check and promote only in a <=12-word enhancement batch."
+      },
+      "何|なん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Same written front as governed 何|なに; useful なん contexts are already taught more clearly through words such as 何時 and 何ですか.",
+        "nextStep": "Do not add a duplicate standalone front unless a future review proves it is worth the ambiguity."
+      },
+      "二十日|はつか": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful date/duration vocabulary; should be treated as whole-word reading support, not fake per-kanji coverage.",
+        "nextStep": "Review with the date-word family and promote only in a <=12-word enhancement batch."
+      },
+      "半|はん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Useful standalone/prefix-style beginner word that complements governed 半分, 一時半, and 後半 without duplicating an exact identity.",
+        "nextStep": "Source-check and promote only in a <=12-word enhancement batch."
+      },
+      "一月|ひとつき": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Useful duration idea, but the written front is ambiguous with January and cleaner beginner surfaces such as 一か月 should be reviewed first.",
+        "nextStep": "Do not promote this exact source row in the first enhancement pass."
+      },
+      "百|ひゃく": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Useful standalone number word that complements governed 百円 and 三百 without duplicating an exact identity.",
+        "nextStep": "Source-check and promote only in a <=12-word enhancement batch."
+      },
+      "外|ほか": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Same written front as governed 外|そと, and the existing reading-gap policy already treats 外 -> ほか as better met through kana or 他.",
+        "nextStep": "Keep deferred unless a later source review proves this exact kanji spelling is learner-useful enough."
+      },
+      "毎月|まいげつ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Same written front as governed 毎月|まいつき; the extra reading is useful but not necessary for the first enhancement pass.",
+        "nextStep": "Reconsider only after higher-value non-duplicate words are reviewed."
+      },
+      "毎年|まいねん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Same written front as governed 毎年|まいとし; the extra reading is useful but not necessary for the first enhancement pass.",
+        "nextStep": "Reconsider only after higher-value non-duplicate words are reviewed."
+      },
+      "前|まえ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Useful common noun/adverbial word that complements governed 午前, 駅前, 目の前, and 名前 without duplicating an exact identity.",
+        "nextStep": "Source-check and promote only in a <=12-word enhancement batch."
+      },
+      "万|まん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Useful standalone number word that complements governed 一万円 and 万事 without duplicating an exact identity.",
+        "nextStep": "Source-check and promote only in a <=12-word enhancement batch."
+      },
+      "三日|みっか": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful date/duration vocabulary; should be treated as whole-word reading support, not fake per-kanji coverage.",
+        "nextStep": "Review with the date-word family and promote only in a <=12-word enhancement batch."
+      },
+      "六日|むいか": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful date/duration vocabulary; should be treated as whole-word reading support, not fake per-kanji coverage.",
+        "nextStep": "Review with the date-word family and promote only in a <=12-word enhancement batch."
+      },
+      "四日|よっか": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful date/duration vocabulary; should be treated as whole-word reading support, not fake per-kanji coverage.",
+        "nextStep": "Review with the date-word family and promote only in a <=12-word enhancement batch."
+      }
+    }
+  }
+}

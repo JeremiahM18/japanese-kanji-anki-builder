@@ -333,6 +333,14 @@ function summarizeDispositions(rows) {
     }, {});
 }
 
+function summarizeCandidateTriage(rows) {
+    return rows.reduce((summary, row) => {
+        const decision = row.triageDecision?.decision || "untriaged";
+        summary[decision] = (summary[decision] || 0) + 1;
+        return summary;
+    }, {});
+}
+
 function buildSameWrittenContractIndex(jlptWordLevelContract = {}) {
     const index = new Map();
 
@@ -379,6 +387,35 @@ function compareCandidateRows(a, b) {
     );
 }
 
+function normalizeTriageDecision(decision) {
+    if (!decision || typeof decision !== "object") {
+        return null;
+    }
+    const normalizedDecision = String(decision.decision || "").trim();
+    const reason = String(decision.reason || "").trim();
+    if (!normalizedDecision || !reason) {
+        return null;
+    }
+
+    return {
+        decision: normalizedDecision,
+        priority: String(decision.priority || "").trim() || "normal",
+        reason,
+        nextStep: String(decision.nextStep || "").trim(),
+    };
+}
+
+function normalizeTriageDecisions(triageDecisions = {}) {
+    const normalized = {};
+    for (const [key, decision] of Object.entries(triageDecisions || {})) {
+        const normalizedDecision = normalizeTriageDecision(decision);
+        if (normalizedDecision) {
+            normalized[key] = normalizedDecision;
+        }
+    }
+    return normalized;
+}
+
 function buildWordInventoryExpansionCandidateReport({
     sourceRows = [],
     targetLevel = 5,
@@ -388,6 +425,7 @@ function buildWordInventoryExpansionCandidateReport({
     limit = 50,
     requireSourceLevel = false,
     sourceLabel = "external",
+    triageDecisions = {},
 } = {}) {
     if (!Number.isInteger(targetLevel) || targetLevel < 1 || targetLevel > 5) {
         throw new Error("Target level must be an integer from 1 to 5.");
@@ -414,6 +452,7 @@ function buildWordInventoryExpansionCandidateReport({
     });
 
     const sameWrittenContractIndex = buildSameWrittenContractIndex(jlptWordLevelContract);
+    const normalizedTriageDecisions = normalizeTriageDecisions(triageDecisions);
     const reviewedRows = [...rowsByKey.values()]
         .map((row) => {
             const classified = classifyCandidateDisposition(row, {
@@ -434,12 +473,15 @@ function buildWordInventoryExpansionCandidateReport({
                 easierKanji: classified.scope.easierKanji,
                 outsideJlptKanji: classified.scope.outsideJlptKanji.map((entry) => entry.kanji),
                 sameWrittenContractEntries: findSameWrittenContractEntries(row, sameWrittenContractIndex),
+                triageDecision: normalizedTriageDecisions[row.key] || null,
             };
         })
         .sort(compareCandidateRows);
     const candidateRows = reviewedRows.filter((row) => row.disposition === "review_candidate");
     const sameWrittenCandidateRows = candidateRows
         .filter((row) => row.sameWrittenContractEntries.length > 0);
+    const triagedCandidateRows = candidateRows
+        .filter((row) => row.triageDecision);
 
     return {
         levelLabel: `N${targetLevel}`,
@@ -454,6 +496,9 @@ function buildWordInventoryExpansionCandidateReport({
             reviewCandidateRows: candidateRows.length,
             shownCandidateRows: Math.min(candidateRows.length, limit),
             sameWrittenCandidateRows: sameWrittenCandidateRows.length,
+            triagedCandidateRows: triagedCandidateRows.length,
+            untriagedCandidateRows: candidateRows.length - triagedCandidateRows.length,
+            triageDecisions: summarizeCandidateTriage(candidateRows),
             dispositions: summarizeDispositions(reviewedRows),
         },
         candidates: candidateRows.slice(0, limit),
@@ -495,10 +540,16 @@ function formatWordInventoryExpansionCandidateReport(report) {
     lines.push(`Duplicate source rows skipped: ${report.summary.duplicateSourceRows}`);
     lines.push(`Review candidates: ${report.summary.reviewCandidateRows}`);
     lines.push(`Same-written candidate warnings: ${report.summary.sameWrittenCandidateRows}`);
+    lines.push(`Triaged review candidates: ${report.summary.triagedCandidateRows}/${report.summary.reviewCandidateRows}`);
     lines.push("");
     lines.push("Disposition counts:");
     for (const [disposition, count] of Object.entries(report.summary.dispositions).sort()) {
         lines.push(`- ${disposition}: ${count}`);
+    }
+    lines.push("");
+    lines.push("Triage decision counts:");
+    for (const [decision, count] of Object.entries(report.summary.triageDecisions).sort()) {
+        lines.push(`- ${decision}: ${count}`);
     }
     lines.push("");
 
@@ -517,6 +568,15 @@ function formatWordInventoryExpansionCandidateReport(report) {
         if (row.sameWrittenContractEntries.length > 0) {
             lines.push(`   same-written warning: already tracked with reading(s) ${formatSameWrittenContractEntries(row.sameWrittenContractEntries)}`);
         }
+        if (row.triageDecision) {
+            lines.push(`   triage: ${row.triageDecision.decision} [${row.triageDecision.priority}]`);
+            lines.push(`   triage reason: ${row.triageDecision.reason}`);
+            if (row.triageDecision.nextStep) {
+                lines.push(`   triage next step: ${row.triageDecision.nextStep}`);
+            }
+        } else {
+            lines.push("   triage: untriaged");
+        }
         if (row.notes) {
             lines.push(`   notes: ${row.notes}`);
         }
@@ -531,6 +591,7 @@ module.exports = {
     classifyKanjiScope,
     formatWordInventoryExpansionCandidateReport,
     formatSameWrittenContractEntries,
+    normalizeTriageDecisions,
     normalizeCandidateSourceRow,
     normalizeCandidateSourceRows,
     parseCandidateSourceText,

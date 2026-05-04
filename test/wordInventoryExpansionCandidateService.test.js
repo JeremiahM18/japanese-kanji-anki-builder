@@ -5,6 +5,7 @@ const {
     buildWordInventoryExpansionCandidateReport,
     classifyCandidateDisposition,
     formatWordInventoryExpansionCandidateReport,
+    normalizeTriageDecisions,
     normalizeCandidateSourceRow,
     normalizeCandidateSourceRows,
     parseCandidateSourceText,
@@ -100,6 +101,19 @@ test("buildWordInventoryExpansionCandidateReport keeps only new source words tha
         jlptLevelContract,
         jlptWordLevelContract,
         sourceLabel: "fixture",
+        triageDecisions: {
+            "山川|さんせん": {
+                decision: "keep_candidate",
+                priority: "high",
+                reason: "Useful sourced word for review.",
+                nextStep: "Promote only after source review.",
+            },
+            "行く|ゆく": {
+                decision: "reject_candidate",
+                priority: "low",
+                reason: "Same written duplicate.",
+            },
+        },
     });
 
     assert.equal(report.summary.sourceRows, 10);
@@ -108,7 +122,14 @@ test("buildWordInventoryExpansionCandidateReport keeps only new source words tha
     assert.equal(report.summary.duplicateSourceRows, 1);
     assert.equal(report.summary.reviewCandidateRows, 2);
     assert.equal(report.summary.sameWrittenCandidateRows, 1);
+    assert.equal(report.summary.triagedCandidateRows, 2);
+    assert.equal(report.summary.untriagedCandidateRows, 0);
+    assert.deepEqual(report.summary.triageDecisions, {
+        keep_candidate: 1,
+        reject_candidate: 1,
+    });
     assert.equal(report.candidates[0].key, "山川|さんせん");
+    assert.equal(report.candidates[0].triageDecision.decision, "keep_candidate");
     assert.equal(report.candidates[1].key, "行く|ゆく");
     assert.deepEqual(report.candidates[1].sameWrittenContractEntries, [{
         key: "行く|いく",
@@ -123,6 +144,27 @@ test("buildWordInventoryExpansionCandidateReport keeps only new source words tha
     assert.equal(report.summary.dispositions.kanji_scope_mismatch, 1);
     assert.equal(report.summary.dispositions.already_excluded, 1);
     assert.equal(report.summary.dispositions.source_template, 1);
+});
+
+test("normalizeTriageDecisions keeps only decisions with a reason", () => {
+    assert.deepEqual(normalizeTriageDecisions({
+        "山川|さんせん": {
+            decision: " keep_candidate ",
+            priority: " high ",
+            reason: " review this ",
+            nextStep: " promote later ",
+        },
+        "行く|ゆく": {
+            decision: "reject_candidate",
+        },
+    }), {
+        "山川|さんせん": {
+            decision: "keep_candidate",
+            priority: "high",
+            reason: "review this",
+            nextStep: "promote later",
+        },
+    });
 });
 
 test("source normalization splits slash readings into exact word identities", () => {
@@ -166,6 +208,8 @@ test("formatWordInventoryExpansionCandidateReport is explicit that candidates do
     assert.match(text, /does not promote words, change contracts, or affect readiness/);
     assert.match(text, /Use after the current reading-coverage pass/);
     assert.match(text, /山川 \(さんせん\)/);
+    assert.match(text, /Triaged review candidates: 0\/1/);
+    assert.match(text, /triage: untriaged/);
 });
 
 test("formatWordInventoryExpansionCandidateReport flags same-written governed readings", () => {
@@ -175,10 +219,22 @@ test("formatWordInventoryExpansionCandidateReport flags same-written governed re
         jlptLevelContract,
         jlptWordLevelContract,
         sourceLabel: "fixture",
+        triageDecisions: {
+            "行く|ゆく": {
+                decision: "reject_candidate",
+                priority: "low",
+                reason: "Same written duplicate.",
+                nextStep: "Do not promote.",
+            },
+        },
     });
     const text = formatWordInventoryExpansionCandidateReport(report);
 
     assert.equal(report.summary.sameWrittenCandidateRows, 1);
     assert.match(text, /Same-written candidate warnings: 1/);
     assert.match(text, /same-written warning: already tracked with reading\(s\) いく \(N5\)/);
+    assert.match(text, /Triaged review candidates: 1\/1/);
+    assert.match(text, /triage: reject_candidate \[low\]/);
+    assert.match(text, /triage reason: Same written duplicate\./);
+    assert.match(text, /triage next step: Do not promote\./);
 });

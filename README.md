@@ -276,6 +276,8 @@ Expansion candidates are not product truth. A candidate list may reveal useful v
 
 The report deduplicates exact `written|reading` identities and also flags same-written candidates that already have another governed or excluded reading. Those warnings are review prompts, not automatic rejection: approve multiple readings only when the extra card is useful, common, level-fit, and worth teaching as its own word identity.
 
+Tracked triage decisions live in [templates/word_inventory_expansion_triage.json](templates/word_inventory_expansion_triage.json). These decisions are read-only planning metadata, not card approvals. `keep_candidate` means "worth source-checking next"; it does not bypass the 12-word promotion cap, generated-surface inspection, golden review, platinum evidence, media review, or readiness gates.
+
 ## Media Workflows
 
 ### Stroke Order

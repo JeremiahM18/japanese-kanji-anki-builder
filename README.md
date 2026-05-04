@@ -100,8 +100,8 @@ Golden and platinum review:
 | N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N1 kanji | Golden-reviewed at `1231/1231`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
-| N5 word | Golden-reviewed at `343/343`; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; word platinum has 51 active approvals, 5 deferred/removed rows, and no `needs_review` blockers under the generated-pitch-label policy |
-| N4 word | Golden-reviewed at `455/455`; current N5+N4 selected-scope readiness is blocked by missing governed word audio for `発音|はつおん`; pitch accent, card-back fields other than that audio field, example reading alignment, kanji-context checks, labels, and looping animations are otherwise clean for shipped rows; word platinum has `0` entries and fails until all generated N4 words have active approvals |
+| N5 word | Golden-reviewed at `343/343`; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; word platinum has 61 active approvals, 5 deferred/removed rows, and no `needs_review` blockers under the generated-pitch-label policy |
+| N4 word | Golden-reviewed at `455/455`; current local N5+N4 selected-scope readiness passes after governed local word audio for `発音|はつおん` is generated, synced, and reviewed; pitch accent, card-back fields, example reading alignment, kanji-context checks, labels, and looping animations are clean for shipped rows; word platinum has `0` entries and fails until all generated N4 words have active approvals |
 
 Current tracked word inventory:
 
@@ -112,7 +112,7 @@ Current tracked word inventory:
 - N5 word reading coverage: `78.8% (271/344)` when built alone
 - N5 word reading coverage: `79.7% (274/344)` when built with N4 as the selected word-product scope
 - N4 word reading coverage: `74.5% (485/651)` when built with N5 as the selected word-product scope
-- N5+N4 word readiness: N5 is `ready_with_deferred_variants`; N4 is currently `incomplete` under `npm run deck:words:ready -- --levels=5,4 --require-no-active-triage` until governed word audio for `発音|はつおん` is generated and reviewed
+- N5+N4 word readiness: N5 and N4 are `ready_with_deferred_variants` under `npm run deck:words:ready -- --levels=5,4 --require-no-active-triage` when the governed local word-audio media includes `発音|はつおん`; the audio files remain ignored workspace media and must be regenerated or restored in a fresh checkout
 
 Run live commands for current coverage. Do not rely on README numbers for release decisions.
 

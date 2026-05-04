@@ -33,6 +33,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added ten source-checked N5 word platinum approvals (`上着`, `乗る`, `今晩`, `今月`, `休み`, `会う`, `会社`, `何`, `使う`, `先生`), raising active N5 word platinum coverage to `61` cards while skipping weaker or later-level support rows instead of approving by export order.
 - Added seven N5 word platinum approvals (`二時`, `五時`, `五月`, `人`, `今`, `今年`, `今日`), raising active N5 word platinum coverage to `51` cards with 5 deferred/removed rows and no current `needs_review` blockers.
 - Added governed N4 support word `発音|はつおん` and expanded `音楽|おんがく` coverage so the deck no longer relies on false `出発` / `楽器` coverage for `発 -> はつ` and `楽 -> がく`; N4 readiness remains blocked until exact governed audio for `発音|はつおん` is generated and reviewed.
 - Added nine N5 word platinum approvals (`七つ`, `七日`, `三人`, `三時`, `三百`, `上`, `上げる`, `一万円`, `一時半`), raising active N5 word platinum coverage to `26` cards with 5 later-level deferred rows and no current `needs_review` pitch-provenance blockers.

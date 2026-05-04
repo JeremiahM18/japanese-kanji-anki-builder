@@ -424,6 +424,16 @@
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "西瓜|すいか exposes a weak 西 -> す/すい support family, but the word is usually written in kana; do not force this into the N5 word product."
+    },
+    "後|kun|おくれる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "後れる|おくれる is not the beginner-safe spelling for scheduled lateness; defer 後 -> おくれる instead of teaching a misleading N5 support card."
+    },
+    "語|kun|かたる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "語る|かたる is useful later but source-reviewed as JLPT N3 and more narrative/formal than beginner 話す or 会話; do not force 語 -> かたる into N5."
     }
   },
   "N4": {

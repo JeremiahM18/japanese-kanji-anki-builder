@@ -184,6 +184,8 @@ npm run deck:preview -- --level=5 --limit=5
 npm run deck:preview -- --kanji=日,本,学
 npm run deck:platinum:batch -- --level=5 --limit=12
 npm run deck:platinum:batch -- --level=5 --kanji=父,生,男
+npm run deck:words:platinum:batch -- --level=5 --limit=12
+npm run deck:words:platinum:batch -- --level=5 --words=今日:きょう,八日:ようか
 npm run deck:review:n5
 npm run deck:review:n4
 npm run deck:review:n3
@@ -196,7 +198,7 @@ npm run deck:words:review:n5
 node scripts/reviewPlatinumWordLevel.js --level=5
 ```
 
-Golden review protects learner-facing card output rather than raw field presence. Platinum review is the final release-quality pass. `deck:platinum:batch` is a read-only pre-review report for kanji cards: it shows the generated surface, hard-rule checks, risk flags, current platinum status, and next missing queue before any manifest edits. The `npm run deck:platinum:n5` and `npm run deck:words:platinum:n5` commands are full-level gates and fail until every generated N5 card has an active platinum entry.
+Golden review protects learner-facing card output rather than raw field presence. Platinum review is the final release-quality pass. `deck:platinum:batch` is a read-only pre-review report for kanji cards: it shows the generated surface, hard-rule checks, risk flags, current platinum status, and next missing queue before any manifest edits. `deck:words:platinum:batch` provides the matching read-only packet for word cards: it shows exact written-reading identity, generated card fields, sentence lines, exact word audio, pitch source/render status, lookup links, risk flags, and a suggested review step. Batch reports do not create platinum entries or prove release readiness. The `npm run deck:platinum:n5` and `npm run deck:words:platinum:n5` commands are full-level gates and fail until every generated N5 card has an active platinum entry.
 
 ### Build Kanji Decks
 
@@ -351,6 +353,7 @@ Repository governance:
 | `npm run deck:platinum:n1` | Run the N1 kanji platinum release-quality benchmark |
 | `npm run deck:words:ready` | Build and package word TSV artifacts |
 | `npm run deck:words:apkg` | Build word `.apkg` artifacts |
+| `npm run deck:words:platinum:batch -- --level=5 --limit=12` | Build a read-only word platinum pre-review packet |
 | `npm run deck:words:review:n5` | Run the N5 word golden benchmark |
 | `npm run deck:words:platinum:n5` | Run the N5 word platinum release-quality benchmark |
 | `npm run deck:words:platinum:n4` | Run the N4 word platinum release-quality benchmark |

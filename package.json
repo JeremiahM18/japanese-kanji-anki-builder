@@ -60,6 +60,7 @@
     "deck:words:apkg": "python scripts/buildApkg.py --deck-kind=word --out-dir=out/word-build",
     "deck:words:review:n5": "node scripts/reviewGoldenWordLevel.js --level=5 --require-all",
     "deck:words:review:n4": "node scripts/reviewGoldenWordLevel.js --level=4 --require-all",
+    "deck:words:platinum:batch": "node scripts/platinumWordBatchReport.js",
     "deck:words:platinum:n5": "node scripts/reviewPlatinumWordLevel.js --level=5 --require-all",
     "deck:words:platinum:n4": "node scripts/reviewPlatinumWordLevel.js --level=4 --require-all",
     "deck:words:completion": "node scripts/reportWordDeckCompletion.js",

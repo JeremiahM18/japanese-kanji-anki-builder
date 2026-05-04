@@ -2,6 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const { parseArgs, parseWordTsvForPlatinum } = require("../scripts/reviewPlatinumWordLevel");
+const { parseArgs: parseBatchReportArgs } = require("../scripts/platinumWordBatchReport");
 
 test("parseArgs accepts platinum word review options", () => {
     const options = parseArgs(["--level=5", "--json", "--require-all", "--allow-empty"]);
@@ -11,6 +12,21 @@ test("parseArgs accepts platinum word review options", () => {
         json: true,
         level: 5,
         requireAllRows: true,
+    });
+});
+
+test("platinumWordBatchReport parseArgs accepts scoped read-only batch options", () => {
+    const options = parseBatchReportArgs(["--level=N5", "--words=今日:きょう,八日|ようか", "--limit=2", "--json", "--oops"]);
+
+    assert.deepEqual(options, {
+        json: true,
+        level: 5,
+        limit: 2,
+        unknownArgs: ["--oops"],
+        words: [
+            { word: "今日", reading: "きょう" },
+            { word: "八日", reading: "ようか" },
+        ],
     });
 });
 

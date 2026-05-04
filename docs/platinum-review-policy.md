@@ -203,6 +203,8 @@ Deferred and removed kanji entries must include `kanji`, `reviewedAt`, `reviewer
 ```bash
 npm run deck:platinum:batch -- --level=5 --limit=12
 npm run deck:platinum:batch -- --level=5 --kanji=父,生,男
+npm run deck:words:platinum:batch -- --level=5 --limit=12
+npm run deck:words:platinum:batch -- --level=5 --words=今日:きょう,八日:ようか
 npm run deck:platinum:n5
 npm run deck:platinum:n4
 npm run deck:platinum:n3
@@ -213,6 +215,8 @@ npm run deck:words:platinum:n4
 ```
 
 `deck:platinum:batch` is a read-only kanji pre-review report. It does not create entries or prove release readiness. Use it before editing a platinum manifest to see generated card fields, hard-rule checks, risk flags, existing platinum status, and the next missing queue.
+
+`deck:words:platinum:batch` is the matching read-only word pre-review report. It does not create entries or prove release readiness. Use it before editing a word platinum manifest to see exact written-reading identity, generated card fields, sentence lines, exact word audio, pitch source/render status, source lookup links, risk flags, existing platinum status, and the next missing queue.
 
 Each platinum command requires every generated card for that level and surface to have an active platinum entry.
 

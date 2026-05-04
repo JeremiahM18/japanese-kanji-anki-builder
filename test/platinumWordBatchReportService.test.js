@@ -92,6 +92,22 @@ test("word batch report selects missing rows and surfaces review risks", () => {
     assert.match(formatPlatinumWordBatchReport(report), /This report is read-only/);
 });
 
+test("scoped word batch report keeps formatted output focused on requested cards", () => {
+    const report = buildPlatinumWordBatchReport({
+        rows,
+        entries: [{ word: "今日", status: "platinum", readingIncludes: ["きょう"] }],
+        wordPitchAccentData,
+        level: 5,
+        words: [{ word: "八", reading: "はち" }],
+    });
+    const formatted = formatPlatinumWordBatchReport(report);
+
+    assert.equal(report.scopedToRequestedWords, true);
+    assert.equal(report.nextMissingWords.length, 1);
+    assert.doesNotMatch(formatted, /Next missing queue/);
+    assert.match(formatted, /八\|はち/);
+});
+
 test("word batch sentence evidence allows normal inflected readings", () => {
     assert.equal(exampleSentenceContainsWrittenWord("赤ちゃんが春に生まれます。", "生まれる"), true);
     assert.equal(exampleSentenceContainsWrittenWord("毎朝新聞を読みます。", "読む"), true);

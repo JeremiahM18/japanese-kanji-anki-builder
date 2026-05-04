@@ -411,6 +411,7 @@ function buildPlatinumWordBatchReport({
             .map((target) => buildWordIdentity(target))
             .filter((identity) => !selectedRows.some((row) => buildWordIdentity(row) === identity))
         : [];
+    const scopedToRequestedWords = Array.isArray(words) && words.length > 0;
 
     const cards = selectedRows.map((row) => {
         const identity = buildWordIdentity(row);
@@ -457,9 +458,10 @@ function buildPlatinumWordBatchReport({
 
     return {
         level,
-        scope: Array.isArray(words) && words.length > 0
+        scope: scopedToRequestedWords
             ? `words=${words.map(buildWordIdentity).join(",")}`
             : `next-missing limit=${limit}`,
+        scopedToRequestedWords,
         summary: {
             generatedRows: generatedRows.length,
             activePlatinum: activeCount,
@@ -493,7 +495,7 @@ function formatPlatinumWordBatchReport(report = {}) {
         }
     }
 
-    if (Array.isArray(report.nextMissingWords) && report.nextMissingWords.length > 0) {
+    if (!report.scopedToRequestedWords && Array.isArray(report.nextMissingWords) && report.nextMissingWords.length > 0) {
         lines.push("", `Next missing queue (${Math.min(report.nextMissingWords.length, 30)}/${report.nextMissingWords.length}):`);
         for (const identity of report.nextMissingWords.slice(0, 30)) {
             lines.push(`- ${identity}`);

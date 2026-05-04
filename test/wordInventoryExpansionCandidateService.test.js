@@ -6,9 +6,11 @@ const {
     classifyCandidateDisposition,
     formatWordInventoryExpansionCandidateReport,
     normalizeCandidateSourceRow,
+    normalizeCandidateSourceRows,
     parseCandidateSourceText,
     parseDelimitedLine,
     parseSourceLevel,
+    splitReadingVariants,
 } = require("../src/services/wordInventoryExpansionCandidateService");
 
 const jlptLevelContract = {
@@ -17,6 +19,7 @@ const jlptLevelContract = {
         川: 5,
         学: 5,
         校: 5,
+        行: 5,
         茶: 4,
         新: 4,
         幹: 4,
@@ -28,6 +31,7 @@ const jlptLevelContract = {
 const jlptWordLevelContract = {
     wordLevels: {
         "学校|がっこう": { written: "学校", reading: "がっこう", jlpt: 5 },
+        "行く|いく": { written: "行く", reading: "いく", jlpt: 5 },
     },
     excludedWordLevels: {
         "山の上|やまのうえ": { written: "山の上", reading: "やまのうえ", jlpt: 5, exclusionReason: "phrase" },
@@ -80,6 +84,8 @@ test("buildWordInventoryExpansionCandidateReport keeps only new source words tha
         { written: "学校", reading: "がっこう", meaning: "school", jlpt: "N5" },
         { written: "山川", reading: "さんせん", meaning: "mountains and rivers", jlpt: "N5" },
         { written: "山川", reading: "さんせん", meaning: "duplicate", jlpt: "N5" },
+        { written: "行く", reading: "いく/ゆく", meaning: "to go", jlpt: "N5" },
+        { written: "～円", reading: "～えん", meaning: "yen suffix", jlpt: "N5" },
         { written: "おちゃ", reading: "おちゃ", meaning: "tea", jlpt: "N5" },
         { written: "お茶", reading: "おちゃ", meaning: "tea", jlpt: "N5" },
         { written: "新幹線", reading: "しんかんせん", meaning: "bullet train", jlpt: "N5" },
@@ -96,17 +102,28 @@ test("buildWordInventoryExpansionCandidateReport keeps only new source words tha
         sourceLabel: "fixture",
     });
 
-    assert.equal(report.summary.sourceRows, 8);
-    assert.equal(report.summary.normalizedRows, 8);
-    assert.equal(report.summary.uniqueRows, 7);
+    assert.equal(report.summary.sourceRows, 10);
+    assert.equal(report.summary.normalizedRows, 11);
+    assert.equal(report.summary.uniqueRows, 10);
     assert.equal(report.summary.duplicateSourceRows, 1);
-    assert.equal(report.summary.reviewCandidateRows, 1);
+    assert.equal(report.summary.reviewCandidateRows, 2);
     assert.equal(report.candidates[0].key, "山川|さんせん");
-    assert.equal(report.summary.dispositions.already_governed, 1);
+    assert.equal(report.candidates[1].key, "行く|ゆく");
+    assert.equal(report.summary.dispositions.already_governed, 2);
     assert.equal(report.summary.dispositions.kana_only, 1);
     assert.equal(report.summary.dispositions.no_target_kanji, 2);
     assert.equal(report.summary.dispositions.kanji_scope_mismatch, 1);
     assert.equal(report.summary.dispositions.already_excluded, 1);
+    assert.equal(report.summary.dispositions.source_template, 1);
+});
+
+test("source normalization splits slash readings into exact word identities", () => {
+    assert.deepEqual(splitReadingVariants("いく/ゆく"), ["いく", "ゆく"]);
+    assert.deepEqual(normalizeCandidateSourceRows({
+        written: "行く",
+        reading: "いく/ゆく",
+        meaning: "to go",
+    }).map((row) => row.key), ["行く|いく", "行く|ゆく"]);
 });
 
 test("target-level scope rejects easier-level kanji while at-or-below accepts them", () => {

@@ -155,9 +155,36 @@ function normalizeCandidateSourceRow(row, { sourceLabel = "external" } = {}) {
     };
 }
 
+function splitReadingVariants(reading) {
+    const variants = String(reading || "")
+        .split(/[\/／]/u)
+        .map((variant) => variant.trim())
+        .filter(Boolean);
+
+    return variants.length > 0 ? variants : [String(reading || "").trim()];
+}
+
+function normalizeCandidateSourceRows(row, { sourceLabel = "external" } = {}) {
+    const normalized = normalizeCandidateSourceRow(row, { sourceLabel });
+    if (!normalized) {
+        return [];
+    }
+
+    return splitReadingVariants(normalized.reading).map((reading) => ({
+        ...normalized,
+        reading,
+        sourceReading: normalized.reading,
+        key: buildWordStudyEntryKey({ written: normalized.written, reading }),
+    }));
+}
+
 function getKanjiLevel(kanji, jlptLevelContract = {}) {
     const level = jlptLevelContract?.kanjiLevels?.[kanji];
     return Number.isInteger(level) ? level : null;
+}
+
+function isSourceTemplateRow(row) {
+    return /[～~]/u.test(String(row?.written || "")) || /[～~]/u.test(String(row?.reading || ""));
 }
 
 function classifyKanjiScope(row, { targetLevel, jlptLevelContract }) {
@@ -234,6 +261,13 @@ function classifyCandidateDisposition(row, {
         return {
             disposition: "source_level_mismatch",
             reason: `source level is ${row.sourceLevel ? `N${row.sourceLevel}` : "missing"}, not N${targetLevel}`,
+            scope,
+        };
+    }
+    if (isSourceTemplateRow(row)) {
+        return {
+            disposition: "source_template",
+            reason: "source row is a template, suffix, prefix, or counter pattern rather than an exact word identity",
             scope,
         };
     }
@@ -325,7 +359,7 @@ function buildWordInventoryExpansionCandidateReport({
     }
 
     const normalizedRows = sourceRows
-        .map((row) => normalizeCandidateSourceRow(row, { sourceLabel }))
+        .flatMap((row) => normalizeCandidateSourceRows(row, { sourceLabel }))
         .filter(Boolean);
     const rowsByKey = new Map();
     let duplicateSourceRows = 0;
@@ -440,7 +474,9 @@ module.exports = {
     classifyKanjiScope,
     formatWordInventoryExpansionCandidateReport,
     normalizeCandidateSourceRow,
+    normalizeCandidateSourceRows,
     parseCandidateSourceText,
     parseDelimitedLine,
     parseSourceLevel,
+    splitReadingVariants,
 };

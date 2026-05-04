@@ -100,20 +100,20 @@ Golden and platinum review:
 | N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N1 kanji | Golden-reviewed at `1231/1231`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
-| N5 word | Golden-reviewed at `321/321`; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; word platinum has 227 active approvals, 27 deferred/removed rows, 94 generated rows still missing platinum approval, and no `needs_review` blockers under the generated-pitch-label policy |
+| N5 word | Golden-reviewed at `314/314`; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; word platinum has 232 active approvals, 34 deferred/removed rows, 82 generated rows still missing platinum approval, and no `needs_review` blockers under the generated-pitch-label policy |
 | N4 word | Golden-reviewed at `458/458`; current local N5+N4 selected-scope readiness passes with governed local word audio, pitch accent, card-back fields, example reading alignment, kanji-context checks, labels, and looping animations clean for shipped rows; word platinum has `0` entries and fails until all generated N4 words have active approvals |
 
 Current tracked word inventory:
 
-- N5 canonical word rows: `321`
+- N5 canonical word rows: `314`
 - N5 source-only phrase exclusions: `18`
 - N4 canonical word rows: `458`
-- N3 canonical word rows: `9`
-- N2 canonical word rows: `6`
-- N1 canonical word rows: `5`
-- Current N5+N4 word rows: `779`
-- N5 word reading coverage: `75% (258/344)` when built alone
-- N5 word reading coverage: `76.5% (263/344)` when built with N4 as the selected word-product scope
+- N3 canonical word rows: `11`
+- N2 canonical word rows: `10`
+- N1 canonical word rows: `6`
+- Current N5+N4 word rows: `772`
+- N5 word reading coverage: `72.7% (250/344)` when built alone
+- N5 word reading coverage: `74.1% (255/344)` when built with N4 as the selected word-product scope
 - N4 word reading coverage: `74.5% (485/651)` when built with N5 as the selected word-product scope
 - N5+N4 word readiness: N5 and N4 are `ready_with_deferred_variants` under `npm run deck:words:ready -- --levels=5,4 --require-no-active-triage`; governed word audio remains ignored workspace media and must be regenerated or restored in a fresh checkout
 

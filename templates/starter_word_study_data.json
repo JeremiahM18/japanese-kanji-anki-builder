@@ -613,11 +613,11 @@
     "written": "雨天",
     "reading": "うてん",
     "meaning": "rainy weather",
-    "jlpt": 5,
+    "jlpt": 1,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n1"
     ],
     "coverage": {
       "role": "support",
@@ -628,7 +628,7 @@
         "雨": "う"
       }
     },
-    "notes": "Reading-coverage support word for the common 雨 -> う weather pattern.",
+    "notes": "Deferred from the N5 word product because source review marks 雨天 as JLPT N1 and the rainy-weather/cancellation-register noun is too formal for beginner coverage.",
     "exampleSentence": {
       "japanese": "雨天のため、試合は中止です。",
       "reading": "うてんのため、しあいはちゅうしです。",
@@ -691,8 +691,10 @@
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n5",
+      "phrase"
     ],
+    "notes": "Source-only transparent phrase removed from the default N5 word deck; use dictionary-backed 駅前|えきまえ for the word-card identity.",
     "exampleSentence": {
       "japanese": "駅の前で友だちを待ちます。",
       "reading": "えきのまえでともだちをまちます。",
@@ -2666,7 +2668,7 @@
         "行": "ゆき"
       }
     },
-    "notes": "Reading-coverage support word for the 行 -> ゆき pattern.",
+    "notes": "Common destination word. Also read いきさき; this card uses ゆきさき for the 行 -> ゆき travel/signage reading.",
     "exampleSentence": {
       "japanese": "行き先を紙に書いてください。",
       "reading": "ゆきさきをかみにかいてください。",
@@ -4401,7 +4403,7 @@
         "生": "なま"
       }
     },
-    "notes": "Reading-coverage support word for the 生 -> なま pattern.",
+    "notes": "Common restaurant word for draft beer; useful support for 生 -> なま in a real mixed kanji-katakana word.",
     "exampleSentence": {
       "japanese": "父は店で生ビールを飲みました。",
       "reading": "ちちはみせでなまびーるをのみました。",
@@ -4514,11 +4516,11 @@
     "reading": "すいか",
     "readingBreakdown": "<ruby>西<rt>すい</rt></ruby><ruby>瓜<rt>か</rt></ruby>",
     "meaning": "watermelon",
-    "jlpt": 5,
+    "jlpt": 1,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n1"
     ],
     "coverage": {
       "role": "support",
@@ -4529,7 +4531,7 @@
         "西": "すい"
       }
     },
-    "notes": "Reading-coverage support word for the 西 -> すい pattern.",
+    "notes": "Deferred from the N5 word product because dictionary review marks 西瓜 as usually written in kana; do not force rare kanji-form 西 -> すい coverage into a beginner deck.",
     "exampleSentence": {
       "japanese": "夏に西瓜を食べるのが好きです。",
       "reading": "なつにすいかをたべるのがすきです。",
@@ -6536,11 +6538,11 @@
     "written": "分かつ",
     "reading": "わかつ",
     "meaning": "share / divide",
-    "jlpt": 5,
+    "jlpt": 1,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n1"
     ],
     "coverage": {
       "role": "support",
@@ -6551,7 +6553,7 @@
         "分": "わかつ"
       }
     },
-    "notes": "Reading-coverage support word for the 分 -> わかつ pattern.",
+    "notes": "Deferred from the N5 word product because 分かつ is a real common verb but more written/formal than beginner-friendly 分ける; do not force 分 -> わかつ coverage.",
     "exampleSentence": {
       "japanese": "友だちと喜びを分かちました。",
       "reading": "ともだちとよろこびをわかちました。",

@@ -25553,6 +25553,921 @@
     ]
   },
   {
+    "word": "生ビール",
+    "readingIncludes": [
+      "なまびーる"
+    ],
+    "meaningIncludes": [
+      "draft beer"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "生"
+    ],
+    "coversReadingIncludes": [
+      "生: なま"
+    ],
+    "breakdownIncludes": [
+      "生 （なま） ／ live / life / birth / raw"
+    ],
+    "exampleIncludes": [
+      "父は店で生ビールを飲みました。"
+    ],
+    "notesIncludes": [
+      "Common restaurant word for draft beer",
+      "support for 生 -> なま"
+    ],
+    "status": "fixed_then_platinum",
+    "fixSummary": "Added a clearer restaurant-word usage note and fixed the word platinum batch evidence check so preserved katakana readings such as なまビール match exported kana readings such as なまびーる.",
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "selectionRationale": "Common restaurant word that gives learners a real, useful 生 -> なま support card in a mixed kanji-katakana word without inventing a rare reading target.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 生ビール|なまびーる: word 生ビール, reading なまびーる, meaning draft beer, example 父は店で生ビールを飲みました。, audio word-reading-生ビール-なまびーる, breakdown 生 （なま） ／ live / life / birth / raw, labels JLPT N5 Reading coverage support, focus 生, covered readings 生: なま, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 生ビール|なまびーる, reading なまびーる, meaning draft beer, example 父は店で生ビールを飲みました。, note Common restaurant word for draft beer, covered readings 生: なま, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E7%94%9F%E3%83%93%E3%83%BC%E3%83%AB",
+        "detail": "JLearn.net verifies 生ビール|なまびーる as the normalized reading of source 生ビール|なまビール, a common noun meaning draft beer; product review checked example 父は店で生ビールを飲みました。 Reviewed word 生ビール|なまびーる, reading なまびーる, learner meaning draft beer, and example 父は店で生ビールを飲みました。."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 生ビール|なまびーる for JLPT N5; product review confirmed 生ビール|なまびーる belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 生ビール|なまびーる, reading なまびーる, sentence 父は店で生ビールを飲みました。, reading line ちちはみせでなまビールをのみました。, English line My father drank draft beer at the restaurant., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 生ビール|なまびーる; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 生ビール|なまびーる exact asset fragment word-reading-生ビール-なまびーる for the exported word reading なまびーる."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 生ビール|なまびーる source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] and rendered label Pitch 1: 3."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 生ビール|なまびーる JLPT N5, Reading coverage support, focus 生, covered readings 生: なま, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 生ビール|なまびーる common and learner-friendly for the N5 word deck, with accurate reading なまびーる, meaning draft beer, example 父は店で生ビールを飲みました。, and reviewed pitch handling Pitch 1: 3."
+      }
+    ]
+  },
+  {
+    "word": "北東",
+    "readingIncludes": [
+      "ほくとう"
+    ],
+    "meaningIncludes": [
+      "northeast"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "北"
+    ],
+    "coversReadingIncludes": [
+      "北: ほく"
+    ],
+    "breakdownIncludes": [
+      "北 （ほく） ／ north",
+      "東 （とう） ／ east"
+    ],
+    "exampleIncludes": [
+      "北東の空が明るいです。"
+    ],
+    "notesIncludes": [
+      "Reading-coverage support word for the common 北 -> ほく pattern."
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Useful direction word that naturally reinforces 北 -> ほく and 東 -> とう in a common compass compound.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 北東|ほくとう: word 北東, reading ほくとう, meaning northeast, example 北東の空が明るいです。, audio word-reading-北東-ほくとう, breakdown 北 （ほく） ／ north / 東 （とう） ／ east, labels JLPT N5 Reading coverage support, focus 北, covered readings 北: ほく, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 北東|ほくとう, reading ほくとう, meaning northeast, example 北東の空が明るいです。, breakdown 北 （ほく） ／ north / 東 （とう） ／ east, covered readings 北: ほく, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8C%97%E6%9D%B1",
+        "detail": "JLearn.net verifies 北東|ほくとう, reading ほくとう, meaning northeast; product review checked example 北東の空が明るいです。 Reviewed word 北東|ほくとう, reading ほくとう, learner meaning northeast, and example 北東の空が明るいです。."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 北東|ほくとう for JLPT N5; product review confirmed 北東|ほくとう belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 北東|ほくとう, reading ほくとう, sentence 北東の空が明るいです。, reading line ほくとうのそらがあかるいです。, English line The northeastern sky is bright., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 北東|ほくとう; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 北東|ほくとう exact asset fragment word-reading-北東-ほくとう for the exported word reading ほくとう."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 北東|ほくとう source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 北東|ほくとう JLPT N5, Reading coverage support, focus 北, covered readings 北: ほく, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 北東|ほくとう common and learner-friendly for the N5 word deck, with accurate reading ほくとう, meaning northeast, example 北東の空が明るいです。, and reviewed pitch handling Pitch 1: 0."
+      }
+    ]
+  },
+  {
+    "word": "上下",
+    "readingIncludes": [
+      "じょうげ"
+    ],
+    "meaningIncludes": [
+      "up and down",
+      "top and bottom"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "下"
+    ],
+    "coversReadingIncludes": [
+      "下: げ"
+    ],
+    "breakdownIncludes": [
+      "上 （じょう） ／ up / above",
+      "下 （げ） ／ down / below"
+    ],
+    "exampleIncludes": [
+      "このシャツは上下の色がちがいます。"
+    ],
+    "notesIncludes": [
+      "Reading-coverage support word for the common 下 -> げ pattern."
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Common visual direction pair, parallel to 左右, that is useful for learners and gives honest 下 -> げ compound-reading support.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 上下|じょうげ: word 上下, reading じょうげ, meaning up and down / top and bottom, example このシャツは上下の色がちがいます。, audio word-reading-上下-じょうげ, breakdown 上 （じょう） ／ up / above / 下 （げ） ／ down / below, labels JLPT N5 Reading coverage support, focus 下, covered readings 下: げ, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 上下|じょうげ, reading じょうげ, meaning up and down / top and bottom, example このシャツは上下の色がちがいます。, breakdown 上 （じょう） ／ up / above / 下 （げ） ／ down / below, covered readings 下: げ, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%8A%E4%B8%8B",
+        "detail": "JLearn.net verifies 上下|じょうげ as a common word, reading じょうげ, meaning up and down / top and bottom; product review checked example このシャツは上下の色がちがいます。 Reviewed word 上下|じょうげ, reading じょうげ, learner meaning up and down / top and bottom, and example このシャツは上下の色がちがいます。."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 上下|じょうげ for JLPT N5; product review confirmed 上下|じょうげ belongs in the N5 word deck as Reading coverage support because it is common and learner-friendly despite later JLPT source placement."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 上下|じょうげ, reading じょうげ, sentence このシャツは上下の色がちがいます。, reading line このシャツはじょうげのいろがちがいます。, English line The top and bottom of this shirt are different colors., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 上下|じょうげ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 上下|じょうげ exact asset fragment word-reading-上下-じょうげ for the exported word reading じょうげ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 上下|じょうげ source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 上下|じょうげ JLPT N5, Reading coverage support, focus 下, covered readings 下: げ, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 上下|じょうげ common and learner-friendly for the N5 word deck, with accurate reading じょうげ, meaning up and down / top and bottom, example このシャツは上下の色がちがいます。, and reviewed pitch handling Pitch 1: 1."
+      }
+    ]
+  },
+  {
+    "word": "切手",
+    "readingIncludes": [
+      "きって"
+    ],
+    "meaningIncludes": [
+      "stamp"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "切",
+      "手"
+    ],
+    "coversReadingIncludes": [
+      "切: きっ",
+      "手: て"
+    ],
+    "breakdownIncludes": [
+      "切 （きっ） ／ cut",
+      "手 （て） ／ hand"
+    ],
+    "exampleIncludes": [
+      "手紙に切手をはります。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Core practical mail word and common JLPT N5 vocabulary; the outside-level kanji label is visible, and the word remains learner-useful.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 切手|きって: word 切手, reading きって, meaning stamp, example 手紙に切手をはります。, audio word-reading-切手-きって, breakdown 切 （きっ） ／ cut / 手 （て） ／ hand, labels JLPT N5 JLPT core + reading coverage, focus 切、手, covered readings 切: きっ / 手: て, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 切手|きって, reading きって, meaning stamp, example 手紙に切手をはります。, breakdown 切 （きっ） ／ cut / 手 （て） ／ hand, covered readings 切: きっ / 手: て, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%88%87%E6%89%8B",
+        "detail": "JLearn.net verifies 切手|きって as a common JLPT N5 noun, reading きって, meaning stamp; product review checked example 手紙に切手をはります。 Reviewed word 切手|きって, reading きって, learner meaning stamp, and example 手紙に切手をはります。."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 切手|きって for JLPT N5; product review confirmed 切手|きって belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 切手|きって, reading きって, sentence 手紙に切手をはります。, reading line てがみにきってをはります。, English line I put a stamp on the letter., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 切手|きって; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 切手|きって exact asset fragment word-reading-切手-きって for the exported word reading きって."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 切手|きって source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 切手|きって JLPT N5, JLPT core + reading coverage, focus 切、手, covered readings 切: きっ / 手: て, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 切手|きって common and learner-friendly for the N5 word deck, with accurate reading きって, meaning stamp, example 手紙に切手をはります。, and reviewed pitch handling Pitch 1: 0."
+      }
+    ]
+  },
+  {
+    "word": "子犬",
+    "readingIncludes": [
+      "こいぬ"
+    ],
+    "meaningIncludes": [
+      "puppy"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "子"
+    ],
+    "coversReadingIncludes": [
+      "子: こ"
+    ],
+    "breakdownIncludes": [
+      "子 （こ） ／ child",
+      "犬 （いぬ） ／ dog"
+    ],
+    "exampleIncludes": [
+      "小さい子犬が公園で遊んでいます。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Concrete common learner-friendly animal word; the outside-level 犬 label is visible and the card gives useful 子 -> こ support.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 子犬|こいぬ: word 子犬, reading こいぬ, meaning puppy, example 小さい子犬が公園で遊んでいます。, audio word-reading-子犬-こいぬ, breakdown 子 （こ） ／ child / 犬 （いぬ） ／ dog, labels JLPT N5 JLPT core + reading coverage, focus 子, covered readings 子: こ, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 子犬|こいぬ, reading こいぬ, meaning puppy, example 小さい子犬が公園で遊んでいます。, breakdown 子 （こ） ／ child / 犬 （いぬ） ／ dog, covered readings 子: こ, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%AD%90%E7%8A%AC",
+        "detail": "JLearn.net verifies 子犬|こいぬ, reading こいぬ, meaning puppy; product review checked example 小さい子犬が公園で遊んでいます。 Reviewed word 子犬|こいぬ, reading こいぬ, learner meaning puppy, and example 小さい子犬が公園で遊んでいます。."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 子犬|こいぬ for JLPT N5; product review confirmed 子犬|こいぬ belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 子犬|こいぬ, reading こいぬ, sentence 小さい子犬が公園で遊んでいます。, reading line ちいさいこいぬがこうえんであそんでいます。, English line A small puppy is playing in the park., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 子犬|こいぬ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 子犬|こいぬ exact asset fragment word-reading-子犬-こいぬ for the exported word reading こいぬ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 子犬|こいぬ source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 子犬|こいぬ JLPT N5, JLPT core + reading coverage, focus 子, covered readings 子: こ, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 子犬|こいぬ common and learner-friendly for the N5 word deck, with accurate reading こいぬ, meaning puppy, example 小さい子犬が公園で遊んでいます。, and reviewed pitch handling Pitch 1: 0."
+      }
+    ]
+  },
+  {
+    "word": "行き先",
+    "readingIncludes": [
+      "ゆきさき"
+    ],
+    "meaningIncludes": [
+      "destination",
+      "where someone is headed"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "行"
+    ],
+    "coversReadingIncludes": [
+      "行: ゆき"
+    ],
+    "breakdownIncludes": [
+      "行き （ゆき） ／ destination / going",
+      "先 （さき） ／ ahead / previous"
+    ],
+    "exampleIncludes": [
+      "行き先を紙に書いてください。"
+    ],
+    "notesIncludes": [
+      "Also read いきさき",
+      "uses ゆきさき for the 行 -> ゆき travel/signage reading"
+    ],
+    "status": "fixed_then_platinum",
+    "fixSummary": "Added a note that 行き先 is also read いきさき and that this card intentionally uses ゆきさき for the travel/signage reading.",
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common destination/travel word that is useful to learners; approved with an alternate-reading note so 行き先|ゆきさき is taught as an exact word identity rather than a vague coverage trick.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 行き先|ゆきさき: word 行き先, reading ゆきさき, meaning destination / where someone is headed, example 行き先を紙に書いてください。, audio word-reading-行き先-ゆきさき, breakdown 行き （ゆき） ／ destination / going / 先 （さき） ／ ahead / previous, labels JLPT N5 Reading coverage support, focus 行, covered readings 行: ゆき, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 行き先|ゆきさき, reading ゆきさき, meaning destination / where someone is headed, example 行き先を紙に書いてください。, alternate-reading note Also read いきさき, breakdown 行き （ゆき） ／ destination / going / 先 （さき） ／ ahead / previous, covered readings 行: ゆき, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E8%A1%8C%E3%81%8D%E5%85%88",
+        "detail": "JLearn.net verifies 行き先|ゆきさき as an alternate reading of 行き先, meaning destination / where someone is headed; product review checked example 行き先を紙に書いてください。 Reviewed word 行き先|ゆきさき, reading ゆきさき, learner meaning destination / where someone is headed, and example 行き先を紙に書いてください。."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 行き先|ゆきさき for JLPT N5; product review confirmed 行き先|ゆきさき belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 行き先|ゆきさき, reading ゆきさき, sentence 行き先を紙に書いてください。, reading line ゆきさきをかみにかいてください。, English line Please write your destination on the paper., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 行き先|ゆきさき; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 行き先|ゆきさき exact asset fragment word-reading-行き先-ゆきさき for the exported word reading ゆきさき."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 行き先|ゆきさき source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 行き先|ゆきさき JLPT N5, Reading coverage support, focus 行, covered readings 行: ゆき, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 行き先|ゆきさき common and learner-friendly for the N5 word deck, with accurate reading ゆきさき, meaning destination / where someone is headed, example 行き先を紙に書いてください。, and reviewed pitch handling Pitch 1: 0."
+      }
+    ]
+  },
+  {
+    "word": "東京",
+    "readingIncludes": [
+      "とうきょう"
+    ],
+    "meaningIncludes": [
+      "Tokyo"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "東"
+    ],
+    "coversReadingIncludes": [
+      "東: とう"
+    ],
+    "breakdownIncludes": [
+      "東 （とう） ／ east",
+      "京 （きょう） ／ capital"
+    ],
+    "exampleIncludes": [
+      "東京で友だちに会います。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Core place name and highly useful learner word; the outside-level 京 label is visible while 東 -> とう is taught in a real common word.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 東京|とうきょう: word 東京, reading とうきょう, meaning Tokyo, example 東京で友だちに会います。, audio word-reading-東京-とうきょう, breakdown 東 （とう） ／ east / 京 （きょう） ／ capital, labels JLPT N5 JLPT core + reading coverage, focus 東, covered readings 東: とう, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 東京|とうきょう, reading とうきょう, meaning Tokyo, example 東京で友だちに会います。, breakdown 東 （とう） ／ east / 京 （きょう） ／ capital, covered readings 東: とう, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%9D%B1%E4%BA%AC",
+        "detail": "JLearn.net verifies 東京|とうきょう as a common JLPT N5 proper noun, reading とうきょう, meaning Tokyo; product review checked example 東京で友だちに会います。 Reviewed word 東京|とうきょう, reading とうきょう, learner meaning Tokyo, and example 東京で友だちに会います。."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 東京|とうきょう for JLPT N5; product review confirmed 東京|とうきょう belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 東京|とうきょう, reading とうきょう, sentence 東京で友だちに会います。, reading line とうきょうでともだちにあいます。, English line I will meet a friend in Tokyo., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 東京|とうきょう; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 東京|とうきょう exact asset fragment word-reading-東京-とうきょう for the exported word reading とうきょう."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 東京|とうきょう source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 東京|とうきょう JLPT N5, JLPT core + reading coverage, focus 東, covered readings 東: とう, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 東京|とうきょう common and learner-friendly for the N5 word deck, with accurate reading とうきょう, meaning Tokyo, example 東京で友だちに会います。, and reviewed pitch handling Pitch 1: 0."
+      }
+    ]
+  },
+  {
+    "word": "会話",
+    "readingIncludes": [
+      "かいわ"
+    ],
+    "meaningIncludes": [
+      "conversation"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "話"
+    ],
+    "coversReadingIncludes": [
+      "話: わ"
+    ],
+    "breakdownIncludes": [
+      "会 （かい） ／ meeting / gathering",
+      "話 （わ） ／ speak / talk"
+    ],
+    "exampleIncludes": [
+      "先生と短い会話をしました。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Core language-learning word that is common and useful even if source JLPT placement varies; it gives 話 -> わ support through a learner-relevant noun.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 会話|かいわ: word 会話, reading かいわ, meaning conversation, example 先生と短い会話をしました。, audio word-reading-会話-かいわ, breakdown 会 （かい） ／ meeting / gathering / 話 （わ） ／ speak / talk, labels JLPT N5 JLPT core + reading coverage, focus 話, covered readings 話: わ, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 会話|かいわ, reading かいわ, meaning conversation, example 先生と短い会話をしました。, breakdown 会 （かい） ／ meeting / gathering / 話 （わ） ／ speak / talk, covered readings 話: わ, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BC%9A%E8%A9%B1",
+        "detail": "JLearn.net verifies 会話|かいわ as a common word, reading かいわ, meaning conversation; product review checked example 先生と短い会話をしました。 Reviewed word 会話|かいわ, reading かいわ, learner meaning conversation, and example 先生と短い会話をしました。."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 会話|かいわ for JLPT N5; product review confirmed 会話|かいわ belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 会話|かいわ, reading かいわ, sentence 先生と短い会話をしました。, reading line せんせいとみじかいかいわをしました。, English line I had a short conversation with the teacher., and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 会話|かいわ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 会話|かいわ exact asset fragment word-reading-会話-かいわ for the exported word reading かいわ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 会話|かいわ source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 会話|かいわ JLPT N5, JLPT core + reading coverage, focus 話, covered readings 話: わ, and visible higher-level kanji labels where applicable."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 会話|かいわ common and learner-friendly for the N5 word deck, with accurate reading かいわ, meaning conversation, example 先生と短い会話をしました。, and reviewed pitch handling Pitch 1: 0."
+      }
+    ]
+  },
+  {
+    "word": "分かつ",
+    "status": "deferred",
+    "readingIncludes": [
+      "わかつ"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because source review verifies 分かつ|わかつ as a real common verb, but its share/divide usage is more written or formal than beginner-friendly 分ける. It should not stay in N5 only to close 分 -> わかつ coverage."
+  },
+  {
+    "word": "雨天",
+    "status": "deferred",
+    "readingIncludes": [
+      "うてん"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because JLearn.net classifies 雨天|うてん as JLPT N1 and the rainy-weather/cancellation-register noun is too formal for beginner coverage."
+  },
+  {
+    "word": "西瓜",
+    "status": "deferred",
+    "readingIncludes": [
+      "すいか"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because dictionary review marks 西瓜|すいか as usually written in kana; do not force rare kanji-form 西 -> すい coverage into the beginner word deck."
+  },
+  {
+    "word": "駅の前",
+    "status": "removed",
+    "readingIncludes": [
+      "えきのまえ"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Removed from the default N5 word deck because 駅の前|えきのまえ is a transparent phrase. Keep it as example language and use the dictionary-backed word 駅前|えきまえ for a word-card identity."
+  },
+  {
     "word": "休まる",
     "status": "deferred",
     "readingIncludes": [

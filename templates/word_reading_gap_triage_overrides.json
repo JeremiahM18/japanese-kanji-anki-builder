@@ -404,6 +404,26 @@
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "上り|のぼり is source-reviewed as JLPT N2 and specialized train/ascent vocabulary; defer this support row from N5."
+    },
+    "分|kun|わかつ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "分かつ|わかつ is real but more written/formal than 分ける; defer this reading instead of forcing it into the N5 word product."
+    },
+    "雨|on|う": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "雨天|うてん is formal cancellation/weather vocabulary and source-reviewed as later-level; N5 should not force 雨 -> う coverage."
+    },
+    "西|on|すい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "西瓜|すいか is usually written in kana, so the rare kanji-form 西 -> すい reading should not be forced into N5."
+    },
+    "西|on|す": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "西瓜|すいか exposes a weak 西 -> す/すい support family, but the word is usually written in kana; do not force this into the N5 word product."
     }
   },
   "N4": {

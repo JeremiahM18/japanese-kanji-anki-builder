@@ -116,3 +116,10 @@ test("word batch sentence evidence allows normal inflected readings", () => {
     assert.equal(exampleReadingContainsWordReading("へやがあかるくなります", "あかるい"), true);
     assert.equal(exampleReadingContainsWordReading("きょうはとしょかんへいきます", "あした"), false);
 });
+
+test("word batch sentence evidence allows preserved katakana loanword spans", () => {
+    assert.equal(
+        exampleReadingContainsWordReading("ちちはみせでなまビールをのみました", "なまびーる"),
+        true
+    );
+});

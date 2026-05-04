@@ -10,6 +10,8 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Fixed
 
+- Fixed the N5 word platinum queue by moving `分かつ|わかつ`, `雨天|うてん`, and `西瓜|すいか` to the N1 word product, removing phrase-shaped `駅の前|えきのまえ` from the default word deck, and recording the resulting N5 reading gaps as deferred instead of forcing formal, kana-usual, or phrase-shaped cards into the beginner deck.
+- Fixed the word platinum batch evidence check so preserved katakana loanword spans in example readings, such as `なまビール`, match normalized exported kana readings, such as `なまびーる`, instead of falsely blocking valid mixed-script word cards.
 - Fixed the N5 word platinum queue by moving `休まる|やすまる` and `下り|くだり` to the N3 word product, moving `長男|ちょうなん`, `父母|ふぼ`, `南北|なんぼく`, and `上り|のぼり` to the N2 word product, moving `生かす|いかす` to the N1 word product, and replacing the `外す|はずす` shoe example with a glasses example so the card teaches a natural beginner-safe usage.
 - Fixed the N5 word platinum queue by moving `外れる|はずれる` and `下す|くだす` to the N2 word product, moving `休める|やすめる` and `生やす|はやす` to the N1 word product, excluding `海の水|うみのみず` as a source-only phrase, and recording the resulting N5 reading gaps as deferred instead of forcing later-level, formal, narrow, or phrase-shaped cards into the beginner deck.
 - Fixed word-card coverage auditing for duplicate-kanji words so `CoversReading` must match at least one contextual ruby reading, and corrected `日曜日|にちようび` to cover `日 -> にち` instead of falsely falling back to `日 -> ひ`.
@@ -49,6 +51,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added eight source-checked N5 word platinum approvals (`生ビール`, `北東`, `上下`, `切手`, `子犬`, `行き先`, `東京`, `会話`), raising active N5 word platinum coverage to `240` cards with `38` deferred/removed rows, `70` generated rows still missing platinum approval, and no `needs_review` blockers.
 - Added five source-checked N5 word platinum approvals (`外す`, `生える`, `左右`, `木曜日`, `小川`), raising active N5 word platinum coverage to `232` cards with `34` deferred/removed rows, `82` generated rows still missing platinum approval, and no `needs_review` blockers.
 - Added seven source-checked N5 word platinum approvals (`北口`, `朝ご飯`, `夜空`, `土曜日`, `切符`, `分ける`, `小雨`), raising active N5 word platinum coverage to `227` cards with `27` deferred/removed rows, `94` generated rows still missing platinum approval, and no `needs_review` blockers.
 - Added twelve source-checked N5 word platinum approvals (`食べ物`, `毎週`, `勉強`, `台所`, `右手`, `飲み物`, `辞書`, `出口`, `日曜日`, `左手`, `部屋`, `夕方`), raising active N5 word platinum coverage to `220` cards with `22` deferred/removed rows, `106` generated rows still missing platinum approval, and no `needs_review` blockers.

@@ -11,6 +11,7 @@ const {
     isGeneratedPitchAccentSource,
     validateWordPitchAccentSource,
 } = require("./wordPitchAccentVerificationService");
+const { katakanaToHiragana } = require("../utils/japanese");
 
 function normalizeText(value) {
     return String(value ?? "").trim();
@@ -25,7 +26,7 @@ function stripMarkup(value) {
 }
 
 function normalizeComparable(value) {
-    return stripMarkup(value)
+    return katakanaToHiragana(stripMarkup(value))
         .replace(/[「」『』（）()[\]{}]/g, "")
         .replace(/[、。，，,・.．\s:：/-]/g, "")
         .toLowerCase();

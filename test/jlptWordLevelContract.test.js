@@ -95,12 +95,12 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
         "十|じゅう",
     ];
 
-    assert.equal(contract.inventoryCounts["1"], 6);
+    assert.equal(contract.inventoryCounts["1"], 9);
     assert.equal(contract.inventoryCounts["2"], 10);
     assert.equal(contract.inventoryCounts["3"], 11);
     assert.equal(contract.inventoryCounts["4"], 458);
-    assert.equal(contract.inventoryCounts["5"], 314);
-    assert.equal(contract.excludedCounts["5"], 18);
+    assert.equal(contract.inventoryCounts["5"], 310);
+    assert.equal(contract.excludedCounts["5"], 19);
     for (const key of n5StandaloneNumberWords) {
         assert.equal(getJlptWordLevel(contract, key), 5);
     }
@@ -108,6 +108,7 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
     assert.equal(getJlptWordLevel(contract, "聞こえる|きこえる"), 4);
     assert.equal(contract.excludedWordLevels["山の上|やまのうえ"].exclusionReason, "phrase");
     assert.equal(contract.excludedWordLevels["雨の日|あめのひ"].exclusionReason, "phrase");
+    assert.equal(contract.excludedWordLevels["駅の前|えきのまえ"].exclusionReason, "phrase");
     assert.equal(contract.excludedWordLevels["駅の中|えきのなか"].exclusionReason, "phrase");
     assert.equal(contract.excludedWordLevels["家の中|いえのなか"].exclusionReason, "phrase");
     assert.equal(contract.excludedWordLevels["海の水|うみのみず"].exclusionReason, "phrase");
@@ -442,7 +443,7 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
     assert.equal(getJlptWordLevel(contract, "男子|だんし"), 5);
     assert.equal(getJlptWordLevel(contract, "手本|てほん"), 5);
     assert.equal(getJlptWordLevel(contract, "母校|ぼこう"), 1);
-    assert.equal(getJlptWordLevel(contract, "雨天|うてん"), 5);
+    assert.equal(getJlptWordLevel(contract, "雨天|うてん"), 1);
     assert.equal(getJlptWordLevel(contract, "八日|ようか"), 5);
     assert.equal(getJlptWordLevel(contract, "校長|こうちょう"), 4);
     assert.equal(getJlptWordLevel(contract, "長男|ちょうなん"), 2);
@@ -468,7 +469,9 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
     assert.equal(getJlptWordLevel(contract, "外れる|はずれる"), 2);
     assert.equal(getJlptWordLevel(contract, "行う|おこなう"), 4);
     assert.equal(getJlptWordLevel(contract, "生ビール|なまびーる"), 5);
-    assert.equal(getJlptWordLevel(contract, "西瓜|すいか"), 5);
+    assert.equal(getJlptWordLevel(contract, "西瓜|すいか"), 1);
+    assert.equal(getJlptWordLevel(contract, "分かつ|わかつ"), 1);
+    assert.equal(getJlptWordLevel(contract, "駅の前|えきのまえ"), null);
     assert.equal(getJlptWordLevel(contract, "手間|てま"), 5);
     assert.equal(getJlptWordLevel(contract, "白紙|はくし"), 5);
     assert.equal(getJlptWordLevel(contract, "音読|おんどく"), 5);

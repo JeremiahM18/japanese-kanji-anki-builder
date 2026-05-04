@@ -1,18 +1,18 @@
 {
   "version": 1,
   "inventoryCounts": {
-    "1": 6,
+    "1": 9,
     "2": 10,
     "3": 11,
     "4": 458,
-    "5": 314
+    "5": 310
   },
   "excludedCounts": {
     "1": 0,
     "2": 0,
     "3": 0,
     "4": 0,
-    "5": 18
+    "5": 19
   },
   "wordLevels": {
     "お母さん|おかあさん": {
@@ -563,7 +563,7 @@
     "分かつ|わかつ": {
       "written": "分かつ",
       "reading": "わかつ",
-      "jlpt": 5
+      "jlpt": 1
     },
     "分かる|わかる": {
       "written": "分かる",
@@ -1603,7 +1603,7 @@
     "西瓜|すいか": {
       "written": "西瓜",
       "reading": "すいか",
-      "jlpt": 5
+      "jlpt": 1
     },
     "見える|みえる": {
       "written": "見える",
@@ -1768,7 +1768,7 @@
     "雨天|うてん": {
       "written": "雨天",
       "reading": "うてん",
-      "jlpt": 5
+      "jlpt": 1
     },
     "雨戸|あまど": {
       "written": "雨戸",
@@ -1834,11 +1834,6 @@
       "written": "駅",
       "reading": "えき",
       "jlpt": 4
-    },
-    "駅の前|えきのまえ": {
-      "written": "駅の前",
-      "reading": "えきのまえ",
-      "jlpt": 5
     },
     "駅前|えきまえ": {
       "written": "駅前",
@@ -4099,6 +4094,12 @@
     "雨の日|あめのひ": {
       "written": "雨の日",
       "reading": "あめのひ",
+      "jlpt": 5,
+      "exclusionReason": "phrase"
+    },
+    "駅の前|えきのまえ": {
+      "written": "駅の前",
+      "reading": "えきのまえ",
       "jlpt": 5,
       "exclusionReason": "phrase"
     },

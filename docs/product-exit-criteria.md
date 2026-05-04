@@ -67,8 +67,8 @@ A word level ships only when all criteria are true:
 - N3 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N2 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N1 kanji: golden-reviewed at `1231/1231`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
-- N5 word: golden-reviewed at `343/343` and `ready_with_deferred_variants`; word platinum has 81 active approvals, 5 deferred/removed rows, and no `needs_review` blockers under the generated-pitch-label policy
-- N4 word: golden-reviewed at `455/455`; current local N5+N4 selected-scope readiness passes after governed local word audio for `発音|はつおん` is generated, synced, and reviewed; word platinum has `0` entries and fails until all generated N4 words have active approvals
+- N5 word: golden-reviewed at `341/341` and `ready_with_deferred_variants`; word platinum has 139 active approvals, 7 deferred/removed rows, 202 generated rows still missing platinum approval, and no `needs_review` blockers under the generated-pitch-label policy
+- N4 word: golden-reviewed at `456/456`; current local N5+N4 selected-scope readiness passes with governed local word audio, pitch accent, card-back fields, example reading alignment, kanji-context checks, labels, and looping animations clean for shipped rows; word platinum has `0` entries and fails until all generated N4 words have active approvals
 
 ## Required gates before shipping
 

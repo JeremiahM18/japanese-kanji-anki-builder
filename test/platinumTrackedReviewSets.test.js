@@ -83,7 +83,7 @@ function buildSyntheticWordRows(entries = [], wordPitchAccentData = {}) {
             coversReading: normalizeList(entry.coversReadingIncludes).join(" / "),
             kanjiBreakdown: normalizeList(entry.breakdownIncludes).join(" / "),
             exampleSentence: normalizeList(entry.exampleIncludes).join(" / "),
-            notes: "",
+            notes: normalizeList(entry.notesIncludes).join(" / "),
         };
     });
 }

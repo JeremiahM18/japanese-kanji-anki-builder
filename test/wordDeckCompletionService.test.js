@@ -294,6 +294,51 @@ test("buildWordDeckKanjiBreakdownContextAudit checks single-kanji words with kan
     });
 });
 
+test("buildWordDeckKanjiBreakdownContextAudit flags coverage readings that drift from per-kanji ruby", () => {
+    const audit = buildWordDeckKanjiBreakdownContextAudit({
+        wordRows: [
+            {
+                Word: "二時",
+                Reading: "にじ",
+                ReadingBreakdown: "<ruby>二<rt>に</rt></ruby><ruby>時<rt>じ</rt></ruby>",
+                CoversReading: "二: じ",
+                KanjiBreakdown: [
+                    "<div class=\"kanji-breakdown-item\"><span class=\"kanji-char\">二</span><span class=\"kanji-primary\">に</span><div class=\"kanji-meaning\">二 （に） ／ two</div></div>",
+                    "<div class=\"kanji-breakdown-item\"><span class=\"kanji-char\">時</span><span class=\"kanji-primary\">じ</span><div class=\"kanji-meaning\">時 （じ） ／ time</div></div>",
+                ].join(""),
+            },
+        ],
+    });
+
+    assert.equal(audit.valid, false);
+    assert.deepEqual(audit.coverageMismatchedRows[0], {
+        word: "二時",
+        reading: "にじ",
+        kanji: "二",
+        expectedReading: "に",
+        actualCoverageReading: "じ",
+    });
+});
+
+test("buildWordDeckKanjiBreakdownContextAudit allows katakana coverage readings that match ruby context", () => {
+    const audit = buildWordDeckKanjiBreakdownContextAudit({
+        wordRows: [
+            {
+                Word: "北京",
+                Reading: "ペキン",
+                ReadingBreakdown: "<ruby>北<rt>ペ</rt></ruby><ruby>京<rt>キン</rt></ruby>",
+                CoversReading: "京: キン",
+                KanjiBreakdown: [
+                    "<div class=\"kanji-breakdown-item\"><span class=\"kanji-char\">北</span><span class=\"kanji-primary\">ペ</span><div class=\"kanji-meaning\">北 （ペ） ／ north</div></div>",
+                    "<div class=\"kanji-breakdown-item\"><span class=\"kanji-char\">京</span><span class=\"kanji-primary\">キン</span><div class=\"kanji-meaning\">京 （キン） ／ capital</div></div>",
+                ].join(""),
+            },
+        ],
+    });
+
+    assert.equal(audit.valid, true);
+});
+
 test("buildWordDeckKanjiBreakdownContextAudit requires whole-word labels for non-decomposable ruby groups", () => {
     const audit = buildWordDeckKanjiBreakdownContextAudit({
         wordRows: [

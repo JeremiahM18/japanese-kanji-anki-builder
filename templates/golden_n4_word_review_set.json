@@ -4976,10 +4976,12 @@
       "Reading coverage support"
     ],
     "focusIncludes": [
-      "音"
+      "音",
+      "楽"
     ],
     "coversReadingIncludes": [
-      "音: おん"
+      "音: おん",
+      "楽: がく"
     ],
     "breakdownIncludes": [
       "音 （おん） ／ sound",
@@ -4989,7 +4991,7 @@
       "勉強するときは静かな音楽を聞きます。"
     ],
     "notesIncludes": [
-      "Common N4 support word"
+      "音 -> おん and 楽 -> がく"
     ]
   },
   {
@@ -10977,7 +10979,7 @@
       "発"
     ],
     "coversReadingIncludes": [
-      "発: はつ"
+      "発: ぱつ"
     ],
     "breakdownIncludes": [
       "出 （しゅっ） ／ exit / go out",
@@ -10987,7 +10989,39 @@
       "電車は七時に出発します。"
     ],
     "notesIncludes": [
-      "発 -> はつ"
+      "発 -> ぱつ contextual reading"
+    ]
+  },
+  {
+    "word": "発音",
+    "readingIncludes": [
+      "はつおん"
+    ],
+    "meaningIncludes": [
+      "pronunciation",
+      "production of sound"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "発"
+    ],
+    "coversReadingIncludes": [
+      "発: はつ"
+    ],
+    "breakdownIncludes": [
+      "発 （はつ） ／ depart / emit / start",
+      "音 （おん） ／ sound"
+    ],
+    "exampleIncludes": [
+      "この単語の発音を練習します。"
+    ],
+    "notesIncludes": [
+      "発 -> はつ reading"
     ]
   },
   {
@@ -12344,7 +12378,7 @@
       "楽"
     ],
     "coversReadingIncludes": [
-      "楽: がく"
+      "楽: がっ"
     ],
     "breakdownIncludes": [
       "楽 （がっ） ／ fun / enjoyable / music",
@@ -12354,7 +12388,7 @@
       "弟は学校で楽器を習っています。"
     ],
     "notesIncludes": [
-      "楽 -> がく"
+      "楽 -> がっ contextual reading"
     ]
   },
   {

@@ -390,6 +390,7 @@ function buildWordDeckKanjiBreakdownContextAudit({ wordRows }) {
             }
         }
 
+        const coverageReadings = parseCoversReadingField(row?.CoversReading || row?.coversReading || "");
         const readingCounts = new Map();
         for (const pair of readingPairs) {
             readingCounts.set(pair.kanji, (readingCounts.get(pair.kanji) || 0) + 1);
@@ -415,10 +416,27 @@ function buildWordDeckKanjiBreakdownContextAudit({ wordRows }) {
                     actualReading,
                 });
             }
+
+            if (coverageReadings.has(pair.kanji)) {
+                const actualCoverageReading = coverageReadings.get(pair.kanji);
+                const expectedCoverageReading = normalizeKanaSearchText(pair.reading);
+                const normalizedActualCoverageReading = normalizeKanaSearchText(actualCoverageReading);
+                if (
+                    normalizedActualCoverageReading !== expectedCoverageReading
+                    && !normalizedActualCoverageReading.startsWith(expectedCoverageReading)
+                ) {
+                    coverageMismatchedRows.push({
+                        word,
+                        reading,
+                        kanji: pair.kanji,
+                        expectedReading: pair.reading,
+                        actualCoverageReading,
+                    });
+                }
+            }
         }
 
         const groupContexts = contexts.filter((context) => context.type === "group");
-        const coverageReadings = parseCoversReadingField(row?.CoversReading || row?.coversReading || "");
         for (const group of groupContexts) {
             for (const kanji of group.kanjiList) {
                 if (!breakdownReadings.has(kanji)) {
@@ -990,9 +1008,13 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
     }
 
     if ((report.kanjiBreakdownContextAudit?.coverageMismatchedRows || []).length > 0) {
-        lines.push("", "Coverage readings tied to non-decomposable ruby groups:");
+        lines.push("", "Coverage readings that disagree with ReadingBreakdown:");
         for (const row of report.kanjiBreakdownContextAudit.coverageMismatchedRows.slice(0, maxEntries)) {
-            lines.push(`- ${row.word} (${row.reading}) ${row.kanji}: has ${row.actualCoverageReading}, but ${row.groupSurface} is read as ${row.groupReading}`);
+            if (row.groupSurface) {
+                lines.push(`- ${row.word} (${row.reading}) ${row.kanji}: has ${row.actualCoverageReading}, but ${row.groupSurface} is read as ${row.groupReading}`);
+                continue;
+            }
+            lines.push(`- ${row.word} (${row.reading}) ${row.kanji}: expected ${row.expectedReading}, found ${row.actualCoverageReading}`);
         }
     }
 

@@ -9,6 +9,15 @@
       "common",
       "n5"
     ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "金"
+      ],
+      "coversReadings": {
+        "金": "かね"
+      }
+    },
     "exampleSentence": {
       "japanese": "お金がありません。",
       "reading": "おかねがありません。",
@@ -25,6 +34,15 @@
       "common",
       "n5"
     ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "茶"
+      ],
+      "coversReadings": {
+        "茶": "ちゃ"
+      }
+    },
     "exampleSentence": {
       "japanese": "食事の後でお茶を飲みます。",
       "reading": "しょくじのあとでおちゃをのみます。",
@@ -42,6 +60,15 @@
       "common",
       "n5"
     ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "父"
+      ],
+      "coversReadings": {
+        "父": "とう"
+      }
+    },
     "exampleSentence": {
       "japanese": "お父さんは会社から帰りました。",
       "reading": "おとうさんはかいしゃからかえりました。",
@@ -59,6 +86,15 @@
       "common",
       "n5"
     ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "母"
+      ],
+      "coversReadings": {
+        "母": "かあ"
+      }
+    },
     "exampleSentence": {
       "japanese": "お母さんは台所で料理しています。",
       "reading": "おかあさんはだいどころでりょうりしています。",
@@ -75,6 +111,15 @@
       "core",
       "n5"
     ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "飯"
+      ],
+      "coversReadings": {
+        "飯": "はん"
+      }
+    },
     "exampleSentence": {
       "japanese": "ご飯を食べましょう。",
       "reading": "ごはんをたべましょう。",
@@ -776,10 +821,10 @@
         "下"
       ],
       "coversReadings": {
-        "下": "しも"
+        "下": "した"
       }
     },
-    "notes": "Reading-coverage support word for the 下 -> しも pattern.",
+    "notes": "Reading-coverage support word for the 下 -> した pattern.",
     "exampleSentence": {
       "japanese": "下町をゆっくり歩きました。",
       "reading": "したまちをゆっくりあるきました。",
@@ -985,13 +1030,13 @@
     "coverage": {
       "role": "support",
       "focusKanji": [
-        "天"
+        "雨"
       ],
       "coversReadings": {
-        "天": "あめ"
+        "雨": "あめ"
       }
     },
-    "notes": "Reading-coverage support word for the 天 -> あめ pattern.",
+    "notes": "Reading-coverage support word for the 雨 -> あめ pattern.",
     "exampleSentence": {
       "japanese": "外では天気雨が降っていました。",
       "reading": "そとではてんきあめがふっていました。",
@@ -1351,10 +1396,10 @@
         "山"
       ],
       "coversReadings": {
-        "山": "さん"
+        "山": "ざん"
       }
     },
-    "notes": "Reading-coverage support word for the common 山 -> さん pattern.",
+    "notes": "Reading-coverage support word for the 山 -> ざん pattern.",
     "exampleSentence": {
       "japanese": "その島には大きい火山があります。",
       "reading": "そのしまにはおおきいかざんがあります。",
@@ -1456,7 +1501,7 @@
         "校"
       ],
       "coversReadings": {
-        "学": "がく",
+        "学": "がっ",
         "校": "こう"
       }
     },
@@ -1482,10 +1527,10 @@
         "校"
       ],
       "coversReadings": {
-        "校": "きょう"
+        "校": "こう"
       }
     },
-    "notes": "Reading-coverage support word for the less common 校 -> きょう pattern.",
+    "notes": "Reading-coverage support word for the 校 -> こう pattern.",
     "exampleSentence": {
       "japanese": "校長先生が朝の会で話しました。",
       "reading": "こうちょうせんせいがあさのかいではなしました。",
@@ -2956,10 +3001,10 @@
         "左"
       ],
       "coversReadings": {
-        "左": "しゃ"
+        "左": "さ"
       }
     },
-    "notes": "Reading-coverage support word for the 左 -> しゃ pattern.",
+    "notes": "Reading-coverage support word for the 左 -> さ pattern.",
     "exampleSentence": {
       "japanese": "次の交差点で左折します。",
       "reading": "つぎのこうさてんでさせつします。",
@@ -3821,13 +3866,13 @@
     "coverage": {
       "role": "support",
       "focusKanji": [
-        "小"
+        "雨"
       ],
       "coversReadings": {
-        "小": "さ"
+        "雨": "さめ"
       }
     },
-    "notes": "Reading-coverage support word for the 小 -> さ pattern.",
+    "notes": "Reading-coverage support word for the 雨 -> さめ pattern.",
     "exampleSentence": {
       "japanese": "朝から小雨が降っています。",
       "reading": "あさからこさめがふっています。",
@@ -4150,10 +4195,10 @@
         "母"
       ],
       "coversReadings": {
-        "母": "も"
+        "母": "ぼ"
       }
     },
-    "notes": "Reading-coverage support word for the 母 -> も pattern.",
+    "notes": "Reading-coverage support word for the 母 -> ぼ pattern.",
     "exampleSentence": {
       "japanese": "私の母語は英語です。",
       "reading": "わたしのぼごはえいごです。",
@@ -4474,10 +4519,10 @@
         "西"
       ],
       "coversReadings": {
-        "西": "す"
+        "西": "すい"
       }
     },
-    "notes": "Reading-coverage support word for the 西 -> す pattern.",
+    "notes": "Reading-coverage support word for the 西 -> すい pattern.",
     "exampleSentence": {
       "japanese": "夏に西瓜を食べるのが好きです。",
       "reading": "なつにすいかをたべるのがすきです。",
@@ -5617,10 +5662,10 @@
         "読"
       ],
       "coversReadings": {
-        "読": "とう"
+        "読": "どく"
       }
     },
-    "notes": "Reading-coverage support word for the 読 -> とう pattern.",
+    "notes": "Reading-coverage support word for the 読 -> どく pattern.",
     "exampleSentence": {
       "japanese": "教室で音読をしました。",
       "reading": "きょうしつでおんどくをしました。",
@@ -5915,15 +5960,17 @@
       "n5"
     ],
     "coverage": {
-      "role": "support",
+      "role": "both",
       "focusKanji": [
-        "二"
+        "二",
+        "時"
       ],
       "coversReadings": {
-        "二": "じ"
+        "二": "に",
+        "時": "じ"
       }
     },
-    "notes": "Reading-coverage support word for the common 二 -> じ time-expression pattern.",
+    "notes": "Common N5 time expression that covers 二 as に and 時 as じ.",
     "exampleSentence": {
       "japanese": "二時に駅で会いましょう。",
       "reading": "にじにえきであいましょう。",
@@ -6770,10 +6817,10 @@
         "本"
       ],
       "coversReadings": {
-        "本": "もと"
+        "本": "ほん"
       }
     },
-    "notes": "Reading-coverage support word for the common 本 -> もと pattern.",
+    "notes": "Reading-coverage support word for the 本 -> ほん pattern.",
     "exampleSentence": {
       "japanese": "先生の字を手本にして書きます。",
       "reading": "せんせいのじをてほんにしてかきます。",
@@ -7800,10 +7847,10 @@
         "上"
       ],
       "coversReadings": {
-        "上": "しょう"
+        "上": "じょう"
       }
     },
-    "notes": "Reading-coverage support word for the 上 -> しょう pattern.",
+    "notes": "Reading-coverage support word for the 上 -> じょう pattern.",
     "exampleSentence": {
       "japanese": "気温が急に上昇しました。",
       "reading": "きおんがきゅうにじょうしょうしました。",
@@ -11438,13 +11485,15 @@
     "coverage": {
       "role": "support",
       "focusKanji": [
-        "音"
+        "音",
+        "楽"
       ],
       "coversReadings": {
-        "音": "おん"
+        "音": "おん",
+        "楽": "がく"
       }
     },
-    "notes": "Common N4 support word that covers the 音 -> おん reading.",
+    "notes": "Common N4 support word that covers the 音 -> おん and 楽 -> がく readings.",
     "exampleSentence": {
       "japanese": "勉強するときは静かな音楽を聞きます。",
       "reading": "べんきょうするときはしずかなおんがくをききます。",
@@ -13325,10 +13374,10 @@
         "楽"
       ],
       "coversReadings": {
-        "楽": "がく"
+        "楽": "がっ"
       }
     },
-    "notes": "Common N4 support word that covers the 楽 -> がく reading.",
+    "notes": "Common N4 support word that covers the 楽 -> がっ contextual reading.",
     "exampleSentence": {
       "japanese": "弟は学校で楽器を習っています。",
       "reading": "おとうとはがっこうでがっきをならっています。",
@@ -14542,14 +14591,40 @@
         "発"
       ],
       "coversReadings": {
+        "発": "ぱつ"
+      }
+    },
+    "notes": "Common N4 support word that covers the 発 -> ぱつ contextual reading.",
+    "exampleSentence": {
+      "japanese": "電車は七時に出発します。",
+      "reading": "でんしゃはしちじにしゅっぱつします。",
+      "english": "The train leaves at seven o'clock."
+    }
+  },
+  "発音|はつおん": {
+    "written": "発音",
+    "reading": "はつおん",
+    "meaning": "pronunciation / production of sound",
+    "jlpt": 4,
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "発"
+      ],
+      "coversReadings": {
         "発": "はつ"
       }
     },
     "notes": "Common N4 support word that covers the 発 -> はつ reading.",
     "exampleSentence": {
-      "japanese": "電車は七時に出発します。",
-      "reading": "でんしゃはしちじにしゅっぱつします。",
-      "english": "The train leaves at seven o'clock."
+      "japanese": "この単語の発音を練習します。",
+      "reading": "このたんごのはつおんをれんしゅうします。",
+      "english": "I practice the pronunciation of this word."
     }
   },
   "普通|ふつう": {

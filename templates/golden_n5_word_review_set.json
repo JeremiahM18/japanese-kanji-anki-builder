@@ -486,7 +486,7 @@
       "金"
     ],
     "coversReadingIncludes": [
-      "金: おかね"
+      "金: かね"
     ],
     "breakdownIncludes": [
       "金 （かね） ／ money / gold"
@@ -1900,7 +1900,7 @@
       "母"
     ],
     "coversReadingIncludes": [
-      "母: おかあさん"
+      "母: かあ"
     ],
     "breakdownIncludes": [
       "母 （かあ） ／ mother"
@@ -1928,7 +1928,7 @@
       "父"
     ],
     "coversReadingIncludes": [
-      "父: おとうさん"
+      "父: とう"
     ],
     "breakdownIncludes": [
       "父 （とう） ／ father"
@@ -3604,7 +3604,7 @@
       "飯"
     ],
     "coversReadingIncludes": [
-      "飯: ごはん"
+      "飯: はん"
     ],
     "breakdownIncludes": [
       "飯 （はん） ／ meal / cooked rice"
@@ -3981,7 +3981,7 @@
       "茶"
     ],
     "coversReadingIncludes": [
-      "茶: おちゃ"
+      "茶: ちゃ"
     ],
     "breakdownIncludes": [
       "茶 （ちゃ） ／ tea"
@@ -4513,7 +4513,7 @@
       "校"
     ],
     "coversReadingIncludes": [
-      "学: がく",
+      "学: がっ",
       "校: こう"
     ],
     "breakdownIncludes": [
@@ -5423,7 +5423,7 @@
       "山"
     ],
     "coversReadingIncludes": [
-      "山: さん"
+      "山: ざん"
     ],
     "breakdownIncludes": [
       "火 （か） ／ fire",
@@ -5433,7 +5433,7 @@
       "その島には大きい火山があります。"
     ],
     "notesIncludes": [
-      "Reading-coverage support word for the common 山 -> さん pattern."
+      "Reading-coverage support word for the 山 -> ざん pattern."
     ]
   },
   {
@@ -5810,13 +5810,15 @@
       "JLPT N5"
     ],
     "coverageRoleIncludes": [
-      "Reading coverage support"
+      "JLPT core + reading coverage"
     ],
     "focusIncludes": [
-      "二"
+      "二",
+      "時"
     ],
     "coversReadingIncludes": [
-      "二: じ"
+      "二: に",
+      "時: じ"
     ],
     "breakdownIncludes": [
       "二 （に） ／ two",
@@ -5826,7 +5828,7 @@
       "二時に駅で会いましょう。"
     ],
     "notesIncludes": [
-      "Reading-coverage support word for the common 二 -> じ time-expression pattern."
+      "Common N5 time expression that covers 二 as に and 時 as じ."
     ]
   },
   {
@@ -6001,7 +6003,7 @@
       "母"
     ],
     "coversReadingIncludes": [
-      "母: も"
+      "母: ぼ"
     ],
     "breakdownIncludes": [
       "母 （ぼ） ／ mother",
@@ -6011,7 +6013,7 @@
       "私の母語は英語です。"
     ],
     "notesIncludes": [
-      "Reading-coverage support word for the 母 -> も pattern."
+      "Reading-coverage support word for the 母 -> ぼ pattern."
     ]
   },
   {
@@ -6717,10 +6719,10 @@
       "Reading coverage support"
     ],
     "focusIncludes": [
-      "小"
+      "雨"
     ],
     "coversReadingIncludes": [
-      "小: さ"
+      "雨: さめ"
     ],
     "breakdownIncludes": [
       "小 （こ） ／ small",
@@ -6730,7 +6732,7 @@
       "朝から小雨が降っています。"
     ],
     "notesIncludes": [
-      "Reading-coverage support word for the 小 -> さ pattern."
+      "Reading-coverage support word for the 雨 -> さめ pattern."
     ]
   },
   {
@@ -7368,7 +7370,7 @@
       "校"
     ],
     "coversReadingIncludes": [
-      "校: きょう"
+      "校: こう"
     ],
     "breakdownIncludes": [
       "校 （こう） ／ school campus",
@@ -7378,7 +7380,7 @@
       "校長先生が朝の会で話しました。"
     ],
     "notesIncludes": [
-      "Reading-coverage support word for the less common 校 -> きょう pattern."
+      "Reading-coverage support word for the 校 -> こう pattern."
     ]
   },
   {
@@ -7547,7 +7549,7 @@
       "西"
     ],
     "coversReadingIncludes": [
-      "西: す"
+      "西: すい"
     ],
     "breakdownIncludes": [
       "西 （すい） ／ west",
@@ -7557,7 +7559,7 @@
       "夏に西瓜を食べるのが好きです。"
     ],
     "notesIncludes": [
-      "Reading-coverage support word for the 西 -> す pattern."
+      "Reading-coverage support word for the 西 -> すい pattern."
     ]
   },
   {
@@ -8492,7 +8494,7 @@
       "左"
     ],
     "coversReadingIncludes": [
-      "左: しゃ"
+      "左: さ"
     ],
     "breakdownIncludes": [
       "左 （さ） ／ left",
@@ -8502,7 +8504,7 @@
       "次の交差点で左折します。"
     ],
     "notesIncludes": [
-      "Reading-coverage support word for the 左 -> しゃ pattern."
+      "Reading-coverage support word for the 左 -> さ pattern."
     ]
   },
   {
@@ -8971,10 +8973,10 @@
       "Reading coverage support"
     ],
     "focusIncludes": [
-      "天"
+      "雨"
     ],
     "coversReadingIncludes": [
-      "天: あめ"
+      "雨: あめ"
     ],
     "breakdownIncludes": [
       "天 （てん） ／ weather / sky",
@@ -8985,7 +8987,7 @@
       "外では天気雨が降っていました。"
     ],
     "notesIncludes": [
-      "Reading-coverage support word for the 天 -> あめ pattern."
+      "Reading-coverage support word for the 雨 -> あめ pattern."
     ]
   },
   {
@@ -9067,7 +9069,7 @@
       "本"
     ],
     "coversReadingIncludes": [
-      "本: もと"
+      "本: ほん"
     ],
     "breakdownIncludes": [
       "手 （て） ／ hand",
@@ -9077,7 +9079,7 @@
       "先生の字を手本にして書きます。"
     ],
     "notesIncludes": [
-      "Reading-coverage support word for the common 本 -> もと pattern."
+      "Reading-coverage support word for the 本 -> ほん pattern."
     ]
   },
   {
@@ -9515,7 +9517,7 @@
       "読"
     ],
     "coversReadingIncludes": [
-      "読: とう"
+      "読: どく"
     ],
     "breakdownIncludes": [
       "音 （おん） ／ sound",
@@ -9525,7 +9527,7 @@
       "教室で音読をしました。"
     ],
     "notesIncludes": [
-      "Reading-coverage support word for the 読 -> とう pattern."
+      "Reading-coverage support word for the 読 -> どく pattern."
     ]
   },
   {
@@ -9799,7 +9801,7 @@
       "上"
     ],
     "coversReadingIncludes": [
-      "上: しょう"
+      "上: じょう"
     ],
     "breakdownIncludes": [
       "上 （じょう） ／ up / above",
@@ -9809,7 +9811,7 @@
       "気温が急に上昇しました。"
     ],
     "notesIncludes": [
-      "Reading-coverage support word for the 上 -> しょう pattern."
+      "Reading-coverage support word for the 上 -> じょう pattern."
     ]
   },
   {
@@ -10121,7 +10123,7 @@
       "下"
     ],
     "coversReadingIncludes": [
-      "下: しも"
+      "下: した"
     ],
     "breakdownIncludes": [
       "下 （した） ／ down / below",
@@ -10131,7 +10133,7 @@
       "下町をゆっくり歩きました。"
     ],
     "notesIncludes": [
-      "Reading-coverage support word for the 下 -> しも pattern."
+      "Reading-coverage support word for the 下 -> した pattern."
     ]
   },
   {

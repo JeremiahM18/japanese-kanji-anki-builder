@@ -30,6 +30,11 @@
       "priority": "low",
       "note": "Too remote from the N5 learner surface to justify a support word."
     },
+    "二|on|じ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Useful 二 words for じ are later-level, role-specific, or technical; 二時 must cover 二 -> に and 時 -> じ, not fake 二 -> じ."
+    },
     "外|kun|ほか": {
       "suggestedAction": "defer_variant",
       "priority": "low",
@@ -65,6 +70,11 @@
       "priority": "low",
       "note": "Visible in 時々 as iteration-mark rendaku, but not counted as a separate per-kanji support target."
     },
+    "山|on|さん": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "火山 truthfully covers 山 -> ざん in context; clean さん compounds are later-level or less useful for N5."
+    },
     "山|on|せん": {
       "suggestedAction": "defer_variant",
       "priority": "low",
@@ -99,6 +109,11 @@
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "Highly marginal reading; not a candidate for beginner support words."
+    },
+    "上|on|しょう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "上昇 truthfully covers 上 -> じょう; remaining しょう candidates are weak, formal, or misleading for N5."
     },
     "上|kun|たてまつる": {
       "suggestedAction": "defer_variant",
@@ -170,6 +185,11 @@
       "priority": "low",
       "note": "Rare on-yomi with little learner value at this stage."
     },
+    "読|on|とう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "読点 and 句読 are technical/later-level support words; 音読 must cover 読 -> どく, not fake 読 -> とう."
+    },
     "八|on|はつ": {
       "suggestedAction": "defer_variant",
       "priority": "low",
@@ -219,6 +239,41 @@
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "The standalone word 土|つち is governed as a later-level word, not an N5 support card; do not force N5 coverage just because the kanji is N5."
+    },
+    "下|kun|しも": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "下町 truthfully covers 下 -> した; good しも words are regional, specialized, or better saved for later."
+    },
+    "本|kun|もと": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "本 as もと is conceptually useful later, but it is confusing beside N5 本|ほん and should not be forced through 手本."
+    },
+    "小|kun|さ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Candidate words for 小 -> さ are archaic, name-like, or cross-level-heavy; 小雨 truthfully covers 雨 -> さめ."
+    },
+    "母|kun|も": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Mother/relative vocabulary should stay with お母さん and 母語 -> ぼ; remaining も readings are rare or specialist."
+    },
+    "天|kun|あめ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "天 as あめ is archaic/literary; 天気雨 truthfully covers 雨 -> あめ, not 天 -> あめ."
+    },
+    "校|on|きょう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "校 as きょう appears in obscure words; 校長 truthfully covers 校 -> こう."
+    },
+    "左|on|しゃ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "左官 is trade-specific and not worth an N5 support card; 左折 truthfully covers 左 -> さ."
     },
     "生|kun|いきる": {
       "suggestedAction": "defer_variant",

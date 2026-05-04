@@ -10,6 +10,8 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Fixed
 
+- Fixed word-card coverage auditing so `CoversReading` must match the contextual `ReadingBreakdown` ruby segment while allowing normalized kana matches for katakana readings, preventing false coverage such as `二時` claiming `二 -> じ`.
+- Corrected N5 and N4 word coverage metadata exposed by that stricter gate, including contextual readings for honorific/prefix N5 words, `二時`, `学校`, `火山`, `楽器`, `出発`, and other support rows whose old coverage labels drifted from their generated card surfaces.
 - Resolved the current N5 word platinum review blockers that could be fixed under policy: moved later-level words out of the N5 word product, fixed the `分かる` breakdown meaning, replaced generated pitch provenance for `一|いち` and `七|なな` with source-bound Wiktionary pronunciation evidence, and promoted `一万円|いちまんえん` / `一時半|いちじはん` only after adding visible `Generated pitch (unverified)` labels.
 - Fixed word-card constituent readings so `KanjiBreakdown` now follows deterministic `ReadingBreakdown` context, labels non-decomposable whole-word readings as word readings, and rejects false per-kanji coverage claims.
 - Fixed N5 kanji primary-reading selection so curated individual-kanji display readings outrank word-breakdown support readings, keeping cards like `生|いきる` and `行|いく` anchored on the kanji deck purpose.
@@ -31,6 +33,8 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added seven N5 word platinum approvals (`二時`, `五時`, `五月`, `人`, `今`, `今年`, `今日`), raising active N5 word platinum coverage to `51` cards with 5 deferred/removed rows and no current `needs_review` blockers.
+- Added governed N4 support word `発音|はつおん` and expanded `音楽|おんがく` coverage so the deck no longer relies on false `出発` / `楽器` coverage for `発 -> はつ` and `楽 -> がく`; N4 readiness remains blocked until exact governed audio for `発音|はつおん` is generated and reviewed.
 - Added nine N5 word platinum approvals (`七つ`, `七日`, `三人`, `三時`, `三百`, `上`, `上げる`, `一万円`, `一時半`), raising active N5 word platinum coverage to `26` cards with 5 later-level deferred rows and no current `needs_review` pitch-provenance blockers.
 - Added 12 N5 word platinum approvals (`七時`, `三`, `上る`, `上手`, `下`, `下りる`, `中`, `九`, `九つ`, `九時`, `二`, `二つ`), raising active N5 word platinum coverage to `38` cards while leaving weaker support candidates for later review.
 - Added six N5 word platinum approvals (`下手`, `二人`, `二日`, `五`, `五つ`, `五分`), raising active N5 word platinum coverage to `44` cards while leaving `二時` unpromoted because its current coverage label needs correction.

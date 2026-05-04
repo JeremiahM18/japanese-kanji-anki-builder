@@ -97,7 +97,7 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
 
     assert.equal(contract.inventoryCounts["1"], 2);
     assert.equal(contract.inventoryCounts["3"], 3);
-    assert.equal(contract.inventoryCounts["4"], 454);
+    assert.equal(contract.inventoryCounts["4"], 455);
     assert.equal(contract.inventoryCounts["5"], 343);
     assert.equal(contract.excludedCounts["5"], 13);
     for (const key of n5StandaloneNumberWords) {
@@ -388,6 +388,7 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
     assert.equal(getJlptWordLevel(contract, "別に|べつに"), 4);
     assert.equal(getJlptWordLevel(contract, "中止|ちゅうし"), 4);
     assert.equal(getJlptWordLevel(contract, "出発|しゅっぱつ"), 4);
+    assert.equal(getJlptWordLevel(contract, "発音|はつおん"), 4);
     assert.equal(getJlptWordLevel(contract, "普通|ふつう"), 4);
     assert.equal(getJlptWordLevel(contract, "通り|とおり"), 4);
     assert.equal(getJlptWordLevel(contract, "空く|あく"), 4);

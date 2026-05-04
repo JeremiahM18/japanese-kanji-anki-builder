@@ -33,6 +33,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added twelve source-checked N5 word platinum approvals (`生まれる`, `小さい`, `右`, `書く`, `国`, `日`, `左`, `雨`, `四`, `高い`, `川`, `食べる`), raising active N5 word platinum coverage to `93` cards while keeping single-kanji word rows tied to word-deck usefulness and exact `written|reading` evidence.
 - Added `deck:words:platinum:batch`, a read-only word platinum pre-review packet that surfaces exact written-reading identity, generated card fields, sentence lines, exact word audio, pitch source/render status, lookup links, risk flags, and suggested review steps before manifest edits.
 - Added ten source-checked N5 word platinum approvals (`上がる`, `下がる`, `休日`, `中国`, `会社員`, `働く`, `先`, `入口`, `八つ`, `八日`), raising active N5 word platinum coverage to `81` cards while continuing to leave lower-value, phrase-like, generated-pitch, or later-level support rows unpromoted.
 - Added ten source-checked N5 word platinum approvals (`仕事`, `住む`, `何時`, `元気`, `先月`, `先週`, `入る`, `入れる`, `出す`, `出る`), raising active N5 word platinum coverage to `71` cards while leaving generated-pitch number rows and weaker support rows for later review.

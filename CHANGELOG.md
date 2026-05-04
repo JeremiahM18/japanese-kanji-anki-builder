@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Fixed
 
+- Fixed the N5 word platinum queue by moving `下る|くだる` to the N2 word product and `学ぶ|まなぶ` / `下ろす|おろす` to the N3 word product after source review, and recorded the resulting `下 -> くだる`, `下 -> おろす`, and `学 -> まなぶ` N5 reading gaps as deferred instead of forcing later-level verbs into N5.
 - Fixed the N5 word card for `寝る|ねる` so its example demonstrates the exact dictionary-form written-reading identity instead of only the polite form `寝ます|ねます`.
 - Fixed the N5 word platinum queue by moving `友人|ゆうじん` and `読書|どくしょ` to the N3 word product after source review, excluding `雨の日|あめのひ` as a source-only phrase, and recording the resulting `友 -> ゆう` N5 reading gap as deferred instead of forcing a lower-value N5 card.
 - Fixed the N5 word card for `座る|すわる` so its example demonstrates the exact dictionary-form written-reading identity instead of only the te-form `座って|すわって`.
@@ -41,6 +42,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added nine source-checked N5 word platinum approvals (`毎日`, `外国人`, `千円`, `毎年`, `学校`, `十時`, `午前`, `日本語`, `日本人`), raising active N5 word platinum coverage to `181` cards with `13` deferred/removed rows and no `needs_review` blockers.
 - Added twelve source-checked N5 word platinum approvals (`男の人`, `日本`, `近い`, `寝る`, `四時`, `大学`, `高校`, `天気`, `帰る`, `半分`, `十分`, `毎月`), raising active N5 word platinum coverage to `172` cards with `10` deferred/removed rows and no `needs_review` blockers.
 - Added nine source-checked N5 word platinum approvals (`新しい`, `百円`, `閉める`, `安い`, `開ける`, `古い`, `飲む`, `外国`, `電車`), raising active N5 word platinum coverage to `160` cards with `10` deferred/removed rows and no `needs_review` blockers.
 - Added twelve source-checked N5 word platinum approvals (`来年`, `起きる`, `電話`, `女の子`, `楽しい`, `十日`, `時間`, `名前`, `午後`, `青い`, `座る`, `買う`), raising active N5 word platinum coverage to `151` cards with `7` deferred/removed rows and no `needs_review` blockers.

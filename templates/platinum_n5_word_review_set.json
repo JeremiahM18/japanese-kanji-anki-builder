@@ -18788,5 +18788,1104 @@
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
     }
+  },
+  {
+    "word": "下る",
+    "status": "deferred",
+    "readingIncludes": [
+      "くだる"
+    ],
+    "meaningIncludes": [
+      "to go down",
+      "descend"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "下"
+    ],
+    "coversReadingIncludes": [
+      "下: くだ"
+    ],
+    "breakdownIncludes": [
+      "下 （くだ） ／ down / below"
+    ],
+    "exampleIncludes": [
+      "山を下ります。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common verb for descending, but source review places this exact word later than N5, so it should not ship only as reading coverage.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because JLearn.net classifies 下る|くだる as JLPT N2. It remains useful, but N5 should not force a later-level verb only to close 下 -> くだる coverage."
+  },
+  {
+    "word": "毎日",
+    "status": "platinum",
+    "readingIncludes": [
+      "まいにち"
+    ],
+    "meaningIncludes": [
+      "every day"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "日"
+    ],
+    "coversReadingIncludes": [
+      "日: にち"
+    ],
+    "breakdownIncludes": [
+      "毎 （まい） ／ every",
+      "日 （にち） ／ day / sun"
+    ],
+    "exampleIncludes": [
+      "毎日、日本語を勉強します。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "High-frequency N5 time adverb and everyday study-planning word; useful on its own and cleanly supports 日 -> にち without forcing a contrived card.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 毎日|まいにち: word 毎日, reading まいにち, meaning every day, example 毎日、日本語を勉強します。, audio word-reading-毎日-まいにち, breakdown 毎 （まい） ／ every / 日 （にち） ／ day / sun, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 毎日|まいにち, reading まいにち, meaning every day, example 毎日、日本語を勉強します。, breakdown 毎 （まい） ／ every / 日 （にち） ／ day / sun, and the JLPT N5 word-card labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%AF%8E%E6%97%A5",
+        "detail": "JLearn.net verified 毎日|まいにち, reading まいにち, learner meaning every day, common or dictionary-backed learner word status, and product review checked example 毎日、日本語を勉強します。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 毎日|まいにち for JLPT N5; product review confirmed 毎日|まいにち belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 毎日|まいにち, reading まいにち, sentence 毎日、日本語を勉強します。, reading line まいにち、にほんごをべんきょうします。, English line I study Japanese every day.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 毎日|まいにち; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 毎日|まいにち exact asset fragment word-reading-毎日-まいにち for the exported word reading まいにち."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 毎日|まいにち source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 毎日|まいにち JLPT N5, JLPT core + reading coverage, focus 日, and covered readings 日: にち."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 毎日|まいにち common and learner-friendly for the N5 word deck, with accurate reading まいにち, meaning every day, and example 毎日、日本語を勉強します。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "外国人",
+    "status": "platinum",
+    "readingIncludes": [
+      "がいこくじん"
+    ],
+    "meaningIncludes": [
+      "foreigner"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "外",
+      "国",
+      "人"
+    ],
+    "coversReadingIncludes": [
+      "外: がい",
+      "国: こく",
+      "人: じん"
+    ],
+    "breakdownIncludes": [
+      "外 （がい） ／ outside",
+      "国 （こく） ／ country",
+      "人 （じん） ／ person / nationality suffix"
+    ],
+    "exampleIncludes": [
+      "あの外国人は日本語が上手です。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 4"
+    ],
+    "selectionRationale": "Common N5 noun for a foreign person; useful for beginner identity and travel language, with accurate contextual 外 -> がい / 国 -> こく / 人 -> じん coverage.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 外国人|がいこくじん: word 外国人, reading がいこくじん, meaning foreigner, example あの外国人は日本語が上手です。, audio word-reading-外国人-がいこくじん, breakdown 外 （がい） ／ outside / 国 （こく） ／ country / 人 （じん） ／ person / nationality suffix, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 4."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 外国人|がいこくじん, reading がいこくじん, meaning foreigner, example あの外国人は日本語が上手です。, breakdown 外 （がい） ／ outside / 国 （こく） ／ country / 人 （じん） ／ person / nationality suffix, and the JLPT N5 word-card labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%A4%96%E5%9B%BD%E4%BA%BA",
+        "detail": "JLearn.net verified 外国人|がいこくじん, reading がいこくじん, learner meaning foreigner, common or dictionary-backed learner word status, and product review checked example あの外国人は日本語が上手です。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 外国人|がいこくじん for JLPT N5; product review confirmed 外国人|がいこくじん belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 外国人|がいこくじん, reading がいこくじん, sentence あの外国人は日本語が上手です。, reading line あのがいこくじんはにほんごがじょうずです。, English line That foreigner is good at Japanese.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 外国人|がいこくじん; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 外国人|がいこくじん exact asset fragment word-reading-外国人-がいこくじん for the exported word reading がいこくじん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 外国人|がいこくじん source kanjium-cc-by-sa-4.0 pattern 4 [nakadaka] and rendered label Pitch 1: 4."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 外国人|がいこくじん JLPT N5, JLPT core + reading coverage, focus 外、国、人, and covered readings 外: がい ／ 国: こく ／ 人: じん."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 外国人|がいこくじん common and learner-friendly for the N5 word deck, with accurate reading がいこくじん, meaning foreigner, and example あの外国人は日本語が上手です。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "千円",
+    "status": "platinum",
+    "readingIncludes": [
+      "せんえん"
+    ],
+    "meaningIncludes": [
+      "1,000 yen"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "千",
+      "円"
+    ],
+    "coversReadingIncludes": [
+      "千: せん",
+      "円: えん"
+    ],
+    "breakdownIncludes": [
+      "千 （せん） ／ thousand",
+      "円 （えん） ／ yen / circle"
+    ],
+    "exampleIncludes": [
+      "この本は千円です。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Practical beginner money expression; useful for prices and shopping while cleanly covering 千 -> せん and 円 -> えん in a real word.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 千円|せんえん: word 千円, reading せんえん, meaning 1,000 yen, example この本は千円です。, audio word-reading-千円-せんえん, breakdown 千 （せん） ／ thousand / 円 （えん） ／ yen / circle, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 千円|せんえん, reading せんえん, meaning 1,000 yen, example この本は千円です。, breakdown 千 （せん） ／ thousand / 円 （えん） ／ yen / circle, and the JLPT N5 word-card labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JapanDict Japanese Dictionary https://www.japandict.com/%E5%8D%83%E5%86%86",
+        "detail": "JapanDict verified 千円|せんえん, reading せんえん, learner meaning 1,000 yen, common or dictionary-backed learner word status, and product review checked example この本は千円です。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 千円|せんえん for JLPT N5; product review confirmed 千円|せんえん belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 千円|せんえん, reading せんえん, sentence この本は千円です。, reading line このほんはせんえんです。, English line This book costs 1,000 yen.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 千円|せんえん; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 千円|せんえん exact asset fragment word-reading-千円-せんえん for the exported word reading せんえん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 千円|せんえん source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 千円|せんえん JLPT N5, JLPT core + reading coverage, focus 千、円, and covered readings 千: せん ／ 円: えん."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 千円|せんえん common and learner-friendly for the N5 word deck, with accurate reading せんえん, meaning 1,000 yen, and example この本は千円です。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "毎年",
+    "status": "platinum",
+    "readingIncludes": [
+      "まいとし"
+    ],
+    "meaningIncludes": [
+      "every year"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "毎",
+      "年"
+    ],
+    "coversReadingIncludes": [
+      "毎: まい",
+      "年: とし"
+    ],
+    "breakdownIncludes": [
+      "毎 （まい） ／ every",
+      "年 （とし） ／ year"
+    ],
+    "exampleIncludes": [
+      "毎年、家族と旅行します。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common N5 temporal noun/adverb for yearly routines; useful beginner vocabulary and a clean 年 -> とし context.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 毎年|まいとし: word 毎年, reading まいとし, meaning every year, example 毎年、家族と旅行します。, audio word-reading-毎年-まいとし, breakdown 毎 （まい） ／ every / 年 （とし） ／ year, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 毎年|まいとし, reading まいとし, meaning every year, example 毎年、家族と旅行します。, breakdown 毎 （まい） ／ every / 年 （とし） ／ year, and the JLPT N5 word-card labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%AF%8E%E5%B9%B4",
+        "detail": "JLearn.net verified 毎年|まいとし, reading まいとし, learner meaning every year, common or dictionary-backed learner word status, and product review checked example 毎年、家族と旅行します。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 毎年|まいとし for JLPT N5; product review confirmed 毎年|まいとし belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 毎年|まいとし, reading まいとし, sentence 毎年、家族と旅行します。, reading line まいとし、かぞくとりょこうします。, English line Every year I travel with my family.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 毎年|まいとし; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 毎年|まいとし exact asset fragment word-reading-毎年-まいとし for the exported word reading まいとし."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 毎年|まいとし source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 毎年|まいとし JLPT N5, JLPT core + reading coverage, focus 毎、年, and covered readings 毎: まい ／ 年: とし."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 毎年|まいとし common and learner-friendly for the N5 word deck, with accurate reading まいとし, meaning every year, and example 毎年、家族と旅行します。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "学校",
+    "status": "platinum",
+    "readingIncludes": [
+      "がっこう"
+    ],
+    "meaningIncludes": [
+      "school"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "学",
+      "校"
+    ],
+    "coversReadingIncludes": [
+      "学: がっ",
+      "校: こう"
+    ],
+    "breakdownIncludes": [
+      "学 （がっ） ／ study / learning",
+      "校 （こう） ／ school campus"
+    ],
+    "exampleIncludes": [
+      "学校は八時に始まります。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Essential N5 school word; high learner usefulness and strong contextual coverage for 学 -> がっ and 校 -> こう.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 学校|がっこう: word 学校, reading がっこう, meaning school, example 学校は八時に始まります。, audio word-reading-学校-がっこう, breakdown 学 （がっ） ／ study / learning / 校 （こう） ／ school campus, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 学校|がっこう, reading がっこう, meaning school, example 学校は八時に始まります。, breakdown 学 （がっ） ／ study / learning / 校 （こう） ／ school campus, and the JLPT N5 word-card labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%AD%A6%E6%A0%A1",
+        "detail": "JLearn.net verified 学校|がっこう, reading がっこう, learner meaning school, common or dictionary-backed learner word status, and product review checked example 学校は八時に始まります。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 学校|がっこう for JLPT N5; product review confirmed 学校|がっこう belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 学校|がっこう, reading がっこう, sentence 学校は八時に始まります。, reading line がっこうははちじにはじまります。, English line School starts at eight o'clock.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 学校|がっこう; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 学校|がっこう exact asset fragment word-reading-学校-がっこう for the exported word reading がっこう."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 学校|がっこう source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 学校|がっこう JLPT N5, JLPT core + reading coverage, focus 学、校, and covered readings 学: がっ ／ 校: こう."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 学校|がっこう common and learner-friendly for the N5 word deck, with accurate reading がっこう, meaning school, and example 学校は八時に始まります。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "十時",
+    "status": "platinum",
+    "readingIncludes": [
+      "じゅうじ"
+    ],
+    "meaningIncludes": [
+      "ten o'clock"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "十",
+      "時"
+    ],
+    "coversReadingIncludes": [
+      "十: じゅう",
+      "時: じ"
+    ],
+    "breakdownIncludes": [
+      "十 （じゅう） ／ ten",
+      "時 （じ） ／ time / o'clock"
+    ],
+    "exampleIncludes": [
+      "十時に寝ます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Core beginner time expression; useful for schedules and routines, with generated pitch kept visibly labeled because dictionary-backed pitch remains unverified.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 十時|じゅうじ: word 十時, reading じゅうじ, meaning ten o'clock, example 十時に寝ます。, audio word-reading-十時-じゅうじ, breakdown 十 （じゅう） ／ ten / 時 （じ） ／ time / o'clock, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 2 / Generated pitch (unverified)."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 十時|じゅうじ, reading じゅうじ, meaning ten o'clock, example 十時に寝ます。, breakdown 十 （じゅう） ／ ten / 時 （じ） ／ time / o'clock, and the JLPT N5 word-card labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JapanDict Japanese Dictionary https://www.japandict.com/%E5%8D%81%E6%99%82 and JLPTGlobal N5 time chart https://www.jlptglobal.com/jlpt-n5-express-time/",
+        "detail": "JapanDict and JLPTGlobal verified 十時|じゅうじ, reading じゅうじ, learner meaning ten o'clock, common or dictionary-backed learner word status, and product review checked example 十時に寝ます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 十時|じゅうじ for JLPT N5; product review confirmed 十時|じゅうじ belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 十時|じゅうじ, reading じゅうじ, sentence 十時に寝ます。, reading line じゅうじにねます。, English line I go to bed at ten o'clock.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 十時|じゅうじ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 十時|じゅうじ exact asset fragment word-reading-十時-じゅうじ for the exported word reading じゅうじ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 十時|じゅうじ source voicevox-nemo-accent-query pattern 2 [nakadaka] and rendered label Pitch 1: 2 / Generated pitch (unverified). This is generated guidance, not dictionary-verified pitch."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 十時|じゅうじ JLPT N5, JLPT core + reading coverage, focus 十、時, and covered readings 十: じゅう ／ 時: じ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 十時|じゅうじ common and learner-friendly for the N5 word deck, with accurate reading じゅうじ, meaning ten o'clock, and example 十時に寝ます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "午前",
+    "status": "platinum",
+    "readingIncludes": [
+      "ごぜん"
+    ],
+    "meaningIncludes": [
+      "morning",
+      "a.m."
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "午",
+      "前"
+    ],
+    "coversReadingIncludes": [
+      "午: ご",
+      "前: ぜん"
+    ],
+    "breakdownIncludes": [
+      "午 （ご） ／ noon / midday",
+      "前 （ぜん） ／ front / before"
+    ],
+    "exampleIncludes": [
+      "午前九時に学校へ行きます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Core N5 time-of-day word for schedules; common and learner-friendly, with clean 午 -> ご and 前 -> ぜん coverage.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 午前|ごぜん: word 午前, reading ごぜん, meaning morning / a.m., example 午前九時に学校へ行きます。, audio word-reading-午前-ごぜん, breakdown 午 （ご） ／ noon / midday / 前 （ぜん） ／ front / before, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 午前|ごぜん, reading ごぜん, meaning morning / a.m., example 午前九時に学校へ行きます。, breakdown 午 （ご） ／ noon / midday / 前 （ぜん） ／ front / before, and the JLPT N5 word-card labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8D%88%E5%89%8D",
+        "detail": "JLearn.net verified 午前|ごぜん, reading ごぜん, learner meaning morning / a.m., common or dictionary-backed learner word status, and product review checked example 午前九時に学校へ行きます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 午前|ごぜん for JLPT N5; product review confirmed 午前|ごぜん belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 午前|ごぜん, reading ごぜん, sentence 午前九時に学校へ行きます。, reading line ごぜんくじにがっこうへいきます。, English line I go to school at 9 a.m.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 午前|ごぜん; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 午前|ごぜん exact asset fragment word-reading-午前-ごぜん for the exported word reading ごぜん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 午前|ごぜん source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 午前|ごぜん JLPT N5, JLPT core + reading coverage, focus 午、前, and covered readings 午: ご ／ 前: ぜん."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 午前|ごぜん common and learner-friendly for the N5 word deck, with accurate reading ごぜん, meaning morning / a.m., and example 午前九時に学校へ行きます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "学ぶ",
+    "status": "deferred",
+    "readingIncludes": [
+      "まなぶ"
+    ],
+    "meaningIncludes": [
+      "to learn",
+      "study"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "学"
+    ],
+    "coversReadingIncludes": [
+      "学: まな"
+    ],
+    "breakdownIncludes": [
+      "学 （まな） ／ study / learning"
+    ],
+    "exampleIncludes": [
+      "日本語を学びます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch 2: 2"
+    ],
+    "selectionRationale": "Useful verb for learning, but source review places this exact word later than N5; N5 already has stronger school/study vocabulary.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because JLearn.net classifies 学ぶ|まなぶ as JLPT N3. N5 should teach 学 through learner-fit words such as 学校 and 学生 instead of forcing 学 -> まなぶ coverage."
+  },
+  {
+    "word": "下ろす",
+    "status": "deferred",
+    "readingIncludes": [
+      "おろす"
+    ],
+    "meaningIncludes": [
+      "to lower",
+      "take down"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "下"
+    ],
+    "coversReadingIncludes": [
+      "下: お"
+    ],
+    "breakdownIncludes": [
+      "下 （お） ／ down / below"
+    ],
+    "exampleIncludes": [
+      "かばんをいすに下ろします。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Useful common verb, but source review places this exact written-reading later than N5, so it should wait for the right word level.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because JLearn.net classifies 下ろす|おろす as JLPT N3. It remains useful, but N5 should not force it only to close 下 -> おろす coverage."
+  },
+  {
+    "word": "日本語",
+    "status": "platinum",
+    "readingIncludes": [
+      "にほんご"
+    ],
+    "meaningIncludes": [
+      "Japanese language"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "日",
+      "本",
+      "語"
+    ],
+    "coversReadingIncludes": [
+      "日: に",
+      "本: ほん",
+      "語: ご"
+    ],
+    "breakdownIncludes": [
+      "日 （に） ／ day / sun",
+      "本 （ほん） ／ book / base",
+      "語 （ご） ／ language / word"
+    ],
+    "exampleIncludes": [
+      "日本語を毎日勉強します。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Essential learner word for the Japanese language itself; useful from day one and cleanly supports 日 -> に, 本 -> ほん, and 語 -> ご.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 日本語|にほんご: word 日本語, reading にほんご, meaning Japanese language, example 日本語を毎日勉強します。, audio word-reading-日本語-にほんご, breakdown 日 （に） ／ day / sun / 本 （ほん） ／ book / base / 語 （ご） ／ language / word, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 日本語|にほんご, reading にほんご, meaning Japanese language, example 日本語を毎日勉強します。, breakdown 日 （に） ／ day / sun / 本 （ほん） ／ book / base / 語 （ご） ／ language / word, and the JLPT N5 word-card labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%97%A5%E6%9C%AC%E8%AA%9E",
+        "detail": "JLearn.net verified 日本語|にほんご, reading にほんご, learner meaning Japanese language, common or dictionary-backed learner word status, and product review checked example 日本語を毎日勉強します。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 日本語|にほんご for JLPT N5; product review confirmed 日本語|にほんご belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 日本語|にほんご, reading にほんご, sentence 日本語を毎日勉強します。, reading line にほんごをまいにちべんきょうします。, English line I study Japanese every day.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 日本語|にほんご; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 日本語|にほんご exact asset fragment word-reading-日本語-にほんご for the exported word reading にほんご."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 日本語|にほんご source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 日本語|にほんご JLPT N5, JLPT core + reading coverage, focus 日、本、語, and covered readings 日: に ／ 本: ほん ／ 語: ご."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 日本語|にほんご common and learner-friendly for the N5 word deck, with accurate reading にほんご, meaning Japanese language, and example 日本語を毎日勉強します。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "日本人",
+    "status": "platinum",
+    "readingIncludes": [
+      "にほんじん"
+    ],
+    "meaningIncludes": [
+      "Japanese person"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "日",
+      "本",
+      "人"
+    ],
+    "coversReadingIncludes": [
+      "日: に",
+      "本: ほん",
+      "人: じん"
+    ],
+    "breakdownIncludes": [
+      "日 （に） ／ day / sun",
+      "本 （ほん） ／ book / base",
+      "人 （じん） ／ person / people"
+    ],
+    "exampleIncludes": [
+      "彼は日本人です。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 4"
+    ],
+    "selectionRationale": "Common N5 noun for nationality and identity; useful beginner vocabulary with clean 日 -> に / 本 -> ほん / 人 -> じん coverage.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 日本人|にほんじん: word 日本人, reading にほんじん, meaning Japanese person, example 彼は日本人です。, audio word-reading-日本人-にほんじん, breakdown 日 （に） ／ day / sun / 本 （ほん） ／ book / base / 人 （じん） ／ person / people, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 4."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 日本人|にほんじん, reading にほんじん, meaning Japanese person, example 彼は日本人です。, breakdown 日 （に） ／ day / sun / 本 （ほん） ／ book / base / 人 （じん） ／ person / people, and the JLPT N5 word-card labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%97%A5%E6%9C%AC%E4%BA%BA and Bunpro Japanese vocabulary https://bunpro.jp/vocabs/%E6%97%A5%E6%9C%AC%E4%BA%BA",
+        "detail": "JLearn.net and Bunpro verified 日本人|にほんじん, reading にほんじん, learner meaning Japanese person, common or dictionary-backed learner word status, and product review checked example 彼は日本人です。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 日本人|にほんじん for JLPT N5; product review confirmed 日本人|にほんじん belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 日本人|にほんじん, reading にほんじん, sentence 彼は日本人です。, reading line かれはにほんじんです。, English line He is Japanese.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 日本人|にほんじん; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 日本人|にほんじん exact asset fragment word-reading-日本人-にほんじん for the exported word reading にほんじん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 日本人|にほんじん source kanjium-cc-by-sa-4.0 pattern 4 [nakadaka] and rendered label Pitch 1: 4."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 日本人|にほんじん JLPT N5, JLPT core + reading coverage, focus 日、本、人, and covered readings 日: に ／ 本: ほん ／ 人: じん."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 日本人|にほんじん common and learner-friendly for the N5 word deck, with accurate reading にほんじん, meaning Japanese person, and example 彼は日本人です。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   }
 ]

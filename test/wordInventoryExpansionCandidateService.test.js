@@ -107,8 +107,16 @@ test("buildWordInventoryExpansionCandidateReport keeps only new source words tha
     assert.equal(report.summary.uniqueRows, 10);
     assert.equal(report.summary.duplicateSourceRows, 1);
     assert.equal(report.summary.reviewCandidateRows, 2);
+    assert.equal(report.summary.sameWrittenCandidateRows, 1);
     assert.equal(report.candidates[0].key, "山川|さんせん");
     assert.equal(report.candidates[1].key, "行く|ゆく");
+    assert.deepEqual(report.candidates[1].sameWrittenContractEntries, [{
+        key: "行く|いく",
+        reading: "いく",
+        jlpt: 5,
+        exclusionReason: "",
+        type: "governed",
+    }]);
     assert.equal(report.summary.dispositions.already_governed, 2);
     assert.equal(report.summary.dispositions.kana_only, 1);
     assert.equal(report.summary.dispositions.no_target_kanji, 2);
@@ -158,4 +166,19 @@ test("formatWordInventoryExpansionCandidateReport is explicit that candidates do
     assert.match(text, /does not promote words, change contracts, or affect readiness/);
     assert.match(text, /Use after the current reading-coverage pass/);
     assert.match(text, /山川 \(さんせん\)/);
+});
+
+test("formatWordInventoryExpansionCandidateReport flags same-written governed readings", () => {
+    const report = buildWordInventoryExpansionCandidateReport({
+        sourceRows: [{ written: "行く", reading: "ゆく", meaning: "to go" }],
+        targetLevel: 5,
+        jlptLevelContract,
+        jlptWordLevelContract,
+        sourceLabel: "fixture",
+    });
+    const text = formatWordInventoryExpansionCandidateReport(report);
+
+    assert.equal(report.summary.sameWrittenCandidateRows, 1);
+    assert.match(text, /Same-written candidate warnings: 1/);
+    assert.match(text, /same-written warning: already tracked with reading\(s\) いく \(N5\)/);
 });

@@ -333,6 +333,44 @@ function summarizeDispositions(rows) {
     }, {});
 }
 
+function buildSameWrittenContractIndex(jlptWordLevelContract = {}) {
+    const index = new Map();
+
+    function addEntries(entries = {}, type) {
+        for (const [key, entry] of Object.entries(entries || {})) {
+            const written = String(entry?.written || key.split("|")[0] || "").trim();
+            const reading = String(entry?.reading || key.split("|")[1] || "").trim();
+            if (!written || !reading) {
+                continue;
+            }
+            if (!index.has(written)) {
+                index.set(written, []);
+            }
+            index.get(written).push({
+                key,
+                reading,
+                jlpt: Number.isInteger(entry?.jlpt) ? entry.jlpt : null,
+                exclusionReason: entry?.exclusionReason || "",
+                type,
+            });
+        }
+    }
+
+    addEntries(jlptWordLevelContract.wordLevels, "governed");
+    addEntries(jlptWordLevelContract.excludedWordLevels, "excluded");
+
+    return index;
+}
+
+function findSameWrittenContractEntries(row, sameWrittenIndex) {
+    return (sameWrittenIndex.get(row.written) || [])
+        .filter((entry) => entry.key !== row.key)
+        .sort((a, b) => (
+            a.type.localeCompare(b.type)
+            || a.reading.localeCompare(b.reading, "ja")
+        ));
+}
+
 function compareCandidateRows(a, b) {
     return (
         a.firstSeenIndex - b.firstSeenIndex
@@ -375,6 +413,7 @@ function buildWordInventoryExpansionCandidateReport({
         });
     });
 
+    const sameWrittenContractIndex = buildSameWrittenContractIndex(jlptWordLevelContract);
     const reviewedRows = [...rowsByKey.values()]
         .map((row) => {
             const classified = classifyCandidateDisposition(row, {
@@ -394,10 +433,13 @@ function buildWordInventoryExpansionCandidateReport({
                 harderKanji: classified.scope.harderKanji,
                 easierKanji: classified.scope.easierKanji,
                 outsideJlptKanji: classified.scope.outsideJlptKanji.map((entry) => entry.kanji),
+                sameWrittenContractEntries: findSameWrittenContractEntries(row, sameWrittenContractIndex),
             };
         })
         .sort(compareCandidateRows);
     const candidateRows = reviewedRows.filter((row) => row.disposition === "review_candidate");
+    const sameWrittenCandidateRows = candidateRows
+        .filter((row) => row.sameWrittenContractEntries.length > 0);
 
     return {
         levelLabel: `N${targetLevel}`,
@@ -411,6 +453,7 @@ function buildWordInventoryExpansionCandidateReport({
             requireSourceLevel,
             reviewCandidateRows: candidateRows.length,
             shownCandidateRows: Math.min(candidateRows.length, limit),
+            sameWrittenCandidateRows: sameWrittenCandidateRows.length,
             dispositions: summarizeDispositions(reviewedRows),
         },
         candidates: candidateRows.slice(0, limit),
@@ -427,6 +470,16 @@ function formatKanjiLevels(row) {
         .join(", ");
 }
 
+function formatSameWrittenContractEntries(entries = []) {
+    return entries.map((entry) => {
+        const level = Number.isInteger(entry.jlpt) ? `N${entry.jlpt}` : "unknown level";
+        if (entry.type === "excluded") {
+            return `${entry.reading} (${level}, excluded${entry.exclusionReason ? `: ${entry.exclusionReason}` : ""})`;
+        }
+        return `${entry.reading} (${level})`;
+    }).join(", ");
+}
+
 function formatWordInventoryExpansionCandidateReport(report) {
     const lines = [];
     lines.push(`Japanese Kanji Builder Word Inventory Expansion Candidates (${report.levelLabel})`);
@@ -441,6 +494,7 @@ function formatWordInventoryExpansionCandidateReport(report) {
     lines.push(`Unique written-reading rows: ${report.summary.uniqueRows}`);
     lines.push(`Duplicate source rows skipped: ${report.summary.duplicateSourceRows}`);
     lines.push(`Review candidates: ${report.summary.reviewCandidateRows}`);
+    lines.push(`Same-written candidate warnings: ${report.summary.sameWrittenCandidateRows}`);
     lines.push("");
     lines.push("Disposition counts:");
     for (const [disposition, count] of Object.entries(report.summary.dispositions).sort()) {
@@ -460,6 +514,9 @@ function formatWordInventoryExpansionCandidateReport(report) {
         lines.push(`   kanji: ${formatKanjiLevels(row)}`);
         lines.push(`   source: ${row.source}${row.sourceLevel ? `; source level N${row.sourceLevel}` : ""}`);
         lines.push(`   review: ${row.reason}`);
+        if (row.sameWrittenContractEntries.length > 0) {
+            lines.push(`   same-written warning: already tracked with reading(s) ${formatSameWrittenContractEntries(row.sameWrittenContractEntries)}`);
+        }
         if (row.notes) {
             lines.push(`   notes: ${row.notes}`);
         }
@@ -473,6 +530,7 @@ module.exports = {
     classifyCandidateDisposition,
     classifyKanjiScope,
     formatWordInventoryExpansionCandidateReport,
+    formatSameWrittenContractEntries,
     normalizeCandidateSourceRow,
     normalizeCandidateSourceRows,
     parseCandidateSourceText,

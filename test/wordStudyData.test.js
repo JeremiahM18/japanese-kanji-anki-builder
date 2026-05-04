@@ -903,6 +903,15 @@ test("tracked starter word data keeps formal support words on harder decks", () 
     assert.equal(starterEntries["建立|こんりゅう"].tags.includes("n1"), true);
     assert.equal(starterEntries["建立|こんりゅう"].coverage.coversReadings["建"], "こん");
     assert.equal(starterEntries["建立|こんりゅう"].coverage.coversReadings["立"], "りゅう");
+
+    assert.equal(starterEntries["友人|ゆうじん"].jlpt, 3);
+    assert.equal(starterEntries["友人|ゆうじん"].tags.includes("n3"), true);
+    assert.equal(starterEntries["友人|ゆうじん"].coverage.coversReadings["友"], "ゆう");
+
+    assert.equal(starterEntries["読書|どくしょ"].jlpt, 3);
+    assert.equal(starterEntries["読書|どくしょ"].tags.includes("n3"), true);
+    assert.equal(starterEntries["読書|どくしょ"].coverage.coversReadings["読"], "どく");
+    assert.equal(starterEntries["読書|どくしょ"].coverage.coversReadings["書"], "しょ");
 });
 
 test("tracked starter word data includes the twenty-seventh governed N4 completion batch", () => {
@@ -1033,7 +1042,6 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
         ["五分|ごふん", "分", "ふん"],
         ["午前|ごぜん", "前", "ぜん"],
         ["今月|こんげつ", "今", "こん"],
-        ["友人|ゆうじん", "友", "ゆう"],
         ["月曜日|げつようび", "月", "げつ"],
         ["火曜日|かようび", "火", "か"],
         ["火曜日|かようび", "日", "び"],
@@ -1052,8 +1060,6 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
         ["台所|だいどころ", "台", "だい"],
         ["台所|だいどころ", "所", "どころ"],
         ["東京|とうきょう", "東", "とう"],
-        ["読書|どくしょ", "読", "どく"],
-        ["読書|どくしょ", "書", "しょ"],
         ["毎日|まいにち", "日", "にち"],
         ["木曜日|もくようび", "木", "もく"],
         ["来年|らいねん", "年", "ねん"],

@@ -16490,5 +16490,1001 @@
     "reviewedAt": "2026-05-04",
     "reviewer": "codex-platinum-review",
     "decisionReason": "Removed from the default N5 word deck because 山の上|やまのうえ is a transparent compositional phrase; 山|やま and 上|うえ already cover the useful learner readings without promoting a phrase-shaped card."
+  },
+  {
+    "word": "新しい",
+    "status": "platinum",
+    "readingIncludes": [
+      "あたらしい"
+    ],
+    "meaningIncludes": [
+      "new"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "新"
+    ],
+    "coversReadingIncludes": [
+      "新: あたら"
+    ],
+    "breakdownIncludes": [
+      "新 （あたら） ／ new"
+    ],
+    "exampleIncludes": [
+      "新しい本を買いました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 4"
+    ],
+    "selectionRationale": "Common N5 adjective for new/fresh things; useful immediately for everyday descriptions while the outside-level 新 kanji remains visibly labeled.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 新しい|あたらしい: word 新しい, reading あたらしい, meaning new, example 新しい本を買いました。, audio word-reading-新しい-あたらしい, breakdown 新 （あたら） ／ new, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 4."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 新しい|あたらしい, reading あたらしい, meaning new, example 新しい本を買いました。, breakdown 新 （あたら） ／ new, and pitch label Pitch 1: 4."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%96%B0%E3%81%97%E3%81%84",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%96%B0%E3%81%97%E3%81%84 verified 新しい|あたらしい, reading あたらしい, learner meaning new, and product review checked example 新しい本を買いました。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 新しい|あたらしい for JLPT N5; product review confirmed 新しい|あたらしい belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 新しい|あたらしい, reading あたらしい, sentence 新しい本を買いました。, reading line あたらしいほんをかいました。, English line I bought a new book.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 新しい|あたらしい; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 新しい|あたらしい exact asset fragment word-reading-新しい-あたらしい for the exported word reading あたらしい."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 新しい|あたらしい source kanjium-cc-by-sa-4.0 pattern 4 [nakadaka] and rendered label Pitch 1: 4."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 新しい|あたらしい JLPT N5, JLPT core + reading coverage, focus 新, and covered readings 新: あたらしい."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 新しい|あたらしい common and learner-friendly for the N5 word deck, with accurate reading あたらしい, meaning new, and example 新しい本を買いました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "百円",
+    "status": "platinum",
+    "readingIncludes": [
+      "ひゃくえん"
+    ],
+    "meaningIncludes": [
+      "100 yen"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "百",
+      "円"
+    ],
+    "coversReadingIncludes": [
+      "百: ひゃく",
+      "円: えん"
+    ],
+    "breakdownIncludes": [
+      "百 （ひゃく） ／ hundred",
+      "円 （えん） ／ yen / circle"
+    ],
+    "exampleIncludes": [
+      "このペンは百円です。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Common money amount expression for prices and shopping; useful N5 currency practice with generated pitch kept visibly labeled as unverified.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 百円|ひゃくえん: word 百円, reading ひゃくえん, meaning 100 yen, example このペンは百円です。, audio word-reading-百円-ひゃくえん, breakdown 百 （ひゃく） ／ hundred / 円 （えん） ／ yen / circle, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 2 / Generated pitch (unverified)."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 百円|ひゃくえん, reading ひゃくえん, meaning 100 yen, example このペンは百円です。, breakdown 百 （ひゃく） ／ hundred / 円 （えん） ／ yen / circle, and pitch label Pitch 1: 2 / Generated pitch (unverified)."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%EF%BC%91%EF%BC%90%EF%BC%90%E5%86%86",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%EF%BC%91%EF%BC%90%EF%BC%90%E5%86%86 verified 百円|ひゃくえん, reading ひゃくえん, learner meaning 100 yen, and product review checked example このペンは百円です。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 百円|ひゃくえん for JLPT N5; product review confirmed 百円|ひゃくえん belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 百円|ひゃくえん, reading ひゃくえん, sentence このペンは百円です。, reading line このペンはひゃくえんです。, English line This pen is 100 yen.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 百円|ひゃくえん; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 百円|ひゃくえん exact asset fragment word-reading-百円-ひゃくえん for the exported word reading ひゃくえん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 百円|ひゃくえん source voicevox-nemo-accent-query pattern 2 [nakadaka] and rendered label Pitch 1: 2 / Generated pitch (unverified). This is generated guidance, not dictionary-verified pitch."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 百円|ひゃくえん JLPT N5, JLPT core + reading coverage, focus 百、円, and covered readings 百: ひゃく ／ 円: えん."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 百円|ひゃくえん common and learner-friendly for the N5 word deck, with accurate reading ひゃくえん, meaning 100 yen, and example このペンは百円です。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "閉める",
+    "status": "platinum",
+    "readingIncludes": [
+      "しめる"
+    ],
+    "meaningIncludes": [
+      "close",
+      "shut"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "閉"
+    ],
+    "coversReadingIncludes": [
+      "閉: し"
+    ],
+    "breakdownIncludes": [
+      "閉 （し） ／ close / shut"
+    ],
+    "exampleIncludes": [
+      "ドアを閉めます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Core N5 transitive action verb for closing doors and windows; useful daily command/action word while the outside-level 閉 kanji remains visibly labeled.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 閉める|しめる: word 閉める, reading しめる, meaning close / shut, example ドアを閉めます。, audio word-reading-閉める-しめる, breakdown 閉 （し） ／ close / shut, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 閉める|しめる, reading しめる, meaning close / shut, example ドアを閉めます。, breakdown 閉 （し） ／ close / shut, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%96%89%E3%82%81%E3%82%8B",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%96%89%E3%82%81%E3%82%8B verified 閉める|しめる, reading しめる, learner meaning close / shut, and product review checked example ドアを閉めます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 閉める|しめる for JLPT N5; product review confirmed 閉める|しめる belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 閉める|しめる, reading しめる, sentence ドアを閉めます。, reading line ドアをしめます。, English line I close the door.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 閉める|しめる; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 閉める|しめる exact asset fragment word-reading-閉める-しめる for the exported word reading しめる."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 閉める|しめる source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 閉める|しめる JLPT N5, JLPT core + reading coverage, focus 閉, and covered readings 閉: しめる."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 閉める|しめる common and learner-friendly for the N5 word deck, with accurate reading しめる, meaning close / shut, and example ドアを閉めます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "安い",
+    "status": "platinum",
+    "readingIncludes": [
+      "やすい"
+    ],
+    "meaningIncludes": [
+      "cheap",
+      "inexpensive"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "安"
+    ],
+    "coversReadingIncludes": [
+      "安: やす"
+    ],
+    "breakdownIncludes": [
+      "安 （やす） ／ cheap / calm / safe"
+    ],
+    "exampleIncludes": [
+      "この店のりんごは安いです。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Core N5 adjective for cheap/inexpensive prices; high learner utility for shopping and daily comparisons while the outside-level 安 kanji remains visibly labeled.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 安い|やすい: word 安い, reading やすい, meaning cheap / inexpensive, example この店のりんごは安いです。, audio word-reading-安い-やすい, breakdown 安 （やす） ／ cheap / calm / safe, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 安い|やすい, reading やすい, meaning cheap / inexpensive, example この店のりんごは安いです。, breakdown 安 （やす） ／ cheap / calm / safe, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%AE%89%E3%81%84",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%AE%89%E3%81%84 verified 安い|やすい, reading やすい, learner meaning cheap / inexpensive, and product review checked example この店のりんごは安いです。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 安い|やすい for JLPT N5; product review confirmed 安い|やすい belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 安い|やすい, reading やすい, sentence この店のりんごは安いです。, reading line このみせのりんごはやすいです。, English line The apples at this shop are cheap.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 安い|やすい; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 安い|やすい exact asset fragment word-reading-安い-やすい for the exported word reading やすい."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 安い|やすい source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 安い|やすい JLPT N5, JLPT core + reading coverage, focus 安, and covered readings 安: やすい."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 安い|やすい common and learner-friendly for the N5 word deck, with accurate reading やすい, meaning cheap / inexpensive, and example この店のりんごは安いです。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "開ける",
+    "status": "platinum",
+    "readingIncludes": [
+      "あける"
+    ],
+    "meaningIncludes": [
+      "open"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "開"
+    ],
+    "coversReadingIncludes": [
+      "開: あ"
+    ],
+    "breakdownIncludes": [
+      "開 （あ） ／ open"
+    ],
+    "exampleIncludes": [
+      "窓を開けます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Core N5 transitive action verb for opening doors and windows; useful daily command/action word while the outside-level 開 kanji remains visibly labeled.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 開ける|あける: word 開ける, reading あける, meaning open, example 窓を開けます。, audio word-reading-開ける-あける, breakdown 開 （あ） ／ open, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 開ける|あける, reading あける, meaning open, example 窓を開けます。, breakdown 開 （あ） ／ open, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%96%8B%E3%81%91%E3%82%8B",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%96%8B%E3%81%91%E3%82%8B verified 開ける|あける, reading あける, learner meaning open, and product review checked example 窓を開けます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 開ける|あける for JLPT N5; product review confirmed 開ける|あける belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 開ける|あける, reading あける, sentence 窓を開けます。, reading line まどをあけます。, English line I open the window.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 開ける|あける; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 開ける|あける exact asset fragment word-reading-開ける-あける for the exported word reading あける."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 開ける|あける source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 開ける|あける JLPT N5, JLPT core + reading coverage, focus 開, and covered readings 開: あける."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 開ける|あける common and learner-friendly for the N5 word deck, with accurate reading あける, meaning open, and example 窓を開けます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "古い",
+    "status": "platinum",
+    "readingIncludes": [
+      "ふるい"
+    ],
+    "meaningIncludes": [
+      "old"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "古"
+    ],
+    "coversReadingIncludes": [
+      "古: ふる"
+    ],
+    "breakdownIncludes": [
+      "古 （ふる） ／ old"
+    ],
+    "exampleIncludes": [
+      "その店はとても古いです。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Common N5 adjective for old things; useful in ordinary descriptions while the outside-level 古 kanji remains visibly labeled.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 古い|ふるい: word 古い, reading ふるい, meaning old, example その店はとても古いです。, audio word-reading-古い-ふるい, breakdown 古 （ふる） ／ old, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 古い|ふるい, reading ふるい, meaning old, example その店はとても古いです。, breakdown 古 （ふる） ／ old, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8F%A4%E3%81%84",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8F%A4%E3%81%84 verified 古い|ふるい, reading ふるい, learner meaning old, and product review checked example その店はとても古いです。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 古い|ふるい for JLPT N5; product review confirmed 古い|ふるい belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 古い|ふるい, reading ふるい, sentence その店はとても古いです。, reading line そのみせはとてもふるいです。, English line That shop is very old.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 古い|ふるい; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 古い|ふるい exact asset fragment word-reading-古い-ふるい for the exported word reading ふるい."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 古い|ふるい source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 古い|ふるい JLPT N5, JLPT core + reading coverage, focus 古, and covered readings 古: ふるい."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 古い|ふるい common and learner-friendly for the N5 word deck, with accurate reading ふるい, meaning old, and example その店はとても古いです。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "飲む",
+    "status": "platinum",
+    "readingIncludes": [
+      "のむ"
+    ],
+    "meaningIncludes": [
+      "drink"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "飲"
+    ],
+    "coversReadingIncludes": [
+      "飲: の"
+    ],
+    "breakdownIncludes": [
+      "飲 （の） ／ drink"
+    ],
+    "exampleIncludes": [
+      "毎朝お茶を飲みます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Core N5 daily verb for drinking; high-frequency learner word while the outside-level 飲 kanji remains visibly labeled.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 飲む|のむ: word 飲む, reading のむ, meaning drink, example 毎朝お茶を飲みます。, audio word-reading-飲む-のむ, breakdown 飲 （の） ／ drink, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 飲む|のむ, reading のむ, meaning drink, example 毎朝お茶を飲みます。, breakdown 飲 （の） ／ drink, and pitch label Pitch 1: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%A3%B2%E3%82%80",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%A3%B2%E3%82%80 verified 飲む|のむ, reading のむ, learner meaning drink, and product review checked example 毎朝お茶を飲みます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 飲む|のむ for JLPT N5; product review confirmed 飲む|のむ belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 飲む|のむ, reading のむ, sentence 毎朝お茶を飲みます。, reading line まいあさおちゃをのみます。, English line I drink tea every morning.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 飲む|のむ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 飲む|のむ exact asset fragment word-reading-飲む-のむ for the exported word reading のむ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 飲む|のむ source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 飲む|のむ JLPT N5, JLPT core + reading coverage, focus 飲, and covered readings 飲: のむ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 飲む|のむ common and learner-friendly for the N5 word deck, with accurate reading のむ, meaning drink, and example 毎朝お茶を飲みます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "外国",
+    "status": "platinum",
+    "readingIncludes": [
+      "がいこく"
+    ],
+    "meaningIncludes": [
+      "foreign country",
+      "abroad"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "外",
+      "国"
+    ],
+    "coversReadingIncludes": [
+      "外: がい",
+      "国: こく"
+    ],
+    "breakdownIncludes": [
+      "外 （がい） ／ outside",
+      "国 （こく） ／ country"
+    ],
+    "exampleIncludes": [
+      "外国へ行きたいです。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common N5 noun for foreign country/abroad; useful for travel and personal-information contexts with clear constituent readings.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 外国|がいこく: word 外国, reading がいこく, meaning foreign country / abroad, example 外国へ行きたいです。, audio word-reading-外国-がいこく, breakdown 外 （がい） ／ outside / 国 （こく） ／ country, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 外国|がいこく, reading がいこく, meaning foreign country / abroad, example 外国へ行きたいです。, breakdown 外 （がい） ／ outside / 国 （こく） ／ country, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%A4%96%E5%9B%BD",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%A4%96%E5%9B%BD verified 外国|がいこく, reading がいこく, learner meaning foreign country / abroad, and product review checked example 外国へ行きたいです。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 外国|がいこく for JLPT N5; product review confirmed 外国|がいこく belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 外国|がいこく, reading がいこく, sentence 外国へ行きたいです。, reading line がいこくへいきたいです。, English line I want to go abroad.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 外国|がいこく; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 外国|がいこく exact asset fragment word-reading-外国-がいこく for the exported word reading がいこく."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 外国|がいこく source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 外国|がいこく JLPT N5, JLPT core + reading coverage, focus 外、国, and covered readings 外: がい ／ 国: こく."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 外国|がいこく common and learner-friendly for the N5 word deck, with accurate reading がいこく, meaning foreign country / abroad, and example 外国へ行きたいです。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "電車",
+    "status": "platinum",
+    "readingIncludes": [
+      "でんしゃ"
+    ],
+    "meaningIncludes": [
+      "train"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "車"
+    ],
+    "coversReadingIncludes": [
+      "車: しゃ"
+    ],
+    "breakdownIncludes": [
+      "電 （でん） ／ electric",
+      "車 （しゃ） ／ car / vehicle"
+    ],
+    "exampleIncludes": [
+      "電車で学校へ行きます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch 2: 1"
+    ],
+    "selectionRationale": "Core N5 transportation noun; useful daily word that truthfully covers 車 -> しゃ in context without making 電 a target kanji for N5.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 電車|でんしゃ: word 電車, reading でんしゃ, meaning train, example 電車で学校へ行きます。, audio word-reading-電車-でんしゃ, breakdown 電 （でん） ／ electric / 車 （しゃ） ／ car / vehicle, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0 / Pitch 2: 1."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 電車|でんしゃ, reading でんしゃ, meaning train, example 電車で学校へ行きます。, breakdown 電 （でん） ／ electric / 車 （しゃ） ／ car / vehicle, and pitch label Pitch 1: 0 / Pitch 2: 1."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%9B%BB%E8%BB%8A",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%9B%BB%E8%BB%8A verified 電車|でんしゃ, reading でんしゃ, learner meaning train, and product review checked example 電車で学校へ行きます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 電車|でんしゃ for JLPT N5; product review confirmed 電車|でんしゃ belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 電車|でんしゃ, reading でんしゃ, sentence 電車で学校へ行きます。, reading line でんしゃでがっこうへいきます。, English line I go to school by train.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 電車|でんしゃ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 電車|でんしゃ exact asset fragment word-reading-電車-でんしゃ for the exported word reading でんしゃ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 電車|でんしゃ source kanjium-cc-by-sa-4.0 pattern 0 [heiban] / 1 [atamadaka] and rendered label Pitch 1: 0 / Pitch 2: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 電車|でんしゃ JLPT N5, JLPT core + reading coverage, focus 車, and covered readings 車: しゃ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 電車|でんしゃ common and learner-friendly for the N5 word deck, with accurate reading でんしゃ, meaning train, and example 電車で学校へ行きます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "友人",
+    "status": "deferred",
+    "readingIncludes": [
+      "ゆうじん"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because source review marks 友人|ゆうじん as JLPT N3 and more formal than 友達. It remains useful, but N5 should teach the everyday friend word through 友だち rather than keep 友人 only for 友 -> ゆう coverage."
+  },
+  {
+    "word": "雨の日",
+    "status": "removed",
+    "readingIncludes": [
+      "あめのひ"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Removed from the default N5 word deck because 雨の日|あめのひ is a transparent compositional phrase. The useful N5 readings are already covered by stronger word cards such as 雨|あめ and 日|ひ, so this should remain example/support language rather than a standalone shipped card."
+  },
+  {
+    "word": "読書",
+    "status": "deferred",
+    "readingIncludes": [
+      "どくしょ"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because source review marks 読書|どくしょ as JLPT N3. It is useful, but N5 already teaches 読む and 書く, so 読書 should not be forced into N5 only to close 読 -> どく and 書 -> しょ coverage."
   }
 ]

@@ -1645,6 +1645,7 @@ test("buildWordTsvForJlptLevel renders governed pitch accents as contour graphs"
     const lines = result.tsv.trim().split("\n");
     assert.match(lines[1], /class="pitch-accent-visual"/);
     assert.match(lines[1], /class="pitch-contour"/);
+    assert.match(lines[1], /Generated pitch guide/);
     assert.doesNotMatch(lines[1], /Pitch:/);
     assert.doesNotMatch(lines[1], /atamadaka/);
     assert.match(lines[1], />あ<\/text>/);

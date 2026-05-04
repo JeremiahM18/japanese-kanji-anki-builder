@@ -44,8 +44,8 @@ Each platinum word card must pass all rules below:
 - Constituent readings are field-bound to the exported `ReadingBreakdown`. Safe per-kanji ruby may count as a kanji reading; whole-word ruby must be labeled as a word reading and must not be counted as a per-kanji coverage claim.
 - Higher-level or outside-JLPT kanji are allowed only when the word itself belongs now and the card labels those kanji visibly.
 - Exact word-reading audio is present, governed, and artifact-verified for the written word and exported reading. Human listening QA remains part of the release checklist.
-- Pitch accent is present, protected by explicit expectation text, tied to the same governed word-reading source entry, and the rendered card output matches that governed source pattern.
-- Source evidence explicitly names the shipped written form, reading, meaning, example sentence, level/label claims, exact audio identity, and pitch-accent source pattern.
+- Pitch accent is present, protected by explicit expectation text, tied to the same governed word-reading source entry, and the rendered card output matches that governed source pattern. Generated pitch guidance may ship only when the rendered card visibly labels it as generated; generated pitch is not dictionary-backed pitch evidence.
+- Source evidence explicitly names the shipped written form, reading, meaning, example sentence, level/label claims, exact audio identity, pitch-accent source pattern, and whether pitch is dictionary-verified or generated guidance.
 - The card does not depend on ignored local files, untracked generated content, or silent fallback behavior.
 
 ## Kanji-card platinum rules
@@ -114,7 +114,7 @@ Active word entries must include all evidence types below:
 - `example-review`: the example sentence and reading were checked for release quality.
 - `media-audit`: governed media provenance was checked.
 - `audio-review`: generated audio artifact identity, provenance, and exact word-reading match were reviewed.
-- `pitch-accent-review`: pitch-accent value, source identity, and source-to-render match were reviewed.
+- `pitch-accent-review`: pitch-accent value, source identity, source-to-render match, and any generated-pitch label were reviewed.
 - `label-review`: JLPT/outside-JLPT labels, focus kanji, coverage role, and reading coverage were reviewed.
 - `manual-review`: a final product judgment was made.
 

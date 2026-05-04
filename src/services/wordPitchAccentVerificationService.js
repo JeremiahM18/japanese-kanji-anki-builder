@@ -9,6 +9,20 @@ function normalizeKana(value) {
     return katakanaToHiragana(String(value || "").trim());
 }
 
+function isGeneratedPitchAccentSource({ sourceId = "", source = null } = {}) {
+    const normalizedSourceId = String(sourceId || "").trim();
+    if (normalizedSourceId === "voicevox-nemo-accent-query" || normalizedSourceId === "voicevox-nemo-reading-query") {
+        return true;
+    }
+
+    const sourceText = [
+        source?.name,
+        source?.attribution,
+        source?.notes,
+    ].map((value) => String(value || "").toLowerCase()).join(" ");
+    return /\bgenerated\b/.test(sourceText);
+}
+
 function validateDeclaredPitchIdentity({
     label = "pitch source",
     word = "",
@@ -88,6 +102,7 @@ function validateWordPitchAccentSource({
 
 module.exports = {
     arraysMatch,
+    isGeneratedPitchAccentSource,
     validateDeclaredPitchIdentity,
     validateWordPitchAccentSource,
 };

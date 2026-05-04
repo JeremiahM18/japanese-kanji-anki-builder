@@ -121,10 +121,11 @@ function buildPitchAccentSvg({ accent, moras }) {
     ].join("");
 }
 
-function buildPitchAccentHtml({ pattern, reading }) {
+function buildPitchAccentHtml({ pattern, reading, sourceLabel = "" }) {
     const trimmedPattern = String(pattern || "").trim();
     const moras = splitMoras(reading);
     const accents = parsePitchAccentPattern(trimmedPattern);
+    const trimmedSourceLabel = String(sourceLabel || "").trim();
     if (!trimmedPattern) {
         return "";
     }
@@ -143,6 +144,9 @@ function buildPitchAccentHtml({ pattern, reading }) {
     return [
         "<div class=\"pitch-accent-visual\">",
         diagrams,
+        trimmedSourceLabel
+            ? `<div class="pitch-source-label">${escapeHtml(trimmedSourceLabel)}</div>`
+            : "",
         "</div>",
     ].join("");
 }

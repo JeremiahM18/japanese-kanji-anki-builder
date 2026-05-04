@@ -15,6 +15,7 @@ const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 const { resolveWordPitchAccent } = require("../datasets/wordPitchAccentData");
 const { buildPitchAccentHtml, escapeHtml } = require("./pitchAccentRenderService");
+const { isGeneratedPitchAccentSource } = require("./wordPitchAccentVerificationService");
 const { findManagedWordAudioAsset } = require("./wordAudioService");
 
 const WORD_FIELD_NAMES = loadAnkiNoteSchema("word").fieldNames;
@@ -225,6 +226,10 @@ function formatPitchAccent({ candidate, curatedEntry, wordPitchAccentData }) {
         return buildPitchAccentHtml({
             pattern: explicitPitchAccent,
             reading: curatedEntry?.reading || candidate?.pron,
+            sourceLabel: isGeneratedPitchAccentSource({
+                sourceId: curatedEntry?.pitchAccentSource,
+                source: wordPitchAccentData?.sources?.[curatedEntry?.pitchAccentSource],
+            }) ? "Generated pitch guide" : "",
         });
     }
 
@@ -237,6 +242,10 @@ function formatPitchAccent({ candidate, curatedEntry, wordPitchAccentData }) {
     return buildPitchAccentHtml({
         pattern: pitchAccent?.pattern,
         reading: curatedEntry?.reading || candidate?.pron,
+        sourceLabel: isGeneratedPitchAccentSource({
+            sourceId: pitchAccent?.sourceId,
+            source: wordPitchAccentData?.sources?.[pitchAccent?.sourceId],
+        }) ? "Generated pitch guide" : "",
     });
 }
 

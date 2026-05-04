@@ -1649,7 +1649,7 @@
   },
   {
     "word": "一万円",
-    "status": "needs_review",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
       "いちまんえん"
     ],
@@ -1679,12 +1679,85 @@
       "この時計は一万円です。"
     ],
     "pitchAccentIncludes": [
-      "Pitch 1: 4"
+      "Pitch 1: 4",
+      "Generated pitch guide"
     ],
     "selectionRationale": "Common N5 money amount expression; useful for prices and everyday transactions, with each constituent reading shown clearly.",
     "reviewedAt": "2026-05-03",
     "reviewer": "codex-platinum-review",
-    "decisionReason": "Still blocked by current-policy review: the word is useful for N5 money expressions, but the pitch-accent source remains VOICEVOX generated. Do not promote until dictionary-backed pitch evidence is added or the pitch policy changes explicitly."
+    "fixSummary": "Changed pitch handling so generated VOICEVOX pitch remains visibly labeled as generated guidance instead of pretending to be dictionary-verified pitch.",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 一万円|いちまんえん: word 一万円, reading いちまんえん, meaning 10,000 yen, example この時計は一万円です。, audio word-reading-一万円-いちまんえん, breakdown 一 （いち） ／ one / 万 （まん） ／ ten thousand / 円 （えん） ／ yen / circle, labels JLPT N5 JLPT core + reading coverage, and generated pitch label Generated pitch guide."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 一万円|いちまんえん, reading いちまんえん, meaning 10,000 yen, example この時計は一万円です。, breakdown 一 （いち） ／ one / 万 （まん） ／ ten thousand / 円 （えん） ／ yen / circle, and pitch label Pitch 1: 4; platinum review additionally checks the Generated pitch guide label."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%80%E4%B8%87%E5%86%86",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%80%E4%B8%87%E5%86%86 verified 一万円|いちまんえん, reading いちまんえん, learner meaning 10,000 yen, and product review checked example この時計は一万円です。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 一万円|いちまんえん for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 一万円|いちまんえん, reading いちまんえん, sentence この時計は一万円です。, reading line このとけいはいちまんえんです。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 一万円|いちまんえん; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 一万円|いちまんえん exact asset fragment word-reading-一万円-いちまんえん for the exported word reading いちまんえん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 一万円|いちまんえん source voicevox-nemo-accent-query pattern 4 [nakadaka] and rendered label Pitch 1: 4 / Generated pitch guide. This is generated guidance, not dictionary-verified pitch."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 一万円|いちまんえん JLPT N5, JLPT core + reading coverage, focus 一、万、円, and covered readings 一: いち / 万: まん / 円: えん."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 一万円|いちまんえん common and learner-friendly for the N5 word deck, with accurate reading いちまんえん, meaning 10,000 yen, example この時計は一万円です。, and clearly labeled generated pitch guidance."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   },
   {
     "word": "一人",
@@ -2011,7 +2084,7 @@
   },
   {
     "word": "一時半",
-    "status": "needs_review",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
       "いちじはん"
     ],
@@ -2042,12 +2115,85 @@
       "一時半に昼ご飯を食べます。"
     ],
     "pitchAccentIncludes": [
-      "Pitch 1: 4"
+      "Pitch 1: 4",
+      "Generated pitch guide"
     ],
     "selectionRationale": "Core N5 time expression for half past one; high utility for scheduling and reinforces time-expression readings.",
     "reviewedAt": "2026-05-03",
     "reviewer": "codex-platinum-review",
-    "decisionReason": "Still blocked by current-policy review: the time expression is useful for N5, but the pitch-accent source remains VOICEVOX generated. Do not promote until dictionary-backed pitch evidence is added or the pitch policy changes explicitly."
+    "fixSummary": "Changed pitch handling so generated VOICEVOX pitch remains visibly labeled as generated guidance instead of pretending to be dictionary-verified pitch.",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 一時半|いちじはん: word 一時半, reading いちじはん, meaning half past one / 1:30, example 一時半に昼ご飯を食べます。, audio word-reading-一時半-いちじはん, breakdown 一 （いち） ／ one / 時 （じ） ／ time / o'clock / 半 （はん） ／ half, labels JLPT N5 JLPT core + reading coverage, and generated pitch label Generated pitch guide."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 一時半|いちじはん, reading いちじはん, meaning half past one / 1:30, example 一時半に昼ご飯を食べます。, breakdown 一 （いち） ／ one / 時 （じ） ／ time / o'clock / 半 （はん） ／ half, and pitch label Pitch 1: 4; platinum review additionally checks the Generated pitch guide label."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%99%82%E5%8D%8A and TheJapanesePage JLPT N5 Grammar: Time https://www.thejapanesepage.com/jlpt-n5-grammar-time-toki/",
+        "detail": "JLearn.net verifies 時半|じはん as half past the hour, and TheJapanesePage N5 time lesson gives 一時半|いちじはん as 1:30, supporting the learner meaning half past one / 1:30. Product review checked the shipped 一時半|いちじはん surface and example 一時半に昼ご飯を食べます。."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 一時半|いちじはん for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 一時半|いちじはん, reading いちじはん, sentence 一時半に昼ご飯を食べます。, reading line いちじはんにひるごはんをたべます。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 一時半|いちじはん; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 一時半|いちじはん exact asset fragment word-reading-一時半-いちじはん for the exported word reading いちじはん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 一時半|いちじはん source voicevox-nemo-accent-query pattern 4 [nakadaka] and rendered label Pitch 1: 4 / Generated pitch guide. This is generated guidance, not dictionary-verified pitch."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 一時半|いちじはん JLPT N5, JLPT core + reading coverage, focus 一、時、半, and covered readings 一: いち / 時: じ / 半: はん."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 一時半|いちじはん common and learner-friendly for the N5 word deck, with accurate reading いちじはん, meaning half past one / 1:30, example 一時半に昼ご飯を食べます。, and clearly labeled generated pitch guidance."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   },
   {
     "word": "一生",

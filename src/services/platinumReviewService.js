@@ -6,6 +6,7 @@ const {
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 const {
     arraysMatch,
+    isGeneratedPitchAccentSource,
     validateWordPitchAccentSource,
 } = require("./wordPitchAccentVerificationService");
 const {
@@ -429,6 +430,15 @@ function evaluatePlatinumEntry({ rows = [], entry = {}, wordPitchAccentData = {}
                 });
                 for (const failure of sourceIdentityFailures) {
                     failures.push(`pitch accent source validation failed for ${wordKey}: ${failure}`);
+                }
+                if (
+                    isGeneratedPitchAccentSource({
+                        sourceId: sourcePitchAccent.sourceId,
+                        source: wordPitchAccentData?.sources?.[sourcePitchAccent.sourceId],
+                    })
+                    && !includesAllLiteral(row.pitchAccent, ["Generated pitch guide"])
+                ) {
+                    failures.push(`generated pitch accent source must be visibly labeled on the card: ${wordKey}`);
                 }
             }
         }

@@ -14,6 +14,7 @@ const {
     formatPlatinumWordReviewReport,
 } = require("../src/services/platinumReviewService");
 const { buildPitchAccentHtml } = require("../src/services/pitchAccentRenderService");
+const { isGeneratedPitchAccentSource } = require("../src/services/wordPitchAccentVerificationService");
 const { buildWordStudyEntryKey } = require("../src/datasets/wordStudyData");
 
 const ROOT_DIR = path.resolve(__dirname, "..");
@@ -59,14 +60,19 @@ function buildSyntheticWordRows(entries = [], wordPitchAccentData = {}) {
     return activeEntries(entries, ACTIVE_WORD_PLATINUM_STATUSES).map((entry) => {
         const reading = normalizeList(entry.readingIncludes)[0] || "";
         const wordKey = buildWordStudyEntryKey({ written: entry.word, reading });
-        const pitchPattern = wordPitchAccentData.entries?.[wordKey]?.pattern || "";
+        const pitchEntry = wordPitchAccentData.entries?.[wordKey] || {};
+        const pitchPattern = pitchEntry.pattern || "";
+        const sourceLabel = isGeneratedPitchAccentSource({
+            sourceId: pitchEntry.sourceId,
+            source: wordPitchAccentData.sources?.[pitchEntry.sourceId],
+        }) ? "Generated pitch guide" : "";
 
         return {
             word: entry.word,
             reading,
             readingBreakdown: normalizeList(entry.breakdownIncludes).join(" / "),
             audio: `[sound:${entry.word}-word-reading-${entry.word}-${reading}.wav]`,
-            pitchAccent: buildPitchAccentHtml({ pattern: pitchPattern, reading }),
+            pitchAccent: buildPitchAccentHtml({ pattern: pitchPattern, reading, sourceLabel }),
             meaning: normalizeList(entry.meaningIncludes).join(" / "),
             jlptLevel: normalizeList(entry.jlptLevelIncludes).join(" / "),
             coverageRole: normalizeList(entry.coverageRoleIncludes).join(" / "),

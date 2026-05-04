@@ -20,6 +20,11 @@ function buildWordPitchAccentData(overrides = {}) {
                 name: "Kanjium pitch accent database",
                 license: "CC BY-SA 4.0",
             },
+            "voicevox-nemo-accent-query": {
+                name: "VOICEVOX Nemo accent query",
+                license: "VOICEVOX Nemo terms",
+                attribution: "Accent analysis generated with VOICEVOX Nemo.",
+            },
         },
         entries: {
             "今日|きょう": {
@@ -240,6 +245,45 @@ test("evaluatePlatinumWordReviewSet rejects pitch source data that belongs to a 
     assert.equal(report.passed, false);
     assert.match(report.results[0].failures.join("\n"), /pitch accent source validation failed/);
     assert.match(report.results[0].failures.join("\n"), /sourceWord does not match/);
+});
+
+test("evaluatePlatinumWordReviewSet requires generated pitch to be visibly labeled", () => {
+    const sourceEvidence = buildSourceEvidence().map((entry) => entry.type === "pitch-accent-review"
+        ? {
+            ...entry,
+            detail: "Pitch accent review checked 今日|きょう source voicevox-nemo-accent-query pattern 0 [heiban] and rendered label Pitch 1: 0 / Generated pitch guide.",
+        }
+        : entry);
+    const entry = buildEntry({
+        pitchAccentIncludes: ["Pitch 1: 0", "Generated pitch guide"],
+        sourceEvidence,
+    });
+    const wordPitchAccentData = buildWordPitchAccentData({
+        "今日|きょう": {
+            pattern: "0 [heiban]",
+            sourceId: "voicevox-nemo-accent-query",
+            sourceQuery: "今日",
+            generatedReading: "きょう",
+        },
+    });
+
+    const failing = evaluateWordPlatinum({
+        rows: [buildRow()],
+        entries: [entry],
+        wordPitchAccentData,
+    });
+
+    assert.equal(failing.passed, false);
+    assert.match(failing.results[0].failures.join("\n"), /Generated pitch guide/);
+    assert.match(failing.results[0].failures.join("\n"), /generated pitch accent source must be visibly labeled/);
+
+    const passing = evaluateWordPlatinum({
+        rows: [buildRow({ pitchAccent: "<span aria-label=\"Pitch 1: 0\">きょう</span><span>Generated pitch guide</span>" })],
+        entries: [entry],
+        wordPitchAccentData,
+    });
+
+    assert.equal(passing.passed, true);
 });
 
 test("evaluatePlatinumWordReviewSet keeps deferred and removed words out of the export", () => {

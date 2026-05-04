@@ -161,7 +161,7 @@ function formatWordDeckReadyReport(summary, doctorReport) {
                     : []),
                 ...(pitchAccent
                     ? [
-                        `  pitch accent review: ${pitchAccent.coveragePercent}% (${pitchAccent.annotatedWords}/${pitchAccent.totalWords}) annotated, ${pitchAccent.missingPitchAccent} missing, ${pitchAccent.ungovernedPitchAccent || 0} ungoverned, ${pitchAccent.sourceMismatchPitchAccent || 0} source/render mismatches, ${pitchAccent.invalidSourcePattern || 0} invalid source patterns, ${pitchAccent.sourceIdentityIssues || 0} source identity issues, field ${pitchAccent.fieldPresent ? "present" : "missing"}`,
+                        `  pitch accent review: ${pitchAccent.coveragePercent}% (${pitchAccent.annotatedWords}/${pitchAccent.totalWords}) annotated, ${pitchAccent.missingPitchAccent} missing, ${pitchAccent.ungovernedPitchAccent || 0} ungoverned, ${pitchAccent.sourceMismatchPitchAccent || 0} source/render mismatches, ${pitchAccent.invalidSourcePattern || 0} invalid source patterns, ${pitchAccent.sourceIdentityIssues || 0} source identity issues, ${pitchAccent.generatedUnlabeledPitchAccent || 0} generated labels missing, field ${pitchAccent.fieldPresent ? "present" : "missing"}`,
                         ...((pitchAccent.sourceCounts && Object.keys(pitchAccent.sourceCounts).length > 0)
                             ? [`  pitch accent sources: ${Object.entries(pitchAccent.sourceCounts).sort((a, b) => a[0].localeCompare(b[0])).map(([sourceId, count]) => `${sourceId}=${count}`).join(", ")}`]
                             : []),

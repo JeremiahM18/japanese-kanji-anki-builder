@@ -9,7 +9,10 @@ const {
     extractRenderedPitchAccentPattern,
     parsePitchAccentPattern,
 } = require("./pitchAccentRenderService");
-const { validateWordPitchAccentSource } = require("./wordPitchAccentVerificationService");
+const {
+    isGeneratedPitchAccentSource,
+    validateWordPitchAccentSource,
+} = require("./wordPitchAccentVerificationService");
 const { buildCoverageWordRows } = require("./wordDeckCoverageScopeService");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 const { HAN_CHAR_RE, isKanaOnly, katakanaToHiragana } = require("../utils/japanese");
@@ -129,6 +132,7 @@ function buildWordDeckPitchAccentAudit({ wordRows, starterEntries = {}, wordPitc
     const sourceMismatchRows = [];
     const invalidSourceRows = [];
     const sourceIdentityRows = [];
+    const generatedUnlabeledRows = [];
     let fieldPresent = rows.length === 0;
 
     for (const row of rows) {
@@ -156,6 +160,15 @@ function buildWordDeckPitchAccentAudit({ wordRows, starterEntries = {}, wordPitc
                 sourceCounts[sourceId] = (sourceCounts[sourceId] || 0) + 1;
             } else {
                 ungovernedRows.push({ word, reading, pitchAccent });
+            }
+            if (
+                isGeneratedPitchAccentSource({
+                    sourceId,
+                    source: wordPitchAccentData?.sources?.[sourceId],
+                })
+                && !/Generated pitch guide/i.test(pitchAccent)
+            ) {
+                generatedUnlabeledRows.push({ word, reading, sourceId, pitchAccent });
             }
             if (sourceId && expectedAccents.length === 0) {
                 invalidSourceRows.push({ word, reading, sourceId, sourcePattern });
@@ -214,7 +227,8 @@ function buildWordDeckPitchAccentAudit({ wordRows, starterEntries = {}, wordPitc
             && ungovernedRows.length === 0
             && sourceMismatchRows.length === 0
             && invalidSourceRows.length === 0
-            && sourceIdentityRows.length === 0,
+            && sourceIdentityRows.length === 0
+            && generatedUnlabeledRows.length === 0,
         fieldPresent,
         totalWords: rows.length,
         annotatedWords: annotatedRows.length,
@@ -224,6 +238,7 @@ function buildWordDeckPitchAccentAudit({ wordRows, starterEntries = {}, wordPitc
         sourceMismatchPitchAccent: sourceMismatchRows.length,
         invalidSourcePattern: invalidSourceRows.length,
         sourceIdentityIssues: sourceIdentityRows.length,
+        generatedUnlabeledPitchAccent: generatedUnlabeledRows.length,
         coveragePercent: rows.length > 0
             ? Number(((annotatedRows.length / rows.length) * 100).toFixed(1))
             : 0,
@@ -233,6 +248,7 @@ function buildWordDeckPitchAccentAudit({ wordRows, starterEntries = {}, wordPitc
         sourceMismatchRows,
         invalidSourceRows,
         sourceIdentityRows,
+        generatedUnlabeledRows,
     };
 }
 
@@ -880,6 +896,7 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         `- Source/render mismatches: ${report.pitchAccentAudit?.sourceMismatchPitchAccent || 0}`,
         `- Invalid source patterns: ${report.pitchAccentAudit?.invalidSourcePattern || 0}`,
         `- Source identity issues: ${report.pitchAccentAudit?.sourceIdentityIssues || 0}`,
+        `- Generated pitch missing labels: ${report.pitchAccentAudit?.generatedUnlabeledPitchAccent || 0}`,
         "",
         "Reading coverage:",
         `- Readings audited: ${report.readingCoverage.totalReadings}`,
@@ -953,6 +970,13 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         lines.push("", "Pitch accent source identity issues:");
         for (const row of report.pitchAccentAudit.sourceIdentityRows.slice(0, maxEntries)) {
             lines.push(`- ${row.word} (${row.reading}) — ${row.failures.join("; ")}`);
+        }
+    }
+
+    if ((report.pitchAccentAudit?.generatedUnlabeledRows || []).length > 0) {
+        lines.push("", "Generated pitch accent rows missing learner labels:");
+        for (const row of report.pitchAccentAudit.generatedUnlabeledRows.slice(0, maxEntries)) {
+            lines.push(`- ${row.word} (${row.reading}) — ${row.sourceId}`);
         }
     }
 

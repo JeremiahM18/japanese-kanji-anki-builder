@@ -22,6 +22,11 @@ function buildPitchAccentData(entries = {}) {
                 name: "Kanjium pitch accent database",
                 license: "CC BY-SA 4.0",
             },
+            "voicevox-nemo-accent-query": {
+                name: "VOICEVOX Nemo accent query",
+                license: "VOICEVOX Nemo terms",
+                attribution: "Accent analysis generated with VOICEVOX Nemo.",
+            },
         },
         entries,
     };
@@ -137,6 +142,42 @@ test("buildWordDeckPitchAccentAudit flags governed source data that belongs to a
     assert.equal(audit.valid, false);
     assert.equal(audit.sourceIdentityIssues, 1);
     assert.match(audit.sourceIdentityRows[0].failures.join("\n"), /sourceWord does not match/);
+});
+
+test("buildWordDeckPitchAccentAudit requires generated pitch to be visibly labeled", () => {
+    const unlabeled = buildWordDeckPitchAccentAudit({
+        wordRows: [
+            { Word: "一万円", Reading: "いちまんえん", PitchAccent: "<div aria-label=\"Pitch 1: 4\">いちまんえん</div>" },
+        ],
+        wordPitchAccentData: buildPitchAccentData({
+            "一万円|いちまんえん": {
+                pattern: "4 [nakadaka]",
+                sourceId: "voicevox-nemo-accent-query",
+                sourceQuery: "一万円",
+                generatedReading: "いちまんえん",
+            },
+        }),
+    });
+
+    assert.equal(unlabeled.valid, false);
+    assert.equal(unlabeled.generatedUnlabeledPitchAccent, 1);
+
+    const labeled = buildWordDeckPitchAccentAudit({
+        wordRows: [
+            { Word: "一万円", Reading: "いちまんえん", PitchAccent: "<div aria-label=\"Pitch 1: 4\">いちまんえん</div><div>Generated pitch guide</div>" },
+        ],
+        wordPitchAccentData: buildPitchAccentData({
+            "一万円|いちまんえん": {
+                pattern: "4 [nakadaka]",
+                sourceId: "voicevox-nemo-accent-query",
+                sourceQuery: "一万円",
+                generatedReading: "いちまんえん",
+            },
+        }),
+    });
+
+    assert.equal(labeled.valid, true);
+    assert.equal(labeled.generatedUnlabeledPitchAccent, 0);
 });
 
 test("buildWordDeckPitchAccentAudit flags old word TSVs without the PitchAccent field", () => {

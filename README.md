@@ -258,6 +258,22 @@ The gap planner ranks open reading coverage work and suggests candidate support 
 
 Planner output is advisory. A suggested card still needs canonical contract coverage, explicit reading intent, cross-level labels, media, sentence review, and deck-policy validation before shipping.
 
+### Plan Word Inventory Expansion
+
+```bash
+npm run deck:words:expansion-candidates:n5 -- --source=downloads/n5-vocab.tsv --limit=50
+npm run deck:words:expansion-candidates:n5 -- --source=downloads/n5-vocab.tsv --kanji-scope=target-level --require-source-level
+```
+
+The expansion candidate report is a read-only post-coverage tool. Use it after the current reading-coverage pass to compare an explicit sourced vocabulary list against the governed word contract. It filters for written-reading rows that contain target-level kanji, are not already governed or excluded, and fit the requested kanji scope:
+
+- `at-or-below` keeps words whose kanji are all target-level or easier; this is the default.
+- `target-level` keeps only words whose kanji are all from the requested level.
+- `known-jlpt` allows harder known JLPT kanji but reports them for review.
+- `any` allows outside-JLPT kanji but reports them for review.
+
+Expansion candidates are not product truth. A candidate list may reveal useful vocabulary, but every promoted word still needs source/commonness review, level-fit review, examples, reading breakdowns, kanji labels, audio, pitch policy compliance, golden/platinum review, and readiness validation.
+
 ## Media Workflows
 
 ### Stroke Order
@@ -365,6 +381,7 @@ Repository governance:
 | `npm run deck:words:reading-audit:n4` | Audit N4 word reading coverage |
 | `npm run deck:words:triage:n4` | Classify N4 word reading gaps |
 | `npm run deck:words:gap-plan:n4 -- --limit=50` | Rank the next N4 word coverage batch |
+| `npm run deck:words:expansion-candidates:n5 -- --source=downloads/n5-vocab.tsv` | Diff a sourced vocabulary list into read-only word expansion candidates |
 | `npm run data:audit:jlpt` | Audit kanji taxonomy and starter alignment |
 | `npm run data:audit:jlpt:words` | Audit word taxonomy and starter alignment |
 | `npm run data:audit:audio` | Audit managed audio provenance |

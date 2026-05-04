@@ -1,0 +1,446 @@
+const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
+const { extractConstituentKanji, isLikelyPhraseCard } = require("./wordExportService");
+
+const LEVEL_RE = /^\s*(?:jlpt\s*)?n?\s*([1-5])\s*$/i;
+
+function normalizeHeader(value) {
+    return String(value || "")
+        .trim()
+        .toLowerCase()
+        .replace(/[\s_-]+/g, "");
+}
+
+function parseSourceLevel(value) {
+    const text = String(value ?? "").trim();
+    if (!text) {
+        return null;
+    }
+
+    const match = text.match(LEVEL_RE);
+    if (!match) {
+        return null;
+    }
+
+    return Number(match[1]);
+}
+
+function pickField(row, names) {
+    for (const name of names) {
+        if (row[name] !== undefined && row[name] !== null && String(row[name]).trim()) {
+            return String(row[name]).trim();
+        }
+    }
+    return "";
+}
+
+function parseDelimitedLine(line, delimiter) {
+    const cells = [];
+    let current = "";
+    let quoted = false;
+
+    for (let index = 0; index < line.length; index += 1) {
+        const char = line[index];
+        const next = line[index + 1];
+
+        if (char === "\"") {
+            if (quoted && next === "\"") {
+                current += "\"";
+                index += 1;
+            } else {
+                quoted = !quoted;
+            }
+            continue;
+        }
+
+        if (char === delimiter && !quoted) {
+            cells.push(current);
+            current = "";
+            continue;
+        }
+
+        current += char;
+    }
+
+    cells.push(current);
+    return cells.map((cell) => cell.trim());
+}
+
+function parseDelimitedRows(text, { delimiter = null } = {}) {
+    const lines = String(text || "")
+        .split(/\r?\n/)
+        .map((line) => line.trim())
+        .filter(Boolean);
+
+    if (lines.length === 0) {
+        return [];
+    }
+
+    const chosenDelimiter = delimiter || (lines[0].includes("\t") ? "\t" : ",");
+    const headers = parseDelimitedLine(lines[0], chosenDelimiter).map(normalizeHeader);
+
+    return lines.slice(1).map((line) => {
+        const cells = parseDelimitedLine(line, chosenDelimiter);
+        return headers.reduce((row, header, index) => {
+            if (header) {
+                row[header] = cells[index] || "";
+            }
+            return row;
+        }, {});
+    });
+}
+
+function parseJsonRows(text) {
+    const parsed = JSON.parse(text);
+    if (Array.isArray(parsed)) {
+        return parsed;
+    }
+    for (const key of ["entries", "words", "items", "rows"]) {
+        if (Array.isArray(parsed?.[key])) {
+            return parsed[key];
+        }
+    }
+    throw new Error("JSON candidate source must be an array or contain entries, words, items, or rows.");
+}
+
+function parseCandidateSourceText(text, { format = "auto" } = {}) {
+    const trimmed = String(text || "").trim();
+    if (!trimmed) {
+        return [];
+    }
+
+    const normalizedFormat = String(format || "auto").toLowerCase();
+    if (normalizedFormat === "json" || (normalizedFormat === "auto" && /^[\[{]/.test(trimmed))) {
+        return parseJsonRows(trimmed);
+    }
+    if (normalizedFormat === "tsv") {
+        return parseDelimitedRows(trimmed, { delimiter: "\t" });
+    }
+    if (normalizedFormat === "csv") {
+        return parseDelimitedRows(trimmed, { delimiter: "," });
+    }
+    if (normalizedFormat === "auto") {
+        return parseDelimitedRows(trimmed);
+    }
+
+    throw new Error("Candidate source format must be one of: auto, json, tsv, csv.");
+}
+
+function normalizeCandidateSourceRow(row, { sourceLabel = "external" } = {}) {
+    const normalized = {};
+    for (const [key, value] of Object.entries(row || {})) {
+        normalized[normalizeHeader(key)] = value;
+    }
+
+    const written = pickField(normalized, ["written", "word", "expression", "term", "vocabulary", "japanese"]);
+    const reading = pickField(normalized, ["reading", "kana", "pronunciation", "pronounced", "furigana"]);
+    const meaning = pickField(normalized, ["meaning", "meanings", "gloss", "english", "definition"]);
+    const source = pickField(normalized, ["source", "sourcename"]) || sourceLabel;
+    const notes = pickField(normalized, ["notes", "note"]);
+    const level = parseSourceLevel(pickField(normalized, ["jlpt", "level", "jlptlevel"]));
+    const frequencyRank = Number.parseInt(pickField(normalized, ["frequencyrank", "frequency", "rank"]), 10);
+
+    if (!written || !reading) {
+        return null;
+    }
+
+    return {
+        written,
+        reading,
+        meaning,
+        source,
+        notes,
+        sourceLevel: Number.isInteger(level) ? level : null,
+        frequencyRank: Number.isInteger(frequencyRank) ? frequencyRank : null,
+        key: buildWordStudyEntryKey({ written, reading }),
+    };
+}
+
+function getKanjiLevel(kanji, jlptLevelContract = {}) {
+    const level = jlptLevelContract?.kanjiLevels?.[kanji];
+    return Number.isInteger(level) ? level : null;
+}
+
+function classifyKanjiScope(row, { targetLevel, jlptLevelContract }) {
+    const constituentKanji = extractConstituentKanji(row.written);
+    const kanjiLevels = constituentKanji.map((kanji) => ({
+        kanji,
+        level: getKanjiLevel(kanji, jlptLevelContract),
+    }));
+    const targetKanji = kanjiLevels.filter((entry) => entry.level === targetLevel);
+    const harderKanji = kanjiLevels.filter((entry) => Number.isInteger(entry.level) && entry.level < targetLevel);
+    const easierKanji = kanjiLevels.filter((entry) => Number.isInteger(entry.level) && entry.level > targetLevel);
+    const outsideJlptKanji = kanjiLevels.filter((entry) => !Number.isInteger(entry.level));
+
+    return {
+        constituentKanji,
+        kanjiLevels,
+        targetKanji,
+        easierKanji,
+        harderKanji,
+        outsideJlptKanji,
+    };
+}
+
+function rowMatchesKanjiScope(scope, kanjiScope) {
+    if (scope.constituentKanji.length === 0 || scope.targetKanji.length === 0) {
+        return false;
+    }
+
+    if (kanjiScope === "any") {
+        return true;
+    }
+
+    if (kanjiScope === "known-jlpt") {
+        return scope.outsideJlptKanji.length === 0;
+    }
+
+    if (kanjiScope === "at-or-below") {
+        return scope.harderKanji.length === 0 && scope.outsideJlptKanji.length === 0;
+    }
+
+    if (kanjiScope === "target-level") {
+        return scope.constituentKanji.length === scope.targetKanji.length;
+    }
+
+    throw new Error("kanjiScope must be one of: at-or-below, target-level, known-jlpt, any.");
+}
+
+function classifyCandidateDisposition(row, {
+    targetLevel,
+    kanjiScope,
+    jlptLevelContract,
+    jlptWordLevelContract,
+    requireSourceLevel = false,
+}) {
+    const scope = classifyKanjiScope(row, { targetLevel, jlptLevelContract });
+    const governedEntry = jlptWordLevelContract?.wordLevels?.[row.key] || null;
+    const excludedEntry = jlptWordLevelContract?.excludedWordLevels?.[row.key] || null;
+
+    if (governedEntry) {
+        return {
+            disposition: "already_governed",
+            reason: `already governed in N${governedEntry.jlpt}`,
+            scope,
+        };
+    }
+    if (excludedEntry) {
+        return {
+            disposition: "already_excluded",
+            reason: `already tracked as excluded: ${excludedEntry.exclusionReason}`,
+            scope,
+        };
+    }
+    if (requireSourceLevel && row.sourceLevel !== targetLevel) {
+        return {
+            disposition: "source_level_mismatch",
+            reason: `source level is ${row.sourceLevel ? `N${row.sourceLevel}` : "missing"}, not N${targetLevel}`,
+            scope,
+        };
+    }
+    if (scope.constituentKanji.length === 0) {
+        return {
+            disposition: "kana_only",
+            reason: "does not contain kanji",
+            scope,
+        };
+    }
+    if (scope.targetKanji.length === 0) {
+        return {
+            disposition: "no_target_kanji",
+            reason: `does not contain N${targetLevel} kanji`,
+            scope,
+        };
+    }
+    if (isLikelyPhraseCard(row)) {
+        return {
+            disposition: "likely_phrase",
+            reason: "looks phrase-shaped rather than lexicalized",
+            scope,
+        };
+    }
+    if (!rowMatchesKanjiScope(scope, kanjiScope)) {
+        const issues = [];
+        if (scope.harderKanji.length > 0) {
+            issues.push(`harder kanji ${scope.harderKanji.map((entry) => `${entry.kanji}=N${entry.level}`).join(", ")}`);
+        }
+        if (scope.outsideJlptKanji.length > 0) {
+            issues.push(`outside-JLPT kanji ${scope.outsideJlptKanji.map((entry) => entry.kanji).join(", ")}`);
+        }
+        if (kanjiScope === "target-level" && scope.easierKanji.length > 0) {
+            issues.push(`easier-level kanji ${scope.easierKanji.map((entry) => `${entry.kanji}=N${entry.level}`).join(", ")}`);
+        }
+        return {
+            disposition: "kanji_scope_mismatch",
+            reason: issues.join("; ") || `does not match ${kanjiScope} kanji scope`,
+            scope,
+        };
+    }
+
+    const reviewNeeds = [];
+    if (scope.harderKanji.length > 0) {
+        reviewNeeds.push(`harder kanji labels ${scope.harderKanji.map((entry) => `${entry.kanji}=N${entry.level}`).join(", ")}`);
+    }
+    if (scope.outsideJlptKanji.length > 0) {
+        reviewNeeds.push(`outside-JLPT labels ${scope.outsideJlptKanji.map((entry) => entry.kanji).join(", ")}`);
+    }
+
+    return {
+        disposition: "review_candidate",
+        reason: "not governed yet; source-listed word fits the requested kanji scope and needs editorial review"
+            + (reviewNeeds.length > 0 ? `; ${reviewNeeds.join("; ")}` : ""),
+        scope,
+    };
+}
+
+function summarizeDispositions(rows) {
+    return rows.reduce((summary, row) => {
+        summary[row.disposition] = (summary[row.disposition] || 0) + 1;
+        return summary;
+    }, {});
+}
+
+function compareCandidateRows(a, b) {
+    return (
+        a.firstSeenIndex - b.firstSeenIndex
+        || a.written.localeCompare(b.written, "ja")
+        || a.reading.localeCompare(b.reading, "ja")
+    );
+}
+
+function buildWordInventoryExpansionCandidateReport({
+    sourceRows = [],
+    targetLevel = 5,
+    jlptLevelContract = {},
+    jlptWordLevelContract = {},
+    kanjiScope = "at-or-below",
+    limit = 50,
+    requireSourceLevel = false,
+    sourceLabel = "external",
+} = {}) {
+    if (!Number.isInteger(targetLevel) || targetLevel < 1 || targetLevel > 5) {
+        throw new Error("Target level must be an integer from 1 to 5.");
+    }
+    if (!Number.isInteger(limit) || limit < 1) {
+        throw new Error("Candidate report limit must be a positive integer.");
+    }
+
+    const normalizedRows = sourceRows
+        .map((row) => normalizeCandidateSourceRow(row, { sourceLabel }))
+        .filter(Boolean);
+    const rowsByKey = new Map();
+    let duplicateSourceRows = 0;
+
+    normalizedRows.forEach((row, index) => {
+        if (rowsByKey.has(row.key)) {
+            duplicateSourceRows += 1;
+            return;
+        }
+        rowsByKey.set(row.key, {
+            ...row,
+            firstSeenIndex: index,
+        });
+    });
+
+    const reviewedRows = [...rowsByKey.values()]
+        .map((row) => {
+            const classified = classifyCandidateDisposition(row, {
+                targetLevel,
+                kanjiScope,
+                jlptLevelContract,
+                jlptWordLevelContract,
+                requireSourceLevel,
+            });
+            return {
+                ...row,
+                disposition: classified.disposition,
+                reason: classified.reason,
+                constituentKanji: classified.scope.constituentKanji,
+                kanjiLevels: classified.scope.kanjiLevels,
+                targetKanji: classified.scope.targetKanji.map((entry) => entry.kanji),
+                harderKanji: classified.scope.harderKanji,
+                easierKanji: classified.scope.easierKanji,
+                outsideJlptKanji: classified.scope.outsideJlptKanji.map((entry) => entry.kanji),
+            };
+        })
+        .sort(compareCandidateRows);
+    const candidateRows = reviewedRows.filter((row) => row.disposition === "review_candidate");
+
+    return {
+        levelLabel: `N${targetLevel}`,
+        sourceLabel,
+        summary: {
+            sourceRows: sourceRows.length,
+            normalizedRows: normalizedRows.length,
+            uniqueRows: rowsByKey.size,
+            duplicateSourceRows,
+            kanjiScope,
+            requireSourceLevel,
+            reviewCandidateRows: candidateRows.length,
+            shownCandidateRows: Math.min(candidateRows.length, limit),
+            dispositions: summarizeDispositions(reviewedRows),
+        },
+        candidates: candidateRows.slice(0, limit),
+        allRows: reviewedRows,
+    };
+}
+
+function formatKanjiLevels(row) {
+    if (!row.kanjiLevels || row.kanjiLevels.length === 0) {
+        return "none";
+    }
+    return row.kanjiLevels
+        .map((entry) => `${entry.kanji}:${Number.isInteger(entry.level) ? `N${entry.level}` : "outside-JLPT"}`)
+        .join(", ");
+}
+
+function formatWordInventoryExpansionCandidateReport(report) {
+    const lines = [];
+    lines.push(`Japanese Kanji Builder Word Inventory Expansion Candidates (${report.levelLabel})`);
+    lines.push("");
+    lines.push("Read-only report: this does not promote words, change contracts, or affect readiness.");
+    lines.push("Use after the current reading-coverage pass; every candidate still needs source/commonness/sentence/platinum review.");
+    lines.push("");
+    lines.push(`Source: ${report.sourceLabel}`);
+    lines.push(`Kanji scope: ${report.summary.kanjiScope}`);
+    lines.push(`Source rows: ${report.summary.sourceRows}`);
+    lines.push(`Normalized written-reading rows: ${report.summary.normalizedRows}`);
+    lines.push(`Unique written-reading rows: ${report.summary.uniqueRows}`);
+    lines.push(`Duplicate source rows skipped: ${report.summary.duplicateSourceRows}`);
+    lines.push(`Review candidates: ${report.summary.reviewCandidateRows}`);
+    lines.push("");
+    lines.push("Disposition counts:");
+    for (const [disposition, count] of Object.entries(report.summary.dispositions).sort()) {
+        lines.push(`- ${disposition}: ${count}`);
+    }
+    lines.push("");
+
+    if (report.candidates.length === 0) {
+        lines.push("No review candidates matched the requested source and kanji scope.");
+        return lines.join("\n") + "\n";
+    }
+
+    lines.push(`Candidates shown (${report.candidates.length}):`);
+    report.candidates.forEach((row, index) => {
+        lines.push(`${index + 1}. ${row.written} (${row.reading})`);
+        lines.push(`   meaning: ${row.meaning || "source did not provide one"}`);
+        lines.push(`   kanji: ${formatKanjiLevels(row)}`);
+        lines.push(`   source: ${row.source}${row.sourceLevel ? `; source level N${row.sourceLevel}` : ""}`);
+        lines.push(`   review: ${row.reason}`);
+        if (row.notes) {
+            lines.push(`   notes: ${row.notes}`);
+        }
+    });
+
+    return lines.join("\n") + "\n";
+}
+
+module.exports = {
+    buildWordInventoryExpansionCandidateReport,
+    classifyCandidateDisposition,
+    classifyKanjiScope,
+    formatWordInventoryExpansionCandidateReport,
+    normalizeCandidateSourceRow,
+    parseCandidateSourceText,
+    parseDelimitedLine,
+    parseSourceLevel,
+};

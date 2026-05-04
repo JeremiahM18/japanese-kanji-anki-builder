@@ -10,6 +10,7 @@ const {
     parsePitchAccentPattern,
 } = require("./pitchAccentRenderService");
 const {
+    GENERATED_PITCH_LABEL,
     isGeneratedPitchAccentSource,
     validateWordPitchAccentSource,
 } = require("./wordPitchAccentVerificationService");
@@ -166,7 +167,7 @@ function buildWordDeckPitchAccentAudit({ wordRows, starterEntries = {}, wordPitc
                     sourceId,
                     source: wordPitchAccentData?.sources?.[sourceId],
                 })
-                && !/Generated pitch guide/i.test(pitchAccent)
+                && !pitchAccent.includes(GENERATED_PITCH_LABEL)
             ) {
                 generatedUnlabeledRows.push({ word, reading, sourceId, pitchAccent });
             }

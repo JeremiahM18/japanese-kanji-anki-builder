@@ -251,11 +251,11 @@ test("evaluatePlatinumWordReviewSet requires generated pitch to be visibly label
     const sourceEvidence = buildSourceEvidence().map((entry) => entry.type === "pitch-accent-review"
         ? {
             ...entry,
-            detail: "Pitch accent review checked 今日|きょう source voicevox-nemo-accent-query pattern 0 [heiban] and rendered label Pitch 1: 0 / Generated pitch guide.",
+            detail: "Pitch accent review checked 今日|きょう source voicevox-nemo-accent-query pattern 0 [heiban] and rendered label Pitch 1: 0 / Generated pitch (unverified).",
         }
         : entry);
     const entry = buildEntry({
-        pitchAccentIncludes: ["Pitch 1: 0", "Generated pitch guide"],
+        pitchAccentIncludes: ["Pitch 1: 0", "Generated pitch (unverified)"],
         sourceEvidence,
     });
     const wordPitchAccentData = buildWordPitchAccentData({
@@ -274,11 +274,11 @@ test("evaluatePlatinumWordReviewSet requires generated pitch to be visibly label
     });
 
     assert.equal(failing.passed, false);
-    assert.match(failing.results[0].failures.join("\n"), /Generated pitch guide/);
+    assert.match(failing.results[0].failures.join("\n"), /Generated pitch \(unverified\)/);
     assert.match(failing.results[0].failures.join("\n"), /generated pitch accent source must be visibly labeled/);
 
     const passing = evaluateWordPlatinum({
-        rows: [buildRow({ pitchAccent: "<span aria-label=\"Pitch 1: 0\">きょう</span><span>Generated pitch guide</span>" })],
+        rows: [buildRow({ pitchAccent: "<span aria-label=\"Pitch 1: 0\">きょう</span><span>Generated pitch (unverified)</span>" })],
         entries: [entry],
         wordPitchAccentData,
     });

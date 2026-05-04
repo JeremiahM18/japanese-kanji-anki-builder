@@ -164,7 +164,7 @@ test("buildWordDeckPitchAccentAudit requires generated pitch to be visibly label
 
     const labeled = buildWordDeckPitchAccentAudit({
         wordRows: [
-            { Word: "一万円", Reading: "いちまんえん", PitchAccent: "<div aria-label=\"Pitch 1: 4\">いちまんえん</div><div>Generated pitch guide</div>" },
+            { Word: "一万円", Reading: "いちまんえん", PitchAccent: "<div aria-label=\"Pitch 1: 4\">いちまんえん</div><div>Generated pitch (unverified)</div>" },
         ],
         wordPitchAccentData: buildPitchAccentData({
             "一万円|いちまんえん": {

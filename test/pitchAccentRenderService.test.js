@@ -30,12 +30,12 @@ test("buildPitchAccentHtml renders a learner-facing SVG graph without redundant 
     const html = buildPitchAccentHtml({
         pattern: "1 [atamadaka]",
         reading: "あとで",
-        sourceLabel: "Generated pitch guide",
+        sourceLabel: "Generated pitch (unverified)",
     });
 
     assert.match(html, /class="pitch-accent-visual"/);
     assert.match(html, /<svg class="pitch-contour"/);
-    assert.match(html, /class="pitch-source-label">Generated pitch guide/);
+    assert.match(html, /class="pitch-source-label">Generated pitch \(unverified\)/);
     assert.match(html, /width="122" height="78"/);
     assert.doesNotMatch(html, /Pitch:/);
     assert.doesNotMatch(html, /atamadaka/);

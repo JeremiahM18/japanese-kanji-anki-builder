@@ -15,7 +15,10 @@ const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 const { resolveWordPitchAccent } = require("../datasets/wordPitchAccentData");
 const { buildPitchAccentHtml, escapeHtml } = require("./pitchAccentRenderService");
-const { isGeneratedPitchAccentSource } = require("./wordPitchAccentVerificationService");
+const {
+    GENERATED_PITCH_LABEL,
+    isGeneratedPitchAccentSource,
+} = require("./wordPitchAccentVerificationService");
 const { findManagedWordAudioAsset } = require("./wordAudioService");
 
 const WORD_FIELD_NAMES = loadAnkiNoteSchema("word").fieldNames;
@@ -229,7 +232,7 @@ function formatPitchAccent({ candidate, curatedEntry, wordPitchAccentData }) {
             sourceLabel: isGeneratedPitchAccentSource({
                 sourceId: curatedEntry?.pitchAccentSource,
                 source: wordPitchAccentData?.sources?.[curatedEntry?.pitchAccentSource],
-            }) ? "Generated pitch guide" : "",
+            }) ? GENERATED_PITCH_LABEL : "",
         });
     }
 
@@ -245,7 +248,7 @@ function formatPitchAccent({ candidate, curatedEntry, wordPitchAccentData }) {
         sourceLabel: isGeneratedPitchAccentSource({
             sourceId: pitchAccent?.sourceId,
             source: wordPitchAccentData?.sources?.[pitchAccent?.sourceId],
-        }) ? "Generated pitch guide" : "",
+        }) ? GENERATED_PITCH_LABEL : "",
     });
 }
 

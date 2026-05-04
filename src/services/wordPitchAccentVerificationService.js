@@ -1,6 +1,8 @@
 const { parsePitchAccentPattern } = require("./pitchAccentRenderService");
 const { katakanaToHiragana } = require("../utils/japanese");
 
+const GENERATED_PITCH_LABEL = "Generated pitch (unverified)";
+
 function arraysMatch(left = [], right = []) {
     return left.length === right.length && left.every((entry, index) => entry === right[index]);
 }
@@ -101,6 +103,7 @@ function validateWordPitchAccentSource({
 }
 
 module.exports = {
+    GENERATED_PITCH_LABEL,
     arraysMatch,
     isGeneratedPitchAccentSource,
     validateDeclaredPitchIdentity,

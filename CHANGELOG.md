@@ -10,7 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Fixed
 
-- Resolved the current N5 word platinum review blockers that could be fixed under policy: moved later-level words out of the N5 word product, fixed the `分かる` breakdown meaning, replaced generated pitch provenance for `一|いち` and `七|なな` with source-bound Wiktionary pronunciation evidence, and promoted `一万円|いちまんえん` / `一時半|いちじはん` only after adding visible generated-pitch labels.
+- Resolved the current N5 word platinum review blockers that could be fixed under policy: moved later-level words out of the N5 word product, fixed the `分かる` breakdown meaning, replaced generated pitch provenance for `一|いち` and `七|なな` with source-bound Wiktionary pronunciation evidence, and promoted `一万円|いちまんえん` / `一時半|いちじはん` only after adding visible `Generated pitch (unverified)` labels.
 - Fixed word-card constituent readings so `KanjiBreakdown` now follows deterministic `ReadingBreakdown` context, labels non-decomposable whole-word readings as word readings, and rejects false per-kanji coverage claims.
 - Fixed N5 kanji primary-reading selection so curated individual-kanji display readings outrank word-breakdown support readings, keeping cards like `生|いきる` and `行|いく` anchored on the kanji deck purpose.
 - Fixed N5 word breakdown curation for `午後`, `半分`, `十分`, `五分`, `後半`, `行き先`, and `出来上がり` so word-card support readings stay accurate after the kanji primary-reading separation.
@@ -27,11 +27,12 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 ### Changed
 
 - Changed word-card pronunciation display so `ReadingBreakdown` is the only learner-facing reading surface and `PitchAccent` renders as a graph without redundant caption text.
-- Changed word-card pitch policy so generated VOICEVOX pitch may ship only as visibly labeled guidance; missing, ungoverned, source-mismatched, render-mismatched, and generated-but-unlabeled pitch still block readiness.
+- Changed word-card pitch policy so generated VOICEVOX pitch may ship only as visibly labeled `Generated pitch (unverified)` guidance; missing, ungoverned, source-mismatched, render-mismatched, and generated-but-unlabeled pitch still block readiness.
 
 ### Added
 
 - Added nine N5 word platinum approvals (`七つ`, `七日`, `三人`, `三時`, `三百`, `上`, `上げる`, `一万円`, `一時半`), raising active N5 word platinum coverage to `26` cards with 5 later-level deferred rows and no current `needs_review` pitch-provenance blockers.
+- Added 12 N5 word platinum approvals (`七時`, `三`, `上る`, `上手`, `下`, `下りる`, `中`, `九`, `九つ`, `九時`, `二`, `二つ`), raising active N5 word platinum coverage to `38` cards while leaving weaker support candidates for later review.
 - Added the next 12 N5 kanji platinum entries (`父`, `生`, `男`, `白`, `百`, `聞`, `行`, `西`, `見`, `話`, `語`, `読`), raising active N5 kanji platinum coverage to `72/80`.
 - Added the final 8 N5 kanji platinum entries (`車`, `金`, `長`, `間`, `雨`, `電`, `食`, `高`), completing active N5 kanji platinum coverage at `80/80`.
 - Completed tracked N1 kanji golden review coverage at `1231/1231` cards. N1 remains blocked until exact primary-reading audio passes readiness.

@@ -5,6 +5,7 @@ const {
 } = require("./pitchAccentRenderService");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 const {
+    GENERATED_PITCH_LABEL,
     arraysMatch,
     isGeneratedPitchAccentSource,
     validateWordPitchAccentSource,
@@ -436,7 +437,7 @@ function evaluatePlatinumEntry({ rows = [], entry = {}, wordPitchAccentData = {}
                         sourceId: sourcePitchAccent.sourceId,
                         source: wordPitchAccentData?.sources?.[sourcePitchAccent.sourceId],
                     })
-                    && !includesAllLiteral(row.pitchAccent, ["Generated pitch guide"])
+                    && !includesAllLiteral(row.pitchAccent, [GENERATED_PITCH_LABEL])
                 ) {
                     failures.push(`generated pitch accent source must be visibly labeled on the card: ${wordKey}`);
                 }

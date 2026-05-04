@@ -14,7 +14,10 @@ const {
     formatPlatinumWordReviewReport,
 } = require("../src/services/platinumReviewService");
 const { buildPitchAccentHtml } = require("../src/services/pitchAccentRenderService");
-const { isGeneratedPitchAccentSource } = require("../src/services/wordPitchAccentVerificationService");
+const {
+    GENERATED_PITCH_LABEL,
+    isGeneratedPitchAccentSource,
+} = require("../src/services/wordPitchAccentVerificationService");
 const { buildWordStudyEntryKey } = require("../src/datasets/wordStudyData");
 
 const ROOT_DIR = path.resolve(__dirname, "..");
@@ -65,7 +68,7 @@ function buildSyntheticWordRows(entries = [], wordPitchAccentData = {}) {
         const sourceLabel = isGeneratedPitchAccentSource({
             sourceId: pitchEntry.sourceId,
             source: wordPitchAccentData.sources?.[pitchEntry.sourceId],
-        }) ? "Generated pitch guide" : "";
+        }) ? GENERATED_PITCH_LABEL : "";
 
         return {
             word: entry.word,

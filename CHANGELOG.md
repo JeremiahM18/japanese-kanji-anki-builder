@@ -33,6 +33,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 - Added nine N5 word platinum approvals (`七つ`, `七日`, `三人`, `三時`, `三百`, `上`, `上げる`, `一万円`, `一時半`), raising active N5 word platinum coverage to `26` cards with 5 later-level deferred rows and no current `needs_review` pitch-provenance blockers.
 - Added 12 N5 word platinum approvals (`七時`, `三`, `上る`, `上手`, `下`, `下りる`, `中`, `九`, `九つ`, `九時`, `二`, `二つ`), raising active N5 word platinum coverage to `38` cards while leaving weaker support candidates for later review.
+- Added six N5 word platinum approvals (`下手`, `二人`, `二日`, `五`, `五つ`, `五分`), raising active N5 word platinum coverage to `44` cards while leaving `二時` unpromoted because its current coverage label needs correction.
 - Added the next 12 N5 kanji platinum entries (`父`, `生`, `男`, `白`, `百`, `聞`, `行`, `西`, `見`, `話`, `語`, `読`), raising active N5 kanji platinum coverage to `72/80`.
 - Added the final 8 N5 kanji platinum entries (`車`, `金`, `長`, `間`, `雨`, `電`, `食`, `高`), completing active N5 kanji platinum coverage at `80/80`.
 - Completed tracked N1 kanji golden review coverage at `1231/1231` cards. N1 remains blocked until exact primary-reading audio passes readiness.

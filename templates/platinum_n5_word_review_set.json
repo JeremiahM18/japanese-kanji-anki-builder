@@ -4265,5 +4265,647 @@
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
     }
+  },
+  {
+    "word": "下手",
+    "status": "platinum",
+    "readingIncludes": [
+      "へた"
+    ],
+    "meaningIncludes": [
+      "unskilled / bad at"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "手"
+    ],
+    "coversReadingIncludes": [
+      "手: た"
+    ],
+    "breakdownIncludes": [
+      "下 （へ） ／ down / below",
+      "手 （た） ／ hand"
+    ],
+    "exampleIncludes": [
+      "私は歌が下手です。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Common N5 adjective and direct counterpart to 上手; useful for beginner ability statements while supporting the 手 -> た reading in context.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 下手|へた: word 下手, reading へた, meaning unskilled / bad at, example 私は歌が下手です。, audio word-reading-下手-へた, breakdown 下 （へ） ／ down / below / 手 （た） ／ hand, labels JLPT N5 Reading coverage support."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 下手|へた, reading へた, meaning unskilled / bad at, example 私は歌が下手です。, breakdown 下 （へ） ／ down / below / 手 （た） ／ hand, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%8B%E6%89%8B",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%8B%E6%89%8B verified 下手|へた, reading へた, learner meaning unskilled / bad at, and product review checked example 私は歌が下手です。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 下手|へた for JLPT N5; product review confirmed the word belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 下手|へた, reading へた, sentence 私は歌が下手です。, reading line わたしはうたがへたです。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 下手|へた; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 下手|へた exact asset fragment word-reading-下手-へた for the exported word reading へた."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 下手|へた source kanjium-cc-by-sa-4.0 pattern 2 [odaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 下手|へた JLPT N5, Reading coverage support, focus 手, and covered readings 手: た."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 下手|へた common and learner-friendly for the N5 word deck, with accurate reading へた, meaning unskilled / bad at, and example 私は歌が下手です。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "二人",
+    "status": "platinum",
+    "readingIncludes": [
+      "ふたり"
+    ],
+    "meaningIncludes": [
+      "two people"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "二、人"
+    ],
+    "coversReadingIncludes": [
+      "二: ふた",
+      "人: り"
+    ],
+    "breakdownIncludes": [
+      "二 （ふた） ／ two",
+      "人 （り） ／ person / people"
+    ],
+    "exampleIncludes": [
+      "友だちと二人で映画を見ます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "selectionRationale": "Core N5 people-count word; useful immediately and worth learning as an exact irregular written-reading vocabulary item.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 二人|ふたり: word 二人, reading ふたり, meaning two people, example 友だちと二人で映画を見ます。, audio word-reading-二人-ふたり, breakdown 二 （ふた） ／ two / 人 （り） ／ person / people, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 二人|ふたり, reading ふたり, meaning two people, example 友だちと二人で映画を見ます。, breakdown 二 （ふた） ／ two / 人 （り） ／ person / people, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BA%8C%E4%BA%BA",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BA%8C%E4%BA%BA verified 二人|ふたり, reading ふたり, learner meaning two people, and product review checked example 友だちと二人で映画を見ます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 二人|ふたり for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 二人|ふたり, reading ふたり, sentence 友だちと二人で映画を見ます。, reading line ともだちとふたりでえいがをみます。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 二人|ふたり; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 二人|ふたり exact asset fragment word-reading-二人-ふたり for the exported word reading ふたり."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 二人|ふたり source kanjium-cc-by-sa-4.0 pattern 3 [odaka] and rendered label Pitch 1: 3."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 二人|ふたり JLPT N5, JLPT core + reading coverage, focus 二、人, and covered readings 二: ふた / 人: り."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 二人|ふたり common and learner-friendly for the N5 word deck, with accurate reading ふたり, meaning two people, and example 友だちと二人で映画を見ます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "二日",
+    "status": "platinum",
+    "readingIncludes": [
+      "ふつか"
+    ],
+    "meaningIncludes": [
+      "the second day",
+      "two days"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "日"
+    ],
+    "coversReadingIncludes": [
+      "二日: ふつか"
+    ],
+    "breakdownIncludes": [
+      "二日 （ふつか） ／ the second day / two days"
+    ],
+    "exampleIncludes": [
+      "会議は二日にあります。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common N5 date-duration word with a whole-word reading; useful as vocabulary while explicitly avoiding fake per-kanji coverage.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 二日|ふつか: word 二日, reading ふつか, meaning the second day / two days, example 会議は二日にあります。, audio word-reading-二日-ふつか, breakdown 二日 （ふつか） ／ the second day / two days, labels JLPT N5 Reading coverage support."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 二日|ふつか, reading ふつか, meaning the second day / two days, example 会議は二日にあります。, breakdown 二日 （ふつか） ／ the second day / two days, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BA%8C%E6%97%A5",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BA%8C%E6%97%A5 verified 二日|ふつか, reading ふつか, learner meaning the second day / two days, and product review checked example 会議は二日にあります。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 二日|ふつか for JLPT N5; product review confirmed the word belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 二日|ふつか, reading ふつか, sentence 会議は二日にあります。, reading line かいぎはふつかにあります。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 二日|ふつか; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 二日|ふつか exact asset fragment word-reading-二日-ふつか for the exported word reading ふつか."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 二日|ふつか source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 二日|ふつか JLPT N5, Reading coverage support, focus 日, and covered readings 二日: ふつか."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 二日|ふつか common and learner-friendly for the N5 word deck, with accurate reading ふつか, meaning the second day / two days, and example 会議は二日にあります。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "五",
+    "status": "platinum",
+    "readingIncludes": [
+      "ご"
+    ],
+    "meaningIncludes": [
+      "five"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "五"
+    ],
+    "coversReadingIncludes": [
+      "五: ご"
+    ],
+    "breakdownIncludes": [
+      "五 （ご） ／ five"
+    ],
+    "exampleIncludes": [
+      "数字を五から八まで言います。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Core standalone number word for five; common, beginner-appropriate, and useful beyond the separate 五 kanji card.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 五|ご: word 五, reading ご, meaning five, example 数字を五から八まで言います。, audio word-reading-五-ご, breakdown 五 （ご） ／ five, labels JLPT N5 JLPT core + reading coverage, and generated pitch label Generated pitch (unverified)."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 五|ご, reading ご, meaning five, example 数字を五から八まで言います。, breakdown 五 （ご） ／ five, and pitch label Pitch 1: 1; platinum review additionally checks the Generated pitch (unverified) label."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary search https://jlearn.net/search/%E4%BA%94",
+        "detail": "JLearn.net Japanese Dictionary search https://jlearn.net/search/%E4%BA%94 verified 五|ご, reading ご, learner meaning five, and product review checked example 数字を五から八まで言います。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 五|ご for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 五|ご, reading ご, sentence 数字を五から八まで言います。, reading line すうじをごからはちまでいいます。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 五|ご; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 五|ご exact asset fragment word-reading-五-ご for the exported word reading ご."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 五|ご source voicevox-nemo-accent-query pattern 1 [atamadaka] and rendered label Pitch 1: 1 / Generated pitch (unverified). This is generated guidance, not dictionary-verified pitch."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 五|ご JLPT N5, JLPT core + reading coverage, focus 五, and covered readings 五: ご."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 五|ご common and learner-friendly for the N5 word deck, with accurate reading ご, meaning five, example 数字を五から八まで言います。, and clearly labeled unverified generated pitch."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "五つ",
+    "status": "platinum",
+    "readingIncludes": [
+      "いつつ"
+    ],
+    "meaningIncludes": [
+      "five things"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "五"
+    ],
+    "coversReadingIncludes": [
+      "五: いつつ"
+    ],
+    "breakdownIncludes": [
+      "五 （いつ） ／ five"
+    ],
+    "exampleIncludes": [
+      "クッキーを五つ食べました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Core N5 native counter word for five things; immediately useful in everyday counting and ordering contexts.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 五つ|いつつ: word 五つ, reading いつつ, meaning five things, example クッキーを五つ食べました。, audio word-reading-五つ-いつつ, breakdown 五 （いつ） ／ five, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 五つ|いつつ, reading いつつ, meaning five things, example クッキーを五つ食べました。, breakdown 五 （いつ） ／ five, and pitch label Pitch 1: 2."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BA%94%E3%81%A4",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BA%94%E3%81%A4 verified 五つ|いつつ, reading いつつ, learner meaning five things, and product review checked example クッキーを五つ食べました。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 五つ|いつつ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 五つ|いつつ, reading いつつ, sentence クッキーを五つ食べました。, reading line クッキーをいつつたべました。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 五つ|いつつ; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 五つ|いつつ exact asset fragment word-reading-五つ-いつつ for the exported word reading いつつ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 五つ|いつつ source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 五つ|いつつ JLPT N5, JLPT core + reading coverage, focus 五, and covered readings 五: いつつ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 五つ|いつつ common and learner-friendly for the N5 word deck, with accurate reading いつつ, meaning five things, and example クッキーを五つ食べました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "五分",
+    "status": "platinum",
+    "readingIncludes": [
+      "ごふん"
+    ],
+    "meaningIncludes": [
+      "five minutes"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "分"
+    ],
+    "coversReadingIncludes": [
+      "分: ふん"
+    ],
+    "breakdownIncludes": [
+      "五 （ご） ／ five",
+      "分 （ふん） ／ minute"
+    ],
+    "exampleIncludes": [
+      "駅まで五分で着きます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Core N5 time-duration word; useful for travel and schedule sentences while reinforcing 分 -> ふん.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 五分|ごふん: word 五分, reading ごふん, meaning five minutes, example 駅まで五分で着きます。, audio word-reading-五分-ごふん, breakdown 五 （ご） ／ five / 分 （ふん） ／ minute, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 五分|ごふん, reading ごふん, meaning five minutes, example 駅まで五分で着きます。, breakdown 五 （ご） ／ five / 分 （ふん） ／ minute, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BA%94%E5%88%86-%E3%81%94%E3%81%B5%E3%82%93",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BA%94%E5%88%86-%E3%81%94%E3%81%B5%E3%82%93 verified 五分|ごふん, reading ごふん, learner meaning five minutes, and product review checked example 駅まで五分で着きます。 for the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 五分|ごふん for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 五分|ごふん, reading ごふん, sentence 駅まで五分で着きます。, reading line えきまでごふんでつきます。, and the exported reading line for release quality."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 五分|ごふん; generated export includes audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 五分|ごふん exact asset fragment word-reading-五分-ごふん for the exported word reading ごふん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 五分|ごふん source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 五分|ごふん JLPT N5, JLPT core + reading coverage, focus 分, and covered readings 分: ふん."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 五分|ごふん common and learner-friendly for the N5 word deck, with accurate reading ごふん, meaning five minutes, and example 駅まで五分で着きます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   }
 ]

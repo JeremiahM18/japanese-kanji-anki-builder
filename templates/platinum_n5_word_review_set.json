@@ -27704,5 +27704,929 @@
     "reviewedAt": "2026-05-04",
     "reviewer": "codex-platinum-review",
     "decisionReason": "Deferred from N5 because JLearn.net classifies 語る|かたる as JLPT N3 and its talk-about/narrate sense is more narrative or formal than beginner 話す and 会話. N5 should not keep it only to close 語 -> かたる coverage."
+  },
+  {
+    "word": "金曜日",
+    "readingIncludes": [
+      "きんようび"
+    ],
+    "meaningIncludes": [
+      "Friday"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "金"
+    ],
+    "coversReadingIncludes": [
+      "金: きん"
+    ],
+    "breakdownIncludes": [
+      "金 （きん） ／ money / gold",
+      "曜 （よう） ／ weekday marker",
+      "日 （び） ／ day / sun"
+    ],
+    "exampleIncludes": [
+      "金曜日に友だちと会います。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "selectionRationale": "Common N5 weekday word that is immediately useful for schedules and truthfully covers 金 -> きん with the outside-level 曜 kanji labeled.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 金曜日|きんようび: word 金曜日, reading きんようび, meaning Friday, example 金曜日に友だちと会います。, audio word-reading-金曜日-きんようび, labels JLPT N5 JLPT core + reading coverage, focus 金, covered readings 金: きん, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "Golden review protects 金曜日|きんようび, meaning Friday, example 金曜日に友だちと会います。, and covered readings 金: きん."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%87%91%E6%9B%9C%E6%97%A5",
+        "detail": "JLearn.net verifies 金曜日|きんようび as a JLPT N5 common temporal noun meaning Friday; product review checked example 金曜日に友だちと会います。"
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 金曜日|きんようび for JLPT N5; generated card shows JLPT N5."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 金曜日|きんようび, reading きんようび, sentence 金曜日に友だちと会います。, reading line きんようびにともだちとあいます。."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 金曜日|きんようび without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 金曜日|きんようび exact asset fragment word-reading-金曜日-きんようび."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 金曜日|きんようび source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] and rendered label Pitch 1: 3."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 金曜日|きんようび JLPT N5, JLPT core + reading coverage, focus 金, and covered readings 金: きん."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 金曜日|きんようび common and learner-friendly for the N5 word product: Common N5 weekday word that is immediately useful for schedules and truthfully covers 金 -> きん with the outside-level 曜 kanji labeled."
+      }
+    ]
+  },
+  {
+    "word": "子年",
+    "readingIncludes": [
+      "ねどし"
+    ],
+    "meaningIncludes": [
+      "Year of the Rat"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "子"
+    ],
+    "coversReadingIncludes": [
+      "子: ね"
+    ],
+    "breakdownIncludes": [
+      "子 （ね） ／ child",
+      "年 （どし） ／ year"
+    ],
+    "exampleIncludes": [
+      "私は子年です。"
+    ],
+    "notesIncludes": [
+      "Zodiac-year support word",
+      "十二支",
+      "not the everyday 子 -> こ child word"
+    ],
+    "status": "fixed_then_platinum",
+    "fixSummary": "Replaced the generic coverage note with a learner-facing zodiac note so 子年 is learned as a cultural/birth-year recognition word, not as the ordinary child reading.",
+    "pitchAccentIncludes": [
+      "Pitch 1: 1",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Useful cultural/calendar support word for recognizing 子 -> ね in zodiac and birth-year contexts; kept with a note separating it from everyday 子 -> こ child vocabulary.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 子年|ねどし: word 子年, reading ねどし, meaning Year of the Rat, example 私は子年です。, audio word-reading-子年-ねどし, labels JLPT N5 Reading coverage support, focus 子, covered readings 子: ね, and pitch label Pitch 1: 1 / Generated pitch (unverified)."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "Golden review protects 子年|ねどし, meaning Year of the Rat, example 私は子年です。, notes Zodiac-year support word and 十二支 and not the everyday 子 -> こ child word, and covered readings 子: ね."
+      },
+      {
+        "type": "japanese-source",
+        "source": "語源由来辞典 https://gogen-yurai.jp/ne-eto/",
+        "detail": "語源由来辞典 verifies 子年|ねどし as the zodiac Year of the Rat and 子 as the first 十二支; product review checked example 私は子年です。"
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 子年|ねどし for JLPT N5; generated card shows JLPT N5."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 子年|ねどし, reading ねどし, sentence 私は子年です。, reading line わたしはねどしです。."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 子年|ねどし without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 子年|ねどし exact asset fragment word-reading-子年-ねどし."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "VOICEVOX Nemo generated pitch query with visible generated-pitch label",
+        "detail": "Pitch accent review checked 子年|ねどし source voicevox-nemo-reading-query pattern 1 [atamadaka] and rendered label Pitch 1: 1 / Generated pitch (unverified)."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 子年|ねどし JLPT N5, Reading coverage support, focus 子, and covered readings 子: ね."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 子年|ねどし common and learner-friendly for the N5 word product: Useful cultural/calendar support word for recognizing 子 -> ね in zodiac and birth-year contexts; kept with a note separating it from everyday 子 -> こ child vocabulary."
+      }
+    ]
+  },
+  {
+    "word": "誕生日",
+    "readingIncludes": [
+      "たんじょうび"
+    ],
+    "meaningIncludes": [
+      "birthday"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "生",
+      "日"
+    ],
+    "coversReadingIncludes": [
+      "生: じょう",
+      "日: び"
+    ],
+    "breakdownIncludes": [
+      "誕 （たん） ／ birth",
+      "生 （じょう） ／ life / birth",
+      "日 （び） ／ day / sun"
+    ],
+    "exampleIncludes": [
+      "今日は母の誕生日です。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "selectionRationale": "Core beginner life-event word that is common, useful, and learner-friendly despite the outside-level 誕 kanji being labeled.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 誕生日|たんじょうび: word 誕生日, reading たんじょうび, meaning birthday, example 今日は母の誕生日です。, audio word-reading-誕生日-たんじょうび, labels JLPT N5 JLPT core + reading coverage, focus 生、日, covered readings 生: じょう ／ 日: び, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "Golden review protects 誕生日|たんじょうび, meaning birthday, example 今日は母の誕生日です。, and covered readings 生: じょう ／ 日: び."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E8%AA%95%E7%94%9F%E6%97%A5",
+        "detail": "JLearn.net verifies 誕生日|たんじょうび as a JLPT N5 common noun meaning birthday; product review checked example 今日は母の誕生日です。"
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 誕生日|たんじょうび for JLPT N5; generated card shows JLPT N5."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 誕生日|たんじょうび, reading たんじょうび, sentence 今日は母の誕生日です。, reading line きょうはははのたんじょうびです。."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 誕生日|たんじょうび without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 誕生日|たんじょうび exact asset fragment word-reading-誕生日-たんじょうび."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 誕生日|たんじょうび source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] and rendered label Pitch 1: 3."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 誕生日|たんじょうび JLPT N5, JLPT core + reading coverage, focus 生、日, and covered readings 生: じょう ／ 日: び."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 誕生日|たんじょうび common and learner-friendly for the N5 word product: Core beginner life-event word that is common, useful, and learner-friendly despite the outside-level 誕 kanji being labeled."
+      }
+    ]
+  },
+  {
+    "word": "水曜日",
+    "readingIncludes": [
+      "すいようび"
+    ],
+    "meaningIncludes": [
+      "Wednesday"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "水",
+      "日"
+    ],
+    "coversReadingIncludes": [
+      "水: すい",
+      "日: び"
+    ],
+    "breakdownIncludes": [
+      "水 （すい） ／ water",
+      "曜 （よう） ／ weekday marker",
+      "日 （び） ／ day / sun"
+    ],
+    "exampleIncludes": [
+      "水曜日に図書館で勉強します。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "selectionRationale": "Common N5 weekday word that is immediately useful for schedules and truthfully covers 水 -> すい and 日 -> び with the outside-level 曜 kanji labeled.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 水曜日|すいようび: word 水曜日, reading すいようび, meaning Wednesday, example 水曜日に図書館で勉強します。, audio word-reading-水曜日-すいようび, labels JLPT N5 JLPT core + reading coverage, focus 水、日, covered readings 水: すい ／ 日: び, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "Golden review protects 水曜日|すいようび, meaning Wednesday, example 水曜日に図書館で勉強します。, and covered readings 水: すい ／ 日: び."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%B0%B4%E6%9B%9C%E6%97%A5",
+        "detail": "JLearn.net verifies 水曜日|すいようび as a JLPT N5 common temporal noun meaning Wednesday; product review checked example 水曜日に図書館で勉強します。"
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 水曜日|すいようび for JLPT N5; generated card shows JLPT N5."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 水曜日|すいようび, reading すいようび, sentence 水曜日に図書館で勉強します。, reading line すいようびにとしょかんでべんきょうします。."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 水曜日|すいようび without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 水曜日|すいようび exact asset fragment word-reading-水曜日-すいようび."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 水曜日|すいようび source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] and rendered label Pitch 1: 3."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 水曜日|すいようび JLPT N5, JLPT core + reading coverage, focus 水、日, and covered readings 水: すい ／ 日: び."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 水曜日|すいようび common and learner-friendly for the N5 word product: Common N5 weekday word that is immediately useful for schedules and truthfully covers 水 -> すい and 日 -> び with the outside-level 曜 kanji labeled."
+      }
+    ]
+  },
+  {
+    "word": "自転車",
+    "readingIncludes": [
+      "じてんしゃ"
+    ],
+    "meaningIncludes": [
+      "bicycle"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "車"
+    ],
+    "coversReadingIncludes": [
+      "車: しゃ"
+    ],
+    "breakdownIncludes": [
+      "自 （じ） ／ self / own",
+      "転 （てん） ／ turn / fall",
+      "車 （しゃ） ／ car / vehicle"
+    ],
+    "exampleIncludes": [
+      "自転車で学校へ行きます。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 2",
+      "Pitch 2: 0"
+    ],
+    "selectionRationale": "Core beginner transportation word that is common, useful, learner-friendly, and truthfully covers 車 -> しゃ while labeling the outside-level 自 and 転 kanji.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 自転車|じてんしゃ: word 自転車, reading じてんしゃ, meaning bicycle, example 自転車で学校へ行きます。, audio word-reading-自転車-じてんしゃ, labels JLPT N5 JLPT core + reading coverage, focus 車, covered readings 車: しゃ, and pitch label Pitch 1: 2 / Pitch 2: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "Golden review protects 自転車|じてんしゃ, meaning bicycle, example 自転車で学校へ行きます。, and covered readings 車: しゃ."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E8%87%AA%E8%BB%A2%E8%BB%8A",
+        "detail": "JLearn.net verifies 自転車|じてんしゃ as a JLPT N5 common noun meaning bicycle or bike; product review checked example 自転車で学校へ行きます。"
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 自転車|じてんしゃ for JLPT N5; generated card shows JLPT N5."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 自転車|じてんしゃ, reading じてんしゃ, sentence 自転車で学校へ行きます。, reading line じてんしゃでがっこうへいきます。."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 自転車|じてんしゃ without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 自転車|じてんしゃ exact asset fragment word-reading-自転車-じてんしゃ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 自転車|じてんしゃ source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] / 0 [heiban] and rendered label Pitch 1: 2 / Pitch 2: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 自転車|じてんしゃ JLPT N5, JLPT core + reading coverage, focus 車, and covered readings 車: しゃ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 自転車|じてんしゃ common and learner-friendly for the N5 word product: Core beginner transportation word that is common, useful, learner-friendly, and truthfully covers 車 -> しゃ while labeling the outside-level 自 and 転 kanji."
+      }
+    ]
+  },
+  {
+    "word": "四月",
+    "readingIncludes": [
+      "しがつ"
+    ],
+    "meaningIncludes": [
+      "April"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "四",
+      "月"
+    ],
+    "coversReadingIncludes": [
+      "四: し",
+      "月: がつ"
+    ],
+    "breakdownIncludes": [
+      "四 （し） ／ four",
+      "月 （がつ） ／ month / moon"
+    ],
+    "exampleIncludes": [
+      "四月に新しいクラスが始まります。"
+    ],
+    "status": "platinum",
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "selectionRationale": "Common calendar word and beginner-useful month name that truthfully reinforces 四 -> し and 月 -> がつ without inventing coverage.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 四月|しがつ: word 四月, reading しがつ, meaning April, example 四月に新しいクラスが始まります。, audio word-reading-四月-しがつ, labels JLPT N5 Reading coverage support, focus 四、月, covered readings 四: し ／ 月: がつ, and pitch label Pitch 1: 3."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "Golden review protects 四月|しがつ, meaning April, example 四月に新しいクラスが始まります。, and covered readings 四: し ／ 月: がつ."
+      },
+      {
+        "type": "japanese-source",
+        "source": "TKG Japanese-English Learner Dictionary https://www.tkgje.jp/entries/00500/00668_shigatsu.html",
+        "detail": "TKG Japanese-English Learner Dictionary verifies 四月|しがつ as April and notes the し reading for 四 in the month name; product review checked example 四月に新しいクラスが始まります。"
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 四月|しがつ for JLPT N5; generated card shows JLPT N5."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 四月|しがつ, reading しがつ, sentence 四月に新しいクラスが始まります。, reading line しがつにあたらしいクラスがはじまります。."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 四月|しがつ without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 四月|しがつ exact asset fragment word-reading-四月-しがつ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 四月|しがつ source kanjium-cc-by-sa-4.0 pattern 3 [odaka] and rendered label Pitch 1: 3."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 四月|しがつ JLPT N5, Reading coverage support, focus 四、月, and covered readings 四: し ／ 月: がつ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 四月|しがつ common and learner-friendly for the N5 word product: Common calendar word and beginner-useful month name that truthfully reinforces 四 -> し and 月 -> がつ without inventing coverage."
+      }
+    ]
+  },
+  {
+    "word": "左折",
+    "readingIncludes": [
+      "させつ"
+    ],
+    "meaningIncludes": [
+      "left turn"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "左"
+    ],
+    "coversReadingIncludes": [
+      "左: さ"
+    ],
+    "breakdownIncludes": [
+      "左 （さ） ／ left",
+      "折 （せつ） ／ fold / break"
+    ],
+    "exampleIncludes": [
+      "次の交差点で左折します。"
+    ],
+    "notesIncludes": [
+      "Common direction and signage word",
+      "ひだり remains the everyday standalone left"
+    ],
+    "status": "fixed_then_platinum",
+    "fixSummary": "Replaced the generic coverage note with a navigation/signage note so 左折 is taught as useful recognition vocabulary while preserving ひだり as the everyday standalone left.",
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common navigation and signage word that is learner-useful for directions and truthfully covers 左 -> さ with the outside-level 折 kanji labeled.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 左折|させつ: word 左折, reading させつ, meaning left turn, example 次の交差点で左折します。, audio word-reading-左折-させつ, labels JLPT N5 Reading coverage support, focus 左, covered readings 左: さ, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "Golden review protects 左折|させつ, meaning left turn, example 次の交差点で左折します。, notes Common direction and signage word and ひだり remains the everyday standalone left, and covered readings 左: さ."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%B7%A6%E6%8A%98",
+        "detail": "JLearn.net verifies 左折|させつ as a common noun/suru verb meaning turning to the left or left turn; product review checked example 次の交差点で左折します。"
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 左折|させつ for JLPT N5; generated card shows JLPT N5."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 左折|させつ, reading させつ, sentence 次の交差点で左折します。, reading line つぎのこうさてんでさせつします。."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 左折|させつ without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 左折|させつ exact asset fragment word-reading-左折-させつ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 左折|させつ source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 左折|させつ JLPT N5, Reading coverage support, focus 左, and covered readings 左: さ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 左折|させつ common and learner-friendly for the N5 word product: Common navigation and signage word that is learner-useful for directions and truthfully covers 左 -> さ with the outside-level 折 kanji labeled."
+      }
+    ]
+  },
+  {
+    "word": "葉書",
+    "readingIncludes": [
+      "はがき"
+    ],
+    "meaningIncludes": [
+      "postcard"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "書"
+    ],
+    "coversReadingIncludes": [
+      "書: がき"
+    ],
+    "breakdownIncludes": [
+      "葉 （は） ／ leaf",
+      "書 （がき） ／ write"
+    ],
+    "exampleIncludes": [
+      "旅行先から葉書を送りました。"
+    ],
+    "notesIncludes": [
+      "often written はがき or ハガキ",
+      "kanji form is useful for recognition"
+    ],
+    "status": "fixed_then_platinum",
+    "fixSummary": "Added a spelling note because 葉書 is useful and source-reviewed as N5/common, but the word is often written in kana or katakana.",
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Useful N5 postcard word that remains worth recognizing in kanji form when clearly labeled as often written はがき or ハガキ, and truthfully covers 書 -> がき.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --limit=12",
+        "detail": "Generated word-card surface inspected for 葉書|はがき: word 葉書, reading はがき, meaning postcard, example 旅行先から葉書を送りました。, audio word-reading-葉書-はがき, labels JLPT N5 Reading coverage support, focus 書, covered readings 書: がき, and pitch label Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "Golden review protects 葉書|はがき, meaning postcard, example 旅行先から葉書を送りました。, notes often written はがき or ハガキ and kanji form is useful for recognition, and covered readings 書: がき."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E8%91%89%E6%9B%B8",
+        "detail": "JLearn.net verifies 葉書|はがき as a JLPT N5 common noun meaning postcard, while noting it is usually kana; product review checked example 旅行先から葉書を送りました。"
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 葉書|はがき for JLPT N5; generated card shows JLPT N5."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 葉書|はがき, reading はがき, sentence 旅行先から葉書を送りました。, reading line りょこうさきからはがきをおくりました。."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 葉書|はがき without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 葉書|はがき exact asset fragment word-reading-葉書-はがき."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 葉書|はがき source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 葉書|はがき JLPT N5, Reading coverage support, focus 書, and covered readings 書: がき."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 葉書|はがき common and learner-friendly for the N5 word product: Useful N5 postcard word that remains worth recognizing in kanji form when clearly labeled as often written はがき or ハガキ, and truthfully covers 書 -> がき."
+      }
+    ]
+  },
+  {
+    "word": "黄金",
+    "status": "deferred",
+    "readingIncludes": [
+      "おうごん"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because JLearn.net classifies 黄金|おうごん as JLPT N1. It is a real common word, but 金色 is the simpler beginner gold/golden word, so N5 should not keep 黄金 only to close 金 -> ごん coverage."
+  },
+  {
+    "word": "河川",
+    "status": "deferred",
+    "readingIncludes": [
+      "かせん"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because JLearn.net classifies 河川|かせん as JLPT N1 and the word is formal waterways vocabulary. N5 should rely on 川|かわ instead of forcing 川 -> せん coverage."
+  },
+  {
+    "word": "断食",
+    "status": "deferred",
+    "readingIncludes": [
+      "だんじき"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because 断食|だんじき is a common but topical fasting word built on later-level 断. It is better saved for N3 than taught to force 食 -> じき coverage."
+  },
+  {
+    "word": "雨戸",
+    "status": "deferred",
+    "readingIncludes": [
+      "あまど"
+    ],
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because 雨戸|あまど is a useful housing word but source-reviewed as later-level and too specific for beginner study. N5 should not keep it only to close 雨 -> あま coverage."
   }
 ]

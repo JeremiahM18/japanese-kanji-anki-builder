@@ -1,0 +1,28 @@
+{
+  "description": "Tiny public demo fixture for the Japanese Kanji Anki Builder generated surfaces.",
+  "fixtureScope": "documentation-only",
+  "sampledFromCommands": [
+    "npm run deck:ready -- --levels=5",
+    "npm run deck:words:ready -- --levels=5 --require-no-active-triage"
+  ],
+  "kanji": [
+    {
+      "kanji": "日",
+      "jlpt": 5,
+      "expectedDisplayWord": "日",
+      "expectedPrimaryReading": "ひ"
+    }
+  ],
+  "words": [
+    {
+      "written": "春雨",
+      "reading": "はるさめ",
+      "jlpt": 5,
+      "identity": "春雨|はるさめ"
+    }
+  ],
+  "notReleaseEvidence": [
+    "This fixture is not a readiness gate.",
+    "Use the repository review, readiness, platinum, and release commands for product claims."
+  ]
+}

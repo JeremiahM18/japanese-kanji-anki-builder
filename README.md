@@ -1,5 +1,43 @@
 # Japanese Kanji Anki Builder
 
+## 30-Second Tour
+
+Japanese Kanji Anki Builder creates reviewed Anki flashcard decks for JLPT kanji and vocabulary. It combines curated study data, example sentences, pronunciation audio, stroke-order media, pitch-accent information, and tracked review contracts into exportable Anki decks.
+
+Run this first:
+
+```bash
+npm run doctor
+```
+
+Kanji cards and word cards are separate learning products. A kanji card teaches one target kanji; a word card teaches one exact written form and reading.
+
+<p>
+  <img src="examples/n5-mini/screenshots/kanji-card.svg" alt="N5 kanji card preview for 日" width="360">
+  <img src="examples/n5-mini/screenshots/word-card.svg" alt="N5 word card preview for 春雨" width="360">
+</p>
+
+Tiny TSV excerpt:
+
+```tsv
+Surface	Reading	Meaning	Example
+日	ひ	day / sun	今日はいい日です。 ／ きょうはいいひです。 ／ Today is a good day.
+春雨	はるさめ	glass noodles / spring rain	春雨スープを食べます。 ／ はるさめスープをたべます。 ／ I eat harusame soup.
+```
+
+See the tracked mini fixture in [examples/n5-mini](examples/n5-mini) for sample input metadata, exact generated TSV rows, and card preview images.
+
+```mermaid
+flowchart TD
+    A["JLPT contracts + curated data + sentence corpus + media manifests"] --> B["Dataset loaders"]
+    B --> C["Inference, ranking, and validation"]
+    C --> D["Kanji cards"]
+    C --> E["Word cards"]
+    D --> F["TSV exports + optional APKG packages"]
+    E --> F
+    F --> G["Golden review + platinum review + release gates"]
+```
+
 ## About
 
 Japanese Kanji Anki Builder makes Anki study decks for Japanese learners. It builds JLPT kanji decks and JLPT vocabulary decks with readings, meanings, example sentences, notes, stroke-order animations, audio, pitch accent data for word cards, and labels for kanji that are above the current deck level or outside the tracked JLPT list.

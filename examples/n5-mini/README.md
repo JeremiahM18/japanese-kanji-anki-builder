@@ -17,4 +17,4 @@ Files:
 - [sample-kanji-output.tsv](sample-kanji-output.tsv) contains one exact kanji-deck TSV row for `日`.
 - [sample-word-output.tsv](sample-word-output.tsv) contains one exact word-deck TSV row for `春雨|はるさめ`.
 
-The README uses plain text field previews instead of screenshots so the public demo stays honest about what is tracked here.
+The README uses plain text field previews instead of screenshots so the public demo stays honest about what is tracked here. Those previews summarize the exported note fields; the TSV rows in this folder are the exact generated surfaces.

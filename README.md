@@ -17,10 +17,16 @@ Kanji card field preview:
 ```text
 Kanji: 日
 DisplayWord: 日
-PrimaryReading: ひ
 MeaningJP: day / sun
+PrimaryReading: ひ
 KanjiMeanings: day / sun / Japan / counter for days
 StudyWordKanji: [blank]
+OnReading: ジツ、 ニチ
+KunReading: -か、 -び、 ひ
+StrokeOrder: 65E5_日-stroke-order.gif
+Audio: 65E5_日-kanji-reading-日-ひ.wav
+Radical: 日
+Notes: 日(ひ) - day / sun ／ 日本(にほん) - Japan ／ 日曜日(にちようび) - Sunday
 ExampleSentence: 今日はいい日です。 ／ きょうはいいひです。 ／ Today is a good day.
 ```
 
@@ -30,12 +36,18 @@ Word card field preview:
 Word: 春雨
 Reading: はるさめ
 ReadingBreakdown: 春[はる] 雨[さめ]
+Audio: 96E8_雨-word-reading-春雨-はるさめ.wav
+PitchAccent: Pitch 1: 0
 Meaning: glass noodles / spring rain
 JLPTLevel: JLPT N5
 CoverageRole: Reading coverage support
 FocusKanji: 雨
 CoversReading: 雨: さめ
+KanjiBreakdown:
+  春[はる] - spring, JLPT N4 kanji, stroke order 6625_春-stroke-order.gif, On: シュン, Kun: はる
+  雨[さめ] - rain, stroke order 96E8_雨-stroke-order.gif, On: ウ, Kun: -さめ、 あま-、 あめ
 ExampleSentence: 春雨スープを食べます。 ／ はるさめスープをたべます。 ／ I eat harusame soup.
+Notes: Common food and seasonal word; retained because it gives a real learner-facing 春雨 word for the 雨 -> さめ pattern, not just coverage padding.
 ```
 
 Tiny TSV excerpt:
@@ -46,7 +58,7 @@ Surface	Reading	Meaning	Example
 春雨	はるさめ	glass noodles / spring rain	春雨スープを食べます。 ／ はるさめスープをたべます。 ／ I eat harusame soup.
 ```
 
-See the tracked mini fixture in [examples/n5-mini](examples/n5-mini) for sample input metadata and exact generated TSV rows.
+See the tracked mini fixture in [examples/n5-mini](examples/n5-mini) for sample input metadata and exact generated TSV rows. The field previews above are plain text summaries of those exported fields.
 
 ```mermaid
 flowchart TD

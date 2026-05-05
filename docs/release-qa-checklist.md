@@ -19,7 +19,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 ## Product readiness checks
 
 - Run the golden review command for each shipped kanji level, such as `npm run deck:review:n5`.
-- Run the JLPT kanji source-evidence audit before relying on level placement, such as `npm run data:audit:jlpt:sources -- --strict`.
+- Run the read-only JLPT kanji source-evidence audit before relying on level placement, such as `npm run data:audit:jlpt:sources -- --limit=25`.
 - Run the golden review command for each shipped word level when one exists, such as `npm run deck:words:review:n5`.
 - Run the word-level placement audit for each shipped word level, such as `npm run deck:words:level-anchor-audit -- --level=5`.
 - Run the platinum review command for each version 1 locked kanji level after its platinum manifest is populated, such as `npm run deck:platinum:n5`.

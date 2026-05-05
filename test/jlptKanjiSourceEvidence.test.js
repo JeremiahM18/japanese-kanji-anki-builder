@@ -392,14 +392,19 @@ test("auditJlptKanjiSourceEvidence emits governed confidence manifest entries", 
     assert.equal(report.kanjiConfidenceManifest.length, 1);
     assert.deepEqual(report.kanjiConfidenceManifest[0], {
         kanji: "日",
+        currentContractLevel: 5,
         contractLevel: 5,
         confidence: "high_confidence",
         confidenceLabel: "high_confidence",
+        sourceConsensusLevel: 5,
         consensusLevel: 5,
         agreementScore: 1,
+        agreementCount: 3,
         assignmentCount: 3,
         independentSourceCount: 3,
         japanesePublishedSourceCount: 1,
+        disagreementSources: [],
+        currentContractMatchesConsensus: true,
         reviewedSources: [
             {
                 sourceId: "tanos",
@@ -428,6 +433,33 @@ test("auditJlptKanjiSourceEvidence emits governed confidence manifest entries", 
         ],
     });
     assert.equal(report.sourceCoverage.tanos.tierLabel, "Tier 2 - Community source");
+});
+
+test("auditJlptKanjiSourceEvidence reports agreement counts and disagreement sources", () => {
+    const report = auditJlptKanjiSourceEvidence({
+        contract: { kanjiLevels: { 日: 5 } },
+        evidence: buildEvidence({
+            tanos: { 日: 5 },
+            jlptsensei: { 日: 4 },
+            textbook: { 日: 5 },
+        }),
+        limit: 5,
+    });
+
+    const [entry] = report.kanjiConfidenceManifest;
+    assert.equal(entry.currentContractLevel, 5);
+    assert.equal(entry.sourceConsensusLevel, 5);
+    assert.equal(entry.agreementCount, 2);
+    assert.equal(entry.assignmentCount, 3);
+    assert.deepEqual(entry.disagreementSources, [
+        {
+            sourceId: "jlptsensei",
+            level: 4,
+            tier: "community",
+            tierLabel: "Tier 2 - Community source",
+        },
+    ]);
+    assert.equal(entry.currentContractMatchesConsensus, true);
 });
 
 test("auditJlptKanjiSourceEvidence reports missing evidence and mismatches", () => {
@@ -469,6 +501,8 @@ test("formatJlptKanjiSourceEvidenceReport renders policy and blocker counts", ()
     assert.match(text, /JLPT Kanji Source Evidence Audit/);
     assert.match(text, /Overall result: failing/);
     assert.match(text, /Confidence labels:/);
+    assert.match(text, /Current contract comparison samples \(1 shown\):/);
+    assert.match(text, /- 日: current N5; consensus none; agreement 0\/0; disagreements none; confidence unknown; matches no/);
     assert.match(text, /Missing evidence: 1/);
 });
 

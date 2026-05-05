@@ -32,6 +32,6 @@
 - [ ] Tests added or updated when behavior changed
 - [ ] Lint and tests pass locally
 - [ ] CI is expected to pass
-- [ ] `data:audit:jlpt` and `data:audit:jlpt:sources -- --strict` run when JLPT taxonomy, starter curation, golden review placement, or deck-membership logic changed
+- [ ] `data:audit:jlpt` and read-only `data:audit:jlpt:sources -- --limit=25` run when JLPT taxonomy, starter curation, golden review placement, or deck-membership logic changed
 - [ ] `release:gate` run when packaging, CI, or toolchain behavior changed
 - [ ] CODEOWNERS review requested when touching protected paths

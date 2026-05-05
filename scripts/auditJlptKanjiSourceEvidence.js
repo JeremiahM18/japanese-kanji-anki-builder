@@ -66,6 +66,30 @@ function formatKanjiIssue(entry) {
     return `${entry.kanji} (${level})`;
 }
 
+function formatLevel(level) {
+    return Number.isInteger(level) ? `N${level}` : "none";
+}
+
+function formatDisagreementSources(disagreementSources = []) {
+    if (!Array.isArray(disagreementSources) || disagreementSources.length === 0) {
+        return "none";
+    }
+    return disagreementSources
+        .map((source) => `${source.sourceId}:N${source.level}`)
+        .join(", ");
+}
+
+function formatContractComparisonRows(rows = [], limit = 25) {
+    return rows
+        .slice(0, Math.max(1, limit || 25))
+        .map((entry) => (
+            `- ${entry.kanji}: current ${formatLevel(entry.currentContractLevel)}; consensus ${formatLevel(entry.sourceConsensusLevel)}; `
+            + `agreement ${entry.agreementCount}/${entry.assignmentCount}; `
+            + `disagreements ${formatDisagreementSources(entry.disagreementSources)}; `
+            + `confidence ${entry.confidence}; matches ${entry.currentContractMatchesConsensus === true ? "yes" : "no"}`
+        ));
+}
+
 function formatJlptKanjiSourceEvidenceReport({
     contractPath,
     evidencePath,
@@ -112,6 +136,9 @@ function formatJlptKanjiSourceEvidenceReport({
         "",
         "Source coverage:",
         ...formatSourceCoverage(report.sourceCoverage),
+        "",
+        `Current contract comparison samples (${Math.min(report.kanjiConfidenceManifest.length, Math.max(1, report.limit || 25))} shown):`,
+        ...formatContractComparisonRows(report.kanjiConfidenceManifest, report.limit),
     ];
 
     if (report.issues.missingEvidence.length > 0) {

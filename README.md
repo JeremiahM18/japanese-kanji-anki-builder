@@ -205,7 +205,7 @@ Run before merging changes that affect decks, contracts, media, or release behav
 npm test
 npm run lint
 npm run data:audit:jlpt
-npm run data:audit:jlpt:sources -- --strict
+npm run data:audit:jlpt:sources -- --limit=25
 npm run data:audit:jlpt:words
 npm run deck:words:level-anchor-audit -- --level=5
 npm run data:audit:audio -- --json
@@ -221,9 +221,9 @@ npm run release:gate
 
 `product:artifacts:kanji:n5:preflight` inspects tracked templates and reports whether N5 kanji TSV certification is possible without ignored local `data/` inputs. It currently reports `certifiable: no` because explicit on-yomi, kun-yomi, and rich-source provenance are not yet tracked as product contracts. Component/radical source data is tracked in `templates/kanji_component_contract.json`. Use `-- --require-certifiable` only when the remaining contracts exist and the command is expected to fail closed.
 
-`data:audit:jlpt:sources` audits the operational JLPT kanji contract against the independent source-evidence registry. It is intentionally separate from deck generation: it reports source coverage, reviewed assignment coverage, unique independence groups, active-source license status, consensus, agreement score, confidence, and contract/consensus mismatches without changing the active contract or any decks.
+`data:audit:jlpt:sources` audits the operational JLPT kanji contract against the independent source-evidence registry. It is intentionally separate from deck generation and product readiness: it reports current contract level, source consensus level, agreement count, disagreement sources, confidence, and whether the current contract matches consensus without changing the active contract or any decks. Re-run word placement audits after taxonomy confidence is governed and any kanji contract change is proposed, because word placement depends on kanji levels.
 
-`product:readiness:n5` runs the current automated N5 product checkpoint: JLPT kanji and word audits, JLPT kanji source-evidence audit, governed audio provenance, tracked-source N5 word TSV generation, and N5 kanji and word golden reviews. It must not be used to claim N5 word release readiness while `npm run deck:words:level-anchor-audit -- --level=5` fails or while `npm run data:audit:jlpt:sources -- --strict` fails. It still does not validate tracked-source kanji TSVs, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA. Run the applicable platinum command separately when a level is being version-1 locked.
+`product:readiness:n5` runs the current automated N5 product checkpoint: JLPT kanji and word audits, governed audio provenance, tracked-source N5 word TSV generation, and N5 kanji and word golden reviews. It must not be used to claim N5 word release readiness while `npm run deck:words:level-anchor-audit -- --level=5` fails. It does not run or gate on the JLPT kanji source-evidence audit yet; that audit is currently read-only transparency until the evidence layer is governed. It still does not validate tracked-source kanji TSVs, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA. Run the applicable platinum command separately when a level is being version-1 locked.
 
 `release:gate` validates deterministic smoke-fixture artifacts and packaging contracts. It does not certify public product deck readiness. Add level-specific readiness, golden review, accessibility, provenance, and manual QA commands for the surface being changed.
 

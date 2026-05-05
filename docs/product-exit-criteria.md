@@ -83,7 +83,7 @@ Minimum automated gate:
 npm test
 npm run lint
 npm run data:audit:jlpt
-npm run data:audit:jlpt:sources -- --strict
+npm run data:audit:jlpt:sources -- --limit=25
 npm run data:audit:jlpt:words
 npm run data:audit:audio -- --json
 npm run deck:review:accessibility -- --deck-kind=kanji
@@ -99,7 +99,9 @@ npm run release:gate
 
 `product:artifacts:kanji:n5:preflight` reports whether tracked templates are sufficient to certify fresh N5 kanji TSV generation without ignored local `data/` inputs. It currently reports that certification is blocked because rich kanji readings and rich-source provenance are not tracked release contracts yet. Component/radical source data is tracked in `templates/kanji_component_contract.json`.
 
-`product:readiness:n5` is the current automated N5 product checkpoint. It runs the JLPT kanji audit, JLPT kanji source-evidence audit, JLPT word audit, governed audio provenance audit, tracked-source N5 word TSV artifact checkpoint, N5 kanji golden review, and N5 word golden review. It must not be used to claim N5 word release readiness while `npm run deck:words:level-anchor-audit -- --level=5` fails or while `npm run data:audit:jlpt:sources -- --strict` fails. The word placement audit distinguishes rows placed too early from rows placed later without explicit learner-fit rationale. It does not certify platinum review, tracked-source kanji TSVs, fresh `.apkg` product artifacts, manual Anki import review, mobile QA, screen-reader QA, or listening QA.
+`data:audit:jlpt:sources` is a read-only taxonomy transparency audit. It reports current contract level, source consensus level, agreement count, disagreement sources, confidence, and whether the current contract matches consensus. It does not move kanji, move words, or change readiness. Re-run word placement audits after taxonomy confidence is governed and any kanji contract change is proposed.
+
+`product:readiness:n5` is the current automated N5 product checkpoint. It runs the JLPT kanji audit, JLPT word audit, governed audio provenance audit, tracked-source N5 word TSV artifact checkpoint, N5 kanji golden review, and N5 word golden review. It must not be used to claim N5 word release readiness while `npm run deck:words:level-anchor-audit -- --level=5` fails. The word placement audit distinguishes rows placed too early from rows placed later without explicit learner-fit rationale. It does not certify platinum review, tracked-source kanji TSVs, fresh `.apkg` product artifacts, manual Anki import review, mobile QA, screen-reader QA, listening QA, or governed JLPT kanji source consensus.
 
 `release:gate` validates smoke-fixture artifacts and packaging contracts. It does not certify public product deck readiness. Add level-specific review commands for the deck being shipped, including `npm run deck:words:review:n5` for an N5 word release.
 

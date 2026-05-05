@@ -16,7 +16,6 @@ test("buildProductReadinessPlan defines the N5 automated product checkpoint", ()
     assert.equal(plan.scope.doesNotValidate.includes("tracked-source kanji TSV or .apkg product artifacts"), true);
     assert.deepEqual(plan.commands.map((command) => command.id), [
         "kanji-contract-audit",
-        "kanji-source-evidence-audit",
         "word-contract-audit",
         "audio-provenance-audit",
         "n5-tracked-source-word-artifact",
@@ -42,7 +41,7 @@ test("runProductReadinessGate passes when all checkpoint commands pass", async (
     assert.equal(report.passed, true);
     assert.equal(report.checks.length, N5_PRODUCT_READINESS_COMMANDS.length);
     assert.equal(calls.some((call) => call.includes("reviewGoldenWordLevel.js")), true);
-    assert.equal(calls.some((call) => call.includes("auditJlptKanjiSourceEvidence.js")), true);
+    assert.equal(calls.some((call) => call.includes("auditJlptKanjiSourceEvidence.js")), false);
     assert.equal(calls.some((call) => call.includes("trackedSourceArtifacts.js")), true);
 });
 

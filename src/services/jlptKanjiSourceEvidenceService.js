@@ -112,6 +112,37 @@ function computeConsensus(assignments = []) {
     };
 }
 
+function buildConsensusComparison(assignments = [], consensusLevel = null) {
+    if (!Number.isInteger(consensusLevel)) {
+        return {
+            agreementCount: 0,
+            agreementSourceIds: [],
+            disagreementSources: assignments.map((assignment) => ({
+                sourceId: assignment.sourceId,
+                level: assignment.level,
+                tier: assignment.tier?.id,
+                tierLabel: assignment.tier?.label,
+            })),
+        };
+    }
+
+    const agreementSources = assignments.filter((assignment) => assignment.level === consensusLevel);
+    const disagreementSources = assignments
+        .filter((assignment) => assignment.level !== consensusLevel)
+        .map((assignment) => ({
+            sourceId: assignment.sourceId,
+            level: assignment.level,
+            tier: assignment.tier?.id,
+            tierLabel: assignment.tier?.label,
+        }));
+
+    return {
+        agreementCount: agreementSources.length,
+        agreementSourceIds: agreementSources.map((assignment) => assignment.sourceId),
+        disagreementSources,
+    };
+}
+
 function classifyConfidence({
     assignmentCount,
     independentSourceCount,
@@ -151,6 +182,7 @@ function evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence = {} } = {
     ).size;
     const japanesePublishedSourceCount = assignments.filter((entry) => entry.japanesePublished).length;
     const consensus = computeConsensus(assignments);
+    const comparison = buildConsensusComparison(assignments, consensus.consensusLevel);
     const confidence = classifyConfidence({
         assignmentCount: assignments.length,
         independentSourceCount,
@@ -162,11 +194,16 @@ function evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence = {} } = {
 
     return {
         kanji,
+        currentContractLevel: contractLevel,
         contractLevel,
         assignments,
         assignmentCount: assignments.length,
+        agreementCount: comparison.agreementCount,
+        agreementSourceIds: comparison.agreementSourceIds,
+        disagreementSources: comparison.disagreementSources,
         independentSourceCount,
         japanesePublishedSourceCount,
+        sourceConsensusLevel: consensus.consensusLevel,
         consensusLevel: consensus.consensusLevel,
         agreementScore: consensus.agreementScore,
         voteWeights: consensus.voteWeights,
@@ -290,14 +327,19 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
         const result = evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence });
         kanjiConfidenceManifest.push({
             kanji,
+            currentContractLevel: contractLevel,
             contractLevel,
             confidence: result.confidence,
             confidenceLabel: result.confidenceLabel,
+            sourceConsensusLevel: result.consensusLevel,
             consensusLevel: result.consensusLevel,
             agreementScore: result.agreementScore,
+            agreementCount: result.agreementCount,
             assignmentCount: result.assignmentCount,
             independentSourceCount: result.independentSourceCount,
             japanesePublishedSourceCount: result.japanesePublishedSourceCount,
+            disagreementSources: result.disagreementSources,
+            currentContractMatchesConsensus: result.contractMatchesConsensus,
             reviewedSources: result.assignments.map((entry) => ({
                 sourceId: entry.sourceId,
                 level: entry.level,
@@ -411,6 +453,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
     return {
         valid,
         checked,
+        limit,
         policy,
         sourceTiers: evidence.sourceTiers || {},
         confidenceLabels: evidence.confidenceLabels || {},

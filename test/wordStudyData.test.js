@@ -1312,6 +1312,30 @@ test("tracked starter word data includes the third N5 enhancement batch with hig
     assert.equal(starterEntries["飛行機|ひこうき"].exampleSentence.japanese, "飛行機で行きます。");
 });
 
+test("tracked starter word data includes the final N5 source expansion keepers", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageRoles(starterEntries, [
+        ["本棚|ほんだな", "both"],
+        ["留学生|りゅうがくせい", "both"],
+    ]);
+    assertCoverageReadings(starterEntries, [
+        ["本棚|ほんだな", "本", "ほん"],
+        ["本棚|ほんだな", "棚", "だな"],
+        ["留学生|りゅうがくせい", "留", "りゅう"],
+        ["留学生|りゅうがくせい", "学", "がく"],
+        ["留学生|りゅうがくせい", "生", "せい"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["本棚|ほんだな", "<ruby>本<rt>ほん</rt></ruby><ruby>棚<rt>だな</rt></ruby>"],
+        ["留学生|りゅうがくせい", "<ruby>留<rt>りゅう</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>生<rt>せい</rt></ruby>"],
+    ]);
+    assert.equal(starterEntries["本棚|ほんだな"].source, "jlptstudy.net-n5");
+    assert.equal(starterEntries["留学生|りゅうがくせい"].source, "jlptstudy.net-n5");
+    assert.match(starterEntries["本棚|ほんだな"].notes, /higher-level kanji/);
+    assert.match(starterEntries["留学生|りゅうがくせい"].notes, /higher-level kanji/);
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

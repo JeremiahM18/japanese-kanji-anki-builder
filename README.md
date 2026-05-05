@@ -171,20 +171,20 @@ Golden and platinum review:
 | N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N1 kanji | Golden-reviewed at `1231/1231`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
-| N5 word | Golden-reviewed at `329/329`; platinum-reviewed at `329/329` active entries; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; word platinum has 55 deferred/removed rows and no `needs_review` blockers under the generated-pitch-label policy |
-| N4 word | Expanded to `535` governed rows; previously golden-reviewed rows remain at `458/535`; the 77 N4 source-expansion rows still need golden review, word audio, pitch source/render review, and platinum approval before N4 readiness can be claimed |
+| N5 word | Expanded to `331` governed rows after the final source-expansion keepers; current initial field/media readiness passes with exact word audio, governed pitch, card-back fields, example reading alignment, and looping animations complete; golden/platinum review remains at `329/331`, so release readiness is not claimed |
+| N4 word | Expanded to `535` governed rows; current initial field/media readiness passes with exact word audio, governed pitch, card-back fields, example reading alignment, and looping animations complete; golden review remains at `458/535`, so N4 is not fully golden and release readiness is not claimed |
 
 Current tracked word inventory:
 
-- N5 canonical word rows: `329`
+- N5 canonical word rows: `331`
 - N5 source-only phrase exclusions: `20`
 - N4 canonical word rows: `535`
 - N3 canonical word rows: `14`
 - N2 canonical word rows: `15`
 - N1 canonical word rows: `14`
-- Current N5+N4 word rows: `864`
-- Word reading coverage: rerun the live completion/readiness commands after the 77-row N4 source expansion; the previous N5+N4 coverage percentages are intentionally not restated here
-- N5+N4 word readiness: N5 remains governed by its current release state; N4 readiness is intentionally not claimed after the 77-row source expansion until the new rows pass golden review, exact word audio, pitch policy, platinum review, and readiness gates
+- Current N5+N4 word rows: `866`
+- Word reading coverage from the current `deck:words:ready -- --levels=5,4 --require-no-active-triage` run: N5 `238/344` (`69.2%`), N4 `485/651` (`74.5%`). Coverage remains informational; useful/common/learner-fit decisions and explicit defer/reject reasons are the product guardrail.
+- N5+N4 word readiness: initial field/media readiness currently passes as `ready_with_deferred_variants` for both levels, with no active triage backlog. Release readiness is intentionally not claimed until the new rows pass golden and platinum review.
 
 Run live commands for current coverage. Do not rely on README numbers for release decisions.
 
@@ -210,7 +210,7 @@ npm run release:gate
 
 `product:artifacts:kanji:n5:preflight` inspects tracked templates and reports whether N5 kanji TSV certification is possible without ignored local `data/` inputs. It currently reports `certifiable: no` because explicit on-yomi, kun-yomi, and rich-source provenance are not yet tracked as product contracts. Component/radical source data is tracked in `templates/kanji_component_contract.json`. Use `-- --require-certifiable` only when the remaining contracts exist and the command is expected to fail closed.
 
-`product:readiness:n5` runs the current automated N5 product checkpoint: JLPT kanji and word audits, governed audio provenance, tracked-source N5 word TSV generation, and N5 kanji and word golden reviews. It still does not validate platinum review, tracked-source kanji TSVs, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA. Run the applicable platinum command separately when a level is being version-1 locked.
+`product:readiness:n5` runs the current automated N5 product checkpoint: JLPT kanji and word audits, governed audio provenance, tracked-source N5 word TSV generation, and N5 kanji and word golden reviews. After the final 2-row N5 source expansion, this checkpoint must not be used to claim N5 word release readiness until those rows are covered by the current golden and platinum gates. It still does not validate tracked-source kanji TSVs, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA. Run the applicable platinum command separately when a level is being version-1 locked.
 
 `release:gate` validates deterministic smoke-fixture artifacts and packaging contracts. It does not certify public product deck readiness. Add level-specific readiness, golden review, accessibility, provenance, and manual QA commands for the surface being changed.
 

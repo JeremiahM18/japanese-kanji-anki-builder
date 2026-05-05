@@ -60,6 +60,8 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added governed pitch-accent data for the newly expanded N5/N4 word rows, using Kanjium dictionary matches where available and a visible `Generated pitch (unverified)` VOICEVOX label for the lone generated fallback.
+- Added final source-expansion N5 keepers `本棚|ほんだな` and `留学生|りゅうがくせい` after the jlptstudy.net N5 candidate audit left them as the only remaining useful/common keep candidates, raising governed N5 word rows to `331` while documenting that golden/platinum readiness remains `329/331` until the new cards are reviewed.
 - Added twelve source-checked N5 enhancement word cards and platinum approvals from the known-JLPT candidate pool (`大勢`, `お菓子`, `昨日`, `靴下`, `今朝`, `自分`, `生徒`, `大使館`, `二十歳`, `飛行機`, `八百屋`, `廊下`), raising N5 word golden coverage to `340/340` and active N5 word platinum coverage to `294` cards with `44` deferred/removed rows and `46` generated rows still missing platinum approval.
 - Added twelve source-checked N5 enhancement word cards and platinum approvals (`一日|いちにち`, `一緒`, `九日`, `今週`, `時計`, `大好き`, `二十日`, `毎朝`, `毎晩`, `三日`, `六日`, `四日`), raising N5 word golden coverage to `328/328` and active N5 word platinum coverage to `282` cards with `44` deferred/removed rows and `46` generated rows still missing platinum approval.
 - Added twelve source-checked N5 enhancement word cards and platinum approvals (`後`, `男の子`, `大人`, `白`, `千`, `出かける`, `年`, `半`, `百`, `前`, `万`, `五日`), raising N5 word golden coverage to `316/316` and active N5 word platinum coverage to `270` cards with `44` deferred/removed rows and `46` generated rows still missing platinum approval.

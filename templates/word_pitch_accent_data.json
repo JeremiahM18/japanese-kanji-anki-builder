@@ -67,6 +67,12 @@
       "sourceReading": "おかね",
       "sourceAccent": "0"
     },
+    "ご主人|ごしゅじん": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "ご主人",
+      "generatedReading": "ごしゅじん"
+    },
     "ご飯|ごはん": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -107,6 +113,13 @@
       "sourceWord": "一切",
       "sourceReading": "いっさい",
       "sourceAccent": "1"
+    },
+    "一度|いちど": {
+      "pattern": "3 [odaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "一度",
+      "sourceReading": "いちど",
+      "sourceAccent": "3"
     },
     "一日|いちにち": {
       "pattern": "4 [odaka]",
@@ -367,6 +380,13 @@
       "sourceReading": "したまち",
       "sourceAccent": "0"
     },
+    "下着|したぎ": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "下着",
+      "sourceReading": "したぎ",
+      "sourceAccent": "0"
+    },
     "不便|ふべん": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -408,6 +428,13 @@
       "sourceWord": "世間",
       "sourceReading": "せけん",
       "sourceAccent": "1"
+    },
+    "両方|りょうほう": {
+      "pattern": "3 [nakadaka] / 0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "両方",
+      "sourceReading": "りょうほう",
+      "sourceAccent": "3,0"
     },
     "中|なか": {
       "pattern": "1 [atamadaka]",
@@ -458,6 +485,13 @@
       "sourceReading": "しゅじん",
       "sourceAccent": "1"
     },
+    "乗り物|のりもの": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "乗り物",
+      "sourceReading": "のりもの",
+      "sourceAccent": "0"
+    },
     "乗る|のる": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -490,11 +524,25 @@
       "sourceQuery": "九時",
       "generatedReading": "くじ"
     },
+    "予習|よしゅう": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "予習",
+      "sourceReading": "よしゅう",
+      "sourceAccent": "0"
+    },
     "事|こと": {
       "pattern": "2 [odaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "事",
       "sourceReading": "こと",
+      "sourceAccent": "2"
+    },
+    "事務所|じむしょ": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "事務所",
+      "sourceReading": "じむしょ",
       "sourceAccent": "2"
     },
     "事情|じじょう": {
@@ -503,6 +551,13 @@
       "sourceWord": "事情",
       "sourceReading": "じじょう",
       "sourceAccent": "0"
+    },
+    "事故|じこ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "事故",
+      "sourceReading": "じこ",
+      "sourceAccent": "1"
     },
     "二|に": {
       "pattern": "1 [atamadaka]",
@@ -601,6 +656,13 @@
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "交代",
       "sourceReading": "こうたい",
+      "sourceAccent": "0"
+    },
+    "交通|こうつう": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "交通",
+      "sourceReading": "こうつう",
       "sourceAccent": "0"
     },
     "京|みやこ": {
@@ -775,11 +837,32 @@
       "sourceReading": "もって",
       "sourceAccent": "1"
     },
+    "以上|いじょう": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "以上",
+      "sourceReading": "いじょう",
+      "sourceAccent": "1"
+    },
+    "以下|いか": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "以下",
+      "sourceReading": "いか",
+      "sourceAccent": "1"
+    },
     "以内|いない": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "以内",
       "sourceReading": "いない",
+      "sourceAccent": "1"
+    },
+    "以外|いがい": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "以外",
+      "sourceReading": "いがい",
       "sourceAccent": "1"
     },
     "仮住まい|かりずまい": {
@@ -892,6 +975,13 @@
       "sourceWord": "会話",
       "sourceReading": "かいわ",
       "sourceAccent": "0"
+    },
+    "会議|かいぎ": {
+      "pattern": "1 [atamadaka] / 3 [odaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "会議",
+      "sourceReading": "かいぎ",
+      "sourceAccent": "1,3"
     },
     "会議室|かいぎしつ": {
       "pattern": "3 [nakadaka]",
@@ -1210,6 +1300,13 @@
       "sourceReading": "おおやけ",
       "sourceAccent": "0"
     },
+    "公務員|こうむいん": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "公務員",
+      "sourceReading": "こうむいん",
+      "sourceAccent": "3"
+    },
     "公園|こうえん": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -1424,6 +1521,13 @@
       "sourceReading": "わかれる",
       "sourceAccent": "3"
     },
+    "利用|りよう": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "利用",
+      "sourceReading": "りよう",
+      "sourceAccent": "0"
+    },
     "前|まえ": {
       "pattern": "1 [atamadaka]",
       "sourceId": "voicevox-nemo-accent-query",
@@ -1478,6 +1582,13 @@
       "sourceReading": "どうぶつ",
       "sourceAccent": "0"
     },
+    "動物園|どうぶつえん": {
+      "pattern": "4 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "動物園",
+      "sourceReading": "どうぶつえん",
+      "sourceAccent": "4"
+    },
     "北|きた": {
       "pattern": "0 [heiban] / 2 [odaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -1503,6 +1614,13 @@
       "sourceWord": "北東",
       "sourceReading": "ほくとう",
       "sourceAccent": "0"
+    },
+    "医学|いがく": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "医学",
+      "sourceReading": "いがく",
+      "sourceAccent": "1"
     },
     "医者|いしゃ": {
       "pattern": "0 [heiban]",
@@ -1594,6 +1712,13 @@
       "sourceWord": "半分",
       "sourceReading": "はんぶん",
       "sourceAccent": "3"
+    },
+    "卒業|そつぎょう": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "卒業",
+      "sourceReading": "そつぎょう",
+      "sourceAccent": "0"
     },
     "南|みなみ": {
       "pattern": "0 [heiban]",
@@ -1761,6 +1886,13 @@
       "sourceReading": "しなぎれ",
       "sourceAccent": "0"
     },
+    "品物|しなもの": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "品物",
+      "sourceReading": "しなもの",
+      "sourceAccent": "0"
+    },
     "商品|しょうひん": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -1913,11 +2045,39 @@
       "sourceReading": "ちず",
       "sourceAccent": "1"
     },
+    "地理|ちり": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "地理",
+      "sourceReading": "ちり",
+      "sourceAccent": "1"
+    },
+    "地震|じしん": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "地震",
+      "sourceReading": "じしん",
+      "sourceAccent": "0"
+    },
+    "場合|ばあい": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "場合",
+      "sourceReading": "ばあい",
+      "sourceAccent": "0"
+    },
     "場所|ばしょ": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "場所",
       "sourceReading": "ばしょ",
+      "sourceAccent": "0"
+    },
+    "売り場|うりば": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "売り場",
+      "sourceReading": "うりば",
       "sourceAccent": "0"
     },
     "売る|うる": {
@@ -1987,6 +2147,13 @@
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "夕食",
       "sourceReading": "ゆうしょく",
+      "sourceAccent": "0"
+    },
+    "夕飯|ゆうはん": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "夕飯",
+      "sourceReading": "ゆうはん",
       "sourceAccent": "0"
     },
     "外|そと": {
@@ -2080,11 +2247,25 @@
       "sourceReading": "おおきい",
       "sourceAccent": "3"
     },
+    "大事|だいじ": {
+      "pattern": "1 [atamadaka] / 3 [odaka] / 0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "大事",
+      "sourceReading": "だいじ",
+      "sourceAccent": "(名)1,3,(形動)0,3"
+    },
     "大人|おとな": {
       "pattern": "3 [odaka]",
       "sourceId": "voicevox-nemo-accent-query",
       "sourceQuery": "大人",
       "generatedReading": "おとな"
+    },
+    "大体|だいたい": {
+      "pattern": "0 [heiban] / 3 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "大体",
+      "sourceReading": "だいたい",
+      "sourceAccent": "(副)0,(名)0,3"
     },
     "大使館|たいしかん": {
       "pattern": "3 [nakadaka]",
@@ -2249,6 +2430,13 @@
       "sourceReading": "こねこ",
       "sourceAccent": "2"
     },
+    "字|じ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "字",
+      "sourceReading": "じ",
+      "sourceAccent": "1"
+    },
     "学ぶ|まなぶ": {
       "pattern": "0 [heiban] / 2 [nakadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -2276,6 +2464,13 @@
       "sourceWord": "安い",
       "sourceReading": "やすい",
       "sourceAccent": "2"
+    },
+    "安全|あんぜん": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "安全",
+      "sourceReading": "あんぜん",
+      "sourceAccent": "0"
     },
     "安心|あんしん": {
       "pattern": "0 [heiban]",
@@ -2409,6 +2604,13 @@
       "sourceReading": "こさめ",
       "sourceAccent": "0"
     },
+    "小鳥|ことり": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "小鳥",
+      "sourceReading": "ことり",
+      "sourceAccent": "0"
+    },
     "少々|しょうしょう": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -2512,6 +2714,13 @@
       "sourceWord": "帰す",
       "sourceReading": "かえす",
       "sourceAccent": "1"
+    },
+    "帰り|かえり": {
+      "pattern": "3 [odaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "帰り",
+      "sourceReading": "かえり",
+      "sourceAccent": "3"
     },
     "帰り道|かえりみち": {
       "pattern": "3 [nakadaka]",
@@ -2775,11 +2984,32 @@
       "sourceReading": "こうはん",
       "sourceAccent": "0"
     },
+    "復習|ふくしゅう": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "復習",
+      "sourceReading": "ふくしゅう",
+      "sourceAccent": "0"
+    },
+    "心|こころ": {
+      "pattern": "3 [odaka] / 2 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "心",
+      "sourceReading": "こころ",
+      "sourceAccent": "3,2"
+    },
     "心掛け|こころがけ": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "心掛け",
       "sourceReading": "こころがけ",
+      "sourceAccent": "0"
+    },
+    "忘れ物|わすれもの": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "忘れ物",
+      "sourceReading": "わすれもの",
       "sourceAccent": "0"
     },
     "忙しい|いそがしい": {
@@ -2789,12 +3019,26 @@
       "sourceReading": "いそがしい",
       "sourceAccent": "4"
     },
+    "思い出す|おもいだす": {
+      "pattern": "4 [nakadaka] / 0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "思い出す",
+      "sourceReading": "おもいだす",
+      "sourceAccent": "4,0"
+    },
     "思う|おもう": {
       "pattern": "2 [nakadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "思う",
       "sourceReading": "おもう",
       "sourceAccent": "2"
+    },
+    "急|きゅう": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "急",
+      "sourceReading": "きゅう",
+      "sourceAccent": "0"
     },
     "急ぎ足|いそぎあし": {
       "pattern": "3 [nakadaka]",
@@ -2873,6 +3117,13 @@
       "sourceReading": "いみ",
       "sourceAccent": "1"
     },
+    "意見|いけん": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "意見",
+      "sourceReading": "いけん",
+      "sourceAccent": "1"
+    },
     "愛犬|あいけん": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -2927,6 +3178,13 @@
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "手本",
       "sourceReading": "てほん",
+      "sourceAccent": "2"
+    },
+    "手袋|てぶくろ": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "手袋",
+      "sourceReading": "てぶくろ",
       "sourceAccent": "2"
     },
     "手間|てま": {
@@ -2992,11 +3250,25 @@
       "sourceReading": "おそわる",
       "sourceAccent": "0"
     },
+    "教会|きょうかい": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "教会",
+      "sourceReading": "きょうかい",
+      "sourceAccent": "0"
+    },
     "教室|きょうしつ": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "教室",
       "sourceReading": "きょうしつ",
+      "sourceAccent": "0"
+    },
+    "教育|きょういく": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "教育",
+      "sourceReading": "きょういく",
       "sourceAccent": "0"
     },
     "文|ふみ": {
@@ -3019,6 +3291,20 @@
       "sourceWord": "文化",
       "sourceReading": "ぶんか",
       "sourceAccent": "1"
+    },
+    "文学|ぶんがく": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "文学",
+      "sourceReading": "ぶんがく",
+      "sourceAccent": "1"
+    },
+    "文法|ぶんぽう": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "文法",
+      "sourceReading": "ぶんぽう",
+      "sourceAccent": "0"
     },
     "料理|りょうり": {
       "pattern": "1 [atamadaka]",
@@ -3069,6 +3355,13 @@
       "sourceReading": "しんぶん",
       "sourceAccent": "0"
     },
+    "方|かた": {
+      "pattern": "2 [odaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "方",
+      "sourceReading": "かた",
+      "sourceAccent": "2"
+    },
     "方法|ほうほう": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -3088,6 +3381,13 @@
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "旅行",
       "sourceReading": "りょこう",
+      "sourceAccent": "0"
+    },
+    "旅館|りょかん": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "旅館",
+      "sourceReading": "りょかん",
       "sourceAccent": "0"
     },
     "日|ひ": {
@@ -3188,6 +3488,13 @@
       "sourceReading": "あかるむ",
       "sourceAccent": "3"
     },
+    "明日|あす": {
+      "pattern": "2 [odaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "明日",
+      "sourceReading": "あす",
+      "sourceAccent": "2"
+    },
     "明朝|みょうちょう": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -3275,6 +3582,20 @@
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "昼ご飯",
       "sourceReading": "ひるごはん",
+      "sourceAccent": "3"
+    },
+    "昼休み|ひるやすみ": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "昼休み",
+      "sourceReading": "ひるやすみ",
+      "sourceAccent": "3"
+    },
+    "昼間|ひるま": {
+      "pattern": "3 [odaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "昼間",
+      "sourceReading": "ひるま",
       "sourceAccent": "3"
     },
     "昼食|ちゅうしょく": {
@@ -3465,6 +3786,13 @@
       "sourceReading": "ほんや",
       "sourceAccent": "1"
     },
+    "本棚|ほんだな": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "本棚",
+      "sourceReading": "ほんだな",
+      "sourceAccent": "1"
+    },
     "本音|ほんね": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -3532,6 +3860,13 @@
       "sourceQuery": "東口",
       "generatedReading": "ひがしぐち"
     },
+    "柔道|じゅうどう": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "柔道",
+      "sourceReading": "じゅうどう",
+      "sourceAccent": "1"
+    },
     "校長|こうちょう": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -3553,6 +3888,13 @@
       "sourceReading": "たのしい",
       "sourceAccent": "3"
     },
+    "楽しみ|たのしみ": {
+      "pattern": "3 [nakadaka] / 4 [odaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "楽しみ",
+      "sourceReading": "たのしみ",
+      "sourceAccent": "3,4"
+    },
     "楽しむ|たのしむ": {
       "pattern": "3 [nakadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -3566,6 +3908,13 @@
       "sourceWord": "楽器",
       "sourceReading": "がっき",
       "sourceAccent": "0"
+    },
+    "機会|きかい": {
+      "pattern": "2 [nakadaka] / 0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "機会",
+      "sourceReading": "きかい",
+      "sourceAccent": "2,0"
     },
     "歌|うた": {
       "pattern": "2 [odaka]",
@@ -3658,6 +4007,13 @@
       "sourceReading": "せいしき",
       "sourceAccent": "0"
     },
+    "正月|しょうがつ": {
+      "pattern": "4 [odaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "正月",
+      "sourceReading": "しょうがつ",
+      "sourceAccent": "4"
+    },
     "歩く|あるく": {
       "pattern": "2 [nakadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -3678,6 +4034,13 @@
       "sourceWord": "歩道",
       "sourceReading": "ほどう",
       "sourceAccent": "0"
+    },
+    "歯医者|はいしゃ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "歯医者",
+      "sourceReading": "はいしゃ",
+      "sourceAccent": "1"
     },
     "死ぬ|しぬ": {
       "pattern": "0 [heiban]",
@@ -3789,6 +4152,13 @@
       "sourceReading": "すいでん",
       "sourceAccent": "0"
     },
+    "水道|すいどう": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "水道",
+      "sourceReading": "すいどう",
+      "sourceAccent": "0"
+    },
     "河川|かせん": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -3815,6 +4185,13 @@
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "注ぐ",
       "sourceReading": "つぐ",
+      "sourceAccent": "0"
+    },
+    "注射|ちゅうしゃ": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "注射",
+      "sourceReading": "ちゅうしゃ",
       "sourceAccent": "0"
     },
     "注意|ちゅうい": {
@@ -3865,11 +4242,25 @@
       "sourceReading": "かんじ",
       "sourceAccent": "0"
     },
+    "漫画|まんが": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "漫画",
+      "sourceReading": "まんが",
+      "sourceAccent": "0"
+    },
     "火|ひ": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "火",
       "sourceReading": "ひ",
+      "sourceAccent": "1"
+    },
+    "火事|かじ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "火事",
+      "sourceReading": "かじ",
       "sourceAccent": "1"
     },
     "火山|かざん": {
@@ -3934,6 +4325,20 @@
       "sourceWord": "特に",
       "sourceReading": "とくに",
       "sourceAccent": "1"
+    },
+    "特別|とくべつ": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "特別",
+      "sourceReading": "とくべつ",
+      "sourceAccent": "0"
+    },
+    "特急|とっきゅう": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "特急",
+      "sourceReading": "とっきゅう",
+      "sourceAccent": "0"
     },
     "特色|とくしょく": {
       "pattern": "0 [heiban]",
@@ -4046,6 +4451,20 @@
       "sourceReading": "もちいる",
       "sourceAccent": "3,0"
     },
+    "用事|ようじ": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "用事",
+      "sourceReading": "ようじ",
+      "sourceAccent": "0"
+    },
+    "用意|ようい": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "用意",
+      "sourceReading": "ようい",
+      "sourceAccent": "1"
+    },
     "用紙|ようし": {
       "pattern": "0 [heiban] / 1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -4059,6 +4478,13 @@
       "sourceWord": "田",
       "sourceReading": "た",
       "sourceAccent": "1"
+    },
+    "田舎|いなか": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "田舎",
+      "sourceReading": "いなか",
+      "sourceAccent": "0"
     },
     "男|おとこ": {
       "pattern": "3 [odaka]",
@@ -4106,6 +4532,13 @@
       "sourceWord": "画家",
       "sourceReading": "がか",
       "sourceAccent": "0"
+    },
+    "留学生|りゅうがくせい": {
+      "pattern": "3 [nakadaka] / 4 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "留学生",
+      "sourceReading": "りゅうがくせい",
+      "sourceAccent": "3,4"
     },
     "病|やまい": {
       "pattern": "1 [atamadaka]",
@@ -4314,6 +4747,13 @@
       "sourceReading": "きる",
       "sourceAccent": "0"
     },
+    "着物|きもの": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "着物",
+      "sourceReading": "きもの",
+      "sourceAccent": "0"
+    },
     "知らせる|しらせる": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -4342,6 +4782,13 @@
       "sourceReading": "けんきゅう",
       "sourceAccent": "0"
     },
+    "研究室|けんきゅうしつ": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "研究室",
+      "sourceReading": "けんきゅうしつ",
+      "sourceAccent": "3"
+    },
     "社会|しゃかい": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -4355,6 +4802,13 @@
       "sourceWord": "社長",
       "sourceReading": "しゃちょう",
       "sourceAccent": "0"
+    },
+    "神社|じんじゃ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "神社",
+      "sourceReading": "じんじゃ",
+      "sourceAccent": "1"
     },
     "神道|しんとう": {
       "pattern": "1 [atamadaka]",
@@ -4440,6 +4894,13 @@
       "sourceReading": "むなしい",
       "sourceAccent": "3,0"
     },
+    "空気|くうき": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "空気",
+      "sourceReading": "くうき",
+      "sourceAccent": "1"
+    },
     "空港|くうこう": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -4475,6 +4936,13 @@
       "sourceReading": "きょうそう",
       "sourceAccent": "0"
     },
+    "答|こたえ": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "答",
+      "sourceReading": "こたえ",
+      "sourceAccent": "2"
+    },
     "答え|こたえ": {
       "pattern": "2 [nakadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -4503,6 +4971,13 @@
       "sourceReading": "おえる",
       "sourceAccent": "0"
     },
+    "終わり|おわり": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "終わり",
+      "sourceReading": "おわり",
+      "sourceAccent": "0"
+    },
     "終わる|おわる": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -4524,6 +4999,13 @@
       "sourceReading": "れんしゅう",
       "sourceAccent": "0"
     },
+    "美術館|びじゅつかん": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "美術館",
+      "sourceReading": "びじゅつかん",
+      "sourceAccent": "3"
+    },
     "義兄|ぎけい": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -4537,6 +5019,13 @@
       "sourceWord": "習う",
       "sourceReading": "ならう",
       "sourceAccent": "2"
+    },
+    "習慣|しゅうかん": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "習慣",
+      "sourceReading": "しゅうかん",
+      "sourceAccent": "0"
     },
     "考える|かんがえる": {
       "pattern": "4 [nakadaka] / 3 [nakadaka]",
@@ -4620,6 +5109,13 @@
       "sourceWord": "自転車",
       "sourceReading": "じてんしゃ",
       "sourceAccent": "2,0"
+    },
+    "興味|きょうみ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "興味",
+      "sourceReading": "きょうみ",
+      "sourceAccent": "1"
     },
     "色|いろ": {
       "pattern": "2 [odaka]",
@@ -4913,6 +5409,13 @@
       "sourceReading": "こころみる",
       "sourceAccent": "4"
     },
+    "試合|しあい": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "試合",
+      "sourceReading": "しあい",
+      "sourceAccent": "0"
+    },
     "試験|しけん": {
       "pattern": "2 [nakadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -5045,6 +5548,13 @@
       "sourceReading": "しちや",
       "sourceAccent": "2"
     },
+    "贈り物|おくりもの": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "贈り物",
+      "sourceReading": "おくりもの",
+      "sourceAccent": "0"
+    },
     "赤い|あかい": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -5114,6 +5624,13 @@
       "sourceWord": "起立",
       "sourceReading": "きりつ",
       "sourceAccent": "0"
+    },
+    "趣味|しゅみ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "趣味",
+      "sourceReading": "しゅみ",
+      "sourceAccent": "1"
     },
     "足|あし": {
       "pattern": "2 [odaka]",
@@ -5234,6 +5751,13 @@
       "sourceReading": "ちかみち",
       "sourceAccent": "2"
     },
+    "返事|へんじ": {
+      "pattern": "3 [odaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "返事",
+      "sourceReading": "へんじ",
+      "sourceAccent": "3"
+    },
     "送る|おくる": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -5304,6 +5828,13 @@
       "sourceReading": "うんどう",
       "sourceAccent": "0"
     },
+    "運転手|うんてんしゅ": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "運転手",
+      "sourceReading": "うんてんしゅ",
+      "sourceAccent": "3"
+    },
     "過去|かこ": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -5345,6 +5876,13 @@
       "sourceWord": "部屋",
       "sourceReading": "へや",
       "sourceAccent": "2"
+    },
+    "部長|ぶちょう": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "部長",
+      "sourceReading": "ぶちょう",
+      "sourceAccent": "0"
     },
     "郵便|ゆうびん": {
       "pattern": "0 [heiban]",
@@ -5791,6 +6329,13 @@
       "sourceReading": "しょくどう",
       "sourceAccent": "0"
     },
+    "食料品|しょくりょうひん": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "食料品",
+      "sourceReading": "しょくりょうひん",
+      "sourceAccent": "0"
+    },
     "飲み物|のみもの": {
       "pattern": "3 [nakadaka] / 2 [nakadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -5844,6 +6389,13 @@
       "sourceWord": "駅前",
       "sourceReading": "えきまえ",
       "sourceAccent": "3,0"
+    },
+    "駐車場|ちゅうしゃじょう": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "駐車場",
+      "sourceReading": "ちゅうしゃじょう",
+      "sourceAccent": "0"
     },
     "験担ぎ|げんかつぎ": {
       "pattern": "3 [nakadaka]",

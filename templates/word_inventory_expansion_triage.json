@@ -186,6 +186,48 @@
         "priority": "medium",
         "reason": "Useful date/duration vocabulary; should be treated as whole-word reading support, not fake per-kanji coverage.",
         "nextStep": "Review with the date-word family and promote only in a <=12-word enhancement batch."
+      },
+      "一緒|いっしょ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common N5 social/useful adverbial noun that belongs in the word deck even though 緒 is a higher-level constituent kanji.",
+        "nextStep": "Source-check and promote only in a <=12-word enhancement batch if card-surface review passes."
+      },
+      "今週|こんしゅう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common N5 temporal word that complements 先週, 来週, and 毎週 while preserving higher-level 週 labeling.",
+        "nextStep": "Source-check and promote only in a <=12-word enhancement batch if card-surface review passes."
+      },
+      "時計|とけい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common N5 object word learners will meet early; useful for time vocabulary and reviewed with the N4 計 label.",
+        "nextStep": "Source-check and promote only in a <=12-word enhancement batch if card-surface review passes."
+      },
+      "大好き|だいすき": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common N5 learner-useful feeling word; included for vocabulary value while preserving the N3 好 label.",
+        "nextStep": "Source-check and promote only in a <=12-word enhancement batch if card-surface review passes."
+      },
+      "毎朝|まいあさ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common N5 routine word that complements 毎日, 毎週, 毎月, and 毎年 while preserving the N4 朝 label.",
+        "nextStep": "Source-check and promote only in a <=12-word enhancement batch if card-surface review passes."
+      },
+      "毎晩|まいばん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common N5 routine word that complements 晩 and 晩ご飯 while preserving the N4 晩 label.",
+        "nextStep": "Source-check and promote only in a <=12-word enhancement batch if card-surface review passes."
+      },
+      "大丈夫|だいじょうぶ": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Very useful N5 word, but it includes outside-JLPT 丈; defer from the known-JLPT enhancement batch unless a later pass deliberately accepts outside-JLPT labels for this card.",
+        "nextStep": "Reconsider in a later enhancement pass with explicit outside-JLPT label review."
       }
     }
   }

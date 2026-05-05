@@ -1065,6 +1065,60 @@ test("tracked starter word data includes the first N5 enhancement batch without 
     assert.equal(starterEntries["万|まん"].exampleSentence.japanese, "一万まで数えます。");
 });
 
+test("tracked starter word data includes the second N5 enhancement batch without duplicate junk", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageRoles(starterEntries, [
+        ["一日|いちにち", "both"],
+        ["一緒|いっしょ", "both"],
+        ["九日|ここのか", "both"],
+        ["今週|こんしゅう", "both"],
+        ["時計|とけい", "both"],
+        ["大好き|だいすき", "both"],
+        ["二十日|はつか", "both"],
+        ["毎朝|まいあさ", "both"],
+        ["毎晩|まいばん", "both"],
+        ["三日|みっか", "both"],
+        ["六日|むいか", "both"],
+        ["四日|よっか", "both"],
+    ]);
+    assertCoverageReadings(starterEntries, [
+        ["一日|いちにち", "一", "いち"],
+        ["一日|いちにち", "日", "にち"],
+        ["一緒|いっしょ", "一", "いっ"],
+        ["一緒|いっしょ", "緒", "しょ"],
+        ["九日|ここのか", "九日", "ここのか"],
+        ["今週|こんしゅう", "今", "こん"],
+        ["今週|こんしゅう", "週", "しゅう"],
+        ["時計|とけい", "時", "と"],
+        ["時計|とけい", "計", "けい"],
+        ["大好き|だいすき", "大", "だい"],
+        ["大好き|だいすき", "好", "す"],
+        ["二十日|はつか", "二十日", "はつか"],
+        ["毎朝|まいあさ", "毎", "まい"],
+        ["毎朝|まいあさ", "朝", "あさ"],
+        ["毎晩|まいばん", "毎", "まい"],
+        ["毎晩|まいばん", "晩", "ばん"],
+        ["三日|みっか", "三日", "みっか"],
+        ["六日|むいか", "六日", "むいか"],
+        ["四日|よっか", "四日", "よっか"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["一日|いちにち", "<ruby>一<rt>いち</rt></ruby><ruby>日<rt>にち</rt></ruby>"],
+        ["一緒|いっしょ", "<ruby>一<rt>いっ</rt></ruby><ruby>緒<rt>しょ</rt></ruby>"],
+        ["九日|ここのか", "<ruby>九日<rt>ここのか</rt></ruby>"],
+        ["今週|こんしゅう", "<ruby>今<rt>こん</rt></ruby><ruby>週<rt>しゅう</rt></ruby>"],
+        ["時計|とけい", "<ruby>時<rt>と</rt></ruby><ruby>計<rt>けい</rt></ruby>"],
+        ["大好き|だいすき", "<ruby>大<rt>だい</rt></ruby><ruby>好<rt>す</rt></ruby>き"],
+        ["二十日|はつか", "<ruby>二十日<rt>はつか</rt></ruby>"],
+        ["三日|みっか", "<ruby>三日<rt>みっか</rt></ruby>"],
+        ["六日|むいか", "<ruby>六日<rt>むいか</rt></ruby>"],
+        ["四日|よっか", "<ruby>四日<rt>よっか</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["一日|いちにち"].notes, /distinguish from 一日\|ついたち/);
+    assert.equal(starterEntries["大好き|だいすき"].exampleSentence.japanese, "日本語が大好きです。");
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

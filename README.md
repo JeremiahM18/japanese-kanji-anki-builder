@@ -100,18 +100,18 @@ Golden and platinum review:
 | N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N1 kanji | Golden-reviewed at `1231/1231`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
-| N5 word | Golden-reviewed at `316/316`; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; word platinum has 270 active approvals, 44 deferred/removed rows, 46 generated rows still missing platinum approval, and no `needs_review` blockers under the generated-pitch-label policy |
+| N5 word | Golden-reviewed at `328/328`; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; word platinum has 282 active approvals, 44 deferred/removed rows, 46 generated rows still missing platinum approval, and no `needs_review` blockers under the generated-pitch-label policy |
 | N4 word | Golden-reviewed at `458/458`; current local N5+N4 selected-scope readiness passes with governed local word audio, pitch accent, card-back fields, example reading alignment, kanji-context checks, labels, and looping animations clean for shipped rows; word platinum has `0` entries and fails until all generated N4 words have active approvals |
 
 Current tracked word inventory:
 
-- N5 canonical word rows: `316`
+- N5 canonical word rows: `328`
 - N5 source-only phrase exclusions: `19`
 - N4 canonical word rows: `458`
 - N3 canonical word rows: `13`
 - N2 canonical word rows: `11`
 - N1 canonical word rows: `12`
-- Current N5+N4 word rows: `774`
+- Current N5+N4 word rows: `786`
 - N5 word reading coverage: `70.1% (241/344)` when built alone
 - N5 word reading coverage: `71.5% (246/344)` when built with N4 as the selected word-product scope
 - N4 word reading coverage: `74.5% (485/651)` when built with N5 as the selected word-product scope
@@ -261,8 +261,8 @@ Planner output is advisory. A suggested card still needs canonical contract cove
 ### Plan Word Inventory Expansion
 
 ```bash
-npm run deck:words:expansion-candidates:n5 -- --source=downloads/n5-vocab.tsv --limit=50
-npm run deck:words:expansion-candidates:n5 -- --source=downloads/n5-vocab.tsv --kanji-scope=target-level --require-source-level
+npm run deck:words:expansion-candidates:n5 -- --source=downloads/n5-vocab.tsv --source-label=jlptstudy.net-n5 --limit=50
+npm run deck:words:expansion-candidates:n5 -- --source=downloads/n5-vocab.tsv --source-label=jlptstudy.net-n5 --kanji-scope=target-level --require-source-level
 ```
 
 The expansion candidate report is a read-only post-coverage tool. Use it after the current reading-coverage pass to compare an explicit sourced vocabulary list against the governed word contract. It filters for written-reading rows that contain target-level kanji, are not already governed or excluded, and fit the requested kanji scope:
@@ -385,7 +385,7 @@ Repository governance:
 | `npm run deck:words:reading-audit:n4` | Audit N4 word reading coverage |
 | `npm run deck:words:triage:n4` | Classify N4 word reading gaps |
 | `npm run deck:words:gap-plan:n4 -- --limit=50` | Rank the next N4 word coverage batch |
-| `npm run deck:words:expansion-candidates:n5 -- --source=downloads/n5-vocab.tsv` | Diff a sourced vocabulary list into read-only word expansion candidates |
+| `npm run deck:words:expansion-candidates:n5 -- --source=downloads/n5-vocab.tsv --source-label=jlptstudy.net-n5` | Diff a sourced vocabulary list into read-only word expansion candidates |
 | `npm run data:audit:jlpt` | Audit kanji taxonomy and starter alignment |
 | `npm run data:audit:jlpt:words` | Audit word taxonomy and starter alignment |
 | `npm run data:audit:audio` | Audit managed audio provenance |

@@ -29926,5 +29926,1389 @@
       "noSilentFallback": true
     },
     "fixSummary": "Fixed word export context handling so group-only ruby like 五日（いつか） remains a labeled whole-word reading instead of falling through to fake per-kanji readings."
+  },
+  {
+    "word": "一日",
+    "status": "platinum",
+    "readingIncludes": [
+      "いちにち"
+    ],
+    "meaningIncludes": [
+      "one day",
+      "all day"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "一",
+      "日"
+    ],
+    "coversReadingIncludes": [
+      "一: いち",
+      "日: にち"
+    ],
+    "breakdownIncludes": [
+      "一 （いち）",
+      "日 （にち）"
+    ],
+    "exampleIncludes": [
+      "一日だけ休みます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 4",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Common N5 duration word; kept as a deliberate same-written duplicate because it teaches a different useful reading and meaning from 一日|ついたち.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 一日|いちにち: word 一日, reading いちにち, meaning one day / all day, example 一日だけ休みます。, exact word audio, reading breakdown <ruby>一<rt>いち</rt></ruby><ruby>日<rt>にち</rt></ruby>, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 一日|いちにち, reading いちにち, meaning one day / all day, example 一日だけ休みます。, and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%80%E6%97%A5",
+        "detail": "JLearn.net verifies 一日|いちにち as a JLPT N5 common word with reading いちにち and meanings one day / all day; product review kept it distinct from 一日|ついたち. Product review checked example 一日だけ休みます。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLPTStudy.net N5 vocabulary list https://jlptstudy.net/N5/lists/n5_vocab-list.html",
+        "detail": "JLPTStudy.net N5 vocabulary list includes 一日|いちにち in the cited N5 vocabulary source used by the read-only expansion candidate report."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 一日|いちにち for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 一日|いちにち, reading いちにち, sentence 一日だけ休みます。, exported sentence reading いちにちだけやすみます。, and English gloss I will rest for one day.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5",
+        "detail": "Managed media provenance audit must check 一日|いちにち; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 一日|いちにち exact asset fragment word-reading-一日-いちにち for the exported word reading いちにち."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 一日|いちにち source voicevox-nemo-accent-query pattern 4 [odaka], rendered label Pitch 1: 4, and visible Generated pitch (unverified) label."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 一日|いちにち JLPT N5, JLPT core + reading coverage, focus 一、日, and covered readings 一: いち / 日: にち."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 一日|いちにち common and learner-friendly for the N5 word deck, with accurate reading いちにち, meaning one day / all day, and example 一日だけ休みます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "一緒",
+    "status": "platinum",
+    "readingIncludes": [
+      "いっしょ"
+    ],
+    "meaningIncludes": [
+      "together"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "一",
+      "緒"
+    ],
+    "coversReadingIncludes": [
+      "一: いっ",
+      "緒: しょ"
+    ],
+    "breakdownIncludes": [
+      "一 （いっ）",
+      "緒 （しょ）"
+    ],
+    "exampleIncludes": [
+      "友だちと一緒に勉強します。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Common N5 social/useful adverbial noun that belongs in the word deck even though 緒 is a higher-level constituent kanji.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 一緒|いっしょ: word 一緒, reading いっしょ, meaning together, example 友だちと一緒に勉強します。, exact word audio, reading breakdown <ruby>一<rt>いっ</rt></ruby><ruby>緒<rt>しょ</rt></ruby>, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 一緒|いっしょ, reading いっしょ, meaning together, example 友だちと一緒に勉強します。, and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%80%E7%B7%92",
+        "detail": "JLearn.net verifies 一緒|いっしょ as a JLPT N5 common word with reading いっしょ and meaning together; product review requires the N3 緒 label. Product review checked example 友だちと一緒に勉強します。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLPTStudy.net N5 vocabulary list https://jlptstudy.net/N5/lists/n5_vocab-list.html",
+        "detail": "JLPTStudy.net N5 vocabulary list includes 一緒|いっしょ in the cited N5 vocabulary source used by the read-only expansion candidate report."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 一緒|いっしょ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 一緒|いっしょ, reading いっしょ, sentence 友だちと一緒に勉強します。, exported sentence reading ともだちといっしょにべんきょうします。, and English gloss I study together with my friend.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5",
+        "detail": "Managed media provenance audit must check 一緒|いっしょ; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 一緒|いっしょ exact asset fragment word-reading-一緒-いっしょ for the exported word reading いっしょ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 一緒|いっしょ source voicevox-nemo-accent-query pattern 3 [odaka], rendered label Pitch 1: 3, and visible Generated pitch (unverified) label."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 一緒|いっしょ JLPT N5, JLPT core + reading coverage, focus 一、緒, and covered readings 一: いっ / 緒: しょ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 一緒|いっしょ common and learner-friendly for the N5 word deck, with accurate reading いっしょ, meaning together, and example 友だちと一緒に勉強します。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "九日",
+    "status": "platinum",
+    "readingIncludes": [
+      "ここのか"
+    ],
+    "meaningIncludes": [
+      "the ninth day",
+      "nine days"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "九",
+      "日"
+    ],
+    "coversReadingIncludes": [
+      "九日: ここのか"
+    ],
+    "breakdownIncludes": [
+      "word reading: ここのか",
+      "九日 （ここのか） ／ the ninth day / nine days"
+    ],
+    "exampleIncludes": [
+      "九日に学校へ行きます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 4",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Common N5 date/duration word; useful vocabulary and reviewed as whole-word reading support rather than fake per-kanji coverage.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 九日|ここのか: word 九日, reading ここのか, meaning the ninth day / nine days, example 九日に学校へ行きます。, exact word audio, reading breakdown <ruby>九日<rt>ここのか</rt></ruby>, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 九日|ここのか, reading ここのか, meaning the ninth day / nine days, example 九日に学校へ行きます。, and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B9%9D%E6%97%A5",
+        "detail": "JLearn.net verifies 九日|ここのか as a JLPT N5 common word with reading ここのか and meanings the ninth day / nine days. Product review checked example 九日に学校へ行きます。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLPTStudy.net N5 vocabulary list https://jlptstudy.net/N5/lists/n5_vocab-list.html",
+        "detail": "JLPTStudy.net N5 vocabulary list includes 九日|ここのか in the cited N5 vocabulary source used by the read-only expansion candidate report."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 九日|ここのか for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 九日|ここのか, reading ここのか, sentence 九日に学校へ行きます。, exported sentence reading ここのかにがっこうへいきます。, and English gloss I go to school on the ninth.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5",
+        "detail": "Managed media provenance audit must check 九日|ここのか; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 九日|ここのか exact asset fragment word-reading-九日-ここのか for the exported word reading ここのか."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 九日|ここのか source voicevox-nemo-accent-query pattern 4 [odaka], rendered label Pitch 1: 4, and visible Generated pitch (unverified) label."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 九日|ここのか JLPT N5, JLPT core + reading coverage, focus 九、日, and covered readings 九日: ここのか."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 九日|ここのか common and learner-friendly for the N5 word deck, with accurate reading ここのか, meaning the ninth day / nine days, and example 九日に学校へ行きます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "今週",
+    "status": "platinum",
+    "readingIncludes": [
+      "こんしゅう"
+    ],
+    "meaningIncludes": [
+      "this week"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "今",
+      "週"
+    ],
+    "coversReadingIncludes": [
+      "今: こん",
+      "週: しゅう"
+    ],
+    "breakdownIncludes": [
+      "今 （こん）",
+      "週 （しゅう）"
+    ],
+    "exampleIncludes": [
+      "今週は仕事が忙しいです。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 4",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Common N5 temporal word that complements 先週, 来週, and 毎週 while preserving higher-level 週 labeling.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 今週|こんしゅう: word 今週, reading こんしゅう, meaning this week, example 今週は仕事が忙しいです。, exact word audio, reading breakdown <ruby>今<rt>こん</rt></ruby><ruby>週<rt>しゅう</rt></ruby>, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 今週|こんしゅう, reading こんしゅう, meaning this week, example 今週は仕事が忙しいです。, and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BB%8A%E9%80%B1",
+        "detail": "JLearn.net verifies 今週|こんしゅう as a JLPT N5 common word with reading こんしゅう and meaning this week; product review requires the N4 週 label. Product review checked example 今週は仕事が忙しいです。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLPTStudy.net N5 vocabulary list https://jlptstudy.net/N5/lists/n5_vocab-list.html",
+        "detail": "JLPTStudy.net N5 vocabulary list includes 今週|こんしゅう in the cited N5 vocabulary source used by the read-only expansion candidate report."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 今週|こんしゅう for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 今週|こんしゅう, reading こんしゅう, sentence 今週は仕事が忙しいです。, exported sentence reading こんしゅうはしごとがいそがしいです。, and English gloss Work is busy this week.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5",
+        "detail": "Managed media provenance audit must check 今週|こんしゅう; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 今週|こんしゅう exact asset fragment word-reading-今週-こんしゅう for the exported word reading こんしゅう."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 今週|こんしゅう source voicevox-nemo-accent-query pattern 4 [odaka], rendered label Pitch 1: 4, and visible Generated pitch (unverified) label."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 今週|こんしゅう JLPT N5, JLPT core + reading coverage, focus 今、週, and covered readings 今: こん / 週: しゅう."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 今週|こんしゅう common and learner-friendly for the N5 word deck, with accurate reading こんしゅう, meaning this week, and example 今週は仕事が忙しいです。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "時計",
+    "status": "platinum",
+    "readingIncludes": [
+      "とけい"
+    ],
+    "meaningIncludes": [
+      "clock",
+      "watch"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "時",
+      "計"
+    ],
+    "coversReadingIncludes": [
+      "時: と",
+      "計: けい"
+    ],
+    "breakdownIncludes": [
+      "時 （と）",
+      "計 （けい）"
+    ],
+    "exampleIncludes": [
+      "時計を見ます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Common N5 object word learners will meet early; useful for time vocabulary and reviewed with the N4 計 label.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 時計|とけい: word 時計, reading とけい, meaning clock / watch, example 時計を見ます。, exact word audio, reading breakdown <ruby>時<rt>と</rt></ruby><ruby>計<rt>けい</rt></ruby>, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 時計|とけい, reading とけい, meaning clock / watch, example 時計を見ます。, and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%99%82%E8%A8%88",
+        "detail": "JLearn.net verifies 時計|とけい as a JLPT N5 common word with reading とけい and meaning clock / watch / timepiece; product review requires the N4 計 label. Product review checked example 時計を見ます。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLPTStudy.net N5 vocabulary list https://jlptstudy.net/N5/lists/n5_vocab-list.html",
+        "detail": "JLPTStudy.net N5 vocabulary list includes 時計|とけい in the cited N5 vocabulary source used by the read-only expansion candidate report."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 時計|とけい for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 時計|とけい, reading とけい, sentence 時計を見ます。, exported sentence reading とけいをみます。, and English gloss I look at the clock.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5",
+        "detail": "Managed media provenance audit must check 時計|とけい; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 時計|とけい exact asset fragment word-reading-時計-とけい for the exported word reading とけい."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 時計|とけい source voicevox-nemo-reading-query pattern 3 [odaka], rendered label Pitch 1: 3, and visible Generated pitch (unverified) label."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 時計|とけい JLPT N5, JLPT core + reading coverage, focus 時、計, and covered readings 時: と / 計: けい."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 時計|とけい common and learner-friendly for the N5 word deck, with accurate reading とけい, meaning clock / watch, and example 時計を見ます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "大好き",
+    "status": "platinum",
+    "readingIncludes": [
+      "だいすき"
+    ],
+    "meaningIncludes": [
+      "love",
+      "like very much"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "大",
+      "好"
+    ],
+    "coversReadingIncludes": [
+      "大: だい",
+      "好: す"
+    ],
+    "breakdownIncludes": [
+      "大 （だい）",
+      "好 （す）"
+    ],
+    "exampleIncludes": [
+      "日本語が大好きです。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Common N5 learner-useful feeling word; included for vocabulary value while preserving the N3 好 label.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 大好き|だいすき: word 大好き, reading だいすき, meaning love / like very much, example 日本語が大好きです。, exact word audio, reading breakdown <ruby>大<rt>だい</rt></ruby><ruby>好<rt>す</rt></ruby>き, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 大好き|だいすき, reading だいすき, meaning love / like very much, example 日本語が大好きです。, and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%A4%A7%E5%A5%BD%E3%81%8D",
+        "detail": "JLearn.net verifies 大好き|だいすき as a JLPT N5 common word with reading だいすき and meaning love / like very much; product review requires the N3 好 label. Product review checked example 日本語が大好きです。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLPTStudy.net N5 vocabulary list https://jlptstudy.net/N5/lists/n5_vocab-list.html",
+        "detail": "JLPTStudy.net N5 vocabulary list includes 大好き|だいすき in the cited N5 vocabulary source used by the read-only expansion candidate report."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 大好き|だいすき for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 大好き|だいすき, reading だいすき, sentence 日本語が大好きです。, exported sentence reading にほんごがだいすきです。, and English gloss I love Japanese.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5",
+        "detail": "Managed media provenance audit must check 大好き|だいすき; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 大好き|だいすき exact asset fragment word-reading-大好き-だいすき for the exported word reading だいすき."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 大好き|だいすき source voicevox-nemo-accent-query pattern 1 [atamadaka], rendered label Pitch 1: 1, and visible Generated pitch (unverified) label."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 大好き|だいすき JLPT N5, JLPT core + reading coverage, focus 大、好, and covered readings 大: だい / 好: す."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 大好き|だいすき common and learner-friendly for the N5 word deck, with accurate reading だいすき, meaning love / like very much, and example 日本語が大好きです。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "二十日",
+    "status": "platinum",
+    "readingIncludes": [
+      "はつか"
+    ],
+    "meaningIncludes": [
+      "the twentieth day",
+      "twenty days"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "二",
+      "十",
+      "日"
+    ],
+    "coversReadingIncludes": [
+      "二十日: はつか"
+    ],
+    "breakdownIncludes": [
+      "word reading: はつか",
+      "二十日 （はつか） ／ the twentieth day / twenty days"
+    ],
+    "exampleIncludes": [
+      "二十日に帰ります。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Common N5 date/duration word; useful vocabulary and reviewed as whole-word reading support rather than fake per-kanji coverage.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 二十日|はつか: word 二十日, reading はつか, meaning the twentieth day / twenty days, example 二十日に帰ります。, exact word audio, reading breakdown <ruby>二十日<rt>はつか</rt></ruby>, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 二十日|はつか, reading はつか, meaning the twentieth day / twenty days, example 二十日に帰ります。, and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BA%8C%E5%8D%81%E6%97%A5",
+        "detail": "JLearn.net verifies 二十日|はつか as a JLPT N5 common word with reading はつか and meanings the twentieth day / twenty days. Product review checked example 二十日に帰ります。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLPTStudy.net N5 vocabulary list https://jlptstudy.net/N5/lists/n5_vocab-list.html",
+        "detail": "JLPTStudy.net N5 vocabulary list includes 二十日|はつか in the cited N5 vocabulary source used by the read-only expansion candidate report."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 二十日|はつか for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 二十日|はつか, reading はつか, sentence 二十日に帰ります。, exported sentence reading はつかにかえります。, and English gloss I will go home on the twentieth.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5",
+        "detail": "Managed media provenance audit must check 二十日|はつか; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 二十日|はつか exact asset fragment word-reading-二十日-はつか for the exported word reading はつか."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 二十日|はつか source voicevox-nemo-accent-query pattern 3 [odaka], rendered label Pitch 1: 3, and visible Generated pitch (unverified) label."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 二十日|はつか JLPT N5, JLPT core + reading coverage, focus 二、十、日, and covered readings 二十日: はつか."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 二十日|はつか common and learner-friendly for the N5 word deck, with accurate reading はつか, meaning the twentieth day / twenty days, and example 二十日に帰ります。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "毎朝",
+    "status": "platinum",
+    "readingIncludes": [
+      "まいあさ"
+    ],
+    "meaningIncludes": [
+      "every morning"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "毎",
+      "朝"
+    ],
+    "coversReadingIncludes": [
+      "毎: まい",
+      "朝: あさ"
+    ],
+    "breakdownIncludes": [
+      "毎 （まい）",
+      "朝 （あさ）"
+    ],
+    "exampleIncludes": [
+      "毎朝水を飲みます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Common N5 routine word that complements 毎日, 毎週, 毎月, and 毎年 while preserving the N4 朝 label.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 毎朝|まいあさ: word 毎朝, reading まいあさ, meaning every morning, example 毎朝水を飲みます。, exact word audio, reading breakdown <ruby>毎<rt>まい</rt></ruby><ruby>朝<rt>あさ</rt></ruby>, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 毎朝|まいあさ, reading まいあさ, meaning every morning, example 毎朝水を飲みます。, and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%AF%8E%E6%9C%9D",
+        "detail": "JLearn.net verifies 毎朝|まいあさ as a JLPT N5 common word with reading まいあさ and meaning every morning; product review requires the N4 朝 label. Product review checked example 毎朝水を飲みます。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLPTStudy.net N5 vocabulary list https://jlptstudy.net/N5/lists/n5_vocab-list.html",
+        "detail": "JLPTStudy.net N5 vocabulary list includes 毎朝|まいあさ in the cited N5 vocabulary source used by the read-only expansion candidate report."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 毎朝|まいあさ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 毎朝|まいあさ, reading まいあさ, sentence 毎朝水を飲みます。, exported sentence reading まいあさみずをのみます。, and English gloss I drink water every morning.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5",
+        "detail": "Managed media provenance audit must check 毎朝|まいあさ; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 毎朝|まいあさ exact asset fragment word-reading-毎朝-まいあさ for the exported word reading まいあさ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 毎朝|まいあさ source voicevox-nemo-accent-query pattern 1 [atamadaka], rendered label Pitch 1: 1, and visible Generated pitch (unverified) label."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 毎朝|まいあさ JLPT N5, JLPT core + reading coverage, focus 毎、朝, and covered readings 毎: まい / 朝: あさ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 毎朝|まいあさ common and learner-friendly for the N5 word deck, with accurate reading まいあさ, meaning every morning, and example 毎朝水を飲みます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "毎晩",
+    "status": "platinum",
+    "readingIncludes": [
+      "まいばん"
+    ],
+    "meaningIncludes": [
+      "every night"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "毎",
+      "晩"
+    ],
+    "coversReadingIncludes": [
+      "毎: まい",
+      "晩: ばん"
+    ],
+    "breakdownIncludes": [
+      "毎 （まい）",
+      "晩 （ばん）"
+    ],
+    "exampleIncludes": [
+      "毎晩本を読みます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Common N5 routine word that complements 晩 and 晩ご飯 while preserving the N4 晩 label.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 毎晩|まいばん: word 毎晩, reading まいばん, meaning every night, example 毎晩本を読みます。, exact word audio, reading breakdown <ruby>毎<rt>まい</rt></ruby><ruby>晩<rt>ばん</rt></ruby>, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 毎晩|まいばん, reading まいばん, meaning every night, example 毎晩本を読みます。, and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%AF%8E%E6%99%A9",
+        "detail": "JLearn.net verifies 毎晩|まいばん as a JLPT N5 common word with reading まいばん and meaning every night; product review requires the N4 晩 label. Product review checked example 毎晩本を読みます。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLPTStudy.net N5 vocabulary list https://jlptstudy.net/N5/lists/n5_vocab-list.html",
+        "detail": "JLPTStudy.net N5 vocabulary list includes 毎晩|まいばん in the cited N5 vocabulary source used by the read-only expansion candidate report."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 毎晩|まいばん for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 毎晩|まいばん, reading まいばん, sentence 毎晩本を読みます。, exported sentence reading まいばんほんをよみます。, and English gloss I read a book every night.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5",
+        "detail": "Managed media provenance audit must check 毎晩|まいばん; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 毎晩|まいばん exact asset fragment word-reading-毎晩-まいばん for the exported word reading まいばん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 毎晩|まいばん source voicevox-nemo-accent-query pattern 1 [atamadaka], rendered label Pitch 1: 1, and visible Generated pitch (unverified) label."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 毎晩|まいばん JLPT N5, JLPT core + reading coverage, focus 毎、晩, and covered readings 毎: まい / 晩: ばん."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 毎晩|まいばん common and learner-friendly for the N5 word deck, with accurate reading まいばん, meaning every night, and example 毎晩本を読みます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "三日",
+    "status": "platinum",
+    "readingIncludes": [
+      "みっか"
+    ],
+    "meaningIncludes": [
+      "the third day",
+      "three days"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "三",
+      "日"
+    ],
+    "coversReadingIncludes": [
+      "三日: みっか"
+    ],
+    "breakdownIncludes": [
+      "word reading: みっか",
+      "三日 （みっか） ／ the third day / three days"
+    ],
+    "exampleIncludes": [
+      "三日に会います。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Common N5 date/duration word; useful vocabulary and reviewed as whole-word reading support rather than fake per-kanji coverage.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 三日|みっか: word 三日, reading みっか, meaning the third day / three days, example 三日に会います。, exact word audio, reading breakdown <ruby>三日<rt>みっか</rt></ruby>, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 三日|みっか, reading みっか, meaning the third day / three days, example 三日に会います。, and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%89%E6%97%A5",
+        "detail": "JLearn.net verifies 三日|みっか as a JLPT N5 common word with reading みっか and meanings the third day / three days. Product review checked example 三日に会います。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLPTStudy.net N5 vocabulary list https://jlptstudy.net/N5/lists/n5_vocab-list.html",
+        "detail": "JLPTStudy.net N5 vocabulary list includes 三日|みっか in the cited N5 vocabulary source used by the read-only expansion candidate report."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 三日|みっか for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 三日|みっか, reading みっか, sentence 三日に会います。, exported sentence reading みっかにあいます。, and English gloss I will meet on the third.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5",
+        "detail": "Managed media provenance audit must check 三日|みっか; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 三日|みっか exact asset fragment word-reading-三日-みっか for the exported word reading みっか."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 三日|みっか source voicevox-nemo-accent-query pattern 3 [odaka], rendered label Pitch 1: 3, and visible Generated pitch (unverified) label."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 三日|みっか JLPT N5, JLPT core + reading coverage, focus 三、日, and covered readings 三日: みっか."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 三日|みっか common and learner-friendly for the N5 word deck, with accurate reading みっか, meaning the third day / three days, and example 三日に会います。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "六日",
+    "status": "platinum",
+    "readingIncludes": [
+      "むいか"
+    ],
+    "meaningIncludes": [
+      "the sixth day",
+      "six days"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "六",
+      "日"
+    ],
+    "coversReadingIncludes": [
+      "六日: むいか"
+    ],
+    "breakdownIncludes": [
+      "word reading: むいか",
+      "六日 （むいか） ／ the sixth day / six days"
+    ],
+    "exampleIncludes": [
+      "六日に来ます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Common N5 date/duration word; useful vocabulary and reviewed as whole-word reading support rather than fake per-kanji coverage.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 六日|むいか: word 六日, reading むいか, meaning the sixth day / six days, example 六日に来ます。, exact word audio, reading breakdown <ruby>六日<rt>むいか</rt></ruby>, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 六日|むいか, reading むいか, meaning the sixth day / six days, example 六日に来ます。, and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%85%AD%E6%97%A5",
+        "detail": "JLearn.net verifies 六日|むいか as a JLPT N5 common word with reading むいか and meanings the sixth day / six days. Product review checked example 六日に来ます。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLPTStudy.net N5 vocabulary list https://jlptstudy.net/N5/lists/n5_vocab-list.html",
+        "detail": "JLPTStudy.net N5 vocabulary list includes 六日|むいか in the cited N5 vocabulary source used by the read-only expansion candidate report."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 六日|むいか for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 六日|むいか, reading むいか, sentence 六日に来ます。, exported sentence reading むいかにきます。, and English gloss I will come on the sixth.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5",
+        "detail": "Managed media provenance audit must check 六日|むいか; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 六日|むいか exact asset fragment word-reading-六日-むいか for the exported word reading むいか."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 六日|むいか source voicevox-nemo-accent-query pattern 3 [odaka], rendered label Pitch 1: 3, and visible Generated pitch (unverified) label."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 六日|むいか JLPT N5, JLPT core + reading coverage, focus 六、日, and covered readings 六日: むいか."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 六日|むいか common and learner-friendly for the N5 word deck, with accurate reading むいか, meaning the sixth day / six days, and example 六日に来ます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "四日",
+    "status": "platinum",
+    "readingIncludes": [
+      "よっか"
+    ],
+    "meaningIncludes": [
+      "the fourth day",
+      "four days"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "四",
+      "日"
+    ],
+    "coversReadingIncludes": [
+      "四日: よっか"
+    ],
+    "breakdownIncludes": [
+      "word reading: よっか",
+      "四日 （よっか） ／ the fourth day / four days"
+    ],
+    "exampleIncludes": [
+      "四日に電話します。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Common N5 date/duration word; useful vocabulary and reviewed as whole-word reading support rather than fake per-kanji coverage.",
+    "reviewedAt": "2026-05-04",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 四日|よっか: word 四日, reading よっか, meaning the fourth day / four days, example 四日に電話します。, exact word audio, reading breakdown <ruby>四日<rt>よっか</rt></ruby>, labels JLPT N5 JLPT core + reading coverage."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 四日|よっか, reading よっか, meaning the fourth day / four days, example 四日に電話します。, and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%9B%9B%E6%97%A5",
+        "detail": "JLearn.net verifies 四日|よっか as a JLPT N5 common word with reading よっか and meanings the fourth day / four days. Product review checked example 四日に電話します。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLPTStudy.net N5 vocabulary list https://jlptstudy.net/N5/lists/n5_vocab-list.html",
+        "detail": "JLPTStudy.net N5 vocabulary list includes 四日|よっか in the cited N5 vocabulary source used by the read-only expansion candidate report."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 四日|よっか for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 四日|よっか, reading よっか, sentence 四日に電話します。, exported sentence reading よっかにでんわします。, and English gloss I will call on the fourth.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5",
+        "detail": "Managed media provenance audit must check 四日|よっか; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 四日|よっか exact asset fragment word-reading-四日-よっか for the exported word reading よっか."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 四日|よっか source voicevox-nemo-accent-query pattern 3 [odaka], rendered label Pitch 1: 3, and visible Generated pitch (unverified) label."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 四日|よっか JLPT N5, JLPT core + reading coverage, focus 四、日, and covered readings 四日: よっか."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 四日|よっか common and learner-friendly for the N5 word deck, with accurate reading よっか, meaning the fourth day / four days, and example 四日に電話します。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   }
 ]

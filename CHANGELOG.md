@@ -55,6 +55,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added twelve source-checked N5 enhancement word cards and platinum approvals (`一日|いちにち`, `一緒`, `九日`, `今週`, `時計`, `大好き`, `二十日`, `毎朝`, `毎晩`, `三日`, `六日`, `四日`), raising N5 word golden coverage to `328/328` and active N5 word platinum coverage to `282` cards with `44` deferred/removed rows and `46` generated rows still missing platinum approval.
 - Added twelve source-checked N5 enhancement word cards and platinum approvals (`後`, `男の子`, `大人`, `白`, `千`, `出かける`, `年`, `半`, `百`, `前`, `万`, `五日`), raising N5 word golden coverage to `316/316` and active N5 word platinum coverage to `270` cards with `44` deferred/removed rows and `46` generated rows still missing platinum approval.
 - Added a tracked read-only N5 word-inventory expansion triage file so large enhancement candidate batches can carry explicit keep/defer/reject reasons before any <=12-word promotion batch begins.
 - Added same-written warnings to the word inventory expansion report so review candidates that share a written form with an existing governed or excluded word are visible before any new card is promoted.

@@ -102,6 +102,12 @@
       "sourceReading": "いっさい",
       "sourceAccent": "1"
     },
+    "一日|いちにち": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "一日",
+      "generatedReading": "いちにち"
+    },
     "一日|ついたち": {
       "pattern": "4 [odaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -128,6 +134,12 @@
       "sourceWord": "一生",
       "sourceReading": "いっしょう",
       "sourceAccent": "0"
+    },
+    "一緒|いっしょ": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "一緒",
+      "generatedReading": "いっしょ"
     },
     "七|なな": {
       "pattern": "1 [atamadaka]",
@@ -188,6 +200,12 @@
       "sourceWord": "三人",
       "sourceReading": "さんにん",
       "sourceAccent": "3"
+    },
+    "三日|みっか": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "三日",
+      "generatedReading": "みっか"
     },
     "三時|さんじ": {
       "pattern": "1 [atamadaka]",
@@ -461,6 +479,12 @@
       "sourceReading": "ここのつ",
       "sourceAccent": "2"
     },
+    "九日|ここのか": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "九日",
+      "generatedReading": "ここのか"
+    },
     "九時|くじ": {
       "pattern": "1 [atamadaka]",
       "sourceId": "voicevox-nemo-accent-query",
@@ -500,6 +524,12 @@
       "sourceWord": "二人",
       "sourceReading": "ふたり",
       "sourceAccent": "3"
+    },
+    "二十日|はつか": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "二十日",
+      "generatedReading": "はつか"
     },
     "二日|ふつか": {
       "pattern": "0 [heiban]",
@@ -658,6 +688,12 @@
       "sourceWord": "今月",
       "sourceReading": "こんげつ",
       "sourceAccent": "0"
+    },
+    "今週|こんしゅう": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "今週",
+      "generatedReading": "こんしゅう"
     },
     "仕える|つかえる": {
       "pattern": "3 [nakadaka] / 0 [heiban]",
@@ -1189,6 +1225,12 @@
       "sourceWord": "六つ",
       "sourceReading": "むっつ",
       "sourceAccent": "3"
+    },
+    "六日|むいか": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "六日",
+      "generatedReading": "むいか"
     },
     "六時|ろくじ": {
       "pattern": "2 [nakadaka]",
@@ -1770,6 +1812,12 @@
       "sourceReading": "よっつ",
       "sourceAccent": "3"
     },
+    "四日|よっか": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "四日",
+      "generatedReading": "よっか"
+    },
     "四時|よじ": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -2040,6 +2088,12 @@
       "sourceWord": "大変",
       "sourceReading": "たいへん",
       "sourceAccent": "0"
+    },
+    "大好き|だいすき": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "大好き",
+      "generatedReading": "だいすき"
     },
     "大学|だいがく": {
       "pattern": "0 [heiban]",
@@ -3223,6 +3277,12 @@
       "sourceReading": "じだい",
       "sourceAccent": "0"
     },
+    "時計|とけい": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "とけい",
+      "generatedReading": "とけい"
+    },
     "時間|じかん": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -3640,12 +3700,24 @@
       "sourceReading": "まいにち",
       "sourceAccent": "1"
     },
+    "毎晩|まいばん": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "毎晩",
+      "generatedReading": "まいばん"
+    },
     "毎月|まいつき": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "毎月",
       "sourceReading": "まいつき",
       "sourceAccent": "0"
+    },
+    "毎朝|まいあさ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "毎朝",
+      "generatedReading": "まいあさ"
     },
     "毎週|まいしゅう": {
       "pattern": "0 [heiban]",

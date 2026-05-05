@@ -54,6 +54,12 @@
       "sourceReading": "おちゃ",
       "sourceAccent": "0"
     },
+    "お菓子|おかし": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "お菓子",
+      "generatedReading": "おかし"
+    },
     "お金|おかね": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -531,6 +537,12 @@
       "sourceQuery": "二十日",
       "generatedReading": "はつか"
     },
+    "二十歳|はたち": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "はたち",
+      "generatedReading": "はたち"
+    },
     "二日|ふつか": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -688,6 +700,12 @@
       "sourceWord": "今月",
       "sourceReading": "こんげつ",
       "sourceAccent": "0"
+    },
+    "今朝|けさ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "今朝",
+      "generatedReading": "けさ"
     },
     "今週|こんしゅう": {
       "pattern": "4 [odaka]",
@@ -1185,6 +1203,12 @@
       "sourceId": "voicevox-nemo-accent-query",
       "sourceQuery": "八時",
       "generatedReading": "はちじ"
+    },
+    "八百屋|やおや": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "八百屋",
+      "generatedReading": "やおや"
     },
     "公|おおやけ": {
       "pattern": "0 [heiban]",
@@ -2075,12 +2099,24 @@
       "sourceQuery": "大人",
       "generatedReading": "おとな"
     },
+    "大使館|たいしかん": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "大使館",
+      "generatedReading": "たいしかん"
+    },
     "大切|たいせつ": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "大切",
       "sourceReading": "たいせつ",
       "sourceAccent": "0"
+    },
+    "大勢|おおぜい": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "おおぜい",
+      "generatedReading": "おおぜい"
     },
     "大変|たいへん": {
       "pattern": "0 [heiban]",
@@ -2614,6 +2650,12 @@
       "sourceWord": "座席",
       "sourceReading": "ざせき",
       "sourceAccent": "0"
+    },
+    "廊下|ろうか": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "ろうか",
+      "generatedReading": "ろおか"
     },
     "建つ|たつ": {
       "pattern": "1 [atamadaka]",
@@ -3234,6 +3276,12 @@
       "sourceWord": "春雨",
       "sourceReading": "はるさめ",
       "sourceAccent": "0"
+    },
+    "昨日|きのう": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "きのう",
+      "generatedReading": "きのお"
     },
     "昼|ひる": {
       "pattern": "2 [odaka]",
@@ -4005,6 +4053,12 @@
       "sourceReading": "きじ",
       "sourceAccent": "1"
     },
+    "生徒|せいと": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "せいと",
+      "generatedReading": "せいと"
+    },
     "用|よう": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -4559,6 +4613,12 @@
       "sourceWord": "自ら",
       "sourceReading": "みずから",
       "sourceAccent": "1"
+    },
+    "自分|じぶん": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "自分",
+      "generatedReading": "じぶん"
     },
     "自業自得|じごうじとく": {
       "pattern": "0 [heiban]",
@@ -5655,6 +5715,12 @@
       "sourceReading": "めんぼく",
       "sourceAccent": "0"
     },
+    "靴下|くつした": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "靴下",
+      "generatedReading": "くつした"
+    },
     "音|おと": {
       "pattern": "2 [odaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -5710,6 +5776,12 @@
       "sourceWord": "風向き",
       "sourceReading": "かざむき",
       "sourceAccent": "0"
+    },
+    "飛行機|ひこうき": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "ひこうき",
+      "generatedReading": "ひこおき"
     },
     "食う|くう": {
       "pattern": "1 [atamadaka]",

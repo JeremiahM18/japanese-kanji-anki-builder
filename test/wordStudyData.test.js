@@ -1119,6 +1119,61 @@ test("tracked starter word data includes the second N5 enhancement batch without
     assert.equal(starterEntries["大好き|だいすき"].exampleSentence.japanese, "日本語が大好きです。");
 });
 
+test("tracked starter word data includes the third N5 enhancement batch with higher-level labels", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageRoles(starterEntries, [
+        ["大勢|おおぜい", "both"],
+        ["お菓子|おかし", "both"],
+        ["昨日|きのう", "both"],
+        ["靴下|くつした", "both"],
+        ["今朝|けさ", "both"],
+        ["自分|じぶん", "both"],
+        ["生徒|せいと", "both"],
+        ["大使館|たいしかん", "both"],
+        ["二十歳|はたち", "both"],
+        ["飛行機|ひこうき", "both"],
+        ["八百屋|やおや", "both"],
+        ["廊下|ろうか", "both"],
+    ]);
+    assertCoverageReadings(starterEntries, [
+        ["大勢|おおぜい", "大", "おお"],
+        ["大勢|おおぜい", "勢", "ぜい"],
+        ["お菓子|おかし", "菓", "か"],
+        ["お菓子|おかし", "子", "し"],
+        ["昨日|きのう", "昨日", "きのう"],
+        ["靴下|くつした", "靴", "くつ"],
+        ["靴下|くつした", "下", "した"],
+        ["今朝|けさ", "今朝", "けさ"],
+        ["自分|じぶん", "自", "じ"],
+        ["自分|じぶん", "分", "ぶん"],
+        ["生徒|せいと", "生", "せい"],
+        ["生徒|せいと", "徒", "と"],
+        ["大使館|たいしかん", "大", "たい"],
+        ["大使館|たいしかん", "使", "し"],
+        ["大使館|たいしかん", "館", "かん"],
+        ["二十歳|はたち", "二十歳", "はたち"],
+        ["飛行機|ひこうき", "飛", "ひ"],
+        ["飛行機|ひこうき", "行", "こう"],
+        ["飛行機|ひこうき", "機", "き"],
+        ["八百屋|やおや", "八百屋", "やおや"],
+        ["廊下|ろうか", "廊", "ろう"],
+        ["廊下|ろうか", "下", "か"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["大勢|おおぜい", "<ruby>大<rt>おお</rt></ruby><ruby>勢<rt>ぜい</rt></ruby>"],
+        ["お菓子|おかし", "お<ruby>菓<rt>か</rt></ruby><ruby>子<rt>し</rt></ruby>"],
+        ["昨日|きのう", "<ruby>昨日<rt>きのう</rt></ruby>"],
+        ["靴下|くつした", "<ruby>靴<rt>くつ</rt></ruby><ruby>下<rt>した</rt></ruby>"],
+        ["今朝|けさ", "<ruby>今朝<rt>けさ</rt></ruby>"],
+        ["二十歳|はたち", "<ruby>二十歳<rt>はたち</rt></ruby>"],
+        ["八百屋|やおや", "<ruby>八百屋<rt>やおや</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["昨日|きのう"].notes, /whole-word reading/);
+    assert.match(starterEntries["二十歳|はたち"].notes, /must not be split/);
+    assert.equal(starterEntries["飛行機|ひこうき"].exampleSentence.japanese, "飛行機で行きます。");
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

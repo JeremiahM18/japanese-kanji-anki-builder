@@ -228,6 +228,150 @@
         "priority": "medium",
         "reason": "Very useful N5 word, but it includes outside-JLPT 丈; defer from the known-JLPT enhancement batch unless a later pass deliberately accepts outside-JLPT labels for this card.",
         "nextStep": "Reconsider in a later enhancement pass with explicit outside-JLPT label review."
+      },
+      "大勢|おおぜい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "大勢|おおぜい was source-checked as a common/useful N5 word and promoted in a governed 12-word enhancement batch with required higher-level kanji labels.",
+        "nextStep": "Already promoted; keep the tracked decision as provenance for the expansion candidate pass."
+      },
+      "お菓子|おかし": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "お菓子|おかし was source-checked as a common/useful N5 word and promoted in a governed 12-word enhancement batch with required higher-level kanji labels.",
+        "nextStep": "Already promoted; keep the tracked decision as provenance for the expansion candidate pass."
+      },
+      "昨日|きのう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "昨日|きのう was source-checked as a common/useful N5 word and promoted in a governed 12-word enhancement batch with required higher-level kanji labels.",
+        "nextStep": "Already promoted; keep the tracked decision as provenance for the expansion candidate pass."
+      },
+      "靴下|くつした": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "靴下|くつした was source-checked as a common/useful N5 word and promoted in a governed 12-word enhancement batch with required higher-level kanji labels.",
+        "nextStep": "Already promoted; keep the tracked decision as provenance for the expansion candidate pass."
+      },
+      "今朝|けさ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "今朝|けさ was source-checked as a common/useful N5 word and promoted in a governed 12-word enhancement batch with required higher-level kanji labels.",
+        "nextStep": "Already promoted; keep the tracked decision as provenance for the expansion candidate pass."
+      },
+      "自分|じぶん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "自分|じぶん was source-checked as a common/useful N5 word and promoted in a governed 12-word enhancement batch with required higher-level kanji labels.",
+        "nextStep": "Already promoted; keep the tracked decision as provenance for the expansion candidate pass."
+      },
+      "生徒|せいと": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "生徒|せいと was source-checked as a common/useful N5 word and promoted in a governed 12-word enhancement batch with required higher-level kanji labels.",
+        "nextStep": "Already promoted; keep the tracked decision as provenance for the expansion candidate pass."
+      },
+      "大使館|たいしかん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "大使館|たいしかん was source-checked as a common/useful N5 word and promoted in a governed 12-word enhancement batch with required higher-level kanji labels.",
+        "nextStep": "Already promoted; keep the tracked decision as provenance for the expansion candidate pass."
+      },
+      "二十歳|はたち": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "二十歳|はたち was source-checked as a common/useful N5 word and promoted in a governed 12-word enhancement batch with required higher-level kanji labels.",
+        "nextStep": "Already promoted; keep the tracked decision as provenance for the expansion candidate pass."
+      },
+      "飛行機|ひこうき": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "飛行機|ひこうき was source-checked as a common/useful N5 word and promoted in a governed 12-word enhancement batch with required higher-level kanji labels.",
+        "nextStep": "Already promoted; keep the tracked decision as provenance for the expansion candidate pass."
+      },
+      "八百屋|やおや": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "八百屋|やおや was source-checked as a common/useful N5 word and promoted in a governed 12-word enhancement batch with required higher-level kanji labels.",
+        "nextStep": "Already promoted; keep the tracked decision as provenance for the expansion candidate pass."
+      },
+      "廊下|ろうか": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "廊下|ろうか was source-checked as a common/useful N5 word and promoted in a governed 12-word enhancement batch with required higher-level kanji labels.",
+        "nextStep": "Already promoted; keep the tracked decision as provenance for the expansion candidate pass."
+      },
+      "伯父/叔父・さん|おじ・さん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Source row is slash/dot alternate-spelling heavy and not a clean beginner exact word identity; teach おじさん/kana-family vocabulary separately if needed.",
+        "nextStep": "Do not promote this exact source row."
+      },
+      "伯母さん/叔母さん|おばさん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Source row is slash alternate-spelling heavy and not a clean beginner exact word identity; teach おばさん/kana-family vocabulary separately if needed.",
+        "nextStep": "Do not promote this exact source row."
+      },
+      "片仮名|かたかな": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "The word is useful, but the kanji spelling is lower-priority for beginners than カタカナ/kana; adding the kanji form now risks spelling clutter.",
+        "nextStep": "Reconsider in a kana/orthography vocabulary expansion, not this kanji-word batch."
+      },
+      "川/河|かわ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Source row combines alternate written forms and the governed 川|かわ card already teaches the useful N5 river identity.",
+        "nextStep": "Do not promote the slash-form source row."
+      },
+      "子供|こども": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Governed 子ども|こども already teaches the beginner word with the common mixed spelling; full-kanji 子供 is not needed for this enhancement pass.",
+        "nextStep": "Reconsider only if a spelling-variant policy is added."
+      },
+      "自動車|じどうしゃ": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Useful source-listed word, but 車|くるま already covers the everyday beginner car word and 自動車 is less urgent than the promoted batch.",
+        "nextStep": "Reconsider in a future transportation expansion after higher-value gaps are handled."
+      },
+      "友達|ともだち": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Governed 友だち|ともだち already teaches the beginner friend word with the learner-friendly mixed spelling; full-kanji 友達 adds duplicate spelling load.",
+        "nextStep": "Reconsider only if the word product adds spelling-variant cards."
+      },
+      "平仮名|ひらがな": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "The word is useful, but the kanji spelling is lower-priority for beginners than ひらがな/kana; adding it now risks spelling clutter.",
+        "nextStep": "Reconsider in a kana/orthography vocabulary expansion, not this kanji-word batch."
+      },
+      "本棚|ほんだな": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful common N5 household/classroom word, but it lost the 12-word cap to higher-priority learner words in this batch.",
+        "nextStep": "Source-check and promote in a future <=12-word enhancement batch if card-surface review passes."
+      },
+      "丸い/円い|まるい": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Source row is slash alternate-spelling heavy and 円い is not the clean beginner spelling to promote from this list.",
+        "nextStep": "Do not promote this exact source row."
+      },
+      "万年筆|まんねんひつ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Source-listed and valid, but fountain pen is lower immediate learner value than the promoted everyday/travel/school words.",
+        "nextStep": "Reconsider in a school-supplies expansion only if learner usefulness remains clear."
+      },
+      "留学生|りゅうがくせい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful common N5 learner-relevant word, but it was held for the next batch because of the strict 12-word cap.",
+        "nextStep": "Source-check and promote in a future <=12-word enhancement batch if card-surface review passes."
       }
     }
   }

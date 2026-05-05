@@ -67,6 +67,7 @@ function collectKanjiAssignments({ kanji, evidence = {} } = {}) {
             reviewStatus: assignment.reviewStatus,
             citation: assignment.citation,
             evidenceRef: assignment.evidenceRef,
+            notes: assignment.notes,
             independent: source.independent !== false,
             independenceGroup: source.independenceGroup || sourceId,
             japanesePublished: source.japanesePublished === true,
@@ -347,6 +348,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
                 tierLabel: entry.tier.label,
                 citation: entry.citation,
                 evidenceRef: entry.evidenceRef,
+                notes: entry.notes,
             })),
         });
         confidenceCounts[result.confidence] += 1;

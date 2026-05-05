@@ -1,0 +1,150 @@
+const fs = require("node:fs");
+const path = require("node:path");
+
+const { buildReports } = require("./reportJlptKanjiSourceInputs");
+const {
+    buildJlptKanjiSourceEvidenceImport,
+    formatEvidenceManifestJson,
+    materializeKanjiEvidenceEntries,
+} = require("../src/services/jlptKanjiSourceImportService");
+const { loadJlptLevelContract } = require("../src/datasets/jlptLevelContract");
+const {
+    assertNoUnknownArgs,
+    collectUnknownArg,
+} = require("../src/utils/cliArgs");
+
+const DEFAULT_CONFIG = "templates/jlpt_kanji_source_inputs.json";
+const DEFAULT_CONTRACT = "templates/jlpt_level_contract.json";
+const DEFAULT_EVIDENCE = "templates/jlpt_kanji_source_evidence.json";
+
+function parseArgs(argv) {
+    const options = {
+        config: DEFAULT_CONFIG,
+        contract: DEFAULT_CONTRACT,
+        evidence: DEFAULT_EVIDENCE,
+        source: null,
+        write: false,
+        json: false,
+        unknownArgs: [],
+    };
+
+    for (const arg of argv) {
+        if (arg === "--write") {
+            options.write = true;
+        } else if (arg === "--json") {
+            options.json = true;
+        } else if (arg.startsWith("--config=")) {
+            options.config = arg.slice("--config=".length);
+        } else if (arg.startsWith("--contract=")) {
+            options.contract = arg.slice("--contract=".length);
+        } else if (arg.startsWith("--evidence=")) {
+            options.evidence = arg.slice("--evidence=".length);
+        } else if (arg.startsWith("--source=")) {
+            options.source = arg.slice("--source=".length);
+        } else {
+            collectUnknownArg(options, arg);
+        }
+    }
+
+    return options;
+}
+
+function formatImportReport(result = {}) {
+    return [
+        "JLPT Kanji Source Evidence Import",
+        "",
+        `Source: ${result.sourceId}`,
+        `Mode: ${result.write ? "write" : "dry-run"}`,
+        `Evidence: ${result.evidencePath}`,
+        `Preflight result: ${result.preflightValid ? "passing" : "blocked"}`,
+        `Imported assignments: ${result.summary?.importedAssignmentCount || 0}`,
+        `Previous assignments: ${result.summary?.previousAssignmentCount || 0}`,
+        `Changed assignments: ${result.summary?.changedAssignmentCount || 0}`,
+        "",
+        "This command imports source evidence only. It does not move kanji, move words, update decks, or change readiness.",
+    ].join("\n");
+}
+
+function run(options = {}) {
+    if (!options.source) {
+        throw new Error("Missing required --source=<source-id>.");
+    }
+
+    const evidencePath = path.resolve(process.cwd(), options.evidence || DEFAULT_EVIDENCE);
+    const preflight = buildReports({
+        config: options.config || DEFAULT_CONFIG,
+        contract: options.contract || DEFAULT_CONTRACT,
+        evidence: options.evidence || DEFAULT_EVIDENCE,
+        source: options.source,
+    });
+    const [sourceReport] = preflight.reports || [];
+    if (!preflight.valid || !sourceReport?.valid) {
+        return {
+            sourceId: options.source,
+            write: options.write === true,
+            evidencePath,
+            preflightValid: false,
+            blockers: sourceReport?.blockers || ["source input preflight failed"],
+            summary: {
+                importedAssignmentCount: 0,
+                previousAssignmentCount: 0,
+                changedAssignmentCount: 0,
+            },
+        };
+    }
+
+    const evidenceManifest = JSON.parse(fs.readFileSync(evidencePath, "utf8"));
+    const contract = loadJlptLevelContract(options.contract || DEFAULT_CONTRACT);
+    const imported = buildJlptKanjiSourceEvidenceImport({
+        evidenceManifest,
+        sourceId: options.source,
+        assignments: sourceReport.assignments,
+    });
+    const manifest = materializeKanjiEvidenceEntries({
+        evidenceManifest: imported.manifest,
+        contract,
+    });
+
+    if (options.write) {
+        fs.writeFileSync(evidencePath, formatEvidenceManifestJson(manifest), "utf8");
+    }
+
+    return {
+        sourceId: options.source,
+        write: options.write === true,
+        evidencePath,
+        preflightValid: true,
+        summary: imported.summary,
+    };
+}
+
+function main(argv = process.argv.slice(2)) {
+    const options = parseArgs(argv);
+    assertNoUnknownArgs("data:import:jlpt:source-input", options.unknownArgs);
+    const result = run(options);
+    if (options.json) {
+        process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
+    } else {
+        process.stdout.write(`${formatImportReport(result)}\n`);
+        if (result.blockers?.length > 0) {
+            process.stdout.write("Blockers:\n");
+            for (const blocker of result.blockers) {
+                process.stdout.write(`- ${blocker}\n`);
+            }
+        }
+    }
+    if (!result.preflightValid) {
+        process.exitCode = 1;
+    }
+}
+
+if (require.main === module) {
+    main();
+}
+
+module.exports = {
+    formatImportReport,
+    main,
+    parseArgs,
+    run,
+};

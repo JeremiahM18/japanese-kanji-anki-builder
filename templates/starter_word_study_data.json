@@ -1021,32 +1021,6 @@
       "english": "I could see the Milky Way on the summer night."
     }
   },
-  "天気雨|てんきあめ": {
-    "written": "天気雨",
-    "reading": "てんきあめ",
-    "meaning": "sunshower",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "coverage": {
-      "role": "support",
-      "focusKanji": [
-        "雨"
-      ],
-      "coversReadings": {
-        "雨": "あめ"
-      }
-    },
-    "notes": "Reading-coverage support word for the 雨 -> あめ pattern.",
-    "exampleSentence": {
-      "japanese": "外では天気雨が降っていました。",
-      "reading": "そとではてんきあめがふっていました。",
-      "english": "There was a sunshower outside."
-    }
-  },
   "家の中|いえのなか": {
     "written": "家の中",
     "reading": "いえのなか",
@@ -2170,32 +2144,6 @@
       "japanese": "今日は元気です。",
       "reading": "きょうはげんきです。",
       "english": "I am well today."
-    }
-  },
-  "気配|けはい": {
-    "written": "気配",
-    "reading": "けはい",
-    "meaning": "sign / indication / presence",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "coverage": {
-      "role": "support",
-      "focusKanji": [
-        "気"
-      ],
-      "coversReadings": {
-        "気": "け"
-      }
-    },
-    "notes": "Reading-coverage support word for the 気 -> け pattern.",
-    "exampleSentence": {
-      "japanese": "外に人の気配があります。",
-      "reading": "そとにひとのけはいがあります。",
-      "english": "There seems to be someone outside."
     }
   },
   "木刀|ぼくとう": {
@@ -6309,7 +6257,7 @@
   "春雨|はるさめ": {
     "written": "春雨",
     "reading": "はるさめ",
-    "meaning": "spring rain",
+    "meaning": "glass noodles / spring rain",
     "jlpt": 5,
     "tags": [
       "starter",
@@ -6325,11 +6273,11 @@
         "雨": "さめ"
       }
     },
-    "notes": "Reading-coverage support word for the 雨 -> さめ pattern.",
+    "notes": "Common food and seasonal word; retained because it gives a real learner-facing 春雨 word for the 雨 -> さめ pattern, not just coverage padding.",
     "exampleSentence": {
-      "japanese": "春雨が静かに降っています。",
-      "reading": "はるさめがしずかにふっています。",
-      "english": "A gentle spring rain is falling."
+      "japanese": "春雨スープを食べます。",
+      "reading": "はるさめスープをたべます。",
+      "english": "I eat harusame soup."
     }
   },
   "晩ご飯|ばんごはん": {
@@ -7559,7 +7507,7 @@
       "starter",
       "reading-coverage"
     ],
-    "notes": "Useful polite request form connected to the ください reading.",
+    "notes": "Useful polite request form connected to the ください reading; usually written in kana as ください, so this card is for recognizing the kanji spelling 下さい when it appears.",
     "exampleSentence": {
       "japanese": "水を下さい。",
       "reading": "みずをください。",
@@ -7830,32 +7778,6 @@
       "japanese": "上りの電車はもう来ました。",
       "reading": "のぼりのでんしゃはもうきました。",
       "english": "The inbound train has already arrived."
-    }
-  },
-  "上座|かみざ": {
-    "written": "上座",
-    "reading": "かみざ",
-    "meaning": "seat of honor / upper seat",
-    "jlpt": 5,
-    "tags": [
-      "starter",
-      "common",
-      "n5"
-    ],
-    "coverage": {
-      "role": "support",
-      "focusKanji": [
-        "上"
-      ],
-      "coversReadings": {
-        "上": "かみ"
-      }
-    },
-    "notes": "Reading-coverage support word for the 上 -> かみ pattern.",
-    "exampleSentence": {
-      "japanese": "お客様は上座に案内されました。",
-      "reading": "おきゃくさまはかみざにあんないされました。",
-      "english": "The guest was shown to the seat of honor."
     }
   },
   "上昇|じょうしょう": {

@@ -32700,5 +32700,1042 @@
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
     }
+  },
+  {
+    "word": "金具",
+    "status": "platinum",
+    "readingIncludes": [
+      "かなぐ"
+    ],
+    "meaningIncludes": [
+      "metal fitting",
+      "hardware"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "金"
+    ],
+    "coversReadingIncludes": [
+      "金: かな"
+    ],
+    "breakdownIncludes": [
+      "金 （かな） ／ money / gold",
+      "具 （ぐ） ／ tool / ingredient"
+    ],
+    "exampleIncludes": [
+      "かばんの金具がこわれました。"
+    ],
+    "notesIncludes": [
+      "Reading-coverage support word for the 金 -> かな pattern."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common physical-object word that gives 金 -> かな in a real written form; outside-level 具 is labeled, and the card is useful for recognizing bag, furniture, and hardware contexts.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 金具|かなぐ: word 金具, reading かなぐ, meaning metal fitting / hardware, example かばんの金具がこわれました。, exact word audio, card labels JLPT N5 Reading coverage support."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 金具|かなぐ, reading かなぐ, meaning metal fitting / hardware, example かばんの金具がこわれました。, and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%87%91%E5%85%B7",
+        "detail": "JLearn.net verifies 金具|かなぐ as a common word with reading かなぐ and supports the learner meanings metal fitting / hardware through metal fittings / metal fixtures. Product review checked example かばんの金具がこわれました。 for 金具|かなぐ and the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 金具|かなぐ for JLPT N5; product review confirmed the word belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 金具|かなぐ, reading かなぐ, sentence かばんの金具がこわれました。, exported sentence reading かばんのかなぐがこわれました。, and English gloss The metal fitting on my bag broke.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5",
+        "detail": "Managed media provenance audit must check 金具|かなぐ; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 金具|かなぐ exact asset fragment word-reading-金具-かなぐ for the exported word reading かなぐ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 金具|かなぐ source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 金具|かなぐ JLPT N5, Reading coverage support, focus 金, and covered readings 金: かな."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 金具|かなぐ common and learner-friendly for the N5 word deck, with accurate reading かなぐ, meaning metal fitting / hardware, and example かばんの金具がこわれました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "春雨",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "はるさめ"
+    ],
+    "meaningIncludes": [
+      "glass noodles",
+      "spring rain"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "雨"
+    ],
+    "coversReadingIncludes": [
+      "雨: さめ"
+    ],
+    "breakdownIncludes": [
+      "春 （はる） ／ spring",
+      "雨 （さめ） ／ rain"
+    ],
+    "exampleIncludes": [
+      "春雨スープを食べます。"
+    ],
+    "notesIncludes": [
+      "Common food and seasonal word; retained because it gives a real learner-facing 春雨 word for the 雨 -> さめ pattern, not just coverage padding."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Retained only after fixing the surface toward the common food sense; this makes 春雨|はるさめ useful and concrete instead of a poetic coverage-only rain word.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 春雨|はるさめ: word 春雨, reading はるさめ, meaning glass noodles / spring rain, example 春雨スープを食べます。, exact word audio, card labels JLPT N5 Reading coverage support."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 春雨|はるさめ, reading はるさめ, meaning glass noodles / spring rain, example 春雨スープを食べます。, and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%98%A5%E9%9B%A8",
+        "detail": "JLearn.net verifies 春雨|はるさめ with reading はるさめ and supports the learner meanings glass noodles / spring rain through thin noodles made from bean or potato starch and gentle spring rain. Product review checked example 春雨スープを食べます。 for 春雨|はるさめ and the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 春雨|はるさめ for JLPT N5; product review confirmed the word belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 春雨|はるさめ, reading はるさめ, sentence 春雨スープを食べます。, exported sentence reading はるさめスープをたべます。, and English gloss I eat harusame soup.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5",
+        "detail": "Managed media provenance audit must check 春雨|はるさめ; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 春雨|はるさめ exact asset fragment word-reading-春雨-はるさめ for the exported word reading はるさめ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 春雨|はるさめ source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 春雨|はるさめ JLPT N5, Reading coverage support, focus 雨, and covered readings 雨: さめ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 春雨|はるさめ common and learner-friendly for the N5 word deck, with accurate reading はるさめ, meaning glass noodles / spring rain, and example 春雨スープを食べます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "fixSummary": "Changed 春雨|はるさめ from a poetic spring-rain-only card to a learner-useful glass-noodles / spring-rain card with a food example while preserving the true 雨 -> さめ reading."
+  },
+  {
+    "word": "万事",
+    "status": "platinum",
+    "readingIncludes": [
+      "ばんじ"
+    ],
+    "meaningIncludes": [
+      "all things",
+      "everything"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "万"
+    ],
+    "coversReadingIncludes": [
+      "万: ばん"
+    ],
+    "breakdownIncludes": [
+      "万 （ばん） ／ ten thousand",
+      "事 （じ） ／ matter / task"
+    ],
+    "exampleIncludes": [
+      "万事うまくいくといいですね。"
+    ],
+    "notesIncludes": [
+      "Reading-coverage support word for the 万 -> ばん pattern."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Common expression word that gives 万 -> ばん in a real phrase learners can encounter; kept despite later-level 事 because the expression 万事うまくいく is useful and not merely artificial coverage.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 万事|ばんじ: word 万事, reading ばんじ, meaning all things / everything, example 万事うまくいくといいですね。, exact word audio, card labels JLPT N5 Reading coverage support."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 万事|ばんじ, reading ばんじ, meaning all things / everything, example 万事うまくいくといいですね。, and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%87%E4%BA%8B",
+        "detail": "JLearn.net verifies 万事|ばんじ as a common word with reading ばんじ and supports the learner meanings all things / everything through all / everything examples such as 万事うまくいく. Product review checked example 万事うまくいくといいですね。 for 万事|ばんじ and the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 万事|ばんじ for JLPT N5; product review confirmed the word belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 万事|ばんじ, reading ばんじ, sentence 万事うまくいくといいですね。, exported sentence reading ばんじうまくいくといいですね。, and English gloss I hope everything goes well.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5",
+        "detail": "Managed media provenance audit must check 万事|ばんじ; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 万事|ばんじ exact asset fragment word-reading-万事-ばんじ for the exported word reading ばんじ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 万事|ばんじ source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 万事|ばんじ JLPT N5, Reading coverage support, focus 万, and covered readings 万: ばん."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 万事|ばんじ common and learner-friendly for the N5 word deck, with accurate reading ばんじ, meaning all things / everything, and example 万事うまくいくといいですね。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "下さい",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "ください"
+    ],
+    "meaningIncludes": [
+      "please give me",
+      "please"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "下"
+    ],
+    "coversReadingIncludes": [
+      "下: くださる"
+    ],
+    "breakdownIncludes": [
+      "下 （くだ） ／ down / below"
+    ],
+    "exampleIncludes": [
+      "水を下さい。"
+    ],
+    "notesIncludes": [
+      "Useful polite request form connected to the ください reading; usually written in kana as ください, so this card is for recognizing the kanji spelling 下さい when it appears."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "selectionRationale": "Essential beginner request expression; kept as exact written-form recognition with a visible note that kana ください is the usual spelling, preventing this card from teaching an over-kanji spelling as the default.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 下さい|ください: word 下さい, reading ください, meaning please give me / please, example 水を下さい。, exact word audio, card labels JLPT N5 Reading coverage support."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 下さい|ください, reading ください, meaning please give me / please, example 水を下さい。, and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%8B%E3%81%95%E3%81%84",
+        "detail": "JLearn.net verifies 下さい|ください as a JLPT N5 common expression meaning please / please give me and notes it is usually written in kana. Product review checked example 水を下さい。 for 下さい|ください and the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "goo辞書 デジタル大辞泉 https://dictionary.goo.ne.jp/word/%E4%B8%8B%E3%81%95%E3%81%84/",
+        "detail": "goo辞書 デジタル大辞泉 verifies 下さい|ください as the imperative form of 下さる, used to request something or ask someone to do something. Product review checked 下さい|ください and example 水を下さい。 against the shipped learner-facing meaning."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 下さい|ください for JLPT N5; product review confirmed the word belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 下さい|ください, reading ください, sentence 水を下さい。, exported sentence reading みずをください。, and English gloss Please give me water.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5",
+        "detail": "Managed media provenance audit must check 下さい|ください; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 下さい|ください exact asset fragment word-reading-下さい-ください for the exported word reading ください."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 下さい|ください source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka], rendered label Pitch 1: 3."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 下さい|ください JLPT N5, Reading coverage support, focus 下, and covered readings 下: くださる."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 下さい|ください common and learner-friendly for the N5 word deck, with accurate reading ください, meaning please give me / please, and example 水を下さい。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "fixSummary": "Added a learner-facing note that ください is usually written in kana so the kanji spelling 下さい is recognition support, not the default writing recommendation."
+  },
+  {
+    "word": "名字",
+    "status": "platinum",
+    "readingIncludes": [
+      "みょうじ"
+    ],
+    "meaningIncludes": [
+      "surname",
+      "family name"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "名"
+    ],
+    "coversReadingIncludes": [
+      "名: みょう"
+    ],
+    "breakdownIncludes": [
+      "名 （みょう） ／ name",
+      "字 （じ） ／ character / letter"
+    ],
+    "exampleIncludes": [
+      "名字を先に書いてください。"
+    ],
+    "notesIncludes": [
+      "Reading-coverage support word for the common 名 -> みょう pattern."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "High-utility learner word for forms and introductions; it gives 名 -> みょう in a common written identity while labeling later-level 字.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 名字|みょうじ: word 名字, reading みょうじ, meaning surname / family name, example 名字を先に書いてください。, exact word audio, card labels JLPT N5 Reading coverage support."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 名字|みょうじ, reading みょうじ, meaning surname / family name, example 名字を先に書いてください。, and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%90%8D%E5%AD%97",
+        "detail": "JLearn.net verifies 名字|みょうじ as a common word with reading みょうじ and meaning surname / family name. Product review checked example 名字を先に書いてください。 for 名字|みょうじ and the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 名字|みょうじ for JLPT N5; product review confirmed the word belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 名字|みょうじ, reading みょうじ, sentence 名字を先に書いてください。, exported sentence reading みょうじをさきにかいてください。, and English gloss Please write your family name first.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5",
+        "detail": "Managed media provenance audit must check 名字|みょうじ; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 名字|みょうじ exact asset fragment word-reading-名字-みょうじ for the exported word reading みょうじ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 名字|みょうじ source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 名字|みょうじ JLPT N5, Reading coverage support, focus 名, and covered readings 名: みょう."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 名字|みょうじ common and learner-friendly for the N5 word deck, with accurate reading みょうじ, meaning surname / family name, and example 名字を先に書いてください。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "小指",
+    "status": "platinum",
+    "readingIncludes": [
+      "こゆび"
+    ],
+    "meaningIncludes": [
+      "little finger",
+      "pinky"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "小"
+    ],
+    "coversReadingIncludes": [
+      "小: こ"
+    ],
+    "breakdownIncludes": [
+      "小 （こ） ／ small",
+      "指 （ゆび） ／ finger / point"
+    ],
+    "exampleIncludes": [
+      "小指を机にぶつけました。"
+    ],
+    "notesIncludes": [
+      "Reading-coverage support word for the 小 -> こ pattern."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Concrete body-part word that learners can use immediately; outside-level 指 is labeled, and 小 -> こ is a productive real reading in the exact written form.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 小指|こゆび: word 小指, reading こゆび, meaning little finger / pinky, example 小指を机にぶつけました。, exact word audio, card labels JLPT N5 Reading coverage support."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 小指|こゆび, reading こゆび, meaning little finger / pinky, example 小指を机にぶつけました。, and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%B0%8F%E6%8C%87",
+        "detail": "JLearn.net verifies 小指|こゆび as a JLPT N2 common word with reading こゆび and meanings little finger / pinky / little toe. Product review checked example 小指を机にぶつけました。 for 小指|こゆび and the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 小指|こゆび for JLPT N5; product review confirmed the word belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 小指|こゆび, reading こゆび, sentence 小指を机にぶつけました。, exported sentence reading こゆびをつくえにぶつけました。, and English gloss I bumped my little finger on the desk.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5",
+        "detail": "Managed media provenance audit must check 小指|こゆび; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 小指|こゆび exact asset fragment word-reading-小指-こゆび for the exported word reading こゆび."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 小指|こゆび source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 小指|こゆび JLPT N5, Reading coverage support, focus 小, and covered readings 小: こ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 小指|こゆび common and learner-friendly for the N5 word deck, with accurate reading こゆび, meaning little finger / pinky, and example 小指を机にぶつけました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "外科",
+    "status": "platinum",
+    "readingIncludes": [
+      "げか"
+    ],
+    "meaningIncludes": [
+      "surgery",
+      "surgical department"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "外"
+    ],
+    "coversReadingIncludes": [
+      "外: げ"
+    ],
+    "breakdownIncludes": [
+      "外 （げ） ／ outside",
+      "科 （か） ／ subject / department"
+    ],
+    "exampleIncludes": [
+      "父は病院の外科で診てもらいました。"
+    ],
+    "notesIncludes": [
+      "Reading-coverage support word for the 外 -> げ pattern."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Practical hospital/signage word that gives 外 -> げ in a real common written form; later-level 科 is labeled rather than hidden.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 外科|げか: word 外科, reading げか, meaning surgery / surgical department, example 父は病院の外科で診てもらいました。, exact word audio, card labels JLPT N5 Reading coverage support."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 外科|げか, reading げか, meaning surgery / surgical department, example 父は病院の外科で診てもらいました。, and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/Dictionary/Browse/1203380-geka-%E3%81%92%E3%81%8B-%E5%A4%96%E7%A7%91",
+        "detail": "JLearn.net verifies 外科|げか as a JLPT N2 common word with reading げか and supports the learner meanings surgery / surgical department through surgery / department of surgery. Product review checked example 父は病院の外科で診てもらいました。 for 外科|げか and the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 外科|げか for JLPT N5; product review confirmed the word belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 外科|げか, reading げか, sentence 父は病院の外科で診てもらいました。, exported sentence reading ちちはびょういんのげかでみてもらいました。, and English gloss My father was seen in the hospital's surgical department.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5",
+        "detail": "Managed media provenance audit must check 外科|げか; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 外科|げか exact asset fragment word-reading-外科-げか for the exported word reading げか."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 外科|げか source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 外科|げか JLPT N5, Reading coverage support, focus 外, and covered readings 外: げ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 外科|げか common and learner-friendly for the N5 word deck, with accurate reading げか, meaning surgery / surgical department, and example 父は病院の外科で診てもらいました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "生地",
+    "status": "platinum",
+    "readingIncludes": [
+      "きじ"
+    ],
+    "meaningIncludes": [
+      "fabric",
+      "cloth material"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "生",
+      "地"
+    ],
+    "coversReadingIncludes": [
+      "生: き",
+      "地: じ"
+    ],
+    "breakdownIncludes": [
+      "生 （き） ／ life / birth",
+      "地 （じ） ／ ground / place"
+    ],
+    "exampleIncludes": [
+      "この生地はやわらかくて着やすいです。"
+    ],
+    "notesIncludes": [
+      "Reading-coverage support word for the 生 -> き and 地 -> じ patterns."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Concrete shopping/clothing word with common everyday use; it gives 生 -> き and 地 -> じ in a real written word while labeling later-level 地.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 生地|きじ: word 生地, reading きじ, meaning fabric / cloth material, example この生地はやわらかくて着やすいです。, exact word audio, card labels JLPT N5 Reading coverage support."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 生地|きじ, reading きじ, meaning fabric / cloth material, example この生地はやわらかくて着やすいです。, and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E7%94%9F%E5%9C%B0",
+        "detail": "JLearn.net verifies 生地|きじ as a JLPT N3 common word with reading きじ and supports the learner meanings fabric / cloth material through cloth / fabric / material / texture. Product review checked example この生地はやわらかくて着やすいです。 for 生地|きじ and the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 生地|きじ for JLPT N5; product review confirmed the word belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 生地|きじ, reading きじ, sentence この生地はやわらかくて着やすいです。, exported sentence reading このきじはやわらかくてきやすいです。, and English gloss This fabric is soft and easy to wear.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5",
+        "detail": "Managed media provenance audit must check 生地|きじ; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 生地|きじ exact asset fragment word-reading-生地-きじ for the exported word reading きじ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 生地|きじ source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 生地|きじ JLPT N5, Reading coverage support, focus 生、地, and covered readings 生: き / 地: じ."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 生地|きじ common and learner-friendly for the N5 word deck, with accurate reading きじ, meaning fabric / cloth material, and example この生地はやわらかくて着やすいです。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "土地",
+    "status": "platinum",
+    "readingIncludes": [
+      "とち"
+    ],
+    "meaningIncludes": [
+      "land",
+      "piece of land"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "土"
+    ],
+    "coversReadingIncludes": [
+      "土: と"
+    ],
+    "breakdownIncludes": [
+      "土 （と） ／ soil / earth",
+      "地 （ち） ／ ground / place"
+    ],
+    "exampleIncludes": [
+      "その土地は駅に近いです。"
+    ],
+    "notesIncludes": [
+      "Reading-coverage support word for the common 土 -> と pattern."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common real-world word for land/place contexts; it gives 土 -> と in a useful exact written form while labeling later-level 地.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 土地|とち: word 土地, reading とち, meaning land / piece of land, example その土地は駅に近いです。, exact word audio, card labels JLPT N5 Reading coverage support."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 土地|とち, reading とち, meaning land / piece of land, example その土地は駅に近いです。, and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%9C%9F%E5%9C%B0",
+        "detail": "JLearn.net verifies 土地|とち as a JLPT N3 common word with reading とち and supports the learner meanings land / piece of land through plot of land / lot / soil / locality. Product review checked example その土地は駅に近いです。 for 土地|とち and the shipped word-card surface."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 土地|とち for JLPT N5; product review confirmed the word belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 土地|とち, reading とち, sentence その土地は駅に近いです。, exported sentence reading そのとちはえきにちかいです。, and English gloss That piece of land is near the station.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5",
+        "detail": "Managed media provenance audit must check 土地|とち; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 土地|とち exact asset fragment word-reading-土地-とち for the exported word reading とち."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 土地|とち source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 土地|とち JLPT N5, Reading coverage support, focus 土, and covered readings 土: と."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 土地|とち common and learner-friendly for the N5 word deck, with accurate reading とち, meaning land / piece of land, and example その土地は駅に近いです。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "上座",
+    "status": "removed",
+    "readingIncludes": [
+      "かみざ"
+    ],
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Removed from the N5 word deck because 上座|かみざ is a real common cultural/business etiquette word, but its current surface is too situational and too advanced for N5 learner value; do not keep it only to cover 上 -> かみ."
+  },
+  {
+    "word": "気配",
+    "status": "removed",
+    "readingIncludes": [
+      "けはい"
+    ],
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Removed from the N5 word deck because 気配|けはい is a real common later-level abstract word with N1/N2 source labels; defer 気 -> け instead of forcing an advanced presence/indication card into N5."
+  },
+  {
+    "word": "天気雨",
+    "status": "removed",
+    "readingIncludes": [
+      "てんきあめ"
+    ],
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Removed from the N5 word deck because 天気雨|てんきあめ is a low-frequency weather term and 雨 -> あめ already has stronger beginner coverage through 雨; do not keep a sunshower card just for extra coverage."
   }
 ]

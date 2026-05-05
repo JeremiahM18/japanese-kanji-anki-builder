@@ -1053,6 +1053,115 @@ test("tracked starter word data includes the thirty-second governed N4 support b
     ]);
 });
 
+test("tracked starter word data includes the N4 source expansion pass without reject or defer rows", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const n4ExpansionKeys = [
+        "明日|あす",
+        "安全|あんぜん",
+        "以下|いか",
+        "以外|いがい",
+        "医学|いがく",
+        "意見|いけん",
+        "以上|いじょう",
+        "一度|いちど",
+        "田舎|いなか",
+        "売り場|うりば",
+        "運転手|うんてんしゅ",
+        "贈り物|おくりもの",
+        "思い出す|おもいだす",
+        "終わり|おわり",
+        "会議|かいぎ",
+        "帰り|かえり",
+        "火事|かじ",
+        "方|かた",
+        "機会|きかい",
+        "着物|きもの",
+        "急|きゅう",
+        "教育|きょういく",
+        "教会|きょうかい",
+        "興味|きょうみ",
+        "空気|くうき",
+        "研究室|けんきゅうしつ",
+        "交通|こうつう",
+        "公務員|こうむいん",
+        "心|こころ",
+        "ご主人|ごしゅじん",
+        "答|こたえ",
+        "小鳥|ことり",
+        "字|じ",
+        "試合|しあい",
+        "事故|じこ",
+        "地震|じしん",
+        "下着|したぎ",
+        "品物|しなもの",
+        "事務所|じむしょ",
+        "習慣|しゅうかん",
+        "柔道|じゅうどう",
+        "趣味|しゅみ",
+        "正月|しょうがつ",
+        "食料品|しょくりょうひん",
+        "神社|じんじゃ",
+        "水道|すいどう",
+        "卒業|そつぎょう",
+        "大事|だいじ",
+        "大体|だいたい",
+        "楽しみ|たのしみ",
+        "注射|ちゅうしゃ",
+        "駐車場|ちゅうしゃじょう",
+        "地理|ちり",
+        "手袋|てぶくろ",
+        "動物園|どうぶつえん",
+        "特別|とくべつ",
+        "特急|とっきゅう",
+        "乗り物|のりもの",
+        "場合|ばあい",
+        "歯医者|はいしゃ",
+        "美術館|びじゅつかん",
+        "昼間|ひるま",
+        "昼休み|ひるやすみ",
+        "復習|ふくしゅう",
+        "部長|ぶちょう",
+        "文学|ぶんがく",
+        "文法|ぶんぽう",
+        "返事|へんじ",
+        "漫画|まんが",
+        "夕飯|ゆうはん",
+        "用意|ようい",
+        "用事|ようじ",
+        "予習|よしゅう",
+        "利用|りよう",
+        "両方|りょうほう",
+        "旅館|りょかん",
+        "忘れ物|わすれもの",
+    ];
+
+    assert.equal(n4ExpansionKeys.length, 77);
+    for (const key of n4ExpansionKeys) {
+        assert.equal(starterEntries[key]?.jlpt, 4, key);
+        assert.equal(starterEntries[key]?.source, "jlptstudy.net-n4", key);
+        assert.equal(starterEntries[key]?.coverage?.role, "both", key);
+    }
+    assert.equal(starterEntries["集る|あつまる"], undefined);
+    assert.equal(starterEntries["楽む|たのしむ"], undefined);
+    assert.equal(starterEntries["家内|かない"], undefined);
+    assert.equal(starterEntries["役に立つ|やくにたつ"], undefined);
+    assertCoverageReadings(starterEntries, [
+        ["明日|あす", "明日", "あす"],
+        ["田舎|いなか", "田舎", "いなか"],
+        ["売り場|うりば", "売", "うり"],
+        ["売り場|うりば", "場", "ば"],
+        ["文法|ぶんぽう", "法", "ぽう"],
+        ["歯医者|はいしゃ", "歯", "は"],
+        ["歯医者|はいしゃ", "医", "い"],
+        ["忘れ物|わすれもの", "忘", "わすれ"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["明日|あす", "<ruby>明日<rt>あす</rt></ruby>"],
+        ["田舎|いなか", "<ruby>田舎<rt>いなか</rt></ruby>"],
+        ["歯医者|はいしゃ", "<ruby>歯<rt>は</rt></ruby><ruby>医<rt>い</rt></ruby><ruby>者<rt>しゃ</rt></ruby>"],
+    ]);
+});
+
 test("tracked starter word data includes the first N5 enhancement batch without duplicate junk", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

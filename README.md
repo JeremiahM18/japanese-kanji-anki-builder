@@ -172,21 +172,19 @@ Golden and platinum review:
 | N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N1 kanji | Golden-reviewed at `1231/1231`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N5 word | Golden-reviewed at `329/329`; platinum-reviewed at `329/329` active entries; `ready_with_deferred_variants` in curated-only mode; audio, pitch accent, card-back fields, example reading alignment, and looping animations are complete for shipped rows; word platinum has 55 deferred/removed rows and no `needs_review` blockers under the generated-pitch-label policy |
-| N4 word | Golden-reviewed at `458/458`; current local N5+N4 selected-scope readiness passes with governed local word audio, pitch accent, card-back fields, example reading alignment, kanji-context checks, labels, and looping animations clean for shipped rows; word platinum has `0` entries and fails until all generated N4 words have active approvals |
+| N4 word | Expanded to `535` governed rows; previously golden-reviewed rows remain at `458/535`; the 77 N4 source-expansion rows still need golden review, word audio, pitch source/render review, and platinum approval before N4 readiness can be claimed |
 
 Current tracked word inventory:
 
 - N5 canonical word rows: `329`
 - N5 source-only phrase exclusions: `20`
-- N4 canonical word rows: `458`
+- N4 canonical word rows: `535`
 - N3 canonical word rows: `14`
 - N2 canonical word rows: `15`
 - N1 canonical word rows: `14`
-- Current N5+N4 word rows: `787`
-- N5 word reading coverage: `67.4% (232/344)` when built alone
-- N5 word reading coverage: `68.9% (237/344)` when built with N4 as the selected word-product scope
-- N4 word reading coverage: `74.5% (485/651)` when built with N5 as the selected word-product scope
-- N5+N4 word readiness: N5 and N4 are `ready_with_deferred_variants` under `npm run deck:words:ready -- --levels=5,4 --require-no-active-triage`; governed word audio remains ignored workspace media and must be regenerated or restored in a fresh checkout
+- Current N5+N4 word rows: `864`
+- Word reading coverage: rerun the live completion/readiness commands after the 77-row N4 source expansion; the previous N5+N4 coverage percentages are intentionally not restated here
+- N5+N4 word readiness: N5 remains governed by its current release state; N4 readiness is intentionally not claimed after the 77-row source expansion until the new rows pass golden review, exact word audio, pitch policy, platinum review, and readiness gates
 
 Run live commands for current coverage. Do not rely on README numbers for release decisions.
 

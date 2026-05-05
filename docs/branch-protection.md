@@ -33,4 +33,4 @@ Mark these checks as required on `main`:
 
 Changes to workflow, packaging, shared schema, services, test harnesses, or contributor process files require code-owner review before merge.
 
-Changes that affect JLPT taxonomy, starter curation, golden review placement, or deck-membership logic also require `npm run data:audit:jlpt` before merge.
+Changes that affect JLPT taxonomy, starter curation, golden review placement, or deck-membership logic also require `npm run data:audit:jlpt` and `npm run data:audit:jlpt:sources -- --strict` before merge.

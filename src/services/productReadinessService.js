@@ -81,6 +81,7 @@ const N5_PRODUCT_READINESS_SCOPE = Object.freeze({
     level: 5,
     validates: [
         "JLPT kanji contract, starter, and golden-review alignment",
+        "JLPT kanji source-evidence consensus audit",
         "JLPT word contract and starter alignment",
         "managed audio provenance policy",
         "tracked-source N5 word TSV artifact generation",
@@ -105,6 +106,14 @@ const N5_PRODUCT_READINESS_COMMANDS = Object.freeze([
         command: process.execPath,
         args: [path.join("scripts", "auditJlptAlignment.js")],
         runInProcess: buildScriptRunner("scripts/auditJlptAlignment.js"),
+    }),
+    Object.freeze({
+        id: "kanji-source-evidence-audit",
+        label: "Kanji source evidence audit",
+        displayCommand: "npm run data:audit:jlpt:sources -- --strict",
+        command: process.execPath,
+        args: [path.join("scripts", "auditJlptKanjiSourceEvidence.js"), "--strict"],
+        runInProcess: buildScriptRunner("scripts/auditJlptKanjiSourceEvidence.js", ["--strict"]),
     }),
     Object.freeze({
         id: "word-contract-audit",

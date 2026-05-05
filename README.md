@@ -115,6 +115,7 @@ Use the workflow sections below for preview, `.apkg`, media, audio, and release 
 Tracked contracts define release behavior:
 
 - JLPT kanji taxonomy: [templates/jlpt_level_contract.json](templates/jlpt_level_contract.json)
+- JLPT kanji source-evidence registry: [templates/jlpt_kanji_source_evidence.json](templates/jlpt_kanji_source_evidence.json)
 - JLPT word taxonomy: [templates/jlpt_word_level_contract.json](templates/jlpt_word_level_contract.json)
 - Audio source policy: [templates/audio_source_policy.json](templates/audio_source_policy.json)
 - Kanji note schema: [src/config/ankiNoteSchema.json](src/config/ankiNoteSchema.json)
@@ -131,6 +132,7 @@ Tracked contracts define release behavior:
 Kanji decks:
 
 - Each shipped kanji belongs to the tracked JLPT kanji contract.
+- The JLPT kanji contract is the current operational taxonomy, not sole source truth. Source confidence is governed separately by the JLPT kanji source-evidence audit.
 - N5, N4, N3, N2, and N1 kanji are fully protected by golden review coverage.
 - N1 kanji golden review coverage is complete: `1231/1231` reviewed. N1 can only be treated as ready when exact primary-reading audio and level readiness both pass.
 - The kanji deck learning target is the individual kanji. `DisplayWord` is the target kanji itself, and `PrimaryReading` is the most learner-useful, level-appropriate reading for that kanji.
@@ -191,6 +193,7 @@ Current tracked word inventory:
 - Word-level placement audit currently fails: `181/909` canonical rows. The live split is `46` rows too easy for their constituent kanji and `135` later-level placements missing learner-fit reasons. By level: N5 `46/331`, N4 `92/535`, N3 `14/14`, N2 `15/15`, N1 `14/14`. Run `npm run deck:words:level-anchor-audit` for the live list.
 - Word reading coverage from the current `deck:words:ready -- --levels=5,4 --require-no-active-triage` run: N5 `238/344` (`69.2%`), N4 `485/651` (`74.5%`). Coverage remains informational; useful/common/learner-fit decisions and explicit defer/reject reasons are the product guardrail.
 - N5+N4 word field/media checks were previously clean, but current word readiness must now treat word-level placement violations as blockers. Golden/platinum commands are still separate from APKG import QA, manual card QA, accessibility checks, and listening review.
+- JLPT kanji source evidence is now governed separately from the operational taxonomy. The current source-evidence audit is expected to fail until independent source assignments are populated and reviewed; no deck movement should happen from JLPT level assumptions before that audit is resolved.
 
 Run live commands for current coverage. Do not rely on README numbers for release decisions.
 
@@ -202,6 +205,7 @@ Run before merging changes that affect decks, contracts, media, or release behav
 npm test
 npm run lint
 npm run data:audit:jlpt
+npm run data:audit:jlpt:sources -- --strict
 npm run data:audit:jlpt:words
 npm run deck:words:level-anchor-audit -- --level=5
 npm run data:audit:audio -- --json
@@ -217,7 +221,9 @@ npm run release:gate
 
 `product:artifacts:kanji:n5:preflight` inspects tracked templates and reports whether N5 kanji TSV certification is possible without ignored local `data/` inputs. It currently reports `certifiable: no` because explicit on-yomi, kun-yomi, and rich-source provenance are not yet tracked as product contracts. Component/radical source data is tracked in `templates/kanji_component_contract.json`. Use `-- --require-certifiable` only when the remaining contracts exist and the command is expected to fail closed.
 
-`product:readiness:n5` runs the current automated N5 product checkpoint: JLPT kanji and word audits, governed audio provenance, tracked-source N5 word TSV generation, and N5 kanji and word golden reviews. It must not be used to claim N5 word release readiness while `npm run deck:words:level-anchor-audit -- --level=5` fails. It still does not validate tracked-source kanji TSVs, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA. Run the applicable platinum command separately when a level is being version-1 locked.
+`data:audit:jlpt:sources` audits the operational JLPT kanji contract against the independent source-evidence registry. It is intentionally separate from deck generation: it reports source coverage, reviewed assignment coverage, unique independence groups, active-source license status, consensus, agreement score, confidence, and contract/consensus mismatches without changing the active contract or any decks.
+
+`product:readiness:n5` runs the current automated N5 product checkpoint: JLPT kanji and word audits, JLPT kanji source-evidence audit, governed audio provenance, tracked-source N5 word TSV generation, and N5 kanji and word golden reviews. It must not be used to claim N5 word release readiness while `npm run deck:words:level-anchor-audit -- --level=5` fails or while `npm run data:audit:jlpt:sources -- --strict` fails. It still does not validate tracked-source kanji TSVs, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA. Run the applicable platinum command separately when a level is being version-1 locked.
 
 `release:gate` validates deterministic smoke-fixture artifacts and packaging contracts. It does not certify public product deck readiness. Add level-specific readiness, golden review, accessibility, provenance, and manual QA commands for the surface being changed.
 
@@ -483,6 +489,7 @@ Repository governance:
 | `npm run deck:words:expansion-candidates:n5 -- --source=downloads/n5-vocab.tsv --source-label=jlptstudy.net-n5` | Diff a sourced vocabulary list into read-only word expansion candidates |
 | `npm run deck:words:expansion-signals -- --levels=5,4` | Summarize per-level reading and enhancement expansion exhaustion without claiming release readiness |
 | `npm run data:audit:jlpt` | Audit kanji taxonomy and starter alignment |
+| `npm run data:audit:jlpt:sources` | Audit JLPT kanji source evidence and consensus without changing decks |
 | `npm run data:audit:jlpt:words` | Audit word taxonomy and starter alignment |
 | `npm run data:audit:audio` | Audit managed audio provenance |
 | `npm run data:sync:jlpt` | Sync local ignored JLPT data to the tracked contract |

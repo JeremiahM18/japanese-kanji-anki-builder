@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "policy": {
+    "minimumIndependentSources": 3,
+    "minimumJapanesePublishedSources": 1,
+    "standardAgreementScore": 0.67,
+    "highAgreementScore": 0.8
+  },
+  "sources": {
+    "tanos": {
+      "name": "Tanos JLPT resources",
+      "tier": "community-legacy-jlpt",
+      "status": "planned",
+      "sourceType": "jlpt-kanji-list",
+      "url": "https://www.tanos.co.uk/jlpt/aboutjlpt/",
+      "independent": true,
+      "independenceGroup": "tanos",
+      "japanesePublished": false,
+      "countsForConsensus": true,
+      "weight": 1,
+      "licenseStatus": "needs_review",
+      "notes": "Useful as one legacy/community signal. Tanos describes new JLPT level counts as estimated from JEES documentation; do not treat as sole authority."
+    },
+    "jlptsensei": {
+      "name": "JLPT Sensei kanji lists",
+      "tier": "community-jlpt-study",
+      "status": "planned",
+      "sourceType": "jlpt-kanji-list",
+      "url": "https://jlptsensei.com/jlpt-n5-kanji-list/",
+      "independent": true,
+      "independenceGroup": "jlptsensei",
+      "japanesePublished": false,
+      "countsForConsensus": true,
+      "weight": 1,
+      "licenseStatus": "needs_review",
+      "notes": "Useful as one independent web-study signal once source extraction and license review are complete."
+    },
+    "kanshudo": {
+      "name": "Kanshudo usefulness/JLPT kanji data",
+      "tier": "dictionary-learning-platform",
+      "status": "planned",
+      "sourceType": "jlpt-kanji-list",
+      "url": "https://www.kanshudo.com/",
+      "independent": true,
+      "independenceGroup": "kanshudo",
+      "japanesePublished": false,
+      "countsForConsensus": true,
+      "weight": 1,
+      "licenseStatus": "needs_review",
+      "notes": "Use only after license and extraction terms are reviewed."
+    },
+    "jpdb": {
+      "name": "jpdb kanji metadata",
+      "tier": "frequency-and-jlpt-platform",
+      "status": "planned",
+      "sourceType": "frequency-and-jlpt-signal",
+      "url": "https://jpdb.io/",
+      "independent": true,
+      "independenceGroup": "jpdb",
+      "japanesePublished": false,
+      "countsForConsensus": true,
+      "weight": 1,
+      "licenseStatus": "needs_review",
+      "notes": "Frequency is a sanity signal, not an automatic JLPT level assignment."
+    },
+    "wanikani": {
+      "name": "WaniKani kanji metadata",
+      "tier": "learning-platform",
+      "status": "planned",
+      "sourceType": "level-and-jlpt-signal",
+      "url": "https://www.wanikani.com/",
+      "independent": true,
+      "independenceGroup": "wanikani",
+      "japanesePublished": false,
+      "countsForConsensus": true,
+      "weight": 1,
+      "licenseStatus": "needs_review",
+      "notes": "Use only after license and API/export terms are reviewed."
+    },
+    "japanese_textbook_consensus": {
+      "name": "Japanese-published textbook consensus",
+      "tier": "japanese-published-study-material",
+      "status": "planned",
+      "sourceType": "manual-textbook-consensus",
+      "independent": true,
+      "independenceGroup": "japanese_textbook_consensus",
+      "japanesePublished": true,
+      "countsForConsensus": true,
+      "weight": 2,
+      "licenseStatus": "restricted",
+      "notes": "Manual evidence bucket for Japanese-published study materials such as Shin Kanzen Master, Sou Matome, and TRY. Do not copy copyrighted lists; record reviewed level judgments and citations only where permitted."
+    },
+    "joyo_grade": {
+      "name": "Joyo kanji grade metadata",
+      "tier": "official-japanese-background",
+      "status": "planned",
+      "sourceType": "official-background-metadata",
+      "url": "https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+      "independent": true,
+      "independenceGroup": "joyo_grade",
+      "japanesePublished": true,
+      "countsForConsensus": false,
+      "weight": 1,
+      "licenseStatus": "needs_review",
+      "notes": "Official background metadata for sanity checks; school grade is not a JLPT assignment and must not vote directly in consensus."
+    }
+  },
+  "assignments": {
+    "tanos": {},
+    "jlptsensei": {},
+    "kanshudo": {},
+    "jpdb": {},
+    "wanikani": {},
+    "japanese_textbook_consensus": {},
+    "joyo_grade": {}
+  }
+}

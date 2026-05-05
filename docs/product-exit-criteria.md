@@ -36,6 +36,7 @@ For active word platinum, the reviewed word level must follow the word-level pla
 A kanji level ships only when all criteria are true:
 
 - Canonical JLPT taxonomy is governed by tracked contracts.
+- JLPT kanji taxonomy has passing independent source-evidence consensus before deck movement or release claims depend on level placement.
 - Golden review coverage for that shipped level is complete.
 - Platinum review is complete for the shipped kanji level. Golden review protects the export surface; platinum review decides whether each card deserves to ship.
 - Exported cards preserve the individual-kanji learning contract: `DisplayWord` equals the target kanji, `PrimaryReading` is the most learner-useful level-appropriate reading, `MeaningJP` is the meaning associated with that primary reading, `KanjiMeanings` carries broader kanji meanings, curated `blockedMeanings` suppresses low-value dictionary glosses, and compound words do not replace the card anchor.
@@ -70,6 +71,7 @@ A word level ships only when all criteria are true:
 - N3 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N2 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N1 kanji: golden-reviewed at `1231/1231`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
+- JLPT kanji source evidence: governed separately from the operational taxonomy; current audit is expected to fail until independent source assignments are populated and reviewed
 - N5 word: expanded to `331` governed rows, but current word-level placement audit fails with `46/331` N5 rows placed earlier than their kanji anchor allows; old golden/platinum passes are not release approval under the current policy
 - N4 word: expanded to `535` governed rows, but current word-level placement audit fails with `92/535` N4 rows missing explicit learner-fit reasons for later placement; N4 word golden/platinum readiness is blocked until those rows are moved or documented with reviewed learner-fit rationale
 
@@ -81,6 +83,7 @@ Minimum automated gate:
 npm test
 npm run lint
 npm run data:audit:jlpt
+npm run data:audit:jlpt:sources -- --strict
 npm run data:audit:jlpt:words
 npm run data:audit:audio -- --json
 npm run deck:review:accessibility -- --deck-kind=kanji
@@ -96,7 +99,7 @@ npm run release:gate
 
 `product:artifacts:kanji:n5:preflight` reports whether tracked templates are sufficient to certify fresh N5 kanji TSV generation without ignored local `data/` inputs. It currently reports that certification is blocked because rich kanji readings and rich-source provenance are not tracked release contracts yet. Component/radical source data is tracked in `templates/kanji_component_contract.json`.
 
-`product:readiness:n5` is the current automated N5 product checkpoint. It runs the JLPT kanji audit, JLPT word audit, governed audio provenance audit, tracked-source N5 word TSV artifact checkpoint, N5 kanji golden review, and N5 word golden review. It must not be used to claim N5 word release readiness while `npm run deck:words:level-anchor-audit -- --level=5` fails. That audit now distinguishes rows placed too early from rows placed later without explicit learner-fit rationale. It does not certify platinum review, tracked-source kanji TSVs, fresh `.apkg` product artifacts, manual Anki import review, mobile QA, screen-reader QA, or listening QA.
+`product:readiness:n5` is the current automated N5 product checkpoint. It runs the JLPT kanji audit, JLPT kanji source-evidence audit, JLPT word audit, governed audio provenance audit, tracked-source N5 word TSV artifact checkpoint, N5 kanji golden review, and N5 word golden review. It must not be used to claim N5 word release readiness while `npm run deck:words:level-anchor-audit -- --level=5` fails or while `npm run data:audit:jlpt:sources -- --strict` fails. The word placement audit distinguishes rows placed too early from rows placed later without explicit learner-fit rationale. It does not certify platinum review, tracked-source kanji TSVs, fresh `.apkg` product artifacts, manual Anki import review, mobile QA, screen-reader QA, or listening QA.
 
 `release:gate` validates smoke-fixture artifacts and packaging contracts. It does not certify public product deck readiness. Add level-specific review commands for the deck being shipped, including `npm run deck:words:review:n5` for an N5 word release.
 

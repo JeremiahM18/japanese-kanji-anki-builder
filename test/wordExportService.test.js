@@ -1069,7 +1069,15 @@ test("starter curated data provides learner-friendly kanji breakdown fallbacks",
     assert.deepEqual(curatedStudyData["週"].breakdownDisplayWord, { written: "週", pron: "しゅう" });
     assert.deepEqual(curatedStudyData["生"].breakdownDisplayWord, { written: "生", pron: "せい" });
     assert.deepEqual(curatedStudyData["仕"].breakdownDisplayWord, { written: "仕", pron: "し" });
-    assert.deepEqual(curatedStudyData["事"].breakdownDisplayWord, { written: "事", pron: "ごと" });
+    assert.deepEqual(
+        curatedStudyData["仕"].breakdownOverrides.find((entry) => entry.matchWord === "仕える").displayWord,
+        { written: "仕", pron: "つか" }
+    );
+    assert.deepEqual(curatedStudyData["事"].breakdownDisplayWord, { written: "事", pron: "こと" });
+    assert.deepEqual(
+        curatedStudyData["事"].breakdownOverrides.find((entry) => entry.matchWord === "仕事").displayWord,
+        { written: "事", pron: "ごと" }
+    );
     assert.deepEqual(curatedStudyData["働"].breakdownDisplayWord, { written: "働く", pron: "はたらく" });
     assert.deepEqual(curatedStudyData["誕"].breakdownDisplayWord, { written: "誕", pron: "たん" });
     assert.deepEqual(curatedStudyData["去"].displayWord, { written: "去", pron: "きょ" });
@@ -1083,6 +1091,10 @@ test("starter curated data provides learner-friendly kanji breakdown fallbacks",
     assert.equal(curatedStudyData["仕"].breakdownEnglishMeaning, "service / work");
     assert.equal(curatedStudyData["事"].breakdownEnglishMeaning, "matter / task");
     assert.equal(curatedStudyData["会"].breakdownEnglishMeaning, "meeting / gathering");
+    assert.deepEqual(
+        curatedStudyData["会"].breakdownOverrides.find((entry) => entry.matchWord === "会う").displayWord,
+        { written: "会", pron: "あ" }
+    );
     assert.deepEqual(curatedStudyData["社"].breakdownDisplayWord, { written: "社", pron: "しゃ" });
     assert.equal(curatedStudyData["院"].breakdownEnglishMeaning, "institution / facility");
     assert.deepEqual(curatedStudyData["本"].breakdownDisplayWord, { written: "本", pron: "ほん" });

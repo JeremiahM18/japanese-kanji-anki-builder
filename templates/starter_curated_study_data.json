@@ -686,8 +686,8 @@
   "主": {
     "englishMeaning": "main / primary",
     "displayWord": {
-      "written": "主に",
-      "pron": "おもに"
+      "written": "主",
+      "pron": "おも"
     },
     "breakdownOverrides": [
       {
@@ -1230,9 +1230,26 @@
     },
     "breakdownDisplayWord": {
       "written": "事",
-      "pron": "ごと"
+      "pron": "こと"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "仕事",
+        "displayWord": {
+          "written": "事",
+          "pron": "ごと"
+        },
+        "englishMeaning": "matter / task"
+      },
+      {
+        "matchWord": "仕事中",
+        "displayWord": {
+          "written": "事",
+          "pron": "ごと"
+        },
+        "englishMeaning": "matter / task"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -1246,6 +1263,9 @@
       "大事"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "possibly"
+    ],
     "blockedSentencePhrases": [],
     "notes": "事 （こと） - matter / thing ／ 仕事 （しごと） - work",
     "alternativeNotes": [],
@@ -1680,6 +1700,9 @@
       "京都"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "10**16"
+    ],
     "blockedSentencePhrases": [],
     "notes": "東京 （とうきょう） - Tokyo ／ 京都 （きょうと） - Kyoto",
     "alternativeNotes": [],
@@ -1946,7 +1969,7 @@
     }
   },
   "仕": {
-    "englishMeaning": "serve / do",
+    "englishMeaning": "service / work",
     "breakdownEnglishMeaning": "service / work",
     "displayWord": {
       "written": "仕",
@@ -1956,7 +1979,16 @@
       "written": "仕",
       "pron": "し"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "仕える",
+        "displayWord": {
+          "written": "仕",
+          "pron": "つか"
+        },
+        "englishMeaning": "serve / do"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -1971,12 +2003,12 @@
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "仕える （つかえる） - serve ／ 仕事 （しごと） - work",
+    "notes": "仕事 （しごと） - work ／ 仕える （つかえる） - serve",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "昔は王に仕える人がいました。",
-      "reading": "むかしはおうにつかえるひとがいました。",
-      "english": "In the past there were people who served a king.",
+      "japanese": "新しい仕事を始めます。",
+      "reading": "あたらしいしごとをはじめます。",
+      "english": "I will start a new job.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -2615,13 +2647,30 @@
     }
   },
   "会": {
-    "englishMeaning": "meet / association",
+    "englishMeaning": "meeting / association",
     "breakdownEnglishMeaning": "meeting / gathering",
     "breakdownDisplayWord": {
       "written": "会",
       "pron": "かい"
     },
-    "breakdownOverrides": [],
+    "breakdownOverrides": [
+      {
+        "matchWord": "会う",
+        "displayWord": {
+          "written": "会",
+          "pron": "あ"
+        },
+        "englishMeaning": "meet / association"
+      },
+      {
+        "matchWord": "会わせる",
+        "displayWord": {
+          "written": "会",
+          "pron": "あ"
+        },
+        "englishMeaning": "meet / association"
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "core",
@@ -2630,17 +2679,18 @@
     ],
     "jlpt": 4,
     "preferredWords": [
-      "会う",
-      "会社"
+      "会社",
+      "会議",
+      "会う"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "会う （あう） - meet ／ 会社 （かいしゃ） - company",
+    "notes": "会社 （かいしゃ） - company ／ 会議 （かいぎ） - meeting",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "友だちに会います。",
-      "reading": "ともだちにあいます。",
-      "english": "I will meet a friend.",
+      "japanese": "明日は会社で会議があります。",
+      "reading": "あしたはかいしゃでかいぎがあります。",
+      "english": "There is a meeting at the company tomorrow.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -3138,6 +3188,9 @@
       "体"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "counter for images"
+    ],
     "blockedSentencePhrases": [],
     "notes": "体 （からだ） - body ／ 体調 （たいちょう） - physical condition",
     "alternativeNotes": [],

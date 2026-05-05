@@ -1,7 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { parseArgs, parseWordTsvForPlatinum } = require("../scripts/reviewPlatinumWordLevel");
+const { buildWordExportOptions, parseArgs, parseWordTsvForPlatinum } = require("../scripts/reviewPlatinumWordLevel");
 const { parseArgs: parseBatchReportArgs } = require("../scripts/platinumWordBatchReport");
 
 test("parseArgs accepts platinum word review options", () => {
@@ -34,6 +34,21 @@ test("platinumWordBatchReport defaults word review batches to eight cards", () =
     const options = parseBatchReportArgs(["--level=N5"]);
 
     assert.equal(options.limit, 8);
+});
+
+test("platinum word row builder uses the managed media root for exact word audio", () => {
+    const options = buildWordExportOptions({
+        level: 5,
+        config: { mediaRootDir: "C:/repo/data/media" },
+        jlptOnlyJson: { 日: { jlpt: 5 } },
+        jlptWordLevelContract: { wordLevels: {} },
+        kanjiApiClient: {},
+        strokeOrderService: {},
+        audioService: {},
+    });
+
+    assert.equal(options.mediaRootDir, "C:/repo/data/media");
+    assert.equal(options.includeInferred, false);
 });
 
 test("parseWordTsvForPlatinum preserves release-critical word card fields", () => {

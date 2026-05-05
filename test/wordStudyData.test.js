@@ -912,6 +912,14 @@ test("tracked starter word data keeps formal support words on harder decks", () 
     assert.equal(starterEntries["読書|どくしょ"].tags.includes("n3"), true);
     assert.equal(starterEntries["読書|どくしょ"].coverage.coversReadings["読"], "どく");
     assert.equal(starterEntries["読書|どくしょ"].coverage.coversReadings["書"], "しょ");
+
+    assert.equal(starterEntries["上昇|じょうしょう"].jlpt, 1);
+    assert.equal(starterEntries["上昇|じょうしょう"].tags.includes("n1"), true);
+    assert.equal(starterEntries["上昇|じょうしょう"].coverage.coversReadings["上"], "じょう");
+
+    assert.equal(starterEntries["木刀|ぼくとう"].jlpt, 1);
+    assert.equal(starterEntries["木刀|ぼくとう"].tags.includes("n1"), true);
+    assert.equal(starterEntries["木刀|ぼくとう"].coverage.coversReadings["木"], "ぼく");
 });
 
 test("tracked starter word data includes the twenty-seventh governed N4 completion batch", () => {
@@ -1300,7 +1308,6 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
         ["世間|せけん", "間", "けん"],
         ["半ば|なかば", "半", "なかば"],
         ["小指|こゆび", "小", "こ"],
-        ["木刀|ぼくとう", "木", "ぼく"],
         ["木陰|こかげ", "木", "こ"],
         ["春雨|はるさめ", "雨", "さめ"],
         ["女神|めがみ", "女", "め"],
@@ -1333,7 +1340,6 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
         ["足下|あしもと", "下", "もと"],
         ["出来上がり|できあがり", "上", "あがり"],
         ["一生|いっしょう", "生", "しょう"],
-        ["上昇|じょうしょう", "上", "じょう"],
         ["行方|ゆくえ", "行", "ゆく"],
         ["生地|きじ", "生", "き"],
         ["生地|きじ", "地", "じ"],

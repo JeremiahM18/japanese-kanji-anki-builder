@@ -70,6 +70,27 @@ function parseWordTsvForPlatinum(tsv) {
     return rows;
 }
 
+function buildWordExportOptions({
+    level,
+    config,
+    jlptOnlyJson,
+    jlptWordLevelContract,
+    kanjiApiClient,
+    strokeOrderService,
+    audioService,
+} = {}) {
+    return {
+        levelNumber: level,
+        jlptOnlyJson,
+        jlptWordLevelContract,
+        kanjiApiClient,
+        strokeOrderService,
+        audioService,
+        mediaRootDir: config?.mediaRootDir || "",
+        includeInferred: false,
+    };
+}
+
 async function buildWordRowsForLevel({ level, config }) {
     const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
     const jlptWordLevelContract = loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json"));
@@ -89,15 +110,15 @@ async function buildWordRowsForLevel({ level, config }) {
         wordStudyData,
         wordPitchAccentData,
     });
-    const result = await wordExportService.buildWordTsvForJlptLevel({
-        levelNumber: level,
+    const result = await wordExportService.buildWordTsvForJlptLevel(buildWordExportOptions({
+        level,
+        config,
         jlptOnlyJson,
         jlptWordLevelContract,
         kanjiApiClient,
         strokeOrderService,
         audioService,
-        includeInferred: false,
-    });
+    }));
 
     return parseWordTsvForPlatinum(result.tsv);
 }
@@ -150,6 +171,7 @@ if (require.main === module) {
 }
 
 module.exports = {
+    buildWordExportOptions,
     buildWordRowsForLevel,
     main,
     parseArgs,

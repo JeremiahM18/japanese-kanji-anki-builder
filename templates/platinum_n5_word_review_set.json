@@ -33737,5 +33737,591 @@
     "reviewedAt": "2026-05-05",
     "reviewer": "codex-platinum-review",
     "decisionReason": "Removed from the N5 word deck because 天気雨|てんきあめ is a low-frequency weather term and 雨 -> あめ already has stronger beginner coverage through 雨; do not keep a sunshower card just for extra coverage."
+  },
+  {
+    "word": "手本",
+    "status": "platinum",
+    "readingIncludes": [
+      "てほん"
+    ],
+    "meaningIncludes": [
+      "model",
+      "example to copy"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "本"
+    ],
+    "coversReadingIncludes": [
+      "本: ほん"
+    ],
+    "breakdownIncludes": [
+      "手 （て） ／ hand",
+      "本 （ほん） ／ book / base"
+    ],
+    "exampleIncludes": [
+      "先生の字を手本にして書きます。"
+    ],
+    "notesIncludes": [
+      "Common classroom/study word; retained because it is useful for copying a model/example, not merely to cover 本 -> ほん."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Kept because it is a common classroom and study-context word learners can use when copying a model or example; the card is not needed for 本 coverage alone and visibly labels the outside-level 手 kanji.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 手本|てほん: word 手本, reading てほん, meaning model / example to copy, example 先生の字を手本にして書きます。, audio word-reading-手本-てほん, labels JLPT N5 Reading coverage support, focus 本, covered readings 本: ほん, and pitch Pitch 1: 2."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 手本|てほん, reading てほん, meaning model / example to copy, example 先生の字を手本にして書きます。, notes Common classroom/study word; retained because it is useful for copying a model/example, not merely to cover 本 -> ほん., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%89%8B%E6%9C%AC",
+        "detail": "JLearn.net verifies 手本|てほん as a common noun with reading てほん and meanings copybook / model / pattern. Product review checked example 先生の字を手本にして書きます。 for 手本|てほん, reading てほん, and learner meaning model / example to copy."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 手本|てほん for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 手本|てほん, reading てほん, sentence 先生の字を手本にして書きます。, exported sentence reading せんせいのじをてほんにしてかきます。, and English gloss I copy the teacher's writing as a model.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 手本|てほん; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 手本|てほん exact asset fragment word-reading-手本-てほん for exported reading てほん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 手本|てほん source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka], rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 手本|てほん JLPT N5, Reading coverage support, focus 本, covered readings 本: ほん, visible outside-level label for 手."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 手本|てほん common and learner-friendly for the N5 word deck, with accurate reading てほん, meaning model / example to copy, and example 先生の字を手本にして書きます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "眼鏡",
+    "status": "platinum",
+    "readingIncludes": [
+      "めがね"
+    ],
+    "meaningIncludes": [
+      "glasses",
+      "eyeglasses"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "鏡"
+    ],
+    "coversReadingIncludes": [
+      "鏡: がね"
+    ],
+    "breakdownIncludes": [
+      "眼 （め） ／ eye / viewpoint",
+      "鏡 （がね） ／ mirror"
+    ],
+    "exampleIncludes": [
+      "新しい眼鏡を買いました。"
+    ],
+    "notesIncludes": [
+      "Useful N5 glasses word. Often written めがね or メガネ; the kanji spelling is retained for recognition and labels 眼・鏡 as higher-level kanji instead of hiding them."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Kept because glasses is core learner vocabulary and the kanji spelling is useful for recognition; the card now warns that めがね/メガネ is common and labels both N1 kanji instead of pretending the form is beginner-level.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 眼鏡|めがね: word 眼鏡, reading めがね, meaning glasses / eyeglasses, example 新しい眼鏡を買いました。, audio word-reading-眼鏡-めがね, labels JLPT N5 Reading coverage support, focus 鏡, covered readings 鏡: がね, and pitch Pitch 1: 1."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 眼鏡|めがね, reading めがね, meaning glasses / eyeglasses, example 新しい眼鏡を買いました。, notes Useful N5 glasses word. Often written めがね or メガネ; the kanji spelling is retained for recognition and labels 眼・鏡 as higher-level kanji instead of hiding them., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E7%9C%BC%E9%8F%A1",
+        "detail": "JLearn.net verifies 眼鏡|めがね as a common JLPT N5/N1 noun with reading めがね and meanings glasses / eyeglasses, while marking the spelling as usually kana. Product review checked example 新しい眼鏡を買いました。 for 眼鏡|めがね, reading めがね, and learner meaning glasses / eyeglasses."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 眼鏡|めがね for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 眼鏡|めがね, reading めがね, sentence 新しい眼鏡を買いました。, exported sentence reading あたらしいめがねをかいました。, and English gloss I bought new glasses.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 眼鏡|めがね; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 眼鏡|めがね exact asset fragment word-reading-眼鏡-めがね for exported reading めがね; the resolved managed manifest host is 金."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 眼鏡|めがね source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 眼鏡|めがね JLPT N5, Reading coverage support, focus 鏡, covered readings 鏡: がね, visible outside-level labels for 眼 and 鏡 plus the note that めがね/メガネ spellings are common."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 眼鏡|めがね common and learner-friendly for the N5 word deck, with accurate reading めがね, meaning glasses / eyeglasses, and example 新しい眼鏡を買いました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "十回",
+    "status": "platinum",
+    "readingIncludes": [
+      "じっかい"
+    ],
+    "meaningIncludes": [
+      "ten times"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "十"
+    ],
+    "coversReadingIncludes": [
+      "十: じっ"
+    ],
+    "breakdownIncludes": [
+      "十 （じっ） ／ ten",
+      "回 （かい） ／ time / occurrence"
+    ],
+    "exampleIncludes": [
+      "この漢字を十回書いてください。"
+    ],
+    "notesIncludes": [
+      "Reading-coverage support word for the common 十 -> じっ counter pattern."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 4",
+      "Generated pitch (unverified)"
+    ],
+    "selectionRationale": "Kept because 十回 is a practical counter expression learners can immediately use for repetition and practice; generated pitch is accepted only because the card visibly labels it as Generated pitch (unverified).",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 十回|じっかい: word 十回, reading じっかい, meaning ten times, example この漢字を十回書いてください。, audio word-reading-十回-じっかい, labels JLPT N5 Reading coverage support, focus 十, covered readings 十: じっ, and pitch Pitch 1: 4 / Generated pitch (unverified)."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 十回|じっかい, reading じっかい, meaning ten times, example この漢字を十回書いてください。, notes Reading-coverage support word for the common 十 -> じっ counter pattern., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8D%81%E5%9B%9E",
+        "detail": "JLearn.net verifies 十回|じっかい as a noun meaning ten times and records 十回|じゅっかい as another reading. Product review checked example この漢字を十回書いてください。 for 十回|じっかい, reading じっかい, and learner meaning ten times."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 十回|じっかい for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 十回|じっかい, reading じっかい, sentence この漢字を十回書いてください。, exported sentence reading このかんじをじっかいかいてください。, and English gloss Please write this kanji ten times.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 十回|じっかい; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 十回|じっかい exact asset fragment word-reading-十回-じっかい for exported reading じっかい."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 十回|じっかい source voicevox-nemo-reading-query pattern 4 [odaka], rendered label Pitch 1: 4 / Generated pitch (unverified)."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 十回|じっかい JLPT N5, Reading coverage support, focus 十, covered readings 十: じっ, visible outside-level label for 回 and generated pitch label."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 十回|じっかい common and learner-friendly for the N5 word deck, with accurate reading じっかい, meaning ten times, and example この漢字を十回書いてください。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "行事",
+    "status": "platinum",
+    "readingIncludes": [
+      "ぎょうじ"
+    ],
+    "meaningIncludes": [
+      "event",
+      "school event"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "行"
+    ],
+    "coversReadingIncludes": [
+      "行: ぎょう"
+    ],
+    "breakdownIncludes": [
+      "行 （ぎょう） ／ go / line",
+      "事 （じ） ／ matter / task"
+    ],
+    "exampleIncludes": [
+      "学校の行事で公園へ行きます。"
+    ],
+    "notesIncludes": [
+      "Reading-coverage support word for the common 行 -> ぎょう pattern."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1",
+      "Pitch 2: 0"
+    ],
+    "selectionRationale": "Kept because school and seasonal events are concrete, common contexts for learners; outside-level 事 is labeled and the word is useful beyond reading coverage.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 行事|ぎょうじ: word 行事, reading ぎょうじ, meaning event / school event, example 学校の行事で公園へ行きます。, audio word-reading-行事-ぎょうじ, labels JLPT N5 Reading coverage support, focus 行, covered readings 行: ぎょう, and pitch Pitch 1: 1 / Pitch 2: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 行事|ぎょうじ, reading ぎょうじ, meaning event / school event, example 学校の行事で公園へ行きます。, notes Reading-coverage support word for the common 行 -> ぎょう pattern., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JapaneseClass.jp Dictionary https://japaneseclass.jp/dictionary/%E8%A1%8C%E4%BA%8B",
+        "detail": "JapaneseClass.jp verifies 行事|ぎょうじ as a common noun meaning event / function and includes school-event examples. Product review checked example 学校の行事で公園へ行きます。 for 行事|ぎょうじ, reading ぎょうじ, and learner meaning event / school event."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 行事|ぎょうじ for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 行事|ぎょうじ, reading ぎょうじ, sentence 学校の行事で公園へ行きます。, exported sentence reading がっこうのぎょうじでこうえんへいきます。, and English gloss We go to the park for a school event.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 行事|ぎょうじ; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 行事|ぎょうじ exact asset fragment word-reading-行事-ぎょうじ for exported reading ぎょうじ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 行事|ぎょうじ source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] / 0 [heiban], rendered label Pitch 1: 1 / Pitch 2: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 行事|ぎょうじ JLPT N5, Reading coverage support, focus 行, covered readings 行: ぎょう, visible outside-level label for 事."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 行事|ぎょうじ common and learner-friendly for the N5 word deck, with accurate reading ぎょうじ, meaning event / school event, and example 学校の行事で公園へ行きます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "帽子",
+    "status": "platinum",
+    "readingIncludes": [
+      "ぼうし"
+    ],
+    "meaningIncludes": [
+      "hat",
+      "cap"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "子"
+    ],
+    "coversReadingIncludes": [
+      "子: し"
+    ],
+    "breakdownIncludes": [
+      "帽 （ぼう） ／ hat / cap",
+      "子 （し） ／ child"
+    ],
+    "exampleIncludes": [
+      "赤い帽子を買いました。"
+    ],
+    "notesIncludes": [
+      "Reading-coverage support word for the common 子 -> し pattern."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Kept because 帽子 is core N5 everyday vocabulary and a useful recognition word despite the later-level 帽 kanji, which is visibly labeled.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 帽子|ぼうし: word 帽子, reading ぼうし, meaning hat / cap, example 赤い帽子を買いました。, audio word-reading-帽子-ぼうし, labels JLPT N5 Reading coverage support, focus 子, covered readings 子: し, and pitch Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 帽子|ぼうし, reading ぼうし, meaning hat / cap, example 赤い帽子を買いました。, notes Reading-coverage support word for the common 子 -> し pattern., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%B8%BD%E5%AD%90",
+        "detail": "JLearn.net verifies 帽子|ぼうし as a common JLPT N5 noun with reading ぼうし and meanings hat / cap. Product review checked example 赤い帽子を買いました。 for 帽子|ぼうし, reading ぼうし, and learner meaning hat / cap."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 帽子|ぼうし for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 帽子|ぼうし, reading ぼうし, sentence 赤い帽子を買いました。, exported sentence reading あかいぼうしをかいました。, and English gloss I bought a red hat.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 帽子|ぼうし; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 帽子|ぼうし exact asset fragment word-reading-帽子-ぼうし for exported reading ぼうし."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 帽子|ぼうし source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 帽子|ぼうし JLPT N5, Reading coverage support, focus 子, covered readings 子: し, visible outside-level label for 帽."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 帽子|ぼうし common and learner-friendly for the N5 word deck, with accurate reading ぼうし, meaning hat / cap, and example 赤い帽子を買いました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "上昇",
+    "status": "deferred",
+    "readingIncludes": [
+      "じょうしょう"
+    ],
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because JLearn.net classifies 上昇|じょうしょう as JLPT N1 and the rise/increase suru-noun is abstract later-level vocabulary. It is useful later, but N5 should not keep it only to cover 上 -> じょう."
+  },
+  {
+    "word": "木刀",
+    "status": "deferred",
+    "readingIncludes": [
+      "ぼくとう"
+    ],
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because 木刀|ぼくとう is a real wooden-sword word but niche and built with N1 刀. It belongs in later cultural or martial-arts vocabulary, not as beginner 木 -> ぼく coverage."
+  },
+  {
+    "word": "公園の中",
+    "status": "removed",
+    "readingIncludes": [
+      "こうえんのなか"
+    ],
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Removed from the default N5 word deck because 公園の中|こうえんのなか is a transparent compositional phrase. 公園 and 中 already carry the useful learner value, so this belongs as example/support language rather than a standalone word-card identity."
   }
 ]

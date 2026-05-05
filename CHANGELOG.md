@@ -11,9 +11,12 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 ### Added
 
 - Added `deck:words:expansion-signals`, a read-only per-level word-deck signal that reports reading-expansion exhaustion and source-list enhancement exhaustion separately without treating either signal as golden, platinum, APKG, or release readiness.
+- Added tracked source-integrity pins to the word expansion signal source config so ignored local JLPTStudy TSVs must match source URL, SHA-256, byte size, and parsed row count before enhancement exhaustion can be reported.
 
 ### Fixed
 
+- Finished the current N5 word golden and platinum review surface by promoting `本棚|ほんだな` and `留学生|りゅうがくせい` after generated-surface, audio, pitch, label, and JLearn dictionary review.
+- Finished the current N4 word golden review surface at the requested 11-card batch size, promoting all 77 previously missing generated rows into golden expectations without starting N4 platinum.
 - Finished N5 word platinum by approving source-checked `大変|たいへん`, `足下|あしもと`, `有名|ゆうめい`, `生け花|いけばな`, `休み時間|やすみじかん`, `下町|したまち`, `白米|はくまい`, and `地下|ちか`, moving later-level `行方|ゆくえ` and niche `白夜|びゃくや` to the N2 word product, and recording their N5 reading gaps as deferred instead of padding beginner coverage.
 - Fixed the N5 word platinum queue at the 8-card review size by approving source-checked `女神|めがみ`, `肉料理|にくりょうり`, `音読|おんどく`, `手間|てま`, `白紙|はくし`, `関西|かんさい`, and `彼女|かのじょ`, moving abstract later-level `世間|せけん` to the N3 word product, and recording the resulting `間 -> けん` N5 gap as deferred instead of keeping an N3 concept for coverage.
 - Fixed the N5 word platinum queue at the 8-card review size by approving source-checked `木陰|こかげ`, `魚料理|さかなりょうり`, `火照る|ほてる`, `社長|しゃちょう`, `白髪|しらが`, and `西洋|せいよう`, moving `出来上がり|できあがり` and `女房|にょうぼう` to the N2 word product, and recording the resulting N5 reading gaps as deferred instead of keeping later-level cards for coverage.

@@ -3,16 +3,28 @@
     "N5": {
       "sourcePath": "downloads/n5-vocab.tsv",
       "sourceLabel": "jlptstudy.net-n5",
+      "sourceUrl": "https://jlptstudy.net/N5/lists/n5_vocab-list.html",
       "format": "tsv",
       "kanjiScope": "known-jlpt",
-      "requireSourceLevel": true
+      "requireSourceLevel": true,
+      "checkedAt": "2026-05-05",
+      "sha256": "b933dd6f2ca08b4866e6668d2c354a506afff6641b3440e55ac7a4fd26b40de3",
+      "byteSize": 30570,
+      "rowCount": 537,
+      "integrityPolicy": "The ignored local TSV must match this tracked hash, byte size, and parsed row count before the enhancement signal can report exhausted."
     },
     "N4": {
       "sourcePath": "downloads/n4-vocab.tsv",
       "sourceLabel": "jlptstudy.net-n4",
+      "sourceUrl": "https://jlptstudy.net/N4/lists/n4_vocab-list.html",
       "format": "tsv",
       "kanjiScope": "known-jlpt",
-      "requireSourceLevel": true
+      "requireSourceLevel": true,
+      "checkedAt": "2026-05-05",
+      "sha256": "fe78e99a34beb9f8ac9481e7874ec36488f079479aa9b26bde9069ed27655dc4",
+      "byteSize": 44521,
+      "rowCount": 681,
+      "integrityPolicy": "The ignored local TSV must match this tracked hash, byte size, and parsed row count before the enhancement signal can report exhausted."
     }
   }
 }

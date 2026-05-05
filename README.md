@@ -124,7 +124,7 @@ Tracked contracts define release behavior:
 - Platinum review policy: [docs/platinum-review-policy.md](docs/platinum-review-policy.md)
 - Platinum kanji review sets: [templates/platinum_n5_review_set.json](templates/platinum_n5_review_set.json), [templates/platinum_n4_review_set.json](templates/platinum_n4_review_set.json), [templates/platinum_n3_review_set.json](templates/platinum_n3_review_set.json), [templates/platinum_n2_review_set.json](templates/platinum_n2_review_set.json), [templates/platinum_n1_review_set.json](templates/platinum_n1_review_set.json)
 - Platinum word review sets: [templates/platinum_n5_word_review_set.json](templates/platinum_n5_word_review_set.json), [templates/platinum_n4_word_review_set.json](templates/platinum_n4_word_review_set.json)
-- Word expansion signal source config: [templates/word_expansion_signal_sources.json](templates/word_expansion_signal_sources.json)
+- Word expansion signal source config and ignored-source integrity pins: [templates/word_expansion_signal_sources.json](templates/word_expansion_signal_sources.json)
 
 ## Product Rules
 
@@ -172,8 +172,8 @@ Golden and platinum review:
 | N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N1 kanji | Golden-reviewed at `1231/1231`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
-| N5 word | Expanded to `331` governed rows after the final source-expansion keepers; current initial field/media readiness passes with exact word audio, governed pitch, card-back fields, example reading alignment, and looping animations complete; golden/platinum review remains at `329/331`, so release readiness is not claimed |
-| N4 word | Expanded to `535` governed rows; current initial field/media readiness passes with exact word audio, governed pitch, card-back fields, example reading alignment, and looping animations complete; golden review remains at `458/535`, so N4 is not fully golden and release readiness is not claimed |
+| N5 word | Expanded to `331` governed rows after the final source-expansion keepers; current initial field/media readiness passes with exact word audio, governed pitch, card-back fields, example reading alignment, and looping animations complete; current golden and platinum review commands pass for all `331` active generated rows, but APKG/manual release readiness is not claimed by those commands |
+| N4 word | Expanded to `535` governed rows; current initial field/media readiness passes with exact word audio, governed pitch, card-back fields, example reading alignment, and looping animations complete; current golden review passes for all `535` generated rows; N4 word platinum is not part of this checkpoint and release readiness is not claimed |
 
 Current tracked word inventory:
 
@@ -185,7 +185,7 @@ Current tracked word inventory:
 - N1 canonical word rows: `14`
 - Current N5+N4 word rows: `866`
 - Word reading coverage from the current `deck:words:ready -- --levels=5,4 --require-no-active-triage` run: N5 `238/344` (`69.2%`), N4 `485/651` (`74.5%`). Coverage remains informational; useful/common/learner-fit decisions and explicit defer/reject reasons are the product guardrail.
-- N5+N4 word readiness: initial field/media readiness currently passes as `ready_with_deferred_variants` for both levels, with no active triage backlog. Release readiness is intentionally not claimed until the new rows pass golden and platinum review.
+- N5+N4 word readiness: initial field/media readiness currently passes as `ready_with_deferred_variants` for both levels, with no active triage backlog. Golden/platinum commands are still separate from APKG import QA, manual card QA, accessibility checks, and listening review.
 
 Run live commands for current coverage. Do not rely on README numbers for release decisions.
 
@@ -359,7 +359,9 @@ The expansion signal command answers the narrow "fully expanded under current re
 - Reading signal: `exhausted` only when active reading-gap triage is cleared. Remaining coverage gaps may still exist when they are explicitly deferred variants or lower learner value.
 - Enhancement signal: `exhausted` only when the configured source vocabulary list has no remaining `keep_candidate` rows and no untriaged review candidates.
 
-The signal is deliberately not a release claim. It does not replace golden review, platinum review, APKG import QA, accessibility checks, media/listening QA, or readiness gates. Levels without configured source lists or generated TSV exports report that blocker instead of pretending to be complete.
+The configured source TSVs under `downloads/` are ignored local inputs, so the signal source config pins their source URL, source label, SHA-256, byte size, and parsed row count. The enhancement signal verifies those pins before reporting `exhausted`; a mismatch reports `source_mismatch` and strict mode fails instead of trusting an unverified local file.
+
+The signal is deliberately not a release claim. It does not replace golden review, platinum review, APKG import QA, accessibility checks, media/listening QA, or readiness gates. Levels without configured source lists, matching source integrity, or generated TSV exports report that blocker instead of pretending to be complete.
 
 ## Media Workflows
 

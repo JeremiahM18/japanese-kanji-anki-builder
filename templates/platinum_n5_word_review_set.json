@@ -36737,5 +36737,235 @@
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
     }
+  },
+  {
+    "word": "本棚",
+    "status": "platinum",
+    "readingIncludes": [
+      "ほんだな"
+    ],
+    "meaningIncludes": [
+      "bookshelf",
+      "bookcase"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "本",
+      "棚"
+    ],
+    "coversReadingIncludes": [
+      "本: ほん",
+      "棚: だな"
+    ],
+    "breakdownIncludes": [
+      "本 （ほん） ／ book / base",
+      "棚 （だな） ／ shelf"
+    ],
+    "exampleIncludes": [
+      "本棚に辞書があります。"
+    ],
+    "notesIncludes": [
+      "Common N5 household/classroom word; 棚 is a higher-level kanji and must stay labeled on the N5 card."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Kept because 本棚 is common, concrete household/classroom vocabulary and gives clean 本 -> ほん / 棚 -> だな support without pretending 棚 is N5 kanji.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --words=本棚:ほんだな,留学生:りゅうがくせい",
+        "detail": "Generated word-card surface inspected for 本棚|ほんだな: word 本棚, reading ほんだな, meaning bookshelf / bookcase, example 本棚に辞書があります。, audio word-reading-本棚-ほんだな, labels JLPT N5 JLPT core + reading coverage, focus 本 and 棚, covered readings 本: ほん and 棚: だな, notes Common N5 household/classroom word; 棚 is a higher-level kanji and must stay labeled on the N5 card., and pitch Pitch 1: 1."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 本棚|ほんだな, reading ほんだな, meaning bookshelf / bookcase, example 本棚に辞書があります。, notes Common N5 household/classroom word; 棚 is a higher-level kanji and must stay labeled on the N5 card., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%9C%AC%E6%A3%9A",
+        "detail": "JLearn.net verifies 本棚|ほんだな as a JLPT N5 common noun with reading ほんだな and meanings bookshelves / bookshelf / bookcase. Product review checked 本棚|ほんだな, example 本棚に辞書があります。, reading ほんだな, and learner meaning bookshelf / bookcase."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 本棚|ほんだな for JLPT N5; product review confirmed it belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 本棚|ほんだな, reading ほんだな, sentence 本棚に辞書があります。, exported sentence reading ほんだなにじしょがあります。, and English gloss There is a dictionary on the bookshelf."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 本棚|ほんだな; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 本棚|ほんだな exact asset fragment word-reading-本棚-ほんだな for exported reading ほんだな."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 本棚|ほんだな source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 本棚|ほんだな JLPT N5, JLPT core + reading coverage, focus 本 and 棚, covered readings 本: ほん and 棚: だな, and visible higher-level kanji labels: 棚 is labeled JLPT N1 kanji."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 本棚|ほんだな common and learner-friendly for the N5 word deck, with accurate reading ほんだな, meaning bookshelf / bookcase, and example 本棚に辞書があります。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "留学生",
+    "status": "platinum",
+    "readingIncludes": [
+      "りゅうがくせい"
+    ],
+    "meaningIncludes": [
+      "international student",
+      "overseas student"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "留",
+      "学",
+      "生"
+    ],
+    "coversReadingIncludes": [
+      "留: りゅう",
+      "学: がく",
+      "生: せい"
+    ],
+    "breakdownIncludes": [
+      "留 （りゅう） ／ study abroad / stay",
+      "学 （がく） ／ study / learning",
+      "生 （せい） ／ life / birth"
+    ],
+    "exampleIncludes": [
+      "クラスに留学生がいます。"
+    ],
+    "notesIncludes": [
+      "Common learner-relevant N5 school word; 留 is a higher-level kanji and must stay labeled on the N5 card."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Pitch 2: 4"
+    ],
+    "selectionRationale": "Kept because 留学生 is common learner-relevant school vocabulary and gives clean 留 -> りゅう / 学 -> がく / 生 -> せい support while clearly labeling 留 as higher-level kanji.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5 --words=本棚:ほんだな,留学生:りゅうがくせい",
+        "detail": "Generated word-card surface inspected for 留学生|りゅうがくせい: word 留学生, reading りゅうがくせい, meaning international student / overseas student, example クラスに留学生がいます。, audio word-reading-留学生-りゅうがくせい, labels JLPT N5 JLPT core + reading coverage, focus 留, 学, and 生, covered readings 留: りゅう, 学: がく, and 生: せい, notes Common learner-relevant N5 school word; 留 is a higher-level kanji and must stay labeled on the N5 card., and pitch Pitch 1: 3 / Pitch 2: 4."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 留学生|りゅうがくせい, reading りゅうがくせい, meaning international student / overseas student, example クラスに留学生がいます。, notes Common learner-relevant N5 school word; 留 is a higher-level kanji and must stay labeled on the N5 card., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E7%95%99%E5%AD%A6%E7%94%9F",
+        "detail": "JLearn.net verifies 留学生|りゅうがくせい as a JLPT N5 common noun with reading りゅうがくせい and meanings overseas student / exchange student. Product review checked 留学生|りゅうがくせい, example クラスに留学生がいます。, reading りゅうがくせい, and learner meaning international student / overseas student."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 留学生|りゅうがくせい for JLPT N5; product review confirmed it belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 留学生|りゅうがくせい, reading りゅうがくせい, sentence クラスに留学生がいます。, exported sentence reading クラスにりゅうがくせいがいます。, and English gloss There is an international student in the class."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 留学生|りゅうがくせい; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 留学生|りゅうがくせい exact asset fragment word-reading-留学生-りゅうがくせい for exported reading りゅうがくせい."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 留学生|りゅうがくせい source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] / 4 [nakadaka], rendered labels Pitch 1: 3 / Pitch 2: 4."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 留学生|りゅうがくせい JLPT N5, JLPT core + reading coverage, focus 留, 学, and 生, covered readings 留: りゅう, 学: がく, and 生: せい, and visible higher-level kanji labels: 留 is labeled JLPT N3 kanji."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 留学生|りゅうがくせい common and learner-friendly for the N5 word deck, with accurate reading りゅうがくせい, meaning international student / overseas student, and example クラスに留学生がいます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   }
 ]

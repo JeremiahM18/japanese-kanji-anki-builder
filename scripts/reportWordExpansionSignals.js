@@ -1,5 +1,6 @@
 const fs = require("node:fs");
 const path = require("node:path");
+const crypto = require("node:crypto");
 
 const { loadConfig } = require("../src/config");
 const { loadJlptLevelContract } = require("../src/datasets/jlptLevelContract");
@@ -91,6 +92,39 @@ function loadExpansionSignalSources(configPath = DEFAULT_SIGNAL_SOURCE_CONFIG) {
         path: resolvedPath,
         levels: parsed?.levels || {},
     };
+}
+
+function normalizeSha256(value) {
+    return String(value || "").trim().toLowerCase();
+}
+
+function buildSourceFileIntegrity({ sourceBuffer, sourceRows } = {}) {
+    const buffer = Buffer.isBuffer(sourceBuffer) ? sourceBuffer : Buffer.from(String(sourceBuffer || ""), "utf8");
+    return {
+        sha256: crypto.createHash("sha256").update(buffer).digest("hex"),
+        byteSize: buffer.length,
+        rowCount: Array.isArray(sourceRows) ? sourceRows.length : null,
+    };
+}
+
+function validateExpansionSourceIntegrity(sourceConfig = {}, integrity = {}) {
+    const blockers = [];
+    const expectedSha256 = normalizeSha256(sourceConfig.sha256);
+    const actualSha256 = normalizeSha256(integrity.sha256);
+
+    if (expectedSha256 && actualSha256 !== expectedSha256) {
+        blockers.push(`source sha256 mismatch: expected ${expectedSha256}, got ${actualSha256 || "missing"}`);
+    }
+
+    if (Number.isInteger(sourceConfig.byteSize) && integrity.byteSize !== sourceConfig.byteSize) {
+        blockers.push(`source byte size mismatch: expected ${sourceConfig.byteSize}, got ${integrity.byteSize}`);
+    }
+
+    if (Number.isInteger(sourceConfig.rowCount) && integrity.rowCount !== sourceConfig.rowCount) {
+        blockers.push(`source row count mismatch: expected ${sourceConfig.rowCount}, got ${integrity.rowCount}`);
+    }
+
+    return blockers;
 }
 
 function buildCoverageWordTsvByLevel(level) {
@@ -260,6 +294,7 @@ function buildEnhancementSignal({ level, sourceConfig, shared }) {
             sourceLabel: "",
             sourcePath: "",
             sourceExists: false,
+            sourceIntegrity: null,
             reviewCandidateRows: null,
             triagedCandidateRows: null,
             untriagedCandidateRows: null,
@@ -281,6 +316,7 @@ function buildEnhancementSignal({ level, sourceConfig, shared }) {
             sourceLabel,
             sourcePath,
             sourceExists: false,
+            sourceIntegrity: null,
             reviewCandidateRows: null,
             triagedCandidateRows: null,
             untriagedCandidateRows: null,
@@ -295,9 +331,33 @@ function buildEnhancementSignal({ level, sourceConfig, shared }) {
     }
 
     try {
-        const sourceRows = parseCandidateSourceText(fs.readFileSync(sourcePath, "utf8"), {
+        const sourceBuffer = fs.readFileSync(sourcePath);
+        const sourceRows = parseCandidateSourceText(sourceBuffer.toString("utf8"), {
             format: sourceConfig.format || "auto",
         });
+        const sourceIntegrity = buildSourceFileIntegrity({ sourceBuffer, sourceRows });
+        const sourceIntegrityBlockers = validateExpansionSourceIntegrity(sourceConfig, sourceIntegrity);
+
+        if (sourceIntegrityBlockers.length > 0) {
+            return {
+                status: "source_mismatch",
+                sourceLabel,
+                sourcePath,
+                sourceExists: true,
+                sourceIntegrity,
+                reviewCandidateRows: null,
+                triagedCandidateRows: null,
+                untriagedCandidateRows: null,
+                keepCandidates: null,
+                deferCandidates: null,
+                rejectCandidates: null,
+                kanjiScope: sourceConfig.kanjiScope || "",
+                requireSourceLevel: Boolean(sourceConfig.requireSourceLevel),
+                reason: "Enhancement source-list inventory cannot be evaluated because the ignored local source file no longer matches the tracked integrity manifest.",
+                blockers: sourceIntegrityBlockers,
+            };
+        }
+
         const report = buildWordInventoryExpansionCandidateReport({
             sourceRows,
             targetLevel: level,
@@ -319,6 +379,7 @@ function buildEnhancementSignal({ level, sourceConfig, shared }) {
             ...signal,
             sourcePath,
             sourceExists: true,
+            sourceIntegrity,
         };
     } catch (error) {
         return {
@@ -326,6 +387,7 @@ function buildEnhancementSignal({ level, sourceConfig, shared }) {
             sourceLabel,
             sourcePath,
             sourceExists: true,
+            sourceIntegrity: null,
             reviewCandidateRows: null,
             triagedCandidateRows: null,
             untriagedCandidateRows: null,
@@ -480,6 +542,7 @@ module.exports = {
     DEFAULT_SIGNAL_SOURCE_CONFIG,
     assertValidLevels,
     buildEnhancementSignalFromCandidateReport,
+    buildSourceFileIntegrity,
     buildLevelExpansionSignal,
     buildReadingSignalFromCompletionReport,
     buildWordExpansionSignalReport,
@@ -490,4 +553,5 @@ module.exports = {
     parseArgs,
     resolveKanjiTsvPath,
     resolveWordTsvPath,
+    validateExpansionSourceIntegrity,
 };

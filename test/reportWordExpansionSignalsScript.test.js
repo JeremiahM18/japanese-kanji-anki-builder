@@ -4,8 +4,10 @@ const assert = require("node:assert/strict");
 const {
     buildEnhancementSignalFromCandidateReport,
     buildReadingSignalFromCompletionReport,
+    buildSourceFileIntegrity,
     formatWordExpansionSignalReport,
     parseArgs,
+    validateExpansionSourceIntegrity,
 } = require("../scripts/reportWordExpansionSignals");
 
 test("parseArgs supports word expansion signal options", () => {
@@ -120,6 +122,34 @@ test("enhancement signal separates keep, untriaged, and exhausted source candida
 
     assert.equal(needsTriage.status, "needs_triage");
     assert.equal(needsTriage.untriagedCandidateRows, 1);
+});
+
+test("enhancement source integrity pins ignored local source files", () => {
+    const sourceBuffer = Buffer.from("written\treading\n本棚\tほんだな\n", "utf8");
+    const integrity = buildSourceFileIntegrity({
+        sourceBuffer,
+        sourceRows: [{ written: "本棚", reading: "ほんだな" }],
+    });
+
+    assert.equal(integrity.sha256, "5a5cae6268593a6a5babca9a13d74b9c4e0cf9ca7739447665bb1b124ebcd1ac");
+    assert.equal(integrity.byteSize, sourceBuffer.length);
+    assert.equal(integrity.rowCount, 1);
+
+    assert.deepEqual(validateExpansionSourceIntegrity({
+        sha256: integrity.sha256.toUpperCase(),
+        byteSize: integrity.byteSize,
+        rowCount: integrity.rowCount,
+    }, integrity), []);
+
+    const blockers = validateExpansionSourceIntegrity({
+        sha256: "0000",
+        byteSize: integrity.byteSize + 1,
+        rowCount: integrity.rowCount + 1,
+    }, integrity);
+    assert.equal(blockers.length, 3);
+    assert.match(blockers[0], /sha256 mismatch/);
+    assert.match(blockers[1], /byte size mismatch/);
+    assert.match(blockers[2], /row count mismatch/);
 });
 
 test("formatted expansion signal report does not overclaim release readiness", () => {

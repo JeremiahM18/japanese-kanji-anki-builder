@@ -23,6 +23,26 @@ const evidencePolicySchema = z.object({
     highAgreementScore: z.number().min(0).max(1).default(0.8),
 }).strict();
 
+const sourceTierSchema = z.object({
+    label: z.string().min(1),
+    rank: z.number().int().min(1),
+    role: z.enum([
+        "primary-evidence",
+        "supporting-evidence",
+        "sanity-check",
+        "background-only",
+    ]),
+    description: z.string().min(1),
+    notes: z.string().optional(),
+}).strict();
+
+const confidenceLabelSchema = z.object({
+    label: z.string().min(1),
+    releaseMeaning: z.string().min(1),
+    blocksRelease: z.boolean().default(true),
+    requirements: z.array(z.string().min(1)).default([]),
+}).strict();
+
 const evidenceSourceSchema = z.object({
     name: z.string().min(1),
     tier: z.string().min(1),
@@ -41,6 +61,8 @@ const evidenceSourceSchema = z.object({
 const jlptKanjiSourceEvidenceSchema = z.object({
     version: z.number().int().min(1).default(1),
     policy: evidencePolicySchema.default({}),
+    sourceTiers: z.record(z.string().min(1), sourceTierSchema).default({}),
+    confidenceLabels: z.record(z.string().min(1), confidenceLabelSchema).default({}),
     sources: z.record(z.string().min(1), evidenceSourceSchema).default({}),
     assignments: z.record(
         z.string().min(1),
@@ -87,6 +109,21 @@ function normalizeJlptLevelAssignmentEntry(value) {
     };
 }
 
+function assertKnownSourceTiers(parsed) {
+    const knownTierIds = new Set(Object.keys(parsed.sourceTiers || {}));
+    if (knownTierIds.size === 0) {
+        return;
+    }
+
+    const unknownTiers = Object.entries(parsed.sources || {})
+        .filter(([, source]) => !knownTierIds.has(source.tier))
+        .map(([sourceId, source]) => `${sourceId}:${source.tier}`);
+
+    if (unknownTiers.length > 0) {
+        throw new Error(`Unknown JLPT kanji source tiers: ${unknownTiers.join(", ")}`);
+    }
+}
+
 function normalizeAssignments(assignments = {}) {
     return Object.fromEntries(
         Object.entries(assignments || {}).map(([sourceId, sourceAssignments]) => [
@@ -102,6 +139,7 @@ function normalizeAssignments(assignments = {}) {
 
 function normalizeJlptKanjiSourceEvidence(value = {}) {
     const parsed = jlptKanjiSourceEvidenceSchema.parse(value);
+    assertKnownSourceTiers(parsed);
     return {
         ...parsed,
         assignments: normalizeAssignments(parsed.assignments),
@@ -114,7 +152,9 @@ function loadJlptKanjiSourceEvidence(filePath) {
 
 module.exports = {
     evidencePolicySchema,
+    confidenceLabelSchema,
     evidenceSourceSchema,
+    sourceTierSchema,
     jlptKanjiSourceEvidenceSchema,
     loadJlptKanjiSourceEvidence,
     normalizeJlptKanjiSourceEvidence,

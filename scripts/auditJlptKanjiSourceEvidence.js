@@ -42,8 +42,17 @@ function formatSourceCoverage(sourceCoverage = {}) {
     return Object.entries(sourceCoverage)
         .sort(([a], [b]) => a.localeCompare(b))
         .map(([sourceId, source]) => (
-            `- ${sourceId}: ${source.assignmentCount} assignments; ${source.unreviewedAssignmentCount} unreviewed; status ${source.status}; tier ${source.tier}; license ${source.licenseStatus}`
+            `- ${sourceId}: ${source.assignmentCount} assignments; ${source.unreviewedAssignmentCount} unreviewed; status ${source.status}; tier ${source.tier} (${source.tierLabel}); license ${source.licenseStatus}`
         ));
+}
+
+function formatConfidenceLabels(confidenceLabels = {}) {
+    return ["high", "standard", "weak", "disputed", "missing"]
+        .filter((labelId) => confidenceLabels[labelId])
+        .map((labelId) => {
+            const label = confidenceLabels[labelId];
+            return `- ${labelId}: ${label.label}; blocks release ${label.blocksRelease ? "yes" : "no"}`;
+        });
 }
 
 function formatKanjiIssue(entry) {
@@ -83,6 +92,9 @@ function formatJlptKanjiSourceEvidenceReport({
         `- Weak: ${report.confidenceCounts.weak}`,
         `- Disputed: ${report.confidenceCounts.disputed}`,
         `- Missing: ${report.confidenceCounts.missing}`,
+        "",
+        "Confidence labels:",
+        ...formatConfidenceLabels(report.confidenceLabels),
         "",
         "Issue counts:",
         formatIssueCount("Missing evidence", report.issueCounts.missingEvidence),

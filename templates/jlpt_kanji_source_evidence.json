@@ -6,6 +6,108 @@
     "standardAgreementScore": 0.67,
     "highAgreementScore": 0.8
   },
+  "sourceTiers": {
+    "japanese-published-study-material": {
+      "label": "Tier 1 - Japanese-published study material",
+      "rank": 1,
+      "role": "primary-evidence",
+      "description": "Japanese-published JLPT preparation materials or manually reviewed consensus from those materials.",
+      "notes": "Required for passing source confidence. Do not copy copyrighted lists; record reviewed level judgments and permitted citations only."
+    },
+    "community-legacy-jlpt": {
+      "label": "Tier 2 - Legacy/community JLPT list",
+      "rank": 2,
+      "role": "supporting-evidence",
+      "description": "Community-maintained JLPT lists with legacy or observed-test basis.",
+      "notes": "Useful for triangulation, never sufficient alone."
+    },
+    "community-jlpt-study": {
+      "label": "Tier 2 - Community JLPT study list",
+      "rank": 2,
+      "role": "supporting-evidence",
+      "description": "Independent learner-facing JLPT study lists.",
+      "notes": "Useful as one independent signal after license and extraction review."
+    },
+    "dictionary-learning-platform": {
+      "label": "Tier 3 - Dictionary or learning platform",
+      "rank": 3,
+      "role": "supporting-evidence",
+      "description": "Dictionary or learning-platform metadata that assigns or tags kanji by JLPT level.",
+      "notes": "Use as supporting evidence after source terms are reviewed."
+    },
+    "frequency-and-jlpt-platform": {
+      "label": "Tier 3 - Frequency and JLPT platform",
+      "rank": 3,
+      "role": "sanity-check",
+      "description": "Corpus/frequency-oriented metadata that may include JLPT tags.",
+      "notes": "Frequency is a sanity signal, not an automatic JLPT level assignment."
+    },
+    "learning-platform": {
+      "label": "Tier 3 - Learning platform",
+      "rank": 3,
+      "role": "supporting-evidence",
+      "description": "Structured learning-platform metadata that may include JLPT tags or comparable level signals.",
+      "notes": "Use only after license and API/export terms are reviewed."
+    },
+    "official-japanese-background": {
+      "label": "Background - Official Japanese metadata",
+      "rank": 4,
+      "role": "background-only",
+      "description": "Official Japanese metadata such as Joyo status or school grade.",
+      "notes": "Useful for sanity checks but not a direct JLPT assignment."
+    }
+  },
+  "confidenceLabels": {
+    "high": {
+      "label": "High confidence",
+      "releaseMeaning": "Consensus is source-backed, includes the required Japanese-published evidence, and meets the high agreement threshold.",
+      "blocksRelease": false,
+      "requirements": [
+        "At least three unique independent voting source groups",
+        "At least one Japanese-published voting source",
+        "Agreement score greater than or equal to the high threshold",
+        "No disputed consensus or contract mismatch"
+      ]
+    },
+    "standard": {
+      "label": "Standard confidence",
+      "releaseMeaning": "Consensus is source-backed and meets the standard agreement threshold, but not the high threshold.",
+      "blocksRelease": false,
+      "requirements": [
+        "At least three unique independent voting source groups",
+        "At least one Japanese-published voting source",
+        "Agreement score greater than or equal to the standard threshold",
+        "No disputed consensus or contract mismatch"
+      ]
+    },
+    "weak": {
+      "label": "Weak confidence",
+      "releaseMeaning": "Some evidence exists, but independence, Japanese-published evidence, or agreement is insufficient.",
+      "blocksRelease": true,
+      "requirements": [
+        "Add reviewed independent source assignments",
+        "Add reviewed Japanese-published source evidence when missing",
+        "Resolve weak agreement before release claims"
+      ]
+    },
+    "disputed": {
+      "label": "Disputed",
+      "releaseMeaning": "Voting source groups do not produce a single consensus level.",
+      "blocksRelease": true,
+      "requirements": [
+        "Record the disagreement",
+        "Make an explicit keep/change/defer decision before relying on level placement"
+      ]
+    },
+    "missing": {
+      "label": "Missing evidence",
+      "releaseMeaning": "No reviewed active voting source assignment exists for this kanji.",
+      "blocksRelease": true,
+      "requirements": [
+        "Add reviewed source assignments before claiming source confidence"
+      ]
+    }
+  },
   "sources": {
     "tanos": {
       "name": "Tanos JLPT resources",

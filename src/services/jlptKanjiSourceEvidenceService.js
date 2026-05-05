@@ -37,6 +37,17 @@ function getComparableSourceEntries(evidence = {}) {
         .filter(([, source]) => source.status === "active" && source.countsForConsensus !== false);
 }
 
+function resolveSourceTier(source = {}, evidence = {}) {
+    const tierId = source.tier || "";
+    const tier = evidence.sourceTiers?.[tierId] || null;
+    return {
+        id: tierId,
+        label: tier?.label || tierId,
+        rank: tier?.rank || null,
+        role: tier?.role || null,
+    };
+}
+
 function collectKanjiAssignments({ kanji, evidence = {} } = {}) {
     const sourceEntries = getComparableSourceEntries(evidence);
     const assignments = [];
@@ -57,6 +68,7 @@ function collectKanjiAssignments({ kanji, evidence = {} } = {}) {
             independenceGroup: source.independenceGroup || sourceId,
             japanesePublished: source.japanesePublished === true,
             weight: Number.isFinite(source.weight) && source.weight > 0 ? source.weight : 1,
+            tier: resolveSourceTier(source, evidence),
             source,
         });
     }
@@ -156,6 +168,7 @@ function evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence = {} } = {
         agreementScore: consensus.agreementScore,
         voteWeights: consensus.voteWeights,
         confidence,
+        confidenceLabel: evidence.confidenceLabels?.[confidence]?.label || confidence,
         contractMatchesConsensus: Number.isInteger(consensus.consensusLevel)
             ? consensus.consensusLevel === contractLevel
             : null,
@@ -171,10 +184,14 @@ function summarizeSourceCoverage({ evidence = {}, contractKanjiSet = new Set() }
                 .filter((entry) => entry?.reviewStatus !== "reviewed")
                 .length;
             const assignmentOutsideContract = assignedKanji.filter((kanji) => !contractKanjiSet.has(kanji));
+            const tier = resolveSourceTier(source, evidence);
             return [sourceId, {
                 name: source.name,
                 status: source.status,
-                tier: source.tier,
+                tier: tier.id,
+                tierLabel: tier.label,
+                tierRank: tier.rank,
+                tierRole: tier.role,
                 independent: source.independent !== false,
                 independenceGroup: source.independenceGroup || sourceId,
                 japanesePublished: source.japanesePublished === true,
@@ -239,6 +256,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
         unreviewedAssignments: [],
         unapprovedActiveSources: [],
     };
+    const kanjiConfidenceManifest = [];
 
     for (const [sourceId, source] of getComparableSourceEntries(evidence)) {
         if (!["approved", "restricted"].includes(source.licenseStatus)) {
@@ -264,6 +282,25 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
 
     for (const [kanji, contractLevel] of contractEntries) {
         const result = evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence });
+        kanjiConfidenceManifest.push({
+            kanji,
+            contractLevel,
+            confidence: result.confidence,
+            confidenceLabel: result.confidenceLabel,
+            consensusLevel: result.consensusLevel,
+            agreementScore: result.agreementScore,
+            assignmentCount: result.assignmentCount,
+            independentSourceCount: result.independentSourceCount,
+            japanesePublishedSourceCount: result.japanesePublishedSourceCount,
+            reviewedSources: result.assignments.map((entry) => ({
+                sourceId: entry.sourceId,
+                level: entry.level,
+                tier: entry.tier.id,
+                tierLabel: entry.tier.label,
+                citation: entry.citation,
+                evidenceRef: entry.evidenceRef,
+            })),
+        });
         confidenceCounts[result.confidence] += 1;
         byContractLevel[contractLevel].checked += 1;
         byContractLevel[contractLevel][result.confidence] += 1;
@@ -332,7 +369,10 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
         valid,
         checked,
         policy,
+        sourceTiers: evidence.sourceTiers || {},
+        confidenceLabels: evidence.confidenceLabels || {},
         confidenceCounts,
+        kanjiConfidenceManifest,
         issueCounts,
         byContractLevel,
         sourceCoverage,

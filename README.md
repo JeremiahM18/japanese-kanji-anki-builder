@@ -115,7 +115,7 @@ Use the workflow sections below for preview, `.apkg`, media, audio, and release 
 Tracked contracts define release behavior:
 
 - JLPT kanji taxonomy: [templates/jlpt_level_contract.json](templates/jlpt_level_contract.json)
-- JLPT kanji source-evidence registry: [templates/jlpt_kanji_source_evidence.json](templates/jlpt_kanji_source_evidence.json)
+- JLPT kanji source-evidence registry, source tiers, and confidence labels: [templates/jlpt_kanji_source_evidence.json](templates/jlpt_kanji_source_evidence.json)
 - JLPT word taxonomy: [templates/jlpt_word_level_contract.json](templates/jlpt_word_level_contract.json)
 - Audio source policy: [templates/audio_source_policy.json](templates/audio_source_policy.json)
 - Kanji note schema: [src/config/ankiNoteSchema.json](src/config/ankiNoteSchema.json)
@@ -193,7 +193,7 @@ Current tracked word inventory:
 - Word-level placement audit currently fails: `181/909` canonical rows. The live split is `46` rows too easy for their constituent kanji and `135` later-level placements missing learner-fit reasons. By level: N5 `46/331`, N4 `92/535`, N3 `14/14`, N2 `15/15`, N1 `14/14`. Run `npm run deck:words:level-anchor-audit` for the live list.
 - Word reading coverage from the current `deck:words:ready -- --levels=5,4 --require-no-active-triage` run: N5 `238/344` (`69.2%`), N4 `485/651` (`74.5%`). Coverage remains informational; useful/common/learner-fit decisions and explicit defer/reject reasons are the product guardrail.
 - N5+N4 word field/media checks were previously clean, but current word readiness must now treat word-level placement violations as blockers. Golden/platinum commands are still separate from APKG import QA, manual card QA, accessibility checks, and listening review.
-- JLPT kanji source evidence is now governed separately from the operational taxonomy. The current source-evidence audit is expected to fail until independent source assignments are populated and reviewed; no deck movement should happen from JLPT level assumptions before that audit is resolved.
+- JLPT kanji source evidence is now governed separately from the operational taxonomy. The current source-evidence audit is expected to fail until independent source assignments are populated and reviewed under the tracked source tiers and confidence labels; no deck movement should happen from JLPT level assumptions before that audit is resolved.
 
 Run live commands for current coverage. Do not rely on README numbers for release decisions.
 

@@ -71,7 +71,7 @@ A word level ships only when all criteria are true:
 - N3 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N2 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N1 kanji: golden-reviewed at `1231/1231`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
-- JLPT kanji source evidence: governed separately from the operational taxonomy; current audit is expected to fail until independent source assignments are populated and reviewed
+- JLPT kanji source evidence: governed separately from the operational taxonomy with tracked source tiers and confidence labels; current audit is expected to fail until independent source assignments are populated and reviewed
 - N5 word: expanded to `331` governed rows, but current word-level placement audit fails with `46/331` N5 rows placed earlier than their kanji anchor allows; old golden/platinum passes are not release approval under the current policy
 - N4 word: expanded to `535` governed rows, but current word-level placement audit fails with `92/535` N4 rows missing explicit learner-fit reasons for later placement; N4 word golden/platinum readiness is blocked until those rows are moved or documented with reviewed learner-fit rationale
 

@@ -374,5 +374,645 @@
         "nextStep": "Source-check and promote in a future <=12-word enhancement batch if card-surface review passes."
       }
     }
+  },
+  "N4": {
+    "jlptstudy.net-n4": {
+      "明日|あす": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful common tomorrow word, but it shares the written form 明日 with the more beginner-facing あした reading and needs deliberate duplicate-reading review.",
+        "nextStep": "Source-check against 明日|あした and promote only if the duplicate written front is worth teaching."
+      },
+      "集る|あつまる": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Source row uses the uncommon/ambiguous 集る spelling; governed 集まる|あつまる already teaches the useful N4 verb.",
+        "nextStep": "Do not promote this exact source row."
+      },
+      "安全|あんぜん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common, practical N4 adjective/noun for safety; worth reviewing even though 全 must be labeled as JLPT N3 kanji.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if card-surface review passes."
+      },
+      "以下|いか": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Useful threshold/comparison word that learners meet in instructions, quantities, and forms; cleanly supports 以 with easier 下.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if example and breakdown review passes."
+      },
+      "以外|いがい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very useful exception word for everyday grammar and reading; cleanly supports 以 with easier 外.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if example and breakdown review passes."
+      },
+      "医学|いがく": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful academic/field word and clean 医 support, but lower immediate learner value than medical-practical words such as 医者 or 歯医者.",
+        "nextStep": "Source-check after higher-priority N4 candidates are reviewed."
+      },
+      "意見|いけん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common learner-useful word for opinion/view and a strong N4 意 support target.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if card-surface review passes."
+      },
+      "以上|いじょう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common threshold/closing word used in quantities, instructions, and formal endings; useful N4 以 support.",
+        "nextStep": "Source-check with 以下 as a comparison-word pair before promotion."
+      },
+      "一度|いちど": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very common frequency/count word that belongs in N4 vocabulary and cleanly supports 度 with easier 一.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if example and audio review passes."
+      },
+      "田舎|いなか": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common, useful countryside/rural word; worth reviewing despite 舎 needing a visible JLPT N1 kanji label.",
+        "nextStep": "Source-check as an irregular/gikun-style word and promote only if reading breakdown is safe."
+      },
+      "売り場|うりば": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Useful shopping/store word with clean N4 売 and 場 support.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if card-surface review passes."
+      },
+      "運転手|うんてんしゅ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common practical word for driver and strong N4 運/転/手 support.",
+        "nextStep": "Source-check with 運転 and promote only if both are not redundant for the learner deck."
+      },
+      "運転|うんてん・する": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source reading includes the ・する template marker; the useful word identity is 運転|うんてん.",
+        "nextStep": "Do not promote this exact source row; review normalized 運転|うんてん separately."
+      },
+      "運動|うんどう・する": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source reading includes the ・する template marker and governed 運動|うんどう already exists.",
+        "nextStep": "Do not promote this exact source row."
+      },
+      "贈り物|おくりもの": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful gift/present word, but 贈 is JLPT N2 and makes this a labeled support card rather than a clean N4-kanji-only addition.",
+        "nextStep": "Source-check after higher-priority clean N4 candidates; promote only with a visible 贈=N2 label."
+      },
+      "思い出す|おもいだす": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common useful verb for remembering/recalling and a natural extension from 思う without being mere coverage padding.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if example and breakdown review passes."
+      },
+      "終わり|おわり": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Useful common noun for the end/finish that complements governed 終わる without duplicating the exact word identity.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if card-surface review passes."
+      },
+      "会議|かいぎ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common work/school word for meeting; useful at N4 even though 議 must be labeled as JLPT N3 kanji.",
+        "nextStep": "Source-check and promote with visible 議=N3 labeling if card-surface review passes."
+      },
+      "帰り|かえり": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common return/way-home noun that complements 帰る without duplicating the exact word identity.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if example review passes."
+      },
+      "火事|かじ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common emergency word and useful 火/事 vocabulary; learner value is clear beyond reading coverage.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if audio and breakdown review passes."
+      },
+      "方|かた": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful N4 word/suffix for way/person, but the card needs careful meaning and examples to avoid ambiguity.",
+        "nextStep": "Source-check as a standalone/suffix-sensitive card before deciding whether to promote."
+      },
+      "家内|かない": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Source-listed but socially nuanced/dated as 'my wife/housewife'; not a clean learner-value addition for the first N4 enhancement pass.",
+        "nextStep": "Reconsider only in a family/social-register vocabulary pass."
+      },
+      "お・金持ち|かねもち": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Source row contains a dot/prefix artifact and does not represent a clean exact written word identity.",
+        "nextStep": "Do not promote this exact source row; review normalized 金持ち|かねもち separately only if needed."
+      },
+      "お・金持ち|おかねもち": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Source row contains a dot/prefix artifact and does not represent a clean exact written word identity.",
+        "nextStep": "Do not promote this exact source row; review normalized お金持ち|おかねもち separately only if needed."
+      },
+      "機会|きかい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common useful word for chance/opportunity; worth reviewing even with 機 labeled as JLPT N3 kanji.",
+        "nextStep": "Source-check and promote with visible 機=N3 labeling if card-surface review passes."
+      },
+      "着物|きもの": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common culture/clothing word with clean N4 着 and 物 support.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if example and pitch review pass."
+      },
+      "急|きゅう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful na-adjective/noun for urgent/sudden/steep, but the card needs examples that prevent it from feeling like an abstract kanji gloss.",
+        "nextStep": "Source-check and promote only if a concrete learner-friendly example works."
+      },
+      "教育|きょういく": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common school/social word for education; useful N4 教 support with 育 labeled as JLPT N3 kanji.",
+        "nextStep": "Source-check and promote with visible 育=N3 labeling if card-surface review passes."
+      },
+      "教会|きょうかい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Common enough source-listed place word, though less universally useful than school/travel/daily-life N4 candidates.",
+        "nextStep": "Source-check after higher-priority N4 expansion words."
+      },
+      "興味|きょうみ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very common learner-useful word for interest; worth reviewing even though 興 must be labeled as JLPT N1 kanji.",
+        "nextStep": "Source-check and promote with visible 興=N1 labeling if card-surface review passes."
+      },
+      "空気|くうき": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common practical word for air/atmosphere and strong N4 空 support with easier 気.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if card-surface review passes."
+      },
+      "計画|けいかく・する": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source reading includes the ・する template marker and governed 計画|けいかく already exists.",
+        "nextStep": "Do not promote this exact source row."
+      },
+      "経験|けいけん・する": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source reading includes the ・する template marker; the useful word identity is 経験|けいけん.",
+        "nextStep": "Do not promote this exact source row; review normalized 経験|けいけん separately as a likely useful candidate."
+      },
+      "研究室|けんきゅうしつ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful academic/lab word that extends governed 研究, but lower immediate value than broader daily N4 words.",
+        "nextStep": "Source-check after higher-priority N4 expansion words."
+      },
+      "見物|けんぶつ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Valid source-listed word, but sightseeing/attraction as 見物 is less central than simpler travel words and could feel formal.",
+        "nextStep": "Reconsider in a travel/culture expansion only if learner value remains clear."
+      },
+      "工業|こうぎょう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Valid source-listed industry word, but it is domain/academic vocabulary and lower learner utility than everyday N4 candidates.",
+        "nextStep": "Defer until a later work/school domain expansion."
+      },
+      "交通|こうつう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common practical transportation/traffic word and strong N4 通 support, with 交 labeled as JLPT N3 kanji.",
+        "nextStep": "Source-check and promote with visible 交=N3 labeling if card-surface review passes."
+      },
+      "講堂|こうどう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Valid school/building word, but less broadly useful than classroom/travel/daily-life N4 candidates and includes 講=N2.",
+        "nextStep": "Reconsider in a school-facilities expansion."
+      },
+      "公務員|こうむいん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful occupation/social word, but more specific than the highest-priority daily N4 candidates and requires 務=N3 labeling.",
+        "nextStep": "Source-check after higher-priority N4 expansion words."
+      },
+      "心|こころ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common core word for heart/mind and a clean N4 standalone kanji vocabulary item.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if examples avoid overly abstract glossing."
+      },
+      "ご主人|ごしゅじん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful polite family/social word, but the spouse/other-person register needs careful learner notes.",
+        "nextStep": "Source-check with social-register notes before promotion."
+      },
+      "答|こたえ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very useful school/classroom word for answer/response and a clean N4 答 card.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if card-surface review passes."
+      },
+      "小鳥|ことり": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Simple common word that gives useful 鳥 vocabulary, but lower priority than broader daily-function N4 words.",
+        "nextStep": "Source-check after higher-priority N4 expansion words."
+      },
+      "さ来週|さらいしゅう": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Source spelling is mixed-kana and weaker than the usual 再来週 identity; promoting it would add spelling clutter.",
+        "nextStep": "Do not promote this exact source row; review 再来週 separately only if a later pass accepts its harder 再 label."
+      },
+      "産業|さんぎょう": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Valid source-listed industry word, but more abstract/economic than the first N4 learner enhancement should prioritize.",
+        "nextStep": "Reconsider in a work/society vocabulary expansion."
+      },
+      "字|じ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Useful school/literacy word for character/handwriting and a clean N4 字 card.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if example review passes."
+      },
+      "試合|しあい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common sports/game word with clear learner value; 合 must be labeled as JLPT N3 kanji.",
+        "nextStep": "Source-check and promote with visible 合=N3 labeling if card-surface review passes."
+      },
+      "事故|じこ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common practical safety/news word; useful even though 故 must be labeled as JLPT N1 kanji.",
+        "nextStep": "Source-check and promote with visible 故=N1 labeling if card-surface review passes."
+      },
+      "地震|じしん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common essential safety/nature word; worth reviewing even though 震 must be labeled as JLPT N2 kanji.",
+        "nextStep": "Source-check and promote with visible 震=N2 labeling if card-surface review passes."
+      },
+      "下着|したぎ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Common clothing word with useful 着 support, but lower priority than general classroom/travel/daily-function words.",
+        "nextStep": "Source-check after higher-priority N4 expansion words."
+      },
+      "支度|したく・する": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source reading includes the ・する template marker and governed 支度|したく already exists.",
+        "nextStep": "Do not promote this exact source row."
+      },
+      "品物|しなもの": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful goods/item word with clean 品 and 物 support, but less urgent than higher-frequency shopping words such as 売り場.",
+        "nextStep": "Source-check after higher-priority N4 expansion words."
+      },
+      "事務所|じむしょ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common office/workplace word and useful N4 事/所 support, with 務 labeled as JLPT N3 kanji.",
+        "nextStep": "Source-check and promote with visible 務=N3 labeling if card-surface review passes."
+      },
+      "習慣|しゅうかん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common useful word for habit/custom and strong 習 support, with 慣 labeled as JLPT N3 kanji.",
+        "nextStep": "Source-check and promote with visible 慣=N3 labeling if card-surface review passes."
+      },
+      "柔道|じゅうどう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Common Japanese culture/sport word, but more topical than the highest-priority everyday N4 candidates and requires 柔=N2 labeling.",
+        "nextStep": "Source-check after broader daily-life candidates."
+      },
+      "出発|しゅっぱつ・する": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source reading includes the ・する template marker and governed 出発|しゅっぱつ already exists.",
+        "nextStep": "Do not promote this exact source row."
+      },
+      "趣味|しゅみ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very common learner-useful word for hobbies/interests; worth reviewing even though 趣 must be labeled as JLPT N1 kanji.",
+        "nextStep": "Source-check and promote with visible 趣=N1 labeling if card-surface review passes."
+      },
+      "正月|しょうがつ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common holiday/culture word and useful 正/月 vocabulary.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if example review passes."
+      },
+      "招待|しょうたい・する": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source reading includes the ・する template marker; the useful word identity is 招待|しょうたい.",
+        "nextStep": "Do not promote this exact source row; review normalized 招待|しょうたい separately if invitation vocabulary is prioritized."
+      },
+      "承知|しょうち・する": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source reading includes the ・する template marker and the word is register-sensitive; this row is not a clean card identity.",
+        "nextStep": "Do not promote this exact source row; review normalized 承知|しょうち only in a politeness/register pass."
+      },
+      "食事|しょくじ・する": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source reading includes the ・する template marker and governed 食事|しょくじ already exists.",
+        "nextStep": "Do not promote this exact source row."
+      },
+      "食料品|しょくりょうひん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Useful groceries/foodstuffs word with practical shopping value and N4 料/品 support.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if card-surface review passes."
+      },
+      "神社|じんじゃ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common Japan travel/culture word; useful at N4 even though 神 must be labeled as JLPT N3 kanji.",
+        "nextStep": "Source-check and promote with visible 神=N3 labeling if card-surface review passes."
+      },
+      "心配|しんぱい・する": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source reading includes the ・する template marker; the useful word identity is 心配|しんぱい.",
+        "nextStep": "Do not promote this exact source row; review normalized 心配|しんぱい separately as a likely high-value candidate."
+      },
+      "新聞社|しんぶんしゃ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Valid source-listed word, but 新聞 already covers the core learner word and newspaper company is narrower.",
+        "nextStep": "Reconsider only after broader N4 daily-life vocabulary is handled."
+      },
+      "水道|すいどう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Practical household/infrastructure word and useful 道 support with easier 水.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if example review passes."
+      },
+      "世話|せわ・する": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source reading includes the ・する template marker; the useful word identity is 世話|せわ.",
+        "nextStep": "Do not promote this exact source row; review normalized 世話|せわ separately if care/help vocabulary is prioritized."
+      },
+      "卒業|そつぎょう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common school/life milestone word for graduation and useful 業 support, with 卒 labeled as JLPT N2 kanji.",
+        "nextStep": "Source-check and promote with visible 卒=N2 labeling if card-surface review passes."
+      },
+      "退院|たいいん・する": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source reading includes the ・する template marker; the useful word identity is 退院|たいいん.",
+        "nextStep": "Do not promote this exact source row; review normalized 退院|たいいん separately only if hospital vocabulary is prioritized."
+      },
+      "大事|だいじ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very common learner-useful na-adjective/noun for important/serious and strong 事 support.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if examples distinguish it from 大切."
+      },
+      "大体|だいたい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common adverb/noun for generally/roughly and useful 体 support with easier 大.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if card-surface review passes."
+      },
+      "楽む|たのしむ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Source row uses the wrong/incomplete spelling for the governed useful verb 楽しむ|たのしむ.",
+        "nextStep": "Do not promote this exact source row."
+      },
+      "楽しみ|たのしみ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common noun for pleasure/thing to look forward to; complements governed 楽しむ without duplicating exact identity.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if example review passes."
+      },
+      "注射|ちゅうしゃ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful medical word and practical 注 support, but 射=N1 makes it a labeled support card.",
+        "nextStep": "Source-check after higher-priority clean N4 candidates."
+      },
+      "駐車場|ちゅうしゃじょう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very useful travel/daily-life word for parking lot; worth reviewing even with 駐=N2 label.",
+        "nextStep": "Source-check and promote with visible 駐=N2 labeling if card-surface review passes."
+      },
+      "地理|ちり": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful school subject word with clean N4 地/理 support, but lower immediate value than daily-life candidates.",
+        "nextStep": "Source-check after higher-priority N4 expansion words."
+      },
+      "手袋|てぶくろ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common clothing/weather word and useful 手/物-family vocabulary, with 袋 labeled as JLPT N2 kanji.",
+        "nextStep": "Source-check and promote with visible 袋=N2 labeling if card-surface review passes."
+      },
+      "展覧会|てんらんかい": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Useful culture word, but it carries two JLPT N1 kanji and is less urgent than simpler museum/exhibition vocabulary.",
+        "nextStep": "Reconsider in a culture/museum expansion after 美術館 and other daily candidates."
+      },
+      "動物園|どうぶつえん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very common learner-useful place word and strong 動/物 support, with 園 labeled as JLPT N3 kanji.",
+        "nextStep": "Source-check and promote with visible 園=N3 labeling if card-surface review passes."
+      },
+      "特別|とくべつ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very common adjective/adverb/noun for special and clean N4 特/別 support.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if card-surface review passes."
+      },
+      "特急|とっきゅう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful travel/train word with clean N4 特/急 support, though more domain-specific than core daily words.",
+        "nextStep": "Source-check in a travel/transportation batch."
+      },
+      "入院|にゅういん・する": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source reading includes the ・する template marker and governed 入院|にゅういん already exists.",
+        "nextStep": "Do not promote this exact source row."
+      },
+      "乗り物|のりもの": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common practical word for vehicle/transport, with 乗 labeled as JLPT N3 kanji and 物 as N4.",
+        "nextStep": "Source-check and promote with visible 乗=N3 labeling if card-surface review passes."
+      },
+      "場合|ばあい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very common word for case/situation and useful 場 vocabulary, with 合 labeled as JLPT N3 kanji.",
+        "nextStep": "Source-check and promote with visible 合=N3 labeling if card-surface review passes."
+      },
+      "歯医者|はいしゃ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very practical health word for dentist; useful 医/者 support with 歯 labeled as JLPT N3 kanji.",
+        "nextStep": "Source-check and promote with visible 歯=N3 labeling if card-surface review passes."
+      },
+      "飛行場|ひこうじょう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Valid source-listed airport/airfield word, but 空港 is the more modern/common learner target and 飛行場 is less urgent.",
+        "nextStep": "Do not promote before reviewing a better airport word identity."
+      },
+      "美術館|びじゅつかん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common travel/culture place word for art museum, useful with 館 and visible 美/術=N3 labels.",
+        "nextStep": "Source-check and promote with visible higher-level labels if card-surface review passes."
+      },
+      "昼間|ひるま": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common time word for daytime that complements 昼 and related meal/time vocabulary.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if example review passes."
+      },
+      "昼休み|ひるやすみ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common school/work word for lunch break and useful 昼/休 vocabulary.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if it is not redundant with 休み時間."
+      },
+      "復習|ふくしゅう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very useful study word for review/revision, with 復 labeled as JLPT N2 and 習 as N4.",
+        "nextStep": "Source-check and promote with visible 復=N2 labeling if card-surface review passes."
+      },
+      "部長|ぶちょう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Common workplace/school club title, but more role-specific than the highest-priority daily N4 candidates.",
+        "nextStep": "Source-check after broader daily-life N4 candidates."
+      },
+      "文学|ぶんがく": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful school/academic word with clean 文 support, but lower immediate utility than grammar, reply, or daily-life words.",
+        "nextStep": "Source-check after higher-priority N4 expansion words."
+      },
+      "文法|ぶんぽう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very useful language-learning word for grammar, with 文 as N4 and 法 labeled as JLPT N3 kanji.",
+        "nextStep": "Source-check and promote with visible 法=N3 labeling if card-surface review passes."
+      },
+      "返事|へんじ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common learner-useful word for reply/answer, with 事 as N4 and 返 labeled as JLPT N3 kanji.",
+        "nextStep": "Source-check and promote with visible 返=N3 labeling if card-surface review passes."
+      },
+      "放送|ほうそう・する": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source reading includes the ・する template marker; the useful word identity is 放送|ほうそう.",
+        "nextStep": "Do not promote this exact source row; review normalized 放送|ほうそう separately only if media/broadcast vocabulary is prioritized."
+      },
+      "漫画|まんが": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very common learner-interest word for manga/comics, worth reviewing even though 漫 must be labeled as JLPT N1 kanji.",
+        "nextStep": "Source-check and promote with visible 漫=N1 labeling if card-surface review passes."
+      },
+      "真中|まんなか": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Source spelling is weaker than the common 真ん中 identity and would add avoidable spelling confusion.",
+        "nextStep": "Do not promote this exact source row; review 真ん中|まんなか separately if needed."
+      },
+      "役に立つ|やくにたつ": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Very useful expression, but phrase-shaped and includes 役=N3; it should not enter the word deck without an explicit phrase/expression policy.",
+        "nextStep": "Reconsider in an expression deck or future phrase-governance pass."
+      },
+      "夕飯|ゆうはん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common meal/time word that complements 朝ご飯, 昼ご飯, and 晩ご飯 while giving clean 夕/飯 vocabulary.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if example review passes."
+      },
+      "用意|ようい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common learner-useful word for preparation/getting ready and clean N4 用/意 support.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if card-surface review passes."
+      },
+      "用事|ようじ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common everyday word for errands/things to do and useful N4 用/事 support.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if example review passes."
+      },
+      "予習|よしゅう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful study word that pairs naturally with 復習, but it is less urgent than broader everyday N4 candidates and needs 予=N3 labeling.",
+        "nextStep": "Source-check with 復習 and promote with visible 予=N3 labeling if study-vocabulary expansion is prioritized."
+      },
+      "利用|りよう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very common word for use/utilization and useful 用 support, with 利 labeled as JLPT N3 kanji.",
+        "nextStep": "Source-check and promote with visible 利=N3 labeling if card-surface review passes."
+      },
+      "両方|りょうほう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common learner-useful word for both/both sides and useful 方 support, with 両 labeled as JLPT N3 kanji.",
+        "nextStep": "Source-check and promote with visible 両=N3 labeling if card-surface review passes."
+      },
+      "旅館|りょかん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common Japan travel word for inn/ryokan with clean N4 旅/館 support.",
+        "nextStep": "Source-check and promote in a future 8-word card batch if card-surface review passes."
+      },
+      "忘れ物|わすれもの": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very useful everyday word for lost/forgotten item; worth reviewing with 忘 labeled as JLPT N3 kanji.",
+        "nextStep": "Source-check and promote with visible 忘=N3 labeling if card-surface review passes."
+      }
+    }
   }
 }

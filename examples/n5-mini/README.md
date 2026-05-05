@@ -16,4 +16,5 @@ Files:
 - [sample-input.json](sample-input.json) records the sample identities and generation commands.
 - [sample-kanji-output.tsv](sample-kanji-output.tsv) contains one exact kanji-deck TSV row for `日`.
 - [sample-word-output.tsv](sample-word-output.tsv) contains one exact word-deck TSV row for `春雨|はるさめ`.
-- [screenshots/kanji-card.svg](screenshots/kanji-card.svg) and [screenshots/word-card.svg](screenshots/word-card.svg) are lightweight card previews built from the same sample fields.
+
+The README uses plain text field previews instead of screenshots so the public demo stays honest about what is tracked here.

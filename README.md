@@ -12,10 +12,31 @@ npm run doctor
 
 Kanji cards and word cards are separate learning products. A kanji card teaches one target kanji; a word card teaches one exact written form and reading.
 
-<p>
-  <img src="examples/n5-mini/screenshots/kanji-card.svg" alt="N5 kanji card preview for 日" width="360">
-  <img src="examples/n5-mini/screenshots/word-card.svg" alt="N5 word card preview for 春雨" width="360">
-</p>
+Kanji card field preview:
+
+```text
+Kanji: 日
+DisplayWord: 日
+PrimaryReading: ひ
+MeaningJP: day / sun
+KanjiMeanings: day / sun / Japan / counter for days
+StudyWordKanji: [blank]
+ExampleSentence: 今日はいい日です。 ／ きょうはいいひです。 ／ Today is a good day.
+```
+
+Word card field preview:
+
+```text
+Word: 春雨
+Reading: はるさめ
+ReadingBreakdown: 春[はる] 雨[さめ]
+Meaning: glass noodles / spring rain
+JLPTLevel: JLPT N5
+CoverageRole: Reading coverage support
+FocusKanji: 雨
+CoversReading: 雨: さめ
+ExampleSentence: 春雨スープを食べます。 ／ はるさめスープをたべます。 ／ I eat harusame soup.
+```
 
 Tiny TSV excerpt:
 
@@ -25,7 +46,7 @@ Surface	Reading	Meaning	Example
 春雨	はるさめ	glass noodles / spring rain	春雨スープを食べます。 ／ はるさめスープをたべます。 ／ I eat harusame soup.
 ```
 
-See the tracked mini fixture in [examples/n5-mini](examples/n5-mini) for sample input metadata, exact generated TSV rows, and card preview images.
+See the tracked mini fixture in [examples/n5-mini](examples/n5-mini) for sample input metadata and exact generated TSV rows.
 
 ```mermaid
 flowchart TD

@@ -229,6 +229,8 @@ npm run release:gate
 
 `data:normalize:kanjidic2-jlpt` converts an ignored local KANJIDIC2 XML or `.xml.gz` file into the normalized TSV shape required by `templates/jlpt_kanji_source_inputs.json`. The generated TSV remains ignored local input until its SHA-256, byte size, and row count are pinned. `data:import:jlpt:source-input -- --source=kanjidic2_legacy` then performs a dry-run evidence import after preflight; add `--write` only when updating the tracked source-evidence manifest. Neither command moves kanji, moves words, updates decks, or changes readiness.
 
+`data:template:jlpt:textbook-consensus` creates an ignored worksheet for manually reviewed Japanese-published textbook consensus. It deliberately leaves `consensusLevel`, `citation`, and `evidenceRef` blank so no row can become evidence until a reviewer fills permitted source citations, pins the TSV integrity in `templates/jlpt_kanji_source_inputs.json`, and activates the source intentionally.
+
 `product:readiness:n5` runs the current automated N5 product checkpoint: JLPT kanji and word audits, governed audio provenance, tracked-source N5 word TSV generation, and N5 kanji and word golden reviews. It must not be used to claim N5 word release readiness while `npm run deck:words:level-anchor-audit -- --level=5` fails. It does not run or gate on the JLPT kanji source-evidence audit yet; that audit is currently read-only transparency until the evidence layer is governed. It still does not validate tracked-source kanji TSVs, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA. Run the applicable platinum command separately when a level is being version-1 locked.
 
 `release:gate` validates deterministic smoke-fixture artifacts and packaging contracts. It does not certify public product deck readiness. Add level-specific readiness, golden review, accessibility, provenance, and manual QA commands for the surface being changed.
@@ -499,6 +501,7 @@ Repository governance:
 | `npm run data:audit:jlpt:source-inputs -- --source=kanjidic2_legacy` | Preflight a pinned local JLPT kanji source file before source-evidence import |
 | `npm run data:normalize:kanjidic2-jlpt` | Normalize ignored local KANJIDIC2 XML into the pinned source-input TSV shape |
 | `npm run data:import:jlpt:source-input -- --source=kanjidic2_legacy` | Dry-run import of a passing source input into the JLPT kanji source-evidence manifest |
+| `npm run data:template:jlpt:textbook-consensus -- --level=5` | Create an ignored manual-review worksheet for Japanese-published textbook consensus evidence |
 | `npm run data:audit:jlpt:words` | Audit word taxonomy and starter alignment |
 | `npm run data:audit:audio` | Audit managed audio provenance |
 | `npm run data:sync:jlpt` | Sync local ignored JLPT data to the tracked contract |

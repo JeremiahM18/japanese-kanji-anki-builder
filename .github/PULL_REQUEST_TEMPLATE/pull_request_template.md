@@ -32,6 +32,7 @@
 - [ ] Tests added or updated when behavior changed
 - [ ] Lint and tests pass locally
 - [ ] CI is expected to pass
-- [ ] `data:audit:jlpt`, read-only `data:audit:jlpt:sources -- --limit=25`, and relevant `data:audit:jlpt:source-inputs -- --source=<source-id>` run when JLPT taxonomy, source-evidence inputs, starter curation, golden review placement, or deck-membership logic changed
+- [ ] `data:audit:jlpt`, read-only `data:audit:jlpt:sources -- --limit=25`, and relevant strict `data:audit:jlpt:source-inputs -- --source=<source-id> --strict` run when JLPT taxonomy, source-evidence inputs, starter curation, golden review placement, or deck-membership logic changed
+- [ ] Source-evidence imports dry-run `data:import:jlpt:source-input -- --source=<source-id>` before any `--write`
 - [ ] `release:gate` run when packaging, CI, or toolchain behavior changed
 - [ ] CODEOWNERS review requested when touching protected paths

@@ -11,6 +11,7 @@ const {
     formatJlptKanjiSourceInputsReport,
     parseArgs,
 } = require("../scripts/reportJlptKanjiSourceInputs");
+const { normalizeJlptKanjiSourceInputs } = require("../src/datasets/jlptKanjiSourceInputs");
 
 function buildEvidence(source = {}) {
     return {
@@ -202,4 +203,43 @@ test("source input report script parses args and renders read-only scope", () =>
     assert.match(text, /read-only/);
     assert.match(text, /does not move kanji, move words, update decks, or change readiness/);
     assert.match(text, /source file is missing/);
+});
+
+test("source input manifest can declare a planned restricted textbook consensus lane", () => {
+    const manifest = normalizeJlptKanjiSourceInputs({
+        version: 1,
+        policy: {
+            noDeckMutation: true,
+            requirePinnedIntegrity: true,
+            requireKnownEvidenceSource: true,
+        },
+        inputs: {
+            japanese_textbook_consensus: {
+                sourceId: "japanese_textbook_consensus",
+                sourcePath: "downloads/japanese-textbook-consensus.tsv",
+                sourceLabel: "manual-japanese-published-textbook-consensus",
+                format: "tsv",
+                kanjiColumn: "kanji",
+                levelColumn: "consensusLevel",
+                reviewStatusColumn: "reviewStatus",
+                citationColumn: "citation",
+                evidenceRefColumn: "evidenceRef",
+                notesColumn: "notes",
+                defaultReviewStatus: "needs_review",
+                requireCitation: true,
+                requireEvidenceRef: true,
+                levelMapping: "new-jlpt-n1-n5",
+                integrityPolicy: "Manual source only.",
+            },
+        },
+    });
+
+    const input = manifest.inputs.japanese_textbook_consensus;
+    assert.equal(input.sourcePath, "downloads/japanese-textbook-consensus.tsv");
+    assert.equal(input.levelColumn, "consensusLevel");
+    assert.equal(input.requireCitation, true);
+    assert.equal(input.requireEvidenceRef, true);
+    assert.equal(input.sha256, undefined);
+    assert.equal(input.byteSize, undefined);
+    assert.equal(input.rowCount, undefined);
 });

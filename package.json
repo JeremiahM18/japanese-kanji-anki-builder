@@ -25,6 +25,7 @@
     "data:audit:jlpt:source-inputs": "node scripts/reportJlptKanjiSourceInputs.js",
     "data:normalize:kanjidic2-jlpt": "node scripts/normalizeKanjidic2JlptSource.js",
     "data:import:jlpt:source-input": "node scripts/importJlptKanjiSourceInput.js",
+    "data:template:jlpt:textbook-consensus": "node scripts/createJlptTextbookConsensusTemplate.js",
     "data:audit:jlpt:words": "node scripts/auditJlptWordAlignment.js",
     "data:audit:audio": "node scripts/auditAudioPolicy.js",
     "data:audit:stroke-order": "node scripts/auditStrokeOrderPolicy.js",

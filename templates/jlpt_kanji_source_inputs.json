@@ -30,6 +30,23 @@
       "byteSize": 273677,
       "rowCount": 1479,
       "integrityPolicy": "The ignored normalized TSV must match the tracked SHA-256, byte size, and parsed row count before import. Legacy JLPT level 2 is intentionally blocked because it spans modern N2/N3."
+    },
+    "japanese_textbook_consensus": {
+      "sourceId": "japanese_textbook_consensus",
+      "sourcePath": "downloads/japanese-textbook-consensus.tsv",
+      "sourceLabel": "manual-japanese-published-textbook-consensus",
+      "format": "tsv",
+      "kanjiColumn": "kanji",
+      "levelColumn": "consensusLevel",
+      "reviewStatusColumn": "reviewStatus",
+      "citationColumn": "citation",
+      "evidenceRefColumn": "evidenceRef",
+      "notesColumn": "notes",
+      "defaultReviewStatus": "needs_review",
+      "requireCitation": true,
+      "requireEvidenceRef": true,
+      "levelMapping": "new-jlpt-n1-n5",
+      "integrityPolicy": "This source input is for manually reviewed level judgments from Japanese-published study material only. Do not copy copyrighted kanji lists. Pin SHA-256, byte size, row count, and checkedAt only after the reviewed TSV contains permitted citations and evidence references."
     }
   }
 }

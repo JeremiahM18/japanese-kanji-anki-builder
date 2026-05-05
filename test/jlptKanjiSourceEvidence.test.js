@@ -46,6 +46,21 @@ function buildConfidenceLabels() {
     };
 }
 
+function buildConfidenceReasonLabels() {
+    return {
+        direct_legacy_mapping: { label: "direct", description: "Fixture direct legacy reason." },
+        estimated_split_evidence: { label: "estimated", description: "Fixture estimated reason." },
+        textbook_agreement: { label: "textbook", description: "Fixture textbook reason." },
+        range_evidence_present: { label: "range", description: "Fixture range-present reason." },
+        range_evidence_only: { label: "range only", description: "Fixture range-only reason." },
+        disputed_source_votes: { label: "disputed", description: "Fixture disputed reason." },
+        weak_independence_or_missing_japanese_source: { label: "weak", description: "Fixture weak reason." },
+        unknown_no_reviewed_external_evidence: { label: "unknown", description: "Fixture unknown reason." },
+        current_contract_mismatch: { label: "mismatch", description: "Fixture mismatch reason." },
+        source_confidence_threshold_met: { label: "met", description: "Fixture met reason." },
+    };
+}
+
 function buildEvidence(assignments = {}) {
     return normalizeJlptKanjiSourceEvidence({
         version: 1,
@@ -76,6 +91,7 @@ function buildEvidence(assignments = {}) {
             },
         },
         confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
         sources: {
             tanos: {
                 name: "Tanos",
@@ -100,10 +116,10 @@ function buildEvidence(assignments = {}) {
                 licenseStatus: "approved",
             },
             textbook: {
-                name: "Japanese textbook consensus",
+                name: "Japanese textbook source",
                 tier: "japanese-published",
                 status: "active",
-                sourceType: "manual-consensus",
+                sourceType: "japanese-published-textbook-kanji-review",
                 independent: true,
                 japanesePublished: true,
                 countsForConsensus: true,
@@ -137,6 +153,7 @@ test("normalizeJlptKanjiSourceEvidence rejects sources outside governed source t
     assert.throws(() => normalizeJlptKanjiSourceEvidence({
         version: 1,
         confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
         sourceTiers: {
             approved_tier: {
                 label: "Approved tier",
@@ -160,6 +177,7 @@ test("normalizeJlptKanjiSourceEvidence rejects sources outside governed evidence
     assert.throws(() => normalizeJlptKanjiSourceEvidence({
         version: 1,
         confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
         sourceTiers: {
             approved_tier: {
                 label: "Approved tier",
@@ -195,6 +213,15 @@ test("normalizeJlptKanjiSourceEvidence requires governed confidence labels", () 
     }), /Missing JLPT kanji confidence labels/);
 });
 
+test("normalizeJlptKanjiSourceEvidence requires governed confidence reason labels", () => {
+    assert.throws(() => normalizeJlptKanjiSourceEvidence({
+        version: 1,
+        sourceTiers: {},
+        confidenceLabels: buildConfidenceLabels(),
+        sources: {},
+    }), /Missing JLPT kanji confidence reason labels/);
+});
+
 test("normalizeJlptLevelAssignmentEntry preserves reviewed structured evidence", () => {
     assert.deepEqual(normalizeJlptLevelAssignmentEntry({
         level: "N4",
@@ -223,6 +250,7 @@ test("normalizeJlptKanjiSourceEvidence keeps source-centric assignments authorit
             },
         },
         confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
         sources: {
             source_a: {
                 name: "Source A",
@@ -318,6 +346,7 @@ test("evaluateKanjiSourceEvidence counts unique independent source groups", () =
             },
         },
         confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
         policy: {
             minimumIndependentSources: 2,
             minimumJapanesePublishedSources: 0,
@@ -382,6 +411,7 @@ test("evaluateKanjiSourceEvidence separates publisher independence from evidence
             },
         },
         confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
         policy: {
             minimumIndependentSources: 2,
             minimumIndependentEvidenceLineages: 2,
@@ -432,10 +462,208 @@ test("evaluateKanjiSourceEvidence separates publisher independence from evidence
     assert.equal(result.confidence, "weak_evidence");
 });
 
+test("evaluateKanjiSourceEvidence keeps current operational contract comparison-only", () => {
+    const evidence = normalizeJlptKanjiSourceEvidence({
+        version: 1,
+        sourceTiers: {
+            fixture: {
+                label: "Fixture tier",
+                rank: 1,
+                role: "supporting-evidence",
+                description: "Fixture source tier.",
+            },
+        },
+        confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
+        policy: {
+            minimumIndependentSources: 1,
+            minimumIndependentEvidenceLineages: 0,
+            minimumJapanesePublishedSources: 0,
+        },
+        sources: {
+            current_operational_contract: {
+                name: "Current contract",
+                tier: "fixture",
+                status: "active",
+                sourceType: "tracked-operational-taxonomy",
+                independent: false,
+                publisherIndependence: "repository_contract",
+                countsForConsensus: false,
+                licenseStatus: "approved",
+            },
+            external_source: {
+                name: "External source",
+                tier: "fixture",
+                status: "active",
+                sourceType: "fixture",
+                independent: true,
+                countsForConsensus: true,
+                licenseStatus: "approved",
+            },
+        },
+        assignments: {
+            current_operational_contract: { 日: 4 },
+            external_source: { 日: 5 },
+        },
+    });
+
+    const result = evaluateKanjiSourceEvidence({
+        kanji: "日",
+        contractLevel: 4,
+        evidence,
+    });
+
+    assert.equal(result.assignmentCount, 1);
+    assert.equal(result.consensusLevel, 5);
+    assert.deepEqual(result.agreementSourceIds, ["external_source"]);
+    assert.equal(result.contractMatchesConsensus, false);
+});
+
+test("evaluateKanjiSourceEvidence preserves range evidence without an exact vote", () => {
+    const evidence = normalizeJlptKanjiSourceEvidence({
+        version: 1,
+        sourceTiers: {
+            fixture: {
+                label: "Fixture tier",
+                rank: 1,
+                role: "supporting-evidence",
+                description: "Fixture source tier.",
+            },
+        },
+        confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
+        policy: {
+            minimumIndependentSources: 1,
+            minimumIndependentEvidenceLineages: 0,
+            minimumJapanesePublishedSources: 0,
+        },
+        sources: {
+            kanjidic2_legacy: {
+                name: "KANJIDIC2 legacy",
+                tier: "fixture",
+                status: "active",
+                sourceType: "legacy-jlpt-kanji-list",
+                independent: true,
+                countsForConsensus: true,
+                licenseStatus: "approved",
+                evidenceLineage: "pre_2010_direct_jlpt",
+            },
+        },
+        assignments: {
+            kanjidic2_legacy: {
+                橋: {
+                    levelRange: ["N2", "N3"],
+                    reviewStatus: "reviewed",
+                    citation: "Fixture range citation.",
+                },
+            },
+        },
+    });
+
+    const result = evaluateKanjiSourceEvidence({
+        kanji: "橋",
+        contractLevel: 2,
+        evidence,
+    });
+
+    assert.equal(result.assignmentCount, 1);
+    assert.equal(result.votingAssignmentCount, 0);
+    assert.equal(result.consensusLevel, null);
+    assert.deepEqual(result.disagreementSources[0].levelRange, [2, 3]);
+    assert.deepEqual(result.confidenceReasons, [
+        "range_evidence_only",
+        "direct_legacy_mapping",
+        "weak_independence_or_missing_japanese_source",
+    ]);
+});
+
+test("evaluateKanjiSourceEvidence derives Japanese textbook consensus from individual lanes", () => {
+    const evidence = normalizeJlptKanjiSourceEvidence({
+        version: 1,
+        sourceTiers: {
+            textbook: {
+                label: "Textbook tier",
+                rank: 1,
+                role: "primary-evidence",
+                description: "Fixture textbook tier.",
+            },
+        },
+        sourceLineages: {
+            japanese_published_textbook_review: {
+                label: "Japanese textbook review",
+                role: "japanese-published-study",
+                description: "Fixture textbook lineage.",
+            },
+        },
+        confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
+        policy: {
+            minimumIndependentSources: 2,
+            minimumIndependentEvidenceLineages: 1,
+            minimumJapanesePublishedSources: 1,
+        },
+        sources: {
+            shin_kanzen_master_kanji: {
+                name: "Shin Kanzen Master",
+                tier: "textbook",
+                status: "active",
+                sourceType: "japanese-published-textbook-kanji-review",
+                independent: true,
+                publisherIndependence: "3a_corporation",
+                japanesePublished: true,
+                countsForConsensus: true,
+                licenseStatus: "restricted",
+                evidenceLineage: "japanese_published_textbook_review",
+            },
+            nihongo_sou_matome_kanji: {
+                name: "Nihongo Sou Matome",
+                tier: "textbook",
+                status: "active",
+                sourceType: "japanese-published-textbook-kanji-review",
+                independent: true,
+                publisherIndependence: "ask_publishing_sou_matome",
+                japanesePublished: true,
+                countsForConsensus: true,
+                licenseStatus: "restricted",
+                evidenceLineage: "japanese_published_textbook_review",
+            },
+            japanese_textbook_consensus: {
+                name: "Derived textbook consensus",
+                tier: "textbook",
+                status: "active",
+                sourceType: "derived-textbook-consensus",
+                independent: false,
+                japanesePublished: true,
+                countsForConsensus: false,
+                licenseStatus: "restricted",
+                evidenceLineage: "japanese_published_textbook_review",
+                derivedFromSources: ["shin_kanzen_master_kanji", "nihongo_sou_matome_kanji"],
+            },
+        },
+        assignments: {
+            shin_kanzen_master_kanji: { 語: 4 },
+            nihongo_sou_matome_kanji: { 語: 4 },
+            japanese_textbook_consensus: { 語: 3 },
+        },
+    });
+
+    const result = evaluateKanjiSourceEvidence({
+        kanji: "語",
+        contractLevel: 4,
+        evidence,
+    });
+
+    assert.equal(result.assignmentCount, 2);
+    assert.equal(result.textbookConsensus.consensusLevel, 4);
+    assert.deepEqual(result.textbookConsensus.sourceIds, ["shin_kanzen_master_kanji", "nihongo_sou_matome_kanji"]);
+    assert.ok(result.confidenceReasons.includes("textbook_agreement"));
+});
+
 test("evaluateKanjiSourceEvidence ignores planned sources until activated", () => {
     const evidence = normalizeJlptKanjiSourceEvidence({
         version: 1,
         confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
         sourceTiers: {
             fixture: {
                 label: "Fixture tier",
@@ -480,6 +708,7 @@ test("auditJlptKanjiSourceEvidence fails on unreviewed assignments and unapprove
     const evidence = normalizeJlptKanjiSourceEvidence({
         version: 1,
         confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
         sourceTiers: {
             fixture: {
                 label: "Fixture tier",
@@ -555,9 +784,23 @@ test("auditJlptKanjiSourceEvidence emits governed confidence manifest entries", 
         agreementScore: 1,
         agreementCount: 3,
         assignmentCount: 3,
+        votingAssignmentCount: 3,
         independentSourceCount: 3,
         independentEvidenceLineageCount: 3,
         japanesePublishedSourceCount: 1,
+        textbookConsensus: {
+            sourceId: "japanese_textbook_consensus",
+            sourceIds: [],
+            assignmentCount: 0,
+            votingAssignmentCount: 0,
+            consensusLevel: null,
+            agreementScore: 0,
+            agreementCount: 0,
+            agreementSourceIds: [],
+            disagreementSources: [],
+            disputed: false,
+        },
+        confidenceReasons: ["source_confidence_threshold_met"],
         disagreementSources: [],
         currentContractMatchesConsensus: true,
         reviewedSources: [
@@ -663,7 +906,7 @@ test("formatJlptKanjiSourceEvidenceReport renders policy and blocker counts", ()
     assert.match(text, /Overall result: failing/);
     assert.match(text, /Confidence labels:/);
     assert.match(text, /Current contract comparison samples \(1 shown\):/);
-    assert.match(text, /- 日: current N5; consensus none; agreement 0\/0; lineages 0; disagreements none; confidence unknown; matches no/);
+    assert.match(text, /- 日: current N5; consensus none; agreement 0\/0; lineages 0; disagreements none; confidence unknown; reasons unknown_no_reviewed_external_evidence; textbook consensus none; matches no/);
     assert.match(text, /Missing evidence: 1/);
 });
 

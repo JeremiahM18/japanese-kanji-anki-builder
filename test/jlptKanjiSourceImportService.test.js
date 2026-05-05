@@ -99,6 +99,18 @@ test("materializeKanjiEvidenceEntries keeps declared consensus aligned with acti
             weak_evidence: { label: "weak_evidence", releaseMeaning: "Weak.", blocksRelease: true },
             unknown: { label: "unknown", releaseMeaning: "Unknown.", blocksRelease: true },
         },
+        confidenceReasonLabels: {
+            direct_legacy_mapping: { label: "direct", description: "Direct." },
+            estimated_split_evidence: { label: "estimated", description: "Estimated." },
+            textbook_agreement: { label: "textbook", description: "Textbook." },
+            range_evidence_present: { label: "range", description: "Range present." },
+            range_evidence_only: { label: "range only", description: "Range only." },
+            disputed_source_votes: { label: "disputed", description: "Disputed." },
+            weak_independence_or_missing_japanese_source: { label: "weak", description: "Weak." },
+            unknown_no_reviewed_external_evidence: { label: "unknown", description: "Unknown." },
+            current_contract_mismatch: { label: "mismatch", description: "Mismatch." },
+            source_confidence_threshold_met: { label: "met", description: "Met." },
+        },
         sources: {
             current_operational_contract: {
                 name: "Current",
@@ -106,7 +118,7 @@ test("materializeKanjiEvidenceEntries keeps declared consensus aligned with acti
                 status: "active",
                 sourceType: "fixture",
                 independent: false,
-                countsForConsensus: true,
+                countsForConsensus: false,
                 licenseStatus: "approved",
             },
             kanjidic2_legacy: {
@@ -155,9 +167,9 @@ test("materializeKanjiEvidenceEntries keeps declared consensus aligned with acti
     assert.equal(materialized.kanji.日.consensusLevel, "N5");
     assert.equal(materialized.kanji.日.agreementScore, 1);
     assert.equal(materialized.kanji.日.sources.kanjidic2_legacy.notes, "Fixture notes");
-    assert.equal(materialized.kanji.語.consensusLevel, undefined);
-    assert.equal(materialized.kanji.語.confidence, "disputed");
-    assert.match(materialized.kanji.語.notes, /disagree/);
+    assert.equal(materialized.kanji.語.consensusLevel, "N5");
+    assert.equal(materialized.kanji.語.confidence, "weak_evidence");
+    assert.match(materialized.kanji.語.notes, /Additional independent/);
 });
 
 test("importJlptKanjiSourceInput script parses args and formats read-only scope", () => {

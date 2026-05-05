@@ -12,7 +12,7 @@ const {
     parseArgs,
 } = require("../scripts/createJlptTextbookConsensusTemplate");
 
-test("textbook consensus template rows stay deterministic and blank until reviewed", () => {
+test("textbook source template rows stay deterministic and blank until reviewed", () => {
     const rows = buildJlptTextbookConsensusTemplateRows({
         contract: {
             kanjiLevels: {
@@ -31,12 +31,12 @@ test("textbook consensus template rows stay deterministic and blank until review
         "鬱:N1",
     ]);
     assert.equal(rows.every((row) => row.reviewStatus === "needs_review"), true);
-    assert.equal(rows.every((row) => row.consensusLevel === ""), true);
+    assert.equal(rows.every((row) => row.level === ""), true);
     assert.equal(rows.every((row) => row.citation === ""), true);
     assert.equal(rows.every((row) => row.evidenceRef === ""), true);
 });
 
-test("textbook consensus template supports level and limit filters", () => {
+test("textbook source template supports level and limit filters", () => {
     const rows = buildJlptTextbookConsensusTemplateRows({
         contract: {
             kanjiLevels: {
@@ -53,12 +53,12 @@ test("textbook consensus template supports level and limit filters", () => {
     assert.equal(rows[0].currentContractLevel, "N5");
 });
 
-test("textbook consensus template TSV exposes only manual review fields", () => {
+test("textbook source template TSV exposes only manual review fields", () => {
     const tsv = formatJlptTextbookConsensusTemplateTsv([
         {
             kanji: "日",
             currentContractLevel: "N5",
-            consensusLevel: "",
+            level: "",
             reviewStatus: "needs_review",
             citation: "",
             evidenceRef: "",
@@ -67,13 +67,13 @@ test("textbook consensus template TSV exposes only manual review fields", () => 
     ]);
 
     assert.equal(tsv, [
-        "kanji\tcurrentContractLevel\tconsensusLevel\treviewStatus\tcitation\tevidenceRef\tnotes",
+        "kanji\tcurrentContractLevel\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes",
         "日\tN5\t\tneeds_review\t\t\t",
         "",
     ].join("\n"));
 });
 
-test("textbook consensus template rejects invalid CLI filters", () => {
+test("textbook source template rejects invalid CLI filters", () => {
     assert.equal(parseJlptLevelFilter("n4"), 4);
     assert.equal(resolvePositiveLimit(3), 3);
     assert.throws(() => parseJlptLevelFilter("N6"), /Invalid JLPT level/);
@@ -83,6 +83,8 @@ test("textbook consensus template rejects invalid CLI filters", () => {
 test("createJlptTextbookConsensusTemplate script parses args and reports no deck mutation", () => {
     const options = parseArgs([
         "--contract=templates/custom-contract.json",
+        "--config=templates/custom-inputs.json",
+        "--source=nihongo_sou_matome_kanji",
         "--out=downloads/custom-textbook.tsv",
         "--level=5",
         "--limit=12",
@@ -90,6 +92,8 @@ test("createJlptTextbookConsensusTemplate script parses args and reports no deck
     ]);
 
     assert.equal(options.contract, "templates/custom-contract.json");
+    assert.equal(options.config, "templates/custom-inputs.json");
+    assert.equal(options.source, "nihongo_sou_matome_kanji");
     assert.equal(options.out, "downloads/custom-textbook.tsv");
     assert.equal(options.level, "5");
     assert.equal(options.limit, 12);
@@ -98,11 +102,12 @@ test("createJlptTextbookConsensusTemplate script parses args and reports no deck
     const text = formatTemplateReport({
         outPath: "downloads/custom-textbook.tsv",
         contractPath: "templates/custom-contract.json",
+        sourceId: "nihongo_sou_matome_kanji",
         level: "5",
         rows: [{ kanji: "日" }, { kanji: "月" }],
     });
 
     assert.match(text, /manual-review worksheet only/);
     assert.match(text, /does not import evidence, move kanji, move words, update decks, or change readiness/);
-    assert.match(text, /permitted, manually reviewed level judgments/);
+    assert.match(text, /selected Japanese-published source lane/);
 });

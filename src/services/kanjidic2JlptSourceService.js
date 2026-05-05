@@ -32,7 +32,8 @@ function normalizeLegacyJlptLevel(value) {
         return {
             legacyLevel: 2,
             modernLevel: null,
-            reason: "legacy JLPT level 2 spans modern N2/N3 and is intentionally excluded from automatic source assignments",
+            modernLevelRange: [2, 3],
+            reason: null,
         };
     }
     return {
@@ -66,7 +67,7 @@ function extractKanjidic2JlptRows(xmlText, { contractKanjiSet = null } = {}) {
         }
 
         const normalized = normalizeLegacyJlptLevel(legacyJlptLevel);
-        if (!Number.isInteger(normalized.modernLevel)) {
+        if (!Number.isInteger(normalized.modernLevel) && !Array.isArray(normalized.modernLevelRange)) {
             skipped.push({
                 kanji,
                 legacyJlptLevel,
@@ -89,7 +90,9 @@ function extractKanjidic2JlptRows(xmlText, { contractKanjiSet = null } = {}) {
             reviewStatus: "reviewed",
             citation: DEFAULT_CITATION,
             evidenceRef: DEFAULT_EVIDENCE_REF,
-            notes: `Extracted from KANJIDIC2 <misc><jlpt>; legacy JLPT ${normalized.legacyLevel} maps to modern N${normalized.modernLevel}.`,
+            notes: Array.isArray(normalized.modernLevelRange)
+                ? "Extracted from KANJIDIC2 <misc><jlpt>; legacy JLPT 2 is retained as modern N2/N3 range evidence and must not settle exact placement by itself."
+                : `Extracted from KANJIDIC2 <misc><jlpt>; legacy JLPT ${normalized.legacyLevel} maps to modern N${normalized.modernLevel}.`,
         });
     }
 

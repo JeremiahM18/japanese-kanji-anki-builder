@@ -1,6 +1,9 @@
 const crypto = require("node:crypto");
 
-const { normalizeJlptLevelAssignment } = require("../datasets/jlptKanjiSourceEvidence");
+const {
+    normalizeJlptLevelAssignment,
+    normalizeJlptLevelRangeAssignment,
+} = require("../datasets/jlptKanjiSourceEvidence");
 
 function normalizeText(value) {
     return String(value ?? "").trim();
@@ -109,7 +112,8 @@ function normalizeLegacyJlptLevel(value) {
     if (oldLevel === 2) {
         return {
             level: null,
-            reason: "legacy JLPT level 2 spans modern N2/N3 and must not be auto-assigned",
+            levelRange: [2, 3],
+            reason: null,
         };
     }
     return {
@@ -128,9 +132,13 @@ function normalizeInputLevel(value, levelMapping = "new-jlpt-n1-n5") {
     }
 
     const level = normalizeJlptLevelAssignment(value);
-    return Number.isInteger(level)
-        ? { level, reason: null }
-        : { level: null, reason: `invalid JLPT level: ${normalizeText(value) || "missing"}` };
+    if (Number.isInteger(level)) {
+        return { level, reason: null };
+    }
+    const levelRange = normalizeJlptLevelRangeAssignment(value);
+    return Array.isArray(levelRange)
+        ? { level: null, levelRange, reason: null }
+        : { level: null, levelRange: null, reason: `invalid JLPT level: ${normalizeText(value) || "missing"}` };
 }
 
 function getRowField(row = {}, columnName) {
@@ -203,7 +211,7 @@ function buildAssignmentFromRow({ row, sourceConfig, contractKanjiSet }) {
         issues.push(`kanji ${kanji} is outside the current JLPT kanji contract`);
     }
 
-    if (!Number.isInteger(normalizedLevel.level)) {
+    if (!Number.isInteger(normalizedLevel.level) && !Array.isArray(normalizedLevel.levelRange)) {
         issues.push(normalizedLevel.reason);
     }
     if (!["reviewed", "needs_review", "blocked"].includes(reviewStatus)) {
@@ -220,6 +228,7 @@ function buildAssignmentFromRow({ row, sourceConfig, contractKanjiSet }) {
         rowNumber: row.__rowNumber,
         kanji,
         level: normalizedLevel.level,
+        levelRange: normalizedLevel.levelRange,
         reviewStatus,
         citation,
         evidenceRef,
@@ -253,13 +262,21 @@ function buildJlptKanjiSourceInputReport({
     const rejectedRows = rowResults.filter((row) => row.issues.length > 0);
     const reviewedAssignments = rowResults.filter((row) => row.issues.length === 0 && row.reviewStatus === "reviewed");
     const assignments = Object.fromEntries(
-        reviewedAssignments.map((row) => [row.kanji, {
-            level: row.level,
-            reviewStatus: row.reviewStatus,
-            citation: row.citation,
-            evidenceRef: row.evidenceRef,
-            notes: row.notes,
-        }])
+        reviewedAssignments.map((row) => {
+            const assignment = {
+                reviewStatus: row.reviewStatus,
+                citation: row.citation,
+                evidenceRef: row.evidenceRef,
+                notes: row.notes,
+            };
+            if (Number.isInteger(row.level)) {
+                assignment.level = row.level;
+            }
+            if (Array.isArray(row.levelRange)) {
+                assignment.levelRange = row.levelRange;
+            }
+            return [row.kanji, assignment];
+        })
     );
     const reviewStatusCounts = rowResults.reduce((counts, row) => {
         counts[row.reviewStatus] = (counts[row.reviewStatus] || 0) + 1;

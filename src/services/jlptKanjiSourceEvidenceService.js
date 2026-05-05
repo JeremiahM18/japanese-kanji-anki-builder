@@ -36,6 +36,8 @@ function createIssueCounts() {
     };
 }
 
+const JAPANESE_TEXTBOOK_CONSENSUS_SOURCE_ID = "japanese_textbook_consensus";
+
 function getComparableSourceEntries(evidence = {}) {
     return Object.entries(evidence.sources || {})
         .filter(([, source]) => source.status === "active" && source.countsForConsensus !== false);
@@ -72,13 +74,19 @@ function collectKanjiAssignments({ kanji, evidence = {} } = {}) {
 
     for (const [sourceId, source] of sourceEntries) {
         const assignment = evidence.assignments?.[sourceId]?.[kanji];
-        if (!Number.isInteger(assignment?.level) || assignment.reviewStatus !== "reviewed") {
+        const hasExactLevel = Number.isInteger(assignment?.level);
+        const hasLevelRange = Array.isArray(assignment?.levelRange)
+            && assignment.levelRange.length >= 2
+            && assignment.levelRange.every((level) => Number.isInteger(level));
+        if ((!hasExactLevel && !hasLevelRange) || assignment.reviewStatus !== "reviewed") {
             continue;
         }
 
         assignments.push({
             sourceId,
             level: assignment.level,
+            levelRange: hasLevelRange ? assignment.levelRange : undefined,
+            isRangeEvidence: !hasExactLevel && hasLevelRange,
             reviewStatus: assignment.reviewStatus,
             citation: assignment.citation,
             evidenceRef: assignment.evidenceRef,
@@ -102,6 +110,9 @@ function computeConsensus(assignments = []) {
     let totalWeight = 0;
 
     for (const assignment of assignments) {
+        if (!Number.isInteger(assignment.level)) {
+            continue;
+        }
         voteWeights[assignment.level] += assignment.weight;
         totalWeight += assignment.weight;
     }
@@ -138,6 +149,7 @@ function buildConsensusComparison(assignments = [], consensusLevel = null) {
             disagreementSources: assignments.map((assignment) => ({
                 sourceId: assignment.sourceId,
                 level: assignment.level,
+                ...(Array.isArray(assignment.levelRange) ? { levelRange: assignment.levelRange } : {}),
                 tier: assignment.tier?.id,
                 tierLabel: assignment.tier?.label,
             })),
@@ -150,6 +162,7 @@ function buildConsensusComparison(assignments = [], consensusLevel = null) {
         .map((assignment) => ({
             sourceId: assignment.sourceId,
             level: assignment.level,
+            ...(Array.isArray(assignment.levelRange) ? { levelRange: assignment.levelRange } : {}),
             tier: assignment.tier?.id,
             tierLabel: assignment.tier?.label,
         }));
@@ -158,6 +171,30 @@ function buildConsensusComparison(assignments = [], consensusLevel = null) {
         agreementCount: agreementSources.length,
         agreementSourceIds: agreementSources.map((assignment) => assignment.sourceId),
         disagreementSources,
+    };
+}
+
+function isJapaneseTextbookSourceAssignment(assignment = {}) {
+    return assignment.sourceId !== JAPANESE_TEXTBOOK_CONSENSUS_SOURCE_ID
+        && assignment.japanesePublished
+        && assignment.lineage?.role === "japanese-published-study";
+}
+
+function buildJapaneseTextbookConsensus(assignments = []) {
+    const textbookAssignments = assignments.filter(isJapaneseTextbookSourceAssignment);
+    const consensus = computeConsensus(textbookAssignments);
+    const comparison = buildConsensusComparison(textbookAssignments, consensus.consensusLevel);
+    return {
+        sourceId: JAPANESE_TEXTBOOK_CONSENSUS_SOURCE_ID,
+        sourceIds: textbookAssignments.map((assignment) => assignment.sourceId),
+        assignmentCount: textbookAssignments.length,
+        votingAssignmentCount: textbookAssignments.filter((assignment) => Number.isInteger(assignment.level)).length,
+        consensusLevel: consensus.consensusLevel,
+        agreementScore: consensus.agreementScore,
+        agreementCount: comparison.agreementCount,
+        agreementSourceIds: comparison.agreementSourceIds,
+        disagreementSources: comparison.disagreementSources,
+        disputed: consensus.disputed,
     };
 }
 
@@ -192,6 +229,53 @@ function classifyConfidence({
     return "weak_evidence";
 }
 
+function buildConfidenceReasons({
+    assignments = [],
+    confidence,
+    contractMatchesConsensus,
+    textbookConsensus = {},
+} = {}) {
+    const reasons = new Set();
+    const lineages = new Set(assignments.map((assignment) => assignment.lineage?.id).filter(Boolean));
+
+    if (assignments.length === 0) {
+        reasons.add("unknown_no_reviewed_external_evidence");
+        return [...reasons];
+    }
+    if (assignments.every((assignment) => assignment.isRangeEvidence)) {
+        reasons.add("range_evidence_only");
+    } else if (assignments.some((assignment) => assignment.isRangeEvidence)) {
+        reasons.add("range_evidence_present");
+    }
+    if (lineages.has("pre_2010_direct_jlpt")) {
+        reasons.add("direct_legacy_mapping");
+    }
+    if (lineages.has("post_2010_estimated_split")) {
+        reasons.add("estimated_split_evidence");
+    }
+    if (
+        Number.isInteger(textbookConsensus.consensusLevel)
+        && textbookConsensus.agreementCount >= 2
+        && !textbookConsensus.disputed
+    ) {
+        reasons.add("textbook_agreement");
+    }
+    if (confidence === "disputed") {
+        reasons.add("disputed_source_votes");
+    }
+    if (confidence === "weak_evidence") {
+        reasons.add("weak_independence_or_missing_japanese_source");
+    }
+    if (contractMatchesConsensus === false) {
+        reasons.add("current_contract_mismatch");
+    }
+    if (confidence === "high_confidence" || confidence === "standard_confidence") {
+        reasons.add("source_confidence_threshold_met");
+    }
+
+    return [...reasons];
+}
+
 function evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence = {} } = {}) {
     const policy = evidence.policy || {};
     const assignments = collectKanjiAssignments({ kanji, evidence });
@@ -208,6 +292,7 @@ function evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence = {} } = {
     const japanesePublishedSourceCount = assignments.filter((entry) => entry.japanesePublished).length;
     const consensus = computeConsensus(assignments);
     const comparison = buildConsensusComparison(assignments, consensus.consensusLevel);
+    const textbookConsensus = buildJapaneseTextbookConsensus(assignments);
     const confidence = classifyConfidence({
         assignmentCount: assignments.length,
         independentSourceCount,
@@ -217,6 +302,9 @@ function evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence = {} } = {
         agreementScore: consensus.agreementScore,
         policy,
     });
+    const contractMatchesConsensus = Number.isInteger(consensus.consensusLevel)
+        ? consensus.consensusLevel === contractLevel
+        : null;
 
     return {
         kanji,
@@ -224,6 +312,7 @@ function evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence = {} } = {
         contractLevel,
         assignments,
         assignmentCount: assignments.length,
+        votingAssignmentCount: assignments.filter((assignment) => Number.isInteger(assignment.level)).length,
         agreementCount: comparison.agreementCount,
         agreementSourceIds: comparison.agreementSourceIds,
         disagreementSources: comparison.disagreementSources,
@@ -236,9 +325,14 @@ function evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence = {} } = {
         voteWeights: consensus.voteWeights,
         confidence,
         confidenceLabel: evidence.confidenceLabels?.[confidence]?.label || confidence,
-        contractMatchesConsensus: Number.isInteger(consensus.consensusLevel)
-            ? consensus.consensusLevel === contractLevel
-            : null,
+        confidenceReasons: buildConfidenceReasons({
+            assignments,
+            confidence,
+            contractMatchesConsensus,
+            textbookConsensus,
+        }),
+        textbookConsensus,
+        contractMatchesConsensus,
     };
 }
 
@@ -269,6 +363,7 @@ function summarizeSourceCoverage({ evidence = {}, contractKanjiSet = new Set() }
                 japanesePublished: source.japanesePublished === true,
                 countsForConsensus: source.countsForConsensus !== false,
                 licenseStatus: source.licenseStatus,
+                derivedFromSources: source.derivedFromSources || [],
                 assignmentCount: assignedKanji.length,
                 unreviewedAssignmentCount,
                 assignmentOutsideContractCount: assignmentOutsideContract.length,
@@ -369,9 +464,12 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
             agreementScore: result.agreementScore,
             agreementCount: result.agreementCount,
             assignmentCount: result.assignmentCount,
+            votingAssignmentCount: result.votingAssignmentCount,
             independentSourceCount: result.independentSourceCount,
             independentEvidenceLineageCount: result.independentEvidenceLineageCount,
             japanesePublishedSourceCount: result.japanesePublishedSourceCount,
+            textbookConsensus: result.textbookConsensus,
+            confidenceReasons: result.confidenceReasons,
             disagreementSources: result.disagreementSources,
             currentContractMatchesConsensus: result.contractMatchesConsensus,
             reviewedSources: result.assignments.map((entry) => {
@@ -385,6 +483,9 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
                     evidenceRef: entry.evidenceRef,
                     notes: entry.notes,
                 };
+                if (Array.isArray(entry.levelRange)) {
+                    reviewedSource.levelRange = entry.levelRange;
+                }
                 if (entry.lineage?.id) {
                     reviewedSource.lineage = entry.lineage.id;
                     reviewedSource.lineageLabel = entry.lineage.label;
@@ -512,6 +613,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
         policy,
         sourceTiers: evidence.sourceTiers || {},
         confidenceLabels: evidence.confidenceLabels || {},
+        confidenceReasonLabels: evidence.confidenceReasonLabels || {},
         confidenceCounts,
         kanjiConfidenceManifest,
         issueCounts,
@@ -537,6 +639,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
 
 module.exports = {
     auditJlptKanjiSourceEvidence,
+    buildJapaneseTextbookConsensus,
     classifyConfidence,
     collectKanjiAssignments,
     computeConsensus,

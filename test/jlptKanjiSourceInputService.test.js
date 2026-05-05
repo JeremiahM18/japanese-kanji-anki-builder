@@ -86,6 +86,31 @@ test("source input preflight accepts pinned reviewed source rows without deck mu
     assert.equal(report.assignments.学.level, 4);
 });
 
+test("source input preflight accepts explicit level-range evidence", () => {
+    const text = [
+        "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes",
+        "橋\tN2/N3\treviewed\tFixture citation\tfixture:橋\tAmbiguous old level 2 range",
+    ].join("\n");
+    const sourceConfig = buildSourceConfig(text);
+
+    const report = buildJlptKanjiSourceInputReport({
+        sourceId: "fixture_source",
+        sourceConfig,
+        sourceBuffer: Buffer.from(text, "utf8"),
+        contract: { kanjiLevels: { 橋: 2 } },
+        evidence: buildEvidence(),
+        policy: {
+            noDeckMutation: true,
+            requirePinnedIntegrity: true,
+            requireKnownEvidenceSource: true,
+        },
+    });
+
+    assert.equal(report.valid, true);
+    assert.deepEqual(report.assignments.橋.levelRange, [2, 3]);
+    assert.equal(report.assignments.橋.level, undefined);
+});
+
 test("source input preflight rejects bad rows before they become source evidence", () => {
     const text = [
         "kanji\tlevel\treviewStatus\tcitation\tevidenceRef",
@@ -116,7 +141,7 @@ test("source input preflight rejects bad rows before they become source evidence
     assert.match(report.rejectedRows[2].issues.join("\n"), /missing citation/);
 });
 
-test("legacy KANJIDIC2 level mapping refuses old level 2 instead of guessing N2 or N3", () => {
+test("legacy KANJIDIC2 level mapping preserves old level 2 as N2/N3 range evidence", () => {
     assert.deepEqual(normalizeInputLevel("4", "kanjidic2-legacy-jlpt"), {
         level: 5,
         reason: null,
@@ -132,7 +157,8 @@ test("legacy KANJIDIC2 level mapping refuses old level 2 instead of guessing N2 
 
     const oldLevelTwo = normalizeInputLevel("2", "kanjidic2-legacy-jlpt");
     assert.equal(oldLevelTwo.level, null);
-    assert.match(oldLevelTwo.reason, /spans modern N2\/N3/);
+    assert.deepEqual(oldLevelTwo.levelRange, [2, 3]);
+    assert.equal(oldLevelTwo.reason, null);
 });
 
 test("source input preflight blocks unpinned or unactivated source files", () => {
@@ -205,7 +231,7 @@ test("source input report script parses args and renders read-only scope", () =>
     assert.match(text, /source file is missing/);
 });
 
-test("source input manifest can declare a planned restricted textbook consensus lane", () => {
+test("source input manifest can declare planned restricted textbook source lanes", () => {
     const manifest = normalizeJlptKanjiSourceInputs({
         version: 1,
         policy: {
@@ -214,13 +240,13 @@ test("source input manifest can declare a planned restricted textbook consensus 
             requireKnownEvidenceSource: true,
         },
         inputs: {
-            japanese_textbook_consensus: {
-                sourceId: "japanese_textbook_consensus",
-                sourcePath: "downloads/japanese-textbook-consensus.tsv",
-                sourceLabel: "manual-japanese-published-textbook-consensus",
+            shin_kanzen_master_kanji: {
+                sourceId: "shin_kanzen_master_kanji",
+                sourcePath: "downloads/shin-kanzen-master-kanji-evidence.tsv",
+                sourceLabel: "shin-kanzen-master-kanji-reviewed-evidence",
                 format: "tsv",
                 kanjiColumn: "kanji",
-                levelColumn: "consensusLevel",
+                levelColumn: "level",
                 reviewStatusColumn: "reviewStatus",
                 citationColumn: "citation",
                 evidenceRefColumn: "evidenceRef",
@@ -229,14 +255,14 @@ test("source input manifest can declare a planned restricted textbook consensus 
                 requireCitation: true,
                 requireEvidenceRef: true,
                 levelMapping: "new-jlpt-n1-n5",
-                integrityPolicy: "Manual source only.",
+                integrityPolicy: "Individual textbook source only.",
             },
         },
     });
 
-    const input = manifest.inputs.japanese_textbook_consensus;
-    assert.equal(input.sourcePath, "downloads/japanese-textbook-consensus.tsv");
-    assert.equal(input.levelColumn, "consensusLevel");
+    const input = manifest.inputs.shin_kanzen_master_kanji;
+    assert.equal(input.sourcePath, "downloads/shin-kanzen-master-kanji-evidence.tsv");
+    assert.equal(input.levelColumn, "level");
     assert.equal(input.requireCitation, true);
     assert.equal(input.requireEvidenceRef, true);
     assert.equal(input.sha256, undefined);

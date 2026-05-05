@@ -1,7 +1,7 @@
 const TEMPLATE_HEADERS = Object.freeze([
     "kanji",
     "currentContractLevel",
-    "consensusLevel",
+    "level",
     "reviewStatus",
     "citation",
     "evidenceRef",
@@ -46,7 +46,7 @@ function buildJlptTextbookConsensusTemplateRows({ contract = {}, level = null, l
         .map(([kanji, contractLevel]) => ({
             kanji,
             currentContractLevel: formatLevel(contractLevel),
-            consensusLevel: "",
+            level: "",
             reviewStatus: "needs_review",
             citation: "",
             evidenceRef: "",

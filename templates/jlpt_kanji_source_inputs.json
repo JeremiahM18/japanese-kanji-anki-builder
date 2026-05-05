@@ -51,15 +51,15 @@
       "sha256": "b42141a1cb9b7803de67a9d26c6a18c02eb33caf35f73bf480f0bedde6290047",
       "byteSize": 273677,
       "rowCount": 1479,
-      "integrityPolicy": "The ignored normalized TSV must match the tracked SHA-256, byte size, and parsed row count before import. Legacy JLPT level 2 is intentionally blocked because it spans modern N2/N3."
+      "integrityPolicy": "The ignored normalized TSV must match the tracked SHA-256, byte size, and parsed row count before import. Legacy JLPT level 2 is retained as N2/N3 range evidence and must not be converted into an exact N2 or N3 vote."
     },
-    "japanese_textbook_consensus": {
-      "sourceId": "japanese_textbook_consensus",
-      "sourcePath": "downloads/japanese-textbook-consensus.tsv",
-      "sourceLabel": "manual-japanese-published-textbook-consensus",
+    "shin_kanzen_master_kanji": {
+      "sourceId": "shin_kanzen_master_kanji",
+      "sourcePath": "downloads/shin-kanzen-master-kanji-evidence.tsv",
+      "sourceLabel": "shin-kanzen-master-kanji-reviewed-evidence",
       "format": "tsv",
       "kanjiColumn": "kanji",
-      "levelColumn": "consensusLevel",
+      "levelColumn": "level",
       "reviewStatusColumn": "reviewStatus",
       "citationColumn": "citation",
       "evidenceRefColumn": "evidenceRef",
@@ -68,7 +68,41 @@
       "requireCitation": true,
       "requireEvidenceRef": true,
       "levelMapping": "new-jlpt-n1-n5",
-      "integrityPolicy": "This source input is for manually reviewed level judgments from Japanese-published study material only. Do not copy copyrighted kanji lists. Pin SHA-256, byte size, row count, and checkedAt only after the reviewed TSV contains permitted citations and evidence references."
+      "integrityPolicy": "This source input is for manually reviewed level judgments from Shin Kanzen Master kanji textbooks only. Do not copy copyrighted kanji lists. Pin SHA-256, byte size, row count, and checkedAt only after the reviewed TSV contains permitted citations and evidence references."
+    },
+    "nihongo_sou_matome_kanji": {
+      "sourceId": "nihongo_sou_matome_kanji",
+      "sourcePath": "downloads/nihongo-sou-matome-kanji-evidence.tsv",
+      "sourceLabel": "nihongo-sou-matome-kanji-reviewed-evidence",
+      "format": "tsv",
+      "kanjiColumn": "kanji",
+      "levelColumn": "level",
+      "reviewStatusColumn": "reviewStatus",
+      "citationColumn": "citation",
+      "evidenceRefColumn": "evidenceRef",
+      "notesColumn": "notes",
+      "defaultReviewStatus": "needs_review",
+      "requireCitation": true,
+      "requireEvidenceRef": true,
+      "levelMapping": "new-jlpt-n1-n5",
+      "integrityPolicy": "This source input is for manually reviewed level judgments from Nihongo Sou Matome kanji textbooks only. Do not copy copyrighted kanji lists. Pin SHA-256, byte size, row count, and checkedAt only after the reviewed TSV contains permitted citations and evidence references."
+    },
+    "try_jlpt_textbook": {
+      "sourceId": "try_jlpt_textbook",
+      "sourcePath": "downloads/try-jlpt-textbook-evidence.tsv",
+      "sourceLabel": "try-jlpt-reviewed-evidence",
+      "format": "tsv",
+      "kanjiColumn": "kanji",
+      "levelColumn": "level",
+      "reviewStatusColumn": "reviewStatus",
+      "citationColumn": "citation",
+      "evidenceRefColumn": "evidenceRef",
+      "notesColumn": "notes",
+      "defaultReviewStatus": "needs_review",
+      "requireCitation": true,
+      "requireEvidenceRef": true,
+      "levelMapping": "new-jlpt-n1-n5",
+      "integrityPolicy": "This source input is for manually reviewed level-study judgments from the TRY! JLPT series only. Do not copy copyrighted lists. Pin SHA-256, byte size, row count, and checkedAt only after the reviewed TSV contains permitted citations and evidence references."
     }
   }
 }

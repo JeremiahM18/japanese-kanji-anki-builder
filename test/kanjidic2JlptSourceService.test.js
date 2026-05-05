@@ -69,26 +69,25 @@ test("normalizeLegacyJlptLevel maps only safe legacy JLPT levels", () => {
     const oldLevelTwo = normalizeLegacyJlptLevel("2");
     assert.equal(oldLevelTwo.legacyLevel, 2);
     assert.equal(oldLevelTwo.modernLevel, null);
-    assert.match(oldLevelTwo.reason, /N2\/N3/);
+    assert.deepEqual(oldLevelTwo.modernLevelRange, [2, 3]);
+    assert.equal(oldLevelTwo.reason, null);
 });
 
-test("extractKanjidic2JlptRows emits reviewed rows and skips legacy level 2", () => {
+test("extractKanjidic2JlptRows emits reviewed rows and preserves legacy level 2 as range evidence", () => {
     const result = extractKanjidic2JlptRows(buildFixtureXml());
 
     assert.equal(result.sourceCharacterCount, 6);
     assert.deepEqual(result.rows.map((row) => `${row.kanji}:${row.legacyJlptLevel}`), [
         "丈:1",
         "鬱:1",
+        "橋:2",
         "語:3",
         "日:4",
     ]);
     assert.equal(result.rows.every((row) => row.reviewStatus === "reviewed"), true);
     assert.equal(result.rows.every((row) => row.citation.includes("EDRDG KANJIDIC2")), true);
-    assert.deepEqual(result.skipped, [{
-        kanji: "橋",
-        legacyJlptLevel: "2",
-        reason: "legacy JLPT level 2 spans modern N2/N3 and is intentionally excluded from automatic source assignments",
-    }]);
+    assert.deepEqual(result.skipped, []);
+    assert.match(result.rows.find((row) => row.kanji === "橋").notes, /N2\/N3 range evidence/);
 });
 
 test("extractKanjidic2JlptRows can scope normalized assignments to the current contract", () => {
@@ -96,8 +95,8 @@ test("extractKanjidic2JlptRows can scope normalized assignments to the current c
         contractKanjiSet: new Set(["日", "語", "鬱", "橋"]),
     });
 
-    assert.deepEqual(result.rows.map((row) => row.kanji), ["鬱", "語", "日"]);
-    assert.equal(result.skipped.length, 2);
+    assert.deepEqual(result.rows.map((row) => row.kanji), ["鬱", "橋", "語", "日"]);
+    assert.equal(result.skipped.length, 1);
     assert.match(result.skipped.find((row) => row.kanji === "丈").reason, /outside the current JLPT kanji contract/);
 });
 
@@ -109,15 +108,15 @@ test("buildKanjidic2JlptSource supports gzipped XML and deterministic TSV output
         sourceBuffer,
         contract: { kanjiLevels: { 日: 5, 語: 4, 鬱: 1, 橋: 2 } },
     });
-    assert.equal(result.rowCount, 3);
-    assert.equal(result.skippedCount, 2);
+    assert.equal(result.rowCount, 4);
+    assert.equal(result.skippedCount, 1);
     assert.deepEqual(result.legacyLevelCounts, {
         1: 1,
+        2: 1,
         3: 1,
         4: 1,
     });
     assert.deepEqual(result.skippedLevelCounts, {
-        2: 1,
         1: 1,
     });
     assert.equal(result.skippedReasonCounts["outside the current JLPT kanji contract; excluded from source assignment import"], 1);
@@ -146,8 +145,8 @@ test("normalizeKanjidic2JlptSource script parses args and formats read-only repo
             sourceCharacterCount: 5,
             rowCount: 3,
             skippedCount: 1,
-            legacyLevelCounts: { 1: 1, 3: 1, 4: 1 },
-            skippedLevelCounts: { 2: 1 },
+            legacyLevelCounts: { 1: 1, 2: 1, 4: 1 },
+            skippedLevelCounts: {},
             skippedReasonCounts: {
                 "outside the current JLPT kanji contract; excluded from source assignment import": 0,
             },
@@ -155,7 +154,7 @@ test("normalizeKanjidic2JlptSource script parses args and formats read-only repo
     });
 
     assert.match(text, /old 4 -> N5: 1/);
-    assert.match(text, /old 2 blocked N2\/N3 bridge: 1/);
+    assert.match(text, /old 2 -> N2\/N3 range evidence: 1/);
     assert.match(text, /outside current contract: 0/);
     assert.match(text, /does not update tracked evidence, move kanji, move words, or change readiness/);
 });

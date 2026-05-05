@@ -45,6 +45,7 @@ function formatSourceCoverage(sourceCoverage = {}) {
             `- ${sourceId}: ${source.assignmentCount} assignments; ${source.unreviewedAssignmentCount} unreviewed; status ${source.status}; tier ${source.tier} (${source.tierLabel}); license ${source.licenseStatus}`
             + `${source.publisherIndependence ? `; publisher ${source.publisherIndependence}` : ""}`
             + `${source.lineage ? `; evidence lineage ${source.lineage} (${source.lineageLabel})` : ""}`
+            + `${source.derivedFromSources?.length ? `; derived from ${source.derivedFromSources.join(", ")}` : ""}`
         ));
 }
 
@@ -72,12 +73,22 @@ function formatLevel(level) {
     return Number.isInteger(level) ? `N${level}` : "none";
 }
 
+function formatLevelOrRange(source = {}) {
+    if (Number.isInteger(source.level)) {
+        return `N${source.level}`;
+    }
+    if (Array.isArray(source.levelRange) && source.levelRange.length > 0) {
+        return source.levelRange.map((level) => `N${level}`).join("/");
+    }
+    return "unknown";
+}
+
 function formatDisagreementSources(disagreementSources = []) {
     if (!Array.isArray(disagreementSources) || disagreementSources.length === 0) {
         return "none";
     }
     return disagreementSources
-        .map((source) => `${source.sourceId}:N${source.level}`)
+        .map((source) => `${source.sourceId}:${formatLevelOrRange(source)}`)
         .join(", ");
 }
 
@@ -89,7 +100,9 @@ function formatContractComparisonRows(rows = [], limit = 25) {
             + `agreement ${entry.agreementCount}/${entry.assignmentCount}; `
             + `lineages ${entry.independentEvidenceLineageCount}; `
             + `disagreements ${formatDisagreementSources(entry.disagreementSources)}; `
-            + `confidence ${entry.confidence}; matches ${entry.currentContractMatchesConsensus === true ? "yes" : "no"}`
+            + `confidence ${entry.confidence}; reasons ${(entry.confidenceReasons || []).join(", ") || "none"}; `
+            + `textbook consensus ${formatLevel(entry.textbookConsensus?.consensusLevel)}; `
+            + `matches ${entry.currentContractMatchesConsensus === true ? "yes" : "no"}`
         ));
 }
 
@@ -125,6 +138,8 @@ function formatJlptKanjiSourceEvidenceReport({
         "",
         "Confidence labels:",
         ...formatConfidenceLabels(report.confidenceLabels),
+        "",
+        "Confidence reasons are computed per kanji from source lineage and evidence state.",
         "",
         "Issue counts:",
         formatIssueCount("Missing evidence", report.issueCounts.missingEvidence),

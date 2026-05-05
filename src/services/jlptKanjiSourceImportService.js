@@ -5,16 +5,25 @@ function sortAssignments(assignments = {}) {
     return Object.fromEntries(
         Object.entries(assignments || {})
             .sort(([kanjiA, assignmentA], [kanjiB, assignmentB]) => (
-                (assignmentA.level || 99) - (assignmentB.level || 99)
+                (assignmentA.level || assignmentA.levelRange?.[0] || 99)
+                    - (assignmentB.level || assignmentB.levelRange?.[0] || 99)
                 || kanjiA.localeCompare(kanjiB, "ja")
             ))
-            .map(([kanji, assignment]) => [kanji, {
-                level: assignment.level,
-                reviewStatus: assignment.reviewStatus,
-                citation: assignment.citation,
-                evidenceRef: assignment.evidenceRef,
-                notes: assignment.notes,
-            }])
+            .map(([kanji, assignment]) => {
+                const sortedAssignment = {
+                    reviewStatus: assignment.reviewStatus,
+                    citation: assignment.citation,
+                    evidenceRef: assignment.evidenceRef,
+                    notes: assignment.notes,
+                };
+                if (Number.isInteger(assignment.level)) {
+                    sortedAssignment.level = assignment.level;
+                }
+                if (Array.isArray(assignment.levelRange)) {
+                    sortedAssignment.levelRange = assignment.levelRange;
+                }
+                return [kanji, sortedAssignment];
+            })
     );
 }
 
@@ -36,6 +45,9 @@ function formatLevel(level) {
 function buildMaterializedNotes(entry = {}) {
     if (entry.assignmentCount === 0) {
         return "No active external voting source assignment is recorded yet. Independent source evidence is required before source-confidence or deck-movement claims.";
+    }
+    if (entry.votingAssignmentCount === 0) {
+        return "Only range evidence is recorded from active external sources. This preserves ambiguous source evidence, but it must not move decks or word placement without exact governed assignments.";
     }
     if (entry.confidence === "disputed") {
         return "Computed from active source assignments. Current operational taxonomy and independent source evidence disagree; do not move decks or word placement until additional governed sources resolve the dispute.";
@@ -62,13 +74,21 @@ function materializeKanjiEvidenceEntries({ evidenceManifest = {}, contract = {} 
         const existing = evidenceManifest.kanji?.[entry.kanji] || {};
         const nextEntry = {
             ...existing,
-            sources: Object.fromEntries(entry.reviewedSources.map((source) => [source.sourceId, {
-                level: formatLevel(source.level),
-                reviewStatus: "reviewed",
-                citation: source.citation,
-                evidenceRef: source.evidenceRef,
-                notes: source.notes,
-            }])),
+            sources: Object.fromEntries(entry.reviewedSources.map((source) => {
+                const materializedSource = {
+                    reviewStatus: "reviewed",
+                    citation: source.citation,
+                    evidenceRef: source.evidenceRef,
+                    notes: source.notes,
+                };
+                if (Number.isInteger(source.level)) {
+                    materializedSource.level = formatLevel(source.level);
+                }
+                if (Array.isArray(source.levelRange)) {
+                    materializedSource.levelRange = source.levelRange.map((level) => formatLevel(level));
+                }
+                return [source.sourceId, materializedSource];
+            })),
             agreementScore: entry.agreementScore,
             confidence: entry.confidence,
             notes: buildMaterializedNotes(entry),

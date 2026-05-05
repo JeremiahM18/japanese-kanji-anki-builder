@@ -162,6 +162,48 @@
       ]
     }
   },
+  "confidenceReasonLabels": {
+    "direct_legacy_mapping": {
+      "label": "direct legacy mapping",
+      "description": "At least one reviewed active voting source comes from the pre-2010 direct JLPT lineage, useful for N5, N4, and N1 but not enough by itself for modern source confidence."
+    },
+    "estimated_split_evidence": {
+      "label": "estimated split evidence",
+      "description": "At least one reviewed active voting source comes from a post-2010 N2/N3 estimate and must not silently settle placement by itself."
+    },
+    "textbook_agreement": {
+      "label": "textbook agreement",
+      "description": "Two or more active Japanese-published textbook lanes agree on the same exact level."
+    },
+    "range_evidence_present": {
+      "label": "range evidence present",
+      "description": "At least one source preserves an ambiguous level range such as N2/N3 without converting it into a fake exact vote."
+    },
+    "range_evidence_only": {
+      "label": "range evidence only",
+      "description": "Reviewed evidence exists only as a range and cannot produce exact placement consensus."
+    },
+    "disputed_source_votes": {
+      "label": "disputed source votes",
+      "description": "Active voting sources tie or conflict in a way that prevents a single source consensus level."
+    },
+    "weak_independence_or_missing_japanese_source": {
+      "label": "weak evidence gap",
+      "description": "Evidence exists, but it does not yet satisfy source independence, independent lineage, Japanese-published source, or agreement requirements."
+    },
+    "unknown_no_reviewed_external_evidence": {
+      "label": "unknown source evidence",
+      "description": "No reviewed active external voting evidence is recorded for the kanji."
+    },
+    "current_contract_mismatch": {
+      "label": "current contract mismatch",
+      "description": "The current operational contract differs from computed external source consensus."
+    },
+    "source_confidence_threshold_met": {
+      "label": "source confidence threshold met",
+      "description": "The external voting evidence satisfies the governed confidence threshold."
+    }
+  },
   "sources": {
     "current_operational_contract": {
       "name": "Current JLPT kanji contract",
@@ -311,23 +353,79 @@
       "countsForConsensus": true,
       "weight": 1,
       "licenseStatus": "approved",
-      "notes": "Structured EDRDG source under CC BY-SA 4.0. KANJIDIC2 stores pre-2010 JLPT levels: old 4 maps to N5, old 3 maps to N4, old 1 maps to N1, and old 2 is blocked because it spans modern N2/N3. This shares the direct pre-2010 JLPT lineage with other old-list sources, so it is supporting evidence rather than an independent modern JLPT lineage by itself.",
+      "notes": "Structured EDRDG source under CC BY-SA 4.0. KANJIDIC2 stores pre-2010 JLPT levels: old 4 maps to N5, old 3 maps to N4, old 1 maps to N1, and old 2 is retained only as N2/N3 range evidence. This shares the direct pre-2010 JLPT lineage with other old-list sources, so it is supporting evidence rather than an independent modern JLPT lineage by itself.",
       "lineage": "pre_2010_direct_jlpt",
       "publisherIndependence": "edrdg_kanjidic2",
       "evidenceLineage": "pre_2010_direct_jlpt"
     },
-    "japanese_textbook_consensus": {
-      "name": "Japanese-published textbook consensus",
+    "shin_kanzen_master_kanji": {
+      "name": "Shin Kanzen Master kanji textbooks",
       "tier": "japanese-published-study-material",
       "status": "planned",
-      "sourceType": "manual-textbook-consensus",
+      "sourceType": "japanese-published-textbook-kanji-review",
+      "url": "https://www.3anet.co.jp/np/en/list.html?series_id=4",
       "independent": true,
-      "independenceGroup": "japanese_textbook_consensus",
+      "independenceGroup": "shin_kanzen_master",
       "japanesePublished": true,
       "countsForConsensus": true,
-      "weight": 2,
+      "weight": 1,
       "licenseStatus": "restricted",
-      "notes": "Manual evidence bucket for Japanese-published study materials such as Shin Kanzen Master, Sou Matome, and TRY. Do not copy copyrighted lists; record reviewed level judgments and citations only where permitted.",
+      "notes": "Individual textbook lane for reviewed level judgments from 3A Corporation's Shin Kanzen Master kanji books. Do not copy copyrighted lists; record only permitted citations, evidence references, and reviewer judgments.",
+      "lineage": "japanese_published_textbook_review",
+      "publisherIndependence": "3a_corporation",
+      "evidenceLineage": "japanese_published_textbook_review"
+    },
+    "nihongo_sou_matome_kanji": {
+      "name": "Nihongo Sou Matome kanji textbooks",
+      "tier": "japanese-published-study-material",
+      "status": "planned",
+      "sourceType": "japanese-published-textbook-kanji-review",
+      "url": "https://www.ask-books.com/jp/somatome/",
+      "independent": true,
+      "independenceGroup": "nihongo_sou_matome",
+      "japanesePublished": true,
+      "countsForConsensus": true,
+      "weight": 1,
+      "licenseStatus": "restricted",
+      "notes": "Individual textbook lane for reviewed level judgments from ASK Publishing's Nihongo Sou Matome kanji books. Do not copy copyrighted lists; record only permitted citations, evidence references, and reviewer judgments.",
+      "lineage": "japanese_published_textbook_review",
+      "publisherIndependence": "ask_publishing_sou_matome",
+      "evidenceLineage": "japanese_published_textbook_review"
+    },
+    "try_jlpt_textbook": {
+      "name": "TRY! JLPT textbooks",
+      "tier": "japanese-published-study-material",
+      "status": "planned",
+      "sourceType": "japanese-published-textbook-level-review",
+      "url": "https://ask-books.com/jlpt-try",
+      "independent": true,
+      "independenceGroup": "try_jlpt",
+      "japanesePublished": true,
+      "countsForConsensus": true,
+      "weight": 1,
+      "licenseStatus": "restricted",
+      "notes": "Individual textbook lane for reviewed level judgments from ASK Publishing's TRY! JLPT series. Because TRY! is not a dedicated kanji-list source, use it as level-study evidence only after manual review confirms the kanji evidence surface.",
+      "lineage": "japanese_published_textbook_review",
+      "publisherIndependence": "ask_publishing_try",
+      "evidenceLineage": "japanese_published_textbook_review"
+    },
+    "japanese_textbook_consensus": {
+      "name": "Derived Japanese-published textbook consensus",
+      "tier": "japanese-published-study-material",
+      "status": "active",
+      "sourceType": "derived-textbook-consensus",
+      "independent": false,
+      "independenceGroup": "japanese_textbook_consensus",
+      "japanesePublished": true,
+      "countsForConsensus": false,
+      "weight": 1,
+      "licenseStatus": "restricted",
+      "derivedFromSources": [
+        "shin_kanzen_master_kanji",
+        "nihongo_sou_matome_kanji",
+        "try_jlpt_textbook"
+      ],
+      "notes": "Derived non-voting summary computed from individual Japanese-published textbook lanes. It must not be manually populated or counted in external consensus in addition to the source lanes.",
       "lineage": "japanese_published_textbook_review",
       "publisherIndependence": "japanese_textbook_consensus",
       "evidenceLineage": "japanese_published_textbook_review"
@@ -21059,6 +21157,9 @@
         "notes": "Extracted from KANJIDIC2 <misc><jlpt>; legacy JLPT 4 maps to modern N5."
       }
     },
+    "shin_kanzen_master_kanji": {},
+    "nihongo_sou_matome_kanji": {},
+    "try_jlpt_textbook": {},
     "japanese_textbook_consensus": {},
     "joyo_grade": {},
     "current_operational_contract": {}

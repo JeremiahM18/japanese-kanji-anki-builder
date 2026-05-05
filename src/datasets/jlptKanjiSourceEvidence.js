@@ -8,7 +8,11 @@ const jlptLevelAssignmentValueSchema = z.union([
         level: z.union([
             z.number().int().min(1).max(5),
             z.string().min(1),
-        ]),
+        ]).optional(),
+        levelRange: z.array(z.union([
+            z.number().int().min(1).max(5),
+            z.string().min(1),
+        ])).min(2).optional(),
         reviewStatus: z.enum(["reviewed", "needs_review", "blocked"]).default("reviewed"),
         citation: z.string().min(1).optional(),
         evidenceRef: z.string().min(1).optional(),
@@ -61,6 +65,11 @@ const confidenceLabelSchema = z.object({
     requirements: z.array(z.string().min(1)).default([]),
 }).strict();
 
+const confidenceReasonLabelSchema = z.object({
+    label: z.string().min(1),
+    description: z.string().min(1),
+}).strict();
+
 const confidenceIdSchema = z.enum([
     "high_confidence",
     "standard_confidence",
@@ -74,6 +83,18 @@ const REQUIRED_CONFIDENCE_IDS = Object.freeze([
     "disputed",
     "weak_evidence",
     "unknown",
+]);
+const REQUIRED_CONFIDENCE_REASON_IDS = Object.freeze([
+    "direct_legacy_mapping",
+    "estimated_split_evidence",
+    "textbook_agreement",
+    "range_evidence_present",
+    "range_evidence_only",
+    "disputed_source_votes",
+    "weak_independence_or_missing_japanese_source",
+    "unknown_no_reviewed_external_evidence",
+    "current_contract_mismatch",
+    "source_confidence_threshold_met",
 ]);
 
 const evidenceSourceSchema = z.object({
@@ -91,6 +112,7 @@ const evidenceSourceSchema = z.object({
     countsForConsensus: z.boolean().default(true),
     weight: z.number().positive().default(1),
     licenseStatus: z.enum(["approved", "needs_review", "restricted", "unknown"]).default("needs_review"),
+    derivedFromSources: z.array(z.string().min(1)).default([]),
     notes: z.string().optional(),
 }).strict();
 
@@ -108,6 +130,7 @@ const jlptKanjiSourceEvidenceSchema = z.object({
     sourceTiers: z.record(z.string().min(1), sourceTierSchema).default({}),
     sourceLineages: z.record(z.string().min(1), sourceLineageSchema).default({}),
     confidenceLabels: z.record(z.string().min(1), confidenceLabelSchema).default({}),
+    confidenceReasonLabels: z.record(z.string().min(1), confidenceReasonLabelSchema).default({}),
     sources: z.record(z.string().min(1), evidenceSourceSchema).default({}),
     assignments: z.record(
         z.string().min(1),
@@ -130,19 +153,46 @@ function normalizeJlptLevelAssignment(value) {
     return Number(match[1]);
 }
 
+function normalizeJlptLevelRangeAssignment(value) {
+    if (!Array.isArray(value)) {
+        const text = String(value || "").trim();
+        if (!text) {
+            return null;
+        }
+        const levels = [...text.matchAll(/(?:jlpt\s*)?n?\s*([1-5])/gi)]
+            .map((match) => Number(match[1]));
+        return normalizeJlptLevelRangeAssignment(levels);
+    }
+
+    const levels = [...new Set(
+        value
+            .map((level) => normalizeJlptLevelAssignment(level))
+            .filter((level) => Number.isInteger(level))
+    )].sort((a, b) => a - b);
+
+    return levels.length >= 2 ? levels : null;
+}
+
 function normalizeJlptLevelAssignmentEntry(value) {
     if (value && typeof value === "object" && !Array.isArray(value)) {
         const level = normalizeJlptLevelAssignment(value.level);
-        if (!Number.isInteger(level)) {
+        const levelRange = normalizeJlptLevelRangeAssignment(value.levelRange);
+        if (!Number.isInteger(level) && !Array.isArray(levelRange)) {
             return null;
         }
-        return {
-            level,
+        const normalized = {
             reviewStatus: value.reviewStatus || "reviewed",
             citation: value.citation,
             evidenceRef: value.evidenceRef,
             notes: value.notes,
         };
+        if (Number.isInteger(level)) {
+            normalized.level = level;
+        }
+        if (Array.isArray(levelRange)) {
+            normalized.levelRange = levelRange;
+        }
+        return normalized;
     }
 
     const level = normalizeJlptLevelAssignment(value);
@@ -195,6 +245,14 @@ function assertRequiredConfidenceLabels(parsed) {
     }
 }
 
+function assertRequiredConfidenceReasonLabels(parsed) {
+    const missing = REQUIRED_CONFIDENCE_REASON_IDS
+        .filter((labelId) => !parsed.confidenceReasonLabels?.[labelId]);
+    if (missing.length > 0) {
+        throw new Error(`Missing JLPT kanji confidence reason labels: ${missing.join(", ")}`);
+    }
+}
+
 function normalizeKanjiEvidence(kanjiEvidence = {}) {
     return Object.fromEntries(
         Object.entries(kanjiEvidence || {}).map(([kanji, entry]) => {
@@ -227,6 +285,14 @@ function buildAssignmentsFromKanjiEvidence(kanjiEvidence = {}) {
     return assignments;
 }
 
+function hasConflictingAssignmentLevel(existing = {}, next = {}) {
+    const existingLevel = Number.isInteger(existing.level) ? existing.level : null;
+    const nextLevel = Number.isInteger(next.level) ? next.level : null;
+    const existingRange = Array.isArray(existing.levelRange) ? existing.levelRange.join("/") : "";
+    const nextRange = Array.isArray(next.levelRange) ? next.levelRange.join("/") : "";
+    return existingLevel !== nextLevel || existingRange !== nextRange;
+}
+
 function mergeAssignments(primary = {}, secondary = {}) {
     const merged = Object.fromEntries(
         Object.entries(primary || {}).map(([sourceId, sourceAssignments]) => [
@@ -239,7 +305,7 @@ function mergeAssignments(primary = {}, secondary = {}) {
         merged[sourceId] = merged[sourceId] || {};
         for (const [kanji, assignment] of Object.entries(sourceAssignments || {})) {
             const existing = merged[sourceId][kanji];
-            if (existing && existing.level !== assignment.level) {
+            if (existing && hasConflictingAssignmentLevel(existing, assignment)) {
                 throw new Error(`Conflicting JLPT kanji source assignments for ${kanji} from ${sourceId}`);
             }
             merged[sourceId][kanji] = existing
@@ -269,6 +335,7 @@ function normalizeJlptKanjiSourceEvidence(value = {}) {
     assertKnownSourceTiers(parsed);
     assertKnownSourceLineages(parsed);
     assertRequiredConfidenceLabels(parsed);
+    assertRequiredConfidenceReasonLabels(parsed);
     const kanji = normalizeKanjiEvidence(parsed.kanji);
     const sourceCentricAssignments = normalizeAssignments(parsed.assignments);
     const kanjiAssignments = buildAssignmentsFromKanjiEvidence(kanji);
@@ -285,8 +352,10 @@ function loadJlptKanjiSourceEvidence(filePath) {
 
 module.exports = {
     REQUIRED_CONFIDENCE_IDS,
+    REQUIRED_CONFIDENCE_REASON_IDS,
     evidencePolicySchema,
     confidenceLabelSchema,
+    confidenceReasonLabelSchema,
     confidenceIdSchema,
     evidenceSourceSchema,
     kanjiEvidenceEntrySchema,
@@ -295,6 +364,7 @@ module.exports = {
     jlptKanjiSourceEvidenceSchema,
     loadJlptKanjiSourceEvidence,
     normalizeJlptKanjiSourceEvidence,
+    normalizeJlptLevelRangeAssignment,
     normalizeJlptLevelAssignmentEntry,
     normalizeJlptLevelAssignment,
 };

@@ -124,6 +124,7 @@ Tracked contracts define release behavior:
 - Platinum review policy: [docs/platinum-review-policy.md](docs/platinum-review-policy.md)
 - Platinum kanji review sets: [templates/platinum_n5_review_set.json](templates/platinum_n5_review_set.json), [templates/platinum_n4_review_set.json](templates/platinum_n4_review_set.json), [templates/platinum_n3_review_set.json](templates/platinum_n3_review_set.json), [templates/platinum_n2_review_set.json](templates/platinum_n2_review_set.json), [templates/platinum_n1_review_set.json](templates/platinum_n1_review_set.json)
 - Platinum word review sets: [templates/platinum_n5_word_review_set.json](templates/platinum_n5_word_review_set.json), [templates/platinum_n4_word_review_set.json](templates/platinum_n4_word_review_set.json)
+- Word expansion signal source config: [templates/word_expansion_signal_sources.json](templates/word_expansion_signal_sources.json)
 
 ## Product Rules
 
@@ -347,6 +348,19 @@ The report deduplicates exact `written|reading` identities and also flags same-w
 
 Tracked triage decisions live in [templates/word_inventory_expansion_triage.json](templates/word_inventory_expansion_triage.json). These decisions are read-only planning metadata, not card approvals. `keep_candidate` means "worth source-checking next"; it does not bypass the 8-card word platinum review batch size, generated-surface inspection, golden review, platinum evidence, media review, or readiness gates.
 
+### Check Word Expansion Signals
+
+```bash
+npm run deck:words:expansion-signals -- --levels=5,4
+```
+
+The expansion signal command answers the narrow "fully expanded under current restraints?" question for each selected word level. It has two separate signals:
+
+- Reading signal: `exhausted` only when active reading-gap triage is cleared. Remaining coverage gaps may still exist when they are explicitly deferred variants or lower learner value.
+- Enhancement signal: `exhausted` only when the configured source vocabulary list has no remaining `keep_candidate` rows and no untriaged review candidates.
+
+The signal is deliberately not a release claim. It does not replace golden review, platinum review, APKG import QA, accessibility checks, media/listening QA, or readiness gates. Levels without configured source lists or generated TSV exports report that blocker instead of pretending to be complete.
+
 ## Media Workflows
 
 ### Stroke Order
@@ -455,6 +469,7 @@ Repository governance:
 | `npm run deck:words:triage:n4` | Classify N4 word reading gaps |
 | `npm run deck:words:gap-plan:n4 -- --limit=50` | Rank the next N4 word coverage batch |
 | `npm run deck:words:expansion-candidates:n5 -- --source=downloads/n5-vocab.tsv --source-label=jlptstudy.net-n5` | Diff a sourced vocabulary list into read-only word expansion candidates |
+| `npm run deck:words:expansion-signals -- --levels=5,4` | Summarize per-level reading and enhancement expansion exhaustion without claiming release readiness |
 | `npm run data:audit:jlpt` | Audit kanji taxonomy and starter alignment |
 | `npm run data:audit:jlpt:words` | Audit word taxonomy and starter alignment |
 | `npm run data:audit:audio` | Audit managed audio provenance |

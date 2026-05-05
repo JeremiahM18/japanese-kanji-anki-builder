@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 Checkpoint metrics in older bullets describe the state at that checkpoint. Use the ready/audit commands for current release decisions.
 
+### Added
+
+- Added `deck:words:expansion-signals`, a read-only per-level word-deck signal that reports reading-expansion exhaustion and source-list enhancement exhaustion separately without treating either signal as golden, platinum, APKG, or release readiness.
+
 ### Fixed
 
 - Finished N5 word platinum by approving source-checked `大変|たいへん`, `足下|あしもと`, `有名|ゆうめい`, `生け花|いけばな`, `休み時間|やすみじかん`, `下町|したまち`, `白米|はくまい`, and `地下|ちか`, moving later-level `行方|ゆくえ` and niche `白夜|びゃくや` to the N2 word product, and recording their N5 reading gaps as deferred instead of padding beginner coverage.

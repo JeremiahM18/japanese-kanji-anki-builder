@@ -1,0 +1,18 @@
+{
+  "levels": {
+    "N5": {
+      "sourcePath": "downloads/n5-vocab.tsv",
+      "sourceLabel": "jlptstudy.net-n5",
+      "format": "tsv",
+      "kanjiScope": "known-jlpt",
+      "requireSourceLevel": true
+    },
+    "N4": {
+      "sourcePath": "downloads/n4-vocab.tsv",
+      "sourceLabel": "jlptstudy.net-n4",
+      "format": "tsv",
+      "kanjiScope": "known-jlpt",
+      "requireSourceLevel": true
+    }
+  }
+}

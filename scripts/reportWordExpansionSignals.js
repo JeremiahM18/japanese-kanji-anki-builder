@@ -9,6 +9,7 @@ const { loadWordPitchAccentData } = require("../src/datasets/wordPitchAccentData
 const { loadWordStudyData } = require("../src/datasets/wordStudyData");
 const { buildWordDeckCompletionReport } = require("../src/services/wordDeckCompletionService");
 const { buildCoverageLevels } = require("../src/services/wordDeckCoverageScopeService");
+const { auditWordLevelAnchors } = require("../src/services/wordLevelAnchorAuditService");
 const {
     buildWordInventoryExpansionCandidateReport,
     parseCandidateSourceText,
@@ -250,6 +251,72 @@ function buildReadingSignal({ level, shared }) {
     }
 }
 
+function formatRowCount(count) {
+    return `${count} row${count === 1 ? "" : "s"}`;
+}
+
+function buildPlacementSignalFromAnchorAuditReport(report = {}) {
+    const checkedRows = report.checked || 0;
+    const violationCount = report.violationCount || 0;
+    const byPlacementStatus = report.byPlacementStatus || {};
+    const tooEasyForKanji = byPlacementStatus.too_easy_for_kanji || 0;
+    const laterMissingLearnerFitReason = byPlacementStatus.later_missing_learner_fit_reason || 0;
+    const noKnownJlptKanji = byPlacementStatus.no_known_jlpt_kanji || 0;
+    const invalidDeckLevel = byPlacementStatus.invalid_deck_level || 0;
+    const blockers = [];
+
+    if (tooEasyForKanji > 0) {
+        blockers.push(`${formatRowCount(tooEasyForKanji)} placed earlier than the constituent kanji anchor allows`);
+    }
+    if (laterMissingLearnerFitReason > 0) {
+        blockers.push(`${formatRowCount(laterMissingLearnerFitReason)} placed later without levelPlacement.reason`);
+    }
+    if (noKnownJlptKanji > 0) {
+        blockers.push(`${formatRowCount(noKnownJlptKanji)} without a known JLPT kanji anchor`);
+    }
+    if (invalidDeckLevel > 0) {
+        blockers.push(`${formatRowCount(invalidDeckLevel)} with an invalid deck level`);
+    }
+
+    return {
+        status: violationCount === 0 ? "resolved" : "blocked",
+        checkedRows,
+        violationCount,
+        tooEasyForKanji,
+        laterMissingLearnerFitReason,
+        noKnownJlptKanji,
+        invalidDeckLevel,
+        reason: violationCount === 0
+            ? "Word-level placement has no current blockers."
+            : "Word-level placement blockers remain before this level can be called fully expanded.",
+        blockers,
+    };
+}
+
+function buildPlacementSignal({ level, shared }) {
+    try {
+        const report = auditWordLevelAnchors({
+            wordLevels: shared.jlptWordLevelContract.wordLevels,
+            wordStudyData: shared.starterEntries,
+            kanjiLevelData: shared.jlptLevelContract,
+            level,
+        });
+        return buildPlacementSignalFromAnchorAuditReport(report);
+    } catch (error) {
+        return {
+            status: "blocked",
+            checkedRows: null,
+            violationCount: null,
+            tooEasyForKanji: null,
+            laterMissingLearnerFitReason: null,
+            noKnownJlptKanji: null,
+            invalidDeckLevel: null,
+            reason: "Word-level placement signal failed.",
+            blockers: [error.message],
+        };
+    }
+}
+
 function countDecision(summary, decision) {
     return summary?.triageDecisions?.[decision] || 0;
 }
@@ -422,7 +489,10 @@ function buildLevelExpansionSignal({ level, shared, sourceConfigs }) {
         sourceConfig: sourceConfigs?.[`N${level}`] || null,
         shared,
     });
-    const fullyExpanded = reading.status === "exhausted" && enhancement.status === "exhausted";
+    const placement = buildPlacementSignal({ level, shared });
+    const fullyExpanded = reading.status === "exhausted"
+        && enhancement.status === "exhausted"
+        && placement.status === "resolved";
 
     return {
         level,
@@ -430,6 +500,7 @@ function buildLevelExpansionSignal({ level, shared, sourceConfigs }) {
         fullyExpanded,
         reading,
         enhancement,
+        placement,
     };
 }
 
@@ -470,6 +541,11 @@ function formatStatusWithCounts(signal, type) {
         const source = signal.sourceLabel ? `; source ${signal.sourceLabel}` : "";
         return `${signal.status} (keep ${signal.keepCandidates}; untriaged ${signal.untriagedCandidateRows}; defer ${signal.deferCandidates}; reject ${signal.rejectCandidates}${source})`;
     }
+    if (type === "placement") {
+        if (signal.status === "resolved" || signal.status === "blocked") {
+            return `${signal.status} (${signal.violationCount}/${signal.checkedRows} violations; too early ${signal.tooEasyForKanji}; later missing rationale ${signal.laterMissingLearnerFitReason})`;
+        }
+    }
     return `${signal.status} (${signal.blockers.length} blocker${signal.blockers.length === 1 ? "" : "s"})`;
 }
 
@@ -480,11 +556,12 @@ function formatWordExpansionSignalReport(report) {
         "Signal meaning:",
         "- Reading exhausted means active reading-gap triage is cleared; coverage percent remains informational.",
         "- Enhancement exhausted means the configured source list has no keep candidates and no untriaged candidates.",
+        "- Placement resolved means no word is earlier than its kanji anchor and later learner-fit placement has a tracked reason.",
         "- This is not golden review, platinum review, APKG QA, or release readiness.",
         "",
         "Level signals:",
-        "| Level | Fully expanded | Reading | Enhancement |",
-        "| --- | --- | --- | --- |",
+        "| Level | Fully expanded | Reading | Enhancement | Placement |",
+        "| --- | --- | --- | --- | --- |",
     ];
 
     for (const signal of report.signals) {
@@ -493,12 +570,14 @@ function formatWordExpansionSignalReport(report) {
             signal.fullyExpanded ? "yes" : "no",
             formatStatusWithCounts(signal.reading, "reading"),
             formatStatusWithCounts(signal.enhancement, "enhancement"),
+            formatStatusWithCounts(signal.placement, "placement"),
         ].join(" | ") + " |");
     }
 
     const blockers = report.signals.flatMap((signal) => [
         ...signal.reading.blockers.map((blocker) => `${signal.levelLabel} reading: ${blocker}`),
         ...signal.enhancement.blockers.map((blocker) => `${signal.levelLabel} enhancement: ${blocker}`),
+        ...signal.placement.blockers.map((blocker) => `${signal.levelLabel} placement: ${blocker}`),
     ]);
     if (blockers.length > 0) {
         lines.push("", "Signal blockers:");
@@ -542,6 +621,7 @@ module.exports = {
     DEFAULT_SIGNAL_SOURCE_CONFIG,
     assertValidLevels,
     buildEnhancementSignalFromCandidateReport,
+    buildPlacementSignalFromAnchorAuditReport,
     buildSourceFileIntegrity,
     buildLevelExpansionSignal,
     buildReadingSignalFromCompletionReport,

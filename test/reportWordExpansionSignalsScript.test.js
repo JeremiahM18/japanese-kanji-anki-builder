@@ -3,6 +3,7 @@ const assert = require("node:assert/strict");
 
 const {
     buildEnhancementSignalFromCandidateReport,
+    buildPlacementSignalFromAnchorAuditReport,
     buildReadingSignalFromCompletionReport,
     buildSourceFileIntegrity,
     formatWordExpansionSignalReport,
@@ -124,6 +125,39 @@ test("enhancement signal separates keep, untriaged, and exhausted source candida
     assert.equal(needsTriage.untriagedCandidateRows, 1);
 });
 
+test("placement signal blocks unresolved word-level placement issues", () => {
+    const blocked = buildPlacementSignalFromAnchorAuditReport({
+        checked: 331,
+        violationCount: 46,
+        byPlacementStatus: {
+            too_easy_for_kanji: 46,
+            later_missing_learner_fit_reason: 0,
+            no_known_jlpt_kanji: 0,
+            invalid_deck_level: 0,
+        },
+    });
+
+    assert.equal(blocked.status, "blocked");
+    assert.equal(blocked.violationCount, 46);
+    assert.equal(blocked.tooEasyForKanji, 46);
+    assert.match(blocked.reason, /placement blockers remain/);
+    assert.match(blocked.blockers[0], /placed earlier/);
+
+    const resolved = buildPlacementSignalFromAnchorAuditReport({
+        checked: 12,
+        violationCount: 0,
+        byPlacementStatus: {
+            too_easy_for_kanji: 0,
+            later_missing_learner_fit_reason: 0,
+            no_known_jlpt_kanji: 0,
+            invalid_deck_level: 0,
+        },
+    });
+
+    assert.equal(resolved.status, "resolved");
+    assert.equal(resolved.blockers.length, 0);
+});
+
 test("enhancement source integrity pins ignored local source files", () => {
     const sourceBuffer = Buffer.from("written\treading\n本棚\tほんだな\n", "utf8");
     const integrity = buildSourceFileIntegrity({
@@ -175,9 +209,18 @@ test("formatted expansion signal report does not overclaim release readiness", (
                 rejectCandidates: 6,
                 blockers: [],
             },
+            placement: {
+                status: "resolved",
+                checkedRows: 331,
+                violationCount: 0,
+                tooEasyForKanji: 0,
+                laterMissingLearnerFitReason: 0,
+                blockers: [],
+            },
         }],
     });
 
     assert.match(text, /N5 \| yes \| exhausted/);
+    assert.match(text, /Placement resolved means/);
     assert.match(text, /This is not golden review, platinum review, APKG QA, or release readiness/);
 });

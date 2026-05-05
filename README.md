@@ -362,14 +362,15 @@ Tracked triage decisions live in [templates/word_inventory_expansion_triage.json
 npm run deck:words:expansion-signals -- --levels=5,4
 ```
 
-The expansion signal command answers the narrow "fully expanded under current restraints?" question for each selected word level. It has two separate signals:
+The expansion signal command answers the narrow "fully expanded under current restraints?" question for each selected word level. It has three separate signals:
 
 - Reading signal: `exhausted` only when active reading-gap triage is cleared. Remaining coverage gaps may still exist when they are explicitly deferred variants or lower learner value.
 - Enhancement signal: `exhausted` only when the configured source vocabulary list has no remaining `keep_candidate` rows and no untriaged review candidates.
+- Placement signal: `resolved` only when canonical word rows are not earlier than their highest-numbered known kanji anchor and any later learner-fit placement has a tracked `levelPlacement.reason`.
 
 The configured source TSVs under `downloads/` are ignored local inputs, so the signal source config pins their source URL, source label, SHA-256, byte size, and parsed row count. The enhancement signal verifies those pins before reporting `exhausted`; a mismatch reports `source_mismatch` and strict mode fails instead of trusting an unverified local file.
 
-The signal is deliberately not a release claim. It does not replace golden review, platinum review, APKG import QA, accessibility checks, media/listening QA, or readiness gates. Levels without configured source lists, matching source integrity, or generated TSV exports report that blocker instead of pretending to be complete.
+The signal is deliberately not a release claim. It does not replace golden review, platinum review, APKG import QA, accessibility checks, media/listening QA, or readiness gates. Levels without configured source lists, matching source integrity, generated TSV exports, or resolved placement policy report that blocker instead of pretending to be complete.
 
 ## Media Workflows
 

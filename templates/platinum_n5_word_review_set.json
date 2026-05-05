@@ -34323,5 +34323,700 @@
     "reviewedAt": "2026-05-05",
     "reviewer": "codex-platinum-review",
     "decisionReason": "Removed from the default N5 word deck because 公園の中|こうえんのなか is a transparent compositional phrase. 公園 and 中 already carry the useful learner value, so this belongs as example/support language rather than a standalone word-card identity."
+  },
+  {
+    "word": "木陰",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "こかげ"
+    ],
+    "meaningIncludes": [
+      "shade of a tree"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "木"
+    ],
+    "coversReadingIncludes": [
+      "木: こ"
+    ],
+    "breakdownIncludes": [
+      "木 （こ） ／ tree / wood",
+      "陰 （かげ） ／ shade / hidden side / behind the scenes"
+    ],
+    "exampleIncludes": [
+      "木陰で少し休みましょう。"
+    ],
+    "notesIncludes": [
+      "Common concrete outdoor word; retained because it gives real learner-facing 木 -> こ usage with 陰 visibly labeled as JLPT N1 kanji."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "fixSummary": "Updated 木陰|こかげ source notes during platinum review so the learner-facing card explains the real word value and visible higher-level kanji labels instead of sounding coverage-only.",
+    "selectionRationale": "Kept because 木陰 is a concrete common word learners can use outdoors; it is not coverage padding, and the higher-level 陰 kanji is visibly labeled.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 木陰|こかげ: word 木陰, reading こかげ, meaning shade of a tree, example 木陰で少し休みましょう。, audio word-reading-木陰-こかげ, labels JLPT N5 Reading coverage support, focus 木, covered readings 木: こ, notes Common concrete outdoor word; retained because it gives real learner-facing 木 -> こ usage with 陰 visibly labeled as JLPT N1 kanji., and pitch Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 木陰|こかげ, reading こかげ, meaning shade of a tree, example 木陰で少し休みましょう。, notes Common concrete outdoor word; retained because it gives real learner-facing 木 -> こ usage with 陰 visibly labeled as JLPT N1 kanji., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JapaneseClass.jp Dictionary https://japaneseclass.jp/dictionary/%E6%9C%A8%E9%99%B0",
+        "detail": "JapaneseClass.jp verifies 木陰|こかげ with reading こかげ and learner meaning shade of tree / bower. Product review checked example 木陰で少し休みましょう。 for 木陰|こかげ, reading こかげ, and learner meaning shade of a tree."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 木陰|こかげ for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 木陰|こかげ, reading こかげ, sentence 木陰で少し休みましょう。, exported sentence reading こかげですこしやすみましょう。, and English gloss Let's rest a little in the shade of the tree.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 木陰|こかげ; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 木陰|こかげ exact asset fragment word-reading-木陰-こかげ for exported reading こかげ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 木陰|こかげ source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 木陰|こかげ JLPT N5, Reading coverage support, focus 木, covered readings 木: こ, and visible higher-level kanji labels: 陰 is labeled JLPT N1 kanji."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 木陰|こかげ common and learner-friendly for the N5 word deck, with accurate reading こかげ, meaning shade of a tree, and example 木陰で少し休みましょう。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "魚料理",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "さかなりょうり"
+    ],
+    "meaningIncludes": [
+      "fish dish"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "魚",
+      "料",
+      "理"
+    ],
+    "coversReadingIncludes": [
+      "魚: さかな",
+      "料: りょう",
+      "理: り"
+    ],
+    "breakdownIncludes": [
+      "魚 （さかな） ／ fish",
+      "料 （りょう） ／ fee / materials",
+      "理 （り） ／ reason / logic"
+    ],
+    "exampleIncludes": [
+      "この店の魚料理は有名です。"
+    ],
+    "notesIncludes": [
+      "Common food word; retained because it teaches useful 魚 and 料理 readings in a natural restaurant context, not just coverage padding."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 4",
+      "Generated pitch (unverified)"
+    ],
+    "fixSummary": "Updated 魚料理|さかなりょうり source notes during platinum review so the learner-facing card explains the real word value and visible higher-level kanji labels instead of sounding coverage-only.",
+    "selectionRationale": "Kept because 魚料理 is a transparent, common food word and restaurant-context card; generated pitch remains explicitly labeled unverified, and all N4 constituent kanji are visibly labeled.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 魚料理|さかなりょうり: word 魚料理, reading さかなりょうり, meaning fish dish, example この店の魚料理は有名です。, audio word-reading-魚料理-さかなりょうり, labels JLPT N5 JLPT core + reading coverage, focus 魚、料、理, covered readings 魚: さかな ／ 料: りょう ／ 理: り, notes Common food word; retained because it teaches useful 魚 and 料理 readings in a natural restaurant context, not just coverage padding., and pitch Pitch 1: 4 / Generated pitch (unverified)."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 魚料理|さかなりょうり, reading さかなりょうり, meaning fish dish, example この店の魚料理は有名です。, notes Common food word; retained because it teaches useful 魚 and 料理 readings in a natural restaurant context, not just coverage padding., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "Kotobank https://kotobank.jp/word/%E9%AD%9A%E6%96%99%E7%90%86-1273274",
+        "detail": "Kotobank verifies 魚料理|さかなりょうり with reading さかなりょうり and learner meaning fish-based cooking / fish dish. Product review checked example この店の魚料理は有名です。 for 魚料理|さかなりょうり, reading さかなりょうり, and learner meaning fish dish."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 魚料理|さかなりょうり for JLPT N5; product review confirmed it belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 魚料理|さかなりょうり, reading さかなりょうり, sentence この店の魚料理は有名です。, exported sentence reading このみせのさかなりょうりはゆうめいです。, and English gloss The fish dishes at this restaurant are famous.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 魚料理|さかなりょうり; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 魚料理|さかなりょうり exact asset fragment word-reading-魚料理-さかなりょうり for exported reading さかなりょうり."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 魚料理|さかなりょうり source voicevox-nemo-reading-query pattern 4 [nakadaka], rendered label Pitch 1: 4 / Generated pitch (unverified), with Generated pitch (unverified) visibly labeled and dictionary-backed pitch still unverified."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 魚料理|さかなりょうり JLPT N5, JLPT core + reading coverage, focus 魚、料、理, covered readings 魚: さかな ／ 料: りょう ／ 理: り, and visible higher-level kanji labels: 魚, 料, and 理 are labeled as JLPT N4 kanji on the N5 card."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 魚料理|さかなりょうり common and learner-friendly for the N5 word deck, with accurate reading さかなりょうり, meaning fish dish, and example この店の魚料理は有名です。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "火照る",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "ほてる"
+    ],
+    "meaningIncludes": [
+      "to feel hot",
+      "to flush"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "火"
+    ],
+    "coversReadingIncludes": [
+      "火: ほ"
+    ],
+    "breakdownIncludes": [
+      "火 （ほ） ／ fire",
+      "照 （て） ／ shine / illuminate"
+    ],
+    "exampleIncludes": [
+      "走った後で顔が火照っています。"
+    ],
+    "notesIncludes": [
+      "Natural body-state verb; retained because it gives real 火 -> ほ usage, not coverage padding, with 照 visibly labeled as JLPT N2 kanji."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "fixSummary": "Updated 火照る|ほてる source notes during platinum review so the learner-facing card explains the real word value and visible higher-level kanji labels instead of sounding coverage-only.",
+    "selectionRationale": "Kept because 火照る is a natural body-state verb used for heat, fever, or blushing; it has real learner value and the N2 照 kanji is visibly labeled rather than hidden.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 火照る|ほてる: word 火照る, reading ほてる, meaning to feel hot / to flush, example 走った後で顔が火照っています。, audio word-reading-火照る-ほてる, labels JLPT N5 Reading coverage support, focus 火, covered readings 火: ほ, notes Natural body-state verb; retained because it gives real 火 -> ほ usage, not coverage padding, with 照 visibly labeled as JLPT N2 kanji., and pitch Pitch 1: 2."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 火照る|ほてる, reading ほてる, meaning to feel hot / to flush, example 走った後で顔が火照っています。, notes Natural body-state verb; retained because it gives real 火 -> ほ usage, not coverage padding, with 照 visibly labeled as JLPT N2 kanji., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "goo辞書 https://dictionary.goo.ne.jp/word/%E7%81%AB%E7%85%A7%E3%82%8B/",
+        "detail": "goo辞書 / デジタル大辞泉 verifies 火照る|ほてる with reading ほてる and learner meaning to feel hot / to flush / to burn. Product review checked example 走った後で顔が火照っています。 for 火照る|ほてる, reading ほてる, and learner meaning to feel hot / to flush."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 火照る|ほてる for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 火照る|ほてる, reading ほてる, sentence 走った後で顔が火照っています。, exported sentence reading はしったあとでかおがほてっています。, and English gloss My face feels hot after running.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 火照る|ほてる; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 火照る|ほてる exact asset fragment word-reading-火照る-ほてる for exported reading ほてる."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 火照る|ほてる source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka], rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 火照る|ほてる JLPT N5, Reading coverage support, focus 火, covered readings 火: ほ, and visible higher-level kanji labels: 照 is labeled JLPT N2 kanji."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 火照る|ほてる common and learner-friendly for the N5 word deck, with accurate reading ほてる, meaning to feel hot / to flush, and example 走った後で顔が火照っています。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "社長",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "しゃちょう"
+    ],
+    "meaningIncludes": [
+      "company president"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "長"
+    ],
+    "coversReadingIncludes": [
+      "長: ちょう"
+    ],
+    "breakdownIncludes": [
+      "社 （しゃ） ／ company / society",
+      "長 （ちょう） ／ long"
+    ],
+    "exampleIncludes": [
+      "社長は朝早く会社に来ます。"
+    ],
+    "notesIncludes": [
+      "Common workplace title; retained because it gives useful 長 -> ちょう usage with 社 visibly labeled as JLPT N4 kanji."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "fixSummary": "Updated 社長|しゃちょう source notes during platinum review so the learner-facing card explains the real word value and visible higher-level kanji labels instead of sounding coverage-only.",
+    "selectionRationale": "Kept because 社長 is common JLPT N4 workplace vocabulary that remains useful to N5-kanji learners; it gives a real 長 -> ちょう context and labels 社 as N4.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 社長|しゃちょう: word 社長, reading しゃちょう, meaning company president, example 社長は朝早く会社に来ます。, audio word-reading-社長-しゃちょう, labels JLPT N5 Reading coverage support, focus 長, covered readings 長: ちょう, notes Common workplace title; retained because it gives useful 長 -> ちょう usage with 社 visibly labeled as JLPT N4 kanji., and pitch Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 社長|しゃちょう, reading しゃちょう, meaning company president, example 社長は朝早く会社に来ます。, notes Common workplace title; retained because it gives useful 長 -> ちょう usage with 社 visibly labeled as JLPT N4 kanji., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E7%A4%BE%E9%95%B7",
+        "detail": "JLearn.net verifies 社長|しゃちょう with reading しゃちょう and learner meaning company president / manager / director. Product review checked example 社長は朝早く会社に来ます。 for 社長|しゃちょう, reading しゃちょう, and learner meaning company president."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 社長|しゃちょう for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 社長|しゃちょう, reading しゃちょう, sentence 社長は朝早く会社に来ます。, exported sentence reading しゃちょうはあさはやくかいしゃにきます。, and English gloss The company president comes to the office early in the morning.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 社長|しゃちょう; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 社長|しゃちょう exact asset fragment word-reading-社長-しゃちょう for exported reading しゃちょう."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 社長|しゃちょう source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 社長|しゃちょう JLPT N5, Reading coverage support, focus 長, covered readings 長: ちょう, and visible higher-level kanji labels: 社 is labeled JLPT N4 kanji."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 社長|しゃちょう common and learner-friendly for the N5 word deck, with accurate reading しゃちょう, meaning company president, and example 社長は朝早く会社に来ます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "白髪",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "しらが"
+    ],
+    "meaningIncludes": [
+      "gray hair",
+      "white hair"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "白"
+    ],
+    "coversReadingIncludes": [
+      "白: しら"
+    ],
+    "breakdownIncludes": [
+      "白 （しら） ／ white",
+      "髪 （が） ／ hair"
+    ],
+    "exampleIncludes": [
+      "祖父の白髪が増えました。"
+    ],
+    "notesIncludes": [
+      "Common concrete word for gray or white hair; retained because it gives real 白 -> しら usage with 髪 visibly labeled as JLPT N3 kanji."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "fixSummary": "Updated 白髪|しらが source notes during platinum review so the learner-facing card explains the real word value and visible higher-level kanji labels instead of sounding coverage-only.",
+    "selectionRationale": "Kept because 白髪 is a common concrete word learners can understand and recognize in family/body-description contexts; it is useful beyond coverage and labels 髪 as N3.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 白髪|しらが: word 白髪, reading しらが, meaning gray hair / white hair, example 祖父の白髪が増えました。, audio word-reading-白髪-しらが, labels JLPT N5 Reading coverage support, focus 白, covered readings 白: しら, notes Common concrete word for gray or white hair; retained because it gives real 白 -> しら usage with 髪 visibly labeled as JLPT N3 kanji., and pitch Pitch 1: 3."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 白髪|しらが, reading しらが, meaning gray hair / white hair, example 祖父の白髪が増えました。, notes Common concrete word for gray or white hair; retained because it gives real 白 -> しら usage with 髪 visibly labeled as JLPT N3 kanji., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E7%99%BD%E9%AB%AA",
+        "detail": "JLearn.net verifies 白髪|しらが with reading しらが and learner meaning white hair / grey hair / gray hair. Product review checked example 祖父の白髪が増えました。 for 白髪|しらが, reading しらが, and learner meaning gray hair / white hair."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 白髪|しらが for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 白髪|しらが, reading しらが, sentence 祖父の白髪が増えました。, exported sentence reading そふのしらががふえました。, and English gloss My grandfather has more gray hair now.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 白髪|しらが; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 白髪|しらが exact asset fragment word-reading-白髪-しらが for exported reading しらが."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 白髪|しらが source kanjium-cc-by-sa-4.0 pattern 3 [odaka], rendered label Pitch 1: 3."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 白髪|しらが JLPT N5, Reading coverage support, focus 白, covered readings 白: しら, and visible higher-level kanji labels: 髪 is labeled JLPT N3 kanji."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 白髪|しらが common and learner-friendly for the N5 word deck, with accurate reading しらが, meaning gray hair / white hair, and example 祖父の白髪が増えました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "西洋",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "せいよう"
+    ],
+    "meaningIncludes": [
+      "the West",
+      "Western"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "西"
+    ],
+    "coversReadingIncludes": [
+      "西: せい"
+    ],
+    "breakdownIncludes": [
+      "西 （せい） ／ west",
+      "洋 （よう） ／ ocean / Western"
+    ],
+    "exampleIncludes": [
+      "西洋の音楽も好きです。"
+    ],
+    "notesIncludes": [
+      "Common culture and geography word; retained because it gives useful 西 -> せい usage with 洋 visibly labeled as JLPT N4 kanji."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "fixSummary": "Updated 西洋|せいよう source notes during platinum review so the learner-facing card explains the real word value and visible higher-level kanji labels instead of sounding coverage-only.",
+    "selectionRationale": "Kept because 西洋 is common JLPT N4 culture/geography vocabulary and a useful real context for 西 -> せい; 洋 is visibly labeled as N4.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 西洋|せいよう: word 西洋, reading せいよう, meaning the West / Western, example 西洋の音楽も好きです。, audio word-reading-西洋-せいよう, labels JLPT N5 Reading coverage support, focus 西, covered readings 西: せい, notes Common culture and geography word; retained because it gives useful 西 -> せい usage with 洋 visibly labeled as JLPT N4 kanji., and pitch Pitch 1: 1."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 西洋|せいよう, reading せいよう, meaning the West / Western, example 西洋の音楽も好きです。, notes Common culture and geography word; retained because it gives useful 西 -> せい usage with 洋 visibly labeled as JLPT N4 kanji., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E8%A5%BF%E6%B4%8B",
+        "detail": "JLearn.net verifies 西洋|せいよう with reading せいよう and learner meaning the West / the Occident / Western countries. Product review checked example 西洋の音楽も好きです。 for 西洋|せいよう, reading せいよう, and learner meaning the West / Western."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 西洋|せいよう for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 西洋|せいよう, reading せいよう, sentence 西洋の音楽も好きです。, exported sentence reading せいようのおんがくもすきです。, and English gloss I also like Western music.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 西洋|せいよう; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 西洋|せいよう exact asset fragment word-reading-西洋-せいよう for exported reading せいよう."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 西洋|せいよう source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 西洋|せいよう JLPT N5, Reading coverage support, focus 西, covered readings 西: せい, and visible higher-level kanji labels: 洋 is labeled JLPT N4 kanji."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 西洋|せいよう common and learner-friendly for the N5 word deck, with accurate reading せいよう, meaning the West / Western, and example 西洋の音楽も好きです。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "出来上がり",
+    "status": "deferred",
+    "readingIncludes": [
+      "できあがり"
+    ],
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because JLearn.net verifies 出来上がり|できあがり as a common JLPT N2 completion/result noun. It is useful later, but too nominalized and advanced to keep only for 来 -> き and 上 -> あがり beginner coverage."
+  },
+  {
+    "word": "女房",
+    "status": "deferred",
+    "readingIncludes": [
+      "にょうぼう"
+    ],
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because JLearn.net and Bunpro verify 女房|にょうぼう as JLPT N2 and old-fashioned/own-wife vocabulary. It is real and common, but not learner-friendly N5 support for 女 -> にょう."
   }
 ]

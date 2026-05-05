@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Fixed
 
+- Fixed the N5 word platinum queue at the 8-card review size by approving source-checked `木陰|こかげ`, `魚料理|さかなりょうり`, `火照る|ほてる`, `社長|しゃちょう`, `白髪|しらが`, and `西洋|せいよう`, moving `出来上がり|できあがり` and `女房|にょうぼう` to the N2 word product, and recording the resulting N5 reading gaps as deferred instead of keeping later-level cards for coverage.
 - Fixed the N5 word platinum queue at the new 8-card review size by approving source-checked `手本|てほん`, `眼鏡|めがね`, `十回|じっかい`, `行事|ぎょうじ`, and `帽子|ぼうし`, moving `上昇|じょうしょう` and `木刀|ぼくとう` to the N1 word product, excluding phrase-shaped `公園の中|こうえんのなか`, and making the platinum row builder resolve exact word audio from the managed media root.
 - Fixed the N5 word platinum queue by source-checking the next twelve reviewed rows, approving `金具|かなぐ`, `春雨|はるさめ`, `万事|ばんじ`, `下さい|ください`, `名字|みょうじ`, `小指|こゆび`, `外科|げか`, `生地|きじ`, and `土地|とち`, improving `春雨` and `下さい` learner-facing surfaces, and removing `上座|かみざ`, `気配|けはい`, and `天気雨|てんきあめ` from the N5 word deck instead of keeping lower-value coverage cards.
 - Fixed word-card contextual reading inference so curated group-only ruby such as `五日|いつか` and `大人|おとな` stays labeled as a whole-word reading instead of falling through to fake per-kanji coverage.

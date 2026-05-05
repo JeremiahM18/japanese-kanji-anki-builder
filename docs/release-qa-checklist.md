@@ -21,6 +21,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 - Run the golden review command for each shipped kanji level, such as `npm run deck:review:n5`.
 - Run the read-only JLPT kanji source-evidence audit before relying on level placement, such as `npm run data:audit:jlpt:sources -- --limit=25`.
 - Run `npm run data:audit:jlpt:source-inputs -- --source=<source-id> --strict` before activating or importing any ignored local JLPT kanji source file.
+- For Tanos updates, regenerate the ignored source TSV with `npm run data:normalize:tanos-jlpt-kanji`, pin its SHA-256, byte size, and row count, then dry-run `npm run data:import:jlpt:source-input -- --source=tanos` before using `--write`. Keep Tanos N2/N3 out of automatic import until stronger governed evidence exists.
 - For KANJIDIC2 updates, regenerate the ignored source TSV with `npm run data:normalize:kanjidic2-jlpt`, pin its SHA-256, byte size, and row count, then dry-run `npm run data:import:jlpt:source-input -- --source=kanjidic2_legacy` before using `--write`.
 - For Japanese-published textbook consensus, create the worksheet with `npm run data:template:jlpt:textbook-consensus`, fill only permitted manually reviewed citations and level judgments, pin the reviewed TSV integrity, then dry-run import before any `--write`.
 - Run the golden review command for each shipped word level when one exists, such as `npm run deck:words:review:n5`.

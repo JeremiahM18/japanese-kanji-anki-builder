@@ -194,7 +194,7 @@ Current tracked word inventory:
 - Word-level placement audit currently fails: `181/909` canonical rows. The live split is `46` rows too easy for their constituent kanji and `135` later-level placements missing learner-fit reasons. By level: N5 `46/331`, N4 `92/535`, N3 `14/14`, N2 `15/15`, N1 `14/14`. Run `npm run deck:words:level-anchor-audit` for the live list.
 - Word reading coverage from the current `deck:words:ready -- --levels=5,4 --require-no-active-triage` run: N5 `238/344` (`69.2%`), N4 `485/651` (`74.5%`). Coverage remains informational; useful/common/learner-fit decisions and explicit defer/reject reasons are the product guardrail.
 - N5+N4 word field/media checks were previously clean, but current word readiness must now treat word-level placement violations as blockers. Golden/platinum commands are still separate from APKG import QA, manual card QA, accessibility checks, and listening review.
-- JLPT kanji source evidence is now governed separately from the operational taxonomy. `templates/jlpt_level_contract.json` is recorded as `current_operational_contract` for every kanji, but that baseline is weak evidence only, not source truth. `kanjidic2_legacy` is pinned and imported as an active, approved-license evidence source with `1479` reviewed assignments from KANJIDIC2 legacy JLPT metadata. The current source-evidence audit is still expected to fail because the evidence layer has only one imported external source, still lacks Japanese-published source evidence, and currently reports `69` disputed current-contract/source-consensus rows. No deck movement, word movement, or readiness change should happen from JLPT level assumptions before this evidence layer is governed.
+- JLPT kanji source evidence is now governed separately from the operational taxonomy. `templates/jlpt_level_contract.json` is recorded as `current_operational_contract` for every kanji, but that baseline is weak evidence only, not source truth. `kanjidic2_legacy` is pinned and imported as an active, approved-license evidence source with `1479` reviewed assignments from KANJIDIC2 legacy JLPT metadata. `tanos` is pinned and imported as an active, approved-license community/legacy evidence source with `1478` reviewed N1/N4/N5 assignments; Tanos N2/N3 lanes are intentionally not imported. The current source-evidence audit is still expected to fail because the evidence layer still lacks a Japanese-published source and requires three independent sources; it currently reports `45` disputed rows and `1` current-contract/source-consensus mismatch. No deck movement, word movement, or readiness change should happen from JLPT level assumptions before this evidence layer is governed.
 
 Run live commands for current coverage. Do not rely on README numbers for release decisions.
 
@@ -207,6 +207,7 @@ npm test
 npm run lint
 npm run data:audit:jlpt
 npm run data:audit:jlpt:sources -- --limit=25
+npm run data:audit:jlpt:source-inputs -- --source=tanos --strict
 npm run data:audit:jlpt:source-inputs -- --source=kanjidic2_legacy --strict
 npm run data:audit:jlpt:words
 npm run deck:words:level-anchor-audit -- --level=5
@@ -225,9 +226,11 @@ npm run release:gate
 
 `data:audit:jlpt:sources` audits the operational JLPT kanji contract against the independent source-evidence registry. It is intentionally separate from deck generation and product readiness: it reports current contract level, source consensus level, agreement count, disagreement sources, confidence, and whether the current contract matches consensus without changing the active contract or any decks. Re-run word placement audits after taxonomy confidence is governed and any kanji contract change is proposed, because word placement depends on kanji levels.
 
-`data:audit:jlpt:source-inputs` preflights ignored local source files before they can become source evidence. It verifies the configured source id, evidence manifest source status, license status, SHA-256, byte size, row count, per-row kanji/level validity, review status, citation, and evidence reference. It is read-only and does not import assignments, move kanji, move words, or change readiness. The KANJIDIC2 legacy input intentionally maps old JLPT 4 -> N5, old 3 -> N4, and old 1 -> N1 while blocking old 2 because it spans modern N2/N3.
+`data:audit:jlpt:source-inputs` preflights ignored local source files before they can become source evidence. It verifies the configured source id, evidence manifest source status, license status, SHA-256, byte size, row count, per-row kanji/level validity, review status, citation, and evidence reference. It is read-only and does not import assignments, move kanji, move words, or change readiness. The Tanos input currently imports only the explicit N1, N4, and N5 base kanji lists; N2/N3 are intentionally excluded from automatic source assignments. The KANJIDIC2 legacy input intentionally maps old JLPT 4 -> N5, old 3 -> N4, and old 1 -> N1 while blocking old 2 because it spans modern N2/N3.
 
 `data:normalize:kanjidic2-jlpt` converts an ignored local KANJIDIC2 XML or `.xml.gz` file into the normalized TSV shape required by `templates/jlpt_kanji_source_inputs.json`. The generated TSV remains ignored local input until its SHA-256, byte size, and row count are pinned. `data:import:jlpt:source-input -- --source=kanjidic2_legacy` then performs a dry-run evidence import after preflight; add `--write` only when updating the tracked source-evidence manifest. Neither command moves kanji, moves words, updates decks, or changes readiness.
+
+`data:normalize:tanos-jlpt-kanji` converts ignored local Tanos N1/N4/N5 base text files into the normalized TSV shape required by `templates/jlpt_kanji_source_inputs.json`. The generated TSV remains ignored local input until its SHA-256, byte size, and row count are pinned. `data:import:jlpt:source-input -- --source=tanos` then performs a dry-run evidence import after preflight; add `--write` only when updating the tracked source-evidence manifest. Neither command moves kanji, moves words, updates decks, or changes readiness.
 
 `data:template:jlpt:textbook-consensus` creates an ignored worksheet for manually reviewed Japanese-published textbook consensus. It deliberately leaves `consensusLevel`, `citation`, and `evidenceRef` blank so no row can become evidence until a reviewer fills permitted source citations, pins the TSV integrity in `templates/jlpt_kanji_source_inputs.json`, and activates the source intentionally.
 
@@ -498,8 +501,11 @@ Repository governance:
 | `npm run deck:words:expansion-signals -- --levels=5,4` | Summarize per-level reading and enhancement expansion exhaustion without claiming release readiness |
 | `npm run data:audit:jlpt` | Audit kanji taxonomy and starter alignment |
 | `npm run data:audit:jlpt:sources` | Audit JLPT kanji source evidence and consensus without changing decks |
+| `npm run data:audit:jlpt:source-inputs -- --source=tanos` | Preflight the pinned local Tanos normalized source file before source-evidence import |
 | `npm run data:audit:jlpt:source-inputs -- --source=kanjidic2_legacy` | Preflight a pinned local JLPT kanji source file before source-evidence import |
 | `npm run data:normalize:kanjidic2-jlpt` | Normalize ignored local KANJIDIC2 XML into the pinned source-input TSV shape |
+| `npm run data:normalize:tanos-jlpt-kanji` | Normalize ignored local Tanos N1/N4/N5 base text files into the pinned source-input TSV shape |
+| `npm run data:import:jlpt:source-input -- --source=tanos` | Dry-run import of the passing Tanos source input into the JLPT kanji source-evidence manifest |
 | `npm run data:import:jlpt:source-input -- --source=kanjidic2_legacy` | Dry-run import of a passing source input into the JLPT kanji source-evidence manifest |
 | `npm run data:template:jlpt:textbook-consensus -- --level=5` | Create an ignored manual-review worksheet for Japanese-published textbook consensus evidence |
 | `npm run data:audit:jlpt:words` | Audit word taxonomy and starter alignment |

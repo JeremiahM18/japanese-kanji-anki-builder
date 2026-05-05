@@ -71,7 +71,7 @@ A word level ships only when all criteria are true:
 - N3 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N2 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N1 kanji: golden-reviewed at `1231/1231`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
-- JLPT kanji source evidence: governed separately from the operational taxonomy with tracked source tiers and confidence labels; `current_operational_contract` is a weak baseline input only. `kanjidic2_legacy` is pinned and imported as one active external evidence source with `1479` reviewed assignments, but the current audit is still expected to fail until additional independent evidence and Japanese-published source evidence are populated and reviewed. Ignored source files must pass `data:audit:jlpt:source-inputs` with pinned integrity before their assignments are imported.
+- JLPT kanji source evidence: governed separately from the operational taxonomy with tracked source tiers and confidence labels; `current_operational_contract` is a weak baseline input only. `kanjidic2_legacy` is pinned and imported as one active external evidence source with `1479` reviewed assignments. `tanos` is pinned and imported as one active community/legacy evidence source with `1478` reviewed N1/N4/N5 assignments; Tanos N2/N3 lanes are intentionally not imported. The current audit is still expected to fail until additional independent evidence and Japanese-published source evidence are populated and reviewed. Ignored source files must pass `data:audit:jlpt:source-inputs` with pinned integrity before their assignments are imported.
 - N5 word: expanded to `331` governed rows, but current word-level placement audit fails with `46/331` N5 rows placed earlier than their kanji anchor allows; old golden/platinum passes are not release approval under the current policy
 - N4 word: expanded to `535` governed rows, but current word-level placement audit fails with `92/535` N4 rows missing explicit learner-fit reasons for later placement; N4 word golden/platinum readiness is blocked until those rows are moved or documented with reviewed learner-fit rationale
 
@@ -84,6 +84,7 @@ npm test
 npm run lint
 npm run data:audit:jlpt
 npm run data:audit:jlpt:sources -- --limit=25
+npm run data:audit:jlpt:source-inputs -- --source=tanos --strict
 npm run data:audit:jlpt:source-inputs -- --source=kanjidic2_legacy --strict
 npm run data:audit:jlpt:words
 npm run data:audit:audio -- --json
@@ -102,9 +103,11 @@ npm run release:gate
 
 `data:audit:jlpt:sources` is a read-only taxonomy transparency audit. It reports current contract level, source consensus level, agreement count, disagreement sources, confidence, and whether the current contract matches consensus. It does not move kanji, move words, or change readiness. Re-run word placement audits after taxonomy confidence is governed and any kanji contract change is proposed.
 
-`data:audit:jlpt:source-inputs` is the read-only source-file preflight for the evidence layer. It checks source status, license status, source integrity pins, row-level kanji/level validity, review status, citations, and evidence references before any ignored local source file can become source evidence. KANJIDIC2 legacy JLPT data is handled conservatively: old level 2 is blocked rather than guessed as N2 or N3.
+`data:audit:jlpt:source-inputs` is the read-only source-file preflight for the evidence layer. It checks source status, license status, source integrity pins, row-level kanji/level validity, review status, citations, and evidence references before any ignored local source file can become source evidence. Tanos is handled conservatively: only explicit N1/N4/N5 base files are imported, while N2/N3 are excluded from automatic assignment. KANJIDIC2 legacy JLPT data is also conservative: old level 2 is blocked rather than guessed as N2 or N3.
 
 `data:normalize:kanjidic2-jlpt` creates the ignored normalized TSV from KANJIDIC2 XML or `.xml.gz` input. `data:import:jlpt:source-input -- --source=kanjidic2_legacy` is dry-run by default and writes source evidence only with `--write` after source-input preflight passes. These commands do not move kanji, move words, update decks, or change readiness.
+
+`data:normalize:tanos-jlpt-kanji` creates the ignored normalized TSV from local Tanos N1/N4/N5 base text files. `data:import:jlpt:source-input -- --source=tanos` is dry-run by default and writes source evidence only with `--write` after source-input preflight passes. These commands do not move kanji, move words, update decks, or change readiness.
 
 `data:template:jlpt:textbook-consensus` creates an ignored manual-review worksheet for Japanese-published textbook consensus. Empty worksheet rows are not evidence. A row becomes importable only after the reviewer records a permitted consensus level, citation, evidence reference, source-input integrity pins, and explicit source activation.
 

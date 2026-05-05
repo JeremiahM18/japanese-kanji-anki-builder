@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added a governed Tanos JLPT kanji source-evidence lane: local N1/N4/N5 base files normalize into a pinned ignored TSV, pass strict source-input preflight, and import `1478` reviewed source assignments without moving decks, words, contracts, or readiness.
 - Added `deck:words:expansion-signals`, a read-only per-level word-deck signal that reports reading-expansion exhaustion and source-list enhancement exhaustion separately without treating either signal as golden, platinum, APKG, or release readiness.
 - Added tracked source-integrity pins to the word expansion signal source config so ignored local JLPTStudy TSVs must match source URL, SHA-256, byte size, and parsed row count before enhancement exhaustion can be reported.
 

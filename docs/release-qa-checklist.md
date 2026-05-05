@@ -20,6 +20,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 
 - Run the golden review command for each shipped kanji level, such as `npm run deck:review:n5`.
 - Run the golden review command for each shipped word level when one exists, such as `npm run deck:words:review:n5`.
+- Run the same-level kanji anchor audit for each shipped word level, such as `npm run deck:words:level-anchor-audit -- --level=5`.
 - Run the platinum review command for each version 1 locked kanji level after its platinum manifest is populated, such as `npm run deck:platinum:n5`.
 - Run the platinum review command for each version 1 locked word level after its platinum manifest is populated, such as `npm run deck:words:platinum:n5`.
 - Confirm platinum evidence is field-bound: the evidence must name the card, exported reading, learner-facing values, exact audio identity, and source/provenance claim it supports.
@@ -47,10 +48,11 @@ Run this checklist after automated gates pass and before marking a deck mileston
 
 ## Word deck manual spot review
 
-- Import each word level being shipped into Anki. Current ready-with-deferred-variants local word levels are N5 and N4 when N4 is built with N5 as the selected word-product scope.
+- Import each word level being shipped into Anki only after the current word-level anchor audit, readiness audit, golden review, and applicable platinum review pass. N5 and N4 word levels currently have same-level anchor blockers and must not be treated as release-ready.
 - Confirm platinum-reviewed cards are useful, common enough, learner-friendly, and not present only for reading coverage.
 - Review beginner core words.
 - Review support words.
+- Confirm every shipped word level contains at least one same-level kanji anchor in each word; support kanji can come from any level only when that anchor exists.
 - Review constituent-kanji labels, including cross-level and outside-JLPT kanji.
 - Review audio-bearing word cards.
 - Confirm constituent badges are visible and understandable without repeating same-level kanji in kanji decks.

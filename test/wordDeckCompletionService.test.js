@@ -712,8 +712,10 @@ test("buildWordDeckPolicyAudit rejects standalone higher-level cards and missing
     });
 
     assert.equal(audit.valid, false);
+    assert.equal(audit.sameLevelAnchorViolationCount, 1);
     assert.equal(audit.standaloneViolationCount, 1);
     assert.equal(audit.badgeViolationCount, 1);
+    assert.equal(audit.sameLevelAnchorViolations[0].word, "兄");
     assert.equal(audit.standaloneViolations[0].word, "兄");
     assert.equal(audit.badgeViolations[0].word, "子猫");
     assert.equal(audit.badgeViolations[0].expectedLabel, "JLPT N4 kanji");
@@ -740,6 +742,7 @@ test("buildWordDeckPolicyAudit rejects focus kanji that are not in the written w
     });
 
     assert.equal(audit.valid, false);
+    assert.equal(audit.sameLevelAnchorViolationCount, 1);
     assert.equal(audit.focusViolationCount, 1);
     assert.deepEqual(audit.focusViolations[0], {
         word: "眼鏡",
@@ -748,7 +751,7 @@ test("buildWordDeckPolicyAudit rejects focus kanji that are not in the written w
     });
 });
 
-test("buildWordDeckPolicyAudit treats okurigana words as labeled support cases instead of standalone violations", () => {
+test("buildWordDeckPolicyAudit rejects okurigana words without a same-level kanji anchor", () => {
     const audit = buildWordDeckPolicyAudit({
         level: 5,
         wordRows: [
@@ -764,8 +767,47 @@ test("buildWordDeckPolicyAudit treats okurigana words as labeled support cases i
         },
     });
 
-    assert.equal(audit.valid, true);
+    assert.equal(audit.valid, false);
+    assert.equal(audit.sameLevelAnchorViolationCount, 1);
     assert.equal(audit.standaloneViolationCount, 0);
+    assert.equal(audit.badgeViolationCount, 0);
+    assert.deepEqual(audit.sameLevelAnchorViolations[0].kanjiLevels, [{ kanji: "安", level: 4 }]);
+});
+
+test("buildWordDeckPolicyAudit keeps labeled support kanji only when a same-level anchor exists", () => {
+    const audit = buildWordDeckPolicyAudit({
+        level: 5,
+        wordRows: [
+            {
+                Word: "子猫",
+                Reading: "こねこ",
+                KanjiBreakdown: "<div class=\"kanji-breakdown-item\">子</div><div class=\"kanji-level-badge\">JLPT N4 kanji</div>",
+            },
+            {
+                Word: "魚料理",
+                Reading: "さかなりょうり",
+                KanjiBreakdown: "<div class=\"kanji-level-badge\">JLPT N4 kanji</div>",
+            },
+        ],
+        jlptLevelContract: {
+            kanjiLevels: {
+                子: 5,
+                猫: 4,
+                魚: 4,
+                料: 4,
+                理: 4,
+            },
+        },
+    });
+
+    assert.equal(audit.valid, false);
+    assert.equal(audit.sameLevelAnchorViolationCount, 1);
+    assert.equal(audit.sameLevelAnchorViolations[0].word, "魚料理");
+    assert.deepEqual(audit.sameLevelAnchorViolations[0].kanjiLevels, [
+        { kanji: "魚", level: 4 },
+        { kanji: "料", level: 4 },
+        { kanji: "理", level: 4 },
+    ]);
     assert.equal(audit.badgeViolationCount, 0);
 });
 

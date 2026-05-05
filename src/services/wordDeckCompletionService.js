@@ -17,6 +17,10 @@ const {
 const { buildCoverageWordRows } = require("./wordDeckCoverageScopeService");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 const { HAN_CHAR_RE, isKanaOnly, katakanaToHiragana } = require("../utils/japanese");
+const {
+    buildWordLevelAnchorResult,
+    formatKanjiLevelList,
+} = require("./wordLevelAnchorAuditService");
 
 function extractConstituentKanji(text) {
     return [...new Set(
@@ -622,9 +626,11 @@ function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract }) {
     if (!jlptLevelContract?.kanjiLevels) {
         return {
             valid: true,
+            sameLevelAnchorViolationCount: 0,
             standaloneViolationCount: 0,
             badgeViolationCount: 0,
             focusViolationCount: 0,
+            sameLevelAnchorViolations: [],
             standaloneViolations: [],
             badgeViolations: [],
             focusViolations: [],
@@ -634,9 +640,11 @@ function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract }) {
     const standaloneViolations = [];
     const badgeViolations = [];
     const focusViolations = [];
+    const sameLevelAnchorViolations = [];
 
     for (const row of Array.isArray(wordRows) ? wordRows : []) {
         const written = String(row?.Word || row?.word || "").trim();
+        const reading = String(row?.Reading || row?.reading || "").trim();
         const breakdown = String(row?.KanjiBreakdown || row?.kanjiBreakdown || "");
         const writtenChars = Array.from(written);
         const kanjiList = extractConstituentKanji(written);
@@ -647,6 +655,20 @@ function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract }) {
 
         if (kanjiList.length === 0) {
             continue;
+        }
+
+        const anchorResult = buildWordLevelAnchorResult({
+            written,
+            deckLevel,
+            kanjiLevelData: jlptLevelContract,
+        });
+        if (!anchorResult.valid) {
+            sameLevelAnchorViolations.push({
+                word: written,
+                reading,
+                deckLevel,
+                kanjiLevels: anchorResult.kanjiLevels,
+            });
         }
 
         for (const kanji of focusKanji) {
@@ -695,10 +717,15 @@ function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract }) {
     }
 
     return {
-        valid: standaloneViolations.length === 0 && badgeViolations.length === 0 && focusViolations.length === 0,
+        valid: sameLevelAnchorViolations.length === 0
+            && standaloneViolations.length === 0
+            && badgeViolations.length === 0
+            && focusViolations.length === 0,
+        sameLevelAnchorViolationCount: sameLevelAnchorViolations.length,
         standaloneViolationCount: standaloneViolations.length,
         badgeViolationCount: badgeViolations.length,
         focusViolationCount: focusViolations.length,
+        sameLevelAnchorViolations,
         standaloneViolations,
         badgeViolations,
         focusViolations,
@@ -918,6 +945,7 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         `- Built rows outside canonical inventory: ${report.inventory.extraBuiltCount}`,
         "",
         "Deck policy audit:",
+        `- Missing same-level kanji anchors: ${report.policyAudit.sameLevelAnchorViolationCount || 0}`,
         `- Standalone wrong-level cards: ${report.policyAudit.standaloneViolationCount}`,
         `- Missing cross-level/outside-level badges: ${report.policyAudit.badgeViolationCount}`,
         `- Focus kanji outside written word: ${report.policyAudit.focusViolationCount || 0}`,
@@ -1003,6 +1031,13 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         lines.push("", "Required card-back field gaps:");
         for (const row of report.cardBackAudit.requiredMissingRows.slice(0, maxEntries)) {
             lines.push(`- ${row.word} (${row.reading}) — ${row.field}`);
+        }
+    }
+
+    if ((report.policyAudit?.sameLevelAnchorViolations || []).length > 0) {
+        lines.push("", "Words missing a same-level kanji anchor:");
+        for (const row of report.policyAudit.sameLevelAnchorViolations.slice(0, maxEntries)) {
+            lines.push(`- ${row.word} (${row.reading}) — ${formatKanjiLevelList(row.kanjiLevels)}`);
         }
     }
 

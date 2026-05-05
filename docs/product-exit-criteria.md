@@ -29,6 +29,8 @@ Platinum evidence must name the specific card, exported reading, and learner-fac
 
 For active word platinum, `japanese-source` evidence must cite a non-generated Japanese-language or dictionary source. Generated output, golden expectations, tracked starter templates, ignored local data, and local caches are internal evidence only; they do not satisfy Japanese-source verification by themselves.
 
+For active word platinum, the reviewed word level must be anchored in the written word: an N-level word card must contain at least one kanji from that same N-level. Higher-level, lower-level, and outside-JLPT support kanji may appear only when labeled and when the same-level anchor exists.
+
 ## Kanji deck exit criteria
 
 A kanji level ships only when all criteria are true:
@@ -50,6 +52,7 @@ A word level ships only when all criteria are true:
 
 - Canonical word contract rows are fully built for the level.
 - Platinum review is complete for the shipped word level. Golden review protects the export surface; platinum review decides whether each card deserves to ship.
+- Same-level kanji anchor audit passes for the shipped word level.
 - No standalone wrong-level cards ship in the deck.
 - Constituent kanji are visibly labeled with JLPT level or outside-JLPT status.
 - Reading coverage is reported honestly against the selected word-product level scope, including whether a target is covered by an earlier, same-level, or harder selected deck.
@@ -63,12 +66,12 @@ A word level ships only when all criteria are true:
 ## Current product posture
 
 - N5 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum-reviewed at `80/80` active entries under field-bound evidence validation
-- N4 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
+- N4 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum review has started with `12/176` active entries and remains blocked until the rest of the level is reviewed
 - N3 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N2 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N1 kanji: golden-reviewed at `1231/1231`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
-- N5 word: golden-reviewed at `310/310` and `ready_with_deferred_variants`; word platinum has 240 active approvals, 38 deferred/removed rows, 70 generated rows still missing platinum approval, and no `needs_review` blockers under the generated-pitch-label policy
-- N4 word: golden-reviewed at `458/458`; current local N5+N4 selected-scope readiness passes with governed local word audio, pitch accent, card-back fields, example reading alignment, kanji-context checks, labels, and looping animations clean for shipped rows; word platinum has `0` entries and fails until all generated N4 words have active approvals
+- N5 word: expanded to `331` governed rows, but current same-level kanji anchor audit fails with `46/331` N5 violations; old golden/platinum passes are not release approval under the current policy
+- N4 word: expanded to `535` governed rows, but current same-level kanji anchor audit fails with `6/535` N4 violations; N4 word golden/platinum readiness is blocked until the invalid rows are resolved
 
 ## Required gates before shipping
 
@@ -82,6 +85,7 @@ npm run data:audit:jlpt:words
 npm run data:audit:audio -- --json
 npm run deck:review:accessibility -- --deck-kind=kanji
 npm run deck:review:accessibility -- --deck-kind=word
+npm run deck:words:level-anchor-audit -- --level=5
 npm run product:artifacts:n5
 npm run product:artifacts:kanji:n5:preflight
 npm run product:readiness:n5
@@ -92,7 +96,7 @@ npm run release:gate
 
 `product:artifacts:kanji:n5:preflight` reports whether tracked templates are sufficient to certify fresh N5 kanji TSV generation without ignored local `data/` inputs. It currently reports that certification is blocked because rich kanji readings and rich-source provenance are not tracked release contracts yet. Component/radical source data is tracked in `templates/kanji_component_contract.json`.
 
-`product:readiness:n5` is the current automated N5 product checkpoint. It runs the JLPT kanji audit, JLPT word audit, governed audio provenance audit, tracked-source N5 word TSV artifact checkpoint, N5 kanji golden review, and N5 word golden review. It does not certify platinum review, tracked-source kanji TSVs, fresh `.apkg` product artifacts, manual Anki import review, mobile QA, screen-reader QA, or listening QA.
+`product:readiness:n5` is the current automated N5 product checkpoint. It runs the JLPT kanji audit, JLPT word audit, governed audio provenance audit, tracked-source N5 word TSV artifact checkpoint, N5 kanji golden review, and N5 word golden review. It must not be used to claim N5 word release readiness while `npm run deck:words:level-anchor-audit -- --level=5` fails. It does not certify platinum review, tracked-source kanji TSVs, fresh `.apkg` product artifacts, manual Anki import review, mobile QA, screen-reader QA, or listening QA.
 
 `release:gate` validates smoke-fixture artifacts and packaging contracts. It does not certify public product deck readiness. Add level-specific review commands for the deck being shipped, including `npm run deck:words:review:n5` for an N5 word release.
 
@@ -100,6 +104,7 @@ For a version 1 locked release, also run the applicable platinum gate after the 
 
 ```bash
 npm run deck:platinum:n5
+npm run deck:words:level-anchor-audit -- --level=5
 npm run deck:words:platinum:n5
 npm run deck:words:platinum:n4
 ```

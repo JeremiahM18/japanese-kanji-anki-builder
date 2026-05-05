@@ -14,6 +14,10 @@ const {
     normalizeEvidenceEntries,
     validateEvidenceSnippets,
 } = require("./platinumEvidenceService");
+const {
+    buildWordLevelAnchorResult,
+    formatWordLevelAnchorFailure,
+} = require("./wordLevelAnchorAuditService");
 
 const ACTIVE_PLATINUM_STATUSES = Object.freeze(["platinum", "fixed_then_platinum"]);
 const NON_SHIPPING_STATUSES = Object.freeze(["deferred", "removed"]);
@@ -372,7 +376,43 @@ function validateGeneratedPlatinumRow(row = {}) {
     return failures;
 }
 
-function evaluatePlatinumEntry({ rows = [], entry = {}, wordPitchAccentData = {} } = {}) {
+function parseJlptLevelLabel(value) {
+    const match = String(value || "").match(/N([1-5])/i);
+    return match ? Number(match[1]) : null;
+}
+
+function resolvePlatinumDeckLevel({ row = {}, entry = {} } = {}) {
+    const rowLevel = parseJlptLevelLabel(row.jlptLevel);
+    if (Number.isInteger(rowLevel)) {
+        return rowLevel;
+    }
+
+    for (const value of normalizeStringArray(entry.jlptLevelIncludes)) {
+        const entryLevel = parseJlptLevelLabel(value);
+        if (Number.isInteger(entryLevel)) {
+            return entryLevel;
+        }
+    }
+
+    return null;
+}
+
+function validateSameLevelWordAnchor({ row = {}, entry = {}, kanjiLevelData = null } = {}) {
+    if (!kanjiLevelData) {
+        return [];
+    }
+
+    const deckLevel = resolvePlatinumDeckLevel({ row, entry });
+    const result = buildWordLevelAnchorResult({
+        written: row.word || entry.word,
+        deckLevel,
+        kanjiLevelData,
+    });
+
+    return result.valid ? [] : [formatWordLevelAnchorFailure(result)];
+}
+
+function evaluatePlatinumEntry({ rows = [], entry = {}, wordPitchAccentData = {}, kanjiLevelData = null } = {}) {
     const status = normalizeText(entry.status);
     const label = formatWordReviewLabel(entry.word, buildExpectedReadingText(entry));
     const failures = [];
@@ -390,6 +430,7 @@ function evaluatePlatinumEntry({ rows = [], entry = {}, wordPitchAccentData = {}
             failures.push("active platinum word could not be generated");
         } else {
             failures.push(...validateGeneratedPlatinumRow(row));
+            failures.push(...validateSameLevelWordAnchor({ row, entry, kanjiLevelData }));
             const fieldReport = evaluateGoldenWordReviewSet({ rows, expectations: [entry] });
             const fieldResult = fieldReport.results?.[0];
             if (fieldResult && !fieldResult.passed) {
@@ -489,6 +530,7 @@ function evaluatePlatinumWordReviewSet({
     rows = [],
     entries = [],
     wordPitchAccentData = {},
+    kanjiLevelData = null,
     requireAllRows = false,
     allowEmpty = false,
 } = {}) {
@@ -497,7 +539,12 @@ function evaluatePlatinumWordReviewSet({
     const activeEntries = reviewEntries.filter((entry) => ACTIVE_PLATINUM_STATUSES.includes(normalizeText(entry.status)));
     const nonShippingEntries = reviewEntries.filter((entry) => NON_SHIPPING_STATUSES.includes(normalizeText(entry.status)));
     const needsReviewEntries = reviewEntries.filter((entry) => REVIEW_ONLY_STATUSES.includes(normalizeText(entry.status)));
-    const results = reviewEntries.map((entry) => evaluatePlatinumEntry({ rows: generatedRows, entry, wordPitchAccentData }));
+    const results = reviewEntries.map((entry) => evaluatePlatinumEntry({
+        rows: generatedRows,
+        entry,
+        wordPitchAccentData,
+        kanjiLevelData,
+    }));
     const coverageFailures = [];
     const duplicateActiveEntries = buildDuplicateActiveEntryLabels(activeEntries);
     const missingPlatinumRows = requireAllRows

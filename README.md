@@ -145,7 +145,8 @@ Word decks:
 - The canonical word contract means default-deck eligible.
 - Source-only phrase exclusions stay tracked but do not ship as default word cards.
 - Standalone single-kanji words ship only in their governed word level and must not leak into easier decks just because the kanji is already in scope.
-- Lower-level decks may include multi-kanji support words containing higher-level or outside-JLPT constituent kanji.
+- A word assigned to an N-level word deck must contain at least one kanji from that same N-level. This same-level kanji is the word-deck level anchor.
+- Support kanji can come from any JLPT level or outside the JLPT contract, but only after the same-level anchor rule is satisfied.
 - Cross-level and outside-JLPT constituent kanji must be visibly labeled on the card.
 - Reading coverage is scoped to the selected word-product levels. A higher-level word card can cover a lower-level reading target when those levels are built together.
 - Track reading-coverage intent with `coverage.role`, `coverage.focusKanji`, and `coverage.coversReadings` when the card exists for coverage.
@@ -158,6 +159,7 @@ Golden and platinum review:
 - Platinum review decides whether a card deserves to ship in version 1.
 - Platinum review requires field-bound source evidence, explicit quality gates, and a keep/fix/defer/remove decision. Evidence that only says a field was "reviewed" is not enough; it must name the card, exported reading, and learner-facing values it supports.
 - Active word-card `japanese-source` evidence must cite a non-generated Japanese-language or dictionary source. Generated output, golden expectations, tracked starter templates, ignored local data, and local caches do not satisfy that evidence type by themselves.
+- Active word platinum also enforces the same-level kanji anchor rule. A word with only harder/easier/outside support kanji cannot pass for the reviewed level, even if every constituent badge is visible.
 - Platinum review removes or defers noise instead of preserving cards that are uncommon, awkward, too advanced for the level, or only present to chase coverage.
 - Platinum review may improve source data and example sentences before promotion.
 - Platinum manifests are in progress. Only active `platinum` and `fixed_then_platinum` entries count as reviewed release coverage.
@@ -168,12 +170,12 @@ Golden and platinum review:
 | Surface | Status |
 | --- | --- |
 | N5 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum-reviewed at `80/80` active entries under the field-bound evidence gate |
-| N4 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
+| N4 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum review has started with `12/176` active entries; full N4 platinum remains blocked until the remaining cards are reviewed |
 | N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N1 kanji | Golden-reviewed at `1231/1231`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
-| N5 word | Expanded to `331` governed rows after the final source-expansion keepers; current initial field/media readiness passes with exact word audio, governed pitch, card-back fields, example reading alignment, and looping animations complete; current golden and platinum review commands pass for all `331` active generated rows, but APKG/manual release readiness is not claimed by those commands |
-| N4 word | Expanded to `535` governed rows; current initial field/media readiness passes with exact word audio, governed pitch, card-back fields, example reading alignment, and looping animations complete; current golden review passes for all `535` generated rows; N4 word platinum is not part of this checkpoint and release readiness is not claimed |
+| N5 word | Expanded to `331` governed rows, but the current same-level kanji anchor audit fails with `46/331` N5 violations. Older golden/platinum output passes are not release approval under the current word-level policy until the invalid rows are moved, deferred, or removed and the level is re-reviewed. |
+| N4 word | Expanded to `535` governed rows, but the current same-level kanji anchor audit fails with `6/535` N4 violations. N4 word golden/platinum readiness is blocked under the current word-level policy until those rows are resolved. |
 
 Current tracked word inventory:
 
@@ -184,8 +186,9 @@ Current tracked word inventory:
 - N2 canonical word rows: `15`
 - N1 canonical word rows: `14`
 - Current N5+N4 word rows: `866`
+- Same-level word anchor audit currently fails: N5 `46/331`, N4 `6/535`, N3 `13/14`, N2 `14/15`, N1 `13/14` canonical rows. Run `npm run deck:words:level-anchor-audit` for the live list.
 - Word reading coverage from the current `deck:words:ready -- --levels=5,4 --require-no-active-triage` run: N5 `238/344` (`69.2%`), N4 `485/651` (`74.5%`). Coverage remains informational; useful/common/learner-fit decisions and explicit defer/reject reasons are the product guardrail.
-- N5+N4 word readiness: initial field/media readiness currently passes as `ready_with_deferred_variants` for both levels, with no active triage backlog. Golden/platinum commands are still separate from APKG import QA, manual card QA, accessibility checks, and listening review.
+- N5+N4 word field/media checks were previously clean, but current word readiness must now treat same-level anchor violations as blockers. Golden/platinum commands are still separate from APKG import QA, manual card QA, accessibility checks, and listening review.
 
 Run live commands for current coverage. Do not rely on README numbers for release decisions.
 
@@ -198,6 +201,7 @@ npm test
 npm run lint
 npm run data:audit:jlpt
 npm run data:audit:jlpt:words
+npm run deck:words:level-anchor-audit -- --level=5
 npm run data:audit:audio -- --json
 npm run deck:review:accessibility -- --deck-kind=kanji
 npm run deck:review:accessibility -- --deck-kind=word
@@ -211,7 +215,7 @@ npm run release:gate
 
 `product:artifacts:kanji:n5:preflight` inspects tracked templates and reports whether N5 kanji TSV certification is possible without ignored local `data/` inputs. It currently reports `certifiable: no` because explicit on-yomi, kun-yomi, and rich-source provenance are not yet tracked as product contracts. Component/radical source data is tracked in `templates/kanji_component_contract.json`. Use `-- --require-certifiable` only when the remaining contracts exist and the command is expected to fail closed.
 
-`product:readiness:n5` runs the current automated N5 product checkpoint: JLPT kanji and word audits, governed audio provenance, tracked-source N5 word TSV generation, and N5 kanji and word golden reviews. After the final 2-row N5 source expansion, this checkpoint must not be used to claim N5 word release readiness until those rows are covered by the current golden and platinum gates. It still does not validate tracked-source kanji TSVs, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA. Run the applicable platinum command separately when a level is being version-1 locked.
+`product:readiness:n5` runs the current automated N5 product checkpoint: JLPT kanji and word audits, governed audio provenance, tracked-source N5 word TSV generation, and N5 kanji and word golden reviews. It must not be used to claim N5 word release readiness while `npm run deck:words:level-anchor-audit -- --level=5` fails. It still does not validate tracked-source kanji TSVs, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA. Run the applicable platinum command separately when a level is being version-1 locked.
 
 `release:gate` validates deterministic smoke-fixture artifacts and packaging contracts. It does not certify public product deck readiness. Add level-specific readiness, golden review, accessibility, provenance, and manual QA commands for the surface being changed.
 
@@ -259,6 +263,7 @@ npm run deck:platinum:batch -- --level=5 --limit=12
 npm run deck:platinum:batch -- --level=5 --kanji=父,生,男
 npm run deck:words:platinum:batch -- --level=5 --limit=8
 npm run deck:words:platinum:batch -- --level=5 --words=今日:きょう,八日:ようか
+npm run deck:words:level-anchor-audit -- --level=5
 npm run deck:review:n5
 npm run deck:review:n4
 npm run deck:review:n3
@@ -296,6 +301,7 @@ Word readiness reports:
 - shipped row governance
 - canonical inventory counts
 - source-only exclusions
+- same-level kanji anchor violations
 - explicit reading-coverage contract counts
 - selected-level reading coverage
 - active triage backlog
@@ -465,6 +471,7 @@ Repository governance:
 | `npm run deck:words:review:n5` | Run the N5 word golden benchmark |
 | `npm run deck:words:platinum:n5` | Run the N5 word platinum release-quality benchmark |
 | `npm run deck:words:platinum:n4` | Run the N4 word platinum release-quality benchmark |
+| `npm run deck:words:level-anchor-audit -- --level=5` | Fail when canonical word rows lack a same-level kanji anchor |
 | `npm run deck:words:completion:n5` | Audit N5 word inventory and reading coverage |
 | `npm run deck:words:completion:n4` | Audit N4 word inventory and reading coverage |
 | `npm run deck:words:reading-audit:n4` | Audit N4 word reading coverage |
@@ -565,7 +572,7 @@ The front of a word card shows the written study word without furigana. The back
 
 Word deck readiness verifies pitch accent accuracy against the governed source pattern. A word row with a non-empty `PitchAccent` field is not enough: the rendered pitch contour must decode to the same accent numbers as the tracked source entry, and the source entry must belong to the same written word and reading. Rows with missing, ungoverned, invalid, source/render-mismatched, source-identity-mismatched, or generated-but-unlabeled pitch accent block readiness. Generated pitch provenance by itself does not block readiness when the governed source identity, source/render match, and visible generated label all pass.
 
-`KanjiBreakdown` includes constituent meanings, readings, stroke-order animation, and cross-level badges such as `JLPT N4 kanji`. Its readings are bound to `ReadingBreakdown`: safe per-kanji ruby drives the constituent reading (`電車` shows `車 -> しゃ`), while non-decomposable whole-word ruby is labeled as `word reading: ...` and `CoversReading` uses the whole written surface (`今日: きょう`) instead of pretending each kanji has that reading. Word readiness fails when a constituent panel drifts from deterministic ruby, when whole-word ruby is counted as a per-kanji reading, or when `FocusKanji` names a kanji that is not in the written word.
+`KanjiBreakdown` includes constituent meanings, readings, stroke-order animation, and cross-level badges such as `JLPT N4 kanji`. Its readings are bound to `ReadingBreakdown`: safe per-kanji ruby drives the constituent reading (`電車` shows `車 -> しゃ`), while non-decomposable whole-word ruby is labeled as `word reading: ...` and `CoversReading` uses the whole written surface (`今日: きょう`) instead of pretending each kanji has that reading. Word readiness fails when a constituent panel drifts from deterministic ruby, when whole-word ruby is counted as a per-kanji reading, when `FocusKanji` names a kanji that is not in the written word, or when a word assigned to an N-level deck has no same-level kanji anchor.
 
 ## Output Layout
 

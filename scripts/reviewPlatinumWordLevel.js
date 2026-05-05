@@ -143,11 +143,13 @@ async function main() {
 
     const entries = JSON.parse(fs.readFileSync(reviewSetPath, "utf-8"));
     const wordPitchAccentData = loadWordPitchAccentData(path.join(process.cwd(), "templates", "word_pitch_accent_data.json"));
+    const kanjiLevelData = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
     const rows = await buildWordRowsForLevel({ level, config });
     const report = evaluatePlatinumWordReviewSet({
         rows,
         entries,
         wordPitchAccentData,
+        kanjiLevelData,
         requireAllRows: options.requireAllRows,
         allowEmpty: options.allowEmpty,
     });

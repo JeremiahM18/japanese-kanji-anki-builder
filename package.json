@@ -66,6 +66,7 @@
     "deck:words:completion": "node scripts/reportWordDeckCompletion.js",
     "deck:words:completion:n5": "node scripts/reportWordDeckCompletion.js --level=5",
     "deck:words:completion:n4": "node scripts/reportWordDeckCompletion.js --level=4",
+    "deck:words:level-anchor-audit": "node scripts/auditWordLevelAnchors.js",
     "deck:words:reading-audit": "node scripts/reportWordReadingCoverage.js",
     "deck:words:reading-audit:n5": "node scripts/reportWordReadingCoverage.js --level=5",
     "deck:words:reading-audit:n4": "node scripts/reportWordReadingCoverage.js --level=4",

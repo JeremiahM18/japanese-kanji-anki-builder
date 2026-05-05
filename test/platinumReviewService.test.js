@@ -43,6 +43,10 @@ function buildWordPitchAccentData(overrides = {}) {
 function evaluateWordPlatinum(options = {}) {
     return evaluatePlatinumWordReviewSet({
         wordPitchAccentData: buildWordPitchAccentData(),
+        kanjiLevelData: {
+            今: { jlpt: 5 },
+            日: { jlpt: 5 },
+        },
         ...options,
     });
 }
@@ -144,6 +148,20 @@ test("evaluatePlatinumWordReviewSet rejects active entries when media fields are
     assert.equal(report.passed, false);
     assert.match(report.results[0].failures.join("\n"), /audio field is empty/);
     assert.match(report.results[0].failures.join("\n"), /pitch accent field is empty/);
+});
+
+test("evaluatePlatinumWordReviewSet rejects active entries without a same-level kanji anchor", () => {
+    const report = evaluateWordPlatinum({
+        rows: [buildRow()],
+        entries: [buildEntry()],
+        kanjiLevelData: {
+            今: { jlpt: 4 },
+            日: { jlpt: 4 },
+        },
+    });
+
+    assert.equal(report.passed, false);
+    assert.match(report.results[0].failures.join("\n"), /no same-level kanji anchor for JLPT N5: 今:N4, 日:N4/);
 });
 
 test("evaluatePlatinumWordReviewSet requires selection rationale and structured evidence", () => {

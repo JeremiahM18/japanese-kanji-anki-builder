@@ -929,6 +929,10 @@ test("tracked starter word data keeps formal support words on harder decks", () 
     assert.equal(starterEntries["女房|にょうぼう"].jlpt, 2);
     assert.equal(starterEntries["女房|にょうぼう"].tags.includes("n2"), true);
     assert.equal(starterEntries["女房|にょうぼう"].coverage.coversReadings["女"], "にょう");
+
+    assert.equal(starterEntries["世間|せけん"].jlpt, 3);
+    assert.equal(starterEntries["世間|せけん"].tags.includes("n3"), true);
+    assert.equal(starterEntries["世間|せけん"].coverage.coversReadings["間"], "けん");
 });
 
 test("tracked starter word data includes the twenty-seventh governed N4 completion batch", () => {
@@ -1314,7 +1318,6 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
         ["生ビール|なまびーる", "生", "なま"],
         ["西瓜|すいか", "西", "すい"],
         ["椅子|いす", "子", "す"],
-        ["世間|せけん", "間", "けん"],
         ["半ば|なかば", "半", "なかば"],
         ["小指|こゆび", "小", "こ"],
         ["木陰|こかげ", "木", "こ"],

@@ -35018,5 +35018,800 @@
     "reviewedAt": "2026-05-05",
     "reviewer": "codex-platinum-review",
     "decisionReason": "Deferred from N5 because JLearn.net and Bunpro verify 女房|にょうぼう as JLPT N2 and old-fashioned/own-wife vocabulary. It is real and common, but not learner-friendly N5 support for 女 -> にょう."
+  },
+  {
+    "word": "女神",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "めがみ"
+    ],
+    "meaningIncludes": [
+      "goddess"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "女"
+    ],
+    "coversReadingIncludes": [
+      "女: め"
+    ],
+    "breakdownIncludes": [
+      "女 （め） ／ woman / female",
+      "神 （がみ） ／ shrine / god"
+    ],
+    "exampleIncludes": [
+      "物語に海の女神が出てきます。"
+    ],
+    "notesIncludes": [
+      "Common myth and story word; retained because it gives real 女 -> め usage while 神 is visibly labeled as JLPT N3 kanji."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "fixSummary": "Updated 女神|めがみ source notes during platinum review so the learner-facing card explains real word value and visible higher-level kanji labels instead of sounding coverage-only.",
+    "selectionRationale": "Kept because 女神 is a common, concrete myth/story word learners will meet in fiction and culture; it is not everyday N5 core, but it is learner-friendly enough and labels 神 as N3.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 女神|めがみ: word 女神, reading めがみ, meaning goddess, example 物語に海の女神が出てきます。, audio word-reading-女神-めがみ, labels JLPT N5 Reading coverage support, focus 女, covered readings 女: め, notes Common myth and story word; retained because it gives real 女 -> め usage while 神 is visibly labeled as JLPT N3 kanji., and pitch Pitch 1: 1."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 女神|めがみ, reading めがみ, meaning goddess, example 物語に海の女神が出てきます。, notes Common myth and story word; retained because it gives real 女 -> め usage while 神 is visibly labeled as JLPT N3 kanji., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%A5%B3%E7%A5%9E",
+        "detail": "JLearn.net verifies 女神|めがみ as a common word with reading めがみ and learner meaning goddess / female deity. Product review checked 女神|めがみ, example 物語に海の女神が出てきます。, reading めがみ, and learner meaning goddess."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 女神|めがみ for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 女神|めがみ, reading めがみ, sentence 物語に海の女神が出てきます。, exported sentence reading ものがたりにうみのめがみがでてきます。, and English gloss A sea goddess appears in the story.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 女神|めがみ; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 女神|めがみ exact asset fragment word-reading-女神-めがみ for exported reading めがみ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 女神|めがみ source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 女神|めがみ JLPT N5, Reading coverage support, focus 女, covered readings 女: め, and visible higher-level kanji labels: 神 is labeled JLPT N3 kanji."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 女神|めがみ common and learner-friendly for the N5 word deck, with accurate reading めがみ, meaning goddess, and example 物語に海の女神が出てきます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "肉料理",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "にくりょうり"
+    ],
+    "meaningIncludes": [
+      "meat dish"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "肉",
+      "料",
+      "理"
+    ],
+    "coversReadingIncludes": [
+      "肉: にく",
+      "料: りょう",
+      "理: り"
+    ],
+    "breakdownIncludes": [
+      "肉 （にく） ／ meat",
+      "料 （りょう） ／ fee / materials",
+      "理 （り） ／ reason / logic"
+    ],
+    "exampleIncludes": [
+      "この店の肉料理はおいしいです。"
+    ],
+    "notesIncludes": [
+      "Common food word; retained because it gives useful 肉 and 料理 readings in a natural restaurant context, not just coverage padding."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "fixSummary": "Updated 肉料理|にくりょうり source notes during platinum review so the learner-facing card explains real word value and visible higher-level kanji labels instead of sounding coverage-only.",
+    "selectionRationale": "Kept because 肉料理 is a transparent, common food/restaurant word and useful alongside 料理; all N4 constituent kanji are visibly labeled.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 肉料理|にくりょうり: word 肉料理, reading にくりょうり, meaning meat dish, example この店の肉料理はおいしいです。, audio word-reading-肉料理-にくりょうり, labels JLPT N5 JLPT core + reading coverage, focus 肉、料、理, covered readings 肉: にく ／ 料: りょう ／ 理: り, notes Common food word; retained because it gives useful 肉 and 料理 readings in a natural restaurant context, not just coverage padding., and pitch Pitch 1: 3."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 肉料理|にくりょうり, reading にくりょうり, meaning meat dish, example この店の肉料理はおいしいです。, notes Common food word; retained because it gives useful 肉 and 料理 readings in a natural restaurant context, not just coverage padding., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E8%82%89%E6%96%99%E7%90%86",
+        "detail": "JLearn.net verifies 肉料理|にくりょうり with reading にくりょうり and learner meaning meat dish. Product review checked 肉料理|にくりょうり, example この店の肉料理はおいしいです。, reading にくりょうり, and learner meaning meat dish."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 肉料理|にくりょうり for JLPT N5; product review confirmed it belongs in the N5 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 肉料理|にくりょうり, reading にくりょうり, sentence この店の肉料理はおいしいです。, exported sentence reading このみせのにくりょうりはおいしいです。, and English gloss The meat dishes at this restaurant are delicious.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 肉料理|にくりょうり; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 肉料理|にくりょうり exact asset fragment word-reading-肉料理-にくりょうり for exported reading にくりょうり."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 肉料理|にくりょうり source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka], rendered label Pitch 1: 3."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 肉料理|にくりょうり JLPT N5, JLPT core + reading coverage, focus 肉、料、理, covered readings 肉: にく ／ 料: りょう ／ 理: り, and visible higher-level kanji labels: 肉, 料, and 理 are labeled JLPT N4 kanji."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 肉料理|にくりょうり common and learner-friendly for the N5 word deck, with accurate reading にくりょうり, meaning meat dish, and example この店の肉料理はおいしいです。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "音読",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "おんどく"
+    ],
+    "meaningIncludes": [
+      "reading aloud"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "読"
+    ],
+    "coversReadingIncludes": [
+      "読: どく"
+    ],
+    "breakdownIncludes": [
+      "音 （おん） ／ sound",
+      "読 （どく） ／ read"
+    ],
+    "exampleIncludes": [
+      "教室で音読をしました。"
+    ],
+    "notesIncludes": [
+      "Common classroom and study word; retained because it gives real 読 -> どく usage in a useful learning context, with 音 visibly labeled as JLPT N4 kanji."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "fixSummary": "Updated 音読|おんどく source notes during platinum review so the learner-facing card explains real word value and visible higher-level kanji labels instead of sounding coverage-only.",
+    "selectionRationale": "Kept because 音読 is common classroom/study vocabulary and gives a useful real context for 読 -> どく without inventing coverage.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 音読|おんどく: word 音読, reading おんどく, meaning reading aloud, example 教室で音読をしました。, audio word-reading-音読-おんどく, labels JLPT N5 Reading coverage support, focus 読, covered readings 読: どく, notes Common classroom and study word; retained because it gives real 読 -> どく usage in a useful learning context, with 音 visibly labeled as JLPT N4 kanji., and pitch Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 音読|おんどく, reading おんどく, meaning reading aloud, example 教室で音読をしました。, notes Common classroom and study word; retained because it gives real 読 -> どく usage in a useful learning context, with 音 visibly labeled as JLPT N4 kanji., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%9F%B3%E8%AA%AD",
+        "detail": "JLearn.net verifies 音読|おんどく as a common word with reading おんどく and learner meaning reading aloud. Product review checked 音読|おんどく, example 教室で音読をしました。, reading おんどく, and learner meaning reading aloud."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 音読|おんどく for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 音読|おんどく, reading おんどく, sentence 教室で音読をしました。, exported sentence reading きょうしつでおんどくをしました。, and English gloss We read aloud in the classroom.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 音読|おんどく; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 音読|おんどく exact asset fragment word-reading-音読-おんどく for exported reading おんどく."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 音読|おんどく source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 音読|おんどく JLPT N5, Reading coverage support, focus 読, covered readings 読: どく, and visible higher-level kanji labels: 音 is labeled JLPT N4 kanji."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 音読|おんどく common and learner-friendly for the N5 word deck, with accurate reading おんどく, meaning reading aloud, and example 教室で音読をしました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "手間",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "てま"
+    ],
+    "meaningIncludes": [
+      "time and effort",
+      "trouble"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "間"
+    ],
+    "coversReadingIncludes": [
+      "間: ま"
+    ],
+    "breakdownIncludes": [
+      "手 （て） ／ hand",
+      "間 （ま） ／ interval / time"
+    ],
+    "exampleIncludes": [
+      "手間がかかる仕事です。"
+    ],
+    "notesIncludes": [
+      "Common time-and-effort word; retained because it gives useful 間 -> ま usage in the practical 手間がかかる pattern, with 手 visibly labeled as JLPT N4 kanji."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "fixSummary": "Updated 手間|てま source notes during platinum review so the learner-facing card explains real word value and visible higher-level kanji labels instead of sounding coverage-only.",
+    "selectionRationale": "Kept because 手間 is a common practical word in the useful 手間がかかる pattern; it is later-level vocabulary, but useful and learner-friendly enough for this N5-kanji word product with labels.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 手間|てま: word 手間, reading てま, meaning time and effort / trouble, example 手間がかかる仕事です。, audio word-reading-手間-てま, labels JLPT N5 Reading coverage support, focus 間, covered readings 間: ま, notes Common time-and-effort word; retained because it gives useful 間 -> ま usage in the practical 手間がかかる pattern, with 手 visibly labeled as JLPT N4 kanji., and pitch Pitch 1: 2."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 手間|てま, reading てま, meaning time and effort / trouble, example 手間がかかる仕事です。, notes Common time-and-effort word; retained because it gives useful 間 -> ま usage in the practical 手間がかかる pattern, with 手 visibly labeled as JLPT N4 kanji., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%89%8B%E9%96%93",
+        "detail": "JLearn.net verifies 手間|てま as a JLPT N3 common word with reading てま and learner meaning time / labour. Product review checked 手間|てま, example 手間がかかる仕事です。, reading てま, and learner meaning time and effort / trouble."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 手間|てま for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 手間|てま, reading てま, sentence 手間がかかる仕事です。, exported sentence reading てまがかかるしごとです。, and English gloss It is a job that takes a lot of effort.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 手間|てま; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 手間|てま exact asset fragment word-reading-手間-てま for exported reading てま."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 手間|てま source kanjium-cc-by-sa-4.0 pattern 2 [odaka], rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 手間|てま JLPT N5, Reading coverage support, focus 間, covered readings 間: ま, and visible higher-level kanji labels: 手 is labeled JLPT N4 kanji."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 手間|てま common and learner-friendly for the N5 word deck, with accurate reading てま, meaning time and effort / trouble, and example 手間がかかる仕事です。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "白紙",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "はくし"
+    ],
+    "meaningIncludes": [
+      "blank paper",
+      "blank sheet"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "白"
+    ],
+    "coversReadingIncludes": [
+      "白: はく"
+    ],
+    "breakdownIncludes": [
+      "白 （はく） ／ white",
+      "紙 （し） ／ paper"
+    ],
+    "exampleIncludes": [
+      "白紙に名前を書いてください。"
+    ],
+    "notesIncludes": [
+      "Common paper and school word; retained because it gives useful 白 -> はく usage in a concrete blank-sheet context, with 紙 visibly labeled as JLPT N4 kanji."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "fixSummary": "Updated 白紙|はくし source notes during platinum review so the learner-facing card explains real word value and visible higher-level kanji labels instead of sounding coverage-only.",
+    "selectionRationale": "Kept because 白紙 is a common concrete paper/school word and gives useful 白 -> はく usage without relying on an obscure compound.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 白紙|はくし: word 白紙, reading はくし, meaning blank paper / blank sheet, example 白紙に名前を書いてください。, audio word-reading-白紙-はくし, labels JLPT N5 Reading coverage support, focus 白, covered readings 白: はく, notes Common paper and school word; retained because it gives useful 白 -> はく usage in a concrete blank-sheet context, with 紙 visibly labeled as JLPT N4 kanji., and pitch Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 白紙|はくし, reading はくし, meaning blank paper / blank sheet, example 白紙に名前を書いてください。, notes Common paper and school word; retained because it gives useful 白 -> はく usage in a concrete blank-sheet context, with 紙 visibly labeled as JLPT N4 kanji., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E7%99%BD%E7%B4%99",
+        "detail": "JLearn.net verifies 白紙|はくし as a common word with reading はくし and learner meanings white paper / blank paper. Product review checked 白紙|はくし, example 白紙に名前を書いてください。, reading はくし, and learner meaning blank paper / blank sheet."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 白紙|はくし for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 白紙|はくし, reading はくし, sentence 白紙に名前を書いてください。, exported sentence reading はくしになまえをかいてください。, and English gloss Please write your name on the blank sheet.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 白紙|はくし; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 白紙|はくし exact asset fragment word-reading-白紙-はくし for exported reading はくし."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 白紙|はくし source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 白紙|はくし JLPT N5, Reading coverage support, focus 白, covered readings 白: はく, and visible higher-level kanji labels: 紙 is labeled JLPT N4 kanji."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 白紙|はくし common and learner-friendly for the N5 word deck, with accurate reading はくし, meaning blank paper / blank sheet, and example 白紙に名前を書いてください。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "関西",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "かんさい"
+    ],
+    "meaningIncludes": [
+      "Kansai region"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "西"
+    ],
+    "coversReadingIncludes": [
+      "西: さい"
+    ],
+    "breakdownIncludes": [
+      "関 （かん） ／ relationship / concern",
+      "西 （さい） ／ west"
+    ],
+    "exampleIncludes": [
+      "春に関西へ旅行します。"
+    ],
+    "notesIncludes": [
+      "Common Japan geography word; retained because it gives useful 西 -> さい usage for the Kansai region, with 関 visibly labeled as JLPT N3 kanji."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "fixSummary": "Updated 関西|かんさい source notes during platinum review so the learner-facing card explains real word value and visible higher-level kanji labels instead of sounding coverage-only.",
+    "selectionRationale": "Kept because 関西 is a common Japan geography/travel word that learners can use early even though the source JLPT level is later; 関 is visibly labeled N3.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 関西|かんさい: word 関西, reading かんさい, meaning Kansai region, example 春に関西へ旅行します。, audio word-reading-関西-かんさい, labels JLPT N5 Reading coverage support, focus 西, covered readings 西: さい, notes Common Japan geography word; retained because it gives useful 西 -> さい usage for the Kansai region, with 関 visibly labeled as JLPT N3 kanji., and pitch Pitch 1: 1."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 関西|かんさい, reading かんさい, meaning Kansai region, example 春に関西へ旅行します。, notes Common Japan geography word; retained because it gives useful 西 -> さい usage for the Kansai region, with 関 visibly labeled as JLPT N3 kanji., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%96%A2%E8%A5%BF",
+        "detail": "JLearn.net verifies 関西|かんさい as a JLPT N2 common word with reading かんさい and learner meaning Kansai region. Product review checked 関西|かんさい, example 春に関西へ旅行します。, reading かんさい, and learner meaning Kansai region."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 関西|かんさい for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 関西|かんさい, reading かんさい, sentence 春に関西へ旅行します。, exported sentence reading はるにかんさいへりょこうします。, and English gloss I will travel to Kansai in the spring.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 関西|かんさい; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 関西|かんさい exact asset fragment word-reading-関西-かんさい for exported reading かんさい."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 関西|かんさい source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 関西|かんさい JLPT N5, Reading coverage support, focus 西, covered readings 西: さい, and visible higher-level kanji labels: 関 is labeled JLPT N3 kanji."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 関西|かんさい common and learner-friendly for the N5 word deck, with accurate reading かんさい, meaning Kansai region, and example 春に関西へ旅行します。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "彼女",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "かのじょ"
+    ],
+    "meaningIncludes": [
+      "she",
+      "girlfriend"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "女"
+    ],
+    "coversReadingIncludes": [
+      "女: じょ"
+    ],
+    "breakdownIncludes": [
+      "彼 （かの） ／ he / that",
+      "女 （じょ） ／ woman / female"
+    ],
+    "exampleIncludes": [
+      "彼女は日本人です。"
+    ],
+    "notesIncludes": [
+      "Very common pronoun and girlfriend word; retained because it gives real 女 -> じょ usage in an essential learner-facing word, with 彼 visibly labeled as JLPT N3 kanji."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "fixSummary": "Updated 彼女|かのじょ source notes during platinum review so the learner-facing card explains real word value and visible higher-level kanji labels instead of sounding coverage-only.",
+    "selectionRationale": "Kept because 彼女 is an essential common pronoun/girlfriend word and gives real 女 -> じょ usage with the higher-level 彼 label visible.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 彼女|かのじょ: word 彼女, reading かのじょ, meaning she / girlfriend, example 彼女は日本人です。, audio word-reading-彼女-かのじょ, labels JLPT N5 Reading coverage support, focus 女, covered readings 女: じょ, notes Very common pronoun and girlfriend word; retained because it gives real 女 -> じょ usage in an essential learner-facing word, with 彼 visibly labeled as JLPT N3 kanji., and pitch Pitch 1: 1."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 彼女|かのじょ, reading かのじょ, meaning she / girlfriend, example 彼女は日本人です。, notes Very common pronoun and girlfriend word; retained because it gives real 女 -> じょ usage in an essential learner-facing word, with 彼 visibly labeled as JLPT N3 kanji., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%BD%BC%E5%A5%B3",
+        "detail": "JLearn.net verifies 彼女|かのじょ as a JLPT N4 common word with reading かのじょ and learner meanings she / girlfriend. Product review checked 彼女|かのじょ, example 彼女は日本人です。, reading かのじょ, and learner meaning she / girlfriend."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 彼女|かのじょ for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 彼女|かのじょ, reading かのじょ, sentence 彼女は日本人です。, exported sentence reading かのじょはにほんじんです。, and English gloss She is Japanese.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 彼女|かのじょ; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 彼女|かのじょ exact asset fragment word-reading-彼女-かのじょ for exported reading かのじょ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 彼女|かのじょ source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 彼女|かのじょ JLPT N5, Reading coverage support, focus 女, covered readings 女: じょ, and visible higher-level kanji labels: 彼 is labeled JLPT N3 kanji."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 彼女|かのじょ common and learner-friendly for the N5 word deck, with accurate reading かのじょ, meaning she / girlfriend, and example 彼女は日本人です。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "世間",
+    "status": "deferred",
+    "readingIncludes": [
+      "せけん"
+    ],
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because JLearn.net verifies 世間|せけん as a common JLPT N3 public/society word. It is useful later, but too abstract for an N5 learner card kept only to cover 間 -> けん."
   }
 ]

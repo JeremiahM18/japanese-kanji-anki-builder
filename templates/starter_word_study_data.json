@@ -921,11 +921,11 @@
     "written": "世間",
     "reading": "せけん",
     "meaning": "society / the world around us",
-    "jlpt": 5,
+    "jlpt": 3,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n3"
     ],
     "coverage": {
       "role": "support",
@@ -936,7 +936,7 @@
         "間": "けん"
       }
     },
-    "notes": "Reading-coverage support word for the 間 -> けん pattern.",
+    "notes": "Deferred from N5 because 世間 is common JLPT N3 public/society vocabulary; useful later, but too abstract for N5 coverage-only support of 間 -> けん.",
     "exampleSentence": {
       "japanese": "世間はその話でにぎやかでした。",
       "reading": "せけんはそのはなしでにぎやかでした。",
@@ -962,7 +962,7 @@
         "女": "め"
       }
     },
-    "notes": "Reading-coverage support word for the 女 -> め pattern.",
+    "notes": "Common myth and story word; retained because it gives real 女 -> め usage while 神 is visibly labeled as JLPT N3 kanji.",
     "exampleSentence": {
       "japanese": "物語に海の女神が出てきます。",
       "reading": "ものがたりにうみのめがみがでてきます。",
@@ -4508,7 +4508,7 @@
         "西": "さい"
       }
     },
-    "notes": "Reading-coverage support word for the 西 -> さい pattern.",
+    "notes": "Common Japan geography word; retained because it gives useful 西 -> さい usage for the Kansai region, with 関 visibly labeled as JLPT N3 kanji.",
     "exampleSentence": {
       "japanese": "春に関西へ旅行します。",
       "reading": "はるにかんさいへりょこうします。",
@@ -5627,7 +5627,7 @@
         "読": "どく"
       }
     },
-    "notes": "Reading-coverage support word for the 読 -> どく pattern.",
+    "notes": "Common classroom and study word; retained because it gives real 読 -> どく usage in a useful learning context, with 音 visibly labeled as JLPT N4 kanji.",
     "exampleSentence": {
       "japanese": "教室で音読をしました。",
       "reading": "きょうしつでおんどくをしました。",
@@ -5755,7 +5755,8 @@
       "japanese": "この店の肉料理はおいしいです。",
       "reading": "このみせのにくりょうりはおいしいです。",
       "english": "The meat dishes at this restaurant are delicious."
-    }
+    },
+    "notes": "Common food word; retained because it gives useful 肉 and 料理 readings in a natural restaurant context, not just coverage padding."
   },
   "日|ひ": {
     "written": "日",
@@ -6043,7 +6044,7 @@
         "白": "はく"
       }
     },
-    "notes": "Reading-coverage support word for the 白 -> はく pattern.",
+    "notes": "Common paper and school word; retained because it gives useful 白 -> はく usage in a concrete blank-sheet context, with 紙 visibly labeled as JLPT N4 kanji.",
     "exampleSentence": {
       "japanese": "白紙に名前を書いてください。",
       "reading": "はくしになまえをかいてください。",
@@ -6821,7 +6822,7 @@
         "間": "ま"
       }
     },
-    "notes": "Reading-coverage support word for the 間 -> ま pattern.",
+    "notes": "Common time-and-effort word; retained because it gives useful 間 -> ま usage in the practical 手間がかかる pattern, with 手 visibly labeled as JLPT N4 kanji.",
     "exampleSentence": {
       "japanese": "手間がかかる仕事です。",
       "reading": "てまがかかるしごとです。",
@@ -7593,7 +7594,7 @@
       "starter",
       "reading-coverage"
     ],
-    "notes": "Reading-coverage support word for the common 女 -> じょ pattern.",
+    "notes": "Very common pronoun and girlfriend word; retained because it gives real 女 -> じょ usage in an essential learner-facing word, with 彼 visibly labeled as JLPT N3 kanji.",
     "exampleSentence": {
       "japanese": "彼女は日本人です。",
       "reading": "かのじょはにほんじんです。",

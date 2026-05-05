@@ -35813,5 +35813,929 @@
     "reviewedAt": "2026-05-05",
     "reviewer": "codex-platinum-review",
     "decisionReason": "Deferred from N5 because JLearn.net verifies 世間|せけん as a common JLPT N3 public/society word. It is useful later, but too abstract for an N5 learner card kept only to cover 間 -> けん."
+  },
+  {
+    "word": "大変",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "たいへん"
+    ],
+    "meaningIncludes": [
+      "very",
+      "difficult",
+      "serious"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "大"
+    ],
+    "coversReadingIncludes": [
+      "大: たい"
+    ],
+    "breakdownIncludes": [
+      "大 （たい） ／ big / large",
+      "変 （へん） ／ change / strange"
+    ],
+    "exampleIncludes": [
+      "この宿題は大変です。"
+    ],
+    "notesIncludes": [
+      "Very common N5 adjective/adverb; retained because it is essential learner vocabulary and gives real 大 -> たい usage, with 変 visibly labeled as JLPT N3 kanji."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "fixSummary": "Updated 大変|たいへん source notes during platinum review so the learner-facing card explains real word value and visible label/provenance issues instead of sounding coverage-only.",
+    "selectionRationale": "Kept because 大変 is core N5 learner vocabulary, common as both very and difficult/serious, and the higher-level 変 kanji is visibly labeled.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 大変|たいへん: word 大変, reading たいへん, meaning very / difficult / serious, example この宿題は大変です。, audio word-reading-大変-たいへん, labels JLPT N5 Reading coverage support, focus 大, covered readings 大: たい, notes Very common N5 adjective/adverb; retained because it is essential learner vocabulary and gives real 大 -> たい usage, with 変 visibly labeled as JLPT N3 kanji., and pitch Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 大変|たいへん, reading たいへん, meaning very / difficult / serious, example この宿題は大変です。, notes Very common N5 adjective/adverb; retained because it is essential learner vocabulary and gives real 大 -> たい usage, with 変 visibly labeled as JLPT N3 kanji., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%A4%A7%E5%A4%89",
+        "detail": "JLearn.net verifies 大変|たいへん as a JLPT N5 common word with reading たいへん and learner meanings very / difficult / serious. Product review checked 大変|たいへん, example この宿題は大変です。, reading たいへん, and learner meaning very / difficult / serious."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 大変|たいへん for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 大変|たいへん, reading たいへん, sentence この宿題は大変です。, exported sentence reading このしゅくだいはたいへんです。, and English gloss This homework is tough.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 大変|たいへん; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 大変|たいへん exact asset fragment word-reading-大変-たいへん for exported reading たいへん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 大変|たいへん source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 大変|たいへん JLPT N5, Reading coverage support, focus 大, covered readings 大: たい, and visible higher-level kanji labels: 変 is labeled JLPT N3 kanji."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 大変|たいへん common and learner-friendly for the N5 word deck, with accurate reading たいへん, meaning very / difficult / serious, and example この宿題は大変です。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "足下",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "あしもと"
+    ],
+    "meaningIncludes": [
+      "at one's feet",
+      "underfoot"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "下"
+    ],
+    "coversReadingIncludes": [
+      "下: もと"
+    ],
+    "breakdownIncludes": [
+      "足 （あし） ／ foot / leg / enough",
+      "下 （もと） ／ down / below"
+    ],
+    "exampleIncludes": [
+      "足下に気をつけてください。"
+    ],
+    "notesIncludes": [
+      "Common watch-your-step word; retained because 足下 is a valid あしもと spelling that gives real 下 -> もと usage, while notes make clear this is not just coverage padding."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "fixSummary": "Updated 足下|あしもと source notes during platinum review so the learner-facing card explains real word value and visible label/provenance issues instead of sounding coverage-only.",
+    "selectionRationale": "Kept because 足下 is a real common watch-your-step spelling and gives a practical 下 -> もと context; the card is useful only with the spelling caveat captured in notes.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 足下|あしもと: word 足下, reading あしもと, meaning at one's feet / underfoot, example 足下に気をつけてください。, audio word-reading-足下-あしもと, labels JLPT N5 Reading coverage support, focus 下, covered readings 下: もと, notes Common watch-your-step word; retained because 足下 is a valid あしもと spelling that gives real 下 -> もと usage, while notes make clear this is not just coverage padding., and pitch Pitch 1: 3."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 足下|あしもと, reading あしもと, meaning at one's feet / underfoot, example 足下に気をつけてください。, notes Common watch-your-step word; retained because 足下 is a valid あしもと spelling that gives real 下 -> もと usage, while notes make clear this is not just coverage padding., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JapaneseClass.jp Dictionary https://japaneseclass.jp/dictionary/%E8%B6%B3%E4%B8%8B",
+        "detail": "JapaneseClass.jp verifies 足下|あしもと as a common word with learner meanings at one's feet / underfoot and shows 足下に注意して下さい as watch your step. Product review checked 足下|あしもと, example 足下に気をつけてください。, reading あしもと, and learner meaning at one's feet / underfoot."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 足下|あしもと for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 足下|あしもと, reading あしもと, sentence 足下に気をつけてください。, exported sentence reading あしもとにきをつけてください。, and English gloss Please watch your step.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 足下|あしもと; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 足下|あしもと exact asset fragment word-reading-足下-あしもと for exported reading あしもと."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 足下|あしもと source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka], rendered label Pitch 1: 3."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 足下|あしもと JLPT N5, Reading coverage support, focus 下, covered readings 下: もと, and visible higher-level kanji labels: 足 is labeled JLPT N4 kanji."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 足下|あしもと common and learner-friendly for the N5 word deck, with accurate reading あしもと, meaning at one's feet / underfoot, and example 足下に気をつけてください。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "有名",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "ゆうめい"
+    ],
+    "meaningIncludes": [
+      "famous"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "有",
+      "名"
+    ],
+    "coversReadingIncludes": [
+      "有: ゆう",
+      "名: めい"
+    ],
+    "breakdownIncludes": [
+      "有 （ゆう） ／ have / exist",
+      "名 （めい） ／ name"
+    ],
+    "exampleIncludes": [
+      "その店は有名です。"
+    ],
+    "notesIncludes": [
+      "Very common N5 adjective; retained because it teaches useful 有 -> ゆう and 名 -> めい readings in an essential learner-facing word."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "fixSummary": "Updated 有名|ゆうめい source notes during platinum review so the learner-facing card explains real word value and visible label/provenance issues instead of sounding coverage-only.",
+    "selectionRationale": "Kept because 有名 is essential learner vocabulary and cleanly teaches useful 有 -> ゆう and 名 -> めい readings in one common word.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 有名|ゆうめい: word 有名, reading ゆうめい, meaning famous, example その店は有名です。, audio word-reading-有名-ゆうめい, labels JLPT N5 Reading coverage support, focus 有、名, covered readings 有: ゆう ／ 名: めい, notes Very common N5 adjective; retained because it teaches useful 有 -> ゆう and 名 -> めい readings in an essential learner-facing word., and pitch Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 有名|ゆうめい, reading ゆうめい, meaning famous, example その店は有名です。, notes Very common N5 adjective; retained because it teaches useful 有 -> ゆう and 名 -> めい readings in an essential learner-facing word., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%9C%89%E5%90%8D",
+        "detail": "JLearn.net verifies 有名|ゆうめい as a JLPT N5 common word with reading ゆうめい and learner meaning famous. Product review checked 有名|ゆうめい, example その店は有名です。, reading ゆうめい, and learner meaning famous."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 有名|ゆうめい for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 有名|ゆうめい, reading ゆうめい, sentence その店は有名です。, exported sentence reading そのみせはゆうめいです。, and English gloss That shop is famous.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 有名|ゆうめい; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 有名|ゆうめい exact asset fragment word-reading-有名-ゆうめい for exported reading ゆうめい."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 有名|ゆうめい source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 有名|ゆうめい JLPT N5, Reading coverage support, focus 有、名, covered readings 有: ゆう ／ 名: めい, and visible higher-level kanji labels: 有 is labeled JLPT N4 kanji."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 有名|ゆうめい common and learner-friendly for the N5 word deck, with accurate reading ゆうめい, meaning famous, and example その店は有名です。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "生け花",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "いけばな"
+    ],
+    "meaningIncludes": [
+      "flower arrangement"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "生"
+    ],
+    "coversReadingIncludes": [
+      "生: いける"
+    ],
+    "breakdownIncludes": [
+      "生 （い） ／ life / birth",
+      "花 （ばな） ／ flower"
+    ],
+    "exampleIncludes": [
+      "母は生け花を習っています。"
+    ],
+    "notesIncludes": [
+      "Common Japanese culture word; retained because it gives real 生 -> いける usage in a concrete learner-friendly topic, with 花 visibly labeled as JLPT N4 kanji."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "fixSummary": "Updated 生け花|いけばな source notes during platinum review so the learner-facing card explains real word value and visible label/provenance issues instead of sounding coverage-only.",
+    "selectionRationale": "Kept because 生け花 is a concrete Japanese-culture word learners can recognize and discuss; it is later-level but learner-friendly enough with 花 labeled N4.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 生け花|いけばな: word 生け花, reading いけばな, meaning flower arrangement, example 母は生け花を習っています。, audio word-reading-生け花-いけばな, labels JLPT N5 Reading coverage support, focus 生, covered readings 生: いける, notes Common Japanese culture word; retained because it gives real 生 -> いける usage in a concrete learner-friendly topic, with 花 visibly labeled as JLPT N4 kanji., and pitch Pitch 1: 2."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 生け花|いけばな, reading いけばな, meaning flower arrangement, example 母は生け花を習っています。, notes Common Japanese culture word; retained because it gives real 生 -> いける usage in a concrete learner-friendly topic, with 花 visibly labeled as JLPT N4 kanji., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E7%94%9F%E3%81%91%E8%8A%B1",
+        "detail": "JLearn.net verifies 生け花|いけばな as a JLPT N2 common word with reading いけばな and learner meaning ikebana / flower arrangement. Product review checked 生け花|いけばな, example 母は生け花を習っています。, reading いけばな, and learner meaning flower arrangement."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 生け花|いけばな for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 生け花|いけばな, reading いけばな, sentence 母は生け花を習っています。, exported sentence reading はははいけばなをならっています。, and English gloss My mother studies flower arrangement.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 生け花|いけばな; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 生け花|いけばな exact asset fragment word-reading-生け花-いけばな for exported reading いけばな."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 生け花|いけばな source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka], rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 生け花|いけばな JLPT N5, Reading coverage support, focus 生, covered readings 生: いける, and visible higher-level kanji labels: 花 is labeled JLPT N4 kanji."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 生け花|いけばな common and learner-friendly for the N5 word deck, with accurate reading いけばな, meaning flower arrangement, and example 母は生け花を習っています。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "休み時間",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "やすみじかん"
+    ],
+    "meaningIncludes": [
+      "break time",
+      "recess"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "休",
+      "時",
+      "間"
+    ],
+    "coversReadingIncludes": [
+      "休: やすみ",
+      "時: じ",
+      "間: かん"
+    ],
+    "breakdownIncludes": [
+      "休み （やすみ） ／ rest / holiday",
+      "時 （じ） ／ time / o'clock",
+      "間 （かん） ／ interval / time"
+    ],
+    "exampleIncludes": [
+      "休み時間に友だちと話します。"
+    ],
+    "notesIncludes": [
+      "Common school word; retained because it teaches useful 休み, 時, and 間 readings in a practical break-time context."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Generated pitch (unverified)"
+    ],
+    "fixSummary": "Updated 休み時間|やすみじかん source notes during platinum review so the learner-facing card explains real word value and visible label/provenance issues instead of sounding coverage-only.",
+    "selectionRationale": "Kept because 休み時間 is practical school vocabulary and a natural compound for already useful N5 readings; generated pitch stays visibly labeled unverified.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 休み時間|やすみじかん: word 休み時間, reading やすみじかん, meaning break time / recess, example 休み時間に友だちと話します。, audio word-reading-休み時間-やすみじかん, labels JLPT N5 Reading coverage support, focus 休、時、間, covered readings 休: やすみ ／ 時: じ ／ 間: かん, notes Common school word; retained because it teaches useful 休み, 時, and 間 readings in a practical break-time context., and pitch Pitch 1: 3 / Generated pitch (unverified)."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 休み時間|やすみじかん, reading やすみじかん, meaning break time / recess, example 休み時間に友だちと話します。, notes Common school word; retained because it teaches useful 休み, 時, and 間 readings in a practical break-time context., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "Nihongo Master Japanese Dictionary https://www.nihongomaster.com/japanese/dictionary/word/157466/yasumijikan-%E4%BC%91%E3%81%BF%E6%99%82%E9%96%93-%E3%82%84%E3%81%99%E3%81%BF%E3%81%98%E3%81%8B%E3%82%93",
+        "detail": "Nihongo Master verifies 休み時間|やすみじかん as a common noun meaning recess / break time / break between classes. Product review checked 休み時間|やすみじかん, example 休み時間に友だちと話します。, reading やすみじかん, and learner meaning break time / recess."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 休み時間|やすみじかん for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 休み時間|やすみじかん, reading やすみじかん, sentence 休み時間に友だちと話します。, exported sentence reading やすみじかんにともだちとはなします。, and English gloss I talk with my friend during break time.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 休み時間|やすみじかん; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 休み時間|やすみじかん exact asset fragment word-reading-休み時間-やすみじかん for exported reading やすみじかん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 休み時間|やすみじかん source voicevox-nemo-accent-query pattern 3 [odaka] / 3 [odaka], rendered label Pitch 1: 3 / Generated pitch (unverified), with generated pitch visibly labeled unverified and dictionary-backed pitch still unverified."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 休み時間|やすみじかん JLPT N5, Reading coverage support, focus 休、時、間, covered readings 休: やすみ ／ 時: じ ／ 間: かん, and visible higher-level kanji labels: all constituent kanji are within the N5 word-deck kanji scope."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 休み時間|やすみじかん common and learner-friendly for the N5 word deck, with accurate reading やすみじかん, meaning break time / recess, and example 休み時間に友だちと話します。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "下町",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "したまち"
+    ],
+    "meaningIncludes": [
+      "downtown",
+      "old town"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "下"
+    ],
+    "coversReadingIncludes": [
+      "下: した"
+    ],
+    "breakdownIncludes": [
+      "下 （した） ／ down / below",
+      "町 （まち） ／ town"
+    ],
+    "exampleIncludes": [
+      "下町をゆっくり歩きました。"
+    ],
+    "notesIncludes": [
+      "Common Japan place/culture word; retained because it gives useful 下 -> した usage in a real town/neighborhood context, with 町 visibly labeled as JLPT N4 kanji."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "fixSummary": "Updated 下町|したまち source notes during platinum review so the learner-facing card explains real word value and visible label/provenance issues instead of sounding coverage-only.",
+    "selectionRationale": "Kept because 下町 is a common Japan place/culture word and gives a real 下 -> した context without being abstract or misleading; 町 is visibly labeled N4.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 下町|したまち: word 下町, reading したまち, meaning downtown / old town, example 下町をゆっくり歩きました。, audio word-reading-下町-したまち, labels JLPT N5 Reading coverage support, focus 下, covered readings 下: した, notes Common Japan place/culture word; retained because it gives useful 下 -> した usage in a real town/neighborhood context, with 町 visibly labeled as JLPT N4 kanji., and pitch Pitch 1: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 下町|したまち, reading したまち, meaning downtown / old town, example 下町をゆっくり歩きました。, notes Common Japan place/culture word; retained because it gives useful 下 -> した usage in a real town/neighborhood context, with 町 visibly labeled as JLPT N4 kanji., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%8B%E7%94%BA",
+        "detail": "JLearn.net verifies 下町|したまち as a JLPT N2 common word with reading したまち and meanings low-lying part of a city / Shitamachi area. Product review checked 下町|したまち, example 下町をゆっくり歩きました。, reading したまち, and learner meaning downtown / old town."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 下町|したまち for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 下町|したまち, reading したまち, sentence 下町をゆっくり歩きました。, exported sentence reading したまちをゆっくりあるきました。, and English gloss I took a slow walk through the old downtown area.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 下町|したまち; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 下町|したまち exact asset fragment word-reading-下町-したまち for exported reading したまち."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 下町|したまち source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 下町|したまち JLPT N5, Reading coverage support, focus 下, covered readings 下: した, and visible higher-level kanji labels: 町 is labeled JLPT N4 kanji."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 下町|したまち common and learner-friendly for the N5 word deck, with accurate reading したまち, meaning downtown / old town, and example 下町をゆっくり歩きました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "行方",
+    "status": "deferred",
+    "readingIncludes": [
+      "ゆくえ"
+    ],
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because 行方|ゆくえ is common later-level whereabouts/outcome vocabulary. It is useful later, but too abstract for an N5 learner card kept only to cover 行 -> ゆく."
+  },
+  {
+    "word": "白夜",
+    "status": "deferred",
+    "readingIncludes": [
+      "びゃくや"
+    ],
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "decisionReason": "Deferred from N5 because 白夜|びゃくや is a real common high-latitude geography/nature word, but too niche for an N5 learner card kept only to cover 白 -> びゃく."
+  },
+  {
+    "word": "白米",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "はくまい"
+    ],
+    "meaningIncludes": [
+      "white rice"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "白"
+    ],
+    "coversReadingIncludes": [
+      "白: はく"
+    ],
+    "breakdownIncludes": [
+      "白 （はく） ／ white",
+      "米 （まい） ／ rice / America"
+    ],
+    "exampleIncludes": [
+      "白米を少し食べます。"
+    ],
+    "notesIncludes": [
+      "Common food word; retained because it gives useful 白 -> はく usage in a real rice vocabulary item, with 米 visibly labeled as JLPT N3 kanji."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2",
+      "Pitch 2: 0"
+    ],
+    "fixSummary": "Updated 白米|はくまい source notes during platinum review so the learner-facing card explains real word value and visible higher-level kanji labels instead of sounding coverage-only.",
+    "selectionRationale": "Kept because 白米 is common food vocabulary and gives a useful real context for 白 -> はく while labeling 米 as N3.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 白米|はくまい: word 白米, reading はくまい, meaning white rice, example 白米を少し食べます。, audio word-reading-白米-はくまい, labels JLPT N5 Reading coverage support, focus 白, covered readings 白: はく, notes Common food word; retained because it gives useful 白 -> はく usage in a real rice vocabulary item, with 米 visibly labeled as JLPT N3 kanji., and pitch Pitch 1: 2 / Pitch 2: 0."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 白米|はくまい, reading はくまい, meaning white rice, example 白米を少し食べます。, notes Common food word; retained because it gives useful 白 -> はく usage in a real rice vocabulary item, with 米 visibly labeled as JLPT N3 kanji., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/Dictionary/Browse/1475370-hakumai-%E3%81%AF%E3%81%8F%E3%81%BE%E3%81%84-%E7%99%BD%E7%B1%B3",
+        "detail": "JLearn.net verifies 白米|はくまい as a common word with reading はくまい and learner meaning polished rice / white rice. Product review checked 白米|はくまい, example 白米を少し食べます。, reading はくまい, and learner meaning white rice."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 白米|はくまい for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 白米|はくまい, reading はくまい, sentence 白米を少し食べます。, exported sentence reading はくまいをすこしたべます。, and English gloss I eat a little white rice.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 白米|はくまい; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 白米|はくまい exact asset fragment word-reading-白米-はくまい for exported reading はくまい."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 白米|はくまい source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] / 0 [heiban], rendered labels Pitch 1: 2 / Pitch 2: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 白米|はくまい JLPT N5, Reading coverage support, focus 白, covered readings 白: はく, and visible higher-level kanji labels: 米 is labeled JLPT N3 kanji."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 白米|はくまい common and learner-friendly for the N5 word deck, with accurate reading はくまい, meaning white rice, and example 白米を少し食べます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "地下",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "ちか"
+    ],
+    "meaningIncludes": [
+      "underground",
+      "basement"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "下"
+    ],
+    "coversReadingIncludes": [
+      "下: か"
+    ],
+    "breakdownIncludes": [
+      "地 （ち） ／ ground / place",
+      "下 （か） ／ down / below"
+    ],
+    "exampleIncludes": [
+      "地下の店で昼ご飯を食べました。"
+    ],
+    "notesIncludes": [
+      "Common location word; retained because it gives useful 下 -> か usage in practical underground/basement contexts, with 地 visibly labeled as JLPT N4 kanji."
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1",
+      "Pitch 2: 2"
+    ],
+    "fixSummary": "Updated 地下|ちか source notes during platinum review so the learner-facing card explains real word value and visible higher-level kanji labels instead of sounding coverage-only.",
+    "selectionRationale": "Kept because 地下 is a practical common place/location word learners encounter in buildings and transit, and it gives a clean 下 -> か context with 地 labeled N4.",
+    "reviewedAt": "2026-05-05",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:words:platinum:batch -- --level=5",
+        "detail": "Generated word-card surface inspected for 地下|ちか: word 地下, reading ちか, meaning underground / basement, example 地下の店で昼ご飯を食べました。, audio word-reading-地下-ちか, labels JLPT N5 Reading coverage support, focus 下, covered readings 下: か, notes Common location word; retained because it gives useful 下 -> か usage in practical underground/basement contexts, with 地 visibly labeled as JLPT N4 kanji., and pitch Pitch 1: 1 / Pitch 2: 2."
+      },
+      {
+        "type": "golden-review",
+        "source": "templates/golden_n5_word_review_set.json",
+        "detail": "N5 golden word review protects 地下|ちか, reading ちか, meaning underground / basement, example 地下の店で昼ご飯を食べました。, notes Common location word; retained because it gives useful 下 -> か usage in practical underground/basement contexts, with 地 visibly labeled as JLPT N4 kanji., and card-back labels."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%9C%B0%E4%B8%8B",
+        "detail": "JLearn.net verifies 地下|ちか as a JLPT N3 common word with reading ちか and learner meanings basement / underground place / underground. Product review checked 地下|ちか, example 地下の店で昼ご飯を食べました。, reading ちか, and learner meaning underground / basement."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "templates/jlpt_word_level_contract.json lists 地下|ちか for JLPT N5; product review confirmed it belongs in the N5 word deck as Reading coverage support."
+      },
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 地下|ちか, reading ちか, sentence 地下の店で昼ご飯を食べました。, exported sentence reading ちかのみせでひるごはんをたべました。, and English gloss I ate lunch at the basement shop.."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit must check 地下|ちか; generated export includes exact word audio and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checks 地下|ちか exact asset fragment word-reading-地下-ちか for exported reading ちか."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 地下|ちか source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] / 2 [odaka], rendered labels Pitch 1: 1 / Pitch 2: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 地下|ちか JLPT N5, Reading coverage support, focus 下, covered readings 下: か, and visible higher-level kanji labels: 地 is labeled JLPT N4 kanji."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 地下|ちか common and learner-friendly for the N5 word deck, with accurate reading ちか, meaning underground / basement, and example 地下の店で昼ご飯を食べました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   }
 ]

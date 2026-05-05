@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Fixed
 
+- Finished N5 word platinum by approving source-checked `大変|たいへん`, `足下|あしもと`, `有名|ゆうめい`, `生け花|いけばな`, `休み時間|やすみじかん`, `下町|したまち`, `白米|はくまい`, and `地下|ちか`, moving later-level `行方|ゆくえ` and niche `白夜|びゃくや` to the N2 word product, and recording their N5 reading gaps as deferred instead of padding beginner coverage.
 - Fixed the N5 word platinum queue at the 8-card review size by approving source-checked `女神|めがみ`, `肉料理|にくりょうり`, `音読|おんどく`, `手間|てま`, `白紙|はくし`, `関西|かんさい`, and `彼女|かのじょ`, moving abstract later-level `世間|せけん` to the N3 word product, and recording the resulting `間 -> けん` N5 gap as deferred instead of keeping an N3 concept for coverage.
 - Fixed the N5 word platinum queue at the 8-card review size by approving source-checked `木陰|こかげ`, `魚料理|さかなりょうり`, `火照る|ほてる`, `社長|しゃちょう`, `白髪|しらが`, and `西洋|せいよう`, moving `出来上がり|できあがり` and `女房|にょうぼう` to the N2 word product, and recording the resulting N5 reading gaps as deferred instead of keeping later-level cards for coverage.
 - Fixed the N5 word platinum queue at the new 8-card review size by approving source-checked `手本|てほん`, `眼鏡|めがね`, `十回|じっかい`, `行事|ぎょうじ`, and `帽子|ぼうし`, moving `上昇|じょうしょう` and `木刀|ぼくとう` to the N1 word product, excluding phrase-shaped `公園の中|こうえんのなか`, and making the platinum row builder resolve exact word audio from the managed media root.

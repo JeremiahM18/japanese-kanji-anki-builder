@@ -933,6 +933,14 @@ test("tracked starter word data keeps formal support words on harder decks", () 
     assert.equal(starterEntries["世間|せけん"].jlpt, 3);
     assert.equal(starterEntries["世間|せけん"].tags.includes("n3"), true);
     assert.equal(starterEntries["世間|せけん"].coverage.coversReadings["間"], "けん");
+
+    assert.equal(starterEntries["行方|ゆくえ"].jlpt, 2);
+    assert.equal(starterEntries["行方|ゆくえ"].tags.includes("n2"), true);
+    assert.equal(starterEntries["行方|ゆくえ"].coverage.coversReadings["行"], "ゆく");
+
+    assert.equal(starterEntries["白夜|びゃくや"].jlpt, 2);
+    assert.equal(starterEntries["白夜|びゃくや"].tags.includes("n2"), true);
+    assert.equal(starterEntries["白夜|びゃくや"].coverage.coversReadings["白"], "びゃく");
 });
 
 test("tracked starter word data includes the twenty-seventh governed N4 completion batch", () => {

@@ -43,6 +43,21 @@ const confidenceLabelSchema = z.object({
     requirements: z.array(z.string().min(1)).default([]),
 }).strict();
 
+const confidenceIdSchema = z.enum([
+    "high_confidence",
+    "standard_confidence",
+    "disputed",
+    "weak_evidence",
+    "unknown",
+]);
+const REQUIRED_CONFIDENCE_IDS = Object.freeze([
+    "high_confidence",
+    "standard_confidence",
+    "disputed",
+    "weak_evidence",
+    "unknown",
+]);
+
 const evidenceSourceSchema = z.object({
     name: z.string().min(1),
     tier: z.string().min(1),
@@ -58,6 +73,14 @@ const evidenceSourceSchema = z.object({
     notes: z.string().optional(),
 }).strict();
 
+const kanjiEvidenceEntrySchema = z.object({
+    sources: z.record(z.string().min(1), jlptLevelAssignmentValueSchema).default({}),
+    consensusLevel: jlptLevelAssignmentValueSchema.optional(),
+    agreementScore: z.number().min(0).max(1).optional(),
+    confidence: confidenceIdSchema.optional(),
+    notes: z.string().optional(),
+}).strict();
+
 const jlptKanjiSourceEvidenceSchema = z.object({
     version: z.number().int().min(1).default(1),
     policy: evidencePolicySchema.default({}),
@@ -68,6 +91,7 @@ const jlptKanjiSourceEvidenceSchema = z.object({
         z.string().min(1),
         z.record(z.string().min(1), jlptLevelAssignmentValueSchema)
     ).default({}),
+    kanji: z.record(z.string().min(1), kanjiEvidenceEntrySchema).default({}),
 }).strict();
 
 function normalizeJlptLevelAssignment(value) {
@@ -124,6 +148,67 @@ function assertKnownSourceTiers(parsed) {
     }
 }
 
+function assertRequiredConfidenceLabels(parsed) {
+    const missing = REQUIRED_CONFIDENCE_IDS.filter((labelId) => !parsed.confidenceLabels?.[labelId]);
+    if (missing.length > 0) {
+        throw new Error(`Missing JLPT kanji confidence labels: ${missing.join(", ")}`);
+    }
+}
+
+function normalizeKanjiEvidence(kanjiEvidence = {}) {
+    return Object.fromEntries(
+        Object.entries(kanjiEvidence || {}).map(([kanji, entry]) => {
+            const sources = Object.fromEntries(
+                Object.entries(entry.sources || {})
+                    .map(([sourceId, value]) => [sourceId, normalizeJlptLevelAssignmentEntry(value)])
+                    .filter(([, normalized]) => normalized !== null)
+            );
+            return [kanji, {
+                ...entry,
+                consensusLevel: entry.consensusLevel === undefined
+                    ? undefined
+                    : normalizeJlptLevelAssignment(entry.consensusLevel),
+                sources,
+            }];
+        })
+    );
+}
+
+function buildAssignmentsFromKanjiEvidence(kanjiEvidence = {}) {
+    const assignments = {};
+
+    for (const [kanji, entry] of Object.entries(kanjiEvidence || {})) {
+        for (const [sourceId, assignment] of Object.entries(entry.sources || {})) {
+            assignments[sourceId] = assignments[sourceId] || {};
+            assignments[sourceId][kanji] = assignment;
+        }
+    }
+
+    return assignments;
+}
+
+function mergeAssignments(primary = {}, secondary = {}) {
+    const merged = Object.fromEntries(
+        Object.entries(primary || {}).map(([sourceId, sourceAssignments]) => [
+            sourceId,
+            { ...sourceAssignments },
+        ])
+    );
+
+    for (const [sourceId, sourceAssignments] of Object.entries(secondary || {})) {
+        merged[sourceId] = merged[sourceId] || {};
+        for (const [kanji, assignment] of Object.entries(sourceAssignments || {})) {
+            const existing = merged[sourceId][kanji];
+            if (existing && existing.level !== assignment.level) {
+                throw new Error(`Conflicting JLPT kanji source assignments for ${kanji} from ${sourceId}`);
+            }
+            merged[sourceId][kanji] = assignment;
+        }
+    }
+
+    return merged;
+}
+
 function normalizeAssignments(assignments = {}) {
     return Object.fromEntries(
         Object.entries(assignments || {}).map(([sourceId, sourceAssignments]) => [
@@ -140,9 +225,14 @@ function normalizeAssignments(assignments = {}) {
 function normalizeJlptKanjiSourceEvidence(value = {}) {
     const parsed = jlptKanjiSourceEvidenceSchema.parse(value);
     assertKnownSourceTiers(parsed);
+    assertRequiredConfidenceLabels(parsed);
+    const kanji = normalizeKanjiEvidence(parsed.kanji);
+    const sourceCentricAssignments = normalizeAssignments(parsed.assignments);
+    const kanjiAssignments = buildAssignmentsFromKanjiEvidence(kanji);
     return {
         ...parsed,
-        assignments: normalizeAssignments(parsed.assignments),
+        kanji,
+        assignments: mergeAssignments(sourceCentricAssignments, kanjiAssignments),
     };
 }
 
@@ -151,9 +241,12 @@ function loadJlptKanjiSourceEvidence(filePath) {
 }
 
 module.exports = {
+    REQUIRED_CONFIDENCE_IDS,
     evidencePolicySchema,
     confidenceLabelSchema,
+    confidenceIdSchema,
     evidenceSourceSchema,
+    kanjiEvidenceEntrySchema,
     sourceTierSchema,
     jlptKanjiSourceEvidenceSchema,
     loadJlptKanjiSourceEvidence,

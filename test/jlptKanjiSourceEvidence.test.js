@@ -16,6 +16,36 @@ const {
     parseArgs,
 } = require("../scripts/auditJlptKanjiSourceEvidence");
 
+function buildConfidenceLabels() {
+    return {
+        high_confidence: {
+            label: "high_confidence",
+            releaseMeaning: "Fixture high confidence label.",
+            blocksRelease: false,
+        },
+        standard_confidence: {
+            label: "standard_confidence",
+            releaseMeaning: "Fixture standard confidence label.",
+            blocksRelease: false,
+        },
+        disputed: {
+            label: "disputed",
+            releaseMeaning: "Fixture disputed confidence label.",
+            blocksRelease: true,
+        },
+        weak_evidence: {
+            label: "weak_evidence",
+            releaseMeaning: "Fixture weak confidence label.",
+            blocksRelease: true,
+        },
+        unknown: {
+            label: "unknown",
+            releaseMeaning: "Fixture unknown confidence label.",
+            blocksRelease: true,
+        },
+    };
+}
+
 function buildEvidence(assignments = {}) {
     return normalizeJlptKanjiSourceEvidence({
         version: 1,
@@ -45,33 +75,7 @@ function buildEvidence(assignments = {}) {
                 description: "Fixture background tier.",
             },
         },
-        confidenceLabels: {
-            high: {
-                label: "High confidence",
-                releaseMeaning: "Fixture high confidence label.",
-                blocksRelease: false,
-            },
-            standard: {
-                label: "Standard confidence",
-                releaseMeaning: "Fixture standard confidence label.",
-                blocksRelease: false,
-            },
-            weak: {
-                label: "Weak confidence",
-                releaseMeaning: "Fixture weak confidence label.",
-                blocksRelease: true,
-            },
-            disputed: {
-                label: "Disputed",
-                releaseMeaning: "Fixture disputed confidence label.",
-                blocksRelease: true,
-            },
-            missing: {
-                label: "Missing evidence",
-                releaseMeaning: "Fixture missing confidence label.",
-                blocksRelease: true,
-            },
-        },
+        confidenceLabels: buildConfidenceLabels(),
         sources: {
             tanos: {
                 name: "Tanos",
@@ -132,6 +136,7 @@ test("normalizeJlptLevelAssignment accepts common JLPT level spellings", () => {
 test("normalizeJlptKanjiSourceEvidence rejects sources outside governed source tiers", () => {
     assert.throws(() => normalizeJlptKanjiSourceEvidence({
         version: 1,
+        confidenceLabels: buildConfidenceLabels(),
         sourceTiers: {
             approved_tier: {
                 label: "Approved tier",
@@ -149,6 +154,14 @@ test("normalizeJlptKanjiSourceEvidence rejects sources outside governed source t
             },
         },
     }), /Unknown JLPT kanji source tiers/);
+});
+
+test("normalizeJlptKanjiSourceEvidence requires governed confidence labels", () => {
+    assert.throws(() => normalizeJlptKanjiSourceEvidence({
+        version: 1,
+        sourceTiers: {},
+        sources: {},
+    }), /Missing JLPT kanji confidence labels/);
 });
 
 test("normalizeJlptLevelAssignmentEntry preserves reviewed structured evidence", () => {
@@ -201,8 +214,8 @@ test("evaluateKanjiSourceEvidence classifies source-backed consensus", () => {
     });
 
     assert.equal(result.consensusLevel, 5);
-    assert.equal(result.confidence, "high");
-    assert.equal(result.confidenceLabel, "High confidence");
+    assert.equal(result.confidence, "high_confidence");
+    assert.equal(result.confidenceLabel, "high_confidence");
     assert.equal(result.contractMatchesConsensus, true);
     assert.equal(result.assignmentCount, 3);
     assert.equal(result.japanesePublishedSourceCount, 1);
@@ -219,18 +232,7 @@ test("evaluateKanjiSourceEvidence counts unique independent source groups", () =
                 description: "Fixture source tier.",
             },
         },
-        confidenceLabels: {
-            weak: {
-                label: "Weak confidence",
-                releaseMeaning: "Fixture weak confidence label.",
-                blocksRelease: true,
-            },
-            missing: {
-                label: "Missing evidence",
-                releaseMeaning: "Fixture missing confidence label.",
-                blocksRelease: true,
-            },
-        },
+        confidenceLabels: buildConfidenceLabels(),
         policy: {
             minimumIndependentSources: 2,
             minimumJapanesePublishedSources: 0,
@@ -273,12 +275,13 @@ test("evaluateKanjiSourceEvidence counts unique independent source groups", () =
 
     assert.equal(result.assignmentCount, 2);
     assert.equal(result.independentSourceCount, 1);
-    assert.equal(result.confidence, "weak");
+    assert.equal(result.confidence, "weak_evidence");
 });
 
 test("evaluateKanjiSourceEvidence ignores planned sources until activated", () => {
     const evidence = normalizeJlptKanjiSourceEvidence({
         version: 1,
+        confidenceLabels: buildConfidenceLabels(),
         sourceTiers: {
             fixture: {
                 label: "Fixture tier",
@@ -316,12 +319,13 @@ test("evaluateKanjiSourceEvidence ignores planned sources until activated", () =
     });
 
     assert.equal(result.assignmentCount, 0);
-    assert.equal(result.confidence, "missing");
+    assert.equal(result.confidence, "unknown");
 });
 
 test("auditJlptKanjiSourceEvidence fails on unreviewed assignments and unapproved active voting sources", () => {
     const evidence = normalizeJlptKanjiSourceEvidence({
         version: 1,
+        confidenceLabels: buildConfidenceLabels(),
         sourceTiers: {
             fixture: {
                 label: "Fixture tier",
@@ -389,8 +393,8 @@ test("auditJlptKanjiSourceEvidence emits governed confidence manifest entries", 
     assert.deepEqual(report.kanjiConfidenceManifest[0], {
         kanji: "日",
         contractLevel: 5,
-        confidence: "high",
-        confidenceLabel: "High confidence",
+        confidence: "high_confidence",
+        confidenceLabel: "high_confidence",
         consensusLevel: 5,
         agreementScore: 1,
         assignmentCount: 3,

@@ -10,11 +10,11 @@ function createLevelCounts() {
 
 function createConfidenceCounts() {
     return {
-        high: 0,
-        standard: 0,
-        weak: 0,
+        high_confidence: 0,
+        standard_confidence: 0,
         disputed: 0,
-        missing: 0,
+        weak_evidence: 0,
+        unknown: 0,
     };
 }
 
@@ -29,6 +29,9 @@ function createIssueCounts() {
         unapprovedActiveSources: 0,
         unknownAssignmentSource: 0,
         assignmentOutsideContract: 0,
+        declaredConsensusMismatch: 0,
+        declaredAgreementMismatch: 0,
+        declaredConfidenceMismatch: 0,
     };
 }
 
@@ -118,7 +121,7 @@ function classifyConfidence({
     policy = {},
 } = {}) {
     if (assignmentCount === 0) {
-        return "missing";
+        return "unknown";
     }
     if (disputed) {
         return "disputed";
@@ -127,15 +130,15 @@ function classifyConfidence({
         independentSourceCount < policy.minimumIndependentSources
         || japanesePublishedSourceCount < policy.minimumJapanesePublishedSources
     ) {
-        return "weak";
+        return "weak_evidence";
     }
     if (agreementScore >= policy.highAgreementScore) {
-        return "high";
+        return "high_confidence";
     }
     if (agreementScore >= policy.standardAgreementScore) {
-        return "standard";
+        return "standard_confidence";
     }
-    return "weak";
+    return "weak_evidence";
 }
 
 function evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence = {} } = {}) {
@@ -239,11 +242,11 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
     const byContractLevel = Object.fromEntries(
         [1, 2, 3, 4, 5].map((level) => [level, {
             checked: 0,
-            high: 0,
-            standard: 0,
-            weak: 0,
+            high_confidence: 0,
+            standard_confidence: 0,
             disputed: 0,
-            missing: 0,
+            weak_evidence: 0,
+            unknown: 0,
             mismatches: 0,
         }])
     );
@@ -255,6 +258,9 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
         contractConsensusMismatches: [],
         unreviewedAssignments: [],
         unapprovedActiveSources: [],
+        declaredConsensusMismatches: [],
+        declaredAgreementMismatches: [],
+        declaredConfidenceMismatches: [],
     };
     const kanjiConfidenceManifest = [];
 
@@ -304,6 +310,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
         confidenceCounts[result.confidence] += 1;
         byContractLevel[contractLevel].checked += 1;
         byContractLevel[contractLevel][result.confidence] += 1;
+        const declared = evidence.kanji?.[kanji] || null;
 
         if (result.assignmentCount === 0) {
             issueCounts.missingEvidence += 1;
@@ -343,6 +350,39 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
                 agreementScore: result.agreementScore,
             });
         }
+        if (declared) {
+            const declaredConsensusLevel = declared.consensusLevel;
+            if (
+                Number.isInteger(declaredConsensusLevel)
+                && declaredConsensusLevel !== result.consensusLevel
+            ) {
+                issueCounts.declaredConsensusMismatch += 1;
+                issues.declaredConsensusMismatches.push({
+                    kanji,
+                    declaredConsensusLevel,
+                    computedConsensusLevel: result.consensusLevel,
+                });
+            }
+            if (
+                Number.isFinite(declared.agreementScore)
+                && Math.abs(declared.agreementScore - result.agreementScore) > 0.0001
+            ) {
+                issueCounts.declaredAgreementMismatch += 1;
+                issues.declaredAgreementMismatches.push({
+                    kanji,
+                    declaredAgreementScore: declared.agreementScore,
+                    computedAgreementScore: result.agreementScore,
+                });
+            }
+            if (declared.confidence && declared.confidence !== result.confidence) {
+                issueCounts.declaredConfidenceMismatch += 1;
+                issues.declaredConfidenceMismatches.push({
+                    kanji,
+                    declaredConfidence: declared.confidence,
+                    computedConfidence: result.confidence,
+                });
+            }
+        }
     }
 
     const sourceCoverage = summarizeSourceCoverage({ evidence, contractKanjiSet });
@@ -359,7 +399,10 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
         && issueCounts.unreviewedAssignments === 0
         && issueCounts.unapprovedActiveSources === 0
         && issueCounts.unknownAssignmentSource === 0
-        && issueCounts.assignmentOutsideContract === 0;
+        && issueCounts.assignmentOutsideContract === 0
+        && issueCounts.declaredConsensusMismatch === 0
+        && issueCounts.declaredAgreementMismatch === 0
+        && issueCounts.declaredConfidenceMismatch === 0;
 
     function capped(items) {
         return items.slice(0, Math.max(1, limit || 25));
@@ -386,6 +429,9 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
             contractConsensusMismatches: capped(issues.contractConsensusMismatches),
             unreviewedAssignments: capped(issues.unreviewedAssignments),
             unapprovedActiveSources: capped(issues.unapprovedActiveSources),
+            declaredConsensusMismatches: capped(issues.declaredConsensusMismatches),
+            declaredAgreementMismatches: capped(issues.declaredAgreementMismatches),
+            declaredConfidenceMismatches: capped(issues.declaredConfidenceMismatches),
         },
     };
 }

@@ -47,7 +47,7 @@ function formatSourceCoverage(sourceCoverage = {}) {
 }
 
 function formatConfidenceLabels(confidenceLabels = {}) {
-    return ["high", "standard", "weak", "disputed", "missing"]
+    return ["high_confidence", "standard_confidence", "disputed", "weak_evidence", "unknown"]
         .filter((labelId) => confidenceLabels[labelId])
         .map((labelId) => {
             const label = confidenceLabels[labelId];
@@ -87,11 +87,11 @@ function formatJlptKanjiSourceEvidenceReport({
         `- High agreement score: ${report.policy.highAgreementScore}`,
         "",
         "Confidence:",
-        `- High: ${report.confidenceCounts.high}`,
-        `- Standard: ${report.confidenceCounts.standard}`,
-        `- Weak: ${report.confidenceCounts.weak}`,
-        `- Disputed: ${report.confidenceCounts.disputed}`,
-        `- Missing: ${report.confidenceCounts.missing}`,
+        `- high_confidence: ${report.confidenceCounts.high_confidence}`,
+        `- standard_confidence: ${report.confidenceCounts.standard_confidence}`,
+        `- disputed: ${report.confidenceCounts.disputed}`,
+        `- weak_evidence: ${report.confidenceCounts.weak_evidence}`,
+        `- unknown: ${report.confidenceCounts.unknown}`,
         "",
         "Confidence labels:",
         ...formatConfidenceLabels(report.confidenceLabels),
@@ -106,6 +106,9 @@ function formatJlptKanjiSourceEvidenceReport({
         formatIssueCount("Unapproved active voting sources", report.issueCounts.unapprovedActiveSources),
         formatIssueCount("Unknown assignment sources", report.issueCounts.unknownAssignmentSource),
         formatIssueCount("Assignments outside contract", report.issueCounts.assignmentOutsideContract),
+        formatIssueCount("Declared consensus mismatches", report.issueCounts.declaredConsensusMismatch),
+        formatIssueCount("Declared agreement mismatches", report.issueCounts.declaredAgreementMismatch),
+        formatIssueCount("Declared confidence mismatches", report.issueCounts.declaredConfidenceMismatch),
         "",
         "Source coverage:",
         ...formatSourceCoverage(report.sourceCoverage),

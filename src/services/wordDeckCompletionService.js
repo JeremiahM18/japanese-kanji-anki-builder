@@ -621,7 +621,7 @@ function buildWordDeckCardBackAudit({ wordRows, maxMissingRows = 20 }) {
     };
 }
 
-function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract }) {
+function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract, starterEntries = {} }) {
     const deckLevel = Number(level);
     if (!jlptLevelContract?.kanjiLevels) {
         return {
@@ -652,6 +652,8 @@ function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract }) {
             .split("、")
             .map((kanji) => kanji.trim())
             .filter(Boolean);
+        const key = buildWordStudyEntryKey({ written, reading });
+        const learnerFitReason = starterEntries?.[key]?.levelPlacement?.reason || "";
 
         if (kanjiList.length === 0) {
             continue;
@@ -660,6 +662,7 @@ function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract }) {
         const anchorResult = buildWordLevelAnchorResult({
             written,
             deckLevel,
+            learnerFitReason,
             kanjiLevelData: jlptLevelContract,
         });
         if (!anchorResult.valid) {
@@ -667,7 +670,10 @@ function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract }) {
                 word: written,
                 reading,
                 deckLevel,
+                anchorLevel: anchorResult.anchorLevel,
+                placementStatus: anchorResult.placementStatus,
                 kanjiLevels: anchorResult.kanjiLevels,
+                learnerFitReason: anchorResult.learnerFitReason,
             });
         }
 
@@ -722,10 +728,12 @@ function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract }) {
             && badgeViolations.length === 0
             && focusViolations.length === 0,
         sameLevelAnchorViolationCount: sameLevelAnchorViolations.length,
+        levelPlacementViolationCount: sameLevelAnchorViolations.length,
         standaloneViolationCount: standaloneViolations.length,
         badgeViolationCount: badgeViolations.length,
         focusViolationCount: focusViolations.length,
         sameLevelAnchorViolations,
+        levelPlacementViolations: sameLevelAnchorViolations,
         standaloneViolations,
         badgeViolations,
         focusViolations,
@@ -831,6 +839,7 @@ function buildWordDeckCompletionReport({
         level,
         wordRows,
         jlptLevelContract,
+        starterEntries,
     });
     const sentenceOrthographyAudit = buildWordDeckSentenceOrthographyAudit({
         wordRows,
@@ -945,7 +954,7 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         `- Built rows outside canonical inventory: ${report.inventory.extraBuiltCount}`,
         "",
         "Deck policy audit:",
-        `- Missing same-level kanji anchors: ${report.policyAudit.sameLevelAnchorViolationCount || 0}`,
+        `- Word level placement violations: ${report.policyAudit.levelPlacementViolationCount || 0}`,
         `- Standalone wrong-level cards: ${report.policyAudit.standaloneViolationCount}`,
         `- Missing cross-level/outside-level badges: ${report.policyAudit.badgeViolationCount}`,
         `- Focus kanji outside written word: ${report.policyAudit.focusViolationCount || 0}`,
@@ -1034,10 +1043,10 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         }
     }
 
-    if ((report.policyAudit?.sameLevelAnchorViolations || []).length > 0) {
-        lines.push("", "Words missing a same-level kanji anchor:");
-        for (const row of report.policyAudit.sameLevelAnchorViolations.slice(0, maxEntries)) {
-            lines.push(`- ${row.word} (${row.reading}) — ${formatKanjiLevelList(row.kanjiLevels)}`);
+    if ((report.policyAudit?.levelPlacementViolations || []).length > 0) {
+        lines.push("", "Word level placement violations:");
+        for (const row of report.policyAudit.levelPlacementViolations.slice(0, maxEntries)) {
+            lines.push(`- ${row.word} (${row.reading}) — ${row.placementStatus}; ${formatKanjiLevelList(row.kanjiLevels)}`);
         }
     }
 

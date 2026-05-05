@@ -25,9 +25,11 @@ That means:
 
 ## Word card style
 
-- Standalone single-kanji words stay in their own JLPT level.
-- A word assigned to an N-level word deck must contain at least one kanji from that same N-level. This is the level anchor.
-- Higher-level, lower-level, or outside-JLPT support kanji may appear in the word only after the same-level anchor rule is satisfied.
+- The highest-numbered known JLPT kanji level in the written word is the earliest default word-deck anchor.
+- A word may ship at that anchor level or at a harder/lower-numbered learner-fit level.
+- Later learner-fit placement must be explicit and reviewed, not accidental. This allows useful common words to appear at the right learning moment without dumping hard words into beginner decks.
+- A word must not ship in an easier/higher-numbered deck than its highest-numbered known constituent kanji anchor.
+- Outside-JLPT support kanji do not choose the JLPT deck level, but they must be visibly labeled.
 - Constituent kanji must be visibly labeled on the card, including same-level, higher-level, and outside-JLPT kanji.
 - Reading coverage is scoped to the selected word-product levels. Do not duplicate support words if the reading is already taught well in another selected deck unless there is a clear editorial reason.
 - Every shipped word card must expose a learner-facing reading breakdown on the answer side.

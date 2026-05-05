@@ -128,6 +128,24 @@ test("normalizeWordStudyData keeps explicit reading-coverage contracts", () => {
     });
 });
 
+test("normalizeWordStudyData keeps explicit learner-fit level placement reasons", () => {
+    const normalized = normalizeWordStudyData({
+        "人気|にんき": {
+            written: "人気",
+            reading: "にんき",
+            meaning: "popularity / popular",
+            jlpt: 4,
+            levelPlacement: {
+                reason: " Common and useful, but N4 is a better learner-fit introduction than N5. ",
+            },
+        },
+    });
+
+    assert.deepEqual(normalized["人気|にんき"].levelPlacement, {
+        reason: "Common and useful, but N4 is a better learner-fit introduction than N5.",
+    });
+});
+
 test("normalizeWordStudyData rejects legacy non-ruby reading breakdowns", () => {
     assert.throws(() => normalizeWordStudyData({
         today: {

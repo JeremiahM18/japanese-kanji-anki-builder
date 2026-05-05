@@ -166,14 +166,14 @@ test("buildWordReadingBreakdown renders learner-facing furigana breakdowns", () 
     }), /must use ruby furigana markup/);
 });
 
-test("inferWordLevel uses the hardest constituent JLPT kanji", () => {
+test("inferWordLevel uses the highest-numbered constituent JLPT kanji anchor", () => {
     assert.equal(inferWordLevel({
         written: "今年",
         jlptOnlyJson: {
             今: { jlpt: 5 },
             年: { jlpt: 4 },
         },
-    }), 4);
+    }), 5);
 });
 
 test("getCanonicalWordLevel prefers the tracked word-level contract over kanji heuristics", () => {

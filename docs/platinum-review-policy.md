@@ -29,7 +29,7 @@ Platinum evidence is field-bound. A source entry that only says "reviewed" is no
 
 For active word cards, `japanese-source` evidence must cite a non-generated Japanese-language or dictionary source. Generated output, golden review expectations, tracked starter templates, ignored local data, and local caches are useful internal evidence, but they are not Japanese-source verification by themselves.
 
-For active word cards, the reviewed deck level must be anchored by the written word itself. An N-level word card must contain at least one kanji from that same N-level. Support kanji may come from any JLPT level or outside the JLPT contract, but visible support labels do not make a word belong to a level by themselves.
+For active word cards, the reviewed deck level must be governed by the written word and learner fit. The highest-numbered known JLPT kanji level in the written word is the earliest default anchor. A card must not ship in an easier/higher-numbered level than that anchor. It may ship in a harder/lower-numbered level only with an explicit learner-fit rationale.
 
 Existing platinum sample entries created before the current field-bound evidence gate are not trusted release coverage. Re-review them under the current rules before counting them toward version 1.
 
@@ -38,14 +38,15 @@ Existing platinum sample entries created before the current field-bound evidence
 Each platinum word card must pass all rules below:
 
 - The word belongs in the word-deck product and in the reviewed level.
-- The written word contains at least one kanji from the reviewed N-level.
+- The written word's highest-numbered known JLPT kanji anchor permits the reviewed N-level.
+- Later/harder placement is justified by learner fit, not by convenience or coverage chasing.
 - The word is common enough or useful enough for a version 1 learner deck.
 - The written form and reading are correct for the chosen vocabulary item.
 - The learner-facing meaning is clear, useful, and not a dictionary dump.
 - The example sentence is natural, level-appropriate, and demonstrates the target word clearly.
 - The reading breakdown, furigana, constituent-kanji breakdown, and JLPT or outside-JLPT labels are correct.
 - Constituent readings are field-bound to the exported `ReadingBreakdown`. Safe per-kanji ruby may count as a kanji reading; whole-word ruby must be labeled as a word reading and must not be counted as a per-kanji coverage claim.
-- Higher-level, lower-level, or outside-JLPT support kanji are allowed only when the word itself belongs now, the same-level anchor exists, and the card labels those kanji visibly.
+- Higher-level, lower-level, or outside-JLPT support kanji are allowed only when the word itself belongs now, placement is governed by the kanji anchor plus learner-fit rule, and the card labels those kanji visibly.
 - Exact word-reading audio is present, governed, and artifact-verified for the written word and exported reading. Human listening QA remains part of the release checklist.
 - Pitch accent is present, protected by explicit expectation text, tied to the same governed word-reading source entry, and the rendered card output matches that governed source pattern. Generated pitch guidance may ship only when the rendered card visibly labels it as `Generated pitch (unverified)`; generated pitch is not dictionary-backed pitch evidence.
 - Source evidence explicitly names the shipped written form, reading, meaning, example sentence, level/label claims, exact audio identity, pitch-accent source pattern, and whether pitch is dictionary-verified or generated guidance.

@@ -18,6 +18,10 @@ const wordStudyCoverageSchema = z.object({
     coversReadings: z.record(z.string().min(1), z.string().min(1)).default({}),
 }).strict();
 
+const wordLevelPlacementSchema = z.object({
+    reason: z.string().min(1),
+}).strict();
+
 const wordStudyEntrySchema = z.object({
     written: z.string().min(1),
     reading: z.string().min(1),
@@ -35,6 +39,7 @@ const wordStudyEntrySchema = z.object({
     pitchAccentSource: z.string().min(1).optional(),
     exampleSentence: wordStudySentenceSchema.optional(),
     coverage: wordStudyCoverageSchema.optional(),
+    levelPlacement: wordLevelPlacementSchema.optional(),
 });
 
 const wordStudyDataSchema = z.record(z.string().min(1), wordStudyEntrySchema);
@@ -115,6 +120,16 @@ function normalizeWordCoverage(coverage) {
     return normalized;
 }
 
+function normalizeWordLevelPlacement(levelPlacement) {
+    if (!levelPlacement) {
+        return undefined;
+    }
+
+    return wordLevelPlacementSchema.parse({
+        reason: cleanString(levelPlacement.reason),
+    });
+}
+
 function normalizeWordStudyEntry(entry) {
     return wordStudyEntrySchema.parse({
         written: cleanString(entry?.written),
@@ -129,6 +144,7 @@ function normalizeWordStudyEntry(entry) {
         pitchAccentSource: cleanString(entry?.pitchAccentSource),
         exampleSentence: normalizeWordStudySentence(entry?.exampleSentence),
         coverage: normalizeWordCoverage(entry?.coverage),
+        levelPlacement: normalizeWordLevelPlacement(entry?.levelPlacement),
     });
 }
 
@@ -254,11 +270,13 @@ module.exports = {
     loadWordStudyData,
     normalizeTags,
     normalizeWordCoverage,
+    normalizeWordLevelPlacement,
     normalizeWordStudyData,
     normalizeWordStudyEntry,
     normalizeWordStudySentence,
     refreshStarterEntries,
     wordCoverageRoleSchema,
+    wordLevelPlacementSchema,
     wordStudyCoverageSchema,
     wordStudyDataSchema,
     wordStudyEntrySchema,

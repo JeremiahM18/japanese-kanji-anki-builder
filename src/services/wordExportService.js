@@ -64,7 +64,7 @@ function inferWordLevel({ written, jlptOnlyJson, fallbackLevel = null }) {
         return fallbackLevel;
     }
 
-    return Math.min(...constituentLevels);
+    return Math.max(...constituentLevels);
 }
 
 function getCanonicalWordLevel({ candidate, jlptWordLevelContract }) {

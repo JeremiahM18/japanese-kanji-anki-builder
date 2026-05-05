@@ -139,7 +139,7 @@ function formatWordDeckReadyReport(summary, doctorReport) {
                     : []),
                 `  distinct missing targets: ${audit.distinctGapReadings}, variant-style gaps: ${audit.variantGapReadings}`,
                 ...(audit.policyAudit
-                    ? [`  deck policy: ${audit.policyAudit.sameLevelAnchorViolationCount || 0} missing same-level anchors, ${audit.policyAudit.standaloneViolationCount} standalone wrong-level cards, ${audit.policyAudit.badgeViolationCount} missing labels, ${audit.policyAudit.focusViolationCount || 0} focus mismatches`]
+                    ? [`  deck policy: ${audit.policyAudit.levelPlacementViolationCount || 0} word level placement violations, ${audit.policyAudit.standaloneViolationCount} standalone wrong-level cards, ${audit.policyAudit.badgeViolationCount} missing labels, ${audit.policyAudit.focusViolationCount || 0} focus mismatches`]
                     : []),
                 ...(audit.sentenceOrthographyAudit
                     ? [`  sentence orthography review: ${audit.sentenceOrthographyAudit.suspiciousKanaOnlyCount} suspicious kana-only examples`]

@@ -3,6 +3,7 @@ const path = require("node:path");
 
 const { loadConfig } = require("../src/config");
 const { loadJlptWordLevelContract } = require("../src/datasets/jlptWordLevelContract");
+const { loadWordStudyData } = require("../src/datasets/wordStudyData");
 const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseNumericOption } = require("../src/utils/cliArgs");
 const {
     auditWordLevelAnchors,
@@ -34,11 +35,17 @@ function parseArgs(argv) {
 
 function formatWordLevelAnchorAuditReport(report, { level = null, limit = 40 } = {}) {
     const lines = [
-        "Japanese Kanji Builder Word Level Anchor Audit",
+        "Japanese Kanji Builder Word Level Placement Audit",
         "",
         `Scope: ${Number.isInteger(level) ? `N${level}` : "all word levels"}`,
         `Canonical rows checked: ${report.checked}`,
-        `Same-level kanji anchor violations: ${report.violationCount}`,
+        `Word level placement violations: ${report.violationCount}`,
+        "",
+        "By placement status:",
+        `- Too easy for constituent kanji: ${report.byPlacementStatus?.too_easy_for_kanji || 0}`,
+        `- Later placement missing learner-fit reason: ${report.byPlacementStatus?.later_missing_learner_fit_reason || 0}`,
+        `- No known JLPT kanji anchor: ${report.byPlacementStatus?.no_known_jlpt_kanji || 0}`,
+        `- Invalid deck level: ${report.byPlacementStatus?.invalid_deck_level || 0}`,
         "",
         "By level:",
     ];
@@ -55,7 +62,7 @@ function formatWordLevelAnchorAuditReport(report, { level = null, limit = 40 } =
         const shown = report.violations.slice(0, limit);
         lines.push("", `Violations (${shown.length}/${report.violations.length} shown):`);
         for (const entry of shown) {
-            lines.push(`- N${entry.jlpt} ${entry.written} (${entry.reading}): ${formatKanjiLevelList(entry.kanjiLevels)}`);
+            lines.push(`- N${entry.jlpt} ${entry.written} (${entry.reading}) [${entry.placementStatus}]: ${formatKanjiLevelList(entry.kanjiLevels)}`);
         }
         if (report.violations.length > shown.length) {
             lines.push(`- ... ${report.violations.length - shown.length} more`);
@@ -70,14 +77,16 @@ async function main() {
     assertNoUnknownArgs("deck:words:level-anchor-audit", options.unknownArgs);
 
     if (options.level !== null && (!Number.isInteger(options.level) || options.level < 1 || options.level > 5)) {
-        throw new Error("Word level anchor audit level must be 1-5.");
+        throw new Error("Word level placement audit level must be 1-5.");
     }
 
     const config = loadConfig();
     const contract = loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json"));
+    const wordStudyData = loadWordStudyData({ localPath: null });
     const kanjiLevelData = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf8"));
     const report = auditWordLevelAnchors({
         wordLevels: contract.wordLevels,
+        wordStudyData,
         kanjiLevelData,
         level: options.level,
     });

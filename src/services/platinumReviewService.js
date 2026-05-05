@@ -406,6 +406,7 @@ function validateSameLevelWordAnchor({ row = {}, entry = {}, kanjiLevelData = nu
     const result = buildWordLevelAnchorResult({
         written: row.word || entry.word,
         deckLevel,
+        learnerFitReason: entry.levelPlacementReason || entry.selectionRationale || "",
         kanjiLevelData,
     });
 

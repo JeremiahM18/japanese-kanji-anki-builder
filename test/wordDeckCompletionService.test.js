@@ -751,7 +751,7 @@ test("buildWordDeckPolicyAudit rejects focus kanji that are not in the written w
     });
 });
 
-test("buildWordDeckPolicyAudit rejects okurigana words without a same-level kanji anchor", () => {
+test("buildWordDeckPolicyAudit rejects words placed earlier than their kanji anchor", () => {
     const audit = buildWordDeckPolicyAudit({
         level: 5,
         wordRows: [
@@ -771,10 +771,63 @@ test("buildWordDeckPolicyAudit rejects okurigana words without a same-level kanj
     assert.equal(audit.sameLevelAnchorViolationCount, 1);
     assert.equal(audit.standaloneViolationCount, 0);
     assert.equal(audit.badgeViolationCount, 0);
+    assert.equal(audit.sameLevelAnchorViolations[0].placementStatus, "too_easy_for_kanji");
     assert.deepEqual(audit.sameLevelAnchorViolations[0].kanjiLevels, [{ kanji: "安", level: 4 }]);
 });
 
-test("buildWordDeckPolicyAudit keeps labeled support kanji only when a same-level anchor exists", () => {
+test("buildWordDeckPolicyAudit requires learner-fit reasons for later placement", () => {
+    const audit = buildWordDeckPolicyAudit({
+        level: 4,
+        wordRows: [
+            {
+                Word: "人気",
+                Reading: "にんき",
+                KanjiBreakdown: "<div class=\"kanji-breakdown-item\">人</div><div class=\"kanji-level-badge\">JLPT N5 kanji</div><div class=\"kanji-breakdown-item\">気</div><div class=\"kanji-level-badge\">JLPT N5 kanji</div>",
+            },
+        ],
+        jlptLevelContract: {
+            kanjiLevels: {
+                人: 5,
+                気: 5,
+            },
+        },
+    });
+
+    assert.equal(audit.valid, false);
+    assert.equal(audit.sameLevelAnchorViolationCount, 1);
+    assert.equal(audit.sameLevelAnchorViolations[0].placementStatus, "later_missing_learner_fit_reason");
+});
+
+test("buildWordDeckPolicyAudit accepts later placement with tracked learner-fit reason", () => {
+    const audit = buildWordDeckPolicyAudit({
+        level: 4,
+        wordRows: [
+            {
+                Word: "人気",
+                Reading: "にんき",
+                KanjiBreakdown: "<div class=\"kanji-breakdown-item\">人</div><div class=\"kanji-level-badge\">JLPT N5 kanji</div><div class=\"kanji-breakdown-item\">気</div><div class=\"kanji-level-badge\">JLPT N5 kanji</div>",
+            },
+        ],
+        starterEntries: {
+            "人気|にんき": {
+                levelPlacement: {
+                    reason: "Common and useful, but N4 is a better learner-fit introduction than N5.",
+                },
+            },
+        },
+        jlptLevelContract: {
+            kanjiLevels: {
+                人: 5,
+                気: 5,
+            },
+        },
+    });
+
+    assert.equal(audit.valid, true);
+    assert.equal(audit.sameLevelAnchorViolationCount, 0);
+});
+
+test("buildWordDeckPolicyAudit keeps labeled support kanji when the highest-numbered anchor is in scope", () => {
     const audit = buildWordDeckPolicyAudit({
         level: 5,
         wordRows: [
@@ -803,6 +856,7 @@ test("buildWordDeckPolicyAudit keeps labeled support kanji only when a same-leve
     assert.equal(audit.valid, false);
     assert.equal(audit.sameLevelAnchorViolationCount, 1);
     assert.equal(audit.sameLevelAnchorViolations[0].word, "魚料理");
+    assert.equal(audit.sameLevelAnchorViolations[0].placementStatus, "too_easy_for_kanji");
     assert.deepEqual(audit.sameLevelAnchorViolations[0].kanjiLevels, [
         { kanji: "魚", level: 4 },
         { kanji: "料", level: 4 },

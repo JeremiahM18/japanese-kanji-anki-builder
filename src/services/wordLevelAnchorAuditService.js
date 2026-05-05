@@ -36,9 +36,32 @@ function normalizeDeckLevel(deckLevel) {
     return Number.isInteger(level) && level >= 1 && level <= 5 ? level : null;
 }
 
+function normalizeLearnerFitReason(value) {
+    return String(value || "").trim();
+}
+
+function resolvePlacementStatus({ deckLevel, anchorLevel, learnerFitReason = "" } = {}) {
+    if (!Number.isInteger(deckLevel)) {
+        return "invalid_deck_level";
+    }
+    if (!Number.isInteger(anchorLevel)) {
+        return "no_known_jlpt_kanji";
+    }
+    if (deckLevel > anchorLevel) {
+        return "too_easy_for_kanji";
+    }
+    if (deckLevel < anchorLevel) {
+        return normalizeLearnerFitReason(learnerFitReason)
+            ? "later_with_learner_fit_reason"
+            : "later_missing_learner_fit_reason";
+    }
+    return "anchor_level";
+}
+
 function buildWordLevelAnchorResult({
     written = "",
     deckLevel = null,
+    learnerFitReason = "",
     kanjiLevelData = {},
     kanjiLevelMap = normalizeKanjiLevelMap(kanjiLevelData),
 } = {}) {
@@ -51,14 +74,31 @@ function buildWordLevelAnchorResult({
     const sameLevelKanji = kanjiLevels
         .filter((entry) => entry.level === level)
         .map((entry) => entry.kanji);
+    const knownLevels = kanjiLevels
+        .map((entry) => entry.level)
+        .filter((entryLevel) => Number.isInteger(entryLevel));
+    const anchorLevel = knownLevels.length > 0 ? Math.max(...knownLevels) : null;
+    const anchorKanji = kanjiLevels
+        .filter((entry) => entry.level === anchorLevel)
+        .map((entry) => entry.kanji);
+    const normalizedLearnerFitReason = normalizeLearnerFitReason(learnerFitReason);
+    const placementStatus = resolvePlacementStatus({
+        deckLevel: level,
+        anchorLevel,
+        learnerFitReason: normalizedLearnerFitReason,
+    });
 
     return {
-        valid: Number.isInteger(level) && sameLevelKanji.length > 0,
+        valid: placementStatus === "anchor_level" || placementStatus === "later_with_learner_fit_reason",
         written: String(written || "").trim(),
         deckLevel: level,
+        anchorLevel,
         constituentKanji,
         kanjiLevels,
         sameLevelKanji,
+        anchorKanji,
+        learnerFitReason: normalizedLearnerFitReason,
+        placementStatus,
     };
 }
 
@@ -74,7 +114,18 @@ function formatKanjiLevelList(kanjiLevels = []) {
 
 function formatWordLevelAnchorFailure(result = {}) {
     const levelLabel = Number.isInteger(result.deckLevel) ? `N${result.deckLevel}` : "(unknown)";
-    return `word level placement has no same-level kanji anchor for JLPT ${levelLabel}: ${formatKanjiLevelList(result.kanjiLevels)}`;
+    const anchorLabel = Number.isInteger(result.anchorLevel)
+        ? `N${result.anchorLevel}`
+        : "no known JLPT kanji level";
+
+    if (result.placementStatus === "too_easy_for_kanji") {
+        return `word level placement is easier than its highest-numbered kanji anchor ${anchorLabel}; got ${levelLabel}: ${formatKanjiLevelList(result.kanjiLevels)}`;
+    }
+    if (result.placementStatus === "later_missing_learner_fit_reason") {
+        return `later learner-fit placement from kanji anchor ${anchorLabel} to ${levelLabel} requires levelPlacement.reason: ${formatKanjiLevelList(result.kanjiLevels)}`;
+    }
+
+    return `word level placement is invalid for ${levelLabel}; kanji anchor ${anchorLabel}: ${formatKanjiLevelList(result.kanjiLevels)}`;
 }
 
 function createLevelCounts() {
@@ -87,11 +138,28 @@ function createLevelCounts() {
     };
 }
 
-function auditWordLevelAnchors({ wordLevels = {}, kanjiLevelData = {}, level = null } = {}) {
+function createPlacementStatusCounts() {
+    return {
+        too_easy_for_kanji: 0,
+        later_missing_learner_fit_reason: 0,
+        no_known_jlpt_kanji: 0,
+        invalid_deck_level: 0,
+    };
+}
+
+function resolveLearnerFitReason({ key, wordEntry = {}, wordStudyData = {} } = {}) {
+    return normalizeLearnerFitReason(
+        wordEntry?.levelPlacement?.reason
+        || wordStudyData?.[key]?.levelPlacement?.reason
+    );
+}
+
+function auditWordLevelAnchors({ wordLevels = {}, wordStudyData = {}, kanjiLevelData = {}, level = null } = {}) {
     const requestedLevel = Number(level);
     const hasLevelFilter = Number.isInteger(requestedLevel) && requestedLevel >= 1 && requestedLevel <= 5;
     const kanjiLevelMap = normalizeKanjiLevelMap(kanjiLevelData);
     const byLevel = createLevelCounts();
+    const byPlacementStatus = createPlacementStatusCounts();
     const violations = [];
     let checked = 0;
 
@@ -107,6 +175,7 @@ function auditWordLevelAnchors({ wordLevels = {}, kanjiLevelData = {}, level = n
         const result = buildWordLevelAnchorResult({
             written: entry?.written,
             deckLevel,
+            learnerFitReason: resolveLearnerFitReason({ key, wordEntry: entry, wordStudyData }),
             kanjiLevelMap,
         });
         checked += 1;
@@ -117,12 +186,18 @@ function auditWordLevelAnchors({ wordLevels = {}, kanjiLevelData = {}, level = n
         }
 
         byLevel[deckLevel].violations += 1;
+        if (Object.prototype.hasOwnProperty.call(byPlacementStatus, result.placementStatus)) {
+            byPlacementStatus[result.placementStatus] += 1;
+        }
         violations.push({
             key,
             written: String(entry?.written || "").trim(),
             reading: String(entry?.reading || "").trim(),
             jlpt: deckLevel,
+            anchorLevel: result.anchorLevel,
+            placementStatus: result.placementStatus,
             kanjiLevels: result.kanjiLevels,
+            learnerFitReason: result.learnerFitReason,
             message: formatWordLevelAnchorFailure(result),
         });
     }
@@ -132,6 +207,7 @@ function auditWordLevelAnchors({ wordLevels = {}, kanjiLevelData = {}, level = n
         checked,
         violationCount: violations.length,
         byLevel,
+        byPlacementStatus,
         violations,
     };
 }

@@ -144,9 +144,11 @@ Word decks:
 - Word identity is `written|reading`.
 - The canonical word contract means default-deck eligible.
 - Source-only phrase exclusions stay tracked but do not ship as default word cards.
-- Standalone single-kanji words ship only in their governed word level and must not leak into easier decks just because the kanji is already in scope.
-- A word assigned to an N-level word deck must contain at least one kanji from that same N-level. This same-level kanji is the word-deck level anchor.
-- Support kanji can come from any JLPT level or outside the JLPT contract, but only after the same-level anchor rule is satisfied.
+- The highest-numbered known JLPT kanji level in the written word is the earliest default word-deck anchor. For example, a word with N1, N3, and N4 kanji is anchored at N4.
+- A word may be placed in that anchor level or in a harder/lower-numbered level when learner fit demands it.
+- Later placement must carry an explicit learner-fit reason. This prevents hard or abstract words from being dumped into beginner decks just because their kanji are already known, without rejecting useful words outright.
+- A word must not be placed in an easier/higher-numbered deck than its highest-numbered known constituent kanji anchor.
+- Outside-JLPT constituent kanji do not choose the JLPT deck level, but they must be visibly labeled.
 - Cross-level and outside-JLPT constituent kanji must be visibly labeled on the card.
 - Reading coverage is scoped to the selected word-product levels. A higher-level word card can cover a lower-level reading target when those levels are built together.
 - Track reading-coverage intent with `coverage.role`, `coverage.focusKanji`, and `coverage.coversReadings` when the card exists for coverage.
@@ -159,7 +161,7 @@ Golden and platinum review:
 - Platinum review decides whether a card deserves to ship in version 1.
 - Platinum review requires field-bound source evidence, explicit quality gates, and a keep/fix/defer/remove decision. Evidence that only says a field was "reviewed" is not enough; it must name the card, exported reading, and learner-facing values it supports.
 - Active word-card `japanese-source` evidence must cite a non-generated Japanese-language or dictionary source. Generated output, golden expectations, tracked starter templates, ignored local data, and local caches do not satisfy that evidence type by themselves.
-- Active word platinum also enforces the same-level kanji anchor rule. A word with only harder/easier/outside support kanji cannot pass for the reviewed level, even if every constituent badge is visible.
+- Active word platinum also enforces word-level placement: no card may ship earlier than its kanji anchor allows, and later-level placement needs a learner-fit rationale.
 - Platinum review removes or defers noise instead of preserving cards that are uncommon, awkward, too advanced for the level, or only present to chase coverage.
 - Platinum review may improve source data and example sentences before promotion.
 - Platinum manifests are in progress. Only active `platinum` and `fixed_then_platinum` entries count as reviewed release coverage.
@@ -174,8 +176,8 @@ Golden and platinum review:
 | N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N1 kanji | Golden-reviewed at `1231/1231`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
-| N5 word | Expanded to `331` governed rows, but the current same-level kanji anchor audit fails with `46/331` N5 violations. Older golden/platinum output passes are not release approval under the current word-level policy until the invalid rows are moved, deferred, or removed and the level is re-reviewed. |
-| N4 word | Expanded to `535` governed rows, but the current same-level kanji anchor audit fails with `6/535` N4 violations. N4 word golden/platinum readiness is blocked under the current word-level policy until those rows are resolved. |
+| N5 word | Expanded to `331` governed rows, but the current word-level placement audit fails with `46/331` N5 rows placed earlier than their kanji anchor allows. Older golden/platinum output passes are not release approval under the current word-level policy until the invalid rows are moved, deferred, or removed and the level is re-reviewed. |
+| N4 word | Expanded to `535` governed rows, but the current word-level placement audit fails with `92/535` N4 rows missing explicit learner-fit reasons for later placement. N4 word golden/platinum readiness is blocked until those rows are moved or documented with reviewed learner-fit rationale. |
 
 Current tracked word inventory:
 
@@ -186,9 +188,9 @@ Current tracked word inventory:
 - N2 canonical word rows: `15`
 - N1 canonical word rows: `14`
 - Current N5+N4 word rows: `866`
-- Same-level word anchor audit currently fails: N5 `46/331`, N4 `6/535`, N3 `13/14`, N2 `14/15`, N1 `13/14` canonical rows. Run `npm run deck:words:level-anchor-audit` for the live list.
+- Word-level placement audit currently fails: `181/909` canonical rows. The live split is `46` rows too easy for their constituent kanji and `135` later-level placements missing learner-fit reasons. By level: N5 `46/331`, N4 `92/535`, N3 `14/14`, N2 `15/15`, N1 `14/14`. Run `npm run deck:words:level-anchor-audit` for the live list.
 - Word reading coverage from the current `deck:words:ready -- --levels=5,4 --require-no-active-triage` run: N5 `238/344` (`69.2%`), N4 `485/651` (`74.5%`). Coverage remains informational; useful/common/learner-fit decisions and explicit defer/reject reasons are the product guardrail.
-- N5+N4 word field/media checks were previously clean, but current word readiness must now treat same-level anchor violations as blockers. Golden/platinum commands are still separate from APKG import QA, manual card QA, accessibility checks, and listening review.
+- N5+N4 word field/media checks were previously clean, but current word readiness must now treat word-level placement violations as blockers. Golden/platinum commands are still separate from APKG import QA, manual card QA, accessibility checks, and listening review.
 
 Run live commands for current coverage. Do not rely on README numbers for release decisions.
 
@@ -301,7 +303,7 @@ Word readiness reports:
 - shipped row governance
 - canonical inventory counts
 - source-only exclusions
-- same-level kanji anchor violations
+- word-level placement violations
 - explicit reading-coverage contract counts
 - selected-level reading coverage
 - active triage backlog
@@ -471,7 +473,7 @@ Repository governance:
 | `npm run deck:words:review:n5` | Run the N5 word golden benchmark |
 | `npm run deck:words:platinum:n5` | Run the N5 word platinum release-quality benchmark |
 | `npm run deck:words:platinum:n4` | Run the N4 word platinum release-quality benchmark |
-| `npm run deck:words:level-anchor-audit -- --level=5` | Fail when canonical word rows lack a same-level kanji anchor |
+| `npm run deck:words:level-anchor-audit -- --level=5` | Fail when canonical word rows are too early for their kanji anchor or later without learner-fit rationale |
 | `npm run deck:words:completion:n5` | Audit N5 word inventory and reading coverage |
 | `npm run deck:words:completion:n4` | Audit N4 word inventory and reading coverage |
 | `npm run deck:words:reading-audit:n4` | Audit N4 word reading coverage |
@@ -572,7 +574,7 @@ The front of a word card shows the written study word without furigana. The back
 
 Word deck readiness verifies pitch accent accuracy against the governed source pattern. A word row with a non-empty `PitchAccent` field is not enough: the rendered pitch contour must decode to the same accent numbers as the tracked source entry, and the source entry must belong to the same written word and reading. Rows with missing, ungoverned, invalid, source/render-mismatched, source-identity-mismatched, or generated-but-unlabeled pitch accent block readiness. Generated pitch provenance by itself does not block readiness when the governed source identity, source/render match, and visible generated label all pass.
 
-`KanjiBreakdown` includes constituent meanings, readings, stroke-order animation, and cross-level badges such as `JLPT N4 kanji`. Its readings are bound to `ReadingBreakdown`: safe per-kanji ruby drives the constituent reading (`電車` shows `車 -> しゃ`), while non-decomposable whole-word ruby is labeled as `word reading: ...` and `CoversReading` uses the whole written surface (`今日: きょう`) instead of pretending each kanji has that reading. Word readiness fails when a constituent panel drifts from deterministic ruby, when whole-word ruby is counted as a per-kanji reading, when `FocusKanji` names a kanji that is not in the written word, or when a word assigned to an N-level deck has no same-level kanji anchor.
+`KanjiBreakdown` includes constituent meanings, readings, stroke-order animation, and cross-level badges such as `JLPT N4 kanji`. Its readings are bound to `ReadingBreakdown`: safe per-kanji ruby drives the constituent reading (`電車` shows `車 -> しゃ`), while non-decomposable whole-word ruby is labeled as `word reading: ...` and `CoversReading` uses the whole written surface (`今日: きょう`) instead of pretending each kanji has that reading. Word readiness fails when a constituent panel drifts from deterministic ruby, when whole-word ruby is counted as a per-kanji reading, when `FocusKanji` names a kanji that is not in the written word, or when word-level placement is too early for the word's kanji anchor or later without an explicit learner-fit rationale.
 
 ## Output Layout
 

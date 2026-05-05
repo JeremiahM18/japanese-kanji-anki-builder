@@ -150,7 +150,7 @@ test("evaluatePlatinumWordReviewSet rejects active entries when media fields are
     assert.match(report.results[0].failures.join("\n"), /pitch accent field is empty/);
 });
 
-test("evaluatePlatinumWordReviewSet rejects active entries without a same-level kanji anchor", () => {
+test("evaluatePlatinumWordReviewSet rejects active entries placed easier than their kanji anchor", () => {
     const report = evaluateWordPlatinum({
         rows: [buildRow()],
         entries: [buildEntry()],
@@ -161,7 +161,27 @@ test("evaluatePlatinumWordReviewSet rejects active entries without a same-level 
     });
 
     assert.equal(report.passed, false);
-    assert.match(report.results[0].failures.join("\n"), /no same-level kanji anchor for JLPT N5: 今:N4, 日:N4/);
+    assert.match(report.results[0].failures.join("\n"), /easier than its highest-numbered kanji anchor N4; got N5: 今:N4, 日:N4/);
+});
+
+test("evaluatePlatinumWordReviewSet accepts later learner-fit placement with active rationale", () => {
+    const report = evaluateWordPlatinum({
+        rows: [buildRow({ jlptLevel: "JLPT N4" })],
+        entries: [buildEntry({
+            jlptLevelIncludes: ["JLPT N4"],
+            selectionRationale: "Common and useful, but better introduced at N4 than N5 because the word load is later than the kanji.",
+            sourceEvidence: buildSourceEvidence().map((evidence) => ({
+                ...evidence,
+                detail: evidence.detail.replace(/N5/g, "N4"),
+            })),
+        })],
+        kanjiLevelData: {
+            今: { jlpt: 5 },
+            日: { jlpt: 5 },
+        },
+    });
+
+    assert.equal(report.passed, true);
 });
 
 test("evaluatePlatinumWordReviewSet requires selection rationale and structured evidence", () => {

@@ -22,6 +22,7 @@
     "data:verify:jlpt": "node scripts/verifyJlptInventory.js",
     "data:audit:jlpt": "node scripts/auditJlptAlignment.js",
     "data:audit:jlpt:sources": "node scripts/auditJlptKanjiSourceEvidence.js",
+    "data:audit:jlpt:source-inputs": "node scripts/reportJlptKanjiSourceInputs.js",
     "data:audit:jlpt:words": "node scripts/auditJlptWordAlignment.js",
     "data:audit:audio": "node scripts/auditAudioPolicy.js",
     "data:audit:stroke-order": "node scripts/auditStrokeOrderPolicy.js",

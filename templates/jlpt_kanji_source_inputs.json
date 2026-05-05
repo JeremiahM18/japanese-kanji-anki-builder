@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "policy": {
+    "noDeckMutation": true,
+    "requirePinnedIntegrity": true,
+    "requireKnownEvidenceSource": true,
+    "notes": "Ignored local source files must be pinned here before source assignments can be imported into the JLPT kanji source-evidence manifest. This layer is read-only and must not move kanji, move words, or change readiness."
+  },
+  "inputs": {
+    "kanjidic2_legacy": {
+      "sourceId": "kanjidic2_legacy",
+      "sourcePath": "downloads/kanjidic2-jlpt-normalized.tsv",
+      "sourceLabel": "edrdg-kanjidic2-legacy-jlpt-normalized",
+      "sourceUrl": "https://www.edrdg.org/kanjidic/kanjidic2.xml.gz",
+      "format": "tsv",
+      "kanjiColumn": "kanji",
+      "levelColumn": "legacyJlptLevel",
+      "reviewStatusColumn": "reviewStatus",
+      "citationColumn": "citation",
+      "evidenceRefColumn": "evidenceRef",
+      "notesColumn": "notes",
+      "defaultReviewStatus": "needs_review",
+      "defaultCitation": "EDRDG KANJIDIC2 legacy JLPT metadata; KANJIDIC Project, CC BY-SA 4.0.",
+      "defaultEvidenceRef": "edrdg-kanjidic2:legacy-jlpt",
+      "requireCitation": true,
+      "requireEvidenceRef": true,
+      "levelMapping": "kanjidic2-legacy-jlpt",
+      "integrityPolicy": "The ignored normalized TSV must match the tracked SHA-256, byte size, and parsed row count before import. Legacy JLPT level 2 is intentionally blocked because it spans modern N2/N3."
+    }
+  }
+}

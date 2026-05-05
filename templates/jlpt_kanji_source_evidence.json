@@ -200,6 +200,20 @@
       "licenseStatus": "needs_review",
       "notes": "Use only after license and API/export terms are reviewed."
     },
+    "kanjidic2_legacy": {
+      "name": "KANJIDIC2 legacy JLPT metadata",
+      "tier": "dictionary-learning-platform",
+      "status": "planned",
+      "sourceType": "legacy-jlpt-kanji-list",
+      "url": "https://www.edrdg.org/kanjidic/kanjidic2.xml.gz",
+      "independent": true,
+      "independenceGroup": "edrdg_kanjidic2",
+      "japanesePublished": false,
+      "countsForConsensus": true,
+      "weight": 1,
+      "licenseStatus": "approved",
+      "notes": "Structured EDRDG source under CC BY-SA 4.0. KANJIDIC2 stores pre-2010 JLPT levels: old 4 maps to N5, old 3 maps to N4, old 1 maps to N1, and old 2 is blocked because it spans modern N2/N3."
+    },
     "japanese_textbook_consensus": {
       "name": "Japanese-published textbook consensus",
       "tier": "japanese-published-study-material",
@@ -234,6 +248,7 @@
     "kanshudo": {},
     "jpdb": {},
     "wanikani": {},
+    "kanjidic2_legacy": {},
     "japanese_textbook_consensus": {},
     "joyo_grade": {},
     "current_operational_contract": {}

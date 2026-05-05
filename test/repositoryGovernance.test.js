@@ -53,7 +53,7 @@ test("branch protection baseline names the required GitHub checks", () => {
 test("pull request template calls out release-gate and code-owner expectations", () => {
     const template = readRepoFile(path.join(".github", "PULL_REQUEST_TEMPLATE", "pull_request_template.md"));
 
-    assert.equal(template.includes("`data:audit:jlpt` and read-only `data:audit:jlpt:sources -- --limit=25` run when JLPT taxonomy, starter curation, golden review placement, or deck-membership logic changed"), true);
+    assert.equal(template.includes("`data:audit:jlpt`, read-only `data:audit:jlpt:sources -- --limit=25`, and relevant `data:audit:jlpt:source-inputs -- --source=<source-id>` run when JLPT taxonomy, source-evidence inputs, starter curation, golden review placement, or deck-membership logic changed"), true);
     assert.equal(template.includes("`release:gate` run when packaging, CI, or toolchain behavior changed"), true);
     assert.equal(template.includes("CODEOWNERS review requested when touching protected paths"), true);
 });

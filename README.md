@@ -116,6 +116,7 @@ Tracked contracts define release behavior:
 
 - JLPT kanji taxonomy: [templates/jlpt_level_contract.json](templates/jlpt_level_contract.json)
 - JLPT kanji source-evidence registry, source tiers, and confidence labels (`high_confidence`, `standard_confidence`, `disputed`, `weak_evidence`, `unknown`): [templates/jlpt_kanji_source_evidence.json](templates/jlpt_kanji_source_evidence.json)
+- JLPT kanji source-input preflight config for ignored local source files and integrity pins: [templates/jlpt_kanji_source_inputs.json](templates/jlpt_kanji_source_inputs.json)
 - JLPT word taxonomy: [templates/jlpt_word_level_contract.json](templates/jlpt_word_level_contract.json)
 - Audio source policy: [templates/audio_source_policy.json](templates/audio_source_policy.json)
 - Kanji note schema: [src/config/ankiNoteSchema.json](src/config/ankiNoteSchema.json)
@@ -193,7 +194,7 @@ Current tracked word inventory:
 - Word-level placement audit currently fails: `181/909` canonical rows. The live split is `46` rows too easy for their constituent kanji and `135` later-level placements missing learner-fit reasons. By level: N5 `46/331`, N4 `92/535`, N3 `14/14`, N2 `15/15`, N1 `14/14`. Run `npm run deck:words:level-anchor-audit` for the live list.
 - Word reading coverage from the current `deck:words:ready -- --levels=5,4 --require-no-active-triage` run: N5 `238/344` (`69.2%`), N4 `485/651` (`74.5%`). Coverage remains informational; useful/common/learner-fit decisions and explicit defer/reject reasons are the product guardrail.
 - N5+N4 word field/media checks were previously clean, but current word readiness must now treat word-level placement violations as blockers. Golden/platinum commands are still separate from APKG import QA, manual card QA, accessibility checks, and listening review.
-- JLPT kanji source evidence is now governed separately from the operational taxonomy. `templates/jlpt_level_contract.json` is recorded as `current_operational_contract` for every kanji, but that baseline is weak evidence only, not source truth. The current source-evidence audit is expected to fail until independent source assignments are populated and reviewed under the tracked source tiers and confidence labels; no deck movement should happen from JLPT level assumptions before that audit is resolved.
+- JLPT kanji source evidence is now governed separately from the operational taxonomy. `templates/jlpt_level_contract.json` is recorded as `current_operational_contract` for every kanji, but that baseline is weak evidence only, not source truth. The current source-evidence audit is expected to fail until independent source assignments are populated and reviewed under the tracked source tiers and confidence labels; no deck movement should happen from JLPT level assumptions before that audit is resolved. `kanjidic2_legacy` is registered as a planned, approved-license source input, but it remains unimported until a normalized local source file is pinned by `templates/jlpt_kanji_source_inputs.json`.
 
 Run live commands for current coverage. Do not rely on README numbers for release decisions.
 
@@ -222,6 +223,8 @@ npm run release:gate
 `product:artifacts:kanji:n5:preflight` inspects tracked templates and reports whether N5 kanji TSV certification is possible without ignored local `data/` inputs. It currently reports `certifiable: no` because explicit on-yomi, kun-yomi, and rich-source provenance are not yet tracked as product contracts. Component/radical source data is tracked in `templates/kanji_component_contract.json`. Use `-- --require-certifiable` only when the remaining contracts exist and the command is expected to fail closed.
 
 `data:audit:jlpt:sources` audits the operational JLPT kanji contract against the independent source-evidence registry. It is intentionally separate from deck generation and product readiness: it reports current contract level, source consensus level, agreement count, disagreement sources, confidence, and whether the current contract matches consensus without changing the active contract or any decks. Re-run word placement audits after taxonomy confidence is governed and any kanji contract change is proposed, because word placement depends on kanji levels.
+
+`data:audit:jlpt:source-inputs` preflights ignored local source files before they can become source evidence. It verifies the configured source id, evidence manifest source status, license status, SHA-256, byte size, row count, per-row kanji/level validity, review status, citation, and evidence reference. It is read-only and does not import assignments, move kanji, move words, or change readiness. The KANJIDIC2 legacy input intentionally maps old JLPT 4 -> N5, old 3 -> N4, and old 1 -> N1 while blocking old 2 because it spans modern N2/N3.
 
 `product:readiness:n5` runs the current automated N5 product checkpoint: JLPT kanji and word audits, governed audio provenance, tracked-source N5 word TSV generation, and N5 kanji and word golden reviews. It must not be used to claim N5 word release readiness while `npm run deck:words:level-anchor-audit -- --level=5` fails. It does not run or gate on the JLPT kanji source-evidence audit yet; that audit is currently read-only transparency until the evidence layer is governed. It still does not validate tracked-source kanji TSVs, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA. Run the applicable platinum command separately when a level is being version-1 locked.
 
@@ -490,6 +493,7 @@ Repository governance:
 | `npm run deck:words:expansion-signals -- --levels=5,4` | Summarize per-level reading and enhancement expansion exhaustion without claiming release readiness |
 | `npm run data:audit:jlpt` | Audit kanji taxonomy and starter alignment |
 | `npm run data:audit:jlpt:sources` | Audit JLPT kanji source evidence and consensus without changing decks |
+| `npm run data:audit:jlpt:source-inputs -- --source=kanjidic2_legacy` | Preflight a pinned local JLPT kanji source file before source-evidence import |
 | `npm run data:audit:jlpt:words` | Audit word taxonomy and starter alignment |
 | `npm run data:audit:audio` | Audit managed audio provenance |
 | `npm run data:sync:jlpt` | Sync local ignored JLPT data to the tracked contract |

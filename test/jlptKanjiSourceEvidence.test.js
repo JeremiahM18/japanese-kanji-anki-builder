@@ -156,6 +156,37 @@ test("normalizeJlptKanjiSourceEvidence rejects sources outside governed source t
     }), /Unknown JLPT kanji source tiers/);
 });
 
+test("normalizeJlptKanjiSourceEvidence rejects sources outside governed evidence lineages", () => {
+    assert.throws(() => normalizeJlptKanjiSourceEvidence({
+        version: 1,
+        confidenceLabels: buildConfidenceLabels(),
+        sourceTiers: {
+            approved_tier: {
+                label: "Approved tier",
+                rank: 1,
+                role: "primary-evidence",
+                description: "Fixture tier.",
+            },
+        },
+        sourceLineages: {
+            approved_lineage: {
+                label: "Approved lineage",
+                role: "direct-legacy-jlpt",
+                description: "Fixture lineage.",
+            },
+        },
+        sources: {
+            source_a: {
+                name: "Source A",
+                tier: "approved_tier",
+                evidenceLineage: "missing_lineage",
+                status: "planned",
+                sourceType: "fixture",
+            },
+        },
+    }), /Unknown JLPT kanji source lineages/);
+});
+
 test("normalizeJlptKanjiSourceEvidence requires governed confidence labels", () => {
     assert.throws(() => normalizeJlptKanjiSourceEvidence({
         version: 1,
@@ -332,6 +363,75 @@ test("evaluateKanjiSourceEvidence counts unique independent source groups", () =
     assert.equal(result.confidence, "weak_evidence");
 });
 
+test("evaluateKanjiSourceEvidence separates publisher independence from evidence lineage", () => {
+    const evidence = normalizeJlptKanjiSourceEvidence({
+        version: 1,
+        sourceTiers: {
+            fixture: {
+                label: "Fixture tier",
+                rank: 1,
+                role: "supporting-evidence",
+                description: "Fixture source tier.",
+            },
+        },
+        sourceLineages: {
+            old_jlpt: {
+                label: "Old JLPT lineage",
+                role: "direct-legacy-jlpt",
+                description: "Fixture old JLPT lineage.",
+            },
+        },
+        confidenceLabels: buildConfidenceLabels(),
+        policy: {
+            minimumIndependentSources: 2,
+            minimumIndependentEvidenceLineages: 2,
+            minimumJapanesePublishedSources: 0,
+            standardAgreementScore: 0.67,
+            highAgreementScore: 0.8,
+        },
+        sources: {
+            source_a: {
+                name: "Publisher A",
+                tier: "fixture",
+                evidenceLineage: "old_jlpt",
+                status: "active",
+                sourceType: "fixture",
+                independent: true,
+                publisherIndependence: "publisher_a",
+                countsForConsensus: true,
+                weight: 1,
+                licenseStatus: "approved",
+            },
+            source_b: {
+                name: "Publisher B",
+                tier: "fixture",
+                evidenceLineage: "old_jlpt",
+                status: "active",
+                sourceType: "fixture",
+                independent: true,
+                publisherIndependence: "publisher_b",
+                countsForConsensus: true,
+                weight: 1,
+                licenseStatus: "approved",
+            },
+        },
+        assignments: {
+            source_a: { 日: 5 },
+            source_b: { 日: 5 },
+        },
+    });
+
+    const result = evaluateKanjiSourceEvidence({
+        kanji: "日",
+        contractLevel: 5,
+        evidence,
+    });
+
+    assert.equal(result.independentSourceCount, 2);
+    assert.equal(result.independentEvidenceLineageCount, 1);
+    assert.equal(result.confidence, "weak_evidence");
+});
+
 test("evaluateKanjiSourceEvidence ignores planned sources until activated", () => {
     const evidence = normalizeJlptKanjiSourceEvidence({
         version: 1,
@@ -466,6 +566,7 @@ test("auditJlptKanjiSourceEvidence emits governed confidence manifest entries", 
                 level: 5,
                 tier: "community",
                 tierLabel: "Tier 2 - Community source",
+                publisherIndependence: "tanos",
                 citation: undefined,
                 evidenceRef: undefined,
                 notes: undefined,
@@ -475,6 +576,7 @@ test("auditJlptKanjiSourceEvidence emits governed confidence manifest entries", 
                 level: 5,
                 tier: "community",
                 tierLabel: "Tier 2 - Community source",
+                publisherIndependence: "jlptsensei",
                 citation: undefined,
                 evidenceRef: undefined,
                 notes: undefined,
@@ -484,6 +586,7 @@ test("auditJlptKanjiSourceEvidence emits governed confidence manifest entries", 
                 level: 5,
                 tier: "japanese-published",
                 tierLabel: "Tier 1 - Japanese-published source",
+                publisherIndependence: "textbook",
                 citation: undefined,
                 evidenceRef: undefined,
                 notes: undefined,

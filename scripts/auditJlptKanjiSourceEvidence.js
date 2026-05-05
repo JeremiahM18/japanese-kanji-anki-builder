@@ -43,7 +43,8 @@ function formatSourceCoverage(sourceCoverage = {}) {
         .sort(([a], [b]) => a.localeCompare(b))
         .map(([sourceId, source]) => (
             `- ${sourceId}: ${source.assignmentCount} assignments; ${source.unreviewedAssignmentCount} unreviewed; status ${source.status}; tier ${source.tier} (${source.tierLabel}); license ${source.licenseStatus}`
-            + `${source.lineage ? `; lineage ${source.lineage} (${source.lineageLabel})` : ""}`
+            + `${source.publisherIndependence ? `; publisher ${source.publisherIndependence}` : ""}`
+            + `${source.lineage ? `; evidence lineage ${source.lineage} (${source.lineageLabel})` : ""}`
         ));
 }
 
@@ -103,6 +104,8 @@ function formatJlptKanjiSourceEvidenceReport({
         `Contract: ${contractPath}`,
         `Evidence: ${evidencePath}`,
         `Overall result: ${report.valid ? "passing" : "failing"}`,
+        "",
+        "Consensus scope: active external voting sources only; current_operational_contract is comparison-only.",
         "",
         `Contract kanji checked: ${report.checked}`,
         "",

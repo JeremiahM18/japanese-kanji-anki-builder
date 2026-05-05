@@ -176,7 +176,9 @@
       "weight": 1,
       "licenseStatus": "approved",
       "notes": "The active repository contract remains the current operational taxonomy only. It is recorded for comparison and deck tooling context, but it does not vote in source consensus and must not be treated as source truth.",
-      "lineage": "operational_current_contract"
+      "lineage": "operational_current_contract",
+      "publisherIndependence": "repository_contract",
+      "evidenceLineage": "operational_current_contract"
     },
     "tanos_legacy_direct": {
       "name": "Tanos JLPT direct legacy resources",
@@ -191,7 +193,9 @@
       "weight": 1,
       "licenseStatus": "approved",
       "notes": "Useful as a direct legacy/community signal under Tanos Creative Commons BY sharing terms. Only the explicit N1, N4, and N5 base kanji lists are imported here. This shares the pre-2010 direct JLPT lineage, so it is valuable evidence but not a separate modern JLPT lineage by itself.",
-      "lineage": "pre_2010_direct_jlpt"
+      "lineage": "pre_2010_direct_jlpt",
+      "publisherIndependence": "tanos",
+      "evidenceLineage": "pre_2010_direct_jlpt"
     },
     "tanos_estimated_split": {
       "name": "Tanos estimated N2/N3 split resources",
@@ -206,7 +210,26 @@
       "countsForConsensus": true,
       "weight": 0.5,
       "licenseStatus": "approved",
-      "notes": "Planned lane for Tanos N2/N3 estimates. Do not activate or import until the estimated split is explicitly normalized, labeled, and reviewed separately from the direct N1/N4/N5 legacy lane."
+      "notes": "Planned lane for Tanos N2/N3 estimates. Do not activate or import until the estimated split is explicitly normalized, labeled, and reviewed separately from the direct N1/N4/N5 legacy lane.",
+      "publisherIndependence": "tanos",
+      "evidenceLineage": "post_2010_estimated_split"
+    },
+    "tanos_frequency_method_notes": {
+      "name": "Tanos N2/N3 estimate methodology notes",
+      "tier": "frequency-and-jlpt-platform",
+      "evidenceLineage": "post_2010_estimated_split",
+      "lineage": "post_2010_estimated_split",
+      "status": "active",
+      "sourceType": "methodology-notes",
+      "url": "https://www.tanos.co.uk/jlpt/jlpt3/",
+      "independent": false,
+      "publisherIndependence": "tanos",
+      "independenceGroup": "tanos",
+      "japanesePublished": false,
+      "countsForConsensus": false,
+      "weight": 1,
+      "licenseStatus": "approved",
+      "notes": "Non-voting methodology lane. Tanos states there is no official N3 vocabulary, kanji, or grammar list; N2 and N3 have to be estimated. Its N3 kanji notes say old JLPT kanji were mapped to new levels in the same way as the vocabulary list, where unclear N3 mappings were sorted by occurrence frequency in general Japanese using the Tanaka corpus. This lane explains estimated assignments; it must not vote as a separate source or move decks by itself."
     },
     "jlptsensei": {
       "name": "JLPT Sensei kanji lists",
@@ -221,7 +244,9 @@
       "weight": 1,
       "licenseStatus": "needs_review",
       "notes": "Useful as one independent web-study signal once source extraction and license review are complete.",
-      "lineage": "community_jlpt_study_list"
+      "lineage": "community_jlpt_study_list",
+      "publisherIndependence": "jlptsensei",
+      "evidenceLineage": "community_jlpt_study_list"
     },
     "kanshudo": {
       "name": "Kanshudo usefulness/JLPT kanji data",
@@ -236,7 +261,9 @@
       "weight": 1,
       "licenseStatus": "needs_review",
       "notes": "Use only after license and extraction terms are reviewed.",
-      "lineage": "dictionary_or_learning_platform"
+      "lineage": "dictionary_or_learning_platform",
+      "publisherIndependence": "kanshudo",
+      "evidenceLineage": "dictionary_or_learning_platform"
     },
     "jpdb": {
       "name": "jpdb kanji metadata",
@@ -251,7 +278,9 @@
       "weight": 1,
       "licenseStatus": "needs_review",
       "notes": "Frequency is a sanity signal, not an automatic JLPT level assignment.",
-      "lineage": "frequency_sanity_signal"
+      "lineage": "frequency_sanity_signal",
+      "publisherIndependence": "jpdb",
+      "evidenceLineage": "frequency_sanity_signal"
     },
     "wanikani": {
       "name": "WaniKani kanji metadata",
@@ -266,7 +295,9 @@
       "weight": 1,
       "licenseStatus": "needs_review",
       "notes": "Use only after license and API/export terms are reviewed.",
-      "lineage": "dictionary_or_learning_platform"
+      "lineage": "dictionary_or_learning_platform",
+      "publisherIndependence": "wanikani",
+      "evidenceLineage": "dictionary_or_learning_platform"
     },
     "kanjidic2_legacy": {
       "name": "KANJIDIC2 legacy JLPT metadata",
@@ -281,7 +312,9 @@
       "weight": 1,
       "licenseStatus": "approved",
       "notes": "Structured EDRDG source under CC BY-SA 4.0. KANJIDIC2 stores pre-2010 JLPT levels: old 4 maps to N5, old 3 maps to N4, old 1 maps to N1, and old 2 is blocked because it spans modern N2/N3. This shares the direct pre-2010 JLPT lineage with other old-list sources, so it is supporting evidence rather than an independent modern JLPT lineage by itself.",
-      "lineage": "pre_2010_direct_jlpt"
+      "lineage": "pre_2010_direct_jlpt",
+      "publisherIndependence": "edrdg_kanjidic2",
+      "evidenceLineage": "pre_2010_direct_jlpt"
     },
     "japanese_textbook_consensus": {
       "name": "Japanese-published textbook consensus",
@@ -295,7 +328,9 @@
       "weight": 2,
       "licenseStatus": "restricted",
       "notes": "Manual evidence bucket for Japanese-published study materials such as Shin Kanzen Master, Sou Matome, and TRY. Do not copy copyrighted lists; record reviewed level judgments and citations only where permitted.",
-      "lineage": "japanese_published_textbook_review"
+      "lineage": "japanese_published_textbook_review",
+      "publisherIndependence": "japanese_textbook_consensus",
+      "evidenceLineage": "japanese_published_textbook_review"
     },
     "joyo_grade": {
       "name": "Joyo kanji grade metadata",
@@ -310,7 +345,9 @@
       "weight": 1,
       "licenseStatus": "needs_review",
       "notes": "Official background metadata for sanity checks; school grade is not a JLPT assignment and must not vote directly in consensus.",
-      "lineage": "official_japanese_background"
+      "lineage": "official_japanese_background",
+      "publisherIndependence": "japanese_government_joyo",
+      "evidenceLineage": "official_japanese_background"
     }
   },
   "assignments": {

@@ -52,8 +52,12 @@ function resolveSourceTier(source = {}, evidence = {}) {
     };
 }
 
+function resolvePublisherIndependence(sourceId, source = {}) {
+    return source.publisherIndependence || source.independenceGroup || sourceId;
+}
+
 function resolveSourceLineage(source = {}, evidence = {}) {
-    const lineageId = source.lineage || source.independenceGroup || "";
+    const lineageId = source.evidenceLineage || source.lineage || source.publisherIndependence || source.independenceGroup || "";
     const lineage = evidence.sourceLineages?.[lineageId] || null;
     return {
         id: lineageId,
@@ -80,7 +84,8 @@ function collectKanjiAssignments({ kanji, evidence = {} } = {}) {
             evidenceRef: assignment.evidenceRef,
             notes: assignment.notes,
             independent: source.independent !== false,
-            independenceGroup: source.independenceGroup || sourceId,
+            publisherIndependence: resolvePublisherIndependence(sourceId, source),
+            independenceGroup: resolvePublisherIndependence(sourceId, source),
             japanesePublished: source.japanesePublished === true,
             weight: Number.isFinite(source.weight) && source.weight > 0 ? source.weight : 1,
             tier: resolveSourceTier(source, evidence),
@@ -193,7 +198,7 @@ function evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence = {} } = {
     const independentSourceCount = new Set(
         assignments
             .filter((entry) => entry.independent)
-            .map((entry) => entry.independenceGroup)
+            .map((entry) => entry.publisherIndependence || entry.independenceGroup)
     ).size;
     const independentEvidenceLineageCount = new Set(
         assignments
@@ -259,7 +264,8 @@ function summarizeSourceCoverage({ evidence = {}, contractKanjiSet = new Set() }
                 lineageLabel: lineage.label,
                 lineageRole: lineage.role,
                 independent: source.independent !== false,
-                independenceGroup: source.independenceGroup || sourceId,
+                publisherIndependence: resolvePublisherIndependence(sourceId, source),
+                independenceGroup: resolvePublisherIndependence(sourceId, source),
                 japanesePublished: source.japanesePublished === true,
                 countsForConsensus: source.countsForConsensus !== false,
                 licenseStatus: source.licenseStatus,
@@ -374,6 +380,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
                     level: entry.level,
                     tier: entry.tier.id,
                     tierLabel: entry.tier.label,
+                    publisherIndependence: entry.publisherIndependence,
                     citation: entry.citation,
                     evidenceRef: entry.evidenceRef,
                     notes: entry.notes,

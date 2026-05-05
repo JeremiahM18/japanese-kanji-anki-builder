@@ -79,11 +79,13 @@ const REQUIRED_CONFIDENCE_IDS = Object.freeze([
 const evidenceSourceSchema = z.object({
     name: z.string().min(1),
     tier: z.string().min(1),
+    evidenceLineage: z.string().min(1).optional(),
     lineage: z.string().min(1).optional(),
     status: z.enum(["planned", "active", "blocked", "deprecated"]).default("planned"),
     sourceType: z.string().min(1),
     url: z.string().min(1).optional(),
     independent: z.boolean().default(true),
+    publisherIndependence: z.string().min(1).optional(),
     independenceGroup: z.string().min(1).optional(),
     japanesePublished: z.boolean().default(false),
     countsForConsensus: z.boolean().default(true),
@@ -175,8 +177,11 @@ function assertKnownSourceLineages(parsed) {
     }
 
     const unknownLineages = Object.entries(parsed.sources || {})
-        .filter(([, source]) => source.lineage && !knownLineageIds.has(source.lineage))
-        .map(([sourceId, source]) => `${sourceId}:${source.lineage}`);
+        .filter(([, source]) => {
+            const lineage = source.evidenceLineage || source.lineage;
+            return lineage && !knownLineageIds.has(lineage);
+        })
+        .map(([sourceId, source]) => `${sourceId}:${source.evidenceLineage || source.lineage}`);
 
     if (unknownLineages.length > 0) {
         throw new Error(`Unknown JLPT kanji source lineages: ${unknownLineages.join(", ")}`);

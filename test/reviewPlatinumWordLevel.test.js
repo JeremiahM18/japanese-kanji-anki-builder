@@ -30,6 +30,12 @@ test("platinumWordBatchReport parseArgs accepts scoped read-only batch options",
     });
 });
 
+test("platinumWordBatchReport defaults word review batches to eight cards", () => {
+    const options = parseBatchReportArgs(["--level=N5"]);
+
+    assert.equal(options.limit, 8);
+});
+
 test("parseWordTsvForPlatinum preserves release-critical word card fields", () => {
     const rows = parseWordTsvForPlatinum([
         "Word	Reading	ReadingBreakdown	Audio	PitchAccent	Meaning	JLPTLevel	CoverageRole	FocusKanji	CoversReading	KanjiBreakdown	ExampleSentence	Notes",

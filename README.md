@@ -258,7 +258,7 @@ npm run deck:preview -- --level=5 --limit=5
 npm run deck:preview -- --kanji=日,本,学
 npm run deck:platinum:batch -- --level=5 --limit=12
 npm run deck:platinum:batch -- --level=5 --kanji=父,生,男
-npm run deck:words:platinum:batch -- --level=5 --limit=12
+npm run deck:words:platinum:batch -- --level=5 --limit=8
 npm run deck:words:platinum:batch -- --level=5 --words=今日:きょう,八日:ようか
 npm run deck:review:n5
 npm run deck:review:n4
@@ -447,7 +447,7 @@ Repository governance:
 | `npm run deck:platinum:n1` | Run the N1 kanji platinum release-quality benchmark |
 | `npm run deck:words:ready` | Build and package word TSV artifacts |
 | `npm run deck:words:apkg` | Build word `.apkg` artifacts |
-| `npm run deck:words:platinum:batch -- --level=5 --limit=12` | Build a read-only word platinum pre-review packet |
+| `npm run deck:words:platinum:batch -- --level=5 --limit=8` | Build a read-only word platinum pre-review packet |
 | `npm run deck:words:review:n5` | Run the N5 word golden benchmark |
 | `npm run deck:words:platinum:n5` | Run the N5 word platinum release-quality benchmark |
 | `npm run deck:words:platinum:n4` | Run the N4 word platinum release-quality benchmark |

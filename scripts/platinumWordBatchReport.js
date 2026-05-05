@@ -35,7 +35,7 @@ function parseArgs(argv) {
     const options = {
         json: false,
         level: null,
-        limit: 12,
+        limit: 8,
         unknownArgs: [],
         words: [],
     };

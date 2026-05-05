@@ -203,7 +203,7 @@ Deferred and removed kanji entries must include `kanji`, `reviewedAt`, `reviewer
 ```bash
 npm run deck:platinum:batch -- --level=5 --limit=12
 npm run deck:platinum:batch -- --level=5 --kanji=父,生,男
-npm run deck:words:platinum:batch -- --level=5 --limit=12
+npm run deck:words:platinum:batch -- --level=5 --limit=8
 npm run deck:words:platinum:batch -- --level=5 --words=今日:きょう,八日:ようか
 npm run deck:platinum:n5
 npm run deck:platinum:n4

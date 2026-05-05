@@ -7,10 +7,10 @@
     "notes": "Ignored local source files must be pinned here before source assignments can be imported into the JLPT kanji source-evidence manifest. This layer is read-only and must not move kanji, move words, or change readiness."
   },
   "inputs": {
-    "tanos": {
-      "sourceId": "tanos",
+    "tanos_legacy_direct": {
+      "sourceId": "tanos_legacy_direct",
       "sourcePath": "downloads/tanos-jlpt-kanji-normalized.tsv",
-      "sourceLabel": "tanos-jlpt-kanji-base-normalized",
+      "sourceLabel": "tanos-direct-legacy-jlpt-kanji-base-normalized",
       "sourceUrl": "https://www.tanos.co.uk/jlpt/skills/kanji/",
       "format": "tsv",
       "kanjiColumn": "kanji",
@@ -24,10 +24,10 @@
       "requireEvidenceRef": true,
       "levelMapping": "new-jlpt-n1-n5",
       "checkedAt": "2026-05-05",
-      "sha256": "2bc9c51491a143af21b884118dbf3f392040d1d95b3f89f0f2d5d94e0945b3ed",
-      "byteSize": 534305,
+      "sha256": "57fb9822887c862225b38534e0a2fdab7f4fafec870c3f75ecfa8b24a6cbfafc",
+      "byteSize": 554997,
       "rowCount": 1478,
-      "integrityPolicy": "The ignored normalized TSV must match the tracked SHA-256, byte size, and parsed row count before import. This Tanos lane imports only the explicitly reviewed N1, N4, and N5 base lists. N2 and N3 are intentionally excluded from automatic source assignments until stronger governed evidence exists."
+      "integrityPolicy": "The ignored normalized TSV must match the tracked SHA-256, byte size, and parsed row count before import. This Tanos direct legacy lane imports only the explicitly reviewed N1, N4, and N5 base lists. N2 and N3 are intentionally excluded from this lane and must use a separate estimated-source lane if activated later."
     },
     "kanjidic2_legacy": {
       "sourceId": "kanjidic2_legacy",

@@ -22,6 +22,7 @@ function createIssueCounts() {
     return {
         missingEvidence: 0,
         insufficientIndependentSources: 0,
+        insufficientIndependentEvidenceLineages: 0,
         missingJapanesePublishedSource: 0,
         disputedConsensus: 0,
         contractConsensusMismatch: 0,
@@ -51,6 +52,16 @@ function resolveSourceTier(source = {}, evidence = {}) {
     };
 }
 
+function resolveSourceLineage(source = {}, evidence = {}) {
+    const lineageId = source.lineage || source.independenceGroup || "";
+    const lineage = evidence.sourceLineages?.[lineageId] || null;
+    return {
+        id: lineageId,
+        label: lineage?.label || lineageId,
+        role: lineage?.role || null,
+    };
+}
+
 function collectKanjiAssignments({ kanji, evidence = {} } = {}) {
     const sourceEntries = getComparableSourceEntries(evidence);
     const assignments = [];
@@ -73,6 +84,7 @@ function collectKanjiAssignments({ kanji, evidence = {} } = {}) {
             japanesePublished: source.japanesePublished === true,
             weight: Number.isFinite(source.weight) && source.weight > 0 ? source.weight : 1,
             tier: resolveSourceTier(source, evidence),
+            lineage: resolveSourceLineage(source, evidence),
             source,
         });
     }
@@ -147,6 +159,7 @@ function buildConsensusComparison(assignments = [], consensusLevel = null) {
 function classifyConfidence({
     assignmentCount,
     independentSourceCount,
+    independentEvidenceLineageCount,
     japanesePublishedSourceCount,
     disputed,
     agreementScore,
@@ -160,6 +173,7 @@ function classifyConfidence({
     }
     if (
         independentSourceCount < policy.minimumIndependentSources
+        || independentEvidenceLineageCount < (policy.minimumIndependentEvidenceLineages || 0)
         || japanesePublishedSourceCount < policy.minimumJapanesePublishedSources
     ) {
         return "weak_evidence";
@@ -181,12 +195,18 @@ function evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence = {} } = {
             .filter((entry) => entry.independent)
             .map((entry) => entry.independenceGroup)
     ).size;
+    const independentEvidenceLineageCount = new Set(
+        assignments
+            .filter((entry) => entry.independent)
+            .map((entry) => entry.lineage?.id || entry.independenceGroup)
+    ).size;
     const japanesePublishedSourceCount = assignments.filter((entry) => entry.japanesePublished).length;
     const consensus = computeConsensus(assignments);
     const comparison = buildConsensusComparison(assignments, consensus.consensusLevel);
     const confidence = classifyConfidence({
         assignmentCount: assignments.length,
         independentSourceCount,
+        independentEvidenceLineageCount,
         japanesePublishedSourceCount,
         disputed: consensus.disputed,
         agreementScore: consensus.agreementScore,
@@ -203,6 +223,7 @@ function evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence = {} } = {
         agreementSourceIds: comparison.agreementSourceIds,
         disagreementSources: comparison.disagreementSources,
         independentSourceCount,
+        independentEvidenceLineageCount,
         japanesePublishedSourceCount,
         sourceConsensusLevel: consensus.consensusLevel,
         consensusLevel: consensus.consensusLevel,
@@ -226,6 +247,7 @@ function summarizeSourceCoverage({ evidence = {}, contractKanjiSet = new Set() }
                 .length;
             const assignmentOutsideContract = assignedKanji.filter((kanji) => !contractKanjiSet.has(kanji));
             const tier = resolveSourceTier(source, evidence);
+            const lineage = resolveSourceLineage(source, evidence);
             return [sourceId, {
                 name: source.name,
                 status: source.status,
@@ -233,6 +255,9 @@ function summarizeSourceCoverage({ evidence = {}, contractKanjiSet = new Set() }
                 tierLabel: tier.label,
                 tierRank: tier.rank,
                 tierRole: tier.role,
+                lineage: lineage.id,
+                lineageLabel: lineage.label,
+                lineageRole: lineage.role,
                 independent: source.independent !== false,
                 independenceGroup: source.independenceGroup || sourceId,
                 japanesePublished: source.japanesePublished === true,
@@ -291,6 +316,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
     const issues = {
         missingEvidence: [],
         insufficientIndependentSources: [],
+        insufficientIndependentEvidenceLineages: [],
         missingJapanesePublishedSource: [],
         disputedConsensus: [],
         contractConsensusMismatches: [],
@@ -338,18 +364,26 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
             agreementCount: result.agreementCount,
             assignmentCount: result.assignmentCount,
             independentSourceCount: result.independentSourceCount,
+            independentEvidenceLineageCount: result.independentEvidenceLineageCount,
             japanesePublishedSourceCount: result.japanesePublishedSourceCount,
             disagreementSources: result.disagreementSources,
             currentContractMatchesConsensus: result.contractMatchesConsensus,
-            reviewedSources: result.assignments.map((entry) => ({
-                sourceId: entry.sourceId,
-                level: entry.level,
-                tier: entry.tier.id,
-                tierLabel: entry.tier.label,
-                citation: entry.citation,
-                evidenceRef: entry.evidenceRef,
-                notes: entry.notes,
-            })),
+            reviewedSources: result.assignments.map((entry) => {
+                const reviewedSource = {
+                    sourceId: entry.sourceId,
+                    level: entry.level,
+                    tier: entry.tier.id,
+                    tierLabel: entry.tier.label,
+                    citation: entry.citation,
+                    evidenceRef: entry.evidenceRef,
+                    notes: entry.notes,
+                };
+                if (entry.lineage?.id) {
+                    reviewedSource.lineage = entry.lineage.id;
+                    reviewedSource.lineageLabel = entry.lineage.label;
+                }
+                return reviewedSource;
+            }),
         });
         confidenceCounts[result.confidence] += 1;
         byContractLevel[contractLevel].checked += 1;
@@ -366,6 +400,17 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
                 kanji,
                 contractLevel,
                 independentSourceCount: result.independentSourceCount,
+            });
+        }
+        if (
+            result.assignmentCount > 0
+            && result.independentEvidenceLineageCount < (policy.minimumIndependentEvidenceLineages || 0)
+        ) {
+            issueCounts.insufficientIndependentEvidenceLineages += 1;
+            issues.insufficientIndependentEvidenceLineages.push({
+                kanji,
+                contractLevel,
+                independentEvidenceLineageCount: result.independentEvidenceLineageCount,
             });
         }
         if (result.assignmentCount > 0 && result.japanesePublishedSourceCount < policy.minimumJapanesePublishedSources) {
@@ -437,6 +482,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
     const checked = contractEntries.length;
     const valid = issueCounts.missingEvidence === 0
         && issueCounts.insufficientIndependentSources === 0
+        && issueCounts.insufficientIndependentEvidenceLineages === 0
         && issueCounts.missingJapanesePublishedSource === 0
         && issueCounts.disputedConsensus === 0
         && issueCounts.contractConsensusMismatch === 0
@@ -469,6 +515,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
         issues: {
             missingEvidence: capped(issues.missingEvidence),
             insufficientIndependentSources: capped(issues.insufficientIndependentSources),
+            insufficientIndependentEvidenceLineages: capped(issues.insufficientIndependentEvidenceLineages || []),
             missingJapanesePublishedSource: capped(issues.missingJapanesePublishedSource),
             disputedConsensus: capped(issues.disputedConsensus),
             contractConsensusMismatches: capped(issues.contractConsensusMismatches),

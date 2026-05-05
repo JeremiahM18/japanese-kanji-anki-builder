@@ -34,13 +34,19 @@ function formatLevel(level) {
 }
 
 function buildMaterializedNotes(entry = {}) {
+    if (entry.assignmentCount === 0) {
+        return "No active external voting source assignment is recorded yet. Independent source evidence is required before source-confidence or deck-movement claims.";
+    }
     if (entry.confidence === "disputed") {
         return "Computed from active source assignments. Current operational taxonomy and independent source evidence disagree; do not move decks or word placement until additional governed sources resolve the dispute.";
     }
-    if (entry.assignmentCount > 1) {
-        return "Computed from active source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.";
+    if (entry.independentEvidenceLineageCount <= 1) {
+        return "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.";
     }
-    return "Only the current operational taxonomy baseline is recorded. Independent source evidence is required before source-confidence or deck-movement claims.";
+    if (entry.assignmentCount > 0) {
+        return "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.";
+    }
+    return "Independent source evidence is required before source-confidence or deck-movement claims.";
 }
 
 function materializeKanjiEvidenceEntries({ evidenceManifest = {}, contract = {} } = {}) {

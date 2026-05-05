@@ -43,6 +43,7 @@ function formatSourceCoverage(sourceCoverage = {}) {
         .sort(([a], [b]) => a.localeCompare(b))
         .map(([sourceId, source]) => (
             `- ${sourceId}: ${source.assignmentCount} assignments; ${source.unreviewedAssignmentCount} unreviewed; status ${source.status}; tier ${source.tier} (${source.tierLabel}); license ${source.licenseStatus}`
+            + `${source.lineage ? `; lineage ${source.lineage} (${source.lineageLabel})` : ""}`
         ));
 }
 
@@ -85,6 +86,7 @@ function formatContractComparisonRows(rows = [], limit = 25) {
         .map((entry) => (
             `- ${entry.kanji}: current ${formatLevel(entry.currentContractLevel)}; consensus ${formatLevel(entry.sourceConsensusLevel)}; `
             + `agreement ${entry.agreementCount}/${entry.assignmentCount}; `
+            + `lineages ${entry.independentEvidenceLineageCount}; `
             + `disagreements ${formatDisagreementSources(entry.disagreementSources)}; `
             + `confidence ${entry.confidence}; matches ${entry.currentContractMatchesConsensus === true ? "yes" : "no"}`
         ));
@@ -106,6 +108,7 @@ function formatJlptKanjiSourceEvidenceReport({
         "",
         "Policy:",
         `- Minimum independent sources: ${report.policy.minimumIndependentSources}`,
+        `- Minimum independent evidence lineages: ${report.policy.minimumIndependentEvidenceLineages}`,
         `- Minimum Japanese-published sources: ${report.policy.minimumJapanesePublishedSources}`,
         `- Standard agreement score: ${report.policy.standardAgreementScore}`,
         `- High agreement score: ${report.policy.highAgreementScore}`,
@@ -123,6 +126,7 @@ function formatJlptKanjiSourceEvidenceReport({
         "Issue counts:",
         formatIssueCount("Missing evidence", report.issueCounts.missingEvidence),
         formatIssueCount("Insufficient independent sources", report.issueCounts.insufficientIndependentSources),
+        formatIssueCount("Insufficient independent evidence lineages", report.issueCounts.insufficientIndependentEvidenceLineages),
         formatIssueCount("Missing Japanese-published source", report.issueCounts.missingJapanesePublishedSource),
         formatIssueCount("Disputed consensus", report.issueCounts.disputedConsensus),
         formatIssueCount("Contract/consensus mismatches", report.issueCounts.contractConsensusMismatch),

@@ -18,6 +18,7 @@ const jlptLevelAssignmentValueSchema = z.union([
 
 const evidencePolicySchema = z.object({
     minimumIndependentSources: z.number().int().min(1).default(3),
+    minimumIndependentEvidenceLineages: z.number().int().min(0).default(1),
     minimumJapanesePublishedSources: z.number().int().min(0).default(1),
     standardAgreementScore: z.number().min(0).max(1).default(0.67),
     highAgreementScore: z.number().min(0).max(1).default(0.8),
@@ -31,6 +32,23 @@ const sourceTierSchema = z.object({
         "supporting-evidence",
         "sanity-check",
         "background-only",
+    ]),
+    description: z.string().min(1),
+    notes: z.string().optional(),
+}).strict();
+
+const sourceLineageSchema = z.object({
+    label: z.string().min(1),
+    role: z.enum([
+        "operational-baseline",
+        "direct-legacy-jlpt",
+        "post-2010-estimate",
+        "japanese-published-study",
+        "dictionary-legacy-jlpt",
+        "community-study-list",
+        "frequency-sanity",
+        "learning-platform",
+        "official-background",
     ]),
     description: z.string().min(1),
     notes: z.string().optional(),
@@ -61,6 +79,7 @@ const REQUIRED_CONFIDENCE_IDS = Object.freeze([
 const evidenceSourceSchema = z.object({
     name: z.string().min(1),
     tier: z.string().min(1),
+    lineage: z.string().min(1).optional(),
     status: z.enum(["planned", "active", "blocked", "deprecated"]).default("planned"),
     sourceType: z.string().min(1),
     url: z.string().min(1).optional(),
@@ -85,6 +104,7 @@ const jlptKanjiSourceEvidenceSchema = z.object({
     version: z.number().int().min(1).default(1),
     policy: evidencePolicySchema.default({}),
     sourceTiers: z.record(z.string().min(1), sourceTierSchema).default({}),
+    sourceLineages: z.record(z.string().min(1), sourceLineageSchema).default({}),
     confidenceLabels: z.record(z.string().min(1), confidenceLabelSchema).default({}),
     sources: z.record(z.string().min(1), evidenceSourceSchema).default({}),
     assignments: z.record(
@@ -148,6 +168,21 @@ function assertKnownSourceTiers(parsed) {
     }
 }
 
+function assertKnownSourceLineages(parsed) {
+    const knownLineageIds = new Set(Object.keys(parsed.sourceLineages || {}));
+    if (knownLineageIds.size === 0) {
+        return;
+    }
+
+    const unknownLineages = Object.entries(parsed.sources || {})
+        .filter(([, source]) => source.lineage && !knownLineageIds.has(source.lineage))
+        .map(([sourceId, source]) => `${sourceId}:${source.lineage}`);
+
+    if (unknownLineages.length > 0) {
+        throw new Error(`Unknown JLPT kanji source lineages: ${unknownLineages.join(", ")}`);
+    }
+}
+
 function assertRequiredConfidenceLabels(parsed) {
     const missing = REQUIRED_CONFIDENCE_IDS.filter((labelId) => !parsed.confidenceLabels?.[labelId]);
     if (missing.length > 0) {
@@ -202,7 +237,9 @@ function mergeAssignments(primary = {}, secondary = {}) {
             if (existing && existing.level !== assignment.level) {
                 throw new Error(`Conflicting JLPT kanji source assignments for ${kanji} from ${sourceId}`);
             }
-            merged[sourceId][kanji] = assignment;
+            merged[sourceId][kanji] = existing
+                ? { ...assignment, ...existing }
+                : assignment;
         }
     }
 
@@ -225,6 +262,7 @@ function normalizeAssignments(assignments = {}) {
 function normalizeJlptKanjiSourceEvidence(value = {}) {
     const parsed = jlptKanjiSourceEvidenceSchema.parse(value);
     assertKnownSourceTiers(parsed);
+    assertKnownSourceLineages(parsed);
     assertRequiredConfidenceLabels(parsed);
     const kanji = normalizeKanjiEvidence(parsed.kanji);
     const sourceCentricAssignments = normalizeAssignments(parsed.assignments);
@@ -247,6 +285,7 @@ module.exports = {
     confidenceIdSchema,
     evidenceSourceSchema,
     kanjiEvidenceEntrySchema,
+    sourceLineageSchema,
     sourceTierSchema,
     jlptKanjiSourceEvidenceSchema,
     loadJlptKanjiSourceEvidence,

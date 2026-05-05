@@ -180,6 +180,60 @@ test("normalizeJlptLevelAssignmentEntry preserves reviewed structured evidence",
     });
 });
 
+test("normalizeJlptKanjiSourceEvidence keeps source-centric assignments authoritative", () => {
+    const evidence = normalizeJlptKanjiSourceEvidence({
+        version: 1,
+        sourceTiers: {
+            fixture: {
+                label: "Fixture tier",
+                rank: 1,
+                role: "supporting-evidence",
+                description: "Fixture source tier.",
+            },
+        },
+        confidenceLabels: buildConfidenceLabels(),
+        sources: {
+            source_a: {
+                name: "Source A",
+                tier: "fixture",
+                status: "active",
+                sourceType: "fixture",
+                licenseStatus: "approved",
+            },
+        },
+        assignments: {
+            source_a: {
+                日: {
+                    level: "N5",
+                    reviewStatus: "reviewed",
+                    evidenceRef: "source_a:fresh",
+                    notes: "Fresh source-centric assignment.",
+                },
+            },
+        },
+        kanji: {
+            日: {
+                sources: {
+                    source_a: {
+                        level: "N5",
+                        reviewStatus: "reviewed",
+                        evidenceRef: "source_a:stale-materialized-summary",
+                        notes: "Stale materialized summary.",
+                    },
+                },
+            },
+        },
+    });
+
+    assert.deepEqual(evidence.assignments.source_a.日, {
+        level: 5,
+        reviewStatus: "reviewed",
+        citation: undefined,
+        evidenceRef: "source_a:fresh",
+        notes: "Fresh source-centric assignment.",
+    });
+});
+
 test("computeConsensus detects weighted agreement and ties", () => {
     const consensus = computeConsensus([
         { level: 5, weight: 1 },
@@ -402,6 +456,7 @@ test("auditJlptKanjiSourceEvidence emits governed confidence manifest entries", 
         agreementCount: 3,
         assignmentCount: 3,
         independentSourceCount: 3,
+        independentEvidenceLineageCount: 3,
         japanesePublishedSourceCount: 1,
         disagreementSources: [],
         currentContractMatchesConsensus: true,
@@ -505,7 +560,7 @@ test("formatJlptKanjiSourceEvidenceReport renders policy and blocker counts", ()
     assert.match(text, /Overall result: failing/);
     assert.match(text, /Confidence labels:/);
     assert.match(text, /Current contract comparison samples \(1 shown\):/);
-    assert.match(text, /- 日: current N5; consensus none; agreement 0\/0; disagreements none; confidence unknown; matches no/);
+    assert.match(text, /- 日: current N5; consensus none; agreement 0\/0; lineages 0; disagreements none; confidence unknown; matches no/);
     assert.match(text, /Missing evidence: 1/);
 });
 

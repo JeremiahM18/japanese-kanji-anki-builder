@@ -1,5 +1,5 @@
 const DEFAULT_CITATION = "Tanos JLPT kanji base lists; Jonathan Waller, Creative Commons BY per https://www.tanos.co.uk/jlpt/sharing/.";
-const DEFAULT_EVIDENCE_REF = "tanos:jlpt-kanji-base";
+const DEFAULT_EVIDENCE_REF = "tanos_legacy_direct:jlpt-kanji-base";
 
 const TANOS_LEVEL_SOURCES = Object.freeze({
     1: {

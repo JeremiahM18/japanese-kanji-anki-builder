@@ -867,17 +867,6 @@ function extractRubyReadingContexts(readingBreakdown) {
     return contexts;
 }
 
-function extractKanjiReadingsFromRubyBreakdown(readingBreakdown) {
-    const readings = [];
-    for (const context of extractRubyReadingContexts(readingBreakdown)) {
-        if (context.type === "single") {
-            readings.push({ kanji: context.kanji, reading: context.reading });
-        }
-    }
-
-    return readings;
-}
-
 function buildUniqueKanjiReadingMap(readings = []) {
     const map = new Map();
     const ambiguous = new Set();
@@ -916,8 +905,11 @@ function buildContextualKanjiReadingMap({
         return new Map();
     }
 
-    const curatedRubyReadings = extractKanjiReadingsFromRubyBreakdown(curatedEntry?.readingBreakdown || "");
-    if (curatedRubyReadings.length > 0) {
+    const curatedRubyContexts = extractRubyReadingContexts(curatedEntry?.readingBreakdown || "");
+    const curatedRubyReadings = curatedRubyContexts
+        .filter((context) => context.type === "single")
+        .map((context) => ({ kanji: context.kanji, reading: context.reading }));
+    if (curatedRubyContexts.length > 0) {
         return buildUniqueKanjiReadingMap(curatedRubyReadings);
     }
 

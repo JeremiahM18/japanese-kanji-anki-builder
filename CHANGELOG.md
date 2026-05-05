@@ -10,6 +10,8 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Fixed
 
+- Fixed word-card contextual reading inference so curated group-only ruby such as `五日|いつか` and `大人|おとな` stays labeled as a whole-word reading instead of falling through to fake per-kanji coverage.
+- Fixed the new `万|まん` learner example to use the natural numeric context `一万まで数えます。` instead of the awkward standalone sentence `万まで数えます。`.
 - Fixed the N5 word platinum queue by moving `黄金|おうごん` and `河川|かせん` to the N1 word product, `断食|だんじき` to the N3 word product, and `雨戸|あまど` to the N2 word product after source review, recording the resulting N5 reading gaps as deferred instead of forcing later-level, formal, topical, or niche support cards into the beginner deck.
 - Fixed the N5 word platinum queue by moving `後れる|おくれる` to the N1 word product and `語る|かたる` to the N3 word product after source review, correcting the `後れる` source meaning/example away from scheduled lateness, and recording the resulting N5 reading gaps as deferred instead of forcing misleading or later-level support cards.
 - Fixed the N5 word platinum queue by moving `分かつ|わかつ`, `雨天|うてん`, and `西瓜|すいか` to the N1 word product, removing phrase-shaped `駅の前|えきのまえ` from the default word deck, and recording the resulting N5 reading gaps as deferred instead of forcing formal, kana-usual, or phrase-shaped cards into the beginner deck.
@@ -53,6 +55,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added twelve source-checked N5 enhancement word cards and platinum approvals (`後`, `男の子`, `大人`, `白`, `千`, `出かける`, `年`, `半`, `百`, `前`, `万`, `五日`), raising N5 word golden coverage to `316/316` and active N5 word platinum coverage to `270` cards with `44` deferred/removed rows and `46` generated rows still missing platinum approval.
 - Added a tracked read-only N5 word-inventory expansion triage file so large enhancement candidate batches can carry explicit keep/defer/reject reasons before any <=12-word promotion batch begins.
 - Added same-written warnings to the word inventory expansion report so review candidates that share a written form with an existing governed or excluded word are visible before any new card is promoted.
 - Added `deck:words:expansion-candidates`, a read-only post-coverage report that compares an explicit sourced vocabulary file against the governed word contract and surfaces extra word candidates without changing schemas, readiness, contracts, starter data, or generated deck output.

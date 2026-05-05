@@ -747,6 +747,27 @@ test("buildBreakdownInference keeps kana-affix word readings scoped to the kanji
     assert.equal(result.meaningJP, "母 （かあ） ／ mother");
 });
 
+test("buildContextualKanjiReadingMap does not infer per-kanji readings from group-only ruby", () => {
+    const result = buildContextualKanjiReadingMap({
+        candidate: { written: "五日", pron: "いつか" },
+        curatedEntry: {
+            reading: "いつか",
+            readingBreakdown: "<ruby>五日<rt>いつか</rt></ruby>",
+            coverage: {
+                role: "both",
+                focusKanji: ["五", "日"],
+                coversReadings: {
+                    "五日": "いつか",
+                },
+            },
+        },
+        kanjiInferenceCache: new Map(),
+        curatedStudyData: {},
+    });
+
+    assert.equal(result.size, 0);
+});
+
 test("resolveCoverageMetadata keeps whole-word coverage separate from kanji breakdown context", () => {
     const result = resolveCoverageMetadata({
         entry: {

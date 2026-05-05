@@ -1024,6 +1024,47 @@ test("tracked starter word data includes the thirty-second governed N4 support b
     ]);
 });
 
+test("tracked starter word data includes the first N5 enhancement batch without duplicate junk", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageRoles(starterEntries, [
+        ["後|あと", "both"],
+        ["男の子|おとこのこ", "both"],
+        ["大人|おとな", "both"],
+        ["白|しろ", "both"],
+        ["千|せん", "both"],
+        ["出かける|でかける", "both"],
+        ["年|とし", "both"],
+        ["半|はん", "both"],
+        ["百|ひゃく", "both"],
+        ["前|まえ", "both"],
+        ["万|まん", "both"],
+        ["五日|いつか", "both"],
+    ]);
+    assertCoverageReadings(starterEntries, [
+        ["後|あと", "後", "あと"],
+        ["男の子|おとこのこ", "男", "おとこ"],
+        ["男の子|おとこのこ", "子", "こ"],
+        ["大人|おとな", "大人", "おとな"],
+        ["白|しろ", "白", "しろ"],
+        ["千|せん", "千", "せん"],
+        ["出かける|でかける", "出", "で"],
+        ["年|とし", "年", "とし"],
+        ["半|はん", "半", "はん"],
+        ["百|ひゃく", "百", "ひゃく"],
+        ["前|まえ", "前", "まえ"],
+        ["万|まん", "万", "まん"],
+        ["五日|いつか", "五日", "いつか"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["男の子|おとこのこ", "<ruby>男<rt>おとこ</rt></ruby>の<ruby>子<rt>こ</rt></ruby>"],
+        ["大人|おとな", "<ruby>大人<rt>おとな</rt></ruby>"],
+        ["出かける|でかける", "<ruby>出<rt>で</rt></ruby>かける"],
+        ["五日|いつか", "<ruby>五日<rt>いつか</rt></ruby>"],
+    ]);
+    assert.equal(starterEntries["万|まん"].exampleSentence.japanese, "一万まで数えます。");
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

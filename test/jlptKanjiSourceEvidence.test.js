@@ -18,6 +18,11 @@ const {
     parseArgs,
 } = require("../scripts/auditJlptKanjiSourceEvidence");
 
+/**
+ * @typedef {Record<string, unknown>} SourceFixtureOverrides
+ * @typedef {{ allowedUse?: string, sourceKind?: string, overrides?: SourceFixtureOverrides }} NonVotingSourceOptions
+ */
+
 function buildConfidenceLabels() {
     return {
         high_confidence: {
@@ -58,6 +63,10 @@ function buildConfidenceReasonLabels() {
     };
 }
 
+/**
+ * @param {SourceFixtureOverrides} [overrides]
+ * @returns {SourceFixtureOverrides}
+ */
 function buildGovernedAssignmentSource(overrides = {}) {
     return {
         allowedUse: "bulk-import",
@@ -73,6 +82,10 @@ function buildGovernedAssignmentSource(overrides = {}) {
     };
 }
 
+/**
+ * @param {NonVotingSourceOptions} [options]
+ * @returns {SourceFixtureOverrides}
+ */
 function buildGovernedNonVotingSource({ allowedUse, sourceKind, overrides = {} } = {}) {
     return {
         allowedUse,
@@ -88,6 +101,10 @@ function buildGovernedNonVotingSource({ allowedUse, sourceKind, overrides = {} }
     };
 }
 
+/**
+ * @param {Record<string, unknown>} [assignments]
+ * @returns {Record<string, unknown>}
+ */
 function buildEvidence(assignments = {}) {
     return normalizeJlptKanjiSourceEvidence({
         version: 1,

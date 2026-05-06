@@ -4,20 +4,27 @@
  * @typedef {Record<ConfidenceId, number>} ConfidenceCounts
  * @typedef {Record<string, number>} IssueCounts
  * @typedef {{ minimumIndependentSources?: number, minimumIndependentEvidenceLineages?: number, minimumJapanesePublishedSources?: number, standardAgreementScore?: number, highAgreementScore?: number }} EvidencePolicy
+ * @typedef {{ blocksRelease?: boolean, releaseMeaning?: string }} ConfidenceDefinition
  * @typedef {{ label?: string, rank?: number, role?: string }} SourceTier
  * @typedef {{ label?: string, role?: string }} SourceLineage
  * @typedef {{ level?: number, levelRange?: number[], reviewStatus?: string, citation?: string, evidenceRef?: string, notes?: string }} SourceAssignment
  * @typedef {{ name?: string, status?: string, tier?: string, evidenceLineage?: string, lineage?: string, independent?: boolean, publisherIndependence?: string, independenceGroup?: string, japanesePublished?: boolean, countsForConsensus?: boolean, weight?: number, licenseStatus?: string, allowedUse?: string, sourceKind?: string, canStoreAssignments?: boolean, canStoreRawList?: boolean, canStoreExcerpts?: boolean, requiresCitation?: boolean, positiveEvidenceOnly?: boolean, licenseEvidenceUrl?: string, licenseReviewedAt?: string, derivedFromSources?: string[] }} EvidenceSource
  * @typedef {{ consensusLevel?: number, agreementScore?: number, confidence?: ConfidenceId }} DeclaredKanjiEvidence
- * @typedef {{ policy?: EvidencePolicy, sourceTiers?: Record<string, SourceTier>, sourceLineages?: Record<string, SourceLineage>, confidenceLabels?: Record<string, unknown>, confidenceReasonLabels?: Record<string, unknown>, sources?: Record<string, EvidenceSource>, assignments?: Record<string, Record<string, SourceAssignment>>, kanji?: Record<string, DeclaredKanjiEvidence> }} JlptKanjiSourceEvidence
+ * @typedef {{ policy?: EvidencePolicy, sourceTiers?: Record<string, SourceTier>, sourceLineages?: Record<string, SourceLineage>, confidenceLabels?: Record<string, ConfidenceDefinition>, confidenceReasonLabels?: Record<string, unknown>, sources?: Record<string, EvidenceSource>, assignments?: Record<string, Record<string, SourceAssignment>>, kanji?: Record<string, DeclaredKanjiEvidence> }} JlptKanjiSourceEvidence
  * @typedef {{ kanjiLevels?: Record<string, number> }} JlptLevelContract
  * @typedef {{ id: string, label: string, rank: number | null, role: string | null }} ResolvedSourceTier
  * @typedef {{ id: string, label: string, role: string | null }} ResolvedSourceLineage
  * @typedef {{ sourceId: string, level?: number, levelRange?: number[], isRangeEvidence: boolean, reviewStatus?: string, citation?: string, evidenceRef?: string, notes?: string, independent: boolean, publisherIndependence: string, independenceGroup: string, japanesePublished: boolean, weight: number, tier: ResolvedSourceTier, lineage: ResolvedSourceLineage, source: EvidenceSource }} CollectedAssignment
+ * @typedef {{ level?: number, weight: number }} ConsensusAssignment
  * @typedef {{ consensusLevel: number | null, agreementScore: number, voteWeights: LevelCounts, disputed: boolean }} ConsensusResult
  * @typedef {{ sourceId: string, level?: number, levelRange?: number[], tier?: string, tierLabel?: string }} SourceDisagreement
  * @typedef {{ sourceId: string, sourceIds: string[], assignmentCount: number, votingAssignmentCount: number, consensusLevel: number | null, agreementScore: number, agreementCount: number, agreementSourceIds: string[], disagreementSources: SourceDisagreement[], disputed: boolean }} TextbookConsensus
  * @typedef {{ kanji?: string, currentContractLevel?: number, contractLevel?: number, assignments: CollectedAssignment[], assignmentCount: number, votingAssignmentCount: number, agreementCount: number, agreementSourceIds: string[], disagreementSources: SourceDisagreement[], independentSourceCount: number, independentEvidenceLineageCount: number, japanesePublishedSourceCount: number, sourceConsensusLevel: number | null, consensusLevel: number | null, agreementScore: number, voteWeights: LevelCounts, confidence: ConfidenceId, confidenceReasons: string[], textbookConsensus: TextbookConsensus, contractMatchesConsensus: boolean | null }} KanjiSourceEvidenceResult
+ * @typedef {{ name?: string, status?: string, tier?: string, tierLabel?: string, tierRank?: number | null, tierRole?: string | null, lineage?: string, lineageLabel?: string, lineageRole?: string | null, independent?: boolean, publisherIndependence?: string, independenceGroup?: string, japanesePublished?: boolean, countsForConsensus?: boolean, licenseStatus?: string, allowedUse?: string, sourceKind?: string, canStoreAssignments?: boolean, canStoreRawList?: boolean, canStoreExcerpts?: boolean, requiresCitation?: boolean, positiveEvidenceOnly?: boolean, licenseEvidenceUrl?: string, licenseReviewedAt?: string, derivedFromSources?: string[], assignmentCount?: number, unreviewedAssignmentCount?: number, assignmentOutsideContractCount?: number, assignmentOutsideContract?: string[] }} SourceCoverageEntry
+ * @typedef {{ sourceId?: string, kanji?: string, level?: number, contractLevel?: number, consensusLevel?: number | null, agreementScore?: number, voteWeights?: LevelCounts, reviewStatus?: string, allowedUse?: string, sourceKind?: string, canStoreAssignments?: boolean, licenseStatus?: string, assignmentCount?: number, independentSourceCount?: number, independentEvidenceLineageCount?: number, japanesePublishedSourceCount?: number, declaredConsensusLevel?: number, computedConsensusLevel?: number | null, declaredAgreementScore?: number, computedAgreementScore?: number, declaredConfidence?: ConfidenceId, computedConfidence?: ConfidenceId }} AuditIssueEntry
+ * @typedef {{ sourceId: string, level?: number, levelRange?: number[], tier: string, tierLabel: string, publisherIndependence: string, citation?: string, evidenceRef?: string, notes?: string, lineage?: string, lineageLabel?: string }} ReviewedSourceEntry
+ * @typedef {{ kanji?: string, currentContractLevel?: number, contractLevel?: number, confidence: ConfidenceId, sourceConsensusLevel: number | null, consensusLevel: number | null, agreementScore: number, agreementCount: number, voteWeights: LevelCounts, assignmentCount: number, votingAssignmentCount: number, independentSourceCount: number, independentEvidenceLineageCount: number, japanesePublishedSourceCount: number, textbookConsensus: TextbookConsensus, confidenceReasons: string[], disagreementSources: SourceDisagreement[], currentContractMatchesConsensus: boolean | null, reviewedSources: ReviewedSourceEntry[] }} KanjiConfidenceManifestEntry
+ * @typedef {{ valid: boolean, governanceValid: boolean, evidenceDepthValid: boolean, checked: number, limit: number, policy: Required<EvidencePolicy>, sourceTiers: Record<string, SourceTier>, confidenceLabels: Record<string, ConfidenceDefinition>, confidenceReasonLabels: Record<string, unknown>, confidenceCounts: ConfidenceCounts, kanjiConfidenceManifest: KanjiConfidenceManifestEntry[], issueCounts: IssueCounts, byContractLevel: Record<number, { checked: number, high_confidence: number, standard_confidence: number, disputed: number, weak_evidence: number, unknown: number, mismatches: number }>, sourceCoverage: Record<string, SourceCoverageEntry>, unknownAssignmentSources: string[], assignmentOutsideContract: AuditIssueEntry[], issues: Record<string, AuditIssueEntry[]> }} AuditReport
  */
 
 /** @returns {LevelCounts} */
@@ -190,7 +197,7 @@ function collectKanjiAssignments({ kanji, evidence = {} } = {}) {
 }
 
 /**
- * @param {CollectedAssignment[]} [assignments]
+ * @param {ConsensusAssignment[]} [assignments]
  * @returns {ConsensusResult}
  */
 function computeConsensus(assignments = []) {
@@ -468,7 +475,7 @@ function evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence = {} } = {
 
 /**
  * @param {{ evidence?: JlptKanjiSourceEvidence, contractKanjiSet?: Set<string> }} [options]
- * @returns {Record<string, Record<string, unknown>>}
+ * @returns {Record<string, SourceCoverageEntry>}
  */
 function summarizeSourceCoverage({ evidence = {}, contractKanjiSet = new Set() } = {}) {
     return Object.fromEntries(
@@ -568,7 +575,7 @@ function hasReviewedLicenseEvidence(source = {}) {
 
 /**
  * @param {{ contract?: JlptLevelContract, evidence?: JlptKanjiSourceEvidence, limit?: number }} [options]
- * @returns {Record<string, unknown>}
+ * @returns {AuditReport}
  */
 function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25 } = {}) {
     /** @type {Required<EvidencePolicy>} */
@@ -596,7 +603,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
             mismatches: 0,
         }])
     );
-    /** @type {Record<string, Record<string, unknown>[]>} */
+    /** @type {Record<string, AuditIssueEntry[]>} */
     const issues = {
         missingEvidence: [],
         insufficientIndependentSources: [],
@@ -614,7 +621,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
         declaredAgreementMismatches: [],
         declaredConfidenceMismatches: [],
     };
-    /** @type {Record<string, unknown>[]} */
+    /** @type {KanjiConfidenceManifestEntry[]} */
     const kanjiConfidenceManifest = [];
 
     for (const [sourceId, source] of Object.entries(evidence.sources || {})) {
@@ -704,7 +711,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
             disagreementSources: result.disagreementSources,
             currentContractMatchesConsensus: result.contractMatchesConsensus,
             reviewedSources: result.assignments.map((entry) => {
-                /** @type {Record<string, unknown>} */
+                /** @type {ReviewedSourceEntry} */
                 const reviewedSource = {
                     sourceId: entry.sourceId,
                     level: entry.level,
@@ -840,8 +847,8 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
     const valid = governanceValid && evidenceDepthValid;
 
     /**
-     * @param {Record<string, unknown>[]} items
-     * @returns {Record<string, unknown>[]}
+     * @param {AuditIssueEntry[]} items
+     * @returns {AuditIssueEntry[]}
      */
     function capped(items) {
         return items.slice(0, Math.max(1, limit || 25));

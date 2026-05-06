@@ -15,8 +15,8 @@ const DEFAULT_EVIDENCE_PATH = "templates/jlpt_kanji_source_evidence.json";
  * @typedef {{ checked: number, high_confidence: number, standard_confidence: number, disputed: number, weak_evidence: number, unknown: number, mismatches: number }} ContractLevelConfidenceCounts
  * @typedef {{ sourceIds: string[], activeVotingSources: number }} PublisherIndependenceGroup
  * @typedef {{ assignmentCount?: number, unreviewedAssignmentCount?: number, status?: string, countsForConsensus?: boolean, tier?: string, tierLabel?: string, licenseStatus?: string, allowedUse?: string, sourceKind?: string, canStoreAssignments?: boolean, publisherIndependence?: string, independenceGroup?: string, lineage?: string, lineageLabel?: string, derivedFromSources?: string[] }} SourceCoverageEntry
- * @typedef {{ kanji?: string, contractLevel?: number, consensusLevel?: number, agreementScore?: number, voteWeights?: Record<string, number>, sourceId?: string, licenseStatus?: string, allowedUse?: string, sourceKind?: string, canStoreAssignments?: boolean, assignmentCount?: number }} AuditIssueEntry
- * @typedef {{ kanji?: string, currentContractLevel?: number, sourceConsensusLevel?: number, agreementCount?: number, assignmentCount?: number, voteWeights?: Record<string, number>, confidence?: string, independentEvidenceLineageCount?: number, disagreementSources?: DisagreementSource[], confidenceReasons?: string[], textbookConsensus?: { consensusLevel?: number | null }, currentContractMatchesConsensus?: boolean | null }} ContractComparisonEntry
+ * @typedef {{ kanji?: string, contractLevel?: number, consensusLevel?: number | null, agreementScore?: number, voteWeights?: Record<string, number>, sourceId?: string, licenseStatus?: string, allowedUse?: string, sourceKind?: string, canStoreAssignments?: boolean, assignmentCount?: number }} AuditIssueEntry
+ * @typedef {{ kanji?: string, currentContractLevel?: number, sourceConsensusLevel?: number | null, agreementCount?: number, assignmentCount?: number, voteWeights?: Record<string, number>, confidence?: string, independentEvidenceLineageCount?: number, disagreementSources?: DisagreementSource[], confidenceReasons?: string[], textbookConsensus?: { consensusLevel?: number | null }, currentContractMatchesConsensus?: boolean | null }} ContractComparisonEntry
  * @typedef {{ valid: boolean, governanceValid: boolean, evidenceDepthValid: boolean, checked: number, limit: number, policy: Record<string, number>, confidenceCounts: Record<string, number>, confidenceLabels: Record<string, ConfidenceDefinition>, issueCounts: Record<string, number>, byContractLevel: Record<string, ContractLevelConfidenceCounts>, sourceCoverage: Record<string, SourceCoverageEntry>, kanjiConfidenceManifest: ContractComparisonEntry[], issues: Record<string, AuditIssueEntry[]> }} AuditReport
  */
 
@@ -120,7 +120,7 @@ function formatConfidenceLabels(confidenceLabels = {}) {
 }
 
 /**
- * @param {{ kanji?: string, contractLevel?: number, consensusLevel?: number }} [entry]
+ * @param {{ kanji?: string, contractLevel?: number, consensusLevel?: number | null }} [entry]
  * @returns {string}
  */
 function formatKanjiIssue(entry) {

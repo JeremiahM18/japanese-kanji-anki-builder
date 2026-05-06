@@ -9,6 +9,23 @@ function readRepoFile(relativePath) {
     return fs.readFileSync(path.join(repoRoot, relativePath), "utf-8");
 }
 
+function listJavaScriptFiles(relativeDirectory) {
+    const absoluteDirectory = path.join(repoRoot, relativeDirectory);
+    const entries = fs.readdirSync(absoluteDirectory, { withFileTypes: true });
+    const files = [];
+
+    for (const entry of entries) {
+        const relativePath = path.join(relativeDirectory, entry.name);
+        if (entry.isDirectory()) {
+            files.push(...listJavaScriptFiles(relativePath));
+        } else if (entry.isFile() && entry.name.endsWith(".js")) {
+            files.push(relativePath.split(path.sep).join("/"));
+        }
+    }
+
+    return files;
+}
+
 function extractReadmeSection(readme, heading) {
     const headingText = `## ${heading}`;
     const start = readme.indexOf(headingText);
@@ -92,4 +109,38 @@ test("README source-evidence lane table matches the governed source manifest", (
 
     assert.deepEqual([...new Set(readmeSourceIds)].sort(), manifestSourceIds);
     assert.equal(readmeSourceIds.length, manifestSourceIds.length, "README source lane table contains duplicate source ids.");
+});
+
+test("JLPT kanji source-evidence loaders stay in read-only governance paths", () => {
+    const expectedFilesByLoader = {
+        loadJlptKanjiSourceEvidence: [
+            "scripts/auditJlptKanjiSourceEvidence.js",
+            "scripts/auditJlptKanjiSourceLevelDeltas.js",
+            "scripts/createJlptKanjiSourceInputTemplate.js",
+            "scripts/reportJlptKanjiSourceInputs.js",
+            "src/datasets/jlptKanjiSourceEvidence.js",
+        ],
+        loadJlptKanjiSourceInputs: [
+            "scripts/createJlptKanjiSourceInputTemplate.js",
+            "scripts/mergeJlptKanjiSourceBatch.js",
+            "scripts/reportJlptKanjiSourceInputs.js",
+            "src/datasets/jlptKanjiSourceInputs.js",
+        ],
+        loadJlptOfficialOccurrenceEvidence: [
+            "scripts/reportJlptOfficialOccurrences.js",
+            "src/datasets/jlptOfficialOccurrenceEvidence.js",
+        ],
+    };
+    const files = [
+        ...listJavaScriptFiles("scripts"),
+        ...listJavaScriptFiles("src"),
+    ];
+
+    for (const [loaderName, expectedFiles] of Object.entries(expectedFilesByLoader)) {
+        const actualFiles = files
+            .filter((relativePath) => readRepoFile(relativePath).includes(loaderName))
+            .sort();
+
+        assert.deepEqual(actualFiles, [...expectedFiles].sort(), `${loaderName} is imported or exported outside the governed source-evidence paths.`);
+    }
 });

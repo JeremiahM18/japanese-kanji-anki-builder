@@ -11,6 +11,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 ### Added
 
 - Added a read-only JLPT kanji source-level delta audit that compares current contract counts against active source-claimed level candidates, consensus counts, per-source claim counts, disputed candidates, and source claims outside the current taxonomy without moving decks or changing readiness.
+- Added a repository governance test that keeps JLPT kanji source-evidence loaders confined to source-governance scripts and datasets, preventing accidental deck, word, readiness, release, golden, or platinum consumption of the read-only evidence layer.
 - Added `--priority=source-level-deltas --source-level=<N1-N5>` for manual JLPT kanji source-input worksheets so active source-claimed level deltas, including the current N5 80-vs-103 candidate gap, can be reviewed in a governed blank worksheet without hand-copying or changing decks/readiness.
 - Required explicit `--out=<batch.tsv>` for source-level delta source-input worksheets so delta review batches cannot overwrite a configured full ignored source worksheet by default.
 - Added an official JLPT occurrence-only evidence model and report/extractor: local official sample/workbook text can be reduced to minimal rows containing only level, source PDF, section/page/question reference, and observed kanji, without copying questions or creating assignment truth.
@@ -32,6 +33,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Fixed
 
+- Clarified KANJIDIC2 legacy source-evidence documentation and comparator metadata: the current pinned KANJIDIC2 input has `1479` exact rows and `0` old-JLPT-2 range rows, while future old-2 rows remain range-only; the operational comparator now declares that it stores no source assignments.
 - Finished the remaining JLPT kanji source-evidence cleanup from review: confidence states are no longer duplicated as display labels, unused lineage roles are removed, prose-only per-kanji notes are rejected unless backed by source or materialized audit state, and disputed consensus samples now render vote weights in the text audit.
 - Finished the current N5 word golden and platinum review surface by promoting `本棚|ほんだな` and `留学生|りゅうがくせい` after generated-surface, audio, pitch, label, and JLearn dictionary review.
 - Finished the current N4 word golden review surface at the requested 11-card batch size, promoting all 77 previously missing generated rows into golden expectations without starting N4 platinum.

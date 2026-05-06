@@ -198,20 +198,20 @@
       "countsForConsensus": false,
       "weight": 1,
       "licenseStatus": "approved",
-      "notes": "The active repository contract remains the current operational taxonomy only. It is recorded for comparison and deck tooling context, but it does not vote in source consensus and must not be treated as source truth.",
+      "notes": "The active repository contract remains the current operational taxonomy only. It is recorded for comparison and deck tooling context, but it stores no source assignments, does not vote in source consensus, and must not be treated as source truth.",
       "lineage": "operational_current_contract",
       "publisherIndependence": "repository_contract",
       "evidenceLineage": "operational_current_contract",
       "allowedUse": "operational-comparator",
       "sourceKind": "operational",
-      "canStoreAssignments": true,
+      "canStoreAssignments": false,
       "canStoreRawList": false,
       "canStoreExcerpts": false,
       "requiresCitation": false,
       "positiveEvidenceOnly": false,
       "licenseEvidenceUrl": "templates/jlpt_level_contract.json",
       "licenseReviewedAt": "2026-05-05",
-      "legalNotes": "Repository-owned operational comparator. It may be stored for comparison but must not vote as external source evidence."
+      "legalNotes": "Repository-owned operational comparator. It is loaded from the tracked contract for comparison only; do not store assignment rows under this lane or let it vote as external source evidence."
     },
     "tanos_legacy_direct": {
       "name": "Tanos JLPT direct legacy resources",

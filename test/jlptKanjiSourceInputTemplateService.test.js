@@ -208,6 +208,45 @@ test("kanji source input template can prepare source-level delta review rows", (
     assert.match(rows[1].reviewReason, /Active source consensus places this kanji at N5/);
 });
 
+test("kanji source input template skips already reviewed local source rows", () => {
+    const contract = {
+        kanjiLevels: {
+            日: 5,
+            学: 4,
+            本: 3,
+        },
+    };
+    const evidence = {
+        policy: {
+            minimumIndependentSources: 1,
+            minimumIndependentEvidenceLineages: 0,
+            minimumJapanesePublishedSources: 0,
+            standardAgreementScore: 0.67,
+            highAgreementScore: 0.8,
+        },
+        sources: {
+            kanjidic2_legacy: buildGovernedSource(),
+        },
+        assignments: {
+            kanjidic2_legacy: {
+                日: { level: 5, reviewStatus: "reviewed" },
+                学: { level: 5, reviewStatus: "reviewed" },
+                本: { level: 5, reviewStatus: "reviewed" },
+            },
+        },
+    };
+
+    const rows = buildJlptKanjiSourceInputTemplateRows({
+        contract,
+        evidence,
+        priority: "source-level-deltas",
+        sourceLevel: "N5",
+        skippedSourceKanji: new Set(["学"]),
+    });
+
+    assert.deepEqual(rows.map((row) => row.kanji), ["本"]);
+});
+
 test("source-level delta template priority rejects ambiguous filters", () => {
     assert.equal(normalizePriorityMode("source-level-deltas"), "source-level-deltas");
     assert.throws(() => buildJlptKanjiSourceInputTemplateRows({
@@ -302,6 +341,7 @@ test("createJlptKanjiSourceInputTemplate script parses args and reports no deck 
         level: "5",
         sourceLevel: "N5",
         priority: "source-gaps",
+        skippedExistingSourceRows: 2,
         rows: [
             { kanji: "日", reviewPriority: "missing_evidence" },
             { kanji: "月", reviewPriority: "missing_evidence" },
@@ -314,6 +354,7 @@ test("createJlptKanjiSourceInputTemplate script parses args and reports no deck 
     assert.match(text, /Priority mode: source-gaps/);
     assert.match(text, /Source level filter: N5/);
     assert.match(text, /Priority summary: missing_evidence: 2/);
+    assert.match(text, /Already reviewed\/blocked source rows skipped: 2/);
     assert.equal(formatPrioritySummary([{ reviewPriority: "b" }, { reviewPriority: "a" }]), "a: 1, b: 1");
 });
 

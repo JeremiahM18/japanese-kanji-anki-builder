@@ -4,6 +4,7 @@ const path = require("node:path");
 const { loadJlptLevelContract } = require("../src/datasets/jlptLevelContract");
 const { loadJlptKanjiSourceEvidence } = require("../src/datasets/jlptKanjiSourceEvidence");
 const { loadJlptKanjiSourceInputs } = require("../src/datasets/jlptKanjiSourceInputs");
+const { parseSourceAssignmentRows } = require("../src/services/jlptKanjiSourceInputService");
 const {
     buildJlptKanjiSourceInputTemplateRows,
     formatJlptKanjiSourceInputTemplateTsv,
@@ -80,7 +81,7 @@ function formatPrioritySummary(rows = []) {
         .join(", ") || "none";
 }
 
-function formatTemplateReport({ outPath, contractPath, evidencePath, sourceId, rows, level, sourceLevel, priority } = {}) {
+function formatTemplateReport({ outPath, contractPath, evidencePath, sourceId, rows, level, sourceLevel, priority, skippedExistingSourceRows = 0 } = {}) {
     return [
         "JLPT Kanji Source Input Template",
         "",
@@ -92,11 +93,43 @@ function formatTemplateReport({ outPath, contractPath, evidencePath, sourceId, r
         `Source level filter: ${sourceLevel || "none"}`,
         `Priority mode: ${priority || "contract"}`,
         `Priority summary: ${formatPrioritySummary(rows)}`,
+        `Already reviewed/blocked source rows skipped: ${skippedExistingSourceRows}`,
         `Rows written: ${rows.length}`,
         "",
         "This command creates an ignored manual-review worksheet only. It does not import evidence, move kanji, move words, update decks, or change readiness.",
         "Fill only permitted, manually reviewed level judgments for the selected source lane, then pin the source-input integrity before import.",
     ].join("\n");
+}
+
+function normalizeText(value) {
+    return String(value ?? "").trim();
+}
+
+function buildSkippedSourceKanjiSet(sourceInput = {}) {
+    const sourcePath = sourceInput.sourcePath
+        ? path.resolve(process.cwd(), sourceInput.sourcePath)
+        : null;
+    if (!sourcePath || !fs.existsSync(sourcePath)) {
+        return new Set();
+    }
+
+    const rows = parseSourceAssignmentRows(
+        fs.readFileSync(sourcePath, "utf8"),
+        sourceInput.format || "tsv"
+    );
+    const kanjiColumn = sourceInput.kanjiColumn || "kanji";
+    const reviewStatusColumn = sourceInput.reviewStatusColumn || "reviewStatus";
+    const defaultReviewStatus = sourceInput.defaultReviewStatus || "needs_review";
+    const skippedStatuses = new Set(["reviewed", "blocked"]);
+
+    return rows.reduce((skipped, row) => {
+        const kanji = normalizeText(row[kanjiColumn]);
+        const status = normalizeText(row[reviewStatusColumn]) || defaultReviewStatus;
+        if (kanji && skippedStatuses.has(status)) {
+            skipped.add(kanji);
+        }
+        return skipped;
+    }, new Set());
 }
 
 function run(options = {}) {
@@ -119,12 +152,14 @@ function run(options = {}) {
     const evidence = needsEvidence
         ? loadJlptKanjiSourceEvidence(evidencePath)
         : null;
+    const skippedSourceKanji = options.out ? buildSkippedSourceKanjiSet(sourceInput) : new Set();
     const rows = buildJlptKanjiSourceInputTemplateRows({
         contract,
         evidence,
         level: options.level,
         limit: options.limit,
         priority,
+        skippedSourceKanji,
         sourceLevel: options.sourceLevel,
     });
     const tsv = formatJlptKanjiSourceInputTemplateTsv(rows);
@@ -141,6 +176,7 @@ function run(options = {}) {
         level: options.level,
         sourceLevel: options.sourceLevel,
         priority,
+        skippedExistingSourceRows: skippedSourceKanji.size,
         rows,
     };
 }

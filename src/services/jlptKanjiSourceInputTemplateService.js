@@ -162,7 +162,7 @@ function buildSourceLevelDeltaPriority({ currentContractLevel, targetLevel, conf
     };
 }
 
-function buildSourceLevelDeltaRows({ contract, evidence, sourceLevel, limit }) {
+function buildSourceLevelDeltaRows({ contract, evidence, sourceLevel, limit, skippedSourceKanji }) {
     if (!evidence) {
         throw new Error("source-level-deltas priority requires a source-evidence manifest.");
     }
@@ -176,7 +176,8 @@ function buildSourceLevelDeltaRows({ contract, evidence, sourceLevel, limit }) {
         evidence,
         limit: maxRows || undefined,
     });
-    const rows = report.byLevel[targetLevel]?.missingSourceCandidatesFromCurrent || [];
+    const rows = (report.byLevel[targetLevel]?.missingSourceCandidatesFromCurrent || [])
+        .filter((row) => !skippedSourceKanji?.has(row.kanji));
 
     const formattedRows = rows.map((row) => {
         const priority = buildSourceLevelDeltaPriority(row);
@@ -203,6 +204,7 @@ function buildJlptKanjiSourceInputTemplateRows({
     limit = null,
     priority = DEFAULT_PRIORITY_MODE,
     sourceLevel = null,
+    skippedSourceKanji = new Set(),
 } = {}) {
     const maxRows = resolvePositiveLimit(limit);
     const priorityMode = normalizePriorityMode(priority);
@@ -219,6 +221,7 @@ function buildJlptKanjiSourceInputTemplateRows({
             evidence,
             sourceLevel,
             limit: maxRows,
+            skippedSourceKanji,
         });
     }
     if (hasSourceLevelFilter) {
@@ -228,6 +231,7 @@ function buildJlptKanjiSourceInputTemplateRows({
     const levelFilter = parseJlptLevelFilter(level);
     const rows = Object.entries(contract.kanjiLevels || {})
         .filter(([, contractLevel]) => levelFilter === null || contractLevel === levelFilter)
+        .filter(([kanji]) => !skippedSourceKanji.has(kanji))
         .map(([kanji, contractLevel]) => ({
             kanji,
             contractLevel,

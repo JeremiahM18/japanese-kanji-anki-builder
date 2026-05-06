@@ -8,6 +8,22 @@ const { auditJlptKanjiSourceEvidence } = require("../src/services/jlptKanjiSourc
 
 const DEFAULT_EVIDENCE_PATH = "templates/jlpt_kanji_source_evidence.json";
 
+/**
+ * @typedef {{ evidence: string, governanceStrict: boolean, json: boolean, limit: number, strict: boolean, unknownArgs: string[] }} AuditCliOptions
+ * @typedef {{ blocksRelease?: boolean, releaseMeaning?: string }} ConfidenceDefinition
+ * @typedef {{ sourceId?: string, level?: number, levelRange?: number[], tier?: string, tierLabel?: string }} DisagreementSource
+ * @typedef {{ checked: number, high_confidence: number, standard_confidence: number, disputed: number, weak_evidence: number, unknown: number, mismatches: number }} ContractLevelConfidenceCounts
+ * @typedef {{ sourceIds: string[], activeVotingSources: number }} PublisherIndependenceGroup
+ * @typedef {{ assignmentCount?: number, unreviewedAssignmentCount?: number, status?: string, countsForConsensus?: boolean, tier?: string, tierLabel?: string, licenseStatus?: string, allowedUse?: string, sourceKind?: string, canStoreAssignments?: boolean, publisherIndependence?: string, independenceGroup?: string, lineage?: string, lineageLabel?: string, derivedFromSources?: string[] }} SourceCoverageEntry
+ * @typedef {{ kanji?: string, contractLevel?: number, consensusLevel?: number, agreementScore?: number, voteWeights?: Record<string, number>, sourceId?: string, licenseStatus?: string, allowedUse?: string, sourceKind?: string, canStoreAssignments?: boolean, assignmentCount?: number }} AuditIssueEntry
+ * @typedef {{ kanji?: string, currentContractLevel?: number, sourceConsensusLevel?: number, agreementCount?: number, assignmentCount?: number, voteWeights?: Record<string, number>, confidence?: string, independentEvidenceLineageCount?: number, disagreementSources?: DisagreementSource[], confidenceReasons?: string[], textbookConsensus?: { consensusLevel?: number | null }, currentContractMatchesConsensus?: boolean | null }} ContractComparisonEntry
+ * @typedef {{ valid: boolean, governanceValid: boolean, evidenceDepthValid: boolean, checked: number, limit: number, policy: Record<string, number>, confidenceCounts: Record<string, number>, confidenceLabels: Record<string, ConfidenceDefinition>, issueCounts: Record<string, number>, byContractLevel: Record<string, ContractLevelConfidenceCounts>, sourceCoverage: Record<string, SourceCoverageEntry>, kanjiConfidenceManifest: ContractComparisonEntry[], issues: Record<string, AuditIssueEntry[]> }} AuditReport
+ */
+
+/**
+ * @param {string[]} argv
+ * @returns {AuditCliOptions}
+ */
 function parseArgs(argv) {
     const options = {
         evidence: DEFAULT_EVIDENCE_PATH,
@@ -37,10 +53,19 @@ function parseArgs(argv) {
     return options;
 }
 
+/**
+ * @param {string} label
+ * @param {number} count
+ * @returns {string}
+ */
 function formatIssueCount(label, count) {
     return `- ${label}: ${count}`;
 }
 
+/**
+ * @param {Record<string, SourceCoverageEntry>} [sourceCoverage]
+ * @returns {string[]}
+ */
 function formatSourceCoverage(sourceCoverage = {}) {
     return Object.entries(sourceCoverage)
         .sort(([a], [b]) => a.localeCompare(b))
@@ -53,7 +78,12 @@ function formatSourceCoverage(sourceCoverage = {}) {
         ));
 }
 
+/**
+ * @param {Record<string, SourceCoverageEntry>} [sourceCoverage]
+ * @returns {string[]}
+ */
 function formatPublisherIndependenceGroups(sourceCoverage = {}) {
+    /** @type {Map<string, PublisherIndependenceGroup>} */
     const groups = new Map();
     for (const [sourceId, source] of Object.entries(sourceCoverage || {})) {
         const groupId = source.publisherIndependence || source.independenceGroup || sourceId;
@@ -76,6 +106,10 @@ function formatPublisherIndependenceGroups(sourceCoverage = {}) {
         ));
 }
 
+/**
+ * @param {Record<string, ConfidenceDefinition>} [confidenceLabels]
+ * @returns {string[]}
+ */
 function formatConfidenceLabels(confidenceLabels = {}) {
     return ["high_confidence", "standard_confidence", "disputed", "weak_evidence", "unknown"]
         .filter((labelId) => confidenceLabels[labelId])
@@ -85,6 +119,10 @@ function formatConfidenceLabels(confidenceLabels = {}) {
         });
 }
 
+/**
+ * @param {{ kanji?: string, contractLevel?: number, consensusLevel?: number }} [entry]
+ * @returns {string}
+ */
 function formatKanjiIssue(entry) {
     if (!entry) {
         return "";
@@ -96,10 +134,18 @@ function formatKanjiIssue(entry) {
     return `${entry.kanji} (${level})`;
 }
 
+/**
+ * @param {number | null | undefined} level
+ * @returns {string}
+ */
 function formatLevel(level) {
     return Number.isInteger(level) ? `N${level}` : "none";
 }
 
+/**
+ * @param {DisagreementSource} [source]
+ * @returns {string}
+ */
 function formatLevelOrRange(source = {}) {
     if (Number.isInteger(source.level)) {
         return `N${source.level}`;
@@ -110,6 +156,10 @@ function formatLevelOrRange(source = {}) {
     return "unknown";
 }
 
+/**
+ * @param {DisagreementSource[]} [disagreementSources]
+ * @returns {string}
+ */
 function formatDisagreementSources(disagreementSources = []) {
     if (!Array.isArray(disagreementSources) || disagreementSources.length === 0) {
         return "none";
@@ -119,6 +169,10 @@ function formatDisagreementSources(disagreementSources = []) {
         .join(", ");
 }
 
+/**
+ * @param {Record<string, number>} [voteWeights]
+ * @returns {string}
+ */
 function formatVoteWeights(voteWeights = {}) {
     const votes = Object.entries(voteWeights || {})
         .filter(([, weight]) => Number(weight) > 0)
@@ -127,6 +181,10 @@ function formatVoteWeights(voteWeights = {}) {
     return votes.length > 0 ? votes.join(", ") : "none";
 }
 
+/**
+ * @param {Record<string, ContractLevelConfidenceCounts>} [byContractLevel]
+ * @returns {string[]}
+ */
 function formatConfidenceByContractLevel(byContractLevel = {}) {
     return Object.entries(byContractLevel || {})
         .sort(([a], [b]) => Number(b) - Number(a))
@@ -136,6 +194,11 @@ function formatConfidenceByContractLevel(byContractLevel = {}) {
         ));
 }
 
+/**
+ * @param {ContractComparisonEntry[]} [rows]
+ * @param {number} [limit]
+ * @returns {string[]}
+ */
 function formatContractComparisonRows(rows = [], limit = 25) {
     return rows
         .slice(0, Math.max(1, limit || 25))
@@ -151,17 +214,25 @@ function formatContractComparisonRows(rows = [], limit = 25) {
         ));
 }
 
+/**
+ * @param {AuditIssueEntry[]} [rows]
+ * @returns {string[]}
+ */
 function formatDisputedConsensusRows(rows = []) {
     return rows.map((entry) => (
         `- ${formatKanjiIssue(entry)}; votes ${formatVoteWeights(entry.voteWeights)}`
     ));
 }
 
+/**
+ * @param {{ contractPath?: string, evidencePath?: string, report: AuditReport }} options
+ * @returns {string}
+ */
 function formatJlptKanjiSourceEvidenceReport({
     contractPath,
     evidencePath,
     report,
-} = {}) {
+}) {
     const lines = [
         "JLPT Kanji Source Evidence Audit",
         "",
@@ -236,7 +307,7 @@ function formatJlptKanjiSourceEvidenceReport({
     if (report.issues.contractConsensusMismatches.length > 0) {
         lines.push("", `Contract/consensus mismatch samples (${report.issues.contractConsensusMismatches.length} shown):`);
         for (const entry of report.issues.contractConsensusMismatches) {
-            lines.push(`- ${formatKanjiIssue(entry)}; agreement ${entry.agreementScore.toFixed(2)}`);
+            lines.push(`- ${formatKanjiIssue(entry)}; agreement ${Number(entry.agreementScore || 0).toFixed(2)}`);
         }
     }
 
@@ -283,11 +354,11 @@ function main() {
         throw new Error(`Missing JLPT kanji source evidence file: ${evidencePath}`);
     }
 
-    const report = auditJlptKanjiSourceEvidence({
+    const report = /** @type {AuditReport} */ (auditJlptKanjiSourceEvidence({
         contract: loadJlptLevelContract(contractPath),
         evidence: loadJlptKanjiSourceEvidence(evidencePath),
         limit: options.limit,
-    });
+    }));
 
     if (options.json) {
         console.log(JSON.stringify({

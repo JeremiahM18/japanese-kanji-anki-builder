@@ -1,3 +1,26 @@
+/**
+ * @typedef {"high_confidence" | "standard_confidence" | "disputed" | "weak_evidence" | "unknown"} ConfidenceId
+ * @typedef {Record<number, number>} LevelCounts
+ * @typedef {Record<ConfidenceId, number>} ConfidenceCounts
+ * @typedef {Record<string, number>} IssueCounts
+ * @typedef {{ minimumIndependentSources?: number, minimumIndependentEvidenceLineages?: number, minimumJapanesePublishedSources?: number, standardAgreementScore?: number, highAgreementScore?: number }} EvidencePolicy
+ * @typedef {{ label?: string, rank?: number, role?: string }} SourceTier
+ * @typedef {{ label?: string, role?: string }} SourceLineage
+ * @typedef {{ level?: number, levelRange?: number[], reviewStatus?: string, citation?: string, evidenceRef?: string, notes?: string }} SourceAssignment
+ * @typedef {{ name?: string, status?: string, tier?: string, evidenceLineage?: string, lineage?: string, independent?: boolean, publisherIndependence?: string, independenceGroup?: string, japanesePublished?: boolean, countsForConsensus?: boolean, weight?: number, licenseStatus?: string, allowedUse?: string, sourceKind?: string, canStoreAssignments?: boolean, canStoreRawList?: boolean, canStoreExcerpts?: boolean, requiresCitation?: boolean, positiveEvidenceOnly?: boolean, licenseEvidenceUrl?: string, licenseReviewedAt?: string, derivedFromSources?: string[] }} EvidenceSource
+ * @typedef {{ consensusLevel?: number, agreementScore?: number, confidence?: ConfidenceId }} DeclaredKanjiEvidence
+ * @typedef {{ policy?: EvidencePolicy, sourceTiers?: Record<string, SourceTier>, sourceLineages?: Record<string, SourceLineage>, confidenceLabels?: Record<string, unknown>, confidenceReasonLabels?: Record<string, unknown>, sources?: Record<string, EvidenceSource>, assignments?: Record<string, Record<string, SourceAssignment>>, kanji?: Record<string, DeclaredKanjiEvidence> }} JlptKanjiSourceEvidence
+ * @typedef {{ kanjiLevels?: Record<string, number> }} JlptLevelContract
+ * @typedef {{ id: string, label: string, rank: number | null, role: string | null }} ResolvedSourceTier
+ * @typedef {{ id: string, label: string, role: string | null }} ResolvedSourceLineage
+ * @typedef {{ sourceId: string, level?: number, levelRange?: number[], isRangeEvidence: boolean, reviewStatus?: string, citation?: string, evidenceRef?: string, notes?: string, independent: boolean, publisherIndependence: string, independenceGroup: string, japanesePublished: boolean, weight: number, tier: ResolvedSourceTier, lineage: ResolvedSourceLineage, source: EvidenceSource }} CollectedAssignment
+ * @typedef {{ consensusLevel: number | null, agreementScore: number, voteWeights: LevelCounts, disputed: boolean }} ConsensusResult
+ * @typedef {{ sourceId: string, level?: number, levelRange?: number[], tier?: string, tierLabel?: string }} SourceDisagreement
+ * @typedef {{ sourceId: string, sourceIds: string[], assignmentCount: number, votingAssignmentCount: number, consensusLevel: number | null, agreementScore: number, agreementCount: number, agreementSourceIds: string[], disagreementSources: SourceDisagreement[], disputed: boolean }} TextbookConsensus
+ * @typedef {{ kanji?: string, currentContractLevel?: number, contractLevel?: number, assignments: CollectedAssignment[], assignmentCount: number, votingAssignmentCount: number, agreementCount: number, agreementSourceIds: string[], disagreementSources: SourceDisagreement[], independentSourceCount: number, independentEvidenceLineageCount: number, japanesePublishedSourceCount: number, sourceConsensusLevel: number | null, consensusLevel: number | null, agreementScore: number, voteWeights: LevelCounts, confidence: ConfidenceId, confidenceReasons: string[], textbookConsensus: TextbookConsensus, contractMatchesConsensus: boolean | null }} KanjiSourceEvidenceResult
+ */
+
+/** @returns {LevelCounts} */
 function createLevelCounts() {
     return {
         1: 0,
@@ -8,6 +31,7 @@ function createLevelCounts() {
     };
 }
 
+/** @returns {ConfidenceCounts} */
 function createConfidenceCounts() {
     return {
         high_confidence: 0,
@@ -18,6 +42,7 @@ function createConfidenceCounts() {
     };
 }
 
+/** @returns {IssueCounts} */
 function createIssueCounts() {
     return {
         missingEvidence: 0,
@@ -43,22 +68,40 @@ function createIssueCounts() {
 const JAPANESE_TEXTBOOK_CONSENSUS_SOURCE_ID = "japanese_textbook_consensus";
 const CONSENSUS_ALLOWED_USES = new Set(["bulk-import", "manual-citation-only"]);
 
+/**
+ * @param {JlptKanjiSourceEvidence} [evidence]
+ * @returns {[string, EvidenceSource][]}
+ */
 function getDeclaredActiveVotingSourceEntries(evidence = {}) {
     return Object.entries(evidence.sources || {})
         .filter(([, source]) => source.status === "active" && source.countsForConsensus !== false);
 }
 
+/**
+ * @param {EvidenceSource} [source]
+ * @returns {boolean}
+ */
 function isAllowedConsensusSourceUse(source = {}) {
     return source.sourceKind === "assignment"
+        && typeof source.allowedUse === "string"
         && CONSENSUS_ALLOWED_USES.has(source.allowedUse)
         && source.canStoreAssignments === true;
 }
 
+/**
+ * @param {JlptKanjiSourceEvidence} [evidence]
+ * @returns {[string, EvidenceSource][]}
+ */
 function getComparableSourceEntries(evidence = {}) {
     return getDeclaredActiveVotingSourceEntries(evidence)
         .filter(([, source]) => isAllowedConsensusSourceUse(source));
 }
 
+/**
+ * @param {EvidenceSource} [source]
+ * @param {JlptKanjiSourceEvidence} [evidence]
+ * @returns {ResolvedSourceTier}
+ */
 function resolveSourceTier(source = {}, evidence = {}) {
     const tierId = source.tier || "";
     const tier = evidence.sourceTiers?.[tierId] || null;
@@ -70,10 +113,20 @@ function resolveSourceTier(source = {}, evidence = {}) {
     };
 }
 
+/**
+ * @param {string} sourceId
+ * @param {EvidenceSource} [source]
+ * @returns {string}
+ */
 function resolvePublisherIndependence(sourceId, source = {}) {
     return source.publisherIndependence || source.independenceGroup || sourceId;
 }
 
+/**
+ * @param {EvidenceSource} [source]
+ * @param {JlptKanjiSourceEvidence} [evidence]
+ * @returns {ResolvedSourceLineage}
+ */
 function resolveSourceLineage(source = {}, evidence = {}) {
     const lineageId = source.evidenceLineage || source.lineage || source.publisherIndependence || source.independenceGroup || "";
     const lineage = evidence.sourceLineages?.[lineageId] || null;
@@ -84,24 +137,39 @@ function resolveSourceLineage(source = {}, evidence = {}) {
     };
 }
 
+/**
+ * @param {{ kanji?: string, evidence?: JlptKanjiSourceEvidence }} [options]
+ * @returns {CollectedAssignment[]}
+ */
 function collectKanjiAssignments({ kanji, evidence = {} } = {}) {
     const sourceEntries = getComparableSourceEntries(evidence);
+    /** @type {CollectedAssignment[]} */
     const assignments = [];
+    if (!kanji) {
+        return assignments;
+    }
 
     for (const [sourceId, source] of sourceEntries) {
+        /** @type {SourceAssignment | undefined} */
         const assignment = evidence.assignments?.[sourceId]?.[kanji];
+        if (!assignment) {
+            continue;
+        }
+        const levelRange = Array.isArray(assignment.levelRange) ? assignment.levelRange : [];
         const hasExactLevel = Number.isInteger(assignment?.level);
-        const hasLevelRange = Array.isArray(assignment?.levelRange)
-            && assignment.levelRange.length >= 2
-            && assignment.levelRange.every((level) => Number.isInteger(level));
+        const hasLevelRange = levelRange.length >= 2
+            && levelRange.every((level) => Number.isInteger(level));
         if ((!hasExactLevel && !hasLevelRange) || assignment.reviewStatus !== "reviewed") {
             continue;
         }
+        const sourceWeight = Number.isFinite(source.weight) && Number(source.weight) > 0
+            ? Number(source.weight)
+            : 1;
 
         assignments.push({
             sourceId,
             level: assignment.level,
-            levelRange: hasLevelRange ? assignment.levelRange : undefined,
+            levelRange: hasLevelRange ? levelRange : undefined,
             isRangeEvidence: !hasExactLevel && hasLevelRange,
             reviewStatus: assignment.reviewStatus,
             citation: assignment.citation,
@@ -111,7 +179,7 @@ function collectKanjiAssignments({ kanji, evidence = {} } = {}) {
             publisherIndependence: resolvePublisherIndependence(sourceId, source),
             independenceGroup: resolvePublisherIndependence(sourceId, source),
             japanesePublished: source.japanesePublished === true,
-            weight: Number.isFinite(source.weight) && source.weight > 0 ? source.weight : 1,
+            weight: sourceWeight,
             tier: resolveSourceTier(source, evidence),
             lineage: resolveSourceLineage(source, evidence),
             source,
@@ -121,15 +189,20 @@ function collectKanjiAssignments({ kanji, evidence = {} } = {}) {
     return assignments;
 }
 
+/**
+ * @param {CollectedAssignment[]} [assignments]
+ * @returns {ConsensusResult}
+ */
 function computeConsensus(assignments = []) {
     const voteWeights = createLevelCounts();
     let totalWeight = 0;
 
     for (const assignment of assignments) {
-        if (!Number.isInteger(assignment.level)) {
+        const level = Number(assignment.level);
+        if (!Number.isInteger(level)) {
             continue;
         }
-        voteWeights[assignment.level] += assignment.weight;
+        voteWeights[level] += assignment.weight;
         totalWeight += assignment.weight;
     }
 
@@ -157,6 +230,11 @@ function computeConsensus(assignments = []) {
     };
 }
 
+/**
+ * @param {CollectedAssignment[]} [assignments]
+ * @param {number | null} [consensusLevel]
+ * @returns {{ agreementCount: number, agreementSourceIds: string[], disagreementSources: SourceDisagreement[] }}
+ */
 function buildConsensusComparison(assignments = [], consensusLevel = null) {
     if (!Number.isInteger(consensusLevel)) {
         return {
@@ -190,12 +268,20 @@ function buildConsensusComparison(assignments = [], consensusLevel = null) {
     };
 }
 
+/**
+ * @param {Partial<CollectedAssignment>} [assignment]
+ * @returns {boolean}
+ */
 function isJapaneseTextbookSourceAssignment(assignment = {}) {
     return assignment.sourceId !== JAPANESE_TEXTBOOK_CONSENSUS_SOURCE_ID
-        && assignment.japanesePublished
+        && assignment.japanesePublished === true
         && assignment.lineage?.role === "japanese-published-study";
 }
 
+/**
+ * @param {CollectedAssignment[]} [assignments]
+ * @returns {TextbookConsensus}
+ */
 function buildJapaneseTextbookConsensus(assignments = []) {
     const textbookAssignments = assignments.filter(isJapaneseTextbookSourceAssignment);
     const consensus = computeConsensus(textbookAssignments);
@@ -214,6 +300,10 @@ function buildJapaneseTextbookConsensus(assignments = []) {
     };
 }
 
+/**
+ * @param {{ assignmentCount?: number, independentSourceCount?: number, independentEvidenceLineageCount?: number, japanesePublishedSourceCount?: number, disputed?: boolean, agreementScore?: number, policy?: EvidencePolicy }} [options]
+ * @returns {ConfidenceId}
+ */
 function classifyConfidence({
     assignmentCount,
     independentSourceCount,
@@ -223,6 +313,16 @@ function classifyConfidence({
     agreementScore,
     policy = {},
 } = {}) {
+    const minSources = policy.minimumIndependentSources ?? 3;
+    const minLineages = policy.minimumIndependentEvidenceLineages ?? 0;
+    const minJapaneseSources = policy.minimumJapanesePublishedSources ?? 1;
+    const highAgreementScore = policy.highAgreementScore ?? 0.8;
+    const standardAgreementScore = policy.standardAgreementScore ?? 0.67;
+    const score = agreementScore ?? 0;
+    const sourceCount = independentSourceCount ?? 0;
+    const lineageCount = independentEvidenceLineageCount ?? 0;
+    const japaneseSourceCount = japanesePublishedSourceCount ?? 0;
+
     if (assignmentCount === 0) {
         return "unknown";
     }
@@ -230,21 +330,25 @@ function classifyConfidence({
         return "disputed";
     }
     if (
-        independentSourceCount < policy.minimumIndependentSources
-        || independentEvidenceLineageCount < (policy.minimumIndependentEvidenceLineages || 0)
-        || japanesePublishedSourceCount < policy.minimumJapanesePublishedSources
+        sourceCount < minSources
+        || lineageCount < minLineages
+        || japaneseSourceCount < minJapaneseSources
     ) {
         return "weak_evidence";
     }
-    if (agreementScore >= policy.highAgreementScore) {
+    if (score >= highAgreementScore) {
         return "high_confidence";
     }
-    if (agreementScore >= policy.standardAgreementScore) {
+    if (score >= standardAgreementScore) {
         return "standard_confidence";
     }
     return "weak_evidence";
 }
 
+/**
+ * @param {{ assignments?: CollectedAssignment[], confidence?: ConfidenceId, contractMatchesConsensus?: boolean | null, textbookConsensus?: Partial<TextbookConsensus> }} [options]
+ * @returns {string[]}
+ */
 function buildConfidenceReasons({
     assignments = [],
     confidence,
@@ -271,7 +375,7 @@ function buildConfidenceReasons({
     }
     if (
         Number.isInteger(textbookConsensus.consensusLevel)
-        && textbookConsensus.agreementCount >= 2
+        && (textbookConsensus.agreementCount || 0) >= 2
         && !textbookConsensus.disputed
     ) {
         reasons.add("textbook_agreement");
@@ -292,8 +396,19 @@ function buildConfidenceReasons({
     return [...reasons];
 }
 
+/**
+ * @param {{ kanji?: string, contractLevel?: number, evidence?: JlptKanjiSourceEvidence }} [options]
+ * @returns {KanjiSourceEvidenceResult}
+ */
 function evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence = {} } = {}) {
-    const policy = evidence.policy || {};
+    const policy = {
+        minimumIndependentSources: 3,
+        minimumIndependentEvidenceLineages: 2,
+        minimumJapanesePublishedSources: 1,
+        standardAgreementScore: 0.67,
+        highAgreementScore: 0.8,
+        ...(evidence.policy || {}),
+    };
     const assignments = collectKanjiAssignments({ kanji, evidence });
     const independentSourceCount = new Set(
         assignments
@@ -351,6 +466,10 @@ function evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence = {} } = {
     };
 }
 
+/**
+ * @param {{ evidence?: JlptKanjiSourceEvidence, contractKanjiSet?: Set<string> }} [options]
+ * @returns {Record<string, Record<string, unknown>>}
+ */
 function summarizeSourceCoverage({ evidence = {}, contractKanjiSet = new Set() } = {}) {
     return Object.fromEntries(
         Object.entries(evidence.sources || {}).map(([sourceId, source]) => {
@@ -397,10 +516,15 @@ function summarizeSourceCoverage({ evidence = {}, contractKanjiSet = new Set() }
     );
 }
 
+/**
+ * @param {{ evidence?: JlptKanjiSourceEvidence, contractKanjiSet?: Set<string> }} [options]
+ * @returns {{ unknownAssignmentSources: string[], assignmentOutsideContract: { sourceId: string, kanji: string, level?: number }[] }}
+ */
 function collectAssignmentSourceIssues({ evidence = {}, contractKanjiSet = new Set() } = {}) {
     const knownSourceIds = new Set(Object.keys(evidence.sources || {}));
     const unknownAssignmentSources = Object.keys(evidence.assignments || {})
         .filter((sourceId) => !knownSourceIds.has(sourceId));
+    /** @type {{ sourceId: string, kanji: string, level?: number }[]} */
     const assignmentOutsideContract = [];
 
     for (const [sourceId, sourceAssignments] of Object.entries(evidence.assignments || {})) {
@@ -421,12 +545,20 @@ function collectAssignmentSourceIssues({ evidence = {}, contractKanjiSet = new S
     };
 }
 
+/**
+ * @param {EvidenceSource} [source]
+ * @returns {boolean}
+ */
 function hasGovernedSourceUseProfile(source = {}) {
     return source.allowedUse !== "needs_review"
         && typeof source.sourceKind === "string"
         && source.sourceKind.length > 0;
 }
 
+/**
+ * @param {EvidenceSource} [source]
+ * @returns {boolean}
+ */
 function hasReviewedLicenseEvidence(source = {}) {
     return typeof source.licenseEvidenceUrl === "string"
         && source.licenseEvidenceUrl.trim().length > 0
@@ -434,12 +566,25 @@ function hasReviewedLicenseEvidence(source = {}) {
         && source.licenseReviewedAt.trim().length > 0;
 }
 
+/**
+ * @param {{ contract?: JlptLevelContract, evidence?: JlptKanjiSourceEvidence, limit?: number }} [options]
+ * @returns {Record<string, unknown>}
+ */
 function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25 } = {}) {
-    const policy = evidence.policy || {};
+    /** @type {Required<EvidencePolicy>} */
+    const policy = {
+        minimumIndependentSources: 3,
+        minimumIndependentEvidenceLineages: 2,
+        minimumJapanesePublishedSources: 1,
+        standardAgreementScore: 0.67,
+        highAgreementScore: 0.8,
+        ...(evidence.policy || {}),
+    };
     const contractEntries = Object.entries(contract.kanjiLevels || {});
     const contractKanjiSet = new Set(contractEntries.map(([kanji]) => kanji));
     const confidenceCounts = createConfidenceCounts();
     const issueCounts = createIssueCounts();
+    /** @type {Record<number, { checked: number, high_confidence: number, standard_confidence: number, disputed: number, weak_evidence: number, unknown: number, mismatches: number }>} */
     const byContractLevel = Object.fromEntries(
         [1, 2, 3, 4, 5].map((level) => [level, {
             checked: 0,
@@ -451,6 +596,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
             mismatches: 0,
         }])
     );
+    /** @type {Record<string, Record<string, unknown>[]>} */
     const issues = {
         missingEvidence: [],
         insufficientIndependentSources: [],
@@ -468,6 +614,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
         declaredAgreementMismatches: [],
         declaredConfidenceMismatches: [],
     };
+    /** @type {Record<string, unknown>[]} */
     const kanjiConfidenceManifest = [];
 
     for (const [sourceId, source] of Object.entries(evidence.sources || {})) {
@@ -504,11 +651,12 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
     }
 
     for (const [sourceId, source] of getDeclaredActiveVotingSourceEntries(evidence)) {
-        if (!["approved", "restricted"].includes(source.licenseStatus)) {
+        const licenseStatus = source.licenseStatus || "unknown";
+        if (!["approved", "restricted"].includes(licenseStatus)) {
             issueCounts.unapprovedActiveSources += 1;
             issues.unapprovedActiveSources.push({
                 sourceId,
-                licenseStatus: source.licenseStatus,
+                licenseStatus,
             });
         }
         if (!isAllowedConsensusSourceUse(source)) {
@@ -556,6 +704,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
             disagreementSources: result.disagreementSources,
             currentContractMatchesConsensus: result.contractMatchesConsensus,
             reviewedSources: result.assignments.map((entry) => {
+                /** @type {Record<string, unknown>} */
                 const reviewedSource = {
                     sourceId: entry.sourceId,
                     level: entry.level,
@@ -595,7 +744,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
         }
         if (
             result.assignmentCount > 0
-            && result.independentEvidenceLineageCount < (policy.minimumIndependentEvidenceLineages || 0)
+            && result.independentEvidenceLineageCount < policy.minimumIndependentEvidenceLineages
         ) {
             issueCounts.insufficientIndependentEvidenceLineages += 1;
             issues.insufficientIndependentEvidenceLineages.push({
@@ -645,12 +794,12 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
             }
             if (
                 Number.isFinite(declared.agreementScore)
-                && Math.abs(declared.agreementScore - result.agreementScore) > 0.0001
+                && Math.abs(Number(declared.agreementScore) - result.agreementScore) > 0.0001
             ) {
                 issueCounts.declaredAgreementMismatch += 1;
                 issues.declaredAgreementMismatches.push({
                     kanji,
-                    declaredAgreementScore: declared.agreementScore,
+                    declaredAgreementScore: Number(declared.agreementScore),
                     computedAgreementScore: result.agreementScore,
                 });
             }
@@ -690,6 +839,10 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
         && issueCounts.disallowedStoredAssignments === 0;
     const valid = governanceValid && evidenceDepthValid;
 
+    /**
+     * @param {Record<string, unknown>[]} items
+     * @returns {Record<string, unknown>[]}
+     */
     function capped(items) {
         return items.slice(0, Math.max(1, limit || 25));
     }

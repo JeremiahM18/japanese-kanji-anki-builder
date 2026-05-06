@@ -53,6 +53,24 @@
       "rowCount": 1479,
       "integrityPolicy": "The ignored normalized TSV must match the tracked SHA-256, byte size, and parsed row count before import. Legacy JLPT level 2 is retained as N2/N3 range evidence and must not be converted into an exact N2 or N3 vote."
     },
+    "jlptsensei": {
+      "sourceId": "jlptsensei",
+      "sourcePath": "downloads/jlptsensei-kanji-evidence.tsv",
+      "sourceLabel": "jlptsensei-reviewed-kanji-evidence",
+      "sourceUrl": "https://jlptsensei.com/",
+      "format": "tsv",
+      "kanjiColumn": "kanji",
+      "levelColumn": "level",
+      "reviewStatusColumn": "reviewStatus",
+      "citationColumn": "citation",
+      "evidenceRefColumn": "evidenceRef",
+      "notesColumn": "notes",
+      "defaultReviewStatus": "needs_review",
+      "requireCitation": true,
+      "requireEvidenceRef": true,
+      "levelMapping": "new-jlpt-n1-n5",
+      "integrityPolicy": "This source input is for manually reviewed minimal level judgments from JLPT Sensei kanji pages only. Do not scrape, copy, or republish JLPT Sensei list content. Pin SHA-256, byte size, row count, and checkedAt only after the reviewed TSV contains permitted citations and evidence references."
+    },
     "shin_kanzen_master_kanji": {
       "sourceId": "shin_kanzen_master_kanji",
       "sourcePath": "downloads/shin-kanzen-master-kanji-evidence.tsv",

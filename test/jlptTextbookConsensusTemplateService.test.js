@@ -109,5 +109,5 @@ test("createJlptTextbookConsensusTemplate script parses args and reports no deck
 
     assert.match(text, /manual-review worksheet only/);
     assert.match(text, /does not import evidence, move kanji, move words, update decks, or change readiness/);
-    assert.match(text, /selected Japanese-published source lane/);
+    assert.match(text, /selected source lane/);
 });

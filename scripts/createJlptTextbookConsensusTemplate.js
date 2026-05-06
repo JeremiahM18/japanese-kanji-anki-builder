@@ -54,7 +54,7 @@ function parseArgs(argv) {
 
 function formatTemplateReport({ outPath, contractPath, sourceId, rows, level } = {}) {
     return [
-        "JLPT Japanese Textbook Source Template",
+        "JLPT Kanji Source Input Template",
         "",
         `Source: ${sourceId || "unknown"}`,
         `Output: ${outPath}`,
@@ -63,7 +63,7 @@ function formatTemplateReport({ outPath, contractPath, sourceId, rows, level } =
         `Rows written: ${rows.length}`,
         "",
         "This command creates an ignored manual-review worksheet only. It does not import evidence, move kanji, move words, update decks, or change readiness.",
-        "Fill only permitted, manually reviewed level judgments for the selected Japanese-published source lane, then pin the source-input integrity before import.",
+        "Fill only permitted, manually reviewed level judgments for the selected source lane, then pin the source-input integrity before import.",
     ].join("\n");
 }
 

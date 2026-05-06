@@ -269,3 +269,40 @@ test("source input manifest can declare planned restricted textbook source lanes
     assert.equal(input.byteSize, undefined);
     assert.equal(input.rowCount, undefined);
 });
+
+test("source input manifest can declare a restricted manual JLPT Sensei lane", () => {
+    const manifest = normalizeJlptKanjiSourceInputs({
+        version: 1,
+        policy: {
+            noDeckMutation: true,
+            requirePinnedIntegrity: true,
+            requireKnownEvidenceSource: true,
+        },
+        inputs: {
+            jlptsensei: {
+                sourceId: "jlptsensei",
+                sourcePath: "downloads/jlptsensei-kanji-evidence.tsv",
+                sourceLabel: "jlptsensei-reviewed-kanji-evidence",
+                sourceUrl: "https://jlptsensei.com/",
+                format: "tsv",
+                kanjiColumn: "kanji",
+                levelColumn: "level",
+                reviewStatusColumn: "reviewStatus",
+                citationColumn: "citation",
+                evidenceRefColumn: "evidenceRef",
+                notesColumn: "notes",
+                defaultReviewStatus: "needs_review",
+                requireCitation: true,
+                requireEvidenceRef: true,
+                levelMapping: "new-jlpt-n1-n5",
+                integrityPolicy: "Manual JLPT Sensei evidence only.",
+            },
+        },
+    });
+
+    const input = manifest.inputs.jlptsensei;
+    assert.equal(input.sourcePath, "downloads/jlptsensei-kanji-evidence.tsv");
+    assert.equal(input.sourceUrl, "https://jlptsensei.com/");
+    assert.equal(input.defaultReviewStatus, "needs_review");
+    assert.equal(input.sha256, undefined);
+});

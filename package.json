@@ -23,6 +23,7 @@
     "data:audit:jlpt": "node scripts/auditJlptAlignment.js",
     "data:audit:jlpt:sources": "node scripts/auditJlptKanjiSourceEvidence.js",
     "data:audit:jlpt:source-inputs": "node scripts/reportJlptKanjiSourceInputs.js",
+    "data:merge:jlpt:source-batch": "node scripts/mergeJlptKanjiSourceBatch.js",
     "data:normalize:kanjidic2-jlpt": "node scripts/normalizeKanjidic2JlptSource.js",
     "data:normalize:tanos-jlpt-kanji": "node scripts/normalizeTanosJlptKanjiSource.js",
     "data:import:jlpt:source-input": "node scripts/importJlptKanjiSourceInput.js",

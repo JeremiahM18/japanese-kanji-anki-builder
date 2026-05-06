@@ -1275,10 +1275,32 @@ test("formatJlptKanjiSourceEvidenceReport renders policy and blocker counts", ()
     assert.match(text, /Confidence labels:/);
     assert.match(text, /Confidence by contract level:/);
     assert.match(text, /- N5: checked 1; high 0; standard 0; disputed 0; weak 0; unknown 1; mismatches 0/);
+    assert.match(text, /Missing\/disagreement work queue by contract level:/);
+    assert.match(text, /- N5: checked 1; missing any evidence 1; missing Japanese-published 1; disputed 0; mismatches 0; review queue 1; active agreement but missing Japanese 0/);
+    assert.match(text, /Missing\/disagreement work queue samples \(1 shown\):/);
+    assert.match(text, /- 日: current N5; consensus none; reasons missing reviewed active evidence, missing Japanese-published source/);
     assert.match(text, /Publisher independence groups:/);
     assert.match(text, /Current contract comparison samples \(1 shown\):/);
     assert.match(text, /- 日: current N5; consensus none; agreement 0\/0; lineages 0; disagreements none; confidence unknown; reasons unknown_no_reviewed_external_evidence; textbook consensus none; matches no/);
     assert.match(text, /Missing evidence: 1/);
+});
+
+test("formatJlptKanjiSourceEvidenceReport counts active agreement that is still missing Japanese-published evidence", () => {
+    const text = formatJlptKanjiSourceEvidenceReport({
+        contractPath: "templates/jlpt_level_contract.json",
+        evidencePath: "templates/jlpt_kanji_source_evidence.json",
+        report: auditJlptKanjiSourceEvidence({
+            contract: { kanjiLevels: { 日: 5 } },
+            evidence: buildEvidence({
+                tanos: { 日: 5 },
+                jlptsensei: { 日: 5 },
+            }),
+            limit: 5,
+        }),
+    });
+
+    assert.match(text, /- N5: checked 1; missing any evidence 0; missing Japanese-published 1; disputed 0; mismatches 0; review queue 1; active agreement but missing Japanese 1/);
+    assert.match(text, /- 日: current N5; consensus N5; reasons missing Japanese-published source; agreement 2\/2; Japanese-published sources 0; confidence weak_evidence/);
 });
 
 test("source evidence stays out of deck word and readiness service pipelines", () => {

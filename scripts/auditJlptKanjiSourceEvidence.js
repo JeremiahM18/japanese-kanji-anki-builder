@@ -16,7 +16,8 @@ const DEFAULT_EVIDENCE_PATH = "templates/jlpt_kanji_source_evidence.json";
  * @typedef {{ sourceIds: string[], activeVotingSources: number }} PublisherIndependenceGroup
  * @typedef {{ assignmentCount?: number, unreviewedAssignmentCount?: number, status?: string, countsForConsensus?: boolean, tier?: string, tierLabel?: string, licenseStatus?: string, allowedUse?: string, sourceKind?: string, canStoreAssignments?: boolean, publisherIndependence?: string, independenceGroup?: string, lineage?: string, lineageLabel?: string, derivedFromSources?: string[] }} SourceCoverageEntry
  * @typedef {{ kanji?: string, contractLevel?: number, consensusLevel?: number | null, agreementScore?: number, voteWeights?: Record<string, number>, sourceId?: string, licenseStatus?: string, allowedUse?: string, sourceKind?: string, canStoreAssignments?: boolean, assignmentCount?: number }} AuditIssueEntry
- * @typedef {{ kanji?: string, currentContractLevel?: number, sourceConsensusLevel?: number | null, agreementCount?: number, assignmentCount?: number, voteWeights?: Record<string, number>, confidence?: string, independentEvidenceLineageCount?: number, disagreementSources?: DisagreementSource[], confidenceReasons?: string[], textbookConsensus?: { consensusLevel?: number | null }, currentContractMatchesConsensus?: boolean | null }} ContractComparisonEntry
+ * @typedef {{ kanji?: string, currentContractLevel?: number, sourceConsensusLevel?: number | null, agreementCount?: number, assignmentCount?: number, voteWeights?: Record<string, number>, confidence?: string, independentEvidenceLineageCount?: number, japanesePublishedSourceCount?: number, disagreementSources?: DisagreementSource[], confidenceReasons?: string[], textbookConsensus?: { consensusLevel?: number | null }, currentContractMatchesConsensus?: boolean | null }} ContractComparisonEntry
+ * @typedef {{ checked: number, missingAnyEvidence: number, missingJapanesePublishedSource: number, disputed: number, mismatches: number, reviewQueue: number, activeAgreementMissingJapanese: number }} SourceDepthWorkQueueCounts
  * @typedef {{ valid: boolean, governanceValid: boolean, evidenceDepthValid: boolean, checked: number, limit: number, policy: Record<string, number>, confidenceCounts: Record<string, number>, confidenceLabels: Record<string, ConfidenceDefinition>, issueCounts: Record<string, number>, byContractLevel: Record<string, ContractLevelConfidenceCounts>, sourceCoverage: Record<string, SourceCoverageEntry>, kanjiConfidenceManifest: ContractComparisonEntry[], issues: Record<string, AuditIssueEntry[]> }} AuditReport
  */
 
@@ -195,6 +196,136 @@ function formatConfidenceByContractLevel(byContractLevel = {}) {
 }
 
 /**
+ * @returns {SourceDepthWorkQueueCounts}
+ */
+function createSourceDepthWorkQueueCounts() {
+    return {
+        checked: 0,
+        missingAnyEvidence: 0,
+        missingJapanesePublishedSource: 0,
+        disputed: 0,
+        mismatches: 0,
+        reviewQueue: 0,
+        activeAgreementMissingJapanese: 0,
+    };
+}
+
+/**
+ * @param {ContractComparisonEntry} [entry]
+ * @returns {boolean}
+ */
+function isMissingOrDisagreementQueueEntry(entry = {}) {
+    return Number(entry.assignmentCount || 0) === 0
+        || Number(entry.japanesePublishedSourceCount || 0) < 1
+        || entry.confidence === "disputed"
+        || entry.currentContractMatchesConsensus === false;
+}
+
+/**
+ * @param {ContractComparisonEntry} [entry]
+ * @returns {string[]}
+ */
+function getMissingOrDisagreementReasons(entry = {}) {
+    const reasons = [];
+    if (Number(entry.assignmentCount || 0) === 0) {
+        reasons.push("missing reviewed active evidence");
+    }
+    if (Number(entry.japanesePublishedSourceCount || 0) < 1) {
+        reasons.push("missing Japanese-published source");
+    }
+    if (entry.confidence === "disputed") {
+        reasons.push("disputed consensus");
+    }
+    if (entry.currentContractMatchesConsensus === false) {
+        reasons.push("current/source mismatch");
+    }
+    return reasons;
+}
+
+/**
+ * @param {ContractComparisonEntry} [entryA]
+ * @param {ContractComparisonEntry} [entryB]
+ * @returns {number}
+ */
+function compareMissingOrDisagreementQueueEntries(entryA = {}, entryB = {}) {
+    const rankEntry = (entry = {}) => {
+        if (entry.confidence === "disputed") {
+            return 0;
+        }
+        if (entry.currentContractMatchesConsensus === false) {
+            return 1;
+        }
+        if (Number(entry.assignmentCount || 0) === 0) {
+            return 2;
+        }
+        if (Number(entry.japanesePublishedSourceCount || 0) < 1) {
+            return 3;
+        }
+        return 4;
+    };
+    return rankEntry(entryA) - rankEntry(entryB)
+        || Number(entryB.currentContractLevel || 0) - Number(entryA.currentContractLevel || 0)
+        || String(entryA.kanji || "").localeCompare(String(entryB.kanji || ""), "ja");
+}
+
+/**
+ * @param {ContractComparisonEntry[]} [rows]
+ * @returns {Record<string, SourceDepthWorkQueueCounts>}
+ */
+function buildSourceDepthWorkQueueByContractLevel(rows = []) {
+    /** @type {Record<string, SourceDepthWorkQueueCounts>} */
+    const byLevel = {};
+
+    for (const entry of rows || []) {
+        const level = Number(entry.currentContractLevel);
+        if (!Number.isInteger(level)) {
+            continue;
+        }
+        byLevel[level] ||= createSourceDepthWorkQueueCounts();
+        const counts = byLevel[level];
+        counts.checked += 1;
+        if (Number(entry.assignmentCount || 0) === 0) {
+            counts.missingAnyEvidence += 1;
+        }
+        if (Number(entry.japanesePublishedSourceCount || 0) < 1) {
+            counts.missingJapanesePublishedSource += 1;
+        }
+        if (entry.confidence === "disputed") {
+            counts.disputed += 1;
+        }
+        if (entry.currentContractMatchesConsensus === false) {
+            counts.mismatches += 1;
+        }
+        if (isMissingOrDisagreementQueueEntry(entry)) {
+            counts.reviewQueue += 1;
+        }
+        if (Number(entry.assignmentCount || 0) > 0
+            && Number(entry.agreementCount || 0) === Number(entry.assignmentCount || 0)
+            && entry.currentContractMatchesConsensus === true
+            && Number(entry.japanesePublishedSourceCount || 0) < 1) {
+            counts.activeAgreementMissingJapanese += 1;
+        }
+    }
+
+    return byLevel;
+}
+
+/**
+ * @param {Record<string, SourceDepthWorkQueueCounts>} [byContractLevel]
+ * @returns {string[]}
+ */
+function formatSourceDepthWorkQueueByContractLevel(byContractLevel = {}) {
+    return Object.entries(byContractLevel || {})
+        .sort(([a], [b]) => Number(b) - Number(a))
+        .map(([level, counts]) => (
+            `- N${level}: checked ${counts.checked}; missing any evidence ${counts.missingAnyEvidence}; `
+            + `missing Japanese-published ${counts.missingJapanesePublishedSource}; disputed ${counts.disputed}; `
+            + `mismatches ${counts.mismatches}; review queue ${counts.reviewQueue}; `
+            + `active agreement but missing Japanese ${counts.activeAgreementMissingJapanese}`
+        ));
+}
+
+/**
  * @param {ContractComparisonEntry[]} [rows]
  * @param {number} [limit]
  * @returns {string[]}
@@ -222,6 +353,24 @@ function formatDisputedConsensusRows(rows = []) {
     return rows.map((entry) => (
         `- ${formatKanjiIssue(entry)}; votes ${formatVoteWeights(entry.voteWeights)}`
     ));
+}
+
+/**
+ * @param {ContractComparisonEntry[]} [rows]
+ * @param {number} [limit]
+ * @returns {string[]}
+ */
+function formatMissingOrDisagreementQueueRows(rows = [], limit = 25) {
+    return rows
+        .filter((entry) => isMissingOrDisagreementQueueEntry(entry))
+        .sort(compareMissingOrDisagreementQueueEntries)
+        .slice(0, Math.max(1, limit || 25))
+        .map((entry) => (
+            `- ${entry.kanji}: current ${formatLevel(entry.currentContractLevel)}; consensus ${formatLevel(entry.sourceConsensusLevel)}; `
+            + `reasons ${getMissingOrDisagreementReasons(entry).join(", ") || "none"}; `
+            + `agreement ${entry.agreementCount}/${entry.assignmentCount}; `
+            + `Japanese-published sources ${entry.japanesePublishedSourceCount || 0}; confidence ${entry.confidence}`
+        ));
 }
 
 /**
@@ -286,6 +435,12 @@ function formatJlptKanjiSourceEvidenceReport({
         "",
         "Confidence by contract level:",
         ...formatConfidenceByContractLevel(report.byContractLevel),
+        "",
+        "Missing/disagreement work queue by contract level:",
+        ...formatSourceDepthWorkQueueByContractLevel(buildSourceDepthWorkQueueByContractLevel(report.kanjiConfidenceManifest)),
+        "",
+        `Missing/disagreement work queue samples (${Math.min(report.kanjiConfidenceManifest.filter((entry) => isMissingOrDisagreementQueueEntry(entry)).length, Math.max(1, report.limit || 25))} shown):`,
+        ...formatMissingOrDisagreementQueueRows(report.kanjiConfidenceManifest, report.limit),
         "",
         "Publisher independence groups:",
         ...formatPublisherIndependenceGroups(report.sourceCoverage),
@@ -391,7 +546,9 @@ if (require.main === module) {
 
 module.exports = {
     DEFAULT_EVIDENCE_PATH,
+    buildSourceDepthWorkQueueByContractLevel,
     formatJlptKanjiSourceEvidenceReport,
+    formatMissingOrDisagreementQueueRows,
     main,
     parseArgs,
 };

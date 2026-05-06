@@ -143,6 +143,11 @@ test("buildJlptKanjiSourceLevelDeltaReport exposes source-level candidates outsi
                 sourceId: "shin_kanzen_master_kanji",
                 reviewStatus: "blocked",
             },
+            {
+                kanji: "語",
+                sourceId: "shin_kanzen_master_kanji",
+                reviewStatus: "source_access_gap",
+            },
         ],
     });
 
@@ -186,6 +191,7 @@ test("buildJlptKanjiSourceLevelDeltaReport exposes source-level candidates outsi
         shin_kanzen_master_kanji: {
             reviewed: 1,
             blocked: 1,
+            source_access_gap: 1,
         },
     });
     assert.deepEqual(report.byLevel[4].currentContractConsensusElsewhere.map((row) => row.kanji), []);
@@ -307,15 +313,24 @@ test("auditJlptKanjiSourceLevelDeltas json output honors the level filter", () =
     assert.equal(output.byLevel[4], undefined);
 });
 
-test("buildSourceInputReviews reads only non-active source input progress", () => {
+test("buildSourceInputReviews reads non-voting source input progress", () => {
     const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "jlpt-source-inputs-"));
     const sourcePath = path.join(tmpDir, "shin.tsv");
+    const activeSourcePath = path.join(tmpDir, "active.tsv");
     const configPath = path.join(tmpDir, "inputs.json");
     fs.writeFileSync(sourcePath, [
         "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes",
         "学\tN4\treviewed\tc\te\t",
         "本\t\tblocked\t\t\t",
+        "語\t\tsource_access_gap\t\t\t",
         "日\tN5\tneeds_review\t\t\t",
+        "",
+    ].join("\n"));
+    fs.writeFileSync(activeSourcePath, [
+        "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes",
+        "学\tN4\treviewed\tc\te\t",
+        "月\t\tsource_access_gap\t\t\t",
+        "火\t\tblocked\t\t\t",
         "",
     ].join("\n"));
     fs.writeFileSync(configPath, JSON.stringify({
@@ -336,7 +351,7 @@ test("buildSourceInputReviews reads only non-active source input progress", () =
             },
             tanos_legacy_direct: {
                 sourceId: "tanos_legacy_direct",
-                sourcePath,
+                sourcePath: activeSourcePath,
                 sourceLabel: "fixture-tanos",
                 format: "tsv",
                 kanjiColumn: "kanji",
@@ -368,6 +383,27 @@ test("buildSourceInputReviews reads only non-active source input progress", () =
         {
             kanji: "本",
             sourceId: "shin_kanzen_master_kanji",
+            reviewStatus: "blocked",
+            level: null,
+            levelRange: null,
+        },
+        {
+            kanji: "語",
+            sourceId: "shin_kanzen_master_kanji",
+            reviewStatus: "source_access_gap",
+            level: null,
+            levelRange: null,
+        },
+        {
+            kanji: "月",
+            sourceId: "tanos_legacy_direct",
+            reviewStatus: "source_access_gap",
+            level: null,
+            levelRange: null,
+        },
+        {
+            kanji: "火",
+            sourceId: "tanos_legacy_direct",
             reviewStatus: "blocked",
             level: null,
             levelRange: null,

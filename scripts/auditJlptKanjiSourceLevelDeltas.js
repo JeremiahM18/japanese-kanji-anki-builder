@@ -124,7 +124,7 @@ function formatLevels(levels = []) {
 }
 
 function formatSourceInputReviewCounts(counts = {}) {
-    const parts = ["reviewed", "blocked"]
+    const parts = ["reviewed", "blocked", "source_access_gap"]
         .filter((status) => Number(counts?.[status]) > 0)
         .map((status) => `${status}:${counts[status]}`);
     return parts.length > 0 ? parts.join(", ") : "none";
@@ -184,7 +184,7 @@ function formatWorklistSection({ report, limit } = {}) {
         "All-level review worklist:",
         `- total rows needing governed source review: ${rows.length}`,
         `- priority summary: ${formatWorklistPrioritySummary(rows)}`,
-        "- method: review every listed level for the selected manual source lane; record reviewed only for exact source-level evidence, leave unresolved rows needs_review.",
+        "- method: review every listed level for the selected manual source lane; record reviewed only for exact source-level evidence, leave unresolved rows needs_review, and use source_access_gap only when permitted source material was checked but exact assignment proof is not available yet.",
         ...formatWorklistRows(rows, limit),
     ];
 }
@@ -301,9 +301,12 @@ function buildSourceInputReviews({ sourceInputsPath = null, evidence = {} } = {}
 
     for (const [sourceId, sourceConfig] of Object.entries(sourceInputs.inputs || {})) {
         const source = evidence.sources?.[sourceId];
-        if (!source || source.status === "active") {
+        if (!source) {
             continue;
         }
+        const reportableStatuses = source.status === "active"
+            ? new Set(["blocked", "source_access_gap"])
+            : new Set(["reviewed", "blocked", "source_access_gap"]);
         const sourcePath = sourceConfig.sourcePath
             ? path.resolve(process.cwd(), sourceConfig.sourcePath)
             : null;
@@ -319,7 +322,7 @@ function buildSourceInputReviews({ sourceInputsPath = null, evidence = {} } = {}
             const reviewStatus = normalizeText(row[sourceConfig.reviewStatusColumn || "reviewStatus"])
                 || sourceConfig.defaultReviewStatus
                 || "needs_review";
-            if (!["reviewed", "blocked"].includes(reviewStatus)) {
+            if (!reportableStatuses.has(reviewStatus)) {
                 continue;
             }
             const levelValue = normalizeText(row[sourceConfig.levelColumn || "level"]);

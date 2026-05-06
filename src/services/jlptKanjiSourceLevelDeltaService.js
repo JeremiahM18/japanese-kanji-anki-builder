@@ -13,7 +13,7 @@ const JLPT_LEVELS_DESC = Object.freeze([5, 4, 3, 2, 1]);
  * @typedef {{ kanji?: string, sourceId: string, reviewStatus: string, level?: number | null, levelRange?: number[] | null }} SourceInputReviewRow
  * @typedef {{ kanji: string, currentContractLevel: number, targetLevel: number, sourceConsensusLevel?: number | null, confidence?: string, voteWeights?: Record<number, number>, sourceIds: string[], reviewedSources: ReviewedSourceRow[], sourceInputReviews: SourceInputReviewRow[] }} LevelDeltaRow
  * @typedef {{ kanji: string, currentContractLevel: number, reviewPriority: string, reviewReason: string, rank: number, reviewLevels: number[], sourceCandidateLevels: number[], missingFromCurrentSourceLevels: number[], sourceConsensusLevel?: number | null, confidence?: string, confidenceReasons: string[], assignmentCount: number, independentSourceCount: number, independentEvidenceLineageCount: number, japanesePublishedSourceCount: number, voteWeights?: Record<number, number>, reviewedSources: ReviewedSourceRow[], sourceInputReviews: SourceInputReviewRow[] }} SourceLevelReviewWorklistRow
- * @typedef {{ reviewed?: number, blocked?: number }} SourceInputReviewCounts
+ * @typedef {{ reviewed?: number, blocked?: number, source_access_gap?: number }} SourceInputReviewCounts
  * @typedef {{ missingSourceCandidatesFromCurrent: SourceInputReviewCounts, missingSourceConsensusFromCurrent: SourceInputReviewCounts, disputedMissingSourceCandidatesFromCurrent: SourceInputReviewCounts, currentContractConsensusElsewhere: SourceInputReviewCounts, currentRowsWithoutSourceCandidate: SourceInputReviewCounts, currentRowsWithoutSourceConsensus: SourceInputReviewCounts }} SourceInputReviewQueueCounts
  * @typedef {{ level: number, currentContractCount: number, sourceConsensusCount: number, sourceCandidateCount: number, sourceCandidateAlreadyCurrentCount: number, sourceCandidateMissingFromCurrentCount: number, sourceConsensusAlreadyCurrentCount: number, sourceConsensusMissingFromCurrentCount: number, currentRowsWithoutSourceCandidateCount: number, currentRowsWithoutSourceConsensusCount: number, sourceClaimCounts: Record<string, number>, sourceInputReviewCounts: SourceInputReviewQueueCounts, sourceClaimsOutsideCurrent: LevelDeltaRow[], missingSourceCandidatesFromCurrent: LevelDeltaRow[], sourceConsensusOutsideCurrent: LevelDeltaRow[], missingSourceConsensusFromCurrent: LevelDeltaRow[], currentContractConsensusElsewhere: LevelDeltaRow[], disputedSourceCandidatesOutsideCurrent: LevelDeltaRow[], disputedMissingSourceCandidatesFromCurrent: LevelDeltaRow[], currentRowsWithoutSourceCandidate: LevelDeltaRow[], currentRowsWithoutSourceConsensus: LevelDeltaRow[] }} LevelSummary
  * @typedef {Record<string, SourceInputReviewCounts>} SourceInputReviewCountsBySource
@@ -110,7 +110,7 @@ function buildSourceInputReviewMap(sourceInputReviews = []) {
     for (const review of sourceInputReviews || []) {
         const kanji = String(review.kanji || "").trim();
         const reviewStatus = String(review.reviewStatus || "").trim();
-        if (!kanji || !["reviewed", "blocked"].includes(reviewStatus)) {
+        if (!kanji || !["reviewed", "blocked", "source_access_gap"].includes(reviewStatus)) {
             continue;
         }
         if (!map.has(kanji)) {
@@ -373,7 +373,7 @@ function countSourceInputReviews(rows = []) {
  */
 function countSourceInputReviewsBySource(sourceInputReviews = []) {
     return sourceInputReviews.reduce((counts, review) => {
-        if (!review.sourceId || !["reviewed", "blocked"].includes(review.reviewStatus)) {
+        if (!review.sourceId || !["reviewed", "blocked", "source_access_gap"].includes(review.reviewStatus)) {
             return counts;
         }
         if (!counts[review.sourceId]) {

@@ -108,7 +108,7 @@ function formatTemplateReport({ outPath, contractPath, evidencePath, sourceId, r
         `Source level filter: ${sourceLevel || "none"}`,
         `Priority mode: ${priority || "contract"}`,
         `Priority summary: ${formatPrioritySummary(rows)}`,
-        `Already reviewed/blocked source rows skipped: ${skippedExistingSourceRows}`,
+        `Already resolved source rows skipped: ${skippedExistingSourceRows}`,
         `Rows written: ${rows.length}`,
         ...formatTemplateRows(rows),
         "",
@@ -136,7 +136,7 @@ function buildSkippedSourceKanjiSet(sourceInput = {}) {
     const kanjiColumn = sourceInput.kanjiColumn || "kanji";
     const reviewStatusColumn = sourceInput.reviewStatusColumn || "reviewStatus";
     const defaultReviewStatus = sourceInput.defaultReviewStatus || "needs_review";
-    const skippedStatuses = new Set(["reviewed", "blocked"]);
+    const skippedStatuses = new Set(["reviewed", "blocked", "source_access_gap"]);
 
     return rows.reduce((skipped, row) => {
         const kanji = normalizeText(row[kanjiColumn]);

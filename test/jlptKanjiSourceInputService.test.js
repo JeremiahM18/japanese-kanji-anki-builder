@@ -117,6 +117,7 @@ test("source input preflight keeps blank worksheet rows pending instead of rejec
         "日\tN5\treviewed\tFixture citation\tfixture:日\tObserved fixture row",
         "学\t\tneeds_review\t\t\t",
         "橋\t\tblocked\t\t\tOut of scope for this source batch",
+        "山\t\tsource_access_gap\t\t\tChecked permitted fixture material; exact source-level proof is not available yet",
     ].join("\n");
     const sourceConfig = buildSourceConfig(text);
 
@@ -124,7 +125,7 @@ test("source input preflight keeps blank worksheet rows pending instead of rejec
         sourceId: "fixture_source",
         sourceConfig,
         sourceBuffer: Buffer.from(text, "utf8"),
-        contract: { kanjiLevels: { 日: 5, 学: 5, 橋: 2 } },
+        contract: { kanjiLevels: { 日: 5, 学: 5, 橋: 2, 山: 5 } },
         evidence: buildEvidence(),
         policy: {
             noDeckMutation: true,
@@ -137,6 +138,7 @@ test("source input preflight keeps blank worksheet rows pending instead of rejec
     assert.equal(report.reviewedAssignmentCount, 1);
     assert.equal(report.pendingRowCount, 1);
     assert.equal(report.blockedRowCount, 1);
+    assert.equal(report.sourceAccessGapRowCount, 1);
     assert.equal(report.rejectedRowCount, 0);
     assert.deepEqual(Object.keys(report.assignments), ["日"]);
 });
@@ -277,6 +279,9 @@ test("source input report script parses args and renders read-only scope", () =>
             sourcePath: "downloads/fixture.tsv",
             rowCount: 0,
             reviewedAssignmentCount: 0,
+            pendingRowCount: 0,
+            blockedRowCount: 0,
+            sourceAccessGapRowCount: 1,
             rejectedRowCount: 0,
             noDeckMutation: true,
             blockers: ["source file is missing"],
@@ -285,6 +290,7 @@ test("source input report script parses args and renders read-only scope", () =>
     }, 3);
 
     assert.match(text, /read-only/);
+    assert.match(text, /source access gap rows: 1/);
     assert.match(text, /does not move kanji, move words, update decks, or change readiness/);
     assert.match(text, /source file is missing/);
 });

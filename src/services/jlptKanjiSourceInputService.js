@@ -5,6 +5,13 @@ const {
     normalizeJlptLevelRangeAssignment,
 } = require("../datasets/jlptKanjiSourceEvidence");
 
+const SOURCE_INPUT_REVIEW_STATUSES = Object.freeze([
+    "reviewed",
+    "needs_review",
+    "blocked",
+    "source_access_gap",
+]);
+
 function normalizeText(value) {
     return String(value ?? "").trim();
 }
@@ -218,7 +225,7 @@ function buildAssignmentFromRow({ row, sourceConfig, contractKanjiSet }) {
     if (shouldValidateLevel && !Number.isInteger(normalizedLevel.level) && !Array.isArray(normalizedLevel.levelRange)) {
         issues.push(normalizedLevel.reason);
     }
-    if (!["reviewed", "needs_review", "blocked"].includes(reviewStatus)) {
+    if (!SOURCE_INPUT_REVIEW_STATUSES.includes(reviewStatus)) {
         issues.push(`invalid reviewStatus: ${reviewStatus || "missing"}`);
     }
     if (shouldValidateEvidenceFields && sourceConfig.requireCitation !== false && !citation) {
@@ -267,6 +274,7 @@ function buildJlptKanjiSourceInputReport({
     const reviewedAssignments = rowResults.filter((row) => row.issues.length === 0 && row.reviewStatus === "reviewed");
     const pendingRows = rowResults.filter((row) => row.issues.length === 0 && row.reviewStatus === "needs_review");
     const blockedRows = rowResults.filter((row) => row.issues.length === 0 && row.reviewStatus === "blocked");
+    const sourceAccessGapRows = rowResults.filter((row) => row.issues.length === 0 && row.reviewStatus === "source_access_gap");
     if (reviewedAssignments.length === 0) {
         blockers.push("no reviewed assignments ready for import");
     }
@@ -307,6 +315,7 @@ function buildJlptKanjiSourceInputReport({
         reviewedAssignmentCount: reviewedAssignments.length,
         pendingRowCount: pendingRows.length,
         blockedRowCount: blockedRows.length,
+        sourceAccessGapRowCount: sourceAccessGapRows.length,
         reviewStatusCounts,
         rejectedRowCount: rejectedRows.length,
         rejectedRows,
@@ -315,6 +324,7 @@ function buildJlptKanjiSourceInputReport({
 }
 
 module.exports = {
+    SOURCE_INPUT_REVIEW_STATUSES,
     buildJlptKanjiSourceInputReport,
     buildSourceFileIntegrity,
     normalizeInputLevel,

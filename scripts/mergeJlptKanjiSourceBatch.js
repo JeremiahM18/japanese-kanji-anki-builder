@@ -53,7 +53,7 @@ function readRequiredText(filePath, label) {
 }
 
 function formatStatusCounts(statusCounts = {}) {
-    const ordered = ["reviewed", "needs_review", "blocked"];
+    const ordered = ["reviewed", "needs_review", "blocked", "source_access_gap"];
     const parts = ordered
         .filter((status) => statusCounts[status])
         .map((status) => `${status}: ${statusCounts[status]}`);
@@ -91,6 +91,7 @@ function run(options = {}) {
             reviewedRowCount: 0,
             pendingRowCount: 0,
             blockedRowCount: 0,
+            sourceAccessGapRowCount: 0,
             statusCounts: {},
         };
     }
@@ -117,6 +118,7 @@ function run(options = {}) {
             reviewedRowCount: 0,
             pendingRowCount: 0,
             blockedRowCount: 0,
+            sourceAccessGapRowCount: 0,
             statusCounts: {},
         };
     }
@@ -159,7 +161,7 @@ function formatBatchMergeReport(result = {}) {
         `Batch statuses: ${formatStatusCounts(result.statusCounts)}`,
         `No deck mutation: ${result.noDeckMutation === false ? "no" : "yes"}`,
         "",
-        "This command only merges reviewed local source-evidence worksheet rows. It does not import assignments, move kanji, move words, update decks, or change readiness.",
+        "This command only merges local source-evidence worksheet decisions. It does not import assignments, move kanji, move words, update decks, or change readiness.",
     ];
 
     if (result.blockers?.length > 0) {

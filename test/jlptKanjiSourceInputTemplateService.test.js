@@ -414,7 +414,7 @@ test("createJlptKanjiSourceInputTemplate script parses args and reports no deck 
     assert.match(text, /Priority mode: source-gaps/);
     assert.match(text, /Source level filter: N5/);
     assert.match(text, /Priority summary: missing_evidence: 2/);
-    assert.match(text, /Already reviewed\/blocked source rows skipped: 2/);
+    assert.match(text, /Already resolved source rows skipped: 2/);
     assert.equal(formatPrioritySummary([{ reviewPriority: "b" }, { reviewPriority: "a" }]), "a: 1, b: 1");
 });
 

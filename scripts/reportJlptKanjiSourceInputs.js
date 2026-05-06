@@ -74,6 +74,7 @@ function buildReports(options = {}) {
                 reviewedAssignmentCount: 0,
                 pendingRowCount: 0,
                 blockedRowCount: 0,
+                sourceAccessGapRowCount: 0,
                 rejectedRowCount: 0,
                 rejectedRows: [],
                 assignments: {},
@@ -112,6 +113,7 @@ function formatSourceInputReport(report = {}, limit = 25) {
         `- reviewed assignments ready: ${report.reviewedAssignmentCount || 0}`,
         `- pending rows: ${report.pendingRowCount || 0}`,
         `- blocked rows: ${report.blockedRowCount || 0}`,
+        `- source access gap rows: ${report.sourceAccessGapRowCount || 0}`,
         `- rejected rows: ${report.rejectedRowCount || 0}`,
         `- no deck mutation: ${report.noDeckMutation === false ? "no" : "yes"}`,
     ];

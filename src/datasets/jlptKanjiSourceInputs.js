@@ -1,6 +1,8 @@
 const fs = require("node:fs");
 const { z } = require("zod");
 
+const sourceInputReviewStatusSchema = z.enum(["reviewed", "needs_review", "blocked", "source_access_gap"]);
+
 const sourceInputConfigSchema = z.object({
     sourceId: z.string().min(1),
     sourcePath: z.string().min(1),
@@ -13,7 +15,7 @@ const sourceInputConfigSchema = z.object({
     citationColumn: z.string().min(1).optional(),
     evidenceRefColumn: z.string().min(1).optional(),
     notesColumn: z.string().min(1).optional(),
-    defaultReviewStatus: z.enum(["reviewed", "needs_review", "blocked"]).default("needs_review"),
+    defaultReviewStatus: sourceInputReviewStatusSchema.default("needs_review"),
     defaultCitation: z.string().min(1).optional(),
     defaultEvidenceRef: z.string().min(1).optional(),
     defaultNotes: z.string().min(1).optional(),
@@ -64,4 +66,5 @@ module.exports = {
     normalizeJlptKanjiSourceInputs,
     sourceInputConfigSchema,
     sourceInputManifestSchema,
+    sourceInputReviewStatusSchema,
 };

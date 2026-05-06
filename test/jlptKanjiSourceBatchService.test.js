@@ -34,11 +34,13 @@ test("source batch merge updates matching source rows while preserving worksheet
         "日\t\tneeds_review\t\t\t",
         "学\tN5\treviewed\tFixture citation\tfixture:学\tAlready reviewed",
         "雨\t\tneeds_review\t\t\t",
+        "月\t\tneeds_review\t\t\t",
     ].join("\n");
     const batchText = [
         "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes",
         "雨\t\tblocked\t\t\tNot present in this source volume",
         "日\tN5\treviewed\tFixture citation\tfixture:日\tObserved fixture row",
+        "月\t\tsource_access_gap\t\t\tChecked permitted fixture material; exact source-level proof is not available yet",
     ].join("\n");
 
     const result = buildJlptKanjiSourceBatchMerge({
@@ -48,14 +50,16 @@ test("source batch merge updates matching source rows while preserving worksheet
     });
 
     assert.equal(result.valid, true);
-    assert.equal(result.sourceRowCount, 3);
-    assert.equal(result.batchRowCount, 2);
-    assert.equal(result.changedRowCount, 2);
+    assert.equal(result.sourceRowCount, 4);
+    assert.equal(result.batchRowCount, 3);
+    assert.equal(result.changedRowCount, 3);
     assert.equal(result.reviewedRowCount, 1);
     assert.equal(result.blockedRowCount, 1);
+    assert.equal(result.sourceAccessGapRowCount, 1);
     assert.match(result.tsv, /^kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes\n日\tN5\treviewed/m);
     assert.match(result.tsv, /学\tN5\treviewed\tFixture citation\tfixture:学\tAlready reviewed/);
     assert.match(result.tsv, /雨\t\tblocked\t\t\tNot present in this source volume/);
+    assert.match(result.tsv, /月\t\tsource_access_gap\t\t\tChecked permitted fixture material/);
 });
 
 test("source batch merge rejects unsafe worksheet shape before writing", () => {
@@ -130,10 +134,10 @@ test("source batch merge script parses args and renders no-deck-mutation scope",
         sourceRowCount: 2212,
         batchRowCount: 12,
         changedRowCount: 0,
-        statusCounts: { needs_review: 12 },
+        statusCounts: { needs_review: 11, source_access_gap: 1 },
     });
 
     assert.match(text, /Mode: dry-run/);
-    assert.match(text, /Batch statuses: needs_review: 12/);
+    assert.match(text, /Batch statuses: needs_review: 11, source_access_gap: 1/);
     assert.match(text, /does not import assignments, move kanji, move words, update decks, or change readiness/);
 });

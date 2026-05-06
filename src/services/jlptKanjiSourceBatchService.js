@@ -1,4 +1,7 @@
-const { parseSourceAssignmentRows } = require("./jlptKanjiSourceInputService");
+const {
+    SOURCE_INPUT_REVIEW_STATUSES,
+    parseSourceAssignmentRows,
+} = require("./jlptKanjiSourceInputService");
 
 function normalizeText(value) {
     return String(value ?? "").trim();
@@ -55,7 +58,7 @@ function buildJlptKanjiSourceBatchMerge({
     const sourceRows = parseSourceAssignmentRows(sourceText, "tsv");
     const batchRows = parseSourceAssignmentRows(batchText, "tsv");
     const blockers = [];
-    const validStatuses = new Set(["reviewed", "needs_review", "blocked"]);
+    const validStatuses = new Set(SOURCE_INPUT_REVIEW_STATUSES);
 
     if (!sourceHeaders.includes(kanjiColumn)) {
         blockers.push(`source worksheet is missing kanji column: ${kanjiColumn}`);
@@ -116,6 +119,7 @@ function buildJlptKanjiSourceBatchMerge({
             reviewedRowCount: 0,
             pendingRowCount: 0,
             blockedRowCount: 0,
+            sourceAccessGapRowCount: 0,
             statusCounts: countBatchStatuses(batchRows, sourceConfig),
             tsv: sourceText,
         };
@@ -156,6 +160,7 @@ function buildJlptKanjiSourceBatchMerge({
         reviewedRowCount: statusCounts.reviewed || 0,
         pendingRowCount: statusCounts.needs_review || 0,
         blockedRowCount: statusCounts.blocked || 0,
+        sourceAccessGapRowCount: statusCounts.source_access_gap || 0,
         statusCounts,
         tsv: formatRowsAsTsv({ headers: sourceHeaders, rows: mergedRows }),
     };

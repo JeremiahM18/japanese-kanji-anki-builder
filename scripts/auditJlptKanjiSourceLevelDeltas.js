@@ -113,7 +113,7 @@ function formatSourceInputReviews(reviews = []) {
     const parts = reviews
         .filter((review) => review?.sourceId && review?.reviewStatus)
         .map((review) => `${review.sourceId}:${review.reviewStatus}=${formatSourceInputLevel(review)}`);
-    return parts.length > 0 ? `; local source-input ${parts.join(", ")}` : "";
+    return parts.length > 0 ? `; source-input ${parts.join(", ")}` : "";
 }
 
 function formatLevels(levels = []) {
@@ -130,11 +130,24 @@ function formatSourceInputReviewCounts(counts = {}) {
     return parts.length > 0 ? parts.join(", ") : "none";
 }
 
+function countResolvedSourceInputRows(counts = {}) {
+    return ["reviewed", "blocked", "source_access_gap"].reduce(
+        (total, status) => total + (Number(counts?.[status]) || 0),
+        0
+    );
+}
+
 function formatSourceInputReviewCountsBySource(countsBySource = {}) {
     const parts = Object.entries(countsBySource)
         .sort(([a], [b]) => a.localeCompare(b))
-        .map(([sourceId, counts]) => `${sourceId} ${formatSourceInputReviewCounts(counts)}`)
-        .filter((part) => !part.endsWith(" none"));
+        .map(([sourceId, counts]) => {
+            const resolvedCount = countResolvedSourceInputRows(counts);
+            if (resolvedCount === 0) {
+                return "";
+            }
+            return `${sourceId} ${formatSourceInputReviewCounts(counts)} (resolved:${resolvedCount})`;
+        })
+        .filter((part) => part);
     return parts.length > 0 ? parts.join("; ") : "none";
 }
 
@@ -193,22 +206,22 @@ function formatLevelSection({ summary, limit } = {}) {
     const lines = [
         `N${summary.level} detail:`,
         `- missing from current N${summary.level} by active source claim: ${summary.missingSourceCandidatesFromCurrent.length}`,
-        `- local source-input progress on those missing-claim rows: ${formatSourceInputReviewCounts(summary.sourceInputReviewCounts?.missingSourceCandidatesFromCurrent)}`,
+        `- source-input annotations on those missing-claim rows: ${formatSourceInputReviewCounts(summary.sourceInputReviewCounts?.missingSourceCandidatesFromCurrent)}`,
         ...formatDeltaRows(summary.missingSourceCandidatesFromCurrent, limit),
         `- missing from current N${summary.level} by active source consensus: ${summary.missingSourceConsensusFromCurrent.length}`,
-        `- local source-input progress on those missing-consensus rows: ${formatSourceInputReviewCounts(summary.sourceInputReviewCounts?.missingSourceConsensusFromCurrent)}`,
+        `- source-input annotations on those missing-consensus rows: ${formatSourceInputReviewCounts(summary.sourceInputReviewCounts?.missingSourceConsensusFromCurrent)}`,
         ...formatDeltaRows(summary.missingSourceConsensusFromCurrent, limit),
         `- missing from current N${summary.level} but disputed: ${summary.disputedMissingSourceCandidatesFromCurrent.length}`,
-        `- local source-input progress on those disputed rows: ${formatSourceInputReviewCounts(summary.sourceInputReviewCounts?.disputedMissingSourceCandidatesFromCurrent)}`,
+        `- source-input annotations on those disputed rows: ${formatSourceInputReviewCounts(summary.sourceInputReviewCounts?.disputedMissingSourceCandidatesFromCurrent)}`,
         ...formatDeltaRows(summary.disputedMissingSourceCandidatesFromCurrent, limit),
         `- current N${summary.level} rows with source consensus elsewhere: ${summary.currentContractConsensusElsewhere.length}`,
-        `- local source-input progress on those consensus-elsewhere rows: ${formatSourceInputReviewCounts(summary.sourceInputReviewCounts?.currentContractConsensusElsewhere)}`,
+        `- source-input annotations on those consensus-elsewhere rows: ${formatSourceInputReviewCounts(summary.sourceInputReviewCounts?.currentContractConsensusElsewhere)}`,
         ...formatDeltaRows(summary.currentContractConsensusElsewhere, limit),
         `- current N${summary.level} rows without exact same-level source claim: ${summary.currentRowsWithoutSourceCandidateCount}`,
-        `- local source-input progress on those missing-claim current rows: ${formatSourceInputReviewCounts(summary.sourceInputReviewCounts?.currentRowsWithoutSourceCandidate)}`,
+        `- source-input annotations on those missing-claim current rows: ${formatSourceInputReviewCounts(summary.sourceInputReviewCounts?.currentRowsWithoutSourceCandidate)}`,
         ...formatDeltaRows(summary.currentRowsWithoutSourceCandidate, limit),
         `- current N${summary.level} rows without same-level source consensus: ${summary.currentRowsWithoutSourceConsensusCount}`,
-        `- local source-input progress on those missing-consensus current rows: ${formatSourceInputReviewCounts(summary.sourceInputReviewCounts?.currentRowsWithoutSourceConsensus)}`,
+        `- source-input annotations on those missing-consensus current rows: ${formatSourceInputReviewCounts(summary.sourceInputReviewCounts?.currentRowsWithoutSourceConsensus)}`,
         ...formatDeltaRows(summary.currentRowsWithoutSourceConsensus, limit),
     ];
     return lines;
@@ -234,10 +247,10 @@ function formatJlptKanjiSourceLevelDeltaReport({
         `No deck mutation: ${report.noDeckMutation === false ? "no" : "yes"}`,
         "",
         "This command compares the current operational taxonomy against active external source claims and consensus. It does not move kanji, move words, update decks, or change readiness.",
-        "Local source-input annotations are non-voting in-review progress only.",
+        "Source-input annotations are progress markers only; reviewed rows vote only after they are imported into the governed source-evidence manifest.",
         "",
         `Contract kanji checked: ${report.checked}`,
-        `Local source-input progress: ${formatSourceInputReviewCountsBySource(report.sourceInputReviewCountsBySource)}`,
+        `Source-input resolved progress: ${formatSourceInputReviewCountsBySource(report.sourceInputReviewCountsBySource)}`,
     ];
 
     if (!worklistOnly) {
@@ -304,9 +317,7 @@ function buildSourceInputReviews({ sourceInputsPath = null, evidence = {} } = {}
         if (!source) {
             continue;
         }
-        const reportableStatuses = source.status === "active"
-            ? new Set(["blocked", "source_access_gap"])
-            : new Set(["reviewed", "blocked", "source_access_gap"]);
+        const reportableStatuses = new Set(["reviewed", "blocked", "source_access_gap"]);
         const sourcePath = sourceConfig.sourcePath
             ? path.resolve(process.cwd(), sourceConfig.sourcePath)
             : null;

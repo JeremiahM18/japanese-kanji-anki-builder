@@ -275,6 +275,7 @@ function buildJlptKanjiSourceInputReport({
     const pendingRows = rowResults.filter((row) => row.issues.length === 0 && row.reviewStatus === "needs_review");
     const blockedRows = rowResults.filter((row) => row.issues.length === 0 && row.reviewStatus === "blocked");
     const sourceAccessGapRows = rowResults.filter((row) => row.issues.length === 0 && row.reviewStatus === "source_access_gap");
+    const resolvedRowCount = reviewedAssignments.length + blockedRows.length + sourceAccessGapRows.length;
     if (reviewedAssignments.length === 0) {
         blockers.push("no reviewed assignments ready for import");
     }
@@ -312,6 +313,7 @@ function buildJlptKanjiSourceInputReport({
         integrity,
         blockers,
         rowCount: sourceRows.length,
+        resolvedRowCount,
         reviewedAssignmentCount: reviewedAssignments.length,
         pendingRowCount: pendingRows.length,
         blockedRowCount: blockedRows.length,

@@ -239,13 +239,13 @@ test("formatJlptKanjiSourceLevelDeltaReport renders source claims and disputed c
 
     assert.match(text, /JLPT Kanji Source Level Delta Audit/);
     assert.match(text, /No deck mutation: yes/);
-    assert.match(text, /Local source-input progress: shin_kanzen_master_kanji reviewed:1/);
+    assert.match(text, /Source-input resolved progress: shin_kanzen_master_kanji reviewed:1 \(resolved:1\)/);
     assert.match(text, /N5: current contract 1; source candidates 3 \(already current 1, missing from current 2\); source consensus 2 \(already current 1, missing from current 1\)/);
     assert.match(text, /missing from current N5 by active source claim: 2/);
-    assert.match(text, /local source-input progress on those missing-claim rows: reviewed:1/);
+    assert.match(text, /source-input annotations on those missing-claim rows: reviewed:1/);
     assert.match(text, /missing from current N5 by active source consensus: 1/);
     assert.match(text, /missing from current N5 but disputed: 1/);
-    assert.match(text, /- 学: current N4; target N5; sources kanjidic2_legacy; consensus none; confidence disputed; votes N5:1, N4:1; local source-input shin_kanzen_master_kanji:reviewed=N4/);
+    assert.match(text, /- 学: current N4; target N5; sources kanjidic2_legacy; consensus none; confidence disputed; votes N5:1, N4:1; source-input shin_kanzen_master_kanji:reviewed=N4/);
     assert.match(text, /- 本: current N3; target N5; sources kanjidic2_legacy; consensus N5; confidence weak_evidence; votes N5:1/);
     assert.match(text, /All-level review worklist/);
     assert.match(text, /priority disputed_consensus; current N4; review levels N5, N4; source candidates N5, N4/);
@@ -313,7 +313,7 @@ test("auditJlptKanjiSourceLevelDeltas json output honors the level filter", () =
     assert.equal(output.byLevel[4], undefined);
 });
 
-test("buildSourceInputReviews reads non-voting source input progress", () => {
+test("buildSourceInputReviews reads resolved source input progress", () => {
     const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "jlpt-source-inputs-"));
     const sourcePath = path.join(tmpDir, "shin.tsv");
     const activeSourcePath = path.join(tmpDir, "active.tsv");
@@ -393,6 +393,13 @@ test("buildSourceInputReviews reads non-voting source input progress", () => {
             reviewStatus: "source_access_gap",
             level: null,
             levelRange: null,
+        },
+        {
+            kanji: "学",
+            sourceId: "tanos_legacy_direct",
+            reviewStatus: "reviewed",
+            level: 4,
+            levelRange: undefined,
         },
         {
             kanji: "月",

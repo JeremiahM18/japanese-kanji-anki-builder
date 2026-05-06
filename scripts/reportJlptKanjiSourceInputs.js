@@ -110,6 +110,7 @@ function formatSourceInputReport(report = {}, limit = 25) {
         `- format: ${report.format || ""}`,
         `- level mapping: ${report.levelMapping || ""}`,
         `- rows parsed: ${report.rowCount || 0}`,
+        `- resolved rows: ${report.resolvedRowCount || 0}`,
         `- reviewed assignments ready: ${report.reviewedAssignmentCount || 0}`,
         `- pending rows: ${report.pendingRowCount || 0}`,
         `- blocked rows: ${report.blockedRowCount || 0}`,

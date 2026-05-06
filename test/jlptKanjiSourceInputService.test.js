@@ -139,6 +139,7 @@ test("source input preflight keeps blank worksheet rows pending instead of rejec
     assert.equal(report.pendingRowCount, 1);
     assert.equal(report.blockedRowCount, 1);
     assert.equal(report.sourceAccessGapRowCount, 1);
+    assert.equal(report.resolvedRowCount, 3);
     assert.equal(report.rejectedRowCount, 0);
     assert.deepEqual(Object.keys(report.assignments), ["日"]);
 });
@@ -278,6 +279,7 @@ test("source input report script parses args and renders read-only scope", () =>
             valid: false,
             sourcePath: "downloads/fixture.tsv",
             rowCount: 0,
+            resolvedRowCount: 1,
             reviewedAssignmentCount: 0,
             pendingRowCount: 0,
             blockedRowCount: 0,
@@ -290,6 +292,7 @@ test("source input report script parses args and renders read-only scope", () =>
     }, 3);
 
     assert.match(text, /read-only/);
+    assert.match(text, /resolved rows: 1/);
     assert.match(text, /source access gap rows: 1/);
     assert.match(text, /does not move kanji, move words, update decks, or change readiness/);
     assert.match(text, /source file is missing/);

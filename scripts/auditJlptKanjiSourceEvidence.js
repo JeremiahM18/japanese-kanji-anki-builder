@@ -11,6 +11,7 @@ const DEFAULT_EVIDENCE_PATH = "templates/jlpt_kanji_source_evidence.json";
 function parseArgs(argv) {
     const options = {
         evidence: DEFAULT_EVIDENCE_PATH,
+        governanceStrict: false,
         json: false,
         limit: 25,
         strict: false,
@@ -20,6 +21,8 @@ function parseArgs(argv) {
     for (const arg of argv) {
         if (arg === "--json") {
             options.json = true;
+        } else if (arg === "--governance-strict") {
+            options.governanceStrict = true;
         } else if (arg === "--strict") {
             options.strict = true;
         } else if (arg.startsWith("--evidence=")) {
@@ -47,6 +50,29 @@ function formatSourceCoverage(sourceCoverage = {}) {
             + `${source.publisherIndependence ? `; publisher ${source.publisherIndependence}` : ""}`
             + `${source.lineage ? `; evidence lineage ${source.lineage} (${source.lineageLabel})` : ""}`
             + `${source.derivedFromSources?.length ? `; derived from ${source.derivedFromSources.join(", ")}` : ""}`
+        ));
+}
+
+function formatPublisherIndependenceGroups(sourceCoverage = {}) {
+    const groups = new Map();
+    for (const [sourceId, source] of Object.entries(sourceCoverage || {})) {
+        const groupId = source.publisherIndependence || source.independenceGroup || sourceId;
+        const group = groups.get(groupId) || {
+            sourceIds: [],
+            activeVotingSources: 0,
+        };
+        group.sourceIds.push(sourceId);
+        if (source.status === "active" && source.countsForConsensus && source.sourceKind === "assignment") {
+            group.activeVotingSources += 1;
+        }
+        groups.set(groupId, group);
+    }
+
+    return [...groups.entries()]
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([groupId, group]) => (
+            `- ${groupId}: ${group.sourceIds.join(", ")}`
+            + `; active voting assignment lanes ${group.activeVotingSources}`
         ));
 }
 
@@ -93,12 +119,30 @@ function formatDisagreementSources(disagreementSources = []) {
         .join(", ");
 }
 
+function formatVoteWeights(voteWeights = {}) {
+    const votes = Object.entries(voteWeights || {})
+        .filter(([, weight]) => Number(weight) > 0)
+        .sort(([a], [b]) => Number(b) - Number(a))
+        .map(([level, weight]) => `N${level}:${weight}`);
+    return votes.length > 0 ? votes.join(", ") : "none";
+}
+
+function formatConfidenceByContractLevel(byContractLevel = {}) {
+    return Object.entries(byContractLevel || {})
+        .sort(([a], [b]) => Number(b) - Number(a))
+        .map(([level, counts]) => (
+            `- N${level}: checked ${counts.checked}; high ${counts.high_confidence}; standard ${counts.standard_confidence}; `
+            + `disputed ${counts.disputed}; weak ${counts.weak_evidence}; unknown ${counts.unknown}; mismatches ${counts.mismatches}`
+        ));
+}
+
 function formatContractComparisonRows(rows = [], limit = 25) {
     return rows
         .slice(0, Math.max(1, limit || 25))
         .map((entry) => (
             `- ${entry.kanji}: current ${formatLevel(entry.currentContractLevel)}; consensus ${formatLevel(entry.sourceConsensusLevel)}; `
             + `agreement ${entry.agreementCount}/${entry.assignmentCount}; `
+            + `${entry.confidence === "disputed" ? `votes ${formatVoteWeights(entry.voteWeights)}; ` : ""}`
             + `lineages ${entry.independentEvidenceLineageCount}; `
             + `disagreements ${formatDisagreementSources(entry.disagreementSources)}; `
             + `confidence ${entry.confidence}; reasons ${(entry.confidenceReasons || []).join(", ") || "none"}; `
@@ -118,6 +162,8 @@ function formatJlptKanjiSourceEvidenceReport({
         `Contract: ${contractPath}`,
         `Evidence: ${evidencePath}`,
         `Overall result: ${report.valid ? "passing" : "failing"}`,
+        `Governance result: ${report.governanceValid ? "passing" : "failing"}`,
+        `Evidence-depth result: ${report.evidenceDepthValid ? "passing" : "failing"}`,
         "",
         "Consensus scope: active external assignment sources with permitted source use only; current_operational_contract is comparison-only.",
         "",
@@ -160,6 +206,12 @@ function formatJlptKanjiSourceEvidenceReport({
         formatIssueCount("Missing license/use evidence", report.issueCounts.missingLicenseEvidence),
         formatIssueCount("Illegal consensus source use", report.issueCounts.illegalConsensusSourceUse),
         formatIssueCount("Disallowed stored assignments", report.issueCounts.disallowedStoredAssignments),
+        "",
+        "Confidence by contract level:",
+        ...formatConfidenceByContractLevel(report.byContractLevel),
+        "",
+        "Publisher independence groups:",
+        ...formatPublisherIndependenceGroups(report.sourceCoverage),
         "",
         "Source coverage:",
         ...formatSourceCoverage(report.sourceCoverage),
@@ -240,6 +292,9 @@ function main() {
         }));
     }
 
+    if (options.governanceStrict && !report.governanceValid) {
+        process.exit(1);
+    }
     if (options.strict && !report.valid) {
         process.exit(1);
     }

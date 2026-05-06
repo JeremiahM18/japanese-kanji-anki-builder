@@ -19,10 +19,17 @@ const jlptLevelAssignmentValueSchema = z.union([
         notes: z.string().min(1).optional(),
     }).strict(),
 ]);
+const DEFAULT_EVIDENCE_POLICY = Object.freeze({
+    minimumIndependentSources: 3,
+    minimumIndependentEvidenceLineages: 2,
+    minimumJapanesePublishedSources: 1,
+    standardAgreementScore: 0.67,
+    highAgreementScore: 0.8,
+});
 
 const evidencePolicySchema = z.object({
     minimumIndependentSources: z.number().int().min(1).default(3),
-    minimumIndependentEvidenceLineages: z.number().int().min(0).default(1),
+    minimumIndependentEvidenceLineages: z.number().int().min(0).default(2),
     minimumJapanesePublishedSources: z.number().int().min(0).default(1),
     standardAgreementScore: z.number().min(0).max(1).default(0.67),
     highAgreementScore: z.number().min(0).max(1).default(0.8),
@@ -159,7 +166,7 @@ const kanjiEvidenceEntrySchema = z.object({
 
 const jlptKanjiSourceEvidenceSchema = z.object({
     version: z.number().int().min(1).default(1),
-    policy: evidencePolicySchema.default({}),
+    policy: evidencePolicySchema.default(DEFAULT_EVIDENCE_POLICY),
     sourceTiers: z.record(z.string().min(1), sourceTierSchema).default({}),
     sourceLineages: z.record(z.string().min(1), sourceLineageSchema).default({}),
     confidenceLabels: z.record(z.string().min(1), confidenceLabelSchema).default({}),
@@ -271,6 +278,58 @@ function assertKnownSourceLineages(parsed) {
     }
 }
 
+function assertConsistentSourceLineages(parsed) {
+    const mismatchedLineages = Object.entries(parsed.sources || {})
+        .filter(([, source]) => (
+            source.evidenceLineage
+            && source.lineage
+            && source.evidenceLineage !== source.lineage
+        ))
+        .map(([sourceId, source]) => `${sourceId}:evidenceLineage=${source.evidenceLineage},lineage=${source.lineage}`);
+
+    if (mismatchedLineages.length > 0) {
+        throw new Error(`Mismatched JLPT kanji source lineage fields: ${mismatchedLineages.join(", ")}`);
+    }
+}
+
+function assertDerivedSourceReferences(parsed) {
+    const sourceIds = new Set(Object.keys(parsed.sources || {}));
+    const unknownDerivedSources = [];
+    const derivedWithoutReferences = [];
+    const derivedWithoutAssignmentSources = [];
+
+    for (const [sourceId, source] of Object.entries(parsed.sources || {})) {
+        const derivedFromSources = source.derivedFromSources || [];
+        for (const derivedSourceId of derivedFromSources) {
+            if (!sourceIds.has(derivedSourceId)) {
+                unknownDerivedSources.push(`${sourceId}:${derivedSourceId}`);
+            }
+        }
+
+        if (source.sourceKind === "derived") {
+            if (derivedFromSources.length === 0) {
+                derivedWithoutReferences.push(sourceId);
+            }
+            const assignmentSources = derivedFromSources.filter((derivedSourceId) => (
+                parsed.sources?.[derivedSourceId]?.sourceKind === "assignment"
+            ));
+            if (derivedFromSources.length > 0 && assignmentSources.length === 0) {
+                derivedWithoutAssignmentSources.push(sourceId);
+            }
+        }
+    }
+
+    if (unknownDerivedSources.length > 0) {
+        throw new Error(`Unknown JLPT kanji derived source references: ${unknownDerivedSources.join(", ")}`);
+    }
+    if (derivedWithoutReferences.length > 0) {
+        throw new Error(`Derived JLPT kanji sources require derivedFromSources: ${derivedWithoutReferences.join(", ")}`);
+    }
+    if (derivedWithoutAssignmentSources.length > 0) {
+        throw new Error(`Derived JLPT kanji sources must reference assignment sources: ${derivedWithoutAssignmentSources.join(", ")}`);
+    }
+}
+
 function assertRequiredConfidenceLabels(parsed) {
     const missing = REQUIRED_CONFIDENCE_IDS.filter((labelId) => !parsed.confidenceLabels?.[labelId]);
     if (missing.length > 0) {
@@ -366,7 +425,9 @@ function normalizeAssignments(assignments = {}) {
 function normalizeJlptKanjiSourceEvidence(value = {}) {
     const parsed = jlptKanjiSourceEvidenceSchema.parse(value);
     assertKnownSourceTiers(parsed);
+    assertConsistentSourceLineages(parsed);
     assertKnownSourceLineages(parsed);
+    assertDerivedSourceReferences(parsed);
     assertRequiredConfidenceLabels(parsed);
     assertRequiredConfidenceReasonLabels(parsed);
     const kanji = normalizeKanjiEvidence(parsed.kanji);
@@ -374,6 +435,10 @@ function normalizeJlptKanjiSourceEvidence(value = {}) {
     const kanjiAssignments = buildAssignmentsFromKanjiEvidence(kanji);
     return {
         ...parsed,
+        policy: {
+            ...DEFAULT_EVIDENCE_POLICY,
+            ...parsed.policy,
+        },
         kanji,
         assignments: mergeAssignments(sourceCentricAssignments, kanjiAssignments),
     };

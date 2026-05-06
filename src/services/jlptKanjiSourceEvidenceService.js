@@ -547,6 +547,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
             consensusLevel: result.consensusLevel,
             agreementScore: result.agreementScore,
             agreementCount: result.agreementCount,
+            voteWeights: result.voteWeights,
             assignmentCount: result.assignmentCount,
             votingAssignmentCount: result.votingAssignmentCount,
             independentSourceCount: result.independentSourceCount,
@@ -672,13 +673,13 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
     issueCounts.assignmentOutsideContract = assignmentSourceIssues.assignmentOutsideContract.length;
 
     const checked = contractEntries.length;
-    const valid = issueCounts.missingEvidence === 0
+    const evidenceDepthValid = issueCounts.missingEvidence === 0
         && issueCounts.insufficientIndependentSources === 0
         && issueCounts.insufficientIndependentEvidenceLineages === 0
         && issueCounts.missingJapanesePublishedSource === 0
         && issueCounts.disputedConsensus === 0
-        && issueCounts.contractConsensusMismatch === 0
-        && issueCounts.unreviewedAssignments === 0
+        && issueCounts.contractConsensusMismatch === 0;
+    const governanceValid = issueCounts.unreviewedAssignments === 0
         && issueCounts.unapprovedActiveSources === 0
         && issueCounts.unknownAssignmentSource === 0
         && issueCounts.assignmentOutsideContract === 0
@@ -689,6 +690,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
         && issueCounts.missingLicenseEvidence === 0
         && issueCounts.illegalConsensusSourceUse === 0
         && issueCounts.disallowedStoredAssignments === 0;
+    const valid = governanceValid && evidenceDepthValid;
 
     function capped(items) {
         return items.slice(0, Math.max(1, limit || 25));
@@ -696,6 +698,8 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
 
     return {
         valid,
+        governanceValid,
+        evidenceDepthValid,
         checked,
         limit,
         policy,

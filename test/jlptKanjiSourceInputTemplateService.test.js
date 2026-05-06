@@ -2,18 +2,18 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const {
-    buildJlptTextbookConsensusTemplateRows,
+    buildJlptKanjiSourceInputTemplateRows,
     buildSourceEvidencePriority,
-    formatJlptTextbookConsensusTemplateTsv,
+    formatJlptKanjiSourceInputTemplateTsv,
     normalizePriorityMode,
     parseJlptLevelFilter,
     resolvePositiveLimit,
-} = require("../src/services/jlptTextbookConsensusTemplateService");
+} = require("../src/services/jlptKanjiSourceInputTemplateService");
 const {
     formatTemplateReport,
     formatPrioritySummary,
     parseArgs,
-} = require("../scripts/createJlptTextbookConsensusTemplate");
+} = require("../scripts/createJlptKanjiSourceInputTemplate");
 
 function buildGovernedSource(overrides = {}) {
     return {
@@ -29,8 +29,8 @@ function buildGovernedSource(overrides = {}) {
     };
 }
 
-test("textbook source template rows stay deterministic and blank until reviewed", () => {
-    const rows = buildJlptTextbookConsensusTemplateRows({
+test("kanji source input template rows stay deterministic and blank until reviewed", () => {
+    const rows = buildJlptKanjiSourceInputTemplateRows({
         contract: {
             kanjiLevels: {
                 鬱: 1,
@@ -54,8 +54,8 @@ test("textbook source template rows stay deterministic and blank until reviewed"
     assert.equal(rows.every((row) => row.reviewPriority === "contract_order"), true);
 });
 
-test("textbook source template supports level and limit filters", () => {
-    const rows = buildJlptTextbookConsensusTemplateRows({
+test("kanji source input template supports level and limit filters", () => {
+    const rows = buildJlptKanjiSourceInputTemplateRows({
         contract: {
             kanjiLevels: {
                 日: 5,
@@ -71,8 +71,8 @@ test("textbook source template supports level and limit filters", () => {
     assert.equal(rows[0].currentContractLevel, "N5");
 });
 
-test("textbook source template TSV exposes only manual review fields", () => {
-    const tsv = formatJlptTextbookConsensusTemplateTsv([
+test("kanji source input template TSV exposes only manual review fields", () => {
+    const tsv = formatJlptKanjiSourceInputTemplateTsv([
         {
             kanji: "日",
             currentContractLevel: "N5",
@@ -91,7 +91,7 @@ test("textbook source template TSV exposes only manual review fields", () => {
     ].join("\n"));
 });
 
-test("textbook source template can prioritize current source-evidence gaps", () => {
+test("kanji source input template can prioritize current source-evidence gaps", () => {
     const contract = {
         kanjiLevels: {
             日: 5,
@@ -141,7 +141,7 @@ test("textbook source template can prioritize current source-evidence gaps", () 
         },
     };
 
-    const rows = buildJlptTextbookConsensusTemplateRows({
+    const rows = buildJlptKanjiSourceInputTemplateRows({
         contract,
         evidence,
         priority: "source-gaps",
@@ -181,7 +181,7 @@ test("source-evidence priority labels missing Japanese-published source evidence
     assert.equal(priority.reviewPriority, "missing_japanese_published_source");
 });
 
-test("textbook source template rejects invalid CLI filters", () => {
+test("kanji source input template rejects invalid CLI filters", () => {
     assert.equal(parseJlptLevelFilter("n4"), 4);
     assert.equal(resolvePositiveLimit(3), 3);
     assert.equal(normalizePriorityMode("source-gaps"), "source-gaps");
@@ -190,7 +190,7 @@ test("textbook source template rejects invalid CLI filters", () => {
     assert.throws(() => normalizePriorityMode("fast"), /Invalid JLPT source review priority mode/);
 });
 
-test("createJlptTextbookConsensusTemplate script parses args and reports no deck mutation", () => {
+test("createJlptKanjiSourceInputTemplate script parses args and reports no deck mutation", () => {
     const options = parseArgs([
         "--contract=templates/custom-contract.json",
         "--config=templates/custom-inputs.json",

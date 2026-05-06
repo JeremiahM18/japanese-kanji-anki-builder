@@ -1,5 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
 
 const {
     normalizeJlptKanjiSourceEvidence,
@@ -240,12 +242,123 @@ test("normalizeJlptKanjiSourceEvidence rejects sources outside governed evidence
     }), /Unknown JLPT kanji source lineages/);
 });
 
+test("normalizeJlptKanjiSourceEvidence rejects mismatched lineage aliases", () => {
+    assert.throws(() => normalizeJlptKanjiSourceEvidence({
+        version: 1,
+        confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
+        sourceTiers: {
+            approved_tier: {
+                label: "Approved tier",
+                rank: 1,
+                role: "primary-evidence",
+                description: "Fixture tier.",
+            },
+        },
+        sourceLineages: {
+            lineage_a: {
+                label: "Lineage A",
+                role: "direct-legacy-jlpt",
+                description: "Fixture lineage.",
+            },
+            lineage_b: {
+                label: "Lineage B",
+                role: "community-study-list",
+                description: "Fixture lineage.",
+            },
+        },
+        sources: {
+            source_a: {
+                name: "Source A",
+                tier: "approved_tier",
+                evidenceLineage: "lineage_a",
+                lineage: "lineage_b",
+                status: "planned",
+                sourceType: "fixture",
+            },
+        },
+    }), /Mismatched JLPT kanji source lineage fields/);
+});
+
+test("normalizeJlptKanjiSourceEvidence validates derived source references", () => {
+    const base = {
+        version: 1,
+        confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
+        sourceTiers: {
+            fixture: {
+                label: "Fixture tier",
+                rank: 1,
+                role: "supporting-evidence",
+                description: "Fixture source tier.",
+            },
+        },
+    };
+
+    assert.throws(() => normalizeJlptKanjiSourceEvidence({
+        ...base,
+        sources: {
+            derived_source: buildGovernedNonVotingSource({
+                allowedUse: "derived-summary",
+                sourceKind: "derived",
+                overrides: {
+                    name: "Derived source",
+                    tier: "fixture",
+                    status: "active",
+                    sourceType: "derived",
+                    licenseStatus: "approved",
+                    derivedFromSources: ["missing_source"],
+                },
+            }),
+        },
+    }), /Unknown JLPT kanji derived source references/);
+
+    assert.throws(() => normalizeJlptKanjiSourceEvidence({
+        ...base,
+        sources: {
+            background_source: buildGovernedNonVotingSource({
+                allowedUse: "background-only",
+                sourceKind: "background",
+                overrides: {
+                    name: "Background source",
+                    tier: "fixture",
+                    status: "active",
+                    sourceType: "background",
+                    licenseStatus: "approved",
+                },
+            }),
+            derived_source: buildGovernedNonVotingSource({
+                allowedUse: "derived-summary",
+                sourceKind: "derived",
+                overrides: {
+                    name: "Derived source",
+                    tier: "fixture",
+                    status: "active",
+                    sourceType: "derived",
+                    licenseStatus: "approved",
+                    derivedFromSources: ["background_source"],
+                },
+            }),
+        },
+    }), /must reference assignment sources/);
+});
+
 test("normalizeJlptKanjiSourceEvidence requires governed confidence labels", () => {
     assert.throws(() => normalizeJlptKanjiSourceEvidence({
         version: 1,
         sourceTiers: {},
         sources: {},
     }), /Missing JLPT kanji confidence labels/);
+});
+
+test("normalizeJlptKanjiSourceEvidence defaults to two independent evidence lineages", () => {
+    const evidence = normalizeJlptKanjiSourceEvidence({
+        version: 1,
+        confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
+    });
+
+    assert.equal(evidence.policy.minimumIndependentEvidenceLineages, 2);
 });
 
 test("normalizeJlptKanjiSourceEvidence requires governed confidence reason labels", () => {
@@ -952,6 +1065,13 @@ test("auditJlptKanjiSourceEvidence emits governed confidence manifest entries", 
         consensusLevel: 5,
         agreementScore: 1,
         agreementCount: 3,
+        voteWeights: {
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0,
+            5: 4,
+        },
         assignmentCount: 3,
         votingAssignmentCount: 3,
         independentSourceCount: 3,
@@ -1054,6 +1174,8 @@ test("auditJlptKanjiSourceEvidence reports missing evidence and mismatches", () 
     });
 
     assert.equal(report.valid, false);
+    assert.equal(report.governanceValid, true);
+    assert.equal(report.evidenceDepthValid, false);
     assert.equal(report.issueCounts.missingEvidence, 1);
     assert.equal(report.issueCounts.contractConsensusMismatch, 1);
     assert.deepEqual(report.issues.missingEvidence, [{ kanji: "本", contractLevel: 5 }]);
@@ -1073,21 +1195,53 @@ test("formatJlptKanjiSourceEvidenceReport renders policy and blocker counts", ()
 
     assert.match(text, /JLPT Kanji Source Evidence Audit/);
     assert.match(text, /Overall result: failing/);
+    assert.match(text, /Governance result: passing/);
+    assert.match(text, /Evidence-depth result: failing/);
     assert.match(text, /Confidence labels:/);
+    assert.match(text, /Confidence by contract level:/);
+    assert.match(text, /- N5: checked 1; high 0; standard 0; disputed 0; weak 0; unknown 1; mismatches 0/);
+    assert.match(text, /Publisher independence groups:/);
     assert.match(text, /Current contract comparison samples \(1 shown\):/);
     assert.match(text, /- 日: current N5; consensus none; agreement 0\/0; lineages 0; disagreements none; confidence unknown; reasons unknown_no_reviewed_external_evidence; textbook consensus none; matches no/);
     assert.match(text, /Missing evidence: 1/);
 });
 
+test("source evidence stays out of deck word and readiness service pipelines", () => {
+    const servicesDir = path.join(__dirname, "..", "src", "services");
+    const allowedGovernanceModules = new Set([
+        "jlptKanjiSourceEvidenceService.js",
+        "jlptKanjiSourceImportService.js",
+        "jlptKanjiSourceInputService.js",
+        "jlptKanjiSourceInputTemplateService.js",
+        "jlptTextbookConsensusTemplateService.js",
+    ]);
+    const offenders = [];
+
+    for (const fileName of fs.readdirSync(servicesDir)) {
+        if (!fileName.endsWith(".js") || allowedGovernanceModules.has(fileName)) {
+            continue;
+        }
+        const filePath = path.join(servicesDir, fileName);
+        const text = fs.readFileSync(filePath, "utf8");
+        if (text.includes("jlptKanjiSourceEvidence")) {
+            offenders.push(fileName);
+        }
+    }
+
+    assert.deepEqual(offenders, []);
+});
+
 test("auditJlptKanjiSourceEvidence parseArgs accepts evidence strict json and limit", () => {
     const options = parseArgs([
         "--evidence=templates/custom.json",
+        "--governance-strict",
         "--strict",
         "--json",
         "--limit=5",
     ]);
 
     assert.equal(options.evidence, "templates/custom.json");
+    assert.equal(options.governanceStrict, true);
     assert.equal(options.strict, true);
     assert.equal(options.json, true);
     assert.equal(options.limit, 5);

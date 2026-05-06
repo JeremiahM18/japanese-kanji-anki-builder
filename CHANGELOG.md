@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added `--priority=source-gaps` for manual JLPT kanji source-input worksheets so Japanese-published textbook review can start with disputed, mismatched, missing, and weak source-evidence rows while keeping exported TSV columns blank and import-safe.
 - Added governed source-use policy fields to the JLPT kanji source-evidence manifest and audit: each source now declares allowed use, source kind, storage permission, citation expectations, and license/use evidence; non-assignment lanes cannot vote in assignment consensus, and planned official JLPT sample, BCCWJ frequency, and Kanji Alive background lanes are recorded without moving decks or changing readiness.
 - Added `data:merge:jlpt:source-batch`, a dry-run-by-default helper for merging small ignored JLPT kanji source-evidence review batches into their full ignored worksheets while blocking unsafe columns, duplicate or unknown kanji, invalid statuses, and reviewed-row downgrades.
 - Added source-input pending-row handling so manual JLPT kanji evidence worksheets can be reviewed in batches: only reviewed rows import, while blank `needs_review` rows stay pending instead of being rejected as source evidence.

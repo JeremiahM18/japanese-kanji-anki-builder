@@ -128,6 +128,30 @@ Tracked contracts define release behavior:
 - Platinum word review sets: [templates/platinum_n5_word_review_set.json](templates/platinum_n5_word_review_set.json), [templates/platinum_n4_word_review_set.json](templates/platinum_n4_word_review_set.json)
 - Word expansion signal source config and ignored-source integrity pins: [templates/word_expansion_signal_sources.json](templates/word_expansion_signal_sources.json)
 
+## JLPT Kanji Source Evidence At A Glance
+
+The source-evidence manifest is the governed source registry: [templates/jlpt_kanji_source_evidence.json](templates/jlpt_kanji_source_evidence.json). This table is a human-readable summary of the current lanes. The current JLPT kanji contract is an operational comparator, not final source truth, and no source lane can move kanji, move words, update decks, or change readiness by itself.
+
+| Source lane | Source / location | Current use |
+| --- | --- | --- |
+| `current_operational_contract` | [Tracked JLPT kanji contract](templates/jlpt_level_contract.json) | Active non-voting comparator for the current operational taxonomy |
+| `tanos_legacy_direct` | [Tanos JLPT direct legacy resources](https://www.tanos.co.uk/jlpt/sharing/) | Active approved bulk-import assignment evidence for direct legacy N1, N4, and N5 mappings |
+| `tanos_estimated_split` | [Tanos estimated N2/N3 resources](https://www.tanos.co.uk/jlpt/sharing/) | Active approved lower-weight assignment evidence for estimated N2/N3 splits; cannot settle taxonomy movement alone |
+| `tanos_frequency_method_notes` | [Tanos sharing/method notes](https://www.tanos.co.uk/jlpt/sharing/) | Active non-voting methodology lane explaining why Tanos N2/N3 evidence is estimated |
+| `kanjidic2_legacy` | [KANJIDIC2 legacy JLPT metadata](https://www.edrdg.org/wiki/KANJIDIC_Project.html) | Active approved bulk-import assignment evidence; old JLPT 2 remains N2/N3 range evidence |
+| `official_jlpt_sample_workbooks` | [Official JLPT sample questions/workbooks](https://www.jlpt.jp/e/samples/sampleindex.html?mode=pc-5) | Active occurrence-only evidence; stores only source PDF, section/page/question reference, and observed kanji |
+| `japanese_textbook_consensus` | Derived from individual textbook lanes in the source manifest | Active non-voting derived summary; never manually imported as a copied list |
+| `jlptsensei` | [JLPT Sensei kanji lists](https://jlptsensei.com/) | Planned restricted manual-citation assignment lane; do not scrape, copy, or republish lists |
+| `shin_kanzen_master_kanji` | [Shin Kanzen Master textbooks](https://www.3anet.co.jp/np/en/list.html?series_id=4) | Planned restricted manual-citation textbook lane |
+| `nihongo_sou_matome_kanji` | [Nihongo Sou Matome textbooks](https://www.ask-books.com/jp/somatome/) | Planned restricted manual-citation textbook lane |
+| `try_jlpt_textbook` | [TRY! JLPT textbooks](https://ask-books.com/jlpt-try) | Planned restricted manual-citation textbook lane |
+| `joyo_grade` | [Agency for Cultural Affairs Joyo kanji index](https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html) | Planned background-only metadata; not JLPT level proof |
+| `bccwj_frequency` | [BCCWJ frequency lists](https://clrd.ninjal.ac.jp/bccwj/en/freq-list.html) | Planned frequency-sanity lane; not assignment truth |
+| `kanji_alive` | [Kanji Alive credits/data policy](https://kanjialive.com/credits/) | Planned background-only metadata lane |
+| `jpdb` | [jpdb kanji metadata](https://jpdb.io/) | Planned frequency-sanity lane pending governed use review |
+| `kanshudo` | [Kanshudo terms](https://www.kanshudo.com/tc.html) | Planned but blocked from consensus until a governed use path exists |
+| `wanikani` | [WaniKani terms](https://www.wanikani.com/terms) | Planned but blocked from consensus until a governed use path exists |
+
 ## Product Rules
 
 Kanji decks:

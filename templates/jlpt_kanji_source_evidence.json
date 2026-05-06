@@ -602,7 +602,7 @@
     "official_jlpt_sample_workbooks": {
       "name": "Official JLPT sample questions and workbooks",
       "tier": "official-jlpt-sample-evidence",
-      "status": "planned",
+      "status": "active",
       "sourceType": "official-jlpt-positive-occurrence",
       "url": "https://www.jlpt.jp/e/samples/sampleindex.html?mode=pc-5",
       "independent": true,
@@ -621,7 +621,7 @@
       "licenseEvidenceUrl": "https://www.jlpt.jp/e/samples/sampleindex.html?mode=pc-5",
       "licenseReviewedAt": "2026-05-05",
       "legalNotes": "Use official material only as positive occurrence evidence with citation/page references. Do not copy prompt text, republish workbooks, or treat occurrence as a complete JLPT kanji list.",
-      "notes": "Planned future lane. Requires a separate occurrence-evidence data model before it can support confidence; it must not become a per-kanji assignment vote in the current consensus engine.",
+      "notes": "Active occurrence-only lane backed by a separate occurrence-evidence data model. Store only level, source PDF, section/page/question reference, and observed kanji. It must not become a per-kanji assignment vote in the current consensus engine.",
       "lineage": "official_jlpt_sample_occurrence",
       "publisherIndependence": "japan_foundation_jees",
       "evidenceLineage": "official_jlpt_sample_occurrence"

@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Imported `64` verified Shin Kanzen Master N4 manual-citation source-evidence rows into the active read-only JLPT kanji source-evidence manifest, with the ignored worksheet re-pinned before import and no deck, word, or readiness movement.
 - Added a read-only JLPT kanji source-level delta audit that compares current contract counts against active source-claimed level candidates, consensus counts, per-source claim counts, disputed candidates, and source claims outside the current taxonomy without moving decks or changing readiness.
 - Added missing-aware JLPT kanji source-evidence audit output that reports per-level missing Japanese-published evidence, missing active evidence, disputed rows, contract/source mismatches, and the next missing/disagreement work queue without moving decks or changing readiness.
 - Added a repository governance test that keeps JLPT kanji source-evidence loaders confined to source-governance scripts and datasets, preventing accidental deck, word, readiness, release, golden, or platinum consumption of the read-only evidence layer.

@@ -3,9 +3,12 @@ const assert = require("node:assert/strict");
 
 const {
     DEFAULT_CITATION,
+    ESTIMATED_SPLIT_CITATION,
     buildTanosJlptKanjiSource,
+    extractTanosEstimatedSplitRows,
     extractTanosJlptRows,
     formatTanosJlptRowsAsTsv,
+    parseTanosEstimatedKanjiLines,
     parseTanosKanjiLine,
 } = require("../src/services/tanosJlptKanjiSourceService");
 const {
@@ -86,6 +89,64 @@ test("buildTanosJlptKanjiSource rejects cumulative or duplicated Tanos files", (
     );
 });
 
+test("extractTanosEstimatedSplitRows normalizes N2/N3 estimate evidence separately", () => {
+    const result = extractTanosEstimatedSplitRows([
+        "JLPT N3 Kanji List",
+        "Kanji  Onyomi Kunyomi English",
+        "政 セイ ショウ マ まつりごと politics, government",
+        "議   ",
+        "deliberation, consultation",
+        "民 ミン タ  people, nation, subjects",
+    ].join("\n"), {
+        tanosLevel: 3,
+        contractKanjiSet: new Set(["政", "民"]),
+    });
+
+    assert.equal(result.sourceRowCount, 3);
+    assert.deepEqual(result.rows.map((row) => row.kanji), ["政", "民"]);
+    assert.equal(result.rows[0].tanosJlptLevel, "N3");
+    assert.equal(result.rows[0].reviewStatus, "reviewed");
+    assert.equal(result.rows[0].citation, ESTIMATED_SPLIT_CITATION);
+    assert.equal(result.rows[0].evidenceRef, "tanos_estimated_split:jlpt-kanji-list");
+    assert.match(result.rows[0].notes, /post-2010 estimated split/);
+    assert.deepEqual(result.skipped, [{
+        kanji: "議",
+        tanosJlptLevel: "N3",
+        reason: "outside the current JLPT kanji contract; excluded from source assignment import",
+    }]);
+});
+
+test("parseTanosEstimatedKanjiLines rejects duplicate estimated rows", () => {
+    assert.throws(
+        () => parseTanosEstimatedKanjiLines("政 セイ politics\n政 セイ politics", { sourceLabel: "fixture" }),
+        /duplicate kanji row: 政/
+    );
+});
+
+test("buildTanosJlptKanjiSource keeps estimated N2/N3 out of direct legacy mode", () => {
+    assert.throws(
+        () => buildTanosJlptKanjiSource({
+            levelSources: [{ tanosLevel: 3, sourceText: "政 セイ politics" }],
+        }),
+        /Only N1, N4, and N5/
+    );
+
+    const result = buildTanosJlptKanjiSource({
+        sourceMode: "estimated-split",
+        levelSources: [
+            { tanosLevel: 2, sourceText: "党 トウ party" },
+            { tanosLevel: 3, sourceText: "政 セイ politics" },
+        ],
+        contract: { kanjiLevels: { 党: 2, 政: 3 } },
+    });
+
+    assert.equal(result.rowCount, 2);
+    assert.deepEqual(result.levelCounts, {
+        N2: 1,
+        N3: 1,
+    });
+});
+
 test("normalizeTanosJlptKanjiSource script parses args and reports read-only scope", () => {
     const options = parseArgs([
         "--n1=downloads/n1.txt",
@@ -116,9 +177,43 @@ test("normalizeTanosJlptKanjiSource script parses args and reports read-only sco
             levelCounts: { N1: 1, N4: 1, N5: 1 },
             rowCount: 3,
             skippedCount: 0,
+            sourceMode: "legacy-direct",
         },
     });
 
-    assert.match(text, /N2 and N3 Tanos lanes are intentionally not normalized/);
+    assert.match(text, /Use --lane=estimated-split/);
     assert.match(text, /does not update tracked evidence, move kanji, move words, or change readiness/);
+});
+
+test("normalizeTanosJlptKanjiSource script supports the estimated split lane", () => {
+    const options = parseArgs([
+        "--lane=estimated-split",
+        "--n2=downloads/n2.txt",
+        "--n3=downloads/n3.txt",
+        "--json",
+    ]);
+
+    assert.equal(options.lane, "estimated-split");
+    assert.equal(options.inputs[2], "downloads/n2.txt");
+    assert.equal(options.inputs[3], "downloads/n3.txt");
+    assert.equal(options.json, true);
+
+    const text = formatNormalizeReport({
+        inputPaths: {
+            2: "downloads/n2.txt",
+            3: "downloads/n3.txt",
+        },
+        outPath: "downloads/tanos-estimated.tsv",
+        contractPath: "templates/custom-contract.json",
+        result: {
+            sourceRowCounts: { N2: 1, N3: 1 },
+            levelCounts: { N2: 1, N3: 1 },
+            rowCount: 2,
+            skippedCount: 0,
+            sourceMode: "estimated-split",
+        },
+    });
+
+    assert.match(text, /Lane: estimated-split/);
+    assert.match(text, /lower-weight estimated split evidence/);
 });

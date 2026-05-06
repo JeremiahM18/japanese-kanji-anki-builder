@@ -29,6 +29,28 @@
       "rowCount": 1478,
       "integrityPolicy": "The ignored normalized TSV must match the tracked SHA-256, byte size, and parsed row count before import. This Tanos direct legacy lane imports only the explicitly reviewed N1, N4, and N5 base lists. N2 and N3 are intentionally excluded from this lane and must use a separate estimated-source lane if activated later."
     },
+    "tanos_estimated_split": {
+      "sourceId": "tanos_estimated_split",
+      "sourcePath": "downloads/tanos-jlpt-kanji-estimated-split-normalized.tsv",
+      "sourceLabel": "tanos-estimated-n2-n3-kanji-normalized",
+      "sourceUrl": "https://www.tanos.co.uk/jlpt/jlpt3/",
+      "format": "tsv",
+      "kanjiColumn": "kanji",
+      "levelColumn": "tanosJlptLevel",
+      "reviewStatusColumn": "reviewStatus",
+      "citationColumn": "citation",
+      "evidenceRefColumn": "evidenceRef",
+      "notesColumn": "notes",
+      "defaultReviewStatus": "needs_review",
+      "requireCitation": true,
+      "requireEvidenceRef": true,
+      "levelMapping": "new-jlpt-n1-n5",
+      "checkedAt": "2026-05-05",
+      "sha256": "354bf74e6b0389d094156f2aceac446c2a238501447818b7f30e562c87bb7872",
+      "byteSize": 350091,
+      "rowCount": 734,
+      "integrityPolicy": "The ignored normalized TSV must match the tracked SHA-256, byte size, and parsed row count before import. This lane imports only Tanos N2 and N3 estimated split kanji lists, keeps them separate from the direct legacy lane, and must stay visibly lower-weight estimated evidence."
+    },
     "kanjidic2_legacy": {
       "sourceId": "kanjidic2_legacy",
       "sourcePath": "downloads/kanjidic2-jlpt-normalized.tsv",

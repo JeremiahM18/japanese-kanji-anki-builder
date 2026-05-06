@@ -10,18 +10,17 @@ function sortAssignments(assignments = {}) {
                 || kanjiA.localeCompare(kanjiB, "ja")
             ))
             .map(([kanji, assignment]) => {
-                const sortedAssignment = {
-                    reviewStatus: assignment.reviewStatus,
-                    citation: assignment.citation,
-                    evidenceRef: assignment.evidenceRef,
-                    notes: assignment.notes,
-                };
+                const sortedAssignment = {};
                 if (Number.isInteger(assignment.level)) {
                     sortedAssignment.level = assignment.level;
                 }
                 if (Array.isArray(assignment.levelRange)) {
                     sortedAssignment.levelRange = assignment.levelRange;
                 }
+                sortedAssignment.reviewStatus = assignment.reviewStatus;
+                sortedAssignment.citation = assignment.citation;
+                sortedAssignment.evidenceRef = assignment.evidenceRef;
+                sortedAssignment.notes = assignment.notes;
                 return [kanji, sortedAssignment];
             })
     );
@@ -75,18 +74,17 @@ function materializeKanjiEvidenceEntries({ evidenceManifest = {}, contract = {} 
         const nextEntry = {
             ...existing,
             sources: Object.fromEntries(entry.reviewedSources.map((source) => {
-                const materializedSource = {
-                    reviewStatus: "reviewed",
-                    citation: source.citation,
-                    evidenceRef: source.evidenceRef,
-                    notes: source.notes,
-                };
+                const materializedSource = {};
                 if (Number.isInteger(source.level)) {
                     materializedSource.level = formatLevel(source.level);
                 }
                 if (Array.isArray(source.levelRange)) {
                     materializedSource.levelRange = source.levelRange.map((level) => formatLevel(level));
                 }
+                materializedSource.reviewStatus = "reviewed";
+                materializedSource.citation = source.citation;
+                materializedSource.evidenceRef = source.evidenceRef;
+                materializedSource.notes = source.notes;
                 return [source.sourceId, materializedSource];
             })),
             agreementScore: entry.agreementScore,

@@ -1271,6 +1271,7 @@ test("source evidence stays out of deck word and readiness service pipelines", (
         "jlptKanjiSourceImportService.js",
         "jlptKanjiSourceInputService.js",
         "jlptKanjiSourceInputTemplateService.js",
+        "jlptKanjiSourceLevelDeltaService.js",
         "jlptTextbookConsensusTemplateService.js",
     ]);
     const offenders = [];

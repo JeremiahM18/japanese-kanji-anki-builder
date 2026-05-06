@@ -26569,6 +26569,13 @@
         "evidenceRef": "https://www.3anet.co.jp/np/resrcs/362600/; workbook=0-0001-03-362600-2.xlsx; sheet=読み方と書き方の提出回一覧表; column=42; row=32",
         "notes": "Reviewed as Shin Kanzen Master N4 evidence for the source-level delta queue; do not move decks from this source-evidence row."
       },
+      "間": {
+        "level": 4,
+        "reviewStatus": "reviewed",
+        "citation": "3A Corporation, 新完全マスター漢字 日本語能力試験N4 読み方と書き方の提出回一覧表 Excel版, official free teacher tool, checked 2026-05-06",
+        "evidenceRef": "https://www.3anet.co.jp/np/resrcs/362600/; workbook=0-0001-03-362600-2.xlsx; sheet=読み方と書き方の提出回一覧表; column=43; rows=15,20,23",
+        "notes": "Reviewed as Shin Kanzen Master N4 evidence while triaging the N5 missing-Japanese-source queue; do not import as N5 assignment evidence or move decks from this source-evidence row."
+      },
       "顔": {
         "level": 4,
         "reviewStatus": "reviewed",
@@ -26576,12 +26583,40 @@
         "evidenceRef": "https://www.3anet.co.jp/np/resrcs/362600/; workbook=0-0001-03-362600-2.xlsx; sheet=読み方と書き方の提出回一覧表; column=46; row=26",
         "notes": "Reviewed as Shin Kanzen Master N4 evidence for the source-level delta queue; do not move decks from this source-evidence row."
       },
+      "気": {
+        "level": 4,
+        "reviewStatus": "reviewed",
+        "citation": "3A Corporation, 新完全マスター漢字 日本語能力試験N4 読み方と書き方の提出回一覧表 Excel版, official free teacher tool, checked 2026-05-06",
+        "evidenceRef": "https://www.3anet.co.jp/np/resrcs/362600/; workbook=0-0001-03-362600-2.xlsx; sheet=読み方と書き方の提出回一覧表; column=48; row=6",
+        "notes": "Reviewed as Shin Kanzen Master N4 evidence while triaging the N5 missing-Japanese-source queue; do not import as N5 assignment evidence or move decks from this source-evidence row."
+      },
+      "休": {
+        "level": 4,
+        "reviewStatus": "reviewed",
+        "citation": "3A Corporation, 新完全マスター漢字 日本語能力試験N4 読み方と書き方の提出回一覧表 Excel版, official free teacher tool, checked 2026-05-06",
+        "evidenceRef": "https://www.3anet.co.jp/np/resrcs/362600/; workbook=0-0001-03-362600-2.xlsx; sheet=読み方と書き方の提出回一覧表; column=52; row=17",
+        "notes": "Reviewed as Shin Kanzen Master N4 evidence while triaging the N5 missing-Japanese-source queue; do not import as N5 assignment evidence or move decks from this source-evidence row."
+      },
       "魚": {
         "level": 4,
         "reviewStatus": "reviewed",
         "citation": "3A Corporation, 新完全マスター漢字 日本語能力試験N4 読み方と書き方の提出回一覧表 Excel版, official free teacher tool, checked 2026-05-06",
         "evidenceRef": "https://www.3anet.co.jp/np/resrcs/362600/; workbook=0-0001-03-362600-2.xlsx; sheet=読み方と書き方の提出回一覧表; column=57; row=10",
         "notes": "Reviewed as Shin Kanzen Master N4 evidence for the disputed N5 source-candidate queue; do not import as N5 assignment evidence."
+      },
+      "金": {
+        "level": 4,
+        "reviewStatus": "reviewed",
+        "citation": "3A Corporation, 新完全マスター漢字 日本語能力試験N4 読み方と書き方の提出回一覧表 Excel版, official free teacher tool, checked 2026-05-06",
+        "evidenceRef": "https://www.3anet.co.jp/np/resrcs/362600/; workbook=0-0001-03-362600-2.xlsx; sheet=読み方と書き方の提出回一覧表; column=63; rows=3,26",
+        "notes": "Reviewed as Shin Kanzen Master N4 evidence while triaging the N5 missing-Japanese-source queue; do not import as N5 assignment evidence or move decks from this source-evidence row."
+      },
+      "九": {
+        "level": 4,
+        "reviewStatus": "reviewed",
+        "citation": "3A Corporation, 新完全マスター漢字 日本語能力試験N4 読み方と書き方の提出回一覧表 Excel版, official free teacher tool, checked 2026-05-06",
+        "evidenceRef": "https://www.3anet.co.jp/np/resrcs/362600/; workbook=0-0001-03-362600-2.xlsx; sheet=読み方と書き方の提出回一覧表; column=51; row=3",
+        "notes": "Reviewed as Shin Kanzen Master N4 evidence while triaging the N5 missing-Japanese-source queue; do not import as N5 assignment evidence or move decks from this source-evidence row."
       },
       "区": {
         "level": 4,
@@ -42041,12 +42076,19 @@
           "citation": "EDRDG KANJIDIC2 legacy JLPT metadata; KANJIDIC Project, CC BY-SA 4.0.",
           "evidenceRef": "edrdg-kanjidic2:legacy-jlpt",
           "notes": "Extracted from KANJIDIC2 <misc><jlpt>; legacy JLPT 4 maps to modern N5."
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N4",
+          "reviewStatus": "reviewed",
+          "citation": "3A Corporation, 新完全マスター漢字 日本語能力試験N4 読み方と書き方の提出回一覧表 Excel版, official free teacher tool, checked 2026-05-06",
+          "evidenceRef": "https://www.3anet.co.jp/np/resrcs/362600/; workbook=0-0001-03-362600-2.xlsx; sheet=読み方と書き方の提出回一覧表; column=43; rows=15,20,23",
+          "notes": "Reviewed as Shin Kanzen Master N4 evidence while triaging the N5 missing-Japanese-source queue; do not import as N5 assignment evidence or move decks from this source-evidence row."
         }
       },
       "consensusLevel": "N5",
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims."
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims."
     },
     "関": {
       "sources": {
@@ -42691,12 +42733,19 @@
           "citation": "EDRDG KANJIDIC2 legacy JLPT metadata; KANJIDIC Project, CC BY-SA 4.0.",
           "evidenceRef": "edrdg-kanjidic2:legacy-jlpt",
           "notes": "Extracted from KANJIDIC2 <misc><jlpt>; legacy JLPT 4 maps to modern N5."
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N4",
+          "reviewStatus": "reviewed",
+          "citation": "3A Corporation, 新完全マスター漢字 日本語能力試験N4 読み方と書き方の提出回一覧表 Excel版, official free teacher tool, checked 2026-05-06",
+          "evidenceRef": "https://www.3anet.co.jp/np/resrcs/362600/; workbook=0-0001-03-362600-2.xlsx; sheet=読み方と書き方の提出回一覧表; column=48; row=6",
+          "notes": "Reviewed as Shin Kanzen Master N4 evidence while triaging the N5 missing-Japanese-source queue; do not import as N5 assignment evidence or move decks from this source-evidence row."
         }
       },
       "consensusLevel": "N5",
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims."
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims."
     },
     "汽": {
       "sources": {
@@ -43201,12 +43250,19 @@
           "citation": "EDRDG KANJIDIC2 legacy JLPT metadata; KANJIDIC Project, CC BY-SA 4.0.",
           "evidenceRef": "edrdg-kanjidic2:legacy-jlpt",
           "notes": "Extracted from KANJIDIC2 <misc><jlpt>; legacy JLPT 4 maps to modern N5."
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N4",
+          "reviewStatus": "reviewed",
+          "citation": "3A Corporation, 新完全マスター漢字 日本語能力試験N4 読み方と書き方の提出回一覧表 Excel版, official free teacher tool, checked 2026-05-06",
+          "evidenceRef": "https://www.3anet.co.jp/np/resrcs/362600/; workbook=0-0001-03-362600-2.xlsx; sheet=読み方と書き方の提出回一覧表; column=52; row=17",
+          "notes": "Reviewed as Shin Kanzen Master N4 evidence while triaging the N5 missing-Japanese-source queue; do not import as N5 assignment evidence or move decks from this source-evidence row."
         }
       },
       "consensusLevel": "N5",
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims."
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims."
     },
     "及": {
       "sources": {
@@ -44428,12 +44484,19 @@
           "citation": "EDRDG KANJIDIC2 legacy JLPT metadata; KANJIDIC Project, CC BY-SA 4.0.",
           "evidenceRef": "edrdg-kanjidic2:legacy-jlpt",
           "notes": "Extracted from KANJIDIC2 <misc><jlpt>; legacy JLPT 4 maps to modern N5."
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N4",
+          "reviewStatus": "reviewed",
+          "citation": "3A Corporation, 新完全マスター漢字 日本語能力試験N4 読み方と書き方の提出回一覧表 Excel版, official free teacher tool, checked 2026-05-06",
+          "evidenceRef": "https://www.3anet.co.jp/np/resrcs/362600/; workbook=0-0001-03-362600-2.xlsx; sheet=読み方と書き方の提出回一覧表; column=63; rows=3,26",
+          "notes": "Reviewed as Shin Kanzen Master N4 evidence while triaging the N5 missing-Japanese-source queue; do not import as N5 assignment evidence or move decks from this source-evidence row."
         }
       },
       "consensusLevel": "N5",
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims."
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims."
     },
     "吟": {
       "sources": {
@@ -44494,12 +44557,19 @@
           "citation": "EDRDG KANJIDIC2 legacy JLPT metadata; KANJIDIC Project, CC BY-SA 4.0.",
           "evidenceRef": "edrdg-kanjidic2:legacy-jlpt",
           "notes": "Extracted from KANJIDIC2 <misc><jlpt>; legacy JLPT 4 maps to modern N5."
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N4",
+          "reviewStatus": "reviewed",
+          "citation": "3A Corporation, 新完全マスター漢字 日本語能力試験N4 読み方と書き方の提出回一覧表 Excel版, official free teacher tool, checked 2026-05-06",
+          "evidenceRef": "https://www.3anet.co.jp/np/resrcs/362600/; workbook=0-0001-03-362600-2.xlsx; sheet=読み方と書き方の提出回一覧表; column=51; row=3",
+          "notes": "Reviewed as Shin Kanzen Master N4 evidence while triaging the N5 missing-Japanese-source queue; do not import as N5 assignment evidence or move decks from this source-evidence row."
         }
       },
       "consensusLevel": "N5",
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims."
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims."
     },
     "句": {
       "sources": {

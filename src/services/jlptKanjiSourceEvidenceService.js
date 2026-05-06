@@ -340,7 +340,6 @@ function evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence = {} } = {
         agreementScore: consensus.agreementScore,
         voteWeights: consensus.voteWeights,
         confidence,
-        confidenceLabel: evidence.confidenceLabels?.[confidence]?.label || confidence,
         confidenceReasons: buildConfidenceReasons({
             assignments,
             confidence,
@@ -542,7 +541,6 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
             currentContractLevel: contractLevel,
             contractLevel,
             confidence: result.confidence,
-            confidenceLabel: result.confidenceLabel,
             sourceConsensusLevel: result.consensusLevel,
             consensusLevel: result.consensusLevel,
             agreementScore: result.agreementScore,

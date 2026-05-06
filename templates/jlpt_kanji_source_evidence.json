@@ -123,55 +123,24 @@
   },
   "confidenceLabels": {
     "high_confidence": {
-      "label": "high_confidence",
       "releaseMeaning": "Consensus is source-backed, includes the required Japanese-published evidence, and meets the high agreement threshold.",
-      "blocksRelease": false,
-      "requirements": [
-        "At least three unique independent voting source groups",
-        "At least two independent evidence lineages",
-        "At least one Japanese-published voting source",
-        "Agreement score greater than or equal to the high threshold",
-        "No disputed consensus or contract mismatch"
-      ]
+      "blocksRelease": false
     },
     "standard_confidence": {
-      "label": "standard_confidence",
       "releaseMeaning": "Consensus is source-backed and meets the standard agreement threshold, but not the high threshold.",
-      "blocksRelease": false,
-      "requirements": [
-        "At least three unique independent voting source groups",
-        "At least two independent evidence lineages",
-        "At least one Japanese-published voting source",
-        "Agreement score greater than or equal to the standard threshold",
-        "No disputed consensus or contract mismatch"
-      ]
+      "blocksRelease": false
     },
     "disputed": {
-      "label": "disputed",
       "releaseMeaning": "Voting source groups do not produce a single consensus level.",
-      "blocksRelease": true,
-      "requirements": [
-        "Record the disagreement",
-        "Make an explicit keep/change/defer decision before relying on level placement"
-      ]
+      "blocksRelease": true
     },
     "weak_evidence": {
-      "label": "weak_evidence",
       "releaseMeaning": "Some evidence exists, but independence, Japanese-published evidence, or agreement is insufficient.",
-      "blocksRelease": true,
-      "requirements": [
-        "Add reviewed independent source assignments",
-        "Add reviewed Japanese-published source evidence when missing",
-        "Resolve weak agreement before release claims"
-      ]
+      "blocksRelease": true
     },
     "unknown": {
-      "label": "unknown",
       "releaseMeaning": "No reviewed active voting source assignment exists for this kanji.",
-      "blocksRelease": true,
-      "requirements": [
-        "Add reviewed source assignments before claiming source confidence"
-      ]
+      "blocksRelease": true
     }
   },
   "confidenceReasonLabels": {

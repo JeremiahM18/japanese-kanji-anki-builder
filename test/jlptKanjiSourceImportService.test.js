@@ -93,11 +93,11 @@ test("materializeKanjiEvidenceEntries keeps declared consensus aligned with acti
             },
         },
         confidenceLabels: {
-            high_confidence: { label: "high_confidence", releaseMeaning: "High.", blocksRelease: false },
-            standard_confidence: { label: "standard_confidence", releaseMeaning: "Standard.", blocksRelease: false },
-            disputed: { label: "disputed", releaseMeaning: "Disputed.", blocksRelease: true },
-            weak_evidence: { label: "weak_evidence", releaseMeaning: "Weak.", blocksRelease: true },
-            unknown: { label: "unknown", releaseMeaning: "Unknown.", blocksRelease: true },
+            high_confidence: { releaseMeaning: "High.", blocksRelease: false },
+            standard_confidence: { releaseMeaning: "Standard.", blocksRelease: false },
+            disputed: { releaseMeaning: "Disputed.", blocksRelease: true },
+            weak_evidence: { releaseMeaning: "Weak.", blocksRelease: true },
+            unknown: { releaseMeaning: "Unknown.", blocksRelease: true },
         },
         confidenceReasonLabels: {
             direct_legacy_mapping: { label: "direct", description: "Direct." },

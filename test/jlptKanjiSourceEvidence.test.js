@@ -21,27 +21,22 @@ const {
 function buildConfidenceLabels() {
     return {
         high_confidence: {
-            label: "high_confidence",
             releaseMeaning: "Fixture high confidence label.",
             blocksRelease: false,
         },
         standard_confidence: {
-            label: "standard_confidence",
             releaseMeaning: "Fixture standard confidence label.",
             blocksRelease: false,
         },
         disputed: {
-            label: "disputed",
             releaseMeaning: "Fixture disputed confidence label.",
             blocksRelease: true,
         },
         weak_evidence: {
-            label: "weak_evidence",
             releaseMeaning: "Fixture weak confidence label.",
             blocksRelease: true,
         },
         unknown: {
-            label: "unknown",
             releaseMeaning: "Fixture unknown confidence label.",
             blocksRelease: true,
         },
@@ -370,6 +365,43 @@ test("normalizeJlptKanjiSourceEvidence requires governed confidence reason label
     }), /Missing JLPT kanji confidence reason labels/);
 });
 
+test("normalizeJlptKanjiSourceEvidence rejects prose-only kanji notes", () => {
+    assert.throws(() => normalizeJlptKanjiSourceEvidence({
+        version: 1,
+        confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
+        kanji: {
+            日: {
+                notes: "Manual note without source evidence or materialized audit state.",
+            },
+        },
+    }), /notes require sources or derived audit values/);
+});
+
+test("normalizeJlptKanjiSourceEvidence permits kanji notes backed by source or derived audit state", () => {
+    const evidence = normalizeJlptKanjiSourceEvidence({
+        version: 1,
+        confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
+        kanji: {
+            日: {
+                sources: {
+                    fixture_source: 5,
+                },
+                notes: "Backed by a source assignment.",
+            },
+            本: {
+                agreementScore: 0,
+                confidence: "unknown",
+                notes: "Materialized audit note without source assignments yet.",
+            },
+        },
+    });
+
+    assert.equal(evidence.kanji.日.notes, "Backed by a source assignment.");
+    assert.equal(evidence.kanji.本.confidence, "unknown");
+});
+
 test("normalizeJlptLevelAssignmentEntry preserves reviewed structured evidence", () => {
     assert.deepEqual(normalizeJlptLevelAssignmentEntry({
         level: "N4",
@@ -476,7 +508,6 @@ test("evaluateKanjiSourceEvidence classifies source-backed consensus", () => {
 
     assert.equal(result.consensusLevel, 5);
     assert.equal(result.confidence, "high_confidence");
-    assert.equal(result.confidenceLabel, "high_confidence");
     assert.equal(result.contractMatchesConsensus, true);
     assert.equal(result.assignmentCount, 3);
     assert.equal(result.japanesePublishedSourceCount, 1);
@@ -1060,7 +1091,6 @@ test("auditJlptKanjiSourceEvidence emits governed confidence manifest entries", 
         currentContractLevel: 5,
         contractLevel: 5,
         confidence: "high_confidence",
-        confidenceLabel: "high_confidence",
         sourceConsensusLevel: 5,
         consensusLevel: 5,
         agreementScore: 1,
@@ -1153,6 +1183,34 @@ test("auditJlptKanjiSourceEvidence reports agreement counts and disagreement sou
         },
     ]);
     assert.equal(entry.currentContractMatchesConsensus, true);
+});
+
+test("formatJlptKanjiSourceEvidenceReport renders disputed vote weights outside the main sample", () => {
+    const report = auditJlptKanjiSourceEvidence({
+        contract: {
+            kanjiLevels: {
+                日: 5,
+                学: 5,
+            },
+        },
+        evidence: buildEvidence({
+            tanos: { 学: 5 },
+            jlptsensei: { 学: 5 },
+            textbook: { 学: 4 },
+        }),
+        limit: 1,
+    });
+    const text = formatJlptKanjiSourceEvidenceReport({
+        contractPath: "templates/jlpt_level_contract.json",
+        evidencePath: "templates/jlpt_kanji_source_evidence.json",
+        report,
+    });
+
+    assert.equal(report.issueCounts.disputedConsensus, 1);
+    assert.match(text, /Current contract comparison samples \(1 shown\):/);
+    assert.match(text, /- 日: current N5; consensus none/);
+    assert.match(text, /Disputed consensus samples \(1 shown\):/);
+    assert.match(text, /- 学 \(N5\); votes N5:2, N4:2/);
 });
 
 test("auditJlptKanjiSourceEvidence reports missing evidence and mismatches", () => {

@@ -81,7 +81,7 @@ function formatConfidenceLabels(confidenceLabels = {}) {
         .filter((labelId) => confidenceLabels[labelId])
         .map((labelId) => {
             const label = confidenceLabels[labelId];
-            return `- ${labelId}: ${label.label}; blocks release ${label.blocksRelease ? "yes" : "no"}`;
+            return `- ${labelId}: blocks release ${label.blocksRelease ? "yes" : "no"}; ${label.releaseMeaning}`;
         });
 }
 
@@ -149,6 +149,12 @@ function formatContractComparisonRows(rows = [], limit = 25) {
             + `textbook consensus ${formatLevel(entry.textbookConsensus?.consensusLevel)}; `
             + `matches ${entry.currentContractMatchesConsensus === true ? "yes" : "no"}`
         ));
+}
+
+function formatDisputedConsensusRows(rows = []) {
+    return rows.map((entry) => (
+        `- ${formatKanjiIssue(entry)}; votes ${formatVoteWeights(entry.voteWeights)}`
+    ));
 }
 
 function formatJlptKanjiSourceEvidenceReport({
@@ -232,6 +238,11 @@ function formatJlptKanjiSourceEvidenceReport({
         for (const entry of report.issues.contractConsensusMismatches) {
             lines.push(`- ${formatKanjiIssue(entry)}; agreement ${entry.agreementScore.toFixed(2)}`);
         }
+    }
+
+    if (report.issues.disputedConsensus.length > 0) {
+        lines.push("", `Disputed consensus samples (${report.issues.disputedConsensus.length} shown):`);
+        lines.push(...formatDisputedConsensusRows(report.issues.disputedConsensus));
     }
 
     if (report.issues.unapprovedActiveSources.length > 0) {

@@ -55,7 +55,6 @@ const sourceLineageSchema = z.object({
         "direct-legacy-jlpt",
         "post-2010-estimate",
         "japanese-published-study",
-        "dictionary-legacy-jlpt",
         "community-study-list",
         "official-jlpt-occurrence",
         "frequency-sanity",
@@ -67,10 +66,8 @@ const sourceLineageSchema = z.object({
 }).strict();
 
 const confidenceLabelSchema = z.object({
-    label: z.string().min(1),
     releaseMeaning: z.string().min(1),
     blocksRelease: z.boolean().default(true),
-    requirements: z.array(z.string().min(1)).default([]),
 }).strict();
 
 const confidenceReasonLabelSchema = z.object({
@@ -345,6 +342,23 @@ function assertRequiredConfidenceReasonLabels(parsed) {
     }
 }
 
+function assertKanjiEvidenceNotesHaveEvidence(parsed) {
+    const proseOnlyKanji = Object.entries(parsed.kanji || {})
+        .filter(([, entry]) => {
+            const hasNotes = typeof entry.notes === "string" && entry.notes.trim().length > 0;
+            const hasSources = Object.keys(entry.sources || {}).length > 0;
+            const hasDerivedAuditValues = entry.consensusLevel !== undefined
+                || entry.agreementScore !== undefined
+                || entry.confidence !== undefined;
+            return hasNotes && !hasSources && !hasDerivedAuditValues;
+        })
+        .map(([kanji]) => kanji);
+
+    if (proseOnlyKanji.length > 0) {
+        throw new Error(`JLPT kanji evidence notes require sources or derived audit values: ${proseOnlyKanji.join(", ")}`);
+    }
+}
+
 function normalizeKanjiEvidence(kanjiEvidence = {}) {
     return Object.fromEntries(
         Object.entries(kanjiEvidence || {}).map(([kanji, entry]) => {
@@ -430,6 +444,7 @@ function normalizeJlptKanjiSourceEvidence(value = {}) {
     assertDerivedSourceReferences(parsed);
     assertRequiredConfidenceLabels(parsed);
     assertRequiredConfidenceReasonLabels(parsed);
+    assertKanjiEvidenceNotesHaveEvidence(parsed);
     const kanji = normalizeKanjiEvidence(parsed.kanji);
     const sourceCentricAssignments = normalizeAssignments(parsed.assignments);
     const kanjiAssignments = buildAssignmentsFromKanjiEvidence(kanji);

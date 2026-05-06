@@ -61,6 +61,36 @@ function buildConfidenceReasonLabels() {
     };
 }
 
+function buildGovernedAssignmentSource(overrides = {}) {
+    return {
+        allowedUse: "bulk-import",
+        sourceKind: "assignment",
+        canStoreAssignments: true,
+        canStoreRawList: false,
+        canStoreExcerpts: false,
+        requiresCitation: true,
+        positiveEvidenceOnly: false,
+        licenseEvidenceUrl: "https://example.com/source-license",
+        licenseReviewedAt: "2026-05-05",
+        ...overrides,
+    };
+}
+
+function buildGovernedNonVotingSource({ allowedUse, sourceKind, overrides = {} } = {}) {
+    return {
+        allowedUse,
+        sourceKind,
+        canStoreAssignments: false,
+        canStoreRawList: false,
+        canStoreExcerpts: false,
+        requiresCitation: true,
+        positiveEvidenceOnly: false,
+        licenseEvidenceUrl: "https://example.com/source-license",
+        licenseReviewedAt: "2026-05-05",
+        ...overrides,
+    };
+}
+
 function buildEvidence(assignments = {}) {
     return normalizeJlptKanjiSourceEvidence({
         version: 1,
@@ -93,7 +123,7 @@ function buildEvidence(assignments = {}) {
         confidenceLabels: buildConfidenceLabels(),
         confidenceReasonLabels: buildConfidenceReasonLabels(),
         sources: {
-            tanos: {
+            tanos: buildGovernedAssignmentSource({
                 name: "Tanos",
                 tier: "community",
                 status: "active",
@@ -103,8 +133,8 @@ function buildEvidence(assignments = {}) {
                 countsForConsensus: true,
                 weight: 1,
                 licenseStatus: "approved",
-            },
-            jlptsensei: {
+            }),
+            jlptsensei: buildGovernedAssignmentSource({
                 name: "JLPT Sensei",
                 tier: "community",
                 status: "active",
@@ -114,8 +144,9 @@ function buildEvidence(assignments = {}) {
                 countsForConsensus: true,
                 weight: 1,
                 licenseStatus: "approved",
-            },
-            textbook: {
+            }),
+            textbook: buildGovernedAssignmentSource({
+                allowedUse: "manual-citation-only",
                 name: "Japanese textbook source",
                 tier: "japanese-published",
                 status: "active",
@@ -125,18 +156,22 @@ function buildEvidence(assignments = {}) {
                 countsForConsensus: true,
                 weight: 2,
                 licenseStatus: "restricted",
-            },
-            joyo_grade: {
-                name: "Joyo grade",
-                tier: "official-background",
-                status: "active",
-                sourceType: "official-background",
-                independent: true,
-                japanesePublished: true,
-                countsForConsensus: false,
-                weight: 1,
-                licenseStatus: "needs_review",
-            },
+            }),
+            joyo_grade: buildGovernedNonVotingSource({
+                allowedUse: "background-only",
+                sourceKind: "background",
+                overrides: {
+                    name: "Joyo grade",
+                    tier: "official-background",
+                    status: "active",
+                    sourceType: "official-background",
+                    independent: true,
+                    japanesePublished: true,
+                    countsForConsensus: false,
+                    weight: 1,
+                    licenseStatus: "needs_review",
+                },
+            }),
         },
         assignments,
     });
@@ -252,13 +287,13 @@ test("normalizeJlptKanjiSourceEvidence keeps source-centric assignments authorit
         confidenceLabels: buildConfidenceLabels(),
         confidenceReasonLabels: buildConfidenceReasonLabels(),
         sources: {
-            source_a: {
+            source_a: buildGovernedAssignmentSource({
                 name: "Source A",
                 tier: "fixture",
                 status: "active",
                 sourceType: "fixture",
                 licenseStatus: "approved",
-            },
+            }),
         },
         assignments: {
             source_a: {
@@ -352,7 +387,7 @@ test("evaluateKanjiSourceEvidence counts unique independent source groups", () =
             minimumJapanesePublishedSources: 0,
         },
         sources: {
-            source_a: {
+            source_a: buildGovernedAssignmentSource({
                 name: "Source A",
                 tier: "fixture",
                 status: "active",
@@ -362,8 +397,8 @@ test("evaluateKanjiSourceEvidence counts unique independent source groups", () =
                 countsForConsensus: true,
                 weight: 1,
                 licenseStatus: "approved",
-            },
-            source_b: {
+            }),
+            source_b: buildGovernedAssignmentSource({
                 name: "Source B",
                 tier: "fixture",
                 status: "active",
@@ -373,7 +408,7 @@ test("evaluateKanjiSourceEvidence counts unique independent source groups", () =
                 countsForConsensus: true,
                 weight: 1,
                 licenseStatus: "approved",
-            },
+            }),
         },
         assignments: {
             source_a: { 日: 5 },
@@ -420,7 +455,7 @@ test("evaluateKanjiSourceEvidence separates publisher independence from evidence
             highAgreementScore: 0.8,
         },
         sources: {
-            source_a: {
+            source_a: buildGovernedAssignmentSource({
                 name: "Publisher A",
                 tier: "fixture",
                 evidenceLineage: "old_jlpt",
@@ -431,8 +466,8 @@ test("evaluateKanjiSourceEvidence separates publisher independence from evidence
                 countsForConsensus: true,
                 weight: 1,
                 licenseStatus: "approved",
-            },
-            source_b: {
+            }),
+            source_b: buildGovernedAssignmentSource({
                 name: "Publisher B",
                 tier: "fixture",
                 evidenceLineage: "old_jlpt",
@@ -443,7 +478,7 @@ test("evaluateKanjiSourceEvidence separates publisher independence from evidence
                 countsForConsensus: true,
                 weight: 1,
                 licenseStatus: "approved",
-            },
+            }),
         },
         assignments: {
             source_a: { 日: 5 },
@@ -481,7 +516,10 @@ test("evaluateKanjiSourceEvidence keeps current operational contract comparison-
             minimumJapanesePublishedSources: 0,
         },
         sources: {
-            current_operational_contract: {
+            current_operational_contract: buildGovernedNonVotingSource({
+                allowedUse: "operational-comparator",
+                sourceKind: "operational",
+                overrides: {
                 name: "Current contract",
                 tier: "fixture",
                 status: "active",
@@ -490,8 +528,9 @@ test("evaluateKanjiSourceEvidence keeps current operational contract comparison-
                 publisherIndependence: "repository_contract",
                 countsForConsensus: false,
                 licenseStatus: "approved",
-            },
-            external_source: {
+                },
+            }),
+            external_source: buildGovernedAssignmentSource({
                 name: "External source",
                 tier: "fixture",
                 status: "active",
@@ -499,7 +538,7 @@ test("evaluateKanjiSourceEvidence keeps current operational contract comparison-
                 independent: true,
                 countsForConsensus: true,
                 licenseStatus: "approved",
-            },
+            }),
         },
         assignments: {
             current_operational_contract: { 日: 4 },
@@ -538,7 +577,7 @@ test("evaluateKanjiSourceEvidence preserves range evidence without an exact vote
             minimumJapanesePublishedSources: 0,
         },
         sources: {
-            kanjidic2_legacy: {
+            kanjidic2_legacy: buildGovernedAssignmentSource({
                 name: "KANJIDIC2 legacy",
                 tier: "fixture",
                 status: "active",
@@ -547,7 +586,7 @@ test("evaluateKanjiSourceEvidence preserves range evidence without an exact vote
                 countsForConsensus: true,
                 licenseStatus: "approved",
                 evidenceLineage: "pre_2010_direct_jlpt",
-            },
+            }),
         },
         assignments: {
             kanjidic2_legacy: {
@@ -603,7 +642,8 @@ test("evaluateKanjiSourceEvidence derives Japanese textbook consensus from indiv
             minimumJapanesePublishedSources: 1,
         },
         sources: {
-            shin_kanzen_master_kanji: {
+            shin_kanzen_master_kanji: buildGovernedAssignmentSource({
+                allowedUse: "manual-citation-only",
                 name: "Shin Kanzen Master",
                 tier: "textbook",
                 status: "active",
@@ -614,8 +654,9 @@ test("evaluateKanjiSourceEvidence derives Japanese textbook consensus from indiv
                 countsForConsensus: true,
                 licenseStatus: "restricted",
                 evidenceLineage: "japanese_published_textbook_review",
-            },
-            nihongo_sou_matome_kanji: {
+            }),
+            nihongo_sou_matome_kanji: buildGovernedAssignmentSource({
+                allowedUse: "manual-citation-only",
                 name: "Nihongo Sou Matome",
                 tier: "textbook",
                 status: "active",
@@ -626,8 +667,11 @@ test("evaluateKanjiSourceEvidence derives Japanese textbook consensus from indiv
                 countsForConsensus: true,
                 licenseStatus: "restricted",
                 evidenceLineage: "japanese_published_textbook_review",
-            },
-            japanese_textbook_consensus: {
+            }),
+            japanese_textbook_consensus: buildGovernedNonVotingSource({
+                allowedUse: "derived-summary",
+                sourceKind: "derived",
+                overrides: {
                 name: "Derived textbook consensus",
                 tier: "textbook",
                 status: "active",
@@ -638,7 +682,8 @@ test("evaluateKanjiSourceEvidence derives Japanese textbook consensus from indiv
                 licenseStatus: "restricted",
                 evidenceLineage: "japanese_published_textbook_review",
                 derivedFromSources: ["shin_kanzen_master_kanji", "nihongo_sou_matome_kanji"],
-            },
+                },
+            }),
         },
         assignments: {
             shin_kanzen_master_kanji: { 語: 4 },
@@ -677,7 +722,7 @@ test("evaluateKanjiSourceEvidence ignores planned sources until activated", () =
             minimumJapanesePublishedSources: 0,
         },
         sources: {
-            planned_source: {
+            planned_source: buildGovernedAssignmentSource({
                 name: "Planned source",
                 tier: "fixture",
                 status: "planned",
@@ -687,7 +732,7 @@ test("evaluateKanjiSourceEvidence ignores planned sources until activated", () =
                 countsForConsensus: true,
                 weight: 1,
                 licenseStatus: "needs_review",
-            },
+            }),
         },
         assignments: {
             planned_source: { 日: 5 },
@@ -722,7 +767,7 @@ test("auditJlptKanjiSourceEvidence fails on unreviewed assignments and unapprove
             minimumJapanesePublishedSources: 0,
         },
         sources: {
-            unapproved_source: {
+            unapproved_source: buildGovernedAssignmentSource({
                 name: "Unapproved Source",
                 tier: "fixture",
                 status: "active",
@@ -731,7 +776,7 @@ test("auditJlptKanjiSourceEvidence fails on unreviewed assignments and unapprove
                 countsForConsensus: true,
                 weight: 1,
                 licenseStatus: "needs_review",
-            },
+            }),
         },
         assignments: {
             unapproved_source: {
@@ -758,6 +803,130 @@ test("auditJlptKanjiSourceEvidence fails on unreviewed assignments and unapprove
         kanji: "日",
         level: 5,
         reviewStatus: "needs_review",
+    });
+});
+
+test("evaluateKanjiSourceEvidence excludes active sources without assignment-use permission", () => {
+    const evidence = normalizeJlptKanjiSourceEvidence({
+        version: 1,
+        confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
+        sourceTiers: {
+            fixture: {
+                label: "Fixture tier",
+                rank: 1,
+                role: "supporting-evidence",
+                description: "Fixture source tier.",
+            },
+        },
+        policy: {
+            minimumIndependentSources: 1,
+            minimumJapanesePublishedSources: 0,
+        },
+        sources: {
+            legal_source: buildGovernedAssignmentSource({
+                name: "Legal Source",
+                tier: "fixture",
+                status: "active",
+                sourceType: "fixture",
+                independent: true,
+                countsForConsensus: true,
+                licenseStatus: "approved",
+            }),
+            frequency_source: buildGovernedNonVotingSource({
+                allowedUse: "frequency-sanity-only",
+                sourceKind: "frequency",
+                overrides: {
+                    name: "Frequency Source",
+                    tier: "fixture",
+                    status: "active",
+                    sourceType: "frequency",
+                    independent: true,
+                    countsForConsensus: true,
+                    licenseStatus: "approved",
+                },
+            }),
+        },
+        assignments: {
+            legal_source: { 日: 5 },
+            frequency_source: { 日: 4 },
+        },
+    });
+
+    const result = evaluateKanjiSourceEvidence({
+        kanji: "日",
+        contractLevel: 5,
+        evidence,
+    });
+
+    assert.equal(result.assignmentCount, 1);
+    assert.equal(result.consensusLevel, 5);
+    assert.deepEqual(result.agreementSourceIds, ["legal_source"]);
+});
+
+test("auditJlptKanjiSourceEvidence blocks unsafe source-use profiles", () => {
+    const evidence = normalizeJlptKanjiSourceEvidence({
+        version: 1,
+        confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
+        sourceTiers: {
+            fixture: {
+                label: "Fixture tier",
+                rank: 1,
+                role: "supporting-evidence",
+                description: "Fixture source tier.",
+            },
+        },
+        policy: {
+            minimumIndependentSources: 1,
+            minimumJapanesePublishedSources: 0,
+        },
+        sources: {
+            incomplete_source: {
+                name: "Incomplete Source",
+                tier: "fixture",
+                status: "active",
+                sourceType: "fixture",
+                independent: true,
+                countsForConsensus: false,
+                licenseStatus: "approved",
+                licenseEvidenceUrl: "https://example.com/license",
+                licenseReviewedAt: "2026-05-05",
+            },
+            frequency_source: buildGovernedNonVotingSource({
+                allowedUse: "frequency-sanity-only",
+                sourceKind: "frequency",
+                overrides: {
+                    name: "Frequency Source",
+                    tier: "fixture",
+                    status: "active",
+                    sourceType: "frequency",
+                    independent: true,
+                    countsForConsensus: true,
+                    licenseStatus: "approved",
+                },
+            }),
+        },
+        assignments: {
+            frequency_source: { 日: 5 },
+        },
+    });
+
+    const report = auditJlptKanjiSourceEvidence({
+        contract: { kanjiLevels: { 日: 5 } },
+        evidence,
+        limit: 5,
+    });
+
+    assert.equal(report.valid, false);
+    assert.equal(report.issueCounts.missingSourceUseProfile, 1);
+    assert.equal(report.issueCounts.illegalConsensusSourceUse, 1);
+    assert.equal(report.issueCounts.disallowedStoredAssignments, 1);
+    assert.deepEqual(report.issues.illegalConsensusSourceUses[0], {
+        sourceId: "frequency_source",
+        allowedUse: "frequency-sanity-only",
+        sourceKind: "frequency",
+        canStoreAssignments: false,
     });
 });
 

@@ -43,6 +43,7 @@ function formatSourceCoverage(sourceCoverage = {}) {
         .sort(([a], [b]) => a.localeCompare(b))
         .map(([sourceId, source]) => (
             `- ${sourceId}: ${source.assignmentCount} assignments; ${source.unreviewedAssignmentCount} unreviewed; status ${source.status}; tier ${source.tier} (${source.tierLabel}); license ${source.licenseStatus}`
+            + `; use ${source.allowedUse}; kind ${source.sourceKind}; store assignments ${source.canStoreAssignments ? "yes" : "no"}`
             + `${source.publisherIndependence ? `; publisher ${source.publisherIndependence}` : ""}`
             + `${source.lineage ? `; evidence lineage ${source.lineage} (${source.lineageLabel})` : ""}`
             + `${source.derivedFromSources?.length ? `; derived from ${source.derivedFromSources.join(", ")}` : ""}`
@@ -118,7 +119,7 @@ function formatJlptKanjiSourceEvidenceReport({
         `Evidence: ${evidencePath}`,
         `Overall result: ${report.valid ? "passing" : "failing"}`,
         "",
-        "Consensus scope: active external voting sources only; current_operational_contract is comparison-only.",
+        "Consensus scope: active external assignment sources with permitted source use only; current_operational_contract is comparison-only.",
         "",
         `Contract kanji checked: ${report.checked}`,
         "",
@@ -155,6 +156,10 @@ function formatJlptKanjiSourceEvidenceReport({
         formatIssueCount("Declared consensus mismatches", report.issueCounts.declaredConsensusMismatch),
         formatIssueCount("Declared agreement mismatches", report.issueCounts.declaredAgreementMismatch),
         formatIssueCount("Declared confidence mismatches", report.issueCounts.declaredConfidenceMismatch),
+        formatIssueCount("Missing source-use profiles", report.issueCounts.missingSourceUseProfile),
+        formatIssueCount("Missing license/use evidence", report.issueCounts.missingLicenseEvidence),
+        formatIssueCount("Illegal consensus source use", report.issueCounts.illegalConsensusSourceUse),
+        formatIssueCount("Disallowed stored assignments", report.issueCounts.disallowedStoredAssignments),
         "",
         "Source coverage:",
         ...formatSourceCoverage(report.sourceCoverage),
@@ -181,6 +186,20 @@ function formatJlptKanjiSourceEvidenceReport({
         lines.push("", `Unapproved active voting sources (${report.issues.unapprovedActiveSources.length} shown):`);
         for (const entry of report.issues.unapprovedActiveSources) {
             lines.push(`- ${entry.sourceId}: license ${entry.licenseStatus}`);
+        }
+    }
+
+    if (report.issues.illegalConsensusSourceUses.length > 0) {
+        lines.push("", `Illegal consensus source-use samples (${report.issues.illegalConsensusSourceUses.length} shown):`);
+        for (const entry of report.issues.illegalConsensusSourceUses) {
+            lines.push(`- ${entry.sourceId}: use ${entry.allowedUse}; kind ${entry.sourceKind}; store assignments ${entry.canStoreAssignments ? "yes" : "no"}`);
+        }
+    }
+
+    if (report.issues.disallowedStoredAssignments.length > 0) {
+        lines.push("", `Disallowed stored-assignment samples (${report.issues.disallowedStoredAssignments.length} shown):`);
+        for (const entry of report.issues.disallowedStoredAssignments) {
+            lines.push(`- ${entry.sourceId}: ${entry.assignmentCount} assignments; use ${entry.allowedUse}; kind ${entry.sourceKind}`);
         }
     }
 

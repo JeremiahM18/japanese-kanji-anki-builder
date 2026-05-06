@@ -50,6 +50,7 @@ const sourceLineageSchema = z.object({
         "japanese-published-study",
         "dictionary-legacy-jlpt",
         "community-study-list",
+        "official-jlpt-occurrence",
         "frequency-sanity",
         "learning-platform",
         "official-background",
@@ -97,6 +98,28 @@ const REQUIRED_CONFIDENCE_REASON_IDS = Object.freeze([
     "source_confidence_threshold_met",
 ]);
 
+const sourceAllowedUseIdSchema = z.enum([
+    "bulk-import",
+    "manual-citation-only",
+    "occurrence-only",
+    "frequency-sanity-only",
+    "background-only",
+    "methodology-notes-only",
+    "operational-comparator",
+    "derived-summary",
+    "blocked",
+    "needs_review",
+]);
+const sourceKindIdSchema = z.enum([
+    "assignment",
+    "occurrence",
+    "frequency",
+    "background",
+    "methodology",
+    "operational",
+    "derived",
+]);
+
 const evidenceSourceSchema = z.object({
     name: z.string().min(1),
     tier: z.string().min(1),
@@ -112,6 +135,16 @@ const evidenceSourceSchema = z.object({
     countsForConsensus: z.boolean().default(true),
     weight: z.number().positive().default(1),
     licenseStatus: z.enum(["approved", "needs_review", "restricted", "unknown"]).default("needs_review"),
+    allowedUse: sourceAllowedUseIdSchema.default("needs_review"),
+    sourceKind: sourceKindIdSchema.default("assignment"),
+    canStoreAssignments: z.boolean().default(false),
+    canStoreRawList: z.boolean().default(false),
+    canStoreExcerpts: z.boolean().default(false),
+    requiresCitation: z.boolean().default(true),
+    positiveEvidenceOnly: z.boolean().default(false),
+    licenseEvidenceUrl: z.string().min(1).optional(),
+    licenseReviewedAt: z.string().min(1).optional(),
+    legalNotes: z.string().optional(),
     derivedFromSources: z.array(z.string().min(1)).default([]),
     notes: z.string().optional(),
 }).strict();
@@ -360,6 +393,8 @@ module.exports = {
     evidenceSourceSchema,
     kanjiEvidenceEntrySchema,
     sourceLineageSchema,
+    sourceAllowedUseIdSchema,
+    sourceKindIdSchema,
     sourceTierSchema,
     jlptKanjiSourceEvidenceSchema,
     loadJlptKanjiSourceEvidence,

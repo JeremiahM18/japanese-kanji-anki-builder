@@ -120,6 +120,11 @@ test("materializeKanjiEvidenceEntries keeps declared consensus aligned with acti
                 independent: false,
                 countsForConsensus: false,
                 licenseStatus: "approved",
+                allowedUse: "operational-comparator",
+                sourceKind: "operational",
+                canStoreAssignments: true,
+                licenseEvidenceUrl: "templates/jlpt_level_contract.json",
+                licenseReviewedAt: "2026-05-05",
             },
             kanjidic2_legacy: {
                 name: "KANJIDIC2",
@@ -129,6 +134,11 @@ test("materializeKanjiEvidenceEntries keeps declared consensus aligned with acti
                 independent: true,
                 countsForConsensus: true,
                 licenseStatus: "approved",
+                allowedUse: "bulk-import",
+                sourceKind: "assignment",
+                canStoreAssignments: true,
+                licenseEvidenceUrl: "https://example.com/license",
+                licenseReviewedAt: "2026-05-05",
             },
         },
         assignments: {

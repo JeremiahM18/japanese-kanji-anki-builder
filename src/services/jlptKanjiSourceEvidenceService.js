@@ -33,14 +33,30 @@ function createIssueCounts() {
         declaredConsensusMismatch: 0,
         declaredAgreementMismatch: 0,
         declaredConfidenceMismatch: 0,
+        missingSourceUseProfile: 0,
+        missingLicenseEvidence: 0,
+        illegalConsensusSourceUse: 0,
+        disallowedStoredAssignments: 0,
     };
 }
 
 const JAPANESE_TEXTBOOK_CONSENSUS_SOURCE_ID = "japanese_textbook_consensus";
+const CONSENSUS_ALLOWED_USES = new Set(["bulk-import", "manual-citation-only"]);
 
-function getComparableSourceEntries(evidence = {}) {
+function getDeclaredActiveVotingSourceEntries(evidence = {}) {
     return Object.entries(evidence.sources || {})
         .filter(([, source]) => source.status === "active" && source.countsForConsensus !== false);
+}
+
+function isAllowedConsensusSourceUse(source = {}) {
+    return source.sourceKind === "assignment"
+        && CONSENSUS_ALLOWED_USES.has(source.allowedUse)
+        && source.canStoreAssignments === true;
+}
+
+function getComparableSourceEntries(evidence = {}) {
+    return getDeclaredActiveVotingSourceEntries(evidence)
+        .filter(([, source]) => isAllowedConsensusSourceUse(source));
 }
 
 function resolveSourceTier(source = {}, evidence = {}) {
@@ -363,6 +379,15 @@ function summarizeSourceCoverage({ evidence = {}, contractKanjiSet = new Set() }
                 japanesePublished: source.japanesePublished === true,
                 countsForConsensus: source.countsForConsensus !== false,
                 licenseStatus: source.licenseStatus,
+                allowedUse: source.allowedUse,
+                sourceKind: source.sourceKind,
+                canStoreAssignments: source.canStoreAssignments === true,
+                canStoreRawList: source.canStoreRawList === true,
+                canStoreExcerpts: source.canStoreExcerpts === true,
+                requiresCitation: source.requiresCitation !== false,
+                positiveEvidenceOnly: source.positiveEvidenceOnly === true,
+                licenseEvidenceUrl: source.licenseEvidenceUrl,
+                licenseReviewedAt: source.licenseReviewedAt,
                 derivedFromSources: source.derivedFromSources || [],
                 assignmentCount: assignedKanji.length,
                 unreviewedAssignmentCount,
@@ -397,6 +422,19 @@ function collectAssignmentSourceIssues({ evidence = {}, contractKanjiSet = new S
     };
 }
 
+function hasGovernedSourceUseProfile(source = {}) {
+    return source.allowedUse !== "needs_review"
+        && typeof source.sourceKind === "string"
+        && source.sourceKind.length > 0;
+}
+
+function hasReviewedLicenseEvidence(source = {}) {
+    return typeof source.licenseEvidenceUrl === "string"
+        && source.licenseEvidenceUrl.trim().length > 0
+        && typeof source.licenseReviewedAt === "string"
+        && source.licenseReviewedAt.trim().length > 0;
+}
+
 function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25 } = {}) {
     const policy = evidence.policy || {};
     const contractEntries = Object.entries(contract.kanjiLevels || {});
@@ -423,18 +461,64 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
         contractConsensusMismatches: [],
         unreviewedAssignments: [],
         unapprovedActiveSources: [],
+        missingSourceUseProfiles: [],
+        missingLicenseEvidence: [],
+        illegalConsensusSourceUses: [],
+        disallowedStoredAssignments: [],
         declaredConsensusMismatches: [],
         declaredAgreementMismatches: [],
         declaredConfidenceMismatches: [],
     };
     const kanjiConfidenceManifest = [];
 
-    for (const [sourceId, source] of getComparableSourceEntries(evidence)) {
+    for (const [sourceId, source] of Object.entries(evidence.sources || {})) {
+        const sourceAssignments = evidence.assignments?.[sourceId] || {};
+        const assignmentCount = Object.keys(sourceAssignments).length;
+
+        if (source.status === "active" && !hasGovernedSourceUseProfile(source)) {
+            issueCounts.missingSourceUseProfile += 1;
+            issues.missingSourceUseProfiles.push({
+                sourceId,
+                allowedUse: source.allowedUse,
+                sourceKind: source.sourceKind,
+            });
+        }
+
+        if (source.status === "active" && !hasReviewedLicenseEvidence(source)) {
+            issueCounts.missingLicenseEvidence += 1;
+            issues.missingLicenseEvidence.push({
+                sourceId,
+                licenseStatus: source.licenseStatus,
+                allowedUse: source.allowedUse,
+            });
+        }
+
+        if (assignmentCount > 0 && source.canStoreAssignments !== true) {
+            issueCounts.disallowedStoredAssignments += 1;
+            issues.disallowedStoredAssignments.push({
+                sourceId,
+                assignmentCount,
+                allowedUse: source.allowedUse,
+                sourceKind: source.sourceKind,
+            });
+        }
+    }
+
+    for (const [sourceId, source] of getDeclaredActiveVotingSourceEntries(evidence)) {
         if (!["approved", "restricted"].includes(source.licenseStatus)) {
             issueCounts.unapprovedActiveSources += 1;
             issues.unapprovedActiveSources.push({
                 sourceId,
                 licenseStatus: source.licenseStatus,
+            });
+        }
+        if (!isAllowedConsensusSourceUse(source)) {
+            issueCounts.illegalConsensusSourceUse += 1;
+            issues.illegalConsensusSourceUses.push({
+                sourceId,
+                allowedUse: source.allowedUse,
+                sourceKind: source.sourceKind,
+                canStoreAssignments: source.canStoreAssignments === true,
             });
         }
 
@@ -600,7 +684,11 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
         && issueCounts.assignmentOutsideContract === 0
         && issueCounts.declaredConsensusMismatch === 0
         && issueCounts.declaredAgreementMismatch === 0
-        && issueCounts.declaredConfidenceMismatch === 0;
+        && issueCounts.declaredConfidenceMismatch === 0
+        && issueCounts.missingSourceUseProfile === 0
+        && issueCounts.missingLicenseEvidence === 0
+        && issueCounts.illegalConsensusSourceUse === 0
+        && issueCounts.disallowedStoredAssignments === 0;
 
     function capped(items) {
         return items.slice(0, Math.max(1, limit || 25));
@@ -630,6 +718,10 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
             contractConsensusMismatches: capped(issues.contractConsensusMismatches),
             unreviewedAssignments: capped(issues.unreviewedAssignments),
             unapprovedActiveSources: capped(issues.unapprovedActiveSources),
+            missingSourceUseProfiles: capped(issues.missingSourceUseProfiles),
+            missingLicenseEvidence: capped(issues.missingLicenseEvidence),
+            illegalConsensusSourceUses: capped(issues.illegalConsensusSourceUses),
+            disallowedStoredAssignments: capped(issues.disallowedStoredAssignments),
             declaredConsensusMismatches: capped(issues.declaredConsensusMismatches),
             declaredAgreementMismatches: capped(issues.declaredAgreementMismatches),
             declaredConfidenceMismatches: capped(issues.declaredConfidenceMismatches),

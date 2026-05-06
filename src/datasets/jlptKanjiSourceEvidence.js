@@ -129,7 +129,7 @@ const evidenceSourceSchema = z.object({
     tier: z.string().min(1),
     evidenceLineage: z.string().min(1).optional(),
     lineage: z.string().min(1).optional(),
-    status: z.enum(["planned", "active", "blocked", "deprecated"]).default("planned"),
+    status: z.enum(["planned", "in_review", "active", "blocked", "deprecated"]).default("planned"),
     sourceType: z.string().min(1),
     url: z.string().min(1).optional(),
     independent: z.boolean().default(true),

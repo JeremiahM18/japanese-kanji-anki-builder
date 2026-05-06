@@ -37,17 +37,21 @@ function extractReadmeSection(readme, heading) {
         : readme.slice(bodyStart, bodyStart + nextHeading);
 }
 
-function extractMarkdownTableSourceIds(sectionText) {
+function extractMarkdownTableRows(sectionText) {
     return sectionText
         .split(/\r?\n/)
         .filter((line) => line.startsWith("| "))
         .map((line) => line.split("|").slice(1, -1).map((cell) => cell.trim()))
         .filter((cells) => cells.length > 0 && !cells.every((cell) => /^-+$/.test(cell)))
-        .map(([sourceCell]) => {
+        .map(([sourceCell, sourceLocation, currentUse]) => {
             const match = sourceCell.match(/^`([^`]+)`$/);
-            return match ? match[1] : null;
+            return match ? { sourceId: match[1], sourceLocation, currentUse } : null;
         })
-        .filter((sourceId) => sourceId !== null);
+        .filter((row) => row !== null);
+}
+
+function extractMarkdownTableSourceIds(sectionText) {
+    return extractMarkdownTableRows(sectionText).map((row) => row.sourceId);
 }
 
 test("CODEOWNERS covers critical repository governance paths", () => {
@@ -109,6 +113,25 @@ test("README source-evidence lane table matches the governed source manifest", (
 
     assert.deepEqual([...new Set(readmeSourceIds)].sort(), manifestSourceIds);
     assert.equal(readmeSourceIds.length, manifestSourceIds.length, "README source lane table contains duplicate source ids.");
+});
+
+test("README marks in-review source-evidence lanes as inactive review work", () => {
+    const readme = readRepoFile("README.md");
+    const evidence = JSON.parse(readRepoFile(path.join("templates", "jlpt_kanji_source_evidence.json")));
+    const section = extractReadmeSection(readme, "JLPT Kanji Source Evidence At A Glance");
+    const readmeRows = extractMarkdownTableRows(section);
+    const readmeRowsBySourceId = new Map(readmeRows.map((row) => [row.sourceId, row]));
+
+    for (const [sourceId, source] of Object.entries(evidence.sources)) {
+        if (source.status !== "in_review") {
+            continue;
+        }
+
+        const row = readmeRowsBySourceId.get(sourceId);
+        assert.ok(row, `Missing README source lane row for in-review source: ${sourceId}`);
+        assert.match(row.currentUse, /in-review/i);
+        assert.match(row.currentUse, /inactive\/non-voting/i);
+    }
 });
 
 test("JLPT kanji source-evidence loaders stay in read-only governance paths", () => {

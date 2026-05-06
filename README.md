@@ -130,7 +130,7 @@ Tracked contracts define release behavior:
 
 The source-evidence manifest is the governed source registry: [templates/jlpt_kanji_source_evidence.json](templates/jlpt_kanji_source_evidence.json). This table is a human-readable summary of the current lanes. The current JLPT kanji contract is an operational comparator, not final source truth, and no source lane can move kanji, move words, update decks, or change readiness by itself.
 
-Manifest `planned` status means a lane is registered but not activated for import or consensus yet. It does not mean the source is ignored. Manual-citation lanes can be under review while staying inactive/non-voting until reviewed rows, source provenance, source-input integrity, and explicit activation are all in place.
+Manifest status is a lifecycle gate, not a work queue label. `planned` means registered but not under active import/review, `in_review` means manual review or source-input preparation is underway, `active` means the lane may be imported and counted according to its governed use, and `blocked` means it must not enter consensus. Non-active lanes remain inactive/non-voting until reviewed rows, source provenance, source-input integrity, and explicit activation are all in place.
 
 | Source lane | Source / location | Current use |
 | --- | --- | --- |
@@ -142,7 +142,7 @@ Manifest `planned` status means a lane is registered but not activated for impor
 | `official_jlpt_sample_workbooks` | [Official JLPT sample questions/workbooks](https://www.jlpt.jp/e/samples/sampleindex.html?mode=pc-5) | Active occurrence-only evidence; stores only source PDF, section/page/question reference, and observed kanji |
 | `japanese_textbook_consensus` | Derived from individual textbook lanes in the source manifest | Active non-voting derived summary; never manually imported as a copied list |
 | `jlptsensei` | [JLPT Sensei kanji lists](https://jlptsensei.com/) | Registered restricted manual-citation assignment lane; inactive/non-voting until reviewed rows are pinned and source activated; do not scrape, copy, or republish lists |
-| `shin_kanzen_master_kanji` | [Shin Kanzen Master textbooks](https://www.3anet.co.jp/np/en/list.html?series_id=4) | Manual review in progress through a pinned ignored worksheet; inactive/non-voting until reviewed rows and source activation |
+| `shin_kanzen_master_kanji` | [Shin Kanzen Master textbooks](https://www.3anet.co.jp/np/en/list.html?series_id=4) | In-review manual-citation textbook lane through a pinned ignored worksheet; inactive/non-voting until reviewed rows and source activation |
 | `nihongo_sou_matome_kanji` | [Nihongo Sou Matome textbooks](https://www.ask-books.com/jp/somatome/) | Registered restricted manual-citation textbook lane; inactive/non-voting until reviewed rows are pinned and source activated |
 | `try_jlpt_textbook` | [TRY! JLPT textbooks](https://ask-books.com/jlpt-try) | Registered restricted manual-citation textbook lane; inactive/non-voting until reviewed rows are pinned and source activated |
 | `joyo_grade` | [Agency for Cultural Affairs Joyo kanji index](https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html) | Registered background-only metadata lane; inactive and not JLPT level proof |

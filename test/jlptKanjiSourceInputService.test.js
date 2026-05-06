@@ -223,6 +223,34 @@ test("source input preflight blocks unpinned or unactivated source files", () =>
     assert.match(report.blockers.join("\n"), /sha256 mismatch/);
 });
 
+test("source input preflight blocks pinned in-review source files until activation", () => {
+    const text = [
+        "kanji\tlevel\treviewStatus\tcitation\tevidenceRef",
+        "日\tN5\treviewed\tFixture citation\tfixture:日",
+    ].join("\n");
+    const sourceConfig = buildSourceConfig(text);
+
+    const report = buildJlptKanjiSourceInputReport({
+        sourceId: "fixture_source",
+        sourceConfig,
+        sourceBuffer: Buffer.from(text, "utf8"),
+        contract: { kanjiLevels: { 日: 5 } },
+        evidence: buildEvidence({
+            status: "in_review",
+            licenseStatus: "restricted",
+        }),
+        policy: {
+            noDeckMutation: true,
+            requirePinnedIntegrity: true,
+            requireKnownEvidenceSource: true,
+        },
+    });
+
+    assert.equal(report.valid, false);
+    assert.match(report.blockers.join("\n"), /is in_review/);
+    assert.equal(report.reviewedAssignmentCount, 1);
+});
+
 test("source input report script parses args and renders read-only scope", () => {
     const options = parseArgs([
         "--source=fixture_source",

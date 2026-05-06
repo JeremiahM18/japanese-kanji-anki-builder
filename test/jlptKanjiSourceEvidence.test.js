@@ -865,7 +865,7 @@ test("evaluateKanjiSourceEvidence derives Japanese textbook consensus from indiv
     assert.ok(result.confidenceReasons.includes("textbook_agreement"));
 });
 
-test("evaluateKanjiSourceEvidence ignores planned sources until activated", () => {
+test("evaluateKanjiSourceEvidence ignores non-active source lifecycle statuses until activated", () => {
     const evidence = normalizeJlptKanjiSourceEvidence({
         version: 1,
         confidenceLabels: buildConfidenceLabels(),
@@ -894,9 +894,21 @@ test("evaluateKanjiSourceEvidence ignores planned sources until activated", () =
                 weight: 1,
                 licenseStatus: "needs_review",
             }),
+            in_review_source: buildGovernedAssignmentSource({
+                name: "In-review source",
+                tier: "fixture",
+                status: "in_review",
+                sourceType: "fixture",
+                independent: true,
+                japanesePublished: false,
+                countsForConsensus: true,
+                weight: 1,
+                licenseStatus: "restricted",
+            }),
         },
         assignments: {
             planned_source: { 日: 5 },
+            in_review_source: { 日: 5 },
         },
     });
 

@@ -110,6 +110,9 @@ function run(options = {}) {
     if (!sourceInput) {
         throw new Error(`Unknown JLPT kanji source input: ${sourceId}`);
     }
+    if (priority === "source-level-deltas" && !options.out) {
+        throw new Error("source-level-deltas priority requires --out=<batch.tsv> so it does not overwrite the configured full source worksheet.");
+    }
     const outPath = path.resolve(process.cwd(), options.out || sourceInput.sourcePath);
     const contract = loadJlptLevelContract(contractPath);
     const needsEvidence = priority === "source-gaps" || priority === "source-level-deltas";

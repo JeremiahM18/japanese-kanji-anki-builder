@@ -13,6 +13,7 @@ const {
     formatTemplateReport,
     formatPrioritySummary,
     parseArgs,
+    run,
 } = require("../scripts/createJlptKanjiSourceInputTemplate");
 
 function buildGovernedSource(overrides = {}) {
@@ -314,4 +315,16 @@ test("createJlptKanjiSourceInputTemplate script parses args and reports no deck 
     assert.match(text, /Source level filter: N5/);
     assert.match(text, /Priority summary: missing_evidence: 2/);
     assert.equal(formatPrioritySummary([{ reviewPriority: "b" }, { reviewPriority: "a" }]), "a: 1, b: 1");
+});
+
+test("source-level delta template command requires an explicit batch output", () => {
+    assert.throws(() => run({
+        contract: "templates/jlpt_level_contract.json",
+        config: "templates/jlpt_kanji_source_inputs.json",
+        evidence: "templates/jlpt_kanji_source_evidence.json",
+        source: "shin_kanzen_master_kanji",
+        priority: "source-level-deltas",
+        sourceLevel: "N5",
+        limit: 23,
+    }), /requires --out=<batch.tsv>/);
 });

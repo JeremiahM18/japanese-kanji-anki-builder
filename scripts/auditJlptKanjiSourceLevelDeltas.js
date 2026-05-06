@@ -91,14 +91,18 @@ function formatDeltaRows(rows = [], limit = 25) {
 function formatLevelSection({ summary, limit } = {}) {
     const lines = [
         `N${summary.level} detail:`,
-        `- source claims outside current N${summary.level}: ${summary.sourceClaimsOutsideCurrent.length}`,
-        ...formatDeltaRows(summary.sourceClaimsOutsideCurrent, limit),
-        `- source consensus outside current N${summary.level}: ${summary.sourceConsensusOutsideCurrent.length}`,
-        ...formatDeltaRows(summary.sourceConsensusOutsideCurrent, limit),
-        `- disputed source candidates outside current N${summary.level}: ${summary.disputedSourceCandidatesOutsideCurrent.length}`,
-        ...formatDeltaRows(summary.disputedSourceCandidatesOutsideCurrent, limit),
+        `- missing from current N${summary.level} by active source claim: ${summary.missingSourceCandidatesFromCurrent.length}`,
+        ...formatDeltaRows(summary.missingSourceCandidatesFromCurrent, limit),
+        `- missing from current N${summary.level} by active source consensus: ${summary.missingSourceConsensusFromCurrent.length}`,
+        ...formatDeltaRows(summary.missingSourceConsensusFromCurrent, limit),
+        `- missing from current N${summary.level} but disputed: ${summary.disputedMissingSourceCandidatesFromCurrent.length}`,
+        ...formatDeltaRows(summary.disputedMissingSourceCandidatesFromCurrent, limit),
         `- current N${summary.level} rows with source consensus elsewhere: ${summary.currentContractConsensusElsewhere.length}`,
         ...formatDeltaRows(summary.currentContractConsensusElsewhere, limit),
+        `- current N${summary.level} rows without exact same-level source claim: ${summary.currentRowsWithoutSourceCandidateCount}`,
+        ...formatDeltaRows(summary.currentRowsWithoutSourceCandidate, limit),
+        `- current N${summary.level} rows without same-level source consensus: ${summary.currentRowsWithoutSourceConsensusCount}`,
+        ...formatDeltaRows(summary.currentRowsWithoutSourceConsensus, limit),
     ];
     return lines;
 }
@@ -132,11 +136,14 @@ function formatJlptKanjiSourceLevelDeltaReport({
         }
         lines.push(
             `- N${currentLevel}: current contract ${summary.currentContractCount}; `
-            + `source consensus ${summary.sourceConsensusCount}; source candidates ${summary.sourceCandidateCount}; `
-            + `source claims outside current ${summary.sourceClaimsOutsideCurrent.length}; `
-            + `source consensus outside current ${summary.sourceConsensusOutsideCurrent.length}; `
-            + `disputed source candidates outside current ${summary.disputedSourceCandidatesOutsideCurrent.length}; `
+            + `source candidates ${summary.sourceCandidateCount} `
+            + `(already current ${summary.sourceCandidateAlreadyCurrentCount}, missing from current ${summary.sourceCandidateMissingFromCurrentCount}); `
+            + `source consensus ${summary.sourceConsensusCount} `
+            + `(already current ${summary.sourceConsensusAlreadyCurrentCount}, missing from current ${summary.sourceConsensusMissingFromCurrentCount}); `
+            + `disputed missing candidates ${summary.disputedMissingSourceCandidatesFromCurrent.length}; `
             + `current rows with consensus elsewhere ${summary.currentContractConsensusElsewhere.length}; `
+            + `current rows without source claim ${summary.currentRowsWithoutSourceCandidateCount}; `
+            + `current rows without source consensus ${summary.currentRowsWithoutSourceConsensusCount}; `
             + `claims by source ${formatSourceClaimCounts(summary.sourceClaimCounts)}`
         );
     }
@@ -150,6 +157,19 @@ function formatJlptKanjiSourceLevelDeltaReport({
     }
 
     return `${lines.join("\n")}\n`;
+}
+
+function buildJsonOutput({ contractPath, evidencePath, level = null, report } = {}) {
+    const byLevel = Number.isInteger(level)
+        ? { [level]: report.byLevel?.[level] }
+        : report.byLevel;
+    return {
+        contractPath,
+        evidencePath,
+        level,
+        ...report,
+        byLevel,
+    };
 }
 
 function main() {
@@ -172,12 +192,12 @@ function main() {
     });
 
     if (options.json) {
-        process.stdout.write(`${JSON.stringify({
+        process.stdout.write(`${JSON.stringify(buildJsonOutput({
             contractPath,
             evidencePath,
             level: options.level,
-            ...report,
-        }, null, 2)}\n`);
+            report,
+        }), null, 2)}\n`);
     } else {
         process.stdout.write(formatJlptKanjiSourceLevelDeltaReport({
             contractPath,
@@ -198,6 +218,7 @@ if (require.main === module) {
 module.exports = {
     DEFAULT_CONTRACT,
     DEFAULT_EVIDENCE,
+    buildJsonOutput,
     formatJlptKanjiSourceLevelDeltaReport,
     main,
     parseArgs,

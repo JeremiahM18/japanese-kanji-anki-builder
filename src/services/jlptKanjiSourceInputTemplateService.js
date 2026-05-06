@@ -176,7 +176,7 @@ function buildSourceLevelDeltaRows({ contract, evidence, sourceLevel, limit }) {
         evidence,
         limit: maxRows || undefined,
     });
-    const rows = report.byLevel[targetLevel]?.sourceClaimsOutsideCurrent || [];
+    const rows = report.byLevel[targetLevel]?.missingSourceCandidatesFromCurrent || [];
 
     const formattedRows = rows.map((row) => {
         const priority = buildSourceLevelDeltaPriority(row);

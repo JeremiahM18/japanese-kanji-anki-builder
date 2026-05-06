@@ -11,7 +11,7 @@ const JLPT_LEVELS_DESC = Object.freeze([5, 4, 3, 2, 1]);
  * @typedef {{ consensusLevel?: number | null, confidence?: string, voteWeights?: Record<number, number>, assignments?: SourceAssignmentRow[] }} EvidenceResultLike
  * @typedef {{ sourceId: string, level?: number, levelRange?: number[] }} ReviewedSourceRow
  * @typedef {{ kanji: string, currentContractLevel: number, targetLevel: number, sourceConsensusLevel?: number | null, confidence?: string, voteWeights?: Record<number, number>, sourceIds: string[], reviewedSources: ReviewedSourceRow[] }} LevelDeltaRow
- * @typedef {{ level: number, currentContractCount: number, sourceConsensusCount: number, sourceCandidateCount: number, sourceClaimCounts: Record<string, number>, sourceClaimsOutsideCurrent: LevelDeltaRow[], sourceConsensusOutsideCurrent: LevelDeltaRow[], currentContractConsensusElsewhere: LevelDeltaRow[], disputedSourceCandidatesOutsideCurrent: LevelDeltaRow[] }} LevelSummary
+ * @typedef {{ level: number, currentContractCount: number, sourceConsensusCount: number, sourceCandidateCount: number, sourceCandidateAlreadyCurrentCount: number, sourceCandidateMissingFromCurrentCount: number, sourceConsensusAlreadyCurrentCount: number, sourceConsensusMissingFromCurrentCount: number, currentRowsWithoutSourceCandidateCount: number, currentRowsWithoutSourceConsensusCount: number, sourceClaimCounts: Record<string, number>, sourceClaimsOutsideCurrent: LevelDeltaRow[], missingSourceCandidatesFromCurrent: LevelDeltaRow[], sourceConsensusOutsideCurrent: LevelDeltaRow[], missingSourceConsensusFromCurrent: LevelDeltaRow[], currentContractConsensusElsewhere: LevelDeltaRow[], disputedSourceCandidatesOutsideCurrent: LevelDeltaRow[], disputedMissingSourceCandidatesFromCurrent: LevelDeltaRow[], currentRowsWithoutSourceCandidate: LevelDeltaRow[], currentRowsWithoutSourceConsensus: LevelDeltaRow[] }} LevelSummary
  * @typedef {{ valid: boolean, noDeckMutation: boolean, checked: number, limit: number, byLevel: Record<number, LevelSummary> }} LevelDeltaReport
  */
 
@@ -25,11 +25,22 @@ function createLevelSummary(level) {
         currentContractCount: 0,
         sourceConsensusCount: 0,
         sourceCandidateCount: 0,
+        sourceCandidateAlreadyCurrentCount: 0,
+        sourceCandidateMissingFromCurrentCount: 0,
+        sourceConsensusAlreadyCurrentCount: 0,
+        sourceConsensusMissingFromCurrentCount: 0,
+        currentRowsWithoutSourceCandidateCount: 0,
+        currentRowsWithoutSourceConsensusCount: 0,
         sourceClaimCounts: {},
         sourceClaimsOutsideCurrent: [],
+        missingSourceCandidatesFromCurrent: [],
         sourceConsensusOutsideCurrent: [],
+        missingSourceConsensusFromCurrent: [],
         currentContractConsensusElsewhere: [],
         disputedSourceCandidatesOutsideCurrent: [],
+        disputedMissingSourceCandidatesFromCurrent: [],
+        currentRowsWithoutSourceCandidate: [],
+        currentRowsWithoutSourceConsensus: [],
     };
 }
 
@@ -164,6 +175,26 @@ function buildJlptKanjiSourceLevelDeltaReport({ contract = {}, evidence = {}, li
         const consensusLevel = Number.isInteger(result.consensusLevel)
             ? Number(result.consensusLevel)
             : null;
+        const exactCurrentSourceIds = getExactSourceIdsForLevel(assignments, currentContractLevel);
+        if (exactCurrentSourceIds.length === 0) {
+            byLevel[currentContractLevel].currentRowsWithoutSourceCandidate.push(buildLevelDeltaRow({
+                kanji,
+                currentContractLevel,
+                targetLevel: currentContractLevel,
+                result,
+                sourceIds: [],
+            }));
+        }
+        if (consensusLevel !== currentContractLevel) {
+            byLevel[currentContractLevel].currentRowsWithoutSourceConsensus.push(buildLevelDeltaRow({
+                kanji,
+                currentContractLevel,
+                targetLevel: currentContractLevel,
+                result,
+                sourceIds: exactCurrentSourceIds,
+            }));
+        }
+
         if (consensusLevel !== null && sourceConsensusSets[consensusLevel]) {
             sourceConsensusSets[consensusLevel].add(kanji);
             if (consensusLevel !== currentContractLevel) {
@@ -198,9 +229,20 @@ function buildJlptKanjiSourceLevelDeltaReport({ contract = {}, evidence = {}, li
         summary.sourceCandidateCount = sourceCandidateSets[level].size;
         summary.sourceConsensusCount = sourceConsensusSets[level].size;
         summary.sourceClaimsOutsideCurrent = sortLevelDeltaRows([...sourceClaimsOutsideCurrentMaps[level].values()]);
+        summary.missingSourceCandidatesFromCurrent = summary.sourceClaimsOutsideCurrent;
         summary.sourceConsensusOutsideCurrent = sortLevelDeltaRows(summary.sourceConsensusOutsideCurrent);
+        summary.missingSourceConsensusFromCurrent = summary.sourceConsensusOutsideCurrent;
         summary.currentContractConsensusElsewhere = sortLevelDeltaRows(summary.currentContractConsensusElsewhere);
         summary.disputedSourceCandidatesOutsideCurrent = sortLevelDeltaRows([...disputedSourceCandidateMaps[level].values()]);
+        summary.disputedMissingSourceCandidatesFromCurrent = summary.disputedSourceCandidatesOutsideCurrent;
+        summary.currentRowsWithoutSourceCandidate = sortLevelDeltaRows(summary.currentRowsWithoutSourceCandidate);
+        summary.currentRowsWithoutSourceConsensus = sortLevelDeltaRows(summary.currentRowsWithoutSourceConsensus);
+        summary.sourceCandidateMissingFromCurrentCount = summary.missingSourceCandidatesFromCurrent.length;
+        summary.sourceCandidateAlreadyCurrentCount = summary.sourceCandidateCount - summary.sourceCandidateMissingFromCurrentCount;
+        summary.sourceConsensusMissingFromCurrentCount = summary.missingSourceConsensusFromCurrent.length;
+        summary.sourceConsensusAlreadyCurrentCount = summary.sourceConsensusCount - summary.sourceConsensusMissingFromCurrentCount;
+        summary.currentRowsWithoutSourceCandidateCount = summary.currentRowsWithoutSourceCandidate.length;
+        summary.currentRowsWithoutSourceConsensusCount = summary.currentRowsWithoutSourceConsensus.length;
     }
 
     return {

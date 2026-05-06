@@ -6,6 +6,7 @@ const {
     buildJlptKanjiSourceLevelDeltaReport,
 } = require("../src/services/jlptKanjiSourceLevelDeltaService");
 const {
+    buildJsonOutput,
     formatJlptKanjiSourceLevelDeltaReport,
     parseArgs,
 } = require("../scripts/auditJlptKanjiSourceLevelDeltas");
@@ -132,16 +133,29 @@ test("buildJlptKanjiSourceLevelDeltaReport exposes source-level candidates outsi
     assert.equal(report.noDeckMutation, true);
     assert.equal(report.byLevel[5].currentContractCount, 1);
     assert.equal(report.byLevel[5].sourceCandidateCount, 3);
+    assert.equal(report.byLevel[5].sourceCandidateAlreadyCurrentCount, 1);
+    assert.equal(report.byLevel[5].sourceCandidateMissingFromCurrentCount, 2);
     assert.equal(report.byLevel[5].sourceConsensusCount, 2);
+    assert.equal(report.byLevel[5].sourceConsensusAlreadyCurrentCount, 1);
+    assert.equal(report.byLevel[5].sourceConsensusMissingFromCurrentCount, 1);
+    assert.equal(report.byLevel[5].currentRowsWithoutSourceCandidateCount, 0);
+    assert.equal(report.byLevel[5].currentRowsWithoutSourceConsensusCount, 0);
     assert.deepEqual(report.byLevel[5].sourceClaimCounts, {
         kanjidic2_legacy: 3,
         tanos_legacy_direct: 1,
     });
     assert.deepEqual(report.byLevel[5].sourceClaimsOutsideCurrent.map((row) => row.kanji), ["学", "本"]);
+    assert.deepEqual(report.byLevel[5].missingSourceCandidatesFromCurrent.map((row) => row.kanji), ["学", "本"]);
     assert.deepEqual(report.byLevel[5].sourceConsensusOutsideCurrent.map((row) => row.kanji), ["本"]);
+    assert.deepEqual(report.byLevel[5].missingSourceConsensusFromCurrent.map((row) => row.kanji), ["本"]);
     assert.deepEqual(report.byLevel[5].disputedSourceCandidatesOutsideCurrent.map((row) => row.kanji), ["学"]);
+    assert.deepEqual(report.byLevel[5].disputedMissingSourceCandidatesFromCurrent.map((row) => row.kanji), ["学"]);
     assert.deepEqual(report.byLevel[4].currentContractConsensusElsewhere.map((row) => row.kanji), []);
+    assert.deepEqual(report.byLevel[4].currentRowsWithoutSourceCandidate.map((row) => row.kanji), []);
+    assert.deepEqual(report.byLevel[4].currentRowsWithoutSourceConsensus.map((row) => row.kanji), ["学"]);
     assert.deepEqual(report.byLevel[3].currentContractConsensusElsewhere.map((row) => row.kanji), ["本"]);
+    assert.deepEqual(report.byLevel[3].currentRowsWithoutSourceCandidate.map((row) => row.kanji), ["本"]);
+    assert.deepEqual(report.byLevel[3].currentRowsWithoutSourceConsensus.map((row) => row.kanji), ["本"]);
 });
 
 test("formatJlptKanjiSourceLevelDeltaReport renders source claims and disputed candidates", () => {
@@ -165,8 +179,10 @@ test("formatJlptKanjiSourceLevelDeltaReport renders source claims and disputed c
 
     assert.match(text, /JLPT Kanji Source Level Delta Audit/);
     assert.match(text, /No deck mutation: yes/);
-    assert.match(text, /N5: current contract 1; source consensus 2; source candidates 3/);
-    assert.match(text, /source claims outside current N5: 2/);
+    assert.match(text, /N5: current contract 1; source candidates 3 \(already current 1, missing from current 2\); source consensus 2 \(already current 1, missing from current 1\)/);
+    assert.match(text, /missing from current N5 by active source claim: 2/);
+    assert.match(text, /missing from current N5 by active source consensus: 1/);
+    assert.match(text, /missing from current N5 but disputed: 1/);
     assert.match(text, /- 学: current N4; target N5; sources kanjidic2_legacy; consensus none; confidence disputed; votes N5:1, N4:1/);
     assert.match(text, /- 本: current N3; target N5; sources kanjidic2_legacy; consensus N5; confidence weak_evidence; votes N5:1/);
 });
@@ -185,4 +201,29 @@ test("auditJlptKanjiSourceLevelDeltas parseArgs supports json level and limit", 
     assert.equal(options.limit, 12);
     assert.equal(options.contract, "templates/custom-contract.json");
     assert.equal(options.evidence, "templates/custom-evidence.json");
+});
+
+test("auditJlptKanjiSourceLevelDeltas json output honors the level filter", () => {
+    const report = buildJlptKanjiSourceLevelDeltaReport({
+        contract: {
+            kanjiLevels: {
+                日: 5,
+                学: 4,
+                本: 3,
+            },
+        },
+        evidence: buildFixtureEvidence(),
+        limit: 5,
+    });
+
+    const output = buildJsonOutput({
+        contractPath: "templates/jlpt_level_contract.json",
+        evidencePath: "templates/jlpt_kanji_source_evidence.json",
+        report,
+        level: 5,
+    });
+
+    assert.deepEqual(Object.keys(output.byLevel), ["5"]);
+    assert.equal(output.byLevel[5].sourceCandidateMissingFromCurrentCount, 2);
+    assert.equal(output.byLevel[4], undefined);
 });

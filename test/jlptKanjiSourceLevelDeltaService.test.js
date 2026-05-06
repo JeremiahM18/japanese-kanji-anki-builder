@@ -194,6 +194,12 @@ test("buildJlptKanjiSourceLevelDeltaReport exposes source-level candidates outsi
     assert.deepEqual(report.byLevel[3].currentContractConsensusElsewhere.map((row) => row.kanji), ["本"]);
     assert.deepEqual(report.byLevel[3].currentRowsWithoutSourceCandidate.map((row) => row.kanji), ["本"]);
     assert.deepEqual(report.byLevel[3].currentRowsWithoutSourceConsensus.map((row) => row.kanji), ["本"]);
+    assert.deepEqual(report.reviewWorklist.map((row) => (
+        `${row.kanji}:${row.reviewPriority}:${row.reviewLevels.join(",")}`
+    )), [
+        "学:disputed_consensus:5,4",
+        "本:contract_consensus_mismatch:5,3",
+    ]);
 });
 
 test("formatJlptKanjiSourceLevelDeltaReport renders source claims and disputed candidates", () => {
@@ -222,6 +228,7 @@ test("formatJlptKanjiSourceLevelDeltaReport renders source claims and disputed c
         sourceInputsPath: "templates/jlpt_kanji_source_inputs.json",
         report,
         level: 5,
+        worklist: true,
     });
 
     assert.match(text, /JLPT Kanji Source Level Delta Audit/);
@@ -234,6 +241,9 @@ test("formatJlptKanjiSourceLevelDeltaReport renders source claims and disputed c
     assert.match(text, /missing from current N5 but disputed: 1/);
     assert.match(text, /- 学: current N4; target N5; sources kanjidic2_legacy; consensus none; confidence disputed; votes N5:1, N4:1; local source-input shin_kanzen_master_kanji:reviewed=N4/);
     assert.match(text, /- 本: current N3; target N5; sources kanjidic2_legacy; consensus N5; confidence weak_evidence; votes N5:1/);
+    assert.match(text, /All-level review worklist/);
+    assert.match(text, /priority disputed_consensus; current N4; review levels N5, N4; source candidates N5, N4/);
+    assert.match(text, /method: review every listed level/);
 });
 
 test("auditJlptKanjiSourceLevelDeltas parseArgs supports json level and limit", () => {
@@ -241,6 +251,7 @@ test("auditJlptKanjiSourceLevelDeltas parseArgs supports json level and limit", 
         "--json",
         "--level=N5",
         "--limit=12",
+        "--worklist",
         "--contract=templates/custom-contract.json",
         "--evidence=templates/custom-evidence.json",
         "--source-inputs=templates/custom-source-inputs.json",
@@ -249,9 +260,18 @@ test("auditJlptKanjiSourceLevelDeltas parseArgs supports json level and limit", 
     assert.equal(options.json, true);
     assert.equal(options.level, 5);
     assert.equal(options.limit, 12);
+    assert.equal(options.worklist, true);
+    assert.equal(options.worklistOnly, false);
     assert.equal(options.contract, "templates/custom-contract.json");
     assert.equal(options.evidence, "templates/custom-evidence.json");
     assert.equal(options.sourceInputs, "templates/custom-source-inputs.json");
+});
+
+test("auditJlptKanjiSourceLevelDeltas parseArgs supports worklist-only mode", () => {
+    const options = parseArgs(["--worklist-only"]);
+
+    assert.equal(options.worklist, true);
+    assert.equal(options.worklistOnly, true);
 });
 
 test("auditJlptKanjiSourceLevelDeltas parseArgs can disable source input annotations", () => {

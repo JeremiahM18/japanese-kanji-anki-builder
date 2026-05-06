@@ -14,7 +14,13 @@ const TEMPLATE_HEADERS = Object.freeze([
     "notes",
 ]);
 const SOURCE_LEVEL_DELTA_PRIORITY = "source-level-deltas";
-const PRIORITY_MODES = Object.freeze(["contract", "source-gaps", SOURCE_LEVEL_DELTA_PRIORITY]);
+const SOURCE_REVIEW_WORKLIST_PRIORITY = "source-review-worklist";
+const PRIORITY_MODES = Object.freeze([
+    "contract",
+    "source-gaps",
+    SOURCE_LEVEL_DELTA_PRIORITY,
+    SOURCE_REVIEW_WORKLIST_PRIORITY,
+]);
 const DEFAULT_PRIORITY_MODE = "contract";
 
 function formatLevel(level) {
@@ -197,6 +203,36 @@ function buildSourceLevelDeltaRows({ contract, evidence, sourceLevel, limit, ski
     return maxRows === null ? formattedRows : formattedRows.slice(0, maxRows);
 }
 
+function buildSourceReviewWorklistRows({ contract, evidence, limit, skippedSourceKanji }) {
+    if (!evidence) {
+        throw new Error("source-review-worklist priority requires a source-evidence manifest.");
+    }
+    const maxRows = resolvePositiveLimit(limit);
+    const report = buildJlptKanjiSourceLevelDeltaReport({
+        contract,
+        evidence,
+        limit: maxRows || undefined,
+    });
+    const rows = (report.reviewWorklist || [])
+        .filter((row) => !skippedSourceKanji?.has(row.kanji));
+
+    const formattedRows = rows.map((row) => ({
+        kanji: row.kanji,
+        currentContractLevel: formatDeltaLevel(row.currentContractLevel),
+        level: "",
+        reviewStatus: "needs_review",
+        citation: "",
+        evidenceRef: "",
+        notes: "",
+        reviewPriority: row.reviewPriority,
+        reviewReason: `${row.reviewReason} Review levels: ${
+            row.reviewLevels.map((reviewLevel) => formatDeltaLevel(reviewLevel)).join(", ") || "none"
+        }.`,
+    }));
+
+    return maxRows === null ? formattedRows : formattedRows.slice(0, maxRows);
+}
+
 function buildJlptKanjiSourceInputTemplateRows({
     contract = {},
     evidence = null,
@@ -220,6 +256,20 @@ function buildJlptKanjiSourceInputTemplateRows({
             contract,
             evidence,
             sourceLevel,
+            limit: maxRows,
+            skippedSourceKanji,
+        });
+    }
+    if (priorityMode === SOURCE_REVIEW_WORKLIST_PRIORITY) {
+        if (level !== null && level !== undefined && String(level).trim() !== "") {
+            throw new Error("source-review-worklist priority is all-level and must not use --level.");
+        }
+        if (hasSourceLevelFilter) {
+            throw new Error("source-review-worklist priority is all-level and must not use --source-level.");
+        }
+        return buildSourceReviewWorklistRows({
+            contract,
+            evidence,
             limit: maxRows,
             skippedSourceKanji,
         });
@@ -279,6 +329,7 @@ module.exports = {
     TEMPLATE_HEADERS,
     DEFAULT_PRIORITY_MODE,
     PRIORITY_MODES,
+    SOURCE_REVIEW_WORKLIST_PRIORITY,
     buildSourceEvidencePriority,
     buildJlptKanjiSourceInputTemplateRows,
     buildJlptTextbookConsensusTemplateRows: buildJlptKanjiSourceInputTemplateRows,

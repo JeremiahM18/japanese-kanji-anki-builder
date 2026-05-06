@@ -81,6 +81,21 @@ function formatPrioritySummary(rows = []) {
         .join(", ") || "none";
 }
 
+function formatTemplateRows(rows = [], limit = 10) {
+    const cappedRows = rows.slice(0, Math.max(1, limit || 10));
+    if (cappedRows.length === 0) {
+        return ["Rows: none"];
+    }
+    return [
+        "Rows:",
+        ...cappedRows.map((row) => (
+            `- ${row.kanji}: current ${row.currentContractLevel || "none"}; `
+            + `priority ${row.reviewPriority || "unknown"}; `
+            + `${row.reviewReason || "No priority reason recorded."}`
+        )),
+    ];
+}
+
 function formatTemplateReport({ outPath, contractPath, evidencePath, sourceId, rows, level, sourceLevel, priority, skippedExistingSourceRows = 0 } = {}) {
     return [
         "JLPT Kanji Source Input Template",
@@ -95,6 +110,7 @@ function formatTemplateReport({ outPath, contractPath, evidencePath, sourceId, r
         `Priority summary: ${formatPrioritySummary(rows)}`,
         `Already reviewed/blocked source rows skipped: ${skippedExistingSourceRows}`,
         `Rows written: ${rows.length}`,
+        ...formatTemplateRows(rows),
         "",
         "This command creates an ignored manual-review worksheet only. It does not import evidence, move kanji, move words, update decks, or change readiness.",
         "Fill only permitted, manually reviewed level judgments for the selected source lane, then pin the source-input integrity before import.",
@@ -143,12 +159,14 @@ function run(options = {}) {
     if (!sourceInput) {
         throw new Error(`Unknown JLPT kanji source input: ${sourceId}`);
     }
-    if (priority === "source-level-deltas" && !options.out) {
-        throw new Error("source-level-deltas priority requires --out=<batch.tsv> so it does not overwrite the configured full source worksheet.");
+    if (["source-level-deltas", "source-review-worklist"].includes(priority) && !options.out) {
+        throw new Error(`${priority} priority requires --out=<batch.tsv> so it does not overwrite the configured full source worksheet.`);
     }
     const outPath = path.resolve(process.cwd(), options.out || sourceInput.sourcePath);
     const contract = loadJlptLevelContract(contractPath);
-    const needsEvidence = priority === "source-gaps" || priority === "source-level-deltas";
+    const needsEvidence = priority === "source-gaps"
+        || priority === "source-level-deltas"
+        || priority === "source-review-worklist";
     const evidence = needsEvidence
         ? loadJlptKanjiSourceEvidence(evidencePath)
         : null;
@@ -202,6 +220,7 @@ module.exports = {
     DEFAULT_EVIDENCE,
     DEFAULT_SOURCE,
     formatTemplateReport,
+    formatTemplateRows,
     formatPrioritySummary,
     main,
     parseArgs,

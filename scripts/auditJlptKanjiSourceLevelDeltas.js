@@ -47,12 +47,19 @@ function parseArgs(argv) {
         level: null,
         limit: 25,
         sourceInputs: DEFAULT_SOURCE_INPUTS,
+        worklist: false,
+        worklistOnly: false,
         unknownArgs: [],
     };
 
     for (const arg of argv) {
         if (arg === "--json") {
             options.json = true;
+        } else if (arg === "--worklist") {
+            options.worklist = true;
+        } else if (arg === "--worklist-only") {
+            options.worklist = true;
+            options.worklistOnly = true;
         } else if (arg.startsWith("--contract=")) {
             options.contract = String(arg.slice("--contract=".length) || "").trim();
         } else if (arg.startsWith("--evidence=")) {
@@ -109,6 +116,13 @@ function formatSourceInputReviews(reviews = []) {
     return parts.length > 0 ? `; local source-input ${parts.join(", ")}` : "";
 }
 
+function formatLevels(levels = []) {
+    const parts = (levels || [])
+        .filter((level) => Number.isInteger(level))
+        .map((level) => formatLevel(level));
+    return parts.length > 0 ? parts.join(", ") : "none";
+}
+
 function formatSourceInputReviewCounts(counts = {}) {
     const parts = ["reviewed", "blocked"]
         .filter((status) => Number(counts?.[status]) > 0)
@@ -134,6 +148,45 @@ function formatDeltaRows(rows = [], limit = 25) {
             + `votes ${formatVoteWeights(row.voteWeights)}`
             + formatSourceInputReviews(row.sourceInputReviews)
         ));
+}
+
+function summarizeWorklistPriorities(rows = []) {
+    return rows.reduce((counts, row) => {
+        const priority = row.reviewPriority || "unknown";
+        counts[priority] = (counts[priority] || 0) + 1;
+        return counts;
+    }, {});
+}
+
+function formatWorklistPrioritySummary(rows = []) {
+    const counts = summarizeWorklistPriorities(rows);
+    return Object.entries(counts)
+        .sort(([, countA], [, countB]) => countB - countA)
+        .map(([priority, count]) => `${priority}: ${count}`)
+        .join(", ") || "none";
+}
+
+function formatWorklistRows(rows = [], limit = 25) {
+    return rows
+        .slice(0, Math.max(1, limit || 25))
+        .map((row) => (
+            `- ${row.kanji}: priority ${row.reviewPriority}; current ${formatLevel(row.currentContractLevel)}; `
+            + `review levels ${formatLevels(row.reviewLevels)}; source candidates ${formatLevels(row.sourceCandidateLevels)}; `
+            + `consensus ${formatLevel(row.sourceConsensusLevel)}; confidence ${row.confidence || "unknown"}; `
+            + `votes ${formatVoteWeights(row.voteWeights)}`
+            + formatSourceInputReviews(row.sourceInputReviews)
+        ));
+}
+
+function formatWorklistSection({ report, limit } = {}) {
+    const rows = report.reviewWorklist || [];
+    return [
+        "All-level review worklist:",
+        `- total rows needing governed source review: ${rows.length}`,
+        `- priority summary: ${formatWorklistPrioritySummary(rows)}`,
+        "- method: review every listed level for the selected manual source lane; record reviewed only for exact source-level evidence, leave unresolved rows needs_review.",
+        ...formatWorklistRows(rows, limit),
+    ];
 }
 
 function formatLevelSection({ summary, limit } = {}) {
@@ -167,6 +220,8 @@ function formatJlptKanjiSourceLevelDeltaReport({
     sourceInputsPath = null,
     report,
     level = null,
+    worklist = false,
+    worklistOnly = false,
 } = {}) {
     const levels = Number.isInteger(level) ? [level] : JLPT_LEVELS_DESC;
     const lines = [
@@ -183,35 +238,41 @@ function formatJlptKanjiSourceLevelDeltaReport({
         "",
         `Contract kanji checked: ${report.checked}`,
         `Local source-input progress: ${formatSourceInputReviewCountsBySource(report.sourceInputReviewCountsBySource)}`,
-        "",
-        "Level summary:",
     ];
 
-    for (const currentLevel of levels) {
-        const summary = report.byLevel?.[currentLevel];
-        if (!summary) {
-            continue;
+    if (!worklistOnly) {
+        lines.push("", "Level summary:");
+
+        for (const currentLevel of levels) {
+            const summary = report.byLevel?.[currentLevel];
+            if (!summary) {
+                continue;
+            }
+            lines.push(
+                `- N${currentLevel}: current contract ${summary.currentContractCount}; `
+                + `source candidates ${summary.sourceCandidateCount} `
+                + `(already current ${summary.sourceCandidateAlreadyCurrentCount}, missing from current ${summary.sourceCandidateMissingFromCurrentCount}); `
+                + `source consensus ${summary.sourceConsensusCount} `
+                + `(already current ${summary.sourceConsensusAlreadyCurrentCount}, missing from current ${summary.sourceConsensusMissingFromCurrentCount}); `
+                + `disputed missing candidates ${summary.disputedMissingSourceCandidatesFromCurrent.length}; `
+                + `current rows with consensus elsewhere ${summary.currentContractConsensusElsewhere.length}; `
+                + `current rows without source claim ${summary.currentRowsWithoutSourceCandidateCount}; `
+                + `current rows without source consensus ${summary.currentRowsWithoutSourceConsensusCount}; `
+                + `claims by source ${formatSourceClaimCounts(summary.sourceClaimCounts)}`
+            );
         }
-        lines.push(
-            `- N${currentLevel}: current contract ${summary.currentContractCount}; `
-            + `source candidates ${summary.sourceCandidateCount} `
-            + `(already current ${summary.sourceCandidateAlreadyCurrentCount}, missing from current ${summary.sourceCandidateMissingFromCurrentCount}); `
-            + `source consensus ${summary.sourceConsensusCount} `
-            + `(already current ${summary.sourceConsensusAlreadyCurrentCount}, missing from current ${summary.sourceConsensusMissingFromCurrentCount}); `
-            + `disputed missing candidates ${summary.disputedMissingSourceCandidatesFromCurrent.length}; `
-            + `current rows with consensus elsewhere ${summary.currentContractConsensusElsewhere.length}; `
-            + `current rows without source claim ${summary.currentRowsWithoutSourceCandidateCount}; `
-            + `current rows without source consensus ${summary.currentRowsWithoutSourceConsensusCount}; `
-            + `claims by source ${formatSourceClaimCounts(summary.sourceClaimCounts)}`
-        );
+
+        for (const currentLevel of levels) {
+            const summary = report.byLevel?.[currentLevel];
+            if (!summary) {
+                continue;
+            }
+            lines.push("", ...formatLevelSection({ summary, limit: report.limit }));
+        }
     }
 
-    for (const currentLevel of levels) {
-        const summary = report.byLevel?.[currentLevel];
-        if (!summary) {
-            continue;
-        }
-        lines.push("", ...formatLevelSection({ summary, limit: report.limit }));
+    if (worklist) {
+        lines.push("", ...formatWorklistSection({ report, limit: report.limit }));
     }
 
     return `${lines.join("\n")}\n`;
@@ -320,6 +381,8 @@ function main() {
             sourceInputsPath,
             report,
             level: options.level,
+            worklist: options.worklist,
+            worklistOnly: options.worklistOnly,
         }));
     }
 }
@@ -337,7 +400,9 @@ module.exports = {
     DEFAULT_SOURCE_INPUTS,
     buildSourceInputReviews,
     buildJsonOutput,
+    formatWorklistPrioritySummary,
     formatJlptKanjiSourceLevelDeltaReport,
     main,
     parseArgs,
+    summarizeWorklistPriorities,
 };

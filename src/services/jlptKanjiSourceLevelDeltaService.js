@@ -12,11 +12,12 @@ const JLPT_LEVELS_DESC = Object.freeze([5, 4, 3, 2, 1]);
  * @typedef {{ sourceId: string, level?: number, levelRange?: number[] }} ReviewedSourceRow
  * @typedef {{ kanji?: string, sourceId: string, reviewStatus: string, level?: number | null, levelRange?: number[] | null }} SourceInputReviewRow
  * @typedef {{ kanji: string, currentContractLevel: number, targetLevel: number, sourceConsensusLevel?: number | null, confidence?: string, voteWeights?: Record<number, number>, sourceIds: string[], reviewedSources: ReviewedSourceRow[], sourceInputReviews: SourceInputReviewRow[] }} LevelDeltaRow
+ * @typedef {{ kanji: string, currentContractLevel: number, reviewPriority: string, reviewReason: string, rank: number, reviewLevels: number[], sourceCandidateLevels: number[], missingFromCurrentSourceLevels: number[], sourceConsensusLevel?: number | null, confidence?: string, confidenceReasons: string[], assignmentCount: number, independentSourceCount: number, independentEvidenceLineageCount: number, japanesePublishedSourceCount: number, voteWeights?: Record<number, number>, reviewedSources: ReviewedSourceRow[], sourceInputReviews: SourceInputReviewRow[] }} SourceLevelReviewWorklistRow
  * @typedef {{ reviewed?: number, blocked?: number }} SourceInputReviewCounts
  * @typedef {{ missingSourceCandidatesFromCurrent: SourceInputReviewCounts, missingSourceConsensusFromCurrent: SourceInputReviewCounts, disputedMissingSourceCandidatesFromCurrent: SourceInputReviewCounts, currentContractConsensusElsewhere: SourceInputReviewCounts, currentRowsWithoutSourceCandidate: SourceInputReviewCounts, currentRowsWithoutSourceConsensus: SourceInputReviewCounts }} SourceInputReviewQueueCounts
  * @typedef {{ level: number, currentContractCount: number, sourceConsensusCount: number, sourceCandidateCount: number, sourceCandidateAlreadyCurrentCount: number, sourceCandidateMissingFromCurrentCount: number, sourceConsensusAlreadyCurrentCount: number, sourceConsensusMissingFromCurrentCount: number, currentRowsWithoutSourceCandidateCount: number, currentRowsWithoutSourceConsensusCount: number, sourceClaimCounts: Record<string, number>, sourceInputReviewCounts: SourceInputReviewQueueCounts, sourceClaimsOutsideCurrent: LevelDeltaRow[], missingSourceCandidatesFromCurrent: LevelDeltaRow[], sourceConsensusOutsideCurrent: LevelDeltaRow[], missingSourceConsensusFromCurrent: LevelDeltaRow[], currentContractConsensusElsewhere: LevelDeltaRow[], disputedSourceCandidatesOutsideCurrent: LevelDeltaRow[], disputedMissingSourceCandidatesFromCurrent: LevelDeltaRow[], currentRowsWithoutSourceCandidate: LevelDeltaRow[], currentRowsWithoutSourceConsensus: LevelDeltaRow[] }} LevelSummary
  * @typedef {Record<string, SourceInputReviewCounts>} SourceInputReviewCountsBySource
- * @typedef {{ valid: boolean, noDeckMutation: boolean, checked: number, limit: number, sourceInputReviewCountsBySource: SourceInputReviewCountsBySource, byLevel: Record<number, LevelSummary> }} LevelDeltaReport
+ * @typedef {{ valid: boolean, noDeckMutation: boolean, checked: number, limit: number, sourceInputReviewCountsBySource: SourceInputReviewCountsBySource, reviewWorklist: SourceLevelReviewWorklistRow[], byLevel: Record<number, LevelSummary> }} LevelDeltaReport
  */
 
 /**
@@ -77,6 +78,15 @@ function addSourceClaimCount(summary, sourceId) {
  */
 function formatLevel(level) {
     return Number.isInteger(level) ? `N${level}` : "none";
+}
+
+/**
+ * @param {number[]} [levels]
+ * @returns {number[]}
+ */
+function sortLevelsForReview(levels = []) {
+    return [...new Set(levels.filter((level) => Number.isInteger(level)))]
+        .sort((a, b) => b - a);
 }
 
 /**
@@ -188,6 +198,163 @@ function getExactSourceIdsForLevel(assignments, level) {
 }
 
 /**
+ * @param {SourceAssignmentRow[]} [assignments]
+ * @returns {number[]}
+ */
+function getExactSourceCandidateLevels(assignments = []) {
+    return sortLevelsForReview(
+        assignments
+            .map((assignment) => assignment.level)
+            .filter((level) => Number.isInteger(level))
+    );
+}
+
+/**
+ * @param {Record<number, number>} [voteWeights]
+ * @returns {number[]}
+ */
+function getVotedLevels(voteWeights = {}) {
+    return sortLevelsForReview(
+        Object.entries(voteWeights || {})
+            .filter(([, weight]) => Number(weight) > 0)
+            .map(([level]) => Number(level))
+    );
+}
+
+/**
+ * @param {number} currentContractLevel
+ * @param {EvidenceResultLike} [result]
+ * @returns {number[]}
+ */
+function buildReviewLevels(currentContractLevel, result = {}) {
+    return sortLevelsForReview([
+        currentContractLevel,
+        result.consensusLevel,
+        ...getExactSourceCandidateLevels(result.assignments || []),
+        ...getVotedLevels(result.voteWeights || {}),
+    ]);
+}
+
+/**
+ * @param {EvidenceResultLike & { assignmentCount?: number, independentSourceCount?: number, independentEvidenceLineageCount?: number, japanesePublishedSourceCount?: number, contractMatchesConsensus?: boolean | null }} result
+ * @param {Record<string, number>} policy
+ * @returns {{ rank: number, reviewPriority: string, reviewReason: string } | null}
+ */
+function classifyReviewWorklistProblem(result = {}, policy = {}) {
+    if (result.confidence === "disputed") {
+        return {
+            rank: 0,
+            reviewPriority: "disputed_consensus",
+            reviewReason: "Active voting sources disagree; review the current level and every voted candidate level before recording a manual source judgment.",
+        };
+    }
+    if (result.contractMatchesConsensus === false) {
+        return {
+            rank: 1,
+            reviewPriority: "contract_consensus_mismatch",
+            reviewReason: "Active source consensus differs from the current operational contract; review both the current and consensus levels.",
+        };
+    }
+    if ((result.assignmentCount || 0) === 0) {
+        return {
+            rank: 2,
+            reviewPriority: "missing_evidence",
+            reviewReason: "No reviewed active external voting evidence is recorded; review the current contract level first and capture only exact source-level evidence.",
+        };
+    }
+    if ((result.japanesePublishedSourceCount || 0) < (policy.minimumJapanesePublishedSources ?? 1)) {
+        return {
+            rank: 3,
+            reviewPriority: "missing_japanese_published_source",
+            reviewReason: "Evidence exists, but no required Japanese-published source evidence is recorded; review exact source-level placement from the manual lane.",
+        };
+    }
+    if ((result.independentEvidenceLineageCount || 0) < (policy.minimumIndependentEvidenceLineages ?? 2)) {
+        return {
+            rank: 4,
+            reviewPriority: "insufficient_independent_evidence_lineages",
+            reviewReason: "Evidence exists, but independent evidence-lineage requirements are not satisfied.",
+        };
+    }
+    if ((result.independentSourceCount || 0) < (policy.minimumIndependentSources ?? 3)) {
+        return {
+            rank: 5,
+            reviewPriority: "insufficient_independent_sources",
+            reviewReason: "Evidence exists, but independent source-count requirements are not satisfied.",
+        };
+    }
+    if (result.confidence === "weak_evidence") {
+        return {
+            rank: 6,
+            reviewPriority: "weak_evidence",
+            reviewReason: "Evidence exists, but governed confidence requirements are not yet satisfied.",
+        };
+    }
+    return null;
+}
+
+/**
+ * @param {{ kanji: string, currentContractLevel: number, result: EvidenceResultLike & { assignmentCount?: number, independentSourceCount?: number, independentEvidenceLineageCount?: number, japanesePublishedSourceCount?: number, confidenceReasons?: string[], contractMatchesConsensus?: boolean | null }, policy?: Record<string, number>, sourceInputReviewMap?: Map<string, SourceInputReviewRow[]> }} options
+ * @returns {SourceLevelReviewWorklistRow | null}
+ */
+function buildReviewWorklistRow({
+    kanji,
+    currentContractLevel,
+    result,
+    policy = {},
+    sourceInputReviewMap = new Map(),
+}) {
+    const problem = classifyReviewWorklistProblem(result, policy);
+    if (!problem) {
+        return null;
+    }
+    const sourceCandidateLevels = getExactSourceCandidateLevels(result.assignments || []);
+
+    return {
+        kanji,
+        currentContractLevel,
+        reviewPriority: problem.reviewPriority,
+        reviewReason: problem.reviewReason,
+        rank: problem.rank,
+        reviewLevels: buildReviewLevels(currentContractLevel, result),
+        sourceCandidateLevels,
+        missingFromCurrentSourceLevels: sourceCandidateLevels.filter((level) => level !== currentContractLevel),
+        sourceConsensusLevel: result.consensusLevel,
+        confidence: result.confidence,
+        confidenceReasons: result.confidenceReasons || [],
+        assignmentCount: result.assignmentCount || 0,
+        independentSourceCount: result.independentSourceCount || 0,
+        independentEvidenceLineageCount: result.independentEvidenceLineageCount || 0,
+        japanesePublishedSourceCount: result.japanesePublishedSourceCount || 0,
+        voteWeights: result.voteWeights,
+        reviewedSources: (result.assignments || []).map((assignment) => {
+            /** @type {ReviewedSourceRow} */
+            const source = {
+                sourceId: assignment.sourceId,
+                level: assignment.level,
+            };
+            if (Array.isArray(assignment.levelRange)) {
+                source.levelRange = assignment.levelRange;
+            }
+            return source;
+        }),
+        sourceInputReviews: getSourceInputReviewsForKanji(sourceInputReviewMap, kanji),
+    };
+}
+
+/**
+ * @param {SourceLevelReviewWorklistRow[]} [rows]
+ * @returns {SourceLevelReviewWorklistRow[]}
+ */
+function sortReviewWorklistRows(rows = []) {
+    return [...rows].sort((a, b) => (
+        a.rank - b.rank
+        || (b.currentContractLevel || 0) - (a.currentContractLevel || 0)
+        || a.kanji.localeCompare(b.kanji, "ja")
+    ));
+}
+
+/**
  * @param {LevelDeltaRow[]} rows
  * @returns {SourceInputReviewCounts}
  */
@@ -243,9 +410,17 @@ function buildJlptKanjiSourceLevelDeltaReport({
     limit = 25,
     sourceInputReviews = [],
 } = {}) {
+    const policy = {
+        minimumIndependentSources: 3,
+        minimumIndependentEvidenceLineages: 2,
+        minimumJapanesePublishedSources: 1,
+        ...(evidence.policy || {}),
+    };
     const byLevel = createLevelSummaries();
     const sourceInputReviewMap = buildSourceInputReviewMap(sourceInputReviews);
     const flattenedSourceInputReviews = [...sourceInputReviewMap.values()].flat();
+    /** @type {SourceLevelReviewWorklistRow[]} */
+    const reviewWorklistRows = [];
     /** @type {Record<number, Set<string>>} */
     const sourceCandidateSets = Object.fromEntries(JLPT_LEVELS_DESC.map((level) => [level, new Set()]));
     /** @type {Record<number, Set<string>>} */
@@ -264,6 +439,16 @@ function buildJlptKanjiSourceLevelDeltaReport({
             contractLevel: currentContractLevel,
             evidence,
         });
+        const reviewWorklistRow = buildReviewWorklistRow({
+            kanji,
+            currentContractLevel,
+            result,
+            policy,
+            sourceInputReviewMap,
+        });
+        if (reviewWorklistRow) {
+            reviewWorklistRows.push(reviewWorklistRow);
+        }
 
         for (const assignment of assignments) {
             const assignmentLevel = Number(assignment.level);
@@ -374,6 +559,7 @@ function buildJlptKanjiSourceLevelDeltaReport({
         checked: contractEntries.length,
         limit,
         sourceInputReviewCountsBySource: countSourceInputReviewsBySource(flattenedSourceInputReviews),
+        reviewWorklist: sortReviewWorklistRows(reviewWorklistRows),
         byLevel,
     };
 }
@@ -383,4 +569,5 @@ module.exports = {
     buildSourceInputReviewMap,
     buildJlptKanjiSourceLevelDeltaReport,
     formatLevel,
+    sortLevelsForReview,
 };

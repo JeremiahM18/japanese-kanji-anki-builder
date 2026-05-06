@@ -208,6 +208,54 @@ test("kanji source input template can prepare source-level delta review rows", (
     assert.match(rows[1].reviewReason, /Active source consensus places this kanji at N5/);
 });
 
+test("kanji source input template can prepare all-level source review worklist rows", () => {
+    const contract = {
+        kanjiLevels: {
+            日: 5,
+            学: 4,
+            本: 3,
+        },
+    };
+    const evidence = {
+        policy: {
+            minimumIndependentSources: 1,
+            minimumIndependentEvidenceLineages: 0,
+            minimumJapanesePublishedSources: 0,
+            standardAgreementScore: 0.67,
+            highAgreementScore: 0.8,
+        },
+        sources: {
+            kanjidic2_legacy: buildGovernedSource(),
+            tanos_legacy_direct: buildGovernedSource(),
+        },
+        assignments: {
+            kanjidic2_legacy: {
+                日: { level: 5, reviewStatus: "reviewed" },
+                学: { level: 5, reviewStatus: "reviewed" },
+                本: { level: 5, reviewStatus: "reviewed" },
+            },
+            tanos_legacy_direct: {
+                日: { level: 5, reviewStatus: "reviewed" },
+                学: { level: 4, reviewStatus: "reviewed" },
+            },
+        },
+    };
+
+    const rows = buildJlptKanjiSourceInputTemplateRows({
+        contract,
+        evidence,
+        priority: "source-review-worklist",
+        skippedSourceKanji: new Set(["学"]),
+    });
+
+    assert.deepEqual(rows.map((row) => `${row.kanji}:${row.currentContractLevel}:${row.reviewPriority}`), [
+        "本:N3:contract_consensus_mismatch",
+    ]);
+    assert.equal(rows[0].reviewStatus, "needs_review");
+    assert.equal(rows[0].level, "");
+    assert.match(rows[0].reviewReason, /Review levels: N5, N3/);
+});
+
 test("kanji source input template skips already reviewed local source rows", () => {
     const contract = {
         kanjiLevels: {
@@ -271,6 +319,18 @@ test("source-level delta template priority rejects ambiguous filters", () => {
         priority: "source-gaps",
         sourceLevel: "N5",
     }), /only supported with source-level-deltas/);
+    assert.throws(() => buildJlptKanjiSourceInputTemplateRows({
+        contract: { kanjiLevels: { 日: 5 } },
+        evidence: {},
+        priority: "source-review-worklist",
+        level: "N5",
+    }), /must not use --level/);
+    assert.throws(() => buildJlptKanjiSourceInputTemplateRows({
+        contract: { kanjiLevels: { 日: 5 } },
+        evidence: {},
+        priority: "source-review-worklist",
+        sourceLevel: "N5",
+    }), /must not use --source-level/);
 });
 
 test("source-evidence priority labels missing Japanese-published source evidence", () => {
@@ -367,5 +427,16 @@ test("source-level delta template command requires an explicit batch output", ()
         priority: "source-level-deltas",
         sourceLevel: "N5",
         limit: 23,
+    }), /requires --out=<batch.tsv>/);
+});
+
+test("source review worklist template command requires an explicit batch output", () => {
+    assert.throws(() => run({
+        contract: "templates/jlpt_level_contract.json",
+        config: "templates/jlpt_kanji_source_inputs.json",
+        evidence: "templates/jlpt_kanji_source_evidence.json",
+        source: "shin_kanzen_master_kanji",
+        priority: "source-review-worklist",
+        limit: 10,
     }), /requires --out=<batch.tsv>/);
 });

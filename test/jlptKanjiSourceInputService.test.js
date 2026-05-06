@@ -111,6 +111,36 @@ test("source input preflight accepts explicit level-range evidence", () => {
     assert.equal(report.assignments.橋.level, undefined);
 });
 
+test("source input preflight keeps blank worksheet rows pending instead of rejected", () => {
+    const text = [
+        "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes",
+        "日\tN5\treviewed\tFixture citation\tfixture:日\tObserved fixture row",
+        "学\t\tneeds_review\t\t\t",
+        "橋\t\tblocked\t\t\tOut of scope for this source batch",
+    ].join("\n");
+    const sourceConfig = buildSourceConfig(text);
+
+    const report = buildJlptKanjiSourceInputReport({
+        sourceId: "fixture_source",
+        sourceConfig,
+        sourceBuffer: Buffer.from(text, "utf8"),
+        contract: { kanjiLevels: { 日: 5, 学: 5, 橋: 2 } },
+        evidence: buildEvidence(),
+        policy: {
+            noDeckMutation: true,
+            requirePinnedIntegrity: true,
+            requireKnownEvidenceSource: true,
+        },
+    });
+
+    assert.equal(report.valid, true);
+    assert.equal(report.reviewedAssignmentCount, 1);
+    assert.equal(report.pendingRowCount, 1);
+    assert.equal(report.blockedRowCount, 1);
+    assert.equal(report.rejectedRowCount, 0);
+    assert.deepEqual(Object.keys(report.assignments), ["日"]);
+});
+
 test("source input preflight rejects bad rows before they become source evidence", () => {
     const text = [
         "kanji\tlevel\treviewStatus\tcitation\tevidenceRef",

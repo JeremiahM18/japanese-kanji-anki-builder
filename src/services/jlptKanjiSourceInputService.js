@@ -203,7 +203,11 @@ function buildAssignmentFromRow({ row, sourceConfig, contractKanjiSet }) {
     const citation = getRowField(row, sourceConfig.citationColumn) || sourceConfig.defaultCitation;
     const evidenceRef = getRowField(row, sourceConfig.evidenceRefColumn) || sourceConfig.defaultEvidenceRef;
     const notes = getRowField(row, sourceConfig.notesColumn) || sourceConfig.defaultNotes;
-    const normalizedLevel = normalizeInputLevel(levelValue, sourceConfig.levelMapping);
+    const shouldValidateEvidenceFields = reviewStatus === "reviewed";
+    const shouldValidateLevel = shouldValidateEvidenceFields || levelValue.length > 0;
+    const normalizedLevel = shouldValidateLevel
+        ? normalizeInputLevel(levelValue, sourceConfig.levelMapping)
+        : { level: null, levelRange: null, reason: null };
 
     if (Array.from(kanji).length !== 1) {
         issues.push(`invalid kanji value: ${kanji || "missing"}`);
@@ -211,16 +215,16 @@ function buildAssignmentFromRow({ row, sourceConfig, contractKanjiSet }) {
         issues.push(`kanji ${kanji} is outside the current JLPT kanji contract`);
     }
 
-    if (!Number.isInteger(normalizedLevel.level) && !Array.isArray(normalizedLevel.levelRange)) {
+    if (shouldValidateLevel && !Number.isInteger(normalizedLevel.level) && !Array.isArray(normalizedLevel.levelRange)) {
         issues.push(normalizedLevel.reason);
     }
     if (!["reviewed", "needs_review", "blocked"].includes(reviewStatus)) {
         issues.push(`invalid reviewStatus: ${reviewStatus || "missing"}`);
     }
-    if (sourceConfig.requireCitation !== false && !citation) {
+    if (shouldValidateEvidenceFields && sourceConfig.requireCitation !== false && !citation) {
         issues.push("missing citation");
     }
-    if (sourceConfig.requireEvidenceRef !== false && !evidenceRef) {
+    if (shouldValidateEvidenceFields && sourceConfig.requireEvidenceRef !== false && !evidenceRef) {
         issues.push("missing evidenceRef");
     }
 
@@ -261,6 +265,11 @@ function buildJlptKanjiSourceInputReport({
     const rowResults = sourceRows.map((row) => buildAssignmentFromRow({ row, sourceConfig, contractKanjiSet }));
     const rejectedRows = rowResults.filter((row) => row.issues.length > 0);
     const reviewedAssignments = rowResults.filter((row) => row.issues.length === 0 && row.reviewStatus === "reviewed");
+    const pendingRows = rowResults.filter((row) => row.issues.length === 0 && row.reviewStatus === "needs_review");
+    const blockedRows = rowResults.filter((row) => row.issues.length === 0 && row.reviewStatus === "blocked");
+    if (reviewedAssignments.length === 0) {
+        blockers.push("no reviewed assignments ready for import");
+    }
     const assignments = Object.fromEntries(
         reviewedAssignments.map((row) => {
             const assignment = {
@@ -296,6 +305,8 @@ function buildJlptKanjiSourceInputReport({
         blockers,
         rowCount: sourceRows.length,
         reviewedAssignmentCount: reviewedAssignments.length,
+        pendingRowCount: pendingRows.length,
+        blockedRowCount: blockedRows.length,
         reviewStatusCounts,
         rejectedRowCount: rejectedRows.length,
         rejectedRows,

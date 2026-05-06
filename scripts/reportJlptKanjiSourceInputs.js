@@ -72,6 +72,8 @@ function buildReports(options = {}) {
                 blockers: [`unknown source input: ${sourceId}`],
                 rowCount: 0,
                 reviewedAssignmentCount: 0,
+                pendingRowCount: 0,
+                blockedRowCount: 0,
                 rejectedRowCount: 0,
                 rejectedRows: [],
                 assignments: {},
@@ -108,6 +110,8 @@ function formatSourceInputReport(report = {}, limit = 25) {
         `- level mapping: ${report.levelMapping || ""}`,
         `- rows parsed: ${report.rowCount || 0}`,
         `- reviewed assignments ready: ${report.reviewedAssignmentCount || 0}`,
+        `- pending rows: ${report.pendingRowCount || 0}`,
+        `- blocked rows: ${report.blockedRowCount || 0}`,
         `- rejected rows: ${report.rejectedRowCount || 0}`,
         `- no deck mutation: ${report.noDeckMutation === false ? "no" : "yes"}`,
     ];

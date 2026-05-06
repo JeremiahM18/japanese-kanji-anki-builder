@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added source-input pending-row handling so manual JLPT kanji evidence worksheets can be reviewed in batches: only reviewed rows import, while blank `needs_review` rows stay pending instead of being rejected as source evidence.
 - Added a restricted manual-review `jlptsensei` source-input lane and generic JLPT kanji source worksheet command so JLPT Sensei can be reviewed as independent evidence without scraping, copying, moving decks, or changing readiness.
 - Added individual Japanese-published textbook source lanes plus a derived non-voting `japanese_textbook_consensus`, range-level source evidence for ambiguous N2/N3 legacy data, and per-kanji confidence reasons in the JLPT kanji source audit.
 - Added explicit publisher-independence and evidence-lineage fields to JLPT kanji sources, plus a non-voting `tanos_frequency_method_notes` lane that records Tanos's N2/N3 estimate methodology without counting as a separate source vote.

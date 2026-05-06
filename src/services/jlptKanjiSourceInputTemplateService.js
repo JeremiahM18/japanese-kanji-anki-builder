@@ -1,4 +1,8 @@
 const { evaluateKanjiSourceEvidence } = require("./jlptKanjiSourceEvidenceService");
+const {
+    buildJlptKanjiSourceLevelDeltaReport,
+    formatLevel: formatDeltaLevel,
+} = require("./jlptKanjiSourceLevelDeltaService");
 
 const TEMPLATE_HEADERS = Object.freeze([
     "kanji",
@@ -9,7 +13,8 @@ const TEMPLATE_HEADERS = Object.freeze([
     "evidenceRef",
     "notes",
 ]);
-const PRIORITY_MODES = Object.freeze(["contract", "source-gaps"]);
+const SOURCE_LEVEL_DELTA_PRIORITY = "source-level-deltas";
+const PRIORITY_MODES = Object.freeze(["contract", "source-gaps", SOURCE_LEVEL_DELTA_PRIORITY]);
 const DEFAULT_PRIORITY_MODE = "contract";
 
 function formatLevel(level) {
@@ -130,16 +135,97 @@ function buildSourceEvidencePriority({ kanji, contractLevel, evidence = null } =
     };
 }
 
+function buildSourceLevelDeltaPriority({ currentContractLevel, targetLevel, confidence, sourceConsensusLevel } = {}) {
+    const currentLevelText = formatLevel(currentContractLevel);
+    const targetLevelText = formatLevel(targetLevel);
+    const consensusLevelText = formatLevel(sourceConsensusLevel);
+
+    if (sourceConsensusLevel === targetLevel) {
+        return {
+            rank: 0,
+            reviewPriority: "source_consensus_outside_current_level",
+            reviewReason: `Active source consensus places this kanji at ${targetLevelText} while the current contract is ${currentLevelText}.`,
+        };
+    }
+    if (confidence === "disputed") {
+        return {
+            rank: 1,
+            reviewPriority: "disputed_source_candidate_outside_current_level",
+            reviewReason: `At least one active source claims ${targetLevelText}, but source votes are disputed while the current contract is ${currentLevelText}.`,
+        };
+    }
+
+    return {
+        rank: 2,
+        reviewPriority: "source_claim_outside_current_level",
+        reviewReason: `At least one active source claims ${targetLevelText} while the current contract is ${currentLevelText}; computed consensus is ${consensusLevelText}.`,
+    };
+}
+
+function buildSourceLevelDeltaRows({ contract, evidence, sourceLevel, limit }) {
+    if (!evidence) {
+        throw new Error("source-level-deltas priority requires a source-evidence manifest.");
+    }
+    const targetLevel = parseJlptLevelFilter(sourceLevel);
+    if (targetLevel === null) {
+        throw new Error("source-level-deltas priority requires --source-level=<N1-N5>.");
+    }
+    const maxRows = resolvePositiveLimit(limit);
+    const report = buildJlptKanjiSourceLevelDeltaReport({
+        contract,
+        evidence,
+        limit: maxRows || undefined,
+    });
+    const rows = report.byLevel[targetLevel]?.sourceClaimsOutsideCurrent || [];
+
+    const formattedRows = rows.map((row) => {
+        const priority = buildSourceLevelDeltaPriority(row);
+        return {
+            kanji: row.kanji,
+            currentContractLevel: formatDeltaLevel(row.currentContractLevel),
+            level: "",
+            reviewStatus: "needs_review",
+            citation: "",
+            evidenceRef: "",
+            notes: "",
+            reviewPriority: priority.reviewPriority,
+            reviewReason: priority.reviewReason,
+        };
+    });
+
+    return maxRows === null ? formattedRows : formattedRows.slice(0, maxRows);
+}
+
 function buildJlptKanjiSourceInputTemplateRows({
     contract = {},
     evidence = null,
     level = null,
     limit = null,
     priority = DEFAULT_PRIORITY_MODE,
+    sourceLevel = null,
 } = {}) {
-    const levelFilter = parseJlptLevelFilter(level);
     const maxRows = resolvePositiveLimit(limit);
     const priorityMode = normalizePriorityMode(priority);
+    const hasSourceLevelFilter = sourceLevel !== null
+        && sourceLevel !== undefined
+        && String(sourceLevel).trim() !== "";
+
+    if (priorityMode === SOURCE_LEVEL_DELTA_PRIORITY) {
+        if (level !== null && level !== undefined && String(level).trim() !== "") {
+            throw new Error("source-level-deltas priority uses --source-level and must not also use --level.");
+        }
+        return buildSourceLevelDeltaRows({
+            contract,
+            evidence,
+            sourceLevel,
+            limit: maxRows,
+        });
+    }
+    if (hasSourceLevelFilter) {
+        throw new Error("--source-level is only supported with source-level-deltas priority.");
+    }
+
+    const levelFilter = parseJlptLevelFilter(level);
     const rows = Object.entries(contract.kanjiLevels || {})
         .filter(([, contractLevel]) => levelFilter === null || contractLevel === levelFilter)
         .map(([kanji, contractLevel]) => ({

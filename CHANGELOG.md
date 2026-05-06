@@ -11,6 +11,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 ### Added
 
 - Added a read-only JLPT kanji source-level delta audit that compares current contract counts against active source-claimed level candidates, consensus counts, per-source claim counts, disputed candidates, and source claims outside the current taxonomy without moving decks or changing readiness.
+- Added `--priority=source-level-deltas --source-level=<N1-N5>` for manual JLPT kanji source-input worksheets so active source-claimed level deltas, including the current N5 80-vs-103 candidate gap, can be reviewed in a governed blank worksheet without hand-copying or changing decks/readiness.
 - Added an official JLPT occurrence-only evidence model and report/extractor: local official sample/workbook text can be reduced to minimal rows containing only level, source PDF, section/page/question reference, and observed kanji, without copying questions or creating assignment truth.
 - Clarified the official JLPT occurrence workflow after PDF extraction probes: raw page-level PDF text must be Unicode-verified and manually reduced to question/page-scoped occurrence rows before any tracked manifest write.
 - Hardened JLPT kanji source-evidence governance: source lineage aliases must agree, derived sources must reference real assignment lanes, the default independent-lineage requirement matches the tracked policy, and the source audit now separates governance validity from evidence-depth completeness with per-level and publisher-independence rollups.

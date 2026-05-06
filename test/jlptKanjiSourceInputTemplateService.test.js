@@ -155,6 +155,84 @@ test("kanji source input template can prioritize current source-evidence gaps", 
     assert.match(rows[0].reviewReason, /differs from computed external source consensus/);
 });
 
+test("kanji source input template can prepare source-level delta review rows", () => {
+    const contract = {
+        kanjiLevels: {
+            日: 5,
+            学: 4,
+            本: 3,
+        },
+    };
+    const evidence = {
+        policy: {
+            minimumIndependentSources: 1,
+            minimumIndependentEvidenceLineages: 0,
+            minimumJapanesePublishedSources: 0,
+            standardAgreementScore: 0.67,
+            highAgreementScore: 0.8,
+        },
+        sources: {
+            kanjidic2_legacy: buildGovernedSource(),
+            tanos_legacy_direct: buildGovernedSource(),
+        },
+        assignments: {
+            kanjidic2_legacy: {
+                日: { level: 5, reviewStatus: "reviewed" },
+                学: { level: 5, reviewStatus: "reviewed" },
+                本: { level: 5, reviewStatus: "reviewed" },
+            },
+            tanos_legacy_direct: {
+                日: { level: 5, reviewStatus: "reviewed" },
+                学: { level: 4, reviewStatus: "reviewed" },
+            },
+        },
+    };
+
+    const rows = buildJlptKanjiSourceInputTemplateRows({
+        contract,
+        evidence,
+        priority: "source-level-deltas",
+        sourceLevel: "N5",
+    });
+
+    assert.deepEqual(rows.map((row) => `${row.kanji}:${row.currentContractLevel}:${row.reviewPriority}`), [
+        "学:N4:disputed_source_candidate_outside_current_level",
+        "本:N3:source_consensus_outside_current_level",
+    ]);
+    assert.equal(rows.every((row) => row.reviewStatus === "needs_review"), true);
+    assert.equal(rows.every((row) => row.level === ""), true);
+    assert.equal(rows.every((row) => row.citation === ""), true);
+    assert.equal(rows.every((row) => row.evidenceRef === ""), true);
+    assert.match(rows[0].reviewReason, /source votes are disputed/);
+    assert.match(rows[1].reviewReason, /Active source consensus places this kanji at N5/);
+});
+
+test("source-level delta template priority rejects ambiguous filters", () => {
+    assert.equal(normalizePriorityMode("source-level-deltas"), "source-level-deltas");
+    assert.throws(() => buildJlptKanjiSourceInputTemplateRows({
+        contract: { kanjiLevels: { 日: 5 } },
+        evidence: {},
+        priority: "source-level-deltas",
+    }), /requires --source-level/);
+    assert.throws(() => buildJlptKanjiSourceInputTemplateRows({
+        contract: { kanjiLevels: { 日: 5 } },
+        evidence: {},
+        priority: "source-level-deltas",
+        level: "N5",
+        sourceLevel: "N5",
+    }), /must not also use --level/);
+    assert.throws(() => buildJlptKanjiSourceInputTemplateRows({
+        contract: { kanjiLevels: { 日: 5 } },
+        priority: "source-level-deltas",
+        sourceLevel: "N5",
+    }), /requires a source-evidence manifest/);
+    assert.throws(() => buildJlptKanjiSourceInputTemplateRows({
+        contract: { kanjiLevels: { 日: 5 } },
+        priority: "source-gaps",
+        sourceLevel: "N5",
+    }), /only supported with source-level-deltas/);
+});
+
 test("source-evidence priority labels missing Japanese-published source evidence", () => {
     const priority = buildSourceEvidencePriority({
         kanji: "語",
@@ -198,6 +276,7 @@ test("createJlptKanjiSourceInputTemplate script parses args and reports no deck 
         "--source=nihongo_sou_matome_kanji",
         "--out=downloads/custom-textbook.tsv",
         "--level=5",
+        "--source-level=N5",
         "--limit=12",
         "--priority=source-gaps",
         "--json",
@@ -209,6 +288,7 @@ test("createJlptKanjiSourceInputTemplate script parses args and reports no deck 
     assert.equal(options.source, "nihongo_sou_matome_kanji");
     assert.equal(options.out, "downloads/custom-textbook.tsv");
     assert.equal(options.level, "5");
+    assert.equal(options.sourceLevel, "N5");
     assert.equal(options.limit, 12);
     assert.equal(options.priority, "source-gaps");
     assert.equal(options.json, true);
@@ -219,6 +299,7 @@ test("createJlptKanjiSourceInputTemplate script parses args and reports no deck 
         evidencePath: "templates/custom-evidence.json",
         sourceId: "nihongo_sou_matome_kanji",
         level: "5",
+        sourceLevel: "N5",
         priority: "source-gaps",
         rows: [
             { kanji: "日", reviewPriority: "missing_evidence" },
@@ -230,6 +311,7 @@ test("createJlptKanjiSourceInputTemplate script parses args and reports no deck 
     assert.match(text, /does not import evidence, move kanji, move words, update decks, or change readiness/);
     assert.match(text, /selected source lane/);
     assert.match(text, /Priority mode: source-gaps/);
+    assert.match(text, /Source level filter: N5/);
     assert.match(text, /Priority summary: missing_evidence: 2/);
     assert.equal(formatPrioritySummary([{ reviewPriority: "b" }, { reviewPriority: "a" }]), "a: 1, b: 1");
 });

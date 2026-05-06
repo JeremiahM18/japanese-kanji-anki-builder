@@ -28,6 +28,7 @@ function parseArgs(argv) {
         source: DEFAULT_SOURCE,
         out: null,
         level: null,
+        sourceLevel: null,
         limit: null,
         priority: "contract",
         json: false,
@@ -49,6 +50,8 @@ function parseArgs(argv) {
             options.out = arg.slice("--out=".length);
         } else if (arg.startsWith("--level=")) {
             options.level = arg.slice("--level=".length);
+        } else if (arg.startsWith("--source-level=")) {
+            options.sourceLevel = arg.slice("--source-level=".length);
         } else if (arg.startsWith("--limit=")) {
             options.limit = parseNumericOption(arg, "limit");
         } else if (arg.startsWith("--priority=")) {
@@ -77,7 +80,7 @@ function formatPrioritySummary(rows = []) {
         .join(", ") || "none";
 }
 
-function formatTemplateReport({ outPath, contractPath, evidencePath, sourceId, rows, level, priority } = {}) {
+function formatTemplateReport({ outPath, contractPath, evidencePath, sourceId, rows, level, sourceLevel, priority } = {}) {
     return [
         "JLPT Kanji Source Input Template",
         "",
@@ -86,6 +89,7 @@ function formatTemplateReport({ outPath, contractPath, evidencePath, sourceId, r
         `Contract: ${contractPath}`,
         `Evidence: ${evidencePath || "not used"}`,
         `Level filter: ${level || "all"}`,
+        `Source level filter: ${sourceLevel || "none"}`,
         `Priority mode: ${priority || "contract"}`,
         `Priority summary: ${formatPrioritySummary(rows)}`,
         `Rows written: ${rows.length}`,
@@ -108,7 +112,8 @@ function run(options = {}) {
     }
     const outPath = path.resolve(process.cwd(), options.out || sourceInput.sourcePath);
     const contract = loadJlptLevelContract(contractPath);
-    const evidence = priority === "source-gaps"
+    const needsEvidence = priority === "source-gaps" || priority === "source-level-deltas";
+    const evidence = needsEvidence
         ? loadJlptKanjiSourceEvidence(evidencePath)
         : null;
     const rows = buildJlptKanjiSourceInputTemplateRows({
@@ -117,6 +122,7 @@ function run(options = {}) {
         level: options.level,
         limit: options.limit,
         priority,
+        sourceLevel: options.sourceLevel,
     });
     const tsv = formatJlptKanjiSourceInputTemplateTsv(rows);
 
@@ -127,9 +133,10 @@ function run(options = {}) {
         outPath,
         contractPath,
         configPath,
-        evidencePath: priority === "source-gaps" ? evidencePath : null,
+        evidencePath: needsEvidence ? evidencePath : null,
         sourceId,
         level: options.level,
+        sourceLevel: options.sourceLevel,
         priority,
         rows,
     };

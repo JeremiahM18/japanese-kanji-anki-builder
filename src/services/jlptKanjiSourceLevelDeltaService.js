@@ -10,9 +10,13 @@ const JLPT_LEVELS_DESC = Object.freeze([5, 4, 3, 2, 1]);
  * @typedef {{ sourceId: string, level?: number, levelRange?: number[] }} SourceAssignmentRow
  * @typedef {{ consensusLevel?: number | null, confidence?: string, voteWeights?: Record<number, number>, assignments?: SourceAssignmentRow[] }} EvidenceResultLike
  * @typedef {{ sourceId: string, level?: number, levelRange?: number[] }} ReviewedSourceRow
- * @typedef {{ kanji: string, currentContractLevel: number, targetLevel: number, sourceConsensusLevel?: number | null, confidence?: string, voteWeights?: Record<number, number>, sourceIds: string[], reviewedSources: ReviewedSourceRow[] }} LevelDeltaRow
- * @typedef {{ level: number, currentContractCount: number, sourceConsensusCount: number, sourceCandidateCount: number, sourceCandidateAlreadyCurrentCount: number, sourceCandidateMissingFromCurrentCount: number, sourceConsensusAlreadyCurrentCount: number, sourceConsensusMissingFromCurrentCount: number, currentRowsWithoutSourceCandidateCount: number, currentRowsWithoutSourceConsensusCount: number, sourceClaimCounts: Record<string, number>, sourceClaimsOutsideCurrent: LevelDeltaRow[], missingSourceCandidatesFromCurrent: LevelDeltaRow[], sourceConsensusOutsideCurrent: LevelDeltaRow[], missingSourceConsensusFromCurrent: LevelDeltaRow[], currentContractConsensusElsewhere: LevelDeltaRow[], disputedSourceCandidatesOutsideCurrent: LevelDeltaRow[], disputedMissingSourceCandidatesFromCurrent: LevelDeltaRow[], currentRowsWithoutSourceCandidate: LevelDeltaRow[], currentRowsWithoutSourceConsensus: LevelDeltaRow[] }} LevelSummary
- * @typedef {{ valid: boolean, noDeckMutation: boolean, checked: number, limit: number, byLevel: Record<number, LevelSummary> }} LevelDeltaReport
+ * @typedef {{ kanji?: string, sourceId: string, reviewStatus: string, level?: number | null, levelRange?: number[] | null }} SourceInputReviewRow
+ * @typedef {{ kanji: string, currentContractLevel: number, targetLevel: number, sourceConsensusLevel?: number | null, confidence?: string, voteWeights?: Record<number, number>, sourceIds: string[], reviewedSources: ReviewedSourceRow[], sourceInputReviews: SourceInputReviewRow[] }} LevelDeltaRow
+ * @typedef {{ reviewed?: number, blocked?: number }} SourceInputReviewCounts
+ * @typedef {{ missingSourceCandidatesFromCurrent: SourceInputReviewCounts, missingSourceConsensusFromCurrent: SourceInputReviewCounts, disputedMissingSourceCandidatesFromCurrent: SourceInputReviewCounts, currentContractConsensusElsewhere: SourceInputReviewCounts, currentRowsWithoutSourceCandidate: SourceInputReviewCounts, currentRowsWithoutSourceConsensus: SourceInputReviewCounts }} SourceInputReviewQueueCounts
+ * @typedef {{ level: number, currentContractCount: number, sourceConsensusCount: number, sourceCandidateCount: number, sourceCandidateAlreadyCurrentCount: number, sourceCandidateMissingFromCurrentCount: number, sourceConsensusAlreadyCurrentCount: number, sourceConsensusMissingFromCurrentCount: number, currentRowsWithoutSourceCandidateCount: number, currentRowsWithoutSourceConsensusCount: number, sourceClaimCounts: Record<string, number>, sourceInputReviewCounts: SourceInputReviewQueueCounts, sourceClaimsOutsideCurrent: LevelDeltaRow[], missingSourceCandidatesFromCurrent: LevelDeltaRow[], sourceConsensusOutsideCurrent: LevelDeltaRow[], missingSourceConsensusFromCurrent: LevelDeltaRow[], currentContractConsensusElsewhere: LevelDeltaRow[], disputedSourceCandidatesOutsideCurrent: LevelDeltaRow[], disputedMissingSourceCandidatesFromCurrent: LevelDeltaRow[], currentRowsWithoutSourceCandidate: LevelDeltaRow[], currentRowsWithoutSourceConsensus: LevelDeltaRow[] }} LevelSummary
+ * @typedef {Record<string, SourceInputReviewCounts>} SourceInputReviewCountsBySource
+ * @typedef {{ valid: boolean, noDeckMutation: boolean, checked: number, limit: number, sourceInputReviewCountsBySource: SourceInputReviewCountsBySource, byLevel: Record<number, LevelSummary> }} LevelDeltaReport
  */
 
 /**
@@ -32,6 +36,14 @@ function createLevelSummary(level) {
         currentRowsWithoutSourceCandidateCount: 0,
         currentRowsWithoutSourceConsensusCount: 0,
         sourceClaimCounts: {},
+        sourceInputReviewCounts: {
+            missingSourceCandidatesFromCurrent: {},
+            missingSourceConsensusFromCurrent: {},
+            disputedMissingSourceCandidatesFromCurrent: {},
+            currentContractConsensusElsewhere: {},
+            currentRowsWithoutSourceCandidate: {},
+            currentRowsWithoutSourceConsensus: {},
+        },
         sourceClaimsOutsideCurrent: [],
         missingSourceCandidatesFromCurrent: [],
         sourceConsensusOutsideCurrent: [],
@@ -68,7 +80,57 @@ function formatLevel(level) {
 }
 
 /**
- * @param {{ kanji: string, currentContractLevel: number, targetLevel: number, result?: EvidenceResultLike, sourceIds?: string[] }} options
+ * @param {SourceInputReviewRow[]} [reviews]
+ * @returns {SourceInputReviewRow[]}
+ */
+function sortSourceInputReviews(reviews = []) {
+    return [...reviews].sort((a, b) => (
+        a.sourceId.localeCompare(b.sourceId)
+        || a.reviewStatus.localeCompare(b.reviewStatus)
+        || (a.level || 0) - (b.level || 0)
+    ));
+}
+
+/**
+ * @param {SourceInputReviewRow[]} [sourceInputReviews]
+ * @returns {Map<string, SourceInputReviewRow[]>}
+ */
+function buildSourceInputReviewMap(sourceInputReviews = []) {
+    const map = new Map();
+    for (const review of sourceInputReviews || []) {
+        const kanji = String(review.kanji || "").trim();
+        const reviewStatus = String(review.reviewStatus || "").trim();
+        if (!kanji || !["reviewed", "blocked"].includes(reviewStatus)) {
+            continue;
+        }
+        if (!map.has(kanji)) {
+            map.set(kanji, []);
+        }
+        const mappedReview = {
+            sourceId: review.sourceId,
+            reviewStatus,
+            level: review.level,
+            levelRange: review.levelRange,
+        };
+        map.get(kanji).push(mappedReview);
+    }
+    for (const [kanji, reviews] of map.entries()) {
+        map.set(kanji, sortSourceInputReviews(reviews));
+    }
+    return map;
+}
+
+/**
+ * @param {Map<string, SourceInputReviewRow[]>} sourceInputReviewMap
+ * @param {string} kanji
+ * @returns {SourceInputReviewRow[]}
+ */
+function getSourceInputReviewsForKanji(sourceInputReviewMap, kanji) {
+    return sourceInputReviewMap?.get(kanji) || [];
+}
+
+/**
+ * @param {{ kanji: string, currentContractLevel: number, targetLevel: number, result?: EvidenceResultLike, sourceIds?: string[], sourceInputReviewMap?: Map<string, SourceInputReviewRow[]> }} options
  * @returns {LevelDeltaRow}
  */
 function buildLevelDeltaRow({
@@ -77,6 +139,7 @@ function buildLevelDeltaRow({
     targetLevel,
     result = {},
     sourceIds = [],
+    sourceInputReviewMap = new Map(),
 }) {
     return {
         kanji,
@@ -97,6 +160,7 @@ function buildLevelDeltaRow({
             }
             return source;
         }),
+        sourceInputReviews: getSourceInputReviewsForKanji(sourceInputReviewMap, kanji),
     };
 }
 
@@ -124,11 +188,64 @@ function getExactSourceIdsForLevel(assignments, level) {
 }
 
 /**
- * @param {{ contract?: JlptLevelContract, evidence?: Record<string, unknown>, limit?: number }} [options]
+ * @param {LevelDeltaRow[]} rows
+ * @returns {SourceInputReviewCounts}
+ */
+function countSourceInputReviews(rows = []) {
+    return rows.reduce((counts, row) => {
+        for (const review of row.sourceInputReviews || []) {
+            counts[review.reviewStatus] = (counts[review.reviewStatus] || 0) + 1;
+        }
+        return counts;
+    }, {});
+}
+
+/**
+ * @param {SourceInputReviewRow[]} sourceInputReviews
+ * @returns {SourceInputReviewCountsBySource}
+ */
+function countSourceInputReviewsBySource(sourceInputReviews = []) {
+    return sourceInputReviews.reduce((counts, review) => {
+        if (!review.sourceId || !["reviewed", "blocked"].includes(review.reviewStatus)) {
+            return counts;
+        }
+        if (!counts[review.sourceId]) {
+            counts[review.sourceId] = {};
+        }
+        counts[review.sourceId][review.reviewStatus] = (
+            counts[review.sourceId][review.reviewStatus] || 0
+        ) + 1;
+        return counts;
+    }, {});
+}
+
+/**
+ * @param {LevelSummary} summary
+ */
+function assignSourceInputReviewCounts(summary) {
+    summary.sourceInputReviewCounts = {
+        missingSourceCandidatesFromCurrent: countSourceInputReviews(summary.missingSourceCandidatesFromCurrent),
+        missingSourceConsensusFromCurrent: countSourceInputReviews(summary.missingSourceConsensusFromCurrent),
+        disputedMissingSourceCandidatesFromCurrent: countSourceInputReviews(summary.disputedMissingSourceCandidatesFromCurrent),
+        currentContractConsensusElsewhere: countSourceInputReviews(summary.currentContractConsensusElsewhere),
+        currentRowsWithoutSourceCandidate: countSourceInputReviews(summary.currentRowsWithoutSourceCandidate),
+        currentRowsWithoutSourceConsensus: countSourceInputReviews(summary.currentRowsWithoutSourceConsensus),
+    };
+}
+
+/**
+ * @param {{ contract?: JlptLevelContract, evidence?: Record<string, unknown>, limit?: number, sourceInputReviews?: SourceInputReviewRow[] }} [options]
  * @returns {LevelDeltaReport}
  */
-function buildJlptKanjiSourceLevelDeltaReport({ contract = {}, evidence = {}, limit = 25 } = {}) {
+function buildJlptKanjiSourceLevelDeltaReport({
+    contract = {},
+    evidence = {},
+    limit = 25,
+    sourceInputReviews = [],
+} = {}) {
     const byLevel = createLevelSummaries();
+    const sourceInputReviewMap = buildSourceInputReviewMap(sourceInputReviews);
+    const flattenedSourceInputReviews = [...sourceInputReviewMap.values()].flat();
     /** @type {Record<number, Set<string>>} */
     const sourceCandidateSets = Object.fromEntries(JLPT_LEVELS_DESC.map((level) => [level, new Set()]));
     /** @type {Record<number, Set<string>>} */
@@ -165,6 +282,7 @@ function buildJlptKanjiSourceLevelDeltaReport({ contract = {}, evidence = {}, li
                     targetLevel: assignmentLevel,
                     result,
                     sourceIds: [],
+                    sourceInputReviewMap,
                 });
                 row.sourceIds.push(assignment.sourceId);
                 row.sourceIds.sort((a, b) => a.localeCompare(b));
@@ -183,6 +301,7 @@ function buildJlptKanjiSourceLevelDeltaReport({ contract = {}, evidence = {}, li
                 targetLevel: currentContractLevel,
                 result,
                 sourceIds: [],
+                sourceInputReviewMap,
             }));
         }
         if (consensusLevel !== currentContractLevel) {
@@ -192,6 +311,7 @@ function buildJlptKanjiSourceLevelDeltaReport({ contract = {}, evidence = {}, li
                 targetLevel: currentContractLevel,
                 result,
                 sourceIds: exactCurrentSourceIds,
+                sourceInputReviewMap,
             }));
         }
 
@@ -204,6 +324,7 @@ function buildJlptKanjiSourceLevelDeltaReport({ contract = {}, evidence = {}, li
                     targetLevel: consensusLevel,
                     result,
                     sourceIds: getExactSourceIdsForLevel(assignments, consensusLevel),
+                    sourceInputReviewMap,
                 });
                 byLevel[consensusLevel].sourceConsensusOutsideCurrent.push(consensusRow);
                 byLevel[currentContractLevel].currentContractConsensusElsewhere.push(consensusRow);
@@ -220,6 +341,7 @@ function buildJlptKanjiSourceLevelDeltaReport({ contract = {}, evidence = {}, li
                 targetLevel: level,
                 result,
                 sourceIds: getExactSourceIdsForLevel(assignments, level),
+                sourceInputReviewMap,
             }));
         }
     }
@@ -237,6 +359,7 @@ function buildJlptKanjiSourceLevelDeltaReport({ contract = {}, evidence = {}, li
         summary.disputedMissingSourceCandidatesFromCurrent = summary.disputedSourceCandidatesOutsideCurrent;
         summary.currentRowsWithoutSourceCandidate = sortLevelDeltaRows(summary.currentRowsWithoutSourceCandidate);
         summary.currentRowsWithoutSourceConsensus = sortLevelDeltaRows(summary.currentRowsWithoutSourceConsensus);
+        assignSourceInputReviewCounts(summary);
         summary.sourceCandidateMissingFromCurrentCount = summary.missingSourceCandidatesFromCurrent.length;
         summary.sourceCandidateAlreadyCurrentCount = summary.sourceCandidateCount - summary.sourceCandidateMissingFromCurrentCount;
         summary.sourceConsensusMissingFromCurrentCount = summary.missingSourceConsensusFromCurrent.length;
@@ -250,12 +373,14 @@ function buildJlptKanjiSourceLevelDeltaReport({ contract = {}, evidence = {}, li
         noDeckMutation: true,
         checked: contractEntries.length,
         limit,
+        sourceInputReviewCountsBySource: countSourceInputReviewsBySource(flattenedSourceInputReviews),
         byLevel,
     };
 }
 
 module.exports = {
     JLPT_LEVELS_DESC,
+    buildSourceInputReviewMap,
     buildJlptKanjiSourceLevelDeltaReport,
     formatLevel,
 };

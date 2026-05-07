@@ -4,6 +4,21 @@ const path = require("node:path");
 
 const TEST_ROOT_DIR = path.resolve(__dirname, "..", "test");
 const TEST_FILE_SUFFIX = ".test.js";
+const TEST_SCOPES = Object.freeze({
+    "source-evidence": Object.freeze([
+        "jlptKanjiSourceBatchService.test.js",
+        "jlptKanjiSourceEvidence.test.js",
+        "jlptKanjiSourceImportService.test.js",
+        "jlptKanjiSourceInputService.test.js",
+        "jlptKanjiSourceInputTemplateService.test.js",
+        "jlptKanjiSourceLevelDeltaService.test.js",
+        "jlptOfficialOccurrenceService.test.js",
+        "jlptTaxonomyGovernance.test.js",
+        "pinJlptKanjiSourceInputScript.test.js",
+        "repositoryGovernance.test.js",
+        "runNodeTestsScript.test.js",
+    ]),
+});
 
 // Keep the test invocation compatible across the supported Node matrix.
 // Newer runtimes can opt into shared-process execution, while older CI lanes
@@ -22,19 +37,61 @@ function supportsTestIsolationFlag(version = process.versions.node) {
     return major >= 24;
 }
 
-function buildNodeTestArgs(version = process.versions.node, passthroughArgs = []) {
+function parseRunNodeTestsArgs(argv = []) {
+    const passthroughArgs = [];
+    let scope = null;
+
+    for (const arg of argv) {
+        if (arg.startsWith("--scope=")) {
+            scope = arg.slice("--scope=".length);
+            continue;
+        }
+        passthroughArgs.push(arg);
+    }
+
+    if (scope && !TEST_SCOPES[scope]) {
+        throw new Error(`Unknown test scope: ${scope}`);
+    }
+
+    return { passthroughArgs, scope };
+}
+
+function buildNodeTestArgs(version = process.versions.node, passthroughArgs = [], options = {}) {
+    const parsed = parseRunNodeTestsArgs(passthroughArgs);
+    const scope = options.scope || parsed.scope;
     const args = ["--test"];
 
     if (supportsTestIsolationFlag(version)) {
         args.push("--test-isolation=none");
     }
 
-    args.push(...passthroughArgs);
-    args.push(...findTestFiles());
+    if (scope && !TEST_SCOPES[scope]) {
+        throw new Error(`Unknown test scope: ${scope}`);
+    }
+
+    args.push(...parsed.passthroughArgs);
+    args.push(...findTestFiles(TEST_ROOT_DIR, scope));
     return args;
 }
 
-function findTestFiles(rootDir = TEST_ROOT_DIR) {
+function findScopedTestFiles(rootDir, scope) {
+    return TEST_SCOPES[scope].map((fileName) => {
+        const testPath = path.join(rootDir, fileName);
+        if (!fs.existsSync(testPath)) {
+            throw new Error(`Missing test file for ${scope} scope: ${testPath}`);
+        }
+        return path.relative(process.cwd(), testPath);
+    });
+}
+
+function findTestFiles(rootDir = TEST_ROOT_DIR, scope = null) {
+    if (scope) {
+        if (!TEST_SCOPES[scope]) {
+            throw new Error(`Unknown test scope: ${scope}`);
+        }
+        return findScopedTestFiles(rootDir, scope);
+    }
+
     const discovered = [];
     const pending = [rootDir];
 
@@ -78,8 +135,11 @@ if (require.main === module) {
 }
 
 module.exports = {
+    TEST_SCOPES,
     buildNodeTestArgs,
+    findScopedTestFiles,
     findTestFiles,
     parseNodeVersion,
+    parseRunNodeTestsArgs,
     supportsTestIsolationFlag,
 };

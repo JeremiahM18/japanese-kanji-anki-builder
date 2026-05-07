@@ -25,6 +25,7 @@
     "data:audit:jlpt:source-levels": "node scripts/auditJlptKanjiSourceLevelDeltas.js",
     "data:audit:jlpt:source-inputs": "node scripts/reportJlptKanjiSourceInputs.js",
     "data:merge:jlpt:source-batch": "node scripts/mergeJlptKanjiSourceBatch.js",
+    "data:pin:jlpt:source-input": "node scripts/pinJlptKanjiSourceInput.js",
     "data:audit:jlpt:official-occurrences": "node scripts/reportJlptOfficialOccurrences.js",
     "data:normalize:kanjidic2-jlpt": "node scripts/normalizeKanjidic2JlptSource.js",
     "data:normalize:tanos-jlpt-kanji": "node scripts/normalizeTanosJlptKanjiSource.js",

@@ -147,6 +147,7 @@ test("JLPT kanji source-evidence loaders stay in read-only governance paths", ()
             "scripts/auditJlptKanjiSourceLevelDeltas.js",
             "scripts/createJlptKanjiSourceInputTemplate.js",
             "scripts/mergeJlptKanjiSourceBatch.js",
+            "scripts/pinJlptKanjiSourceInput.js",
             "scripts/reportJlptKanjiSourceInputs.js",
             "src/datasets/jlptKanjiSourceInputs.js",
         ],

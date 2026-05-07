@@ -91,25 +91,25 @@ function buildSourceEvidencePriority({ kanji, contractLevel, evidence = null } =
             reviewReason: "Active voting sources do not produce a single consensus level.",
         };
     }
-    if (result.contractMatchesConsensus === false) {
-        return {
-            rank: 1,
-            reviewPriority: "contract_consensus_mismatch",
-            reviewReason: "Current operational contract differs from computed external source consensus.",
-        };
-    }
     if (result.assignmentCount === 0) {
         return {
-            rank: 2,
+            rank: 1,
             reviewPriority: "missing_evidence",
             reviewReason: "No reviewed active external voting evidence is recorded for this kanji.",
         };
     }
     if (result.japanesePublishedSourceCount < policy.minimumJapanesePublishedSources) {
         return {
-            rank: 3,
+            rank: 2,
             reviewPriority: "missing_japanese_published_source",
             reviewReason: "Reviewed evidence exists, but no required Japanese-published source evidence is recorded.",
+        };
+    }
+    if (result.contractMatchesConsensus === false) {
+        return {
+            rank: 3,
+            reviewPriority: "contract_consensus_mismatch",
+            reviewReason: "Current operational contract differs from computed external source consensus.",
         };
     }
     if (result.independentEvidenceLineageCount < policy.minimumIndependentEvidenceLineages) {

@@ -120,6 +120,43 @@ function buildFixtureEvidence() {
     });
 }
 
+function buildMissingJapaneseEvidence() {
+    return normalizeJlptKanjiSourceEvidence({
+        version: 1,
+        policy: {
+            minimumIndependentSources: 1,
+            minimumIndependentEvidenceLineages: 0,
+            minimumJapanesePublishedSources: 1,
+        },
+        sourceTiers: {
+            fixture: {
+                label: "Fixture source tier",
+                rank: 2,
+                role: "supporting-evidence",
+                description: "Fixture source tier.",
+            },
+        },
+        confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
+        sources: {
+            legacy_source: buildAssignmentSource({
+                name: "Legacy",
+                tier: "fixture",
+                status: "active",
+                sourceType: "fixture",
+                licenseStatus: "approved",
+                japanesePublished: false,
+            }),
+        },
+        assignments: {
+            legacy_source: {
+                日: 5,
+                語: 3,
+            },
+        },
+    });
+}
+
 test("buildJlptKanjiSourceLevelDeltaReport exposes source-level candidates outside the current contract", () => {
     const report = buildJlptKanjiSourceLevelDeltaReport({
         contract: {
@@ -205,6 +242,28 @@ test("buildJlptKanjiSourceLevelDeltaReport exposes source-level candidates outsi
     )), [
         "学:disputed_consensus:5,4",
         "本:contract_consensus_mismatch:5,3",
+    ]);
+});
+
+test("source review worklist prioritizes missing evidence before taxonomy mismatches", () => {
+    const report = buildJlptKanjiSourceLevelDeltaReport({
+        contract: {
+            kanjiLevels: {
+                日: 5,
+                語: 4,
+                本: 3,
+            },
+        },
+        evidence: buildMissingJapaneseEvidence(),
+        limit: 10,
+    });
+
+    assert.deepEqual(report.reviewWorklist.map((row) => (
+        `${row.kanji}:${row.reviewPriority}:${row.reviewLevels.join(",")}`
+    )), [
+        "本:missing_evidence:3",
+        "日:missing_japanese_published_source:5",
+        "語:missing_japanese_published_source:4,3",
     ]);
 });
 

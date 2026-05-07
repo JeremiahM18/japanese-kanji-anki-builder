@@ -149,11 +149,12 @@ test("kanji source input template can prioritize current source-evidence gaps", 
     });
 
     assert.deepEqual(rows.map((row) => `${row.kanji}:${row.reviewPriority}`), [
-        "語:contract_consensus_mismatch",
         "月:missing_evidence",
+        "語:missing_japanese_published_source",
         "日:high_confidence",
     ]);
-    assert.match(rows[0].reviewReason, /differs from computed external source consensus/);
+    assert.match(rows[0].reviewReason, /No reviewed active external voting evidence/);
+    assert.match(rows[1].reviewReason, /no required Japanese-published source evidence/);
 });
 
 test("kanji source input template can prepare source-level delta review rows", () => {
@@ -254,6 +255,49 @@ test("kanji source input template can prepare all-level source review worklist r
     assert.equal(rows[0].reviewStatus, "needs_review");
     assert.equal(rows[0].level, "");
     assert.match(rows[0].reviewReason, /Review levels: N5, N3/);
+});
+
+test("kanji source input template prioritizes missing evidence before mismatch rows", () => {
+    const contract = {
+        kanjiLevels: {
+            日: 5,
+            語: 4,
+            本: 3,
+        },
+    };
+    const evidence = {
+        policy: {
+            minimumIndependentSources: 1,
+            minimumIndependentEvidenceLineages: 0,
+            minimumJapanesePublishedSources: 1,
+            standardAgreementScore: 0.67,
+            highAgreementScore: 0.8,
+        },
+        sources: {
+            legacy_source: buildGovernedSource({
+                japanesePublished: false,
+            }),
+        },
+        assignments: {
+            legacy_source: {
+                日: { level: 5, reviewStatus: "reviewed" },
+                語: { level: 3, reviewStatus: "reviewed" },
+            },
+        },
+    };
+
+    const rows = buildJlptKanjiSourceInputTemplateRows({
+        contract,
+        evidence,
+        priority: "source-review-worklist",
+    });
+
+    assert.deepEqual(rows.map((row) => `${row.kanji}:${row.currentContractLevel}:${row.reviewPriority}`), [
+        "本:N3:missing_evidence",
+        "日:N5:missing_japanese_published_source",
+        "語:N4:missing_japanese_published_source",
+    ]);
+    assert.match(rows[2].reviewReason, /Review levels: N4, N3/);
 });
 
 test("kanji source input template skips already reviewed local source rows", () => {

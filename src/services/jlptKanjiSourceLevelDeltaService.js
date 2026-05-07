@@ -248,25 +248,25 @@ function classifyReviewWorklistProblem(result = {}, policy = {}) {
             reviewReason: "Active voting sources disagree; review the current level and every voted candidate level before recording a manual source judgment.",
         };
     }
-    if (result.contractMatchesConsensus === false) {
-        return {
-            rank: 1,
-            reviewPriority: "contract_consensus_mismatch",
-            reviewReason: "Active source consensus differs from the current operational contract; review both the current and consensus levels.",
-        };
-    }
     if ((result.assignmentCount || 0) === 0) {
         return {
-            rank: 2,
+            rank: 1,
             reviewPriority: "missing_evidence",
             reviewReason: "No reviewed active external voting evidence is recorded; review the current contract level first and capture only exact source-level evidence.",
         };
     }
     if ((result.japanesePublishedSourceCount || 0) < (policy.minimumJapanesePublishedSources ?? 1)) {
         return {
-            rank: 3,
+            rank: 2,
             reviewPriority: "missing_japanese_published_source",
             reviewReason: "Evidence exists, but no required Japanese-published source evidence is recorded; review exact source-level placement from the manual lane.",
+        };
+    }
+    if (result.contractMatchesConsensus === false) {
+        return {
+            rank: 3,
+            reviewPriority: "contract_consensus_mismatch",
+            reviewReason: "Active source consensus differs from the current operational contract; review both the current and consensus levels.",
         };
     }
     if ((result.independentEvidenceLineageCount || 0) < (policy.minimumIndependentEvidenceLineages ?? 2)) {

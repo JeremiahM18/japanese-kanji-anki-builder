@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Raised Nihongo Sou Matome kanji source evidence to `150` reviewed rows by importing `48` additional manual-citation rows from the official N1 sample table of contents, with source-input pins updated and no deck/readiness movement.
 - Added `data:audit:jlpt:source-access`, a read-only source-lane triage report that ranks Japanese-published textbook, occurrence-only, derived, bulk-import, and secondary lanes before more manual source-review batches are generated.
 - Activated and imported the first Nihongo Sou Matome kanji source-access milestone, adding `102` reviewed manual-citation assignments from the pinned ignored worksheet across N5-N1 while keeping decks/readiness unchanged.
 - Moved the Nihongo Sou Matome kanji textbook lane to `in_review` for governed source-access setup while keeping it inactive/non-voting until reviewed rows, source-input pins, and explicit activation are in place.

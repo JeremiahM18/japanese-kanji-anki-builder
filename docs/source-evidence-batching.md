@@ -13,6 +13,8 @@ The batching policy is intentionally conservative:
 
 For this repository, that means manual source review stays small, source-input integrity is automated, source evidence is imported only after explicit gates pass, and release/product readiness remains separate.
 
+The tracked evidence manifest keeps reviewer evidence in source-centric assignment rows. The derived `kanji` rollup should not duplicate `citation`, `evidenceRef`, or reviewer `notes`; regenerate it through `data:import:jlpt:source-input -- --full-rematerialize` only when materialization logic or source policy changes intentionally.
+
 ## Priority Order
 
 Use source-review priorities in this order unless a tracked issue says otherwise:

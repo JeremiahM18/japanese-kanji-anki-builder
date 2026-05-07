@@ -83,9 +83,6 @@ function buildMaterializedKanjiEvidenceEntry({
                 materializedSource.levelRange = source.levelRange.map((level) => formatLevel(level));
             }
             materializedSource.reviewStatus = "reviewed";
-            materializedSource.citation = source.citation;
-            materializedSource.evidenceRef = source.evidenceRef;
-            materializedSource.notes = source.notes;
             return [source.sourceId, materializedSource];
         })),
         agreementScore: result.agreementScore,

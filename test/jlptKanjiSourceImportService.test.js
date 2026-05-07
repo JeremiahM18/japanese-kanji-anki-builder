@@ -182,7 +182,10 @@ test("materializeKanjiEvidenceEntries keeps declared consensus aligned with acti
 
     assert.equal(materialized.kanji.日.consensusLevel, "N5");
     assert.equal(materialized.kanji.日.agreementScore, 1);
-    assert.equal(materialized.kanji.日.sources.kanjidic2_legacy.notes, "Fixture notes");
+    assert.deepEqual(materialized.kanji.日.sources.kanjidic2_legacy, {
+        level: "N5",
+        reviewStatus: "reviewed",
+    });
     assert.equal(materialized.kanji.語.consensusLevel, "N5");
     assert.equal(materialized.kanji.語.confidence, "weak_evidence");
     assert.match(materialized.kanji.語.notes, /Additional independent/);
@@ -262,7 +265,10 @@ test("materializeKanjiEvidenceEntries can update only changed kanji rollups", ()
     });
 
     assert.equal(materialized.kanji.日.consensusLevel, "N5");
-    assert.equal(materialized.kanji.日.sources.kanjidic2_legacy.notes, "Fresh notes");
+    assert.deepEqual(materialized.kanji.日.sources.kanjidic2_legacy, {
+        level: "N5",
+        reviewStatus: "reviewed",
+    });
     assert.deepEqual(materialized.kanji.語, evidenceManifest.kanji.語);
 });
 

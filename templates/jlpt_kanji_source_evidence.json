@@ -27269,6 +27269,13 @@
         "evidenceRef": "https://www.3anet.co.jp/np/resrcs/362600/; workbook=0-0001-03-362600-2.xlsx; sheet=読み方と書き方の提出回一覧表; column=126; rows=3,20,27",
         "notes": "Reviewed as Shin Kanzen Master N4 evidence while triaging the N5 missing-Japanese-source queue; do not import as N5 assignment evidence or move decks from this source-evidence row."
       },
+      "次": {
+        "level": 4,
+        "reviewStatus": "reviewed",
+        "citation": "3A Corporation, 新完全マスター漢字 日本語能力試験N4 読み方と書き方の提出回一覧表 Excel版, official free teacher tool, checked 2026-05-07",
+        "evidenceRef": "https://www.3anet.co.jp/np/resrcs/362600/; workbook=0-0001-03-362600-2.xlsx; sheet=読み方と書き方の提出回一覧表; column=121; row=15",
+        "notes": "Reviewed as Shin Kanzen Master N4 evidence from the official N4 reading/writing table; source evidence only; do not move decks from this source-evidence row."
+      },
       "耳": {
         "level": 4,
         "reviewStatus": "reviewed",
@@ -27351,6 +27358,13 @@
         "reviewStatus": "reviewed",
         "citation": "3A Corporation, 新完全マスター漢字 日本語能力試験N4 読み方と書き方の提出回一覧表 Excel版, official free teacher tool, checked 2026-05-07",
         "evidenceRef": "https://www.3anet.co.jp/np/resrcs/362600/; workbook=0-0001-03-362600-2.xlsx; sheet=読み方と書き方の提出回一覧表; column=137; row=32",
+        "notes": "Reviewed as Shin Kanzen Master N4 evidence from the official N4 reading/writing table; source evidence only; do not move decks from this source-evidence row."
+      },
+      "取": {
+        "level": 4,
+        "reviewStatus": "reviewed",
+        "citation": "3A Corporation, 新完全マスター漢字 日本語能力試験N4 読み方と書き方の提出回一覧表 Excel版, official free teacher tool, checked 2026-05-07",
+        "evidenceRef": "https://www.3anet.co.jp/np/resrcs/362600/; workbook=0-0001-03-362600-2.xlsx; sheet=読み方と書き方の提出回一覧表; column=138; row=24",
         "notes": "Reviewed as Shin Kanzen Master N4 evidence from the official N4 reading/writing table; source evidence only; do not move decks from this source-evidence row."
       },
       "手": {
@@ -27681,6 +27695,13 @@
         "citation": "3A Corporation, 新完全マスター漢字 日本語能力試験N4 読み方と書き方の提出回一覧表 Excel版, official free teacher tool, checked 2026-05-06",
         "evidenceRef": "https://www.3anet.co.jp/np/resrcs/362600/; workbook=0-0001-03-362600-2.xlsx; sheet=読み方と書き方の提出回一覧表; column=186; rows=5,11",
         "notes": "Reviewed as Shin Kanzen Master N4 evidence while triaging the N5 missing-Japanese-source queue; do not import as N5 assignment evidence or move decks from this source-evidence row."
+      },
+      "全": {
+        "level": 4,
+        "reviewStatus": "reviewed",
+        "citation": "3A Corporation, 新完全マスター漢字 日本語能力試験N4 読み方と書き方の提出回一覧表 Excel版, official free teacher tool, checked 2026-05-07",
+        "evidenceRef": "https://www.3anet.co.jp/np/resrcs/362600/; workbook=0-0001-03-362600-2.xlsx; sheet=読み方と書き方の提出回一覧表; column=185; rows=9,35",
+        "notes": "Reviewed as Shin Kanzen Master N4 evidence from the official N4 reading/writing table; source evidence only; do not move decks from this source-evidence row."
       },
       "早": {
         "level": 4,
@@ -46098,12 +46119,16 @@
         "tanos_estimated_split": {
           "level": "N3",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N4",
+          "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
+      "consensusLevel": "N4"
     },
     "滋": {
       "sources": {
@@ -46693,12 +46718,16 @@
         "tanos_estimated_split": {
           "level": "N3",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N4",
+          "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
+      "consensusLevel": "N4"
     },
     "守": {
       "sources": {
@@ -50673,12 +50702,16 @@
         "tanos_estimated_split": {
           "level": "N3",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N4",
+          "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
+      "consensusLevel": "N4"
     },
     "塑": {
       "sources": {

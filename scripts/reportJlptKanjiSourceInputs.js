@@ -58,9 +58,9 @@ function buildReports(options = {}) {
     const configPath = path.resolve(process.cwd(), options.config || DEFAULT_CONFIG);
     const contractPath = path.resolve(process.cwd(), options.contract || DEFAULT_CONTRACT);
     const evidencePath = path.resolve(process.cwd(), options.evidence || DEFAULT_EVIDENCE);
-    const inputManifest = loadJlptKanjiSourceInputs(configPath);
-    const contract = loadJlptLevelContract(contractPath);
-    const evidence = loadJlptKanjiSourceEvidence(evidencePath);
+    const inputManifest = options.inputManifest || loadJlptKanjiSourceInputs(configPath);
+    const contract = options.contractData || loadJlptLevelContract(contractPath);
+    const evidence = options.evidenceData || loadJlptKanjiSourceEvidence(evidencePath);
     const sourceIds = options.source ? [options.source] : Object.keys(inputManifest.inputs || {});
     const reports = sourceIds.map((sourceId) => {
         const sourceConfig = inputManifest.inputs?.[sourceId];

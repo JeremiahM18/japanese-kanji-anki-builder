@@ -8,6 +8,7 @@ const {
     materializeKanjiEvidenceEntries,
 } = require("../src/services/jlptKanjiSourceImportService");
 const { loadJlptLevelContract } = require("../src/datasets/jlptLevelContract");
+const { normalizeJlptKanjiSourceEvidence } = require("../src/datasets/jlptKanjiSourceEvidence");
 const {
     assertNoUnknownArgs,
     collectUnknownArg,
@@ -75,11 +76,16 @@ function run(options = {}) {
     }
 
     const evidencePath = path.resolve(process.cwd(), options.evidence || DEFAULT_EVIDENCE);
+    const evidenceManifest = JSON.parse(fs.readFileSync(evidencePath, "utf8"));
+    const normalizedEvidence = normalizeJlptKanjiSourceEvidence(evidenceManifest);
+    const contract = loadJlptLevelContract(options.contract || DEFAULT_CONTRACT);
     const preflight = buildReports({
         config: options.config || DEFAULT_CONFIG,
         contract: options.contract || DEFAULT_CONTRACT,
         evidence: options.evidence || DEFAULT_EVIDENCE,
         source: options.source,
+        contractData: contract,
+        evidenceData: normalizedEvidence,
     });
     const [sourceReport] = preflight.reports || [];
     if (!preflight.valid || !sourceReport?.valid) {
@@ -99,8 +105,6 @@ function run(options = {}) {
         };
     }
 
-    const evidenceManifest = JSON.parse(fs.readFileSync(evidencePath, "utf8"));
-    const contract = loadJlptLevelContract(options.contract || DEFAULT_CONTRACT);
     const imported = buildJlptKanjiSourceEvidenceImport({
         evidenceManifest,
         sourceId: options.source,

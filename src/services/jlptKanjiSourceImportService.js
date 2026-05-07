@@ -98,11 +98,15 @@ function buildMaterializedKanjiEvidenceEntry({
 }
 
 function materializeKanjiEvidenceEntries({ evidenceManifest = {}, contract = {}, changedKanji = null } = {}) {
-    const normalizedEvidence = normalizeJlptKanjiSourceEvidence(evidenceManifest);
-    const contractEntries = Object.entries(contract.kanjiLevels || {});
     const changedKanjiSet = Array.isArray(changedKanji) || changedKanji instanceof Set
         ? new Set(changedKanji)
         : null;
+    if (changedKanjiSet !== null && changedKanjiSet.size === 0) {
+        return evidenceManifest;
+    }
+
+    const normalizedEvidence = normalizeJlptKanjiSourceEvidence(evidenceManifest);
+    const contractEntries = Object.entries(contract.kanjiLevels || {});
     const kanji = changedKanjiSet === null
         ? {}
         : { ...(evidenceManifest.kanji || {}) };

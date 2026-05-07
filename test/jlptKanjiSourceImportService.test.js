@@ -272,6 +272,21 @@ test("materializeKanjiEvidenceEntries can update only changed kanji rollups", ()
     assert.deepEqual(materialized.kanji.語, evidenceManifest.kanji.語);
 });
 
+test("materializeKanjiEvidenceEntries skips work for empty incremental change sets", () => {
+    const evidenceManifest = {
+        version: 1,
+        kanji: {
+            日: { confidence: "weak_evidence" },
+        },
+    };
+
+    assert.equal(materializeKanjiEvidenceEntries({
+        evidenceManifest,
+        contract: { kanjiLevels: { 日: 5 } },
+        changedKanji: [],
+    }), evidenceManifest);
+});
+
 test("importJlptKanjiSourceInput script parses args and formats read-only scope", () => {
     const options = parseArgs([
         "--source=kanjidic2_legacy",

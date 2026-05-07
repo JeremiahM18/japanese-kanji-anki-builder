@@ -236,7 +236,7 @@ npm test
 npm run lint
 npm run data:audit:jlpt
 npm run data:audit:jlpt:sources -- --governance-strict --limit=25
-npm run data:audit:jlpt:source-levels -- --level=5 --limit=25
+npm run data:audit:jlpt:source-levels -- --worklist-only --limit=25
 npm run data:benchmark:jlpt:sources -- --source=shin_kanzen_master_kanji --repeat=2 --limit=10
 npm run data:audit:jlpt:official-occurrences -- --strict
 npm run data:audit:jlpt:source-inputs -- --source=tanos_legacy_direct --strict
@@ -547,7 +547,6 @@ Repository governance:
 | `npm run data:audit:jlpt` | Audit kanji taxonomy and starter alignment |
 | `npm run data:audit:jlpt:sources -- --governance-strict` | Audit JLPT kanji source evidence and fail only on source-governance regressions while evidence depth remains incomplete |
 | `npm run data:audit:jlpt:source-levels -- --worklist-only --limit=10` | Report the focused all-level governed review packet with current level, candidate levels, consensus, vote weights, and resolved source-input worksheet progress without changing decks or readiness |
-| `npm run data:audit:jlpt:source-levels -- --level=5` | Report active source-claimed N5 candidates, candidates missing from the current N5 contract, disputed missing candidates, resolved source-input worksheet progress, and current rows lacking same-level source support without changing decks or readiness |
 | `npm run data:audit:jlpt:official-occurrences` | Report or extract official JLPT positive occurrence evidence without storing question text or assigning levels |
 | `npm run data:audit:jlpt:source-inputs -- --source=tanos_legacy_direct` | Preflight the pinned local Tanos direct legacy normalized source file before source-evidence import |
 | `npm run data:audit:jlpt:source-inputs -- --source=tanos_estimated_split` | Preflight the pinned local Tanos estimated N2/N3 normalized source file before source-evidence import |

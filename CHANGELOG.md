@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Imported the 400-row all-level Shin Kanzen Master source-review milestone, adding `5` reviewed N4 source assignments (`科`, `危`, `険`, `交`, `号`), marking `85` rows as non-importing `source_access_gap`, and raising the source lane to `404` resolved rows without changing decks/readiness.
 - Imported the next all-level Shin Kanzen Master source-review milestone, adding `70` reviewed N4 source assignments, marking `10` rows as non-importing `source_access_gap`, and raising the source lane to `314` resolved rows without changing decks/readiness.
 - Imported the next milestone-sized all-level Shin Kanzen Master source-evidence packet, adding `59` reviewed N4 assignments from the pinned N4 reading/writing table, marking `公` as a non-importing `source_access_gap`, and raising the source lane to `207` reviewed assignments without changing decks/readiness.
 - Imported the next all-level worklist Shin Kanzen Master N4 source-evidence rows (`院`, `運`, `映`, `英`, `屋`, `音`, `夏`, `家`, `歌`, `画`) from the pinned N4 reading/writing table, re-pinned source-input integrity before import, and kept decks/readiness unchanged.

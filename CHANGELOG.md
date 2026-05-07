@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Imported nine supported Shin Kanzen Master N4 source-evidence rows (`木`, `来`, `六`, `話`, `悪`, `以`, `意`, `医`, `員`), marked `友` as a non-importing source-access gap after checking the official N4 workbook, re-pinned source-input integrity before import, and kept decks/readiness unchanged.
 - Added `data:benchmark:jlpt:sources`, a read-only source-evidence cost report that measures source-input preflight, import dry-run materialization, manifest serialization, audit timing, manifest shape, and selected-source citation repetition before larger performance refactors are chosen.
 - Added `data:pin:jlpt:source-input`, source-evidence batching documentation, and a `npm test -- --scope=source-evidence` fast-feedback scope so manual JLPT kanji source review can keep small human batches while promoting tracked evidence through explicit milestone gates.
 - Added incremental JLPT kanji source-evidence import materialization so `data:import:jlpt:source-input` updates only changed kanji rollup entries by default, with `--full-rematerialize` retained for one-off full manifest regeneration.

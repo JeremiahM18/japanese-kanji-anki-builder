@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Imported ten additional Shin Kanzen Master N4 source-evidence rows from the pinned N4 reading/writing table while triaging the N5 missing-Japanese-source queue, re-pinned source-input integrity before import, and kept decks/readiness unchanged.
 - Added a non-importing `source_access_gap` state for JLPT kanji source-input worksheets so checked rows with no exact assignment proof from currently available permitted material can be skipped in later batches without becoming votes or negative evidence.
 - Imported five additional Shin Kanzen Master N4 source-evidence rows discovered while triaging the N5 missing-Japanese-source queue, marked five checked rows as source-access gaps, and regenerated the reusable 10-row batch without moving decks.
 - Recorded the next ten checked Shin Kanzen Master source-access gaps, re-pinned the ignored worksheet integrity, and regenerated the reusable 10-row source-review batch without importing assignments or moving decks.

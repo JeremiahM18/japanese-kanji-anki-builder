@@ -35,16 +35,16 @@ Run the source-access audit before generating another manual textbook batch:
 npm run data:audit:jlpt:source-access
 ```
 
-Use this report to decide whether reviewer time should stay on the current lane or move to another governed source. If an active lane is producing mostly `source_access_gap` rows, pause broad review until fuller exact assignment access exists. If a planned Japanese-published kanji-review lane is ranked first, do a source-access spike there before creating importable rows.
+Use this report to decide whether reviewer time should stay on the current lane or move to another governed source. If an active lane is producing mostly `source_access_gap` rows, pause broad review until fuller exact assignment access exists. If a planned or in-review Japanese-published kanji-review lane is ranked first, do a source-access spike there before creating importable rows.
 
 The source-access audit is read-only. It ranks source lanes from tracked source-use policy, tracked source-input config, local worksheet state, tracked assignments, and the all-level source-review worklist. It does not import evidence, move kanji, move words, update decks, or change readiness.
 
 ## Per 10-Row Review Pass
 
-Generate or refresh one reusable ignored batch file:
+Generate or refresh one reusable ignored batch file for the lane selected by `data:audit:jlpt:source-access`:
 
 ```bash
-npm run data:template:jlpt:textbook-source -- --source=shin_kanzen_master_kanji --priority=source-review-worklist --limit=10 --out=downloads/shin-kanzen-master-kanji-evidence-working-batch.tsv
+npm run data:template:jlpt:textbook-source -- --source=<source-id> --priority=source-review-worklist --limit=10 --out=<ignored-batch.tsv>
 ```
 
 Review only the permitted manual fields in the batch:
@@ -60,13 +60,13 @@ Do not copy textbook lists, passages, prompts, questions, answers, or source exc
 Dry-run the merge:
 
 ```bash
-npm run data:merge:jlpt:source-batch -- --source=shin_kanzen_master_kanji --batch=downloads/shin-kanzen-master-kanji-evidence-working-batch.tsv
+npm run data:merge:jlpt:source-batch -- --source=<source-id> --batch=<ignored-batch.tsv>
 ```
 
 If the dry-run is clean, merge into the ignored full worksheet:
 
 ```bash
-npm run data:merge:jlpt:source-batch -- --source=shin_kanzen_master_kanji --batch=downloads/shin-kanzen-master-kanji-evidence-working-batch.tsv --write
+npm run data:merge:jlpt:source-batch -- --source=<source-id> --batch=<ignored-batch.tsv> --write
 ```
 
 At this point, do not import yet by habit. The full ignored worksheet has changed, so strict source-input preflight is expected to fail until the tracked integrity pin is intentionally updated.
@@ -78,26 +78,26 @@ A milestone is usually 5 to 10 reviewed passes, or any smaller set that you want
 Preview the new integrity pins:
 
 ```bash
-npm run data:pin:jlpt:source-input -- --source=shin_kanzen_master_kanji --reason="merged reviewed Shin Kanzen source batch"
+npm run data:pin:jlpt:source-input -- --source=<source-id> --reason="<review milestone reason>"
 ```
 
 Write the pin only when the preview shows the expected SHA-256, byte size, and row count changes:
 
 ```bash
-npm run data:pin:jlpt:source-input -- --source=shin_kanzen_master_kanji --reason="merged reviewed Shin Kanzen source batch" --write
+npm run data:pin:jlpt:source-input -- --source=<source-id> --reason="<review milestone reason>" --write
 ```
 
 Run strict source-input preflight:
 
 ```bash
-npm run data:audit:jlpt:source-inputs -- --source=shin_kanzen_master_kanji --strict
+npm run data:audit:jlpt:source-inputs -- --source=<source-id> --strict
 ```
 
 Dry-run and then write the source-evidence import:
 
 ```bash
-npm run data:import:jlpt:source-input -- --source=shin_kanzen_master_kanji
-npm run data:import:jlpt:source-input -- --source=shin_kanzen_master_kanji --write
+npm run data:import:jlpt:source-input -- --source=<source-id>
+npm run data:import:jlpt:source-input -- --source=<source-id> --write
 ```
 
 Run the source-evidence fast feedback scope:
@@ -109,7 +109,7 @@ npm test -- --scope=source-evidence
 Run the read-only cost report before choosing any source-evidence performance refactor:
 
 ```bash
-npm run data:benchmark:jlpt:sources -- --source=shin_kanzen_master_kanji --repeat=2 --limit=10
+npm run data:benchmark:jlpt:sources -- --source=<source-id> --repeat=2 --limit=10
 ```
 
 Then run the full commit gate:

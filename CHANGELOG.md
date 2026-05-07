@@ -57,6 +57,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Fixed
 
+- Corrected source-evidence workflow docs so the current textbook lane states match the governed manifest and reusable batch commands follow the source-access-selected lane instead of hard-coding the previous Shin Kanzen batch path.
 - Reused loaded JLPT kanji source-evidence data during source-input import preflight and skipped incremental materialization when an import changes no kanji, cutting no-change source-import cost without adding persistent cache state.
 - Slimmed the JLPT kanji source-evidence rollup so reviewer `citation`, `evidenceRef`, and `notes` stay in authoritative source-centric assignments instead of being duplicated into every derived `kanji` rollup entry, reducing manifest size and diff noise without changing source votes, decks, or readiness.
 - Reordered the JLPT kanji source-review batch queue so disputed rows remain first, missing evidence and missing Japanese-published evidence come before contract/consensus movement candidates, and each priority bucket continues to run N5 through N1 without moving decks.

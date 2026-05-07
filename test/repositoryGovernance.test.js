@@ -137,6 +137,7 @@ test("README marks in-review source-evidence lanes as inactive review work", () 
 test("JLPT kanji source-evidence loaders stay in read-only governance paths", () => {
     const expectedFilesByLoader = {
         loadJlptKanjiSourceEvidence: [
+            "scripts/auditJlptKanjiSourceAccess.js",
             "scripts/auditJlptKanjiSourceEvidence.js",
             "scripts/auditJlptKanjiSourceLevelDeltas.js",
             "scripts/createJlptKanjiSourceInputTemplate.js",
@@ -145,6 +146,7 @@ test("JLPT kanji source-evidence loaders stay in read-only governance paths", ()
             "src/datasets/jlptKanjiSourceEvidence.js",
         ],
         loadJlptKanjiSourceInputs: [
+            "scripts/auditJlptKanjiSourceAccess.js",
             "scripts/auditJlptKanjiSourceLevelDeltas.js",
             "scripts/createJlptKanjiSourceInputTemplate.js",
             "scripts/mergeJlptKanjiSourceBatch.js",

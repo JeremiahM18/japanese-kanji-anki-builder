@@ -27,6 +27,18 @@ Use source-review priorities in this order unless a tracked issue says otherwise
 
 Keep the human review batch at `--limit=10` unless you have a specific source-access session where a larger ignored worksheet is easier to manage. Larger generation is fine; larger manual decisions should still be reviewed in 10-row passes.
 
+## Before Choosing A Lane
+
+Run the source-access audit before generating another manual textbook batch:
+
+```bash
+npm run data:audit:jlpt:source-access
+```
+
+Use this report to decide whether reviewer time should stay on the current lane or move to another governed source. If an active lane is producing mostly `source_access_gap` rows, pause broad review until fuller exact assignment access exists. If a planned Japanese-published kanji-review lane is ranked first, do a source-access spike there before creating importable rows.
+
+The source-access audit is read-only. It ranks source lanes from tracked source-use policy, tracked source-input config, local worksheet state, tracked assignments, and the all-level source-review worklist. It does not import evidence, move kanji, move words, update decks, or change readiness.
+
 ## Per 10-Row Review Pass
 
 Generate or refresh one reusable ignored batch file:

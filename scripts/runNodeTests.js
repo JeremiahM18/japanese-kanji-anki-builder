@@ -7,6 +7,7 @@ const TEST_FILE_SUFFIX = ".test.js";
 const TEST_SCOPES = Object.freeze({
     "source-evidence": Object.freeze([
         "jlptKanjiSourceBatchService.test.js",
+        "jlptKanjiSourceAccessService.test.js",
         "jlptKanjiSourceEvidenceCostReport.test.js",
         "jlptKanjiSourceEvidence.test.js",
         "jlptKanjiSourceImportService.test.js",

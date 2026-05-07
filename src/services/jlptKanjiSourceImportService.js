@@ -1,5 +1,5 @@
 const { normalizeJlptKanjiSourceEvidence } = require("../datasets/jlptKanjiSourceEvidence");
-const { auditJlptKanjiSourceEvidence } = require("./jlptKanjiSourceEvidenceService");
+const { evaluateKanjiSourceEvidence } = require("./jlptKanjiSourceEvidenceService");
 
 function sortAssignments(assignments = {}) {
     return Object.fromEntries(
@@ -27,14 +27,14 @@ function sortAssignments(assignments = {}) {
 }
 
 function countChangedAssignments(existing = {}, next = {}) {
+    return listChangedAssignments(existing, next).length;
+}
+
+function listChangedAssignments(existing = {}, next = {}) {
     const keys = new Set([...Object.keys(existing || {}), ...Object.keys(next || {})]);
-    let changed = 0;
-    for (const key of keys) {
-        if (JSON.stringify(existing[key] || null) !== JSON.stringify(next[key] || null)) {
-            changed += 1;
-        }
-    }
-    return changed;
+    return [...keys]
+        .filter((key) => JSON.stringify(existing[key] || null) !== JSON.stringify(next[key] || null))
+        .sort((kanjiA, kanjiB) => kanjiA.localeCompare(kanjiB, "ja"));
 }
 
 function formatLevel(level) {
@@ -60,43 +60,66 @@ function buildMaterializedNotes(entry = {}) {
     return "Independent source evidence is required before source-confidence or deck-movement claims.";
 }
 
-function materializeKanjiEvidenceEntries({ evidenceManifest = {}, contract = {} } = {}) {
-    const normalizedEvidence = normalizeJlptKanjiSourceEvidence(evidenceManifest);
-    const audit = auditJlptKanjiSourceEvidence({
-        contract,
+function buildMaterializedKanjiEvidenceEntry({
+    kanji,
+    contractLevel,
+    evidenceManifest = {},
+    normalizedEvidence = {},
+} = {}) {
+    const result = evaluateKanjiSourceEvidence({
+        kanji,
+        contractLevel,
         evidence: normalizedEvidence,
-        limit: Number.MAX_SAFE_INTEGER,
     });
-    const kanji = {};
+    const existing = evidenceManifest.kanji?.[kanji] || {};
+    const nextEntry = {
+        ...existing,
+        sources: Object.fromEntries(result.assignments.map((source) => {
+            const materializedSource = {};
+            if (Number.isInteger(source.level)) {
+                materializedSource.level = formatLevel(source.level);
+            }
+            if (Array.isArray(source.levelRange)) {
+                materializedSource.levelRange = source.levelRange.map((level) => formatLevel(level));
+            }
+            materializedSource.reviewStatus = "reviewed";
+            materializedSource.citation = source.citation;
+            materializedSource.evidenceRef = source.evidenceRef;
+            materializedSource.notes = source.notes;
+            return [source.sourceId, materializedSource];
+        })),
+        agreementScore: result.agreementScore,
+        confidence: result.confidence,
+        notes: buildMaterializedNotes(result),
+    };
+    if (Number.isInteger(result.consensusLevel)) {
+        nextEntry.consensusLevel = formatLevel(result.consensusLevel);
+    } else {
+        delete nextEntry.consensusLevel;
+    }
+    return nextEntry;
+}
 
-    for (const entry of audit.kanjiConfidenceManifest) {
-        const existing = evidenceManifest.kanji?.[entry.kanji] || {};
-        const nextEntry = {
-            ...existing,
-            sources: Object.fromEntries(entry.reviewedSources.map((source) => {
-                const materializedSource = {};
-                if (Number.isInteger(source.level)) {
-                    materializedSource.level = formatLevel(source.level);
-                }
-                if (Array.isArray(source.levelRange)) {
-                    materializedSource.levelRange = source.levelRange.map((level) => formatLevel(level));
-                }
-                materializedSource.reviewStatus = "reviewed";
-                materializedSource.citation = source.citation;
-                materializedSource.evidenceRef = source.evidenceRef;
-                materializedSource.notes = source.notes;
-                return [source.sourceId, materializedSource];
-            })),
-            agreementScore: entry.agreementScore,
-            confidence: entry.confidence,
-            notes: buildMaterializedNotes(entry),
-        };
-        if (Number.isInteger(entry.consensusLevel)) {
-            nextEntry.consensusLevel = formatLevel(entry.consensusLevel);
-        } else {
-            delete nextEntry.consensusLevel;
+function materializeKanjiEvidenceEntries({ evidenceManifest = {}, contract = {}, changedKanji = null } = {}) {
+    const normalizedEvidence = normalizeJlptKanjiSourceEvidence(evidenceManifest);
+    const contractEntries = Object.entries(contract.kanjiLevels || {});
+    const changedKanjiSet = Array.isArray(changedKanji) || changedKanji instanceof Set
+        ? new Set(changedKanji)
+        : null;
+    const kanji = changedKanjiSet === null
+        ? {}
+        : { ...(evidenceManifest.kanji || {}) };
+
+    for (const [kanjiText, contractLevel] of contractEntries) {
+        if (changedKanjiSet !== null && !changedKanjiSet.has(kanjiText)) {
+            continue;
         }
-        kanji[entry.kanji] = nextEntry;
+        kanji[kanjiText] = buildMaterializedKanjiEvidenceEntry({
+            kanji: kanjiText,
+            contractLevel,
+            evidenceManifest,
+            normalizedEvidence,
+        });
     }
 
     return {
@@ -130,6 +153,7 @@ function buildJlptKanjiSourceEvidenceImport({ evidenceManifest = {}, sourceId, a
             importedAssignmentCount: Object.keys(sortedAssignments).length,
             previousAssignmentCount: Object.keys(existingAssignments).length,
             changedAssignmentCount: countChangedAssignments(existingAssignments, sortedAssignments),
+            changedKanji: listChangedAssignments(existingAssignments, sortedAssignments),
         },
     };
 }
@@ -139,9 +163,11 @@ function formatEvidenceManifestJson(manifest = {}) {
 }
 
 module.exports = {
+    buildMaterializedKanjiEvidenceEntry,
     buildJlptKanjiSourceEvidenceImport,
     countChangedAssignments,
     formatEvidenceManifestJson,
+    listChangedAssignments,
     materializeKanjiEvidenceEntries,
     sortAssignments,
 };

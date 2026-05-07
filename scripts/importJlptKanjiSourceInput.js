@@ -24,6 +24,7 @@ function parseArgs(argv) {
         evidence: DEFAULT_EVIDENCE,
         source: null,
         write: false,
+        fullRematerialize: false,
         json: false,
         unknownArgs: [],
     };
@@ -31,6 +32,8 @@ function parseArgs(argv) {
     for (const arg of argv) {
         if (arg === "--write") {
             options.write = true;
+        } else if (arg === "--full-rematerialize") {
+            options.fullRematerialize = true;
         } else if (arg === "--json") {
             options.json = true;
         } else if (arg.startsWith("--config=")) {
@@ -57,6 +60,7 @@ function formatImportReport(result = {}) {
         `Mode: ${result.write ? "write" : "dry-run"}`,
         `Evidence: ${result.evidencePath}`,
         `Preflight result: ${result.preflightValid ? "passing" : "blocked"}`,
+        `Materialization: ${result.fullRematerialize ? "full" : "incremental"}`,
         `Imported assignments: ${result.summary?.importedAssignmentCount || 0}`,
         `Previous assignments: ${result.summary?.previousAssignmentCount || 0}`,
         `Changed assignments: ${result.summary?.changedAssignmentCount || 0}`,
@@ -84,11 +88,13 @@ function run(options = {}) {
             write: options.write === true,
             evidencePath,
             preflightValid: false,
+            fullRematerialize: options.fullRematerialize === true,
             blockers: sourceReport?.blockers || ["source input preflight failed"],
             summary: {
                 importedAssignmentCount: 0,
                 previousAssignmentCount: 0,
                 changedAssignmentCount: 0,
+                changedKanji: [],
             },
         };
     }
@@ -103,6 +109,7 @@ function run(options = {}) {
     const manifest = materializeKanjiEvidenceEntries({
         evidenceManifest: imported.manifest,
         contract,
+        changedKanji: options.fullRematerialize ? null : imported.summary.changedKanji,
     });
 
     if (options.write) {
@@ -114,6 +121,7 @@ function run(options = {}) {
         write: options.write === true,
         evidencePath,
         preflightValid: true,
+        fullRematerialize: options.fullRematerialize === true,
         summary: imported.summary,
     };
 }

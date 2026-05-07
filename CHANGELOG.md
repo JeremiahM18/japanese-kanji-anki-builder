@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added incremental JLPT kanji source-evidence import materialization so `data:import:jlpt:source-input` updates only changed kanji rollup entries by default, with `--full-rematerialize` retained for one-off full manifest regeneration.
 - Imported the next ten Shin Kanzen Master N4 source-evidence rows (`百`, `父`, `分`, `聞`, `母`, `北`, `本`, `毎`, `万`, `名`) from the pinned N4 reading/writing table, re-pinned source-input integrity before import, and kept decks/readiness unchanged.
 - Imported the next fixed-queue Shin Kanzen Master N4 source-evidence rows (`東`, `読`, `南`, `二`, `日`, `入`, `年`, `白`, `八`, `半`) from the pinned N4 reading/writing table, re-pinned source-input integrity before import, and kept decks/readiness unchanged.
 - Imported the next ten Shin Kanzen Master N4 source-evidence rows (`千`, `川`, `前`, `大`, `男`, `中`, `長`, `天`, `電`, `土`) from the pinned N4 reading/writing table, re-pinned source-input integrity before import, and kept decks/readiness unchanged.

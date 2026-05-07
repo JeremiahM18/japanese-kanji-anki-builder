@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Imported the next fixed-queue Shin Kanzen Master N4 source-evidence rows (`東`, `読`, `南`, `二`, `日`, `入`, `年`, `白`, `八`, `半`) from the pinned N4 reading/writing table, re-pinned source-input integrity before import, and kept decks/readiness unchanged.
 - Imported the next ten Shin Kanzen Master N4 source-evidence rows (`千`, `川`, `前`, `大`, `男`, `中`, `長`, `天`, `電`, `土`) from the pinned N4 reading/writing table, re-pinned source-input integrity before import, and kept decks/readiness unchanged.
 - Imported another ten Shin Kanzen Master N4 source-evidence rows from the pinned N4 reading/writing table for the governed missing-Japanese-source worklist, re-pinned source-input integrity before import, and kept decks/readiness unchanged.
 - Imported ten more Shin Kanzen Master N4 source-evidence rows from the pinned N4 reading/writing table while continuing the all-level missing-Japanese-source worklist, re-pinned source-input integrity before import, and kept decks/readiness unchanged.

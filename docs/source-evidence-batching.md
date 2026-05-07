@@ -92,6 +92,12 @@ Run the source-evidence fast feedback scope:
 npm test -- --scope=source-evidence
 ```
 
+Run the read-only cost report before choosing any source-evidence performance refactor:
+
+```bash
+npm run data:benchmark:jlpt:sources -- --source=shin_kanzen_master_kanji --repeat=2 --limit=10
+```
+
 Then run the full commit gate:
 
 ```bash

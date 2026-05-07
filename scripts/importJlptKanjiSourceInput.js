@@ -151,6 +151,9 @@ if (require.main === module) {
 }
 
 module.exports = {
+    DEFAULT_CONFIG,
+    DEFAULT_CONTRACT,
+    DEFAULT_EVIDENCE,
     formatImportReport,
     main,
     parseArgs,

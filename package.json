@@ -13,6 +13,7 @@
     "lint": "eslint src scripts test *.js",
     "test": "node scripts/runNodeTests.js",
     "bench:export": "node scripts/benchmarkExport.js",
+    "data:benchmark:jlpt:sources": "node scripts/reportJlptKanjiSourceEvidenceCost.js",
     "corpus:normalize": "node scripts/normalizeSentenceCorpus.js",
     "corpus:report": "node scripts/reportSentenceCorpusCoverage.js",
     "corpus:init": "node scripts/initSentenceCorpus.js",

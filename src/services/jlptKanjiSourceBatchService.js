@@ -44,6 +44,7 @@ function countBatchStatuses(rows = [], sourceConfig = {}) {
 }
 
 function buildJlptKanjiSourceBatchMerge({
+    allowAdditions = false,
     sourceConfig = {},
     sourceText = "",
     batchText = "",
@@ -96,7 +97,7 @@ function buildJlptKanjiSourceBatchMerge({
             blockers.push(`batch worksheet has duplicate kanji row: ${kanji}`);
         }
         seenBatchKanji.add(kanji);
-        if (!sourceIndex.has(kanji)) {
+        if (!sourceIndex.has(kanji) && !allowAdditions) {
             blockers.push(`batch kanji ${kanji} is not present in source worksheet`);
         }
         const reviewStatus = getReviewStatus(row, sourceConfig);
@@ -127,6 +128,7 @@ function buildJlptKanjiSourceBatchMerge({
 
     let changedRowCount = 0;
     const batchIndex = new Map(batchRows.map((row) => [normalizeText(row[kanjiColumn]), row]));
+    const addedRows = [];
     const mergedRows = sourceRows.map((row) => {
         const batchRow = batchIndex.get(normalizeText(row[kanjiColumn]));
         if (!batchRow) {
@@ -149,6 +151,17 @@ function buildJlptKanjiSourceBatchMerge({
         }
         return merged;
     });
+    for (const row of batchRows) {
+        const kanji = normalizeText(row[kanjiColumn]);
+        if (!sourceIndex.has(kanji)) {
+            const added = {};
+            for (const header of sourceHeaders) {
+                added[header] = row[header] ?? "";
+            }
+            addedRows.push(added);
+            changedRowCount += 1;
+        }
+    }
     const statusCounts = countBatchStatuses(batchRows, sourceConfig);
 
     return {
@@ -156,13 +169,14 @@ function buildJlptKanjiSourceBatchMerge({
         blockers: [],
         sourceRowCount: sourceRows.length,
         batchRowCount: batchRows.length,
+        addedRowCount: addedRows.length,
         changedRowCount,
         reviewedRowCount: statusCounts.reviewed || 0,
         pendingRowCount: statusCounts.needs_review || 0,
         blockedRowCount: statusCounts.blocked || 0,
         sourceAccessGapRowCount: statusCounts.source_access_gap || 0,
         statusCounts,
-        tsv: formatRowsAsTsv({ headers: sourceHeaders, rows: mergedRows }),
+        tsv: formatRowsAsTsv({ headers: sourceHeaders, rows: [...mergedRows, ...addedRows] }),
     };
 }
 

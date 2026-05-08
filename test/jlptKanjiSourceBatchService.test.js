@@ -62,6 +62,32 @@ test("source batch merge updates matching source rows while preserving worksheet
     assert.match(result.tsv, /月\t\tsource_access_gap\t\t\tChecked permitted fixture material/);
 });
 
+test("source batch merge can append new sparse worksheet rows when explicitly allowed", () => {
+    const sourceText = [
+        "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes",
+        "学\tN5\treviewed\tFixture citation\tfixture:学\tAlready reviewed",
+    ].join("\n");
+    const batchText = [
+        "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes",
+        "日\tN5\treviewed\tFixture citation\tfixture:日\tObserved fixture row",
+    ].join("\n");
+
+    const result = buildJlptKanjiSourceBatchMerge({
+        allowAdditions: true,
+        sourceConfig: buildSourceConfig(),
+        sourceText,
+        batchText,
+    });
+
+    assert.equal(result.valid, true);
+    assert.equal(result.sourceRowCount, 1);
+    assert.equal(result.batchRowCount, 1);
+    assert.equal(result.addedRowCount, 1);
+    assert.equal(result.changedRowCount, 1);
+    assert.match(result.tsv, /学\tN5\treviewed\tFixture citation\tfixture:学\tAlready reviewed/);
+    assert.match(result.tsv, /日\tN5\treviewed\tFixture citation\tfixture:日\tObserved fixture row/);
+});
+
 test("source batch merge rejects unsafe worksheet shape before writing", () => {
     const sourceText = [
         "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes",
@@ -113,6 +139,7 @@ test("source batch merge script parses args and renders no-deck-mutation scope",
         "--source=shin_kanzen_master_kanji",
         "--batch=downloads/shin-kanzen-master-kanji-evidence-n5-batch-001.tsv",
         "--config=templates/custom.json",
+        "--allow-additions",
         "--write",
         "--json",
     ]);
@@ -120,6 +147,7 @@ test("source batch merge script parses args and renders no-deck-mutation scope",
     assert.equal(options.source, "shin_kanzen_master_kanji");
     assert.equal(options.batch, "downloads/shin-kanzen-master-kanji-evidence-n5-batch-001.tsv");
     assert.equal(options.config, "templates/custom.json");
+    assert.equal(options.allowAdditions, true);
     assert.equal(options.write, true);
     assert.equal(options.json, true);
 
@@ -138,6 +166,7 @@ test("source batch merge script parses args and renders no-deck-mutation scope",
     });
 
     assert.match(text, /Mode: dry-run/);
+    assert.match(text, /Added source rows: 0/);
     assert.match(text, /Batch statuses: needs_review: 11, source_access_gap: 1/);
     assert.match(text, /does not import assignments, move kanji, move words, update decks, or change readiness/);
 });

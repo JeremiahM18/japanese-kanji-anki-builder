@@ -71,6 +71,12 @@ If the dry-run is clean, merge into the ignored full worksheet:
 npm run data:merge:jlpt:source-batch -- --source=<source-id> --batch=<ignored-batch.tsv> --write
 ```
 
+For sparse source worksheets that intentionally contain only resolved rows, use `--allow-additions` after the dry-run confirms the added row count:
+
+```bash
+npm run data:merge:jlpt:source-batch -- --source=<source-id> --batch=<ignored-batch.tsv> --allow-additions --write
+```
+
 At this point, do not import yet by habit. The full ignored worksheet has changed, so strict source-input preflight is expected to fail until the tracked integrity pin is intentionally updated.
 
 ## Per Milestone

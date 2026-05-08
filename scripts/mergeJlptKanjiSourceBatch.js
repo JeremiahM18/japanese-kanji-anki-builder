@@ -15,6 +15,7 @@ function parseArgs(argv) {
         config: DEFAULT_CONFIG,
         source: null,
         batch: null,
+        allowAdditions: false,
         write: false,
         json: false,
         unknownArgs: [],
@@ -23,6 +24,8 @@ function parseArgs(argv) {
     for (const arg of argv) {
         if (arg === "--write") {
             options.write = true;
+        } else if (arg === "--allow-additions") {
+            options.allowAdditions = true;
         } else if (arg === "--json") {
             options.json = true;
         } else if (arg.startsWith("--config=")) {
@@ -124,6 +127,7 @@ function run(options = {}) {
     }
 
     const result = buildJlptKanjiSourceBatchMerge({
+        allowAdditions: options.allowAdditions === true,
         sourceConfig,
         sourceText: sourceFile.text,
         batchText: batchFile.text,
@@ -157,6 +161,7 @@ function formatBatchMergeReport(result = {}) {
         `Batch worksheet: ${result.batchPath || ""}`,
         `Source rows parsed: ${result.sourceRowCount || 0}`,
         `Batch rows parsed: ${result.batchRowCount || 0}`,
+        `Added source rows: ${result.addedRowCount || 0}`,
         `Changed source rows: ${result.changedRowCount || 0}`,
         `Batch statuses: ${formatStatusCounts(result.statusCounts)}`,
         `No deck mutation: ${result.noDeckMutation === false ? "no" : "yes"}`,

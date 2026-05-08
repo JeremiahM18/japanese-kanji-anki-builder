@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added explicit sparse-worksheet append support to `data:merge:jlpt:source-batch -- --allow-additions`, then imported `18` ASK Hajimete N1 target-entry rows and `20` Nihongo Sou Matome N1 direct-table rows from official sample pages while keeping decks/readiness unchanged.
 - Imported `79` additional Nihongo Sou Matome kanji source-evidence rows from official N2/N3 sample table-of-contents and direct kanji-table surfaces, including `19` N2/N3 range rows where both official sample surfaces expose the same kanji, raising the active lane to `544` reviewed assignments while keeping decks/readiness unchanged.
 - Imported `39` additional Nihongo Sou Matome kanji source-evidence rows from official N4 sample table-of-contents kanji-study rows and official N2 revised-list submitted-kanji rows, raising the active lane to `465` reviewed assignments while keeping decks/readiness unchanged.
 - Recorded the TRY! JLPT source-access spike result and blocked the lane from assignment consensus under current access because official public TRY materials expose grammar/vocabulary surfaces rather than exact per-kanji JLPT assignment proof.

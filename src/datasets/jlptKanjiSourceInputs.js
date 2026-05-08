@@ -22,6 +22,7 @@ const sourceInputConfigSchema = z.object({
     requireCitation: z.boolean().default(true),
     requireEvidenceRef: z.boolean().default(true),
     levelMapping: z.enum(["new-jlpt-n1-n5", "kanjidic2-legacy-jlpt"]).default("new-jlpt-n1-n5"),
+    supportedLevels: z.array(z.number().int().min(1).max(5)).min(1).optional(),
     checkedAt: z.string().min(1).optional(),
     sha256: z.string().regex(/^[a-f0-9]{64}$/i).optional(),
     byteSize: z.number().int().nonnegative().optional(),

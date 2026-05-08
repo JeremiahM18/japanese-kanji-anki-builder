@@ -96,7 +96,16 @@ function formatTemplateRows(rows = [], limit = 10) {
     ];
 }
 
-function formatTemplateReport({ outPath, contractPath, evidencePath, sourceId, rows, level, sourceLevel, priority, skippedExistingSourceRows = 0 } = {}) {
+function formatSupportedLevels(levels = []) {
+    return (levels || [])
+        .map((level) => Number(level))
+        .filter((level) => Number.isInteger(level) && level >= 1 && level <= 5)
+        .sort((a, b) => a - b)
+        .map((level) => `N${level}`)
+        .join(", ") || "all";
+}
+
+function formatTemplateReport({ outPath, contractPath, evidencePath, sourceId, rows, level, sourceLevel, priority, skippedExistingSourceRows = 0, supportedLevels = [] } = {}) {
     return [
         "JLPT Kanji Source Input Template",
         "",
@@ -106,6 +115,7 @@ function formatTemplateReport({ outPath, contractPath, evidencePath, sourceId, r
         `Evidence: ${evidencePath || "not used"}`,
         `Level filter: ${level || "all"}`,
         `Source level filter: ${sourceLevel || "none"}`,
+        `Supported source levels: ${formatSupportedLevels(supportedLevels)}`,
         `Priority mode: ${priority || "contract"}`,
         `Priority summary: ${formatPrioritySummary(rows)}`,
         `Already resolved source rows skipped: ${skippedExistingSourceRows}`,
@@ -179,6 +189,7 @@ function run(options = {}) {
         priority,
         skippedSourceKanji,
         sourceLevel: options.sourceLevel,
+        supportedLevels: sourceInput.supportedLevels || [],
     });
     const tsv = formatJlptKanjiSourceInputTemplateTsv(rows);
 
@@ -193,6 +204,7 @@ function run(options = {}) {
         sourceId,
         level: options.level,
         sourceLevel: options.sourceLevel,
+        supportedLevels: sourceInput.supportedLevels || [],
         priority,
         skippedExistingSourceRows: skippedSourceKanji.size,
         rows,

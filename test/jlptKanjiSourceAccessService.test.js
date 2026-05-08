@@ -159,6 +159,7 @@ test("source-access CLI parsing and formatting stay read-only", () => {
             status: "planned",
             trackedAssignments: 0,
             worksheet: { reviewed: 0, sourceAccessGap: 0, pending: 0 },
+            supportedLevels: [1, 2, 3],
             nextStep: "Verify source access first.",
         }],
         lanes: [],
@@ -167,6 +168,7 @@ test("source-access CLI parsing and formatting stay read-only", () => {
     assert.match(text, /Mode: read-only/);
     assert.match(text, /does not import evidence, move kanji, move words, update decks, or change readiness/);
     assert.match(text, /missing_japanese_published_source: 2/);
+    assert.match(text, /supported levels N1, N2, N3/);
 });
 
 test("source-access file summary handles missing configured worksheets", () => {

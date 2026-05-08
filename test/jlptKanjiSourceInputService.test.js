@@ -322,6 +322,7 @@ test("source input manifest can declare planned restricted textbook source lanes
                 requireCitation: true,
                 requireEvidenceRef: true,
                 levelMapping: "new-jlpt-n1-n5",
+                supportedLevels: [1, 2, 3],
                 integrityPolicy: "Individual textbook source only.",
             },
         },
@@ -332,6 +333,7 @@ test("source input manifest can declare planned restricted textbook source lanes
     assert.equal(input.levelColumn, "level");
     assert.equal(input.requireCitation, true);
     assert.equal(input.requireEvidenceRef, true);
+    assert.deepEqual(input.supportedLevels, [1, 2, 3]);
     assert.equal(input.sha256, undefined);
     assert.equal(input.byteSize, undefined);
     assert.equal(input.rowCount, undefined);

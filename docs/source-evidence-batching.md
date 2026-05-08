@@ -39,6 +39,8 @@ Use this report to decide whether reviewer time should stay on the current lane 
 
 The source-access audit is read-only. It ranks source lanes from tracked source-use policy, tracked source-input config, local worksheet state, tracked assignments, and the all-level source-review worklist. It does not import evidence, move kanji, move words, update decks, or change readiness.
 
+Use dedicated kanji sources before grammar or vocabulary-adjacent sources. TRY! remains a planned level-study lane until exact kanji assignment evidence is confirmed. `ask_hajimete_jlpt_kanji` is a planned ASK kanji-book lane with source-input `supportedLevels` set to N1-N3, so all-level source-review worklists skip N4/N5-only rows for that lane.
+
 ## Per 10-Row Review Pass
 
 Generate or refresh one reusable ignored batch file for the lane selected by `data:audit:jlpt:source-access`:

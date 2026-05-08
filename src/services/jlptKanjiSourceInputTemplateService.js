@@ -203,17 +203,20 @@ function buildSourceLevelDeltaRows({ contract, evidence, sourceLevel, limit, ski
     return maxRows === null ? formattedRows : formattedRows.slice(0, maxRows);
 }
 
-function buildSourceReviewWorklistRows({ contract, evidence, limit, skippedSourceKanji }) {
+function buildSourceReviewWorklistRows({ contract, evidence, limit, skippedSourceKanji, supportedLevels = [] }) {
     if (!evidence) {
         throw new Error("source-review-worklist priority requires a source-evidence manifest.");
     }
     const maxRows = resolvePositiveLimit(limit);
+    const supportedLevelSet = normalizeSupportedLevels(supportedLevels);
+    const hasPostReportFilters = supportedLevelSet.size > 0 || (skippedSourceKanji?.size || 0) > 0;
     const report = buildJlptKanjiSourceLevelDeltaReport({
         contract,
         evidence,
-        limit: maxRows || undefined,
+        limit: hasPostReportFilters ? undefined : maxRows || undefined,
     });
     const rows = (report.reviewWorklist || [])
+        .filter((row) => hasSupportedReviewLevel(row, supportedLevelSet))
         .filter((row) => !skippedSourceKanji?.has(row.kanji));
 
     const formattedRows = rows.map((row) => ({
@@ -233,6 +236,19 @@ function buildSourceReviewWorklistRows({ contract, evidence, limit, skippedSourc
     return maxRows === null ? formattedRows : formattedRows.slice(0, maxRows);
 }
 
+function normalizeSupportedLevels(supportedLevels = []) {
+    return new Set((supportedLevels || [])
+        .map((level) => Number(level))
+        .filter((level) => Number.isInteger(level) && level >= 1 && level <= 5));
+}
+
+function hasSupportedReviewLevel(row = {}, supportedLevelSet = new Set()) {
+    if (supportedLevelSet.size === 0) {
+        return true;
+    }
+    return (row.reviewLevels || []).some((level) => supportedLevelSet.has(Number(level)));
+}
+
 function buildJlptKanjiSourceInputTemplateRows({
     contract = {},
     evidence = null,
@@ -241,6 +257,7 @@ function buildJlptKanjiSourceInputTemplateRows({
     priority = DEFAULT_PRIORITY_MODE,
     sourceLevel = null,
     skippedSourceKanji = new Set(),
+    supportedLevels = [],
 } = {}) {
     const maxRows = resolvePositiveLimit(limit);
     const priorityMode = normalizePriorityMode(priority);
@@ -272,6 +289,7 @@ function buildJlptKanjiSourceInputTemplateRows({
             evidence,
             limit: maxRows,
             skippedSourceKanji,
+            supportedLevels,
         });
     }
     if (hasSourceLevelFilter) {

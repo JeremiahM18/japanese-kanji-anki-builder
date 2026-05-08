@@ -28,6 +28,15 @@ function formatPercent(numerator, denominator) {
     return `${((numerator / denominator) * 100).toFixed(1)}%`;
 }
 
+function formatSupportedLevels(levels = []) {
+    return (levels || [])
+        .map((level) => Number(level))
+        .filter((level) => Number.isInteger(level) && level >= 1 && level <= 5)
+        .sort((a, b) => a - b)
+        .map((level) => `N${level}`)
+        .join(", ");
+}
+
 function hasKanjiReviewSourceType(source = {}) {
     return String(source.sourceType || "").includes("kanji-review");
 }
@@ -189,6 +198,7 @@ function buildSourceAccessLaneSummary({
         canStoreExcerpts: source.canStoreExcerpts === true,
         positiveEvidenceOnly: source.positiveEvidenceOnly === true,
         sourcePath: sourceInput?.sourcePath || "",
+        supportedLevels: sourceInput?.supportedLevels || [],
         sourceFileExists: sourceFile.exists === true,
         sourceFileRows: rowCount,
         trackedAssignments: assignmentCount,
@@ -273,9 +283,11 @@ function formatCounts(counts = {}) {
 
 function formatLaneLine(lane = {}) {
     const worksheet = lane.worksheet || {};
+    const supportedLevels = formatSupportedLevels(lane.supportedLevels || []);
     return `- ${lane.sourceId}: ${lane.action}; status ${lane.status}; `
         + `tracked assignments ${lane.trackedAssignments}; worksheet reviewed ${worksheet.reviewed || 0}, `
-        + `gaps ${worksheet.sourceAccessGap || 0}, pending ${worksheet.pending || 0}; ${lane.nextStep}`;
+        + `gaps ${worksheet.sourceAccessGap || 0}, pending ${worksheet.pending || 0}; `
+        + `${supportedLevels ? `supported levels ${supportedLevels}; ` : ""}${lane.nextStep}`;
 }
 
 function formatJlptKanjiSourceAccessReport(report = {}, { limit = 12 } = {}) {

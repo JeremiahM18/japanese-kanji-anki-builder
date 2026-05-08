@@ -510,6 +510,33 @@
       "licenseReviewedAt": "2026-05-05",
       "legalNotes": "Copyrighted textbook lane. Do not copy lists or excerpts; store only manually reviewed level judgments with permitted citations/evidence refs."
     },
+    "ask_hajimete_jlpt_kanji": {
+      "name": "ASK Hajimete JLPT kanji textbooks",
+      "tier": "japanese-published-study-material",
+      "status": "planned",
+      "sourceType": "japanese-published-textbook-kanji-review",
+      "url": "https://ask-books.com/series/jlpt-kanji/",
+      "independent": true,
+      "independenceGroup": "ask_hajimete_jlpt_kanji",
+      "japanesePublished": true,
+      "countsForConsensus": true,
+      "weight": 1,
+      "licenseStatus": "restricted",
+      "notes": "Individual textbook lane for reviewed level judgments from ASK Publishing's Hajimete no Nihongo Noryoku Shiken kanji books. Official product pages currently identify dedicated N1, N2, and N3 kanji volumes; do not use this lane for N4/N5 rows unless exact permitted source access is separately verified. Active rows must come only from pinned manual-citation worksheets with permitted citations and evidence references.",
+      "lineage": "japanese_published_textbook_review",
+      "publisherIndependence": "ask_publishing_hajimete_kanji",
+      "evidenceLineage": "japanese_published_textbook_review",
+      "allowedUse": "manual-citation-only",
+      "sourceKind": "assignment",
+      "canStoreAssignments": true,
+      "canStoreRawList": false,
+      "canStoreExcerpts": false,
+      "requiresCitation": true,
+      "positiveEvidenceOnly": false,
+      "licenseEvidenceUrl": "https://ask-books.com/series/jlpt-kanji/",
+      "licenseReviewedAt": "2026-05-08",
+      "legalNotes": "Copyrighted textbook lane. Do not copy lists or excerpts; store only manually reviewed level judgments with permitted citations/evidence refs."
+    },
     "japanese_textbook_consensus": {
       "name": "Derived Japanese-published textbook consensus",
       "tier": "japanese-published-study-material",
@@ -524,7 +551,8 @@
       "derivedFromSources": [
         "shin_kanzen_master_kanji",
         "nihongo_sou_matome_kanji",
-        "try_jlpt_textbook"
+        "try_jlpt_textbook",
+        "ask_hajimete_jlpt_kanji"
       ],
       "notes": "Derived non-voting summary computed from individual Japanese-published textbook lanes. It must not be manually populated or counted in external consensus in addition to the source lanes.",
       "lineage": "japanese_published_textbook_review",
@@ -31081,6 +31109,7 @@
       }
     },
     "try_jlpt_textbook": {},
+    "ask_hajimete_jlpt_kanji": {},
     "japanese_textbook_consensus": {},
     "joyo_grade": {},
     "current_operational_contract": {}

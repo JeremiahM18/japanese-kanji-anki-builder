@@ -257,6 +257,58 @@ test("kanji source input template can prepare all-level source review worklist r
     assert.match(rows[0].reviewReason, /Review levels: N5, N3/);
 });
 
+test("kanji source input template filters source review worklist by supported source levels", () => {
+    const contract = {
+        kanjiLevels: {
+            日: 5,
+            語: 4,
+            本: 3,
+        },
+    };
+    const evidence = {
+        policy: {
+            minimumIndependentSources: 1,
+            minimumIndependentEvidenceLineages: 0,
+            minimumJapanesePublishedSources: 1,
+            standardAgreementScore: 0.67,
+            highAgreementScore: 0.8,
+        },
+        sources: {
+            legacy_source: buildGovernedSource({
+                japanesePublished: false,
+            }),
+        },
+        assignments: {
+            legacy_source: {
+                日: { level: 5, reviewStatus: "reviewed" },
+                語: { level: 4, reviewStatus: "reviewed" },
+                本: { level: 3, reviewStatus: "reviewed" },
+            },
+        },
+    };
+
+    const rows = buildJlptKanjiSourceInputTemplateRows({
+        contract,
+        evidence,
+        priority: "source-review-worklist",
+        supportedLevels: [1, 2, 3],
+    });
+
+    assert.deepEqual(rows.map((row) => `${row.kanji}:${row.currentContractLevel}:${row.reviewPriority}`), [
+        "本:N3:missing_japanese_published_source",
+    ]);
+
+    const limitedRows = buildJlptKanjiSourceInputTemplateRows({
+        contract,
+        evidence,
+        priority: "source-review-worklist",
+        limit: 1,
+        supportedLevels: [1, 2, 3],
+    });
+
+    assert.deepEqual(limitedRows.map((row) => row.kanji), ["本"]);
+});
+
 test("kanji source input template prioritizes missing evidence before mismatch rows", () => {
     const contract = {
         kanjiLevels: {
@@ -444,6 +496,7 @@ test("createJlptKanjiSourceInputTemplate script parses args and reports no deck 
         sourceId: "nihongo_sou_matome_kanji",
         level: "5",
         sourceLevel: "N5",
+        supportedLevels: [1, 2, 3],
         priority: "source-gaps",
         skippedExistingSourceRows: 2,
         rows: [
@@ -457,6 +510,7 @@ test("createJlptKanjiSourceInputTemplate script parses args and reports no deck 
     assert.match(text, /selected source lane/);
     assert.match(text, /Priority mode: source-gaps/);
     assert.match(text, /Source level filter: N5/);
+    assert.match(text, /Supported source levels: N1, N2, N3/);
     assert.match(text, /Priority summary: missing_evidence: 2/);
     assert.match(text, /Already resolved source rows skipped: 2/);
     assert.equal(formatPrioritySummary([{ reviewPriority: "b" }, { reviewPriority: "a" }]), "a: 1, b: 1");

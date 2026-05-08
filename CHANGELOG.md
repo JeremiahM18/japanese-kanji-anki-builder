@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Imported `39` additional Nihongo Sou Matome kanji source-evidence rows from official N4 sample table-of-contents kanji-study rows and official N2 revised-list submitted-kanji rows, raising the active lane to `465` reviewed assignments while keeping decks/readiness unchanged.
 - Recorded the TRY! JLPT source-access spike result and blocked the lane from assignment consensus under current access because official public TRY materials expose grammar/vocabulary surfaces rather than exact per-kanji JLPT assignment proof.
 - Added import-time reporting for JLPT kanji source-evidence materialized `consensusLevel`, `confidence`, and `agreementScore` shifts so milestone imports expose source-consensus side effects before `--write`.
 - Activated and imported the first ASK Hajimete JLPT Kanji source-access spike, adding `15` reviewed N3 manual-citation assignments from official sample target-entry pages while keeping decks/readiness unchanged.

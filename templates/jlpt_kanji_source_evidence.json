@@ -486,7 +486,7 @@
     "try_jlpt_textbook": {
       "name": "TRY! JLPT textbooks",
       "tier": "japanese-published-study-material",
-      "status": "planned",
+      "status": "blocked",
       "sourceType": "japanese-published-textbook-level-review",
       "url": "https://ask-books.com/jlpt-try",
       "independent": true,
@@ -495,7 +495,7 @@
       "countsForConsensus": true,
       "weight": 1,
       "licenseStatus": "restricted",
-      "notes": "Individual textbook lane for reviewed level judgments from ASK Publishing's TRY! JLPT series. Because TRY! is not a dedicated kanji-list source, use it as level-study evidence only after manual review confirms the kanji evidence surface.",
+      "notes": "Individual textbook lane for reviewed level judgments from ASK Publishing's TRY! JLPT series. A 2026-05-08 source-access spike inspected the official series page, learning-item PDFs, product samples, and vocabulary-list surface; those public official materials expose grammar/can-do and vocabulary/occurrence evidence, not exact per-kanji JLPT assignment proof. Keep this lane blocked from assignment consensus unless actual source access provides exact per-kanji assignment evidence.",
       "lineage": "japanese_published_textbook_review",
       "publisherIndependence": "ask_publishing_try",
       "evidenceLineage": "japanese_published_textbook_review",

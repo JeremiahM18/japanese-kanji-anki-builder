@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Activated and imported the first ASK Hajimete JLPT Kanji source-access spike, adding `15` reviewed N3 manual-citation assignments from official sample target-entry pages while keeping decks/readiness unchanged.
 - Imported `60` additional Nihongo Sou Matome N3 kanji source-evidence rows from the official ASK correction-list target-kanji rows, raising the active lane to `426` reviewed assignments while keeping decks/readiness unchanged.
 - Registered the ASK Hajimete JLPT Kanji source as a planned restricted manual-citation N1-N3 kanji textbook lane and added source-input `supportedLevels` filtering so all-level source-review batches can avoid unsupported source levels.
 - Imported `73` additional Nihongo Sou Matome kanji source-evidence rows from inspected official N1 sample-page evidence (`1` direct-table row and `72` table-of-contents kanji-group rows), raising the active lane to `366` reviewed assignments while keeping decks/readiness unchanged.

@@ -7,10 +7,12 @@ const {
     formatEvidenceManifestJson,
     listChangedAssignments,
     materializeKanjiEvidenceEntries,
+    summarizeMaterializedKanjiEvidenceShifts,
     sortAssignments,
 } = require("../src/services/jlptKanjiSourceImportService");
 const {
     formatImportReport,
+    formatMaterializedShiftLine,
     parseArgs,
 } = require("../scripts/importJlptKanjiSourceInput");
 
@@ -287,6 +289,58 @@ test("materializeKanjiEvidenceEntries skips work for empty incremental change se
     }), evidenceManifest);
 });
 
+test("summarizeMaterializedKanjiEvidenceShifts reports only changed rollup fields", () => {
+    const shifts = summarizeMaterializedKanjiEvidenceShifts({
+        previousManifest: {
+            kanji: {
+                日: {
+                    consensusLevel: "N4",
+                    confidence: "weak_evidence",
+                    agreementScore: 0.5,
+                },
+                語: {
+                    consensusLevel: "N5",
+                    confidence: "weak_evidence",
+                    agreementScore: 1,
+                },
+            },
+        },
+        nextManifest: {
+            kanji: {
+                日: {
+                    consensusLevel: "N5",
+                    confidence: "standard_confidence",
+                    agreementScore: 0.75,
+                },
+                語: {
+                    consensusLevel: "N5",
+                    confidence: "weak_evidence",
+                    agreementScore: 1,
+                },
+                本: {
+                    confidence: "unknown",
+                    agreementScore: 0,
+                },
+            },
+        },
+        changedKanji: ["語", "日", "日", "本"],
+    });
+
+    assert.deepEqual(shifts, [
+        {
+            kanji: "日",
+            consensusLevel: { previous: "N4", next: "N5" },
+            confidence: { previous: "weak_evidence", next: "standard_confidence" },
+            agreementScore: { previous: 0.5, next: 0.75 },
+        },
+        {
+            kanji: "本",
+            confidence: { previous: null, next: "unknown" },
+            agreementScore: { previous: null, next: 0 },
+        },
+    ]);
+});
+
 test("importJlptKanjiSourceInput script parses args and formats read-only scope", () => {
     const options = parseArgs([
         "--source=kanjidic2_legacy",
@@ -316,10 +370,25 @@ test("importJlptKanjiSourceInput script parses args and formats read-only scope"
             importedAssignmentCount: 1479,
             previousAssignmentCount: 0,
             changedAssignmentCount: 1479,
+            materializedShiftCount: 1,
+            materializedShifts: [
+                {
+                    kanji: "日",
+                    consensusLevel: { previous: "N4", next: "N5" },
+                    confidence: { previous: "weak_evidence", next: "standard_confidence" },
+                    agreementScore: { previous: 0.6666666666666666, next: 0.75 },
+                },
+            ],
         },
     });
 
     assert.match(text, /Mode: dry-run/);
     assert.match(text, /Materialization: incremental/);
+    assert.match(text, /Materialized consensus\/confidence shifts: 1/);
+    assert.match(text, /- 日: consensus N4 -> N5; confidence weak_evidence -> standard_confidence; agreement 0.6667 -> 0.75/);
     assert.match(text, /does not move kanji, move words, update decks, or change readiness/);
+    assert.equal(formatMaterializedShiftLine({
+        kanji: "語",
+        consensusLevel: { previous: null, next: "N5" },
+    }), "- 語: consensus none -> N5");
 });

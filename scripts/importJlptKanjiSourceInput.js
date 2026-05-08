@@ -6,6 +6,7 @@ const {
     buildJlptKanjiSourceEvidenceImport,
     formatEvidenceManifestJson,
     materializeKanjiEvidenceEntries,
+    summarizeMaterializedKanjiEvidenceShifts,
 } = require("../src/services/jlptKanjiSourceImportService");
 const { loadJlptLevelContract } = require("../src/datasets/jlptLevelContract");
 const { normalizeJlptKanjiSourceEvidence } = require("../src/datasets/jlptKanjiSourceEvidence");
@@ -17,6 +18,30 @@ const {
 const DEFAULT_CONFIG = "templates/jlpt_kanji_source_inputs.json";
 const DEFAULT_CONTRACT = "templates/jlpt_level_contract.json";
 const DEFAULT_EVIDENCE = "templates/jlpt_kanji_source_evidence.json";
+
+function formatShiftValue(value) {
+    if (value === null || value === undefined) {
+        return "none";
+    }
+    if (typeof value === "number" && !Number.isInteger(value)) {
+        return String(Number(value.toFixed(4)));
+    }
+    return String(value);
+}
+
+function formatMaterializedShiftLine(shift = {}) {
+    const parts = [];
+    if (shift.consensusLevel) {
+        parts.push(`consensus ${formatShiftValue(shift.consensusLevel.previous)} -> ${formatShiftValue(shift.consensusLevel.next)}`);
+    }
+    if (shift.confidence) {
+        parts.push(`confidence ${formatShiftValue(shift.confidence.previous)} -> ${formatShiftValue(shift.confidence.next)}`);
+    }
+    if (shift.agreementScore) {
+        parts.push(`agreement ${formatShiftValue(shift.agreementScore.previous)} -> ${formatShiftValue(shift.agreementScore.next)}`);
+    }
+    return `- ${shift.kanji}: ${parts.join("; ")}`;
+}
 
 function parseArgs(argv) {
     const options = {
@@ -54,7 +79,7 @@ function parseArgs(argv) {
 }
 
 function formatImportReport(result = {}) {
-    return [
+    const lines = [
         "JLPT Kanji Source Evidence Import",
         "",
         `Source: ${result.sourceId}`,
@@ -65,9 +90,17 @@ function formatImportReport(result = {}) {
         `Imported assignments: ${result.summary?.importedAssignmentCount || 0}`,
         `Previous assignments: ${result.summary?.previousAssignmentCount || 0}`,
         `Changed assignments: ${result.summary?.changedAssignmentCount || 0}`,
+        `Materialized consensus/confidence shifts: ${result.summary?.materializedShiftCount || 0}`,
         "",
         "This command imports source evidence only. It does not move kanji, move words, update decks, or change readiness.",
-    ].join("\n");
+    ];
+    if (result.summary?.materializedShifts?.length > 0) {
+        lines.push("", "Materialized shifts:");
+        for (const shift of result.summary.materializedShifts) {
+            lines.push(formatMaterializedShiftLine(shift));
+        }
+    }
+    return lines.join("\n");
 }
 
 function run(options = {}) {
@@ -101,6 +134,8 @@ function run(options = {}) {
                 previousAssignmentCount: 0,
                 changedAssignmentCount: 0,
                 changedKanji: [],
+                materializedShiftCount: 0,
+                materializedShifts: [],
             },
         };
     }
@@ -115,6 +150,18 @@ function run(options = {}) {
         contract,
         changedKanji: options.fullRematerialize ? null : imported.summary.changedKanji,
     });
+    const materializedShifts = summarizeMaterializedKanjiEvidenceShifts({
+        previousManifest: evidenceManifest,
+        nextManifest: manifest,
+        changedKanji: options.fullRematerialize
+            ? Object.keys(contract.kanjiLevels || {})
+            : imported.summary.changedKanji,
+    });
+    const summary = {
+        ...imported.summary,
+        materializedShiftCount: materializedShifts.length,
+        materializedShifts,
+    };
 
     if (options.write) {
         fs.writeFileSync(evidencePath, formatEvidenceManifestJson(manifest), "utf8");
@@ -126,7 +173,7 @@ function run(options = {}) {
         evidencePath,
         preflightValid: true,
         fullRematerialize: options.fullRematerialize === true,
-        summary: imported.summary,
+        summary,
     };
 }
 
@@ -159,6 +206,7 @@ module.exports = {
     DEFAULT_CONTRACT,
     DEFAULT_EVIDENCE,
     formatImportReport,
+    formatMaterializedShiftLine,
     main,
     parseArgs,
     run,

@@ -102,6 +102,8 @@ npm run data:import:jlpt:source-input -- --source=<source-id>
 npm run data:import:jlpt:source-input -- --source=<source-id> --write
 ```
 
+Read the dry-run's `Materialized consensus/confidence shifts` before `--write`. The shift list shows changed `consensusLevel`, `confidence`, and `agreementScore` values for the kanji touched by the import; use `--json` when a large milestone needs a machine-readable review packet.
+
 Run the source-evidence fast feedback scope:
 
 ```bash

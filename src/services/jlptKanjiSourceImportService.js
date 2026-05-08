@@ -129,6 +129,54 @@ function materializeKanjiEvidenceEntries({ evidenceManifest = {}, contract = {},
     };
 }
 
+function normalizeMaterializedShiftValue(entry = {}) {
+    return {
+        consensusLevel: entry.consensusLevel || null,
+        confidence: entry.confidence || null,
+        agreementScore: Number.isFinite(entry.agreementScore) ? entry.agreementScore : null,
+    };
+}
+
+function buildChangedField(previousValue, nextValue) {
+    return Object.is(previousValue, nextValue)
+        ? null
+        : { previous: previousValue, next: nextValue };
+}
+
+function summarizeMaterializedKanjiEvidenceShifts({
+    previousManifest = {},
+    nextManifest = {},
+    changedKanji = [],
+} = {}) {
+    const kanji = [...new Set(changedKanji || [])]
+        .sort((kanjiA, kanjiB) => kanjiA.localeCompare(kanjiB, "ja"));
+    const shifts = [];
+
+    for (const kanjiText of kanji) {
+        const previous = normalizeMaterializedShiftValue(previousManifest.kanji?.[kanjiText] || {});
+        const next = normalizeMaterializedShiftValue(nextManifest.kanji?.[kanjiText] || {});
+        const shift = { kanji: kanjiText };
+        const consensusLevel = buildChangedField(previous.consensusLevel, next.consensusLevel);
+        const confidence = buildChangedField(previous.confidence, next.confidence);
+        const agreementScore = buildChangedField(previous.agreementScore, next.agreementScore);
+
+        if (consensusLevel) {
+            shift.consensusLevel = consensusLevel;
+        }
+        if (confidence) {
+            shift.confidence = confidence;
+        }
+        if (agreementScore) {
+            shift.agreementScore = agreementScore;
+        }
+        if (shift.consensusLevel || shift.confidence || shift.agreementScore) {
+            shifts.push(shift);
+        }
+    }
+
+    return shifts;
+}
+
 function buildJlptKanjiSourceEvidenceImport({ evidenceManifest = {}, sourceId, assignments = {} } = {}) {
     if (!sourceId) {
         throw new Error("A source id is required for JLPT kanji source-evidence import.");
@@ -170,5 +218,6 @@ module.exports = {
     formatEvidenceManifestJson,
     listChangedAssignments,
     materializeKanjiEvidenceEntries,
+    summarizeMaterializedKanjiEvidenceShifts,
     sortAssignments,
 };

@@ -25,7 +25,7 @@ Use source-review priorities in this order unless a tracked issue says otherwise
 | Source gaps | You need a broad evidence-depth scan in operational contract order. | `--priority=source-gaps` |
 | Source level deltas | You are intentionally investigating active source-claimed candidates for one source level. | `--priority=source-level-deltas --source-level=<N1-N5>` |
 
-Keep the human review batch at `--limit=10` unless you have a specific source-access session where a larger ignored worksheet is easier to manage. Broad `source-review-worklist` batches over `10` rows require `--source-access-note="<exact source surface reviewed>"`; use that note only after checking the source surface that will support the review. Larger generation is fine only after that access check, and larger manual decisions should still be reviewed in 10-row passes.
+Keep the human review batch at `--limit=10` unless you have a specific source-access session where a larger ignored worksheet is easier to manage. Broad `source-review-worklist` batches from `11` to `99` rows require `--source-access-note="<exact source surface reviewed>"`. Broad `source-review-worklist` batches with no limit or `100+` rows require a source-access packet. Larger manual decisions should still be reviewed in 10-row passes.
 
 ## Before Choosing A Lane
 
@@ -41,6 +41,14 @@ The source-access audit is read-only. It ranks source lanes from tracked source-
 
 Use dedicated kanji sources before grammar or vocabulary-adjacent sources. TRY! is blocked from assignment-consensus batching under current source access: the 2026-05-08 source-access spike found official public TRY materials expose grammar/can-do and vocabulary surfaces, not exact per-kanji assignment proof. `ask_hajimete_jlpt_kanji` is an active ASK kanji-book lane with source-input `supportedLevels` set to N1-N3, so all-level source-review worklists skip N4/N5-only rows for that lane.
 
+Before creating a `100+` row source-review worksheet, write an ignored source-access packet for the exact surface that makes the rows reviewable:
+
+```bash
+npm run data:packet:jlpt:source-access -- --source=<source-id> --surface-type=<exact-kanji-table|official-correction-list-target-row|exact-assignment-page|target-entry-page> --title="<surface title>" --citation="<source citation>" --evidence-ref="<source URL or local source reference>" --notes="<why this surface proves exact source-level assignment>" --out=downloads/source-access-packets/<source-id>-<surface>.json
+```
+
+This packet is not evidence and is not imported. It records the source-access proof for the batch session. Use only exact kanji tables, official correction-list target rows, exact assignment pages, or target-entry pages. Do not use appearance-only, vocabulary-only, adjacent schedule, review table, grammar, or can-do surfaces as assignment proof.
+
 ## Per 10-Row Review Pass
 
 Generate or refresh one reusable ignored batch file for the lane selected by `data:audit:jlpt:source-access`:
@@ -53,6 +61,12 @@ For a larger source-access session, name the exact surface in the command:
 
 ```bash
 npm run data:template:jlpt:textbook-source -- --source=<source-id> --priority=source-review-worklist --limit=50 --source-access-note="<exact source surface reviewed>" --out=<ignored-batch.tsv>
+```
+
+For `100+` rows, pass the source-access packet instead:
+
+```bash
+npm run data:template:jlpt:textbook-source -- --source=<source-id> --priority=source-review-worklist --limit=100 --source-access-packet=downloads/source-access-packets/<source-id>-<surface>.json --out=<ignored-batch.tsv>
 ```
 
 Review only the permitted manual fields in the batch:
@@ -71,11 +85,19 @@ Dry-run the merge:
 npm run data:merge:jlpt:source-batch -- --source=<source-id> --batch=<ignored-batch.tsv>
 ```
 
+For `100+` row batch files, pass the same source-access packet to the dry-run and write commands:
+
+```bash
+npm run data:merge:jlpt:source-batch -- --source=<source-id> --batch=<ignored-batch.tsv> --source-access-packet=downloads/source-access-packets/<source-id>-<surface>.json
+```
+
 If the dry-run is clean, merge into the ignored full worksheet:
 
 ```bash
 npm run data:merge:jlpt:source-batch -- --source=<source-id> --batch=<ignored-batch.tsv> --write
 ```
+
+For `100+` row batch files, keep the same `--source-access-packet=...` on the write command.
 
 For sparse source worksheets that intentionally contain only resolved rows, use `--allow-additions` after the dry-run confirms the added row count:
 

@@ -10,7 +10,7 @@ const {
     resolvePositiveLimit,
 } = require("../src/services/jlptKanjiSourceInputTemplateService");
 const {
-    assertLargeSourceReviewWorklistHasAccessNote,
+    assertSourceReviewWorklistAccessGate,
     formatTemplateReport,
     formatPrioritySummary,
     parseArgs,
@@ -475,6 +475,7 @@ test("createJlptKanjiSourceInputTemplate script parses args and reports no deck 
         "--level=5",
         "--source-level=N5",
         "--source-access-note=Official sample direct table checked",
+        "--source-access-packet=downloads/source-access-packets/custom.json",
         "--limit=12",
         "--priority=source-gaps",
         "--json",
@@ -488,6 +489,7 @@ test("createJlptKanjiSourceInputTemplate script parses args and reports no deck 
     assert.equal(options.level, "5");
     assert.equal(options.sourceLevel, "N5");
     assert.equal(options.sourceAccessNote, "Official sample direct table checked");
+    assert.equal(options.sourceAccessPacket, "downloads/source-access-packets/custom.json");
     assert.equal(options.limit, 12);
     assert.equal(options.priority, "source-gaps");
     assert.equal(options.json, true);
@@ -500,6 +502,7 @@ test("createJlptKanjiSourceInputTemplate script parses args and reports no deck 
         level: "5",
         sourceLevel: "N5",
         sourceAccessNote: "Official sample direct table checked",
+        sourceAccessPacket: "downloads/source-access-packets/custom.json",
         supportedLevels: [1, 2, 3],
         priority: "source-gaps",
         skippedExistingSourceRows: 2,
@@ -516,6 +519,7 @@ test("createJlptKanjiSourceInputTemplate script parses args and reports no deck 
     assert.match(text, /Source level filter: N5/);
     assert.match(text, /Supported source levels: N1, N2, N3/);
     assert.match(text, /Source access note: Official sample direct table checked/);
+    assert.match(text, /Source access packet: downloads\/source-access-packets\/custom\.json/);
     assert.match(text, /Priority summary: missing_evidence: 2/);
     assert.match(text, /Already resolved source rows skipped: 2/);
     assert.equal(formatPrioritySummary([{ reviewPriority: "b" }, { reviewPriority: "a" }]), "a: 1, b: 1");
@@ -544,22 +548,53 @@ test("source review worklist template command requires an explicit batch output"
     }), /requires --out=<batch.tsv>/);
 });
 
-test("large source review worklist batches require a source-access note", () => {
-    assert.throws(() => assertLargeSourceReviewWorklistHasAccessNote({
+test("source review worklist batch size controls require notes or packets", () => {
+    assert.throws(() => assertSourceReviewWorklistAccessGate({
         priority: "source-review-worklist",
         limit: 200,
         sourceAccessNote: "",
-    }), /require --source-access-note/);
+        sourceAccessPacket: "",
+    }), /require --source-access-packet/);
 
-    assert.doesNotThrow(() => assertLargeSourceReviewWorklistHasAccessNote({
+    assert.throws(() => assertSourceReviewWorklistAccessGate({
         priority: "source-review-worklist",
         limit: 200,
         sourceAccessNote: "Official sample target-entry pages checked",
+        sourceAccessPacket: "",
+    }), /require --source-access-packet/);
+
+    assert.doesNotThrow(() => assertSourceReviewWorklistAccessGate({
+        priority: "source-review-worklist",
+        limit: 200,
+        sourceAccessNote: "",
+        sourceAccessPacket: "downloads/source-access-packets/fixture.json",
     }));
 
-    assert.doesNotThrow(() => assertLargeSourceReviewWorklistHasAccessNote({
+    assert.doesNotThrow(() => assertSourceReviewWorklistAccessGate({
+        priority: "source-review-worklist",
+        limit: 50,
+        sourceAccessNote: "Official sample target-entry pages checked",
+        sourceAccessPacket: "",
+    }));
+
+    assert.doesNotThrow(() => assertSourceReviewWorklistAccessGate({
         priority: "source-review-worklist",
         limit: 10,
         sourceAccessNote: "",
+        sourceAccessPacket: "",
+    }));
+
+    assert.throws(() => assertSourceReviewWorklistAccessGate({
+        priority: "source-review-worklist",
+        limit: null,
+        sourceAccessNote: "Official sample target-entry pages checked",
+        sourceAccessPacket: "",
+    }), /require --source-access-packet/);
+
+    assert.doesNotThrow(() => assertSourceReviewWorklistAccessGate({
+        priority: "source-gaps",
+        limit: 200,
+        sourceAccessNote: "",
+        sourceAccessPacket: "",
     }));
 });

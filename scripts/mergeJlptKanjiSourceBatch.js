@@ -4,6 +4,11 @@ const path = require("node:path");
 const { loadJlptKanjiSourceInputs } = require("../src/datasets/jlptKanjiSourceInputs");
 const { buildJlptKanjiSourceBatchMerge } = require("../src/services/jlptKanjiSourceBatchService");
 const {
+    requiresSourceAccessPacket,
+    summarizeSourceAccessPacket,
+    validateSourceAccessPacketFile,
+} = require("../src/services/jlptKanjiSourceAccessPacketService");
+const {
     assertNoUnknownArgs,
     collectUnknownArg,
 } = require("../src/utils/cliArgs");
@@ -15,6 +20,7 @@ function parseArgs(argv) {
         config: DEFAULT_CONFIG,
         source: null,
         batch: null,
+        sourceAccessPacket: "",
         allowAdditions: false,
         write: false,
         json: false,
@@ -34,6 +40,8 @@ function parseArgs(argv) {
             options.source = arg.slice("--source=".length);
         } else if (arg.startsWith("--batch=")) {
             options.batch = arg.slice("--batch=".length);
+        } else if (arg.startsWith("--source-access-packet=")) {
+            options.sourceAccessPacket = arg.slice("--source-access-packet=".length);
         } else {
             collectUnknownArg(options, arg);
         }
@@ -132,6 +140,50 @@ function run(options = {}) {
         sourceText: sourceFile.text,
         batchText: batchFile.text,
     });
+    let sourceAccessPacketResult = null;
+    if (result.valid && requiresSourceAccessPacket(result.batchRowCount)) {
+        sourceAccessPacketResult = validateSourceAccessPacketFile({
+            packetPath: options.sourceAccessPacket,
+            expectedSourceId: options.source,
+        });
+        if (!sourceAccessPacketResult.valid) {
+            return {
+                ...result,
+                valid: false,
+                blockers: sourceAccessPacketResult.blockers,
+                write: options.write === true,
+                noDeckMutation: manifest.policy?.noDeckMutation !== false,
+                sourceId: options.source,
+                configPath,
+                sourcePath,
+                batchPath,
+                sourceAccessPacketPath: options.sourceAccessPacket || "",
+                sourceAccessPacket: null,
+                tsv: undefined,
+            };
+        }
+    } else if (options.sourceAccessPacket) {
+        sourceAccessPacketResult = validateSourceAccessPacketFile({
+            packetPath: options.sourceAccessPacket,
+            expectedSourceId: options.source,
+        });
+        if (!sourceAccessPacketResult.valid) {
+            return {
+                ...result,
+                valid: false,
+                blockers: sourceAccessPacketResult.blockers,
+                write: options.write === true,
+                noDeckMutation: manifest.policy?.noDeckMutation !== false,
+                sourceId: options.source,
+                configPath,
+                sourcePath,
+                batchPath,
+                sourceAccessPacketPath: options.sourceAccessPacket || "",
+                sourceAccessPacket: null,
+                tsv: undefined,
+            };
+        }
+    }
 
     if (options.write && result.valid) {
         fs.writeFileSync(sourcePath, result.tsv, "utf8");
@@ -145,8 +197,19 @@ function run(options = {}) {
         configPath,
         sourcePath,
         batchPath,
+        sourceAccessPacketPath: options.sourceAccessPacket || "",
+        sourceAccessPacket: sourceAccessPacketResult?.packet || null,
         tsv: undefined,
     };
+}
+
+function formatSourceAccessPacketLine(result = {}) {
+    if (!result.sourceAccessPacketPath) {
+        return "none";
+    }
+    return result.sourceAccessPacket
+        ? `${result.sourceAccessPacketPath} (${summarizeSourceAccessPacket(result.sourceAccessPacket)})`
+        : result.sourceAccessPacketPath;
 }
 
 function formatBatchMergeReport(result = {}) {
@@ -159,6 +222,7 @@ function formatBatchMergeReport(result = {}) {
         `Config: ${result.configPath || ""}`,
         `Source worksheet: ${result.sourcePath || ""}`,
         `Batch worksheet: ${result.batchPath || ""}`,
+        `Source access packet: ${formatSourceAccessPacketLine(result)}`,
         `Source rows parsed: ${result.sourceRowCount || 0}`,
         `Batch rows parsed: ${result.batchRowCount || 0}`,
         `Added source rows: ${result.addedRowCount || 0}`,

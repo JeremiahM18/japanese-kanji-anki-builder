@@ -1,18 +1,27 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const os = require("node:os");
+const path = require("node:path");
 
 const {
     buildJlptKanjiSourceBatchMerge,
 } = require("../src/services/jlptKanjiSourceBatchService");
 const {
+    buildSourceAccessPacket,
+    formatSourceAccessPacketJson,
+} = require("../src/services/jlptKanjiSourceAccessPacketService");
+const {
     formatBatchMergeReport,
     parseArgs,
+    run: runBatchMerge,
 } = require("../scripts/mergeJlptKanjiSourceBatch");
 
 function buildSourceConfig(overrides = {}) {
     return {
         sourceId: "fixture_source",
         sourcePath: "downloads/fixture.tsv",
+        sourceLabel: "Fixture Source",
         format: "tsv",
         kanjiColumn: "kanji",
         levelColumn: "level",
@@ -139,6 +148,7 @@ test("source batch merge script parses args and renders no-deck-mutation scope",
         "--source=shin_kanzen_master_kanji",
         "--batch=downloads/shin-kanzen-master-kanji-evidence-n5-batch-001.tsv",
         "--config=templates/custom.json",
+        "--source-access-packet=downloads/source-access-packets/shin.json",
         "--allow-additions",
         "--write",
         "--json",
@@ -147,6 +157,7 @@ test("source batch merge script parses args and renders no-deck-mutation scope",
     assert.equal(options.source, "shin_kanzen_master_kanji");
     assert.equal(options.batch, "downloads/shin-kanzen-master-kanji-evidence-n5-batch-001.tsv");
     assert.equal(options.config, "templates/custom.json");
+    assert.equal(options.sourceAccessPacket, "downloads/source-access-packets/shin.json");
     assert.equal(options.allowAdditions, true);
     assert.equal(options.write, true);
     assert.equal(options.json, true);
@@ -159,6 +170,7 @@ test("source batch merge script parses args and renders no-deck-mutation scope",
         configPath: "templates/jlpt_kanji_source_inputs.json",
         sourcePath: "downloads/shin-kanzen-master-kanji-evidence.tsv",
         batchPath: "downloads/shin-kanzen-master-kanji-evidence-n5-batch-001.tsv",
+        sourceAccessPacketPath: "downloads/source-access-packets/shin.json",
         sourceRowCount: 2212,
         batchRowCount: 12,
         changedRowCount: 0,
@@ -166,7 +178,73 @@ test("source batch merge script parses args and renders no-deck-mutation scope",
     });
 
     assert.match(text, /Mode: dry-run/);
+    assert.match(text, /Source access packet: downloads\/source-access-packets\/shin\.json/);
     assert.match(text, /Added source rows: 0/);
     assert.match(text, /Batch statuses: needs_review: 11, source_access_gap: 1/);
     assert.match(text, /does not import assignments, move kanji, move words, update decks, or change readiness/);
+});
+
+test("source batch merge script requires a source-access packet for 100-row batches", () => {
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "source-batch-packet-"));
+    const sourcePath = path.join(tmpDir, "source.tsv");
+    const batchPath = path.join(tmpDir, "batch.tsv");
+    const configPath = path.join(tmpDir, "inputs.json");
+    const packetPath = path.join(tmpDir, "packet.json");
+    const header = "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes";
+    const kanji = Array.from({ length: 100 }, (_, index) => String.fromCodePoint(0x4E00 + index));
+    const sourceRows = kanji.map((character) => `${character}\t\tneeds_review\t\t\t`);
+    const batchRows = kanji.map((character) => [
+        character,
+        "N3",
+        "reviewed",
+        "Fixture exact kanji table",
+        `fixture:${character}`,
+        "Observed exact source-level assignment row",
+    ].join("\t"));
+
+    fs.writeFileSync(sourcePath, [header, ...sourceRows].join("\n"), "utf8");
+    fs.writeFileSync(batchPath, [header, ...batchRows].join("\n"), "utf8");
+    fs.writeFileSync(configPath, JSON.stringify({
+        version: 1,
+        policy: {
+            noDeckMutation: true,
+            requirePinnedIntegrity: false,
+            requireKnownEvidenceSource: false,
+        },
+        inputs: {
+            fixture_source: buildSourceConfig({
+                sourcePath,
+            }),
+        },
+    }, null, 2), "utf8");
+
+    const blocked = runBatchMerge({
+        config: configPath,
+        source: "fixture_source",
+        batch: batchPath,
+    });
+    assert.equal(blocked.valid, false);
+    assert.match(blocked.blockers.join("\n"), /source-access packet path is required/);
+
+    fs.writeFileSync(packetPath, formatSourceAccessPacketJson(buildSourceAccessPacket({
+        sourceId: "fixture_source",
+        checkedAt: "2026-05-09",
+        sourceSurface: {
+            type: "exact-kanji-table",
+            title: "Fixture exact kanji table",
+            citation: "Fixture source exact kanji table",
+            evidenceRef: "fixture:exact-kanji-table",
+            notes: "Fixture rows are exact source-level assignments.",
+        },
+    })), "utf8");
+
+    const passing = runBatchMerge({
+        config: configPath,
+        source: "fixture_source",
+        batch: batchPath,
+        sourceAccessPacket: packetPath,
+    });
+    assert.equal(passing.valid, true);
+    assert.equal(passing.batchRowCount, 100);
+    assert.equal(passing.sourceAccessPacket.sourceSurface.type, "exact-kanji-table");
 });

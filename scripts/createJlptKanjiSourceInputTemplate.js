@@ -11,6 +11,12 @@ const {
     normalizePriorityMode,
 } = require("../src/services/jlptKanjiSourceInputTemplateService");
 const {
+    LARGE_SOURCE_ACCESS_PACKET_BATCH_SIZE,
+    requiresSourceAccessPacket,
+    summarizeSourceAccessPacket,
+    validateSourceAccessPacketFile,
+} = require("../src/services/jlptKanjiSourceAccessPacketService");
+const {
     assertNoUnknownArgs,
     collectUnknownArg,
     parseNumericOption,
@@ -32,6 +38,7 @@ function parseArgs(argv) {
         level: null,
         sourceLevel: null,
         sourceAccessNote: "",
+        sourceAccessPacket: "",
         limit: null,
         priority: "contract",
         json: false,
@@ -57,6 +64,8 @@ function parseArgs(argv) {
             options.sourceLevel = arg.slice("--source-level=".length);
         } else if (arg.startsWith("--source-access-note=")) {
             options.sourceAccessNote = arg.slice("--source-access-note=".length);
+        } else if (arg.startsWith("--source-access-packet=")) {
+            options.sourceAccessPacket = arg.slice("--source-access-packet=".length);
         } else if (arg.startsWith("--limit=")) {
             options.limit = parseNumericOption(arg, "limit");
         } else if (arg.startsWith("--priority=")) {
@@ -114,7 +123,14 @@ function formatSourceAccessNote(note) {
     return text || "none";
 }
 
-function formatTemplateReport({ outPath, contractPath, evidencePath, sourceId, rows, level, sourceLevel, sourceAccessNote = "", priority, skippedExistingSourceRows = 0, supportedLevels = [] } = {}) {
+function formatSourceAccessPacketLine(packetPath, packet = null) {
+    if (!normalizeText(packetPath)) {
+        return "none";
+    }
+    return packet ? `${packetPath} (${summarizeSourceAccessPacket(packet)})` : packetPath;
+}
+
+function formatTemplateReport({ outPath, contractPath, evidencePath, sourceId, rows, level, sourceLevel, sourceAccessNote = "", sourceAccessPacket = "", sourceAccessPacketData = null, priority, skippedExistingSourceRows = 0, supportedLevels = [] } = {}) {
     return [
         "JLPT Kanji Source Input Template",
         "",
@@ -126,6 +142,7 @@ function formatTemplateReport({ outPath, contractPath, evidencePath, sourceId, r
         `Source level filter: ${sourceLevel || "none"}`,
         `Supported source levels: ${formatSupportedLevels(supportedLevels)}`,
         `Source access note: ${formatSourceAccessNote(sourceAccessNote)}`,
+        `Source access packet: ${formatSourceAccessPacketLine(sourceAccessPacket, sourceAccessPacketData)}`,
         `Priority mode: ${priority || "contract"}`,
         `Priority summary: ${formatPrioritySummary(rows)}`,
         `Already resolved source rows skipped: ${skippedExistingSourceRows}`,
@@ -141,14 +158,23 @@ function normalizeText(value) {
     return String(value ?? "").trim();
 }
 
-function assertLargeSourceReviewWorklistHasAccessNote({ priority, limit, sourceAccessNote } = {}) {
+function assertSourceReviewWorklistAccessGate({ priority, limit, sourceAccessNote, sourceAccessPacket } = {}) {
     if (priority !== "source-review-worklist") {
         return;
     }
-    if (!Number.isInteger(limit) || limit <= LARGE_SOURCE_REVIEW_WORKLIST_LIMIT) {
+    if (requiresSourceAccessPacket(limit)) {
+        if (normalizeText(sourceAccessPacket)) {
+            return;
+        }
+        throw new Error(
+            `source-review-worklist batches with no limit or at least ${LARGE_SOURCE_ACCESS_PACKET_BATCH_SIZE} rows require `
+            + "--source-access-packet=<ignored-source-access-packet.json>."
+        );
+    }
+    if (limit <= LARGE_SOURCE_REVIEW_WORKLIST_LIMIT) {
         return;
     }
-    if (normalizeText(sourceAccessNote)) {
+    if (normalizeText(sourceAccessNote) || normalizeText(sourceAccessPacket)) {
         return;
     }
     throw new Error(
@@ -190,11 +216,22 @@ function run(options = {}) {
     const evidencePath = path.resolve(process.cwd(), options.evidence || DEFAULT_EVIDENCE);
     const sourceId = options.source || DEFAULT_SOURCE;
     const priority = normalizePriorityMode(options.priority || "contract");
-    assertLargeSourceReviewWorklistHasAccessNote({
+    assertSourceReviewWorklistAccessGate({
         priority,
         limit: options.limit,
         sourceAccessNote: options.sourceAccessNote,
+        sourceAccessPacket: options.sourceAccessPacket,
     });
+    let sourceAccessPacketResult = null;
+    if (normalizeText(options.sourceAccessPacket)) {
+        sourceAccessPacketResult = validateSourceAccessPacketFile({
+            packetPath: options.sourceAccessPacket,
+            expectedSourceId: sourceId,
+        });
+        if (!sourceAccessPacketResult.valid) {
+            throw new Error(`Invalid source-access packet: ${sourceAccessPacketResult.blockers.join("; ")}`);
+        }
+    }
     const sourceInputs = loadJlptKanjiSourceInputs(configPath);
     const sourceInput = sourceInputs.inputs?.[sourceId];
     if (!sourceInput) {
@@ -236,6 +273,8 @@ function run(options = {}) {
         level: options.level,
         sourceLevel: options.sourceLevel,
         sourceAccessNote: normalizeText(options.sourceAccessNote),
+        sourceAccessPacket: normalizeText(options.sourceAccessPacket),
+        sourceAccessPacketData: sourceAccessPacketResult?.packet || null,
         supportedLevels: sourceInput.supportedLevels || [],
         priority,
         skippedExistingSourceRows: skippedSourceKanji.size,
@@ -266,7 +305,7 @@ module.exports = {
     formatTemplateReport,
     formatTemplateRows,
     formatPrioritySummary,
-    assertLargeSourceReviewWorklistHasAccessNote,
+    assertSourceReviewWorklistAccessGate,
     main,
     parseArgs,
     run,

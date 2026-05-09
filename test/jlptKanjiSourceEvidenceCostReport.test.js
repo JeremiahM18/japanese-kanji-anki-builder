@@ -115,17 +115,30 @@ test("source evidence cost report summarizes split assignment file storage", (t)
     const evidencePath = path.join(tempDir, "evidence.json");
     const assignmentPath = path.join(tempDir, "assignments", "source_a.json");
     fs.mkdirSync(path.dirname(assignmentPath), { recursive: true });
+    const assignmentText = `${JSON.stringify({
+        sourceId: "source_a",
+        evidenceRecords: {
+            evidence_a: { citation: "Fixture citation" },
+        },
+        assignments: {
+            日: { level: 5, reviewStatus: "reviewed", evidenceRecordId: "evidence_a" },
+            月: { level: 5, reviewStatus: "reviewed" },
+        },
+    }, null, 2)}\n`;
     fs.writeFileSync(evidencePath, "{}\n", "utf8");
-    fs.writeFileSync(assignmentPath, "{}\n", "utf8");
+    fs.writeFileSync(assignmentPath, assignmentText, "utf8");
 
     const stats = buildAssignmentFileStats(evidencePath, {
         source_a: "assignments/source_a.json",
     });
 
     assert.equal(stats.count, 1);
-    assert.equal(stats.byteSize, 3);
-    assert.equal(stats.lineCount, 2);
-    assert.match(formatAssignmentFileStats(stats), /1 files; 3 bytes; 2 lines/);
+    assert.equal(stats.byteSize, Buffer.byteLength(assignmentText));
+    assert.equal(stats.lineCount, countPhysicalLines(assignmentText));
+    assert.equal(stats.assignmentCount, 2);
+    assert.equal(stats.evidenceRecordCount, 1);
+    assert.equal(stats.evidenceRecordReferenceCount, 1);
+    assert.match(formatAssignmentFileStats(stats), /1 evidence records; 1 record refs/);
 });
 
 test("source evidence cost report summarizes operation outputs without large payloads", () => {
@@ -245,7 +258,7 @@ test("source evidence cost report formats read-only no-mutation scope", () => {
         repeat: 1,
         files: {
             evidence: { exists: true, byteSize: 100, lineCount: 10, path: "templates/evidence.json" },
-            assignmentFiles: { count: 1, byteSize: 50, lineCount: 8 },
+            assignmentFiles: { count: 1, byteSize: 50, lineCount: 8, evidenceRecordCount: 2, evidenceRecordReferenceCount: 3 },
             sourceInputs: { exists: true, byteSize: 20, lineCount: 4, path: "templates/inputs.json" },
             contract: { exists: true, byteSize: 30, lineCount: 5, path: "templates/contract.json" },
             sourceWorksheet: { exists: true, byteSize: 40, lineCount: 6, path: "downloads/source.tsv" },
@@ -315,7 +328,7 @@ test("source evidence cost report formats read-only no-mutation scope", () => {
     assert.match(text, /Mode: read-only/);
     assert.match(text, /does not import assignments, move kanji, move words, update decks, or change readiness/);
     assert.match(text, /source input preflight/);
-    assert.match(text, /source assignment files: 1 files; 50 bytes; 8 lines/);
+    assert.match(text, /source assignment files: 1 files; 50 bytes; 8 lines; 2 evidence records; 3 record refs/);
     assert.match(text, /source-evidence tracked storage total: 150 bytes/);
     assert.match(text, /assignment files: 1/);
     assert.match(text, /full manifest serialization/);

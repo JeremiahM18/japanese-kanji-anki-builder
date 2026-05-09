@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added assignment-file `evidenceRecords` for JLPT kanji source evidence so repeated reviewer `citation`, `evidenceRef`, and `notes` are stored once per routed source file while the normalized `assignments[sourceId][kanji]` API remains unchanged.
 - Split tracked JLPT kanji source-evidence assignments into routed per-source files while keeping the normalized `assignments[sourceId][kanji]` API and source-evidence governance boundaries unchanged.
 - Added observed process-memory telemetry to `data:benchmark:jlpt:sources` so source-evidence load, preflight, import dry-run, serialization, and audit cost can be measured before storage-layout or cache refactors.
 - Added explicit sparse-worksheet append support to `data:merge:jlpt:source-batch -- --allow-additions`, then imported `18` ASK Hajimete N1 target-entry rows and `20` Nihongo Sou Matome N1 direct-table rows from official sample pages while keeping decks/readiness unchanged.

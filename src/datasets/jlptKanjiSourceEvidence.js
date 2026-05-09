@@ -2,24 +2,43 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { z } = require("zod");
 
+const jlptLevelAssignmentObjectFields = {
+    level: z.union([
+        z.number().int().min(1).max(5),
+        z.string().min(1),
+    ]).optional(),
+    levelRange: z.array(z.union([
+        z.number().int().min(1).max(5),
+        z.string().min(1),
+    ])).min(2).optional(),
+    reviewStatus: z.enum(["reviewed", "needs_review", "blocked"]).default("reviewed"),
+    citation: z.string().min(1).optional(),
+    evidenceRef: z.string().min(1).optional(),
+    notes: z.string().min(1).optional(),
+};
+
 const jlptLevelAssignmentValueSchema = z.union([
     z.number().int().min(1).max(5),
     z.string().min(1),
+    z.object(jlptLevelAssignmentObjectFields).strict(),
+]);
+
+const storedJlptLevelAssignmentValueSchema = z.union([
+    z.number().int().min(1).max(5),
+    z.string().min(1),
     z.object({
-        level: z.union([
-            z.number().int().min(1).max(5),
-            z.string().min(1),
-        ]).optional(),
-        levelRange: z.array(z.union([
-            z.number().int().min(1).max(5),
-            z.string().min(1),
-        ])).min(2).optional(),
-        reviewStatus: z.enum(["reviewed", "needs_review", "blocked"]).default("reviewed"),
-        citation: z.string().min(1).optional(),
-        evidenceRef: z.string().min(1).optional(),
-        notes: z.string().min(1).optional(),
+        ...jlptLevelAssignmentObjectFields,
+        evidenceRecordId: z.string().min(1).optional(),
     }).strict(),
 ]);
+
+const assignmentEvidenceRecordSchema = z.object({
+    citation: z.string().min(1).optional(),
+    evidenceRef: z.string().min(1).optional(),
+    notes: z.string().min(1).optional(),
+}).strict().refine((record) => Object.values(record).some((value) => value !== undefined), {
+    message: "Assignment evidence records must define citation, evidenceRef, or notes.",
+});
 const DEFAULT_EVIDENCE_POLICY = Object.freeze({
     minimumIndependentSources: 3,
     minimumIndependentEvidenceLineages: 2,
@@ -164,7 +183,8 @@ const kanjiEvidenceEntrySchema = z.object({
 
 const assignmentFileSchema = z.object({
     sourceId: z.string().min(1),
-    assignments: z.record(z.string().min(1), jlptLevelAssignmentValueSchema).default({}),
+    evidenceRecords: z.record(z.string().min(1), assignmentEvidenceRecordSchema).default({}),
+    assignments: z.record(z.string().min(1), storedJlptLevelAssignmentValueSchema).default({}),
 }).strict();
 
 const jlptKanjiSourceEvidenceSchema = z.object({
@@ -451,6 +471,30 @@ function resolveEvidenceRelativePath(evidencePath, relativePath) {
     return path.resolve(path.dirname(evidencePath), relativePath);
 }
 
+function hydrateAssignmentEvidenceRecords({ sourceId, assignments = {}, evidenceRecords = {} } = {}) {
+    return Object.fromEntries(
+        Object.entries(assignments || {}).map(([kanji, value]) => {
+            if (!value || typeof value !== "object" || Array.isArray(value) || !value.evidenceRecordId) {
+                return [kanji, value];
+            }
+
+            const record = evidenceRecords[value.evidenceRecordId];
+            if (!record) {
+                throw new Error(
+                    `JLPT kanji assignment file ${sourceId} references unknown evidence record ${value.evidenceRecordId} for ${kanji}.`
+                );
+            }
+
+            const assignment = { ...value };
+            delete assignment.evidenceRecordId;
+            return [kanji, {
+                ...record,
+                ...assignment,
+            }];
+        })
+    );
+}
+
 function loadAssignmentFiles(evidencePath, assignmentFiles = {}) {
     const assignments = {};
 
@@ -460,7 +504,11 @@ function loadAssignmentFiles(evidencePath, assignmentFiles = {}) {
         if (parsed.sourceId !== sourceId) {
             throw new Error(`JLPT kanji assignment file source mismatch: ${sourceId} points to ${parsed.sourceId}`);
         }
-        assignments[sourceId] = parsed.assignments || {};
+        assignments[sourceId] = hydrateAssignmentEvidenceRecords({
+            sourceId,
+            assignments: parsed.assignments || {},
+            evidenceRecords: parsed.evidenceRecords || {},
+        });
     }
 
     return assignments;

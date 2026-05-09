@@ -108,10 +108,27 @@ function buildAssignmentFileStats(evidencePath, assignmentFiles = {}) {
     const filesBySource = Object.fromEntries(
         Object.entries(assignmentFiles || {})
             .sort(([a], [b]) => a.localeCompare(b))
-            .map(([sourceId, relativePath]) => [
-                sourceId,
-                buildFileStats(path.resolve(baseDir, relativePath)),
-            ])
+            .map(([sourceId, relativePath]) => {
+                const stats = buildFileStats(path.resolve(baseDir, relativePath));
+                if (!stats.exists) {
+                    return [sourceId, {
+                        ...stats,
+                        assignmentCount: 0,
+                        evidenceRecordCount: 0,
+                        evidenceRecordReferenceCount: 0,
+                    }];
+                }
+                const data = JSON.parse(fs.readFileSync(stats.path, "utf8"));
+                const assignments = Object.values(data.assignments || {});
+                return [sourceId, {
+                    ...stats,
+                    assignmentCount: assignments.length,
+                    evidenceRecordCount: Object.keys(data.evidenceRecords || {}).length,
+                    evidenceRecordReferenceCount: assignments.filter((assignment) => (
+                        assignment && typeof assignment === "object" && !Array.isArray(assignment) && assignment.evidenceRecordId
+                    )).length,
+                }];
+            })
     );
     const files = Object.values(filesBySource);
 
@@ -119,6 +136,12 @@ function buildAssignmentFileStats(evidencePath, assignmentFiles = {}) {
         count: files.length,
         byteSize: files.reduce((sum, file) => sum + Number(file.byteSize || 0), 0),
         lineCount: files.reduce((sum, file) => sum + Number(file.lineCount || 0), 0),
+        assignmentCount: files.reduce((sum, file) => sum + Number(file.assignmentCount || 0), 0),
+        evidenceRecordCount: files.reduce((sum, file) => sum + Number(file.evidenceRecordCount || 0), 0),
+        evidenceRecordReferenceCount: files.reduce(
+            (sum, file) => sum + Number(file.evidenceRecordReferenceCount || 0),
+            0
+        ),
         filesBySource,
     };
 }
@@ -408,7 +431,7 @@ function formatFileStats(label, stats = {}) {
 }
 
 function formatAssignmentFileStats(stats = {}) {
-    return `- source assignment files: ${stats.count || 0} files; ${stats.byteSize || 0} bytes; ${stats.lineCount || 0} lines`;
+    return `- source assignment files: ${stats.count || 0} files; ${stats.byteSize || 0} bytes; ${stats.lineCount || 0} lines; ${stats.evidenceRecordCount || 0} evidence records; ${stats.evidenceRecordReferenceCount || 0} record refs`;
 }
 
 function formatJlptKanjiSourceEvidenceCostReport(report = {}) {

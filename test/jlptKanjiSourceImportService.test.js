@@ -6,6 +6,7 @@ const path = require("node:path");
 const {
     buildStorageManifest,
     buildJlptKanjiSourceEvidenceImport,
+    compressAssignmentEvidenceRecords,
     countChangedAssignments,
     formatEvidenceManifestJson,
     formatSourceAssignmentFileJson,
@@ -103,6 +104,43 @@ test("buildJlptKanjiSourceEvidenceImport replaces only the selected source assig
     });
 });
 
+test("buildJlptKanjiSourceEvidenceImport ignores storage-order differences for unchanged assignments", () => {
+    const evidenceManifest = {
+        version: 1,
+        sources: {
+            source_a: { name: "Source A" },
+        },
+        assignments: {
+            source_a: {
+                日: {
+                    citation: "Fixture citation",
+                    evidenceRef: "fixture:日",
+                    notes: "Fixture notes",
+                    reviewStatus: "reviewed",
+                    level: 5,
+                },
+            },
+        },
+    };
+
+    const result = buildJlptKanjiSourceEvidenceImport({
+        evidenceManifest,
+        sourceId: "source_a",
+        assignments: {
+            日: {
+                level: 5,
+                reviewStatus: "reviewed",
+                citation: "Fixture citation",
+                evidenceRef: "fixture:日",
+                notes: "Fixture notes",
+            },
+        },
+    });
+
+    assert.equal(result.summary.changedAssignmentCount, 0);
+    assert.deepEqual(result.summary.changedKanji, []);
+});
+
 test("source import helpers count changes and serialize stable JSON", () => {
     assert.equal(countChangedAssignments(
         { 日: { level: 5 } },
@@ -158,6 +196,92 @@ test("split assignment storage keeps routed sources out of the parent manifest",
         "}",
         "",
     ].join("\n"));
+});
+
+test("assignment-file serialization deduplicates repeated evidence records without changing row meaning", () => {
+    const compressed = compressAssignmentEvidenceRecords({
+        日: {
+            level: 5,
+            reviewStatus: "reviewed",
+            citation: "Fixture citation with enough repeated source detail to justify a shared evidence record",
+            evidenceRef: "fixture:shared-source-page-reference-with-stable-anchor",
+            notes: "Shared notes with enough repeated review context to make indirection worthwhile",
+        },
+        月: {
+            level: 5,
+            reviewStatus: "reviewed",
+            citation: "Fixture citation with enough repeated source detail to justify a shared evidence record",
+            evidenceRef: "fixture:shared-source-page-reference-with-stable-anchor",
+            notes: "Shared notes with enough repeated review context to make indirection worthwhile",
+        },
+        語: {
+            level: 4,
+            reviewStatus: "reviewed",
+            citation: "Unique citation",
+            evidenceRef: "fixture:unique",
+            notes: "Unique notes",
+        },
+        水: {
+            level: 5,
+            reviewStatus: "reviewed",
+            citation: "Pair citation with repeated publication and section detail",
+            evidenceRef: "fixture:pair-source-page-reference",
+            notes: "Water note",
+        },
+        火: {
+            level: 5,
+            reviewStatus: "reviewed",
+            citation: "Pair citation with repeated publication and section detail",
+            evidenceRef: "fixture:pair-source-page-reference",
+            notes: "Fire note",
+        },
+        土: {
+            level: 5,
+            reviewStatus: "reviewed",
+            citation: "Pair citation with repeated publication and section detail",
+            evidenceRef: "fixture:pair-source-page-reference",
+            notes: "Earth note",
+        },
+        金: {
+            level: 5,
+            reviewStatus: "reviewed",
+            citation: "Pair citation with repeated publication and section detail",
+            evidenceRef: "fixture:pair-source-page-reference",
+            notes: "Metal note",
+        },
+    });
+    const sharedRecordId = compressed.assignments.日.evidenceRecordId;
+    const pairRecordId = compressed.assignments.水.evidenceRecordId;
+
+    assert.ok(sharedRecordId);
+    assert.equal(compressed.assignments.月.evidenceRecordId, sharedRecordId);
+    assert.equal("citation" in compressed.assignments.日, false);
+    assert.equal("evidenceRef" in compressed.assignments.日, false);
+    assert.equal("notes" in compressed.assignments.日, false);
+    assert.deepEqual(compressed.evidenceRecords[sharedRecordId], {
+        citation: "Fixture citation with enough repeated source detail to justify a shared evidence record",
+        evidenceRef: "fixture:shared-source-page-reference-with-stable-anchor",
+        notes: "Shared notes with enough repeated review context to make indirection worthwhile",
+    });
+    assert.deepEqual(compressed.assignments.語, {
+        level: 4,
+        reviewStatus: "reviewed",
+        citation: "Unique citation",
+        evidenceRef: "fixture:unique",
+        notes: "Unique notes",
+    });
+    assert.ok(pairRecordId);
+    assert.equal(compressed.assignments.火.evidenceRecordId, pairRecordId);
+    assert.equal(compressed.assignments.土.evidenceRecordId, pairRecordId);
+    assert.equal(compressed.assignments.金.evidenceRecordId, pairRecordId);
+    assert.deepEqual(compressed.evidenceRecords[pairRecordId], {
+        citation: "Pair citation with repeated publication and section detail",
+        evidenceRef: "fixture:pair-source-page-reference",
+    });
+    assert.equal(compressed.assignments.水.notes, "Water note");
+    assert.equal(compressed.assignments.火.notes, "Fire note");
+    assert.equal("citation" in compressed.assignments.水, false);
+    assert.equal("evidenceRef" in compressed.assignments.水, false);
 });
 
 test("import script writes routed assignment files without embedding split assignments in parent manifest", (t) => {

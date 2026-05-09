@@ -498,12 +498,18 @@ test("loadJlptKanjiSourceEvidence merges split assignment files into normalized 
     fs.mkdirSync(assignmentDir, { recursive: true });
     fs.writeFileSync(path.join(assignmentDir, "source_a.json"), JSON.stringify({
         sourceId: "source_a",
+        evidenceRecords: {
+            fixture_shared: {
+                citation: "Fixture citation",
+                evidenceRef: "fixture:shared",
+                notes: "Fixture notes",
+            },
+        },
         assignments: {
             日: {
                 level: "N5",
                 reviewStatus: "reviewed",
-                citation: "Fixture citation",
-                evidenceRef: "fixture:日",
+                evidenceRecordId: "fixture_shared",
             },
         },
     }, null, 2), "utf8");
@@ -541,12 +547,61 @@ test("loadJlptKanjiSourceEvidence merges split assignment files into normalized 
         level: 5,
         reviewStatus: "reviewed",
         citation: "Fixture citation",
-        evidenceRef: "fixture:日",
-        notes: undefined,
+        evidenceRef: "fixture:shared",
+        notes: "Fixture notes",
     });
     assert.deepEqual(evidence.assignmentFiles, {
         source_a: "jlpt_kanji_source_evidence/assignments/source_a.json",
     });
+});
+
+test("loadJlptKanjiSourceEvidence rejects split assignment files with unknown evidence records", (t) => {
+    const tempDir = fs.mkdtempSync(path.join(__dirname, "tmp-source-evidence-"));
+    t.after(() => fs.rmSync(tempDir, { recursive: true, force: true }));
+    const assignmentDir = path.join(tempDir, "jlpt_kanji_source_evidence", "assignments");
+    fs.mkdirSync(assignmentDir, { recursive: true });
+    fs.writeFileSync(path.join(assignmentDir, "source_a.json"), JSON.stringify({
+        sourceId: "source_a",
+        assignments: {
+            日: {
+                level: "N5",
+                reviewStatus: "reviewed",
+                evidenceRecordId: "missing_record",
+            },
+        },
+    }, null, 2), "utf8");
+    const manifestPath = path.join(tempDir, "evidence.json");
+    fs.writeFileSync(manifestPath, JSON.stringify({
+        version: 1,
+        sourceTiers: {
+            fixture: {
+                label: "Fixture tier",
+                rank: 1,
+                role: "supporting-evidence",
+                description: "Fixture source tier.",
+            },
+        },
+        confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
+        sources: {
+            source_a: buildGovernedAssignmentSource({
+                name: "Source A",
+                tier: "fixture",
+                status: "active",
+                sourceType: "fixture",
+                licenseStatus: "approved",
+            }),
+        },
+        assignments: {},
+        assignmentFiles: {
+            source_a: "jlpt_kanji_source_evidence/assignments/source_a.json",
+        },
+    }, null, 2), "utf8");
+
+    assert.throws(
+        () => loadJlptKanjiSourceEvidence(manifestPath),
+        /references unknown evidence record missing_record/
+    );
 });
 
 test("computeConsensus detects weighted agreement and ties", () => {

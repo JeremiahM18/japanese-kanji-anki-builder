@@ -1,5 +1,18 @@
+const crypto = require("node:crypto");
+
 const { normalizeJlptKanjiSourceEvidence } = require("../datasets/jlptKanjiSourceEvidence");
 const { evaluateKanjiSourceEvidence } = require("./jlptKanjiSourceEvidenceService");
+
+const EVIDENCE_RECORD_FIELDS = Object.freeze(["citation", "evidenceRef", "notes"]);
+const EVIDENCE_RECORD_FIELD_SETS = Object.freeze([
+    ["citation", "evidenceRef", "notes"],
+    ["citation", "evidenceRef"],
+    ["citation", "notes"],
+    ["evidenceRef", "notes"],
+    ["citation"],
+    ["evidenceRef"],
+    ["notes"],
+]);
 
 function sortAssignments(assignments = {}) {
     return Object.fromEntries(
@@ -24,6 +37,113 @@ function sortAssignments(assignments = {}) {
                 return [kanji, sortedAssignment];
             })
     );
+}
+
+function removeUndefinedFields(object = {}) {
+    return Object.fromEntries(
+        Object.entries(object).filter(([, value]) => value !== undefined)
+    );
+}
+
+function buildAssignmentEvidenceRecord(assignment = {}, fields = EVIDENCE_RECORD_FIELDS) {
+    const record = removeUndefinedFields(Object.fromEntries(
+        fields.map((field) => [field, assignment[field]])
+    ));
+    return Object.keys(record).length > 0 ? record : null;
+}
+
+function serializeEvidenceRecord(record = {}) {
+    return JSON.stringify(removeUndefinedFields({
+        citation: record.citation,
+        evidenceRef: record.evidenceRef,
+        notes: record.notes,
+    }));
+}
+
+function buildEvidenceRecordId(record = {}) {
+    const hash = crypto
+        .createHash("sha256")
+        .update(serializeEvidenceRecord(record))
+        .digest("hex")
+        .slice(0, 16);
+    return `evidence_${hash}`;
+}
+
+function estimateEvidenceRecordSavings(record = {}, count = 0) {
+    if (count <= 1) {
+        return 0;
+    }
+    const recordId = buildEvidenceRecordId(record);
+    const inlineBytes = serializeEvidenceRecord(record).length - 2;
+    const recordDefinitionBytes = JSON.stringify({ [recordId]: record }).length - 2;
+    const recordReferenceBytes = JSON.stringify({ evidenceRecordId: recordId }).length - 2;
+    return (inlineBytes * count) - recordDefinitionBytes - (recordReferenceBytes * count);
+}
+
+function listAssignmentEvidenceRecordCandidates(assignment = {}) {
+    return EVIDENCE_RECORD_FIELD_SETS
+        .map((fields) => buildAssignmentEvidenceRecord(assignment, fields))
+        .filter((record) => record !== null);
+}
+
+function compareEvidenceRecordCandidates(candidateA, candidateB) {
+    return Object.keys(candidateB.record).length - Object.keys(candidateA.record).length
+        || candidateB.savings - candidateA.savings
+        || serializeEvidenceRecord(candidateB.record).length - serializeEvidenceRecord(candidateA.record).length
+        || serializeEvidenceRecord(candidateA.record).localeCompare(serializeEvidenceRecord(candidateB.record));
+}
+
+function compressAssignmentEvidenceRecords(assignments = {}) {
+    const sortedAssignments = sortAssignments(assignments);
+    const recordCounts = new Map();
+
+    for (const assignment of Object.values(sortedAssignments)) {
+        for (const record of listAssignmentEvidenceRecordCandidates(assignment)) {
+            const serializedRecord = serializeEvidenceRecord(record);
+            recordCounts.set(serializedRecord, (recordCounts.get(serializedRecord) || 0) + 1);
+        }
+    }
+
+    const evidenceRecords = {};
+    const compressedAssignments = {};
+
+    for (const [kanji, assignment] of Object.entries(sortedAssignments)) {
+        const record = listAssignmentEvidenceRecordCandidates(assignment)
+            .map((candidateRecord) => {
+                const serializedRecord = serializeEvidenceRecord(candidateRecord);
+                const count = recordCounts.get(serializedRecord) || 0;
+                return {
+                    record: candidateRecord,
+                    count,
+                    savings: estimateEvidenceRecordSavings(candidateRecord, count),
+                };
+            })
+            .filter((candidate) => candidate.count > 1 && candidate.savings > 0)
+            .sort(compareEvidenceRecordCandidates)[0]?.record || null;
+        const compressedAssignment = removeUndefinedFields({ ...assignment });
+
+        if (record) {
+            const recordId = buildEvidenceRecordId(record);
+            const existingRecord = evidenceRecords[recordId];
+            if (existingRecord && serializeEvidenceRecord(existingRecord) !== serializeEvidenceRecord(record)) {
+                throw new Error(`Evidence record id collision while serializing ${kanji}: ${recordId}`);
+            }
+            evidenceRecords[recordId] = record;
+            for (const field of Object.keys(record)) {
+                delete compressedAssignment[field];
+            }
+            compressedAssignment.evidenceRecordId = recordId;
+        }
+
+        compressedAssignments[kanji] = compressedAssignment;
+    }
+
+    return {
+        evidenceRecords: Object.fromEntries(
+            Object.entries(evidenceRecords).sort(([recordIdA], [recordIdB]) => recordIdA.localeCompare(recordIdB))
+        ),
+        assignments: compressedAssignments,
+    };
 }
 
 function countChangedAssignments(existing = {}, next = {}) {
@@ -186,7 +306,7 @@ function buildJlptKanjiSourceEvidenceImport({ evidenceManifest = {}, sourceId, a
     }
 
     const sortedAssignments = sortAssignments(assignments);
-    const existingAssignments = evidenceManifest.assignments?.[sourceId] || {};
+    const existingAssignments = sortAssignments(evidenceManifest.assignments?.[sourceId] || {});
     const nextManifest = {
         ...evidenceManifest,
         assignments: {
@@ -229,17 +349,23 @@ function formatSourceAssignmentFileJson({ sourceId, assignments = {} } = {}) {
     if (!sourceId) {
         throw new Error("A source id is required for JLPT kanji assignment-file serialization.");
     }
-
-    return `${JSON.stringify({
+    const compressed = compressAssignmentEvidenceRecords(assignments);
+    const storage = {
         sourceId,
-        assignments: sortAssignments(assignments),
-    }, null, 2)}\n`;
+    };
+    if (Object.keys(compressed.evidenceRecords).length > 0) {
+        storage.evidenceRecords = compressed.evidenceRecords;
+    }
+    storage.assignments = compressed.assignments;
+
+    return `${JSON.stringify(storage, null, 2)}\n`;
 }
 
 module.exports = {
     buildStorageManifest,
     buildMaterializedKanjiEvidenceEntry,
     buildJlptKanjiSourceEvidenceImport,
+    compressAssignmentEvidenceRecords,
     countChangedAssignments,
     formatEvidenceManifestJson,
     formatSourceAssignmentFileJson,

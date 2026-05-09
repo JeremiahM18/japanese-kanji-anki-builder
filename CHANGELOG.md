@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Imported `153` additional reviewed Japanese-published kanji source-evidence assignments from exact Nihongo Sou Matome correction-list target rows and ASK Hajimete N2/N5 checklist pages, raising Sou Matome to `673` reviewed assignments and ASK Hajimete to `77` while keeping decks/readiness unchanged.
 - Added assignment-file `evidenceRecords` for JLPT kanji source evidence so repeated reviewer `citation`, `evidenceRef`, and `notes` are stored once per routed source file while the normalized `assignments[sourceId][kanji]` API remains unchanged.
 - Split tracked JLPT kanji source-evidence assignments into routed per-source files while keeping the normalized `assignments[sourceId][kanji]` API and source-evidence governance boundaries unchanged.
 - Added observed process-memory telemetry to `data:benchmark:jlpt:sources` so source-evidence load, preflight, import dry-run, serialization, and audit cost can be measured before storage-layout or cache refactors.

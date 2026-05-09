@@ -130,8 +130,8 @@
       "requireEvidenceRef": true,
       "levelMapping": "new-jlpt-n1-n5",
       "checkedAt": "2026-05-09",
-      "sha256": "a284cea17b8546d49bc855fc08cc9bd4fc95575076861e7aab4b72df6e781caf",
-      "byteSize": 335492,
+      "sha256": "88f1bd2b96b4ff9c5f078848823faa4f8a6f489f72c2be34c2d1a8cd617c9988",
+      "byteSize": 372347,
       "rowCount": 2212,
       "integrityPolicy": "This source input is for manually reviewed level judgments from Nihongo Sou Matome kanji textbooks only. Do not copy copyrighted kanji lists. Pin SHA-256, byte size, row count, and checkedAt only after the reviewed TSV contains permitted citations and evidence references."
     },
@@ -171,13 +171,14 @@
       "supportedLevels": [
         1,
         2,
-        3
+        3,
+        5
       ],
-      "checkedAt": "2026-05-08",
-      "sha256": "6fd127214b0f33c3298aa4223dbb201065cdb1375b621be9041f9c7a227d0794",
-      "byteSize": 12409,
-      "rowCount": 33,
-      "integrityPolicy": "This source input is for manually reviewed level judgments from ASK Publishing's Hajimete no Nihongo Noryoku Shiken kanji books only. Official product pages currently identify N1, N2, and N3 kanji volumes; do not use this lane for N4/N5 rows unless exact permitted source access is separately verified. Do not copy copyrighted kanji lists. Pin SHA-256, byte size, row count, and checkedAt only after the reviewed TSV contains permitted citations and evidence references."
+      "checkedAt": "2026-05-09",
+      "sha256": "2bee594a7546750be2b0ef8b05733a7eb342f6b017e489c1b17140c5f87ed064",
+      "byteSize": 29893,
+      "rowCount": 77,
+      "integrityPolicy": "This source input is for manually reviewed level judgments from ASK Publishing's Hajimete no Nihongo Noryoku Shiken kanji books only. Official product pages currently identify N1, N2, and N3 kanji volumes; N5 is permitted only for the separately verified official sample page explicitly labeled N5 Kanji Checklist, and N4 remains unsupported until exact permitted source access is separately verified. Do not copy copyrighted kanji lists. Pin SHA-256, byte size, row count, and checkedAt only after the reviewed TSV contains permitted citations and evidence references."
     }
   }
 }

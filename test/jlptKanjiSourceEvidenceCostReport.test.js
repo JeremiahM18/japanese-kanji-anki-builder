@@ -1,15 +1,19 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
 
 const importDefaults = require("../scripts/importJlptKanjiSourceInput");
 const {
     DEFAULT_CONFIG,
     DEFAULT_CONTRACT,
     DEFAULT_EVIDENCE,
+    buildAssignmentFileStats,
     buildJlptKanjiSourceEvidenceCostReport,
     countPhysicalLines,
     diffMemoryUsage,
     formatBytesAsMiB,
+    formatAssignmentFileStats,
     formatJlptKanjiSourceEvidenceCostReport,
     formatMemoryDelta,
     formatMemoryObservation,
@@ -79,6 +83,9 @@ test("source evidence cost report summarizes manifest and selected source shape"
             日: {},
             月: {},
         },
+        assignmentFiles: {
+            source_a: "assignments/source_a.json",
+        },
     };
 
     assert.deepEqual(summarizeEvidenceManifest(evidence), {
@@ -86,6 +93,7 @@ test("source evidence cost report summarizes manifest and selected source shape"
         sourceCount: 2,
         assignmentSourceCount: 2,
         assignmentCount: 3,
+        assignmentFileCount: 1,
         kanjiRollupCount: 2,
         assignmentsBySource: {
             source_a: 2,
@@ -99,6 +107,25 @@ test("source evidence cost report summarizes manifest and selected source shape"
         uniqueEvidenceRefCount: 2,
         repeatedCitationCount: 1,
     });
+});
+
+test("source evidence cost report summarizes split assignment file storage", (t) => {
+    const tempDir = fs.mkdtempSync(path.join(__dirname, "tmp-source-cost-"));
+    t.after(() => fs.rmSync(tempDir, { recursive: true, force: true }));
+    const evidencePath = path.join(tempDir, "evidence.json");
+    const assignmentPath = path.join(tempDir, "assignments", "source_a.json");
+    fs.mkdirSync(path.dirname(assignmentPath), { recursive: true });
+    fs.writeFileSync(evidencePath, "{}\n", "utf8");
+    fs.writeFileSync(assignmentPath, "{}\n", "utf8");
+
+    const stats = buildAssignmentFileStats(evidencePath, {
+        source_a: "assignments/source_a.json",
+    });
+
+    assert.equal(stats.count, 1);
+    assert.equal(stats.byteSize, 3);
+    assert.equal(stats.lineCount, 2);
+    assert.match(formatAssignmentFileStats(stats), /1 files; 3 bytes; 2 lines/);
 });
 
 test("source evidence cost report summarizes operation outputs without large payloads", () => {
@@ -218,6 +245,7 @@ test("source evidence cost report formats read-only no-mutation scope", () => {
         repeat: 1,
         files: {
             evidence: { exists: true, byteSize: 100, lineCount: 10, path: "templates/evidence.json" },
+            assignmentFiles: { count: 1, byteSize: 50, lineCount: 8 },
             sourceInputs: { exists: true, byteSize: 20, lineCount: 4, path: "templates/inputs.json" },
             contract: { exists: true, byteSize: 30, lineCount: 5, path: "templates/contract.json" },
             sourceWorksheet: { exists: true, byteSize: 40, lineCount: 6, path: "downloads/source.tsv" },
@@ -226,6 +254,7 @@ test("source evidence cost report formats read-only no-mutation scope", () => {
             sourceCount: 2,
             assignmentSourceCount: 1,
             assignmentCount: 3,
+            assignmentFileCount: 1,
             kanjiRollupCount: 3,
         },
         selectedSource: {
@@ -286,6 +315,9 @@ test("source evidence cost report formats read-only no-mutation scope", () => {
     assert.match(text, /Mode: read-only/);
     assert.match(text, /does not import assignments, move kanji, move words, update decks, or change readiness/);
     assert.match(text, /source input preflight/);
+    assert.match(text, /source assignment files: 1 files; 50 bytes; 8 lines/);
+    assert.match(text, /source-evidence tracked storage total: 150 bytes/);
+    assert.match(text, /assignment files: 1/);
     assert.match(text, /full manifest serialization/);
     assert.match(text, /Timing and memory/);
     assert.match(text, /Observed process memory snapshots/);

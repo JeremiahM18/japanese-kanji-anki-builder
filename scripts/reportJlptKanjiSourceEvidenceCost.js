@@ -103,6 +103,26 @@ function buildFileStats(filePath) {
     };
 }
 
+function buildAssignmentFileStats(evidencePath, assignmentFiles = {}) {
+    const baseDir = path.dirname(path.resolve(process.cwd(), evidencePath));
+    const filesBySource = Object.fromEntries(
+        Object.entries(assignmentFiles || {})
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([sourceId, relativePath]) => [
+                sourceId,
+                buildFileStats(path.resolve(baseDir, relativePath)),
+            ])
+    );
+    const files = Object.values(filesBySource);
+
+    return {
+        count: files.length,
+        byteSize: files.reduce((sum, file) => sum + Number(file.byteSize || 0), 0),
+        lineCount: files.reduce((sum, file) => sum + Number(file.lineCount || 0), 0),
+        filesBySource,
+    };
+}
+
 function summarizeEvidenceManifest(evidenceManifest = {}) {
     const assignmentsBySource = Object.fromEntries(
         Object.entries(evidenceManifest.assignments || {})
@@ -115,6 +135,7 @@ function summarizeEvidenceManifest(evidenceManifest = {}) {
         sourceCount: Object.keys(evidenceManifest.sources || {}).length,
         assignmentSourceCount: Object.keys(evidenceManifest.assignments || {}).length,
         assignmentCount: Object.values(assignmentsBySource).reduce((sum, count) => sum + count, 0),
+        assignmentFileCount: Object.keys(evidenceManifest.assignmentFiles || {}).length,
         kanjiRollupCount: Object.keys(evidenceManifest.kanji || {}).length,
         assignmentsBySource,
     };
@@ -283,6 +304,7 @@ function buildJlptKanjiSourceEvidenceCostReport(options = {}) {
     });
     const evidenceSummary = evidenceLoad.lastResult;
     const selectedSource = summarizeSourceAssignments(evidenceManifest, sourceId);
+    const assignmentFileStats = buildAssignmentFileStats(evidenceStats.path, evidenceManifest.assignmentFiles || {});
     const preflight = measureOperation("source input preflight", repeat, () => summarizePreflightReport(buildReports({
         config: configPath,
         contract: contractPath,
@@ -321,6 +343,7 @@ function buildJlptKanjiSourceEvidenceCostReport(options = {}) {
         },
         files: {
             evidence: evidenceStats,
+            assignmentFiles: assignmentFileStats,
             sourceInputs: configStats,
             contract: contractStats,
             sourceWorksheet: sourceWorksheetStats,
@@ -384,6 +407,10 @@ function formatFileStats(label, stats = {}) {
     return `- ${label}: ${stats.byteSize} bytes; ${stats.lineCount} lines; ${stats.exists ? stats.path : "missing"}`;
 }
 
+function formatAssignmentFileStats(stats = {}) {
+    return `- source assignment files: ${stats.count || 0} files; ${stats.byteSize || 0} bytes; ${stats.lineCount || 0} lines`;
+}
+
 function formatJlptKanjiSourceEvidenceCostReport(report = {}) {
     const preflight = report.timings?.preflight?.lastResult || {};
     const importResult = report.timings?.importDryRun?.lastResult || {};
@@ -400,6 +427,8 @@ function formatJlptKanjiSourceEvidenceCostReport(report = {}) {
         "",
         "Files:",
         formatFileStats("evidence manifest", report.files?.evidence),
+        formatAssignmentFileStats(report.files?.assignmentFiles),
+        `- source-evidence tracked storage total: ${(report.files?.evidence?.byteSize || 0) + (report.files?.assignmentFiles?.byteSize || 0)} bytes`,
         formatFileStats("source-input manifest", report.files?.sourceInputs),
         formatFileStats("JLPT contract", report.files?.contract),
         formatFileStats("selected source worksheet", report.files?.sourceWorksheet),
@@ -408,6 +437,7 @@ function formatJlptKanjiSourceEvidenceCostReport(report = {}) {
         `- sources: ${report.evidence?.sourceCount || 0}`,
         `- assignment sources: ${report.evidence?.assignmentSourceCount || 0}`,
         `- assignment rows: ${report.evidence?.assignmentCount || 0}`,
+        `- assignment files: ${report.evidence?.assignmentFileCount || 0}`,
         `- materialized kanji rollups: ${report.evidence?.kanjiRollupCount || 0}`,
         "",
         "Selected source:",
@@ -469,10 +499,12 @@ module.exports = {
     DEFAULT_CONFIG,
     DEFAULT_CONTRACT,
     DEFAULT_EVIDENCE,
+    buildAssignmentFileStats,
     buildFileStats,
     buildJlptKanjiSourceEvidenceCostReport,
     countPhysicalLines,
     formatDuration,
+    formatAssignmentFileStats,
     formatFileStats,
     formatJlptKanjiSourceEvidenceCostReport,
     measureOperation,

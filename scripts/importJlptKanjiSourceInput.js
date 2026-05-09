@@ -3,13 +3,18 @@ const path = require("node:path");
 
 const { buildReports } = require("./reportJlptKanjiSourceInputs");
 const {
+    buildStorageManifest,
     buildJlptKanjiSourceEvidenceImport,
     formatEvidenceManifestJson,
+    formatSourceAssignmentFileJson,
     materializeKanjiEvidenceEntries,
     summarizeMaterializedKanjiEvidenceShifts,
 } = require("../src/services/jlptKanjiSourceImportService");
 const { loadJlptLevelContract } = require("../src/datasets/jlptLevelContract");
-const { normalizeJlptKanjiSourceEvidence } = require("../src/datasets/jlptKanjiSourceEvidence");
+const {
+    normalizeJlptKanjiSourceEvidence,
+    readJlptKanjiSourceEvidenceManifest,
+} = require("../src/datasets/jlptKanjiSourceEvidence");
 const {
     assertNoUnknownArgs,
     collectUnknownArg,
@@ -109,7 +114,7 @@ function run(options = {}) {
     }
 
     const evidencePath = path.resolve(process.cwd(), options.evidence || DEFAULT_EVIDENCE);
-    const evidenceManifest = JSON.parse(fs.readFileSync(evidencePath, "utf8"));
+    const evidenceManifest = readJlptKanjiSourceEvidenceManifest(evidencePath);
     const normalizedEvidence = normalizeJlptKanjiSourceEvidence(evidenceManifest);
     const contract = loadJlptLevelContract(options.contract || DEFAULT_CONTRACT);
     const preflight = buildReports({
@@ -164,7 +169,16 @@ function run(options = {}) {
     };
 
     if (options.write) {
-        fs.writeFileSync(evidencePath, formatEvidenceManifestJson(manifest), "utf8");
+        const assignmentFile = manifest.assignmentFiles?.[options.source];
+        if (assignmentFile) {
+            const assignmentPath = path.resolve(path.dirname(evidencePath), assignmentFile);
+            fs.mkdirSync(path.dirname(assignmentPath), { recursive: true });
+            fs.writeFileSync(assignmentPath, formatSourceAssignmentFileJson({
+                sourceId: options.source,
+                assignments: manifest.assignments?.[options.source] || {},
+            }), "utf8");
+        }
+        fs.writeFileSync(evidencePath, formatEvidenceManifestJson(buildStorageManifest(manifest)), "utf8");
     }
 
     return {

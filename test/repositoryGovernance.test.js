@@ -134,6 +134,18 @@ test("README marks in-review source-evidence lanes as inactive review work", () 
     }
 });
 
+test("JLPT kanji source-evidence assignment files match manifest routing", () => {
+    const evidence = JSON.parse(readRepoFile(path.join("templates", "jlpt_kanji_source_evidence.json")));
+    const assignmentFiles = evidence.assignmentFiles || {};
+
+    assert.deepEqual(evidence.assignments || {}, {}, "Tracked source-evidence assignments should live in routed per-source files.");
+    for (const [sourceId, relativePath] of Object.entries(assignmentFiles)) {
+        const assignmentFile = JSON.parse(readRepoFile(path.join("templates", relativePath)));
+        assert.equal(assignmentFile.sourceId, sourceId, `Assignment file sourceId mismatch for ${sourceId}.`);
+        assert.equal(typeof assignmentFile.assignments, "object", `Assignment file is missing assignments object for ${sourceId}.`);
+    }
+});
+
 test("JLPT kanji source-evidence loaders stay in read-only governance paths", () => {
     const expectedFilesByLoader = {
         loadJlptKanjiSourceEvidence: [

@@ -1,4 +1,5 @@
 const fs = require("node:fs");
+const path = require("node:path");
 const { z } = require("zod");
 
 const jlptLevelAssignmentValueSchema = z.union([
@@ -161,6 +162,11 @@ const kanjiEvidenceEntrySchema = z.object({
     notes: z.string().optional(),
 }).strict();
 
+const assignmentFileSchema = z.object({
+    sourceId: z.string().min(1),
+    assignments: z.record(z.string().min(1), jlptLevelAssignmentValueSchema).default({}),
+}).strict();
+
 const jlptKanjiSourceEvidenceSchema = z.object({
     version: z.number().int().min(1).default(1),
     policy: evidencePolicySchema.default(DEFAULT_EVIDENCE_POLICY),
@@ -173,6 +179,7 @@ const jlptKanjiSourceEvidenceSchema = z.object({
         z.string().min(1),
         z.record(z.string().min(1), jlptLevelAssignmentValueSchema)
     ).default({}),
+    assignmentFiles: z.record(z.string().min(1), z.string().min(1)).default({}),
     kanji: z.record(z.string().min(1), kanjiEvidenceEntrySchema).default({}),
 }).strict();
 
@@ -436,6 +443,44 @@ function normalizeAssignments(assignments = {}) {
     );
 }
 
+function readJsonFile(filePath) {
+    return JSON.parse(fs.readFileSync(filePath, "utf8"));
+}
+
+function resolveEvidenceRelativePath(evidencePath, relativePath) {
+    return path.resolve(path.dirname(evidencePath), relativePath);
+}
+
+function loadAssignmentFiles(evidencePath, assignmentFiles = {}) {
+    const assignments = {};
+
+    for (const [sourceId, relativePath] of Object.entries(assignmentFiles || {})) {
+        const assignmentPath = resolveEvidenceRelativePath(evidencePath, relativePath);
+        const parsed = assignmentFileSchema.parse(readJsonFile(assignmentPath));
+        if (parsed.sourceId !== sourceId) {
+            throw new Error(`JLPT kanji assignment file source mismatch: ${sourceId} points to ${parsed.sourceId}`);
+        }
+        assignments[sourceId] = parsed.assignments || {};
+    }
+
+    return assignments;
+}
+
+function mergeExternalAssignments(manifest = {}, evidencePath) {
+    const assignmentFiles = manifest.assignmentFiles || {};
+    if (Object.keys(assignmentFiles).length === 0) {
+        return manifest;
+    }
+
+    return {
+        ...manifest,
+        assignments: mergeAssignments(
+            manifest.assignments || {},
+            loadAssignmentFiles(evidencePath, assignmentFiles)
+        ),
+    };
+}
+
 function normalizeJlptKanjiSourceEvidence(value = {}) {
     const parsed = jlptKanjiSourceEvidenceSchema.parse(value);
     assertKnownSourceTiers(parsed);
@@ -459,8 +504,12 @@ function normalizeJlptKanjiSourceEvidence(value = {}) {
     };
 }
 
+function readJlptKanjiSourceEvidenceManifest(filePath) {
+    return mergeExternalAssignments(readJsonFile(filePath), filePath);
+}
+
 function loadJlptKanjiSourceEvidence(filePath) {
-    return normalizeJlptKanjiSourceEvidence(JSON.parse(fs.readFileSync(filePath, "utf8")));
+    return normalizeJlptKanjiSourceEvidence(readJlptKanjiSourceEvidenceManifest(filePath));
 }
 
 module.exports = {
@@ -470,6 +519,7 @@ module.exports = {
     confidenceLabelSchema,
     confidenceReasonLabelSchema,
     confidenceIdSchema,
+    assignmentFileSchema,
     evidenceSourceSchema,
     kanjiEvidenceEntrySchema,
     sourceLineageSchema,
@@ -478,6 +528,7 @@ module.exports = {
     sourceTierSchema,
     jlptKanjiSourceEvidenceSchema,
     loadJlptKanjiSourceEvidence,
+    readJlptKanjiSourceEvidenceManifest,
     normalizeJlptKanjiSourceEvidence,
     normalizeJlptLevelRangeAssignment,
     normalizeJlptLevelAssignmentEntry,

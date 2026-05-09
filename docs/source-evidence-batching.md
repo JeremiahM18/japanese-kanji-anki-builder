@@ -13,7 +13,7 @@ The batching policy is intentionally conservative:
 
 For this repository, that means manual source review stays small, source-input integrity is automated, source evidence is imported only after explicit gates pass, and release/product readiness remains separate.
 
-The tracked evidence manifest keeps reviewer evidence in source-centric assignment rows. The derived `kanji` rollup should not duplicate `citation`, `evidenceRef`, or reviewer `notes`; regenerate it through `data:import:jlpt:source-input -- --full-rematerialize` only when materialization logic or source policy changes intentionally.
+The tracked evidence manifest keeps reviewer evidence in routed per-source assignment files that load as source-centric assignment rows. The derived `kanji` rollup should not duplicate `citation`, `evidenceRef`, or reviewer `notes`; regenerate it through `data:import:jlpt:source-input -- --full-rematerialize` only when materialization logic or source policy changes intentionally.
 
 ## Priority Order
 
@@ -122,7 +122,7 @@ Run the read-only cost report before choosing any source-evidence performance re
 npm run data:benchmark:jlpt:sources -- --source=<source-id> --repeat=2 --limit=10
 ```
 
-The report includes observed Node process memory snapshots for manifest loading, preflight, import dry-run, serialization, and audit. Treat those memory deltas as trend signals, not exact allocation counts; use them to justify storage splitting, citation defaulting, or cache work before changing the source-evidence architecture.
+The report includes observed Node process memory snapshots for manifest loading, preflight, import dry-run, serialization, and audit, plus parent-manifest and assignment-file storage totals. Treat memory deltas as trend signals, not exact allocation counts; use them to justify citation defaulting or cache work before changing the source-evidence architecture again.
 
 Then run the full commit gate:
 

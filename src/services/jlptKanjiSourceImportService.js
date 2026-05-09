@@ -211,11 +211,38 @@ function formatEvidenceManifestJson(manifest = {}) {
     return `${JSON.stringify(manifest, null, 2)}\n`;
 }
 
+function buildStorageManifest(manifest = {}) {
+    const assignmentFiles = manifest.assignmentFiles || {};
+    const splitSourceIds = new Set(Object.keys(assignmentFiles));
+    const assignments = Object.fromEntries(
+        Object.entries(manifest.assignments || {})
+            .filter(([sourceId]) => !splitSourceIds.has(sourceId))
+    );
+
+    return {
+        ...manifest,
+        assignments,
+    };
+}
+
+function formatSourceAssignmentFileJson({ sourceId, assignments = {} } = {}) {
+    if (!sourceId) {
+        throw new Error("A source id is required for JLPT kanji assignment-file serialization.");
+    }
+
+    return `${JSON.stringify({
+        sourceId,
+        assignments: sortAssignments(assignments),
+    }, null, 2)}\n`;
+}
+
 module.exports = {
+    buildStorageManifest,
     buildMaterializedKanjiEvidenceEntry,
     buildJlptKanjiSourceEvidenceImport,
     countChangedAssignments,
     formatEvidenceManifestJson,
+    formatSourceAssignmentFileJson,
     listChangedAssignments,
     materializeKanjiEvidenceEntries,
     summarizeMaterializedKanjiEvidenceShifts,

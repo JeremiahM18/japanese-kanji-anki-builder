@@ -25,7 +25,7 @@ Use source-review priorities in this order unless a tracked issue says otherwise
 | Source gaps | You need a broad evidence-depth scan in operational contract order. | `--priority=source-gaps` |
 | Source level deltas | You are intentionally investigating active source-claimed candidates for one source level. | `--priority=source-level-deltas --source-level=<N1-N5>` |
 
-Keep the human review batch at `--limit=10` unless you have a specific source-access session where a larger ignored worksheet is easier to manage. Larger generation is fine; larger manual decisions should still be reviewed in 10-row passes.
+Keep the human review batch at `--limit=10` unless you have a specific source-access session where a larger ignored worksheet is easier to manage. Broad `source-review-worklist` batches over `10` rows require `--source-access-note="<exact source surface reviewed>"`; use that note only after checking the source surface that will support the review. Larger generation is fine only after that access check, and larger manual decisions should still be reviewed in 10-row passes.
 
 ## Before Choosing A Lane
 
@@ -47,6 +47,12 @@ Generate or refresh one reusable ignored batch file for the lane selected by `da
 
 ```bash
 npm run data:template:jlpt:textbook-source -- --source=<source-id> --priority=source-review-worklist --limit=10 --out=<ignored-batch.tsv>
+```
+
+For a larger source-access session, name the exact surface in the command:
+
+```bash
+npm run data:template:jlpt:textbook-source -- --source=<source-id> --priority=source-review-worklist --limit=50 --source-access-note="<exact source surface reviewed>" --out=<ignored-batch.tsv>
 ```
 
 Review only the permitted manual fields in the batch:

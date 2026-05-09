@@ -20,6 +20,7 @@ const DEFAULT_CONTRACT = "templates/jlpt_level_contract.json";
 const DEFAULT_CONFIG = "templates/jlpt_kanji_source_inputs.json";
 const DEFAULT_EVIDENCE = "templates/jlpt_kanji_source_evidence.json";
 const DEFAULT_SOURCE = "shin_kanzen_master_kanji";
+const LARGE_SOURCE_REVIEW_WORKLIST_LIMIT = 10;
 
 function parseArgs(argv) {
     const options = {
@@ -30,6 +31,7 @@ function parseArgs(argv) {
         out: null,
         level: null,
         sourceLevel: null,
+        sourceAccessNote: "",
         limit: null,
         priority: "contract",
         json: false,
@@ -53,6 +55,8 @@ function parseArgs(argv) {
             options.level = arg.slice("--level=".length);
         } else if (arg.startsWith("--source-level=")) {
             options.sourceLevel = arg.slice("--source-level=".length);
+        } else if (arg.startsWith("--source-access-note=")) {
+            options.sourceAccessNote = arg.slice("--source-access-note=".length);
         } else if (arg.startsWith("--limit=")) {
             options.limit = parseNumericOption(arg, "limit");
         } else if (arg.startsWith("--priority=")) {
@@ -105,7 +109,12 @@ function formatSupportedLevels(levels = []) {
         .join(", ") || "all";
 }
 
-function formatTemplateReport({ outPath, contractPath, evidencePath, sourceId, rows, level, sourceLevel, priority, skippedExistingSourceRows = 0, supportedLevels = [] } = {}) {
+function formatSourceAccessNote(note) {
+    const text = normalizeText(note);
+    return text || "none";
+}
+
+function formatTemplateReport({ outPath, contractPath, evidencePath, sourceId, rows, level, sourceLevel, sourceAccessNote = "", priority, skippedExistingSourceRows = 0, supportedLevels = [] } = {}) {
     return [
         "JLPT Kanji Source Input Template",
         "",
@@ -116,6 +125,7 @@ function formatTemplateReport({ outPath, contractPath, evidencePath, sourceId, r
         `Level filter: ${level || "all"}`,
         `Source level filter: ${sourceLevel || "none"}`,
         `Supported source levels: ${formatSupportedLevels(supportedLevels)}`,
+        `Source access note: ${formatSourceAccessNote(sourceAccessNote)}`,
         `Priority mode: ${priority || "contract"}`,
         `Priority summary: ${formatPrioritySummary(rows)}`,
         `Already resolved source rows skipped: ${skippedExistingSourceRows}`,
@@ -129,6 +139,22 @@ function formatTemplateReport({ outPath, contractPath, evidencePath, sourceId, r
 
 function normalizeText(value) {
     return String(value ?? "").trim();
+}
+
+function assertLargeSourceReviewWorklistHasAccessNote({ priority, limit, sourceAccessNote } = {}) {
+    if (priority !== "source-review-worklist") {
+        return;
+    }
+    if (!Number.isInteger(limit) || limit <= LARGE_SOURCE_REVIEW_WORKLIST_LIMIT) {
+        return;
+    }
+    if (normalizeText(sourceAccessNote)) {
+        return;
+    }
+    throw new Error(
+        `source-review-worklist batches over ${LARGE_SOURCE_REVIEW_WORKLIST_LIMIT} rows require `
+        + "--source-access-note=<exact source surface reviewed>. Generate 10 rows, or name the exact source-access session before creating a larger batch."
+    );
 }
 
 function buildSkippedSourceKanjiSet(sourceInput = {}) {
@@ -164,6 +190,11 @@ function run(options = {}) {
     const evidencePath = path.resolve(process.cwd(), options.evidence || DEFAULT_EVIDENCE);
     const sourceId = options.source || DEFAULT_SOURCE;
     const priority = normalizePriorityMode(options.priority || "contract");
+    assertLargeSourceReviewWorklistHasAccessNote({
+        priority,
+        limit: options.limit,
+        sourceAccessNote: options.sourceAccessNote,
+    });
     const sourceInputs = loadJlptKanjiSourceInputs(configPath);
     const sourceInput = sourceInputs.inputs?.[sourceId];
     if (!sourceInput) {
@@ -204,6 +235,7 @@ function run(options = {}) {
         sourceId,
         level: options.level,
         sourceLevel: options.sourceLevel,
+        sourceAccessNote: normalizeText(options.sourceAccessNote),
         supportedLevels: sourceInput.supportedLevels || [],
         priority,
         skippedExistingSourceRows: skippedSourceKanji.size,
@@ -234,6 +266,7 @@ module.exports = {
     formatTemplateReport,
     formatTemplateRows,
     formatPrioritySummary,
+    assertLargeSourceReviewWorklistHasAccessNote,
     main,
     parseArgs,
     run,

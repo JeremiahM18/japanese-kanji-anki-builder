@@ -10,6 +10,7 @@ const {
     resolvePositiveLimit,
 } = require("../src/services/jlptKanjiSourceInputTemplateService");
 const {
+    assertLargeSourceReviewWorklistHasAccessNote,
     formatTemplateReport,
     formatPrioritySummary,
     parseArgs,
@@ -473,6 +474,7 @@ test("createJlptKanjiSourceInputTemplate script parses args and reports no deck 
         "--out=downloads/custom-textbook.tsv",
         "--level=5",
         "--source-level=N5",
+        "--source-access-note=Official sample direct table checked",
         "--limit=12",
         "--priority=source-gaps",
         "--json",
@@ -485,6 +487,7 @@ test("createJlptKanjiSourceInputTemplate script parses args and reports no deck 
     assert.equal(options.out, "downloads/custom-textbook.tsv");
     assert.equal(options.level, "5");
     assert.equal(options.sourceLevel, "N5");
+    assert.equal(options.sourceAccessNote, "Official sample direct table checked");
     assert.equal(options.limit, 12);
     assert.equal(options.priority, "source-gaps");
     assert.equal(options.json, true);
@@ -496,6 +499,7 @@ test("createJlptKanjiSourceInputTemplate script parses args and reports no deck 
         sourceId: "nihongo_sou_matome_kanji",
         level: "5",
         sourceLevel: "N5",
+        sourceAccessNote: "Official sample direct table checked",
         supportedLevels: [1, 2, 3],
         priority: "source-gaps",
         skippedExistingSourceRows: 2,
@@ -511,6 +515,7 @@ test("createJlptKanjiSourceInputTemplate script parses args and reports no deck 
     assert.match(text, /Priority mode: source-gaps/);
     assert.match(text, /Source level filter: N5/);
     assert.match(text, /Supported source levels: N1, N2, N3/);
+    assert.match(text, /Source access note: Official sample direct table checked/);
     assert.match(text, /Priority summary: missing_evidence: 2/);
     assert.match(text, /Already resolved source rows skipped: 2/);
     assert.equal(formatPrioritySummary([{ reviewPriority: "b" }, { reviewPriority: "a" }]), "a: 1, b: 1");
@@ -537,4 +542,24 @@ test("source review worklist template command requires an explicit batch output"
         priority: "source-review-worklist",
         limit: 10,
     }), /requires --out=<batch.tsv>/);
+});
+
+test("large source review worklist batches require a source-access note", () => {
+    assert.throws(() => assertLargeSourceReviewWorklistHasAccessNote({
+        priority: "source-review-worklist",
+        limit: 200,
+        sourceAccessNote: "",
+    }), /require --source-access-note/);
+
+    assert.doesNotThrow(() => assertLargeSourceReviewWorklistHasAccessNote({
+        priority: "source-review-worklist",
+        limit: 200,
+        sourceAccessNote: "Official sample target-entry pages checked",
+    }));
+
+    assert.doesNotThrow(() => assertLargeSourceReviewWorklistHasAccessNote({
+        priority: "source-review-worklist",
+        limit: 10,
+        sourceAccessNote: "",
+    }));
 });

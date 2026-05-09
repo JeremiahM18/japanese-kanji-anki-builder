@@ -8,10 +8,17 @@ const {
     DEFAULT_EVIDENCE,
     buildJlptKanjiSourceEvidenceCostReport,
     countPhysicalLines,
+    diffMemoryUsage,
+    formatBytesAsMiB,
     formatJlptKanjiSourceEvidenceCostReport,
+    formatMemoryDelta,
+    formatMemoryObservation,
+    formatMemorySnapshot,
     measureOperation,
     normalizeRepeat,
     parseArgs,
+    snapshotMemoryUsage,
+    summarizeMemorySamples,
     summarizeAuditReport,
     summarizeEvidenceManifest,
     summarizeImportResult,
@@ -166,9 +173,46 @@ test("source evidence cost report measures repeated operations", () => {
     assert.equal(measured.repeat, 3);
     assert.equal(measured.lastResult.calls, 3);
     assert.ok(measured.averageMs >= 0);
+    assert.equal(measured.memory.unit, "bytes");
+    assert.equal(measured.memory.samples, 3);
+    assert.ok(Number.isInteger(measured.memory.before.rss));
+    assert.ok(Number.isInteger(measured.memory.after.heapUsed));
+    assert.ok(Object.hasOwn(measured.memory.delta, "heapTotal"));
+});
+
+test("source evidence cost report summarizes and formats memory observations", () => {
+    const before = { rss: 10485760, heapTotal: 5242880, heapUsed: 2097152, external: 0, arrayBuffers: 0 };
+    const after = { rss: 12582912, heapTotal: 6291456, heapUsed: 2621440, external: 0, arrayBuffers: 0 };
+    const sample = {
+        before,
+        after,
+        delta: diffMemoryUsage(after, before),
+    };
+    const memory = summarizeMemorySamples([sample]);
+
+    assert.deepEqual(memory.delta, {
+        rss: 2097152,
+        heapTotal: 1048576,
+        heapUsed: 524288,
+        external: 0,
+        arrayBuffers: 0,
+    });
+    assert.equal(formatBytesAsMiB(1048576), "1.00 MiB");
+    assert.match(formatMemorySnapshot(after), /rss 12.00 MiB/);
+    assert.match(formatMemoryDelta(memory.delta), /heapUsed \+0.50 MiB/);
+    assert.match(formatMemoryObservation({ memory }), /max delta/);
+
+    const current = snapshotMemoryUsage();
+    assert.ok(Number.isInteger(current.rss));
+    assert.ok(Number.isInteger(current.heapUsed));
 });
 
 test("source evidence cost report formats read-only no-mutation scope", () => {
+    const memory = summarizeMemorySamples([{
+        before: { rss: 10485760, heapTotal: 5242880, heapUsed: 2097152, external: 0, arrayBuffers: 0 },
+        after: { rss: 12582912, heapTotal: 6291456, heapUsed: 2621440, external: 0, arrayBuffers: 0 },
+        delta: { rss: 2097152, heapTotal: 1048576, heapUsed: 524288, external: 0, arrayBuffers: 0 },
+    }]);
     const text = formatJlptKanjiSourceEvidenceCostReport({
         sourceId: "fixture_source",
         repeat: 1,
@@ -190,12 +234,26 @@ test("source evidence cost report formats read-only no-mutation scope", () => {
             repeatedCitationCount: 2,
             uniqueEvidenceRefCount: 3,
         },
+        memory: {
+            baseline: memory.before,
+            final: memory.after,
+            delta: memory.delta,
+        },
         timings: {
+            evidenceLoad: {
+                averageMs: 0.5,
+                minMs: 0.5,
+                maxMs: 0.5,
+                repeat: 1,
+                memory,
+                lastResult: {},
+            },
             preflight: {
                 averageMs: 1,
                 minMs: 1,
                 maxMs: 1,
                 repeat: 1,
+                memory,
                 lastResult: { rowCount: 10, reviewedAssignmentCount: 3, resolvedRowCount: 3, rejectedRowCount: 0, blockerCount: 0 },
             },
             importDryRun: {
@@ -203,6 +261,7 @@ test("source evidence cost report formats read-only no-mutation scope", () => {
                 minMs: 2,
                 maxMs: 2,
                 repeat: 1,
+                memory,
                 lastResult: { fullRematerialize: false, importedAssignmentCount: 3, previousAssignmentCount: 2, changedAssignmentCount: 1, changedKanjiCount: 1 },
             },
             serializedEvidence: {
@@ -210,6 +269,7 @@ test("source evidence cost report formats read-only no-mutation scope", () => {
                 minMs: 3,
                 maxMs: 3,
                 repeat: 1,
+                memory,
                 lastResult: 100,
             },
             sourceAudit: {
@@ -217,6 +277,7 @@ test("source evidence cost report formats read-only no-mutation scope", () => {
                 minMs: 4,
                 maxMs: 4,
                 repeat: 1,
+                memory,
                 lastResult: { governanceValid: true, evidenceDepthValid: false, checked: 3 },
             },
         },
@@ -226,6 +287,9 @@ test("source evidence cost report formats read-only no-mutation scope", () => {
     assert.match(text, /does not import assignments, move kanji, move words, update decks, or change readiness/);
     assert.match(text, /source input preflight/);
     assert.match(text, /full manifest serialization/);
+    assert.match(text, /Timing and memory/);
+    assert.match(text, /Observed process memory snapshots/);
+    assert.match(text, /evidence manifest load/);
 });
 
 test("source evidence cost report counts physical lines", () => {

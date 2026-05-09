@@ -22,6 +22,14 @@ const {
     run: runSourceInputImport,
 } = require("./importJlptKanjiSourceInput");
 
+const MEMORY_FIELDS = Object.freeze([
+    "rss",
+    "heapTotal",
+    "heapUsed",
+    "external",
+    "arrayBuffers",
+]);
+
 function parseArgs(argv) {
     const options = {
         config: DEFAULT_CONFIG,
@@ -131,14 +139,71 @@ function roundMs(value) {
     return Number(Number(value || 0).toFixed(2));
 }
 
+function snapshotMemoryUsage() {
+    const usage = process.memoryUsage();
+    return Object.fromEntries(
+        MEMORY_FIELDS.map((field) => [field, Number(usage[field] || 0)])
+    );
+}
+
+function diffMemoryUsage(after = {}, before = {}) {
+    return Object.fromEntries(
+        MEMORY_FIELDS.map((field) => [field, Number(after[field] || 0) - Number(before[field] || 0)])
+    );
+}
+
+function maxMemoryUsage(snapshots = []) {
+    return Object.fromEntries(
+        MEMORY_FIELDS.map((field) => [
+            field,
+            Math.max(0, ...snapshots.map((snapshot) => Number(snapshot?.[field] || 0))),
+        ])
+    );
+}
+
+function maxMemoryDelta(samples = []) {
+    return Object.fromEntries(
+        MEMORY_FIELDS.map((field) => [
+            field,
+            Math.max(0, ...samples.map((sample) => Number(sample?.delta?.[field] || 0))),
+        ])
+    );
+}
+
+function summarizeMemorySamples(samples = []) {
+    if (samples.length === 0) {
+        return null;
+    }
+
+    const first = samples[0].before;
+    const last = samples[samples.length - 1].after;
+    return {
+        unit: "bytes",
+        samples: samples.length,
+        before: first,
+        after: last,
+        delta: diffMemoryUsage(last, first),
+        max: maxMemoryUsage(samples.flatMap((sample) => [sample.before, sample.after])),
+        maxDelta: maxMemoryDelta(samples),
+    };
+}
+
 function measureOperation(label, repeat, operation) {
     const durations = [];
+    const memorySamples = [];
     let lastResult = null;
 
     for (let index = 0; index < repeat; index += 1) {
+        const memoryBefore = snapshotMemoryUsage();
         const startedAt = performance.now();
         lastResult = operation();
         durations.push(performance.now() - startedAt);
+        const memoryAfter = snapshotMemoryUsage();
+        memorySamples.push({
+            before: memoryBefore,
+            after: memoryAfter,
+            delta: diffMemoryUsage(memoryAfter, memoryBefore),
+        });
     }
 
     const total = durations.reduce((sum, value) => sum + value, 0);
@@ -148,6 +213,7 @@ function measureOperation(label, repeat, operation) {
         averageMs: roundMs(total / durations.length),
         minMs: roundMs(Math.min(...durations)),
         maxMs: roundMs(Math.max(...durations)),
+        memory: summarizeMemorySamples(memorySamples),
         lastResult,
     };
 }
@@ -190,6 +256,7 @@ function summarizeAuditReport(report = {}) {
 }
 
 function buildJlptKanjiSourceEvidenceCostReport(options = {}) {
+    const baselineMemory = snapshotMemoryUsage();
     const repeat = normalizeRepeat(options.repeat || 1);
     const configPath = options.config || DEFAULT_CONFIG;
     const contractPath = options.contract || DEFAULT_CONTRACT;
@@ -209,12 +276,13 @@ function buildJlptKanjiSourceEvidenceCostReport(options = {}) {
     const configStats = buildFileStats(configPath);
     const contractStats = buildFileStats(contractPath);
     const sourceWorksheetStats = buildFileStats(sourceConfig.sourcePath);
-    const evidenceManifest = loadJlptKanjiSourceEvidence(evidenceStats.path);
-    const evidenceSummary = summarizeEvidenceManifest(evidenceManifest);
+    let evidenceManifest = null;
+    const evidenceLoad = measureOperation("evidence manifest load", repeat, () => {
+        evidenceManifest = loadJlptKanjiSourceEvidence(evidenceStats.path);
+        return summarizeEvidenceManifest(evidenceManifest);
+    });
+    const evidenceSummary = evidenceLoad.lastResult;
     const selectedSource = summarizeSourceAssignments(evidenceManifest, sourceId);
-    const serializedEvidence = measureOperation("full manifest serialization", repeat, () => (
-        Buffer.byteLength(formatEvidenceManifestJson(evidenceManifest), "utf8")
-    ));
     const preflight = measureOperation("source input preflight", repeat, () => summarizePreflightReport(buildReports({
         config: configPath,
         contract: contractPath,
@@ -229,11 +297,15 @@ function buildJlptKanjiSourceEvidenceCostReport(options = {}) {
         write: false,
         fullRematerialize: options.fullRematerialize === true,
     })));
+    const serializedEvidence = measureOperation("full manifest serialization", repeat, () => (
+        Buffer.byteLength(formatEvidenceManifestJson(evidenceManifest), "utf8")
+    ));
     const sourceAudit = measureOperation("source evidence audit", repeat, () => summarizeAuditReport(auditJlptKanjiSourceEvidence({
         contract: loadJlptLevelContract(contractPath),
         evidence: loadJlptKanjiSourceEvidence(evidenceStats.path),
         limit: options.limit || 25,
     })));
+    const finalMemory = snapshotMemoryUsage();
 
     return {
         sourceId,
@@ -255,17 +327,57 @@ function buildJlptKanjiSourceEvidenceCostReport(options = {}) {
         },
         evidence: evidenceSummary,
         selectedSource,
+        memory: {
+            unit: "bytes",
+            baseline: baselineMemory,
+            final: finalMemory,
+            delta: diffMemoryUsage(finalMemory, baselineMemory),
+        },
         timings: {
+            evidenceLoad,
             preflight,
             importDryRun,
-            sourceAudit,
             serializedEvidence,
+            sourceAudit,
         },
     };
 }
 
 function formatDuration(entry = {}) {
     return `${entry.averageMs}ms avg; ${entry.minMs}ms min; ${entry.maxMs}ms max; repeat ${entry.repeat}`;
+}
+
+function formatBytesAsMiB(value) {
+    return `${(Number(value || 0) / 1048576).toFixed(2)} MiB`;
+}
+
+function formatSignedBytesAsMiB(value) {
+    const numeric = Number(value || 0);
+    const sign = numeric > 0 ? "+" : "";
+    return `${sign}${formatBytesAsMiB(numeric)}`;
+}
+
+function formatMemorySnapshot(snapshot = {}) {
+    return [
+        `rss ${formatBytesAsMiB(snapshot.rss)}`,
+        `heapUsed ${formatBytesAsMiB(snapshot.heapUsed)}`,
+        `heapTotal ${formatBytesAsMiB(snapshot.heapTotal)}`,
+    ].join("; ");
+}
+
+function formatMemoryDelta(delta = {}) {
+    return [
+        `rss ${formatSignedBytesAsMiB(delta.rss)}`,
+        `heapUsed ${formatSignedBytesAsMiB(delta.heapUsed)}`,
+        `heapTotal ${formatSignedBytesAsMiB(delta.heapTotal)}`,
+    ].join("; ");
+}
+
+function formatMemoryObservation(entry = {}) {
+    if (!entry.memory) {
+        return "memory unavailable";
+    }
+    return `after ${formatMemorySnapshot(entry.memory.after)}; delta ${formatMemoryDelta(entry.memory.delta)}; max delta ${formatMemoryDelta(entry.memory.maxDelta)}`;
 }
 
 function formatFileStats(label, stats = {}) {
@@ -304,14 +416,26 @@ function formatJlptKanjiSourceEvidenceCostReport(report = {}) {
         `- repeated citation rows: ${report.selectedSource?.repeatedCitationCount || 0}`,
         `- unique evidence refs: ${report.selectedSource?.uniqueEvidenceRefCount || 0}`,
         "",
-        "Timing:",
+        "Memory:",
+        "- Observed process memory snapshots. Node garbage collection can make small deltas noisy; use repeated runs for trends.",
+        `- baseline: ${formatMemorySnapshot(report.memory?.baseline)}`,
+        `- final: ${formatMemorySnapshot(report.memory?.final)}`,
+        `- delta: ${formatMemoryDelta(report.memory?.delta)}`,
+        "",
+        "Timing and memory:",
+        `- evidence manifest load: ${formatDuration(report.timings?.evidenceLoad)}`,
+        `  ${formatMemoryObservation(report.timings?.evidenceLoad)}`,
         `- source input preflight: ${formatDuration(report.timings?.preflight)}`,
+        `  ${formatMemoryObservation(report.timings?.preflight)}`,
         `  rows ${preflight.rowCount || 0}; reviewed ${preflight.reviewedAssignmentCount || 0}; resolved ${preflight.resolvedRowCount || 0}; rejected ${preflight.rejectedRowCount || 0}; blockers ${preflight.blockerCount || 0}`,
         `- import dry-run (${importResult.fullRematerialize ? "full" : "incremental"} materialization): ${formatDuration(report.timings?.importDryRun)}`,
+        `  ${formatMemoryObservation(report.timings?.importDryRun)}`,
         `  imported ${importResult.importedAssignmentCount || 0}; previous ${importResult.previousAssignmentCount || 0}; changed assignments ${importResult.changedAssignmentCount || 0}; changed kanji ${importResult.changedKanjiCount || 0}`,
         `- full manifest serialization: ${formatDuration(report.timings?.serializedEvidence)}`,
+        `  ${formatMemoryObservation(report.timings?.serializedEvidence)}`,
         `  serialized bytes ${report.timings?.serializedEvidence?.lastResult || 0}`,
         `- source evidence audit: ${formatDuration(report.timings?.sourceAudit)}`,
+        `  ${formatMemoryObservation(report.timings?.sourceAudit)}`,
         `  governance ${audit.governanceValid ? "passing" : "failing"}; evidence depth ${audit.evidenceDepthValid ? "passing" : "failing"}; checked ${audit.checked || 0}`,
         "",
         "Cost interpretation:",
@@ -352,6 +476,13 @@ module.exports = {
     formatFileStats,
     formatJlptKanjiSourceEvidenceCostReport,
     measureOperation,
+    snapshotMemoryUsage,
+    diffMemoryUsage,
+    summarizeMemorySamples,
+    formatBytesAsMiB,
+    formatMemoryDelta,
+    formatMemoryObservation,
+    formatMemorySnapshot,
     normalizeRepeat,
     parseArgs,
     summarizeAuditReport,

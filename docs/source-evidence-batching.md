@@ -122,6 +122,8 @@ Run the read-only cost report before choosing any source-evidence performance re
 npm run data:benchmark:jlpt:sources -- --source=<source-id> --repeat=2 --limit=10
 ```
 
+The report includes observed Node process memory snapshots for manifest loading, preflight, import dry-run, serialization, and audit. Treat those memory deltas as trend signals, not exact allocation counts; use them to justify storage splitting, citation defaulting, or cache work before changing the source-evidence architecture.
+
 Then run the full commit gate:
 
 ```bash

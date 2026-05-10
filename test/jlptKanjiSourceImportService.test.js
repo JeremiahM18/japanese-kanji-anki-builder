@@ -595,6 +595,80 @@ test("materializeKanjiEvidenceEntries can update only changed kanji rollups", ()
     assert.deepEqual(materialized.kanji.語, evidenceManifest.kanji.語);
 });
 
+test("materializeKanjiEvidenceEntries removes stale rollup sources when source-centric assignments are corrected", () => {
+    const evidenceManifest = {
+        version: 1,
+        policy: {
+            minimumIndependentSources: 1,
+            minimumJapanesePublishedSources: 0,
+        },
+        sourceTiers: {
+            fixture: {
+                label: "Fixture tier",
+                rank: 1,
+                role: "supporting-evidence",
+                description: "Fixture tier.",
+            },
+        },
+        confidenceLabels: buildFixtureConfidenceLabels(),
+        confidenceReasonLabels: buildFixtureConfidenceReasonLabels(),
+        sources: {
+            source_a: {
+                name: "Source A",
+                tier: "fixture",
+                status: "active",
+                sourceType: "fixture",
+                independent: true,
+                countsForConsensus: true,
+                licenseStatus: "restricted",
+                allowedUse: "manual-citation-only",
+                sourceKind: "assignment",
+                canStoreAssignments: true,
+                canStoreRawList: false,
+                canStoreExcerpts: false,
+                licenseEvidenceUrl: "https://example.com/license",
+                licenseReviewedAt: "2026-05-05",
+            },
+        },
+        assignments: {
+            source_a: {
+                日: {
+                    level: 5,
+                    reviewStatus: "reviewed",
+                    citation: "Fixture citation",
+                    evidenceRef: "fixture:日",
+                    notes: "Still valid.",
+                },
+            },
+        },
+        kanji: {
+            月: {
+                sources: {
+                    source_a: {
+                        level: "N5",
+                        reviewStatus: "reviewed",
+                    },
+                },
+                consensusLevel: "N5",
+                confidence: "standard_confidence",
+                agreementScore: 1,
+                notes: "Stale removed assignment.",
+            },
+        },
+    };
+
+    const materialized = materializeKanjiEvidenceEntries({
+        evidenceManifest,
+        contract: { kanjiLevels: { 日: 5, 月: 5 } },
+        changedKanji: ["月"],
+    });
+
+    assert.deepEqual(materialized.kanji.月.sources, {});
+    assert.equal(materialized.kanji.月.consensusLevel, undefined);
+    assert.equal(materialized.kanji.月.confidence, "unknown");
+    assert.equal(materialized.kanji.月.agreementScore, 0);
+});
+
 test("materializeKanjiEvidenceEntries skips work for empty incremental change sets", () => {
     const evidenceManifest = {
         version: 1,

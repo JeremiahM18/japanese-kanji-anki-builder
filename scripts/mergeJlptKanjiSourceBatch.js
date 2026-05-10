@@ -22,6 +22,8 @@ function parseArgs(argv) {
         batch: null,
         sourceAccessPacket: "",
         allowAdditions: false,
+        allowReviewedDowngrades: false,
+        reviewedDowngradeReason: "",
         write: false,
         json: false,
         unknownArgs: [],
@@ -32,6 +34,8 @@ function parseArgs(argv) {
             options.write = true;
         } else if (arg === "--allow-additions") {
             options.allowAdditions = true;
+        } else if (arg === "--allow-reviewed-downgrade") {
+            options.allowReviewedDowngrades = true;
         } else if (arg === "--json") {
             options.json = true;
         } else if (arg.startsWith("--config=")) {
@@ -42,6 +46,8 @@ function parseArgs(argv) {
             options.batch = arg.slice("--batch=".length);
         } else if (arg.startsWith("--source-access-packet=")) {
             options.sourceAccessPacket = arg.slice("--source-access-packet=".length);
+        } else if (arg.startsWith("--reviewed-downgrade-reason=")) {
+            options.reviewedDowngradeReason = arg.slice("--reviewed-downgrade-reason=".length);
         } else {
             collectUnknownArg(options, arg);
         }
@@ -136,12 +142,14 @@ function run(options = {}) {
 
     const result = buildJlptKanjiSourceBatchMerge({
         allowAdditions: options.allowAdditions === true,
+        allowReviewedDowngrades: options.allowReviewedDowngrades === true,
+        reviewedDowngradeReason: options.reviewedDowngradeReason,
         sourceConfig,
         sourceText: sourceFile.text,
         batchText: batchFile.text,
     });
     let sourceAccessPacketResult = null;
-    if (result.valid && requiresSourceAccessPacket(result.batchRowCount)) {
+    if (result.valid && requiresSourceAccessPacket(result.reviewedRowCount)) {
         sourceAccessPacketResult = validateSourceAccessPacketFile({
             packetPath: options.sourceAccessPacket,
             expectedSourceId: options.source,
@@ -227,11 +235,16 @@ function formatBatchMergeReport(result = {}) {
         `Batch rows parsed: ${result.batchRowCount || 0}`,
         `Added source rows: ${result.addedRowCount || 0}`,
         `Changed source rows: ${result.changedRowCount || 0}`,
+        `Reviewed evidence downgrades: ${result.reviewedDowngradeCount || 0}`,
         `Batch statuses: ${formatStatusCounts(result.statusCounts)}`,
         `No deck mutation: ${result.noDeckMutation === false ? "no" : "yes"}`,
         "",
         "This command only merges local source-evidence worksheet decisions. It does not import assignments, move kanji, move words, update decks, or change readiness.",
     ];
+
+    if (result.reviewedDowngradeCount > 0) {
+        lines.push(`Reviewed downgrade reason: ${result.reviewedDowngradeReason || "missing"}`);
+    }
 
     if (result.blockers?.length > 0) {
         lines.push("", "Blockers:");

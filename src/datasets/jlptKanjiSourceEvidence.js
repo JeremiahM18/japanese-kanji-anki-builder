@@ -405,11 +405,14 @@ function normalizeKanjiEvidence(kanjiEvidence = {}) {
     );
 }
 
-function buildAssignmentsFromKanjiEvidence(kanjiEvidence = {}) {
+function buildAssignmentsFromKanjiEvidence(kanjiEvidence = {}, { excludedSourceIds = new Set() } = {}) {
     const assignments = {};
 
     for (const [kanji, entry] of Object.entries(kanjiEvidence || {})) {
         for (const [sourceId, assignment] of Object.entries(entry.sources || {})) {
+            if (excludedSourceIds.has(sourceId)) {
+                continue;
+            }
             assignments[sourceId] = assignments[sourceId] || {};
             assignments[sourceId][kanji] = assignment;
         }
@@ -540,7 +543,13 @@ function normalizeJlptKanjiSourceEvidence(value = {}) {
     assertKanjiEvidenceNotesHaveEvidence(parsed);
     const kanji = normalizeKanjiEvidence(parsed.kanji);
     const sourceCentricAssignments = normalizeAssignments(parsed.assignments);
-    const kanjiAssignments = buildAssignmentsFromKanjiEvidence(kanji);
+    const sourceTruthIds = new Set([
+        ...Object.keys(sourceCentricAssignments),
+        ...Object.keys(parsed.assignmentFiles || {}),
+    ]);
+    const kanjiAssignments = buildAssignmentsFromKanjiEvidence(kanji, {
+        excludedSourceIds: sourceTruthIds,
+    });
     return {
         ...parsed,
         policy: {

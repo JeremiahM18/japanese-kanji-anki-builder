@@ -491,6 +491,77 @@ test("normalizeJlptKanjiSourceEvidence keeps source-centric assignments authorit
     });
 });
 
+test("normalizeJlptKanjiSourceEvidence does not resurrect removed source-centric assignments from the materialized rollup", () => {
+    const evidence = normalizeJlptKanjiSourceEvidence({
+        version: 1,
+        sourceTiers: {
+            fixture: {
+                label: "Fixture tier",
+                rank: 1,
+                role: "supporting-evidence",
+                description: "Fixture source tier.",
+            },
+        },
+        confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
+        sources: {
+            source_a: buildGovernedAssignmentSource({
+                name: "Source A",
+                tier: "fixture",
+                status: "active",
+                sourceType: "fixture",
+                licenseStatus: "approved",
+            }),
+            source_b: buildGovernedAssignmentSource({
+                name: "Source B",
+                tier: "fixture",
+                status: "active",
+                sourceType: "fixture",
+                licenseStatus: "approved",
+            }),
+        },
+        assignments: {
+            source_a: {
+                日: {
+                    level: "N5",
+                    reviewStatus: "reviewed",
+                    evidenceRef: "source_a:fresh",
+                },
+            },
+        },
+        kanji: {
+            月: {
+                sources: {
+                    source_a: {
+                        level: "N5",
+                        reviewStatus: "reviewed",
+                        evidenceRef: "source_a:stale-removed-rollup",
+                    },
+                },
+            },
+            火: {
+                sources: {
+                    source_b: {
+                        level: "N4",
+                        reviewStatus: "reviewed",
+                        evidenceRef: "source_b:legacy-rollup-only",
+                    },
+                },
+            },
+        },
+    });
+
+    assert.equal(evidence.assignments.source_a.月, undefined);
+    assert.equal(evidence.assignments.source_a.日.level, 5);
+    assert.deepEqual(evidence.assignments.source_b.火, {
+        level: 4,
+        reviewStatus: "reviewed",
+        citation: undefined,
+        evidenceRef: "source_b:legacy-rollup-only",
+        notes: undefined,
+    });
+});
+
 test("loadJlptKanjiSourceEvidence merges split assignment files into normalized evidence", (t) => {
     const tempDir = fs.mkdtempSync(path.join(__dirname, "tmp-source-evidence-"));
     t.after(() => fs.rmSync(tempDir, { recursive: true, force: true }));

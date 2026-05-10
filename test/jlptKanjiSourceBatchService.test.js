@@ -143,6 +143,63 @@ test("source batch merge blocks accidental downgrade of reviewed source evidence
     assert.match(result.blockers.join("\n"), /would downgrade reviewed source evidence for 日/);
 });
 
+test("source batch merge allows deliberate reviewed evidence corrections with a reason", () => {
+    const sourceText = [
+        "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes",
+        "日\tN5\treviewed\tFixture citation\tfixture:日\tAlready reviewed from weak surface",
+        "月\tN5\treviewed\tFixture citation\tfixture:月\tAlready reviewed from exact surface",
+    ].join("\n");
+    const batchText = [
+        "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes",
+        "日\t\tsource_access_gap\tFixture citation\tfixture:日\tCorrected: inspected surface is not exact assignment proof",
+    ].join("\n");
+
+    const missingReason = buildJlptKanjiSourceBatchMerge({
+        allowReviewedDowngrades: true,
+        sourceConfig: buildSourceConfig(),
+        sourceText,
+        batchText,
+    });
+    assert.equal(missingReason.valid, false);
+    assert.match(missingReason.blockers.join("\n"), /needs --reviewed-downgrade-reason/);
+
+    const result = buildJlptKanjiSourceBatchMerge({
+        allowReviewedDowngrades: true,
+        reviewedDowngradeReason: "Correct weak table-of-contents evidence to non-voting source_access_gap.",
+        sourceConfig: buildSourceConfig(),
+        sourceText,
+        batchText,
+    });
+
+    assert.equal(result.valid, true);
+    assert.equal(result.reviewedDowngradeCount, 1);
+    assert.match(result.reviewedDowngradeReason, /table-of-contents/);
+    assert.match(result.tsv, /日\t\tsource_access_gap\tFixture citation\tfixture:日\tCorrected:/);
+    assert.match(result.tsv, /月\tN5\treviewed\tFixture citation\tfixture:月\tAlready reviewed from exact surface/);
+});
+
+test("source batch merge rejects deliberate reviewed downgrades back to pending", () => {
+    const sourceText = [
+        "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes",
+        "日\tN5\treviewed\tFixture citation\tfixture:日\tAlready reviewed",
+    ].join("\n");
+    const batchText = [
+        "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes",
+        "日\t\tneeds_review\t\t\t",
+    ].join("\n");
+
+    const result = buildJlptKanjiSourceBatchMerge({
+        allowReviewedDowngrades: true,
+        reviewedDowngradeReason: "Correction requires a non-voting resolved status.",
+        sourceConfig: buildSourceConfig(),
+        sourceText,
+        batchText,
+    });
+
+    assert.equal(result.valid, false);
+    assert.match(result.blockers.join("\n"), /can only downgrade reviewed source evidence for 日 to blocked or source_access_gap/);
+});
+
 test("source batch merge script parses args and renders no-deck-mutation scope", () => {
     const options = parseArgs([
         "--source=shin_kanzen_master_kanji",
@@ -150,6 +207,8 @@ test("source batch merge script parses args and renders no-deck-mutation scope",
         "--config=templates/custom.json",
         "--source-access-packet=downloads/source-access-packets/shin.json",
         "--allow-additions",
+        "--allow-reviewed-downgrade",
+        "--reviewed-downgrade-reason=Correct weak evidence",
         "--write",
         "--json",
     ]);
@@ -159,6 +218,8 @@ test("source batch merge script parses args and renders no-deck-mutation scope",
     assert.equal(options.config, "templates/custom.json");
     assert.equal(options.sourceAccessPacket, "downloads/source-access-packets/shin.json");
     assert.equal(options.allowAdditions, true);
+    assert.equal(options.allowReviewedDowngrades, true);
+    assert.equal(options.reviewedDowngradeReason, "Correct weak evidence");
     assert.equal(options.write, true);
     assert.equal(options.json, true);
 
@@ -180,6 +241,7 @@ test("source batch merge script parses args and renders no-deck-mutation scope",
     assert.match(text, /Mode: dry-run/);
     assert.match(text, /Source access packet: downloads\/source-access-packets\/shin\.json/);
     assert.match(text, /Added source rows: 0/);
+    assert.match(text, /Reviewed evidence downgrades: 0/);
     assert.match(text, /Batch statuses: needs_review: 11, source_access_gap: 1/);
     assert.match(text, /does not import assignments, move kanji, move words, update decks, or change readiness/);
 });
@@ -247,4 +309,60 @@ test("source batch merge script requires a source-access packet for 100-row batc
     assert.equal(passing.valid, true);
     assert.equal(passing.batchRowCount, 100);
     assert.equal(passing.sourceAccessPacket.sourceSurface.type, "exact-kanji-table");
+});
+
+test("source batch merge script does not require an exact-proof packet for large non-voting corrections", () => {
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "source-batch-correction-"));
+    const sourcePath = path.join(tmpDir, "source.tsv");
+    const batchPath = path.join(tmpDir, "batch.tsv");
+    const configPath = path.join(tmpDir, "inputs.json");
+    const header = "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes";
+    const kanji = Array.from({ length: 100 }, (_, index) => String.fromCodePoint(0x4E00 + index));
+    const sourceRows = kanji.map((character) => [
+        character,
+        "N3",
+        "reviewed",
+        "Fixture weak table of contents",
+        `fixture:${character}`,
+        "Previously reviewed from weak source surface",
+    ].join("\t"));
+    const batchRows = kanji.map((character) => [
+        character,
+        "",
+        "source_access_gap",
+        "Fixture weak table of contents",
+        `fixture:${character}`,
+        "Corrected: permitted surface was checked, but it is not exact assignment proof",
+    ].join("\t"));
+
+    fs.writeFileSync(sourcePath, [header, ...sourceRows].join("\n"), "utf8");
+    fs.writeFileSync(batchPath, [header, ...batchRows].join("\n"), "utf8");
+    fs.writeFileSync(configPath, JSON.stringify({
+        version: 1,
+        policy: {
+            noDeckMutation: true,
+            requirePinnedIntegrity: false,
+            requireKnownEvidenceSource: false,
+        },
+        inputs: {
+            fixture_source: buildSourceConfig({
+                sourcePath,
+            }),
+        },
+    }, null, 2), "utf8");
+
+    const result = runBatchMerge({
+        config: configPath,
+        source: "fixture_source",
+        batch: batchPath,
+        allowReviewedDowngrades: true,
+        reviewedDowngradeReason: "Correct weak source surface rows to source_access_gap.",
+    });
+
+    assert.equal(result.valid, true);
+    assert.equal(result.batchRowCount, 100);
+    assert.equal(result.reviewedRowCount, 0);
+    assert.equal(result.sourceAccessGapRowCount, 100);
+    assert.equal(result.reviewedDowngradeCount, 100);
+    assert.equal(result.sourceAccessPacket, null);
 });

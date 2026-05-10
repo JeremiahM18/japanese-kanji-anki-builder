@@ -45,6 +45,8 @@ function countBatchStatuses(rows = [], sourceConfig = {}) {
 
 function buildJlptKanjiSourceBatchMerge({
     allowAdditions = false,
+    allowReviewedDowngrades = false,
+    reviewedDowngradeReason = "",
     sourceConfig = {},
     sourceText = "",
     batchText = "",
@@ -60,6 +62,8 @@ function buildJlptKanjiSourceBatchMerge({
     const batchRows = parseSourceAssignmentRows(batchText, "tsv");
     const blockers = [];
     const validStatuses = new Set(SOURCE_INPUT_REVIEW_STATUSES);
+    const normalizedReviewedDowngradeReason = normalizeText(reviewedDowngradeReason);
+    let reviewedDowngradeCount = 0;
 
     if (!sourceHeaders.includes(kanjiColumn)) {
         blockers.push(`source worksheet is missing kanji column: ${kanjiColumn}`);
@@ -106,7 +110,14 @@ function buildJlptKanjiSourceBatchMerge({
         }
         const sourceRow = sourceIndex.get(kanji);
         if (sourceRow && isReviewedDowngrade({ sourceRow, batchRow: row, sourceConfig })) {
-            blockers.push(`batch row ${row.__rowNumber} would downgrade reviewed source evidence for ${kanji}`);
+            reviewedDowngradeCount += 1;
+            if (!allowReviewedDowngrades) {
+                blockers.push(`batch row ${row.__rowNumber} would downgrade reviewed source evidence for ${kanji}`);
+            } else if (!normalizedReviewedDowngradeReason) {
+                blockers.push(`batch row ${row.__rowNumber} needs --reviewed-downgrade-reason to downgrade reviewed source evidence for ${kanji}`);
+            } else if (!["blocked", "source_access_gap"].includes(reviewStatus)) {
+                blockers.push(`batch row ${row.__rowNumber} can only downgrade reviewed source evidence for ${kanji} to blocked or source_access_gap`);
+            }
         }
     }
 
@@ -121,6 +132,8 @@ function buildJlptKanjiSourceBatchMerge({
             pendingRowCount: 0,
             blockedRowCount: 0,
             sourceAccessGapRowCount: 0,
+            reviewedDowngradeCount,
+            reviewedDowngradeReason: allowReviewedDowngrades ? normalizedReviewedDowngradeReason : "",
             statusCounts: countBatchStatuses(batchRows, sourceConfig),
             tsv: sourceText,
         };
@@ -175,6 +188,8 @@ function buildJlptKanjiSourceBatchMerge({
         pendingRowCount: statusCounts.needs_review || 0,
         blockedRowCount: statusCounts.blocked || 0,
         sourceAccessGapRowCount: statusCounts.source_access_gap || 0,
+        reviewedDowngradeCount,
+        reviewedDowngradeReason: reviewedDowngradeCount > 0 ? normalizedReviewedDowngradeReason : "",
         statusCounts,
         tsv: formatRowsAsTsv({ headers: sourceHeaders, rows: [...mergedRows, ...addedRows] }),
     };

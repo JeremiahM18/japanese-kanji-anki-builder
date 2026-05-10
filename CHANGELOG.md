@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Corrected `265` Nihongo Sou Matome table-of-contents source rows from reviewed assignments to non-importing `source_access_gap`, added a guarded reviewed-evidence correction path, and fixed source-evidence normalization so stale materialized rollups cannot resurrect removed split-file assignments; Sou Matome now has `408` reviewed assignments and `450` source-access-gap rows without deck/readiness movement.
 - Imported `131` additional ASK Hajimete reviewed kanji source-evidence assignments from official N3 and N1 sample index pages with explicit kanji numbers, raising ASK Hajimete to `208` reviewed assignments while keeping decks/readiness unchanged.
 - Imported `153` additional reviewed Japanese-published kanji source-evidence assignments from exact Nihongo Sou Matome correction-list target rows and ASK Hajimete N2/N5 checklist pages, raising Sou Matome to `673` reviewed assignments and ASK Hajimete to `77` while keeping decks/readiness unchanged.
 - Added assignment-file `evidenceRecords` for JLPT kanji source evidence so repeated reviewer `citation`, `evidenceRef`, and `notes` are stored once per routed source file while the normalized `assignments[sourceId][kanji]` API remains unchanged.

@@ -25,7 +25,7 @@ Use source-review priorities in this order unless a tracked issue says otherwise
 | Source gaps | You need a broad evidence-depth scan in operational contract order. | `--priority=source-gaps` |
 | Source level deltas | You are intentionally investigating active source-claimed candidates for one source level. | `--priority=source-level-deltas --source-level=<N1-N5>` |
 
-Keep the human review batch at `--limit=10` unless you have a specific source-access session where a larger ignored worksheet is easier to manage. Broad `source-review-worklist` batches from `11` to `99` rows require `--source-access-note="<exact source surface reviewed>"`. Broad `source-review-worklist` batches with no limit or `100+` rows require a source-access packet. Larger manual decisions should still be reviewed in 10-row passes.
+Keep the human review batch at `--limit=10` unless you have a specific source-access session where a larger ignored worksheet is easier to manage. Broad `source-review-worklist` batches from `11` to `99` rows require `--source-access-note="<exact source surface reviewed>"`. Broad `source-review-worklist` batches with no limit or `100+` rows require a source-access packet before generation. Merge also requires that packet when the batch contains `100+` importable `reviewed` rows. Larger manual decisions should still be reviewed in 10-row passes.
 
 ## Before Choosing A Lane
 
@@ -85,7 +85,7 @@ Dry-run the merge:
 npm run data:merge:jlpt:source-batch -- --source=<source-id> --batch=<ignored-batch.tsv>
 ```
 
-For `100+` row batch files, pass the same source-access packet to the dry-run and write commands:
+For batch files with `100+` importable `reviewed` rows, pass the same source-access packet to the dry-run and write commands:
 
 ```bash
 npm run data:merge:jlpt:source-batch -- --source=<source-id> --batch=<ignored-batch.tsv> --source-access-packet=downloads/source-access-packets/<source-id>-<surface>.json
@@ -97,13 +97,21 @@ If the dry-run is clean, merge into the ignored full worksheet:
 npm run data:merge:jlpt:source-batch -- --source=<source-id> --batch=<ignored-batch.tsv> --write
 ```
 
-For `100+` row batch files, keep the same `--source-access-packet=...` on the write command.
+For batch files with `100+` importable `reviewed` rows, keep the same `--source-access-packet=...` on the write command.
 
 For sparse source worksheets that intentionally contain only resolved rows, use `--allow-additions` after the dry-run confirms the added row count:
 
 ```bash
 npm run data:merge:jlpt:source-batch -- --source=<source-id> --batch=<ignored-batch.tsv> --allow-additions --write
 ```
+
+If a previously reviewed row no longer meets current source-access policy, correct it through the merge tool instead of manually bypassing the downgrade guard. The correction batch should preserve the inspected citation/evidenceRef, set `reviewStatus` to `source_access_gap` when permitted material was checked but does not prove exact assignment, or `blocked` for a source-use/worksheet defect, and carry notes explaining the correction. Use a reason on both dry-run and write:
+
+```bash
+npm run data:merge:jlpt:source-batch -- --source=<source-id> --batch=<ignored-correction-batch.tsv> --allow-reviewed-downgrade --reviewed-downgrade-reason="<why reviewed evidence is being corrected>"
+```
+
+The downgrade option is only for deliberate corrections from `reviewed` to non-voting resolved statuses. It does not make weak surfaces importable, and it must not be used to return checked evidence to vague pending work.
 
 At this point, do not import yet by habit. The full ignored worksheet has changed, so strict source-input preflight is expected to fail until the tracked integrity pin is intentionally updated.
 

@@ -13550,12 +13550,16 @@
         "tanos_estimated_split": {
           "level": "N2",
           "reviewStatus": "reviewed"
+        },
+        "nihongo_sou_matome_kanji": {
+          "level": "N3",
+          "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N2"
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
+      "consensusLevel": "N3"
     },
     "休": {
       "sources": {

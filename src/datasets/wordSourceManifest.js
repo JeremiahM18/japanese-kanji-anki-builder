@@ -7,6 +7,7 @@ const sourceTypeSchema = z.enum([
     "community_web_list",
     "corpus_frequency",
     "dictionary",
+    "dictionary_priority",
     "jlpt_level_list",
     "pitch_accent",
     "textbook_word_list",

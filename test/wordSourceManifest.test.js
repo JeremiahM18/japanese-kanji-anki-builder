@@ -73,10 +73,16 @@ test("parseWordSourceManifest validates source-purpose rules and active local pi
 test("tracked word source manifest loads", () => {
     const manifest = loadWordSourceManifest("templates/word_source_manifest.json");
     assert.equal(manifest.sources["jlptstudy.net-n5"].status, "active");
-    assert.equal(manifest.sources["jpdb-frequency"].status, "needs_review");
+    assert.equal(manifest.sources["jpdb-frequency"].status, "blocked");
+    assert.equal(manifest.sources.jmdict.status, "active");
+    assert.equal(manifest.sources["jmdict-priority-commonness"].status, "active");
     assert.deepEqual(manifest.sourcePurposeRules.dictionary.allowedUse, [
         "dictionary-verification",
         "reading-verification",
         "meaning-verification",
+    ]);
+    assert.deepEqual(manifest.sourcePurposeRules.dictionary_priority.allowedUse, [
+        "frequency-sanity",
+        "usefulness-support",
     ]);
 });

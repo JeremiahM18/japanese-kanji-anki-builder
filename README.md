@@ -126,6 +126,7 @@ Tracked contracts define release behavior:
 - Platinum kanji review sets: [templates/platinum_n5_review_set.json](templates/platinum_n5_review_set.json), [templates/platinum_n4_review_set.json](templates/platinum_n4_review_set.json), [templates/platinum_n3_review_set.json](templates/platinum_n3_review_set.json), [templates/platinum_n2_review_set.json](templates/platinum_n2_review_set.json), [templates/platinum_n1_review_set.json](templates/platinum_n1_review_set.json)
 - Platinum word review sets: [templates/platinum_n5_word_review_set.json](templates/platinum_n5_word_review_set.json), [templates/platinum_n4_word_review_set.json](templates/platinum_n4_word_review_set.json)
 - Word source manifest and source-purpose rules: [templates/word_source_manifest.json](templates/word_source_manifest.json)
+- Word source lanes currently include active ignored-local JMdict dictionary verification plus JMdict priority/commonness support; `jpdb-frequency` remains blocked pending permission/governed export.
 - Word expansion signal source config and ignored-source integrity pins: [templates/word_expansion_signal_sources.json](templates/word_expansion_signal_sources.json)
 
 ## JLPT Kanji Source Evidence At A Glance
@@ -556,6 +557,7 @@ Repository governance:
 | `npm run deck:words:triage:n4` | Classify N4 word reading gaps |
 | `npm run deck:words:gap-plan:n4 -- --limit=50` | Rank the next N4 word coverage batch |
 | `npm run deck:words:expansion-candidates:n5 -- --source=downloads/n5-vocab.tsv --source-label=jlptstudy.net-n5` | Diff a sourced vocabulary list into read-only word expansion candidates |
+| `npm run data:normalize:words:jmdict` | Normalize ignored local JMdict XML into the pinned word dictionary/commonness TSV shape |
 | `npm run deck:words:candidate-agreement -- --levels=5,4` | Rebuild the N5/N4 candidate universe from the governed word source manifest with source-purpose, agreement, triage, and placement signals |
 | `npm run deck:words:expansion-signals -- --levels=5,4` | Summarize per-level reading and enhancement expansion exhaustion without claiming release readiness |
 | `npm run data:audit:jlpt` | Audit kanji taxonomy and starter alignment |

@@ -20,7 +20,7 @@ function writeFixtureSource(dir, fileName, text) {
     };
 }
 
-function buildManifest({ candidateSource, dictionarySource }) {
+function buildManifest({ candidateSource, dictionarySource, frequencySource }) {
     return {
         version: 1,
         checkedAt: "2026-05-11",
@@ -33,6 +33,11 @@ function buildManifest({ candidateSource, dictionarySource }) {
             dictionary: {
                 description: "Dictionary verification.",
                 allowedUse: ["dictionary-verification", "reading-verification", "meaning-verification"],
+                disallowedUse: ["level-truth"],
+            },
+            dictionary_priority: {
+                description: "Dictionary priority support.",
+                allowedUse: ["frequency-sanity", "usefulness-support"],
                 disallowedUse: ["level-truth"],
             },
         },
@@ -92,6 +97,31 @@ function buildManifest({ candidateSource, dictionarySource }) {
                 allowedUse: ["dictionary-verification", "reading-verification", "meaning-verification"],
                 disallowedUse: ["level-truth"],
             },
+            "fixture-priority": {
+                name: "Fixture priority source",
+                tier: 3,
+                status: "active",
+                sourceType: "dictionary_priority",
+                origin: {
+                    url: "https://example.com/priority",
+                    localPath: frequencySource.path,
+                },
+                licenseUse: {
+                    status: "approved",
+                    notes: "Fixture commonness source.",
+                },
+                checkedAt: "2026-05-11",
+                local: {
+                    path: frequencySource.path,
+                    format: "tsv",
+                    byteSize: frequencySource.byteSize,
+                    rowCount: frequencySource.rowCount,
+                    columns: ["written", "reading", "meaning", "frequencyRank"],
+                },
+                intendedUse: ["frequency-sanity", "usefulness-support"],
+                allowedUse: ["frequency-sanity", "usefulness-support"],
+                disallowedUse: ["level-truth"],
+            },
         },
     };
 }
@@ -108,11 +138,16 @@ test("buildWordCandidateAgreementReport seeds candidates from discovery sources 
         "dict.tsv",
         "written\treading\tmeaning\n山川\tさんせん\tmountains and rivers\n辞書\tじしょ\tdictionary\n"
     );
+    const frequencySource = writeFixtureSource(
+        dir,
+        "priority.tsv",
+        "written\treading\tmeaning\tfrequencyRank\n山川\tさんせん\tmountains and rivers\t100\n辞書\tじしょ\tdictionary\t\n"
+    );
 
     const report = buildWordCandidateAgreementReport({
         levels: [5],
         limit: 10,
-        manifest: buildManifest({ candidateSource, dictionarySource }),
+        manifest: buildManifest({ candidateSource, dictionarySource, frequencySource }),
         jlptLevelContract: {
             kanjiLevels: {
                 学: 5,
@@ -172,8 +207,9 @@ test("buildWordCandidateAgreementReport seeds candidates from discovery sources 
 
     const mountainRiver = report.levelReports[0].rows.find((row) => row.key === "山川|さんせん");
     assert.equal(mountainRiver.dictionaryVerified, true);
+    assert.equal(mountainRiver.frequencySupported, true);
     assert.equal(mountainRiver.triageStatus, "keep_candidate");
-    assert.deepEqual(mountainRiver.sourceIds, ["fixture-dictionary", "fixture-jlpt"]);
+    assert.deepEqual(mountainRiver.sourceIds, ["fixture-dictionary", "fixture-jlpt", "fixture-priority"]);
     assert.match(formatWordCandidateAgreementReport(report), /Read-only report/);
     assert.match(formatWordCandidateAgreementReport(report), /Placement gate: 0\/1 word-level placement violations/);
 });

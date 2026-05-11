@@ -405,7 +405,7 @@ function addSourceAppearance(candidate, sourceId, source, row, {
     if (sourceAllows(source, "dictionary-verification")) {
         candidate.dictionaryVerified = true;
     }
-    if (sourceAllows(source, "frequency-sanity") || Number.isInteger(row.frequencyRank)) {
+    if (Number.isInteger(row.frequencyRank)) {
         candidate.frequencySupported = true;
     }
 }

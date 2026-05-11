@@ -29,6 +29,20 @@
         "pitch-verification"
       ]
     },
+    "dictionary_priority": {
+      "description": "Dictionary priority/commonness markers can support usefulness when attached to exact written-reading identities, but cannot prove JLPT level or approve cards.",
+      "allowedUse": [
+        "frequency-sanity",
+        "usefulness-support"
+      ],
+      "disallowedUse": [
+        "level-truth",
+        "card-approval",
+        "reading-verification",
+        "meaning-verification",
+        "pitch-verification"
+      ]
+    },
     "corpus_frequency": {
       "description": "Corpus or frequency sources can support usefulness and commonness, but cannot prove JLPT level or dictionary identity.",
       "allowedUse": [
@@ -227,25 +241,46 @@
       ]
     },
     "jmdict": {
-      "name": "JMdict or equivalent Japanese dictionary source",
+      "name": "JMdict English dictionary source",
       "tier": 2,
-      "status": "registered",
+      "status": "active",
       "sourceType": "dictionary",
       "origin": {
         "url": "https://www.edrdg.org/jmdict/j_jmdict.html",
-        "notes": "Registered future dictionary lane. No local dictionary extract is pinned yet."
+        "localPath": "downloads/jmdict-word-verification.tsv",
+        "notes": "Official JMdict English data normalized into an ignored exact written-reading TSV. Raw and normalized source files stay out of git."
       },
       "licenseUse": {
-        "status": "needs_review",
-        "notes": "Review license, attribution, local extract shape, and stored fields before use."
+        "status": "approved",
+        "license": "CC BY-SA 4.0",
+        "notes": "Dictionary verification only with attribution to EDRDG/JMdict. Do not copy raw dictionary rows into tracked product files."
       },
       "checkedAt": "2026-05-11",
+      "local": {
+        "path": "downloads/jmdict-word-verification.tsv",
+        "format": "tsv",
+        "sha256": "a540658623d32afdc1315091db494a4c9dcaf5c4cfe1add95ec65965e5228fe2",
+        "byteSize": 57660320,
+        "rowCount": 255738,
+        "columns": [
+          "written",
+          "reading",
+          "meaning",
+          "frequencyRank",
+          "source",
+          "notes"
+        ]
+      },
       "intendedUse": [
         "dictionary-verification",
         "reading-verification",
         "meaning-verification"
       ],
-      "allowedUse": [],
+      "allowedUse": [
+        "dictionary-verification",
+        "reading-verification",
+        "meaning-verification"
+      ],
       "disallowedUse": [
         "card-approval",
         "level-truth",
@@ -253,18 +288,66 @@
         "pitch-verification"
       ]
     },
+    "jmdict-priority-commonness": {
+      "name": "JMdict priority/commonness signal",
+      "tier": 3,
+      "status": "active",
+      "sourceType": "dictionary_priority",
+      "origin": {
+        "url": "https://www.edrdg.org/jmdict/j_jmdict.html",
+        "localPath": "downloads/jmdict-word-verification.tsv",
+        "notes": "Uses only JMdict priority markers such as ichi/news/spec/gai/nf from the pinned ignored extract. Empty priority rows do not count as commonness support."
+      },
+      "licenseUse": {
+        "status": "approved",
+        "license": "CC BY-SA 4.0",
+        "notes": "Commonness sanity only with attribution to EDRDG/JMdict; priority markers are not JLPT level truth."
+      },
+      "checkedAt": "2026-05-11",
+      "local": {
+        "path": "downloads/jmdict-word-verification.tsv",
+        "format": "tsv",
+        "sha256": "a540658623d32afdc1315091db494a4c9dcaf5c4cfe1add95ec65965e5228fe2",
+        "byteSize": 57660320,
+        "rowCount": 255738,
+        "columns": [
+          "written",
+          "reading",
+          "meaning",
+          "frequencyRank",
+          "source",
+          "notes"
+        ]
+      },
+      "intendedUse": [
+        "frequency-sanity",
+        "usefulness-support"
+      ],
+      "allowedUse": [
+        "frequency-sanity",
+        "usefulness-support"
+      ],
+      "disallowedUse": [
+        "candidate-discovery",
+        "card-approval",
+        "level-truth",
+        "reading-verification",
+        "meaning-verification",
+        "pitch-verification"
+      ]
+    },
     "jpdb-frequency": {
       "name": "jpdb frequency signal",
       "tier": 3,
-      "status": "needs_review",
+      "status": "blocked",
       "sourceType": "corpus_frequency",
       "origin": {
-        "url": "https://jpdb.io/",
-        "notes": "Possible future frequency sanity lane only; no local export or source-use approval is pinned."
+        "url": "https://jpdb.io/terms-of-use",
+        "notes": "Reviewed against current terms. Possible future frequency sanity lane only with explicit permission or a governed export path."
       },
       "licenseUse": {
-        "status": "needs_review",
-        "notes": "Blocked from use until source-use/API/export terms and a governed local shape are approved."
+        "status": "blocked",
+        "notes": "Terms prohibit automated collection/scraping and reserve unsupported use; no automated extraction, raw storage, or approval signal is allowed without permission."
       },
       "checkedAt": "2026-05-11",
       "intendedUse": [

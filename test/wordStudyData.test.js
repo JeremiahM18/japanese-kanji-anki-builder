@@ -944,8 +944,8 @@ test("tracked starter word data keeps formal support words on harder decks", () 
     assert.equal(starterEntries["出来上がり|できあがり"].coverage.coversReadings["来"], "き");
     assert.equal(starterEntries["出来上がり|できあがり"].coverage.coversReadings["上"], "あがり");
 
-    assert.equal(starterEntries["女房|にょうぼう"].jlpt, 2);
-    assert.equal(starterEntries["女房|にょうぼう"].tags.includes("n2"), true);
+    assert.equal(starterEntries["女房|にょうぼう"].jlpt, 1);
+    assert.equal(starterEntries["女房|にょうぼう"].tags.includes("n1"), true);
     assert.equal(starterEntries["女房|にょうぼう"].coverage.coversReadings["女"], "にょう");
 
     assert.equal(starterEntries["世間|せけん"].jlpt, 3);

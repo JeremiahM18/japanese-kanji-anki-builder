@@ -36,11 +36,11 @@ test("reading signal is exhausted only when active reading triage is cleared", (
             totalItems: 12,
         },
         readingCoverage: {
-            coveredReadings: 232,
+            coveredReadings: 233,
             totalReadings: 344,
         },
         readiness: {
-            readingCoveragePercent: 67.4,
+            readingCoveragePercent: 67.7,
         },
         coverageScope: {
             label: "N5",
@@ -49,7 +49,7 @@ test("reading signal is exhausted only when active reading triage is cleared", (
 
     assert.equal(exhausted.status, "exhausted");
     assert.equal(exhausted.activeItems, 0);
-    assert.equal(exhausted.coverage.coveragePercent, 67.4);
+    assert.equal(exhausted.coverage.coveragePercent, 67.7);
 
     const active = buildReadingSignalFromCompletionReport({
         level: 4,
@@ -127,10 +127,10 @@ test("enhancement signal separates keep, untriaged, and exhausted source candida
 
 test("placement signal blocks unresolved word-level placement issues", () => {
     const blocked = buildPlacementSignalFromAnchorAuditReport({
-        checked: 331,
-        violationCount: 46,
+        checked: 12,
+        violationCount: 2,
         byPlacementStatus: {
-            too_easy_for_kanji: 46,
+            too_easy_for_kanji: 2,
             later_missing_learner_fit_reason: 0,
             no_known_jlpt_kanji: 0,
             invalid_deck_level: 0,
@@ -138,8 +138,8 @@ test("placement signal blocks unresolved word-level placement issues", () => {
     });
 
     assert.equal(blocked.status, "blocked");
-    assert.equal(blocked.violationCount, 46);
-    assert.equal(blocked.tooEasyForKanji, 46);
+    assert.equal(blocked.violationCount, 2);
+    assert.equal(blocked.tooEasyForKanji, 2);
     assert.match(blocked.reason, /placement blockers remain/);
     assert.match(blocked.blockers[0], /without a current-level kanji anchor/);
 
@@ -196,7 +196,7 @@ test("formatted expansion signal report does not overclaim release readiness", (
                 activeItems: 0,
                 deferVariantItems: 12,
                 coverage: {
-                    coveredReadings: 232,
+                    coveredReadings: 233,
                     totalReadings: 344,
                 },
                 blockers: [],
@@ -211,7 +211,7 @@ test("formatted expansion signal report does not overclaim release readiness", (
             },
             placement: {
                 status: "resolved",
-                checkedRows: 331,
+                checkedRows: 287,
                 violationCount: 0,
                 tooEasyForKanji: 0,
                 laterMissingLearnerFitReason: 0,

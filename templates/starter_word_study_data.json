@@ -28,11 +28,11 @@
     "written": "お茶",
     "reading": "おちゃ",
     "meaning": "tea",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "coverage": {
       "role": "both",
@@ -105,11 +105,11 @@
     "written": "ご飯",
     "reading": "ごはん",
     "meaning": "meal / cooked rice",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "core",
-      "n5"
+      "n4"
     ],
     "coverage": {
       "role": "both",
@@ -156,11 +156,11 @@
     "written": "安い",
     "reading": "やすい",
     "meaning": "cheap / inexpensive",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "この店のりんごは安いです。",
@@ -269,6 +269,9 @@
       "japanese": "一生忘れない思い出です。",
       "reading": "いっしょうわすれないおもいでです。",
       "english": "It is a memory I will never forget for the rest of my life."
+    },
+    "levelPlacement": {
+      "reason": "N3 learner-fit placement: lifetime expression built from N5 kanji, more abstract than beginner number/life words."
     }
   },
   "万事|ばんじ": {
@@ -456,6 +459,9 @@
       "japanese": "一週間休んで、勉強が少し後れました。",
       "reading": "いっしゅうかんやすんで、べんきょうがすこしおくれました。",
       "english": "After taking a week off, I fell a little behind in my studies."
+    },
+    "levelPlacement": {
+      "reason": "N1 learner-fit placement: lag-behind verb built from N5 後, less common than 遅れる and advanced in register."
     }
   },
   "一万円|いちまんえん": {
@@ -478,11 +484,11 @@
     "written": "飲み物",
     "reading": "のみもの",
     "meaning": "drink / beverage",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "coverage": {
       "role": "both",
@@ -495,7 +501,7 @@
         "物": "もの"
       }
     },
-    "notes": "Core N5 study word that also covers the 飲 -> のみ and 物 -> もの readings.",
+    "notes": "Core drink word anchored by N4 飲 and 物; also covers 飲 -> のみ and 物 -> もの.",
     "exampleSentence": {
       "japanese": "冷たい飲み物がほしいです。",
       "reading": "つめたいのみものがほしいです。",
@@ -506,11 +512,11 @@
     "written": "飲む",
     "reading": "のむ",
     "meaning": "drink",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "core",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "毎朝お茶を飲みます。",
@@ -633,17 +639,20 @@
       "japanese": "雨天のため、試合は中止です。",
       "reading": "うてんのため、しあいはちゅうしです。",
       "english": "Because of rainy weather, the game is canceled."
+    },
+    "levelPlacement": {
+      "reason": "N1 learner-fit placement: formal rainy-weather compound built from N5 雨 and 天, later than basic weather words."
     }
   },
   "映画|えいが": {
     "written": "映画",
     "reading": "えいが",
     "meaning": "movie",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "友だちと映画を見ます。",
@@ -944,6 +953,9 @@
       "japanese": "世間はその話でにぎやかでした。",
       "reading": "せけんはそのはなしでにぎやかでした。",
       "english": "People were buzzing about that story."
+    },
+    "levelPlacement": {
+      "reason": "N3 learner-fit placement: abstract society/world expression using N4 世 and N5 間, later than basic time/place words."
     }
   },
   "女神|めがみ": {
@@ -976,11 +988,11 @@
     "written": "女房",
     "reading": "にょうぼう",
     "meaning": "wife / spouse (old-fashioned)",
-    "jlpt": 2,
+    "jlpt": 1,
     "tags": [
       "starter",
       "common",
-      "n2"
+      "n1"
     ],
     "coverage": {
       "role": "support",
@@ -991,7 +1003,7 @@
         "女": "にょう"
       }
     },
-    "notes": "Deferred from N5 during platinum review: 女房|にょうぼう is common but old-fashioned and source-reviewed as JLPT N2, so it belongs later instead of serving as beginner 女 -> にょう coverage.",
+    "notes": "Common but old-fashioned spouse term moved to N1 under the anchor policy because the kanji spelling includes N1 房; kept as labeled support for 女 -> にょう.",
     "exampleSentence": {
       "japanese": "昔の話では女房という言い方もあります。",
       "reading": "むかしのはなしではにょうぼうといういいかたもあります。",
@@ -1120,11 +1132,11 @@
     "written": "会う",
     "reading": "あう",
     "meaning": "meet",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "core",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "学校の後で先生に会います。",
@@ -1136,11 +1148,11 @@
     "written": "会社",
     "reading": "かいしゃ",
     "meaning": "company",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "父は会社へ行きます。",
@@ -1152,11 +1164,11 @@
     "written": "会社員",
     "reading": "かいしゃいん",
     "meaning": "company employee / office worker",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "父は会社員です。",
@@ -1250,11 +1262,11 @@
     "written": "開ける",
     "reading": "あける",
     "meaning": "open",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "core",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "窓を開けます。",
@@ -1387,6 +1399,9 @@
       "japanese": "その島には大きい火山があります。",
       "reading": "そのしまにはおおきいかざんがあります。",
       "english": "There is a large volcano on that island."
+    },
+    "levelPlacement": {
+      "reason": "N2 learner-fit placement: geography compound built from N5 火 and 山, useful but not core beginner vocabulary."
     }
   },
   "火照る|ほてる": {
@@ -1465,6 +1480,9 @@
       "japanese": "ボタンが外れました。",
       "reading": "ぼたんがはずれました。",
       "english": "The button came off."
+    },
+    "levelPlacement": {
+      "reason": "N2 learner-fit placement: come off/miss/deviate verb built from N5 外, later than basic outside words."
     }
   },
   "学校|がっこう": {
@@ -1543,11 +1561,11 @@
     "written": "楽しい",
     "reading": "たのしい",
     "meaning": "fun / enjoyable",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "日本語の勉強は楽しいです。",
@@ -1575,11 +1593,11 @@
     "written": "帰る",
     "reading": "かえる",
     "meaning": "return / go home",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "core",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "午後六時に家へ帰ります。",
@@ -1591,11 +1609,11 @@
     "written": "起きる",
     "reading": "おきる",
     "meaning": "wake up / get up",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "core",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "毎朝六時に起きます。",
@@ -1661,6 +1679,9 @@
       "japanese": "今日は足を少し休めます。",
       "reading": "きょうはあしをすこしやすめます。",
       "english": "Today I can rest my legs a little."
+    },
+    "levelPlacement": {
+      "reason": "N1 learner-fit placement: transitive/resting form built from N5 休, less beginner-central than 休む/休み."
     }
   },
   "休まる|やすまる": {
@@ -1687,6 +1708,9 @@
       "japanese": "静かな音楽を聞くと心が休まります。",
       "reading": "しずかなおんがくをきくとこころがやすまります。",
       "english": "Listening to quiet music makes me feel at ease."
+    },
+    "levelPlacement": {
+      "reason": "N3 learner-fit placement: intransitive rest/relief verb built from N5 休, later than basic 休む."
     }
   },
   "去年|きょねん": {
@@ -1741,13 +1765,13 @@
     "written": "魚料理",
     "reading": "さかなりょうり",
     "meaning": "fish dish",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
-    "notes": "Common food word; retained because it teaches useful 魚 and 料理 readings in a natural restaurant context, not just coverage padding.",
+    "notes": "Common food word anchored by N4 魚, 料, and 理; retained for useful readings in a natural restaurant context.",
     "exampleSentence": {
       "japanese": "この店の魚料理は有名です。",
       "reading": "このみせのさかなりょうりはゆうめいです。",
@@ -1758,11 +1782,11 @@
     "written": "近い",
     "reading": "ちかい",
     "meaning": "near / close",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "駅はここから近いです。",
@@ -1861,6 +1885,9 @@
       "japanese": "夕日に山が黄金色に見えました。",
       "reading": "ゆうひにやまがおうごんいろにみえました。",
       "english": "The mountain looked golden in the evening sun."
+    },
+    "levelPlacement": {
+      "reason": "N1 learner-fit placement: literary/formal gold compound built from N3 黄 and N5 金, later than basic color/money words."
     }
   },
   "九|きゅう": {
@@ -1983,10 +2010,10 @@
     "written": "月",
     "reading": "つき",
     "meaning": "moon",
-    "jlpt": 3,
+    "jlpt": 5,
     "tags": [
       "common",
-      "n3",
+      "n5",
       "starter"
     ],
     "exampleSentence": {
@@ -2110,6 +2137,9 @@
       "japanese": "来週、学校を見学します。",
       "reading": "らいしゅう、がっこうをけんがくします。",
       "english": "Next week I will visit the school to observe it."
+    },
+    "levelPlacement": {
+      "reason": "N2 learner-fit placement: visit/observation study noun built from N5 見 and 学, later than basic see/school words."
     }
   },
   "見える|みえる": {
@@ -2229,17 +2259,20 @@
       "japanese": "この河川は町の中心を流れています。",
       "reading": "このかせんはまちのちゅうしんをながれています。",
       "english": "This river runs through the center of town."
+    },
+    "levelPlacement": {
+      "reason": "N1 learner-fit placement: formal river/waterway compound using N2 河 and N5 川, domain-style vocabulary."
     }
   },
   "古い|ふるい": {
     "written": "古い",
     "reading": "ふるい",
     "meaning": "old",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "その店はとても古いです。",
@@ -2473,11 +2506,11 @@
     "written": "公園",
     "reading": "こうえん",
     "meaning": "park",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "日曜日に公園で遊びます。",
@@ -2603,6 +2636,9 @@
       "japanese": "その船の行方が気になります。",
       "reading": "そのふねのゆくえがきになります。",
       "english": "I'm curious about where that ship is headed."
+    },
+    "levelPlacement": {
+      "reason": "N2 learner-fit placement: whereabouts/direction noun built from N5 行 and N4 方, abstract and later than basic go/person words."
     }
   },
   "行き先|ゆきさき": {
@@ -2982,11 +3018,11 @@
     "written": "座る",
     "reading": "すわる",
     "meaning": "sit",
-    "jlpt": 5,
+    "jlpt": 3,
     "tags": [
       "starter",
       "core",
-      "n5"
+      "n3"
     ],
     "exampleSentence": {
       "japanese": "ここに座る。",
@@ -3105,11 +3141,11 @@
     "written": "仕事",
     "reading": "しごと",
     "meaning": "work / job",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "core",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "父は朝から仕事です。",
@@ -3121,11 +3157,11 @@
     "written": "使う",
     "reading": "つかう",
     "meaning": "use",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "core",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "このペンを使います。",
@@ -3508,11 +3544,11 @@
     "written": "住む",
     "reading": "すむ",
     "meaning": "live / reside",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "core",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "東京に住んでいます。",
@@ -3645,17 +3681,18 @@
     "written": "宿題",
     "reading": "しゅくだい",
     "meaning": "homework",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "宿題はもう終わりました。",
       "reading": "しゅくだいはもうおわりました。",
       "english": "My homework is already finished."
-    }
+    },
+    "notes": "Common homework word anchored by N4 題 with N3 宿 labeled as support."
   },
   "出る|でる": {
     "written": "出る",
@@ -3995,11 +4032,11 @@
     "written": "乗る",
     "reading": "のる",
     "meaning": "ride / get on",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "core",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "電車に乗って学校へ行きます。",
@@ -4047,6 +4084,9 @@
       "japanese": "腹が減ったから昼ご飯を食う。",
       "reading": "はらがへったからひるごはんをくう。",
       "english": "I'm hungry, so I'll eat lunch."
+    },
+    "levelPlacement": {
+      "reason": "N3 learner-fit placement: casual eat verb built from N5 食, register-sensitive and later than 食べる."
     }
   },
   "食べ物|たべもの": {
@@ -4094,11 +4134,11 @@
     "written": "寝る",
     "reading": "ねる",
     "meaning": "sleep / go to bed",
-    "jlpt": 5,
+    "jlpt": 3,
     "tags": [
       "starter",
       "core",
-      "n5"
+      "n3"
     ],
     "exampleSentence": {
       "japanese": "今日は十時に寝る。",
@@ -4110,11 +4150,11 @@
     "written": "新しい",
     "reading": "あたらしい",
     "meaning": "new",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "新しい本を買いました。",
@@ -4265,6 +4305,9 @@
       "japanese": "経験を仕事に生かしたいです。",
       "reading": "けいけんをしごとにいかしたいです。",
       "english": "I want to make use of my experience in my work."
+    },
+    "levelPlacement": {
+      "reason": "N1 learner-fit placement: make use of/keep alive verb built from N5 生, abstract usage later than basic 生きる."
     }
   },
   "生地|きじ": {
@@ -4397,6 +4440,9 @@
       "japanese": "父は長いひげを生やしています。",
       "reading": "ちちはながいひげをはやしています。",
       "english": "My father grows a long beard."
+    },
+    "levelPlacement": {
+      "reason": "N1 learner-fit placement: grow/cultivate verb built from N5 生, less beginner-central than 生える/生きる."
     }
   },
   "生まれる|うまれる": {
@@ -4499,6 +4545,9 @@
       "japanese": "夏に西瓜を食べるのが好きです。",
       "reading": "なつにすいかをたべるのがすきです。",
       "english": "I like eating watermelon in the summer."
+    },
+    "levelPlacement": {
+      "reason": "N1 learner-fit placement: kanji spelling for watermelon using N5 西 plus outside-JLPT 瓜; rare written form kept only for advanced recognition."
     }
   },
   "関西|かんさい": {
@@ -4551,17 +4600,20 @@
       "japanese": "この道は南北に長いです。",
       "reading": "このみちはなんぼくにながいです。",
       "english": "This road runs long from north to south."
+    },
+    "levelPlacement": {
+      "reason": "N2 learner-fit placement: directional-pair compound built from N5 南 and 北, useful but later than single direction words."
     }
   },
   "青い|あおい": {
     "written": "青い",
     "reading": "あおい",
     "meaning": "blue",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "core",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "空が青いです。",
@@ -4590,11 +4642,11 @@
     "written": "赤い",
     "reading": "あかい",
     "meaning": "red",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "core",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "赤い車が見えます。",
@@ -4624,11 +4676,11 @@
     "reading": "きって",
     "readingBreakdown": "<ruby>切<rt>きっ</rt></ruby><ruby>手<rt>て</rt></ruby>",
     "meaning": "stamp",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "手紙に切手をはります。",
@@ -4641,13 +4693,13 @@
     "reading": "きっぷ",
     "readingBreakdown": "<ruby>切<rt>きっ</rt></ruby><ruby>符<rt>ぷ</rt></ruby>",
     "meaning": "ticket",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
-    "notes": "Learn this as a common whole word.",
+    "notes": "Common ticket word anchored by N4 切 with N2 符 labeled as support.",
     "exampleSentence": {
       "japanese": "駅で切符を買います。",
       "reading": "えきできっぷをかいます。",
@@ -4809,11 +4861,11 @@
     "reading": "だいどころ",
     "readingBreakdown": "<ruby>台<rt>だい</rt></ruby><ruby>所<rt>どころ</rt></ruby>",
     "meaning": "kitchen",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "coverage": {
       "role": "both",
@@ -4826,7 +4878,7 @@
         "所": "どころ"
       }
     },
-    "notes": "Common N5 kitchen word that also covers 台 -> だい and the contextual 所 -> どころ reading while labeling both N4 constituent kanji.",
+    "notes": "Common kitchen word anchored by N4 台 and 所; retained for useful 台 -> だい and contextual 所 -> どころ readings.",
     "exampleSentence": {
       "japanese": "台所で母が料理を作ります。",
       "reading": "だいどころでははがりょうりをつくります。",
@@ -5048,11 +5100,11 @@
     "written": "昼ご飯",
     "reading": "ひるごはん",
     "meaning": "lunch",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "友だちと昼ご飯を食べます。",
@@ -5080,11 +5132,11 @@
     "written": "朝ご飯",
     "reading": "あさごはん",
     "meaning": "breakfast",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "毎朝、朝ご飯を食べます。",
@@ -5132,6 +5184,9 @@
       "japanese": "長男は東京で働いています。",
       "reading": "ちょうなんはとうきょうではたらいています。",
       "english": "The eldest son works in Tokyo."
+    },
+    "levelPlacement": {
+      "reason": "N2 learner-fit placement: eldest-son family term built from N5 長 and 男, later than basic family/person words."
     }
   },
   "長い時間|ながいじかん": {
@@ -5236,11 +5291,11 @@
     "written": "店員",
     "reading": "てんいん",
     "meaning": "shop clerk",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "店員さんに水をくださいと言いました。",
@@ -5269,11 +5324,11 @@
     "reading": "めがね",
     "readingBreakdown": "<ruby>眼<rt>め</rt></ruby><ruby>鏡<rt>がね</rt></ruby>",
     "meaning": "glasses / eyeglasses",
-    "jlpt": 5,
+    "jlpt": 1,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n1"
     ],
     "coverage": {
       "role": "support",
@@ -5284,7 +5339,7 @@
         "鏡": "がね"
       }
     },
-    "notes": "Useful N5 glasses word. Often written めがね or メガネ; the kanji spelling is retained for recognition and labels 眼・鏡 as higher-level kanji instead of hiding them.",
+    "notes": "Useful glasses word. Often written めがね or メガネ; the kanji spelling is placed in N1 because both 眼 and 鏡 are N1 anchors.",
     "exampleSentence": {
       "japanese": "新しい眼鏡を買いました。",
       "reading": "あたらしいめがねをかいました。",
@@ -5371,10 +5426,10 @@
     "written": "土",
     "reading": "つち",
     "meaning": "soil / earth",
-    "jlpt": 3,
+    "jlpt": 5,
     "tags": [
       "common",
-      "n3",
+      "n5",
       "starter"
     ],
     "exampleSentence": {
@@ -5495,11 +5550,11 @@
     "written": "働く",
     "reading": "はたらく",
     "meaning": "work",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "姉は銀行で働いています。",
@@ -5564,6 +5619,9 @@
       "japanese": "先生が日本の歴史を語ります。",
       "reading": "せんせいがにほんのれきしをかたります。",
       "english": "The teacher talks about Japanese history."
+    },
+    "levelPlacement": {
+      "reason": "N3 learner-fit placement: narrate/tell verb built from N5 語, later than basic language words."
     }
   },
   "語らう|かたらう": {
@@ -5618,7 +5676,10 @@
       "reading": "にちようびはへやでどくしょします。",
       "english": "I read in my room on Sundays."
     },
-    "notes": "Deferred from the N5 word product because source review marks 読書 as later-level; N5 already teaches the core verbs 読む and 書く."
+    "notes": "Deferred from the N5 word product because source review marks 読書 as later-level; N5 already teaches the core verbs 読む and 書く.",
+    "levelPlacement": {
+      "reason": "N3 learner-fit placement: reading/activity noun built from N5 読 and 書, better after basic read/write verbs."
+    }
   },
   "音読|おんどく": {
     "written": "音読",
@@ -5757,18 +5818,18 @@
     "written": "肉料理",
     "reading": "にくりょうり",
     "meaning": "meat dish",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "この店の肉料理はおいしいです。",
       "reading": "このみせのにくりょうりはおいしいです。",
       "english": "The meat dishes at this restaurant are delicious."
     },
-    "notes": "Common food word; retained because it gives useful 肉 and 料理 readings in a natural restaurant context, not just coverage padding."
+    "notes": "Common food word anchored by N4 料 and 理; retained for useful 肉 and 料理 readings in a natural restaurant context."
   },
   "日|ひ": {
     "written": "日",
@@ -5983,11 +6044,11 @@
     "written": "買う",
     "reading": "かう",
     "meaning": "buy",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "core",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "駅前の店で本を買います。",
@@ -6087,6 +6148,9 @@
       "japanese": "北の国では白夜で夜も明るいです。",
       "reading": "きたのくにではびゃくやでよるもあかるいです。",
       "english": "In northern countries, the midnight sun keeps the night bright."
+    },
+    "levelPlacement": {
+      "reason": "N2 learner-fit placement: specialized natural-phenomenon compound built from N5 白 and N4 夜, later than basic color/time words."
     }
   },
   "白髪|しらが": {
@@ -6268,6 +6332,9 @@
       "japanese": "四月も半ばになりました。",
       "reading": "しがつもなかばになりました。",
       "english": "It is already the middle of April."
+    },
+    "levelPlacement": {
+      "reason": "N3 learner-fit placement: midpoint/halfway noun-adverb built from N5 半, more abstract than basic half/counting use."
     }
   },
   "春雨|はるさめ": {
@@ -6300,11 +6367,11 @@
     "written": "晩ご飯",
     "reading": "ばんごはん",
     "meaning": "dinner",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "家で晩ご飯を食べます。",
@@ -6384,11 +6451,11 @@
     "written": "病院",
     "reading": "びょういん",
     "meaning": "hospital",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "病院は駅の前にあります。",
@@ -6437,6 +6504,9 @@
       "japanese": "父母に手紙を書きます。",
       "reading": "ふぼにてがみをかきます。",
       "english": "I write a letter to my parents."
+    },
+    "levelPlacement": {
+      "reason": "N2 learner-fit placement: formal parents compound built from N5 父 and 母, later than basic family words."
     }
   },
   "部屋|へや": {
@@ -6444,11 +6514,11 @@
     "reading": "へや",
     "readingBreakdown": "<ruby>部<rt>へ</rt></ruby><ruby>屋<rt>や</rt></ruby>",
     "meaning": "room",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "部屋で本を読みます。",
@@ -6522,6 +6592,9 @@
       "japanese": "友だちと喜びを分かちました。",
       "reading": "ともだちとよろこびをわかちました。",
       "english": "I shared the joy with my friend."
+    },
+    "levelPlacement": {
+      "reason": "N1 learner-fit placement: literary/formal divide/share verb built from N5 分, register-sensitive advanced vocabulary."
     }
   },
   "分ける|わける": {
@@ -6589,11 +6662,11 @@
     "written": "閉める",
     "reading": "しめる",
     "meaning": "close / shut",
-    "jlpt": 5,
+    "jlpt": 2,
     "tags": [
       "starter",
       "core",
-      "n5"
+      "n2"
     ],
     "exampleSentence": {
       "japanese": "ドアを閉めます。",
@@ -6605,11 +6678,11 @@
     "written": "勉強",
     "reading": "べんきょう",
     "meaning": "study",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "core",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "毎日日本語を勉強します。",
@@ -6621,11 +6694,11 @@
     "written": "歩く",
     "reading": "あるく",
     "meaning": "walk",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "core",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "駅まで歩きます。",
@@ -6674,6 +6747,9 @@
       "japanese": "母校を見学しました。",
       "reading": "ぼこうをけんがくしました。",
       "english": "I visited my old school."
+    },
+    "levelPlacement": {
+      "reason": "N1 learner-fit placement: alma mater compound built from N5 母 and 校, conceptually later than basic family/school words."
     }
   },
   "忙しい|いそがしい": {
@@ -7120,11 +7196,11 @@
     "written": "夜空",
     "reading": "よぞら",
     "meaning": "night sky",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "夜空に月が見えます。",
@@ -7172,7 +7248,10 @@
       "reading": "ゆうじんとえきであいます。",
       "english": "I will meet a friend at the station."
     },
-    "notes": "Deferred from the N5 word product because source review marks 友人 as later-level and more formal than 友達; N5 teaches the safer everyday friend word through 友だち."
+    "notes": "Deferred from the N5 word product because source review marks 友人 as later-level and more formal than 友達; N5 teaches the safer everyday friend word through 友だち.",
+    "levelPlacement": {
+      "reason": "N3 learner-fit placement: formal friend/person noun built from N5 友 and 人, later than beginner 友だち."
+    }
   },
   "郵便局|ゆうびんきょく": {
     "written": "郵便局",
@@ -7204,11 +7283,11 @@
     "written": "夕方",
     "reading": "ゆうがた",
     "meaning": "evening",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "夕方に駅で友だちに会います。",
@@ -7348,11 +7427,11 @@
     "written": "料理",
     "reading": "りょうり",
     "meaning": "cooking / dish",
-    "jlpt": 5,
+    "jlpt": 4,
     "tags": [
       "starter",
       "common",
-      "n5"
+      "n4"
     ],
     "exampleSentence": {
       "japanese": "日本料理が好きです。",
@@ -7658,7 +7737,10 @@
       "reading": "かばんをいすにおろします。",
       "english": "I put my bag down on the chair."
     },
-    "notes": "Deferred from the N5 word product because source review marks 下ろす as JLPT N3; keep it for later-level word review instead of forcing 下 -> おろす coverage."
+    "notes": "Deferred from the N5 word product because source review marks 下ろす as JLPT N3; keep it for later-level word review instead of forcing 下 -> おろす coverage.",
+    "levelPlacement": {
+      "reason": "N3 learner-fit placement: downward/removal verb built from N5 下, later than basic 下 direction words."
+    }
   },
   "下す|くだす": {
     "written": "下す",
@@ -7684,6 +7766,9 @@
       "japanese": "先生が大事な決定を下します。",
       "reading": "せんせいがだいじなけっていをくだします。",
       "english": "The teacher makes an important decision."
+    },
+    "levelPlacement": {
+      "reason": "N2 learner-fit placement: transitive judgment/downward action verb built from N5 下, later than basic 下げる/下ろす."
     }
   },
   "下り|くだり": {
@@ -7710,6 +7795,9 @@
       "japanese": "下りの電車に乗ります。",
       "reading": "くだりのでんしゃにのります。",
       "english": "I get on the outbound train."
+    },
+    "levelPlacement": {
+      "reason": "N3 learner-fit placement: route/direction noun built from N5 下, best after basic down/below words."
     }
   },
   "上着|うわぎ": {
@@ -7754,7 +7842,10 @@
       "reading": "にほんごをまなびます。",
       "english": "I learn Japanese."
     },
-    "notes": "Deferred from the N5 word product because source review marks 学ぶ as JLPT N3; N5 should teach 学 through common school words instead of forcing 学 -> まなぶ coverage."
+    "notes": "Deferred from the N5 word product because source review marks 学ぶ as JLPT N3; N5 should teach 学 through common school words instead of forcing 学 -> まなぶ coverage.",
+    "levelPlacement": {
+      "reason": "N3 learner-fit placement: formal learn/study verb built from N5 学, later than basic 学校/学生 words."
+    }
   },
   "上る|のぼる": {
     "written": "上る",
@@ -7797,6 +7888,9 @@
       "japanese": "上りの電車はもう来ました。",
       "reading": "のぼりのでんしゃはもうきました。",
       "english": "The inbound train has already arrived."
+    },
+    "levelPlacement": {
+      "reason": "N2 learner-fit placement: route/grade-direction noun built from N5 上, specialized compared with basic 上 readings."
     }
   },
   "上昇|じょうしょう": {
@@ -7823,6 +7917,9 @@
       "japanese": "気温が急に上昇しました。",
       "reading": "きおんがきゅうにじょうしょうしました。",
       "english": "The temperature rose suddenly."
+    },
+    "levelPlacement": {
+      "reason": "N1 learner-fit placement: formal rise/increase compound built from N5 上 and N2 昇, later abstract/domain vocabulary."
     }
   },
   "下る|くだる": {
@@ -7841,7 +7938,10 @@
       "reading": "やまをくだります。",
       "english": "I go down the mountain."
     },
-    "notes": "Deferred from the N5 word product because source review marks 下る as JLPT N2; keep it for later-level word review instead of forcing 下 -> くだる coverage."
+    "notes": "Deferred from the N5 word product because source review marks 下る as JLPT N2; keep it for later-level word review instead of forcing 下 -> くだる coverage.",
+    "levelPlacement": {
+      "reason": "N2 learner-fit placement: intransitive descend/go down verb built from N5 下, later than basic direction words."
+    }
   },
   "休み時間|やすみじかん": {
     "written": "休み時間",
@@ -7956,6 +8056,9 @@
       "japanese": "ケーキの出来上がりを待っています。",
       "reading": "けーきのできあがりをまっています。",
       "english": "I'm waiting for the cake to be finished."
+    },
+    "levelPlacement": {
+      "reason": "N2 learner-fit placement: completion/result noun built from N5 出, 来, and 上, conceptually compound and later than basic verbs."
     }
   },
   "文|ぶん": {
@@ -15222,6 +15325,9 @@
       "japanese": "その答えは私たちの考え方を問うものです。",
       "reading": "そのこたえはわたしたちのかんがえかたをとうものです。",
       "english": "That answer calls our way of thinking into question."
+    },
+    "levelPlacement": {
+      "reason": "N2 learner-fit placement: formal ask/question verb built from N4 問, register-sensitive and later than basic 質問/聞く."
     }
   },
   "母音|ぼいん": {
@@ -17095,6 +17201,9 @@
       "japanese": "古い寺は平安時代に建立されました。",
       "reading": "ふるいてらはへいあんじだいにこんりゅうされました。",
       "english": "The old temple was built in the Heian period."
+    },
+    "levelPlacement": {
+      "reason": "N1 learner-fit placement: formal build/establish verb-noun built from N4 建 and 立, advanced domain vocabulary."
     }
   },
   "心掛け|こころがけ": {
@@ -18094,6 +18203,9 @@
       "japanese": "無理な仕事を強いるべきではありません。",
       "reading": "むりなしごとをしいるべきではありません。",
       "english": "You should not force unreasonable work on someone."
+    },
+    "levelPlacement": {
+      "reason": "N1 learner-fit placement: force/compel verb built from N4 強, advanced usage later than basic 強い."
     }
   },
   "空しい|むなしい": {

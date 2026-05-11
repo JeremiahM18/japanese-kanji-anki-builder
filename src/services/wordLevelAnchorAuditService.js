@@ -40,22 +40,35 @@ function normalizeLearnerFitReason(value) {
     return String(value || "").trim();
 }
 
-function resolvePlacementStatus({ deckLevel, anchorLevel, learnerFitReason = "" } = {}) {
+function resolvePlacementStatus({
+    deckLevel,
+    anchorLevel,
+    sameLevelKanji = [],
+    knownLevels = [],
+    learnerFitReason = "",
+} = {}) {
     if (!Number.isInteger(deckLevel)) {
         return "invalid_deck_level";
     }
-    if (!Number.isInteger(anchorLevel)) {
+    if (!Array.isArray(knownLevels) || knownLevels.length === 0) {
         return "no_known_jlpt_kanji";
     }
-    if (deckLevel > anchorLevel) {
+    if (Array.isArray(sameLevelKanji) && sameLevelKanji.length > 0) {
+        return "anchor_level";
+    }
+
+    const hasHarderThanDeckKanji = knownLevels.some((level) => level < deckLevel);
+    if (hasHarderThanDeckKanji) {
         return "too_easy_for_kanji";
     }
-    if (deckLevel < anchorLevel) {
+
+    if (Number.isInteger(anchorLevel) && deckLevel < anchorLevel) {
         return normalizeLearnerFitReason(learnerFitReason)
             ? "later_with_learner_fit_reason"
             : "later_missing_learner_fit_reason";
     }
-    return "anchor_level";
+
+    return "too_easy_for_kanji";
 }
 
 function buildWordLevelAnchorResult({
@@ -77,7 +90,8 @@ function buildWordLevelAnchorResult({
     const knownLevels = kanjiLevels
         .map((entry) => entry.level)
         .filter((entryLevel) => Number.isInteger(entryLevel));
-    const anchorLevel = knownLevels.length > 0 ? Math.max(...knownLevels) : null;
+    const fallbackAnchorLevel = knownLevels.length > 0 ? Math.max(...knownLevels) : null;
+    const anchorLevel = sameLevelKanji.length > 0 ? level : fallbackAnchorLevel;
     const anchorKanji = kanjiLevels
         .filter((entry) => entry.level === anchorLevel)
         .map((entry) => entry.kanji);
@@ -85,6 +99,8 @@ function buildWordLevelAnchorResult({
     const placementStatus = resolvePlacementStatus({
         deckLevel: level,
         anchorLevel,
+        sameLevelKanji,
+        knownLevels,
         learnerFitReason: normalizedLearnerFitReason,
     });
 
@@ -119,10 +135,10 @@ function formatWordLevelAnchorFailure(result = {}) {
         : "no known JLPT kanji level";
 
     if (result.placementStatus === "too_easy_for_kanji") {
-        return `word level placement is easier than its highest-numbered kanji anchor ${anchorLabel}; got ${levelLabel}: ${formatKanjiLevelList(result.kanjiLevels)}`;
+        return `word level placement lacks a current-level kanji anchor for ${levelLabel}; harder support floor ${anchorLabel}: ${formatKanjiLevelList(result.kanjiLevels)}`;
     }
     if (result.placementStatus === "later_missing_learner_fit_reason") {
-        return `later learner-fit placement from kanji anchor ${anchorLabel} to ${levelLabel} requires levelPlacement.reason: ${formatKanjiLevelList(result.kanjiLevels)}`;
+        return `later learner-fit placement from all-easier kanji anchor ${anchorLabel} to ${levelLabel} requires levelPlacement.reason: ${formatKanjiLevelList(result.kanjiLevels)}`;
     }
 
     return `word level placement is invalid for ${levelLabel}; kanji anchor ${anchorLabel}: ${formatKanjiLevelList(result.kanjiLevels)}`;

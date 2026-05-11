@@ -161,7 +161,7 @@ test("evaluatePlatinumWordReviewSet rejects active entries placed easier than th
     });
 
     assert.equal(report.passed, false);
-    assert.match(report.results[0].failures.join("\n"), /easier than its highest-numbered kanji anchor N4; got N5: 今:N4, 日:N4/);
+    assert.match(report.results[0].failures.join("\n"), /lacks a current-level kanji anchor for N5; harder support floor N4: 今:N4, 日:N4/);
 });
 
 test("evaluatePlatinumWordReviewSet accepts later learner-fit placement with active rationale", () => {

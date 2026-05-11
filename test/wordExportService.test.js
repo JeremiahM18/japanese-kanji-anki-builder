@@ -166,7 +166,7 @@ test("buildWordReadingBreakdown renders learner-facing furigana breakdowns", () 
     }), /must use ruby furigana markup/);
 });
 
-test("inferWordLevel uses the highest-numbered constituent JLPT kanji anchor", () => {
+test("inferWordLevel keeps the legacy constituent-level fallback heuristic", () => {
     assert.equal(inferWordLevel({
         written: "今年",
         jlptOnlyJson: {

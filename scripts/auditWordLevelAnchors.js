@@ -42,7 +42,7 @@ function formatWordLevelAnchorAuditReport(report, { level = null, limit = 40 } =
         `Word level placement violations: ${report.violationCount}`,
         "",
         "By placement status:",
-        `- Too easy for constituent kanji: ${report.byPlacementStatus?.too_easy_for_kanji || 0}`,
+        `- No current-level anchor with harder support kanji: ${report.byPlacementStatus?.too_easy_for_kanji || 0}`,
         `- Later placement missing learner-fit reason: ${report.byPlacementStatus?.later_missing_learner_fit_reason || 0}`,
         `- No known JLPT kanji anchor: ${report.byPlacementStatus?.no_known_jlpt_kanji || 0}`,
         `- Invalid deck level: ${report.byPlacementStatus?.invalid_deck_level || 0}`,

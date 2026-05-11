@@ -58,7 +58,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 - Confirm platinum-reviewed cards are useful, common enough, learner-friendly, and not present only for reading coverage.
 - Review beginner core words.
 - Review support words.
-- Confirm every shipped word is not earlier/easier than its highest-numbered known constituent kanji anchor, and that later/harder placement has an explicit learner-fit rationale.
+- Confirm every shipped word has a current-level kanji anchor, or has an explicit learner-fit rationale for later all-easier-kanji placement; support kanji from other levels must be visibly labeled.
 - Review constituent-kanji labels, including cross-level and outside-JLPT kanji.
 - Review audio-bearing word cards.
 - Confirm constituent badges are visible and understandable without repeating same-level kanji in kanji decks.

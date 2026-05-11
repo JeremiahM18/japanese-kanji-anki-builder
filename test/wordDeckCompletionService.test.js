@@ -827,7 +827,7 @@ test("buildWordDeckPolicyAudit accepts later placement with tracked learner-fit 
     assert.equal(audit.sameLevelAnchorViolationCount, 0);
 });
 
-test("buildWordDeckPolicyAudit keeps labeled support kanji when the highest-numbered anchor is in scope", () => {
+test("buildWordDeckPolicyAudit keeps labeled support kanji when a current-level anchor is in scope", () => {
     const audit = buildWordDeckPolicyAudit({
         level: 5,
         wordRows: [

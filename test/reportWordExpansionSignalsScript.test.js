@@ -141,7 +141,7 @@ test("placement signal blocks unresolved word-level placement issues", () => {
     assert.equal(blocked.violationCount, 46);
     assert.equal(blocked.tooEasyForKanji, 46);
     assert.match(blocked.reason, /placement blockers remain/);
-    assert.match(blocked.blockers[0], /placed earlier/);
+    assert.match(blocked.blockers[0], /without a current-level kanji anchor/);
 
     const resolved = buildPlacementSignalFromAnchorAuditReport({
         checked: 12,
@@ -222,5 +222,6 @@ test("formatted expansion signal report does not overclaim release readiness", (
 
     assert.match(text, /N5 \| yes \| exhausted/);
     assert.match(text, /Placement resolved means/);
+    assert.match(text, /no anchor 0/);
     assert.match(text, /This is not golden review, platinum review, APKG QA, or release readiness/);
 });

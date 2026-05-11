@@ -266,7 +266,7 @@ function buildPlacementSignalFromAnchorAuditReport(report = {}) {
     const blockers = [];
 
     if (tooEasyForKanji > 0) {
-        blockers.push(`${formatRowCount(tooEasyForKanji)} placed earlier than the constituent kanji anchor allows`);
+        blockers.push(`${formatRowCount(tooEasyForKanji)} without a current-level kanji anchor`);
     }
     if (laterMissingLearnerFitReason > 0) {
         blockers.push(`${formatRowCount(laterMissingLearnerFitReason)} placed later without levelPlacement.reason`);
@@ -543,7 +543,7 @@ function formatStatusWithCounts(signal, type) {
     }
     if (type === "placement") {
         if (signal.status === "resolved" || signal.status === "blocked") {
-            return `${signal.status} (${signal.violationCount}/${signal.checkedRows} violations; too early ${signal.tooEasyForKanji}; later missing rationale ${signal.laterMissingLearnerFitReason})`;
+            return `${signal.status} (${signal.violationCount}/${signal.checkedRows} violations; no anchor ${signal.tooEasyForKanji}; later missing rationale ${signal.laterMissingLearnerFitReason})`;
         }
     }
     return `${signal.status} (${signal.blockers.length} blocker${signal.blockers.length === 1 ? "" : "s"})`;
@@ -556,7 +556,7 @@ function formatWordExpansionSignalReport(report) {
         "Signal meaning:",
         "- Reading exhausted means active reading-gap triage is cleared; coverage percent remains informational.",
         "- Enhancement exhausted means the configured source list has no keep candidates and no untriaged candidates.",
-        "- Placement resolved means no word is earlier than its kanji anchor and later learner-fit placement has a tracked reason.",
+        "- Placement resolved means each word has a current-level kanji anchor, or has a tracked learner-fit reason for later all-easier-kanji placement.",
         "- This is not golden review, platinum review, APKG QA, or release readiness.",
         "",
         "Level signals:",

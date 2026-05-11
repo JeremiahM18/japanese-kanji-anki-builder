@@ -7,7 +7,7 @@ const {
     formatKanjiLevelList,
 } = require("../src/services/wordLevelAnchorAuditService");
 
-test("buildWordLevelAnchorResult accepts the highest-numbered constituent kanji level", () => {
+test("buildWordLevelAnchorResult anchors on the current deck level and allows support kanji", () => {
     const result = buildWordLevelAnchorResult({
         written: "子猫",
         deckLevel: 5,
@@ -25,32 +25,50 @@ test("buildWordLevelAnchorResult accepts the highest-numbered constituent kanji 
     assert.equal(formatKanjiLevelList(result.kanjiLevels), "子:N5, 猫:N4");
 });
 
-test("buildWordLevelAnchorResult accepts later placement when learner fit is explained", () => {
+test("buildWordLevelAnchorResult accepts mixed easier support when the deck-level anchor exists", () => {
     const result = buildWordLevelAnchorResult({
-        written: "子猫",
+        written: "科学",
         deckLevel: 4,
-        learnerFitReason: "Useful word, but better introduced after basic N5 animal vocabulary.",
         kanjiLevelData: {
-            子: { jlpt: 5 },
-            猫: { jlpt: 4 },
+            科: { jlpt: 4 },
+            学: { jlpt: 5 },
         },
     });
 
     assert.equal(result.valid, true);
-    assert.deepEqual(result.sameLevelKanji, ["猫"]);
+    assert.deepEqual(result.sameLevelKanji, ["科"]);
+    assert.equal(result.anchorLevel, 4);
+    assert.deepEqual(result.anchorKanji, ["科"]);
+    assert.equal(result.placementStatus, "anchor_level");
+    assert.equal(formatKanjiLevelList(result.kanjiLevels), "科:N4, 学:N5");
+});
+
+test("buildWordLevelAnchorResult accepts later placement when learner fit is explained", () => {
+    const result = buildWordLevelAnchorResult({
+        written: "人気",
+        deckLevel: 4,
+        learnerFitReason: "Common and useful, but N4 is a better learner-fit introduction than N5.",
+        kanjiLevelData: {
+            人: { jlpt: 5 },
+            気: { jlpt: 5 },
+        },
+    });
+
+    assert.equal(result.valid, true);
+    assert.deepEqual(result.sameLevelKanji, []);
     assert.equal(result.anchorLevel, 5);
-    assert.deepEqual(result.anchorKanji, ["子"]);
+    assert.deepEqual(result.anchorKanji, ["人", "気"]);
     assert.equal(result.placementStatus, "later_with_learner_fit_reason");
-    assert.equal(formatKanjiLevelList(result.kanjiLevels), "子:N5, 猫:N4");
+    assert.equal(formatKanjiLevelList(result.kanjiLevels), "人:N5, 気:N5");
 });
 
 test("buildWordLevelAnchorResult rejects later placement without a learner-fit reason", () => {
     const result = buildWordLevelAnchorResult({
-        written: "子猫",
+        written: "人気",
         deckLevel: 4,
         kanjiLevelData: {
-            子: { jlpt: 5 },
-            猫: { jlpt: 4 },
+            人: { jlpt: 5 },
+            気: { jlpt: 5 },
         },
     });
 
@@ -76,6 +94,21 @@ test("buildWordLevelAnchorResult rejects words assigned to an easier deck than t
     assert.deepEqual(result.anchorKanji, ["魚", "料", "理"]);
     assert.equal(result.placementStatus, "too_easy_for_kanji");
     assert.equal(formatKanjiLevelList(result.kanjiLevels), "魚:N4, 料:N4, 理:N4");
+});
+
+test("buildWordLevelAnchorResult rejects support kanji without a current-level anchor", () => {
+    const result = buildWordLevelAnchorResult({
+        written: "お茶",
+        deckLevel: 5,
+        kanjiLevelData: {
+            茶: { jlpt: 4 },
+        },
+    });
+
+    assert.equal(result.valid, false);
+    assert.deepEqual(result.sameLevelKanji, []);
+    assert.equal(result.anchorLevel, 4);
+    assert.equal(result.placementStatus, "too_easy_for_kanji");
 });
 
 test("auditWordLevelAnchors reports canonical rows assigned to the wrong deck level", () => {

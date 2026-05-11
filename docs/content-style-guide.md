@@ -25,10 +25,10 @@ That means:
 
 ## Word card style
 
-- The highest-numbered known JLPT kanji level in the written word is the earliest default word-deck anchor.
-- A word may ship at that anchor level or at a harder/lower-numbered learner-fit level.
-- Later learner-fit placement must be explicit and reviewed, not accidental. This allows useful common words to appear at the right learning moment without dumping hard words into beginner decks.
-- A word must not ship in an easier/higher-numbered deck than its highest-numbered known constituent kanji anchor.
+- A word is anchored by kanji from its own deck level; other constituent kanji are support kanji and must be labeled.
+- All-easier-kanji words may ship at a harder/lower-numbered learner-fit level only when that later placement is explicit and reviewed.
+- Useful common words can appear at the right learning moment, but hard words do not go into beginner decks just because their kanji are easy.
+- A word with no current-level anchor must not ship in an easier/higher-numbered deck when it depends only on harder support kanji.
 - Outside-JLPT support kanji do not choose the JLPT deck level, but they must be visibly labeled.
 - Constituent kanji must be visibly labeled on the card, including same-level, higher-level, and outside-JLPT kanji.
 - Reading coverage is scoped to the selected word-product levels. Do not duplicate support words if the reading is already taught well in another selected deck unless there is a clear editorial reason.

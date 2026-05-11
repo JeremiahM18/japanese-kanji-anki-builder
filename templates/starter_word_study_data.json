@@ -764,6 +764,9 @@
       "japanese": "手を下げてください。",
       "reading": "てをさげてください。",
       "english": "Please lower your hand."
+    },
+    "levelPlacement": {
+      "reason": "N4 learner-fit placement: useful transitive verb introduced after basic 下 direction words."
     }
   },
   "下|した": {
@@ -1515,6 +1518,9 @@
       "japanese": "校長先生が朝の会で話しました。",
       "reading": "こうちょうせんせいがあさのかいではなしました。",
       "english": "The principal spoke at the morning assembly."
+    },
+    "levelPlacement": {
+      "reason": "N4 learner-fit placement: school-role compound built from N5 kanji, but the title is introduced after basic school words."
     }
   },
   "学生|がくせい": {
@@ -2676,6 +2682,9 @@
       "japanese": "学校で大切な行事を行います。",
       "reading": "がっこうでたいせつなぎょうじをおこないます。",
       "english": "We carry out an important event at school."
+    },
+    "levelPlacement": {
+      "reason": "N4 learner-fit placement: formal action verb built from N5 行, distinct from the basic 行く reading and usage."
     }
   },
   "高い|たかい": {
@@ -4227,6 +4236,9 @@
       "japanese": "魚は水の中で生きています。",
       "reading": "さかなはみずのなかでいきています。",
       "english": "Fish live in the water."
+    },
+    "levelPlacement": {
+      "reason": "N4 learner-fit placement: useful verb built from the N5 生 kanji, but the meaning and verb behavior fit after basic N5 生 words."
     }
   },
   "生かす|いかす": {
@@ -5955,11 +5967,11 @@
     "written": "猫",
     "reading": "ねこ",
     "meaning": "cat",
-    "jlpt": 4,
+    "jlpt": 3,
     "tags": [
       "starter",
       "common",
-      "n4"
+      "n3"
     ],
     "exampleSentence": {
       "japanese": "猫が窓のそばで寝ています。",
@@ -6568,6 +6580,9 @@
       "japanese": "外で音楽が聞こえます。",
       "reading": "そとでおんがくがきこえます。",
       "english": "I can hear music outside."
+    },
+    "levelPlacement": {
+      "reason": "N4 learner-fit placement: potential/intransitive hearing verb built from N5 聞, best introduced after 聞く."
     }
   },
   "閉める|しめる": {
@@ -6665,11 +6680,11 @@
     "written": "忙しい",
     "reading": "いそがしい",
     "meaning": "busy",
-    "jlpt": 4,
+    "jlpt": 3,
     "tags": [
       "starter",
       "core",
-      "n4"
+      "n3"
     ],
     "coverage": {
       "role": "both",
@@ -6680,7 +6695,7 @@
         "忙": "いそがしい"
       }
     },
-    "notes": "Core N4 study word that also covers the 忙 -> いそがしい reading.",
+    "notes": "Core study word anchored by the N3 忙 kanji and useful before harder 忙 compounds.",
     "exampleSentence": {
       "japanese": "今週は仕事が多くてとても忙しいです。",
       "reading": "こんしゅうはしごとがおおくてとてもいそがしいです。",
@@ -8573,11 +8588,11 @@
     "written": "閉まる",
     "reading": "しまる",
     "meaning": "close / be shut",
-    "jlpt": 4,
+    "jlpt": 2,
     "tags": [
       "starter",
       "common",
-      "n4"
+      "n2"
     ],
     "coverage": {
       "role": "support",
@@ -8588,7 +8603,7 @@
         "閉": "しまる"
       }
     },
-    "notes": "Common N4 support word that covers the 閉 -> しまる reading.",
+    "notes": "Common support word anchored by the N2 閉 kanji and covering 閉 -> しまる.",
     "exampleSentence": {
       "japanese": "この店は九時に閉まります。",
       "reading": "このみせはくじにしまります。",
@@ -9753,11 +9768,11 @@
     "written": "座席",
     "reading": "ざせき",
     "meaning": "seat",
-    "jlpt": 4,
+    "jlpt": 3,
     "tags": [
       "starter",
       "common",
-      "n4"
+      "n3"
     ],
     "coverage": {
       "role": "support",
@@ -9768,7 +9783,7 @@
         "座": "ざ"
       }
     },
-    "notes": "Common N4 support word that covers the 座 -> ざ reading.",
+    "notes": "Common support word anchored by the N3 座 kanji and covering 座 -> ざ.",
     "exampleSentence": {
       "japanese": "映画館で前の座席に座りました。",
       "reading": "えいがかんでまえのざせきにすわりました。",
@@ -12840,6 +12855,9 @@
       "japanese": "その店は安くて人気があります。",
       "reading": "そのみせはやすくてにんきがあります。",
       "english": "That shop is inexpensive and popular."
+    },
+    "levelPlacement": {
+      "reason": "N4 learner-fit placement: common abstract popularity expression built from N5 kanji, better after basic 人 and 気 words."
     }
   },
   "悪口|わるくち": {
@@ -14006,11 +14024,11 @@
     "written": "寝坊",
     "reading": "ねぼう",
     "meaning": "oversleeping / sleeping in",
-    "jlpt": 4,
+    "jlpt": 3,
     "tags": [
       "starter",
       "common",
-      "n4"
+      "n3"
     ],
     "coverage": {
       "role": "support",
@@ -14021,7 +14039,7 @@
         "寝": "ね"
       }
     },
-    "notes": "Common N4 support word that covers the 寝 -> ね reading.",
+    "notes": "Common daily-life support word anchored by the N3 寝 kanji and covering 寝 -> ね.",
     "readingBreakdown": "<ruby>寝<rt>ね</rt></ruby><ruby>坊<rt>ぼう</rt></ruby>",
     "exampleSentence": {
       "japanese": "今日は寝坊して学校へ急ぎました。",
@@ -14378,11 +14396,11 @@
     "written": "閉じる",
     "reading": "とじる",
     "meaning": "to close / to shut",
-    "jlpt": 4,
+    "jlpt": 2,
     "tags": [
       "starter",
       "core",
-      "n4"
+      "n2"
     ],
     "coverage": {
       "role": "both",
@@ -14393,7 +14411,7 @@
         "閉": "とじる"
       }
     },
-    "notes": "Core N4 study word that also covers the 閉 -> とじる reading.",
+    "notes": "Core study word anchored by the N2 閉 kanji and covering 閉 -> とじる.",
     "exampleSentence": {
       "japanese": "本を閉じてください。",
       "reading": "ほんをとじてください。",
@@ -19136,11 +19154,11 @@
     "reading": "とざす",
     "readingBreakdown": "<ruby>閉<rt>と</rt></ruby>ざす",
     "meaning": "to close off / to shut",
-    "jlpt": 4,
+    "jlpt": 2,
     "tags": [
       "starter",
       "common",
-      "n4"
+      "n2"
     ],
     "coverage": {
       "role": "support",
@@ -19151,7 +19169,7 @@
         "閉": "とざす"
       }
     },
-    "notes": "Useful weather and access support word that covers the 閉 -> とざす reading.",
+    "notes": "Useful weather and access support word anchored by the N2 閉 kanji and covering 閉 -> とざす.",
     "exampleSentence": {
       "japanese": "雪が山道を閉ざしました。",
       "reading": "ゆきがやまみちをとざしました。",
@@ -19163,11 +19181,11 @@
     "reading": "ねかす",
     "readingBreakdown": "<ruby>寝<rt>ね</rt></ruby>かす",
     "meaning": "to put to sleep / to lay down",
-    "jlpt": 4,
+    "jlpt": 3,
     "tags": [
       "starter",
       "common",
-      "n4"
+      "n3"
     ],
     "coverage": {
       "role": "support",
@@ -19178,7 +19196,7 @@
         "寝": "ねかす"
       }
     },
-    "notes": "Common daily-life support verb that covers the 寝 -> ねかす reading.",
+    "notes": "Common daily-life support verb anchored by the N3 寝 kanji and covering 寝 -> ねかす.",
     "exampleSentence": {
       "japanese": "赤ちゃんを早く寝かしました。",
       "reading": "あかちゃんをはやくねかしました。",

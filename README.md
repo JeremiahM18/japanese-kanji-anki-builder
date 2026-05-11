@@ -207,19 +207,19 @@ Golden and platinum review:
 | N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N1 kanji | Golden-reviewed at `1230/1230`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N5 word | Expanded to `331` governed rows, but the current word-level placement audit fails with `46/331` N5 rows that do not have an N5 kanji anchor. Older golden/platinum output passes are not release approval under the current word-level policy until the invalid rows are moved, deferred, or removed and the level is re-reviewed. |
-| N4 word | Expanded to `535` governed rows, but the current word-level placement audit fails with `14/535` N4 rows: `8` without an N4 anchor and `6` later placements missing explicit learner-fit reasons. N4 word golden/platinum readiness is blocked until those rows are moved, deferred/removed, or documented with reviewed learner-fit rationale. |
+| N4 word | Expanded to `527` governed rows; the current word-level placement audit passes for N4 at `0/527` violations. N4 word release is still not approved until fresh word artifacts, golden/platinum review, import QA, accessibility, and listening checks are run. |
 
 Current tracked word inventory:
 
 - N5 canonical word rows: `331`
 - N5 source-only phrase exclusions: `20`
-- N4 canonical word rows: `535`
-- N3 canonical word rows: `14`
-- N2 canonical word rows: `15`
+- N4 canonical word rows: `527`
+- N3 canonical word rows: `19`
+- N2 canonical word rows: `18`
 - N1 canonical word rows: `14`
-- Current N5+N4 word rows: `866`
-- Word-level placement audit currently fails: `100/909` canonical rows. The live split is `55` rows without a current-level anchor and `45` later-level placements missing learner-fit reasons. By level: N5 `46/331`, N4 `14/535`, N3 `13/14`, N2 `14/15`, N1 `13/14`. Run `npm run deck:words:level-anchor-audit` for the live list.
-- Word reading coverage from the current `deck:words:completion:n5` and `deck:words:completion:n4` reports: N5 `232/344` (`67.4%`), N4 `485/651` (`74.5%`). Coverage remains informational; useful/common/learner-fit decisions and explicit defer/reject reasons are the product guardrail.
+- Current N5+N4 word rows: `858`
+- Word-level placement audit currently fails: `86/909` canonical rows. The live split is `47` rows without a current-level anchor and `39` later-level placements missing learner-fit reasons. By level: N5 `46/331`, N4 `0/527`, N3 `13/19`, N2 `14/18`, N1 `13/14`. Run `npm run deck:words:level-anchor-audit` for the live list.
+- Word reading coverage from the current `deck:words:completion:n5` report is N5 `232/344` (`67.4%`). The current `deck:words:completion:n4` command still reads stale generated N4 word output with `8` built rows outside canonical inventory after the source-contract move; rebuild ignored word artifacts before using N4 completion coverage for release decisions.
 - N5+N4 word field/media checks were previously clean, but current word readiness must now treat word-level placement violations as blockers. Golden/platinum commands are still separate from APKG import QA, manual card QA, accessibility checks, and listening review.
 - JLPT kanji source evidence is governed separately from the operational taxonomy. `templates/jlpt_level_contract.json` is represented as the non-voting `current_operational_contract` comparator, not source truth. Each source declares allowed use (`bulk-import`, `manual-citation-only`, `occurrence-only`, `frequency-sanity-only`, `background-only`, `methodology-notes-only`, `operational-comparator`, `derived-summary`, `blocked`, or `needs_review`), source kind, assignment-storage permission, citation expectations, and license/use evidence.
 - Current active assignment lanes are evidence inputs; their audit commands do not themselves move decks. `kanjidic2_legacy` has `1479` reviewed exact assignments and `0` current range rows; future old JLPT 2 rows stay N2/N3 range evidence when present. `tanos_legacy_direct` has `1478` reviewed N1/N4/N5 assignments. `tanos_estimated_split` has `734` lower-weight reviewed estimated N2/N3 assignments (`367` N2 and `367` N3) and must not settle taxonomy movement by itself. `shin_kanzen_master_kanji` has `406` active restricted manual-citation assignments; `1570` worksheet rows are still pending and `236` checked rows are marked non-importing `source_access_gap` until fuller source access can provide exact source-level evidence. `nihongo_sou_matome_kanji` has `498` active restricted manual-citation assignments; `1297` worksheet rows are still pending and `417` checked rows are marked non-importing `source_access_gap`; continue targeted Sou review only where exact assignment proof is available. `ask_hajimete_jlpt_kanji` has `208` active restricted manual-citation assignments from pinned official N1/N3 sample target-entry and index pages plus exact N2 and N5 checklist pages. `official_jlpt_sample_workbooks` is active occurrence-only evidence backed by [templates/jlpt_official_kanji_occurrences.json](templates/jlpt_official_kanji_occurrences.json), and official occurrence rows may store only level, source PDF, section, page, question reference, and observed kanji.

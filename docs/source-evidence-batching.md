@@ -25,7 +25,7 @@ Use source-review priorities in this order unless a tracked issue says otherwise
 | Source gaps | You need a broad evidence-depth scan in operational contract order. | `--priority=source-gaps` |
 | Source level deltas | You are intentionally investigating active source-claimed candidates for one source level. | `--priority=source-level-deltas --source-level=<N1-N5>` |
 
-Keep the human review batch at `--limit=10` unless you have a specific source-access session where a larger ignored worksheet is easier to manage. Broad `source-review-worklist` batches from `11` to `99` rows require `--source-access-note="<exact source surface reviewed>"`. Broad `source-review-worklist` batches with no limit or `100+` rows require a source-access packet before generation. Merge also requires that packet when the batch contains `100+` importable `reviewed` rows. Larger manual decisions should still be reviewed in 10-row passes.
+Keep the human review batch at `--limit=10` unless you have a specific source-access session where a larger ignored worksheet is easier to manage. Broad `source-review-worklist` batches from `11` to `99` rows require `--source-access-note="<exact source surface reviewed>"`. Broad `source-review-worklist` batches with no limit or `100+` rows require a source-access packet before generation. Merge also requires that packet when the batch contains `100+` importable `reviewed` rows. Larger manual decisions should still be reviewed in small passes, but commits are reserved for real milestones.
 
 ## Before Choosing A Lane
 
@@ -49,7 +49,7 @@ npm run data:packet:jlpt:source-access -- --source=<source-id> --surface-type=<e
 
 This packet is not evidence and is not imported. It records the source-access proof for the batch session. Use only exact kanji tables, official correction-list target rows, exact assignment pages, or target-entry pages. Do not use appearance-only, vocabulary-only, adjacent schedule, review table, grammar, or can-do surfaces as assignment proof.
 
-## Per 10-Row Review Pass
+## Per Review Pass
 
 Generate or refresh one reusable ignored batch file for the lane selected by `data:audit:jlpt:source-access`:
 
@@ -117,7 +117,7 @@ At this point, do not import yet by habit. The full ignored worksheet has change
 
 ## Per Milestone
 
-A milestone is usually 5 to 10 reviewed passes, or any smaller set that you want to promote into the tracked evidence manifest. At milestone time, pin the ignored worksheet, preflight it, import it, then run tests.
+A milestone is not every small review pass. It is usually 5 to 10 reviewed passes, exhaustion of an exact source surface, or a smaller separately valuable evidence correction that should be promoted into the tracked evidence manifest. At milestone time, pin the ignored worksheet, preflight it, import it, then run tests.
 
 Preview the new integrity pins:
 
@@ -170,7 +170,7 @@ npm run lint
 npm test
 ```
 
-Commit the tracked pin, tracked evidence manifest, docs, and tests together. Do not commit ignored worksheets, generated APKGs, generated TSVs, media caches, downloaded source files, or private source material.
+Commit the tracked pin, tracked evidence manifest, docs, and tests together only at a real review milestone or for a separate tracked-file fix. Do not commit every small review pass. Do not commit ignored worksheets, generated APKGs, generated TSVs, media caches, downloaded source files, or private source material.
 
 ## Before Product Release
 

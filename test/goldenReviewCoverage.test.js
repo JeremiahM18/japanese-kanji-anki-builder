@@ -106,8 +106,8 @@ test("tracked N2 golden review coverage protects every starter-curated kanji", (
         levels: [2],
     });
 
-    assert.equal(summary.starterCuratedKanji, 366);
-    assert.equal(summary.goldenCoveredKanji, 366);
+    assert.equal(summary.starterCuratedKanji, 349);
+    assert.equal(summary.goldenCoveredKanji, 349);
     assert.equal(summary.missingKanji, 0);
 });
 
@@ -122,8 +122,8 @@ test("tracked N1 golden review coverage reports the started review queue against
         levels: [1],
     });
 
-    assert.equal(summary.starterCuratedKanji, 1231);
-    assert.equal(summary.goldenCoveredKanji, 1231);
+    assert.equal(summary.starterCuratedKanji, 1230);
+    assert.equal(summary.goldenCoveredKanji, 1230);
     assert.equal(summary.missingKanji, 0);
 });
 

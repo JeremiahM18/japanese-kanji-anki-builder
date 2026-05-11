@@ -1012,6 +1012,168 @@
         "priority": "high",
         "reason": "Very useful everyday word for lost/forgotten item; worth reviewing with 忘 labeled as JLPT N3 kanji.",
         "nextStep": "Source-check and promote with visible 忘=N3 labeling if card-surface review passes."
+      },
+      "合う|あう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common useful N4 verb for fitting/matching with a clean 合=N4 anchor and no same-written governed duplicate.",
+        "nextStep": "Promote only in a governed card batch after source/commonness, example, pitch, and word-audio review pass."
+      },
+      "遠慮|えんりょ・する": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source reading includes the ・する template marker and the card identity needs register-sensitive review as 遠慮|えんりょ, not this source row.",
+        "nextStep": "Do not promote this exact row; review normalized 遠慮|えんりょ only in a politeness/register batch."
+      },
+      "お土産|おみやげ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very common travel/social word with an N4 産 anchor and clear learner value beyond coverage chasing.",
+        "nextStep": "Promote in a governed card batch if gikun-style breakdown, example, pitch, and audio review pass."
+      },
+      "科学|かがく": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common school/general-knowledge word with a clean 科=N4 anchor and easy 学 support.",
+        "nextStep": "Promote in a governed card batch if example, pitch, and audio review pass."
+      },
+      "具合|ぐあい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common condition/health word with useful N4 合 support; 具 must be visibly labeled as JLPT N2 support.",
+        "nextStep": "Promote in a governed card batch only with visible 具=N2 labeling and clean example review."
+      },
+      "首|くび": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Core body word with a clean N4 anchor and strong learner usefulness.",
+        "nextStep": "Promote in a governed card batch if word-audio and pitch review pass."
+      },
+      "市|し": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Valid source-listed city/municipality word with a clean 市=N4 anchor, but less immediately useful than 市民 or 市場.",
+        "nextStep": "Promote only after higher-value city vocabulary is reviewed, or defer if 市民/市役所 coverage is enough."
+      },
+      "市民|しみん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common civic word with clean 市=N4 and 民=N4 anchors and clear learner value.",
+        "nextStep": "Promote in a governed card batch if example, pitch, and audio review pass."
+      },
+      "小説|しょうせつ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common reading/media word with N4 説 support and easy 小 support; useful beyond reading coverage.",
+        "nextStep": "Promote in a governed card batch if example, pitch, and audio review pass."
+      },
+      "進む|すすむ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common movement/progress verb with a clean 進=N4 anchor and strong learner usefulness.",
+        "nextStep": "Promote in a governed card batch if example, pitch, and audio review pass."
+      },
+      "生産|せいさん・する": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source reading includes the ・する template marker; the useful card identity would be 生産|せいさん and still needs learner-value review.",
+        "nextStep": "Do not promote this exact row; review normalized 生産|せいさん only in a work/economy vocabulary pass."
+      },
+      "専門|せんもん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common school/work word with N4 門 anchor and useful meaning; 専 must be visibly labeled as JLPT N3 support.",
+        "nextStep": "Promote in a governed card batch only with visible 専=N3 labeling and clean example review."
+      },
+      "都合|つごう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very common convenience/circumstances word with clean N4 都 and 合 anchors.",
+        "nextStep": "Promote in a governed card batch if meaning, example, pitch, and audio review pass."
+      },
+      "都|と": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Standalone metropolitan/municipal 都 is abstract and less useful than concrete N4 words such as 都合 or city-name compounds.",
+        "nextStep": "Reconsider only after higher-value 都 vocabulary is covered."
+      },
+      "遠く|とおく": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common distance adverb/noun with a clean 遠=N4 anchor and direct learner usefulness.",
+        "nextStep": "Promote in a governed card batch if example, pitch, and audio review pass."
+      },
+      "乗り換える|のりかえる": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very useful transportation verb with N4 乗 anchor; 換 must be visibly labeled as JLPT N3 support.",
+        "nextStep": "Promote in a governed card batch only with visible 換=N3 labeling and clean transit example review."
+      },
+      "林|はやし": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Valid nature word with a clean 林=N4 anchor, though lower immediate utility than daily-life and transit candidates.",
+        "nextStep": "Promote after higher-priority N4 enhancement words, or defer if 森 coverage is sufficient."
+      },
+      "番組|ばんぐみ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common media word with N4 番 anchor and useful learner value; 組 must be visibly labeled as JLPT N3 support.",
+        "nextStep": "Promote in a governed card batch only with visible 組=N3 labeling and clean example review."
+      },
+      "光る|ひかる": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Common verb with a clean 光=N4 anchor, useful but potentially redundant with 光|ひかり in the same enhancement batch.",
+        "nextStep": "Review alongside 光|ひかり and promote only if both noun and verb cards are worth separate learner surfaces."
+      },
+      "光|ひかり": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common noun with a clean 光=N4 anchor and already natural learner examples in curated data.",
+        "nextStep": "Promote in a governed card batch if word-audio and pitch review pass."
+      },
+      "引き出し|ひきだし": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Useful household word with N4 引 anchor and easy 出 support; card identity is concrete and learner-friendly.",
+        "nextStep": "Promote in a governed card batch if example, pitch, and audio review pass."
+      },
+      "引っ越す|ひっこす": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very common life-event verb with N4 引 anchor; 越 must be visibly labeled as JLPT N3 support.",
+        "nextStep": "Promote in a governed card batch only with visible 越=N3 labeling and clean example review."
+      },
+      "太る|ふとる": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Common verb with a clean 太=N4 anchor, but body/weight wording needs careful learner-facing example tone.",
+        "nextStep": "Promote only after example review confirms a neutral, non-shaming card surface."
+      },
+      "間に合う|まにあう": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Very useful expression, but particle-shaped; it should not enter the default word deck until expression-card policy is explicit.",
+        "nextStep": "Reconsider in an expression/phrase governance pass, or promote only after policy explicitly allows this identity."
+      },
+      "回る|まわる": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common movement verb with a clean 回=N4 anchor and broad learner usefulness.",
+        "nextStep": "Promote in a governed card batch if example, pitch, and audio review pass."
+      },
+      "森|もり": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common nature noun with a clean 森=N4 anchor and already natural learner examples in curated data.",
+        "nextStep": "Promote in a governed card batch if word-audio and pitch review pass."
+      },
+      "割合|わりあい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful ratio/percentage word with N4 合 anchor; 割 must be visibly labeled as JLPT N3 support and the concept is slightly abstract.",
+        "nextStep": "Promote after higher-priority daily-life N4 candidates, with visible 割=N3 labeling."
       }
     }
   }

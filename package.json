@@ -25,6 +25,7 @@
     "data:audit:jlpt:sources": "node scripts/auditJlptKanjiSourceEvidence.js",
     "data:audit:jlpt:source-levels": "node scripts/auditJlptKanjiSourceLevelDeltas.js",
     "data:audit:jlpt:source-access": "node scripts/auditJlptKanjiSourceAccess.js",
+    "data:audit:jlpt:source-ocr-intake": "node scripts/reportJlptKanjiSourceOcrIntake.js",
     "data:audit:jlpt:source-inputs": "node scripts/reportJlptKanjiSourceInputs.js",
     "data:packet:jlpt:source-access": "node scripts/createJlptKanjiSourceAccessPacket.js",
     "data:merge:jlpt:source-batch": "node scripts/mergeJlptKanjiSourceBatch.js",

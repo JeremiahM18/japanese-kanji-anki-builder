@@ -332,8 +332,8 @@
       "japanesePublished": false,
       "countsForConsensus": false,
       "weight": 1,
-      "licenseStatus": "needs_review",
-      "notes": "Use only after license and extraction terms are reviewed.",
+      "licenseStatus": "restricted",
+      "notes": "Reviewed terms keep this lane blocked for product evidence unless Kanshudo grants an express permission or license path.",
       "lineage": "dictionary_or_learning_platform",
       "publisherIndependence": "kanshudo",
       "evidenceLineage": "dictionary_or_learning_platform",
@@ -344,9 +344,9 @@
       "canStoreExcerpts": false,
       "requiresCitation": true,
       "positiveEvidenceOnly": false,
-      "licenseEvidenceUrl": "https://www.kanshudo.com/tc.html",
-      "licenseReviewedAt": "2026-05-05",
-      "legalNotes": "Do not import or count until terms grant a governed use path."
+      "licenseEvidenceUrl": "https://www.kanshudo.com/tc",
+      "licenseReviewedAt": "2026-05-11",
+      "legalNotes": "Kanshudo terms limit use to personal or group study unless expressly permitted; data may not be downloaded, scraped, distributed, copied, or used outside Kanshudo except for personal study without express permission. Keep blocked unless a written permission/license path is approved."
     },
     "jpdb": {
       "name": "jpdb kanji metadata",
@@ -359,8 +359,8 @@
       "japanesePublished": false,
       "countsForConsensus": false,
       "weight": 1,
-      "licenseStatus": "needs_review",
-      "notes": "Frequency is a sanity signal, not an automatic JLPT level assignment.",
+      "licenseStatus": "restricted",
+      "notes": "Reviewed terms allow only non-abusive site use and forbid automated access/scraping. Keep this lane as manual frequency sanity only; it is not assignment truth.",
       "lineage": "frequency_sanity_signal",
       "publisherIndependence": "jpdb",
       "evidenceLineage": "frequency_sanity_signal",
@@ -371,9 +371,9 @@
       "canStoreExcerpts": false,
       "requiresCitation": true,
       "positiveEvidenceOnly": false,
-      "licenseEvidenceUrl": "https://jpdb.io/",
-      "licenseReviewedAt": "2026-05-05",
-      "legalNotes": "Frequency/JLPT platform metadata is reserved for sanity checks only unless a legal assignment-use path is reviewed."
+      "licenseEvidenceUrl": "https://jpdb.io/terms-of-use",
+      "licenseReviewedAt": "2026-05-11",
+      "legalNotes": "jpdb terms forbid automated access/scraping and advise contacting jpdb before unintended use. Use only for sparse manual frequency sanity checks with citations unless written permission/API terms approve broader extraction. It cannot assign JLPT levels or vote in consensus."
     },
     "wanikani": {
       "name": "WaniKani kanji metadata",
@@ -386,8 +386,8 @@
       "japanesePublished": false,
       "countsForConsensus": false,
       "weight": 1,
-      "licenseStatus": "needs_review",
-      "notes": "Use only after license and API/export terms are reviewed.",
+      "licenseStatus": "restricted",
+      "notes": "Reviewed terms/API docs show structured API access, but content rights and resale/high-throughput use remain restricted. Keep blocked until a governed API/export and permission path is approved.",
       "lineage": "dictionary_or_learning_platform",
       "publisherIndependence": "wanikani",
       "evidenceLineage": "dictionary_or_learning_platform",
@@ -399,8 +399,8 @@
       "requiresCitation": true,
       "positiveEvidenceOnly": false,
       "licenseEvidenceUrl": "https://www.wanikani.com/terms",
-      "licenseReviewedAt": "2026-05-05",
-      "legalNotes": "Do not import or count platform data unless a governed use path is approved."
+      "licenseReviewedAt": "2026-05-11",
+      "legalNotes": "WaniKani terms reserve Tofugu content rights, restrict copying/resale/exploitation without written permission, and place API use under the terms/rate limits. Do not import or count platform data unless a governed API/export and permission path is approved."
     },
     "kanjidic2_legacy": {
       "name": "KANJIDIC2 legacy JLPT metadata",
@@ -580,8 +580,8 @@
       "japanesePublished": true,
       "countsForConsensus": false,
       "weight": 1,
-      "licenseStatus": "needs_review",
-      "notes": "Official background metadata for sanity checks; school grade is not a JLPT assignment and must not vote directly in consensus.",
+      "licenseStatus": "approved",
+      "notes": "Official Japanese government background metadata for sanity checks; school grade is not a JLPT assignment and must not vote directly in consensus.",
       "lineage": "official_japanese_background",
       "publisherIndependence": "japanese_government_joyo",
       "evidenceLineage": "official_japanese_background",
@@ -592,9 +592,9 @@
       "canStoreExcerpts": false,
       "requiresCitation": true,
       "positiveEvidenceOnly": false,
-      "licenseEvidenceUrl": "https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
-      "licenseReviewedAt": "2026-05-05",
-      "legalNotes": "Official background metadata only. It can sanity-check kanji commonness or school grade but cannot vote as JLPT level evidence."
+      "licenseEvidenceUrl": "https://www.mext.go.jp/b_menu/1351168.htm",
+      "licenseReviewedAt": "2026-05-11",
+      "legalNotes": "Bunka.go.jp follows the MEXT website terms, which allow reuse including commercial use with attribution and note CC BY 4.0 compatibility for covered content. Use only as official background metadata with citation; it can sanity-check kanji commonness or school grade but cannot vote as JLPT level evidence."
     },
     "official_jlpt_sample_workbooks": {
       "name": "Official JLPT sample questions and workbooks",

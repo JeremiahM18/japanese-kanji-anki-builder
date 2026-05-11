@@ -17,7 +17,13 @@ const TOOL_CHECKS = [
     {
         id: "tesseract",
         label: "Tesseract OCR",
-        commands: [{ command: "tesseract", args: ["--version"] }],
+        commands: [
+            { command: "tesseract", args: ["--version"] },
+            {
+                command: path.join(process.env.USERPROFILE || "", "scoop", "shims", "tesseract.exe"),
+                args: ["--version"],
+            },
+        ],
         requiredFor: "local OCR extraction",
     },
     {
@@ -147,6 +153,20 @@ function checkTool(tool, commandRunner = spawnSync) {
     };
 }
 
+function listTesseractLanguages({ tesseractCommand = "tesseract", commandRunner = spawnSync } = {}) {
+    const result = commandRunner(tesseractCommand, ["--list-langs"], {
+        encoding: "utf8",
+        windowsHide: true,
+    });
+    if (result.error || result.status !== 0) {
+        return [];
+    }
+    return String(result.stdout || "")
+        .split(/\r?\n/)
+        .map((line) => line.trim())
+        .filter((line) => line && !line.startsWith("List of available languages"));
+}
+
 function buildOcrIntakeReport({
     rootDir = path.resolve(process.cwd(), DEFAULT_ROOT),
     levelDirs = DEFAULT_LEVEL_DIRS,
@@ -155,7 +175,16 @@ function buildOcrIntakeReport({
     const resolvedRoot = path.resolve(process.cwd(), rootDir);
     const files = collectInputFiles({ rootDir: resolvedRoot, levelDirs });
     const tools = TOOL_CHECKS.map((tool) => checkTool(tool, commandRunner));
-    const hasOcrEngine = tools.some((tool) => tool.id === "tesseract" && tool.available);
+    const tesseractTool = tools.find((tool) => tool.id === "tesseract");
+    const hasOcrEngine = Boolean(tesseractTool?.available);
+    const tesseractLanguages = hasOcrEngine
+        ? listTesseractLanguages({
+            tesseractCommand: tesseractTool.command,
+            commandRunner,
+        })
+        : [];
+    const hasJapaneseLanguage = tesseractLanguages.includes("jpn");
+    const hasVerticalJapaneseLanguage = tesseractLanguages.includes("jpn_vert");
     const blockers = [];
 
     if (files.length === 0) {
@@ -163,6 +192,8 @@ function buildOcrIntakeReport({
     }
     if (!hasOcrEngine) {
         blockers.push("Tesseract OCR is not available in PATH; install Tesseract with Japanese language data or provide searchable PDFs from a trusted scanner app");
+    } else if (!hasJapaneseLanguage) {
+        blockers.push("Tesseract is available, but Japanese language data (jpn.traineddata) is missing");
     }
 
     const status = blockers.length === 0 ? "ready" : files.length === 0 ? "needs_input" : "blocked";
@@ -174,6 +205,9 @@ function buildOcrIntakeReport({
         acceptedExtensions: [...INPUT_EXTENSIONS].sort(),
         inputFiles: files,
         tools,
+        tesseractLanguages,
+        hasJapaneseLanguage,
+        hasVerticalJapaneseLanguage,
         blockers,
         noDeckMutation: true,
     };
@@ -196,6 +230,9 @@ function formatReport(report = {}) {
 
     for (const tool of report.tools || []) {
         lines.push(`- ${tool.label}: ${tool.available ? "available" : "missing"}${tool.version ? ` (${tool.version})` : ""}; ${tool.requiredFor}`);
+    }
+    if (report.tesseractLanguages?.length > 0) {
+        lines.push(`- Tesseract languages: ${report.tesseractLanguages.join(", ")}`);
     }
 
     if (report.inputFiles?.length > 0) {
@@ -243,5 +280,6 @@ module.exports = {
     buildOcrIntakeReport,
     collectInputFiles,
     formatReport,
+    listTesseractLanguages,
     parseArgs,
 };

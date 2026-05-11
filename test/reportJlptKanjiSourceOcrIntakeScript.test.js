@@ -7,6 +7,7 @@ const path = require("node:path");
 const {
     buildOcrIntakeReport,
     collectInputFiles,
+    listTesseractLanguages,
     parseArgs,
 } = require("../scripts/reportJlptKanjiSourceOcrIntake");
 
@@ -55,8 +56,11 @@ test("buildOcrIntakeReport reports ready when private input and OCR engine are a
         const report = buildOcrIntakeReport({
             rootDir: root,
             levelDirs: ["n2"],
-            commandRunner(command) {
+            commandRunner(command, args) {
                 if (command === "tesseract") {
+                    if (args.includes("--list-langs")) {
+                        return { status: 0, stdout: "List of available languages\neng\njpn\njpn_vert\n", stderr: "" };
+                    }
                     return { status: 0, stdout: "tesseract 5.0.0\n", stderr: "" };
                 }
                 return { error: new Error("missing"), status: null, stdout: "", stderr: "" };
@@ -66,7 +70,23 @@ test("buildOcrIntakeReport reports ready when private input and OCR engine are a
         assert.equal(report.status, "ready");
         assert.equal(report.blockers.length, 0);
         assert.equal(report.inputFiles.length, 1);
+        assert.equal(report.hasJapaneseLanguage, true);
+        assert.equal(report.hasVerticalJapaneseLanguage, true);
     } finally {
         fs.rmSync(root, { recursive: true, force: true });
     }
+});
+
+test("listTesseractLanguages parses available language output", () => {
+    const languages = listTesseractLanguages({
+        commandRunner() {
+            return {
+                status: 0,
+                stdout: "List of available languages in \"tessdata\" (3):\neng\njpn\nosd\n",
+                stderr: "",
+            };
+        },
+    });
+
+    assert.deepEqual(languages, ["eng", "jpn", "osd"]);
 });

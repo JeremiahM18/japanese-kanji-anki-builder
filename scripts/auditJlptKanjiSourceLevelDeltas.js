@@ -353,6 +353,28 @@ function buildSourceInputReviews({ sourceInputsPath = null, evidence = {} } = {}
     return reviews;
 }
 
+function buildSourceLevelDeltaReportFromPaths({
+    contractPath,
+    evidencePath,
+    sourceInputsPath = null,
+    limit = 25,
+} = {}) {
+    const evidence = loadJlptKanjiSourceEvidence(evidencePath);
+    const contract = loadJlptLevelContract(contractPath);
+    const report = buildJlptKanjiSourceLevelDeltaReport({
+        contract,
+        evidence,
+        limit,
+        sourceInputReviews: buildSourceInputReviews({ sourceInputsPath, evidence }),
+    });
+
+    return {
+        contract,
+        evidence,
+        report,
+    };
+}
+
 function main() {
     const options = parseArgs(process.argv.slice(2));
     assertNoUnknownArgs("data:audit:jlpt:source-levels", options.unknownArgs);
@@ -372,12 +394,11 @@ function main() {
         throw new Error(`Missing JLPT kanji source input config: ${sourceInputsPath}`);
     }
 
-    const evidence = loadJlptKanjiSourceEvidence(evidencePath);
-    const report = buildJlptKanjiSourceLevelDeltaReport({
-        contract: loadJlptLevelContract(contractPath),
-        evidence,
+    const { report } = buildSourceLevelDeltaReportFromPaths({
+        contractPath,
+        evidencePath,
+        sourceInputsPath,
         limit: options.limit,
-        sourceInputReviews: buildSourceInputReviews({ sourceInputsPath, evidence }),
     });
 
     if (options.json) {
@@ -412,8 +433,9 @@ module.exports = {
     DEFAULT_CONTRACT,
     DEFAULT_EVIDENCE,
     DEFAULT_SOURCE_INPUTS,
-    buildSourceInputReviews,
     buildJsonOutput,
+    buildSourceInputReviews,
+    buildSourceLevelDeltaReportFromPaths,
     formatWorklistPrioritySummary,
     formatJlptKanjiSourceLevelDeltaReport,
     main,

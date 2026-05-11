@@ -1001,12 +1001,15 @@
         "tanos_legacy_direct": {
           "level": "N1",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
-      "consensusLevel": "N1",
-      "agreementScore": 1,
-      "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims."
+      "agreementScore": 0.5,
+      "confidence": "disputed",
+      "notes": "Computed from active source assignments. Current operational taxonomy and independent source evidence disagree; do not move decks or word placement until additional governed sources resolve the dispute."
     },
     "磁": {
       "sources": {
@@ -1110,13 +1113,17 @@
           "level": "N1",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N1",
           "reviewStatus": "reviewed"
         }
       },
       "consensusLevel": "N1",
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims."
     },
@@ -9041,12 +9048,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "ask_hajimete_jlpt_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -9305,12 +9316,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "ask_hajimete_jlpt_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -9389,12 +9404,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "ask_hajimete_jlpt_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -9797,6 +9816,10 @@
           "level": "N2",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N2",
           "reviewStatus": "reviewed"
@@ -9806,8 +9829,8 @@
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.6,
-      "confidence": "weak_evidence",
+      "agreementScore": 0.7142857142857143,
+      "confidence": "standard_confidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N2"
     },
@@ -9877,6 +9900,10 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N2",
           "reviewStatus": "reviewed"
@@ -9886,10 +9913,10 @@
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.6,
+      "agreementScore": 0.5714285714285714,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "consensusLevel": "N2"
     },
     "瑛": {
       "sources": {
@@ -10296,15 +10323,19 @@
           "level": "N2",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "ask_hajimete_jlpt_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.6666666666666666,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "consensusLevel": "N2"
     },
     "奥": {
       "sources": {
@@ -10396,6 +10427,10 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
@@ -10405,8 +10440,8 @@
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
-      "confidence": "high_confidence",
+      "agreementScore": 0.7142857142857143,
+      "confidence": "standard_confidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
     },
@@ -10444,12 +10479,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "ask_hajimete_jlpt_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -10492,13 +10531,17 @@
           "level": "N2",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "ask_hajimete_jlpt_kanji": {
           "level": "N2",
           "reviewStatus": "reviewed"
         }
       },
       "agreementScore": 1,
-      "confidence": "weak_evidence",
+      "confidence": "high_confidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N2"
     },
@@ -10596,6 +10639,10 @@
           "level": "N2",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
@@ -10605,8 +10652,8 @@
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.8,
-      "confidence": "high_confidence",
+      "agreementScore": 0.5714285714285714,
+      "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
     },
@@ -10660,6 +10707,10 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N2",
           "reviewStatus": "reviewed"
@@ -10669,10 +10720,10 @@
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.6,
+      "agreementScore": 0.5714285714285714,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "consensusLevel": "N2"
     },
     "仮": {
       "sources": {
@@ -10776,12 +10827,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "ask_hajimete_jlpt_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -10916,6 +10971,10 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
@@ -10925,8 +10984,8 @@
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
-      "confidence": "high_confidence",
+      "agreementScore": 0.7142857142857143,
+      "confidence": "standard_confidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
     },
@@ -11072,6 +11131,10 @@
           "level": "N2",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
@@ -11081,8 +11144,8 @@
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.8,
-      "confidence": "high_confidence",
+      "agreementScore": 0.5714285714285714,
+      "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
     },
@@ -11104,6 +11167,10 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
@@ -11113,8 +11180,8 @@
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
-      "confidence": "high_confidence",
+      "agreementScore": 0.7142857142857143,
+      "confidence": "standard_confidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
     },
@@ -11212,12 +11279,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "ask_hajimete_jlpt_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -11380,15 +11451,19 @@
           "level": "N2",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "ask_hajimete_jlpt_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.6666666666666666,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "consensusLevel": "N2"
     },
     "械": {
       "sources": {
@@ -11488,12 +11563,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "ask_hajimete_jlpt_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -11524,6 +11603,10 @@
           "level": "N2",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
@@ -11533,8 +11616,8 @@
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.8,
-      "confidence": "high_confidence",
+      "agreementScore": 0.5714285714285714,
+      "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
     },
@@ -11712,15 +11795,19 @@
           "level": "N2",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "ask_hajimete_jlpt_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.6666666666666666,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "consensusLevel": "N2"
     },
     "拡": {
       "sources": {
@@ -11740,12 +11827,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -11835,11 +11926,15 @@
         "tanos_estimated_split": {
           "level": "N2",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
       "agreementScore": 1,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N2"
     },
     "革": {
@@ -12016,12 +12111,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -12319,12 +12418,16 @@
         "tanos_estimated_split": {
           "level": "N3",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
+      "consensusLevel": "N2"
     },
     "官": {
       "sources": {
@@ -12412,12 +12515,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -12732,12 +12839,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -12876,12 +12987,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -12943,12 +13058,16 @@
         "tanos_estimated_split": {
           "level": "N3",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
+      "consensusLevel": "N2"
     },
     "器": {
       "sources": {
@@ -12956,12 +13075,16 @@
           "level": "N1",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "ask_hajimete_jlpt_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.5,
+      "agreementScore": 0.3333333333333333,
       "confidence": "disputed",
       "notes": "Computed from active source assignments. Current operational taxonomy and independent source evidence disagree; do not move decks or word placement until additional governed sources resolve the dispute."
     },
@@ -13154,12 +13277,16 @@
         "tanos_estimated_split": {
           "level": "N3",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
+      "consensusLevel": "N2"
     },
     "棋": {
       "sources": {
@@ -13199,12 +13326,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "ask_hajimete_jlpt_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -13331,15 +13462,18 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N1",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.6666666666666666,
-      "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N1"
+      "agreementScore": 0.4,
+      "confidence": "disputed",
+      "notes": "Computed from active source assignments. Current operational taxonomy and independent source evidence disagree; do not move decks or word placement until additional governed sources resolve the dispute."
     },
     "起": {
       "sources": {
@@ -13535,12 +13669,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -13626,12 +13764,16 @@
         "tanos_estimated_split": {
           "level": "N3",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
+      "consensusLevel": "N2"
     },
     "逆": {
       "sources": {
@@ -13830,24 +13972,31 @@
         "tanos_legacy_direct": {
           "level": "N1",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
-      "consensusLevel": "N1",
-      "agreementScore": 1,
-      "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims."
+      "agreementScore": 0.5,
+      "confidence": "disputed",
+      "notes": "Computed from active source assignments. Current operational taxonomy and independent source evidence disagree; do not move decks or word placement until additional governed sources resolve the dispute."
     },
     "球": {
       "sources": {
         "tanos_estimated_split": {
           "level": "N3",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
+      "consensusLevel": "N2"
     },
     "究": {
       "sources": {
@@ -14150,12 +14299,16 @@
         "tanos_estimated_split": {
           "level": "N3",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
+      "consensusLevel": "N2"
     },
     "凶": {
       "sources": {
@@ -14347,15 +14500,19 @@
           "level": "N2",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.6666666666666666,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "consensusLevel": "N2"
     },
     "況": {
       "sources": {
@@ -14506,24 +14663,32 @@
         "tanos_estimated_split": {
           "level": "N3",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
+      "consensusLevel": "N2"
     },
     "曲": {
       "sources": {
         "tanos_estimated_split": {
           "level": "N3",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
+      "consensusLevel": "N2"
     },
     "極": {
       "sources": {
@@ -14667,15 +14832,19 @@
           "level": "N2",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.6666666666666666,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "consensusLevel": "N2"
     },
     "近": {
       "sources": {
@@ -14835,12 +15004,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "ask_hajimete_jlpt_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -14850,12 +15023,16 @@
         "tanos_estimated_split": {
           "level": "N3",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
+      "consensusLevel": "N2"
     },
     "愚": {
       "sources": {
@@ -15074,11 +15251,15 @@
         "tanos_estimated_split": {
           "level": "N2",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
       "agreementScore": 1,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N2"
     },
     "係": {
@@ -15087,12 +15268,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -15218,12 +15403,16 @@
         "tanos_estimated_split": {
           "level": "N3",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
+      "consensusLevel": "N2"
     },
     "径": {
       "sources": {
@@ -15403,15 +15592,18 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N1",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.6666666666666666,
-      "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N1"
+      "agreementScore": 0.4,
+      "confidence": "disputed",
+      "notes": "Computed from active source assignments. Current operational taxonomy and independent source evidence disagree; do not move decks or word placement until additional governed sources resolve the dispute."
     },
     "計": {
       "sources": {
@@ -15559,12 +15751,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -15574,12 +15770,16 @@
         "tanos_estimated_split": {
           "level": "N3",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
+      "consensusLevel": "N2"
     },
     "潔": {
       "sources": {
@@ -15602,11 +15802,15 @@
         "tanos_estimated_split": {
           "level": "N2",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
       "agreementScore": 1,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N2"
     },
     "月": {
@@ -15635,6 +15839,10 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
@@ -15644,8 +15852,8 @@
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
-      "confidence": "high_confidence",
+      "agreementScore": 0.7142857142857143,
+      "confidence": "standard_confidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
     },
@@ -16097,12 +16305,16 @@
         "tanos_estimated_split": {
           "level": "N3",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
+      "consensusLevel": "N2"
     },
     "厳": {
       "sources": {
@@ -16157,11 +16369,15 @@
         "tanos_estimated_split": {
           "level": "N2",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
       "agreementScore": 1,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N2"
     },
     "源": {
@@ -16202,12 +16418,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "ask_hajimete_jlpt_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -16237,16 +16457,24 @@
         "tanos_estimated_split": {
           "level": "N3",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
+      "consensusLevel": "N2"
     },
     "個": {
       "sources": {
         "tanos_estimated_split": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
           "level": "N2",
           "reviewStatus": "reviewed"
         },
@@ -16255,10 +16483,10 @@
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.6666666666666666,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "consensusLevel": "N2"
     },
     "古": {
       "sources": {
@@ -16792,12 +17020,16 @@
           "level": "N4",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.5,
+      "agreementScore": 0.3333333333333333,
       "confidence": "disputed",
       "notes": "Computed from active source assignments. Current operational taxonomy and independent source evidence disagree; do not move decks or word placement until additional governed sources resolve the dispute."
     },
@@ -16826,11 +17058,15 @@
         "tanos_estimated_split": {
           "level": "N2",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
       "agreementScore": 1,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N2"
     },
     "厚": {
@@ -16881,12 +17117,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -17513,6 +17753,10 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N4",
           "reviewStatus": "reviewed"
@@ -17522,7 +17766,7 @@
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.6,
+      "agreementScore": 0.42857142857142855,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -17804,12 +18048,16 @@
         "tanos_estimated_split": {
           "level": "N3",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
+      "consensusLevel": "N2"
     },
     "墾": {
       "sources": {
@@ -20583,6 +20831,10 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N2",
           "reviewStatus": "reviewed"
@@ -20592,10 +20844,10 @@
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.6,
+      "agreementScore": 0.5714285714285714,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "consensusLevel": "N2"
     },
     "授": {
       "sources": {
@@ -22216,15 +22468,18 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N1",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.6666666666666666,
-      "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N1"
+      "agreementScore": 0.4,
+      "confidence": "disputed",
+      "notes": "Computed from active source assignments. Current operational taxonomy and independent source evidence disagree; do not move decks or word placement until additional governed sources resolve the dispute."
     },
     "渉": {
       "sources": {
@@ -22572,12 +22827,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -23775,13 +24034,17 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N2",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.6666666666666666,
-      "confidence": "weak_evidence",
+      "agreementScore": 0.8,
+      "confidence": "high_confidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N2"
     },
@@ -24099,13 +24362,17 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N2",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.6666666666666666,
-      "confidence": "weak_evidence",
+      "agreementScore": 0.8,
+      "confidence": "high_confidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N2"
     },
@@ -24638,11 +24905,15 @@
         "tanos_estimated_split": {
           "level": "N2",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
       "agreementScore": 1,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N2"
     },
     "船": {
@@ -27606,12 +27877,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "ask_hajimete_jlpt_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -27834,13 +28109,17 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N2",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.6666666666666666,
-      "confidence": "weak_evidence",
+      "agreementScore": 0.8,
+      "confidence": "high_confidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N2"
     },
@@ -28118,15 +28397,19 @@
           "level": "N2",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.6666666666666666,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "consensusLevel": "N2"
     },
     "典": {
       "sources": {
@@ -29418,6 +29701,10 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N2",
           "reviewStatus": "reviewed"
@@ -29427,10 +29714,10 @@
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.6,
+      "agreementScore": 0.5714285714285714,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "consensusLevel": "N2"
     },
     "凪": {
       "sources": {
@@ -31077,12 +31364,16 @@
         "tanos_estimated_split": {
           "level": "N3",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
+      "consensusLevel": "N2"
     },
     "非": {
       "sources": {
@@ -31090,12 +31381,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -32430,13 +32725,17 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N2",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 0.6666666666666666,
-      "confidence": "weak_evidence",
+      "agreementScore": 0.8,
+      "confidence": "high_confidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N2"
     },
@@ -34603,12 +34902,16 @@
           "level": "N3",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N3",
           "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6,
       "confidence": "weak_evidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N3"
@@ -34799,14 +35102,18 @@
           "level": "N5",
           "reviewStatus": "reviewed"
         },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
+        },
         "nihongo_sou_matome_kanji": {
           "level": "N5",
           "reviewStatus": "reviewed"
         }
       },
       "consensusLevel": "N5",
-      "agreementScore": 1,
-      "confidence": "high_confidence",
+      "agreementScore": 0.75,
+      "confidence": "standard_confidence",
       "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims."
     },
     "宥": {
@@ -34978,11 +35285,15 @@
         "tanos_estimated_split": {
           "level": "N2",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
       "agreementScore": 1,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
       "consensusLevel": "N2"
     },
     "夕": {
@@ -35206,12 +35517,16 @@
         "tanos_estimated_split": {
           "level": "N3",
           "reviewStatus": "reviewed"
+        },
+        "shin_kanzen_master_kanji": {
+          "level": "N2",
+          "reviewStatus": "reviewed"
         }
       },
-      "agreementScore": 1,
+      "agreementScore": 0.6666666666666666,
       "confidence": "weak_evidence",
-      "notes": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
-      "consensusLevel": "N3"
+      "notes": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
+      "consensusLevel": "N2"
     },
     "洋": {
       "sources": {

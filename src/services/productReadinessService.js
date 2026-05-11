@@ -11,6 +11,7 @@ async function runCliMainInProcess({ main, args = [], cwd = process.cwd() } = {}
     const originalCwd = process.cwd();
     const originalArgv = process.argv;
     const originalExit = process.exit;
+    const originalExitCode = process.exitCode;
     const originalStdoutWrite = process.stdout.write;
     const originalStderrWrite = process.stderr.write;
     let stdout = "";
@@ -18,6 +19,7 @@ async function runCliMainInProcess({ main, args = [], cwd = process.cwd() } = {}
     let status = 0;
 
     process.argv = [process.execPath, "product-readiness-subcommand", ...args];
+    process.exitCode = 0;
     process.exit = (code = 0) => {
         throw new CliExit(Number.isInteger(code) ? code : 0);
     };
@@ -56,8 +58,12 @@ async function runCliMainInProcess({ main, args = [], cwd = process.cwd() } = {}
         if (process.cwd() !== originalCwd) {
             process.chdir(originalCwd);
         }
+        if (status === 0 && Number.isInteger(process.exitCode) && process.exitCode !== 0) {
+            status = process.exitCode;
+        }
         process.argv = originalArgv;
         process.exit = originalExit;
+        process.exitCode = originalExitCode;
         process.stdout.write = originalStdoutWrite;
         process.stderr.write = originalStderrWrite;
     }
@@ -84,6 +90,7 @@ const N5_PRODUCT_READINESS_SCOPE = Object.freeze({
         "JLPT word contract and starter alignment",
         "managed audio provenance policy",
         "tracked-source N5 word TSV artifact generation",
+        "N5 word-level placement policy",
         "N5 kanji golden review benchmark",
         "N5 word golden review benchmark",
     ],
@@ -129,6 +136,14 @@ const N5_PRODUCT_READINESS_COMMANDS = Object.freeze([
         command: process.execPath,
         args: [path.join("scripts", "trackedSourceArtifacts.js"), "--level=5"],
         runInProcess: buildScriptRunner("scripts/trackedSourceArtifacts.js", ["--level=5"]),
+    }),
+    Object.freeze({
+        id: "n5-word-level-placement-audit",
+        label: "N5 word-level placement audit",
+        displayCommand: "npm run deck:words:level-anchor-audit -- --level=5 --limit=12",
+        command: process.execPath,
+        args: [path.join("scripts", "auditWordLevelAnchors.js"), "--level=5", "--limit=12"],
+        runInProcess: buildScriptRunner("scripts/auditWordLevelAnchors.js", ["--level=5", "--limit=12"]),
     }),
     Object.freeze({
         id: "n5-kanji-golden-review",
@@ -277,5 +292,6 @@ module.exports = {
     buildSpawnOptions,
     formatProductReadinessReport,
     normalizeCommandResult,
+    runCliMainInProcess,
     runProductReadinessGate,
 };

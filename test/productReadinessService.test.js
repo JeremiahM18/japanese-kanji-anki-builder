@@ -6,6 +6,7 @@ const {
     buildProductReadinessPlan,
     buildSpawnOptions,
     formatProductReadinessReport,
+    runCliMainInProcess,
     runProductReadinessGate,
 } = require("../src/services/productReadinessService");
 
@@ -19,6 +20,7 @@ test("buildProductReadinessPlan defines the N5 automated product checkpoint", ()
         "word-contract-audit",
         "audio-provenance-audit",
         "n5-tracked-source-word-artifact",
+        "n5-word-level-placement-audit",
         "n5-kanji-golden-review",
         "n5-word-golden-review",
     ]);
@@ -42,6 +44,7 @@ test("runProductReadinessGate passes when all checkpoint commands pass", async (
     assert.equal(report.checks.length, N5_PRODUCT_READINESS_COMMANDS.length);
     assert.equal(calls.some((call) => call.includes("reviewGoldenWordLevel.js")), true);
     assert.equal(calls.some((call) => call.includes("auditJlptKanjiSourceEvidence.js")), false);
+    assert.equal(calls.some((call) => call.includes("auditWordLevelAnchors.js")), true);
     assert.equal(calls.some((call) => call.includes("trackedSourceArtifacts.js")), true);
 });
 
@@ -68,6 +71,34 @@ test("runProductReadinessGate fails when any checkpoint command fails", async ()
     const failed = report.checks.find((check) => check.id === "n5-word-golden-review");
     assert.equal(failed.passed, false);
     assert.match(failed.stderrTail, /golden drift/);
+});
+
+test("runProductReadinessGate fails when word placement policy fails", async () => {
+    const report = await runProductReadinessGate({
+        runCommandFn(command, args) {
+            if (args.some((arg) => String(arg).includes("auditWordLevelAnchors.js"))) {
+                return { status: 1, stdout: "Word level placement violations: 46", stderr: "" };
+            }
+            return { status: 0, stdout: "ok", stderr: "" };
+        },
+    });
+
+    assert.equal(report.passed, false);
+    const failed = report.checks.find((check) => check.id === "n5-word-level-placement-audit");
+    assert.equal(failed.passed, false);
+    assert.match(failed.stdoutTail, /Word level placement violations: 46/);
+});
+
+test("runCliMainInProcess respects process.exitCode failures without process.exit", async () => {
+    const result = await runCliMainInProcess({
+        async main() {
+            process.stdout.write("soft failure");
+            process.exitCode = 1;
+        },
+    });
+
+    assert.equal(result.status, 1);
+    assert.match(result.stdout, /soft failure/);
 });
 
 test("formatProductReadinessReport states scope and exclusions", () => {

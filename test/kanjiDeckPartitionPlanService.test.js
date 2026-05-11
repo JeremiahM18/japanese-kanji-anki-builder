@@ -6,6 +6,7 @@ const {
     buildKanjiDeckPartitionPlan,
     classifyAdditionalEntry,
     formatKanjiDeckPartitionPlan,
+    shouldIncludeDeckCandidate,
 } = require("../src/services/kanjiDeckPartitionPlanService");
 
 function buildRow(overrides = {}) {
@@ -71,7 +72,22 @@ test("classifyAdditionalEntry separates consensus, non-consensus, and disputed s
     assert.equal(classifyAdditionalEntry(buildRow({ confidence: "disputed" })), "disputed_source_claim");
 });
 
-test("buildKanjiDeckPartitionPlan keeps core decks separate and excludes disputed additions by default", () => {
+test("default deck candidates require target-level consensus", () => {
+    assert.equal(shouldIncludeDeckCandidate(buildRow({ targetLevel: 5, sourceConsensusLevel: 5 })), true);
+    assert.equal(shouldIncludeDeckCandidate(buildRow({ targetLevel: 5, sourceConsensusLevel: 4 })), false);
+    assert.equal(shouldIncludeDeckCandidate(buildRow({ targetLevel: 5, sourceConsensusLevel: null })), false);
+    assert.equal(shouldIncludeDeckCandidate(buildRow({ confidence: "disputed", sourceConsensusLevel: null })), false);
+    assert.equal(shouldIncludeDeckCandidate(buildRow({ confidence: "disputed", sourceConsensusLevel: null }), { includeDisputed: true }), true);
+    assert.equal(
+        shouldIncludeDeckCandidate(
+            buildRow({ targetLevel: 5, sourceConsensusLevel: 4 }),
+            { candidateScope: CANDIDATE_SCOPES.ALL_SOURCE_CLAIMS }
+        ),
+        true
+    );
+});
+
+test("buildKanjiDeckPartitionPlan keeps core decks separate and excludes non-candidate additions by default", () => {
     const plan = buildKanjiDeckPartitionPlan({
         contract: {
             kanjiLevels: {
@@ -95,20 +111,21 @@ test("buildKanjiDeckPartitionPlan keeps core decks separate and excludes dispute
     ]);
 
     const additionalN5 = plan.additionalDecks.find((deck) => deck.deckId === "additional_unverified_N5");
-    assert.equal(additionalN5.count, 2);
+    assert.equal(additionalN5.count, 1);
     assert.equal(additionalN5.sourceCandidateCount, 3);
+    assert.equal(additionalN5.nonDeckCandidateExcludedCount, 1);
     assert.equal(additionalN5.disputedExcludedCount, 1);
-    assert.deepEqual(additionalN5.entries.map((entry) => entry.kanji), ["学", "本"]);
+    assert.deepEqual(additionalN5.entries.map((entry) => entry.kanji), ["本"]);
     assert.deepEqual(additionalN5.entries[0].labels, [
         "additional_unverified_N5",
         "source_claim_N5",
-        "source_claim_consensus_elsewhere",
-        "current_core_N4",
-        "standard_confidence",
+        "source_consensus_candidate",
+        "current_core_N3",
+        "high_confidence",
     ]);
 
     assert.equal(plan.collisionReport.safeToExportAsPhysicalDecksWithoutDuplicateNotes, false);
-    assert.equal(plan.collisionReport.coreCollisionCount, 3);
+    assert.equal(plan.collisionReport.coreCollisionCount, 1);
     assert.equal(plan.collisionReport.duplicateAdditionalKanjiCount, 0);
 });
 
@@ -125,7 +142,8 @@ test("buildKanjiDeckPartitionPlan can include disputed rows explicitly", () => {
     });
 
     const additionalN5 = plan.additionalDecks[0];
-    assert.equal(additionalN5.count, 3);
+    assert.equal(additionalN5.count, 2);
+    assert.equal(additionalN5.nonDeckCandidateExcludedCount, 1);
     assert.equal(additionalN5.disputedExcludedCount, 0);
     assert.equal(additionalN5.entries.find((entry) => entry.kanji === "駅").category, "disputed_source_claim");
 });
@@ -208,6 +226,6 @@ test("formatKanjiDeckPartitionPlan reports mutation and duplicate guards", () =>
     assert.match(output, /No deck mutation: yes/);
     assert.match(output, /No contract mutation: yes/);
     assert.match(output, /Candidate scope: learner-additions-only/);
-    assert.match(output, /additional_unverified_N5: 2 included; 0 out of product-addition scope; 1 disputed excluded/);
+    assert.match(output, /additional_unverified_N5: 1 included; 0 out of product-addition scope; 1 non-deck candidates excluded; 1 disputed excluded/);
     assert.match(output, /physical ten-deck export safe without duplicate notes: no/);
 });

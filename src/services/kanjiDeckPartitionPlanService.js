@@ -109,6 +109,19 @@ function summarizeAdditionalEntries(entries = []) {
     }, {});
 }
 
+function shouldIncludeDeckCandidate(row = {}, {
+    includeDisputed = false,
+    candidateScope = CANDIDATE_SCOPES.LEARNER_ADDITIONS_ONLY,
+} = {}) {
+    if (candidateScope === CANDIDATE_SCOPES.ALL_SOURCE_CLAIMS) {
+        return includeDisputed || !isDisputedRow(row);
+    }
+    if (isDisputedRow(row)) {
+        return includeDisputed;
+    }
+    return row.sourceConsensusLevel === row.targetLevel;
+}
+
 function buildCoreDecks({ contract = {}, levels = JLPT_LEVELS_DESC } = {}) {
     const kanjiByLevel = new Map(levels.map((level) => [level, []]));
     for (const [kanji, level] of Object.entries(contract.kanjiLevels || {})) {
@@ -142,8 +155,11 @@ function buildAdditionalDecks({
         const candidateRows = summary.missingSourceCandidatesFromCurrent || [];
         const scopedRows = filterRowsByCandidateScope(candidateRows, candidateScope);
         const disputedRows = scopedRows.includedRows.filter(isDisputedRow);
+        const nonDeckCandidateRows = scopedRows.includedRows
+            .filter((row) => !isDisputedRow(row))
+            .filter((row) => !shouldIncludeDeckCandidate(row, { includeDisputed, candidateScope }));
         const entries = scopedRows.includedRows
-            .filter((row) => includeDisputed || !isDisputedRow(row))
+            .filter((row) => shouldIncludeDeckCandidate(row, { includeDisputed, candidateScope }))
             .map(buildAdditionalEntry)
             .sort((a, b) => (
                 (b.currentContractLevel || 0) - (a.currentContractLevel || 0)
@@ -159,10 +175,12 @@ function buildAdditionalDecks({
             sourceCandidateCount: candidateRows.length,
             candidateScope,
             outOfScopeCount: scopedRows.outOfScopeRows.length,
+            nonDeckCandidateExcludedCount: nonDeckCandidateRows.length,
             disputedExcludedCount: includeDisputed ? 0 : disputedRows.length,
             categoryCounts: summarizeAdditionalEntries(entries),
             entries,
             disputedExcluded: includeDisputed ? [] : disputedRows.map(buildAdditionalEntry),
+            nonDeckCandidateExcluded: nonDeckCandidateRows.map(buildAdditionalEntry),
             outOfScope: scopedRows.outOfScopeRows.map(buildAdditionalEntry),
         };
     });
@@ -322,6 +340,7 @@ function formatKanjiDeckPartitionPlan(plan = {}, { limit = 20 } = {}) {
         lines.push(
             `- ${deck.deckId}: ${deck.count} included; `
             + `${deck.outOfScopeCount} out of product-addition scope; `
+            + `${deck.nonDeckCandidateExcludedCount || 0} non-deck candidates excluded; `
             + `${deck.disputedExcludedCount} disputed excluded; `
             + `categories ${formatCategoryCounts(deck.categoryCounts)}`
         );
@@ -350,4 +369,5 @@ module.exports = {
     buildKanjiDeckPartitionPlan,
     classifyAdditionalEntry,
     formatKanjiDeckPartitionPlan,
+    shouldIncludeDeckCandidate,
 };

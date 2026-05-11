@@ -1,0 +1,337 @@
+{
+  "version": 1,
+  "checkedAt": "2026-05-11",
+  "sourcePurposeRules": {
+    "jlpt_level_list": {
+      "description": "JLPT-oriented word lists can propose candidate words and weak level hints, but cannot approve cards by themselves.",
+      "allowedUse": [
+        "candidate-discovery",
+        "level-hint"
+      ],
+      "disallowedUse": [
+        "card-approval",
+        "reading-verification",
+        "meaning-verification",
+        "pitch-verification",
+        "frequency-sanity"
+      ]
+    },
+    "dictionary": {
+      "description": "Dictionary sources can verify exact written, reading, and meaning identity when source-use terms allow the stored citation shape.",
+      "allowedUse": [
+        "dictionary-verification",
+        "reading-verification",
+        "meaning-verification"
+      ],
+      "disallowedUse": [
+        "level-truth",
+        "frequency-sanity",
+        "pitch-verification"
+      ]
+    },
+    "corpus_frequency": {
+      "description": "Corpus or frequency sources can support usefulness and commonness, but cannot prove JLPT level or dictionary identity.",
+      "allowedUse": [
+        "frequency-sanity",
+        "usefulness-support"
+      ],
+      "disallowedUse": [
+        "level-truth",
+        "card-approval",
+        "reading-verification",
+        "meaning-verification",
+        "pitch-verification"
+      ]
+    },
+    "pitch_accent": {
+      "description": "Pitch sources prove only pitch-accent evidence for an exact written|reading identity.",
+      "allowedUse": [
+        "pitch-verification"
+      ],
+      "disallowedUse": [
+        "level-truth",
+        "candidate-discovery",
+        "card-approval",
+        "reading-verification",
+        "meaning-verification",
+        "frequency-sanity"
+      ]
+    },
+    "textbook_word_list": {
+      "description": "Japanese-learning textbook word lists can support candidate discovery and stronger learner-level fit when exact permitted surfaces are reviewed.",
+      "allowedUse": [
+        "candidate-discovery",
+        "level-hint",
+        "learner-fit-support"
+      ],
+      "disallowedUse": [
+        "card-approval",
+        "pitch-verification",
+        "frequency-sanity"
+      ]
+    },
+    "community_web_list": {
+      "description": "Free public or community web lists are discovery-only unless source-use review approves a narrower governed use.",
+      "allowedUse": [
+        "candidate-discovery",
+        "level-hint"
+      ],
+      "disallowedUse": [
+        "card-approval",
+        "reading-verification",
+        "meaning-verification",
+        "pitch-verification",
+        "frequency-sanity"
+      ]
+    }
+  },
+  "sources": {
+    "jlptstudy.net-n5": {
+      "name": "JLPTStudy N5 vocabulary list",
+      "tier": 4,
+      "status": "active",
+      "sourceType": "community_web_list",
+      "origin": {
+        "url": "https://jlptstudy.net/N5/lists/n5_vocab-list.html",
+        "localPath": "downloads/n5-vocab.tsv",
+        "notes": "Ignored local TSV normalized for candidate discovery only."
+      },
+      "licenseUse": {
+        "status": "needs_review",
+        "notes": "Do not copy or republish list content. Use only as a local discovery signal until terms are reviewed."
+      },
+      "checkedAt": "2026-05-05",
+      "levels": [
+        5
+      ],
+      "local": {
+        "path": "downloads/n5-vocab.tsv",
+        "format": "tsv",
+        "sha256": "b933dd6f2ca08b4866e6668d2c354a506afff6641b3440e55ac7a4fd26b40de3",
+        "byteSize": 30570,
+        "rowCount": 537,
+        "columns": [
+          "written",
+          "reading",
+          "meaning",
+          "jlpt",
+          "source",
+          "notes"
+        ]
+      },
+      "intendedUse": [
+        "candidate-discovery",
+        "level-hint"
+      ],
+      "allowedUse": [
+        "candidate-discovery",
+        "level-hint"
+      ],
+      "disallowedUse": [
+        "card-approval",
+        "dictionary-verification",
+        "pitch-verification",
+        "frequency-sanity"
+      ],
+      "candidatePolicy": {
+        "levels": [
+          5
+        ],
+        "kanjiScope": "known-jlpt",
+        "requireSourceLevel": true
+      }
+    },
+    "jlptstudy.net-n4": {
+      "name": "JLPTStudy N4 vocabulary list",
+      "tier": 4,
+      "status": "active",
+      "sourceType": "community_web_list",
+      "origin": {
+        "url": "https://jlptstudy.net/N4/lists/n4_vocab-list.html",
+        "localPath": "downloads/n4-vocab.tsv",
+        "notes": "Ignored local TSV normalized for candidate discovery only."
+      },
+      "licenseUse": {
+        "status": "needs_review",
+        "notes": "Do not copy or republish list content. Use only as a local discovery signal until terms are reviewed."
+      },
+      "checkedAt": "2026-05-05",
+      "levels": [
+        4
+      ],
+      "local": {
+        "path": "downloads/n4-vocab.tsv",
+        "format": "tsv",
+        "sha256": "fe78e99a34beb9f8ac9481e7874ec36488f079479aa9b26bde9069ed27655dc4",
+        "byteSize": 44521,
+        "rowCount": 681,
+        "columns": [
+          "written",
+          "reading",
+          "meaning",
+          "jlpt",
+          "source",
+          "notes"
+        ]
+      },
+      "intendedUse": [
+        "candidate-discovery",
+        "level-hint"
+      ],
+      "allowedUse": [
+        "candidate-discovery",
+        "level-hint"
+      ],
+      "disallowedUse": [
+        "card-approval",
+        "dictionary-verification",
+        "pitch-verification",
+        "frequency-sanity"
+      ],
+      "candidatePolicy": {
+        "levels": [
+          4
+        ],
+        "kanjiScope": "known-jlpt",
+        "requireSourceLevel": true
+      }
+    },
+    "kanjium-pitch-accent": {
+      "name": "Kanjium pitch accent database",
+      "tier": 2,
+      "status": "active",
+      "sourceType": "pitch_accent",
+      "origin": {
+        "url": "https://github.com/mifunetoshiro/kanjium",
+        "localPath": "templates/word_pitch_accent_data.json",
+        "notes": "Tracked normalized pitch entries only; raw source is not committed."
+      },
+      "licenseUse": {
+        "status": "approved",
+        "license": "CC BY-SA 4.0",
+        "notes": "Pitch verification only for exact written|reading entries with source identity."
+      },
+      "checkedAt": "2026-05-11",
+      "intendedUse": [
+        "pitch-verification"
+      ],
+      "allowedUse": [
+        "pitch-verification"
+      ],
+      "disallowedUse": [
+        "candidate-discovery",
+        "level-hint",
+        "card-approval",
+        "dictionary-verification",
+        "frequency-sanity"
+      ]
+    },
+    "jmdict": {
+      "name": "JMdict or equivalent Japanese dictionary source",
+      "tier": 2,
+      "status": "registered",
+      "sourceType": "dictionary",
+      "origin": {
+        "url": "https://www.edrdg.org/jmdict/j_jmdict.html",
+        "notes": "Registered future dictionary lane. No local dictionary extract is pinned yet."
+      },
+      "licenseUse": {
+        "status": "needs_review",
+        "notes": "Review license, attribution, local extract shape, and stored fields before use."
+      },
+      "checkedAt": "2026-05-11",
+      "intendedUse": [
+        "dictionary-verification",
+        "reading-verification",
+        "meaning-verification"
+      ],
+      "allowedUse": [],
+      "disallowedUse": [
+        "card-approval",
+        "level-truth",
+        "frequency-sanity",
+        "pitch-verification"
+      ]
+    },
+    "jpdb-frequency": {
+      "name": "jpdb frequency signal",
+      "tier": 3,
+      "status": "needs_review",
+      "sourceType": "corpus_frequency",
+      "origin": {
+        "url": "https://jpdb.io/",
+        "notes": "Possible future frequency sanity lane only; no local export or source-use approval is pinned."
+      },
+      "licenseUse": {
+        "status": "needs_review",
+        "notes": "Blocked from use until source-use/API/export terms and a governed local shape are approved."
+      },
+      "checkedAt": "2026-05-11",
+      "intendedUse": [
+        "frequency-sanity",
+        "usefulness-support"
+      ],
+      "allowedUse": [],
+      "disallowedUse": [
+        "candidate-discovery",
+        "card-approval",
+        "level-truth",
+        "reading-verification",
+        "meaning-verification",
+        "pitch-verification"
+      ]
+    },
+    "core-deck-frequency": {
+      "name": "Core deck frequency or common-vocabulary source",
+      "tier": 3,
+      "status": "registered",
+      "sourceType": "corpus_frequency",
+      "origin": {
+        "notes": "Registered future commonness lane. No source file, license review, or local integrity pins exist yet."
+      },
+      "licenseUse": {
+        "status": "needs_review",
+        "notes": "Do not import or derive approval from a Core deck until license/source-use terms and local fields are reviewed."
+      },
+      "checkedAt": "2026-05-11",
+      "intendedUse": [
+        "frequency-sanity",
+        "usefulness-support"
+      ],
+      "allowedUse": [],
+      "disallowedUse": [
+        "candidate-discovery",
+        "card-approval",
+        "level-truth",
+        "reading-verification",
+        "meaning-verification",
+        "pitch-verification"
+      ]
+    },
+    "textbook-word-list": {
+      "name": "Japanese learning textbook word-list lane",
+      "tier": 1,
+      "status": "registered",
+      "sourceType": "textbook_word_list",
+      "origin": {
+        "notes": "Registered future lane for purchased or permissioned Japanese-learning word lists. No word-list surface is pinned yet."
+      },
+      "licenseUse": {
+        "status": "needs_review",
+        "notes": "Use only with exact permitted source surfaces and minimal citation metadata; do not store copied passages or raw lists."
+      },
+      "checkedAt": "2026-05-11",
+      "intendedUse": [
+        "candidate-discovery",
+        "level-hint",
+        "learner-fit-support"
+      ],
+      "allowedUse": [],
+      "disallowedUse": [
+        "card-approval",
+        "pitch-verification",
+        "frequency-sanity"
+      ]
+    }
+  }
+}

@@ -99,6 +99,7 @@
     "deck:words:expansion-candidates": "node scripts/reportWordInventoryExpansionCandidates.js",
     "deck:words:expansion-candidates:n5": "node scripts/reportWordInventoryExpansionCandidates.js --level=5",
     "deck:words:expansion-candidates:n4": "node scripts/reportWordInventoryExpansionCandidates.js --level=4",
+    "deck:words:candidate-agreement": "node scripts/reportWordCandidateAgreement.js",
     "deck:words:expansion-signals": "node scripts/reportWordExpansionSignals.js",
     "ci:smoke": "node scripts/ciSmoke.js",
     "release:gate": "node scripts/releaseGate.js",

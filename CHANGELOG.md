@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Tightened word source-manifest governance for source-purpose use rules, blocked-source fences, active candidate policies, local integrity pins, and required columns, then added the first governed N4 source-expansion batch (`番組`, `市民`, `首`, `専門`, `光`, `森`, `進む`, `回る`), raising N4 canonical word rows and golden coverage to `577/577` while keeping N4 incomplete and platinum unstarted.
 - Added manifest-driven defaults to `deck:words:expansion-candidates` so level-scoped word expansion resolves the pinned source label, format, candidate policy, and local integrity from the word source manifest instead of relying on manual CLI source labels.
 - Documented the separate additional-unverified kanji deck surface in README and release docs, including `deck:kanji:additional:ready`, additional golden review commands, `deck:kanji:review-status`, current N5/N4/N3/N2/N1 generated-golden counts (`16/81/90/114/90`), and suppressed duplicate additional source claims.
 - Added an APKG SQLite round-trip regression test that rebuilds the N5 mini fixture package and verifies TSV field values, deck name, media mapping, and card count after unpacking.

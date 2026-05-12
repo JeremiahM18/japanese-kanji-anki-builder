@@ -8240,13 +8240,15 @@
     "coverage": {
       "role": "both",
       "focusKanji": [
-        "郵"
+        "郵",
+        "便"
       ],
       "coversReadings": {
-        "郵": "ゆう"
+        "郵": "ゆう",
+        "便": "びん"
       }
     },
-    "notes": "Core N4 study word that also covers the 郵 -> ゆう reading.",
+    "notes": "Core N4 study word that covers 郵 -> ゆう and 便 -> びん in the everyday mail sense.",
     "exampleSentence": {
       "japanese": "郵便は毎日午後に届きます。",
       "reading": "ゆうびんはまいにちごごにとどきます。",
@@ -15668,13 +15670,15 @@
     "coverage": {
       "role": "support",
       "focusKanji": [
-        "強"
+        "強",
+        "引"
       ],
       "coversReadings": {
-        "強": "ごう"
+        "強": "ごう",
+        "引": "いん"
       }
     },
-    "notes": "Common N4 support word that covers the 強 -> ごう reading.",
+    "notes": "Common N4 support word that covers 強 -> ごう and 引 -> いん in one useful adjective.",
     "exampleSentence": {
       "japanese": "彼の説明は少し強引でした。",
       "reading": "かれのせつめいはすこしごういんでした。",
@@ -22789,6 +22793,236 @@
       "japanese": "クラスに留学生がいます。",
       "reading": "クラスにりゅうがくせいがいます。",
       "english": "There is an international student in the class."
+    }
+  },
+  "番組|ばんぐみ": {
+    "written": "番組",
+    "reading": "ばんぐみ",
+    "readingBreakdown": "<ruby>番<rt>ばん</rt></ruby><ruby>組<rt>ぐみ</rt></ruby>",
+    "meaning": "program / broadcast show",
+    "jlpt": 4,
+    "source": "jlptstudy.net-n4",
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "番",
+        "組"
+      ],
+      "coversReadings": {
+        "番": "ばん",
+        "組": "ぐみ"
+      }
+    },
+    "notes": "Common N4 media word that covers 番 -> ばん and labels the higher-level 組 -> ぐみ support on the card.",
+    "exampleSentence": {
+      "japanese": "この番組は毎週見ています。",
+      "reading": "このばんぐみはまいしゅうみています。",
+      "english": "I watch this program every week."
+    }
+  },
+  "市民|しみん": {
+    "written": "市民",
+    "reading": "しみん",
+    "readingBreakdown": "<ruby>市<rt>し</rt></ruby><ruby>民<rt>みん</rt></ruby>",
+    "meaning": "citizen / resident",
+    "jlpt": 4,
+    "source": "jlptstudy.net-n4",
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "市",
+        "民"
+      ],
+      "coversReadings": {
+        "市": "し",
+        "民": "みん"
+      }
+    },
+    "notes": "Common civic N4 word that covers 市 -> し and 民 -> みん with a clean written-reading identity.",
+    "exampleSentence": {
+      "japanese": "多くの市民が公園を使います。",
+      "reading": "おおくのしみんがこうえんをつかいます。",
+      "english": "Many citizens use the park."
+    }
+  },
+  "首|くび": {
+    "written": "首",
+    "reading": "くび",
+    "readingBreakdown": "<ruby>首<rt>くび</rt></ruby>",
+    "meaning": "neck",
+    "jlpt": 4,
+    "source": "jlptstudy.net-n4",
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "首"
+      ],
+      "coversReadings": {
+        "首": "くび"
+      }
+    },
+    "notes": "Common body word that covers the N4 首 -> くび reading.",
+    "exampleSentence": {
+      "japanese": "首が少し痛いです。",
+      "reading": "くびがすこしいたいです。",
+      "english": "My neck hurts a little."
+    }
+  },
+  "専門|せんもん": {
+    "written": "専門",
+    "reading": "せんもん",
+    "readingBreakdown": "<ruby>専<rt>せん</rt></ruby><ruby>門<rt>もん</rt></ruby>",
+    "meaning": "specialty / field of study",
+    "jlpt": 4,
+    "source": "jlptstudy.net-n4",
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "専",
+        "門"
+      ],
+      "coversReadings": {
+        "専": "せん",
+        "門": "もん"
+      }
+    },
+    "notes": "Common school/work word that covers 門 -> もん and labels the higher-level 専 -> せん support on the card.",
+    "exampleSentence": {
+      "japanese": "兄の専門は日本文学です。",
+      "reading": "あにのせんもんはにほんぶんがくです。",
+      "english": "My older brother's specialty is Japanese literature."
+    }
+  },
+  "光|ひかり": {
+    "written": "光",
+    "reading": "ひかり",
+    "readingBreakdown": "<ruby>光<rt>ひかり</rt></ruby>",
+    "meaning": "light",
+    "jlpt": 4,
+    "source": "jlptstudy.net-n4",
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "光"
+      ],
+      "coversReadings": {
+        "光": "ひかり"
+      }
+    },
+    "notes": "Common N4 noun that covers 光 -> ひかり with a simple learner-friendly example.",
+    "exampleSentence": {
+      "japanese": "朝の光が部屋に入ります。",
+      "reading": "あさのひかりがへやにはいります。",
+      "english": "Morning light enters the room."
+    }
+  },
+  "森|もり": {
+    "written": "森",
+    "reading": "もり",
+    "readingBreakdown": "<ruby>森<rt>もり</rt></ruby>",
+    "meaning": "forest",
+    "jlpt": 4,
+    "source": "jlptstudy.net-n4",
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "森"
+      ],
+      "coversReadings": {
+        "森": "もり"
+      }
+    },
+    "notes": "Common nature word that covers the N4 森 -> もり reading.",
+    "exampleSentence": {
+      "japanese": "森の中は静かです。",
+      "reading": "もりのなかはしずかです。",
+      "english": "It is quiet in the forest."
+    }
+  },
+  "進む|すすむ": {
+    "written": "進む",
+    "reading": "すすむ",
+    "readingBreakdown": "<ruby>進<rt>すす</rt></ruby>む",
+    "meaning": "to move forward / advance",
+    "jlpt": 4,
+    "source": "jlptstudy.net-n4",
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "進"
+      ],
+      "coversReadings": {
+        "進": "すすむ"
+      }
+    },
+    "notes": "Common motion/progress verb that covers the N4 進 -> すすむ reading.",
+    "exampleSentence": {
+      "japanese": "電車は駅に向かって進みます。",
+      "reading": "でんしゃはえきにむかってすすみます。",
+      "english": "The train moves toward the station."
+    }
+  },
+  "回る|まわる": {
+    "written": "回る",
+    "reading": "まわる",
+    "readingBreakdown": "<ruby>回<rt>まわ</rt></ruby>る",
+    "meaning": "to turn / go around",
+    "jlpt": 4,
+    "source": "jlptstudy.net-n4",
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "回"
+      ],
+      "coversReadings": {
+        "回": "まわる"
+      }
+    },
+    "notes": "Common movement verb that covers the N4 回 -> まわる reading.",
+    "exampleSentence": {
+      "japanese": "時計の針が回ります。",
+      "reading": "とけいのはりがまわります。",
+      "english": "The clock hands turn."
     }
   }
 }

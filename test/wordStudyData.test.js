@@ -74,6 +74,34 @@ test("tracked starter word data governs N5 standalone number words as a family",
     }
 });
 
+test("tracked starter word data includes the first governed N4 source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["番組|ばんぐみ", "番", "ばん"],
+        ["番組|ばんぐみ", "組", "ぐみ"],
+        ["市民|しみん", "市", "し"],
+        ["市民|しみん", "民", "みん"],
+        ["首|くび", "首", "くび"],
+        ["専門|せんもん", "専", "せん"],
+        ["専門|せんもん", "門", "もん"],
+        ["光|ひかり", "光", "ひかり"],
+        ["森|もり", "森", "もり"],
+        ["進む|すすむ", "進", "すすむ"],
+        ["回る|まわる", "回", "まわる"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["番組|ばんぐみ", "both"],
+        ["市民|しみん", "both"],
+        ["首|くび", "both"],
+        ["専門|せんもん", "both"],
+        ["光|ひかり", "both"],
+        ["森|もり", "both"],
+        ["進む|すすむ", "both"],
+        ["回る|まわる", "both"],
+    ]);
+});
+
 test("buildWordStudyEntryKey uses written and reading", () => {
     assert.equal(buildWordStudyEntryKey({ written: "今日", reading: "きょう" }), "今日|きょう");
 });
@@ -301,6 +329,7 @@ test("tracked starter word data includes the first promoted N4 completion batch"
         ["問|もん", "問", "もん"],
         ["有る|ある", "有", "ある"],
         ["郵便|ゆうびん", "郵", "ゆう"],
+        ["郵便|ゆうびん", "便", "びん"],
         ["曜日|ようび", "曜", "よう"],
         ["洋服|ようふく", "洋", "よう"],
         ["理由|りゆう", "理", "り"],
@@ -754,6 +783,7 @@ test("tracked starter word data includes the twentieth governed N4 completion ba
 
     assertCoverageReadings(starterEntries, [
         ["強引|ごういん", "強", "ごう"],
+        ["強引|ごういん", "引", "いん"],
         ["建設|けんせつ", "建", "けん"],
         ["愛犬|あいけん", "犬", "けん"],
         ["言語|げんご", "言", "げん"],

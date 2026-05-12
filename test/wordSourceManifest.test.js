@@ -35,7 +35,10 @@ function buildManifest(overrides = {}) {
                 local: {
                     path: "downloads/fixture.tsv",
                     format: "tsv",
-                    columns: ["written", "reading"],
+                    sha256: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    byteSize: 128,
+                    rowCount: 2,
+                    columns: ["written", "reading", "jlpt"],
                 },
                 intendedUse: ["candidate-discovery"],
                 allowedUse: ["candidate-discovery"],
@@ -60,14 +63,89 @@ test("parseWordSourceManifest validates source-purpose rules and active local pi
     assert.throws(() => parseWordSourceManifest(buildManifest({
         source: {
             allowedUse: ["card-approval"],
+            disallowedUse: [],
         },
     })), /allows card-approval/);
+
+    assert.throws(() => parseWordSourceManifest(buildManifest({
+        source: {
+            allowedUse: ["candidate-discovery"],
+            disallowedUse: ["candidate-discovery"],
+        },
+    })), /both allows and disallows/);
 
     assert.throws(() => parseWordSourceManifest(buildManifest({
         source: {
             local: undefined,
         },
     })), /must pin a local source path/);
+
+    assert.throws(() => parseWordSourceManifest(buildManifest({
+        source: {
+            local: {
+                path: "downloads/fixture.tsv",
+                format: "tsv",
+                columns: ["written", "reading"],
+            },
+        },
+    })), /missing local integrity pin/);
+
+    assert.throws(() => parseWordSourceManifest(buildManifest({
+        source: {
+            candidatePolicy: undefined,
+        },
+    })), /must declare candidatePolicy/);
+
+    assert.throws(() => parseWordSourceManifest(buildManifest({
+        source: {
+            candidatePolicy: {
+                levels: [],
+                kanjiScope: "known-jlpt",
+                requireSourceLevel: true,
+            },
+        },
+    })), /must declare candidatePolicy\.levels/);
+
+    assert.throws(() => parseWordSourceManifest(buildManifest({
+        source: {
+            local: {
+                path: "downloads/fixture.tsv",
+                format: "tsv",
+                sha256: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                byteSize: 128,
+                rowCount: 2,
+                columns: ["written"],
+            },
+        },
+    })), /missing required local column\(s\): reading, jlpt/);
+
+    assert.throws(() => parseWordSourceManifest(buildManifest({
+        source: {
+            status: "blocked",
+            allowedUse: ["candidate-discovery"],
+        },
+    })), /Blocked word source fixture must not allow active use/);
+
+    assert.throws(() => parseWordSourceManifest(buildManifest({
+        source: {
+            licenseUse: {
+                status: "blocked",
+                notes: "Fixture blocked.",
+            },
+        },
+    })), /cannot have blocked license/);
+
+    assert.throws(() => parseWordSourceManifest(buildManifest({
+        manifest: {
+            sourcePurposeRules: {
+                community_web_list: {
+                    description: "Conflicting rule.",
+                    allowedUse: ["candidate-discovery"],
+                    disallowedUse: ["candidate-discovery"],
+                },
+            },
+        },
+    })), /purpose rule community_web_list both allows and disallows/);
 });
 
 test("tracked word source manifest loads", () => {

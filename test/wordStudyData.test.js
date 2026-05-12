@@ -1342,6 +1342,60 @@ test("tracked starter word data includes the second N4 active reading backlog ba
     assert.match(starterEntries["洗う|あらう"].notes, /hygiene/);
 });
 
+test("tracked starter word data includes the third N4 active reading backlog batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const n4ReadingSupportKeys = [
+        "区別|くべつ",
+        "産地|さんち",
+        "労働|ろうどう",
+        "首都|しゅと",
+        "遠足|えんそく",
+        "暗記|あんき",
+        "好物|こうぶつ",
+        "次回|じかい",
+        "乗車|じょうしゃ",
+        "森林|しんりん",
+    ];
+
+    for (const key of n4ReadingSupportKeys) {
+        assert.equal(starterEntries[key]?.jlpt, 4, key);
+        assert.equal(starterEntries[key]?.source, "starter-word", key);
+        assert.equal(starterEntries[key]?.coverage?.role, "support", key);
+    }
+    assertCoverageReadings(starterEntries, [
+        ["区別|くべつ", "区", "く"],
+        ["区別|くべつ", "別", "べつ"],
+        ["産地|さんち", "産", "さん"],
+        ["産地|さんち", "地", "ち"],
+        ["労働|ろうどう", "働", "どう"],
+        ["首都|しゅと", "首", "しゅ"],
+        ["首都|しゅと", "都", "と"],
+        ["遠足|えんそく", "遠", "えん"],
+        ["遠足|えんそく", "足", "そく"],
+        ["暗記|あんき", "暗", "あん"],
+        ["好物|こうぶつ", "好", "こう"],
+        ["好物|こうぶつ", "物", "ぶつ"],
+        ["次回|じかい", "次", "じ"],
+        ["次回|じかい", "回", "かい"],
+        ["乗車|じょうしゃ", "乗", "じょう"],
+        ["乗車|じょうしゃ", "車", "しゃ"],
+        ["森林|しんりん", "森", "しん"],
+        ["森林|しんりん", "林", "りん"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["区別|くべつ", "<ruby>区<rt>く</rt></ruby><ruby>別<rt>べつ</rt></ruby>"],
+        ["産地|さんち", "<ruby>産<rt>さん</rt></ruby><ruby>地<rt>ち</rt></ruby>"],
+        ["労働|ろうどう", "<ruby>労<rt>ろう</rt></ruby><ruby>働<rt>どう</rt></ruby>"],
+        ["首都|しゅと", "<ruby>首<rt>しゅ</rt></ruby><ruby>都<rt>と</rt></ruby>"],
+        ["遠足|えんそく", "<ruby>遠<rt>えん</rt></ruby><ruby>足<rt>そく</rt></ruby>"],
+        ["暗記|あんき", "<ruby>暗<rt>あん</rt></ruby><ruby>記<rt>き</rt></ruby>"],
+        ["森林|しんりん", "<ruby>森<rt>しん</rt></ruby><ruby>林<rt>りん</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["労働|ろうどう"].notes, /労=N3/);
+    assert.match(starterEntries["暗記|あんき"].notes, /記=N3/);
+    assert.match(starterEntries["産地|さんち"].notes, /product-origin/);
+});
+
 test("tracked starter word data includes the first N5 enhancement batch without duplicate junk", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

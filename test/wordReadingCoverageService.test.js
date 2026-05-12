@@ -265,6 +265,33 @@ test('buildWordReadingGapTriage respects tracked editorial override dispositions
   assert.equal(triage.items[0].suggestedAction, 'defer_variant');
   assert.equal(triage.items[0].priority, 'low');
   assert.match(triage.items[0].editorialNote, /Archaic reading/);
+
+  const n4Report = {
+    summary: { levelLabel: 'N4' },
+    kanji: [
+      {
+        kanji: '合',
+        displayWord: '合',
+        onCoverage: [
+          {
+            reading: 'かっ',
+            status: 'missing_example',
+            coverageSource: 'none',
+            matchingExamples: [],
+            deckExamples: [],
+            gapKind: 'distinct',
+          },
+        ],
+        kunCoverage: [],
+      },
+    ],
+  };
+
+  const n4Triage = buildWordReadingGapTriage(n4Report);
+  assert.equal(n4Triage.summary.editorialReviewItems, 0);
+  assert.equal(n4Triage.summary.deferVariantItems, 1);
+  assert.equal(n4Triage.items[0].suggestedAction, 'defer_variant');
+  assert.match(n4Triage.items[0].editorialNote, /合戦 is real and common/);
 });
 
 test('formatWordReadingGapTriage renders a practical backlog summary', () => {

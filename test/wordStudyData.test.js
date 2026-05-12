@@ -1524,6 +1524,40 @@ test("tracked starter word data includes the sixth N4 active reading backlog bat
     assert.match(starterEntries["声色|こわいろ"].notes, /声色（せいしょく）/);
 });
 
+test("tracked starter word data includes the seventh N4 active reading backlog batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const n4ReadingSupportKeys = [
+        "門出|かどで",
+        "産声|うぶごえ",
+        "目頭|めがしら",
+        "頭文字|かしらもじ",
+    ];
+
+    for (const key of n4ReadingSupportKeys) {
+        assert.equal(starterEntries[key]?.jlpt, 4, key);
+        assert.equal(starterEntries[key]?.source, "starter-word", key);
+        assert.equal(starterEntries[key]?.coverage?.role, "support", key);
+    }
+    assert.equal(starterEntries["合戦|かっせん"], undefined);
+    assert.equal(starterEntries["遊説|ゆうぜい"], undefined);
+    assertCoverageReadings(starterEntries, [
+        ["門出|かどで", "門", "かど"],
+        ["産声|うぶごえ", "産", "うぶ"],
+        ["目頭|めがしら", "頭", "がしら"],
+        ["頭文字|かしらもじ", "頭", "かしら"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["門出|かどで", "<ruby>門<rt>かど</rt></ruby><ruby>出<rt>で</rt></ruby>"],
+        ["産声|うぶごえ", "<ruby>産<rt>うぶ</rt></ruby><ruby>声<rt>ごえ</rt></ruby>"],
+        ["目頭|めがしら", "<ruby>目<rt>め</rt></ruby><ruby>頭<rt>がしら</rt></ruby>"],
+        ["頭文字|かしらもじ", "<ruby>頭<rt>かしら</rt></ruby><ruby>文字<rt>もじ</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["門出|かどで"].notes, /N5 出 support/);
+    assert.match(starterEntries["産声|うぶごえ"].notes, /birth\/new-beginning/);
+    assert.match(starterEntries["目頭|めがしら"].notes, /目頭が熱くなる/);
+    assert.match(starterEntries["頭文字|かしらもじ"].notes, /文字 support/);
+});
+
 test("tracked starter word data includes the first N5 enhancement batch without duplicate junk", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

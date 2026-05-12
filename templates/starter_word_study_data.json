@@ -24960,5 +24960,121 @@
       "reading": "でんわのこわいろでげんきだとわかりました。",
       "english": "I could tell from the tone of voice on the phone that they were well."
     }
+  },
+  "門出|かどで": {
+    "written": "門出",
+    "reading": "かどで",
+    "readingBreakdown": "<ruby>門<rt>かど</rt></ruby><ruby>出<rt>で</rt></ruby>",
+    "meaning": "departure / starting a new life",
+    "jlpt": 4,
+    "source": "starter-word",
+    "tags": [
+      "starter",
+      "common",
+      "n4",
+      "reading-coverage"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "門"
+      ],
+      "coversReadings": {
+        "門": "かど"
+      }
+    },
+    "notes": "Common life-event word with a clean N4 門 -> かど anchor and N5 出 support; keep it as departure/start-new-life vocabulary, not a concrete gate card.",
+    "exampleSentence": {
+      "japanese": "今日は二人の新しい門出です。",
+      "reading": "きょうはふたりのあたらしいかどでです。",
+      "english": "Today is the start of a new life for the two of them."
+    }
+  },
+  "産声|うぶごえ": {
+    "written": "産声",
+    "reading": "うぶごえ",
+    "readingBreakdown": "<ruby>産<rt>うぶ</rt></ruby><ruby>声<rt>ごえ</rt></ruby>",
+    "meaning": "first cry of a newborn baby",
+    "jlpt": 4,
+    "source": "starter-word",
+    "tags": [
+      "starter",
+      "common",
+      "n4",
+      "reading-coverage"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "産"
+      ],
+      "coversReadings": {
+        "産": "うぶ"
+      }
+    },
+    "notes": "Common birth/new-beginning word with a clean N4 産 -> うぶ anchor and same-level 声 support; narrow but concrete enough to teach without padding.",
+    "exampleSentence": {
+      "japanese": "赤ちゃんの産声が聞こえました。",
+      "reading": "あかちゃんのうぶごえがきこえました。",
+      "english": "I heard the baby's first cry."
+    }
+  },
+  "目頭|めがしら": {
+    "written": "目頭",
+    "reading": "めがしら",
+    "readingBreakdown": "<ruby>目<rt>め</rt></ruby><ruby>頭<rt>がしら</rt></ruby>",
+    "meaning": "inner corner of the eye",
+    "jlpt": 4,
+    "source": "starter-word",
+    "tags": [
+      "starter",
+      "common",
+      "n4",
+      "reading-coverage"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "頭"
+      ],
+      "coversReadings": {
+        "頭": "がしら"
+      }
+    },
+    "notes": "Common body/expression word with a clean N4 頭 -> がしら anchor and same-level 目 support; useful in the expression 目頭が熱くなる.",
+    "exampleSentence": {
+      "japanese": "映画を見て目頭が熱くなりました。",
+      "reading": "えいがをみてめがしらがあつくなりました。",
+      "english": "The movie made my eyes well up."
+    }
+  },
+  "頭文字|かしらもじ": {
+    "written": "頭文字",
+    "reading": "かしらもじ",
+    "readingBreakdown": "<ruby>頭<rt>かしら</rt></ruby><ruby>文字<rt>もじ</rt></ruby>",
+    "meaning": "initial letter / initials",
+    "jlpt": 4,
+    "source": "starter-word",
+    "tags": [
+      "starter",
+      "common",
+      "n4",
+      "reading-coverage"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "頭"
+      ],
+      "coversReadings": {
+        "頭": "かしら"
+      }
+    },
+    "notes": "Common writing/name word with a clean N4 頭 -> かしら anchor and same-level 文字 support.",
+    "exampleSentence": {
+      "japanese": "名前の頭文字を書いてください。",
+      "reading": "なまえのかしらもじをかいてください。",
+      "english": "Please write the initials of your name."
+    }
   }
 }

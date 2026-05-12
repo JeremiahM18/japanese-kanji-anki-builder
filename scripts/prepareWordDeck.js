@@ -2,6 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const { loadConfig } = require("../src/config");
+const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { createKanjiApiClient } = require("../src/clients/kanjiApiClient");
 const { loadSentenceCorpus } = require("../src/datasets/sentenceCorpus");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
@@ -229,7 +230,7 @@ async function main() {
 
     const outDir = options.outDir || path.join(path.dirname(config.buildOutDir), "word-build");
     const buildPaths = buildOutputPaths(outDir);
-    const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
+    const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
     const jlptWordLevelContract = loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json"));
     const jlptLevelContract = loadJlptLevelContract(path.join(process.cwd(), "templates", "jlpt_level_contract.json"));
     const sentenceCorpus = loadSentenceCorpus(config.sentenceCorpusPath);

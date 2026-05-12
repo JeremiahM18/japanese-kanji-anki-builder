@@ -1,6 +1,7 @@
 const fs = require("node:fs");
 
 const { loadConfig } = require("../src/config");
+const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { createKanjiApiClient } = require("../src/clients/kanjiApiClient");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const { loadGovernedComponentMap } = require("../src/datasets/kradfile");
@@ -59,7 +60,7 @@ async function main() {
         throw new Error(`Missing kanji component contract at ${config.kanjiComponentContractPath} and KRADFILE at ${config.kradfilePath}`);
     }
 
-    const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
+    const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
     const sentenceCorpus = loadSentenceCorpus(config.sentenceCorpusPath);
     const curatedStudyData = loadCuratedStudyData(config.curatedStudyDataPath);
     const kradMap = loadGovernedComponentMap({

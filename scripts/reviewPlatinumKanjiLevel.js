@@ -3,6 +3,7 @@ const path = require("node:path");
 const { invokeCliMain } = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
+const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { createKanjiApiClient } = require("../src/clients/kanjiApiClient");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const { loadGovernedComponentMap, pickMainComponent } = require("../src/datasets/kradfile");
@@ -71,7 +72,7 @@ function parseKanjiTsvForPlatinum(tsv, { level } = {}) {
 }
 
 async function buildKanjiRowsForLevel({ level, config }) {
-    const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
+    const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
     const sentenceCorpus = loadSentenceCorpus(config.sentenceCorpusPath);
     const curatedStudyData = loadCuratedStudyData(config.curatedStudyDataPath);
     const kradMap = loadGovernedComponentMap({

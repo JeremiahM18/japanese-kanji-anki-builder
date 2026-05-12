@@ -3,6 +3,7 @@ const path = require("node:path");
 const { invokeCliMain } = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
+const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { createKanjiApiClient } = require("../src/clients/kanjiApiClient");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const { loadSentenceCorpus } = require("../src/datasets/sentenceCorpus");
@@ -92,7 +93,7 @@ function buildWordExportOptions({
 }
 
 async function buildWordRowsForLevel({ level, config }) {
-    const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
+    const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
     const jlptWordLevelContract = loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json"));
     const sentenceCorpus = loadSentenceCorpus(config.sentenceCorpusPath);
     const curatedStudyData = loadCuratedStudyData(config.curatedStudyDataPath);
@@ -143,7 +144,7 @@ async function main() {
 
     const entries = JSON.parse(fs.readFileSync(reviewSetPath, "utf-8"));
     const wordPitchAccentData = loadWordPitchAccentData(path.join(process.cwd(), "templates", "word_pitch_accent_data.json"));
-    const kanjiLevelData = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
+    const kanjiLevelData = loadJlptOnlyJson(config.jlptJsonPath);
     const rows = await buildWordRowsForLevel({ level, config });
     const report = evaluatePlatinumWordReviewSet({
         rows,

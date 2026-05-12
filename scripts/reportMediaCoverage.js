@@ -2,6 +2,7 @@ const fs = require("node:fs");
 const { invokeCliMain } = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
+const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { buildMediaCoverageSummary } = require("../src/datasets/mediaCoverage");
 
 function parseArgs(argv) {
@@ -26,7 +27,7 @@ async function main() {
         throw new Error(`Missing JLPT JSON file at ${config.jlptJsonPath}`);
     }
 
-    const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
+    const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
     const summary = await buildMediaCoverageSummary({
         jlptOnlyJson,
         mediaRootDir: config.mediaRootDir,

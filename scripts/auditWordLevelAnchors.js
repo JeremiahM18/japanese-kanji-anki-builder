@@ -1,7 +1,7 @@
-const fs = require("node:fs");
 const path = require("node:path");
 
 const { loadConfig } = require("../src/config");
+const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { loadJlptWordLevelContract } = require("../src/datasets/jlptWordLevelContract");
 const { loadWordStudyData } = require("../src/datasets/wordStudyData");
 const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseNumericOption } = require("../src/utils/cliArgs");
@@ -83,7 +83,7 @@ async function main() {
     const config = loadConfig();
     const contract = loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json"));
     const wordStudyData = loadWordStudyData({ localPath: null });
-    const kanjiLevelData = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf8"));
+    const kanjiLevelData = loadJlptOnlyJson(config.jlptJsonPath);
     const report = auditWordLevelAnchors({
         wordLevels: contract.wordLevels,
         wordStudyData,

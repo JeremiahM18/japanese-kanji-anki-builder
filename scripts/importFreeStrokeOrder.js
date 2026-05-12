@@ -3,6 +3,7 @@ const fs = require("node:fs");
 const { invokeCliMain } = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
+const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { importFreeStrokeOrderDirectory } = require("../src/services/freeStrokeOrderImportService");
 
 function parseArgs(argv) {
@@ -68,7 +69,7 @@ async function main() {
         throw new Error(`Missing JLPT JSON file at ${config.jlptJsonPath}`);
     }
 
-    const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
+    const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
     const kanjiList = selectKanjiList(jlptOnlyJson, options.limit);
     const summary = await importFreeStrokeOrderDirectory({
         inputDir: path.resolve(options.inputDir),

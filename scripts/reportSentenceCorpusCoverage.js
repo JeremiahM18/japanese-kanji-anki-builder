@@ -2,6 +2,7 @@ const fs = require("node:fs");
 const { invokeCliMain } = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
+const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const { loadSentenceCorpus } = require("../src/datasets/sentenceCorpus");
 const { buildCoverageSummary } = require("../src/datasets/sentenceCorpusCoverage");
@@ -28,7 +29,7 @@ function main() {
         throw new Error(`Missing JLPT JSON file at ${config.jlptJsonPath}`);
     }
 
-    const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
+    const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
     const sentenceCorpus = loadSentenceCorpus(config.sentenceCorpusPath);
     const curatedStudyData = loadCuratedStudyData(config.curatedStudyDataPath);
     const summary = buildCoverageSummary({

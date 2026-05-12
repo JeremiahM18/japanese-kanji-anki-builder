@@ -2,6 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const { loadConfig } = require("../src/config");
+const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { loadAudioSourcePolicy } = require("../src/datasets/audioSourcePolicy");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const { buildAudioReviewReport, parseLevelsArgument, formatAudioReviewReport } = require("../src/services/audioReviewService");
@@ -70,7 +71,7 @@ async function main() {
         throw new Error(`Missing JLPT JSON file at ${config.jlptJsonPath}`);
     }
 
-    const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
+    const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
     const curatedStudyData = loadCuratedStudyData(config.curatedStudyDataPath);
     const kanjiTsv = readKanjiTsvForLevels({
         buildOutDir: config.buildOutDir,

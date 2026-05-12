@@ -2,6 +2,7 @@ const fs = require("node:fs");
 const { invokeCliMain } = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
+const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { createKanjiApiClient } = require("../src/clients/kanjiApiClient");
 const { createVoicevoxClient } = require("../src/clients/voicevoxClient");
 const { loadAudioSourcePolicy } = require("../src/datasets/audioSourcePolicy");
@@ -73,7 +74,7 @@ async function main() {
         throw new Error(`Missing JLPT JSON file at ${config.jlptJsonPath}`);
     }
 
-    const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
+    const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
     const kanjiList = selectKanjiForSync({
         jlptOnlyJson,
         level: options.level,

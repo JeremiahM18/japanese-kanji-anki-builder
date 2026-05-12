@@ -185,3 +185,25 @@ test("JLPT kanji source-evidence loaders stay in read-only governance paths", ()
         assert.deepEqual(actualFiles, [...expectedFiles].sort(), `${loaderName} is imported or exported outside the governed source-evidence paths.`);
     }
 });
+
+test("JLPT runtime dataset readers use the governed JLPT JSON loader", () => {
+    const files = [
+        ...listJavaScriptFiles("scripts"),
+        ...listJavaScriptFiles("src"),
+    ];
+    const forbiddenRawReads = [];
+
+    for (const relativePath of files) {
+        const text = readRepoFile(relativePath);
+        if (/JSON\.parse\(fs\.readFileSync\(config\.jlptJsonPath/u.test(text)
+            || /fs\.readFileSync\(config\.jlptJsonPath/u.test(text)) {
+            forbiddenRawReads.push(relativePath);
+        }
+    }
+
+    assert.deepEqual(
+        forbiddenRawReads.sort(),
+        [],
+        "Scripts and services should use loadJlptOnlyJson(config.jlptJsonPath) so JLPT runtime data stays schema-validated."
+    );
+});

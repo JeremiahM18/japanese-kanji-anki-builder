@@ -1,6 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { loadConfig } = require('../src/config');
+const { loadJlptOnlyJson } = require('../src/datasets/jlptOnlyJson');
 const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseNumericOption } = require('../src/utils/cliArgs');
 const {
   buildWordReadingCoverageReport,
@@ -62,7 +63,7 @@ async function main() {
   }
 
   const config = loadConfig();
-  const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, 'utf8'));
+  const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
   const expectedKanjiCount = Object.values(jlptOnlyJson).filter((entry) => entry?.jlpt === level).length;
   const kanjiTsvPath = resolveKanjiTsvPath(config, level);
   const wordTsvPath = resolveWordTsvPath(level);

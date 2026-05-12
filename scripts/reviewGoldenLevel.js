@@ -3,6 +3,7 @@ const path = require("node:path");
 const { invokeCliMain } = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
+const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { createKanjiApiClient } = require("../src/clients/kanjiApiClient");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const { loadGovernedComponentMap } = require("../src/datasets/kradfile");
@@ -50,7 +51,7 @@ async function main() {
     }
 
     const expectations = JSON.parse(fs.readFileSync(reviewSetPath, "utf-8"));
-    const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
+    const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
     const sentenceCorpus = loadSentenceCorpus(config.sentenceCorpusPath);
     const curatedStudyData = loadCuratedStudyData(config.curatedStudyDataPath);
     const kradMap = loadGovernedComponentMap({

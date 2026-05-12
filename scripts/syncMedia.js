@@ -1,6 +1,7 @@
 const fs = require("node:fs");
 
 const { loadConfig } = require("../src/config");
+const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { ensureMediaRoot } = require("../src/services/mediaStore");
 const { createMediaServices } = require("../src/services/mediaServiceFactory");
 const { parseLevelArgument, selectKanjiForSync, syncMediaForKanjiList } = require("../src/services/mediaSync");
@@ -58,7 +59,7 @@ async function main() {
         throw new Error("Missing JLPT JSON file at " + config.jlptJsonPath);
     }
 
-    const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
+    const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
     const kanjiList = selectKanjiForSync({
         jlptOnlyJson,
         level: options.level,

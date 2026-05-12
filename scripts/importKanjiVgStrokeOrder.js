@@ -3,6 +3,7 @@ const fs = require("node:fs");
 const { invokeCliMain } = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
+const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { parseLevelsArgument } = require("../src/services/mediaSourceReportService");
 const { importKanjiVgDirectory } = require("../src/services/kanjiVgImportService");
 const { parseCsvOption } = require("../src/utils/cliArgs");
@@ -88,7 +89,7 @@ async function main() {
         throw new Error(`Missing JLPT JSON file at ${config.jlptJsonPath}`);
     }
 
-    const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
+    const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
     const kanjiList = selectKanjiList(jlptOnlyJson, options.levels, options.limit, options.kanji);
     const summary = await importKanjiVgDirectory({
         inputDir: path.resolve(options.inputDir),

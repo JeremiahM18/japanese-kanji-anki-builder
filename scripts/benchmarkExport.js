@@ -3,6 +3,7 @@ const { performance } = require("node:perf_hooks");
 const { invokeCliMain } = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
+const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { loadGovernedComponentMap, pickMainComponent } = require("../src/datasets/kradfile");
 const { createEmptyExportProfile, createExportService } = require("../src/services/exportService");
 const { createKanjiApiClient, createEmptyClientMetrics } = require("../src/clients/kanjiApiClient");
@@ -167,7 +168,7 @@ async function main() {
         throw new Error(`Missing kanji component contract at ${config.kanjiComponentContractPath} and KRADFILE at ${config.kradfilePath}`);
     }
 
-    const jlptOnlyJson = JSON.parse(fs.readFileSync(config.jlptJsonPath, "utf-8"));
+    const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
     const kradMap = loadGovernedComponentMap({
         kanjiComponentContractPath: config.kanjiComponentContractPath,
         kradfilePath: config.kradfilePath,

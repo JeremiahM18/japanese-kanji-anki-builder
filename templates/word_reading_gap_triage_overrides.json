@@ -1271,6 +1271,81 @@
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "好く is valid but lower priority and less learner-facing than 好き or 好む; defer the standalone verb reading until a stronger usage case is needed."
+    },
+    "区|on|おう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "No exact JMdict learner-facing 区 -> おう candidate was found in the local verification surface; do not invent a support card for this reading."
+    },
+    "区|on|こう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "No exact JMdict learner-facing 区 -> こう candidate was found in the local verification surface; keep useful 区 vocabulary anchored by 区別."
+    },
+    "乗|on|しょう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "No exact JMdict learner-facing 乗 -> しょう candidate was found in the local verification surface; 乗車, 乗る, 乗り物, 乗り換える, and 乗せる cover the useful N4 乗 deck value."
+    },
+    "頭|kun|かぶり": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "頭 as かぶり has no priority/commonness support here and the visible suggestion 頭を振る is phrase-shaped with 振=N1; do not add it as a default N4 word card."
+    },
+    "暗|kun|くらむ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "暗む is dictionary-valid but lacks priority/commonness support and is more idiomatic/specialized than useful N4 暗 coverage through 暗い and 暗記."
+    },
+    "暗|kun|くれる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "暗れる is an alternate spelling for the common 暮れる word family; promoting it would add spelling clutter to N4 instead of a clean 暗 support card."
+    },
+    "引|kun|ひける": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "引ける is dictionary-valid but has no local priority/commonness support and is idiomatic/sense-split; keep 引 focused on 引く, 引き出し, and 引っ越す."
+    },
+    "回|kun|かえる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "No exact JMdict or Kanjium support was found for 回 -> かえる in the local verification surfaces; do not force this reading into the N4 word deck."
+    },
+    "回|kun|もとおる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "回る as もとおる is dictionary-valid but lacks priority/commonness and pitch support here, and the 'wander around' sense is too rare for N4 learner payoff."
+    },
+    "県|kun|かける": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "No exact JMdict or Kanjium support was found for 県 -> かける in the local verification surfaces; do not add a coverage-only card."
+    },
+    "合|kun|あわす": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "合わす is valid and common enough, but it is a lower-priority/variant transitive beside newly governed 合わせる; avoid a duplicate N4 support card."
+    },
+    "低|kun|ひくまる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "低まる is dictionary-valid but lacks priority/commonness support; 低める covers the stronger learner-facing 低 -> ひくめる active reading target."
+    },
+    "疲|kun|つからす": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "疲らす is dictionary-valid but lacks local priority/commonness support and adds little learner value beyond 疲れる plus ordinary causative grammar."
+    },
+    "疲|kun|づかれ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "疲れ as づかれ is suffix/compound-shaped and has no local priority/commonness or pitch support as a standalone word card; defer rather than teaching a fragment."
+    },
+    "軽|kun|かろんじる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "軽んじる is valid but formal and lower-priority than 軽い, 軽食, 軽やか, and other learner-facing 軽 support; defer it from N4."
     }
   }
 }

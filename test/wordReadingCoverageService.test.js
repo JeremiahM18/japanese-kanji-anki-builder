@@ -299,15 +299,31 @@ test('buildWordReadingGapTriage respects tracked editorial override dispositions
           },
         ],
       },
+      {
+        kanji: '区',
+        displayWord: '区',
+        onCoverage: [
+          {
+            reading: 'おう',
+            status: 'missing_example',
+            coverageSource: 'none',
+            matchingExamples: [],
+            deckExamples: [],
+            gapKind: 'distinct',
+          },
+        ],
+        kunCoverage: [],
+      },
     ],
   };
 
   const n4Triage = buildWordReadingGapTriage(n4Report);
   assert.equal(n4Triage.summary.editorialReviewItems, 0);
-  assert.equal(n4Triage.summary.deferVariantItems, 2);
+  assert.equal(n4Triage.summary.deferVariantItems, 3);
   assert.ok(n4Triage.items.every((item) => item.suggestedAction === 'defer_variant'));
   assert.ok(n4Triage.items.some((item) => /合戦 is real and common/.test(item.editorialNote)));
   assert.ok(n4Triage.items.some((item) => /公園/.test(item.editorialNote)));
+  assert.ok(n4Triage.items.some((item) => /No exact JMdict learner-facing 区 -> おう/.test(item.editorialNote)));
 });
 
 test('formatWordReadingGapTriage renders a practical backlog summary', () => {

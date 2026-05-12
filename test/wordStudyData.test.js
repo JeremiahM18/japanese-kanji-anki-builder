@@ -1614,6 +1614,57 @@ test("tracked starter word data includes the eighth N4 active reading backlog ba
     assert.match(starterEntries["便り|たより"].notes, /proverb-shaped/);
 });
 
+test("tracked starter word data includes the ninth N4 active reading backlog batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const n4ReadingSupportKeys = [
+        "民|たみ",
+        "都|みやこ",
+        "次ぐ|つぐ",
+        "説く|とく",
+        "利く|きく",
+        "軽やか|かろやか",
+        "乗せる|のせる",
+        "進める|すすめる",
+        "低める|ひくめる",
+    ];
+
+    for (const key of n4ReadingSupportKeys) {
+        assert.equal(starterEntries[key]?.jlpt, 4, key);
+        assert.equal(starterEntries[key]?.source, "starter-word", key);
+        assert.equal(starterEntries[key]?.coverage?.role, "support", key);
+    }
+    assert.equal(starterEntries["頭を振る|かぶりをふる"], undefined);
+    assert.equal(starterEntries["暗れる|くれる"], undefined);
+    assert.equal(starterEntries["合わす|あわす"], undefined);
+    assert.equal(starterEntries["軽んじる|かろんじる"], undefined);
+    assertCoverageReadings(starterEntries, [
+        ["民|たみ", "民", "たみ"],
+        ["都|みやこ", "都", "みやこ"],
+        ["次ぐ|つぐ", "次", "つぐ"],
+        ["説く|とく", "説", "とく"],
+        ["利く|きく", "利", "きく"],
+        ["軽やか|かろやか", "軽", "かろやか"],
+        ["乗せる|のせる", "乗", "のせる"],
+        ["進める|すすめる", "進", "すすめる"],
+        ["低める|ひくめる", "低", "ひくめる"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["民|たみ", "<ruby>民<rt>たみ</rt></ruby>"],
+        ["都|みやこ", "<ruby>都<rt>みやこ</rt></ruby>"],
+        ["次ぐ|つぐ", "<ruby>次<rt>つ</rt></ruby>ぐ"],
+        ["説く|とく", "<ruby>説<rt>と</rt></ruby>く"],
+        ["利く|きく", "<ruby>利<rt>き</rt></ruby>く"],
+        ["軽やか|かろやか", "<ruby>軽<rt>かろ</rt></ruby>やか"],
+        ["乗せる|のせる", "<ruby>乗<rt>の</rt></ruby>せる"],
+        ["進める|すすめる", "<ruby>進<rt>すす</rt></ruby>める"],
+        ["低める|ひくめる", "<ruby>低<rt>ひく</rt></ruby>める"],
+    ]);
+    assert.match(starterEntries["民|たみ"].notes, /市民 and 村民/);
+    assert.match(starterEntries["都|みやこ"].notes, /municipal 都 -> と/);
+    assert.match(starterEntries["利く|きく"].notes, /聞く and 効く/);
+    assert.match(starterEntries["低める|ひくめる"].notes, /低まる/);
+});
+
 test("tracked starter word data includes the first N5 enhancement batch without duplicate junk", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

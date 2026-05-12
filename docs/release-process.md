@@ -29,7 +29,7 @@ This document defines tagged release procedure.
 | `product:artifacts:n5` | Fresh tracked-source N5 word TSV generation from tracked templates only, with deterministic output and canonical-row checks. | Kanji TSV certification, managed-media packaging, `.apkg` release approval, or manual card QA. |
 | `product:artifacts:kanji:n5:preflight` | Whether tracked templates are sufficient to certify N5 kanji TSV generation without ignored local `data/` inputs. | Deck readiness by itself; it is allowed to report blocked until the remaining tracked kanji contracts exist. |
 | `deck:kanji:review-status` | Generated, golden, platinum, structural, and duplicate-claim status for core and additional kanji decks. | Source-evidence confidence, platinum completion for missing rows, or manual Anki QA. |
-| `deck:kanji:additional:ready` | Separate optional additional-unverified kanji TSV/APKG generation with media completeness and duplicate-claim quarantine reporting. | Core contract movement, source-evidence proof, platinum release quality, or public product readiness. |
+| `deck:kanji:additional:ready` | Separate optional additional-unverified kanji TSV/APKG generation with media completeness and duplicate-claim suppression reporting. | Core contract movement, source-evidence proof, platinum release quality, or public product readiness. |
 
 ## Release workflow outputs
 

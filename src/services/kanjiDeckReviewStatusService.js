@@ -187,26 +187,32 @@ function summarizeDuplicateAdditionalClaims(additionalDecks = [], selection = { 
     const selectedByKanji = new Map(
         (selection.selectedEntries || []).map((entry) => [entry.kanji, entry])
     );
-    const quarantinedKanji = new Set(selection.quarantinedDuplicateKanji || []);
+    const coreRetainedKanji = new Set(selection.coreRetainedDuplicateKanji || []);
     const duplicateClaims = [...appearancesByKanji.entries()]
         .filter(([, appearances]) => appearances.length > 1)
-        .map(([kanji, appearances]) => ({
-            kanji,
-            selectedTargetLevel: selectedByKanji.get(kanji)?.targetLevel || null,
-            quarantineStatus: quarantinedKanji.has(kanji) ? "quarantined" : "unquarantined",
-            appearances: appearances.sort((a, b) => (
+        .map(([kanji, appearances]) => {
+            const sortedAppearances = appearances.sort((a, b) => (
                 Number(b.targetLevel || 0) - Number(a.targetLevel || 0)
                 || a.deckId.localeCompare(b.deckId)
-            )),
-        }))
+            ));
+            const coreLevel = sortedAppearances.find((appearance) => appearance.currentContractLevel)?.currentContractLevel || null;
+            return {
+                kanji,
+                coreLevel,
+                selectedTargetLevel: selectedByKanji.get(kanji)?.targetLevel || null,
+                additionalClaimStatus: coreRetainedKanji.has(kanji) ? "core-retained" : "unresolved",
+                appearances: sortedAppearances,
+            };
+        })
         .sort((a, b) => a.kanji.localeCompare(b.kanji, "ja"));
 
+    const suppressedClaims = selection.suppressedDuplicateClaims || [];
     return {
         duplicateKanjiCount: duplicateClaims.length,
         excludedDuplicateClaimCount: (selection.excludedDuplicateClaims || []).length,
-        quarantinedDuplicateKanjiCount: quarantinedKanji.size,
-        quarantinedDuplicateClaimCount: (selection.quarantinedDuplicateClaims || []).length,
-        unquarantinedDuplicateKanjiCount: duplicateClaims.filter((claim) => claim.quarantineStatus !== "quarantined").length,
+        coreRetainedDuplicateKanjiCount: coreRetainedKanji.size,
+        suppressedDuplicateClaimCount: suppressedClaims.length,
+        unresolvedDuplicateKanjiCount: duplicateClaims.filter((claim) => claim.additionalClaimStatus !== "core-retained").length,
         duplicateClaims,
     };
 }
@@ -290,9 +296,9 @@ function buildKanjiDeckReviewStatus({
         ...additionalRows.flatMap((row) => row.issues.map((issue) => `${row.deckId}: ${issue}`)),
     ];
 
-    if (duplicateAdditionalClaims.unquarantinedDuplicateKanjiCount > 0) {
+    if (duplicateAdditionalClaims.unresolvedDuplicateKanjiCount > 0) {
         structuralIssues.push(
-            `${duplicateAdditionalClaims.unquarantinedDuplicateKanjiCount} kanji have unquarantined duplicate additional source claims`
+            `${duplicateAdditionalClaims.unresolvedDuplicateKanjiCount} kanji have unresolved duplicate additional source claims`
         );
     }
 
@@ -353,9 +359,9 @@ function formatKanjiDeckReviewStatus(report = {}) {
         "",
         "Duplicate Additional Source Claims:",
         `- duplicate kanji: ${duplicates.duplicateKanjiCount || 0}`,
-        `- quarantined duplicate kanji: ${duplicates.quarantinedDuplicateKanjiCount || 0}`,
-        `- quarantined duplicate claims: ${duplicates.quarantinedDuplicateClaimCount || 0}`,
-        `- unquarantined duplicate kanji: ${duplicates.unquarantinedDuplicateKanjiCount || 0}`
+        `- core-retained duplicate kanji: ${duplicates.coreRetainedDuplicateKanjiCount || 0}`,
+        `- suppressed duplicate additional claims: ${duplicates.suppressedDuplicateClaimCount || 0}`,
+        `- unresolved duplicate kanji: ${duplicates.unresolvedDuplicateKanjiCount || 0}`
     );
 
     if ((duplicates.duplicateClaims || []).length > 0) {
@@ -363,8 +369,11 @@ function formatKanjiDeckReviewStatus(report = {}) {
             const appearances = duplicate.appearances
                 .map((appearance) => `${appearance.deckId} claim N${appearance.targetLevel}`)
                 .join("; ");
-            const selected = duplicate.selectedTargetLevel ? `selected N${duplicate.selectedTargetLevel}` : "selected none";
-            lines.push(`- ${duplicate.kanji}: ${duplicate.quarantineStatus}; ${selected}; ${appearances}`);
+            const core = duplicate.coreLevel ? `core N${duplicate.coreLevel} retained` : "core placement retained";
+            const selected = duplicate.selectedTargetLevel
+                ? `selected additional N${duplicate.selectedTargetLevel}`
+                : "no additional duplicate selected";
+            lines.push(`- ${duplicate.kanji}: ${core}; ${selected}; ${appearances}`);
         }
     }
 

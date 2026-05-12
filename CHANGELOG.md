@@ -10,7 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
-- Documented the separate additional-unverified kanji deck surface in README and release docs, including `deck:kanji:additional:ready`, additional golden review commands, `deck:kanji:review-status`, current N5/N4/N3/N2/N1 generated-golden counts (`16/81/90/114/90`), and quarantined duplicate source claims.
+- Documented the separate additional-unverified kanji deck surface in README and release docs, including `deck:kanji:additional:ready`, additional golden review commands, `deck:kanji:review-status`, current N5/N4/N3/N2/N1 generated-golden counts (`16/81/90/114/90`), and suppressed duplicate additional source claims.
 - Added an APKG SQLite round-trip regression test that rebuilds the N5 mini fixture package and verifies TSV field values, deck name, media mapping, and card count after unpacking.
 - Added reusable JLPT kanji source-evidence evaluation context so audits, import materialization, source-level deltas, and source-input worklists prepare source policy and comparable assignments once per run.
 - Added negative source-governance tests proving only active reviewed assignment sources with assignment-storage permission can vote, while unreviewed, planned, non-storing, and background lanes remain non-voting.

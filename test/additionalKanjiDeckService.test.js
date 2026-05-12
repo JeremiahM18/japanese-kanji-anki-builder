@@ -22,7 +22,7 @@ function buildEntry(overrides = {}) {
     };
 }
 
-test("selectPhysicalAdditionalEntries quarantines repeated source claims by default", () => {
+test("selectPhysicalAdditionalEntries suppresses repeated additional source claims by default", () => {
     const selection = selectPhysicalAdditionalEntries([
         {
             level: 5,
@@ -44,9 +44,9 @@ test("selectPhysicalAdditionalEntries quarantines repeated source claims by defa
     assert.deepEqual(selection.selectedEntries.map((entry) => `${entry.kanji}:N${entry.targetLevel}`), [
         "本:N5",
     ]);
-    assert.deepEqual(selection.quarantinedDuplicateKanji, ["古"]);
+    assert.deepEqual(selection.coreRetainedDuplicateKanji, ["古"]);
     assert.deepEqual(
-        selection.quarantinedDuplicateClaims.map((entry) => `${entry.kanji}:N${entry.targetLevel}`).sort(),
+        selection.suppressedDuplicateClaims.map((entry) => `${entry.kanji}:N${entry.targetLevel}`).sort(),
         ["古:N1", "古:N5"]
     );
 });
@@ -75,7 +75,33 @@ test("selectPhysicalAdditionalEntries can select one duplicate only when explici
         "本:N5",
     ]);
     assert.deepEqual(selection.excludedDuplicateClaims.map((entry) => `${entry.kanji}:N${entry.targetLevel}`), ["古:N1"]);
-    assert.deepEqual(selection.quarantinedDuplicateKanji, []);
+    assert.deepEqual(selection.coreRetainedDuplicateKanji, []);
+});
+
+test("selectPhysicalAdditionalEntries does not mark duplicates core-retained without a core level", () => {
+    const selection = selectPhysicalAdditionalEntries([
+        {
+            level: 5,
+            deckId: "additional_unverified_N5",
+            entries: [
+                buildEntry({ kanji: "仮", currentContractLevel: null, targetLevel: 5 }),
+            ],
+        },
+        {
+            level: 1,
+            deckId: "additional_unverified_N1",
+            entries: [
+                buildEntry({ kanji: "仮", currentContractLevel: null, targetLevel: 1 }),
+            ],
+        },
+    ]);
+
+    assert.deepEqual(selection.selectedEntries, []);
+    assert.deepEqual(selection.coreRetainedDuplicateKanji, []);
+    assert.deepEqual(
+        selection.suppressedDuplicateClaims.map((entry) => `${entry.kanji}:N${entry.targetLevel}`).sort(),
+        ["仮:N1", "仮:N5"]
+    );
 });
 
 test("buildAdditionalJlptDataset projects selected entries into target-level export scope", () => {

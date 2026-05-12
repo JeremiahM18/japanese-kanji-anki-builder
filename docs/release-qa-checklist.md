@@ -21,7 +21,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 ## Product readiness checks
 
 - Run the golden review command for each shipped kanji level, such as `npm run deck:review:n5`.
-- For additional unverified kanji decks, run `npm run deck:kanji:additional:ready`, every applicable `npm run deck:kanji:additional:review:n*` command, and `npm run deck:kanji:review-status`. Duplicate additional source claims must be quarantined or resolved.
+- For additional unverified kanji decks, run `npm run deck:kanji:additional:ready`, every applicable `npm run deck:kanji:additional:review:n*` command, and `npm run deck:kanji:review-status`. Duplicate additional source claims must be suppressed or resolved.
 - Run the read-only JLPT kanji source-evidence audit before relying on level placement, such as `npm run data:audit:jlpt:sources -- --governance-strict --limit=25`. Read the missing/disagreement work queue; missing Japanese-published evidence is an evidence-depth blocker, not a deck-movement instruction.
 - Run `npm run data:audit:jlpt:source-inputs -- --source=<source-id> --strict` before activating or importing any ignored local JLPT kanji source file.
 - For Tanos direct legacy updates, regenerate the ignored source TSV with `npm run data:normalize:tanos-jlpt-kanji`, pin its SHA-256, byte size, and row count, then dry-run `npm run data:import:jlpt:source-input -- --source=tanos_legacy_direct` before using `--write`. Keep Tanos N2/N3 in the separate `tanos_estimated_split` lane as active lower-weight estimated evidence, require its own strict preflight and dry-run import before writes, and keep `tanos_frequency_method_notes` non-voting as method explanation only.
@@ -42,7 +42,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 ## Kanji deck manual spot review
 
 - Import each kanji level being shipped into Anki. Current ready local kanji levels are N5, N4, N3, N2, and N1. Platinum review is still required before any level is version-1 locked.
-- Import additional unverified kanji decks separately from core decks. Confirm they are labeled as additional/unverified and do not include quarantined duplicate-claim kanji.
+- Import additional unverified kanji decks separately from core decks. Confirm they are labeled as additional/unverified and do not include suppressed duplicate-claim kanji.
 - Confirm platinum-reviewed cards preserve the individual-kanji anchor and do not ship weak, noisy, or compound-led teaching surfaces.
 - Confirm each card front is the individual target kanji.
 - Confirm each card back starts with the learner-facing `PrimaryReading` plus only the meaning associated with that reading.

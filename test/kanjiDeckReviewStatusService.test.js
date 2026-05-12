@@ -91,12 +91,72 @@ test("buildKanjiDeckReviewStatus reports core and additional review coverage", (
         assert.equal(additionalN5.goldenCount, 0);
         assert.equal(additionalN5.missingGolden.length, 1);
         assert.equal(report.duplicateAdditionalClaims.duplicateKanjiCount, 1);
-        assert.equal(report.duplicateAdditionalClaims.quarantinedDuplicateKanjiCount, 1);
-        assert.equal(report.duplicateAdditionalClaims.quarantinedDuplicateClaimCount, 2);
-        assert.equal(report.duplicateAdditionalClaims.unquarantinedDuplicateKanjiCount, 0);
+        assert.equal(report.duplicateAdditionalClaims.coreRetainedDuplicateKanjiCount, 1);
+        assert.equal(report.duplicateAdditionalClaims.suppressedDuplicateClaimCount, 2);
+        assert.equal(report.duplicateAdditionalClaims.unresolvedDuplicateKanjiCount, 0);
         assert.equal(report.passed, true);
         assert.match(formatKanjiDeckReviewStatus(report), /duplicate kanji: 1/);
-        assert.match(formatKanjiDeckReviewStatus(report), /quarantined; selected none/);
+        assert.match(formatKanjiDeckReviewStatus(report), /core N4 retained; no additional duplicate selected/);
+    } finally {
+        fs.rmSync(tempRoot, { recursive: true, force: true });
+    }
+});
+
+test("buildKanjiDeckReviewStatus fails unresolved duplicate additional claims without core placement", () => {
+    const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "kanji-review-status-unresolved-"));
+
+    try {
+        writeJson(path.join(tempRoot, "templates", "golden_n5_review_set.json"), []);
+        writeJson(path.join(tempRoot, "templates", "platinum_n5_review_set.json"), []);
+        writeJson(path.join(tempRoot, "templates", "golden_n1_review_set.json"), []);
+        writeJson(path.join(tempRoot, "templates", "platinum_n1_review_set.json"), []);
+        writeTsv(path.join(tempRoot, "out", "build", "exports", "jlpt-n5.tsv"), []);
+        writeTsv(path.join(tempRoot, "out", "build", "exports", "jlpt-n1.tsv"), []);
+        writeTsv(path.join(tempRoot, "out", "build", "additional_unverified", "exports", "additional-unverified-n5.tsv"), []);
+        writeTsv(path.join(tempRoot, "out", "build", "additional_unverified", "exports", "additional-unverified-n1.tsv"), []);
+
+        const report = buildKanjiDeckReviewStatus({
+            rootDir: tempRoot,
+            coreOutDir: path.join(tempRoot, "out", "build"),
+            additionalOutDir: path.join(tempRoot, "out", "build", "additional_unverified"),
+            levels: [5, 1],
+            contract: { kanjiLevels: {} },
+            deltaReport: {
+                byLevel: {
+                    5: {
+                        missingSourceCandidatesFromCurrent: [
+                            {
+                                kanji: "仮",
+                                currentContractLevel: null,
+                                targetLevel: 5,
+                                confidence: "weak_evidence",
+                                sourceConsensusLevel: 5,
+                                sourceIds: ["fixture_legacy"],
+                            },
+                        ],
+                    },
+                    1: {
+                        missingSourceCandidatesFromCurrent: [
+                            {
+                                kanji: "仮",
+                                currentContractLevel: null,
+                                targetLevel: 1,
+                                confidence: "weak_evidence",
+                                sourceConsensusLevel: 1,
+                                sourceIds: ["fixture_textbook"],
+                            },
+                        ],
+                    },
+                },
+            },
+        });
+
+        assert.equal(report.duplicateAdditionalClaims.duplicateKanjiCount, 1);
+        assert.equal(report.duplicateAdditionalClaims.coreRetainedDuplicateKanjiCount, 0);
+        assert.equal(report.duplicateAdditionalClaims.suppressedDuplicateClaimCount, 2);
+        assert.equal(report.duplicateAdditionalClaims.unresolvedDuplicateKanjiCount, 1);
+        assert.equal(report.passed, false);
+        assert.match(formatKanjiDeckReviewStatus(report), /unresolved duplicate kanji: 1/);
     } finally {
         fs.rmSync(tempRoot, { recursive: true, force: true });
     }

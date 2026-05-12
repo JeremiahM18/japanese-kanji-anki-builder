@@ -70,20 +70,22 @@ function buildEntriesByKanji(additionalDecks = []) {
     return entriesByKanji;
 }
 
-function selectPhysicalAdditionalEntries(additionalDecks = [], { duplicatePolicy = "quarantine" } = {}) {
-    if (!["quarantine", "select-best"].includes(duplicatePolicy)) {
+function selectPhysicalAdditionalEntries(additionalDecks = [], { duplicatePolicy = "core-only" } = {}) {
+    if (!["core-only", "select-best"].includes(duplicatePolicy)) {
         throw new Error(`Unsupported additional kanji duplicate policy: ${duplicatePolicy}`);
     }
 
     const selectedByKanji = new Map();
     const excludedDuplicateClaims = [];
-    const quarantinedDuplicateClaims = [];
-    const quarantinedDuplicateKanji = [];
+    const suppressedDuplicateClaims = [];
+    const coreRetainedDuplicateKanji = [];
 
     for (const [kanji, entries] of buildEntriesByKanji(additionalDecks)) {
-        if (entries.length > 1 && duplicatePolicy === "quarantine") {
-            quarantinedDuplicateKanji.push(kanji);
-            quarantinedDuplicateClaims.push(...entries);
+        if (entries.length > 1 && duplicatePolicy !== "select-best") {
+            if (entries.some((entry) => Number(entry.currentContractLevel))) {
+                coreRetainedDuplicateKanji.push(kanji);
+            }
+            suppressedDuplicateClaims.push(...entries);
             continue;
         }
 
@@ -120,8 +122,8 @@ function selectPhysicalAdditionalEntries(additionalDecks = [], { duplicatePolicy
         selectedEntries,
         entriesByLevel,
         excludedDuplicateClaims: excludedDuplicateClaims.sort(compareEntryPriority),
-        quarantinedDuplicateClaims: quarantinedDuplicateClaims.sort(compareEntryPriority),
-        quarantinedDuplicateKanji: quarantinedDuplicateKanji.sort((a, b) => a.localeCompare(b, "ja")),
+        suppressedDuplicateClaims: suppressedDuplicateClaims.sort(compareEntryPriority),
+        coreRetainedDuplicateKanji: coreRetainedDuplicateKanji.sort((a, b) => a.localeCompare(b, "ja")),
     };
 }
 

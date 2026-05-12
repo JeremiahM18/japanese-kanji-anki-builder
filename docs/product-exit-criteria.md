@@ -47,6 +47,8 @@ A kanji level ships only when all criteria are true:
 - Audio is governed, audited, review-clean, and exact for the exported target kanji plus primary reading.
 - Accessibility review has no unresolved blocker.
 
+Additional unverified kanji decks are separate optional surfaces, not core taxonomy movement. They may be generated only as `additional_unverified_Nx` decks, must keep duplicate source claims quarantined or explicitly resolved, and must pass their own golden review before use. Additional golden coverage does not satisfy core platinum review.
+
 ## Word deck exit criteria
 
 A word level ships only when all criteria are true:
@@ -71,6 +73,7 @@ A word level ships only when all criteria are true:
 - N3 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N2 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N1 kanji: golden-reviewed at `1230/1230`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
+- Additional unverified kanji decks: separate optional `kanji-additional` surface generated from non-disputed source-claim deltas; current `deck:kanji:review-status` passes with generated/golden counts N5 `16/16`, N4 `81/81`, N3 `90/90`, N2 `114/114`, N1 `90/90`; platinum is `0/391`; `15` duplicate-claim kanji (`30` claims) are quarantined and not generated
 - JLPT kanji source evidence: governed separately from the operational taxonomy with tracked source tiers, publisher-independence groups, evidence lineages, range evidence, and confidence reasons. `current_operational_contract` is a non-voting comparator only. `kanjidic2_legacy` is pinned and imported as one active external evidence source with `1479` reviewed exact assignments and `0` current range rows; future regeneration preserves old level 2 as N2/N3 range evidence instead of guessing exact placement. `tanos_legacy_direct` is pinned and imported as one active direct legacy source with `1478` reviewed N1/N4/N5 assignments. `tanos_estimated_split` is pinned and imported as an active lower-weight estimated source with `734` reviewed N2/N3 assignments, separate from direct legacy evidence, and must not settle taxonomy movement by itself. `tanos_frequency_method_notes` is an active, non-voting method lane that explains why Tanos N2/N3 assignments are estimated. `official_jlpt_sample_workbooks` is active occurrence-only evidence and cannot assign or move kanji. Japanese-published textbook evidence is split into individual manual-citation source lanes: `ask_hajimete_jlpt_kanji` is active with `208` reviewed assignments, `0` non-importing `source_access_gap` rows, and `0` pending rows from pinned official N1/N3 target-entry and index pages plus exact N2 and N5 checklist pages, `shin_kanzen_master_kanji` is active with `406` reviewed assignments, `236` non-importing `source_access_gap` rows, and `1570` pending rows, and `nihongo_sou_matome_kanji` is active with `498` reviewed assignments, `417` non-importing `source_access_gap` rows, and `1297` pending rows; continue targeted Sou review only where exact assignment proof is available. `try_jlpt_textbook` is blocked unless exact per-kanji assignment proof is found. `japanese_textbook_consensus` is a derived non-voting summary computed from individual textbook lanes. `joyo_grade` and `kanji_alive` are background metadata only, `bccwj_frequency` is frequency sanity only, `jpdb` is restricted manual frequency sanity only after source-use review, `kanshudo` and `wanikani` are restricted and blocked until governed use paths are approved, and `jlptsensei` is a secondary non-Japanese manual-citation signal only after Japanese-published evidence is no longer the dominant blocker. Tanos direct legacy and KANJIDIC2 legacy have different publisher-independence groups but share the `pre_2010_direct_jlpt` evidence lineage, so they do not satisfy the independent-lineage requirement by themselves. The current audit is still expected to fail evidence depth until additional independent evidence-lineage and Japanese-published source evidence are populated and reviewed, even when source-use governance is clean. Ignored source files must pass `data:audit:jlpt:source-inputs` with pinned integrity before their assignments are imported.
 - Non-disputed source consensus can be promoted only by an explicit governed contract migration. The source audit remains an evidence-depth gate and does not itself generate decks or release approval.
 - N5 word: expanded to `287` canonical governed rows plus `20` tracked source-only phrase exclusions; current word-level placement, golden, platinum, tracked-source artifact, and automated readiness checks pass, but manual import QA, accessibility, and listening checks are still required before release-ready status
@@ -94,6 +97,7 @@ npm run data:audit:jlpt:words
 npm run data:audit:audio -- --json
 npm run deck:review:accessibility -- --deck-kind=kanji
 npm run deck:review:accessibility -- --deck-kind=word
+npm run deck:kanji:review-status
 npm run deck:words:level-anchor-audit -- --level=5
 npm run product:artifacts:n5
 npm run product:artifacts:kanji:n5:preflight
@@ -120,6 +124,8 @@ npm run release:gate
 `product:readiness:n5` is the current automated N5 product checkpoint. It runs the JLPT kanji audit, JLPT word audit, governed audio provenance audit, tracked-source N5 word TSV artifact checkpoint, N5 word-level placement audit, N5 kanji golden review, and N5 word golden review. It currently passes. The word placement audit distinguishes rows without a current-level anchor from later all-easier-kanji placements without explicit learner-fit rationale. It does not certify platinum review, tracked-source kanji TSVs, fresh `.apkg` product artifacts, manual Anki import review, mobile QA, screen-reader QA, listening QA, or governed JLPT kanji source consensus.
 
 `release:gate` validates smoke-fixture artifacts and packaging contracts. It does not certify public product deck readiness. Add level-specific review commands for the deck being shipped, including `npm run deck:words:review:n5` for an N5 word release.
+
+For additional unverified kanji decks, also run `npm run deck:kanji:additional:ready`, every applicable `npm run deck:kanji:additional:review:n*` command, and `npm run deck:kanji:review-status`. Duplicate additional source claims must be quarantined or resolved before any optional additional deck is shipped.
 
 For a version 1 locked release, also run the applicable platinum gate after the platinum manifest is populated:
 

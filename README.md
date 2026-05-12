@@ -123,6 +123,7 @@ Use the workflow sections below for preview, `.apkg`, media, audio, and release 
 | N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N1 kanji | Golden-reviewed at `1230/1230`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
+| Additional unverified kanji decks | Separate optional `kanji-additional` surface generated from non-disputed source-claim deltas without moving the core contract. Current `deck:kanji:review-status` passes with generated/golden counts N5 `16/16`, N4 `81/81`, N3 `90/90`, N2 `114/114`, N1 `90/90`; platinum is `0/391`. `15` duplicate-claim kanji (`30` claims) are quarantined and not generated. |
 | N5 word | Expanded to `287` canonical governed rows plus `20` tracked source-only phrase exclusions; current word-level placement, golden, platinum, tracked-source artifact, and automated readiness checks pass. N5 word release still needs manual import QA, accessibility, and listening checks before release-ready status. |
 | N4 word | Expanded to `569` governed rows; current word-level placement audit passes for N4 at `0/569` violations. N4 word completion remains incomplete until active reading coverage and active enhancement candidates are resolved, then fresh golden/platinum review, import QA, accessibility, and listening checks are still required. |
 
@@ -166,6 +167,7 @@ Tracked contracts define release behavior:
 - Kanji note schema: [src/config/ankiNoteSchema.json](src/config/ankiNoteSchema.json)
 - Word note schema: [src/config/ankiWordNoteSchema.json](src/config/ankiWordNoteSchema.json)
 - Golden kanji review sets: [templates/golden_n5_review_set.json](templates/golden_n5_review_set.json), [templates/golden_n4_review_set.json](templates/golden_n4_review_set.json), [templates/golden_n3_review_set.json](templates/golden_n3_review_set.json), [templates/golden_n2_review_set.json](templates/golden_n2_review_set.json), [templates/golden_n1_review_set.json](templates/golden_n1_review_set.json)
+- Golden additional unverified kanji review sets: [templates/golden_additional_unverified_n5_review_set.json](templates/golden_additional_unverified_n5_review_set.json), [templates/golden_additional_unverified_n4_review_set.json](templates/golden_additional_unverified_n4_review_set.json), [templates/golden_additional_unverified_n3_review_set.json](templates/golden_additional_unverified_n3_review_set.json), [templates/golden_additional_unverified_n2_review_set.json](templates/golden_additional_unverified_n2_review_set.json), [templates/golden_additional_unverified_n1_review_set.json](templates/golden_additional_unverified_n1_review_set.json)
 - Golden word review sets: [templates/golden_n5_word_review_set.json](templates/golden_n5_word_review_set.json), [templates/golden_n4_word_review_set.json](templates/golden_n4_word_review_set.json)
 - Platinum review policy: [docs/platinum-review-policy.md](docs/platinum-review-policy.md)
 - Platinum kanji review sets: [templates/platinum_n5_review_set.json](templates/platinum_n5_review_set.json), [templates/platinum_n4_review_set.json](templates/platinum_n4_review_set.json), [templates/platinum_n3_review_set.json](templates/platinum_n3_review_set.json), [templates/platinum_n2_review_set.json](templates/platinum_n2_review_set.json), [templates/platinum_n1_review_set.json](templates/platinum_n1_review_set.json)
@@ -216,6 +218,9 @@ Kanji decks:
 - `deck:ready` fails on export fallbacks unless `--allow-export-fallbacks` is explicit.
 - Static stroke-order images and looping animations are separate managed-media readiness surfaces.
 - Audio is governed by policy and required for kanji deck readiness. Exported kanji cards must use exact audio for the target kanji and exported primary reading.
+- Additional unverified kanji decks are a separate optional surface. They do not move the core JLPT contract, do not prove source-evidence confidence, and do not replace core deck readiness.
+- Duplicate additional source claims are quarantined by default. Unquarantined duplicate additional claims fail `deck:kanji:review-status`.
+- Additional golden review protects the generated additional deck output. Additional platinum review remains unstarted and must not be implied by golden coverage.
 
 Word decks:
 
@@ -256,6 +261,7 @@ npm run data:audit:jlpt
 npm run data:audit:jlpt:sources -- --governance-strict --limit=25
 npm run data:audit:jlpt:source-levels -- --worklist-only --limit=25
 npm run deck:kanji:partition-plan -- --limit=25
+npm run deck:kanji:review-status
 npm run data:audit:jlpt:source-access
 npm run data:benchmark:jlpt:sources -- --source=<source-id> --repeat=2 --limit=10
 npm run data:benchmark:jlpt:sources:gate -- --source=<source-id> --repeat=2 --limit=10
@@ -287,6 +293,10 @@ npm run release:gate
 `data:audit:jlpt:source-levels` is a read-only companion audit for source-claimed level deltas. It answers questions like "how many kanji do active sources call N5, how many are already in the current N5 contract, and which source-backed candidates are missing from the current N5 deck?" by reporting current contract counts, active source-candidate counts, source-consensus counts, per-source claim counts, missing source candidates from the current level, missing source-consensus rows, disputed missing candidates, current-level rows whose source consensus points elsewhere, and current-level rows without same-level source support. Add `--worklist` to append an all-level source-lane batch packet, or `--worklist-only` to show only that packet, ordered by batch value: disputed source votes, missing evidence, missing Japanese-published evidence, contract/source consensus mismatches, independence gaps, and weak evidence, with each priority bucket ordered N5 through N1. Each worklist row lists the current level, all source-candidate levels, consensus level, vote weights, and exact levels that must be checked in the manual source lane so review is not narrowed to one adjacent N level. It also annotates resolved source-input worksheet progress, including active or in-review rows marked `reviewed`, `blocked`, or `source_access_gap`; those annotations are progress markers only, and reviewed rows vote only after they are imported into the governed source-evidence manifest. Use `data:audit:jlpt:sources` as the governance-closure view for final dispute and contract-movement decisions. This command is informational only: it does not move kanji, move words, update decks, or change readiness.
 
 `deck:kanji:partition-plan` converts the source-level delta audit into a read-only kanji product plan: five core logical decks plus five `additional_unverified_Nx` logical decks. By default it includes only learner-useful earlier-placement candidates whose source consensus matches the proposed target level, excludes disputed rows, excludes source claims whose consensus points elsewhere, and reports duplicate-note risk before any physical export work. Use `--candidate-scope=all-source-claims` only for audit/debug visibility. It does not move contracts, generate decks, import evidence, or change readiness.
+
+`deck:kanji:review-status` reports generated, golden, and platinum coverage for the five core kanji decks and five `additional_unverified_Nx` decks. It also fails on unquarantined duplicate additional source claims so duplicate notes cannot silently enter optional decks.
+
+`deck:kanji:additional:ready` builds the separate optional additional-unverified kanji TSV/APKG surface. It currently uses all non-disputed source claims, selects `391` unique additional cards, quarantines `15` duplicate-claim kanji (`30` claims), and reports `0` blank audio and `0` blank stroke-order fields for the generated rows. It does not move the core JLPT contract or certify platinum release quality.
 
 `data:audit:jlpt:source-access` ranks source lanes before another manual textbook batch is generated. It combines the all-level source-review pressure with the source-use manifest, tracked source-input config, local worksheet existence, tracked assignment counts, and worksheet status counts. Use it when a lane starts producing mostly `source_access_gap` decisions or when a planned Japanese-published source may be a better next use of reviewer time. Occurrence-only, derived, background, frequency, blocked, and non-Japanese lanes are reported, but they are not treated as replacements for Japanese-published assignment evidence. This command is read-only and does not import evidence, move kanji, move words, update decks, or change readiness.
 
@@ -366,6 +376,12 @@ npm run deck:review:n4
 npm run deck:review:n3
 npm run deck:review:n2
 npm run deck:review:n1
+npm run deck:kanji:review-status
+npm run deck:kanji:additional:review:n5
+npm run deck:kanji:additional:review:n4
+npm run deck:kanji:additional:review:n3
+npm run deck:kanji:additional:review:n2
+npm run deck:kanji:additional:review:n1
 npm run deck:review:coverage
 npm run deck:review:coverage -- --level=1
 node scripts/reviewPlatinumKanjiLevel.js --level=5
@@ -380,11 +396,14 @@ Golden review protects learner-facing card output rather than raw field presence
 ```bash
 npm run deck:ready -- --levels=5
 npm run deck:apkg -- --levels=5
+npm run deck:kanji:additional:ready
 ```
 
 `deck:ready` validates setup, syncs media, builds exports, packages files under `out/build/package`, rebuilds from a clean package directory, reports managed manifest coverage and exported card media completeness, and fails on export fallbacks by default. Exported card media completeness is the release-critical signal for kanji deck media readiness.
 
 Use `--allow-export-fallbacks` only for an explicitly degraded local artifact.
+
+`deck:kanji:additional:ready` writes separate `additional_unverified_Nx` exports under `out/build/additional_unverified` and packages them as a separate `kanji-additional` APKG. Do not merge those rows into the core deck or treat their golden manifests as source-evidence proof.
 
 ### Build Word Decks
 
@@ -553,11 +572,18 @@ Repository governance:
 | `npm run deck:platinum:batch -- --level=5 --limit=12` | Build a read-only kanji platinum pre-review packet |
 | `npm run deck:ready` | Build and package kanji TSV artifacts |
 | `npm run deck:apkg` | Build kanji `.apkg` artifacts |
+| `npm run deck:kanji:additional:ready` | Build the separate optional additional-unverified kanji TSV/APKG surface |
+| `npm run deck:kanji:review-status` | Report core/additional kanji generated, golden, platinum, and duplicate-claim status |
 | `npm run deck:review:n5` | Run the N5 kanji golden benchmark |
 | `npm run deck:review:n4` | Run the N4 kanji golden benchmark |
 | `npm run deck:review:n3` | Run the N3 kanji golden benchmark |
 | `npm run deck:review:n2` | Run the N2 kanji golden benchmark |
 | `npm run deck:review:n1` | Run the N1 kanji golden benchmark |
+| `npm run deck:kanji:additional:review:n5` | Run the additional-unverified N5 kanji golden benchmark |
+| `npm run deck:kanji:additional:review:n4` | Run the additional-unverified N4 kanji golden benchmark |
+| `npm run deck:kanji:additional:review:n3` | Run the additional-unverified N3 kanji golden benchmark |
+| `npm run deck:kanji:additional:review:n2` | Run the additional-unverified N2 kanji golden benchmark |
+| `npm run deck:kanji:additional:review:n1` | Run the additional-unverified N1 kanji golden benchmark |
 | `npm run deck:review:coverage` | Audit golden-review coverage |
 | `npm run deck:platinum:n5` | Run the N5 kanji platinum release-quality benchmark |
 | `npm run deck:platinum:n4` | Run the N4 kanji platinum release-quality benchmark |

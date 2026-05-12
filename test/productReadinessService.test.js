@@ -6,7 +6,6 @@ const {
     buildProductReadinessPlan,
     buildSpawnOptions,
     formatProductReadinessReport,
-    runCliMainInProcess,
     runProductReadinessGate,
 } = require("../src/services/productReadinessService");
 
@@ -42,6 +41,7 @@ test("runProductReadinessGate passes when all checkpoint commands pass", async (
 
     assert.equal(report.passed, true);
     assert.equal(report.checks.length, N5_PRODUCT_READINESS_COMMANDS.length);
+    assert.equal(N5_PRODUCT_READINESS_COMMANDS.some((command) => command.runInProcess), false);
     assert.equal(calls.some((call) => call.includes("reviewGoldenWordLevel.js")), true);
     assert.equal(calls.some((call) => call.includes("auditJlptKanjiSourceEvidence.js")), false);
     assert.equal(calls.some((call) => call.includes("auditWordLevelAnchors.js")), true);
@@ -87,18 +87,6 @@ test("runProductReadinessGate fails when word placement policy fails", async () 
     const failed = report.checks.find((check) => check.id === "n5-word-level-placement-audit");
     assert.equal(failed.passed, false);
     assert.match(failed.stdoutTail, /Word level placement violations: 46/);
-});
-
-test("runCliMainInProcess respects process.exitCode failures without process.exit", async () => {
-    const result = await runCliMainInProcess({
-        async main() {
-            process.stdout.write("soft failure");
-            process.exitCode = 1;
-        },
-    });
-
-    assert.equal(result.status, 1);
-    assert.match(result.stdout, /soft failure/);
 });
 
 test("formatProductReadinessReport states scope and exclusions", () => {

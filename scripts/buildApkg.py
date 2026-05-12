@@ -3,11 +3,12 @@ import hashlib
 import json
 import shutil
 import sqlite3
-import time
 import zipfile
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+DETERMINISTIC_ZIP_TIMESTAMP = (2024, 1, 1, 0, 0, 0)
+DETERMINISTIC_MOD_EPOCH = 1_704_067_200
 NOTE_SCHEMA_PATHS = {
     "kanji": REPO_ROOT / "src" / "config" / "ankiNoteSchema.json",
     "word": REPO_ROOT / "src" / "config" / "ankiWordNoteSchema.json",
@@ -229,15 +230,52 @@ def build_guid(primary_field: str, level: int, deck_kind: str) -> str:
     return hashlib.sha1(f"{deck_kind}:{level}:{primary_field}".encode("utf-8")).hexdigest()[:10]
 
 
+def update_hash_with_file(digest, file_path: Path, label: str):
+    digest.update(label.encode("utf-8"))
+    digest.update(b"\0")
+    digest.update(str(file_path.name).encode("utf-8"))
+    digest.update(b"\0")
+    digest.update(file_path.read_bytes())
+    digest.update(b"\0")
+
+
+def build_package_fingerprint(levels, package_exports_dir: Path, media_dir: Path, deck_kind: str, note_schema) -> str:
+    digest = hashlib.sha256()
+    digest.update(deck_kind.encode("utf-8"))
+    digest.update(b"\0")
+    digest.update(",".join(str(level) for level in levels).encode("utf-8"))
+    digest.update(b"\0")
+    digest.update(json.dumps(note_schema, ensure_ascii=False, sort_keys=True).encode("utf-8"))
+    digest.update(b"\0")
+
+    for level in levels:
+        update_hash_with_file(digest, package_exports_dir / build_export_file_name(level, deck_kind), f"export:N{level}")
+
+    if media_dir.exists():
+        for file_path in sorted([item for item in media_dir.iterdir() if item.is_file()]):
+            update_hash_with_file(digest, file_path, "media")
+
+    return digest.hexdigest()
+
+
+def build_deterministic_seed(fingerprint: str) -> int:
+    return int(fingerprint[:15], 16)
+
+
+def build_deterministic_mod(seed: int) -> int:
+    return DETERMINISTIC_MOD_EPOCH + (seed % 31_536_000)
+
+
 def create_collection_db(db_path: Path, levels, package_exports_dir: Path, deck_kind: str):
     db_path.parent.mkdir(parents=True, exist_ok=True)
 
-    unique_seed = time.time_ns()
-    now_ms = int(time.time() * 1000)
-    mod = int(time.time())
+    note_schema = load_anki_note_schema(deck_kind)
+    fingerprint = build_package_fingerprint(levels, package_exports_dir, package_exports_dir.parent / "media", deck_kind, note_schema)
+    unique_seed = build_deterministic_seed(fingerprint)
+    mod = build_deterministic_mod(unique_seed)
+    now_ms = mod * 1000
     model_id = unique_seed
     deck_ids_by_level = {level: unique_seed + 1000 + index for index, level in enumerate(levels)}
-    note_schema = load_anki_note_schema(deck_kind)
     field_names = note_schema["fieldNames"]
 
     note_rows = []
@@ -329,6 +367,13 @@ def create_collection_db(db_path: Path, levels, package_exports_dir: Path, deck_
     return len(note_rows), len(deck_ids_by_level)
 
 
+def write_deterministic_archive_file(archive, file_path: Path, arcname: str):
+    info = zipfile.ZipInfo(arcname, date_time=DETERMINISTIC_ZIP_TIMESTAMP)
+    info.compress_type = zipfile.ZIP_DEFLATED
+    info.external_attr = 0o644 << 16
+    archive.writestr(info, file_path.read_bytes())
+
+
 def build_apkg(out_dir: Path, levels, deck_kind: str):
     package_root = out_dir / "package"
     exports_dir = package_root / "exports"
@@ -374,10 +419,10 @@ def build_apkg(out_dir: Path, levels, deck_kind: str):
             apkg_path.unlink()
 
         with zipfile.ZipFile(apkg_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
-            archive.write(collection_path, arcname="collection.anki2")
-            archive.write(media_index_path, arcname="media")
+            write_deterministic_archive_file(archive, collection_path, "collection.anki2")
+            write_deterministic_archive_file(archive, media_index_path, "media")
             for index in range(len(media_files)):
-                archive.write(stage_dir / str(index), arcname=str(index))
+                write_deterministic_archive_file(archive, stage_dir / str(index), str(index))
 
         return {
             "filePath": str(apkg_path),

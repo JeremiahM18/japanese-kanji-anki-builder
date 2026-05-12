@@ -1,86 +1,5 @@
+const { spawnSync } = require("node:child_process");
 const path = require("node:path");
-
-class CliExit extends Error {
-    constructor(code = 0) {
-        super(`CLI exited with status ${code}`);
-        this.code = code;
-    }
-}
-
-async function runCliMainInProcess({ main, args = [], cwd = process.cwd() } = {}) {
-    const originalCwd = process.cwd();
-    const originalArgv = process.argv;
-    const originalExit = process.exit;
-    const originalExitCode = process.exitCode;
-    const originalStdoutWrite = process.stdout.write;
-    const originalStderrWrite = process.stderr.write;
-    let stdout = "";
-    let stderr = "";
-    let status = 0;
-
-    process.argv = [process.execPath, "product-readiness-subcommand", ...args];
-    process.exitCode = 0;
-    process.exit = (code = 0) => {
-        throw new CliExit(Number.isInteger(code) ? code : 0);
-    };
-    process.stdout.write = (chunk, encoding, callback) => {
-        stdout += String(chunk || "");
-        if (typeof encoding === "function") {
-            encoding();
-        } else if (typeof callback === "function") {
-            callback();
-        }
-        return true;
-    };
-    process.stderr.write = (chunk, encoding, callback) => {
-        stderr += String(chunk || "");
-        if (typeof encoding === "function") {
-            encoding();
-        } else if (typeof callback === "function") {
-            callback();
-        }
-        return true;
-    };
-
-    try {
-        if (cwd && cwd !== originalCwd) {
-            process.chdir(cwd);
-        }
-        await main();
-    } catch (error) {
-        if (error instanceof CliExit) {
-            status = error.code;
-        } else {
-            status = 1;
-            stderr += `${error.stack || error}\n`;
-        }
-    } finally {
-        if (process.cwd() !== originalCwd) {
-            process.chdir(originalCwd);
-        }
-        if (status === 0 && Number.isInteger(process.exitCode) && process.exitCode !== 0) {
-            status = process.exitCode;
-        }
-        process.argv = originalArgv;
-        process.exit = originalExit;
-        process.exitCode = originalExitCode;
-        process.stdout.write = originalStdoutWrite;
-        process.stderr.write = originalStderrWrite;
-    }
-
-    return {
-        status,
-        stdout,
-        stderr,
-    };
-}
-
-function buildScriptRunner(scriptPath, args = []) {
-    return ({ cwd = process.cwd() } = {}) => {
-        const { main } = require(path.resolve(__dirname, "..", "..", scriptPath));
-        return runCliMainInProcess({ main, args, cwd });
-    };
-}
 
 const N5_PRODUCT_READINESS_SCOPE = Object.freeze({
     type: "n5-product-readiness-checkpoint",
@@ -111,7 +30,6 @@ const N5_PRODUCT_READINESS_COMMANDS = Object.freeze([
         displayCommand: "npm run data:audit:jlpt",
         command: process.execPath,
         args: [path.join("scripts", "auditJlptAlignment.js")],
-        runInProcess: buildScriptRunner("scripts/auditJlptAlignment.js"),
     }),
     Object.freeze({
         id: "word-contract-audit",
@@ -119,7 +37,6 @@ const N5_PRODUCT_READINESS_COMMANDS = Object.freeze([
         displayCommand: "npm run data:audit:jlpt:words",
         command: process.execPath,
         args: [path.join("scripts", "auditJlptWordAlignment.js")],
-        runInProcess: buildScriptRunner("scripts/auditJlptWordAlignment.js"),
     }),
     Object.freeze({
         id: "audio-provenance-audit",
@@ -127,7 +44,6 @@ const N5_PRODUCT_READINESS_COMMANDS = Object.freeze([
         displayCommand: "npm run data:audit:audio -- --json",
         command: process.execPath,
         args: [path.join("scripts", "auditAudioPolicy.js"), "--json"],
-        runInProcess: buildScriptRunner("scripts/auditAudioPolicy.js", ["--json"]),
     }),
     Object.freeze({
         id: "n5-tracked-source-word-artifact",
@@ -135,7 +51,6 @@ const N5_PRODUCT_READINESS_COMMANDS = Object.freeze([
         displayCommand: "npm run product:artifacts:n5",
         command: process.execPath,
         args: [path.join("scripts", "trackedSourceArtifacts.js"), "--level=5"],
-        runInProcess: buildScriptRunner("scripts/trackedSourceArtifacts.js", ["--level=5"]),
     }),
     Object.freeze({
         id: "n5-word-level-placement-audit",
@@ -143,7 +58,6 @@ const N5_PRODUCT_READINESS_COMMANDS = Object.freeze([
         displayCommand: "npm run deck:words:level-anchor-audit -- --level=5 --limit=12",
         command: process.execPath,
         args: [path.join("scripts", "auditWordLevelAnchors.js"), "--level=5", "--limit=12"],
-        runInProcess: buildScriptRunner("scripts/auditWordLevelAnchors.js", ["--level=5", "--limit=12"]),
     }),
     Object.freeze({
         id: "n5-kanji-golden-review",
@@ -151,7 +65,6 @@ const N5_PRODUCT_READINESS_COMMANDS = Object.freeze([
         displayCommand: "npm run deck:review:n5",
         command: process.execPath,
         args: [path.join("scripts", "reviewGoldenLevel.js"), "--level=5"],
-        runInProcess: buildScriptRunner("scripts/reviewGoldenLevel.js", ["--level=5"]),
     }),
     Object.freeze({
         id: "n5-word-golden-review",
@@ -159,7 +72,6 @@ const N5_PRODUCT_READINESS_COMMANDS = Object.freeze([
         displayCommand: "npm run deck:words:review:n5",
         command: process.execPath,
         args: [path.join("scripts", "reviewGoldenWordLevel.js"), "--level=5", "--require-all"],
-        runInProcess: buildScriptRunner("scripts/reviewGoldenWordLevel.js", ["--level=5", "--require-all"]),
     }),
 ]);
 
@@ -197,6 +109,10 @@ function buildSpawnOptions(cwd) {
     };
 }
 
+function runCliSubprocess(command, args, options) {
+    return spawnSync(resolveCommand(command), args, options);
+}
+
 function buildProductReadinessPlan({ level = 5 } = {}) {
     if (level !== 5) {
         throw new Error("Product readiness checkpoint currently supports N5 only.");
@@ -218,9 +134,10 @@ async function runProductReadinessGate({
 
     for (const check of plan.commands) {
         const startedAt = Date.now();
+        const command = resolveCommand(check.command);
         const result = normalizeCommandResult(runCommandFn
-            ? runCommandFn(resolveCommand(check.command), check.args, buildSpawnOptions(cwd))
-            : await check.runInProcess({ cwd }));
+            ? runCommandFn(command, check.args, buildSpawnOptions(cwd))
+            : runCliSubprocess(command, check.args, buildSpawnOptions(cwd)));
         const durationMs = Date.now() - startedAt;
         const passed = result.status === 0 && !result.error;
 
@@ -292,6 +209,5 @@ module.exports = {
     buildSpawnOptions,
     formatProductReadinessReport,
     normalizeCommandResult,
-    runCliMainInProcess,
     runProductReadinessGate,
 };

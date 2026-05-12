@@ -1254,6 +1254,55 @@ test("tracked starter word data includes the N4 source expansion pass without re
     assert.match(starterEntries["太る|ふとる"].notes, /neutral self-reference/);
 });
 
+test("tracked starter word data includes the first N4 active reading backlog batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const n4ReadingBacklogKeys = [
+        "顔|かお",
+        "県|けん",
+        "次|つぎ",
+        "頭|あたま",
+        "薬|くすり",
+        "声|こえ",
+        "村|むら",
+        "太い|ふとい",
+        "池|いけ",
+        "引く|ひく",
+        "弱い|よわい",
+        "軽い|かるい",
+    ];
+
+    for (const key of n4ReadingBacklogKeys) {
+        assert.equal(starterEntries[key]?.jlpt, 4, key);
+        assert.equal(starterEntries[key]?.source, "starter-word", key);
+        assert.equal(starterEntries[key]?.coverage?.role, "both", key);
+    }
+    assert.equal(starterEntries["区|く"], undefined);
+    assert.equal(starterEntries["産|さん"], undefined);
+    assertCoverageReadings(starterEntries, [
+        ["顔|かお", "顔", "かお"],
+        ["県|けん", "県", "けん"],
+        ["次|つぎ", "次", "つぎ"],
+        ["頭|あたま", "頭", "あたま"],
+        ["薬|くすり", "薬", "くすり"],
+        ["声|こえ", "声", "こえ"],
+        ["村|むら", "村", "むら"],
+        ["太い|ふとい", "太", "ふとい"],
+        ["池|いけ", "池", "いけ"],
+        ["引く|ひく", "引", "ひく"],
+        ["弱い|よわい", "弱", "よわい"],
+        ["軽い|かるい", "軽", "かるい"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["顔|かお", "<ruby>顔<rt>かお</rt></ruby>"],
+        ["太い|ふとい", "<ruby>太<rt>ふと</rt></ruby>い"],
+        ["引く|ひく", "<ruby>引<rt>ひ</rt></ruby>く"],
+        ["弱い|よわい", "<ruby>弱<rt>よわ</rt></ruby>い"],
+        ["軽い|かるい", "<ruby>軽<rt>かる</rt></ruby>い"],
+    ]);
+    assert.match(starterEntries["引く|ひく"].notes, /distinct from 引き出し/);
+    assert.match(starterEntries["太い|ふとい"].notes, /complements 太る/);
+});
+
 test("tracked starter word data includes the first N5 enhancement batch without duplicate junk", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

@@ -1448,6 +1448,50 @@ test("tracked starter word data includes the fourth N4 active reading backlog ba
     assert.match(starterEntries["市場|いちば"].notes, /市場（しじょう）/);
 });
 
+test("tracked starter word data includes the fifth N4 active reading backlog batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const n4ReadingSupportKeys = [
+        "低音|ていおん",
+        "薬品|やくひん",
+        "頭痛|ずつう",
+        "先頭|せんとう",
+        "疲労|ひろう",
+        "青菜|あおな",
+        "合宿|がっしゅく",
+        "回り道|まわりみち",
+    ];
+
+    for (const key of n4ReadingSupportKeys) {
+        assert.equal(starterEntries[key]?.jlpt, 4, key);
+        assert.equal(starterEntries[key]?.source, "starter-word", key);
+        assert.equal(starterEntries[key]?.coverage?.role, "support", key);
+    }
+    assertCoverageReadings(starterEntries, [
+        ["低音|ていおん", "低", "てい"],
+        ["薬品|やくひん", "薬", "やく"],
+        ["頭痛|ずつう", "頭", "ず"],
+        ["先頭|せんとう", "頭", "とう"],
+        ["疲労|ひろう", "疲", "ひ"],
+        ["青菜|あおな", "菜", "な"],
+        ["合宿|がっしゅく", "合", "がっ"],
+        ["回り道|まわりみち", "回", "まわり"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["低音|ていおん", "<ruby>低<rt>てい</rt></ruby><ruby>音<rt>おん</rt></ruby>"],
+        ["薬品|やくひん", "<ruby>薬<rt>やく</rt></ruby><ruby>品<rt>ひん</rt></ruby>"],
+        ["頭痛|ずつう", "<ruby>頭<rt>ず</rt></ruby><ruby>痛<rt>つう</rt></ruby>"],
+        ["先頭|せんとう", "<ruby>先<rt>せん</rt></ruby><ruby>頭<rt>とう</rt></ruby>"],
+        ["疲労|ひろう", "<ruby>疲<rt>ひ</rt></ruby><ruby>労<rt>ろう</rt></ruby>"],
+        ["青菜|あおな", "<ruby>青<rt>あお</rt></ruby><ruby>菜<rt>な</rt></ruby>"],
+        ["合宿|がっしゅく", "<ruby>合<rt>がっ</rt></ruby><ruby>宿<rt>しゅく</rt></ruby>"],
+        ["回り道|まわりみち", "<ruby>回り<rt>まわり</rt></ruby><ruby>道<rt>みち</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["頭痛|ずつう"].notes, /痛=N3/);
+    assert.match(starterEntries["疲労|ひろう"].notes, /労=N3/);
+    assert.match(starterEntries["合宿|がっしゅく"].notes, /宿=N3/);
+    assert.match(starterEntries["回り道|まわりみち"].notes, /回 -> まわり/);
+});
+
 test("tracked starter word data includes the first N5 enhancement batch without duplicate junk", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

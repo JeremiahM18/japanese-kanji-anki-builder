@@ -8,6 +8,7 @@ const { parseArgs: parseReadinessArgs } = require("../scripts/reportDeckReadines
 const { parseArgs: parseSyncArgs } = require("../scripts/syncMedia");
 const { parseArgs: parsePrepareArgs } = require("../scripts/prepareDeck");
 const { parseArgs: parseAdditionalKanjiArgs } = require("../scripts/prepareAdditionalKanjiDeck");
+const { parseArgs: parseKanjiReviewStatusArgs } = require("../scripts/reportKanjiDeckReviewStatus");
 const { parseArgs: parseImportKanjiVgArgs } = require("../scripts/importKanjiVgStrokeOrder");
 const { parseArgs: parseDoctorArgs } = require("../scripts/doctor");
 const { parseArgs: parseVoicevoxDoctorArgs } = require("../scripts/doctorVoicevox");
@@ -72,6 +73,26 @@ test("prepareAdditionalKanjiDeck parseArgs records scope levels and unsupported 
     assert.equal(options.candidateScope, "all-source-claims");
     assert.equal(options.includeDisputed, true);
     assert.equal(options.outDir, "out/additional");
+    assert.equal(options.json, true);
+    assert.deepEqual(options.unknownArgs, ["--oops"]);
+});
+
+test("reportKanjiDeckReviewStatus parseArgs records output roots and unsupported flags", () => {
+    const options = parseKanjiReviewStatusArgs([
+        "--levels=5,1",
+        "--candidate-scope=all-source-claims",
+        "--core-out-dir=out/core",
+        "--additional-out-dir=out/additional",
+        "--include-disputed",
+        "--json",
+        "--oops",
+    ]);
+
+    assert.deepEqual(options.levels, [5, 1]);
+    assert.equal(options.candidateScope, "all-source-claims");
+    assert.equal(options.coreOutDir, "out/core");
+    assert.equal(options.additionalOutDir, "out/additional");
+    assert.equal(options.includeDisputed, true);
     assert.equal(options.json, true);
     assert.deepEqual(options.unknownArgs, ["--oops"]);
 });

@@ -72,6 +72,7 @@
     "deck:review:accessibility": "node scripts/reportAccessibilityChecklist.js",
     "deck:review:coverage": "node scripts/reportGoldenReviewCoverage.js",
     "deck:kanji:partition-plan": "node scripts/reportKanjiDeckPartitionPlan.js",
+    "deck:kanji:review-status": "node scripts/reportKanjiDeckReviewStatus.js",
     "deck:kanji:additional:ready": "node scripts/prepareAdditionalKanjiDeck.js",
     "deck:apkg": "python scripts/buildApkg.py",
     "media:import:kanjivg": "node scripts/importKanjiVgStrokeOrder.js",

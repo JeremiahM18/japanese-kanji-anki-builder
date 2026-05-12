@@ -1303,6 +1303,45 @@ test("tracked starter word data includes the first N4 active reading backlog bat
     assert.match(starterEntries["太い|ふとい"].notes, /complements 太る/);
 });
 
+test("tracked starter word data includes the second N4 active reading backlog batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const n4ReadingBacklogKeys = [
+        "暗い|くらい",
+        "遠い|とおい",
+        "寒い|さむい",
+        "洗う|あらう",
+        "短い|みじかい",
+        "低い|ひくい",
+        "疲れる|つかれる",
+    ];
+
+    for (const key of n4ReadingBacklogKeys) {
+        assert.equal(starterEntries[key]?.jlpt, 4, key);
+        assert.equal(starterEntries[key]?.source, "starter-word", key);
+        assert.equal(starterEntries[key]?.coverage?.role, "both", key);
+    }
+    assertCoverageReadings(starterEntries, [
+        ["暗い|くらい", "暗", "くらい"],
+        ["遠い|とおい", "遠", "とおい"],
+        ["寒い|さむい", "寒", "さむい"],
+        ["洗う|あらう", "洗", "あらう"],
+        ["短い|みじかい", "短", "みじかい"],
+        ["低い|ひくい", "低", "ひくい"],
+        ["疲れる|つかれる", "疲", "つかれる"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["暗い|くらい", "<ruby>暗<rt>くら</rt></ruby>い"],
+        ["遠い|とおい", "<ruby>遠<rt>とお</rt></ruby>い"],
+        ["寒い|さむい", "<ruby>寒<rt>さむ</rt></ruby>い"],
+        ["洗う|あらう", "<ruby>洗<rt>あら</rt></ruby>う"],
+        ["短い|みじかい", "<ruby>短<rt>みじか</rt></ruby>い"],
+        ["低い|ひくい", "<ruby>低<rt>ひく</rt></ruby>い"],
+        ["疲れる|つかれる", "<ruby>疲<rt>つか</rt></ruby>れる"],
+    ]);
+    assert.match(starterEntries["遠い|とおい"].notes, /complements 遠く/);
+    assert.match(starterEntries["洗う|あらう"].notes, /hygiene/);
+});
+
 test("tracked starter word data includes the first N5 enhancement batch without duplicate junk", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

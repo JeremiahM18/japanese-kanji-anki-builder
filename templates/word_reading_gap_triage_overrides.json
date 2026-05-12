@@ -1226,6 +1226,51 @@
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "回向 is Buddhist memorial-service vocabulary with 向=N3 and too narrow for N4 learner coverage; defer 回 -> え."
+    },
+    "園|kun|その": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "園 as その is valid, but the useful beginner garden/park concept is already clearer through 公園; remaining その surfaces are standalone/literary or compound-like, so defer instead of adding a low-value support card."
+    },
+    "好|kun|いい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "好い as いい is not a clean dictionary-backed active word identity here and is better taught through 良い/いい. Do not force 好 -> いい from phrase-shaped suggestions."
+    },
+    "好|kun|よい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "好い as よい is valid but mainly an alternate spelling for 良い; 好む now covers a stronger learner-facing 好 kun-reading without adding spelling clutter."
+    },
+    "産|kun|むす": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "産 -> むす candidates are mythological/rare surfaces such as 産霊 and are not useful N4 word-deck targets; 産む and 産まれる cover stronger birth readings."
+    },
+    "軽|on|きょう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "軽 -> きょう candidates such as 軽骨/軽忽 are rare or awkward for learners; keep N4 軽 focused on common かる/けい support words."
+    },
+    "軽|on|きん": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "剽軽 is real but carries outside-JLPT 剽 and is not a clean N4 support anchor for 軽 -> きん."
+    },
+    "回|kun|まわし": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "回し is a noun with sumo/garment and socially sensitive senses; 回す now covers the cleaner transitive 回 -> まわす learner target."
+    },
+    "番|kun|つがい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "番 as つがい has no priority/commonness support in the local JMdict surface and is mainly animal/anatomical pair vocabulary; defer rather than adding an ambiguous same-written card."
+    },
+    "好|kun|すく": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "好く is valid but lower priority and less learner-facing than 好き or 好む; defer the standalone verb reading until a stronger usage case is needed."
     }
   }
 }

@@ -1558,6 +1558,62 @@ test("tracked starter word data includes the seventh N4 active reading backlog b
     assert.match(starterEntries["頭文字|かしらもじ"].notes, /文字 support/);
 });
 
+test("tracked starter word data includes the eighth N4 active reading backlog batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const n4ReadingSupportKeys = [
+        "産む|うむ",
+        "産まれる|うまれる",
+        "好む|このむ",
+        "弱まる|よわまる",
+        "弱める|よわめる",
+        "弱る|よわる",
+        "回す|まわす",
+        "合わせる|あわせる",
+        "全く|まったく",
+        "全て|すべて",
+        "便り|たより",
+    ];
+
+    for (const key of n4ReadingSupportKeys) {
+        assert.equal(starterEntries[key]?.jlpt, 4, key);
+        assert.equal(starterEntries[key]?.source, "starter-word", key);
+        assert.equal(starterEntries[key]?.coverage?.role, "support", key);
+    }
+    assert.equal(starterEntries["好い|よい"], undefined);
+    assert.equal(starterEntries["回し|まわし"], undefined);
+    assert.equal(starterEntries["剽軽|ひょうきん"], undefined);
+    assertCoverageReadings(starterEntries, [
+        ["産む|うむ", "産", "うむ"],
+        ["産まれる|うまれる", "産", "うまれる"],
+        ["好む|このむ", "好", "このむ"],
+        ["弱まる|よわまる", "弱", "よわまる"],
+        ["弱める|よわめる", "弱", "よわめる"],
+        ["弱る|よわる", "弱", "よわる"],
+        ["回す|まわす", "回", "まわす"],
+        ["合わせる|あわせる", "合", "あわせる"],
+        ["全く|まったく", "全", "まったく"],
+        ["全て|すべて", "全", "すべて"],
+        ["便り|たより", "便", "たより"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["産む|うむ", "<ruby>産<rt>う</rt></ruby>む"],
+        ["産まれる|うまれる", "<ruby>産<rt>う</rt></ruby>まれる"],
+        ["好む|このむ", "<ruby>好<rt>この</rt></ruby>む"],
+        ["弱まる|よわまる", "<ruby>弱<rt>よわ</rt></ruby>まる"],
+        ["弱める|よわめる", "<ruby>弱<rt>よわ</rt></ruby>める"],
+        ["弱る|よわる", "<ruby>弱<rt>よわ</rt></ruby>る"],
+        ["回す|まわす", "<ruby>回<rt>まわ</rt></ruby>す"],
+        ["合わせる|あわせる", "<ruby>合<rt>あ</rt></ruby>わせる"],
+        ["全く|まったく", "<ruby>全<rt>まった</rt></ruby>く"],
+        ["全て|すべて", "<ruby>全<rt>すべ</rt></ruby>て"],
+        ["便り|たより", "<ruby>便<rt>たよ</rt></ruby>り"],
+    ]);
+    assert.match(starterEntries["産まれる|うまれる"].notes, /N5 生まれる remains/);
+    assert.match(starterEntries["好む|このむ"].notes, /好い spelling variants/);
+    assert.match(starterEntries["回す|まわす"].notes, /nominal 回し/);
+    assert.match(starterEntries["便り|たより"].notes, /proverb-shaped/);
+});
+
 test("tracked starter word data includes the first N5 enhancement batch without duplicate junk", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

@@ -284,14 +284,30 @@ test('buildWordReadingGapTriage respects tracked editorial override dispositions
         ],
         kunCoverage: [],
       },
+      {
+        kanji: '園',
+        displayWord: '園',
+        onCoverage: [],
+        kunCoverage: [
+          {
+            reading: 'その',
+            status: 'missing_example',
+            coverageSource: 'none',
+            matchingExamples: [],
+            deckExamples: [],
+            gapKind: 'distinct',
+          },
+        ],
+      },
     ],
   };
 
   const n4Triage = buildWordReadingGapTriage(n4Report);
   assert.equal(n4Triage.summary.editorialReviewItems, 0);
-  assert.equal(n4Triage.summary.deferVariantItems, 1);
-  assert.equal(n4Triage.items[0].suggestedAction, 'defer_variant');
-  assert.match(n4Triage.items[0].editorialNote, /合戦 is real and common/);
+  assert.equal(n4Triage.summary.deferVariantItems, 2);
+  assert.ok(n4Triage.items.every((item) => item.suggestedAction === 'defer_variant'));
+  assert.ok(n4Triage.items.some((item) => /合戦 is real and common/.test(item.editorialNote)));
+  assert.ok(n4Triage.items.some((item) => /公園/.test(item.editorialNote)));
 });
 
 test('formatWordReadingGapTriage renders a practical backlog summary', () => {

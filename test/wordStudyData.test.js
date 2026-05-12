@@ -1181,9 +1181,24 @@ test("tracked starter word data includes the N4 source expansion pass without re
         "両方|りょうほう",
         "旅館|りょかん",
         "忘れ物|わすれもの",
+        "合う|あう",
+        "お土産|おみやげ",
+        "科学|かがく",
+        "具合|ぐあい",
+        "市|し",
+        "小説|しょうせつ",
+        "都合|つごう",
+        "遠く|とおく",
+        "乗り換える|のりかえる",
+        "林|はやし",
+        "光る|ひかる",
+        "引き出し|ひきだし",
+        "引っ越す|ひっこす",
+        "太る|ふとる",
+        "割合|わりあい",
     ];
 
-    assert.equal(n4ExpansionKeys.length, 77);
+    assert.equal(n4ExpansionKeys.length, 92);
     for (const key of n4ExpansionKeys) {
         assert.equal(starterEntries[key]?.jlpt, 4, key);
         assert.equal(starterEntries[key]?.source, "jlptstudy.net-n4", key);
@@ -1202,12 +1217,41 @@ test("tracked starter word data includes the N4 source expansion pass without re
         ["歯医者|はいしゃ", "歯", "は"],
         ["歯医者|はいしゃ", "医", "い"],
         ["忘れ物|わすれもの", "忘", "わすれ"],
+        ["合う|あう", "合", "あう"],
+        ["お土産|おみやげ", "お土産", "おみやげ"],
+        ["科学|かがく", "科", "か"],
+        ["科学|かがく", "学", "がく"],
+        ["具合|ぐあい", "具", "ぐ"],
+        ["具合|ぐあい", "合", "あい"],
+        ["市|し", "市", "し"],
+        ["小説|しょうせつ", "小", "しょう"],
+        ["小説|しょうせつ", "説", "せつ"],
+        ["都合|つごう", "都", "つ"],
+        ["都合|つごう", "合", "ごう"],
+        ["遠く|とおく", "遠", "とおく"],
+        ["乗り換える|のりかえる", "乗", "のり"],
+        ["乗り換える|のりかえる", "換", "かえる"],
+        ["林|はやし", "林", "はやし"],
+        ["光る|ひかる", "光", "ひかる"],
+        ["引き出し|ひきだし", "引", "ひき"],
+        ["引き出し|ひきだし", "出", "だし"],
+        ["引っ越す|ひっこす", "引", "ひっ"],
+        ["引っ越す|ひっこす", "越", "こす"],
+        ["太る|ふとる", "太", "ふとる"],
+        ["割合|わりあい", "割", "わり"],
+        ["割合|わりあい", "合", "あい"],
     ]);
     assertReadingBreakdowns(starterEntries, [
         ["明日|あす", "<ruby>明日<rt>あす</rt></ruby>"],
         ["田舎|いなか", "<ruby>田舎<rt>いなか</rt></ruby>"],
         ["歯医者|はいしゃ", "<ruby>歯<rt>は</rt></ruby><ruby>医<rt>い</rt></ruby><ruby>者<rt>しゃ</rt></ruby>"],
+        ["お土産|おみやげ", "<ruby>お土産<rt>おみやげ</rt></ruby>"],
+        ["乗り換える|のりかえる", "<ruby>乗り<rt>のり</rt></ruby><ruby>換える<rt>かえる</rt></ruby>"],
+        ["引っ越す|ひっこす", "<ruby>引っ<rt>ひっ</rt></ruby><ruby>越す<rt>こす</rt></ruby>"],
     ]);
+    assert.match(starterEntries["お土産|おみやげ"].notes, /whole-word reading/);
+    assert.match(starterEntries["具合|ぐあい"].notes, /higher-level/);
+    assert.match(starterEntries["太る|ふとる"].notes, /neutral self-reference/);
 });
 
 test("tracked starter word data includes the first N5 enhancement batch without duplicate junk", () => {

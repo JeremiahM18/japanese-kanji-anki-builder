@@ -1,7 +1,10 @@
 const crypto = require("node:crypto");
 
 const { normalizeJlptKanjiSourceEvidence } = require("../datasets/jlptKanjiSourceEvidence");
-const { evaluateKanjiSourceEvidence } = require("./jlptKanjiSourceEvidenceService");
+const {
+    buildSourceEvidenceContext,
+    evaluateKanjiSourceEvidence,
+} = require("./jlptKanjiSourceEvidenceService");
 
 const EVIDENCE_RECORD_FIELDS = Object.freeze(["citation", "evidenceRef", "notes"]);
 const EVIDENCE_RECORD_FIELD_SETS = Object.freeze([
@@ -185,11 +188,13 @@ function buildMaterializedKanjiEvidenceEntry({
     contractLevel,
     evidenceManifest = {},
     normalizedEvidence = {},
+    evidenceContext = null,
 } = {}) {
     const result = evaluateKanjiSourceEvidence({
         kanji,
         contractLevel,
         evidence: normalizedEvidence,
+        evidenceContext,
     });
     const existing = evidenceManifest.kanji?.[kanji] || {};
     const nextEntry = {
@@ -226,6 +231,7 @@ function materializeKanjiEvidenceEntries({ evidenceManifest = {}, contract = {},
     }
 
     const normalizedEvidence = normalizeJlptKanjiSourceEvidence(evidenceManifest);
+    const evidenceContext = buildSourceEvidenceContext(normalizedEvidence);
     const contractEntries = Object.entries(contract.kanjiLevels || {});
     const kanji = changedKanjiSet === null
         ? {}
@@ -240,6 +246,7 @@ function materializeKanjiEvidenceEntries({ evidenceManifest = {}, contract = {},
             contractLevel,
             evidenceManifest,
             normalizedEvidence,
+            evidenceContext,
         });
     }
 

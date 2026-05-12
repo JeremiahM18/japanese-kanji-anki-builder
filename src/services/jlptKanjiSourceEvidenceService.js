@@ -15,6 +15,8 @@
  * @typedef {{ id: string, label: string, rank: number | null, role: string | null }} ResolvedSourceTier
  * @typedef {{ id: string, label: string, role: string | null }} ResolvedSourceLineage
  * @typedef {{ sourceId: string, level?: number, levelRange?: number[], isRangeEvidence: boolean, reviewStatus?: string, citation?: string, evidenceRef?: string, notes?: string, independent: boolean, publisherIndependence: string, independenceGroup: string, japanesePublished: boolean, weight: number, tier: ResolvedSourceTier, lineage: ResolvedSourceLineage, source: EvidenceSource }} CollectedAssignment
+ * @typedef {{ sourceId: string, source: EvidenceSource, independent: boolean, publisherIndependence: string, independenceGroup: string, japanesePublished: boolean, weight: number, tier: ResolvedSourceTier, lineage: ResolvedSourceLineage }} SourceEvidenceContextSource
+ * @typedef {{ evidence: JlptKanjiSourceEvidence, policy: Required<EvidencePolicy>, comparableSources: SourceEvidenceContextSource[], comparableAssignmentsByKanji: Map<string, { assignment: SourceAssignment, sourceMeta: SourceEvidenceContextSource }[]> }} SourceEvidenceContext
  * @typedef {{ level?: number, weight: number }} ConsensusAssignment
  * @typedef {{ consensusLevel: number | null, agreementScore: number, voteWeights: LevelCounts, disputed: boolean }} ConsensusResult
  * @typedef {{ sourceId: string, level?: number, levelRange?: number[], tier?: string, tierLabel?: string }} SourceDisagreement
@@ -145,20 +147,76 @@ function resolveSourceLineage(source = {}, evidence = {}) {
 }
 
 /**
- * @param {{ kanji?: string, evidence?: JlptKanjiSourceEvidence }} [options]
+ * Builds reusable source policy metadata and per-kanji comparable assignment indexes.
+ * @param {JlptKanjiSourceEvidence} [evidence]
+ * @returns {SourceEvidenceContext}
+ */
+function buildSourceEvidenceContext(evidence = {}) {
+    const policy = {
+        minimumIndependentSources: 3,
+        minimumIndependentEvidenceLineages: 2,
+        minimumJapanesePublishedSources: 1,
+        standardAgreementScore: 0.67,
+        highAgreementScore: 0.8,
+        ...(evidence.policy || {}),
+    };
+    const comparableSources = getComparableSourceEntries(evidence).map(([sourceId, source]) => {
+        const sourceWeight = Number.isFinite(source.weight) && Number(source.weight) > 0
+            ? Number(source.weight)
+            : 1;
+        const publisherIndependence = resolvePublisherIndependence(sourceId, source);
+        return {
+            sourceId,
+            source,
+            independent: source.independent !== false,
+            publisherIndependence,
+            independenceGroup: publisherIndependence,
+            japanesePublished: source.japanesePublished === true,
+            weight: sourceWeight,
+            tier: resolveSourceTier(source, evidence),
+            lineage: resolveSourceLineage(source, evidence),
+        };
+    });
+    const comparableAssignmentsByKanji = new Map();
+
+    for (const sourceMeta of comparableSources) {
+        for (const [kanji, assignment] of Object.entries(evidence.assignments?.[sourceMeta.sourceId] || {})) {
+            if (!comparableAssignmentsByKanji.has(kanji)) {
+                comparableAssignmentsByKanji.set(kanji, []);
+            }
+            comparableAssignmentsByKanji.get(kanji).push({
+                assignment,
+                sourceMeta,
+            });
+        }
+    }
+
+    return {
+        evidence,
+        policy,
+        comparableSources,
+        comparableAssignmentsByKanji,
+    };
+}
+
+function resolveEvidenceContext(evidence = {}, evidenceContext = null) {
+    return evidenceContext || buildSourceEvidenceContext(evidence);
+}
+
+/**
+ * @param {{ kanji?: string, evidence?: JlptKanjiSourceEvidence, evidenceContext?: SourceEvidenceContext }} [options]
  * @returns {CollectedAssignment[]}
  */
-function collectKanjiAssignments({ kanji, evidence = {} } = {}) {
-    const sourceEntries = getComparableSourceEntries(evidence);
+function collectKanjiAssignments({ kanji, evidence = {}, evidenceContext = null } = {}) {
+    const context = resolveEvidenceContext(evidence, evidenceContext);
     /** @type {CollectedAssignment[]} */
     const assignments = [];
     if (!kanji) {
         return assignments;
     }
 
-    for (const [sourceId, source] of sourceEntries) {
+    for (const { assignment, sourceMeta } of context.comparableAssignmentsByKanji.get(kanji) || []) {
         /** @type {SourceAssignment | undefined} */
-        const assignment = evidence.assignments?.[sourceId]?.[kanji];
         if (!assignment) {
             continue;
         }
@@ -169,12 +227,9 @@ function collectKanjiAssignments({ kanji, evidence = {} } = {}) {
         if ((!hasExactLevel && !hasLevelRange) || assignment.reviewStatus !== "reviewed") {
             continue;
         }
-        const sourceWeight = Number.isFinite(source.weight) && Number(source.weight) > 0
-            ? Number(source.weight)
-            : 1;
 
         assignments.push({
-            sourceId,
+            sourceId: sourceMeta.sourceId,
             level: assignment.level,
             levelRange: hasLevelRange ? levelRange : undefined,
             isRangeEvidence: !hasExactLevel && hasLevelRange,
@@ -182,14 +237,14 @@ function collectKanjiAssignments({ kanji, evidence = {} } = {}) {
             citation: assignment.citation,
             evidenceRef: assignment.evidenceRef,
             notes: assignment.notes,
-            independent: source.independent !== false,
-            publisherIndependence: resolvePublisherIndependence(sourceId, source),
-            independenceGroup: resolvePublisherIndependence(sourceId, source),
-            japanesePublished: source.japanesePublished === true,
-            weight: sourceWeight,
-            tier: resolveSourceTier(source, evidence),
-            lineage: resolveSourceLineage(source, evidence),
-            source,
+            independent: sourceMeta.independent,
+            publisherIndependence: sourceMeta.publisherIndependence,
+            independenceGroup: sourceMeta.independenceGroup,
+            japanesePublished: sourceMeta.japanesePublished,
+            weight: sourceMeta.weight,
+            tier: sourceMeta.tier,
+            lineage: sourceMeta.lineage,
+            source: sourceMeta.source,
         });
     }
 
@@ -404,19 +459,13 @@ function buildConfidenceReasons({
 }
 
 /**
- * @param {{ kanji?: string, contractLevel?: number, evidence?: JlptKanjiSourceEvidence }} [options]
+ * @param {{ kanji?: string, contractLevel?: number, evidence?: JlptKanjiSourceEvidence, evidenceContext?: SourceEvidenceContext }} [options]
  * @returns {KanjiSourceEvidenceResult}
  */
-function evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence = {} } = {}) {
-    const policy = {
-        minimumIndependentSources: 3,
-        minimumIndependentEvidenceLineages: 2,
-        minimumJapanesePublishedSources: 1,
-        standardAgreementScore: 0.67,
-        highAgreementScore: 0.8,
-        ...(evidence.policy || {}),
-    };
-    const assignments = collectKanjiAssignments({ kanji, evidence });
+function evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence = {}, evidenceContext = null } = {}) {
+    const context = resolveEvidenceContext(evidence, evidenceContext);
+    const policy = context.policy;
+    const assignments = collectKanjiAssignments({ kanji, evidence, evidenceContext: context });
     const independentSourceCount = new Set(
         assignments
             .filter((entry) => entry.independent)
@@ -587,6 +636,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
         highAgreementScore: 0.8,
         ...(evidence.policy || {}),
     };
+    const evidenceContext = buildSourceEvidenceContext(evidence);
     const contractEntries = Object.entries(contract.kanjiLevels || {});
     const contractKanjiSet = new Set(contractEntries.map(([kanji]) => kanji));
     const confidenceCounts = createConfidenceCounts();
@@ -690,7 +740,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
     }
 
     for (const [kanji, contractLevel] of contractEntries) {
-        const result = evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence });
+        const result = evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence, evidenceContext });
         kanjiConfidenceManifest.push({
             kanji,
             currentContractLevel: contractLevel,
@@ -893,6 +943,7 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
 
 module.exports = {
     auditJlptKanjiSourceEvidence,
+    buildSourceEvidenceContext,
     buildJapaneseTextbookConsensus,
     classifyConfidence,
     collectKanjiAssignments,

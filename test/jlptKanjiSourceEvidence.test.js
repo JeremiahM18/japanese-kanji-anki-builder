@@ -11,6 +11,8 @@ const {
 } = require("../src/datasets/jlptKanjiSourceEvidence");
 const {
     auditJlptKanjiSourceEvidence,
+    buildSourceEvidenceContext,
+    collectKanjiAssignments,
     computeConsensus,
     evaluateKanjiSourceEvidence,
 } = require("../src/services/jlptKanjiSourceEvidenceService");
@@ -1220,6 +1222,138 @@ test("evaluateKanjiSourceEvidence excludes active sources without assignment-use
     assert.equal(result.assignmentCount, 1);
     assert.equal(result.consensusLevel, 5);
     assert.deepEqual(result.agreementSourceIds, ["legal_source"]);
+});
+
+test("evaluateKanjiSourceEvidence context matches uncached evidence evaluation", () => {
+    const evidence = buildEvidence({
+        tanos: { 日: 5 },
+        jlptsensei: { 日: 5 },
+        textbook: { 日: 5 },
+        joyo_grade: { 日: 4 },
+    });
+    const evidenceContext = buildSourceEvidenceContext(evidence);
+
+    const withoutContext = evaluateKanjiSourceEvidence({
+        kanji: "日",
+        contractLevel: 5,
+        evidence,
+    });
+    const withContext = evaluateKanjiSourceEvidence({
+        kanji: "日",
+        contractLevel: 5,
+        evidence,
+        evidenceContext,
+    });
+
+    assert.deepEqual(
+        collectKanjiAssignments({ kanji: "日", evidence, evidenceContext }).map((entry) => entry.sourceId),
+        ["tanos", "jlptsensei", "textbook"]
+    );
+    assert.equal(withContext.consensusLevel, withoutContext.consensusLevel);
+    assert.equal(withContext.agreementScore, withoutContext.agreementScore);
+    assert.equal(withContext.confidence, withoutContext.confidence);
+    assert.deepEqual(withContext.voteWeights, withoutContext.voteWeights);
+});
+
+test("only active reviewed assignment sources with storage permission can vote", () => {
+    const evidence = normalizeJlptKanjiSourceEvidence({
+        version: 1,
+        confidenceLabels: buildConfidenceLabels(),
+        confidenceReasonLabels: buildConfidenceReasonLabels(),
+        sourceTiers: {
+            fixture: {
+                label: "Fixture tier",
+                rank: 1,
+                role: "supporting-evidence",
+                description: "Fixture source tier.",
+            },
+        },
+        policy: {
+            minimumIndependentSources: 1,
+            minimumJapanesePublishedSources: 0,
+        },
+        sources: {
+            reviewed_assignment: buildGovernedAssignmentSource({
+                name: "Reviewed assignment source",
+                tier: "fixture",
+                status: "active",
+                sourceType: "fixture",
+                independent: true,
+                countsForConsensus: true,
+                licenseStatus: "approved",
+            }),
+            unreviewed_assignment: buildGovernedAssignmentSource({
+                name: "Unreviewed assignment source",
+                tier: "fixture",
+                status: "active",
+                sourceType: "fixture",
+                independent: true,
+                countsForConsensus: true,
+                licenseStatus: "approved",
+            }),
+            planned_assignment: buildGovernedAssignmentSource({
+                name: "Planned assignment source",
+                tier: "fixture",
+                status: "planned",
+                sourceType: "fixture",
+                independent: true,
+                countsForConsensus: true,
+                licenseStatus: "approved",
+            }),
+            no_storage_assignment: buildGovernedAssignmentSource({
+                name: "No storage source",
+                tier: "fixture",
+                status: "active",
+                sourceType: "fixture",
+                independent: true,
+                countsForConsensus: true,
+                licenseStatus: "approved",
+                canStoreAssignments: false,
+            }),
+            background_source: buildGovernedNonVotingSource({
+                allowedUse: "background-only",
+                sourceKind: "background",
+                overrides: {
+                    name: "Background source",
+                    tier: "fixture",
+                    status: "active",
+                    sourceType: "background",
+                    independent: true,
+                    countsForConsensus: false,
+                    licenseStatus: "approved",
+                },
+            }),
+        },
+        assignments: {
+            reviewed_assignment: { 日: 5 },
+            unreviewed_assignment: {
+                日: {
+                    level: "N4",
+                    reviewStatus: "needs_review",
+                },
+            },
+            planned_assignment: { 日: 4 },
+            no_storage_assignment: { 日: 4 },
+            background_source: { 日: 4 },
+        },
+    });
+
+    const result = evaluateKanjiSourceEvidence({
+        kanji: "日",
+        contractLevel: 5,
+        evidence,
+    });
+    const report = auditJlptKanjiSourceEvidence({
+        contract: { kanjiLevels: { 日: 5 } },
+        evidence,
+        limit: 10,
+    });
+
+    assert.deepEqual(result.assignments.map((assignment) => assignment.sourceId), ["reviewed_assignment"]);
+    assert.equal(result.consensusLevel, 5);
+    assert.equal(report.issueCounts.unreviewedAssignments, 1);
+    assert.equal(report.issueCounts.disallowedStoredAssignments, 2);
+    assert.equal(report.issueCounts.illegalConsensusSourceUse, 1);
 });
 
 test("auditJlptKanjiSourceEvidence blocks unsafe source-use profiles", () => {

@@ -1,4 +1,5 @@
 const {
+    buildSourceEvidenceContext,
     collectKanjiAssignments,
     evaluateKanjiSourceEvidence,
 } = require("./jlptKanjiSourceEvidenceService");
@@ -417,6 +418,7 @@ function buildJlptKanjiSourceLevelDeltaReport({
         ...(evidence.policy || {}),
     };
     const byLevel = createLevelSummaries();
+    const evidenceContext = buildSourceEvidenceContext(evidence);
     const sourceInputReviewMap = buildSourceInputReviewMap(sourceInputReviews);
     const flattenedSourceInputReviews = [...sourceInputReviewMap.values()].flat();
     /** @type {SourceLevelReviewWorklistRow[]} */
@@ -433,11 +435,12 @@ function buildJlptKanjiSourceLevelDeltaReport({
 
     for (const [kanji, currentContractLevel] of contractEntries) {
         byLevel[currentContractLevel].currentContractCount += 1;
-        const assignments = collectKanjiAssignments({ kanji, evidence });
+        const assignments = collectKanjiAssignments({ kanji, evidence, evidenceContext });
         const result = evaluateKanjiSourceEvidence({
             kanji,
             contractLevel: currentContractLevel,
             evidence,
+            evidenceContext,
         });
         const reviewWorklistRow = buildReviewWorklistRow({
             kanji,

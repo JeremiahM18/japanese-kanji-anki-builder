@@ -1,4 +1,7 @@
-const { evaluateKanjiSourceEvidence } = require("./jlptKanjiSourceEvidenceService");
+const {
+    buildSourceEvidenceContext,
+    evaluateKanjiSourceEvidence,
+} = require("./jlptKanjiSourceEvidenceService");
 const {
     buildJlptKanjiSourceLevelDeltaReport,
     formatLevel: formatDeltaLevel,
@@ -72,7 +75,7 @@ function getEvidencePolicyMinimums(policy = {}) {
     };
 }
 
-function buildSourceEvidencePriority({ kanji, contractLevel, evidence = null } = {}) {
+function buildSourceEvidencePriority({ kanji, contractLevel, evidence = null, evidenceContext = null } = {}) {
     if (!evidence) {
         return {
             rank: 100,
@@ -82,7 +85,7 @@ function buildSourceEvidencePriority({ kanji, contractLevel, evidence = null } =
     }
 
     const policy = getEvidencePolicyMinimums(evidence.policy || {});
-    const result = evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence });
+    const result = evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence, evidenceContext });
 
     if (result.confidence === "disputed") {
         return {
@@ -261,6 +264,7 @@ function buildJlptKanjiSourceInputTemplateRows({
 } = {}) {
     const maxRows = resolvePositiveLimit(limit);
     const priorityMode = normalizePriorityMode(priority);
+    const evidenceContext = evidence ? buildSourceEvidenceContext(evidence) : null;
     const hasSourceLevelFilter = sourceLevel !== null
         && sourceLevel !== undefined
         && String(sourceLevel).trim() !== "";
@@ -304,7 +308,7 @@ function buildJlptKanjiSourceInputTemplateRows({
             kanji,
             contractLevel,
             priority: priorityMode === "source-gaps"
-                ? buildSourceEvidencePriority({ kanji, contractLevel, evidence })
+                ? buildSourceEvidencePriority({ kanji, contractLevel, evidence, evidenceContext })
                 : buildSourceEvidencePriority({ kanji, contractLevel, evidence: null }),
         }))
         .sort((entryA, entryB) => {

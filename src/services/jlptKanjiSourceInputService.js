@@ -202,6 +202,23 @@ function buildIntegrityBlockers({ sourceConfig = {}, integrity = {}, policy = {}
     return blockers;
 }
 
+function buildReviewStatusCountBlockers({ sourceConfig = {}, reviewStatusCounts = {} } = {}) {
+    const expectedCounts = sourceConfig.expectedReviewStatusCounts;
+    if (!expectedCounts) {
+        return [];
+    }
+
+    return SOURCE_INPUT_REVIEW_STATUSES
+        .map((status) => {
+            const expected = expectedCounts[status] || 0;
+            const actual = reviewStatusCounts[status] || 0;
+            return expected === actual
+                ? null
+                : `source reviewStatus count mismatch for ${status}: expected ${expected}, got ${actual}`;
+        })
+        .filter((blocker) => blocker !== null);
+}
+
 function buildAssignmentFromRow({ row, sourceConfig, contractKanjiSet }) {
     const issues = [];
     const kanji = getRowField(row, sourceConfig.kanjiColumn);
@@ -276,9 +293,14 @@ function buildJlptKanjiSourceInputReport({
     const blockedRows = rowResults.filter((row) => row.issues.length === 0 && row.reviewStatus === "blocked");
     const sourceAccessGapRows = rowResults.filter((row) => row.issues.length === 0 && row.reviewStatus === "source_access_gap");
     const resolvedRowCount = reviewedAssignments.length + blockedRows.length + sourceAccessGapRows.length;
+    const reviewStatusCounts = rowResults.reduce((counts, row) => {
+        counts[row.reviewStatus] = (counts[row.reviewStatus] || 0) + 1;
+        return counts;
+    }, {});
     if (reviewedAssignments.length === 0) {
         blockers.push("no reviewed assignments ready for import");
     }
+    blockers.push(...buildReviewStatusCountBlockers({ sourceConfig, reviewStatusCounts }));
     const assignments = Object.fromEntries(
         reviewedAssignments.map((row) => {
             const assignment = {
@@ -296,10 +318,6 @@ function buildJlptKanjiSourceInputReport({
             return [row.kanji, assignment];
         })
     );
-    const reviewStatusCounts = rowResults.reduce((counts, row) => {
-        counts[row.reviewStatus] = (counts[row.reviewStatus] || 0) + 1;
-        return counts;
-    }, {});
 
     return {
         valid: blockers.length === 0 && rejectedRows.length === 0 && reviewedAssignments.length > 0,

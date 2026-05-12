@@ -112,6 +112,11 @@
       "sha256": "5ad4acbc320eec6ac052fa6e6a2a2624bebc6b8ee13aecc65fe2c308f4fa7443",
       "byteSize": 304357,
       "rowCount": 2212,
+      "expectedReviewStatusCounts": {
+        "reviewed": 406,
+        "needs_review": 1570,
+        "source_access_gap": 236
+      },
       "integrityPolicy": "This source input is for manually reviewed level judgments from Shin Kanzen Master kanji textbooks only. Do not copy copyrighted kanji lists. Pin SHA-256, byte size, row count, and checkedAt only after the reviewed TSV contains permitted citations and evidence references."
     },
     "nihongo_sou_matome_kanji": {
@@ -133,6 +138,11 @@
       "sha256": "d416ef15904dec3954ca84ea510d93f6ee25abe5261dc9e9a248a0b40b4f3ca0",
       "byteSize": 414261,
       "rowCount": 2212,
+      "expectedReviewStatusCounts": {
+        "reviewed": 498,
+        "needs_review": 1297,
+        "source_access_gap": 417
+      },
       "integrityPolicy": "This source input is for manually reviewed level judgments from Nihongo Sou Matome kanji textbooks only. Do not copy copyrighted kanji lists. Pin SHA-256, byte size, row count, and checkedAt only after the reviewed TSV contains permitted citations and evidence references."
     },
     "try_jlpt_textbook": {
@@ -178,6 +188,9 @@
       "sha256": "bb066549763e65418ec649c54619a67607469c361fcf32f0b0c523c931968fd6",
       "byteSize": 90261,
       "rowCount": 208,
+      "expectedReviewStatusCounts": {
+        "reviewed": 208
+      },
       "integrityPolicy": "This source input is for manually reviewed level judgments from ASK Publishing's Hajimete no Nihongo Noryoku Shiken kanji books only. Official product pages currently identify N1, N2, and N3 kanji volumes; N5 is permitted only for the separately verified official sample page explicitly labeled N5 Kanji Checklist, and N4 remains unsupported until exact permitted source access is separately verified. Do not copy copyrighted kanji lists. Pin SHA-256, byte size, row count, and checkedAt only after the reviewed TSV contains permitted citations and evidence references."
     }
   }

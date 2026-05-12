@@ -595,6 +595,100 @@ test("materializeKanjiEvidenceEntries can update only changed kanji rollups", ()
     assert.deepEqual(materialized.kanji.語, evidenceManifest.kanji.語);
 });
 
+test("materializeKanjiEvidenceEntries incremental updates match full rematerialization for touched rows", () => {
+    const evidenceManifest = {
+        version: 1,
+        policy: {
+            minimumIndependentSources: 2,
+            minimumIndependentEvidenceLineages: 0,
+            minimumJapanesePublishedSources: 0,
+        },
+        sourceTiers: {
+            fixture: {
+                label: "Fixture tier",
+                rank: 1,
+                role: "supporting-evidence",
+                description: "Fixture tier.",
+            },
+        },
+        confidenceLabels: buildFixtureConfidenceLabels(),
+        confidenceReasonLabels: buildFixtureConfidenceReasonLabels(),
+        sources: {
+            source_a: {
+                name: "Source A",
+                tier: "fixture",
+                status: "active",
+                sourceType: "fixture",
+                independent: true,
+                countsForConsensus: true,
+                licenseStatus: "approved",
+                allowedUse: "bulk-import",
+                sourceKind: "assignment",
+                canStoreAssignments: true,
+                licenseEvidenceUrl: "https://example.com/source-a-license",
+                licenseReviewedAt: "2026-05-05",
+            },
+            source_b: {
+                name: "Source B",
+                tier: "fixture",
+                status: "active",
+                sourceType: "fixture",
+                independent: true,
+                countsForConsensus: true,
+                licenseStatus: "approved",
+                allowedUse: "bulk-import",
+                sourceKind: "assignment",
+                canStoreAssignments: true,
+                licenseEvidenceUrl: "https://example.com/source-b-license",
+                licenseReviewedAt: "2026-05-05",
+            },
+        },
+        assignments: {
+            source_a: {
+                日: { level: 5, reviewStatus: "reviewed" },
+                語: { level: 4, reviewStatus: "reviewed" },
+                本: { level: 4, reviewStatus: "reviewed" },
+            },
+            source_b: {
+                日: { level: 5, reviewStatus: "reviewed" },
+                語: { level: 4, reviewStatus: "reviewed" },
+                本: { level: 4, reviewStatus: "reviewed" },
+            },
+        },
+        kanji: {
+            日: { confidence: "unknown", agreementScore: 0, notes: "Stale changed entry." },
+            語: { confidence: "unknown", agreementScore: 0, notes: "Stale changed entry." },
+            本: { confidence: "unknown", agreementScore: 0, notes: "Stale unchanged entry." },
+        },
+    };
+    const contract = { kanjiLevels: { 日: 5, 語: 4, 本: 4 } };
+    const full = materializeKanjiEvidenceEntries({ evidenceManifest, contract });
+    const incrementalInput = {
+        ...evidenceManifest,
+        kanji: {
+            ...full.kanji,
+            日: evidenceManifest.kanji.日,
+            語: evidenceManifest.kanji.語,
+        },
+    };
+    const incremental = materializeKanjiEvidenceEntries({
+        evidenceManifest: incrementalInput,
+        contract,
+        changedKanji: ["日", "語"],
+    });
+    const summarizeRollup = (entry = {}) => ({
+        consensusLevel: entry.consensusLevel || null,
+        confidence: entry.confidence,
+        agreementScore: entry.agreementScore,
+    });
+
+    assert.deepEqual(summarizeRollup(incremental.kanji.日), summarizeRollup(full.kanji.日));
+    assert.deepEqual(summarizeRollup(incremental.kanji.語), summarizeRollup(full.kanji.語));
+    assert.deepEqual(incremental.kanji.日.sources, full.kanji.日.sources);
+    assert.deepEqual(incremental.kanji.語.sources, full.kanji.語.sources);
+    assert.deepEqual(incremental.kanji.本, full.kanji.本);
+});
+
 test("materializeKanjiEvidenceEntries removes stale rollup sources when source-centric assignments are corrected", () => {
     const evidenceManifest = {
         version: 1,

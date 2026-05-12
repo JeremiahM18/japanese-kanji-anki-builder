@@ -54,6 +54,62 @@ function extractMarkdownTableSourceIds(sectionText) {
     return extractMarkdownTableRows(sectionText).map((row) => row.sourceId);
 }
 
+const SOURCE_COUNT_GUARD_LANES = Object.freeze([
+    {
+        sourceId: "ask_hajimete_jlpt_kanji",
+        changelogLabel: "ASK Hajimete",
+        productDocLabel: "`ask_hajimete_jlpt_kanji`",
+    },
+    {
+        sourceId: "shin_kanzen_master_kanji",
+        changelogLabel: "Shin Kanzen",
+        productDocLabel: "`shin_kanzen_master_kanji`",
+    },
+    {
+        sourceId: "nihongo_sou_matome_kanji",
+        changelogLabel: "Sou Matome",
+        productDocLabel: "`nihongo_sou_matome_kanji`",
+    },
+]);
+
+function normalizeWhitespace(value) {
+    return String(value).replace(/\s+/gu, " ");
+}
+
+function getExpectedReviewCounts(sourceInput = {}) {
+    const counts = sourceInput.expectedReviewStatusCounts || {};
+    return {
+        reviewed: counts.reviewed || 0,
+        sourceAccessGap: counts.source_access_gap || 0,
+        pending: counts.needs_review || 0,
+        blocked: counts.blocked || 0,
+    };
+}
+
+function assertTextCarriesSourceCounts(text, counts, description) {
+    const normalized = normalizeWhitespace(text);
+    assert.match(normalized, new RegExp(`\`${counts.reviewed}\`\\s+reviewed`, "iu"), `${description} missing reviewed count ${counts.reviewed}.`);
+    assert.match(normalized, new RegExp(`\`${counts.sourceAccessGap}\`[^.]*source[-_ ]access[-_ ]gap`, "iu"), `${description} missing source_access_gap count ${counts.sourceAccessGap}.`);
+    assert.match(normalized, new RegExp(`\`${counts.pending}\`[^.]*pending`, "iu"), `${description} missing pending count ${counts.pending}.`);
+}
+
+function sliceNearLabel(text, label, width = 700) {
+    const normalized = normalizeWhitespace(text);
+    const index = normalized.indexOf(label);
+    assert.notEqual(index, -1, `Missing source count label: ${label}`);
+    return normalized.slice(index, index + width);
+}
+
+function countReviewedAssignmentsForSource(evidence, sourceId) {
+    const relativePath = evidence.assignmentFiles?.[sourceId];
+    assert.ok(relativePath, `Missing routed assignment file for ${sourceId}.`);
+    const assignmentFile = JSON.parse(readRepoFile(path.join("templates", relativePath)));
+    assert.equal(assignmentFile.sourceId, sourceId, `Assignment file sourceId mismatch for ${sourceId}.`);
+    return Object.values(assignmentFile.assignments || {})
+        .filter((assignment) => (assignment.reviewStatus || "reviewed") === "reviewed")
+        .length;
+}
+
 test("CODEOWNERS covers critical repository governance paths", () => {
     const codeowners = readRepoFile(path.join(".github", "CODEOWNERS"));
     const requiredEntries = [
@@ -131,6 +187,53 @@ test("README marks in-review source-evidence lanes as inactive review work", () 
         assert.ok(row, `Missing README source lane row for in-review source: ${sourceId}`);
         assert.match(row.currentUse, /in-review/i);
         assert.match(row.currentUse, /inactive\/non-voting/i);
+    }
+});
+
+test("current textbook source-count baselines match tracked manifests and docs", () => {
+    const readme = readRepoFile("README.md");
+    const changelog = readRepoFile("CHANGELOG.md");
+    const productExitCriteria = readRepoFile(path.join("docs", "product-exit-criteria.md"));
+    const evidence = JSON.parse(readRepoFile(path.join("templates", "jlpt_kanji_source_evidence.json")));
+    const sourceInputs = JSON.parse(readRepoFile(path.join("templates", "jlpt_kanji_source_inputs.json")));
+    const sourceSection = extractReadmeSection(readme, "JLPT Kanji Source Evidence At A Glance");
+    const sourceRowsById = new Map(extractMarkdownTableRows(sourceSection).map((row) => [row.sourceId, row]));
+    const changelogCurrentBaseline = sliceNearLabel(
+        changelog,
+        "current routed assignment files and pinned worksheet baselines contain",
+        900
+    );
+
+    for (const lane of SOURCE_COUNT_GUARD_LANES) {
+        const sourceInput = sourceInputs.inputs?.[lane.sourceId];
+        assert.ok(sourceInput, `Missing source input for ${lane.sourceId}.`);
+        assert.ok(sourceInput.expectedReviewStatusCounts, `Missing expected review-status counts for ${lane.sourceId}.`);
+
+        const counts = getExpectedReviewCounts(sourceInput);
+        assert.equal(
+            counts.reviewed + counts.sourceAccessGap + counts.pending + counts.blocked,
+            sourceInput.rowCount,
+            `Expected review-status counts must sum to rowCount for ${lane.sourceId}.`
+        );
+        assert.equal(
+            counts.reviewed,
+            countReviewedAssignmentsForSource(evidence, lane.sourceId),
+            `Reviewed assignment count drifted for ${lane.sourceId}.`
+        );
+
+        const readmeRow = sourceRowsById.get(lane.sourceId);
+        assert.ok(readmeRow, `Missing README source lane row for ${lane.sourceId}.`);
+        assertTextCarriesSourceCounts(readmeRow.currentUse, counts, `README source row for ${lane.sourceId}`);
+        assertTextCarriesSourceCounts(
+            sliceNearLabel(productExitCriteria, lane.productDocLabel),
+            counts,
+            `product exit criteria source baseline for ${lane.sourceId}`
+        );
+        assertTextCarriesSourceCounts(
+            sliceNearLabel(changelogCurrentBaseline, lane.changelogLabel),
+            counts,
+            `CHANGELOG source baseline for ${lane.sourceId}`
+        );
     }
 });
 

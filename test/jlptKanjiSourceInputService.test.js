@@ -144,6 +144,74 @@ test("source input preflight keeps blank worksheet rows pending instead of rejec
     assert.deepEqual(Object.keys(report.assignments), ["日"]);
 });
 
+test("source input preflight enforces pinned review-status counts when declared", () => {
+    const text = [
+        "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes",
+        "日\tN5\treviewed\tFixture citation\tfixture:日\tObserved fixture row",
+        "学\t\tneeds_review\t\t\t",
+        "山\t\tsource_access_gap\t\t\tChecked permitted fixture material; exact source-level proof is not available yet",
+    ].join("\n");
+    const sourceConfig = buildSourceConfig(text, {
+        expectedReviewStatusCounts: {
+            reviewed: 1,
+            needs_review: 1,
+            source_access_gap: 1,
+        },
+    });
+
+    const report = buildJlptKanjiSourceInputReport({
+        sourceId: "fixture_source",
+        sourceConfig,
+        sourceBuffer: Buffer.from(text, "utf8"),
+        contract: { kanjiLevels: { 日: 5, 学: 5, 山: 5 } },
+        evidence: buildEvidence(),
+        policy: {
+            noDeckMutation: true,
+            requirePinnedIntegrity: true,
+            requireKnownEvidenceSource: true,
+        },
+    });
+
+    assert.equal(report.valid, true);
+    assert.deepEqual(report.reviewStatusCounts, {
+        reviewed: 1,
+        needs_review: 1,
+        source_access_gap: 1,
+    });
+});
+
+test("source input preflight blocks review-status count drift", () => {
+    const text = [
+        "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes",
+        "日\tN5\treviewed\tFixture citation\tfixture:日\tObserved fixture row",
+        "山\t\tsource_access_gap\t\t\tChecked permitted fixture material; exact source-level proof is not available yet",
+    ].join("\n");
+    const sourceConfig = buildSourceConfig(text, {
+        expectedReviewStatusCounts: {
+            reviewed: 1,
+            needs_review: 1,
+            source_access_gap: 0,
+        },
+    });
+
+    const report = buildJlptKanjiSourceInputReport({
+        sourceId: "fixture_source",
+        sourceConfig,
+        sourceBuffer: Buffer.from(text, "utf8"),
+        contract: { kanjiLevels: { 日: 5, 山: 5 } },
+        evidence: buildEvidence(),
+        policy: {
+            noDeckMutation: true,
+            requirePinnedIntegrity: true,
+            requireKnownEvidenceSource: true,
+        },
+    });
+
+    assert.equal(report.valid, false);
+    assert.match(report.blockers.join("\n"), /source reviewStatus count mismatch for needs_review: expected 1, got 0/);
+    assert.match(report.blockers.join("\n"), /source reviewStatus count mismatch for source_access_gap: expected 0, got 1/);
+});
+
 test("source input preflight rejects bad rows before they become source evidence", () => {
     const text = [
         "kanji\tlevel\treviewStatus\tcitation\tevidenceRef",
@@ -337,6 +405,24 @@ test("source input manifest can declare planned restricted textbook source lanes
     assert.equal(input.sha256, undefined);
     assert.equal(input.byteSize, undefined);
     assert.equal(input.rowCount, undefined);
+});
+
+test("source input manifest rejects expected review-status counts that do not match rowCount", () => {
+    assert.throws(() => normalizeJlptKanjiSourceInputs({
+        version: 1,
+        inputs: {
+            fixture_source: {
+                sourceId: "fixture_source",
+                sourcePath: "downloads/fixture.tsv",
+                sourceLabel: "fixture-source",
+                rowCount: 3,
+                expectedReviewStatusCounts: {
+                    reviewed: 1,
+                    needs_review: 1,
+                },
+            },
+        },
+    }), /expected review status counts sum to 2, not rowCount 3/);
 });
 
 test("source input manifest can declare a restricted manual JLPT Sensei lane", () => {

@@ -2,6 +2,12 @@ const fs = require("node:fs");
 const { z } = require("zod");
 
 const sourceInputReviewStatusSchema = z.enum(["reviewed", "needs_review", "blocked", "source_access_gap"]);
+const sourceInputReviewStatusCountsSchema = z.object({
+    reviewed: z.number().int().nonnegative().optional(),
+    needs_review: z.number().int().nonnegative().optional(),
+    blocked: z.number().int().nonnegative().optional(),
+    source_access_gap: z.number().int().nonnegative().optional(),
+}).strict();
 
 const sourceInputConfigSchema = z.object({
     sourceId: z.string().min(1),
@@ -27,6 +33,7 @@ const sourceInputConfigSchema = z.object({
     sha256: z.string().regex(/^[a-f0-9]{64}$/i).optional(),
     byteSize: z.number().int().nonnegative().optional(),
     rowCount: z.number().int().nonnegative().optional(),
+    expectedReviewStatusCounts: sourceInputReviewStatusCountsSchema.optional(),
     integrityPolicy: z.string().min(1).optional(),
 }).strict();
 
@@ -48,6 +55,13 @@ function normalizeJlptKanjiSourceInputs(value = {}) {
             if (input.sourceId !== inputId) {
                 throw new Error(`JLPT kanji source input id mismatch: ${inputId} declares ${input.sourceId}`);
             }
+            if (input.expectedReviewStatusCounts && Number.isInteger(input.rowCount)) {
+                const expectedRows = Object.values(input.expectedReviewStatusCounts)
+                    .reduce((total, count) => total + count, 0);
+                if (expectedRows !== input.rowCount) {
+                    throw new Error(`JLPT kanji source input ${inputId} expected review status counts sum to ${expectedRows}, not rowCount ${input.rowCount}`);
+                }
+            }
             return [inputId, input];
         })
     );
@@ -67,5 +81,6 @@ module.exports = {
     normalizeJlptKanjiSourceInputs,
     sourceInputConfigSchema,
     sourceInputManifestSchema,
+    sourceInputReviewStatusCountsSchema,
     sourceInputReviewStatusSchema,
 };

@@ -91,7 +91,10 @@ function buildSyntheticWordRows(entries = [], wordPitchAccentData = {}) {
 test("tracked populated kanji platinum manifests bind evidence to protected fields", () => {
     const platinumFiles = fs
         .readdirSync(TEMPLATES_DIR)
-        .filter((name) => /^platinum_n[1-5]_review_set\.json$/.test(name))
+        .filter((name) => (
+            /^platinum_n[1-5]_review_set\.json$/.test(name)
+            || /^platinum_additional_unverified_n[1-5]_review_set\.json$/.test(name)
+        ))
         .sort();
 
     for (const fileName of platinumFiles) {
@@ -100,7 +103,7 @@ test("tracked populated kanji platinum manifests bind evidence to protected fiel
             continue;
         }
 
-        const level = fileName.match(/^platinum_n([1-5])_review_set\.json$/)?.[1];
+        const level = fileName.match(/^platinum_(?:additional_unverified_)?n([1-5])_review_set\.json$/)?.[1];
         const report = evaluatePlatinumKanjiReviewSet({
             rows: buildSyntheticKanjiRows(entries, `N${level}`),
             entries,

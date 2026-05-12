@@ -2,6 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const { parseArgs, parseKanjiTsvForPlatinum } = require("../scripts/reviewPlatinumKanjiLevel");
+const { parseArgs: parseAdditionalArgs } = require("../scripts/reviewPlatinumAdditionalKanjiLevel");
 const { parseArgs: parseBatchReportArgs } = require("../scripts/platinumKanjiBatchReport");
 
 test("parseArgs accepts platinum kanji review options", () => {
@@ -12,6 +13,26 @@ test("parseArgs accepts platinum kanji review options", () => {
         json: true,
         level: 5,
         requireAllRows: true,
+    });
+});
+
+test("parseArgs accepts additional platinum kanji review options", () => {
+    const options = parseAdditionalArgs([
+        "--level=5",
+        "--out-dir=out/custom-additional",
+        "--json",
+        "--require-all",
+        "--allow-empty",
+        "--oops",
+    ]);
+
+    assert.deepEqual(options, {
+        allowEmpty: true,
+        json: true,
+        level: 5,
+        outDir: "out/custom-additional",
+        requireAllRows: true,
+        unknownArgs: ["--oops"],
     });
 });
 

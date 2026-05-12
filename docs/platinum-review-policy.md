@@ -215,6 +215,7 @@ npm run deck:platinum:n4
 npm run deck:platinum:n3
 npm run deck:platinum:n2
 npm run deck:platinum:n1
+npm run deck:kanji:additional:platinum:n5
 npm run deck:words:platinum:n5
 npm run deck:words:platinum:n4
 ```
@@ -224,5 +225,7 @@ npm run deck:words:platinum:n4
 `deck:words:platinum:batch` is the matching read-only word pre-review report. It does not create entries or prove release readiness. Use it before editing a word platinum manifest to see exact written-reading identity, generated card fields, sentence lines, exact word audio, pitch source/render status, source lookup links, risk flags, existing platinum status, and the next missing queue.
 
 Each platinum command requires every generated card for that level and surface to have an active platinum entry.
+
+Additional platinum commands apply only to the optional `additional_unverified_Nx` surface. They do not move the core JLPT kanji contract, certify source-evidence confidence, or satisfy core kanji platinum coverage.
 
 The platinum command intentionally fails for an empty platinum manifest. Do not use golden coverage as a substitute for platinum review.

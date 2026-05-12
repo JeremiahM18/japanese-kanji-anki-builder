@@ -1,1 +1,1335 @@
-[]
+[
+  {
+    "kanji": "安",
+    "status": "platinum",
+    "readingIncludes": [
+      "やすい"
+    ],
+    "meaningIncludes": [
+      "cheap"
+    ],
+    "kanjiMeaningsIncludes": [
+      "cheap",
+      "calm",
+      "safe"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "安心",
+      "安い",
+      "Additional unverified N5 source claim."
+    ],
+    "exampleIncludes": [
+      "無事に着いたと聞いて安心しました。"
+    ],
+    "reviewedAt": "2026-05-12",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Generated additional-unverified card surface re-reviewed for 安|やすい: single-kanji anchor; Kanji and DisplayWord 安; PrimaryReading やすい; MeaningJP cheap; KanjiMeanings include cheap, calm, and safe; notes include 安心, 安い, and Additional unverified N5 source claim.; example 無事に着いたと聞いて安心しました。; audio field includes kanji-reading-安-やすい; stroke-order field includes stroke-order.gif."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:kanji:additional:review:n5",
+        "detail": "Additional N5 golden review protects 安 with PrimaryReading やすい, MeaningJP cheap, additional-unverified notes, and example 無事に着いたと聞いて安心しました。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0000097800; templates/jlpt_kanji_source_evidence.json; out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Japanese source re-review for 安|やすい: Kanjipedia lists 音 アン and 訓 やすい with senses supporting cheap, calm, and safe; the generated notes keep the optional N5 source-claim label visible while core placement and source consensus remain N4. Platinum supports PrimaryReading やすい, MeaningJP cheap, and KanjiMeanings cheap, calm, safe."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/5B/5B89_安/manifest.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 安: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source remote-stroke-order-animation; static stroke-order image source local-filesystem; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/5B/5B89_安/manifest.json and exported Audio field",
+        "detail": "Audio artifact re-reviewed for 安|やすい: exact kanji-reading audio kanji-reading-安-やすい; source voicevox-nemo; category kanji-reading; target 安; exported PrimaryReading やすい."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "data/media/kanji/5B/5B89_安/manifest.json and out/qa/additional-n5-stroke-contact.png",
+        "detail": "Visual stroke-order review recorded for 安: stroke-order animation 5B89_安-stroke-order.gif shows target 安; source provenance remote-stroke-order-animation."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 安|やすい: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses やすい because the additional card is an individual-kanji learner surface centered on the common 安い reading; 安心 remains a support note/example and the optional N5 source-claim label remains visible."
+  },
+  {
+    "kanji": "飲",
+    "status": "platinum",
+    "readingIncludes": [
+      "のむ"
+    ],
+    "meaningIncludes": [
+      "drink"
+    ],
+    "kanjiMeaningsIncludes": [
+      "drink"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "飲む",
+      "飲み物",
+      "Additional unverified N5 source claim."
+    ],
+    "exampleIncludes": [
+      "朝は水をよく飲みます。"
+    ],
+    "reviewedAt": "2026-05-12",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Generated additional-unverified card surface re-reviewed for 飲|のむ: single-kanji anchor; Kanji and DisplayWord 飲; PrimaryReading のむ; MeaningJP drink; KanjiMeanings include drink; notes include 飲む, 飲み物, and Additional unverified N5 source claim.; example 朝は水をよく飲みます。; audio field includes kanji-reading-飲-のむ; stroke-order field includes stroke-order.gif."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:kanji:additional:review:n5",
+        "detail": "Additional N5 golden review protects 飲 with PrimaryReading のむ, MeaningJP drink, additional-unverified notes, and example 朝は水をよく飲みます。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0000297300; templates/jlpt_kanji_source_evidence.json; out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Japanese source re-review for 飲|のむ: Kanjipedia lists 音 イン and 訓 のむ with senses supporting drink; the generated notes keep the optional N5 source-claim label visible while core placement and source consensus remain N4. Platinum supports PrimaryReading のむ, MeaningJP drink, and KanjiMeanings drink."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/98/98F2_飲/manifest.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 飲: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source remote-stroke-order-animation; static stroke-order image source local-filesystem; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/98/98F2_飲/manifest.json and exported Audio field",
+        "detail": "Audio artifact re-reviewed for 飲|のむ: exact kanji-reading audio kanji-reading-飲-のむ; source voicevox-nemo; category kanji-reading; target 飲; exported PrimaryReading のむ."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "data/media/kanji/98/98F2_飲/manifest.json and out/qa/additional-n5-stroke-contact.png",
+        "detail": "Visual stroke-order review recorded for 飲: stroke-order animation 98F2_飲-stroke-order.gif shows target 飲; source provenance remote-stroke-order-animation."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 飲|のむ: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses のむ because the learner-facing support word 飲む is common, transparent, and directly demonstrates the selected individual-kanji reading."
+  },
+  {
+    "kanji": "花",
+    "status": "platinum",
+    "readingIncludes": [
+      "はな"
+    ],
+    "meaningIncludes": [
+      "flower"
+    ],
+    "kanjiMeaningsIncludes": [
+      "flower"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "花",
+      "花見",
+      "Additional unverified N5 source claim."
+    ],
+    "exampleIncludes": [
+      "公園できれいな花が咲いています。"
+    ],
+    "reviewedAt": "2026-05-12",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Generated additional-unverified card surface re-reviewed for 花|はな: single-kanji anchor; Kanji and DisplayWord 花; PrimaryReading はな; MeaningJP flower; KanjiMeanings include flower; notes include 花, 花見, and Additional unverified N5 source claim.; example 公園できれいな花が咲いています。; audio field includes kanji-reading-花-はな; stroke-order field includes stroke-order.gif."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:kanji:additional:review:n5",
+        "detail": "Additional N5 golden review protects 花 with PrimaryReading はな, MeaningJP flower, additional-unverified notes, and example 公園できれいな花が咲いています。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0000645600; templates/jlpt_kanji_source_evidence.json; out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Japanese source re-review for 花|はな: Kanjipedia lists 音 カ and 訓 はな with senses supporting flower; the generated notes keep the optional N5 source-claim label visible while core placement and source consensus remain N4. Platinum supports PrimaryReading はな, MeaningJP flower, and KanjiMeanings flower."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/82/82B1_花/manifest.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 花: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source remote-stroke-order-animation; static stroke-order image source local-filesystem; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/82/82B1_花/manifest.json and exported Audio field",
+        "detail": "Audio artifact re-reviewed for 花|はな: exact kanji-reading audio kanji-reading-花-はな; source voicevox-nemo; category kanji-reading; target 花; exported PrimaryReading はな."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "data/media/kanji/82/82B1_花/manifest.json and out/qa/additional-n5-stroke-contact.png",
+        "detail": "Visual stroke-order review recorded for 花: stroke-order animation 82B1_花-stroke-order.gif shows target 花; source provenance remote-stroke-order-animation."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 花|はな: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses はな because 花 as a standalone noun is common, beginner-useful, and directly matches the learner-facing meaning flower."
+  },
+  {
+    "kanji": "会",
+    "status": "platinum",
+    "readingIncludes": [
+      "かい"
+    ],
+    "meaningIncludes": [
+      "meeting / association"
+    ],
+    "kanjiMeaningsIncludes": [
+      "meeting",
+      "association",
+      "meet"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "会社",
+      "会議",
+      "Additional unverified N5 source claim."
+    ],
+    "exampleIncludes": [
+      "明日は会社で会議があります。"
+    ],
+    "reviewedAt": "2026-05-12",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Generated additional-unverified card surface re-reviewed for 会|かい: single-kanji anchor; Kanji and DisplayWord 会; PrimaryReading かい; MeaningJP meeting / association; KanjiMeanings include meeting, association, and meet; notes include 会社, 会議, and Additional unverified N5 source claim.; example 明日は会社で会議があります。; audio field includes kanji-reading-会-かい; stroke-order field includes stroke-order.gif."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:kanji:additional:review:n5",
+        "detail": "Additional N5 golden review protects 会 with PrimaryReading かい, MeaningJP meeting / association, additional-unverified notes, and example 明日は会社で会議があります。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0000756800; templates/jlpt_kanji_source_evidence.json; out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Japanese source re-review for 会|かい: Kanjipedia lists 音 カイ and the meet/gather sense that supports meeting / association; the generated notes keep the optional N5 source-claim label visible while core placement and source consensus remain N4. Platinum supports PrimaryReading かい, MeaningJP meeting / association, and KanjiMeanings meeting, association, meet."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/4F/4F1A_会/manifest.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 会: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source remote-stroke-order-animation; static stroke-order image source local-filesystem; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/4F/4F1A_会/manifest.json and exported Audio field",
+        "detail": "Audio artifact re-reviewed for 会|かい: exact kanji-reading audio kanji-reading-会-かい; source voicevox-nemo; category kanji-reading; target 会; exported PrimaryReading かい."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "data/media/kanji/4F/4F1A_会/manifest.json and out/qa/additional-n5-stroke-contact.png",
+        "detail": "Visual stroke-order review recorded for 会: stroke-order animation 4F1A_会-stroke-order.gif shows target 会; source provenance remote-stroke-order-animation."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 会|かい: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses かい because the support words 会社 and 会議 are common learner anchors for the individual kanji's meeting/association sense."
+  },
+  {
+    "kanji": "魚",
+    "status": "platinum",
+    "readingIncludes": [
+      "さかな"
+    ],
+    "meaningIncludes": [
+      "fish"
+    ],
+    "kanjiMeaningsIncludes": [
+      "fish"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "魚",
+      "金魚",
+      "Additional unverified N5 source claim."
+    ],
+    "exampleIncludes": [
+      "市場で新鮮な魚を買いました。"
+    ],
+    "reviewedAt": "2026-05-12",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Generated additional-unverified card surface re-reviewed for 魚|さかな: single-kanji anchor; Kanji and DisplayWord 魚; PrimaryReading さかな; MeaningJP fish; KanjiMeanings include fish; notes include 魚, 金魚, and Additional unverified N5 source claim.; example 市場で新鮮な魚を買いました。; audio field includes kanji-reading-魚-さかな; stroke-order field includes stroke-order.gif."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:kanji:additional:review:n5",
+        "detail": "Additional N5 golden review protects 魚 with PrimaryReading さかな, MeaningJP fish, additional-unverified notes, and example 市場で新鮮な魚を買いました。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0001450900; templates/jlpt_kanji_source_evidence.json; out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Japanese source re-review for 魚|さかな: Kanjipedia lists 音 ギョ and 訓 さかな with senses supporting fish; the generated notes keep the optional N5 source-claim label visible while core placement and source consensus remain N4. Platinum supports PrimaryReading さかな, MeaningJP fish, and KanjiMeanings fish."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/9B/9B5A_魚/manifest.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 魚: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source remote-stroke-order-animation; static stroke-order image source local-filesystem; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/9B/9B5A_魚/manifest.json and exported Audio field",
+        "detail": "Audio artifact re-reviewed for 魚|さかな: exact kanji-reading audio kanji-reading-魚-さかな; source voicevox-nemo; category kanji-reading; target 魚; exported PrimaryReading さかな."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "data/media/kanji/9B/9B5A_魚/manifest.json and out/qa/additional-n5-stroke-contact.png",
+        "detail": "Visual stroke-order review recorded for 魚: stroke-order animation 9B5A_魚-stroke-order.gif shows target 魚; source provenance remote-stroke-order-animation."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 魚|さかな: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses さかな because standalone 魚 is a common beginner food noun and directly demonstrates the learner-facing fish meaning."
+  },
+  {
+    "kanji": "空",
+    "status": "platinum",
+    "readingIncludes": [
+      "そら"
+    ],
+    "meaningIncludes": [
+      "sky"
+    ],
+    "kanjiMeaningsIncludes": [
+      "sky",
+      "empty",
+      "vacant",
+      "vacuum",
+      "void"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "空",
+      "空港",
+      "Additional unverified N5 source claim."
+    ],
+    "exampleIncludes": [
+      "今日は空がとても青いです。"
+    ],
+    "reviewedAt": "2026-05-12",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Generated additional-unverified card surface re-reviewed for 空|そら: single-kanji anchor; Kanji and DisplayWord 空; PrimaryReading そら; MeaningJP sky; KanjiMeanings include sky, empty, vacant, vacuum, and void; notes include 空, 空港, and Additional unverified N5 source claim.; example 今日は空がとても青いです。; audio field includes kanji-reading-空-そら; stroke-order field includes stroke-order.gif."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:kanji:additional:review:n5",
+        "detail": "Additional N5 golden review protects 空 with PrimaryReading そら, MeaningJP sky, additional-unverified notes, and example 今日は空がとても青いです。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0001680900; templates/jlpt_kanji_source_evidence.json; out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Japanese source re-review for 空|そら: Kanjipedia lists 音 クウ and 訓 そら with senses supporting sky, empty, vacant, vacuum, and void; the generated notes keep the optional N5 source-claim label visible while core placement and source consensus remain N4. Platinum supports PrimaryReading そら, MeaningJP sky, and KanjiMeanings sky, empty, vacant, vacuum, void."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/7A/7A7A_空/manifest.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 空: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source remote-stroke-order-animation; static stroke-order image source local-filesystem; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/7A/7A7A_空/manifest.json and exported Audio field",
+        "detail": "Audio artifact re-reviewed for 空|そら: exact kanji-reading audio kanji-reading-空-そら; source voicevox-nemo; category kanji-reading; target 空; exported PrimaryReading そら."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "data/media/kanji/7A/7A7A_空/manifest.json and out/qa/additional-n5-stroke-contact.png",
+        "detail": "Visual stroke-order review recorded for 空: stroke-order animation 7A7A_空-stroke-order.gif shows target 空; source provenance remote-stroke-order-animation."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 空|そら: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses そら because standalone 空 is a common beginner word and the example directly reinforces the sky sense; 空港 remains support for the on-reading."
+  },
+  {
+    "kanji": "言",
+    "status": "platinum",
+    "readingIncludes": [
+      "いう"
+    ],
+    "meaningIncludes": [
+      "say"
+    ],
+    "kanjiMeaningsIncludes": [
+      "say",
+      "word"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "言う",
+      "言葉",
+      "Additional unverified N5 source claim."
+    ],
+    "exampleIncludes": [
+      "大切なことを先生が言いました。"
+    ],
+    "reviewedAt": "2026-05-12",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Generated additional-unverified card surface re-reviewed for 言|いう: single-kanji anchor; Kanji and DisplayWord 言; PrimaryReading いう; MeaningJP say; KanjiMeanings include say and word; notes include 言う, 言葉, and Additional unverified N5 source claim.; example 大切なことを先生が言いました。; audio field includes kanji-reading-言-いう; stroke-order field includes stroke-order.gif."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:kanji:additional:review:n5",
+        "detail": "Additional N5 golden review protects 言 with PrimaryReading いう, MeaningJP say, additional-unverified notes, and example 大切なことを先生が言いました。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0001990500; templates/jlpt_kanji_source_evidence.json; out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Japanese source re-review for 言|いう: Kanjipedia lists 音 ゲン and 訓 いう with senses supporting say and word; the generated notes keep the optional N5 source-claim label visible while core placement and source consensus remain N4. Platinum supports PrimaryReading いう, MeaningJP say, and KanjiMeanings say, word."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/8A/8A00_言/manifest.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 言: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source remote-stroke-order-animation; static stroke-order image source local-filesystem; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/8A/8A00_言/manifest.json and exported Audio field",
+        "detail": "Audio artifact re-reviewed for 言|いう: exact kanji-reading audio kanji-reading-言-いう; source voicevox-nemo; category kanji-reading; target 言; exported PrimaryReading いう."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "data/media/kanji/8A/8A00_言/manifest.json and out/qa/additional-n5-stroke-contact.png",
+        "detail": "Visual stroke-order review recorded for 言: stroke-order animation 8A00_言-stroke-order.gif shows target 言; source provenance remote-stroke-order-animation."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 言|いう: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses いう because 言う is the common learner-facing verb that directly demonstrates the target kanji's say meaning; 言葉 remains support vocabulary."
+  },
+  {
+    "kanji": "少",
+    "status": "platinum",
+    "readingIncludes": [
+      "すこし"
+    ],
+    "meaningIncludes": [
+      "a little"
+    ],
+    "kanjiMeaningsIncludes": [
+      "few",
+      "little"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "少し",
+      "少ない",
+      "Additional unverified N5 source claim."
+    ],
+    "exampleIncludes": [
+      "この問題は少し難しいですが、できそうです。"
+    ],
+    "reviewedAt": "2026-05-12",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Generated additional-unverified card surface re-reviewed for 少|すこし: single-kanji anchor; Kanji and DisplayWord 少; PrimaryReading すこし; MeaningJP a little; KanjiMeanings include few and little; notes include 少し, 少ない, and Additional unverified N5 source claim.; example この問題は少し難しいですが、できそうです。; audio field includes kanji-reading-少-すこし; stroke-order field includes stroke-order.gif."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:kanji:additional:review:n5",
+        "detail": "Additional N5 golden review protects 少 with PrimaryReading すこし, MeaningJP a little, additional-unverified notes, and example この問題は少し難しいですが、できそうです。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0003346200; templates/jlpt_kanji_source_evidence.json; out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Japanese source re-review for 少|すこし: Kanjipedia lists 音 ショウ and 訓 すこし with senses supporting a little, few, and little; the generated notes keep the optional N5 source-claim label visible while core placement and source consensus remain N4. Platinum supports PrimaryReading すこし, MeaningJP a little, and KanjiMeanings few, little."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/5C/5C11_少/manifest.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 少: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source remote-stroke-order-animation; static stroke-order image source local-filesystem; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/5C/5C11_少/manifest.json and exported Audio field",
+        "detail": "Audio artifact re-reviewed for 少|すこし: exact kanji-reading audio kanji-reading-少-すこし; source voicevox-nemo; category kanji-reading; target 少; exported PrimaryReading すこし."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "data/media/kanji/5C/5C11_少/manifest.json and out/qa/additional-n5-stroke-contact.png",
+        "detail": "Visual stroke-order review recorded for 少: stroke-order animation 5C11_少-stroke-order.gif shows target 少; source provenance remote-stroke-order-animation."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 少|すこし: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses すこし because 少し is a common beginner adverb and the example directly demonstrates the selected reading and a little meaning."
+  },
+  {
+    "kanji": "新",
+    "status": "platinum",
+    "readingIncludes": [
+      "あたらしい"
+    ],
+    "meaningIncludes": [
+      "new"
+    ],
+    "kanjiMeaningsIncludes": [
+      "new"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "新しい",
+      "新聞",
+      "Additional unverified N5 source claim."
+    ],
+    "exampleIncludes": [
+      "新しいくつをはいて学校へ行きました。"
+    ],
+    "reviewedAt": "2026-05-12",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Generated additional-unverified card surface re-reviewed for 新|あたらしい: single-kanji anchor; Kanji and DisplayWord 新; PrimaryReading あたらしい; MeaningJP new; KanjiMeanings include new; notes include 新しい, 新聞, and Additional unverified N5 source claim.; example 新しいくつをはいて学校へ行きました。; audio field includes kanji-reading-新-あたらしい; stroke-order field includes stroke-order.gif."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:kanji:additional:review:n5",
+        "detail": "Additional N5 golden review protects 新 with PrimaryReading あたらしい, MeaningJP new, additional-unverified notes, and example 新しいくつをはいて学校へ行きました。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0003650300; templates/jlpt_kanji_source_evidence.json; out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Japanese source re-review for 新|あたらしい: Kanjipedia lists 音 シン and 訓 あたらしい with senses supporting new; the generated notes keep the optional N5 source-claim label visible while core placement and source consensus remain N4. Platinum supports PrimaryReading あたらしい, MeaningJP new, and KanjiMeanings new."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/65/65B0_新/manifest.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 新: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source remote-stroke-order-animation; static stroke-order image source local-filesystem; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/65/65B0_新/manifest.json and exported Audio field",
+        "detail": "Audio artifact re-reviewed for 新|あたらしい: exact kanji-reading audio kanji-reading-新-あたらしい; source voicevox-nemo; category kanji-reading; target 新; exported PrimaryReading あたらしい."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "data/media/kanji/65/65B0_新/manifest.json and out/qa/additional-n5-stroke-contact.png",
+        "detail": "Visual stroke-order review recorded for 新: stroke-order animation 65B0_新-stroke-order.gif shows target 新; source provenance remote-stroke-order-animation."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 新|あたらしい: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses あたらしい because 新しい is a common beginner adjective and the example directly demonstrates the new meaning."
+  },
+  {
+    "kanji": "多",
+    "status": "platinum",
+    "readingIncludes": [
+      "おおい"
+    ],
+    "meaningIncludes": [
+      "many"
+    ],
+    "kanjiMeaningsIncludes": [
+      "many",
+      "much"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "多い",
+      "多分",
+      "Additional unverified N5 source claim."
+    ],
+    "exampleIncludes": [
+      "この道は朝の時間に車が多いです。"
+    ],
+    "reviewedAt": "2026-05-12",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Generated additional-unverified card surface re-reviewed for 多|おおい: single-kanji anchor; Kanji and DisplayWord 多; PrimaryReading おおい; MeaningJP many; KanjiMeanings include many and much; notes include 多い, 多分, and Additional unverified N5 source claim.; example この道は朝の時間に車が多いです。; audio field includes kanji-reading-多-おおい; stroke-order field includes stroke-order.gif."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:kanji:additional:review:n5",
+        "detail": "Additional N5 golden review protects 多 with PrimaryReading おおい, MeaningJP many, additional-unverified notes, and example この道は朝の時間に車が多いです。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0004396400; templates/jlpt_kanji_source_evidence.json; out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Japanese source re-review for 多|おおい: Kanjipedia lists 音 タ and 訓 おおい with senses supporting many and much; the generated notes keep the optional N5 source-claim label visible while core placement and source consensus remain N4. Platinum supports PrimaryReading おおい, MeaningJP many, and KanjiMeanings many, much."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/59/591A_多/manifest.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 多: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source remote-stroke-order-animation; static stroke-order image source local-filesystem; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/59/591A_多/manifest.json and exported Audio field",
+        "detail": "Audio artifact re-reviewed for 多|おおい: exact kanji-reading audio kanji-reading-多-おおい; source voicevox-nemo; category kanji-reading; target 多; exported PrimaryReading おおい."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "data/media/kanji/59/591A_多/manifest.json and out/qa/additional-n5-stroke-contact.png",
+        "detail": "Visual stroke-order review recorded for 多: stroke-order animation 591A_多-stroke-order.gif shows target 多; source provenance remote-stroke-order-animation."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 多|おおい: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses おおい because 多い is a common beginner adjective and the example directly demonstrates the many/much meaning."
+  },
+  {
+    "kanji": "店",
+    "status": "platinum",
+    "readingIncludes": [
+      "みせ"
+    ],
+    "meaningIncludes": [
+      "shop"
+    ],
+    "kanjiMeaningsIncludes": [
+      "shop",
+      "store"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "店",
+      "書店",
+      "Additional unverified N5 source claim."
+    ],
+    "exampleIncludes": [
+      "駅前の新しい店で昼ご飯を食べました。"
+    ],
+    "reviewedAt": "2026-05-12",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Generated additional-unverified card surface re-reviewed for 店|みせ: single-kanji anchor; Kanji and DisplayWord 店; PrimaryReading みせ; MeaningJP shop; KanjiMeanings include shop and store; notes include 店, 書店, and Additional unverified N5 source claim.; example 駅前の新しい店で昼ご飯を食べました。; audio field includes kanji-reading-店-みせ; stroke-order field includes stroke-order.gif."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:kanji:additional:review:n5",
+        "detail": "Additional N5 golden review protects 店 with PrimaryReading みせ, MeaningJP shop, additional-unverified notes, and example 駅前の新しい店で昼ご飯を食べました。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0005052100; templates/jlpt_kanji_source_evidence.json; out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Japanese source re-review for 店|みせ: Kanjipedia lists 音 テン and 訓 みせ with senses supporting shop and store; the generated notes keep the optional N5 source-claim label visible while core placement and source consensus remain N4. Platinum supports PrimaryReading みせ, MeaningJP shop, and KanjiMeanings shop, store."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/5E/5E97_店/manifest.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 店: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source remote-stroke-order-animation; static stroke-order image source local-filesystem; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/5E/5E97_店/manifest.json and exported Audio field",
+        "detail": "Audio artifact re-reviewed for 店|みせ: exact kanji-reading audio kanji-reading-店-みせ; source voicevox-nemo; category kanji-reading; target 店; exported PrimaryReading みせ."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "data/media/kanji/5E/5E97_店/manifest.json and out/qa/additional-n5-stroke-contact.png",
+        "detail": "Visual stroke-order review recorded for 店: stroke-order animation 5E97_店-stroke-order.gif shows target 店; source provenance remote-stroke-order-animation."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 店|みせ: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses みせ because standalone 店 is a common beginner noun and the example directly demonstrates the shop/store meaning."
+  },
+  {
+    "kanji": "田",
+    "status": "platinum",
+    "readingIncludes": [
+      "た"
+    ],
+    "meaningIncludes": [
+      "rice field"
+    ],
+    "kanjiMeaningsIncludes": [
+      "rice field",
+      "rice paddy"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "田んぼ",
+      "山田",
+      "Additional unverified N5 source claim."
+    ],
+    "exampleIncludes": [
+      "春になると田んぼに水が入ります。"
+    ],
+    "reviewedAt": "2026-05-12",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Generated additional-unverified card surface re-reviewed for 田|た: single-kanji anchor; Kanji and DisplayWord 田; PrimaryReading た; MeaningJP rice field; KanjiMeanings include rice field and rice paddy; notes include 田んぼ, 山田, and Additional unverified N5 source claim.; example 春になると田んぼに水が入ります。; audio field includes kanji-reading-田-た; stroke-order field includes stroke-order.gif."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:kanji:additional:review:n5",
+        "detail": "Additional N5 golden review protects 田 with PrimaryReading た, MeaningJP rice field, additional-unverified notes, and example 春になると田んぼに水が入ります。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0005083100; templates/jlpt_kanji_source_evidence.json; out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Japanese source re-review for 田|た: Kanjipedia lists 音 デン and 訓 た with senses supporting rice field and rice paddy; the generated notes keep the optional N5 source-claim label visible while core placement and source consensus remain N4. Platinum supports PrimaryReading た, MeaningJP rice field, and KanjiMeanings rice field, rice paddy."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/75/7530_田/manifest.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 田: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source remote-stroke-order-animation; static stroke-order image source local-filesystem; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/75/7530_田/manifest.json and exported Audio field",
+        "detail": "Audio artifact re-reviewed for 田|た: exact kanji-reading audio kanji-reading-田-た; source voicevox-nemo; category kanji-reading; target 田; exported PrimaryReading た."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "data/media/kanji/75/7530_田/manifest.json and out/qa/additional-n5-stroke-contact.png",
+        "detail": "Visual stroke-order review recorded for 田: stroke-order animation 7530_田-stroke-order.gif shows target 田; source provenance remote-stroke-order-animation."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 田|た: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses た because it is the direct kun reading behind 田 and 田んぼ, with 山田 kept as support for name exposure rather than the card anchor."
+  },
+  {
+    "kanji": "道",
+    "status": "platinum",
+    "readingIncludes": [
+      "みち"
+    ],
+    "meaningIncludes": [
+      "road"
+    ],
+    "kanjiMeaningsIncludes": [
+      "road",
+      "way",
+      "course",
+      "street",
+      "teachings"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "道",
+      "道具",
+      "Additional unverified N5 source claim."
+    ],
+    "exampleIncludes": [
+      "この道をまっすぐ行ってください。"
+    ],
+    "reviewedAt": "2026-05-12",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Generated additional-unverified card surface re-reviewed for 道|みち: single-kanji anchor; Kanji and DisplayWord 道; PrimaryReading みち; MeaningJP road; KanjiMeanings include road, way, course, street, and teachings; notes include 道, 道具, and Additional unverified N5 source claim.; example この道をまっすぐ行ってください。; audio field includes kanji-reading-道-みち; stroke-order field includes stroke-order.gif."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:kanji:additional:review:n5",
+        "detail": "Additional N5 golden review protects 道 with PrimaryReading みち, MeaningJP road, additional-unverified notes, and example この道をまっすぐ行ってください。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0005273900; templates/jlpt_kanji_source_evidence.json; out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Japanese source re-review for 道|みち: Kanjipedia lists 音 ドウ and 訓 みち with senses supporting road, way, course, street, and teachings; the generated notes keep the optional N5 source-claim label visible while core placement and source consensus remain N4. Platinum supports PrimaryReading みち, MeaningJP road, and KanjiMeanings road, way, course, street, teachings."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/90/9053_道/manifest.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 道: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source remote-stroke-order-animation; static stroke-order image source local-filesystem; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/90/9053_道/manifest.json and exported Audio field",
+        "detail": "Audio artifact re-reviewed for 道|みち: exact kanji-reading audio kanji-reading-道-みち; source voicevox-nemo; category kanji-reading; target 道; exported PrimaryReading みち."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "data/media/kanji/90/9053_道/manifest.json and out/qa/additional-n5-stroke-contact.png",
+        "detail": "Visual stroke-order review recorded for 道: stroke-order animation 9053_道-stroke-order.gif shows target 道; source provenance remote-stroke-order-animation."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 道|みち: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses みち because standalone 道 is a common beginner road/way noun and the example directly demonstrates the selected reading."
+  },
+  {
+    "kanji": "買",
+    "status": "platinum",
+    "readingIncludes": [
+      "かう"
+    ],
+    "meaningIncludes": [
+      "buy"
+    ],
+    "kanjiMeaningsIncludes": [
+      "buy"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "買う",
+      "買い物",
+      "Additional unverified N5 source claim."
+    ],
+    "exampleIncludes": [
+      "駅の店で飲み物を買いました。"
+    ],
+    "reviewedAt": "2026-05-12",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Generated additional-unverified card surface re-reviewed for 買|かう: single-kanji anchor; Kanji and DisplayWord 買; PrimaryReading かう; MeaningJP buy; KanjiMeanings include buy; notes include 買う, 買い物, and Additional unverified N5 source claim.; example 駅の店で飲み物を買いました。; audio field includes kanji-reading-買-かう; stroke-order field includes stroke-order.gif."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:kanji:additional:review:n5",
+        "detail": "Additional N5 golden review protects 買 with PrimaryReading かう, MeaningJP buy, additional-unverified notes, and example 駅の店で飲み物を買いました。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0005597500; templates/jlpt_kanji_source_evidence.json; out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Japanese source re-review for 買|かう: Kanjipedia lists 音 バイ and 訓 かう with senses supporting buy; the generated notes keep the optional N5 source-claim label visible while core placement and source consensus remain N4. Platinum supports PrimaryReading かう, MeaningJP buy, and KanjiMeanings buy."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/8C/8CB7_買/manifest.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 買: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source remote-stroke-order-animation; static stroke-order image source local-filesystem; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/8C/8CB7_買/manifest.json and exported Audio field",
+        "detail": "Audio artifact re-reviewed for 買|かう: exact kanji-reading audio kanji-reading-買-かう; source voicevox-nemo; category kanji-reading; target 買; exported PrimaryReading かう."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "data/media/kanji/8C/8CB7_買/manifest.json and out/qa/additional-n5-stroke-contact.png",
+        "detail": "Visual stroke-order review recorded for 買: stroke-order animation 8CB7_買-stroke-order.gif shows target 買; source provenance remote-stroke-order-animation."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 買|かう: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses かう because 買う is a common beginner verb and the example directly demonstrates the selected buy reading."
+  },
+  {
+    "kanji": "目",
+    "status": "platinum",
+    "readingIncludes": [
+      "め"
+    ],
+    "meaningIncludes": [
+      "eye"
+    ],
+    "kanjiMeaningsIncludes": [
+      "eye",
+      "item",
+      "look"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "目",
+      "一つ目",
+      "Additional unverified N5 source claim."
+    ],
+    "exampleIncludes": [
+      "今日は目が少しつかれています。"
+    ],
+    "reviewedAt": "2026-05-12",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Generated additional-unverified card surface re-reviewed for 目|め: single-kanji anchor; Kanji and DisplayWord 目; PrimaryReading め; MeaningJP eye; KanjiMeanings include eye, item, and look; notes include 目, 一つ目, and Additional unverified N5 source claim.; example 今日は目が少しつかれています。; audio field includes kanji-reading-目-め; stroke-order field includes stroke-order.gif."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:kanji:additional:review:n5",
+        "detail": "Additional N5 golden review protects 目 with PrimaryReading め, MeaningJP eye, additional-unverified notes, and example 今日は目が少しつかれています。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0006740200; templates/jlpt_kanji_source_evidence.json; out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Japanese source re-review for 目|め: Kanjipedia lists 音 モク and 訓 め with senses supporting eye, item, and look; the generated notes keep the optional N5 source-claim label visible while core placement and source consensus remain N4. Platinum supports PrimaryReading め, MeaningJP eye, and KanjiMeanings eye, item, look."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/76/76EE_目/manifest.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 目: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source remote-stroke-order-animation; static stroke-order image source local-filesystem; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/76/76EE_目/manifest.json and exported Audio field",
+        "detail": "Audio artifact re-reviewed for 目|め: exact kanji-reading audio kanji-reading-目-め; source voicevox-nemo; category kanji-reading; target 目; exported PrimaryReading め."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "data/media/kanji/76/76EE_目/manifest.json and out/qa/additional-n5-stroke-contact.png",
+        "detail": "Visual stroke-order review recorded for 目: stroke-order animation 76EE_目-stroke-order.gif shows target 目; source provenance remote-stroke-order-animation."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 目|め: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses め because standalone 目 is a common beginner body-part noun and 一つ目 remains a support note for the item/order sense."
+  },
+  {
+    "kanji": "立",
+    "status": "platinum",
+    "readingIncludes": [
+      "たつ"
+    ],
+    "meaningIncludes": [
+      "stand"
+    ],
+    "kanjiMeaningsIncludes": [
+      "stand",
+      "erect",
+      "stand up"
+    ],
+    "levelIncludes": [
+      "N5"
+    ],
+    "notesIncludes": [
+      "立つ",
+      "役立つ",
+      "Additional unverified N5 source claim."
+    ],
+    "exampleIncludes": [
+      "電車の中で立っています。"
+    ],
+    "reviewedAt": "2026-05-12",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Generated additional-unverified card surface re-reviewed for 立|たつ: single-kanji anchor; Kanji and DisplayWord 立; PrimaryReading たつ; MeaningJP stand; KanjiMeanings include stand, erect, and stand up; notes include 立つ, 役立つ, and Additional unverified N5 source claim.; example 電車の中で立っています。; audio field includes kanji-reading-立-たつ; stroke-order field includes stroke-order.gif."
+      },
+      {
+        "type": "golden-review",
+        "source": "npm run deck:kanji:additional:review:n5",
+        "detail": "Additional N5 golden review protects 立 with PrimaryReading たつ, MeaningJP stand, additional-unverified notes, and example 電車の中で立っています。."
+      },
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0007104000; templates/jlpt_kanji_source_evidence.json; out/build/additional_unverified/exports/additional-unverified-n5.tsv",
+        "detail": "Japanese source re-review for 立|たつ: Kanjipedia lists 音 リツ and 訓 たつ with senses supporting stand, erect, and stand up; the generated notes keep the optional N5 source-claim label visible while core placement and source consensus remain N4. Platinum supports PrimaryReading たつ, MeaningJP stand, and KanjiMeanings stand, erect, stand up."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/7A/7ACB_立/manifest.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 立: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source remote-stroke-order-animation; static stroke-order image source local-filesystem; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/7A/7ACB_立/manifest.json and exported Audio field",
+        "detail": "Audio artifact re-reviewed for 立|たつ: exact kanji-reading audio kanji-reading-立-たつ; source voicevox-nemo; category kanji-reading; target 立; exported PrimaryReading たつ."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "data/media/kanji/7A/7ACB_立/manifest.json and out/qa/additional-n5-stroke-contact.png",
+        "detail": "Visual stroke-order review recorded for 立: stroke-order animation 7ACB_立-stroke-order.gif shows target 立; source provenance remote-stroke-order-animation."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 立|たつ: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses たつ because 立つ is a common beginner verb and the example directly demonstrates the stand/stand up meaning; 役立つ remains support vocabulary."
+  }
+]

@@ -1,5 +1,5 @@
 const fs = require("node:fs");
-const { invokeCliMain } = require("../src/utils/cliArgs");
+const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseStringOption } = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
 const { normalizeSentenceCorpus } = require("../src/datasets/sentenceCorpus");
@@ -9,15 +9,18 @@ function parseArgs(argv) {
         input: null,
         output: null,
         check: false,
+        unknownArgs: [],
     };
 
     for (const arg of argv) {
         if (arg.startsWith("--input=")) {
-            options.input = arg.split("=")[1];
+            options.input = parseStringOption(arg, "input");
         } else if (arg.startsWith("--output=")) {
-            options.output = arg.split("=")[1];
+            options.output = parseStringOption(arg, "output");
         } else if (arg === "--check") {
             options.check = true;
+        } else {
+            collectUnknownArg(options, arg);
         }
     }
 
@@ -51,6 +54,7 @@ function buildMissingSummary(inputPath, outputPath, mode) {
 function main() {
     const config = loadConfig();
     const options = parseArgs(process.argv.slice(2));
+    assertNoUnknownArgs("corpus:normalize", options.unknownArgs);
     const inputPath = options.input || config.sentenceCorpusPath;
     const outputPath = options.output || inputPath;
 

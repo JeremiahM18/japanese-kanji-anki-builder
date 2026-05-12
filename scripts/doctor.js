@@ -1,15 +1,27 @@
 const { loadConfig } = require("../src/config");
 const { buildDoctorReport, formatDoctorReport } = require("../src/services/doctorService");
-const { invokeCliMain } = require("../src/utils/cliArgs");
+const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain } = require("../src/utils/cliArgs");
 
 function parseArgs(argv) {
-    return {
-        json: argv.includes("--json"),
+    const options = {
+        json: false,
+        unknownArgs: [],
     };
+
+    for (const arg of argv) {
+        if (arg === "--json") {
+            options.json = true;
+        } else {
+            collectUnknownArg(options, arg);
+        }
+    }
+
+    return options;
 }
 
 async function main() {
     const options = parseArgs(process.argv.slice(2));
+    assertNoUnknownArgs("doctor", options.unknownArgs);
     const config = loadConfig();
     const report = await buildDoctorReport({ config });
 

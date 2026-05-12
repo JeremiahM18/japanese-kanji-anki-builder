@@ -1,5 +1,5 @@
 const fs = require("node:fs");
-const { invokeCliMain } = require("../src/utils/cliArgs");
+const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseNumericOption } = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
 const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
@@ -10,11 +10,14 @@ const { buildCoverageSummary } = require("../src/datasets/sentenceCorpusCoverage
 function parseArgs(argv) {
     const options = {
         limit: 25,
+        unknownArgs: [],
     };
 
     for (const arg of argv) {
         if (arg.startsWith("--limit=")) {
-            options.limit = Number(arg.split("=")[1]);
+            options.limit = parseNumericOption(arg, "limit");
+        } else {
+            collectUnknownArg(options, arg);
         }
     }
 
@@ -24,6 +27,7 @@ function parseArgs(argv) {
 function main() {
     const config = loadConfig();
     const options = parseArgs(process.argv.slice(2));
+    assertNoUnknownArgs("corpus:report", options.unknownArgs);
 
     if (!fs.existsSync(config.jlptJsonPath)) {
         throw new Error(`Missing JLPT JSON file at ${config.jlptJsonPath}`);

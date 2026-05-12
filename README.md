@@ -82,6 +82,12 @@ The engineering goal is controlled output. The repository does not rely on silen
 
 Ignored local files under `data/` are workspace inputs. They are not product truth unless a tracked contract or template promotes the data into the repository.
 
+## Testing Philosophy
+
+- [Repository governance tests](test/repositoryGovernance.test.js) protect source-of-truth boundaries, README/source-lane consistency, CI contract names, CODEOWNERS coverage, and source-evidence routing.
+- The tracked [examples/n5-mini](examples/n5-mini) fixture locks exact generated TSV rows against the live note schemas so schema or export drift is visible immediately.
+- Golden review protects generated card output from regression; platinum review decides whether a card deserves to ship.
+
 ## Scope
 
 - Kanji decks for JLPT N5 through N1.
@@ -107,6 +113,45 @@ npm run deck:words:ready -- --levels=5
 Kanji deck readiness requires governed audio and complete exported media fields. A level with missing exact primary-reading audio must not be treated as ready even if the managed manifest inventory reports audio coverage.
 
 Use the workflow sections below for preview, `.apkg`, media, audio, and release commands. Native `.apkg` commands require the Python packaging toolchain. If packaging is blocked on a workstation, use the readiness output and package directory for review, and run `.apkg` packaging in a supported environment before release.
+
+## Current Baseline
+
+| Surface | Status |
+| --- | --- |
+| N5 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum-reviewed at `80/80` active entries under the field-bound evidence gate |
+| N4 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum review has started with `12/212` active entries; full N4 platinum remains blocked until the remaining cards are reviewed |
+| N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
+| N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
+| N1 kanji | Golden-reviewed at `1230/1230`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
+| N5 word | Expanded to `287` canonical governed rows plus `20` tracked source-only phrase exclusions; current word-level placement, golden, platinum, tracked-source artifact, and automated readiness checks pass. N5 word release still needs manual import QA, accessibility, and listening checks before release-ready status. |
+| N4 word | Expanded to `569` governed rows; current word-level placement audit passes for N4 at `0/569` violations. N4 word completion remains incomplete until active reading coverage and active enhancement candidates are resolved, then fresh golden/platinum review, import QA, accessibility, and listening checks are still required. |
+
+Current tracked word inventory:
+
+- N5 canonical word rows: `287`
+- N5 source-only phrase exclusions: `20`
+- N4 canonical word rows: `569`
+- N3 canonical word rows: `19`
+- N2 canonical word rows: `18`
+- N1 canonical word rows: `16`
+- Current N5+N4 word rows: `856`
+- Word-level placement audit passes: `0/909` canonical rows. By level: N5 `0/287`, N4 `0/569`, N3 `0/19`, N2 `0/18`, N1 `0/16`.
+- Word reading coverage from current completion reports is N5 `233/344` (`67.7%`) and N4 `484/765` (`63.3%`). N5 is `ready_with_deferred_variants`; N4 is still `incomplete` because active reading coverage and active enhancement candidates remain.
+- N5 word golden and platinum checks pass against the current `287` generated rows. Golden/platinum commands are still separate from APKG import QA, manual card QA, accessibility checks, and listening review.
+- JLPT kanji source evidence is governed separately from the operational taxonomy. `templates/jlpt_level_contract.json` is represented as the non-voting `current_operational_contract` comparator, not source truth. Each source declares allowed use (`bulk-import`, `manual-citation-only`, `occurrence-only`, `frequency-sanity-only`, `background-only`, `methodology-notes-only`, `operational-comparator`, `derived-summary`, `blocked`, or `needs_review`), source kind, assignment-storage permission, citation expectations, and license/use evidence.
+- Current active assignment lanes are evidence inputs; their audit commands do not themselves move decks. `kanjidic2_legacy` has `1479` reviewed exact assignments and `0` current range rows; future old JLPT 2 rows stay N2/N3 range evidence when present. `tanos_legacy_direct` has `1478` reviewed N1/N4/N5 assignments. `tanos_estimated_split` has `734` lower-weight reviewed estimated N2/N3 assignments (`367` N2 and `367` N3) and must not settle taxonomy movement by itself. `shin_kanzen_master_kanji` has `406` active restricted manual-citation assignments; `1570` worksheet rows are still pending and `236` checked rows are marked non-importing `source_access_gap` until fuller source access can provide exact source-level evidence. `nihongo_sou_matome_kanji` has `498` active restricted manual-citation assignments; `1297` worksheet rows are still pending and `417` checked rows are marked non-importing `source_access_gap`; continue targeted Sou review only where exact assignment proof is available. `ask_hajimete_jlpt_kanji` has `208` active restricted manual-citation assignments, `0` source-access-gap rows, and `0` pending rows from pinned official N1/N3 sample target-entry and index pages plus exact N2 and N5 checklist pages. `official_jlpt_sample_workbooks` is active occurrence-only evidence backed by [templates/jlpt_official_kanji_occurrences.json](templates/jlpt_official_kanji_occurrences.json), and official occurrence rows may store only level, source PDF, section, page, question reference, and observed kanji.
+- Restricted or non-assignment lanes remain fenced. `tanos_frequency_method_notes` is active non-voting methodology evidence. `ask_hajimete_jlpt_kanji` is active only for pinned, reviewed N1, N2, N3, and separately verified N5 manual-citation rows with exact assignment proof; N4 remains unsupported until exact permitted source access is verified. `joyo_grade` is approved background metadata only, `bccwj_frequency` is frequency sanity only, `kanji_alive` is learner/background metadata only, and `jpdb` is restricted manual frequency sanity only after source-use review; none are assignment truth. `kanshudo` is restricted and blocked until express permission/license and a governed use path are approved. `wanikani` is restricted and blocked until source-use/API/export terms and a governed use path are approved. `jlptsensei` is a secondary non-Japanese manual-citation signal only after Japanese-published evidence is no longer the dominant blocker; do not scrape, copy, or republish lists. `try_jlpt_textbook` is blocked unless exact per-kanji assignment proof is found. `japanese_textbook_consensus` is an active derived non-voting summary computed from the individual textbook lanes.
+- The current source-evidence audit is still expected to fail on taxonomy confidence, not source-use hygiene. The latest `npm run data:audit:jlpt:sources -- --governance-strict --limit=25` run reports governance passing and evidence-depth failing: `392` high-confidence rows, `70` standard-confidence rows, `24` disputed rows, `1726` weak-evidence rows, and `0` unknown rows. Issue counts are `0` missing evidence rows, `1603` insufficient independent source rows, `1328` insufficient independent evidence-lineage rows, `1335` missing Japanese-published source rows, `24` disputed consensus rows, and `73` current-contract/source-consensus mismatches; source-use, license/use evidence, illegal consensus use, and disallowed stored-assignment blockers are currently `0`. The all-level source-review batch worklist currently reports `1751` rows needing governed source review: `1335` missing Japanese-published source, `196` insufficient independent sources, `131` weak evidence, `65` contract/consensus mismatch, and `24` disputed consensus, with source-input progress at `208` ASK Hajimete reviewed rows (`208` resolved), `406` Shin Kanzen reviewed rows plus `236` `source_access_gap` rows (`642` resolved), and `498` Sou Matome reviewed rows plus `417` `source_access_gap` rows (`915` resolved). Further kanji contract movement should stay source-consensus backed and reviewed; word movement and readiness changes remain separate product decisions.
+
+Run live commands for current coverage. Do not rely on README numbers for release decisions.
+
+## Reading Order
+
+- Current status and local gates: this README's Current Baseline and Standard Verification sections.
+- Release bar: [docs/product-exit-criteria.md](docs/product-exit-criteria.md), [docs/release-process.md](docs/release-process.md), and [docs/release-qa-checklist.md](docs/release-qa-checklist.md).
+- Card-quality decisions: [docs/platinum-review-policy.md](docs/platinum-review-policy.md).
+- Source-evidence work: [docs/source-evidence-batching.md](docs/source-evidence-batching.md) and [docs/source-acquisition-register.md](docs/source-acquisition-register.md).
+- Platform compatibility: [docs/compatibility-matrix.md](docs/compatibility-matrix.md).
 
 ## Source Of Truth
 
@@ -198,37 +243,6 @@ Golden and platinum review:
 - Platinum review may improve source data and example sentences before promotion.
 - Platinum manifests are in progress. Only active `platinum` and `fixed_then_platinum` entries count as reviewed release coverage.
 - Platinum entries created before the current field-bound evidence gate are not trusted release coverage until they are re-reviewed and pass the current platinum command.
-
-## Current Baseline
-
-| Surface | Status |
-| --- | --- |
-| N5 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum-reviewed at `80/80` active entries under the field-bound evidence gate |
-| N4 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum review has started with `12/212` active entries; full N4 platinum remains blocked until the remaining cards are reviewed |
-| N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
-| N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
-| N1 kanji | Golden-reviewed at `1230/1230`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
-| N5 word | Expanded to `287` canonical governed rows plus `20` tracked source-only phrase exclusions; current word-level placement, golden, platinum, tracked-source artifact, and automated readiness checks pass. N5 word release still needs manual import QA, accessibility, and listening checks before release-ready status. |
-| N4 word | Expanded to `569` governed rows; current word-level placement audit passes for N4 at `0/569` violations. N4 word completion remains incomplete until active reading coverage and active enhancement candidates are resolved, then fresh golden/platinum review, import QA, accessibility, and listening checks are still required. |
-
-Current tracked word inventory:
-
-- N5 canonical word rows: `287`
-- N5 source-only phrase exclusions: `20`
-- N4 canonical word rows: `569`
-- N3 canonical word rows: `19`
-- N2 canonical word rows: `18`
-- N1 canonical word rows: `16`
-- Current N5+N4 word rows: `856`
-- Word-level placement audit passes: `0/909` canonical rows. By level: N5 `0/287`, N4 `0/569`, N3 `0/19`, N2 `0/18`, N1 `0/16`.
-- Word reading coverage from current completion reports is N5 `233/344` (`67.7%`) and N4 `484/765` (`63.3%`). N5 is `ready_with_deferred_variants`; N4 is still `incomplete` because active reading coverage and active enhancement candidates remain.
-- N5 word golden and platinum checks pass against the current `287` generated rows. Golden/platinum commands are still separate from APKG import QA, manual card QA, accessibility checks, and listening review.
-- JLPT kanji source evidence is governed separately from the operational taxonomy. `templates/jlpt_level_contract.json` is represented as the non-voting `current_operational_contract` comparator, not source truth. Each source declares allowed use (`bulk-import`, `manual-citation-only`, `occurrence-only`, `frequency-sanity-only`, `background-only`, `methodology-notes-only`, `operational-comparator`, `derived-summary`, `blocked`, or `needs_review`), source kind, assignment-storage permission, citation expectations, and license/use evidence.
-- Current active assignment lanes are evidence inputs; their audit commands do not themselves move decks. `kanjidic2_legacy` has `1479` reviewed exact assignments and `0` current range rows; future old JLPT 2 rows stay N2/N3 range evidence when present. `tanos_legacy_direct` has `1478` reviewed N1/N4/N5 assignments. `tanos_estimated_split` has `734` lower-weight reviewed estimated N2/N3 assignments (`367` N2 and `367` N3) and must not settle taxonomy movement by itself. `shin_kanzen_master_kanji` has `406` active restricted manual-citation assignments; `1570` worksheet rows are still pending and `236` checked rows are marked non-importing `source_access_gap` until fuller source access can provide exact source-level evidence. `nihongo_sou_matome_kanji` has `498` active restricted manual-citation assignments; `1297` worksheet rows are still pending and `417` checked rows are marked non-importing `source_access_gap`; continue targeted Sou review only where exact assignment proof is available. `ask_hajimete_jlpt_kanji` has `208` active restricted manual-citation assignments, `0` source-access-gap rows, and `0` pending rows from pinned official N1/N3 sample target-entry and index pages plus exact N2 and N5 checklist pages. `official_jlpt_sample_workbooks` is active occurrence-only evidence backed by [templates/jlpt_official_kanji_occurrences.json](templates/jlpt_official_kanji_occurrences.json), and official occurrence rows may store only level, source PDF, section, page, question reference, and observed kanji.
-- Restricted or non-assignment lanes remain fenced. `tanos_frequency_method_notes` is active non-voting methodology evidence. `ask_hajimete_jlpt_kanji` is active only for pinned, reviewed N1, N2, N3, and separately verified N5 manual-citation rows with exact assignment proof; N4 remains unsupported until exact permitted source access is verified. `joyo_grade` is approved background metadata only, `bccwj_frequency` is frequency sanity only, `kanji_alive` is learner/background metadata only, and `jpdb` is restricted manual frequency sanity only after source-use review; none are assignment truth. `kanshudo` is restricted and blocked until express permission/license and a governed use path are approved. `wanikani` is restricted and blocked until source-use/API/export terms and a governed use path are approved. `jlptsensei` is a secondary non-Japanese manual-citation signal only after Japanese-published evidence is no longer the dominant blocker; do not scrape, copy, or republish lists. `try_jlpt_textbook` is blocked unless exact per-kanji assignment proof is found. `japanese_textbook_consensus` is an active derived non-voting summary computed from the individual textbook lanes.
-- The current source-evidence audit is still expected to fail on taxonomy confidence, not source-use hygiene. The latest `npm run data:audit:jlpt:sources -- --governance-strict --limit=25` run reports governance passing and evidence-depth failing: `392` high-confidence rows, `70` standard-confidence rows, `24` disputed rows, `1726` weak-evidence rows, and `0` unknown rows. Issue counts are `0` missing evidence rows, `1603` insufficient independent source rows, `1328` insufficient independent evidence-lineage rows, `1335` missing Japanese-published source rows, `24` disputed consensus rows, and `73` current-contract/source-consensus mismatches; source-use, license/use evidence, illegal consensus use, and disallowed stored-assignment blockers are currently `0`. The all-level source-review batch worklist currently reports `1751` rows needing governed source review: `1335` missing Japanese-published source, `196` insufficient independent sources, `131` weak evidence, `65` contract/consensus mismatch, and `24` disputed consensus, with source-input progress at `208` ASK Hajimete reviewed rows (`208` resolved), `406` Shin Kanzen reviewed rows plus `236` `source_access_gap` rows (`642` resolved), and `498` Sou Matome reviewed rows plus `417` `source_access_gap` rows (`915` resolved). Further kanji contract movement should stay source-consensus backed and reviewed; word movement and readiness changes remain separate product decisions.
-
-Run live commands for current coverage. Do not rely on README numbers for release decisions.
 
 ## Standard Verification
 

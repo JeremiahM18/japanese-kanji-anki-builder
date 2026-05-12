@@ -1,4 +1,4 @@
-const { invokeCliMain } = require("../src/utils/cliArgs");
+const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseNumericOption } = require("../src/utils/cliArgs");
 const {
     formatProductReadinessReport,
     runProductReadinessGate,
@@ -8,15 +8,16 @@ function parseArgs(argv) {
     const options = {
         json: false,
         level: 5,
+        unknownArgs: [],
     };
 
     for (const arg of argv) {
         if (arg === "--json") {
             options.json = true;
         } else if (arg.startsWith("--level=")) {
-            options.level = Number(arg.slice("--level=".length));
+            options.level = parseNumericOption(arg, "level");
         } else {
-            throw new Error(`Unknown argument for productReadiness: ${arg}`);
+            collectUnknownArg(options, arg);
         }
     }
 
@@ -25,6 +26,7 @@ function parseArgs(argv) {
 
 async function main() {
     const options = parseArgs(process.argv.slice(2));
+    assertNoUnknownArgs("product:readiness", options.unknownArgs);
     const report = await runProductReadinessGate({ level: options.level });
 
     if (options.json) {

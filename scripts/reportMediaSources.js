@@ -1,5 +1,5 @@
 const fs = require("node:fs");
-const { invokeCliMain } = require("../src/utils/cliArgs");
+const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseNumericOption, parseStringOption } = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
 const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
@@ -13,16 +13,21 @@ function parseArgs(argv) {
     const options = {
         levels: [5],
         limit: 25,
-        json: argv.includes("--json"),
+        json: false,
+        unknownArgs: [],
     };
 
     for (const arg of argv) {
-        if (arg.startsWith("--levels=")) {
-            options.levels = parseLevelsArgument(arg.split("=")[1]);
+        if (arg === "--json") {
+            options.json = true;
+        } else if (arg.startsWith("--levels=")) {
+            options.levels = parseLevelsArgument(parseStringOption(arg, "levels"));
         } else if (arg.startsWith("--level=")) {
-            options.levels = parseLevelsArgument(arg.split("=")[1]);
+            options.levels = parseLevelsArgument(parseStringOption(arg, "level"));
         } else if (arg.startsWith("--limit=")) {
-            options.limit = Number(arg.split("=")[1]);
+            options.limit = parseNumericOption(arg, "limit");
+        } else {
+            collectUnknownArg(options, arg);
         }
     }
 
@@ -32,6 +37,7 @@ function parseArgs(argv) {
 async function main() {
     const config = loadConfig();
     const options = parseArgs(process.argv.slice(2));
+    assertNoUnknownArgs("media:sources", options.unknownArgs);
 
     if (!fs.existsSync(config.jlptJsonPath)) {
         throw new Error(`Missing JLPT JSON file at ${config.jlptJsonPath}`);

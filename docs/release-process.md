@@ -20,6 +20,15 @@ This document defines tagged release procedure.
 7. Create and push the matching `v*` tag.
 8. Let [.github/workflows/release.yml](../.github/workflows/release.yml) produce the tagged release artifacts.
 
+## Gate boundaries
+
+| Gate | Proves | Does not prove |
+| --- | --- | --- |
+| `release:gate` | Smoke-fixture TSV headers, package directories, packaged media presence, governed audio policy, and optional smoke-fixture `.apkg` creation when packaging tools are required. | Public product readiness, level-specific golden/platinum completion, manual Anki import QA, learner UX, accessibility, or listening QA. |
+| `product:readiness:n5` | The current automated N5 checkpoint: JLPT audits, audio policy, tracked-source N5 word artifact, word placement audit, and N5 golden reviews. | Platinum completion, tracked-source kanji TSV certification, fresh product `.apkg` approval, manual import QA, mobile QA, screen-reader QA, or listening QA. |
+| `product:artifacts:n5` | Fresh tracked-source N5 word TSV generation from tracked templates only, with deterministic output and canonical-row checks. | Kanji TSV certification, managed-media packaging, `.apkg` release approval, or manual card QA. |
+| `product:artifacts:kanji:n5:preflight` | Whether tracked templates are sufficient to certify N5 kanji TSV generation without ignored local `data/` inputs. | Deck readiness by itself; it is allowed to report blocked until the remaining tracked kanji contracts exist. |
+
 ## Release workflow outputs
 
 The tagged release workflow publishes these build outputs as GitHub Actions artifacts:

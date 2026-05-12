@@ -13,6 +13,7 @@ test("parseArgs supports levels, limit, and json output for missing animation re
         levels: [1],
         limit: 40,
         json: true,
+        unknownArgs: [],
     });
 });
 

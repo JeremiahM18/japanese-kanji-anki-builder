@@ -1,16 +1,28 @@
-const { invokeCliMain } = require("../src/utils/cliArgs");
+const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain } = require("../src/utils/cliArgs");
 const { loadConfig } = require("../src/config");
 const { loadAudioSourcePolicy } = require("../src/datasets/audioSourcePolicy");
 const { buildAudioPolicyAuditReport, formatAudioPolicyAuditReport } = require("../src/services/audioPolicyAuditService");
 
 function parseArgs(argv) {
-    return {
-        json: argv.includes("--json"),
+    const options = {
+        json: false,
+        unknownArgs: [],
     };
+
+    for (const arg of argv) {
+        if (arg === "--json") {
+            options.json = true;
+        } else {
+            collectUnknownArg(options, arg);
+        }
+    }
+
+    return options;
 }
 
 async function main() {
     const options = parseArgs(process.argv.slice(2));
+    assertNoUnknownArgs("data:audit:audio", options.unknownArgs);
     const config = loadConfig();
     const policy = loadAudioSourcePolicy();
     const report = buildAudioPolicyAuditReport({

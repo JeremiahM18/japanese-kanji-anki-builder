@@ -1,7 +1,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 
-const { invokeCliMain } = require("../src/utils/cliArgs");
+const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseCsvOption, parseNumericOption, parseStringOption } = require("../src/utils/cliArgs");
 const { loadConfig } = require("../src/config");
 const { loadAudioSourcePolicy } = require("../src/datasets/audioSourcePolicy");
 const { createMediaServices } = require("../src/services/mediaServiceFactory");
@@ -12,22 +12,24 @@ function parseArgs(argv) {
         level: 5,
         limit: 25,
         words: [],
-        json: argv.includes("--json"),
+        json: false,
         tsvPath: "",
+        unknownArgs: [],
     };
 
     for (const arg of argv) {
         if (arg === "--json") {
-            continue;
-        }
-        if (arg.startsWith("--level=")) {
-            options.level = Number(arg.split("=")[1]);
+            options.json = true;
+        } else if (arg.startsWith("--level=")) {
+            options.level = parseNumericOption(arg, "level");
         } else if (arg.startsWith("--limit=")) {
-            options.limit = Number(arg.split("=")[1]);
+            options.limit = parseNumericOption(arg, "limit");
         } else if (arg.startsWith("--word=")) {
-            options.words = arg.split("=")[1].split(",").map((item) => item.trim()).filter(Boolean);
+            options.words = parseCsvOption(arg, "word");
         } else if (arg.startsWith("--tsv-path=")) {
-            options.tsvPath = arg.split("=")[1].trim();
+            options.tsvPath = parseStringOption(arg, "tsv-path").trim();
+        } else {
+            collectUnknownArg(options, arg);
         }
     }
 
@@ -36,6 +38,7 @@ function parseArgs(argv) {
 
 async function main() {
     const options = parseArgs(process.argv.slice(2));
+    assertNoUnknownArgs("media:review:word-audio", options.unknownArgs);
     const config = loadConfig();
     const policy = loadAudioSourcePolicy();
     const { audioService } = createMediaServices(config);

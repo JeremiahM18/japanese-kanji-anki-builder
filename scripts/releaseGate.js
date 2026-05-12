@@ -1,4 +1,4 @@
-const { invokeCliMain } = require("../src/utils/cliArgs");
+const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseStringOption } = require("../src/utils/cliArgs");
 const { runReleaseGate } = require("../src/services/releaseGateService");
 
 function parseArgs(argv) {
@@ -6,6 +6,7 @@ function parseArgs(argv) {
         rootDir: null,
         keepTempDir: false,
         requireApkgTools: false,
+        unknownArgs: [],
     };
 
     for (const arg of argv) {
@@ -14,9 +15,9 @@ function parseArgs(argv) {
         } else if (arg === "--require-apkg-tools") {
             options.requireApkgTools = true;
         } else if (arg.startsWith("--root-dir=")) {
-            options.rootDir = arg.slice("--root-dir=".length).trim();
+            options.rootDir = parseStringOption(arg, "root-dir").trim();
         } else {
-            throw new Error(`Unknown argument for releaseGate: ${arg}`);
+            collectUnknownArg(options, arg);
         }
     }
 
@@ -25,6 +26,7 @@ function parseArgs(argv) {
 
 async function main() {
     const options = parseArgs(process.argv.slice(2));
+    assertNoUnknownArgs("release:gate", options.unknownArgs);
     const report = await runReleaseGate({
         rootDir: options.rootDir || null,
         keepTempDir: options.keepTempDir,

@@ -80,6 +80,9 @@ function buildReviewStatusRow({
     if (!generated.exists) {
         issues.push(`missing generated TSV: ${exportPath}`);
     }
+    if (Number.isInteger(plannedCount) && generated.exists && generated.unique !== plannedCount) {
+        issues.push(`generated unique count ${generated.unique} does not match planned count ${plannedCount}`);
+    }
     if (extraGolden.length > 0) {
         issues.push(`${extraGolden.length} golden entries are not present in generated TSV`);
     }
@@ -184,11 +187,13 @@ function summarizeDuplicateAdditionalClaims(additionalDecks = [], selection = { 
     const selectedByKanji = new Map(
         (selection.selectedEntries || []).map((entry) => [entry.kanji, entry])
     );
+    const quarantinedKanji = new Set(selection.quarantinedDuplicateKanji || []);
     const duplicateClaims = [...appearancesByKanji.entries()]
         .filter(([, appearances]) => appearances.length > 1)
         .map(([kanji, appearances]) => ({
             kanji,
             selectedTargetLevel: selectedByKanji.get(kanji)?.targetLevel || null,
+            quarantineStatus: quarantinedKanji.has(kanji) ? "quarantined" : "unquarantined",
             appearances: appearances.sort((a, b) => (
                 Number(b.targetLevel || 0) - Number(a.targetLevel || 0)
                 || a.deckId.localeCompare(b.deckId)
@@ -199,6 +204,9 @@ function summarizeDuplicateAdditionalClaims(additionalDecks = [], selection = { 
     return {
         duplicateKanjiCount: duplicateClaims.length,
         excludedDuplicateClaimCount: (selection.excludedDuplicateClaims || []).length,
+        quarantinedDuplicateKanjiCount: quarantinedKanji.size,
+        quarantinedDuplicateClaimCount: (selection.quarantinedDuplicateClaims || []).length,
+        unquarantinedDuplicateKanjiCount: duplicateClaims.filter((claim) => claim.quarantineStatus !== "quarantined").length,
         duplicateClaims,
     };
 }
@@ -282,9 +290,9 @@ function buildKanjiDeckReviewStatus({
         ...additionalRows.flatMap((row) => row.issues.map((issue) => `${row.deckId}: ${issue}`)),
     ];
 
-    if (duplicateAdditionalClaims.duplicateKanjiCount > 0) {
+    if (duplicateAdditionalClaims.unquarantinedDuplicateKanjiCount > 0) {
         structuralIssues.push(
-            `${duplicateAdditionalClaims.duplicateKanjiCount} kanji have duplicate additional source claims`
+            `${duplicateAdditionalClaims.unquarantinedDuplicateKanjiCount} kanji have unquarantined duplicate additional source claims`
         );
     }
 
@@ -345,7 +353,9 @@ function formatKanjiDeckReviewStatus(report = {}) {
         "",
         "Duplicate Additional Source Claims:",
         `- duplicate kanji: ${duplicates.duplicateKanjiCount || 0}`,
-        `- suppressed duplicate claims: ${duplicates.excludedDuplicateClaimCount || 0}`
+        `- quarantined duplicate kanji: ${duplicates.quarantinedDuplicateKanjiCount || 0}`,
+        `- quarantined duplicate claims: ${duplicates.quarantinedDuplicateClaimCount || 0}`,
+        `- unquarantined duplicate kanji: ${duplicates.unquarantinedDuplicateKanjiCount || 0}`
     );
 
     if ((duplicates.duplicateClaims || []).length > 0) {
@@ -353,7 +363,8 @@ function formatKanjiDeckReviewStatus(report = {}) {
             const appearances = duplicate.appearances
                 .map((appearance) => `${appearance.deckId} claim N${appearance.targetLevel}`)
                 .join("; ");
-            lines.push(`- ${duplicate.kanji}: selected N${duplicate.selectedTargetLevel}; ${appearances}`);
+            const selected = duplicate.selectedTargetLevel ? `selected N${duplicate.selectedTargetLevel}` : "selected none";
+            lines.push(`- ${duplicate.kanji}: ${duplicate.quarantineStatus}; ${selected}; ${appearances}`);
         }
     }
 

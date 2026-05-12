@@ -29,7 +29,7 @@ test("buildKanjiDeckReviewStatus reports core and additional review coverage", (
         writeJson(path.join(tempRoot, "templates", "platinum_n1_review_set.json"), []);
         writeTsv(path.join(tempRoot, "out", "build", "exports", "jlpt-n5.tsv"), ["一"]);
         writeTsv(path.join(tempRoot, "out", "build", "exports", "jlpt-n1.tsv"), ["亜"]);
-        writeTsv(path.join(tempRoot, "out", "build", "additional_unverified", "exports", "additional-unverified-n5.tsv"), ["学"]);
+        writeTsv(path.join(tempRoot, "out", "build", "additional_unverified", "exports", "additional-unverified-n5.tsv"), ["本"]);
         writeTsv(path.join(tempRoot, "out", "build", "additional_unverified", "exports", "additional-unverified-n1.tsv"), []);
 
         const report = buildKanjiDeckReviewStatus({
@@ -44,6 +44,14 @@ test("buildKanjiDeckReviewStatus reports core and additional review coverage", (
                         missingSourceCandidatesFromCurrent: [
                             {
                                 kanji: "学",
+                                currentContractLevel: 4,
+                                targetLevel: 5,
+                                confidence: "weak_evidence",
+                                sourceConsensusLevel: 4,
+                                sourceIds: ["fixture_legacy"],
+                            },
+                            {
+                                kanji: "本",
                                 currentContractLevel: 4,
                                 targetLevel: 5,
                                 confidence: "weak_evidence",
@@ -79,12 +87,16 @@ test("buildKanjiDeckReviewStatus reports core and additional review coverage", (
         assert.equal(coreN1.goldenCount, 1);
         assert.equal(coreN1.platinumCount, 0);
         assert.equal(additionalN5.presentUnique, 1);
+        assert.equal(additionalN5.plannedCount, 1);
         assert.equal(additionalN5.goldenCount, 0);
         assert.equal(additionalN5.missingGolden.length, 1);
         assert.equal(report.duplicateAdditionalClaims.duplicateKanjiCount, 1);
-        assert.equal(report.duplicateAdditionalClaims.excludedDuplicateClaimCount, 1);
-        assert.equal(report.passed, false);
+        assert.equal(report.duplicateAdditionalClaims.quarantinedDuplicateKanjiCount, 1);
+        assert.equal(report.duplicateAdditionalClaims.quarantinedDuplicateClaimCount, 2);
+        assert.equal(report.duplicateAdditionalClaims.unquarantinedDuplicateKanjiCount, 0);
+        assert.equal(report.passed, true);
         assert.match(formatKanjiDeckReviewStatus(report), /duplicate kanji: 1/);
+        assert.match(formatKanjiDeckReviewStatus(report), /quarantined; selected none/);
     } finally {
         fs.rmSync(tempRoot, { recursive: true, force: true });
     }

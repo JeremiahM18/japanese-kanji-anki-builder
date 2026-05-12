@@ -127,7 +127,8 @@ function formatReport(summary) {
         `Disputed rows included: ${summary.includeDisputed ? "yes" : "no"}`,
         `Raw additional claims: ${summary.rawAdditionalEntries}`,
         `Selected unique additional cards: ${summary.selectedAdditionalEntries}`,
-        `Excluded duplicate additional claims: ${summary.excludedDuplicateClaims}`,
+        `Quarantined duplicate kanji: ${summary.quarantinedDuplicateKanji}`,
+        `Quarantined duplicate claims: ${summary.quarantinedDuplicateClaims}`,
         "",
         "Exports:",
     ];
@@ -260,6 +261,8 @@ async function main() {
         rawAdditionalEntries: plan.additionalDecks.reduce((sum, deck) => sum + deck.count, 0),
         selectedAdditionalEntries: physicalSelection.selectedEntries.length,
         excludedDuplicateClaims: physicalSelection.excludedDuplicateClaims.length,
+        quarantinedDuplicateKanji: physicalSelection.quarantinedDuplicateKanji.length,
+        quarantinedDuplicateClaims: physicalSelection.quarantinedDuplicateClaims.length,
         exports,
         blankAudioRows,
         blankStrokeOrderRows,

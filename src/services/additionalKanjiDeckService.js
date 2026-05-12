@@ -59,22 +59,47 @@ function flattenAdditionalEntries(additionalDecks = []) {
         })));
 }
 
-function selectPhysicalAdditionalEntries(additionalDecks = []) {
+function buildEntriesByKanji(additionalDecks = []) {
+    const entriesByKanji = new Map();
+    for (const entry of flattenAdditionalEntries(additionalDecks)) {
+        if (!entriesByKanji.has(entry.kanji)) {
+            entriesByKanji.set(entry.kanji, []);
+        }
+        entriesByKanji.get(entry.kanji).push(entry);
+    }
+    return entriesByKanji;
+}
+
+function selectPhysicalAdditionalEntries(additionalDecks = [], { duplicatePolicy = "quarantine" } = {}) {
+    if (!["quarantine", "select-best"].includes(duplicatePolicy)) {
+        throw new Error(`Unsupported additional kanji duplicate policy: ${duplicatePolicy}`);
+    }
+
     const selectedByKanji = new Map();
     const excludedDuplicateClaims = [];
+    const quarantinedDuplicateClaims = [];
+    const quarantinedDuplicateKanji = [];
 
-    for (const entry of flattenAdditionalEntries(additionalDecks)) {
-        const previous = selectedByKanji.get(entry.kanji);
-        if (!previous) {
-            selectedByKanji.set(entry.kanji, entry);
+    for (const [kanji, entries] of buildEntriesByKanji(additionalDecks)) {
+        if (entries.length > 1 && duplicatePolicy === "quarantine") {
+            quarantinedDuplicateKanji.push(kanji);
+            quarantinedDuplicateClaims.push(...entries);
             continue;
         }
 
-        const [selected, excluded] = compareEntryPriority(entry, previous) < 0
-            ? [entry, previous]
-            : [previous, entry];
-        selectedByKanji.set(entry.kanji, selected);
-        excludedDuplicateClaims.push(excluded);
+        for (const entry of entries) {
+            const previous = selectedByKanji.get(entry.kanji);
+            if (!previous) {
+                selectedByKanji.set(entry.kanji, entry);
+                continue;
+            }
+
+            const [selected, excluded] = compareEntryPriority(entry, previous) < 0
+                ? [entry, previous]
+                : [previous, entry];
+            selectedByKanji.set(entry.kanji, selected);
+            excludedDuplicateClaims.push(excluded);
+        }
     }
 
     const selectedEntries = [...selectedByKanji.values()]
@@ -95,6 +120,8 @@ function selectPhysicalAdditionalEntries(additionalDecks = []) {
         selectedEntries,
         entriesByLevel,
         excludedDuplicateClaims: excludedDuplicateClaims.sort(compareEntryPriority),
+        quarantinedDuplicateClaims: quarantinedDuplicateClaims.sort(compareEntryPriority),
+        quarantinedDuplicateKanji: quarantinedDuplicateKanji.sort((a, b) => a.localeCompare(b, "ja")),
     };
 }
 
@@ -187,6 +214,7 @@ module.exports = {
     buildAdditionalKanjiExportFileName,
     buildAdditionalKanjiExportPath,
     annotateAdditionalKanjiTsv,
+    buildEntriesByKanji,
     compareEntryPriority,
     formatAdditionalNote,
     parseTsv,

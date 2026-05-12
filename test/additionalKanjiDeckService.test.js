@@ -22,7 +22,7 @@ function buildEntry(overrides = {}) {
     };
 }
 
-test("selectPhysicalAdditionalEntries dedupes repeated source claims deterministically", () => {
+test("selectPhysicalAdditionalEntries quarantines repeated source claims by default", () => {
     const selection = selectPhysicalAdditionalEntries([
         {
             level: 5,
@@ -42,10 +42,40 @@ test("selectPhysicalAdditionalEntries dedupes repeated source claims determinist
     ]);
 
     assert.deepEqual(selection.selectedEntries.map((entry) => `${entry.kanji}:N${entry.targetLevel}`), [
+        "本:N5",
+    ]);
+    assert.deepEqual(selection.quarantinedDuplicateKanji, ["古"]);
+    assert.deepEqual(
+        selection.quarantinedDuplicateClaims.map((entry) => `${entry.kanji}:N${entry.targetLevel}`).sort(),
+        ["古:N1", "古:N5"]
+    );
+});
+
+test("selectPhysicalAdditionalEntries can select one duplicate only when explicitly requested", () => {
+    const selection = selectPhysicalAdditionalEntries([
+        {
+            level: 5,
+            deckId: "additional_unverified_N5",
+            entries: [
+                buildEntry({ kanji: "古", targetLevel: 5, confidence: "weak_evidence" }),
+                buildEntry({ kanji: "本", targetLevel: 5, category: "source_consensus_candidate", confidence: "standard_confidence" }),
+            ],
+        },
+        {
+            level: 1,
+            deckId: "additional_unverified_N1",
+            entries: [
+                buildEntry({ kanji: "古", targetLevel: 1, confidence: "weak_evidence" }),
+            ],
+        },
+    ], { duplicatePolicy: "select-best" });
+
+    assert.deepEqual(selection.selectedEntries.map((entry) => `${entry.kanji}:N${entry.targetLevel}`), [
         "古:N5",
         "本:N5",
     ]);
     assert.deepEqual(selection.excludedDuplicateClaims.map((entry) => `${entry.kanji}:N${entry.targetLevel}`), ["古:N1"]);
+    assert.deepEqual(selection.quarantinedDuplicateKanji, []);
 });
 
 test("buildAdditionalJlptDataset projects selected entries into target-level export scope", () => {

@@ -513,6 +513,21 @@ function buildKanjiLevelLookup({ jlptOnlyJson = {}, targetKanji = "", targetJlpt
     return lookup;
 }
 
+function resolveKanjiLevelLookup({ kanjiLevelLookup = null, jlptOnlyJson = {}, targetKanji = "", targetJlptEntry = null } = {}) {
+    if (!(kanjiLevelLookup instanceof Map)) {
+        return buildKanjiLevelLookup({ jlptOnlyJson, targetKanji, targetJlptEntry });
+    }
+
+    const targetLevel = Number(targetJlptEntry?.jlpt);
+    if (!targetKanji || !Number.isInteger(targetLevel) || kanjiLevelLookup.has(targetKanji)) {
+        return kanjiLevelLookup;
+    }
+
+    const lookupWithTarget = new Map(kanjiLevelLookup);
+    lookupWithTarget.set(targetKanji, targetLevel);
+    return lookupWithTarget;
+}
+
 function formatStudyWordKanjiLabels(displayWord, kanjiLevelLookup = new Map(), { currentLevel = null } = {}) {
     const deckLevel = Number(currentLevel);
     return extractConstituentKanji(displayWord)
@@ -682,16 +697,18 @@ function createExportService({
         exportProfile = null,
         exportIssues = null,
         jlptOnlyJson = {},
+        kanjiLevelLookup = null,
     }) {
+        const resolvedKanjiLevelLookup = resolveKanjiLevelLookup({
+            kanjiLevelLookup,
+            jlptOnlyJson,
+            targetKanji: kanji,
+            targetJlptEntry: jlptEntry,
+        });
         try {
             const skipWordFetch = shouldSkipWordFetch(inferenceEngine, kanji);
             const useLocalJlptEntry = shouldUseLocalJlptEntry({ inferenceEngine, kanji, jlptEntry });
             const curatedEntry = curatedStudyData?.[kanji] || null;
-            const kanjiLevelLookup = buildKanjiLevelLookup({
-                jlptOnlyJson,
-                targetKanji: kanji,
-                targetJlptEntry: jlptEntry,
-            });
             const currentLevel = Number(jlptEntry?.jlpt);
             const [kanjiInfo, words] = await Promise.all([
                 useLocalJlptEntry
@@ -738,7 +755,7 @@ function createExportService({
                 pickMainComponent,
                 mediaFields,
                 curatedEntry,
-                kanjiLevelLookup,
+                kanjiLevelLookup: resolvedKanjiLevelLookup,
                 currentLevel,
             });
             recordProfileTiming(exportProfile, "formatting", formattingStartedAt);
@@ -755,11 +772,6 @@ function createExportService({
                     strokeOrderService,
                     audioService,
                 });
-                const kanjiLevelLookup = buildKanjiLevelLookup({
-                    jlptOnlyJson,
-                    targetKanji: kanji,
-                    targetJlptEntry: jlptEntry,
-                });
 
                 appendExportIssue(exportIssues, {
                     kanji,
@@ -769,7 +781,11 @@ function createExportService({
                     error: error instanceof Error ? error.message : String(error),
                 });
 
-                return buildFallbackRow({ fallbackCard, kanjiLevelLookup, currentLevel: Number(jlptEntry?.jlpt) });
+                return buildFallbackRow({
+                    fallbackCard,
+                    kanjiLevelLookup: resolvedKanjiLevelLookup,
+                    currentLevel: Number(jlptEntry?.jlpt),
+                });
             } catch (fallbackError) {
                 appendExportIssue(exportIssues, {
                     kanji,
@@ -787,10 +803,16 @@ function createExportService({
         }
     }
 
-    async function buildInferenceForKanji({ kanji, jlptEntry = null, jlptOnlyJson = {}, kanjiApiClient, strokeOrderService, audioService }) {
+    async function buildInferenceForKanji({ kanji, jlptEntry = null, jlptOnlyJson = {}, kanjiLevelLookup = null, kanjiApiClient, strokeOrderService, audioService }) {
         const skipWordFetch = shouldSkipWordFetch(inferenceEngine, kanji);
         const useLocalJlptEntry = shouldUseLocalJlptEntry({ inferenceEngine, kanji, jlptEntry });
         const curatedEntry = curatedStudyData?.[kanji] || null;
+        const resolvedKanjiLevelLookup = resolveKanjiLevelLookup({
+            kanjiLevelLookup,
+            jlptOnlyJson,
+            targetKanji: kanji,
+            targetJlptEntry: jlptEntry,
+        });
         const [kanjiInfo, words] = await Promise.all([
             useLocalJlptEntry ? Promise.resolve(jlptEntry) : kanjiApiClient.getKanji(kanji),
             skipWordFetch ? Promise.resolve([]) : kanjiApiClient.getWords(kanji),
@@ -814,11 +836,6 @@ function createExportService({
         const onReading = labelOnReading(filterBlockedReadings(kanjiInfo?.on_readings, curatedEntry));
         const kunReading = labelKunReading(filterBlockedReadings(kanjiInfo?.kun_readings, curatedEntry));
         const displayWordText = inferred.displayWordText;
-        const kanjiLevelLookup = buildKanjiLevelLookup({
-            jlptOnlyJson,
-            targetKanji: kanji,
-            targetJlptEntry: jlptEntry,
-        });
         const currentLevel = Number(jlptEntry?.jlpt);
 
         return {
@@ -826,7 +843,7 @@ function createExportService({
             displayWordText,
             primaryReading: inferred.primaryReading,
             kanjiMeanings: inferred.kanjiMeanings,
-            studyWordKanji: formatStudyWordKanjiLabels(displayWordText, kanjiLevelLookup, { currentLevel }),
+            studyWordKanji: formatStudyWordKanjiLabels(displayWordText, resolvedKanjiLevelLookup, { currentLevel }),
             notes: formatNotesWithRuby(inferred.notes),
             onReading,
             kunReading,
@@ -855,6 +872,7 @@ function createExportService({
         exportIssues = null,
     }) {
         const header = ANKI_FIELD_NAMES.join("\t");
+        const kanjiLevelLookup = buildKanjiLevelLookup({ jlptOnlyJson });
 
         const kanjiList = Object.entries(jlptOnlyJson)
             .filter(([, value]) => value?.jlpt === levelNumber)
@@ -878,6 +896,7 @@ function createExportService({
                 exportProfile,
                 exportIssues,
                 jlptOnlyJson,
+                kanjiLevelLookup,
             })
         );
 

@@ -1291,6 +1291,64 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
     assert.equal(cols[12], '「日本」を勉強します。 ／ 「にほん」をべんきょうします。 ／ I study the word "日本".');
 });
 
+test("buildTsvForJlptLevel builds the kanji level lookup once per TSV build", async () => {
+    let ownKeysCalls = 0;
+    const jlptOnlyJson = new Proxy({
+        日: { jlpt: 5, meanings: ["day"], on_readings: ["ニチ"], kun_readings: ["ひ"] },
+        本: { jlpt: 5, meanings: ["book"], on_readings: ["ホン"], kun_readings: ["もと"] },
+        人: { jlpt: 4, meanings: ["person"], on_readings: ["ジン"], kun_readings: ["ひと"] },
+    }, {
+        ownKeys(target) {
+            ownKeysCalls += 1;
+            return Reflect.ownKeys(target);
+        },
+    });
+    const exportService = createExportService({
+        inferenceEngine: {
+            hasFullyCuratedKanjiEntry() {
+                return true;
+            },
+            inferKanjiStudyData({ kanji }) {
+                const reading = kanji === "日" ? "ひ" : "ほん";
+                const meaning = kanji === "日" ? "day" : "book";
+                return {
+                    displayWord: { written: kanji, pron: reading },
+                    bestWord: null,
+                    meaningJP: `${kanji} （${reading}） ／ ${meaning}`,
+                    notes: `${kanji} （${reading}） - ${meaning}`,
+                    sentenceCandidates: [],
+                };
+            },
+        },
+    });
+
+    const tsv = await exportService.buildTsvForJlptLevel({
+        levelNumber: 5,
+        jlptOnlyJson,
+        kradMap: new Map([
+            ["日", ["日"]],
+            ["本", ["木"]],
+        ]),
+        pickMainComponent(components) {
+            return components[0] || "";
+        },
+        kanjiApiClient: {
+            async getKanji() {
+                throw new Error("should use local JLPT data for fully curated rows");
+            },
+            async getWords() {
+                throw new Error("should skip word fetch for fully curated rows");
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+        concurrency: 1,
+    });
+
+    assert.equal(tsv.trim().split("\n").length, 3);
+    assert.equal(ownKeysCalls, 2);
+});
+
 
 test("buildRowForKanji falls back to local data instead of leaking raw timeout errors", async () => {
     const exportIssues = [];

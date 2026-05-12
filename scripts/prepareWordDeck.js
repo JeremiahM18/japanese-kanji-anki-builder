@@ -215,6 +215,45 @@ function formatWordDeckReadyReport(summary, doctorReport) {
     ].join("\n");
 }
 
+function buildWordDeckExitCondition(summary = {}, options = {}) {
+    const trueAnimationCoverage = summary.completion?.trueAnimationCoverage || {};
+    const hasFullTrueAnimationCoverage = (trueAnimationCoverage.totalKanji || 0) === 0
+        || (trueAnimationCoverage.coveredKanji || 0) >= trueAnimationCoverage.totalKanji;
+    const readingCoverageAudits = Object.values(summary.completion?.readingCoverageAuditByLevel || {});
+    const hasActiveTriageBacklog = Object.values(summary.completion?.readingGapTriageByLevel || {})
+        .some((triage) => ((triage?.editorialReviewItems || 0) + (triage?.promoteCuratedExampleItems || 0)) > 0);
+    const hasPolicyViolations = readingCoverageAudits
+        .some((audit) => !audit?.policyAudit?.valid);
+    const hasReadingBreakdownViolations = readingCoverageAudits
+        .some((audit) => !audit?.readingBreakdownAudit?.valid);
+    const hasKanjiBreakdownContextViolations = readingCoverageAudits
+        .some((audit) => audit?.kanjiBreakdownContextAudit && !audit.kanjiBreakdownContextAudit.valid);
+    const hasCardBackViolations = readingCoverageAudits
+        .some((audit) => audit?.cardBackAudit && !audit.cardBackAudit.valid);
+    const hasExampleReadingAlignmentViolations = readingCoverageAudits
+        .some((audit) => audit?.exampleReadingAlignmentAudit && !audit.exampleReadingAlignmentAudit.valid);
+    const blocksOnActiveTriage = options.requireNoActiveTriage && hasActiveTriageBacklog;
+    const valid = hasFullTrueAnimationCoverage
+        && !hasPolicyViolations
+        && !hasReadingBreakdownViolations
+        && !hasKanjiBreakdownContextViolations
+        && !hasCardBackViolations
+        && !hasExampleReadingAlignmentViolations
+        && !blocksOnActiveTriage;
+
+    return {
+        valid,
+        hasFullTrueAnimationCoverage,
+        hasActiveTriageBacklog,
+        blocksOnActiveTriage,
+        hasPolicyViolations,
+        hasReadingBreakdownViolations,
+        hasKanjiBreakdownContextViolations,
+        hasCardBackViolations,
+        hasExampleReadingAlignmentViolations,
+    };
+}
+
 async function main() {
     const config = loadConfig();
     const options = parseArgs(process.argv.slice(2));
@@ -406,44 +445,20 @@ async function main() {
     writeJson(path.join(buildPaths.root, "build-summary.json"), summary);
     writeJson(path.join(buildPaths.reportsDir, "word-deck-summary.json"), summary);
 
-    const trueAnimationCoverage = summary.completion.trueAnimationCoverage;
-    const hasFullTrueAnimationCoverage = trueAnimationCoverage.totalKanji === 0
-        || trueAnimationCoverage.coveredKanji >= trueAnimationCoverage.totalKanji;
+    const exitCondition = buildWordDeckExitCondition(summary, {
+        requireNoActiveTriage: options.requireNoActiveTriage,
+    });
 
     if (options.json) {
         console.log(JSON.stringify({ doctor: doctorReport, build: summary }, null, 2));
-        const hasActiveTriageBacklog = Object.values(summary.completion.readingGapTriageByLevel || {})
-            .some((triage) => ((triage?.editorialReviewItems || 0) + (triage?.promoteCuratedExampleItems || 0)) > 0);
-        const hasPolicyViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
-            .some((audit) => !audit?.policyAudit?.valid);
-        const hasReadingBreakdownViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
-            .some((audit) => !audit?.readingBreakdownAudit?.valid);
-        const hasKanjiBreakdownContextViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
-            .some((audit) => audit?.kanjiBreakdownContextAudit && !audit.kanjiBreakdownContextAudit.valid);
-        const hasCardBackViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
-            .some((audit) => audit?.cardBackAudit && !audit.cardBackAudit.valid);
-        const hasExampleReadingAlignmentViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
-            .some((audit) => audit?.exampleReadingAlignmentAudit && !audit.exampleReadingAlignmentAudit.valid);
-        if (!hasFullTrueAnimationCoverage || hasPolicyViolations || hasReadingBreakdownViolations || hasKanjiBreakdownContextViolations || hasCardBackViolations || hasExampleReadingAlignmentViolations || (options.requireNoActiveTriage && hasActiveTriageBacklog)) {
+        if (!exitCondition.valid) {
             process.exitCode = 1;
         }
         return;
     }
 
     process.stdout.write(formatWordDeckReadyReport(summary, doctorReport));
-    const hasActiveTriageBacklog = Object.values(summary.completion.readingGapTriageByLevel || {})
-        .some((triage) => ((triage?.editorialReviewItems || 0) + (triage?.promoteCuratedExampleItems || 0)) > 0);
-    const hasPolicyViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
-        .some((audit) => !audit?.policyAudit?.valid);
-    const hasReadingBreakdownViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
-        .some((audit) => !audit?.readingBreakdownAudit?.valid);
-    const hasKanjiBreakdownContextViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
-        .some((audit) => audit?.kanjiBreakdownContextAudit && !audit.kanjiBreakdownContextAudit.valid);
-    const hasCardBackViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
-        .some((audit) => audit?.cardBackAudit && !audit.cardBackAudit.valid);
-    const hasExampleReadingAlignmentViolations = Object.values(summary.completion.readingCoverageAuditByLevel || {})
-        .some((audit) => audit?.exampleReadingAlignmentAudit && !audit.exampleReadingAlignmentAudit.valid);
-    if (!hasFullTrueAnimationCoverage || hasPolicyViolations || hasReadingBreakdownViolations || hasKanjiBreakdownContextViolations || hasCardBackViolations || hasExampleReadingAlignmentViolations || (options.requireNoActiveTriage && hasActiveTriageBacklog)) {
+    if (!exitCondition.valid) {
         process.exitCode = 1;
     }
 }
@@ -456,6 +471,7 @@ if (require.main === module) {
 }
 
 module.exports = {
+    buildWordDeckExitCondition,
     formatWordDeckReadyReport,
     main,
     parseArgs,

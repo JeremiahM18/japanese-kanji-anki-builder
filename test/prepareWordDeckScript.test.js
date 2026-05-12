@@ -2,7 +2,34 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const path = require("node:path");
 
-const { formatWordDeckReadyReport, resolveKanjiTsvPath } = require("../scripts/prepareWordDeck");
+const {
+    buildWordDeckExitCondition,
+    formatWordDeckReadyReport,
+    resolveKanjiTsvPath,
+} = require("../scripts/prepareWordDeck");
+
+function buildReadyExitSummary(overrides = {}) {
+    return {
+        completion: {
+            trueAnimationCoverage: {
+                coveredKanji: 2,
+                totalKanji: 2,
+            },
+            readingGapTriageByLevel: {},
+            readingCoverageAuditByLevel: {
+                N5: {
+                    policyAudit: { valid: true },
+                    readingBreakdownAudit: { valid: true },
+                    kanjiBreakdownContextAudit: { valid: true },
+                    cardBackAudit: { valid: true },
+                    exampleReadingAlignmentAudit: { valid: true },
+                },
+            },
+            ...(overrides.completion || {}),
+        },
+        ...overrides,
+    };
+}
 
 test("formatWordDeckReadyReport surfaces reading coverage health alongside vocabulary completion", () => {
     const text = formatWordDeckReadyReport({
@@ -155,4 +182,120 @@ test("resolveKanjiTsvPath points word completion back to the kanji export for th
         resolveKanjiTsvPath("C:/repo/out/build", 5),
         path.join("C:/repo/out/build", "exports", "jlpt-n5.tsv")
     );
+});
+
+test("buildWordDeckExitCondition keeps JSON and text exit gates on one policy surface", () => {
+    assert.equal(buildWordDeckExitCondition(buildReadyExitSummary()).valid, true);
+
+    const withActiveTriage = buildReadyExitSummary({
+        completion: {
+            trueAnimationCoverage: {
+                coveredKanji: 2,
+                totalKanji: 2,
+            },
+            readingGapTriageByLevel: {
+                N5: {
+                    editorialReviewItems: 1,
+                    promoteCuratedExampleItems: 0,
+                },
+            },
+            readingCoverageAuditByLevel: {
+                N5: {
+                    policyAudit: { valid: true },
+                    readingBreakdownAudit: { valid: true },
+                    kanjiBreakdownContextAudit: { valid: true },
+                    cardBackAudit: { valid: true },
+                    exampleReadingAlignmentAudit: { valid: true },
+                },
+            },
+        },
+    });
+    assert.equal(buildWordDeckExitCondition(withActiveTriage).valid, true);
+    assert.equal(buildWordDeckExitCondition(withActiveTriage, { requireNoActiveTriage: true }).valid, false);
+    assert.equal(buildWordDeckExitCondition(withActiveTriage, { requireNoActiveTriage: true }).blocksOnActiveTriage, true);
+
+    const blockers = [
+        [
+            "hasFullTrueAnimationCoverage",
+            buildReadyExitSummary({
+                completion: {
+                    trueAnimationCoverage: { coveredKanji: 1, totalKanji: 2 },
+                },
+            }),
+        ],
+        [
+            "hasPolicyViolations",
+            buildReadyExitSummary({
+                completion: {
+                    readingCoverageAuditByLevel: {
+                        N5: {
+                            policyAudit: { valid: false },
+                            readingBreakdownAudit: { valid: true },
+                        },
+                    },
+                },
+            }),
+        ],
+        [
+            "hasReadingBreakdownViolations",
+            buildReadyExitSummary({
+                completion: {
+                    readingCoverageAuditByLevel: {
+                        N5: {
+                            policyAudit: { valid: true },
+                            readingBreakdownAudit: { valid: false },
+                        },
+                    },
+                },
+            }),
+        ],
+        [
+            "hasKanjiBreakdownContextViolations",
+            buildReadyExitSummary({
+                completion: {
+                    readingCoverageAuditByLevel: {
+                        N5: {
+                            policyAudit: { valid: true },
+                            readingBreakdownAudit: { valid: true },
+                            kanjiBreakdownContextAudit: { valid: false },
+                        },
+                    },
+                },
+            }),
+        ],
+        [
+            "hasCardBackViolations",
+            buildReadyExitSummary({
+                completion: {
+                    readingCoverageAuditByLevel: {
+                        N5: {
+                            policyAudit: { valid: true },
+                            readingBreakdownAudit: { valid: true },
+                            cardBackAudit: { valid: false },
+                        },
+                    },
+                },
+            }),
+        ],
+        [
+            "hasExampleReadingAlignmentViolations",
+            buildReadyExitSummary({
+                completion: {
+                    readingCoverageAuditByLevel: {
+                        N5: {
+                            policyAudit: { valid: true },
+                            readingBreakdownAudit: { valid: true },
+                            exampleReadingAlignmentAudit: { valid: false },
+                        },
+                    },
+                },
+            }),
+        ],
+    ];
+
+    for (const [flagName, summary] of blockers) {
+        const exitCondition = buildWordDeckExitCondition(summary);
+        assert.equal(exitCondition.valid, false, `${flagName} should block word deck exit success`);
+        assert.equal(exitCondition[flagName], flagName === "hasFullTrueAnimationCoverage" ? false : true);
+    }
 });

@@ -58,7 +58,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 
 ## Word deck manual spot review
 
-- Import each word level being shipped into Anki only after the current word-level placement audit, readiness audit, golden review, and applicable platinum review pass. N5 word currently passes those automated checks but still needs manual import, accessibility, and listening QA before release-ready status; N4 word remains blocked by active triage.
+- Import each word level being shipped into Anki only after the current word-level placement audit, readiness audit, golden review, and applicable platinum review pass. N5 word currently passes those automated checks but still needs manual import, accessibility, and listening QA before release-ready status; N4 word golden review passes, but N4 remains blocked by active triage and platinum review.
 - Confirm platinum-reviewed cards are useful, common enough, learner-friendly, and not present only for reading coverage.
 - Review beginner core words.
 - Review support words.

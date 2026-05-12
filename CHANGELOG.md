@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added manifest-driven defaults to `deck:words:expansion-candidates` so level-scoped word expansion resolves the pinned source label, format, candidate policy, and local integrity from the word source manifest instead of relying on manual CLI source labels.
 - Documented the separate additional-unverified kanji deck surface in README and release docs, including `deck:kanji:additional:ready`, additional golden review commands, `deck:kanji:review-status`, current N5/N4/N3/N2/N1 generated-golden counts (`16/81/90/114/90`), and suppressed duplicate additional source claims.
 - Added an APKG SQLite round-trip regression test that rebuilds the N5 mini fixture package and verifies TSV field values, deck name, media mapping, and card count after unpacking.
 - Added reusable JLPT kanji source-evidence evaluation context so audits, import materialization, source-level deltas, and source-input worklists prepare source policy and comparable assignments once per run.
@@ -140,6 +141,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Changed
 
+- Realigned N4 word golden review to the current `569` generated rows, removing stale expectations and adding missing generated rows without starting N4 platinum or claiming N4 completion.
 - Changed word-card pronunciation display so `ReadingBreakdown` is the only learner-facing reading surface and `PitchAccent` renders as a graph without redundant caption text.
 - Changed word-card pitch policy so generated VOICEVOX pitch may ship only as visibly labeled `Generated pitch (unverified)` guidance; missing, ungoverned, source-mismatched, render-mismatched, and generated-but-unlabeled pitch still block readiness.
 

@@ -83,6 +83,7 @@ Minimum automated gate:
 ```bash
 npm test
 npm run lint
+npm run typecheck
 npm run data:audit:jlpt
 npm run data:audit:jlpt:sources -- --governance-strict --limit=25
 npm run data:audit:jlpt:official-occurrences -- --strict

@@ -202,6 +202,9 @@ function refreshStarterEntries(starterEntries = {}, existingEntries = {}) {
     return refreshed;
 }
 
+/**
+ * @param {{ localPath?: string, starterPath?: string }} [options]
+ */
 function loadWordStudyData({
     localPath,
     starterPath = path.resolve(process.cwd(), "templates", "starter_word_study_data.json"),

@@ -6,6 +6,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 
 - `npm test`
 - `npm run lint`
+- `npm run typecheck`
 - `npm run deck:review:accessibility -- --deck-kind=kanji`
 - `npm run deck:review:accessibility -- --deck-kind=word`
 - `npm run product:artifacts:n5` when N5 word ships

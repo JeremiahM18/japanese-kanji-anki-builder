@@ -12,6 +12,7 @@
     "start": "node src/server.js",
     "lint": "eslint src scripts test *.js",
     "test": "node scripts/runNodeTests.js",
+    "typecheck": "tsc --noEmit -p jsconfig.json",
     "bench:export": "node scripts/benchmarkExport.js",
     "data:benchmark:jlpt:sources": "node scripts/reportJlptKanjiSourceEvidenceCost.js",
     "corpus:normalize": "node scripts/normalizeSentenceCorpus.js",
@@ -136,6 +137,7 @@
   "devDependencies": {
     "@types/node": "^24.12.2",
     "eslint": "^9.39.4",
-    "nodemon": "^3.1.14"
+    "nodemon": "^3.1.14",
+    "typescript": "^6.0.3"
   }
 }

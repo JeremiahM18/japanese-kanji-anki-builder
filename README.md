@@ -237,6 +237,7 @@ Run before merging changes that affect decks, contracts, media, or release behav
 ```bash
 npm test
 npm run lint
+npm run typecheck
 npm run data:audit:jlpt
 npm run data:audit:jlpt:sources -- --governance-strict --limit=25
 npm run data:audit:jlpt:source-levels -- --worklist-only --limit=25
@@ -521,6 +522,7 @@ Repository governance:
 | --- | --- |
 | `npm test` | Run the full test suite |
 | `npm run lint` | Run ESLint |
+| `npm run typecheck` | Run the staged JSDoc typecheck gate |
 | `npm run ci:smoke` | Build deterministic smoke artifacts |
 | `npm run release:gate` | Validate smoke-fixture release artifact contracts |
 | `npm run product:artifacts:n5` | Build and validate the tracked-source N5 word TSV artifact |

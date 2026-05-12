@@ -1,16 +1,35 @@
 {
   "compilerOptions": {
+    "allowJs": true,
     "checkJs": true,
     "noEmit": true,
-    "strict": true,
+    "strict": false,
     "target": "ES2022",
     "module": "CommonJS",
-    "lib": ["ES2022"],
-    "types": ["node"]
+    "lib": [
+      "ES2022"
+    ],
+    "types": [
+      "node"
+    ],
+    "skipLibCheck": true,
+    "maxNodeModuleJsDepth": 0
   },
+  "include": [
+    "src/config.js",
+    "src/config/**/*.js",
+    "src/datasets/audioSourcePolicy.js",
+    "src/datasets/jlptLevelContract.js",
+    "src/datasets/jlptWordLevelContract.js",
+    "src/datasets/strokeOrderSourcePolicy.js",
+    "src/datasets/wordSourceManifest.js",
+    "src/utils/**/*.js"
+  ],
   "exclude": [
     "node_modules",
     "cache",
-    "out"
+    "out",
+    "scripts",
+    "test"
   ]
 }

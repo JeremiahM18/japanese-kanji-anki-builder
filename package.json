@@ -55,6 +55,7 @@
     "deck:preview": "node scripts/previewDeck.js",
     "deck:platinum:batch": "node scripts/platinumKanjiBatchReport.js",
     "deck:package": "node scripts/buildArtifacts.js",
+    "deck:kanji:surface-audit": "node scripts/auditKanjiDeckGeneratedSurface.js",
     "deck:ready": "node scripts/prepareDeck.js",
     "deck:readiness": "node scripts/reportDeckReadiness.js",
     "media:plan": "node scripts/reportMediaPlan.js",

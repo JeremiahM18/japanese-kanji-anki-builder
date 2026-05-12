@@ -373,6 +373,69 @@ test("buildInferenceForKanji keeps the curated kanji primary reading ahead of di
     assert.equal(inference.meaningJP, "go");
 });
 
+test("buildInferenceForKanji uses bare-kanji breakdown reading when display word pronunciation is a wrapper", async () => {
+    const exportService = createExportService({
+        curatedStudyData: {
+            婆: {
+                displayWord: { written: "お婆さん", pron: "おばあさん" },
+                breakdownDisplayWord: { written: "婆", pron: "ばあ" },
+                englishMeaning: "old woman / grandmother",
+                notes: "お婆さん （おばあさん） - old woman / grandmother ／ 婆 （ばあ） - old woman",
+            },
+        },
+        inferenceEngine: {
+            hasFullyCuratedKanjiEntry() {
+                return true;
+            },
+            inferKanjiStudyData() {
+                return {
+                    displayWord: { written: "お婆さん", pron: "おばあさん" },
+                    bestWord: { written: "お婆さん", pron: "おばあさん" },
+                    englishMeaning: "old woman / grandmother",
+                    meaningJP: "お婆さん （おばあさん） ／ old woman / grandmother",
+                    notes: "お婆さん （おばあさん） - old woman / grandmother ／ 婆 （ばあ） - old woman",
+                    sentenceCandidates: [],
+                };
+            },
+        },
+    });
+
+    const inference = await exportService.buildInferenceForKanji({
+        kanji: "婆",
+        jlptEntry: { meanings: ["old woman"], on_readings: ["バ"], kun_readings: ["ばあ", "ばば"], jlpt: 1 },
+        kanjiApiClient: {
+            async getKanji() {
+                throw new Error("should use local JLPT data");
+            },
+            async getWords() {
+                throw new Error("should skip word fetch");
+            },
+        },
+        strokeOrderService: {
+            async getManifest() {
+                return {
+                    assets: {
+                        strokeOrderImage: null,
+                        strokeOrderAnimation: { path: "animations/5A46_婆-stroke-order.gif" },
+                        audio: [{
+                            path: "audio/5A46_婆-kanji-reading-婆-ばあ.wav",
+                            category: "kanji-reading",
+                            text: "婆",
+                            reading: "ばあ",
+                            locale: "ja-JP",
+                        }],
+                    },
+                };
+            },
+        },
+        audioService: null,
+    });
+
+    assert.equal(inference.displayWordText, "婆");
+    assert.equal(inference.primaryReading, "ばあ");
+    assert.equal(inference.audioPath, "audio/5A46_婆-kanji-reading-婆-ばあ.wav");
+});
+
 test("buildInferenceForKanji lets explicit bare-kanji breakdown readings override bare display readings", async () => {
     const exportService = createExportService({
         curatedStudyData: {

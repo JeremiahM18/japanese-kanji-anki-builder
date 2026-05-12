@@ -157,12 +157,25 @@ function hasOnlyTargetKanji(value, kanji) {
     return kanjiChars.length > 0 && kanjiChars.every((char) => char === kanji);
 }
 
-function selectReadingFromKanjiInfo({ kanjiInfo, contextReading = "" }) {
-    const normalizedContext = normalizeReading(contextReading);
-    const readings = [
+function collectNormalizedKanjiReadings(kanjiInfo) {
+    return [
         ...(Array.isArray(kanjiInfo?.kun_readings) ? kanjiInfo.kun_readings : []),
         ...(Array.isArray(kanjiInfo?.on_readings) ? kanjiInfo.on_readings : []),
     ].map(normalizeReading).filter(Boolean);
+}
+
+function isKnownKanjiReading(reading, kanjiInfo) {
+    const normalizedReading = normalizeReading(reading);
+    if (!normalizedReading) {
+        return false;
+    }
+
+    return collectNormalizedKanjiReadings(kanjiInfo).includes(normalizedReading);
+}
+
+function selectReadingFromKanjiInfo({ kanjiInfo, contextReading = "" }) {
+    const normalizedContext = normalizeReading(contextReading);
+    const readings = collectNormalizedKanjiReadings(kanjiInfo);
 
     if (normalizedContext) {
         const contextual = readings
@@ -179,7 +192,10 @@ function selectReadingFromKanjiInfo({ kanjiInfo, contextReading = "" }) {
 function selectKanjiPrimaryReading({ kanji, curatedEntry = null, inferred = null, kanjiInfo = null }) {
     const curatedWord = curatedEntry?.displayWord?.written;
     const curatedPron = curatedEntry?.displayWord?.pron;
-    if (curatedPron && hasOnlyTargetKanji(curatedWord, kanji) && String(curatedWord || "").trim() !== kanji) {
+    if (curatedPron
+        && hasOnlyTargetKanji(curatedWord, kanji)
+        && String(curatedWord || "").trim() !== kanji
+        && isKnownKanjiReading(curatedPron, kanjiInfo)) {
         return String(curatedPron).trim();
     }
 

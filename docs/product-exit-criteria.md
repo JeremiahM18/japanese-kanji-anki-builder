@@ -31,6 +31,8 @@ For active word platinum, `japanese-source` evidence must cite a non-generated J
 
 For active word platinum, the reviewed word level must follow the word-level placement policy: a word is anchored by kanji from its own deck level, support kanji from any other level must be visibly labeled, all-easier-kanji words may ship later only with an explicit learner-fit rationale, and words with no current-level anchor must not ship earlier than their harder support kanji justify.
 
+For active kanji platinum, `japanese-source` evidence must cite a non-generated Japanese-language, kanji-reference, or dictionary source for the card's target kanji, exported primary reading, primary meaning, and broader meanings. This verifies card-field accuracy only. It does not certify JLPT placement or source-governance confidence, and it does not require a different source from word-card review when the same source accurately supports both products.
+
 ## Kanji deck exit criteria
 
 A kanji level ships only when all criteria are true:

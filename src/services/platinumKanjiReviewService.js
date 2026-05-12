@@ -2,6 +2,7 @@ const ACTIVE_PLATINUM_STATUSES = Object.freeze(["platinum", "fixed_then_platinum
 const {
     normalizeEvidenceEntries,
     validateEvidenceSnippets,
+    validateJapaneseSourceEvidence,
 } = require("./platinumEvidenceService");
 const NON_SHIPPING_STATUSES = Object.freeze(["deferred", "removed"]);
 const REVIEW_ONLY_STATUSES = Object.freeze(["needs_review"]);
@@ -147,6 +148,7 @@ function validateActivePlatinumEntry(entry = {}) {
             failures.push(`sourceEvidence must include evidence type: ${requiredType}`);
         }
     }
+    failures.push(...validateJapaneseSourceEvidence(sourceEvidence, { context: "kanji card accuracy" }));
     if (entry.status === "fixed_then_platinum" && !normalizeText(entry.fixSummary)) {
         failures.push("fixed_then_platinum entries must include fixSummary");
     }

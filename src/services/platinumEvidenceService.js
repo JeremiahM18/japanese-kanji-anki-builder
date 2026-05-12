@@ -10,6 +10,47 @@ function normalizeForEvidence(value) {
         .toLowerCase();
 }
 
+const JAPANESE_SOURCE_MARKERS = Object.freeze([
+    "jmdict",
+    "jisho.org",
+    "weblio",
+    "goo辞書",
+    "dictionary.goo.ne.jp",
+    "デジタル大辞泉",
+    "大辞泉",
+    "大辞林",
+    "明鏡",
+    "新明解",
+    "三省堂",
+    "nhk",
+    "ojad",
+    "tatoeba",
+    "jlearn.net",
+    "japandict.com",
+    "japaneseclass.jp",
+    "nihongomaster.com",
+    "kotobank.jp",
+    "kaikki.org",
+    "wiktionary.org",
+    "practice-japanese.com",
+    "benkyoumashou.com",
+    "bunpro.jp",
+    "tkgje.jp",
+    "gogen-yurai.jp",
+    "jlptglobal.com",
+    "mlcjapanese.co.jp",
+    "thejapanesepage.com",
+    "tofugu.com",
+    "nihoner.com",
+    "kanjipedia.jp",
+    "漢字ペディア",
+    "bunka.go.jp",
+    "joyokanjihyo",
+    "joyo kanji",
+    "常用漢字",
+    "文化庁",
+]);
+
 function normalizeEvidenceEntries(value) {
     return (Array.isArray(value) ? value : [])
         .filter((entry) => entry && typeof entry === "object" && !Array.isArray(entry))
@@ -31,6 +72,26 @@ function buildEvidenceTextByType(sourceEvidence = []) {
     }
 
     return byType;
+}
+
+function validateJapaneseSourceEvidence(sourceEvidence = [], { context = "platinum card accuracy" } = {}) {
+    const japaneseEvidenceText = normalizeEvidenceEntries(sourceEvidence)
+        .filter((entry) => entry.type === "japanese-source")
+        .map((entry) => `${entry.source} ${entry.detail}`)
+        .join(" ");
+
+    if (!normalizeText(japaneseEvidenceText)) {
+        return [];
+    }
+
+    const normalizedEvidenceText = normalizeForEvidence(japaneseEvidenceText);
+    const hasVerifiableSource = JAPANESE_SOURCE_MARKERS.some((marker) => (
+        normalizedEvidenceText.includes(normalizeForEvidence(marker))
+    ));
+
+    return hasVerifiableSource
+        ? []
+        : [`japanese-source evidence must cite a non-generated Japanese/reference/dictionary source for ${context}; generated output, golden fixtures, tracked starter data, source-governance manifests, and local caches are not sufficient by themselves`];
 }
 
 function validateEvidenceSnippets({
@@ -58,8 +119,10 @@ function validateEvidenceSnippets({
 }
 
 module.exports = {
+    JAPANESE_SOURCE_MARKERS,
     buildEvidenceTextByType,
     normalizeEvidenceEntries,
     normalizeForEvidence,
     validateEvidenceSnippets,
+    validateJapaneseSourceEvidence,
 };

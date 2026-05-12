@@ -45,7 +45,9 @@ function buildSourceEvidence() {
 
     return REQUIRED_KANJI_EVIDENCE_TYPES.map((type) => ({
         type,
-        source: "test fixture source",
+        source: type === "japanese-source"
+            ? "Kanjipedia https://www.kanjipedia.jp/kanji/0006416300; Bunka Joyo Kanji reading index"
+            : "test fixture source",
         detail: details[type],
     }));
 }
@@ -141,7 +143,9 @@ test("evaluatePlatinumKanjiReviewSet rejects source evidence that does not bind 
             buildEntry({
                 sourceEvidence: REQUIRED_KANJI_EVIDENCE_TYPES.map((type) => ({
                     type,
-                    source: "dictionary source",
+                    source: type === "japanese-source"
+                        ? "Kanjipedia https://www.kanjipedia.jp/kanji/0006416300"
+                        : "test fixture source",
                     detail: "Reviewed this field.",
                 })),
             }),
@@ -153,6 +157,27 @@ test("evaluatePlatinumKanjiReviewSet rejects source evidence that does not bind 
     assert.match(failures, /japanese-source evidence must explicitly support/);
     assert.match(failures, /audio-review evidence must explicitly support/);
     assert.match(failures, /stroke-order-review evidence must explicitly support/);
+});
+
+test("evaluatePlatinumKanjiReviewSet rejects generated-only japanese-source evidence", () => {
+    const localOnlyEvidence = buildSourceEvidence().map((evidence) => (
+        evidence.type === "japanese-source"
+            ? {
+                ...evidence,
+                source: "templates/starter_curated_study_data.json; templates/jlpt_kanji_source_evidence.json; out/build/exports/kanji-n5.tsv",
+                detail: "Local starter/source-governance/generated files list 日 with primary reading ひ, primary meaning day, and broader meanings day and sun.",
+            }
+            : evidence
+    ));
+
+    const report = evaluatePlatinumKanjiReviewSet({
+        rows: [buildRow()],
+        entries: [buildEntry({ sourceEvidence: localOnlyEvidence })],
+    });
+
+    const failures = report.results[0].failures.join("\n");
+    assert.equal(report.passed, false);
+    assert.match(failures, /japanese-source evidence must cite a non-generated Japanese\/reference\/dictionary source for kanji card accuracy/);
 });
 
 test("evaluatePlatinumKanjiReviewSet requires every structured evidence type", () => {

@@ -244,6 +244,7 @@ Golden and platinum review:
 - Platinum review decides whether a card deserves to ship in version 1.
 - Platinum review requires field-bound source evidence, explicit quality gates, and a keep/fix/defer/remove decision. Evidence that only says a field was "reviewed" is not enough; it must name the card, exported reading, and learner-facing values it supports.
 - Active word-card `japanese-source` evidence must cite a non-generated Japanese-language or dictionary source. Generated output, golden expectations, tracked starter templates, ignored local data, and local caches do not satisfy that evidence type by themselves.
+- Active kanji-card `japanese-source` evidence must cite a non-generated Japanese-language, kanji-reference, or dictionary source for card-field accuracy. This does not certify JLPT placement or source-governance confidence, and the same source may support kanji and word product reviews when it directly verifies each card's fields.
 - Active word platinum also enforces word-level placement: a card needs a current-level kanji anchor, or a learner-fit rationale for later all-easier-kanji placement.
 - Platinum review removes or defers noise instead of preserving cards that are uncommon, awkward, too advanced for the level, or only present to chase coverage.
 - Platinum review may improve source data and example sentences before promotion.

@@ -8,12 +8,15 @@ const {
     DEFAULT_CONFIG,
     DEFAULT_CONTRACT,
     DEFAULT_EVIDENCE,
+    DEFAULT_SOURCE_EVIDENCE_BUDGET,
     buildAssignmentFileStats,
     buildJlptKanjiSourceEvidenceCostReport,
     countPhysicalLines,
     diffMemoryUsage,
+    evaluateBudget,
     formatBytesAsMiB,
     formatAssignmentFileStats,
+    formatBudgetResult,
     formatJlptKanjiSourceEvidenceCostReport,
     formatMemoryDelta,
     formatMemoryObservation,
@@ -21,6 +24,7 @@ const {
     measureOperation,
     normalizeRepeat,
     parseArgs,
+    resolveBudget,
     snapshotMemoryUsage,
     summarizeMemorySamples,
     summarizeAuditReport,
@@ -42,6 +46,8 @@ test("source evidence cost report parses explicit benchmark options", () => {
         "--repeat=3",
         "--limit=10",
         "--full-rematerialize",
+        "--budget=default",
+        "--budget-source-audit-ms=1234",
         "--json",
     ]);
 
@@ -49,6 +55,8 @@ test("source evidence cost report parses explicit benchmark options", () => {
     assert.equal(options.repeat, 3);
     assert.equal(options.limit, 10);
     assert.equal(options.fullRematerialize, true);
+    assert.equal(options.budget, "default");
+    assert.equal(options.budgetSourceAuditMs, 1234);
     assert.equal(options.json, true);
 });
 
@@ -61,6 +69,55 @@ test("source evidence cost report validates repeat bounds", () => {
     assert.equal(normalizeRepeat("20"), 20);
     assert.throws(() => normalizeRepeat(0), /Invalid --repeat/);
     assert.throws(() => normalizeRepeat(21), /Invalid --repeat/);
+});
+
+test("source evidence cost report resolves and evaluates benchmark budgets", () => {
+    const budget = resolveBudget({
+        budget: "default",
+        budgetEvidenceLoadMs: null,
+        budgetPreflightMs: 42,
+        budgetImportDryRunMs: null,
+        budgetSerializationMs: null,
+        budgetSourceAuditMs: null,
+    });
+
+    assert.deepEqual(budget, {
+        ...DEFAULT_SOURCE_EVIDENCE_BUDGET,
+        preflightMs: 42,
+    });
+
+    const result = evaluateBudget({
+        timings: {
+            evidenceLoad: { averageMs: 10 },
+            preflight: { averageMs: 50 },
+            importDryRun: { averageMs: 20 },
+            serializedEvidence: { averageMs: 30 },
+            sourceAudit: { averageMs: 40 },
+        },
+    }, budget);
+
+    assert.equal(result.passed, false);
+    assert.deepEqual(result.failures.map((failure) => failure.key), ["preflightMs"]);
+    assert.match(formatBudgetResult(result), /source input preflight/);
+});
+
+test("source evidence cost report supports custom budget-only mode", () => {
+    const budget = resolveBudget({
+        budget: null,
+        budgetEvidenceLoadMs: 11,
+        budgetPreflightMs: null,
+        budgetImportDryRunMs: null,
+        budgetSerializationMs: null,
+        budgetSourceAuditMs: null,
+    });
+
+    assert.deepEqual(budget, {
+        evidenceLoadMs: 11,
+        preflightMs: null,
+        importDryRunMs: null,
+        serializationMs: null,
+        sourceAuditMs: null,
+    });
 });
 
 test("source evidence cost report summarizes manifest and selected source shape", () => {
@@ -323,6 +380,11 @@ test("source evidence cost report formats read-only no-mutation scope", () => {
                 lastResult: { governanceValid: true, evidenceDepthValid: false, checked: 3 },
             },
         },
+        budget: {
+            passed: true,
+            failures: [],
+            budget: DEFAULT_SOURCE_EVIDENCE_BUDGET,
+        },
     });
 
     assert.match(text, /Mode: read-only/);
@@ -335,6 +397,7 @@ test("source evidence cost report formats read-only no-mutation scope", () => {
     assert.match(text, /Timing and memory/);
     assert.match(text, /Observed process memory snapshots/);
     assert.match(text, /evidence manifest load/);
+    assert.match(text, /Source-evidence benchmark budget: pass/);
 });
 
 test("source evidence cost report counts physical lines", () => {

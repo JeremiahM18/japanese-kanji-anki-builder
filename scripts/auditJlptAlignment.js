@@ -111,7 +111,10 @@ function main() {
     }
 
     const contract = loadJlptLevelContract(contractPath);
-    const localDatasetAudit = auditJlptInventoryAgainstContract(loadJlptOnlyJson(config.jlptJsonPath), contract);
+    const localDatasetAudit = auditJlptInventoryAgainstContract(
+        loadJlptOnlyJson(config.jlptJsonPath, { contractPath: null }),
+        contract
+    );
     const starterAudit = auditStarterEntriesAgainstContract(loadTrackedStarterEntries(templatesDir), contract);
     const goldenAudit = auditGoldenReviewSetsAgainstContract(loadGoldenReviewSets(templatesDir), contract);
 

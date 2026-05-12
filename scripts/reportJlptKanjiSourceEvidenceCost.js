@@ -29,6 +29,13 @@ const MEMORY_FIELDS = Object.freeze([
     "external",
     "arrayBuffers",
 ]);
+const DEFAULT_SOURCE_EVIDENCE_BUDGET = Object.freeze({
+    evidenceLoadMs: 1500,
+    preflightMs: 2500,
+    importDryRunMs: 5000,
+    serializationMs: 2000,
+    sourceAuditMs: 4000,
+});
 
 function parseArgs(argv) {
     const options = {
@@ -40,6 +47,12 @@ function parseArgs(argv) {
         limit: 25,
         fullRematerialize: false,
         json: false,
+        budget: null,
+        budgetEvidenceLoadMs: null,
+        budgetPreflightMs: null,
+        budgetImportDryRunMs: null,
+        budgetSerializationMs: null,
+        budgetSourceAuditMs: null,
         unknownArgs: [],
     };
 
@@ -60,6 +73,18 @@ function parseArgs(argv) {
             options.repeat = parseNumericOption(arg, "repeat");
         } else if (arg.startsWith("--limit=")) {
             options.limit = parseNumericOption(arg, "limit");
+        } else if (arg.startsWith("--budget=")) {
+            options.budget = parseStringOption(arg, "budget");
+        } else if (arg.startsWith("--budget-evidence-load-ms=")) {
+            options.budgetEvidenceLoadMs = parseNumericOption(arg, "budget-evidence-load-ms");
+        } else if (arg.startsWith("--budget-preflight-ms=")) {
+            options.budgetPreflightMs = parseNumericOption(arg, "budget-preflight-ms");
+        } else if (arg.startsWith("--budget-import-dry-run-ms=")) {
+            options.budgetImportDryRunMs = parseNumericOption(arg, "budget-import-dry-run-ms");
+        } else if (arg.startsWith("--budget-serialization-ms=")) {
+            options.budgetSerializationMs = parseNumericOption(arg, "budget-serialization-ms");
+        } else if (arg.startsWith("--budget-source-audit-ms=")) {
+            options.budgetSourceAuditMs = parseNumericOption(arg, "budget-source-audit-ms");
         } else {
             collectUnknownArg(options, arg);
         }
@@ -74,6 +99,98 @@ function normalizeRepeat(value) {
         throw new Error(`Invalid --repeat value: ${value}. Use an integer from 1 to 20.`);
     }
     return repeat;
+}
+
+function resolveBudget(options = {}) {
+    const customBudget = {
+        evidenceLoadMs: Number.isFinite(options.budgetEvidenceLoadMs) ? options.budgetEvidenceLoadMs : null,
+        preflightMs: Number.isFinite(options.budgetPreflightMs) ? options.budgetPreflightMs : null,
+        importDryRunMs: Number.isFinite(options.budgetImportDryRunMs) ? options.budgetImportDryRunMs : null,
+        serializationMs: Number.isFinite(options.budgetSerializationMs) ? options.budgetSerializationMs : null,
+        sourceAuditMs: Number.isFinite(options.budgetSourceAuditMs) ? options.budgetSourceAuditMs : null,
+    };
+    const hasCustomBudget = Object.values(customBudget).some((value) => Number.isFinite(value));
+
+    if (!options.budget && !hasCustomBudget) {
+        return null;
+    }
+
+    if (options.budget && options.budget !== "default") {
+        throw new Error(`Unsupported source-evidence benchmark budget '${options.budget}'. Use --budget=default or explicit --budget-*-ms flags.`);
+    }
+
+    const baseBudget = options.budget === "default"
+        ? { ...DEFAULT_SOURCE_EVIDENCE_BUDGET }
+        : {
+            evidenceLoadMs: null,
+            preflightMs: null,
+            importDryRunMs: null,
+            serializationMs: null,
+            sourceAuditMs: null,
+        };
+
+    return {
+        evidenceLoadMs: Number.isFinite(customBudget.evidenceLoadMs) ? customBudget.evidenceLoadMs : baseBudget.evidenceLoadMs,
+        preflightMs: Number.isFinite(customBudget.preflightMs) ? customBudget.preflightMs : baseBudget.preflightMs,
+        importDryRunMs: Number.isFinite(customBudget.importDryRunMs) ? customBudget.importDryRunMs : baseBudget.importDryRunMs,
+        serializationMs: Number.isFinite(customBudget.serializationMs) ? customBudget.serializationMs : baseBudget.serializationMs,
+        sourceAuditMs: Number.isFinite(customBudget.sourceAuditMs) ? customBudget.sourceAuditMs : baseBudget.sourceAuditMs,
+    };
+}
+
+function evaluateBudget(report = {}, budget = null) {
+    if (!budget) {
+        return null;
+    }
+
+    const checks = [
+        {
+            key: "evidenceLoadMs",
+            label: "evidence manifest load",
+            actual: Number(report.timings?.evidenceLoad?.averageMs ?? NaN),
+            limit: budget.evidenceLoadMs,
+        },
+        {
+            key: "preflightMs",
+            label: "source input preflight",
+            actual: Number(report.timings?.preflight?.averageMs ?? NaN),
+            limit: budget.preflightMs,
+        },
+        {
+            key: "importDryRunMs",
+            label: "source input import dry-run",
+            actual: Number(report.timings?.importDryRun?.averageMs ?? NaN),
+            limit: budget.importDryRunMs,
+        },
+        {
+            key: "serializationMs",
+            label: "full manifest serialization",
+            actual: Number(report.timings?.serializedEvidence?.averageMs ?? NaN),
+            limit: budget.serializationMs,
+        },
+        {
+            key: "sourceAuditMs",
+            label: "source evidence audit",
+            actual: Number(report.timings?.sourceAudit?.averageMs ?? NaN),
+            limit: budget.sourceAuditMs,
+        },
+    ].filter((entry) => Number.isFinite(entry.limit));
+
+    const failures = checks
+        .filter((entry) => Number.isFinite(entry.actual) && entry.actual > entry.limit)
+        .map((entry) => ({
+            key: entry.key,
+            label: entry.label,
+            actual: entry.actual,
+            limit: entry.limit,
+            overByMs: Number((entry.actual - entry.limit).toFixed(2)),
+        }));
+
+    return {
+        budget,
+        passed: failures.length === 0,
+        failures,
+    };
 }
 
 function countPhysicalLines(text) {
@@ -491,6 +608,8 @@ function formatJlptKanjiSourceEvidenceCostReport(report = {}) {
         `  ${formatMemoryObservation(report.timings?.sourceAudit)}`,
         `  governance ${audit.governanceValid ? "passing" : "failing"}; evidence depth ${audit.evidenceDepthValid ? "passing" : "failing"}; checked ${audit.checked || 0}`,
         "",
+        formatBudgetResult(report.budget),
+        "",
         "Cost interpretation:",
         "- Use this report before choosing source-evidence performance refactors.",
         "- Keep source review batches small for human quality, then promote reviewed rows at milestones.",
@@ -498,17 +617,46 @@ function formatJlptKanjiSourceEvidenceCostReport(report = {}) {
     ].join("\n");
 }
 
+function formatBudgetResult(budgetResult) {
+    if (!budgetResult) {
+        return "No source-evidence benchmark budget configured.";
+    }
+
+    const lines = [
+        `Source-evidence benchmark budget: ${budgetResult.passed ? "pass" : "fail"}`,
+    ];
+
+    if (budgetResult.failures.length === 0) {
+        lines.push("All configured budget thresholds were met.");
+        return lines.join("\n");
+    }
+
+    for (const failure of budgetResult.failures) {
+        lines.push(`- ${failure.label}: ${failure.actual}ms exceeded ${failure.limit}ms by ${failure.overByMs}ms`);
+    }
+
+    return lines.join("\n");
+}
+
 function main(argv = process.argv.slice(2)) {
     const options = parseArgs(argv);
     assertNoUnknownArgs("data:benchmark:jlpt:sources", options.unknownArgs);
+    const budget = resolveBudget(options);
     const report = buildJlptKanjiSourceEvidenceCostReport(options);
+    report.budget = evaluateBudget(report, budget);
 
     if (options.json) {
         process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
+        if (report.budget && !report.budget.passed) {
+            throw new Error("Source-evidence benchmark exceeded the configured budget.");
+        }
         return;
     }
 
     process.stdout.write(`${formatJlptKanjiSourceEvidenceCostReport(report)}\n`);
+    if (report.budget && !report.budget.passed) {
+        throw new Error("Source-evidence benchmark exceeded the configured budget.");
+    }
 }
 
 if (require.main === module) {
@@ -522,6 +670,7 @@ module.exports = {
     DEFAULT_CONFIG,
     DEFAULT_CONTRACT,
     DEFAULT_EVIDENCE,
+    DEFAULT_SOURCE_EVIDENCE_BUDGET,
     buildAssignmentFileStats,
     buildFileStats,
     buildJlptKanjiSourceEvidenceCostReport,
@@ -533,6 +682,8 @@ module.exports = {
     measureOperation,
     snapshotMemoryUsage,
     diffMemoryUsage,
+    evaluateBudget,
+    formatBudgetResult,
     summarizeMemorySamples,
     formatBytesAsMiB,
     formatMemoryDelta,
@@ -540,6 +691,7 @@ module.exports = {
     formatMemorySnapshot,
     normalizeRepeat,
     parseArgs,
+    resolveBudget,
     summarizeAuditReport,
     summarizeEvidenceManifest,
     summarizeImportResult,

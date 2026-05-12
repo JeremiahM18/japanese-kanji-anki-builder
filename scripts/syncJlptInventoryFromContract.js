@@ -69,13 +69,16 @@ function main() {
         throw new Error(`Missing JLPT level contract at ${contractPath}`);
     }
 
-    const dataset = loadJlptOnlyJson(config.jlptJsonPath);
+    const dataset = loadJlptOnlyJson(config.jlptJsonPath, { contractPath: null });
     const contract = loadJlptLevelContract(contractPath);
     const { syncedDataset, updates } = syncJlptInventoryToContract(dataset, contract);
 
     fs.writeFileSync(config.jlptJsonPath, `${JSON.stringify(syncedDataset, null, 2)}\n`, "utf-8");
 
-    const audit = auditJlptInventoryAgainstContract(loadJlptOnlyJson(config.jlptJsonPath), contract);
+    const audit = auditJlptInventoryAgainstContract(
+        loadJlptOnlyJson(config.jlptJsonPath, { contractPath: null }),
+        contract
+    );
     const result = {
         datasetPath: config.jlptJsonPath,
         contractPath,

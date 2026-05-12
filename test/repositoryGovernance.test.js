@@ -268,6 +268,7 @@ test("JLPT kanji source-evidence loaders stay in read-only governance paths", ()
             "scripts/pinJlptKanjiSourceInput.js",
             "scripts/reportJlptKanjiSourceEvidenceCost.js",
             "scripts/reportJlptKanjiSourceInputs.js",
+            "scripts/reportJlptKanjiSourceReviewPacket.js",
             "src/datasets/jlptKanjiSourceInputs.js",
         ],
         loadJlptOfficialOccurrenceEvidence: [

@@ -80,7 +80,7 @@ The kanji decks and word decks are separate products:
 
 The engineering goal is controlled output. The repository does not rely on silent fallbacks or untracked local edits for release-ready decks. Tracked JSON contracts define the JLPT kanji inventory, word eligibility, Anki note fields, media policy, and review expectations. Build scripts produce deterministic TSV exports and byte-stable optional `.apkg` packages from unchanged packaged inputs. Audit, review, readiness, and release-gate commands check for missing audio, missing stroke-order media, schema drift, bad labels, unreviewed learner-facing content, and generated content that has not been promoted into tracked source files.
 
-Ignored local files under `data/` are workspace inputs. They are not product truth unless a tracked contract or template promotes the data into the repository.
+Ignored local files under `data/` are workspace inputs. They are not product truth unless a tracked contract or template promotes the data into the repository. Deck-facing JLPT runtime readers fail closed when the ignored `data/kanji_jlpt_only.json` inventory drifts from [templates/jlpt_level_contract.json](templates/jlpt_level_contract.json); use `data:audit:jlpt` for details or `data:sync:jlpt` to resync that local file.
 
 ## Testing Philosophy
 
@@ -258,10 +258,12 @@ npm run data:audit:jlpt:source-levels -- --worklist-only --limit=25
 npm run deck:kanji:partition-plan -- --limit=25
 npm run data:audit:jlpt:source-access
 npm run data:benchmark:jlpt:sources -- --source=<source-id> --repeat=2 --limit=10
+npm run data:benchmark:jlpt:sources:gate -- --source=<source-id> --repeat=2 --limit=10
 npm run data:audit:jlpt:official-occurrences -- --strict
 npm run data:audit:jlpt:source-inputs -- --source=tanos_legacy_direct --strict
 npm run data:audit:jlpt:source-inputs -- --source=tanos_estimated_split --strict
 npm run data:audit:jlpt:source-inputs -- --source=kanjidic2_legacy --strict
+npm run data:packet:jlpt:source-review -- --source=<source-id> --limit=25
 npm run data:packet:jlpt:source-access -- --source=<source-id> --surface-type=<surface-type> --title="<surface title>" --citation="<source citation>" --evidence-ref="<source reference>" --notes="<exact assignment proof>"
 npm run data:merge:jlpt:source-batch -- --source=<source-id> --batch=<ignored-batch.tsv>
 npm run data:pin:jlpt:source-input -- --source=<source-id> --reason="<review milestone reason>"
@@ -290,7 +292,9 @@ npm run release:gate
 
 `data:audit:jlpt:source-ocr-intake` inventories ignored private source scans under `downloads/private/shin-kanzen-master/` and checks local OCR prerequisites before a purchased-book source review. It is read-only and does not extract evidence, import assignments, move kanji, move words, update decks, or change readiness. Use `--strict` only when private scans and local OCR tooling are expected to be ready.
 
-`data:benchmark:jlpt:sources` is a read-only cost report for the JLPT kanji source-evidence workflow. It measures evidence-manifest load, source-input preflight, source-input import dry-run/materialization, full evidence-manifest serialization, and source-evidence audit timing plus observed Node process memory snapshots, parent-manifest and assignment-file storage, line counts, assignment counts, rollup count, and selected-source citation repetition. Memory deltas are process snapshots, not allocation-profiler output, so use repeated runs for trends. Use it before choosing performance refactors such as assignment-file evidence-record deduplication or audit caching. It does not import assignments, move kanji, move words, update decks, or change readiness.
+`data:benchmark:jlpt:sources` is a read-only cost report for the JLPT kanji source-evidence workflow. It measures evidence-manifest load, source-input preflight, source-input import dry-run/materialization, full evidence-manifest serialization, and source-evidence audit timing plus observed Node process memory snapshots, parent-manifest and assignment-file storage, line counts, assignment counts, rollup count, and selected-source citation repetition. Memory deltas are process snapshots, not allocation-profiler output, so use repeated runs for trends. Add `--budget=default` or run `data:benchmark:jlpt:sources:gate` to fail when configured source-review timing budgets are exceeded. Use it before choosing performance refactors such as assignment-file evidence-record deduplication or audit caching. It does not import assignments, move kanji, move words, update decks, or change readiness.
+
+`data:packet:jlpt:source-review` emits a compact read-only JSON packet for AI or human source-review planning. It filters the all-level governed source worklist for the selected lane's supported levels, skips rows already resolved in that lane's local worksheet, and includes current level, review levels, source candidates, consensus, vote weights, confidence, compact source-input status, and blocker reason. The packet is planning context only: it does not create source-access proof, import evidence, move kanji, move words, update decks, or change readiness.
 
 `data:packet:jlpt:source-access` writes an ignored JSON packet that records the exact source surface behind a large manual source-review session. Use it before generating `100+` all-level source-review rows and before merging a batch with `100+` importable `reviewed` rows. Valid surface types are `exact-kanji-table`, `official-correction-list-target-row`, `exact-assignment-page`, and `target-entry-page`. The packet is not evidence and is not imported; it only proves the batch was scoped from a source surface that can support exact assignment review. It does not create review rows, import evidence, move kanji, move words, update decks, or change readiness.
 
@@ -582,6 +586,8 @@ Repository governance:
 | `npm run data:audit:jlpt:source-access` | Rank source lanes by governed usefulness and current source-access state before spending another manual review batch |
 | `npm run data:audit:jlpt:source-ocr-intake` | Inventory ignored private Shin scan files and OCR prerequisites before purchased-book extraction |
 | `npm run data:audit:jlpt:official-occurrences` | Report or extract official JLPT positive occurrence evidence without storing question text or assigning levels |
+| `npm run data:benchmark:jlpt:sources:gate -- --source=<source-id>` | Fail when source-evidence benchmark timing exceeds configured default budgets |
+| `npm run data:packet:jlpt:source-review -- --source=<source-id> --limit=25` | Emit compact read-only JSON planning rows for the next governed source-review packet |
 | `npm run data:audit:jlpt:source-inputs -- --source=tanos_legacy_direct` | Preflight the pinned local Tanos direct legacy normalized source file before source-evidence import |
 | `npm run data:audit:jlpt:source-inputs -- --source=tanos_estimated_split` | Preflight the pinned local Tanos estimated N2/N3 normalized source file before source-evidence import |
 | `npm run data:audit:jlpt:source-inputs -- --source=kanjidic2_legacy` | Preflight a pinned local JLPT kanji source file before source-evidence import |
@@ -618,6 +624,8 @@ Expected ignored workspace data:
 - `data/sentence_corpus.json`
 - `data/curated_study_data.json`
 - `data/word_study_data.json`
+
+`data/kanji_jlpt_only.json` is ignored runtime input, not source truth. Deck-facing loaders guard it against the tracked JLPT level contract; audit and sync commands intentionally read it unguarded so they can report or repair drift.
 
 Managed media:
 

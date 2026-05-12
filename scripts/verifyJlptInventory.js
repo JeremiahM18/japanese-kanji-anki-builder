@@ -59,7 +59,7 @@ function main() {
         throw new Error(`Missing JLPT level contract at ${contractPath}`);
     }
 
-    const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
+    const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath, { contractPath: null });
     const result = auditJlptInventoryAgainstContract(jlptOnlyJson, loadJlptLevelContract(contractPath));
 
     if (options.json) {

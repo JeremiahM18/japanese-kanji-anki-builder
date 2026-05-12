@@ -11,6 +11,7 @@ DETERMINISTIC_ZIP_TIMESTAMP = (2024, 1, 1, 0, 0, 0)
 DETERMINISTIC_MOD_EPOCH = 1_704_067_200
 NOTE_SCHEMA_PATHS = {
     "kanji": REPO_ROOT / "src" / "config" / "ankiNoteSchema.json",
+    "kanji-additional": REPO_ROOT / "src" / "config" / "ankiNoteSchema.json",
     "word": REPO_ROOT / "src" / "config" / "ankiWordNoteSchema.json",
 }
 
@@ -39,18 +40,27 @@ def parse_levels(value: str):
 def build_deck_name(level: int, deck_kind: str) -> str:
     if deck_kind == "word":
         return f"Japanese Kanji Builder::Word Deck::JLPT N{level}"
+    if deck_kind == "kanji-additional":
+        return f"Japanese Kanji Builder::Additional Unverified::JLPT N{level}"
     return f"Japanese Kanji Builder::JLPT N{level}"
 
 
 def build_apkg_file_name(levels, deck_kind: str):
     suffix = "-".join(f"n{level}" for level in levels) or "deck"
-    prefix = "japanese-kanji-builder-words" if deck_kind == "word" else "japanese-kanji-builder"
+    if deck_kind == "word":
+        prefix = "japanese-kanji-builder-words"
+    elif deck_kind == "kanji-additional":
+        prefix = "japanese-kanji-builder-additional-unverified"
+    else:
+        prefix = "japanese-kanji-builder"
     return f"{prefix}-{suffix}.apkg"
 
 
 def build_export_file_name(level: int, deck_kind: str) -> str:
     if deck_kind == "word":
         return f"jlpt-n{level}-words.tsv"
+    if deck_kind == "kanji-additional":
+        return f"additional-unverified-n{level}.tsv"
     return f"jlpt-n{level}.tsv"
 
 
@@ -440,7 +450,7 @@ def main():
     parser = argparse.ArgumentParser(description="Build an Anki .apkg from packaged TSV/media artifacts.")
     parser.add_argument("--out-dir", default="out/build", help="Build output directory containing the package folder.")
     parser.add_argument("--levels", default="5", help="Comma-separated JLPT levels, for example 5 or 5,4.")
-    parser.add_argument("--deck-kind", default="kanji", choices=["kanji", "word"], help="Packaged deck type to build.")
+    parser.add_argument("--deck-kind", default="kanji", choices=["kanji", "kanji-additional", "word"], help="Packaged deck type to build.")
     parser.add_argument("--json", action="store_true", help="Emit a machine-readable JSON summary instead of plain text.")
     args = parser.parse_args()
 

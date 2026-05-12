@@ -16,12 +16,20 @@ function buildDeckName(level, deckKind = "kanji") {
     if (deckKind === "word") {
         return `Japanese Kanji Builder::Word Deck::JLPT N${level}`;
     }
+    if (deckKind === "kanji-additional") {
+        return `Japanese Kanji Builder::Additional Unverified::JLPT N${level}`;
+    }
 
     return `Japanese Kanji Builder::JLPT N${level}`;
 }
 
 function buildApkgFileName(levels, deckKind = "kanji") {
-    const prefix = deckKind === "word" ? "japanese-kanji-builder-words" : "japanese-kanji-builder";
+    let prefix = "japanese-kanji-builder";
+    if (deckKind === "word") {
+        prefix = "japanese-kanji-builder-words";
+    } else if (deckKind === "kanji-additional") {
+        prefix = "japanese-kanji-builder-additional-unverified";
+    }
     return `${prefix}-${normalizeDeckSlug(levels)}.apkg`;
 }
 

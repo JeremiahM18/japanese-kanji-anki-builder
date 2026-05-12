@@ -295,10 +295,12 @@ async function buildDeckPackage({
     });
 
     const selectedKanji = collectReferencedKanji({ exports, kanjiByLevel });
-    const kanjiAssetKinds = deckKind === "word"
+    const isWordDeck = deckKind === "word";
+    const isKanjiDeck = deckKind === "kanji" || deckKind === "kanji-additional";
+    const kanjiAssetKinds = isWordDeck
         ? ["strokeOrder", "strokeOrderAnimation"]
         : ["strokeOrder", "audio"];
-    const referencedMediaFileNames = deckKind === "kanji"
+    const referencedMediaFileNames = isKanjiDeck
         ? collectReferencedMediaFileNames(exports)
         : null;
     const { assets, mediaCounts } = await collectPackageAssets({

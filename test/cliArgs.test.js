@@ -7,6 +7,7 @@ const { parseArgs: parsePreviewArgs } = require("../scripts/previewDeck");
 const { parseArgs: parseReadinessArgs } = require("../scripts/reportDeckReadiness");
 const { parseArgs: parseSyncArgs } = require("../scripts/syncMedia");
 const { parseArgs: parsePrepareArgs } = require("../scripts/prepareDeck");
+const { parseArgs: parseAdditionalKanjiArgs } = require("../scripts/prepareAdditionalKanjiDeck");
 const { parseArgs: parseImportKanjiVgArgs } = require("../scripts/importKanjiVgStrokeOrder");
 const { parseArgs: parseDoctorArgs } = require("../scripts/doctor");
 const { parseArgs: parseVoicevoxDoctorArgs } = require("../scripts/doctorVoicevox");
@@ -54,6 +55,24 @@ test("prepareDeck parseArgs records unsupported flags, json mode, and strict ove
     assert.deepEqual(options.levels, [5, 4]);
     assert.equal(options.json, true);
     assert.equal(options.allowExportFallbacks, true);
+    assert.deepEqual(options.unknownArgs, ["--oops"]);
+});
+
+test("prepareAdditionalKanjiDeck parseArgs records scope levels and unsupported flags", () => {
+    const options = parseAdditionalKanjiArgs([
+        "--levels=5,4",
+        "--candidate-scope=all-source-claims",
+        "--include-disputed",
+        "--out-dir=out/additional",
+        "--json",
+        "--oops",
+    ]);
+
+    assert.deepEqual(options.levels, [5, 4]);
+    assert.equal(options.candidateScope, "all-source-claims");
+    assert.equal(options.includeDisputed, true);
+    assert.equal(options.outDir, "out/additional");
+    assert.equal(options.json, true);
     assert.deepEqual(options.unknownArgs, ["--oops"]);
 });
 

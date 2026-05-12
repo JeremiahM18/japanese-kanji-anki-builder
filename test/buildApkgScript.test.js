@@ -17,7 +17,7 @@ function sha256(filePath) {
     return crypto.createHash("sha256").update(fs.readFileSync(filePath)).digest("hex");
 }
 
-function runBuildApkg(python, outDir) {
+function runBuildApkg(python, outDir, { deckKind = "kanji" } = {}) {
     const result = spawnSync(
         python.command,
         [
@@ -26,6 +26,7 @@ function runBuildApkg(python, outDir) {
             "--out-dir",
             outDir,
             "--levels=5",
+            `--deck-kind=${deckKind}`,
             "--json",
         ],
         {
@@ -112,6 +113,31 @@ test("buildApkg.py produces byte-stable APKG output for unchanged package inputs
         assert.equal(firstHash, secondHash);
         assert.equal(first.noteCount, 1);
         assert.equal(first.mediaFileCount, 1);
+    } finally {
+        fs.rmSync(tempRoot, { recursive: true, force: true });
+    }
+});
+
+test("buildApkg.py supports additional unverified kanji decks", {
+    skip: python ? false : "Python is unavailable",
+}, () => {
+    const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "kanji-additional-apkg-"));
+
+    try {
+        const outDir = path.join(tempRoot, "out", "build");
+        const packageRoot = path.join(outDir, "package");
+        const fixtureTsv = fs.readFileSync(
+            path.join(process.cwd(), "examples", "n5-mini", "sample-kanji-output.tsv"),
+            "utf8"
+        );
+        writeFile(path.join(packageRoot, "exports", "additional-unverified-n5.tsv"), fixtureTsv);
+        writeFile(path.join(packageRoot, "media", "sample.txt"), "stable media\n");
+
+        const build = runBuildApkg(python, outDir, { deckKind: "kanji-additional" });
+        const inspected = inspectApkg(python, build.filePath);
+
+        assert.match(build.filePath, /japanese-kanji-builder-additional-unverified-n5\.apkg$/);
+        assert.deepEqual(inspected.deckNames, ["Japanese Kanji Builder::Additional Unverified::JLPT N5"]);
     } finally {
         fs.rmSync(tempRoot, { recursive: true, force: true });
     }

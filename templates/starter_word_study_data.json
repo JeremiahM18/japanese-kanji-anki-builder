@@ -24844,5 +24844,121 @@
       "reading": "こうじちゅうなのでまわりみちをしました。",
       "english": "Because of construction, I took a detour."
     }
+  },
+  "寒波|かんぱ": {
+    "written": "寒波",
+    "reading": "かんぱ",
+    "readingBreakdown": "<ruby>寒<rt>かん</rt></ruby><ruby>波<rt>ぱ</rt></ruby>",
+    "meaning": "cold wave / cold snap",
+    "jlpt": 4,
+    "source": "starter-word",
+    "tags": [
+      "starter",
+      "common",
+      "n4",
+      "reading-coverage"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "寒"
+      ],
+      "coversReadings": {
+        "寒": "かん"
+      }
+    },
+    "notes": "Common weather word with a clean N4 寒 -> かん anchor; 波=N3 must stay visibly labeled as support.",
+    "exampleSentence": {
+      "japanese": "寒波で今朝はとても寒いです。",
+      "reading": "かんぱでけさはとてもさむいです。",
+      "english": "Because of the cold wave, it is very cold this morning."
+    }
+  },
+  "村民|そんみん": {
+    "written": "村民",
+    "reading": "そんみん",
+    "readingBreakdown": "<ruby>村<rt>そん</rt></ruby><ruby>民<rt>みん</rt></ruby>",
+    "meaning": "villager / village resident",
+    "jlpt": 4,
+    "source": "starter-word",
+    "tags": [
+      "starter",
+      "common",
+      "n4",
+      "reading-coverage"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "村"
+      ],
+      "coversReadings": {
+        "村": "そん"
+      }
+    },
+    "notes": "Common person/community word with a clean N4 村 -> そん anchor and same-level 民 support.",
+    "exampleSentence": {
+      "japanese": "村民が公園に集まりました。",
+      "reading": "そんみんがこうえんにあつまりました。",
+      "english": "The villagers gathered in the park."
+    }
+  },
+  "次第|しだい": {
+    "written": "次第",
+    "reading": "しだい",
+    "readingBreakdown": "<ruby>次<rt>し</rt></ruby><ruby>第<rt>だい</rt></ruby>",
+    "meaning": "depending on / circumstances / order",
+    "jlpt": 4,
+    "source": "starter-word",
+    "tags": [
+      "starter",
+      "common",
+      "n4",
+      "reading-coverage"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "次"
+      ],
+      "coversReadings": {
+        "次": "し"
+      }
+    },
+    "notes": "Common dependency/circumstances word with a clean N4 次 -> し anchor; 第=N1 must stay visibly labeled as support.",
+    "exampleSentence": {
+      "japanese": "予定は天気次第です。",
+      "reading": "よていはてんきしだいです。",
+      "english": "The plan depends on the weather."
+    }
+  },
+  "声色|こわいろ": {
+    "written": "声色",
+    "reading": "こわいろ",
+    "readingBreakdown": "<ruby>声<rt>こわ</rt></ruby><ruby>色<rt>いろ</rt></ruby>",
+    "meaning": "tone of voice / voice imitation",
+    "jlpt": 4,
+    "source": "starter-word",
+    "tags": [
+      "starter",
+      "common",
+      "n4",
+      "reading-coverage"
+    ],
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "声"
+      ],
+      "coversReadings": {
+        "声": "こわ"
+      }
+    },
+    "notes": "Useful speech/listening word with a clean N4 声 -> こわ anchor and same-level 色 support; keeps tone-of-voice sense distinct from rare 声色（せいしょく）.",
+    "exampleSentence": {
+      "japanese": "電話の声色で元気だと分かりました。",
+      "reading": "でんわのこわいろでげんきだとわかりました。",
+      "english": "I could tell from the tone of voice on the phone that they were well."
+    }
   }
 }

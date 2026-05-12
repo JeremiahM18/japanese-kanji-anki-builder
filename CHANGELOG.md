@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added a governed N4 active reading-backlog batch (`寒波`, `村民`, `次第`, `声色`), raising N4 canonical word rows and golden coverage to `643/643`, moving completion coverage to `555/765` (`72.5%`), keeping source keep/untriaged candidates at `0/0`, and leaving N4 incomplete with `54` active reading-plan items and platinum unstarted.
 - Added a governed N4 active reading-backlog batch (`低音`, `薬品`, `頭痛`, `先頭`, `疲労`, `青菜`, `合宿`, `回り道`), raising N4 canonical word rows and golden coverage to `639/639`, moving completion coverage to `551/765` (`72.0%`), keeping source keep/untriaged candidates at `0/0`, and leaving N4 incomplete with `58` active reading-plan items and platinum unstarted.
 - Added a governed N4 active reading-backlog batch (`進歩`, `音声`, `強弱`, `短所`, `観光`, `軽食`, `電池`, `洗顔`, `太陽`, `市場`), raising N4 canonical word rows and golden coverage to `631/631`, moving completion coverage to `542/765` (`70.8%`), keeping source keep/untriaged candidates at `0/0`, and leaving N4 incomplete with `67` active reading-plan items and platinum unstarted.
 - Tightened word source-manifest governance for source-purpose use rules, blocked-source fences, active candidate policies, local integrity pins, and required columns, then added the first governed N4 source-expansion batch (`番組`, `市民`, `首`, `専門`, `光`, `森`, `進む`, `回る`), raising N4 canonical word rows and golden coverage to `577/577` while keeping N4 incomplete and platinum unstarted.

@@ -1492,6 +1492,38 @@ test("tracked starter word data includes the fifth N4 active reading backlog bat
     assert.match(starterEntries["回り道|まわりみち"].notes, /回 -> まわり/);
 });
 
+test("tracked starter word data includes the sixth N4 active reading backlog batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const n4ReadingSupportKeys = [
+        "寒波|かんぱ",
+        "村民|そんみん",
+        "次第|しだい",
+        "声色|こわいろ",
+    ];
+
+    for (const key of n4ReadingSupportKeys) {
+        assert.equal(starterEntries[key]?.jlpt, 4, key);
+        assert.equal(starterEntries[key]?.source, "starter-word", key);
+        assert.equal(starterEntries[key]?.coverage?.role, "support", key);
+    }
+    assertCoverageReadings(starterEntries, [
+        ["寒波|かんぱ", "寒", "かん"],
+        ["村民|そんみん", "村", "そん"],
+        ["次第|しだい", "次", "し"],
+        ["声色|こわいろ", "声", "こわ"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["寒波|かんぱ", "<ruby>寒<rt>かん</rt></ruby><ruby>波<rt>ぱ</rt></ruby>"],
+        ["村民|そんみん", "<ruby>村<rt>そん</rt></ruby><ruby>民<rt>みん</rt></ruby>"],
+        ["次第|しだい", "<ruby>次<rt>し</rt></ruby><ruby>第<rt>だい</rt></ruby>"],
+        ["声色|こわいろ", "<ruby>声<rt>こわ</rt></ruby><ruby>色<rt>いろ</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["寒波|かんぱ"].notes, /波=N3/);
+    assert.match(starterEntries["村民|そんみん"].notes, /民 support/);
+    assert.match(starterEntries["次第|しだい"].notes, /第=N1/);
+    assert.match(starterEntries["声色|こわいろ"].notes, /声色（せいしょく）/);
+});
+
 test("tracked starter word data includes the first N5 enhancement batch without duplicate junk", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

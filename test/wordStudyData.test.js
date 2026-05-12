@@ -1396,6 +1396,58 @@ test("tracked starter word data includes the third N4 active reading backlog bat
     assert.match(starterEntries["産地|さんち"].notes, /product-origin/);
 });
 
+test("tracked starter word data includes the fourth N4 active reading backlog batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const n4ReadingSupportKeys = [
+        "進歩|しんぽ",
+        "音声|おんせい",
+        "強弱|きょうじゃく",
+        "短所|たんしょ",
+        "観光|かんこう",
+        "軽食|けいしょく",
+        "電池|でんち",
+        "洗顔|せんがん",
+        "太陽|たいよう",
+        "市場|いちば",
+    ];
+
+    for (const key of n4ReadingSupportKeys) {
+        assert.equal(starterEntries[key]?.jlpt, 4, key);
+        assert.equal(starterEntries[key]?.source, "starter-word", key);
+        assert.equal(starterEntries[key]?.coverage?.role, "support", key);
+    }
+    assert.equal(starterEntries["市場|しじょう"], undefined);
+    assertCoverageReadings(starterEntries, [
+        ["進歩|しんぽ", "進", "しん"],
+        ["音声|おんせい", "声", "せい"],
+        ["強弱|きょうじゃく", "弱", "じゃく"],
+        ["短所|たんしょ", "短", "たん"],
+        ["観光|かんこう", "光", "こう"],
+        ["軽食|けいしょく", "軽", "けい"],
+        ["電池|でんち", "池", "ち"],
+        ["洗顔|せんがん", "洗", "せん"],
+        ["洗顔|せんがん", "顔", "がん"],
+        ["太陽|たいよう", "太", "たい"],
+        ["市場|いちば", "市", "いち"],
+        ["市場|いちば", "場", "ば"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["進歩|しんぽ", "<ruby>進<rt>しん</rt></ruby><ruby>歩<rt>ぽ</rt></ruby>"],
+        ["音声|おんせい", "<ruby>音<rt>おん</rt></ruby><ruby>声<rt>せい</rt></ruby>"],
+        ["強弱|きょうじゃく", "<ruby>強<rt>きょう</rt></ruby><ruby>弱<rt>じゃく</rt></ruby>"],
+        ["短所|たんしょ", "<ruby>短<rt>たん</rt></ruby><ruby>所<rt>しょ</rt></ruby>"],
+        ["観光|かんこう", "<ruby>観<rt>かん</rt></ruby><ruby>光<rt>こう</rt></ruby>"],
+        ["軽食|けいしょく", "<ruby>軽<rt>けい</rt></ruby><ruby>食<rt>しょく</rt></ruby>"],
+        ["電池|でんち", "<ruby>電<rt>でん</rt></ruby><ruby>池<rt>ち</rt></ruby>"],
+        ["洗顔|せんがん", "<ruby>洗<rt>せん</rt></ruby><ruby>顔<rt>がん</rt></ruby>"],
+        ["太陽|たいよう", "<ruby>太<rt>たい</rt></ruby><ruby>陽<rt>よう</rt></ruby>"],
+        ["市場|いちば", "<ruby>市<rt>いち</rt></ruby><ruby>場<rt>ば</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["観光|かんこう"].notes, /観=N3/);
+    assert.match(starterEntries["太陽|たいよう"].notes, /陽=N3/);
+    assert.match(starterEntries["市場|いちば"].notes, /市場（しじょう）/);
+});
+
 test("tracked starter word data includes the first N5 enhancement batch without duplicate junk", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

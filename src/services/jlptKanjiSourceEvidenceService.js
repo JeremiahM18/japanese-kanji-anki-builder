@@ -527,49 +527,61 @@ function evaluateKanjiSourceEvidence({ kanji, contractLevel, evidence = {}, evid
  * @returns {Record<string, SourceCoverageEntry>}
  */
 function summarizeSourceCoverage({ evidence = {}, contractKanjiSet = new Set() } = {}) {
-    return Object.fromEntries(
-        Object.entries(evidence.sources || {}).map(([sourceId, source]) => {
-            const sourceAssignments = evidence.assignments?.[sourceId] || {};
-            const assignedKanji = Object.keys(sourceAssignments);
-            const unreviewedAssignmentCount = Object.values(sourceAssignments)
-                .filter((entry) => entry?.reviewStatus !== "reviewed")
-                .length;
-            const assignmentOutsideContract = assignedKanji.filter((kanji) => !contractKanjiSet.has(kanji));
-            const tier = resolveSourceTier(source, evidence);
-            const lineage = resolveSourceLineage(source, evidence);
-            return [sourceId, {
-                name: source.name,
-                status: source.status,
-                tier: tier.id,
-                tierLabel: tier.label,
-                tierRank: tier.rank,
-                tierRole: tier.role,
-                lineage: lineage.id,
-                lineageLabel: lineage.label,
-                lineageRole: lineage.role,
-                independent: source.independent !== false,
-                publisherIndependence: resolvePublisherIndependence(sourceId, source),
-                independenceGroup: resolvePublisherIndependence(sourceId, source),
-                japanesePublished: source.japanesePublished === true,
-                countsForConsensus: source.countsForConsensus !== false,
-                licenseStatus: source.licenseStatus,
-                allowedUse: source.allowedUse,
-                sourceKind: source.sourceKind,
-                canStoreAssignments: source.canStoreAssignments === true,
-                canStoreRawList: source.canStoreRawList === true,
-                canStoreExcerpts: source.canStoreExcerpts === true,
-                requiresCitation: source.requiresCitation !== false,
-                positiveEvidenceOnly: source.positiveEvidenceOnly === true,
-                licenseEvidenceUrl: source.licenseEvidenceUrl,
-                licenseReviewedAt: source.licenseReviewedAt,
-                derivedFromSources: source.derivedFromSources || [],
-                assignmentCount: assignedKanji.length,
-                unreviewedAssignmentCount,
-                assignmentOutsideContractCount: assignmentOutsideContract.length,
-                assignmentOutsideContract,
-            }];
-        })
-    );
+    /** @type {Record<string, SourceCoverageEntry>} */
+    const coverage = {};
+
+    for (const [sourceId, source] of Object.entries(evidence.sources || {})) {
+        const sourceAssignments = evidence.assignments?.[sourceId] || {};
+        const assignedKanji = Object.keys(sourceAssignments);
+        const assignmentOutsideContract = [];
+        let unreviewedAssignmentCount = 0;
+
+        for (const kanji of assignedKanji) {
+            if (sourceAssignments[kanji]?.reviewStatus !== "reviewed") {
+                unreviewedAssignmentCount += 1;
+            }
+            if (!contractKanjiSet.has(kanji)) {
+                assignmentOutsideContract.push(kanji);
+            }
+        }
+
+        const tier = resolveSourceTier(source, evidence);
+        const lineage = resolveSourceLineage(source, evidence);
+        const publisherIndependence = resolvePublisherIndependence(sourceId, source);
+        coverage[sourceId] = {
+            name: source.name,
+            status: source.status,
+            tier: tier.id,
+            tierLabel: tier.label,
+            tierRank: tier.rank,
+            tierRole: tier.role,
+            lineage: lineage.id,
+            lineageLabel: lineage.label,
+            lineageRole: lineage.role,
+            independent: source.independent !== false,
+            publisherIndependence,
+            independenceGroup: publisherIndependence,
+            japanesePublished: source.japanesePublished === true,
+            countsForConsensus: source.countsForConsensus !== false,
+            licenseStatus: source.licenseStatus,
+            allowedUse: source.allowedUse,
+            sourceKind: source.sourceKind,
+            canStoreAssignments: source.canStoreAssignments === true,
+            canStoreRawList: source.canStoreRawList === true,
+            canStoreExcerpts: source.canStoreExcerpts === true,
+            requiresCitation: source.requiresCitation !== false,
+            positiveEvidenceOnly: source.positiveEvidenceOnly === true,
+            licenseEvidenceUrl: source.licenseEvidenceUrl,
+            licenseReviewedAt: source.licenseReviewedAt,
+            derivedFromSources: source.derivedFromSources || [],
+            assignmentCount: assignedKanji.length,
+            unreviewedAssignmentCount,
+            assignmentOutsideContractCount: assignmentOutsideContract.length,
+            assignmentOutsideContract,
+        };
+    }
+
+    return coverage;
 }
 
 /**
@@ -578,12 +590,14 @@ function summarizeSourceCoverage({ evidence = {}, contractKanjiSet = new Set() }
  */
 function collectAssignmentSourceIssues({ evidence = {}, contractKanjiSet = new Set() } = {}) {
     const knownSourceIds = new Set(Object.keys(evidence.sources || {}));
-    const unknownAssignmentSources = Object.keys(evidence.assignments || {})
-        .filter((sourceId) => !knownSourceIds.has(sourceId));
+    const unknownAssignmentSources = [];
     /** @type {{ sourceId: string, kanji: string, level?: number }[]} */
     const assignmentOutsideContract = [];
 
     for (const [sourceId, sourceAssignments] of Object.entries(evidence.assignments || {})) {
+        if (!knownSourceIds.has(sourceId)) {
+            unknownAssignmentSources.push(sourceId);
+        }
         for (const kanji of Object.keys(sourceAssignments || {})) {
             if (!contractKanjiSet.has(kanji)) {
                 assignmentOutsideContract.push({
@@ -642,8 +656,9 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
     const confidenceCounts = createConfidenceCounts();
     const issueCounts = createIssueCounts();
     /** @type {Record<number, { checked: number, high_confidence: number, standard_confidence: number, disputed: number, weak_evidence: number, unknown: number, mismatches: number }>} */
-    const byContractLevel = Object.fromEntries(
-        [1, 2, 3, 4, 5].map((level) => [level, {
+    const byContractLevel = {};
+    for (const level of [1, 2, 3, 4, 5]) {
+        byContractLevel[level] = {
             checked: 0,
             high_confidence: 0,
             standard_confidence: 0,
@@ -651,8 +666,8 @@ function auditJlptKanjiSourceEvidence({ contract = {}, evidence = {}, limit = 25
             weak_evidence: 0,
             unknown: 0,
             mismatches: 0,
-        }])
-    );
+        };
+    }
     /** @type {Record<string, AuditIssueEntry[]>} */
     const issues = {
         missingEvidence: [],

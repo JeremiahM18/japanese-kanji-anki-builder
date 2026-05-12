@@ -387,22 +387,27 @@ function assertKanjiEvidenceNotesHaveEvidence(parsed) {
 }
 
 function normalizeKanjiEvidence(kanjiEvidence = {}) {
-    return Object.fromEntries(
-        Object.entries(kanjiEvidence || {}).map(([kanji, entry]) => {
-            const sources = Object.fromEntries(
-                Object.entries(entry.sources || {})
-                    .map(([sourceId, value]) => [sourceId, normalizeJlptLevelAssignmentEntry(value)])
-                    .filter(([, normalized]) => normalized !== null)
-            );
-            return [kanji, {
-                ...entry,
-                consensusLevel: entry.consensusLevel === undefined
-                    ? undefined
-                    : normalizeJlptLevelAssignment(entry.consensusLevel),
-                sources,
-            }];
-        })
-    );
+    const normalizedEvidence = {};
+
+    for (const [kanji, entry] of Object.entries(kanjiEvidence || {})) {
+        const sources = {};
+        for (const [sourceId, value] of Object.entries(entry.sources || {})) {
+            const normalized = normalizeJlptLevelAssignmentEntry(value);
+            if (normalized !== null) {
+                sources[sourceId] = normalized;
+            }
+        }
+
+        normalizedEvidence[kanji] = {
+            ...entry,
+            consensusLevel: entry.consensusLevel === undefined
+                ? undefined
+                : normalizeJlptLevelAssignment(entry.consensusLevel),
+            sources,
+        };
+    }
+
+    return normalizedEvidence;
 }
 
 function buildAssignmentsFromKanjiEvidence(kanjiEvidence = {}, { excludedSourceIds = new Set() } = {}) {
@@ -430,12 +435,11 @@ function hasConflictingAssignmentLevel(existing = {}, next = {}) {
 }
 
 function mergeAssignments(primary = {}, secondary = {}) {
-    const merged = Object.fromEntries(
-        Object.entries(primary || {}).map(([sourceId, sourceAssignments]) => [
-            sourceId,
-            { ...sourceAssignments },
-        ])
-    );
+    const merged = {};
+
+    for (const [sourceId, sourceAssignments] of Object.entries(primary || {})) {
+        merged[sourceId] = { ...sourceAssignments };
+    }
 
     for (const [sourceId, sourceAssignments] of Object.entries(secondary || {})) {
         merged[sourceId] = merged[sourceId] || {};
@@ -454,16 +458,20 @@ function mergeAssignments(primary = {}, secondary = {}) {
 }
 
 function normalizeAssignments(assignments = {}) {
-    return Object.fromEntries(
-        Object.entries(assignments || {}).map(([sourceId, sourceAssignments]) => [
-            sourceId,
-            Object.fromEntries(
-                Object.entries(sourceAssignments || {})
-                    .map(([kanji, value]) => [kanji, normalizeJlptLevelAssignmentEntry(value)])
-                    .filter(([, entry]) => entry !== null)
-            ),
-        ])
-    );
+    const normalizedAssignments = {};
+
+    for (const [sourceId, sourceAssignments] of Object.entries(assignments || {})) {
+        const normalizedSourceAssignments = {};
+        for (const [kanji, value] of Object.entries(sourceAssignments || {})) {
+            const normalized = normalizeJlptLevelAssignmentEntry(value);
+            if (normalized !== null) {
+                normalizedSourceAssignments[kanji] = normalized;
+            }
+        }
+        normalizedAssignments[sourceId] = normalizedSourceAssignments;
+    }
+
+    return normalizedAssignments;
 }
 
 function readJsonFile(filePath) {
@@ -475,27 +483,30 @@ function resolveEvidenceRelativePath(evidencePath, relativePath) {
 }
 
 function hydrateAssignmentEvidenceRecords({ sourceId, assignments = {}, evidenceRecords = {} } = {}) {
-    return Object.fromEntries(
-        Object.entries(assignments || {}).map(([kanji, value]) => {
-            if (!value || typeof value !== "object" || Array.isArray(value) || !value.evidenceRecordId) {
-                return [kanji, value];
-            }
+    const hydratedAssignments = {};
 
-            const record = evidenceRecords[value.evidenceRecordId];
-            if (!record) {
-                throw new Error(
-                    `JLPT kanji assignment file ${sourceId} references unknown evidence record ${value.evidenceRecordId} for ${kanji}.`
-                );
-            }
+    for (const [kanji, value] of Object.entries(assignments || {})) {
+        if (!value || typeof value !== "object" || Array.isArray(value) || !value.evidenceRecordId) {
+            hydratedAssignments[kanji] = value;
+            continue;
+        }
 
-            const assignment = { ...value };
-            delete assignment.evidenceRecordId;
-            return [kanji, {
-                ...record,
-                ...assignment,
-            }];
-        })
-    );
+        const record = evidenceRecords[value.evidenceRecordId];
+        if (!record) {
+            throw new Error(
+                `JLPT kanji assignment file ${sourceId} references unknown evidence record ${value.evidenceRecordId} for ${kanji}.`
+            );
+        }
+
+        const assignment = { ...value };
+        delete assignment.evidenceRecordId;
+        hydratedAssignments[kanji] = {
+            ...record,
+            ...assignment,
+        };
+    }
+
+    return hydratedAssignments;
 }
 
 function loadAssignmentFiles(evidencePath, assignmentFiles = {}) {

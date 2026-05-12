@@ -73,6 +73,31 @@ test("kanji source input template supports level and limit filters", () => {
     assert.equal(rows[0].currentContractLevel, "N5");
 });
 
+test("kanji source input contract priority does not initialize source evidence", () => {
+    const evidence = {};
+    Object.defineProperty(evidence, "sources", {
+        get() {
+            throw new Error("contract priority should not read source evidence");
+        },
+    });
+
+    const rows = buildJlptKanjiSourceInputTemplateRows({
+        contract: {
+            kanjiLevels: {
+                日: 5,
+                月: 5,
+                語: 4,
+            },
+        },
+        evidence,
+        priority: "contract",
+        limit: 1,
+    });
+
+    assert.equal(rows.length, 1);
+    assert.equal(rows[0].reviewPriority, "contract_order");
+});
+
 test("kanji source input template TSV exposes only manual review fields", () => {
     const tsv = formatJlptKanjiSourceInputTemplateTsv([
         {
@@ -156,6 +181,18 @@ test("kanji source input template can prioritize current source-evidence gaps", 
     ]);
     assert.match(rows[0].reviewReason, /No reviewed active external voting evidence/);
     assert.match(rows[1].reviewReason, /no required Japanese-published source evidence/);
+
+    const limitedRows = buildJlptKanjiSourceInputTemplateRows({
+        contract,
+        evidence,
+        priority: "source-gaps",
+        limit: 2,
+    });
+
+    assert.deepEqual(limitedRows.map((row) => `${row.kanji}:${row.reviewPriority}`), [
+        "月:missing_evidence",
+        "語:missing_japanese_published_source",
+    ]);
 });
 
 test("kanji source input template can prepare source-level delta review rows", () => {

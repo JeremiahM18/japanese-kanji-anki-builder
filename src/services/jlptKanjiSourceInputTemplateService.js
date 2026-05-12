@@ -252,6 +252,116 @@ function hasSupportedReviewLevel(row = {}, supportedLevelSet = new Set()) {
     return (row.reviewLevels || []).some((level) => supportedLevelSet.has(Number(level)));
 }
 
+function compareContractTemplateEntries(entryA, entryB) {
+    return entryB.contractLevel - entryA.contractLevel
+        || entryA.kanji.localeCompare(entryB.kanji, "ja");
+}
+
+function compareSourceGapTemplateEntries(entryA, entryB) {
+    return entryA.priority.rank - entryB.priority.rank
+        || compareContractTemplateEntries(entryA, entryB);
+}
+
+function formatTemplateRow(entry) {
+    return {
+        kanji: entry.kanji,
+        currentContractLevel: formatLevel(entry.contractLevel),
+        level: "",
+        reviewStatus: "needs_review",
+        citation: "",
+        evidenceRef: "",
+        notes: "",
+        reviewPriority: entry.priority.reviewPriority,
+        reviewReason: entry.priority.reviewReason,
+    };
+}
+
+function pushLimitedTemplateEntry(rows, entry, compareEntries, maxRows) {
+    if (maxRows === null) {
+        rows.push(entry);
+        return;
+    }
+
+    let insertAt = rows.findIndex((existing) => compareEntries(entry, existing) < 0);
+    if (insertAt === -1) {
+        if (rows.length < maxRows) {
+            rows.push(entry);
+        }
+        return;
+    }
+
+    rows.splice(insertAt, 0, entry);
+    if (rows.length > maxRows) {
+        rows.pop();
+    }
+}
+
+function buildContractPriorityRows({ contract, levelFilter, maxRows, skippedSourceKanji = new Set() } = {}) {
+    /** @type {Map<number, string[]>} */
+    const levelBuckets = new Map();
+
+    for (const [kanji, contractLevel] of Object.entries(contract.kanjiLevels || {})) {
+        if ((levelFilter !== null && contractLevel !== levelFilter) || skippedSourceKanji.has(kanji)) {
+            continue;
+        }
+        if (!levelBuckets.has(contractLevel)) {
+            levelBuckets.set(contractLevel, []);
+        }
+        levelBuckets.get(contractLevel).push(kanji);
+    }
+
+    const priority = buildSourceEvidencePriority({ evidence: null });
+    const levels = levelFilter === null ? [5, 4, 3, 2, 1] : [levelFilter];
+    const rows = [];
+
+    for (const contractLevel of levels) {
+        const kanjiForLevel = levelBuckets.get(contractLevel) || [];
+        kanjiForLevel.sort((kanjiA, kanjiB) => kanjiA.localeCompare(kanjiB, "ja"));
+        for (const kanji of kanjiForLevel) {
+            rows.push(formatTemplateRow({ kanji, contractLevel, priority }));
+            if (maxRows !== null && rows.length >= maxRows) {
+                return rows;
+            }
+        }
+    }
+
+    return rows;
+}
+
+function buildSourceGapPriorityRows({
+    contract,
+    evidence,
+    levelFilter,
+    maxRows,
+    skippedSourceKanji = new Set(),
+} = {}) {
+    if (!evidence) {
+        return buildContractPriorityRows({ contract, levelFilter, maxRows, skippedSourceKanji });
+    }
+
+    const evidenceContext = buildSourceEvidenceContext(evidence);
+    const entries = [];
+
+    for (const [kanji, contractLevel] of Object.entries(contract.kanjiLevels || {})) {
+        if ((levelFilter !== null && contractLevel !== levelFilter) || skippedSourceKanji.has(kanji)) {
+            continue;
+        }
+
+        const entry = {
+            kanji,
+            contractLevel,
+            priority: buildSourceEvidencePriority({ kanji, contractLevel, evidence, evidenceContext }),
+        };
+        pushLimitedTemplateEntry(entries, entry, compareSourceGapTemplateEntries, maxRows);
+    }
+
+    if (maxRows === null) {
+        entries.sort(compareSourceGapTemplateEntries);
+    }
+
+    return entries.map(formatTemplateRow);
+}
+
 function buildJlptKanjiSourceInputTemplateRows({
     contract = {},
     evidence = null,
@@ -264,7 +374,6 @@ function buildJlptKanjiSourceInputTemplateRows({
 } = {}) {
     const maxRows = resolvePositiveLimit(limit);
     const priorityMode = normalizePriorityMode(priority);
-    const evidenceContext = evidence ? buildSourceEvidenceContext(evidence) : null;
     const hasSourceLevelFilter = sourceLevel !== null
         && sourceLevel !== undefined
         && String(sourceLevel).trim() !== "";
@@ -301,37 +410,22 @@ function buildJlptKanjiSourceInputTemplateRows({
     }
 
     const levelFilter = parseJlptLevelFilter(level);
-    const rows = Object.entries(contract.kanjiLevels || {})
-        .filter(([, contractLevel]) => levelFilter === null || contractLevel === levelFilter)
-        .filter(([kanji]) => !skippedSourceKanji.has(kanji))
-        .map(([kanji, contractLevel]) => ({
-            kanji,
-            contractLevel,
-            priority: priorityMode === "source-gaps"
-                ? buildSourceEvidencePriority({ kanji, contractLevel, evidence, evidenceContext })
-                : buildSourceEvidencePriority({ kanji, contractLevel, evidence: null }),
-        }))
-        .sort((entryA, entryB) => {
-            if (priorityMode === "source-gaps" && entryA.priority.rank !== entryB.priority.rank) {
-                return entryA.priority.rank - entryB.priority.rank;
-            }
-            return entryB.contractLevel - entryA.contractLevel
-                || entryA.kanji.localeCompare(entryB.kanji, "ja");
+    if (priorityMode === "source-gaps") {
+        return buildSourceGapPriorityRows({
+            contract,
+            evidence,
+            levelFilter,
+            maxRows,
+            skippedSourceKanji,
         });
+    }
 
-    const formattedRows = rows.map((entry) => ({
-        kanji: entry.kanji,
-        currentContractLevel: formatLevel(entry.contractLevel),
-        level: "",
-        reviewStatus: "needs_review",
-        citation: "",
-        evidenceRef: "",
-        notes: "",
-        reviewPriority: entry.priority.reviewPriority,
-        reviewReason: entry.priority.reviewReason,
-    }));
-
-    return maxRows === null ? formattedRows : formattedRows.slice(0, maxRows);
+    return buildContractPriorityRows({
+        contract,
+        levelFilter,
+        maxRows,
+        skippedSourceKanji,
+    });
 }
 
 function escapeTsvCell(value) {

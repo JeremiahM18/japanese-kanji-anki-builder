@@ -191,6 +191,21 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
     assert.deepEqual(curatedStudyData["便"].displayWord, { written: "便利", pron: "べんり" });
     assert.equal(curatedStudyData["便"].englishMeaning, "convenience / mail service");
     assert.deepEqual(curatedStudyData["便"].preferredWords, ["便利", "郵便"]);
+    assert.deepEqual(curatedStudyData["乗"].blockedMeanings, ["counter for vehicles", "multiplication", "power", "record"]);
+    assert.deepEqual(curatedStudyData["低"].blockedMeanings, ["humble", "short"]);
+    assert.deepEqual(curatedStudyData["使"].blockedMeanings, ["ambassador", "cause", "envoy", "messenger", "order", "send on a mission"]);
+    assert.deepEqual(curatedStudyData["便"].blockedMeanings, ["chance", "excrement", "facility", "feces"]);
+    assert.deepEqual(curatedStudyData["働"].blockedMeanings, ["(kokuji)"]);
+    assert.deepEqual(curatedStudyData["全"].blockedMeanings, ["fulfill"]);
+    assert.deepEqual(curatedStudyData["公"].blockedMeanings, ["prince"]);
+    assert.deepEqual(curatedStudyData["写"].blockedMeanings, ["describe"]);
+    assert.deepEqual(curatedStudyData["別"].blockedMeanings, ["branch off", "diverge", "fork"]);
+    assert.deepEqual(curatedStudyData["力"].blockedMeanings, ["bear up", "strain"]);
+    assert.deepEqual(curatedStudyData["勉"].blockedMeanings, ["encourage", "endeavour", "exertion"]);
+    assert.deepEqual(curatedStudyData["動"].blockedMeanings, ["confusion"]);
+    assert.deepEqual(curatedStudyData["去"].blockedMeanings, ["divorce", "quit"]);
+    assert.deepEqual(curatedStudyData["合"].blockedMeanings, ["0.1"]);
+    assert.deepEqual(curatedStudyData["品"].blockedMeanings, ["counter for meal courses"]);
 
     assert.deepEqual(curatedStudyData["情"].displayWord, { written: "事情", pron: "じじょう" });
     assert.equal(curatedStudyData["情"].englishMeaning, "situation / emotion");

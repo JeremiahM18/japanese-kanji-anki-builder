@@ -53830,6 +53830,11 @@
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
+    "blockedMeanings": [
+      "akin",
+      "early",
+      "tantamount"
+    ],
     "notes": "近い （ちかい） - near ／ 近所 （きんじょ） - neighborhood",
     "alternativeNotes": [],
     "exampleSentence": {
@@ -54159,6 +54164,10 @@
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
+    "blockedMeanings": [
+      "avenue",
+      "counter for letters, notes, documents, etc."
+    ],
     "notes": "通う （かよう） - commute ／ 通る （とおる） - pass through",
     "alternativeNotes": [],
     "exampleSentence": {
@@ -54403,7 +54412,7 @@
     }
   },
   "運": {
-    "englishMeaning": "carry / luck / exercise",
+    "englishMeaning": "exercise / luck",
     "breakdownOverrides": [],
     "source": "starter-curated",
     "tags": [
@@ -54416,12 +54425,19 @@
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "運動 （うんどう） - exercise ／ 運ぶ （はこぶ） - carry",
+    "blockedMeanings": [
+      "advance",
+      "destiny",
+      "fate",
+      "lot",
+      "progress"
+    ],
+    "notes": "運動 （うんどう） - exercise ／ 運 （うん） - luck ／ 運ぶ （はこぶ） - carry",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "健康のために毎日運動しています。",
-      "reading": "けんこうのためにまいにちうんどうしています。",
-      "english": "I exercise every day for my health.",
+      "japanese": "今日は運がいいです。",
+      "reading": "きょうはうんがいいです。",
+      "english": "I am lucky today.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -54498,6 +54514,13 @@
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
+    "blockedMeanings": [
+      "district",
+      "journey",
+      "moral",
+      "road-way",
+      "teachings"
+    ],
     "notes": "道 （みち） - road ／ 道具 （どうぐ） - tool",
     "alternativeNotes": [],
     "exampleSentence": {
@@ -54723,17 +54746,22 @@
     ],
     "jlpt": 4,
     "preferredWords": [
-      "部屋",
-      "部分"
+      "部分",
+      "部屋"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "部屋 （へや） - room ／ 部分 （ぶぶん） - part",
+    "blockedMeanings": [
+      "copy",
+      "counter for copies of a newspaper or magazine",
+      "dept"
+    ],
+    "notes": "部分 （ぶぶん） - part ／ 部屋 （へや） - room",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "この部屋は明るいです。",
-      "reading": "このへやはあかるいです。",
-      "english": "This room is bright.",
+      "japanese": "この部分を読んでください。",
+      "reading": "このぶぶんをよんでください。",
+      "english": "Please read this part.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -54793,6 +54821,10 @@
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
+    "blockedMeanings": [
+      "all",
+      "everything"
+    ],
     "notes": "都会 （とかい） - city / urban area ／ 都市 （とし） - city ／ 東京都 （とうきょうと） - Tokyo Metropolis",
     "alternativeNotes": [],
     "exampleSentence": {
@@ -54886,6 +54918,13 @@
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
+    "blockedMeanings": [
+      "-fold",
+      "esteem",
+      "heap up",
+      "nest of boxes",
+      "respect"
+    ],
     "notes": "重い （おもい） - heavy ／ 重要 （じゅうよう） - important",
     "alternativeNotes": [],
     "exampleSentence": {
@@ -54913,16 +54952,21 @@
     ],
     "jlpt": 4,
     "preferredWords": [
+      "野原",
       "野菜"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "野菜 （やさい） - vegetables ／ 野原 （のはら） - field",
+    "blockedMeanings": [
+      "civilian life",
+      "rustic"
+    ],
+    "notes": "野原 （のはら） - field ／ 野菜 （やさい） - vegetables",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "夕食に野菜をたくさん食べます。",
-      "reading": "ゆうしょくにやさいをたくさんたべます。",
-      "english": "I eat a lot of vegetables for dinner.",
+      "japanese": "広い野原を歩きました。",
+      "reading": "ひろいのはらをあるきました。",
+      "english": "I walked through a wide field.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -55307,8 +55351,8 @@
   "門": {
     "englishMeaning": "gate / field",
     "displayWord": {
-      "written": "専門",
-      "pron": "せんもん"
+      "written": "門",
+      "pron": "もん"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -55318,18 +55362,21 @@
     ],
     "jlpt": 4,
     "preferredWords": [
-      "専門",
       "門",
-      "正門"
+      "正門",
+      "専門"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "専門 （せんもん） - specialty / field ／ 門 （もん） - gate ／ 正門 （せいもん） - main gate",
+    "blockedMeanings": [
+      "counter for cannons"
+    ],
+    "notes": "門 （もん） - gate ／ 正門 （せいもん） - main gate ／ 専門 （せんもん） - specialty / field",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "大学では経済学を専門にしています。",
-      "reading": "だいがくではけいざいがくをせんもんにしています。",
-      "english": "I specialize in economics at university.",
+      "japanese": "学校の正門で友だちを待ちました。",
+      "reading": "がっこうのせいもんでともだちをまちました。",
+      "english": "I waited for my friend at the school's main gate.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -55623,6 +55670,10 @@
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
+    "blockedMeanings": [
+      "Inst.",
+      "mansion"
+    ],
     "notes": "病院 （びょういん） - hospital ／ 入院 （にゅういん） - hospitalization",
     "alternativeNotes": [],
     "exampleSentence": {
@@ -55941,17 +55992,22 @@
     ],
     "jlpt": 4,
     "preferredWords": [
-      "集まる",
-      "集める"
+      "集める",
+      "集まる"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "集まる （あつまる） - gather ／ 集める （あつめる） - collect",
+    "blockedMeanings": [
+      "congregate",
+      "flock",
+      "swarm"
+    ],
+    "notes": "集める （あつめる） - collect ／ 集まる （あつまる） - gather",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "駅前に人がたくさん集まりました。",
-      "reading": "えきまえにひとがたくさんあつまりました。",
-      "english": "A lot of people gathered in front of the station.",
+      "japanese": "切手を集めています。",
+      "reading": "きってをあつめています。",
+      "english": "I collect stamps.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -56496,17 +56552,17 @@
     ],
     "jlpt": 4,
     "preferredWords": [
-      "音楽",
-      "音"
+      "音",
+      "音楽"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "音楽 （おんがく） - music ／ 音 （おと） - sound",
+    "notes": "音 （おと） - sound ／ 音楽 （おんがく） - music",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "部屋で小さな音楽を聞いています。",
-      "reading": "へやでちいさなおんがくをきいています。",
-      "english": "I am listening to soft music in my room.",
+      "japanese": "外で大きな音がしました。",
+      "reading": "そとでおおきなおとがしました。",
+      "english": "There was a loud sound outside.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -56701,6 +56757,9 @@
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
+    "blockedMeanings": [
+      "counter for large animals"
+    ],
     "notes": "頭 （あたま） - head ／ 頭痛 （ずつう） - headache ／ 店頭 （てんとう） - storefront",
     "alternativeNotes": [],
     "exampleSentence": {
@@ -57089,6 +57148,9 @@
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
+    "blockedMeanings": [
+      "smoke"
+    ],
     "notes": "飲む （のむ） - drink ／ 飲み物 （のみもの） - drink",
     "alternativeNotes": [],
     "exampleSentence": {
@@ -57122,6 +57184,10 @@
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
+    "blockedMeanings": [
+      "mansion",
+      "palace"
+    ],
     "notes": "図書館 （としょかん） - library ／ 旅館 （りょかん） - Japanese inn",
     "alternativeNotes": [],
     "exampleSentence": {
@@ -57155,6 +57221,9 @@
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
+    "blockedMeanings": [
+      "counter for songs and poems"
+    ],
     "notes": "首 （くび） - neck ／ 手首 （てくび） - wrist ／ 首都 （しゅと） - capital city",
     "alternativeNotes": [],
     "exampleSentence": {
@@ -57310,6 +57379,10 @@
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
+    "blockedMeanings": [
+      "effect",
+      "verification"
+    ],
     "notes": "試験 （しけん） - test ／ 経験 （けいけん） - experience",
     "alternativeNotes": [],
     "exampleSentence": {
@@ -57470,6 +57543,9 @@
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
+    "blockedMeanings": [
+      "chicken"
+    ],
     "notes": "鳥 （とり） - bird ／ 小鳥 （ことり） - small bird",
     "alternativeNotes": [],
     "exampleSentence": {

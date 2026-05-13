@@ -1,7 +1,9 @@
 const {
     ACTIVE_PLATINUM_STATUSES,
     NON_SHIPPING_STATUSES,
+    REVALIDATION_STATUSES,
     REVIEW_ONLY_STATUSES,
+    isCurrentStandardPlatinumEntry,
     validateGeneratedKanjiRow,
 } = require("./platinumKanjiReviewService");
 const { katakanaToHiragana } = require("../utils/japanese");
@@ -63,26 +65,34 @@ function describeCuratedReadingConflict(row = {}, curatedEntry = null) {
     return `curated display reading ${displayPron} differs from word-breakdown reading ${breakdownPron};${selected} must be explicitly justified against Japanese source evidence before platinum`;
 }
 
-function buildEntryStatusByKanji(entries = []) {
-    const statusByKanji = new Map();
+function buildEntryStateByKanji(entries = []) {
+    const stateByKanji = new Map();
 
     for (const entry of Array.isArray(entries) ? entries : []) {
         const kanji = normalizeText(entry.kanji);
         if (!kanji) {
             continue;
         }
-        if (!statusByKanji.has(kanji)) {
-            statusByKanji.set(kanji, []);
+        if (!stateByKanji.has(kanji)) {
+            stateByKanji.set(kanji, {
+                statuses: [],
+                entries: [],
+            });
         }
-        statusByKanji.get(kanji).push(normalizeText(entry.status) || "(blank)");
+        const state = stateByKanji.get(kanji);
+        state.statuses.push(normalizeText(entry.status) || "(blank)");
+        state.entries.push(entry);
     }
 
-    return statusByKanji;
+    return stateByKanji;
 }
 
-function classifyReviewStatus(statuses = []) {
-    if (statuses.some((status) => ACTIVE_PLATINUM_STATUSES.includes(status))) {
+function classifyReviewStatus(statuses = [], entries = []) {
+    if ((Array.isArray(entries) ? entries : []).some(isCurrentStandardPlatinumEntry)) {
         return "active_platinum";
+    }
+    if (statuses.some((status) => ACTIVE_PLATINUM_STATUSES.includes(status) || REVALIDATION_STATUSES.includes(status))) {
+        return "needs_revalidation";
     }
     if (statuses.some((status) => NON_SHIPPING_STATUSES.includes(status))) {
         return "non_shipping_decision";
@@ -158,6 +168,8 @@ function buildRiskFlags(row = {}, { reviewStatus = "missing_platinum", statuses 
 
     if (reviewStatus === "active_platinum") {
         flags.push("already has active platinum; re-review only if intentionally replacing prior evidence");
+    } else if (reviewStatus === "needs_revalidation") {
+        flags.push("existing legacy/unversioned review history does not count as platinum until current-standard revalidation");
     } else if (reviewStatus === "needs_review") {
         flags.push("existing needs_review entry blocks platinum until resolved");
     } else if (reviewStatus === "non_shipping_decision") {
@@ -194,7 +206,7 @@ function buildRiskFlags(row = {}, { reviewStatus = "missing_platinum", statuses 
 
 function selectBatchRows({ rows = [], entries = [], kanji = [], limit = 12 } = {}) {
     const activeKanji = new Set((Array.isArray(entries) ? entries : [])
-        .filter((entry) => ACTIVE_PLATINUM_STATUSES.includes(normalizeText(entry.status)))
+        .filter(isCurrentStandardPlatinumEntry)
         .map((entry) => normalizeText(entry.kanji)));
 
     if (Array.isArray(kanji) && kanji.length > 0) {
@@ -211,17 +223,18 @@ function selectBatchRows({ rows = [], entries = [], kanji = [], limit = 12 } = {
 function buildPlatinumKanjiBatchReport({ rows = [], entries = [], level, kanji = [], limit = 12, curatedStudyData = {} } = {}) {
     const generatedRows = Array.isArray(rows) ? rows : [];
     const reviewEntries = Array.isArray(entries) ? entries : [];
-    const statusByKanji = buildEntryStatusByKanji(reviewEntries);
+    const stateByKanji = buildEntryStateByKanji(reviewEntries);
     const selectedRows = selectBatchRows({ rows: generatedRows, entries: reviewEntries, kanji, limit });
-    const activeCount = reviewEntries.filter((entry) => ACTIVE_PLATINUM_STATUSES.includes(normalizeText(entry.status))).length;
+    const activeCount = reviewEntries.filter(isCurrentStandardPlatinumEntry).length;
     const missingRows = generatedRows.filter((row) => {
-        const statuses = statusByKanji.get(row.kanji) || [];
-        return classifyReviewStatus(statuses) !== "active_platinum";
+        const state = stateByKanji.get(row.kanji) || { statuses: [], entries: [] };
+        return classifyReviewStatus(state.statuses, state.entries) !== "active_platinum";
     });
 
     const cards = selectedRows.map((row) => {
-        const statuses = statusByKanji.get(row.kanji) || [];
-        const reviewStatus = classifyReviewStatus(statuses);
+        const state = stateByKanji.get(row.kanji) || { statuses: [], entries: [] };
+        const statuses = state.statuses;
+        const reviewStatus = classifyReviewStatus(statuses, state.entries);
         const hardChecks = buildHardChecks(row);
         const generatedFailures = validateGeneratedKanjiRow(row);
         const curatedEntry = curatedStudyData?.[row.kanji] || null;
@@ -272,7 +285,7 @@ function formatPlatinumKanjiBatchReport(report = {}) {
         "",
         `Scope: ${report.scope || "(unknown)"}`,
         `Generated cards: ${summary.generatedRows || 0}`,
-        `Active platinum: ${summary.activePlatinum || 0}`,
+        `Active current-standard platinum: ${summary.activePlatinum || 0}`,
         `Remaining platinum: ${summary.remainingPlatinum || 0}`,
         `Selected cards: ${summary.selectedCards || 0}`,
     ];

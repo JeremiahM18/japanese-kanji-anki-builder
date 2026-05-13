@@ -12,9 +12,9 @@ const {
     selectPhysicalAdditionalEntries,
 } = require("./additionalKanjiDeckService");
 const {
-    ACTIVE_PLATINUM_STATUSES,
     buildKanjiReviewStandardSummary,
     buildKanjiVerificationLimitationSummary,
+    isCurrentStandardPlatinumEntry,
 } = require("./platinumKanjiReviewService");
 
 function toSortedArray(values = []) {
@@ -36,7 +36,7 @@ function buildKanjiSetFromReviewSet(reviewSet = []) {
 function buildActivePlatinumSet(reviewSet = []) {
     return new Set(
         (Array.isArray(reviewSet) ? reviewSet : [])
-            .filter((entry) => ACTIVE_PLATINUM_STATUSES.includes(String(entry?.status || "").trim()))
+            .filter(isCurrentStandardPlatinumEntry)
             .map((entry) => String(entry?.kanji || "").trim())
             .filter(Boolean)
     );
@@ -110,8 +110,10 @@ function buildReviewStatusRow({
         platinumCount: platinumSet.size,
         currentStandardPlatinumCount: reviewStandardSummary.currentStandardCount || 0,
         legacyOrUnversionedPlatinumCount: reviewStandardSummary.legacyOrUnversionedCount || 0,
+        revalidationBacklogCount: reviewStandardSummary.revalidationBacklogCount || 0,
         currentStandardKanji: reviewStandardSummary.currentStandardKanji || [],
         legacyOrUnversionedKanji: reviewStandardSummary.legacyOrUnversionedKanji || [],
+        revalidationBacklogKanji: reviewStandardSummary.revalidationBacklogKanji || [],
         verificationLimitationKanjiCount: verificationLimitationSummary.kanjiCount || 0,
         verificationLimitationCount: verificationLimitationSummary.limitationCount || 0,
         verificationLimitationFieldCounts: verificationLimitationSummary.fieldCounts || {},
@@ -408,7 +410,7 @@ function formatKanjiDeckReviewStatus(report = {}) {
         for (const row of rowsWithLimitations) {
             lines.push(
                 `- ${row.deckId}: ${row.verificationLimitationCount} limitation(s) `
-                + `on ${row.verificationLimitationKanjiCount} active platinum card(s)`
+                + `on ${row.verificationLimitationKanjiCount} active current-standard platinum card(s)`
             );
             for (const limitation of (row.verificationLimitations || []).slice(0, 12)) {
                 lines.push(`  - ${limitation.kanji}: ${limitation.field} (${limitation.status}) - ${limitation.label}`);
@@ -420,13 +422,15 @@ function formatKanjiDeckReviewStatus(report = {}) {
     }
 
     const legacyRows = (report.rows || [])
-        .filter((row) => (row.legacyOrUnversionedPlatinumCount || 0) > 0);
+        .filter((row) => (row.revalidationBacklogCount ?? row.legacyOrUnversionedPlatinumCount ?? 0) > 0);
     if (legacyRows.length > 0) {
-        lines.push("", "Legacy/Unversioned Platinum:");
+        lines.push("", "Revalidation Backlog/History:");
         for (const row of legacyRows) {
-            lines.push(`- ${row.deckId}: ${row.legacyOrUnversionedPlatinumCount} active platinum card(s) need current-standard revalidation`);
-            if ((row.legacyOrUnversionedKanji || []).length > 0) {
-                lines.push(`  - sample: ${formatSample(row.legacyOrUnversionedKanji)}`);
+            const count = row.revalidationBacklogCount ?? row.legacyOrUnversionedPlatinumCount ?? 0;
+            const kanji = row.revalidationBacklogKanji || row.legacyOrUnversionedKanji || [];
+            lines.push(`- ${row.deckId}: ${count} non-certifying review-history card(s) need current-standard revalidation`);
+            if (kanji.length > 0) {
+                lines.push(`  - sample: ${formatSample(kanji)}`);
             }
         }
     }

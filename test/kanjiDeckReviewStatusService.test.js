@@ -8,6 +8,7 @@ const {
     buildKanjiDeckReviewStatus,
     formatKanjiDeckReviewStatus,
 } = require("../src/services/kanjiDeckReviewStatusService");
+const { CURRENT_KANJI_PLATINUM_REVIEW_STANDARD } = require("../src/services/platinumKanjiReviewService");
 
 function writeJson(filePath, value) {
     fs.mkdirSync(path.dirname(filePath), { recursive: true });
@@ -27,6 +28,10 @@ test("buildKanjiDeckReviewStatus reports core and additional review coverage", (
         writeJson(path.join(tempRoot, "templates", "platinum_n5_review_set.json"), [{
             kanji: "一",
             status: "platinum",
+            reviewStandard: CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
+            revalidatedAt: "2026-05-13",
+            revalidationSummary: "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+            sourceEvidence: [{ type: "current-standard-review" }],
             verificationLimitations: [{
                 field: "strokeOrderSequence",
                 status: "externally_unverified",
@@ -35,7 +40,14 @@ test("buildKanjiDeckReviewStatus reports core and additional review coverage", (
             }],
         }]);
         writeJson(path.join(tempRoot, "templates", "golden_n1_review_set.json"), [{ kanji: "亜" }]);
-        writeJson(path.join(tempRoot, "templates", "platinum_n1_review_set.json"), []);
+        writeJson(path.join(tempRoot, "templates", "platinum_n1_review_set.json"), [{
+            kanji: "亜",
+            status: "needs_revalidation",
+            previousStatus: "platinum",
+            reviewedAt: "2026-05-01",
+            reviewer: "fixture-review",
+            decisionReason: "Legacy fixture retained only as non-certifying review history.",
+        }]);
         writeTsv(path.join(tempRoot, "out", "build", "exports", "jlpt-n5.tsv"), ["一"]);
         writeTsv(path.join(tempRoot, "out", "build", "exports", "jlpt-n1.tsv"), ["亜"]);
         writeTsv(path.join(tempRoot, "out", "build", "additional_unverified", "exports", "additional-unverified-n5.tsv"), ["本"]);
@@ -92,15 +104,17 @@ test("buildKanjiDeckReviewStatus reports core and additional review coverage", (
         assert.equal(coreN5.presentUnique, 1);
         assert.equal(coreN5.goldenCount, 1);
         assert.equal(coreN5.platinumCount, 1);
-        assert.equal(coreN5.currentStandardPlatinumCount, 0);
-        assert.equal(coreN5.legacyOrUnversionedPlatinumCount, 1);
-        assert.deepEqual(coreN5.legacyOrUnversionedKanji, ["一"]);
+        assert.equal(coreN5.currentStandardPlatinumCount, 1);
+        assert.equal(coreN5.revalidationBacklogCount, 0);
         assert.equal(coreN5.verificationLimitationCount, 1);
         assert.equal(coreN5.verificationLimitationKanjiCount, 1);
         assert.equal(coreN5.verificationLimitationFieldCounts.strokeOrderSequence, 1);
         assert.equal(coreN1.presentUnique, 1);
         assert.equal(coreN1.goldenCount, 1);
         assert.equal(coreN1.platinumCount, 0);
+        assert.equal(coreN1.revalidationBacklogCount, 1);
+        assert.deepEqual(coreN1.revalidationBacklogKanji, ["亜"]);
+        assert.deepEqual(coreN1.missingPlatinum, ["亜"]);
         assert.equal(additionalN5.presentUnique, 1);
         assert.equal(additionalN5.plannedCount, 1);
         assert.equal(additionalN5.goldenCount, 0);
@@ -113,10 +127,10 @@ test("buildKanjiDeckReviewStatus reports core and additional review coverage", (
         assert.match(formatKanjiDeckReviewStatus(report), /duplicate kanji: 1/);
         assert.match(formatKanjiDeckReviewStatus(report), /core N4 retained; no additional duplicate selected/);
         assert.match(formatKanjiDeckReviewStatus(report), /Verification Limitations:/);
-        assert.match(formatKanjiDeckReviewStatus(report), /core_N5: 1 limitation\(s\) on 1 active platinum card\(s\)/);
+        assert.match(formatKanjiDeckReviewStatus(report), /core_N5: 1 limitation\(s\) on 1 active current-standard platinum card\(s\)/);
         assert.match(formatKanjiDeckReviewStatus(report), /Current Std/);
-        assert.match(formatKanjiDeckReviewStatus(report), /Legacy\/Unversioned Platinum:/);
-        assert.match(formatKanjiDeckReviewStatus(report), /core_N5: 1 active platinum card\(s\) need current-standard revalidation/);
+        assert.match(formatKanjiDeckReviewStatus(report), /Revalidation Backlog\/History:/);
+        assert.match(formatKanjiDeckReviewStatus(report), /core_N1: 1 non-certifying review-history card\(s\) need current-standard revalidation/);
     } finally {
         fs.rmSync(tempRoot, { recursive: true, force: true });
     }

@@ -9,6 +9,7 @@ const {
     normalizeReadingEvidence,
     selectBatchRows,
 } = require("../src/services/platinumKanjiBatchReportService");
+const { CURRENT_KANJI_PLATINUM_REVIEW_STANDARD } = require("../src/services/platinumKanjiReviewService");
 
 function buildRow(overrides = {}) {
     return {
@@ -30,6 +31,17 @@ function buildRow(overrides = {}) {
     };
 }
 
+function buildCurrentStandardEntry(kanji = "日") {
+    return {
+        kanji,
+        status: "platinum",
+        reviewStandard: CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
+        revalidatedAt: "2026-05-13",
+        revalidationSummary: "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+        sourceEvidence: [{ type: "current-standard-review" }],
+    };
+}
+
 test("normalizeReadingEvidence sees dictionary punctuation and katakana readings as comparable", () => {
     assert.equal(normalizeReadingEvidence("On: ジ、 Kun: か.く"), "onじkunかく");
 });
@@ -40,7 +52,7 @@ test("selectBatchRows defaults to next missing rows in generated deck order", ()
         buildRow({ kanji: "二", displayWord: "二" }),
         buildRow({ kanji: "三", displayWord: "三" }),
     ];
-    const entries = [{ kanji: "一", status: "platinum" }];
+    const entries = [buildCurrentStandardEntry("一")];
 
     assert.deepEqual(selectBatchRows({ rows, entries, limit: 2 }).map((row) => row.kanji), ["二", "三"]);
 });
@@ -62,7 +74,7 @@ test("buildPlatinumKanjiBatchReport summarizes surfaces checks and risks without
 
     const report = buildPlatinumKanjiBatchReport({
         rows,
-        entries: [{ kanji: "日", status: "platinum" }],
+        entries: [buildCurrentStandardEntry("日")],
         level: 5,
         limit: 12,
     });

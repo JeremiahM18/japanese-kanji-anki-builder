@@ -41,7 +41,7 @@ For active kanji cards, `japanese-source` evidence must cite a source registered
 
 Current word platinum uses the versioned standard `word-platinum-v2-limitation-aware`. Active word entries count toward current-standard platinum only when they include `reviewStandard`, `revalidatedAt`, `revalidationSummary`, `notesIncludes`, and `current-standard-review` source evidence. That current-standard evidence must explicitly bind the generated surface, Japanese-source field check, example sentence, notes/support surface, reading breakdown, level/label surface, exact audio identity, pitch-accent source/render state, media provenance, and verification limitations to the exact written-reading card. It must also record the example sentence judgment: natural, useful, learner-friendly, level-appropriate, and release-quality. Existing active word platinum entries created before this standard are legacy/unversioned: keep them for historical context, but do not count them as current version 1 release coverage until they are revalidated.
 
-Current kanji platinum uses the versioned standard `kanji-platinum-v2-limitation-aware`. Active kanji entries count toward current-standard platinum only when they include `reviewStandard`, `revalidatedAt`, `revalidationSummary`, and `current-standard-review` source evidence. That current-standard evidence must explicitly bind the generated surface, Japanese-source field check, example sentence, notes/support surface, audio, stroke-order media, and verification limitations to the exact card. It must also record the example sentence judgment: natural, useful, learner-friendly, level-appropriate, release-quality, and support-only. Existing active kanji platinum entries created before this standard are legacy/unversioned: keep them for historical context, but do not count them as current version 1 release coverage until they are revalidated.
+Current kanji platinum uses the versioned standard `kanji-platinum-v2-limitation-aware`. Active kanji entries count as platinum only when they include `reviewStandard`, `revalidatedAt`, `revalidationSummary`, and `current-standard-review` source evidence. That current-standard evidence must explicitly bind the generated surface, Japanese-source field check, example sentence, notes/support surface, audio, stroke-order media, and verification limitations to the exact card. It must also record the example sentence judgment: natural, useful, learner-friendly, level-appropriate, release-quality, and support-only. Legacy or unversioned kanji review history must be recorded as `needs_revalidation`; it is non-certifying backlog/history and must not use active platinum statuses until the card is revalidated under the current standard.
 
 ## Word-card platinum rules
 
@@ -91,9 +91,10 @@ Every platinum pass decision must use one explicit outcome:
 - `fixed_then_platinum`: source data or examples were improved during review, then the card ships.
 - `deferred`: useful later, but not for the current level or version 1 surface.
 - `removed`: not useful enough, not learner-friendly, or not appropriate for this product.
+- `needs_revalidation`: old review history retained for context; it does not certify platinum and remains backlog until current-standard revalidation is completed.
 - `needs_review`: blocked until a decision or fix is made.
 
-Only `platinum` and `fixed_then_platinum` count as active platinum cards. `deferred` and `removed` entries must not appear in generated exports. `needs_review` always fails platinum.
+Only current-standard `platinum` and `fixed_then_platinum` entries count as active platinum cards. `deferred` and `removed` entries must not appear in generated exports. `needs_revalidation` is allowed as non-certifying history and still counts as missing platinum coverage. `needs_review` always fails platinum.
 
 ## Required manifest fields
 
@@ -231,6 +232,8 @@ Required kanji `qualityGates`:
 All kanji gates must be `true`. `fixed_then_platinum` kanji entries must also include `fixSummary`.
 
 Deferred and removed kanji entries must include `kanji`, `reviewedAt`, `reviewer`, and `decisionReason`.
+
+`needs_revalidation` kanji history entries must include `kanji`, `previousStatus`, `reviewedAt`, `reviewer`, and `decisionReason`.
 
 ## Commands
 

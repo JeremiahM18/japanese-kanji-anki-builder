@@ -9,7 +9,8 @@ const {
     resolveKanjiSourceOriginIdsForEntry,
 } = require("./platinumKanjiSourceOriginService");
 const NON_SHIPPING_STATUSES = Object.freeze(["deferred", "removed"]);
-const REVIEW_ONLY_STATUSES = Object.freeze(["needs_review"]);
+const REVALIDATION_STATUSES = Object.freeze(["needs_revalidation"]);
+const REVIEW_ONLY_STATUSES = Object.freeze(["needs_review", ...REVALIDATION_STATUSES]);
 const ALLOWED_PLATINUM_STATUSES = Object.freeze([
     ...ACTIVE_PLATINUM_STATUSES,
     ...NON_SHIPPING_STATUSES,
@@ -130,6 +131,20 @@ function entryUsesCurrentKanjiPlatinumStandard(entry = {}) {
     return validateCurrentKanjiPlatinumReviewStandard(entry).length === 0;
 }
 
+function hasActivePlatinumStatus(entry = {}) {
+    return ACTIVE_PLATINUM_STATUSES.includes(normalizeText(entry.status));
+}
+
+function isCurrentStandardPlatinumEntry(entry = {}) {
+    return hasActivePlatinumStatus(entry) && entryUsesCurrentKanjiPlatinumStandard(entry);
+}
+
+function isLegacyOrUnversionedKanjiReviewHistoryEntry(entry = {}) {
+    const status = normalizeText(entry.status);
+    return REVALIDATION_STATUSES.includes(status)
+        || (hasActivePlatinumStatus(entry) && !entryUsesCurrentKanjiPlatinumStandard(entry));
+}
+
 function validateCurrentKanjiPlatinumReviewStandard(entry = {}) {
     const failures = [];
     const reviewStandard = normalizeReviewStandard(entry.reviewStandard);
@@ -161,23 +176,26 @@ function validateCurrentKanjiPlatinumReviewStandard(entry = {}) {
 }
 
 function buildKanjiReviewStandardSummary(entries = []) {
-    const activeEntries = (Array.isArray(entries) ? entries : [])
-        .filter((entry) => ACTIVE_PLATINUM_STATUSES.includes(normalizeText(entry.status)));
-    const currentStandardEntries = activeEntries.filter(entryUsesCurrentKanjiPlatinumStandard);
-    const legacyEntries = activeEntries.filter((entry) => !entryUsesCurrentKanjiPlatinumStandard(entry));
+    const reviewEntries = Array.isArray(entries) ? entries : [];
+    const activeStatusEntries = reviewEntries.filter(hasActivePlatinumStatus);
+    const currentStandardEntries = activeStatusEntries.filter(entryUsesCurrentKanjiPlatinumStandard);
+    const legacyEntries = reviewEntries.filter(isLegacyOrUnversionedKanjiReviewHistoryEntry);
 
     return {
         currentStandard: CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
         currentStandardCount: currentStandardEntries.length,
+        activeStatusCount: activeStatusEntries.length,
+        revalidationBacklogCount: legacyEntries.length,
         legacyOrUnversionedCount: legacyEntries.length,
         currentStandardKanji: currentStandardEntries.map((entry) => normalizeText(entry.kanji)).filter(Boolean).sort((a, b) => a.localeCompare(b, "ja")),
+        revalidationBacklogKanji: legacyEntries.map((entry) => normalizeText(entry.kanji)).filter(Boolean).sort((a, b) => a.localeCompare(b, "ja")),
         legacyOrUnversionedKanji: legacyEntries.map((entry) => normalizeText(entry.kanji)).filter(Boolean).sort((a, b) => a.localeCompare(b, "ja")),
     };
 }
 
 function buildKanjiVerificationLimitationSummary(entries = []) {
     const activeEntries = (Array.isArray(entries) ? entries : [])
-        .filter((entry) => ACTIVE_PLATINUM_STATUSES.includes(normalizeText(entry.status)));
+        .filter(isCurrentStandardPlatinumEntry);
     const limitationRows = [];
     const fieldCounts = {};
 
@@ -381,6 +399,28 @@ function validateNonShippingEntry(entry = {}) {
     return failures;
 }
 
+function validateRevalidationEntry(entry = {}) {
+    const failures = [];
+
+    if (!SINGLE_KANJI_RE.test(normalizeText(entry.kanji))) {
+        failures.push("kanji must be one target kanji");
+    }
+    if (!ACTIVE_PLATINUM_STATUSES.includes(normalizeText(entry.previousStatus))) {
+        failures.push(`needs_revalidation entries must preserve previousStatus as one of: ${ACTIVE_PLATINUM_STATUSES.join(", ")}`);
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(normalizeText(entry.reviewedAt))) {
+        failures.push("reviewedAt must be YYYY-MM-DD for needs_revalidation history");
+    }
+    if (!normalizeText(entry.reviewer)) {
+        failures.push("reviewer is required for needs_revalidation history");
+    }
+    if (!normalizeText(entry.decisionReason)) {
+        failures.push("decisionReason is required for needs_revalidation history");
+    }
+
+    return failures;
+}
+
 function validateGeneratedKanjiRow(row = {}) {
     const failures = [];
     const kanji = normalizeText(row.kanji);
@@ -545,7 +585,6 @@ function validateKanjiEvidenceBindings({
 }
 
 function evaluatePlatinumKanjiEntry({
-    requireCurrentReviewStandard = false,
     rows = [],
     entry = {},
     sourceOriginFailures = [],
@@ -560,9 +599,12 @@ function evaluatePlatinumKanjiEntry({
     }
 
     if (ACTIVE_PLATINUM_STATUSES.includes(status)) {
+        if (!entryUsesCurrentKanjiPlatinumStandard(entry)) {
+            failures.push("active platinum status requires current-standard revalidation; use needs_revalidation for legacy/unversioned review history");
+        }
         failures.push(...sourceOriginFailures);
         failures.push(...validateActivePlatinumEntry(entry, {
-            requireCurrentReviewStandard,
+            requireCurrentReviewStandard: true,
             sourceOriginIds,
         }));
         const row = findKanjiRowForEntry(rows, entry);
@@ -574,7 +616,7 @@ function evaluatePlatinumKanjiEntry({
             failures.push(...validateGeneratedKanjiRow(row));
             failures.push(...validateKanjiEvidenceBindings({
                 entry,
-                requireCurrentReviewStandard,
+                requireCurrentReviewStandard: true,
                 row,
             }));
             if (Array.isArray(entry.readingIncludes) && !includesAll(row.primaryReading, entry.readingIncludes)) {
@@ -604,6 +646,8 @@ function evaluatePlatinumKanjiEntry({
         } else if (row) {
             failures.push(`${status} kanji still appears in the generated export`);
         }
+    } else if (REVALIDATION_STATUSES.includes(status)) {
+        failures.push(...validateRevalidationEntry(entry));
     } else if (REVIEW_ONLY_STATUSES.includes(status)) {
         failures.push("entry is still needs_review and cannot pass platinum");
     }
@@ -614,7 +658,7 @@ function evaluatePlatinumKanjiEntry({
         status: status || "(blank)",
         passed: failures.length === 0,
         failures,
-        verificationLimitations: ACTIVE_PLATINUM_STATUSES.includes(status)
+        verificationLimitations: isCurrentStandardPlatinumEntry(entry)
             ? normalizeKanjiVerificationLimitations(entry.verificationLimitations)
             : [],
     };
@@ -650,11 +694,13 @@ function evaluatePlatinumKanjiReviewSet({
 } = {}) {
     const generatedRows = Array.isArray(rows) ? rows : [];
     const reviewEntries = Array.isArray(entries) ? entries : [];
-    const activeEntries = reviewEntries.filter((entry) => ACTIVE_PLATINUM_STATUSES.includes(normalizeText(entry.status)));
-    const reviewStandardSummary = buildKanjiReviewStandardSummary(activeEntries);
-    const currentStandardEntries = activeEntries.filter(entryUsesCurrentKanjiPlatinumStandard);
+    const activeStatusEntries = reviewEntries.filter(hasActivePlatinumStatus);
+    const activeEntries = reviewEntries.filter(isCurrentStandardPlatinumEntry);
+    const reviewStandardSummary = buildKanjiReviewStandardSummary(reviewEntries);
+    const currentStandardEntries = activeEntries;
     const nonShippingEntries = reviewEntries.filter((entry) => NON_SHIPPING_STATUSES.includes(normalizeText(entry.status)));
-    const needsReviewEntries = reviewEntries.filter((entry) => REVIEW_ONLY_STATUSES.includes(normalizeText(entry.status)));
+    const needsRevalidationEntries = reviewEntries.filter((entry) => REVALIDATION_STATUSES.includes(normalizeText(entry.status)));
+    const needsReviewEntries = reviewEntries.filter((entry) => normalizeText(entry.status) === "needs_review");
     const results = reviewEntries.map((entry) => {
         try {
             const sourceOriginIds = resolveKanjiSourceOriginIdsForEntry({
@@ -664,14 +710,12 @@ function evaluatePlatinumKanjiReviewSet({
             return evaluatePlatinumKanjiEntry({
                 rows: generatedRows,
                 entry,
-                requireCurrentReviewStandard,
                 sourceOriginIds,
             });
         } catch (error) {
             return evaluatePlatinumKanjiEntry({
                 rows: generatedRows,
                 entry,
-                requireCurrentReviewStandard,
                 sourceOriginFailures: [`could not resolve kanji source-claim origin ids: ${error.message}`],
             });
         }
@@ -686,15 +730,15 @@ function evaluatePlatinumKanjiReviewSet({
         : [];
 
     if (!allowEmpty && activeEntries.length === 0) {
-        coverageFailures.push("no active platinum entries have been reviewed");
+        coverageFailures.push("no current-standard platinum entries have been reviewed");
     }
     if (duplicateActiveEntries.length > 0) {
         coverageFailures.push(`duplicate active platinum entries: ${duplicateActiveEntries.join(", ")}`);
     }
     if (missingPlatinumRows.length > 0) {
-        coverageFailures.push(`missing platinum entries for generated kanji: ${missingPlatinumRows.length}`);
+        coverageFailures.push(`missing platinum entries for generated kanji: ${missingPlatinumRows.length} (platinum requires current-standard revalidation)`);
     }
-    if (missingCurrentStandardRows.length > 0) {
+    if (missingCurrentStandardRows.length > 0 && missingCurrentStandardRows.length !== missingPlatinumRows.length) {
         coverageFailures.push(`missing current-standard platinum entries for generated kanji: ${missingCurrentStandardRows.length}`);
     }
 
@@ -705,12 +749,16 @@ function evaluatePlatinumKanjiReviewSet({
     return {
         totalEntries: reviewEntries.length,
         activePlatinumCount: activeEntries.length,
+        activePlatinumStatusCount: activeStatusEntries.length,
         currentReviewStandard: CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
         currentStandardPlatinumCount: reviewStandardSummary.currentStandardCount,
         legacyOrUnversionedPlatinumCount: reviewStandardSummary.legacyOrUnversionedCount,
+        revalidationBacklogCount: reviewStandardSummary.revalidationBacklogCount,
         currentStandardKanji: reviewStandardSummary.currentStandardKanji,
         legacyOrUnversionedKanji: reviewStandardSummary.legacyOrUnversionedKanji,
+        revalidationBacklogKanji: reviewStandardSummary.revalidationBacklogKanji,
         nonShippingCount: nonShippingEntries.length,
+        needsRevalidationCount: needsRevalidationEntries.length,
         needsReviewCount: needsReviewEntries.length,
         verificationLimitationCount: verificationLimitationSummary.limitationCount,
         verificationLimitationKanjiCount: verificationLimitationSummary.kanjiCount,
@@ -732,13 +780,14 @@ function formatPlatinumKanjiReviewReport(report = {}, { title = "Japanese Kanji 
         title,
         "",
         `Review entries: ${report.totalEntries || 0}`,
-        `Active platinum cards: ${report.activePlatinumCount || 0}`,
+        `Active current-standard platinum cards: ${report.activePlatinumCount || 0}`,
         `Current review standard: ${report.currentReviewStandard || CURRENT_KANJI_PLATINUM_REVIEW_STANDARD}`,
         `Current-standard platinum cards: ${report.currentStandardPlatinumCount || 0}`,
-        `Legacy/unversioned platinum cards: ${report.legacyOrUnversionedPlatinumCount || 0}`,
+        `Revalidation backlog/history cards: ${report.revalidationBacklogCount ?? report.legacyOrUnversionedPlatinumCount ?? 0}`,
         `Active cards with verification limitations: ${report.verificationLimitationKanjiCount || 0}`,
         `Verification limitations: ${report.verificationLimitationCount || 0}`,
         `Deferred/removed tracked: ${report.nonShippingCount || 0}`,
+        `Needs revalidation: ${report.needsRevalidationCount || 0}`,
         `Needs review: ${report.needsReviewCount || 0}`,
         `Passed entries: ${report.passedCount || 0}`,
         `Failed entries: ${report.failedCount || 0}`,
@@ -764,7 +813,11 @@ function formatPlatinumKanjiReviewReport(report = {}, { title = "Japanese Kanji 
         }
     }
 
-    if (Array.isArray(report.missingCurrentStandardRows) && report.missingCurrentStandardRows.length > 0) {
+    if (
+        Array.isArray(report.missingCurrentStandardRows)
+        && report.missingCurrentStandardRows.length > 0
+        && report.missingCurrentStandardRows.length !== (report.missingPlatinumRows || []).length
+    ) {
         const sampleSize = 30;
         const sample = report.missingCurrentStandardRows.slice(0, sampleSize);
         lines.push("", `Missing current-standard platinum sample (${sample.length}/${report.missingCurrentStandardRows.length}):`);
@@ -803,6 +856,7 @@ module.exports = {
     BLOCKED_KANJI_VERIFICATION_LIMITATION_FIELDS,
     CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
     NON_SHIPPING_STATUSES,
+    REVALIDATION_STATUSES,
     REQUIRED_KANJI_EVIDENCE_TYPES,
     REQUIRED_KANJI_QUALITY_GATES,
     REVIEW_ONLY_STATUSES,
@@ -811,6 +865,7 @@ module.exports = {
     entryUsesCurrentKanjiPlatinumStandard,
     evaluatePlatinumKanjiReviewSet,
     formatPlatinumKanjiReviewReport,
+    isCurrentStandardPlatinumEntry,
     normalizeKanjiVerificationLimitations,
     validateGeneratedKanjiRow,
     validateCurrentKanjiPlatinumReviewStandard,

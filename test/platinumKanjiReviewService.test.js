@@ -65,7 +65,7 @@ function buildCurrentStandardSourceEvidence() {
     ];
 }
 
-function buildEntry(overrides = {}) {
+function buildLegacyEntry(overrides = {}) {
     return {
         kanji: "日",
         status: "platinum",
@@ -84,14 +84,18 @@ function buildEntry(overrides = {}) {
     };
 }
 
-function buildCurrentStandardEntry(overrides = {}) {
-    return buildEntry({
+function buildEntry(overrides = {}) {
+    return buildLegacyEntry({
         reviewStandard: CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
         revalidatedAt: "2026-05-13",
         revalidationSummary: "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
         sourceEvidence: buildCurrentStandardSourceEvidence(),
         ...overrides,
     });
+}
+
+function buildCurrentStandardEntry(overrides = {}) {
+    return buildEntry(overrides);
 }
 
 test("evaluatePlatinumKanjiReviewSet passes active platinum entries with strict kanji card gates", () => {
@@ -108,8 +112,8 @@ test("evaluatePlatinumKanjiReviewSet passes active platinum entries with strict 
 
 test("evaluatePlatinumKanjiReviewSet tracks explicit non-core verification limitations", () => {
     const limitationLabel = "Stroke-order sequence unverified";
-    const sourceEvidence = buildSourceEvidence().map((evidence) => (
-        evidence.type === "manual-review"
+    const sourceEvidence = buildCurrentStandardSourceEvidence().map((evidence) => (
+        evidence.type === "manual-review" || evidence.type === "current-standard-review"
             ? {
                 ...evidence,
                 detail: `${evidence.detail} ${limitationLabel} is visibly labeled after an unsuccessful independent sequence-source check.`,
@@ -141,10 +145,26 @@ test("evaluatePlatinumKanjiReviewSet tracks explicit non-core verification limit
     assert.match(formatPlatinumKanjiReviewReport(report), /Stroke-order sequence unverified/);
 });
 
-test("evaluatePlatinumKanjiReviewSet gates current-standard revalidation separately from legacy platinum", () => {
+test("evaluatePlatinumKanjiReviewSet treats legacy review history as non-certifying backlog", () => {
     const legacyReport = evaluatePlatinumKanjiReviewSet({
         rows: [buildRow()],
-        entries: [buildEntry()],
+        entries: [buildLegacyEntry()],
+        requireAllRows: true,
+        requireCurrentReviewStandard: true,
+    });
+    const legacyCompatReport = evaluatePlatinumKanjiReviewSet({
+        rows: [buildRow()],
+        entries: [buildLegacyEntry()],
+        requireAllRows: true,
+        requireCurrentReviewStandard: false,
+    });
+    const revalidationReport = evaluatePlatinumKanjiReviewSet({
+        rows: [buildRow()],
+        entries: [buildLegacyEntry({
+            status: "needs_revalidation",
+            previousStatus: "platinum",
+            decisionReason: "Legacy fixture retained only as non-certifying review history.",
+        })],
         requireAllRows: true,
         requireCurrentReviewStandard: true,
     });
@@ -156,11 +176,22 @@ test("evaluatePlatinumKanjiReviewSet gates current-standard revalidation separat
     });
 
     assert.equal(legacyReport.passed, false);
+    assert.equal(legacyReport.activePlatinumCount, 0);
+    assert.equal(legacyReport.activePlatinumStatusCount, 1);
     assert.equal(legacyReport.currentStandardPlatinumCount, 0);
     assert.equal(legacyReport.legacyOrUnversionedPlatinumCount, 1);
+    assert.deepEqual(legacyReport.missingPlatinumRows, ["日"]);
     assert.deepEqual(legacyReport.missingCurrentStandardRows, ["日"]);
-    assert.match(legacyReport.results[0].failures.join("\n"), /reviewStandard must be kanji-platinum-v2-limitation-aware/);
+    assert.match(legacyReport.results[0].failures.join("\n"), /active platinum status requires current-standard revalidation/);
+    assert.equal(legacyCompatReport.activePlatinumCount, 0);
+    assert.equal(legacyCompatReport.results[0].passed, false);
+    assert.match(legacyCompatReport.results[0].failures.join("\n"), /active platinum status requires current-standard revalidation/);
+    assert.equal(revalidationReport.failedCount, 0);
+    assert.equal(revalidationReport.activePlatinumCount, 0);
+    assert.equal(revalidationReport.revalidationBacklogCount, 1);
+    assert.deepEqual(revalidationReport.missingPlatinumRows, ["日"]);
     assert.equal(currentReport.passed, true);
+    assert.equal(currentReport.activePlatinumCount, 1);
     assert.equal(currentReport.currentStandardPlatinumCount, 1);
     assert.equal(currentReport.legacyOrUnversionedPlatinumCount, 0);
 });
@@ -168,7 +199,7 @@ test("evaluatePlatinumKanjiReviewSet gates current-standard revalidation separat
 test("evaluatePlatinumKanjiReviewSet requires complete current-standard revalidation evidence", () => {
     const missingEvidenceReport = evaluatePlatinumKanjiReviewSet({
         rows: [buildRow()],
-        entries: [buildEntry({
+        entries: [buildLegacyEntry({
             reviewStandard: CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
             revalidatedAt: "2026-05-13",
             revalidationSummary: "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
@@ -379,7 +410,7 @@ test("evaluatePlatinumKanjiReviewSet does not pass an empty platinum set by defa
     });
 
     assert.equal(report.passed, false);
-    assert.deepEqual(report.coverageFailures, ["no active platinum entries have been reviewed"]);
+    assert.deepEqual(report.coverageFailures, ["no current-standard platinum entries have been reviewed"]);
 });
 
 test("evaluatePlatinumKanjiReviewSet requires reviewer and date for non-shipping decisions", () => {

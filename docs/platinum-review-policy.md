@@ -27,11 +27,11 @@ A card only becomes platinum when it is accurate, useful, learner-friendly, and 
 
 Platinum evidence is field-bound. A source entry that only says "reviewed" is not enough. The evidence text for an active card must explicitly name the reviewed word or kanji, the exported reading, and the learner-facing values it supports. Automated checks enforce that evidence is tied to the generated card surface; human review still owns the judgment that the cited source and final card are correct.
 
-For active word cards, `japanese-source` evidence must cite a non-generated Japanese-language or dictionary source. Generated output, golden review expectations, tracked starter templates, ignored local data, and local caches are useful internal evidence, but they are not Japanese-source verification by themselves.
+For active word cards, `japanese-source` evidence must cite a source registered in `templates/platinum_card_source_manifest.json` for `word-field-verification`. Generated output, golden review expectations, tracked starter templates, ignored local data, source-claim lists, and local caches are useful internal evidence, but they are not Japanese-source verification by themselves. Kanji-reference sources may support `single-kanji-word-field-verification` only for one-kanji word cards.
 
 For active word cards, the reviewed deck level must be governed by the written word and learner fit. A card is anchored by kanji from its own deck level; other constituent kanji are support kanji and must be visibly labeled. If the word has no current-level anchor, all-easier-kanji words may ship later only with an explicit learner-fit rationale, and words that depend only on harder support kanji must move, defer, or be removed.
 
-For active kanji cards, `japanese-source` evidence must cite a non-generated Japanese-language, kanji-reference, or dictionary source for card-field accuracy. Generated output, golden review expectations, tracked starter templates, source-governance manifests, ignored local data, and local caches are useful internal evidence, but they are not Japanese-source verification by themselves. The same source may support both kanji and word product reviews when it directly verifies each card's own fields; the requirement is accuracy and field binding, not source uniqueness across products. This card-field source check is not a JLPT placement proof; placement confidence remains owned by the source-governance layer.
+For active kanji cards, `japanese-source` evidence must cite a source registered in `templates/platinum_card_source_manifest.json` for `kanji-field-verification`. Generated output, golden review expectations, tracked starter templates, source-governance manifests, source-claim lists, ignored local data, and local caches are useful internal evidence, but they are not Japanese-source verification by themselves. The same source may support both kanji and word product reviews when it directly verifies each card's own fields; the requirement is accuracy and field binding, not source uniqueness across products. This card-field source check is not a JLPT placement proof; placement confidence remains owned by the source-governance layer. Platinum may read JLPT kanji source-governance origin ids only to reject circular field verification against the same source family.
 
 Existing platinum sample entries created before the current field-bound evidence gate are not trusted release coverage. Re-review them under the current rules before counting them toward version 1.
 
@@ -72,7 +72,7 @@ Each platinum kanji card must pass all rules below:
 - Exact kanji-reading audio is present, governed, and artifact-verified for the target kanji and exported `PrimaryReading`. Human listening QA remains part of the release checklist.
 - Stroke-order media is present, governed by approved tracked sources, and visually verified to show the reviewed target kanji. The automated gate can verify source policy and target-bound evidence; it does not prove the stroke sequence is correct without human visual review.
 - Source evidence explicitly names the target kanji, exported primary reading, primary meaning, broader meanings, exact audio identity, and stroke-order target/provenance review.
-- The `japanese-source` evidence cites a non-generated Japanese-language, kanji-reference, or dictionary source for the exported primary reading, primary meaning, and broader meanings. It does not certify the JLPT placement or source-governance confidence.
+- The `japanese-source` evidence cites a governed `kanji-field-verification` source for the exported primary reading, primary meaning, and broader meanings. It does not certify the JLPT placement or source-governance confidence, and it must be independent from any source-claim origin family used by the source-governance layer for that kanji-level claim.
 - The card does not depend on ignored local files, untracked generated content, or silent fallback behavior.
 
 ## Outcomes
@@ -116,7 +116,7 @@ Active word entries must include all evidence types below:
 
 - `generated-surface`: the generated word-card surface was inspected.
 - `golden-review`: the golden regression expectation was checked.
-- `japanese-source`: written form, reading, meaning, and example were checked against a Japanese-language or dictionary source.
+- `japanese-source`: written form, reading, meaning, and example were checked against a governed `word-field-verification` source; one-kanji word cards may use a registered `single-kanji-word-field-verification` source.
 - `level-contract`: the word belongs in the reviewed word-product level.
 - `example-review`: the example sentence and reading were checked for release quality.
 - `media-audit`: governed media provenance was checked.
@@ -176,7 +176,7 @@ Active kanji entries must include all evidence types below:
 
 - `generated-surface`: the generated card surface was inspected.
 - `golden-review`: the golden regression expectation was checked.
-- `japanese-source`: reading and meaning were checked against a non-generated Japanese-language, kanji-reference, or dictionary source for card-field accuracy.
+- `japanese-source`: reading and meaning were checked against a governed `kanji-field-verification` source for card-field accuracy.
 - `media-audit`: governed media provenance was checked.
 - `audio-review`: generated audio artifact identity, provenance, and exact target-reading match were reviewed.
 - `stroke-order-review`: stroke-order media was visually checked for the reviewed target kanji.

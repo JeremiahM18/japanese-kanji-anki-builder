@@ -63,6 +63,8 @@ const REQUIRED_WORD_EVIDENCE_TYPES = Object.freeze([
     "manual-review",
 ]);
 
+const SINGLE_KANJI_WORD_RE = /^\p{Script=Han}$/u;
+
 function normalizeText(value) {
     return String(value ?? "").trim();
 }
@@ -209,7 +211,13 @@ function validateActivePlatinumEntry(entry = {}) {
             failures.push(`sourceEvidence must include evidence type: ${requiredType}`);
         }
     }
-    failures.push(...validateJapaneseSourceEvidence(sourceEvidence, { context: "word card accuracy" }));
+    failures.push(...validateJapaneseSourceEvidence(sourceEvidence, {
+        context: "word card accuracy",
+        alternativeRequiredUses: SINGLE_KANJI_WORD_RE.test(normalizeText(entry.word))
+            ? ["single-kanji-word-field-verification"]
+            : [],
+        requiredUse: "word-field-verification",
+    }));
     if (entry.status === "fixed_then_platinum" && !normalizeText(entry.fixSummary)) {
         failures.push("fixed_then_platinum entries must include fixSummary");
     }

@@ -237,7 +237,7 @@ test("evaluatePlatinumWordReviewSet rejects local generated artifacts as Japanes
     });
 
     assert.equal(report.passed, false);
-    assert.match(report.results[0].failures.join("\n"), /japanese-source evidence must cite a non-generated Japanese\/reference\/dictionary source/);
+    assert.match(report.results[0].failures.join("\n"), /japanese-source evidence must cite a governed source allowed for word-field-verification/);
 });
 
 test("evaluatePlatinumWordReviewSet protects exact word audio and pitch accent expectations", () => {

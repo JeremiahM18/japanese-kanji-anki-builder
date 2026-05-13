@@ -249,7 +249,7 @@ test("JLPT kanji source-evidence assignment files match manifest routing", () =>
     }
 });
 
-test("JLPT kanji source-evidence loaders stay in read-only governance paths", () => {
+test("JLPT kanji source-evidence loaders stay in governed source and platinum-origin paths", () => {
     const expectedFilesByLoader = {
         loadJlptKanjiSourceEvidence: [
             "scripts/auditJlptKanjiSourceAccess.js",
@@ -259,6 +259,7 @@ test("JLPT kanji source-evidence loaders stay in read-only governance paths", ()
             "scripts/reportJlptKanjiSourceEvidenceCost.js",
             "scripts/reportJlptKanjiSourceInputs.js",
             "src/datasets/jlptKanjiSourceEvidence.js",
+            "src/services/platinumKanjiSourceOriginService.js",
         ],
         loadJlptKanjiSourceInputs: [
             "scripts/auditJlptKanjiSourceAccess.js",
@@ -286,7 +287,7 @@ test("JLPT kanji source-evidence loaders stay in read-only governance paths", ()
             .filter((relativePath) => readRepoFile(relativePath).includes(loaderName))
             .sort();
 
-        assert.deepEqual(actualFiles, [...expectedFiles].sort(), `${loaderName} is imported or exported outside the governed source-evidence paths.`);
+        assert.deepEqual(actualFiles, [...expectedFiles].sort(), `${loaderName} is imported or exported outside the governed source-evidence/platinum-origin paths.`);
     }
 });
 

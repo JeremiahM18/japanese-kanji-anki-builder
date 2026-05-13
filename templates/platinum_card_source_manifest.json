@@ -1,0 +1,666 @@
+{
+  "version": 1,
+  "checkedAt": "2026-05-12",
+  "sourcePurposeRules": {
+    "kanji_reference": {
+      "description": "Japanese kanji reference source that may verify kanji-card readings and meanings when the platinum evidence binds the exact card fields.",
+      "allowedUse": ["kanji-field-verification", "single-kanji-word-field-verification"],
+      "disallowedUse": ["word-field-verification", "placement-claim-origin", "level-truth"]
+    },
+    "official_kanji_reference": {
+      "description": "Official Japanese kanji reference metadata. Useful as supporting reading/reference evidence, but not a full card-field verifier by itself.",
+      "allowedUse": ["kanji-reading-reference"],
+      "disallowedUse": ["kanji-field-verification", "word-field-verification", "placement-claim-origin", "level-truth"]
+    },
+    "lexical_dictionary": {
+      "description": "Dictionary or lexical reference source that may verify word-card written form, reading, meaning, and example fields when bound to the exact card.",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "learner_reference": {
+      "description": "Learner reference page that may support word-card field accuracy when the page directly covers the exact word, expression, or usage.",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "word_list": {
+      "description": "Vocabulary list source. It may support discovery or level hints, but cannot verify platinum card fields by itself.",
+      "allowedUse": ["word-candidate-discovery", "word-level-hint"],
+      "disallowedUse": ["word-field-verification", "kanji-field-verification", "placement-claim-origin", "level-truth"]
+    },
+    "kanji_assignment_origin": {
+      "description": "JLPT kanji source-governance assignment lane. It may identify placement/source-claim origin only, not platinum card-field accuracy.",
+      "allowedUse": ["placement-claim-origin"],
+      "disallowedUse": ["word-field-verification", "kanji-field-verification", "level-truth"]
+    },
+    "source_governance": {
+      "description": "Governance manifest or derived source-evidence layer. It may provide lineage context but cannot serve as Japanese-source field verification.",
+      "allowedUse": ["lineage-context", "placement-claim-origin"],
+      "disallowedUse": ["word-field-verification", "kanji-field-verification", "level-truth"]
+    },
+    "generated_artifact": {
+      "description": "Generated export, local cache, golden fixture, or starter template. Useful for internal traceability only.",
+      "allowedUse": ["generated-surface", "lineage-context"],
+      "disallowedUse": ["word-field-verification", "kanji-field-verification", "placement-claim-origin", "level-truth"]
+    }
+  },
+  "sources": {
+    "kanjipedia": {
+      "name": "Kanjipedia",
+      "status": "active",
+      "sourceType": "kanji_reference",
+      "matchers": ["kanjipedia.jp", "Kanjipedia", "漢字ペディア"],
+      "sourceFamily": "kanjipedia",
+      "independenceGroup": "japan_kanji_aptitude_foundation",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual citation and short field-bound review notes only; do not copy entries or bulk data."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["kanji-field-verification", "single-kanji-word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "bunka_joyo_kanji": {
+      "name": "Agency for Cultural Affairs Joyo Kanji Index",
+      "status": "active",
+      "sourceType": "official_kanji_reference",
+      "matchers": ["bunka.go.jp", "Bunka Joyo Kanji", "joyokanjihyo", "常用漢字", "文化庁"],
+      "sourceFamily": "bunka_joyo_kanji",
+      "independenceGroup": "agency_for_cultural_affairs",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual citation and reading/index verification only; not a full meaning verifier for platinum cards."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["kanji-reading-reference"],
+      "disallowedUse": ["kanji-field-verification", "placement-claim-origin", "level-truth"]
+    },
+    "jmdict": {
+      "name": "JMdict",
+      "status": "active",
+      "sourceType": "lexical_dictionary",
+      "matchers": ["jmdict", "JMdict"],
+      "sourceFamily": "jmdict",
+      "independenceGroup": "edrdg_dictionary",
+      "licenseUse": {
+        "status": "approved",
+        "license": "CC BY-SA 4.0",
+        "notes": "Use governed local source data or manual citation for exact word-reading field verification."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "jlearn": {
+      "name": "JLearn Japanese Dictionary",
+      "status": "active",
+      "sourceType": "lexical_dictionary",
+      "matchers": ["jlearn.net", "JLearn.net"],
+      "sourceFamily": "jlearn",
+      "independenceGroup": "jlearn",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual citation and short field-bound review notes only."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "japandict": {
+      "name": "JapanDict",
+      "status": "active",
+      "sourceType": "lexical_dictionary",
+      "matchers": ["japandict.com", "JapanDict"],
+      "sourceFamily": "japandict",
+      "independenceGroup": "japandict",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual citation and short field-bound review notes only."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "japaneseclass": {
+      "name": "JapaneseClass Dictionary",
+      "status": "active",
+      "sourceType": "lexical_dictionary",
+      "matchers": ["japaneseclass.jp", "JapaneseClass"],
+      "sourceFamily": "japaneseclass",
+      "independenceGroup": "japaneseclass",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual citation and short field-bound review notes only."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "nihongo_master": {
+      "name": "Nihongo Master Dictionary",
+      "status": "active",
+      "sourceType": "lexical_dictionary",
+      "matchers": ["nihongomaster.com", "Nihongo Master"],
+      "sourceFamily": "nihongo_master",
+      "independenceGroup": "nihongo_master",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual citation and short field-bound review notes only."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "kotobank": {
+      "name": "Kotobank",
+      "status": "active",
+      "sourceType": "lexical_dictionary",
+      "matchers": ["kotobank.jp", "Kotobank"],
+      "sourceFamily": "kotobank",
+      "independenceGroup": "kotobank",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual citation and short field-bound review notes only."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "goo_daijisen": {
+      "name": "goo辞書 / デジタル大辞泉",
+      "status": "active",
+      "sourceType": "lexical_dictionary",
+      "matchers": ["dictionary.goo.ne.jp", "goo辞書", "デジタル大辞泉", "大辞泉"],
+      "sourceFamily": "goo_daijisen",
+      "independenceGroup": "shogakukan_daijisen",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual citation and short field-bound review notes only."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "kaikki": {
+      "name": "Kaikki Japanese Wiktionary Extract",
+      "status": "active",
+      "sourceType": "lexical_dictionary",
+      "matchers": ["kaikki.org", "Kaikki"],
+      "sourceFamily": "kaikki",
+      "independenceGroup": "wiktionary_extract",
+      "licenseUse": {
+        "status": "approved",
+        "license": "CC BY-SA 4.0",
+        "notes": "Use for exact dictionary field support with attribution-compatible handling."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "wiktionary": {
+      "name": "Wiktionary Japanese Entry",
+      "status": "active",
+      "sourceType": "lexical_dictionary",
+      "matchers": ["wiktionary.org", "Wiktionary"],
+      "sourceFamily": "wiktionary",
+      "independenceGroup": "wiktionary",
+      "licenseUse": {
+        "status": "approved",
+        "license": "CC BY-SA 4.0",
+        "notes": "Use for exact dictionary or pronunciation support with attribution-compatible handling."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "bunpro": {
+      "name": "Bunpro Japanese Vocabulary",
+      "status": "active",
+      "sourceType": "learner_reference",
+      "matchers": ["bunpro.jp", "Bunpro"],
+      "sourceFamily": "bunpro",
+      "independenceGroup": "bunpro",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual citation and short field-bound review notes only."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "practice_japanese": {
+      "name": "Practice Japanese",
+      "status": "active",
+      "sourceType": "learner_reference",
+      "matchers": ["practice-japanese.com", "Practice Japanese"],
+      "sourceFamily": "practice_japanese",
+      "independenceGroup": "practice_japanese",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual citation and short field-bound review notes only."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "benkyoumashou": {
+      "name": "Benkyoumashou Japanese Verb Reference",
+      "status": "active",
+      "sourceType": "learner_reference",
+      "matchers": ["benkyoumashou.com", "Benkyoumashou"],
+      "sourceFamily": "benkyoumashou",
+      "independenceGroup": "benkyoumashou",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual citation and short field-bound review notes only."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "tkgje": {
+      "name": "Tanaka Corpus Grammar/Japanese Example Reference",
+      "status": "active",
+      "sourceType": "learner_reference",
+      "matchers": ["tkgje.jp", "TKGJE"],
+      "sourceFamily": "tkgje",
+      "independenceGroup": "tkgje",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual citation and short field-bound review notes only."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "gogen_yurai": {
+      "name": "Gogen Yurai",
+      "status": "active",
+      "sourceType": "learner_reference",
+      "matchers": ["gogen-yurai.jp", "Gogen Yurai"],
+      "sourceFamily": "gogen_yurai",
+      "independenceGroup": "gogen_yurai",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual citation and short field-bound review notes only."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "jlpt_global": {
+      "name": "JLPT Global",
+      "status": "active",
+      "sourceType": "learner_reference",
+      "matchers": ["jlptglobal.com", "JLPTGlobal", "JLPT Global"],
+      "sourceFamily": "jlpt_global",
+      "independenceGroup": "jlpt_global",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual citation and short field-bound review notes only."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "mlc_japanese": {
+      "name": "MLC Japanese",
+      "status": "active",
+      "sourceType": "learner_reference",
+      "matchers": ["mlcjapanese.co.jp", "MLC Japanese"],
+      "sourceFamily": "mlc_japanese",
+      "independenceGroup": "mlc_japanese",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual citation and short field-bound review notes only."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "the_japanese_page": {
+      "name": "The Japanese Page",
+      "status": "active",
+      "sourceType": "learner_reference",
+      "matchers": ["thejapanesepage.com", "TheJapanesePage", "The Japanese Page"],
+      "sourceFamily": "the_japanese_page",
+      "independenceGroup": "the_japanese_page",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual citation and short field-bound review notes only."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "tofugu": {
+      "name": "Tofugu",
+      "status": "active",
+      "sourceType": "learner_reference",
+      "matchers": ["tofugu.com", "Tofugu"],
+      "sourceFamily": "tofugu",
+      "independenceGroup": "tofugu",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual citation and short field-bound review notes only."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "nihoner": {
+      "name": "Nihoner",
+      "status": "active",
+      "sourceType": "learner_reference",
+      "matchers": ["nihoner.com", "Nihoner"],
+      "sourceFamily": "nihoner",
+      "independenceGroup": "nihoner",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual citation and short field-bound review notes only."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "cambridge_japanese": {
+      "name": "Cambridge Dictionary Japanese",
+      "status": "active",
+      "sourceType": "lexical_dictionary",
+      "matchers": ["dictionary.cambridge.org", "Cambridge"],
+      "sourceFamily": "cambridge_dictionary",
+      "independenceGroup": "cambridge_dictionary",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual citation and short field-bound review notes only."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["word-field-verification"],
+      "disallowedUse": ["placement-claim-origin", "level-truth"]
+    },
+    "jlptstudy_net": {
+      "name": "JLPTStudy vocabulary list",
+      "status": "active",
+      "sourceType": "word_list",
+      "matchers": ["jlptstudy.net", "JLPTStudy.net"],
+      "sourceFamily": "jlptstudy_net",
+      "independenceGroup": "jlptstudy_net",
+      "licenseUse": {
+        "status": "needs_review",
+        "notes": "Discovery and level-hint source only; not a platinum card-field verifier."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["word-candidate-discovery", "word-level-hint"],
+      "disallowedUse": ["word-field-verification", "kanji-field-verification", "placement-claim-origin", "level-truth"]
+    },
+    "kanjidic2_legacy": {
+      "name": "KANJIDIC2 legacy JLPT metadata",
+      "status": "active",
+      "sourceType": "kanji_assignment_origin",
+      "matchers": ["kanjidic2_legacy", "KANJIDIC2"],
+      "sourceFamily": "kanjidic2_legacy",
+      "independenceGroup": "edrdg_kanjidic2",
+      "licenseUse": {
+        "status": "approved",
+        "notes": "Placement/source-claim origin only in platinum checks; not card-field verification."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["placement-claim-origin"],
+      "disallowedUse": ["kanji-field-verification", "word-field-verification", "level-truth"]
+    },
+    "tanos_legacy_direct": {
+      "name": "Tanos JLPT direct legacy resources",
+      "status": "active",
+      "sourceType": "kanji_assignment_origin",
+      "matchers": ["tanos_legacy_direct", "Tanos JLPT direct"],
+      "sourceFamily": "tanos_legacy_direct",
+      "independenceGroup": "tanos",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Placement/source-claim origin only in platinum checks."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["placement-claim-origin"],
+      "disallowedUse": ["kanji-field-verification", "word-field-verification", "level-truth"]
+    },
+    "tanos_estimated_split": {
+      "name": "Tanos estimated N2/N3 split resources",
+      "status": "active",
+      "sourceType": "kanji_assignment_origin",
+      "matchers": ["tanos_estimated_split", "Tanos estimated"],
+      "sourceFamily": "tanos_estimated_split",
+      "independenceGroup": "tanos",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Placement/source-claim origin only in platinum checks."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["placement-claim-origin"],
+      "disallowedUse": ["kanji-field-verification", "word-field-verification", "level-truth"]
+    },
+    "nihongo_sou_matome_kanji": {
+      "name": "Nihongo Sou Matome kanji textbooks",
+      "status": "active",
+      "sourceType": "kanji_assignment_origin",
+      "matchers": ["nihongo_sou_matome_kanji", "Nihongo Sou Matome", "Sou Matome"],
+      "sourceFamily": "nihongo_sou_matome_kanji",
+      "independenceGroup": "nihongo_sou_matome",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual-citation placement/source-claim origin only in platinum checks."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["placement-claim-origin"],
+      "disallowedUse": ["kanji-field-verification", "word-field-verification", "level-truth"]
+    },
+    "shin_kanzen_master_kanji": {
+      "name": "Shin Kanzen Master kanji textbooks",
+      "status": "active",
+      "sourceType": "kanji_assignment_origin",
+      "matchers": ["shin_kanzen_master_kanji", "Shin Kanzen Master"],
+      "sourceFamily": "shin_kanzen_master_kanji",
+      "independenceGroup": "shin_kanzen_master",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual-citation placement/source-claim origin only in platinum checks."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["placement-claim-origin"],
+      "disallowedUse": ["kanji-field-verification", "word-field-verification", "level-truth"]
+    },
+    "ask_hajimete_jlpt_kanji": {
+      "name": "ASK Hajimete JLPT kanji textbooks",
+      "status": "active",
+      "sourceType": "kanji_assignment_origin",
+      "matchers": ["ask_hajimete_jlpt_kanji", "ASK Hajimete"],
+      "sourceFamily": "ask_hajimete_jlpt_kanji",
+      "independenceGroup": "ask_hajimete_jlpt_kanji",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Manual-citation placement/source-claim origin only in platinum checks."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["placement-claim-origin"],
+      "disallowedUse": ["kanji-field-verification", "word-field-verification", "level-truth"]
+    },
+    "jlptsensei": {
+      "name": "JLPT Sensei kanji lists",
+      "status": "registered",
+      "sourceType": "kanji_assignment_origin",
+      "matchers": ["jlptsensei", "JLPT Sensei"],
+      "sourceFamily": "jlptsensei",
+      "independenceGroup": "jlptsensei",
+      "licenseUse": {
+        "status": "restricted",
+        "notes": "Secondary placement/source-claim origin only when explicitly activated upstream."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["placement-claim-origin"],
+      "disallowedUse": ["kanji-field-verification", "word-field-verification", "level-truth"]
+    },
+    "try_jlpt_textbook": {
+      "name": "TRY! JLPT textbooks",
+      "status": "blocked",
+      "sourceType": "kanji_assignment_origin",
+      "matchers": ["try_jlpt_textbook", "TRY! JLPT"],
+      "sourceFamily": "try_jlpt_textbook",
+      "independenceGroup": "try_jlpt",
+      "licenseUse": {
+        "status": "blocked",
+        "notes": "Blocked for assignment use under current evidence-access path."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": [],
+      "disallowedUse": ["kanji-field-verification", "word-field-verification", "placement-claim-origin", "level-truth"]
+    },
+    "current_operational_contract": {
+      "name": "Current JLPT kanji contract",
+      "status": "active",
+      "sourceType": "source_governance",
+      "matchers": ["current_operational_contract", "current operational contract"],
+      "sourceFamily": "current_operational_contract",
+      "independenceGroup": "current_operational_contract",
+      "licenseUse": {
+        "status": "approved",
+        "notes": "Operational comparator only; never card-field verification."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["lineage-context", "placement-claim-origin"],
+      "disallowedUse": ["kanji-field-verification", "word-field-verification", "level-truth"]
+    },
+    "japanese_textbook_consensus": {
+      "name": "Derived Japanese-published textbook consensus",
+      "status": "active",
+      "sourceType": "source_governance",
+      "matchers": ["japanese_textbook_consensus", "textbook consensus"],
+      "sourceFamily": "japanese_textbook_consensus",
+      "independenceGroup": "japanese_textbook_consensus",
+      "licenseUse": {
+        "status": "approved",
+        "notes": "Derived source-governance summary only; never card-field verification."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["lineage-context", "placement-claim-origin"],
+      "disallowedUse": ["kanji-field-verification", "word-field-verification", "level-truth"]
+    },
+    "source_governance_manifest": {
+      "name": "JLPT kanji source-evidence manifest",
+      "status": "active",
+      "sourceType": "source_governance",
+      "matchers": ["templates/jlpt_kanji_source_evidence.json", "source-governance manifest", "source governance"],
+      "sourceFamily": "jlpt_kanji_source_evidence_manifest",
+      "independenceGroup": "jlpt_kanji_source_evidence_manifest",
+      "licenseUse": {
+        "status": "approved",
+        "notes": "Lineage context only in platinum evidence; not a card-field source."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["lineage-context", "placement-claim-origin"],
+      "disallowedUse": ["kanji-field-verification", "word-field-verification", "level-truth"]
+    },
+    "jlpt_word_level_contract": {
+      "name": "JLPT word level contract",
+      "status": "active",
+      "sourceType": "source_governance",
+      "matchers": ["templates/jlpt_word_level_contract.json", "jlpt_word_level_contract"],
+      "sourceFamily": "jlpt_word_level_contract",
+      "independenceGroup": "jlpt_word_level_contract",
+      "licenseUse": {
+        "status": "approved",
+        "notes": "Word placement context only; not card-field verification."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["lineage-context"],
+      "disallowedUse": ["word-field-verification", "kanji-field-verification", "level-truth"]
+    },
+    "starter_curated_study_data": {
+      "name": "Starter curated kanji study data",
+      "status": "active",
+      "sourceType": "generated_artifact",
+      "matchers": ["templates/starter_curated_study_data.json"],
+      "sourceFamily": "starter_curated_study_data",
+      "independenceGroup": "starter_curated_study_data",
+      "licenseUse": {
+        "status": "approved",
+        "notes": "Tracked internal template; not external field verification."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["lineage-context", "generated-surface"],
+      "disallowedUse": ["kanji-field-verification", "word-field-verification", "placement-claim-origin", "level-truth"]
+    },
+    "starter_word_study_data": {
+      "name": "Starter word study data",
+      "status": "active",
+      "sourceType": "generated_artifact",
+      "matchers": ["templates/starter_word_study_data.json"],
+      "sourceFamily": "starter_word_study_data",
+      "independenceGroup": "starter_word_study_data",
+      "licenseUse": {
+        "status": "approved",
+        "notes": "Tracked internal template; not external field verification."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["lineage-context", "generated-surface"],
+      "disallowedUse": ["kanji-field-verification", "word-field-verification", "placement-claim-origin", "level-truth"]
+    },
+    "golden_review_sets": {
+      "name": "Golden review fixtures",
+      "status": "active",
+      "sourceType": "generated_artifact",
+      "matchers": ["templates/golden_", "golden review"],
+      "sourceFamily": "golden_review_sets",
+      "independenceGroup": "golden_review_sets",
+      "licenseUse": {
+        "status": "approved",
+        "notes": "Regression expectations only; not external field verification."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["lineage-context", "generated-surface"],
+      "disallowedUse": ["kanji-field-verification", "word-field-verification", "placement-claim-origin", "level-truth"]
+    },
+    "kanji_jlpt_only_local": {
+      "name": "Local JLPT kanji runtime JSON",
+      "status": "active",
+      "sourceType": "generated_artifact",
+      "matchers": ["data/kanji_jlpt_only.json"],
+      "sourceFamily": "kanji_jlpt_only_local",
+      "independenceGroup": "kanji_jlpt_only_local",
+      "licenseUse": {
+        "status": "approved",
+        "notes": "Local runtime input; not external field verification."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["lineage-context", "generated-surface"],
+      "disallowedUse": ["kanji-field-verification", "word-field-verification", "placement-claim-origin", "level-truth"]
+    },
+    "generated_exports": {
+      "name": "Generated deck exports",
+      "status": "active",
+      "sourceType": "generated_artifact",
+      "matchers": ["out/build/", "out/word-build/", "generated export"],
+      "sourceFamily": "generated_exports",
+      "independenceGroup": "generated_exports",
+      "licenseUse": {
+        "status": "approved",
+        "notes": "Generated surfaces are checked by generated-surface evidence, not by japanese-source evidence."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["generated-surface", "lineage-context"],
+      "disallowedUse": ["kanji-field-verification", "word-field-verification", "placement-claim-origin", "level-truth"]
+    },
+    "local_kanji_api_cache": {
+      "name": "Local KanjiAPI cache",
+      "status": "active",
+      "sourceType": "generated_artifact",
+      "matchers": ["local KanjiAPI", "KanjiAPI word cache"],
+      "sourceFamily": "local_kanji_api_cache",
+      "independenceGroup": "local_kanji_api_cache",
+      "licenseUse": {
+        "status": "needs_review",
+        "notes": "Local cache only; not approved as Japanese-source field verification."
+      },
+      "checkedAt": "2026-05-12",
+      "allowedUse": ["lineage-context"],
+      "disallowedUse": ["kanji-field-verification", "word-field-verification", "placement-claim-origin", "level-truth"]
+    }
+  }
+}

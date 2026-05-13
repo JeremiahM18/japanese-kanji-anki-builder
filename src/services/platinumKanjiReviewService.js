@@ -4,6 +4,10 @@ const {
     validateEvidenceSnippets,
     validateJapaneseSourceEvidence,
 } = require("./platinumEvidenceService");
+const {
+    getDefaultJlptKanjiSourceEvidence,
+    resolveKanjiSourceOriginIdsForEntry,
+} = require("./platinumKanjiSourceOriginService");
 const NON_SHIPPING_STATUSES = Object.freeze(["deferred", "removed"]);
 const REVIEW_ONLY_STATUSES = Object.freeze(["needs_review"]);
 const ALLOWED_PLATINUM_STATUSES = Object.freeze([
@@ -99,7 +103,7 @@ function findKanjiRowForEntry(rows = [], entry = {}) {
     return null;
 }
 
-function validateActivePlatinumEntry(entry = {}) {
+function validateActivePlatinumEntry(entry = {}, { sourceOriginIds = [] } = {}) {
     const failures = [];
 
     if (!SINGLE_KANJI_RE.test(normalizeText(entry.kanji))) {
@@ -148,7 +152,11 @@ function validateActivePlatinumEntry(entry = {}) {
             failures.push(`sourceEvidence must include evidence type: ${requiredType}`);
         }
     }
-    failures.push(...validateJapaneseSourceEvidence(sourceEvidence, { context: "kanji card accuracy" }));
+    failures.push(...validateJapaneseSourceEvidence(sourceEvidence, {
+        context: "kanji card accuracy",
+        requiredUse: "kanji-field-verification",
+        sourceOriginIds,
+    }));
     if (entry.status === "fixed_then_platinum" && !normalizeText(entry.fixSummary)) {
         failures.push("fixed_then_platinum entries must include fixSummary");
     }
@@ -276,7 +284,12 @@ function validateKanjiEvidenceBindings({ entry = {}, row = {} } = {}) {
     return failures;
 }
 
-function evaluatePlatinumKanjiEntry({ rows = [], entry = {} } = {}) {
+function evaluatePlatinumKanjiEntry({
+    rows = [],
+    entry = {},
+    sourceOriginFailures = [],
+    sourceOriginIds = [],
+} = {}) {
     const status = normalizeText(entry.status);
     const label = normalizeText(entry.kanji) || "(blank)";
     const failures = [];
@@ -286,7 +299,8 @@ function evaluatePlatinumKanjiEntry({ rows = [], entry = {} } = {}) {
     }
 
     if (ACTIVE_PLATINUM_STATUSES.includes(status)) {
-        failures.push(...validateActivePlatinumEntry(entry));
+        failures.push(...sourceOriginFailures);
+        failures.push(...validateActivePlatinumEntry(entry, { sourceOriginIds }));
         const row = findKanjiRowForEntry(rows, entry);
         if (row?.error) {
             failures.push(row.error);
@@ -358,6 +372,7 @@ function buildDuplicateActiveEntryLabels(activeEntries = []) {
 function evaluatePlatinumKanjiReviewSet({
     rows = [],
     entries = [],
+    kanjiSourceEvidence = getDefaultJlptKanjiSourceEvidence(),
     requireAllRows = false,
     allowEmpty = false,
 } = {}) {
@@ -366,7 +381,25 @@ function evaluatePlatinumKanjiReviewSet({
     const activeEntries = reviewEntries.filter((entry) => ACTIVE_PLATINUM_STATUSES.includes(normalizeText(entry.status)));
     const nonShippingEntries = reviewEntries.filter((entry) => NON_SHIPPING_STATUSES.includes(normalizeText(entry.status)));
     const needsReviewEntries = reviewEntries.filter((entry) => REVIEW_ONLY_STATUSES.includes(normalizeText(entry.status)));
-    const results = reviewEntries.map((entry) => evaluatePlatinumKanjiEntry({ rows: generatedRows, entry }));
+    const results = reviewEntries.map((entry) => {
+        try {
+            const sourceOriginIds = resolveKanjiSourceOriginIdsForEntry({
+                evidence: kanjiSourceEvidence,
+                entry,
+            });
+            return evaluatePlatinumKanjiEntry({
+                rows: generatedRows,
+                entry,
+                sourceOriginIds,
+            });
+        } catch (error) {
+            return evaluatePlatinumKanjiEntry({
+                rows: generatedRows,
+                entry,
+                sourceOriginFailures: [`could not resolve kanji source-claim origin ids: ${error.message}`],
+            });
+        }
+    });
     const coverageFailures = [];
     const duplicateActiveEntries = buildDuplicateActiveEntryLabels(activeEntries);
     const missingPlatinumRows = requireAllRows

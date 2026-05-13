@@ -177,7 +177,7 @@ test("evaluatePlatinumKanjiReviewSet rejects generated-only japanese-source evid
 
     const failures = report.results[0].failures.join("\n");
     assert.equal(report.passed, false);
-    assert.match(failures, /japanese-source evidence must cite a non-generated Japanese\/reference\/dictionary source for kanji card accuracy/);
+    assert.match(failures, /japanese-source evidence must cite a governed source allowed for kanji-field-verification for kanji card accuracy/);
 });
 
 test("evaluatePlatinumKanjiReviewSet requires every structured evidence type", () => {

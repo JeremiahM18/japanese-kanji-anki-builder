@@ -1634,7 +1634,7 @@ test("formatJlptKanjiSourceEvidenceReport counts active agreement that is still 
     assert.match(text, /- 日: current N5; consensus N5; reasons missing Japanese-published source; agreement 2\/2; Japanese-published sources 0; confidence weak_evidence/);
 });
 
-test("source evidence stays out of deck word and readiness service pipelines", () => {
+test("source evidence stays out of deck word and readiness pipelines except platinum origin circularity checks", () => {
     const servicesDir = path.join(__dirname, "..", "src", "services");
     const allowedGovernanceModules = new Set([
         "jlptKanjiSourceEvidenceService.js",
@@ -1643,6 +1643,7 @@ test("source evidence stays out of deck word and readiness service pipelines", (
         "jlptKanjiSourceInputTemplateService.js",
         "jlptKanjiSourceLevelDeltaService.js",
         "jlptTextbookConsensusTemplateService.js",
+        "platinumKanjiSourceOriginService.js",
     ]);
     const offenders = [];
 

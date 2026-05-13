@@ -11,8 +11,15 @@ test("parseArgs accepts platinum word review options", () => {
         allowEmpty: true,
         json: true,
         level: 5,
+        requireCurrentReviewStandard: true,
         requireAllRows: true,
     });
+});
+
+test("parseArgs can opt into legacy word platinum inspection", () => {
+    const options = parseArgs(["--level=5", "--allow-legacy-standard"]);
+
+    assert.equal(options.requireCurrentReviewStandard, false);
 });
 
 test("platinumWordBatchReport parseArgs accepts scoped read-only batch options", () => {

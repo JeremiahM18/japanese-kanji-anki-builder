@@ -31,11 +31,15 @@ If a real review attempt cannot verify a non-core or externally unavailable face
 
 For kanji platinum, record any allowed non-core limitation in `verificationLimitations` instead of burying it in prose. Each limitation must name the exact facet, use an explicit visible label such as `... unverified`, describe the review attempt, appear in the exported `Notes` surface, and be mentioned in `manual-review` evidence. Core truth fields such as the target kanji, `DisplayWord`, `PrimaryReading`, `MeaningJP`, `KanjiMeanings`, example correctness, and product fit cannot use this escape hatch; unresolved uncertainty there still blocks platinum.
 
+For word platinum, record any allowed non-core limitation in `verificationLimitations` instead of burying it in prose. Each limitation must name the exact facet, use an explicit visible label such as `... unverified` or `... limited verification`, describe the review attempt, appear in the exported `Notes` surface, and be mentioned in `manual-review` evidence. Core truth fields such as written form, reading, meaning, example correctness, and product fit cannot use this escape hatch; unresolved uncertainty there still blocks platinum.
+
 For active word cards, `japanese-source` evidence must cite a source registered in `templates/platinum_card_source_manifest.json` for `word-field-verification`. Generated output, golden review expectations, tracked starter templates, ignored local data, source-claim lists, and local caches are useful internal evidence, but they are not Japanese-source verification by themselves. Kanji-reference sources may support `single-kanji-word-field-verification` only for one-kanji word cards.
 
 For active word cards, the reviewed deck level must be governed by the written word and learner fit. A card is anchored by kanji from its own deck level; other constituent kanji are support kanji and must be visibly labeled. If the word has no current-level anchor, all-easier-kanji words may ship later only with an explicit learner-fit rationale, and words that depend only on harder support kanji must move, defer, or be removed.
 
 For active kanji cards, `japanese-source` evidence must cite a source registered in `templates/platinum_card_source_manifest.json` for `kanji-field-verification`. Generated output, golden review expectations, tracked starter templates, source-governance manifests, source-claim lists, ignored local data, and local caches are useful internal evidence, but they are not Japanese-source verification by themselves. The same source may support both kanji and word product reviews when it directly verifies each card's own fields; the requirement is accuracy and field binding, not source uniqueness across products. This card-field source check is not a JLPT placement proof; placement confidence remains owned by the source-governance layer. Platinum may read JLPT kanji source-governance origin ids only to reject circular field verification against the same source family.
+
+Current word platinum uses the versioned standard `word-platinum-v2-limitation-aware`. Active word entries count toward current-standard platinum only when they include `reviewStandard`, `revalidatedAt`, `revalidationSummary`, `notesIncludes`, and `current-standard-review` source evidence. That current-standard evidence must explicitly bind the generated surface, Japanese-source field check, example sentence, notes/support surface, reading breakdown, level/label surface, exact audio identity, pitch-accent source/render state, media provenance, and verification limitations to the exact written-reading card. It must also record the example sentence judgment: natural, useful, learner-friendly, level-appropriate, and release-quality. Existing active word platinum entries created before this standard are legacy/unversioned: keep them for historical context, but do not count them as current version 1 release coverage until they are revalidated.
 
 Current kanji platinum uses the versioned standard `kanji-platinum-v2-limitation-aware`. Active kanji entries count toward current-standard platinum only when they include `reviewStandard`, `revalidatedAt`, `revalidationSummary`, and `current-standard-review` source evidence. That current-standard evidence must explicitly bind the generated surface, Japanese-source field check, example sentence, notes/support surface, audio, stroke-order media, and verification limitations to the exact card. It must also record the example sentence judgment: natural, useful, learner-friendly, level-appropriate, release-quality, and support-only. Existing active kanji platinum entries created before this standard are legacy/unversioned: keep them for historical context, but do not count them as current version 1 release coverage until they are revalidated.
 
@@ -109,6 +113,16 @@ Active platinum word entries must include:
 - `reviewer`
 - `sourceEvidence`
 - `qualityGates`
+
+Current-standard active word entries must also include:
+
+- `reviewStandard`: exactly `word-platinum-v2-limitation-aware`
+- `revalidatedAt`: `YYYY-MM-DD`
+- `revalidationSummary`: explicit current-standard revalidation summary covering generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, and verification limitations
+- `notesIncludes`: protected snippets from the exported notes/support surface
+- `current-standard-review` source evidence: exact whole-card revalidation evidence covering generated surface, Japanese-source fields, example sentence, natural/useful/learner-friendly/level-appropriate sentence judgment, notes/support surface, reading breakdown, label surface, exact audio identity, pitch-accent source/render state, media provenance, and either explicit verification limitations or `no active limitations`
+
+Active word entries may also include `verificationLimitations` for non-core limitations that remain after real review. This array is countable by the word platinum report; it does not weaken required quality gates or source evidence.
 
 Word `sourceEvidence` must be an array of structured objects. Each object must include:
 
@@ -242,7 +256,7 @@ npm run deck:words:platinum:n4
 
 Each kanji platinum command requires every generated card for that level and surface to have an active current-standard platinum entry by default. Use `--allow-legacy-standard` only to inspect historical field-bound entries while planning revalidation; it must not be used as version 1 release evidence.
 
-Each word platinum command requires every generated word card for that level and surface to have an active platinum entry.
+Each word platinum command requires every generated word card for that level and surface to have an active current-standard platinum entry by default. Use `--allow-legacy-standard` only to inspect historical field-bound entries while planning revalidation; it must not be used as version 1 release evidence.
 
 Additional platinum commands apply only to the optional `additional_unverified_Nx` surface. They do not move the core JLPT kanji contract, certify source-evidence confidence, or satisfy core kanji platinum coverage.
 

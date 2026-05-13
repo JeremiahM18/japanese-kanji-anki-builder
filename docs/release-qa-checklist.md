@@ -31,9 +31,10 @@ Run this checklist after automated gates pass and before marking a deck mileston
 - Run the golden review command for each shipped word level when one exists, such as `npm run deck:words:review:n5`.
 - Run the word-level placement audit for each shipped word level, such as `npm run deck:words:level-anchor-audit -- --level=5`.
 - Run the platinum review command for each version 1 locked kanji level after its platinum manifest is populated and current-standard revalidated, such as `npm run deck:platinum:n5`.
-- Run the platinum review command for each version 1 locked word level after its platinum manifest is populated, such as `npm run deck:words:platinum:n5`.
+- Run the platinum review command for each version 1 locked word level after its platinum manifest is populated and current-standard revalidated, such as `npm run deck:words:platinum:n5`.
 - Confirm platinum evidence is field-bound and source-role governed: the evidence must name the card, exported reading, learner-facing values, exact audio identity, and source/provenance claim it supports; `japanese-source` entries must resolve to `templates/platinum_card_source_manifest.json`, and kanji card-field verification must not be circular with the source-governance origin family for that kanji-level claim.
 - Confirm kanji platinum current-standard coverage: `deck:kanji:review-status` must show the shipped level's `Current Std` count equal to its generated count, and no shipped active kanji platinum entry may remain only legacy/unversioned. `--allow-legacy-standard` is for historical inspection only, not release evidence.
+- Confirm word platinum current-standard coverage: the shipped level's default `deck:words:platinum:n*` command must show current-standard platinum count equal to the generated active card count, and no shipped active word platinum entry may remain only legacy/unversioned. `--allow-legacy-standard` is for historical inspection only, not release evidence.
 - Run `npm run product:artifacts:n5` for an N5 word release. It proves the N5 word TSV can be regenerated from tracked templates only, but it does not validate kanji TSVs, `.apkg` files, or media packages.
 - Run `npm run product:artifacts:kanji:n5:preflight` for an N5 kanji release. It currently reports tracked-source kanji TSV certification as blocked until rich kanji readings and provenance are tracked release contracts. Component/radical source data is tracked in `templates/kanji_component_contract.json`.
 - Run `npm run product:readiness:n5` for an N5 release. It combines the current automated N5 audits and golden reviews, but it does not replace fresh artifact generation or manual QA.
@@ -60,7 +61,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 
 ## Word deck manual spot review
 
-- Import each word level being shipped into Anki only after the current word-level placement audit, readiness audit, golden review, and applicable platinum review pass. N5 word currently passes those automated checks but still needs manual import, accessibility, and listening QA before release-ready status; N4 word placement, golden review, and automated readiness pass with active reading triage cleared, but N4 remains blocked by platinum review and manual QA.
+- Import each word level being shipped into Anki only after the current word-level placement audit, readiness audit, golden review, and applicable current-standard platinum review pass. N5 word currently passes placement, readiness, golden, and tracked-source artifact checks, but its platinum entries are legacy/unversioned until revalidated under `word-platinum-v2-limitation-aware`; N4 word placement, golden review, and automated readiness pass with active reading triage cleared, but N4 remains blocked by platinum review and manual QA.
 - Confirm platinum-reviewed cards are useful, common enough, learner-friendly, and not present only for reading coverage.
 - Review beginner core words.
 - Review support words.

@@ -2,6 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const {
+    CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
     REQUIRED_WORD_EVIDENCE_TYPES,
     REQUIRED_WORD_QUALITY_GATES,
     evaluatePlatinumWordReviewSet,
@@ -72,6 +73,28 @@ function buildSourceEvidence() {
     }));
 }
 
+function buildCurrentStandardSourceEvidence({ limitationLabel = "" } = {}) {
+    const evidence = buildSourceEvidence();
+    const currentStandardDetail = [
+        "Current-standard whole-card revalidation for 今日|きょう checked generated surface, Japanese-source evidence, example sentence 今日は図書館へ行きます。, notes/support surface Common N5 word., reading breakdown 今 （いま） and 日 （ひ）, meaning today, labels JLPT N5, JLPT core, focus 今 and 日, covers 今: いま and 日: ひ, audio word-reading-今日-きょう, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations.",
+        limitationLabel ? `Visible limitation label: ${limitationLabel}.` : "",
+    ].filter(Boolean).join(" ");
+
+    return [
+        ...evidence.map((entry) => entry.type === "manual-review" && limitationLabel
+            ? {
+                ...entry,
+                detail: `${entry.detail} Verification limitation: ${limitationLabel}.`,
+            }
+            : entry),
+        {
+            type: "current-standard-review",
+            source: "manual current-standard word review fixture",
+            detail: currentStandardDetail,
+        },
+    ];
+}
+
 function buildRow(overrides = {}) {
     return {
         word: "今日",
@@ -113,6 +136,17 @@ function buildEntry(overrides = {}) {
     };
 }
 
+function buildCurrentStandardEntry(overrides = {}) {
+    return buildEntry({
+        reviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
+        revalidatedAt: "2026-05-13",
+        revalidationSummary: "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, and verification limitations under the current word platinum standard.",
+        notesIncludes: ["Common N5 word."],
+        sourceEvidence: buildCurrentStandardSourceEvidence(),
+        ...overrides,
+    });
+}
+
 test("evaluatePlatinumWordReviewSet passes active platinum entries with release gates and matching export fields", () => {
     const report = evaluateWordPlatinum({
         rows: [buildRow()],
@@ -123,6 +157,93 @@ test("evaluatePlatinumWordReviewSet passes active platinum entries with release 
     assert.equal(report.passed, true);
     assert.equal(report.activePlatinumCount, 1);
     assert.equal(report.failedCount, 0);
+});
+
+test("evaluatePlatinumWordReviewSet gates current-standard revalidation separately from legacy word platinum", () => {
+    const legacyReport = evaluateWordPlatinum({
+        rows: [buildRow()],
+        entries: [buildEntry()],
+        requireAllRows: true,
+        requireCurrentReviewStandard: true,
+    });
+    const currentReport = evaluateWordPlatinum({
+        rows: [buildRow()],
+        entries: [buildCurrentStandardEntry()],
+        requireAllRows: true,
+        requireCurrentReviewStandard: true,
+    });
+
+    assert.equal(legacyReport.passed, false);
+    assert.equal(legacyReport.currentStandardPlatinumCount, 0);
+    assert.equal(legacyReport.legacyOrUnversionedPlatinumCount, 1);
+    assert.deepEqual(legacyReport.missingCurrentStandardRows, ["今日 (きょう)"]);
+    assert.match(legacyReport.results[0].failures.join("\n"), /reviewStandard must be word-platinum-v2-limitation-aware/);
+
+    assert.equal(currentReport.passed, true);
+    assert.equal(currentReport.currentStandardPlatinumCount, 1);
+    assert.equal(currentReport.legacyOrUnversionedPlatinumCount, 0);
+    assert.deepEqual(currentReport.missingCurrentStandardRows, []);
+});
+
+test("evaluatePlatinumWordReviewSet requires current-standard evidence to bind the whole word card surface", () => {
+    const report = evaluateWordPlatinum({
+        rows: [buildRow()],
+        entries: [buildCurrentStandardEntry({
+            sourceEvidence: [
+                ...buildSourceEvidence(),
+                {
+                    type: "current-standard-review",
+                    source: "manual current-standard word review fixture",
+                    detail: "Current-standard review completed for 今日|きょう.",
+                },
+            ],
+        })],
+        requireCurrentReviewStandard: true,
+    });
+
+    assert.equal(report.passed, false);
+    assert.match(report.results[0].failures.join("\n"), /current-standard-review evidence must explicitly support current-standard whole-card revalidation/);
+});
+
+test("evaluatePlatinumWordReviewSet tracks word verification limitations without weakening core gates", () => {
+    const limitationLabel = "Pitch accent limited verification";
+    const report = evaluateWordPlatinum({
+        rows: [buildRow({ notes: `Common N5 word. ${limitationLabel}.` })],
+        entries: [buildCurrentStandardEntry({
+            sourceEvidence: buildCurrentStandardSourceEvidence({ limitationLabel }),
+            verificationLimitations: [{
+                field: "pitchAccent",
+                status: "limited_source",
+                label: limitationLabel,
+                reviewNote: "Pitch accent was reviewed against available source data, but the source set is limited.",
+            }],
+        })],
+        requireAllRows: true,
+        requireCurrentReviewStandard: true,
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.verificationLimitationCount, 1);
+    assert.equal(report.verificationLimitationWordCount, 1);
+    assert.deepEqual(report.verificationLimitationFieldCounts, { pitchAccent: 1 });
+});
+
+test("evaluatePlatinumWordReviewSet rejects unverifiable core word truth fields as limitations", () => {
+    const report = evaluateWordPlatinum({
+        rows: [buildRow()],
+        entries: [buildCurrentStandardEntry({
+            verificationLimitations: [{
+                field: "reading",
+                status: "limited_source",
+                label: "Reading limited verification",
+                reviewNote: "This would leave a core card field unverified.",
+            }],
+        })],
+        requireCurrentReviewStandard: true,
+    });
+
+    assert.equal(report.passed, false);
+    assert.match(report.results[0].failures.join("\n"), /cannot be a core word-card truth field: reading/);
 });
 
 test("evaluatePlatinumWordReviewSet rejects active entries with missing release-quality gates", () => {
@@ -374,6 +495,22 @@ test("evaluatePlatinumWordReviewSet can require every generated row to be platin
     assert.deepEqual(report.missingPlatinumRows, ["明日 (あした)"]);
     assert.match(formatPlatinumWordReviewReport(report), /missing platinum entries for generated words: 1/);
     assert.match(formatPlatinumWordReviewReport(report), /明日 \(あした\)/);
+});
+
+test("formatPlatinumWordReviewReport summarizes current-standard and legacy word coverage", () => {
+    const report = evaluateWordPlatinum({
+        rows: [buildRow()],
+        entries: [buildEntry()],
+        requireAllRows: true,
+        requireCurrentReviewStandard: true,
+    });
+    const formatted = formatPlatinumWordReviewReport(report);
+
+    assert.match(formatted, /Current review standard: word-platinum-v2-limitation-aware/);
+    assert.match(formatted, /Current-standard platinum cards: 0/);
+    assert.match(formatted, /Legacy\/unversioned platinum cards: 1/);
+    assert.match(formatted, /missing current-standard platinum entries for generated words: 1/);
+    assert.match(formatted, /Missing current-standard platinum row sample \(1\/1\):/);
 });
 
 test("evaluatePlatinumWordReviewSet does not pass an empty platinum set by default", () => {

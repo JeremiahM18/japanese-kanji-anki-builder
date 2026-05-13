@@ -3,6 +3,7 @@ const assert = require("node:assert/strict");
 
 const {
     ALLOWED_KANJI_VERIFICATION_LIMITATION_FIELDS,
+    CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
     REQUIRED_KANJI_EVIDENCE_TYPES,
     REQUIRED_KANJI_QUALITY_GATES,
     evaluatePlatinumKanjiReviewSet,
@@ -72,6 +73,15 @@ function buildEntry(overrides = {}) {
     };
 }
 
+function buildCurrentStandardEntry(overrides = {}) {
+    return buildEntry({
+        reviewStandard: CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
+        revalidatedAt: "2026-05-13",
+        revalidationSummary: "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+        ...overrides,
+    });
+}
+
 test("evaluatePlatinumKanjiReviewSet passes active platinum entries with strict kanji card gates", () => {
     const report = evaluatePlatinumKanjiReviewSet({
         rows: [buildRow()],
@@ -117,6 +127,47 @@ test("evaluatePlatinumKanjiReviewSet tracks explicit non-core verification limit
     assert.equal(report.verificationLimitationKanjiCount, 1);
     assert.equal(report.verificationLimitationFieldCounts.strokeOrderSequence, 1);
     assert.match(formatPlatinumKanjiReviewReport(report), /Stroke-order sequence unverified/);
+});
+
+test("evaluatePlatinumKanjiReviewSet gates current-standard revalidation separately from legacy platinum", () => {
+    const legacyReport = evaluatePlatinumKanjiReviewSet({
+        rows: [buildRow()],
+        entries: [buildEntry()],
+        requireAllRows: true,
+        requireCurrentReviewStandard: true,
+    });
+    const currentReport = evaluatePlatinumKanjiReviewSet({
+        rows: [buildRow()],
+        entries: [buildCurrentStandardEntry()],
+        requireAllRows: true,
+        requireCurrentReviewStandard: true,
+    });
+
+    assert.equal(legacyReport.passed, false);
+    assert.equal(legacyReport.currentStandardPlatinumCount, 0);
+    assert.equal(legacyReport.legacyOrUnversionedPlatinumCount, 1);
+    assert.deepEqual(legacyReport.missingCurrentStandardRows, ["日"]);
+    assert.match(legacyReport.results[0].failures.join("\n"), /reviewStandard must be kanji-platinum-v2-limitation-aware/);
+    assert.equal(currentReport.passed, true);
+    assert.equal(currentReport.currentStandardPlatinumCount, 1);
+    assert.equal(currentReport.legacyOrUnversionedPlatinumCount, 0);
+});
+
+test("evaluatePlatinumKanjiReviewSet requires complete current-standard revalidation summaries", () => {
+    const report = evaluatePlatinumKanjiReviewSet({
+        rows: [buildRow()],
+        entries: [buildCurrentStandardEntry({
+            revalidationSummary: "Revalidated generated surface and audio.",
+        })],
+        requireAllRows: true,
+        requireCurrentReviewStandard: true,
+    });
+
+    const failures = report.results[0].failures.join("\n");
+    assert.equal(report.passed, false);
+    assert.match(failures, /revalidationSummary must mention Japanese source evidence/);
+    assert.match(failures, /revalidationSummary must mention example sentence/);
+    assert.match(failures, /revalidationSummary must mention verification limitations/);
 });
 
 test("evaluatePlatinumKanjiReviewSet rejects core-field or hidden verification limitations", () => {

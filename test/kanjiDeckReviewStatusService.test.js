@@ -92,6 +92,9 @@ test("buildKanjiDeckReviewStatus reports core and additional review coverage", (
         assert.equal(coreN5.presentUnique, 1);
         assert.equal(coreN5.goldenCount, 1);
         assert.equal(coreN5.platinumCount, 1);
+        assert.equal(coreN5.currentStandardPlatinumCount, 0);
+        assert.equal(coreN5.legacyOrUnversionedPlatinumCount, 1);
+        assert.deepEqual(coreN5.legacyOrUnversionedKanji, ["一"]);
         assert.equal(coreN5.verificationLimitationCount, 1);
         assert.equal(coreN5.verificationLimitationKanjiCount, 1);
         assert.equal(coreN5.verificationLimitationFieldCounts.strokeOrderSequence, 1);
@@ -111,6 +114,9 @@ test("buildKanjiDeckReviewStatus reports core and additional review coverage", (
         assert.match(formatKanjiDeckReviewStatus(report), /core N4 retained; no additional duplicate selected/);
         assert.match(formatKanjiDeckReviewStatus(report), /Verification Limitations:/);
         assert.match(formatKanjiDeckReviewStatus(report), /core_N5: 1 limitation\(s\) on 1 active platinum card\(s\)/);
+        assert.match(formatKanjiDeckReviewStatus(report), /Current Std/);
+        assert.match(formatKanjiDeckReviewStatus(report), /Legacy\/Unversioned Platinum:/);
+        assert.match(formatKanjiDeckReviewStatus(report), /core_N5: 1 active platinum card\(s\) need current-standard revalidation/);
     } finally {
         fs.rmSync(tempRoot, { recursive: true, force: true });
     }

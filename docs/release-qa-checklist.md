@@ -30,9 +30,10 @@ Run this checklist after automated gates pass and before marking a deck mileston
 - For Japanese-published textbook evidence, create one worksheet per individual source lane with `npm run data:template:jlpt:textbook-source -- --source=<source-id>`, fill only permitted manually reviewed citations and level judgments, pin the reviewed TSV integrity, then dry-run import before any `--write`. Do not manually import `japanese_textbook_consensus`; it is derived from the individual lanes.
 - Run the golden review command for each shipped word level when one exists, such as `npm run deck:words:review:n5`.
 - Run the word-level placement audit for each shipped word level, such as `npm run deck:words:level-anchor-audit -- --level=5`.
-- Run the platinum review command for each version 1 locked kanji level after its platinum manifest is populated, such as `npm run deck:platinum:n5`.
+- Run the platinum review command for each version 1 locked kanji level after its platinum manifest is populated and current-standard revalidated, such as `npm run deck:platinum:n5`.
 - Run the platinum review command for each version 1 locked word level after its platinum manifest is populated, such as `npm run deck:words:platinum:n5`.
 - Confirm platinum evidence is field-bound and source-role governed: the evidence must name the card, exported reading, learner-facing values, exact audio identity, and source/provenance claim it supports; `japanese-source` entries must resolve to `templates/platinum_card_source_manifest.json`, and kanji card-field verification must not be circular with the source-governance origin family for that kanji-level claim.
+- Confirm kanji platinum current-standard coverage: `deck:kanji:review-status` must show the shipped level's `Current Std` count equal to its generated count, and no shipped active kanji platinum entry may remain only legacy/unversioned. `--allow-legacy-standard` is for historical inspection only, not release evidence.
 - Run `npm run product:artifacts:n5` for an N5 word release. It proves the N5 word TSV can be regenerated from tracked templates only, but it does not validate kanji TSVs, `.apkg` files, or media packages.
 - Run `npm run product:artifacts:kanji:n5:preflight` for an N5 kanji release. It currently reports tracked-source kanji TSV certification as blocked until rich kanji readings and provenance are tracked release contracts. Component/radical source data is tracked in `templates/kanji_component_contract.json`.
 - Run `npm run product:readiness:n5` for an N5 release. It combines the current automated N5 audits and golden reviews, but it does not replace fresh artifact generation or manual QA.
@@ -41,7 +42,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 
 ## Kanji deck manual spot review
 
-- Import each kanji level being shipped into Anki. Current ready local kanji levels are N5, N4, N3, N2, and N1. Platinum review is still required before any level is version-1 locked.
+- Import each kanji level being shipped into Anki. Current ready local kanji levels are N5, N4, N3, N2, and N1. Current-standard platinum review is still required before any level is version-1 locked.
 - Import additional unverified kanji decks separately from core decks. Confirm they are labeled as additional/unverified and do not include suppressed duplicate-claim kanji.
 - Confirm platinum-reviewed cards preserve the individual-kanji anchor and do not ship weak, noisy, or compound-led teaching surfaces.
 - Confirm any kanji `verificationLimitations` are non-core, visibly labeled on the affected card surface, and reflected in `deck:kanji:review-status` counts.

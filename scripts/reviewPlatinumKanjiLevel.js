@@ -21,11 +21,14 @@ function parseArgs(argv) {
         allowEmpty: false,
         json: false,
         level: null,
+        requireCurrentReviewStandard: true,
         requireAllRows: false,
     };
 
     for (const arg of argv) {
-        if (arg === "--allow-empty") {
+        if (arg === "--allow-legacy-standard") {
+            args.requireCurrentReviewStandard = false;
+        } else if (arg === "--allow-empty") {
             args.allowEmpty = true;
         } else if (arg === "--json") {
             args.json = true;
@@ -126,6 +129,7 @@ async function main() {
     const report = evaluatePlatinumKanjiReviewSet({
         rows,
         entries,
+        requireCurrentReviewStandard: options.requireCurrentReviewStandard,
         requireAllRows: options.requireAllRows,
         allowEmpty: options.allowEmpty,
     });

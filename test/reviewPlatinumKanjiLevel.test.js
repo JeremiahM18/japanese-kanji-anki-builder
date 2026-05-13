@@ -12,8 +12,15 @@ test("parseArgs accepts platinum kanji review options", () => {
         allowEmpty: true,
         json: true,
         level: 5,
+        requireCurrentReviewStandard: true,
         requireAllRows: true,
     });
+});
+
+test("parseArgs allows explicit legacy platinum inspection", () => {
+    const options = parseArgs(["--level=5", "--allow-legacy-standard"]);
+
+    assert.equal(options.requireCurrentReviewStandard, false);
 });
 
 test("parseArgs accepts additional platinum kanji review options", () => {
@@ -23,6 +30,7 @@ test("parseArgs accepts additional platinum kanji review options", () => {
         "--json",
         "--require-all",
         "--allow-empty",
+        "--allow-legacy-standard",
         "--oops",
     ]);
 
@@ -31,6 +39,7 @@ test("parseArgs accepts additional platinum kanji review options", () => {
         json: true,
         level: 5,
         outDir: "out/custom-additional",
+        requireCurrentReviewStandard: false,
         requireAllRows: true,
         unknownArgs: ["--oops"],
     });

@@ -370,6 +370,17 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
     assert.deepEqual(curatedStudyData["力"].displayWord, { written: "力", pron: "ちから" });
     assert.deepEqual(curatedStudyData["場"].displayWord, { written: "場", pron: "ば" });
     assert.deepEqual(curatedStudyData["用"].displayWord, { written: "用", pron: "よう" });
+    assert.deepEqual(curatedStudyData["用"].blockedMeanings, ["service"]);
+    assert.deepEqual(curatedStudyData["田"].displayWord, { written: "田", pron: "た" });
+    assert.equal(curatedStudyData["田"].exampleSentence.japanese, "家の近くに田んぼがあります。");
+    assert.deepEqual(curatedStudyData["真"].displayWord, { written: "真", pron: "ま" });
+    assert.deepEqual(curatedStudyData["真"].blockedMeanings, ["Buddhist sect"]);
+    assert.equal(curatedStudyData["真"].exampleSentence.japanese, "この紙は真っ白です。");
+    assert.deepEqual(curatedStudyData["発"].displayWord, { written: "発", pron: "はつ" });
+    assert.deepEqual(curatedStudyData["発"].blockedReadings, ["あばく", "おこる", "たつ", "つかわす", "はなつ"]);
+    assert.deepEqual(curatedStudyData["発"].blockedMeanings, ["counter for gunshots", "disclose", "start from"]);
+    assert.deepEqual(curatedStudyData["目"].blockedMeanings, ["care", "class", "experience", "favor", "insight", "look"]);
+    assert.deepEqual(curatedStudyData["県"].blockedReadings, ["かける"]);
     assert.deepEqual(curatedStudyData["間"].displayWord, { written: "間", pron: "あいだ" });
     assert.deepEqual(curatedStudyData["食"].displayWord, { written: "食べる", pron: "たべる" });
     assert.deepEqual(curatedStudyData["生"].displayWord, { written: "生きる", pron: "いきる" });
@@ -388,6 +399,9 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
     assert.deepEqual(curatedStudyData["家"].displayWord, { written: "家", pron: "いえ" });
     assert.deepEqual(curatedStudyData["音"].displayWord, { written: "音", pron: "おと" });
     assert.deepEqual(curatedStudyData["開"].displayWord, { written: "開ける", pron: "あける" });
+    assert.deepEqual(curatedStudyData["洗"].blockedMeanings, ["inquire into", "probe"]);
+    assert.deepEqual(curatedStudyData["理"].blockedMeanings, ["justice"]);
+    assert.deepEqual(curatedStudyData["産"].blockedMeanings, ["bear", "give birth", "native", "yield"]);
 
     assert.deepEqual(curatedStudyData["候"].displayWord, { written: "気候", pron: "きこう" });
     assert.equal(curatedStudyData["候"].englishMeaning, "season / climate");

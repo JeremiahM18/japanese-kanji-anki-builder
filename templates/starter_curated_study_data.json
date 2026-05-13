@@ -38407,6 +38407,10 @@
       "洗面所"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "inquire into",
+      "probe"
+    ],
     "blockedSentencePhrases": [],
     "notes": "洗う （あらう） - wash ／ 洗濯 （せんたく） - laundry ／ 洗面所 （せんめんじょ） - washroom",
     "alternativeNotes": [],
@@ -43453,6 +43457,9 @@
       "理由"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "justice"
+    ],
     "blockedSentencePhrases": [],
     "notes": "理由 （りゆう） - reason ／ 料理 （りょうり） - cooking",
     "alternativeNotes": [],
@@ -43984,6 +43991,12 @@
       "産業"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "bear",
+      "give birth",
+      "native",
+      "yield"
+    ],
     "blockedSentencePhrases": [],
     "notes": "生産 （せいさん） - production ／ 出産 （しゅっさん） - childbirth ／ 産業 （さんぎょう） - industry",
     "alternativeNotes": [],
@@ -44015,6 +44028,9 @@
       "用事"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "service"
+    ],
     "blockedSentencePhrases": [],
     "notes": "用事 （ようじ） - errand ／ 使用 （しよう） - use",
     "alternativeNotes": [],
@@ -44062,6 +44078,10 @@
   },
   "田": {
     "englishMeaning": "rice field",
+    "displayWord": {
+      "written": "田",
+      "pron": "た"
+    },
     "breakdownOverrides": [],
     "source": "starter-curated",
     "tags": [
@@ -44070,16 +44090,17 @@
     ],
     "jlpt": 4,
     "preferredWords": [
-      "田んぼ"
+      "田んぼ",
+      "水田"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "田んぼ （たんぼ） - rice field ／ 山田 （やまだ） - Yamada",
+    "notes": "田んぼ （たんぼ） - rice field ／ 水田 （すいでん） - paddy field",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "田んぼがあります。",
-      "reading": "たんぼがあります。",
-      "english": "There is a rice field.",
+      "japanese": "家の近くに田んぼがあります。",
+      "reading": "いえのちかくにたんぼがあります。",
+      "english": "There is a rice field near my house.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -45031,6 +45052,10 @@
   },
   "発": {
     "englishMeaning": "depart / emit / start",
+    "displayWord": {
+      "written": "発",
+      "pron": "はつ"
+    },
     "breakdownOverrides": [],
     "source": "starter-curated",
     "tags": [
@@ -45039,9 +45064,22 @@
     ],
     "jlpt": 4,
     "preferredWords": [
-      "出発"
+      "出発",
+      "発表"
     ],
     "blockedWords": [],
+    "blockedReadings": [
+      "あばく",
+      "おこる",
+      "たつ",
+      "つかわす",
+      "はなつ"
+    ],
+    "blockedMeanings": [
+      "counter for gunshots",
+      "disclose",
+      "start from"
+    ],
     "blockedSentencePhrases": [],
     "notes": "出発 （しゅっぱつ） - departure ／ 発表 （はっぴょう） - presentation",
     "alternativeNotes": [],
@@ -45588,6 +45626,14 @@
       "目"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "care",
+      "class",
+      "experience",
+      "favor",
+      "insight",
+      "look"
+    ],
     "blockedSentencePhrases": [],
     "notes": "目 （め） - eye ／ 一つ目 （ひとつめ） - first item",
     "alternativeNotes": [],
@@ -45855,6 +45901,9 @@
       "県立"
     ],
     "blockedWords": [],
+    "blockedReadings": [
+      "かける"
+    ],
     "blockedSentencePhrases": [],
     "notes": "県 （けん） - prefecture ／ 県立 （けんりつ） - prefectural",
     "alternativeNotes": [],
@@ -45870,10 +45919,10 @@
     }
   },
   "真": {
-    "englishMeaning": "true / real",
+    "englishMeaning": "true / real / pure",
     "displayWord": {
-      "written": "本当",
-      "pron": "ほんとう"
+      "written": "真",
+      "pron": "ま"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -45883,18 +45932,21 @@
     ],
     "jlpt": 4,
     "preferredWords": [
-      "本当",
+      "真っ白",
       "写真",
       "真ん中"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "Buddhist sect"
+    ],
     "blockedSentencePhrases": [],
-    "notes": "本当 （ほんとう） - true / real ／ 写真 （しゃしん） - photograph ／ 真ん中 （まんなか） - center / middle",
+    "notes": "真っ白 （まっしろ） - pure white ／ 写真 （しゃしん） - photograph ／ 真ん中 （まんなか） - center / middle",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "駅の前にある店は話のとおり本当に静かでした。",
-      "reading": "えきのまえにあるみせははなしのとおりほんとうにしずかでした。",
-      "english": "The shop in front of the station really was quiet, just as I was told.",
+      "japanese": "この紙は真っ白です。",
+      "reading": "このかみはまっしろです。",
+      "english": "This paper is pure white.",
       "source": "starter-curated",
       "tags": [
         "example",

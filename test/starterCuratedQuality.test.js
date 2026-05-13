@@ -238,8 +238,33 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
     ]);
     assert.deepEqual(curatedStudyData["動"].blockedMeanings, ["confusion"]);
     assert.deepEqual(curatedStudyData["去"].blockedMeanings, ["divorce", "quit"]);
+    assert.deepEqual(curatedStudyData["台"].blockedMeanings, ["a stand"]);
+    assert.equal(curatedStudyData["台"].notes, "台 （だい） - stand / platform ／ 台所 （だいどころ） - kitchen ／ 台風 （たいふう） - typhoon");
+    assert.equal(curatedStudyData["台"].exampleSentence.japanese, "新しいテレビ台を買いました。");
     assert.deepEqual(curatedStudyData["合"].blockedMeanings, ["0.1"]);
     assert.deepEqual(curatedStudyData["品"].blockedMeanings, ["counter for meal courses"]);
+    assert.deepEqual(curatedStudyData["有"].preferredWords, ["有る", "有名"]);
+    assert.deepEqual(curatedStudyData["有"].blockedMeanings, ["approx", "happen", "occur"]);
+    assert.equal(curatedStudyData["有"].notes, "有る （ある） - exist / have ／ 有名 （ゆうめい） - famous");
+    assert.equal(curatedStudyData["有"].exampleSentence.japanese, "まだ時間が有るので、少し休みます。");
+    assert.deepEqual(curatedStudyData["服"].blockedMeanings, ["admit", "discharge", "obey"]);
+    assert.deepEqual(curatedStudyData["朝"].blockedMeanings, ["(North) Korea", "dynasty", "epoch", "period", "regime"]);
+    assert.deepEqual(curatedStudyData["業"].blockedMeanings, ["arts", "performance", "vocation"]);
+    assert.equal(curatedStudyData["止"].exampleSentence.japanese, "バスが駅前で止まりました。");
+    assert.deepEqual(curatedStudyData["正"].blockedMeanings, ["10**40"]);
+    assert.equal(curatedStudyData["死"].exampleSentence.japanese, "水がないと花はすぐ死んでしまいます。");
+    assert.equal(curatedStudyData["民"].exampleSentence.japanese, "この町には多くの住民がいます。");
+    assert.deepEqual(curatedStudyData["注"].preferredWords, ["注意", "注文"]);
+    assert.deepEqual(curatedStudyData["注"].blockedMeanings, [
+        "annotate",
+        "comment",
+        "concentrate on",
+        "flow into",
+        "irrigate",
+        "notes",
+        "shed (tears)",
+    ]);
+    assert.equal(curatedStudyData["洋"].exampleSentence.english, "Today I plan to eat Western food near the station.");
 
     assert.deepEqual(curatedStudyData["情"].displayWord, { written: "事情", pron: "じじょう" });
     assert.equal(curatedStudyData["情"].englishMeaning, "situation / emotion");

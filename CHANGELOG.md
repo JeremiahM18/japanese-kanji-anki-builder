@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Platinum-revalidated the next core N4 kanji milestone (`動`, `区`, `医`, `去`, `口`, `古`, `台`, `合`, `同`, `味`, `品`, `員`, `有`, `服`, `朝`, `村`, `林`, `森`, `業`, `楽`, `次`, `歌`, `止`, `正`, `歩`, `死`, `民`, `池`, `注`, `洋`) under `kanji-platinum-v2-limitation-aware`, raising core N4 current-standard platinum to `120/212` with `0` failed active entries and `92` remaining coverage gaps.
 - Added a governed platinum card-source manifest and source-role enforcement so word and kanji platinum `japanese-source` evidence must resolve to approved card-field verification roles, generated/source-governance/source-list surfaces cannot satisfy field accuracy by themselves, one-kanji word use of kanji references stays explicitly scoped, and kanji platinum rejects circular field verification from the same source-governance origin family.
 - Platinum-reviewed the full additional-unverified N5 kanji surface (`安`, `飲`, `花`, `会`, `魚`, `空`, `言`, `少`, `新`, `多`, `店`, `田`, `道`, `買`, `目`, `立`), raising additional N5 platinum to `16/16` and all additional platinum to `16/391` without moving the core JLPT contract or certifying source-evidence confidence.
 - Added an additional-unverified N5 kanji platinum gate with empty-manifest failure behavior so additional platinum cannot be inferred from golden review or generated output alone.

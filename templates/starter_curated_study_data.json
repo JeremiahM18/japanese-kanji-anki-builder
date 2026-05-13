@@ -10734,13 +10734,16 @@
       "台風"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "a stand"
+    ],
     "blockedSentencePhrases": [],
-    "notes": "台所 （だいどころ） - kitchen ／ 台風 （たいふう） - typhoon",
+    "notes": "台 （だい） - stand / platform ／ 台所 （だいどころ） - kitchen ／ 台風 （たいふう） - typhoon",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "母は台所で晩ご飯を作っています。",
-      "reading": "はははだいどころでばんごはんをつくっています。",
-      "english": "My mother is making dinner in the kitchen.",
+      "japanese": "新しいテレビ台を買いました。",
+      "reading": "あたらしいテレビだいをかいました。",
+      "english": "I bought a new TV stand.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -32353,22 +32356,28 @@
     ],
     "jlpt": 4,
     "preferredWords": [
+      "有る",
       "有名"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "有名 （ゆうめい） - famous ／ 有る （ある） - exist / have",
+    "notes": "有る （ある） - exist / have ／ 有名 （ゆうめい） - famous",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "この町には有名なラーメン屋があります。",
-      "reading": "このまちにはゆうめいならーめんやがあります。",
-      "english": "There is a famous ramen shop in this town.",
+      "japanese": "まだ時間が有るので、少し休みます。",
+      "reading": "まだじかんがあるので、すこしやすみます。",
+      "english": "There is still time, so I will rest a little.",
       "source": "starter-curated",
       "tags": [
         "example",
         "starter"
       ]
-    }
+    },
+    "blockedMeanings": [
+      "approx",
+      "happen",
+      "occur"
+    ]
   },
   "朋": {
     "englishMeaning": "friend / companion",
@@ -32427,7 +32436,12 @@
         "example",
         "starter"
       ]
-    }
+    },
+    "blockedMeanings": [
+      "admit",
+      "discharge",
+      "obey"
+    ]
   },
   "朔": {
     "englishMeaning": "first day of month / new moon",
@@ -32592,7 +32606,14 @@
         "example",
         "starter"
       ]
-    }
+    },
+    "blockedMeanings": [
+      "(North) Korea",
+      "dynasty",
+      "epoch",
+      "period",
+      "regime"
+    ]
   },
   "期": {
     "englishMeaning": "deadline / period / term",
@@ -35266,7 +35287,12 @@
         "example",
         "starter"
       ]
-    }
+    },
+    "blockedMeanings": [
+      "arts",
+      "performance",
+      "vocation"
+    ]
   },
   "極": {
     "englishMeaning": "extreme / very",
@@ -36305,9 +36331,9 @@
     "notes": "止まる （とまる） - stop ／ 止める （とめる） - stop something",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "雨が止んだので散歩に出かけました。",
-      "reading": "あめがやんだのでさんぽにでかけました。",
-      "english": "Since the rain stopped, I went out for a walk.",
+      "japanese": "バスが駅前で止まりました。",
+      "reading": "バスがえきまえでとまりました。",
+      "english": "The bus stopped near the station.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -36340,7 +36366,10 @@
         "example",
         "starter"
       ]
-    }
+    },
+    "blockedMeanings": [
+      "10**40"
+    ]
   },
   "武": {
     "englishMeaning": "military / martial",
@@ -36530,9 +36559,9 @@
     "notes": "死ぬ （しぬ） - die ／ 必死 （ひっし） - desperate",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "その小説では犬が死ぬ場面があります。",
-      "reading": "そのしょうせつではいぬがしぬばめんがあります。",
-      "english": "There is a scene in that novel where a dog dies.",
+      "japanese": "水がないと花はすぐ死んでしまいます。",
+      "reading": "みずがないとはなはすぐしんでしまいます。",
+      "english": "Without water, flowers quickly die.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -37111,9 +37140,9 @@
     "notes": "国民 （こくみん） - citizens / people of a country ／ 住民 （じゅうみん） - residents ／ 市民 （しみん） - citizen",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "国民の声を大切にするべきです。",
-      "reading": "こくみんのこえをたいせつにするべきです。",
-      "english": "We should value the voices of the people.",
+      "japanese": "この町には多くの住民がいます。",
+      "reading": "このまちにはおおくのじゅうみんがいます。",
+      "english": "There are many residents in this town.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -38230,7 +38259,7 @@
     }
   },
   "注": {
-    "englishMeaning": "pour / note / attention",
+    "englishMeaning": "attention / note / order",
     "breakdownOverrides": [],
     "source": "starter-curated",
     "tags": [
@@ -38239,7 +38268,8 @@
     ],
     "jlpt": 4,
     "preferredWords": [
-      "注意"
+      "注意",
+      "注文"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
@@ -38254,7 +38284,16 @@
         "example",
         "starter"
       ]
-    }
+    },
+    "blockedMeanings": [
+      "annotate",
+      "comment",
+      "concentrate on",
+      "flow into",
+      "irrigate",
+      "notes",
+      "shed (tears)"
+    ]
   },
   "泰": {
     "englishMeaning": "peaceful / calm",
@@ -38341,7 +38380,7 @@
     "exampleSentence": {
       "japanese": "今日は駅前で洋食を食べる予定です。",
       "reading": "きょうはえきまえでようしょくをたべるよていです。",
-      "english": "Today I plan to eat Western food in front of the station.",
+      "english": "Today I plan to eat Western food near the station.",
       "source": "starter-curated",
       "tags": [
         "example",

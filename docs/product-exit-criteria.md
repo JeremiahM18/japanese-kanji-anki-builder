@@ -76,7 +76,7 @@ A word level ships only when all criteria are true:
 
 ## Current product posture
 
-- N5 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; active platinum entries are `80/80`, current-standard revalidation is `30/80`, and `50` legacy/unversioned entries remain under `kanji-platinum-v2-limitation-aware`
+- N5 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; active platinum entries are `80/80`, current-standard revalidation is `60/80`, and `20` legacy/unversioned entries remain under `kanji-platinum-v2-limitation-aware`
 - N4 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; legacy/unversioned platinum review has started with `42/212` active entries and remains blocked until the rest of the level plus current-standard revalidation are complete
 - N3 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N2 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started

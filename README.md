@@ -118,7 +118,7 @@ Use the workflow sections below for preview, `.apkg`, media, audio, and release 
 
 | Surface | Status |
 | --- | --- |
-| N5 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; active platinum entries are `80/80`, current-standard revalidation is `30/80`, and `50` legacy/unversioned entries remain under `kanji-platinum-v2-limitation-aware` |
+| N5 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; active platinum entries are `80/80`, current-standard revalidation is `60/80`, and `20` legacy/unversioned entries remain under `kanji-platinum-v2-limitation-aware` |
 | N4 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; legacy/unversioned platinum review is in progress with `42/212` active entries and `170` remaining, but current-standard revalidation is `0/212` |
 | N3 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |
 | N2 kanji | Golden-reviewed; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started |

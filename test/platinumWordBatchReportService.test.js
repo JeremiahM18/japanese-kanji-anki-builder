@@ -71,7 +71,7 @@ const rows = [
     },
 ];
 
-test("word batch report selects missing rows and surfaces review risks", () => {
+test("word batch report selects rows missing current-standard platinum and surfaces review risks", () => {
     const report = buildPlatinumWordBatchReport({
         rows,
         entries: [{ word: "今日", status: "platinum", readingIncludes: ["きょう"] }],
@@ -82,14 +82,21 @@ test("word batch report selects missing rows and surfaces review risks", () => {
 
     assert.equal(report.summary.generatedRows, 2);
     assert.equal(report.summary.activePlatinum, 1);
+    assert.equal(report.summary.currentStandardPlatinum, 0);
+    assert.equal(report.summary.legacyOrUnversionedPlatinum, 1);
     assert.equal(report.summary.remainingPlatinum, 1);
-    assert.equal(report.cards.length, 1);
-    assert.equal(report.cards[0].identity, "八|はち");
-    assert.equal(report.cards[0].hardChecksPassed, true);
-    assert.ok(report.cards[0].riskFlags.some((flag) => /generated pitch/.test(flag)));
-    assert.ok(report.cards[0].riskFlags.some((flag) => /single-kanji word/.test(flag)));
-    assert.match(report.cards[0].suggestedReviewStep, /source-check pitch/);
+    assert.equal(report.summary.remainingCurrentStandard, 2);
+    assert.equal(report.cards.length, 2);
+    assert.equal(report.cards[0].identity, "今日|きょう");
+    assert.equal(report.cards[0].reviewStatus, "legacy_unversioned_platinum");
+    assert.match(report.cards[0].suggestedReviewStep, /revalidate existing platinum/);
+    assert.equal(report.cards[1].identity, "八|はち");
+    assert.equal(report.cards[1].hardChecksPassed, true);
+    assert.ok(report.cards[1].riskFlags.some((flag) => /generated pitch/.test(flag)));
+    assert.ok(report.cards[1].riskFlags.some((flag) => /single-kanji word/.test(flag)));
+    assert.match(report.cards[1].suggestedReviewStep, /source-check pitch/);
     assert.match(formatPlatinumWordBatchReport(report), /This report is read-only/);
+    assert.match(formatPlatinumWordBatchReport(report), /Next missing current-standard queue/);
 });
 
 test("scoped word batch report keeps formatted output focused on requested cards", () => {
@@ -103,8 +110,8 @@ test("scoped word batch report keeps formatted output focused on requested cards
     const formatted = formatPlatinumWordBatchReport(report);
 
     assert.equal(report.scopedToRequestedWords, true);
-    assert.equal(report.nextMissingWords.length, 1);
-    assert.doesNotMatch(formatted, /Next missing queue/);
+    assert.equal(report.nextMissingWords.length, 2);
+    assert.doesNotMatch(formatted, /Next missing current-standard queue/);
     assert.match(formatted, /八\|はち/);
 });
 

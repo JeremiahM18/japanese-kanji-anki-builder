@@ -2,8 +2,10 @@ const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 const { extractRenderedPitchAccentPattern, parsePitchAccentPattern } = require("./pitchAccentRenderService");
 const {
     ACTIVE_PLATINUM_STATUSES,
+    CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
     NON_SHIPPING_STATUSES,
     REVIEW_ONLY_STATUSES,
+    entryUsesCurrentWordPlatinumStandard,
 } = require("./platinumReviewService");
 const {
     GENERATED_PITCH_LABEL,
@@ -150,6 +152,54 @@ function buildEntryStatusByIdentity(entries = []) {
     }
 
     return statusByIdentity;
+}
+
+function buildEntryReviewStateByIdentity(entries = []) {
+    const stateByIdentity = new Map();
+
+    for (const entry of Array.isArray(entries) ? entries : []) {
+        const word = normalizeText(entry.word);
+        const readings = Array.isArray(entry.readingIncludes) ? entry.readingIncludes : [""];
+        const status = normalizeText(entry.status) || "(blank)";
+        for (const reading of readings) {
+            const identity = buildWordIdentity({ word, reading });
+            if (!identity) {
+                continue;
+            }
+            if (!stateByIdentity.has(identity)) {
+                stateByIdentity.set(identity, {
+                    statuses: [],
+                    hasActivePlatinum: false,
+                    hasCurrentStandardPlatinum: false,
+                    hasLegacyOrUnversionedPlatinum: false,
+                });
+            }
+            const state = stateByIdentity.get(identity);
+            state.statuses.push(status);
+            if (ACTIVE_PLATINUM_STATUSES.includes(status)) {
+                state.hasActivePlatinum = true;
+                if (entryUsesCurrentWordPlatinumStandard(entry)) {
+                    state.hasCurrentStandardPlatinum = true;
+                } else {
+                    state.hasLegacyOrUnversionedPlatinum = true;
+                }
+            }
+        }
+    }
+
+    return stateByIdentity;
+}
+
+function classifyReviewState(state = {}) {
+    const statuses = Array.isArray(state.statuses) ? state.statuses : [];
+
+    if (state.hasCurrentStandardPlatinum) {
+        return "current_standard_platinum";
+    }
+    if (state.hasActivePlatinum) {
+        return "legacy_unversioned_platinum";
+    }
+    return classifyReviewStatus(statuses);
 }
 
 function classifyReviewStatus(statuses = []) {
@@ -314,6 +364,10 @@ function buildRiskFlags(row = {}, {
 
     if (reviewStatus === "active_platinum") {
         flags.push("already has active platinum; re-review only if intentionally replacing prior evidence");
+    } else if (reviewStatus === "current_standard_platinum") {
+        flags.push("already has current-standard platinum; re-review only if intentionally replacing prior evidence");
+    } else if (reviewStatus === "legacy_unversioned_platinum") {
+        flags.push("active platinum is legacy/unversioned; current-standard revalidation required");
     } else if (reviewStatus === "needs_review") {
         flags.push("existing needs_review entry blocks platinum until resolved");
     } else if (reviewStatus === "non_shipping_decision") {
@@ -354,6 +408,12 @@ function buildSuggestedReviewStep({ hardChecksPassed, reviewStatus, riskFlags = 
     if (!hardChecksPassed) {
         return "fix generated surface before platinum";
     }
+    if (reviewStatus === "current_standard_platinum") {
+        return "already current-standard reviewed";
+    }
+    if (reviewStatus === "legacy_unversioned_platinum") {
+        return "revalidate existing platinum under current standard";
+    }
     if (reviewStatus === "active_platinum") {
         return "already reviewed";
     }
@@ -373,7 +433,7 @@ function buildSuggestedReviewStep({ hardChecksPassed, reviewStatus, riskFlags = 
 }
 
 function selectBatchRows({ rows = [], entries = [], words = [], limit = 12 } = {}) {
-    const statusByIdentity = buildEntryStatusByIdentity(entries);
+    const stateByIdentity = buildEntryReviewStateByIdentity(entries);
     const generatedRows = Array.isArray(rows) ? rows : [];
 
     if (Array.isArray(words) && words.length > 0) {
@@ -386,7 +446,7 @@ function selectBatchRows({ rows = [], entries = [], words = [], limit = 12 } = {
     }
 
     return generatedRows
-        .filter((row) => classifyReviewStatus(statusByIdentity.get(buildWordIdentity(row)) || []) !== "active_platinum")
+        .filter((row) => classifyReviewState(stateByIdentity.get(buildWordIdentity(row)) || {}) !== "current_standard_platinum")
         .slice(0, Math.max(1, Number.isFinite(limit) ? Math.floor(limit) : 12));
 }
 
@@ -400,12 +460,21 @@ function buildPlatinumWordBatchReport({
 } = {}) {
     const generatedRows = Array.isArray(rows) ? rows : [];
     const reviewEntries = Array.isArray(entries) ? entries : [];
-    const statusByIdentity = buildEntryStatusByIdentity(reviewEntries);
+    const stateByIdentity = buildEntryReviewStateByIdentity(reviewEntries);
     const selectedRows = selectBatchRows({ rows: generatedRows, entries: reviewEntries, words, limit });
     const activeCount = reviewEntries.filter((entry) => ACTIVE_PLATINUM_STATUSES.includes(normalizeText(entry.status))).length;
+    const currentStandardCount = reviewEntries.filter((entry) => (
+        ACTIVE_PLATINUM_STATUSES.includes(normalizeText(entry.status))
+        && entryUsesCurrentWordPlatinumStandard(entry)
+    )).length;
+    const legacyOrUnversionedCount = activeCount - currentStandardCount;
     const missingRows = generatedRows.filter((row) => {
-        const statuses = statusByIdentity.get(buildWordIdentity(row)) || [];
-        return classifyReviewStatus(statuses) !== "active_platinum";
+        const state = stateByIdentity.get(buildWordIdentity(row)) || {};
+        return !state.hasActivePlatinum;
+    });
+    const missingCurrentStandardRows = generatedRows.filter((row) => {
+        const state = stateByIdentity.get(buildWordIdentity(row)) || {};
+        return classifyReviewState(state) !== "current_standard_platinum";
     });
     const requestedMissing = Array.isArray(words)
         ? words
@@ -416,8 +485,9 @@ function buildPlatinumWordBatchReport({
 
     const cards = selectedRows.map((row) => {
         const identity = buildWordIdentity(row);
-        const statuses = statusByIdentity.get(identity) || [];
-        const reviewStatus = classifyReviewStatus(statuses);
+        const state = stateByIdentity.get(identity) || {};
+        const statuses = state.statuses || [];
+        const reviewStatus = classifyReviewState(state);
         const pitch = buildPitchReview(row, wordPitchAccentData);
         const hardChecks = buildHardChecks(row, wordPitchAccentData);
         const hardChecksPassed = hardChecks.every((check) => check.passed);
@@ -466,12 +536,16 @@ function buildPlatinumWordBatchReport({
         summary: {
             generatedRows: generatedRows.length,
             activePlatinum: activeCount,
+            currentReviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
+            currentStandardPlatinum: currentStandardCount,
+            legacyOrUnversionedPlatinum: legacyOrUnversionedCount,
             remainingPlatinum: missingRows.length,
+            remainingCurrentStandard: missingCurrentStandardRows.length,
             selectedCards: cards.length,
             requestedMissing: requestedMissing.length,
         },
         requestedMissing,
-        nextMissingWords: missingRows.map(buildWordIdentity),
+        nextMissingWords: missingCurrentStandardRows.map(buildWordIdentity),
         cards,
     };
 }
@@ -485,7 +559,11 @@ function formatPlatinumWordBatchReport(report = {}) {
         `Scope: ${report.scope || "(unknown)"}`,
         `Generated cards: ${summary.generatedRows || 0}`,
         `Active platinum: ${summary.activePlatinum || 0}`,
+        `Current review standard: ${summary.currentReviewStandard || CURRENT_WORD_PLATINUM_REVIEW_STANDARD}`,
+        `Current-standard platinum: ${summary.currentStandardPlatinum || 0}`,
+        `Legacy/unversioned platinum: ${summary.legacyOrUnversionedPlatinum || 0}`,
         `Remaining platinum: ${summary.remainingPlatinum || 0}`,
+        `Remaining current-standard: ${summary.remainingCurrentStandard || 0}`,
         `Selected cards: ${summary.selectedCards || 0}`,
     ];
 
@@ -497,7 +575,7 @@ function formatPlatinumWordBatchReport(report = {}) {
     }
 
     if (!report.scopedToRequestedWords && Array.isArray(report.nextMissingWords) && report.nextMissingWords.length > 0) {
-        lines.push("", `Next missing queue (${Math.min(report.nextMissingWords.length, 30)}/${report.nextMissingWords.length}):`);
+        lines.push("", `Next missing current-standard queue (${Math.min(report.nextMissingWords.length, 30)}/${report.nextMissingWords.length}):`);
         for (const identity of report.nextMissingWords.slice(0, 30)) {
             lines.push(`- ${identity}`);
         }

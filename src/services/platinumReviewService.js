@@ -932,6 +932,7 @@ module.exports = {
     REQUIRED_WORD_EVIDENCE_TYPES,
     REQUIRED_WORD_QUALITY_GATES,
     REVIEW_ONLY_STATUSES,
+    entryUsesCurrentWordPlatinumStandard,
     evaluatePlatinumWordReviewSet,
     formatPlatinumWordReviewReport,
 };

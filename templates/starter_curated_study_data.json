@@ -274,6 +274,11 @@
       "不安"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "bad",
+      "clumsy",
+      "ugly"
+    ],
     "blockedSentencePhrases": [],
     "notes": "不便 （ふべん） - inconvenient ／ 不安 （ふあん） - uneasy",
     "alternativeNotes": [],
@@ -403,13 +408,16 @@
       "世界"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "public"
+    ],
     "blockedSentencePhrases": [],
     "notes": "世の中 （よのなか） - society / world ／ 世界 （せかい） - world",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "世の中は広いです。",
       "reading": "よのなかはひろいです。",
-      "english": "The world is wide.",
+      "english": "It is a big world.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -718,6 +726,12 @@
       "主人"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "lord",
+      "main thing",
+      "master",
+      "principal"
+    ],
     "blockedSentencePhrases": [],
     "notes": "主に （おもに） - mainly ／ 主人 （しゅじん） - shop owner / husband",
     "alternativeNotes": [],
@@ -896,6 +910,7 @@
       ]
     },
     "blockedMeanings": [
+      "join",
       "counter for vehicles",
       "multiplication",
       "power",
@@ -1270,7 +1285,8 @@
     ],
     "blockedWords": [],
     "blockedMeanings": [
-      "possibly"
+      "possibly",
+      "reason"
     ],
     "blockedSentencePhrases": [],
     "notes": "事 （こと） - matter / thing ／ 仕事 （しごと） - work",
@@ -1979,7 +1995,7 @@
     "breakdownEnglishMeaning": "service / work",
     "displayWord": {
       "written": "仕",
-      "pron": "つか"
+      "pron": "し"
     },
     "breakdownDisplayWord": {
       "written": "仕",
@@ -2008,6 +2024,9 @@
       "仕方"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "official"
+    ],
     "blockedSentencePhrases": [],
     "notes": "仕事 （しごと） - work ／ 仕える （つかえる） - serve",
     "alternativeNotes": [],
@@ -2153,6 +2172,14 @@
       "電車代"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "change",
+      "charge",
+      "convert",
+      "counter for decades of ages, eras, etc.",
+      "period",
+      "rate"
+    ],
     "blockedSentencePhrases": [],
     "notes": "代 （だい） - cost / substitute ／ 時代 （じだい） - era",
     "alternativeNotes": [],
@@ -2690,13 +2717,17 @@
       "会う"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "interview",
+      "party"
+    ],
     "blockedSentencePhrases": [],
     "notes": "会社 （かいしゃ） - company ／ 会議 （かいぎ） - meeting",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "会社へ行きます。",
       "reading": "かいしゃへいきます。",
-      "english": "I go to the company.",
+      "english": "I go to work.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -3104,6 +3135,9 @@
       "住む"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "inhabit"
+    ],
     "blockedSentencePhrases": [],
     "notes": "住む （すむ） - live ／ 住所 （じゅうしょ） - address",
     "alternativeNotes": [],
@@ -3199,7 +3233,10 @@
     ],
     "blockedWords": [],
     "blockedMeanings": [
-      "counter for images"
+      "counter for images",
+      "object",
+      "reality",
+      "substance"
     ],
     "blockedSentencePhrases": [],
     "notes": "体 （からだ） - body ／ 体調 （たいちょう） - physical condition",
@@ -3307,6 +3344,10 @@
       "作文"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "prepare",
+      "production"
+    ],
     "blockedSentencePhrases": [],
     "notes": "作る （つくる） - make ／ 作文 （さくぶん） - composition",
     "alternativeNotes": [],
@@ -5473,9 +5514,17 @@
     },
     "breakdownDisplayWord": {
       "written": "元",
-      "pron": "げん"
+      "pron": "もと"
     },
     "breakdownOverrides": [
+      {
+        "matchWord": "元気",
+        "displayWord": {
+          "written": "元",
+          "pron": "げん"
+        },
+        "englishMeaning": "origin / source"
+      },
       {
         "matchWord": "元々",
         "displayWord": {
@@ -5483,6 +5532,14 @@
           "pron": "もと"
         },
         "englishMeaning": "origin / original state"
+      },
+      {
+        "matchWord": "元日",
+        "displayWord": {
+          "written": "元",
+          "pron": "がん"
+        },
+        "englishMeaning": "beginning / first"
       }
     ],
     "source": "starter-curated",
@@ -5493,16 +5550,17 @@
     "jlpt": 4,
     "preferredWords": [
       "元",
+      "元々",
       "元気"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "元 （もと） - origin / former ／ 元気 （げんき） - energetic",
+    "notes": "元 （もと） - origin / original state ／ 元々 （もともと） - originally ／ 元気 （げんき） - energetic",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "旅行の後も元気でした。",
-      "reading": "りょこうのあともげんきでした。",
-      "english": "I was still energetic after the trip.",
+      "japanese": "元の場所に戻してください。",
+      "reading": "もとのばしょにもどしてください。",
+      "english": "Please put it back in its original place.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -6401,9 +6459,9 @@
     "notes": "写す （うつす） - copy / photograph ／ 写真 （しゃしん） - photograph",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "旅行でたくさん写真を写しました。",
-      "reading": "りょこうでたくさんしゃしんをうつしました。",
-      "english": "I took many photos on the trip.",
+      "japanese": "先生の字をノートに写しました。",
+      "reading": "せんせいのじをノートにうつしました。",
+      "english": "I copied the teacher's writing into my notebook.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -7186,7 +7244,10 @@
         "example",
         "starter"
       ]
-    }
+    },
+    "blockedMeanings": [
+      "cutoff"
+    ]
   },
   "刈": {
     "englishMeaning": "cut / mow / reap",
@@ -7407,7 +7468,7 @@
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "別 （べつ） - different / separate ／ 別れる （わかれる） - part",
+    "notes": "別 （べつ） - different / separate ／ 別れる （わかれる） - part ways",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "その問題は別の紙に書いてください。",
@@ -8077,6 +8138,8 @@
     },
     "blockedMeanings": [
       "bear up",
+      "exert",
+      "strong",
       "strain"
     ]
   },
@@ -8503,9 +8566,12 @@
       ]
     },
     "blockedMeanings": [
+      "diligent",
       "encourage",
       "endeavour",
-      "exertion"
+      "exertion",
+      "make effort",
+      "strive"
     ]
   },
   "動": {

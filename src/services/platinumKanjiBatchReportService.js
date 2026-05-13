@@ -37,6 +37,32 @@ function countReadingOptions(value) {
         .length;
 }
 
+function hasOnlyTargetKanji(value, kanji) {
+    const chars = normalizeText(value).match(/\p{Script=Han}/gu) || [];
+    return chars.length > 0 && chars.every((char) => char === kanji);
+}
+
+function describeCuratedReadingConflict(row = {}, curatedEntry = null) {
+    const kanji = normalizeText(row.kanji);
+    const primaryReading = normalizeText(row.primaryReading);
+    const displayWord = curatedEntry?.displayWord || {};
+    const breakdownWord = curatedEntry?.breakdownDisplayWord || {};
+    const displayPron = normalizeText(displayWord.pron);
+    const breakdownPron = normalizeText(breakdownWord.pron);
+
+    if (!kanji || !displayPron || !breakdownPron || displayPron === breakdownPron) {
+        return "";
+    }
+    if (!hasOnlyTargetKanji(displayWord.written, kanji) || !hasOnlyTargetKanji(breakdownWord.written, kanji)) {
+        return "";
+    }
+
+    const selected = primaryReading
+        ? ` exported PrimaryReading ${primaryReading}`
+        : " exported PrimaryReading is blank";
+    return `curated display reading ${displayPron} differs from word-breakdown reading ${breakdownPron};${selected} must be explicitly justified against Japanese source evidence before platinum`;
+}
+
 function buildEntryStatusByKanji(entries = []) {
     const statusByKanji = new Map();
 
@@ -119,7 +145,7 @@ function buildHardChecks(row = {}) {
     ];
 }
 
-function buildRiskFlags(row = {}, { reviewStatus = "missing_platinum", statuses = [] } = {}) {
+function buildRiskFlags(row = {}, { reviewStatus = "missing_platinum", statuses = [], curatedEntry = null } = {}) {
     const flags = [];
     const kanji = normalizeText(row.kanji);
     const primaryReading = normalizeText(row.primaryReading);
@@ -142,6 +168,10 @@ function buildRiskFlags(row = {}, { reviewStatus = "missing_platinum", statuses 
 
     if (countReadingOptions(row.onReading) + countReadingOptions(row.kunReading) > 2) {
         flags.push("multiple readings listed; primary-reading rationale needs extra care");
+    }
+    const curatedConflict = describeCuratedReadingConflict(row, curatedEntry);
+    if (curatedConflict) {
+        flags.push(curatedConflict);
     }
     if (primaryReading && !evidenceText.includes(normalizeReadingEvidence(primaryReading))) {
         flags.push("primary reading is not plainly visible in reading evidence; verify against Japanese source before approval");
@@ -178,7 +208,7 @@ function selectBatchRows({ rows = [], entries = [], kanji = [], limit = 12 } = {
         .slice(0, Math.max(1, Number.isFinite(limit) ? Math.floor(limit) : 12));
 }
 
-function buildPlatinumKanjiBatchReport({ rows = [], entries = [], level, kanji = [], limit = 12 } = {}) {
+function buildPlatinumKanjiBatchReport({ rows = [], entries = [], level, kanji = [], limit = 12, curatedStudyData = {} } = {}) {
     const generatedRows = Array.isArray(rows) ? rows : [];
     const reviewEntries = Array.isArray(entries) ? entries : [];
     const statusByKanji = buildEntryStatusByKanji(reviewEntries);
@@ -194,6 +224,7 @@ function buildPlatinumKanjiBatchReport({ rows = [], entries = [], level, kanji =
         const reviewStatus = classifyReviewStatus(statuses);
         const hardChecks = buildHardChecks(row);
         const generatedFailures = validateGeneratedKanjiRow(row);
+        const curatedEntry = curatedStudyData?.[row.kanji] || null;
         return {
             kanji: row.kanji,
             levelLabel: row.levelLabel || (Number.isInteger(level) ? `N${level}` : ""),
@@ -215,7 +246,7 @@ function buildPlatinumKanjiBatchReport({ rows = [], entries = [], level, kanji =
             hardChecks,
             generatedFailures,
             hardChecksPassed: hardChecks.every((check) => check.passed) && generatedFailures.length === 0,
-            riskFlags: buildRiskFlags(row, { reviewStatus, statuses }),
+            riskFlags: buildRiskFlags(row, { reviewStatus, statuses, curatedEntry }),
         };
     });
 
@@ -283,6 +314,7 @@ module.exports = {
     buildPlatinumKanjiBatchReport,
     buildRiskFlags,
     classifyReviewStatus,
+    describeCuratedReadingConflict,
     formatPlatinumKanjiBatchReport,
     normalizeReadingEvidence,
     selectBatchRows,

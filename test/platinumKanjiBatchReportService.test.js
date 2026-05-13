@@ -4,6 +4,7 @@ const assert = require("node:assert/strict");
 const {
     buildPlatinumKanjiBatchReport,
     buildRiskFlags,
+    describeCuratedReadingConflict,
     formatPlatinumKanjiBatchReport,
     normalizeReadingEvidence,
     selectBatchRows,
@@ -85,6 +86,55 @@ test("buildRiskFlags calls out active entries and generated support risks", () =
 
     assert.match(flags.join("\n"), /already has active platinum/);
     assert.match(flags.join("\n"), /example sentence does not visibly include the target kanji/);
+});
+
+test("buildRiskFlags calls out curated kanji-card and word-breakdown reading conflicts", () => {
+    const row = buildRow({
+        kanji: "図",
+        displayWord: "図",
+        primaryReading: "と",
+        onReading: "On: ズ、 ト",
+        kunReading: "Kun: はかる",
+        notes: "図 （ず） - diagram / plan ／ 地図 （ちず） - map",
+        exampleSentence: "地図を見ます。 ／ ちずをみます。 ／ I look at a map.",
+    });
+    const curatedEntry = {
+        displayWord: { written: "図", pron: "ず" },
+        breakdownDisplayWord: { written: "図", pron: "と" },
+    };
+
+    assert.match(
+        describeCuratedReadingConflict(row, curatedEntry),
+        /curated display reading ず differs from word-breakdown reading と/
+    );
+
+    const flags = buildRiskFlags(row, { curatedEntry });
+    assert.match(flags.join("\n"), /word-breakdown reading と/);
+    assert.match(flags.join("\n"), /explicitly justified against Japanese source evidence/);
+});
+
+test("buildPlatinumKanjiBatchReport includes curated reading conflict risks from loaded study data", () => {
+    const report = buildPlatinumKanjiBatchReport({
+        rows: [buildRow({
+            kanji: "元",
+            displayWord: "元",
+            primaryReading: "げん",
+            onReading: "On: ゲン",
+            kunReading: "Kun: もと",
+            notes: "<ruby>元<rt>もと</rt></ruby> - origin ／ 元気 （げんき） - energetic",
+            exampleSentence: "元気です。 ／ げんきです。 ／ I am well.",
+        })],
+        entries: [],
+        level: 4,
+        curatedStudyData: {
+            元: {
+                displayWord: { written: "元", pron: "もと" },
+                breakdownDisplayWord: { written: "元", pron: "げん" },
+            },
+        },
+    });
+
+    assert.match(report.cards[0].riskFlags.join("\n"), /curated display reading もと differs/);
 });
 
 test("formatPlatinumKanjiBatchReport states that the report is read-only", () => {

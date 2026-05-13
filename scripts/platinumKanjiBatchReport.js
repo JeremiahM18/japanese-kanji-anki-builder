@@ -2,6 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { invokeCliMain, parseCsvOption, parseNumericOption, parseStringOption, collectUnknownArg, assertNoUnknownArgs } = require("../src/utils/cliArgs");
 const { loadConfig } = require("../src/config");
+const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const { buildKanjiRowsForLevel } = require("./reviewPlatinumKanjiLevel");
 const {
     buildPlatinumKanjiBatchReport,
@@ -55,6 +56,7 @@ async function main() {
     }
 
     const entries = JSON.parse(fs.readFileSync(reviewSetPath, "utf-8"));
+    const curatedStudyData = loadCuratedStudyData(config.curatedStudyDataPath);
     const rows = await buildKanjiRowsForLevel({ level: options.level, config });
     const report = buildPlatinumKanjiBatchReport({
         rows,
@@ -62,6 +64,7 @@ async function main() {
         level: options.level,
         kanji: options.kanji,
         limit: options.limit,
+        curatedStudyData,
     });
 
     if (options.json) {

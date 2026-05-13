@@ -21516,6 +21516,11 @@
       "今度"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "attitude",
+      "consider",
+      "degrees"
+    ],
     "blockedSentencePhrases": [],
     "notes": "一度 （いちど） - once ／ 今度 （こんど） - next time",
     "alternativeNotes": [],
@@ -22147,6 +22152,14 @@
       "引き出し"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "admit",
+      "install",
+      "jerk",
+      "quote",
+      "refer to",
+      "tug"
+    ],
     "blockedSentencePhrases": [],
     "notes": "引く （ひく） - pull ／ 取引 （とりひき） - transaction ／ 引き出し （ひきだし） - drawer",
     "alternativeNotes": [],
@@ -22207,6 +22220,9 @@
       "弟"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "faithful service to elders"
+    ],
     "blockedSentencePhrases": [],
     "notes": "弟 （おとうと） - younger brother ／ 兄弟 （きょうだい） - siblings",
     "alternativeNotes": [],
@@ -22342,9 +22358,9 @@
     "notes": "弱い （よわい） - weak ／ 弱点 （じゃくてん） - weak point",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "私は辛い食べ物に弱いです。",
-      "reading": "わたしはからいたべものによわいです。",
-      "english": "I am not good with spicy food.",
+      "japanese": "弟は体が弱いです。",
+      "reading": "おとうとはからだがよわいです。",
+      "english": "My younger brother is physically weak.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -22417,9 +22433,9 @@
     "notes": "勉強 （べんきょう） - study ／ 強い （つよい） - strong",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "毎日少しずつ勉強すると力がつきます。",
-      "reading": "まいにちすこしずつべんきょうするとちからがつきます。",
-      "english": "If you study a little every day, you build skill.",
+      "japanese": "兄は力が強いです。",
+      "reading": "あにはちからがつよいです。",
+      "english": "My older brother is strong.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -22946,6 +22962,9 @@
       "待つ"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "depend on"
+    ],
     "blockedSentencePhrases": [],
     "notes": "待つ （まつ） - wait ／ 待ち合わせ （まちあわせ） - meeting up",
     "alternativeNotes": [],
@@ -24608,6 +24627,10 @@
   },
   "悪": {
     "englishMeaning": "bad",
+    "displayWord": {
+      "written": "悪い",
+      "pron": "わるい"
+    },
     "breakdownOverrides": [],
     "source": "starter-curated",
     "tags": [
@@ -24619,6 +24642,11 @@
       "悪い"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "false",
+      "rascal",
+      "vice"
+    ],
     "blockedSentencePhrases": [],
     "notes": "悪い （わるい） - bad ／ 気分が悪い （きぶんがわるい） - feel sick",
     "alternativeNotes": [],
@@ -25077,6 +25105,14 @@
       "意見"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "care",
+      "desire",
+      "heart",
+      "liking",
+      "mind",
+      "taste"
+    ],
     "blockedSentencePhrases": [],
     "notes": "意味 （いみ） - meaning ／ 意見 （いけん） - opinion",
     "alternativeNotes": [],
@@ -26244,6 +26280,9 @@
       "台所"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "extent"
+    ],
     "blockedSentencePhrases": [],
     "notes": "所 （ところ） - place ／ 台所 （だいどころ） - kitchen",
     "alternativeNotes": [],
@@ -26341,9 +26380,9 @@
     "notes": "手 （て） - hand ／ 上手 （じょうず） - skillful",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "寒かったので手がとても冷たくなりました。",
-      "reading": "さむかったのでてがとてもつめたくなりました。",
-      "english": "Because it was cold, my hands became very cold.",
+      "japanese": "手を洗ってください。",
+      "reading": "てをあらってください。",
+      "english": "Please wash your hands.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -29447,6 +29486,9 @@
       "教室"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "faith"
+    ],
     "blockedSentencePhrases": [],
     "notes": "教える （おしえる） - teach ／ 教室 （きょうしつ） - classroom",
     "alternativeNotes": [],
@@ -29735,6 +29777,13 @@
       "作文"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "art",
+      "decoration",
+      "figures",
+      "plan",
+      "style"
+    ],
     "blockedSentencePhrases": [],
     "notes": "文 （ぶん） - sentence ／ 作文 （さくぶん） - composition",
     "alternativeNotes": [],
@@ -30078,12 +30127,24 @@
   },
   "方": {
     "englishMeaning": "direction / way",
+    "displayWord": {
+      "written": "方",
+      "pron": "かた"
+    },
     "breakdownEnglishMeaning": "direction / side",
     "breakdownDisplayWord": {
       "written": "方",
-      "pron": "がた"
+      "pron": "かた"
     },
     "breakdownOverrides": [
+      {
+        "matchWord": "夕方",
+        "displayWord": {
+          "written": "方",
+          "pron": "がた"
+        },
+        "englishMeaning": "direction / side"
+      },
       {
         "matchWord": "方法",
         "displayWord": {
@@ -30121,6 +30182,10 @@
       "夕方"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "alternative",
+      "person"
+    ],
     "blockedSentencePhrases": [],
     "notes": "使い方 （つかいかた） - how to use ／ 夕方 （ゆうがた） - evening",
     "alternativeNotes": [],
@@ -30955,6 +31020,10 @@
       "春"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "spring (season)",
+      "springtime"
+    ],
     "blockedSentencePhrases": [],
     "notes": "春 （はる） - spring ／ 春休み （はるやすみ） - spring vacation",
     "alternativeNotes": [],
@@ -31718,6 +31787,13 @@
       "真っ暗"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "be blinded",
+      "disappear",
+      "grow dark",
+      "informal",
+      "shade"
+    ],
     "blockedSentencePhrases": [],
     "notes": "暗い （くらい） - dark ／ 暗記 （あんき） - memorization ／ 真っ暗 （まっくら） - pitch-dark",
     "alternativeNotes": [],

@@ -22,20 +22,23 @@
       "Additional unverified N5 source claim."
     ],
     "exampleIncludes": [
-      "無事に着いたと聞いて安心しました。"
+      "この店は安いです。"
     ],
     "reviewedAt": "2026-05-12",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "kanji-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated 安|やすい generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
     "sourceEvidence": [
       {
         "type": "generated-surface",
         "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
-        "detail": "Generated additional-unverified card surface re-reviewed for 安|やすい: single-kanji anchor; Kanji and DisplayWord 安; PrimaryReading やすい; MeaningJP cheap; KanjiMeanings include cheap, calm, and safe; notes include 安心, 安い, and Additional unverified N5 source claim.; example 無事に着いたと聞いて安心しました。; audio field includes kanji-reading-安-やすい; stroke-order field includes stroke-order.gif."
+        "detail": "Generated additional-unverified card surface re-reviewed for 安|やすい: single-kanji anchor; Kanji and DisplayWord 安; PrimaryReading やすい; MeaningJP cheap; KanjiMeanings include cheap, calm, safe; notes include 安心, 安い, Additional unverified N5 source claim.; example この店は安いです。; audio field includes kanji-reading-安-やすい; stroke-order field includes stroke-order.gif."
       },
       {
         "type": "golden-review",
         "source": "npm run deck:kanji:additional:review:n5",
-        "detail": "Additional N5 golden review protects 安 with PrimaryReading やすい, MeaningJP cheap, additional-unverified notes, and example 無事に着いたと聞いて安心しました。."
+        "detail": "Additional N5 golden review protects 安 with PrimaryReading やすい, MeaningJP cheap, additional-unverified notes, and example この店は安いです。."
       },
       {
         "type": "japanese-source",
@@ -61,6 +64,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Final product judgment for 安|やすい: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "current-standard platinum product review; generated additional N5 TSV; templates/starter_curated_study_data.json",
+        "detail": "Current-standard review revalidated 安|やすい generated surface, Japanese-source evidence, PrimaryReading やすい, MeaningJP cheap, KanjiMeanings cheap, calm, safe, example sentence この店は安いです。, reading このみせはやすいです。, translation This shop is cheap., notes/support surface 安心, 安い, Additional unverified N5 source claim., audio kanji-reading-安-やすい, stroke-order media 5B89_安-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present."
       }
     ],
     "qualityGates": {
@@ -104,20 +112,23 @@
       "Additional unverified N5 source claim."
     ],
     "exampleIncludes": [
-      "朝は水をよく飲みます。"
+      "水を飲みます。"
     ],
     "reviewedAt": "2026-05-12",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "kanji-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated 飲|のむ generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
     "sourceEvidence": [
       {
         "type": "generated-surface",
         "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
-        "detail": "Generated additional-unverified card surface re-reviewed for 飲|のむ: single-kanji anchor; Kanji and DisplayWord 飲; PrimaryReading のむ; MeaningJP drink; KanjiMeanings include drink; notes include 飲む, 飲み物, and Additional unverified N5 source claim.; example 朝は水をよく飲みます。; audio field includes kanji-reading-飲-のむ; stroke-order field includes stroke-order.gif."
+        "detail": "Generated additional-unverified card surface re-reviewed for 飲|のむ: single-kanji anchor; Kanji and DisplayWord 飲; PrimaryReading のむ; MeaningJP drink; KanjiMeanings include drink; notes include 飲む, 飲み物, Additional unverified N5 source claim.; example 水を飲みます。; audio field includes kanji-reading-飲-のむ; stroke-order field includes stroke-order.gif."
       },
       {
         "type": "golden-review",
         "source": "npm run deck:kanji:additional:review:n5",
-        "detail": "Additional N5 golden review protects 飲 with PrimaryReading のむ, MeaningJP drink, additional-unverified notes, and example 朝は水をよく飲みます。."
+        "detail": "Additional N5 golden review protects 飲 with PrimaryReading のむ, MeaningJP drink, additional-unverified notes, and example 水を飲みます。."
       },
       {
         "type": "japanese-source",
@@ -143,6 +154,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Final product judgment for 飲|のむ: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "current-standard platinum product review; generated additional N5 TSV; templates/starter_curated_study_data.json",
+        "detail": "Current-standard review revalidated 飲|のむ generated surface, Japanese-source evidence, PrimaryReading のむ, MeaningJP drink, KanjiMeanings drink, example sentence 水を飲みます。, reading みずをのみます。, translation I drink water., notes/support surface 飲む, 飲み物, Additional unverified N5 source claim., audio kanji-reading-飲-のむ, stroke-order media 98F2_飲-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present."
       }
     ],
     "qualityGates": {
@@ -186,20 +202,23 @@
       "Additional unverified N5 source claim."
     ],
     "exampleIncludes": [
-      "公園できれいな花が咲いています。"
+      "花がきれいです。"
     ],
     "reviewedAt": "2026-05-12",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "kanji-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated 花|はな generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
     "sourceEvidence": [
       {
         "type": "generated-surface",
         "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
-        "detail": "Generated additional-unverified card surface re-reviewed for 花|はな: single-kanji anchor; Kanji and DisplayWord 花; PrimaryReading はな; MeaningJP flower; KanjiMeanings include flower; notes include 花, 花見, and Additional unverified N5 source claim.; example 公園できれいな花が咲いています。; audio field includes kanji-reading-花-はな; stroke-order field includes stroke-order.gif."
+        "detail": "Generated additional-unverified card surface re-reviewed for 花|はな: single-kanji anchor; Kanji and DisplayWord 花; PrimaryReading はな; MeaningJP flower; KanjiMeanings include flower; notes include 花, 花見, Additional unverified N5 source claim.; example 花がきれいです。; audio field includes kanji-reading-花-はな; stroke-order field includes stroke-order.gif."
       },
       {
         "type": "golden-review",
         "source": "npm run deck:kanji:additional:review:n5",
-        "detail": "Additional N5 golden review protects 花 with PrimaryReading はな, MeaningJP flower, additional-unverified notes, and example 公園できれいな花が咲いています。."
+        "detail": "Additional N5 golden review protects 花 with PrimaryReading はな, MeaningJP flower, additional-unverified notes, and example 花がきれいです。."
       },
       {
         "type": "japanese-source",
@@ -225,6 +244,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Final product judgment for 花|はな: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "current-standard platinum product review; generated additional N5 TSV; templates/starter_curated_study_data.json",
+        "detail": "Current-standard review revalidated 花|はな generated surface, Japanese-source evidence, PrimaryReading はな, MeaningJP flower, KanjiMeanings flower, example sentence 花がきれいです。, reading はながきれいです。, translation The flower is pretty., notes/support surface 花, 花見, Additional unverified N5 source claim., audio kanji-reading-花-はな, stroke-order media 82B1_花-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present."
       }
     ],
     "qualityGates": {
@@ -270,20 +294,23 @@
       "Additional unverified N5 source claim."
     ],
     "exampleIncludes": [
-      "明日は会社で会議があります。"
+      "会社へ行きます。"
     ],
     "reviewedAt": "2026-05-12",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "kanji-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated 会|かい generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
     "sourceEvidence": [
       {
         "type": "generated-surface",
         "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
-        "detail": "Generated additional-unverified card surface re-reviewed for 会|かい: single-kanji anchor; Kanji and DisplayWord 会; PrimaryReading かい; MeaningJP meeting / association; KanjiMeanings include meeting, association, and meet; notes include 会社, 会議, and Additional unverified N5 source claim.; example 明日は会社で会議があります。; audio field includes kanji-reading-会-かい; stroke-order field includes stroke-order.gif."
+        "detail": "Generated additional-unverified card surface re-reviewed for 会|かい: single-kanji anchor; Kanji and DisplayWord 会; PrimaryReading かい; MeaningJP meeting / association; KanjiMeanings include meeting, association, meet; notes include 会社, 会議, Additional unverified N5 source claim.; example 会社へ行きます。; audio field includes kanji-reading-会-かい; stroke-order field includes stroke-order.gif."
       },
       {
         "type": "golden-review",
         "source": "npm run deck:kanji:additional:review:n5",
-        "detail": "Additional N5 golden review protects 会 with PrimaryReading かい, MeaningJP meeting / association, additional-unverified notes, and example 明日は会社で会議があります。."
+        "detail": "Additional N5 golden review protects 会 with PrimaryReading かい, MeaningJP meeting / association, additional-unverified notes, and example 会社へ行きます。."
       },
       {
         "type": "japanese-source",
@@ -309,6 +336,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Final product judgment for 会|かい: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "current-standard platinum product review; generated additional N5 TSV; templates/starter_curated_study_data.json",
+        "detail": "Current-standard review revalidated 会|かい generated surface, Japanese-source evidence, PrimaryReading かい, MeaningJP meeting / association, KanjiMeanings meeting, association, meet, example sentence 会社へ行きます。, reading かいしゃへいきます。, translation I go to the company., notes/support surface 会社, 会議, Additional unverified N5 source claim., audio kanji-reading-会-かい, stroke-order media 4F1A_会-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present."
       }
     ],
     "qualityGates": {
@@ -352,20 +384,23 @@
       "Additional unverified N5 source claim."
     ],
     "exampleIncludes": [
-      "市場で新鮮な魚を買いました。"
+      "魚を食べます。"
     ],
     "reviewedAt": "2026-05-12",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "kanji-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated 魚|さかな generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
     "sourceEvidence": [
       {
         "type": "generated-surface",
         "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
-        "detail": "Generated additional-unverified card surface re-reviewed for 魚|さかな: single-kanji anchor; Kanji and DisplayWord 魚; PrimaryReading さかな; MeaningJP fish; KanjiMeanings include fish; notes include 魚, 金魚, and Additional unverified N5 source claim.; example 市場で新鮮な魚を買いました。; audio field includes kanji-reading-魚-さかな; stroke-order field includes stroke-order.gif."
+        "detail": "Generated additional-unverified card surface re-reviewed for 魚|さかな: single-kanji anchor; Kanji and DisplayWord 魚; PrimaryReading さかな; MeaningJP fish; KanjiMeanings include fish; notes include 魚, 金魚, Additional unverified N5 source claim.; example 魚を食べます。; audio field includes kanji-reading-魚-さかな; stroke-order field includes stroke-order.gif."
       },
       {
         "type": "golden-review",
         "source": "npm run deck:kanji:additional:review:n5",
-        "detail": "Additional N5 golden review protects 魚 with PrimaryReading さかな, MeaningJP fish, additional-unverified notes, and example 市場で新鮮な魚を買いました。."
+        "detail": "Additional N5 golden review protects 魚 with PrimaryReading さかな, MeaningJP fish, additional-unverified notes, and example 魚を食べます。."
       },
       {
         "type": "japanese-source",
@@ -391,6 +426,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Final product judgment for 魚|さかな: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "current-standard platinum product review; generated additional N5 TSV; templates/starter_curated_study_data.json",
+        "detail": "Current-standard review revalidated 魚|さかな generated surface, Japanese-source evidence, PrimaryReading さかな, MeaningJP fish, KanjiMeanings fish, example sentence 魚を食べます。, reading さかなをたべます。, translation I eat fish., notes/support surface 魚, 金魚, Additional unverified N5 source claim., audio kanji-reading-魚-さかな, stroke-order media 9B5A_魚-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present."
       }
     ],
     "qualityGates": {
@@ -438,20 +478,23 @@
       "Additional unverified N5 source claim."
     ],
     "exampleIncludes": [
-      "今日は空がとても青いです。"
+      "空が青いです。"
     ],
     "reviewedAt": "2026-05-12",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "kanji-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated 空|そら generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
     "sourceEvidence": [
       {
         "type": "generated-surface",
         "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
-        "detail": "Generated additional-unverified card surface re-reviewed for 空|そら: single-kanji anchor; Kanji and DisplayWord 空; PrimaryReading そら; MeaningJP sky; KanjiMeanings include sky, empty, vacant, vacuum, and void; notes include 空, 空港, and Additional unverified N5 source claim.; example 今日は空がとても青いです。; audio field includes kanji-reading-空-そら; stroke-order field includes stroke-order.gif."
+        "detail": "Generated additional-unverified card surface re-reviewed for 空|そら: single-kanji anchor; Kanji and DisplayWord 空; PrimaryReading そら; MeaningJP sky; KanjiMeanings include sky, empty, vacant, vacuum, void; notes include 空, 空港, Additional unverified N5 source claim.; example 空が青いです。; audio field includes kanji-reading-空-そら; stroke-order field includes stroke-order.gif."
       },
       {
         "type": "golden-review",
         "source": "npm run deck:kanji:additional:review:n5",
-        "detail": "Additional N5 golden review protects 空 with PrimaryReading そら, MeaningJP sky, additional-unverified notes, and example 今日は空がとても青いです。."
+        "detail": "Additional N5 golden review protects 空 with PrimaryReading そら, MeaningJP sky, additional-unverified notes, and example 空が青いです。."
       },
       {
         "type": "japanese-source",
@@ -477,6 +520,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Final product judgment for 空|そら: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "current-standard platinum product review; generated additional N5 TSV; templates/starter_curated_study_data.json",
+        "detail": "Current-standard review revalidated 空|そら generated surface, Japanese-source evidence, PrimaryReading そら, MeaningJP sky, KanjiMeanings sky, empty, vacant, vacuum, void, example sentence 空が青いです。, reading そらがあおいです。, translation The sky is blue., notes/support surface 空, 空港, Additional unverified N5 source claim., audio kanji-reading-空-そら, stroke-order media 7A7A_空-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present."
       }
     ],
     "qualityGates": {
@@ -521,20 +569,23 @@
       "Additional unverified N5 source claim."
     ],
     "exampleIncludes": [
-      "大切なことを先生が言いました。"
+      "名前を言います。"
     ],
     "reviewedAt": "2026-05-12",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "kanji-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated 言|いう generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
     "sourceEvidence": [
       {
         "type": "generated-surface",
         "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
-        "detail": "Generated additional-unverified card surface re-reviewed for 言|いう: single-kanji anchor; Kanji and DisplayWord 言; PrimaryReading いう; MeaningJP say; KanjiMeanings include say and word; notes include 言う, 言葉, and Additional unverified N5 source claim.; example 大切なことを先生が言いました。; audio field includes kanji-reading-言-いう; stroke-order field includes stroke-order.gif."
+        "detail": "Generated additional-unverified card surface re-reviewed for 言|いう: single-kanji anchor; Kanji and DisplayWord 言; PrimaryReading いう; MeaningJP say; KanjiMeanings include say, word; notes include 言う, 言葉, Additional unverified N5 source claim.; example 名前を言います。; audio field includes kanji-reading-言-いう; stroke-order field includes stroke-order.gif."
       },
       {
         "type": "golden-review",
         "source": "npm run deck:kanji:additional:review:n5",
-        "detail": "Additional N5 golden review protects 言 with PrimaryReading いう, MeaningJP say, additional-unverified notes, and example 大切なことを先生が言いました。."
+        "detail": "Additional N5 golden review protects 言 with PrimaryReading いう, MeaningJP say, additional-unverified notes, and example 名前を言います。."
       },
       {
         "type": "japanese-source",
@@ -560,6 +611,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Final product judgment for 言|いう: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "current-standard platinum product review; generated additional N5 TSV; templates/starter_curated_study_data.json",
+        "detail": "Current-standard review revalidated 言|いう generated surface, Japanese-source evidence, PrimaryReading いう, MeaningJP say, KanjiMeanings say, word, example sentence 名前を言います。, reading なまえをいいます。, translation I say my name., notes/support surface 言う, 言葉, Additional unverified N5 source claim., audio kanji-reading-言-いう, stroke-order media 8A00_言-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present."
       }
     ],
     "qualityGates": {
@@ -604,20 +660,23 @@
       "Additional unverified N5 source claim."
     ],
     "exampleIncludes": [
-      "この問題は少し難しいですが、できそうです。"
+      "水を少し飲みます。"
     ],
     "reviewedAt": "2026-05-12",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "kanji-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated 少|すこし generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
     "sourceEvidence": [
       {
         "type": "generated-surface",
         "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
-        "detail": "Generated additional-unverified card surface re-reviewed for 少|すこし: single-kanji anchor; Kanji and DisplayWord 少; PrimaryReading すこし; MeaningJP a little; KanjiMeanings include few and little; notes include 少し, 少ない, and Additional unverified N5 source claim.; example この問題は少し難しいですが、できそうです。; audio field includes kanji-reading-少-すこし; stroke-order field includes stroke-order.gif."
+        "detail": "Generated additional-unverified card surface re-reviewed for 少|すこし: single-kanji anchor; Kanji and DisplayWord 少; PrimaryReading すこし; MeaningJP a little; KanjiMeanings include few, little; notes include 少し, 少ない, Additional unverified N5 source claim.; example 水を少し飲みます。; audio field includes kanji-reading-少-すこし; stroke-order field includes stroke-order.gif."
       },
       {
         "type": "golden-review",
         "source": "npm run deck:kanji:additional:review:n5",
-        "detail": "Additional N5 golden review protects 少 with PrimaryReading すこし, MeaningJP a little, additional-unverified notes, and example この問題は少し難しいですが、できそうです。."
+        "detail": "Additional N5 golden review protects 少 with PrimaryReading すこし, MeaningJP a little, additional-unverified notes, and example 水を少し飲みます。."
       },
       {
         "type": "japanese-source",
@@ -643,6 +702,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Final product judgment for 少|すこし: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "current-standard platinum product review; generated additional N5 TSV; templates/starter_curated_study_data.json",
+        "detail": "Current-standard review revalidated 少|すこし generated surface, Japanese-source evidence, PrimaryReading すこし, MeaningJP a little, KanjiMeanings few, little, example sentence 水を少し飲みます。, reading みずをすこしのみます。, translation I drink a little water., notes/support surface 少し, 少ない, Additional unverified N5 source claim., audio kanji-reading-少-すこし, stroke-order media 5C11_少-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present."
       }
     ],
     "qualityGates": {
@@ -686,20 +750,23 @@
       "Additional unverified N5 source claim."
     ],
     "exampleIncludes": [
-      "新しいくつをはいて学校へ行きました。"
+      "新しい本です。"
     ],
     "reviewedAt": "2026-05-12",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "kanji-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated 新|あたらしい generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
     "sourceEvidence": [
       {
         "type": "generated-surface",
         "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
-        "detail": "Generated additional-unverified card surface re-reviewed for 新|あたらしい: single-kanji anchor; Kanji and DisplayWord 新; PrimaryReading あたらしい; MeaningJP new; KanjiMeanings include new; notes include 新しい, 新聞, and Additional unverified N5 source claim.; example 新しいくつをはいて学校へ行きました。; audio field includes kanji-reading-新-あたらしい; stroke-order field includes stroke-order.gif."
+        "detail": "Generated additional-unverified card surface re-reviewed for 新|あたらしい: single-kanji anchor; Kanji and DisplayWord 新; PrimaryReading あたらしい; MeaningJP new; KanjiMeanings include new; notes include 新しい, 新聞, Additional unverified N5 source claim.; example 新しい本です。; audio field includes kanji-reading-新-あたらしい; stroke-order field includes stroke-order.gif."
       },
       {
         "type": "golden-review",
         "source": "npm run deck:kanji:additional:review:n5",
-        "detail": "Additional N5 golden review protects 新 with PrimaryReading あたらしい, MeaningJP new, additional-unverified notes, and example 新しいくつをはいて学校へ行きました。."
+        "detail": "Additional N5 golden review protects 新 with PrimaryReading あたらしい, MeaningJP new, additional-unverified notes, and example 新しい本です。."
       },
       {
         "type": "japanese-source",
@@ -725,6 +792,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Final product judgment for 新|あたらしい: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "current-standard platinum product review; generated additional N5 TSV; templates/starter_curated_study_data.json",
+        "detail": "Current-standard review revalidated 新|あたらしい generated surface, Japanese-source evidence, PrimaryReading あたらしい, MeaningJP new, KanjiMeanings new, example sentence 新しい本です。, reading あたらしいほんです。, translation It is a new book., notes/support surface 新しい, 新聞, Additional unverified N5 source claim., audio kanji-reading-新-あたらしい, stroke-order media 65B0_新-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present."
       }
     ],
     "qualityGates": {
@@ -769,20 +841,23 @@
       "Additional unverified N5 source claim."
     ],
     "exampleIncludes": [
-      "この道は朝の時間に車が多いです。"
+      "人が多いです。"
     ],
     "reviewedAt": "2026-05-12",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "kanji-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated 多|おおい generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
     "sourceEvidence": [
       {
         "type": "generated-surface",
         "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
-        "detail": "Generated additional-unverified card surface re-reviewed for 多|おおい: single-kanji anchor; Kanji and DisplayWord 多; PrimaryReading おおい; MeaningJP many; KanjiMeanings include many and much; notes include 多い, 多分, and Additional unverified N5 source claim.; example この道は朝の時間に車が多いです。; audio field includes kanji-reading-多-おおい; stroke-order field includes stroke-order.gif."
+        "detail": "Generated additional-unverified card surface re-reviewed for 多|おおい: single-kanji anchor; Kanji and DisplayWord 多; PrimaryReading おおい; MeaningJP many; KanjiMeanings include many, much; notes include 多い, 多分, Additional unverified N5 source claim.; example 人が多いです。; audio field includes kanji-reading-多-おおい; stroke-order field includes stroke-order.gif."
       },
       {
         "type": "golden-review",
         "source": "npm run deck:kanji:additional:review:n5",
-        "detail": "Additional N5 golden review protects 多 with PrimaryReading おおい, MeaningJP many, additional-unverified notes, and example この道は朝の時間に車が多いです。."
+        "detail": "Additional N5 golden review protects 多 with PrimaryReading おおい, MeaningJP many, additional-unverified notes, and example 人が多いです。."
       },
       {
         "type": "japanese-source",
@@ -808,6 +883,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Final product judgment for 多|おおい: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "current-standard platinum product review; generated additional N5 TSV; templates/starter_curated_study_data.json",
+        "detail": "Current-standard review revalidated 多|おおい generated surface, Japanese-source evidence, PrimaryReading おおい, MeaningJP many, KanjiMeanings many, much, example sentence 人が多いです。, reading ひとがおおいです。, translation There are many people., notes/support surface 多い, 多分, Additional unverified N5 source claim., audio kanji-reading-多-おおい, stroke-order media 591A_多-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present."
       }
     ],
     "qualityGates": {
@@ -852,20 +932,23 @@
       "Additional unverified N5 source claim."
     ],
     "exampleIncludes": [
-      "駅前の新しい店で昼ご飯を食べました。"
+      "店で水を買います。"
     ],
     "reviewedAt": "2026-05-12",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "kanji-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated 店|みせ generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
     "sourceEvidence": [
       {
         "type": "generated-surface",
         "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
-        "detail": "Generated additional-unverified card surface re-reviewed for 店|みせ: single-kanji anchor; Kanji and DisplayWord 店; PrimaryReading みせ; MeaningJP shop; KanjiMeanings include shop and store; notes include 店, 書店, and Additional unverified N5 source claim.; example 駅前の新しい店で昼ご飯を食べました。; audio field includes kanji-reading-店-みせ; stroke-order field includes stroke-order.gif."
+        "detail": "Generated additional-unverified card surface re-reviewed for 店|みせ: single-kanji anchor; Kanji and DisplayWord 店; PrimaryReading みせ; MeaningJP shop; KanjiMeanings include shop, store; notes include 店, 書店, Additional unverified N5 source claim.; example 店で水を買います。; audio field includes kanji-reading-店-みせ; stroke-order field includes stroke-order.gif."
       },
       {
         "type": "golden-review",
         "source": "npm run deck:kanji:additional:review:n5",
-        "detail": "Additional N5 golden review protects 店 with PrimaryReading みせ, MeaningJP shop, additional-unverified notes, and example 駅前の新しい店で昼ご飯を食べました。."
+        "detail": "Additional N5 golden review protects 店 with PrimaryReading みせ, MeaningJP shop, additional-unverified notes, and example 店で水を買います。."
       },
       {
         "type": "japanese-source",
@@ -891,6 +974,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Final product judgment for 店|みせ: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "current-standard platinum product review; generated additional N5 TSV; templates/starter_curated_study_data.json",
+        "detail": "Current-standard review revalidated 店|みせ generated surface, Japanese-source evidence, PrimaryReading みせ, MeaningJP shop, KanjiMeanings shop, store, example sentence 店で水を買います。, reading みせでみずをかいます。, translation I buy water at the shop., notes/support surface 店, 書店, Additional unverified N5 source claim., audio kanji-reading-店-みせ, stroke-order media 5E97_店-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present."
       }
     ],
     "qualityGates": {
@@ -935,20 +1023,23 @@
       "Additional unverified N5 source claim."
     ],
     "exampleIncludes": [
-      "春になると田んぼに水が入ります。"
+      "田んぼがあります。"
     ],
     "reviewedAt": "2026-05-12",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "kanji-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated 田|た generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
     "sourceEvidence": [
       {
         "type": "generated-surface",
         "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
-        "detail": "Generated additional-unverified card surface re-reviewed for 田|た: single-kanji anchor; Kanji and DisplayWord 田; PrimaryReading た; MeaningJP rice field; KanjiMeanings include rice field and rice paddy; notes include 田んぼ, 山田, and Additional unverified N5 source claim.; example 春になると田んぼに水が入ります。; audio field includes kanji-reading-田-た; stroke-order field includes stroke-order.gif."
+        "detail": "Generated additional-unverified card surface re-reviewed for 田|た: single-kanji anchor; Kanji and DisplayWord 田; PrimaryReading た; MeaningJP rice field; KanjiMeanings include rice field, rice paddy; notes include 田んぼ, 山田, Additional unverified N5 source claim.; example 田んぼがあります。; audio field includes kanji-reading-田-た; stroke-order field includes stroke-order.gif."
       },
       {
         "type": "golden-review",
         "source": "npm run deck:kanji:additional:review:n5",
-        "detail": "Additional N5 golden review protects 田 with PrimaryReading た, MeaningJP rice field, additional-unverified notes, and example 春になると田んぼに水が入ります。."
+        "detail": "Additional N5 golden review protects 田 with PrimaryReading た, MeaningJP rice field, additional-unverified notes, and example 田んぼがあります。."
       },
       {
         "type": "japanese-source",
@@ -974,6 +1065,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Final product judgment for 田|た: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "current-standard platinum product review; generated additional N5 TSV; templates/starter_curated_study_data.json",
+        "detail": "Current-standard review revalidated 田|た generated surface, Japanese-source evidence, PrimaryReading た, MeaningJP rice field, KanjiMeanings rice field, rice paddy, example sentence 田んぼがあります。, reading たんぼがあります。, translation There is a rice field., notes/support surface 田んぼ, 山田, Additional unverified N5 source claim., audio kanji-reading-田-た, stroke-order media 7530_田-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present."
       }
     ],
     "qualityGates": {
@@ -1021,20 +1117,23 @@
       "Additional unverified N5 source claim."
     ],
     "exampleIncludes": [
-      "この道をまっすぐ行ってください。"
+      "この道を行きます。"
     ],
     "reviewedAt": "2026-05-12",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "kanji-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated 道|みち generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
     "sourceEvidence": [
       {
         "type": "generated-surface",
         "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
-        "detail": "Generated additional-unverified card surface re-reviewed for 道|みち: single-kanji anchor; Kanji and DisplayWord 道; PrimaryReading みち; MeaningJP road; KanjiMeanings include road, way, course, street, and teachings; notes include 道, 道具, and Additional unverified N5 source claim.; example この道をまっすぐ行ってください。; audio field includes kanji-reading-道-みち; stroke-order field includes stroke-order.gif."
+        "detail": "Generated additional-unverified card surface re-reviewed for 道|みち: single-kanji anchor; Kanji and DisplayWord 道; PrimaryReading みち; MeaningJP road; KanjiMeanings include road, way, course, street, teachings; notes include 道, 道具, Additional unverified N5 source claim.; example この道を行きます。; audio field includes kanji-reading-道-みち; stroke-order field includes stroke-order.gif."
       },
       {
         "type": "golden-review",
         "source": "npm run deck:kanji:additional:review:n5",
-        "detail": "Additional N5 golden review protects 道 with PrimaryReading みち, MeaningJP road, additional-unverified notes, and example この道をまっすぐ行ってください。."
+        "detail": "Additional N5 golden review protects 道 with PrimaryReading みち, MeaningJP road, additional-unverified notes, and example この道を行きます。."
       },
       {
         "type": "japanese-source",
@@ -1060,6 +1159,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Final product judgment for 道|みち: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "current-standard platinum product review; generated additional N5 TSV; templates/starter_curated_study_data.json",
+        "detail": "Current-standard review revalidated 道|みち generated surface, Japanese-source evidence, PrimaryReading みち, MeaningJP road, KanjiMeanings road, way, course, street, teachings, example sentence この道を行きます。, reading このみちをいきます。, translation I go along this road., notes/support surface 道, 道具, Additional unverified N5 source claim., audio kanji-reading-道-みち, stroke-order media 9053_道-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present."
       }
     ],
     "qualityGates": {
@@ -1103,20 +1207,23 @@
       "Additional unverified N5 source claim."
     ],
     "exampleIncludes": [
-      "駅の店で飲み物を買いました。"
+      "水を買います。"
     ],
     "reviewedAt": "2026-05-12",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "kanji-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated 買|かう generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
     "sourceEvidence": [
       {
         "type": "generated-surface",
         "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
-        "detail": "Generated additional-unverified card surface re-reviewed for 買|かう: single-kanji anchor; Kanji and DisplayWord 買; PrimaryReading かう; MeaningJP buy; KanjiMeanings include buy; notes include 買う, 買い物, and Additional unverified N5 source claim.; example 駅の店で飲み物を買いました。; audio field includes kanji-reading-買-かう; stroke-order field includes stroke-order.gif."
+        "detail": "Generated additional-unverified card surface re-reviewed for 買|かう: single-kanji anchor; Kanji and DisplayWord 買; PrimaryReading かう; MeaningJP buy; KanjiMeanings include buy; notes include 買う, 買い物, Additional unverified N5 source claim.; example 水を買います。; audio field includes kanji-reading-買-かう; stroke-order field includes stroke-order.gif."
       },
       {
         "type": "golden-review",
         "source": "npm run deck:kanji:additional:review:n5",
-        "detail": "Additional N5 golden review protects 買 with PrimaryReading かう, MeaningJP buy, additional-unverified notes, and example 駅の店で飲み物を買いました。."
+        "detail": "Additional N5 golden review protects 買 with PrimaryReading かう, MeaningJP buy, additional-unverified notes, and example 水を買います。."
       },
       {
         "type": "japanese-source",
@@ -1142,6 +1249,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Final product judgment for 買|かう: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "current-standard platinum product review; generated additional N5 TSV; templates/starter_curated_study_data.json",
+        "detail": "Current-standard review revalidated 買|かう generated surface, Japanese-source evidence, PrimaryReading かう, MeaningJP buy, KanjiMeanings buy, example sentence 水を買います。, reading みずをかいます。, translation I buy water., notes/support surface 買う, 買い物, Additional unverified N5 source claim., audio kanji-reading-買-かう, stroke-order media 8CB7_買-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present."
       }
     ],
     "qualityGates": {
@@ -1187,20 +1299,23 @@
       "Additional unverified N5 source claim."
     ],
     "exampleIncludes": [
-      "今日は目が少しつかれています。"
+      "目が大きいです。"
     ],
     "reviewedAt": "2026-05-12",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "kanji-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated 目|め generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
     "sourceEvidence": [
       {
         "type": "generated-surface",
         "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
-        "detail": "Generated additional-unverified card surface re-reviewed for 目|め: single-kanji anchor; Kanji and DisplayWord 目; PrimaryReading め; MeaningJP eye; KanjiMeanings include eye, item, and look; notes include 目, 一つ目, and Additional unverified N5 source claim.; example 今日は目が少しつかれています。; audio field includes kanji-reading-目-め; stroke-order field includes stroke-order.gif."
+        "detail": "Generated additional-unverified card surface re-reviewed for 目|め: single-kanji anchor; Kanji and DisplayWord 目; PrimaryReading め; MeaningJP eye; KanjiMeanings include eye, item, look; notes include 目, 一つ目, Additional unverified N5 source claim.; example 目が大きいです。; audio field includes kanji-reading-目-め; stroke-order field includes stroke-order.gif."
       },
       {
         "type": "golden-review",
         "source": "npm run deck:kanji:additional:review:n5",
-        "detail": "Additional N5 golden review protects 目 with PrimaryReading め, MeaningJP eye, additional-unverified notes, and example 今日は目が少しつかれています。."
+        "detail": "Additional N5 golden review protects 目 with PrimaryReading め, MeaningJP eye, additional-unverified notes, and example 目が大きいです。."
       },
       {
         "type": "japanese-source",
@@ -1226,6 +1341,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Final product judgment for 目|め: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "current-standard platinum product review; generated additional N5 TSV; templates/starter_curated_study_data.json",
+        "detail": "Current-standard review revalidated 目|め generated surface, Japanese-source evidence, PrimaryReading め, MeaningJP eye, KanjiMeanings eye, item, look, example sentence 目が大きいです。, reading めがおおきいです。, translation The eyes are big., notes/support surface 目, 一つ目, Additional unverified N5 source claim., audio kanji-reading-目-め, stroke-order media 76EE_目-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present."
       }
     ],
     "qualityGates": {
@@ -1271,20 +1391,23 @@
       "Additional unverified N5 source claim."
     ],
     "exampleIncludes": [
-      "電車の中で立っています。"
+      "ここに立ちます。"
     ],
     "reviewedAt": "2026-05-12",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "kanji-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated 立|たつ generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
     "sourceEvidence": [
       {
         "type": "generated-surface",
         "source": "out/build/additional_unverified/exports/additional-unverified-n5.tsv",
-        "detail": "Generated additional-unverified card surface re-reviewed for 立|たつ: single-kanji anchor; Kanji and DisplayWord 立; PrimaryReading たつ; MeaningJP stand; KanjiMeanings include stand, erect, and stand up; notes include 立つ, 役立つ, and Additional unverified N5 source claim.; example 電車の中で立っています。; audio field includes kanji-reading-立-たつ; stroke-order field includes stroke-order.gif."
+        "detail": "Generated additional-unverified card surface re-reviewed for 立|たつ: single-kanji anchor; Kanji and DisplayWord 立; PrimaryReading たつ; MeaningJP stand; KanjiMeanings include stand, erect, stand up; notes include 立つ, 役立つ, Additional unverified N5 source claim.; example ここに立ちます。; audio field includes kanji-reading-立-たつ; stroke-order field includes stroke-order.gif."
       },
       {
         "type": "golden-review",
         "source": "npm run deck:kanji:additional:review:n5",
-        "detail": "Additional N5 golden review protects 立 with PrimaryReading たつ, MeaningJP stand, additional-unverified notes, and example 電車の中で立っています。."
+        "detail": "Additional N5 golden review protects 立 with PrimaryReading たつ, MeaningJP stand, additional-unverified notes, and example ここに立ちます。."
       },
       {
         "type": "japanese-source",
@@ -1310,6 +1433,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Final product judgment for 立|たつ: individual-kanji additional_unverified N5 card for a learner, not a core JLPT movement; source-claim status remains labeled, support words stay support-only, blank StudyWordKanji, and no silent fallback."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "current-standard platinum product review; generated additional N5 TSV; templates/starter_curated_study_data.json",
+        "detail": "Current-standard review revalidated 立|たつ generated surface, Japanese-source evidence, PrimaryReading たつ, MeaningJP stand, KanjiMeanings stand, erect, stand up, example sentence ここに立ちます。, reading ここにたちます。, translation I stand here., notes/support surface 立つ, 役立つ, Additional unverified N5 source claim., audio kanji-reading-立-たつ, stroke-order media 7ACB_立-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present."
       }
     ],
     "qualityGates": {

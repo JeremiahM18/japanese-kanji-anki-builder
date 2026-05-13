@@ -135,6 +135,8 @@ function validateCurrentKanjiPlatinumReviewStandard(entry = {}) {
     const reviewStandard = normalizeReviewStandard(entry.reviewStandard);
     const revalidatedAt = normalizeText(entry.revalidatedAt);
     const revalidationSummary = normalizeText(entry.revalidationSummary);
+    const sourceEvidence = normalizeEvidenceEntries(entry.sourceEvidence);
+    const evidenceTypes = new Set(sourceEvidence.map((evidence) => evidence.type));
 
     if (reviewStandard !== CURRENT_KANJI_PLATINUM_REVIEW_STANDARD) {
         failures.push(`reviewStandard must be ${CURRENT_KANJI_PLATINUM_REVIEW_STANDARD}`);
@@ -150,6 +152,9 @@ function validateCurrentKanjiPlatinumReviewStandard(entry = {}) {
                 failures.push(`revalidationSummary must mention ${check.label}`);
             }
         }
+    }
+    if (!evidenceTypes.has("current-standard-review")) {
+        failures.push("sourceEvidence must include evidence type: current-standard-review for the current kanji platinum standard");
     }
 
     return failures;
@@ -424,12 +429,22 @@ function validateGeneratedKanjiRow(row = {}) {
     return failures;
 }
 
-function validateKanjiEvidenceBindings({ entry = {}, row = {} } = {}) {
+function validateKanjiEvidenceBindings({
+    entry = {},
+    requireCurrentReviewStandard = false,
+    row = {},
+} = {}) {
     const failures = [];
     const kanji = normalizeText(entry.kanji);
     const primaryReading = normalizeStringArray(entry.readingIncludes)[0] || row.primaryReading;
     const exactAudioFragment = `kanji-reading-${kanji}-${primaryReading}`;
     const sourceEvidence = entry.sourceEvidence || [];
+    const requiresCurrentStandardEvidence = (
+        requireCurrentReviewStandard
+        || entry.reviewStandard !== undefined
+        || entry.revalidatedAt !== undefined
+        || entry.revalidationSummary !== undefined
+    );
 
     failures.push(...validateEvidenceSnippets({
         sourceEvidence,
@@ -466,6 +481,54 @@ function validateKanjiEvidenceBindings({ entry = {}, row = {} } = {}) {
         label: "final kanji-card product judgment",
         snippets: [kanji, "individual-kanji", "learner"],
     }));
+    if (requiresCurrentStandardEvidence) {
+        const exampleParts = normalizeText(row.exampleSentence)
+            .split("／")
+            .map((part) => normalizeText(part))
+            .filter(Boolean);
+        const currentStandardSnippets = [
+            kanji,
+            primaryReading,
+            ...normalizeStringArray(entry.meaningIncludes),
+            ...normalizeStringArray(entry.kanjiMeaningsIncludes),
+            ...normalizeStringArray(entry.exampleIncludes),
+            ...normalizeStringArray(entry.notesIncludes),
+            exactAudioFragment,
+            "generated surface",
+            "Japanese-source",
+            "example sentence",
+            "notes/support surface",
+            "reading",
+            "translation",
+            "audio",
+            "stroke-order media",
+            "release",
+            "support",
+            "learner-friendly",
+            "useful",
+            "level-appropriate",
+            "natural",
+            "verification limitations",
+        ];
+        if (exampleParts[1]) {
+            currentStandardSnippets.push(exampleParts[1]);
+        }
+        if (exampleParts[2]) {
+            currentStandardSnippets.push(exampleParts[2]);
+        }
+        const limitations = normalizeKanjiVerificationLimitations(entry.verificationLimitations);
+        if (limitations.length === 0) {
+            currentStandardSnippets.push("no active limitations");
+        } else {
+            currentStandardSnippets.push(...limitations.map((limitation) => limitation.label));
+        }
+        failures.push(...validateEvidenceSnippets({
+            sourceEvidence,
+            type: "current-standard-review",
+            label: "current-standard whole-card revalidation",
+            snippets: currentStandardSnippets,
+        }));
+    }
     for (const limitation of normalizeKanjiVerificationLimitations(entry.verificationLimitations)) {
         failures.push(...validateEvidenceSnippets({
             sourceEvidence,
@@ -509,7 +572,11 @@ function evaluatePlatinumKanjiEntry({
             failures.push("active platinum kanji could not be generated");
         } else {
             failures.push(...validateGeneratedKanjiRow(row));
-            failures.push(...validateKanjiEvidenceBindings({ entry, row }));
+            failures.push(...validateKanjiEvidenceBindings({
+                entry,
+                requireCurrentReviewStandard,
+                row,
+            }));
             if (Array.isArray(entry.readingIncludes) && !includesAll(row.primaryReading, entry.readingIncludes)) {
                 failures.push(`primary reading did not include: ${entry.readingIncludes.join(", ")}`);
             }

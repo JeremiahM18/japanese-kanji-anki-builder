@@ -695,7 +695,7 @@
       "会議"
     ],
     "exampleIncludes": [
-      "明日は会社で会議があります。"
+      "会社へ行きます。"
     ],
     "reviewedAt": "2026-05-05",
     "reviewer": "codex-platinum-review",
@@ -703,12 +703,12 @@
       {
         "type": "generated-surface",
         "source": "node scripts/reviewPlatinumKanjiLevel.js --level=4 --allow-empty --json",
-        "detail": "Generated card surface re-reviewed for 会|かい: single-kanji anchor; Kanji and DisplayWord 会; PrimaryReading かい; MeaningJP meeting / association; KanjiMeanings include meeting, association, and meet; notes include 会社 and 会議; example 明日は会社で会議があります。; audio field includes kanji-reading-会-かい; stroke-order field includes stroke-order.gif."
+        "detail": "Generated card surface re-reviewed for 会|かい: single-kanji anchor; Kanji and DisplayWord 会; PrimaryReading かい; MeaningJP meeting / association; KanjiMeanings include meeting, association, and meet; notes include 会社 and 会議; example 会社へ行きます。; audio field includes kanji-reading-会-かい; stroke-order field includes stroke-order.gif."
       },
       {
         "type": "golden-review",
         "source": "npm run deck:review:n4",
-        "detail": "N4 golden review protects 会 with PrimaryReading かい, MeaningJP meeting / association, support notes, and example 明日は会社で会議があります。."
+        "detail": "N4 golden review protects 会 with PrimaryReading かい, MeaningJP meeting / association, support notes, and example 会社へ行きます。."
       },
       {
         "type": "japanese-source",

@@ -54,6 +54,17 @@ function buildSourceEvidence() {
     }));
 }
 
+function buildCurrentStandardSourceEvidence() {
+    return [
+        ...buildSourceEvidence(),
+        {
+            type: "current-standard-review",
+            source: "current-standard fixture review",
+            detail: "Current-standard review revalidated 日|ひ generated surface, Japanese-source evidence, PrimaryReading ひ, MeaningJP day, KanjiMeanings day and sun, example sentence 雨の日です。, reading あめのひです。, translation It is a rainy day., notes/support surface 日 and 日本, audio kanji-reading-日-ひ, stroke-order media, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present.",
+        },
+    ];
+}
+
 function buildEntry(overrides = {}) {
     return {
         kanji: "日",
@@ -78,6 +89,7 @@ function buildCurrentStandardEntry(overrides = {}) {
         reviewStandard: CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
         revalidatedAt: "2026-05-13",
         revalidationSummary: "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+        sourceEvidence: buildCurrentStandardSourceEvidence(),
         ...overrides,
     });
 }
@@ -153,7 +165,17 @@ test("evaluatePlatinumKanjiReviewSet gates current-standard revalidation separat
     assert.equal(currentReport.legacyOrUnversionedPlatinumCount, 0);
 });
 
-test("evaluatePlatinumKanjiReviewSet requires complete current-standard revalidation summaries", () => {
+test("evaluatePlatinumKanjiReviewSet requires complete current-standard revalidation evidence", () => {
+    const missingEvidenceReport = evaluatePlatinumKanjiReviewSet({
+        rows: [buildRow()],
+        entries: [buildEntry({
+            reviewStandard: CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
+            revalidatedAt: "2026-05-13",
+            revalidationSummary: "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+        })],
+        requireAllRows: true,
+        requireCurrentReviewStandard: true,
+    });
     const report = evaluatePlatinumKanjiReviewSet({
         rows: [buildRow()],
         entries: [buildCurrentStandardEntry({
@@ -163,6 +185,11 @@ test("evaluatePlatinumKanjiReviewSet requires complete current-standard revalida
         requireCurrentReviewStandard: true,
     });
 
+    assert.equal(missingEvidenceReport.passed, false);
+    assert.match(
+        missingEvidenceReport.results[0].failures.join("\n"),
+        /sourceEvidence must include evidence type: current-standard-review/
+    );
     const failures = report.results[0].failures.join("\n");
     assert.equal(report.passed, false);
     assert.match(failures, /revalidationSummary must mention Japanese source evidence/);

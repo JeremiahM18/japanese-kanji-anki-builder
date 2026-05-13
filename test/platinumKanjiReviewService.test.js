@@ -2,6 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const {
+    ALLOWED_KANJI_VERIFICATION_LIMITATION_FIELDS,
     REQUIRED_KANJI_EVIDENCE_TYPES,
     REQUIRED_KANJI_QUALITY_GATES,
     evaluatePlatinumKanjiReviewSet,
@@ -81,6 +82,83 @@ test("evaluatePlatinumKanjiReviewSet passes active platinum entries with strict 
     assert.equal(report.passed, true);
     assert.equal(report.activePlatinumCount, 1);
     assert.equal(report.failedCount, 0);
+});
+
+test("evaluatePlatinumKanjiReviewSet tracks explicit non-core verification limitations", () => {
+    const limitationLabel = "Stroke-order sequence unverified";
+    const sourceEvidence = buildSourceEvidence().map((evidence) => (
+        evidence.type === "manual-review"
+            ? {
+                ...evidence,
+                detail: `${evidence.detail} ${limitationLabel} is visibly labeled after an unsuccessful independent sequence-source check.`,
+            }
+            : evidence
+    ));
+
+    const report = evaluatePlatinumKanjiReviewSet({
+        rows: [buildRow({
+            notes: `<ruby>日<rt>ひ</rt></ruby> - day ／ ${limitationLabel}`,
+        })],
+        entries: [buildEntry({
+            sourceEvidence,
+            notesIncludes: ["日", limitationLabel],
+            verificationLimitations: [{
+                field: "strokeOrderSequence",
+                status: "externally_unverified",
+                label: limitationLabel,
+                reviewNote: "Governed stroke-order media was visually checked for 日, but no independent sequence source was available.",
+            }],
+        })],
+        requireAllRows: true,
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.verificationLimitationCount, 1);
+    assert.equal(report.verificationLimitationKanjiCount, 1);
+    assert.equal(report.verificationLimitationFieldCounts.strokeOrderSequence, 1);
+    assert.match(formatPlatinumKanjiReviewReport(report), /Stroke-order sequence unverified/);
+});
+
+test("evaluatePlatinumKanjiReviewSet rejects core-field or hidden verification limitations", () => {
+    const hiddenLabel = "Stroke-order sequence unverified";
+    const sourceEvidence = buildSourceEvidence().map((evidence) => (
+        evidence.type === "manual-review"
+            ? {
+                ...evidence,
+                detail: `${evidence.detail} ${hiddenLabel} was reviewed as a limitation.`,
+            }
+            : evidence
+    ));
+    const coreFieldReport = evaluatePlatinumKanjiReviewSet({
+        rows: [buildRow({ notes: `<ruby>日<rt>ひ</rt></ruby> - day ／ ${hiddenLabel}` })],
+        entries: [buildEntry({
+            sourceEvidence,
+            verificationLimitations: [{
+                field: "primaryReading",
+                status: "externally_unverified",
+                label: hiddenLabel,
+                reviewNote: "Fixture limitation.",
+            }],
+        })],
+    });
+    const hiddenReport = evaluatePlatinumKanjiReviewSet({
+        rows: [buildRow()],
+        entries: [buildEntry({
+            sourceEvidence,
+            verificationLimitations: [{
+                field: "strokeOrderSequence",
+                status: "externally_unverified",
+                label: hiddenLabel,
+                reviewNote: "Fixture limitation.",
+            }],
+        })],
+    });
+
+    assert.ok(ALLOWED_KANJI_VERIFICATION_LIMITATION_FIELDS.includes("strokeOrderSequence"));
+    assert.equal(coreFieldReport.passed, false);
+    assert.match(coreFieldReport.results[0].failures.join("\n"), /cannot be a core kanji-card truth field: primaryReading/);
+    assert.equal(hiddenReport.passed, false);
+    assert.match(hiddenReport.results[0].failures.join("\n"), /Notes must include verification limitation label/);
 });
 
 test("evaluatePlatinumKanjiReviewSet rejects entries when the kanji card anchor drifts", () => {

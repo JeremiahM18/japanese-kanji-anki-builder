@@ -45,6 +45,31 @@ const REQUIRED_KANJI_EVIDENCE_TYPES = Object.freeze([
     "manual-review",
 ]);
 
+const ALLOWED_KANJI_VERIFICATION_LIMITATION_FIELDS = Object.freeze([
+    "audioNaturalness",
+    "exampleSupportNuance",
+    "notesSupportNuance",
+    "sourceAvailability",
+    "strokeOrderSequence",
+    "strokeOrderSourceDepth",
+]);
+
+const BLOCKED_KANJI_VERIFICATION_LIMITATION_FIELDS = Object.freeze([
+    "kanji",
+    "displayWord",
+    "primaryReading",
+    "meaningJP",
+    "kanjiMeanings",
+    "exampleSentence",
+    "productFit",
+]);
+
+const ALLOWED_KANJI_VERIFICATION_LIMITATION_STATUSES = Object.freeze([
+    "externally_unverified",
+    "limited_source",
+    "manual_review_only",
+]);
+
 const SINGLE_KANJI_RE = /^\p{Script=Han}$/u;
 
 function normalizeText(value) {
@@ -69,6 +94,52 @@ function normalizeStringArray(value) {
     return (Array.isArray(value) ? value : [])
         .map((entry) => normalizeText(entry))
         .filter(Boolean);
+}
+
+function normalizeKanjiVerificationLimitations(value) {
+    if (!Array.isArray(value)) {
+        return [];
+    }
+    return value
+        .filter((limitation) => limitation && typeof limitation === "object" && !Array.isArray(limitation))
+        .map((limitation) => ({
+            field: normalizeText(limitation.field),
+            status: normalizeText(limitation.status),
+            label: normalizeText(limitation.label),
+            reviewNote: normalizeText(limitation.reviewNote),
+        }));
+}
+
+function buildKanjiVerificationLimitationSummary(entries = []) {
+    const activeEntries = (Array.isArray(entries) ? entries : [])
+        .filter((entry) => ACTIVE_PLATINUM_STATUSES.includes(normalizeText(entry.status)));
+    const limitationRows = [];
+    const fieldCounts = {};
+
+    for (const entry of activeEntries) {
+        const limitations = normalizeKanjiVerificationLimitations(entry.verificationLimitations);
+        for (const limitation of limitations) {
+            limitationRows.push({
+                kanji: normalizeText(entry.kanji),
+                field: limitation.field,
+                status: limitation.status,
+                label: limitation.label,
+                reviewNote: limitation.reviewNote,
+            });
+            fieldCounts[limitation.field] = (fieldCounts[limitation.field] || 0) + 1;
+        }
+    }
+
+    return {
+        limitationCount: limitationRows.length,
+        kanjiCount: new Set(limitationRows.map((limitation) => limitation.kanji).filter(Boolean)).size,
+        fieldCounts,
+        limitations: limitationRows.sort((left, right) => (
+            left.kanji.localeCompare(right.kanji, "ja")
+            || left.field.localeCompare(right.field)
+            || left.label.localeCompare(right.label)
+        )),
+    };
 }
 
 function findDuplicateValues(values = []) {
@@ -160,11 +231,55 @@ function validateActivePlatinumEntry(entry = {}, { sourceOriginIds = [] } = {}) 
     if (entry.status === "fixed_then_platinum" && !normalizeText(entry.fixSummary)) {
         failures.push("fixed_then_platinum entries must include fixSummary");
     }
+    failures.push(...validateKanjiVerificationLimitations(entry));
 
     const gates = entry.qualityGates || {};
     for (const gate of REQUIRED_KANJI_QUALITY_GATES) {
         if (gates[gate] !== true) {
             failures.push(`quality gate must be true: ${gate}`);
+        }
+    }
+
+    return failures;
+}
+
+function validateKanjiVerificationLimitations(entry = {}) {
+    const failures = [];
+
+    if (entry.verificationLimitations === undefined) {
+        return failures;
+    }
+    if (!Array.isArray(entry.verificationLimitations)) {
+        return ["verificationLimitations must be an array when present"];
+    }
+
+    for (const [index, rawLimitation] of entry.verificationLimitations.entries()) {
+        if (!rawLimitation || typeof rawLimitation !== "object" || Array.isArray(rawLimitation)) {
+            failures.push(`verificationLimitations[${index}] must be a structured object`);
+            continue;
+        }
+
+        const limitation = normalizeKanjiVerificationLimitations([rawLimitation])[0] || {};
+        const prefix = `verificationLimitations[${index}]`;
+        if (!limitation.field) {
+            failures.push(`${prefix}.field is required`);
+        } else if (BLOCKED_KANJI_VERIFICATION_LIMITATION_FIELDS.includes(limitation.field)) {
+            failures.push(`${prefix}.field cannot be a core kanji-card truth field: ${limitation.field}`);
+        } else if (!ALLOWED_KANJI_VERIFICATION_LIMITATION_FIELDS.includes(limitation.field)) {
+            failures.push(`${prefix}.field must be one of: ${ALLOWED_KANJI_VERIFICATION_LIMITATION_FIELDS.join(", ")}`);
+        }
+        if (!limitation.status) {
+            failures.push(`${prefix}.status is required`);
+        } else if (!ALLOWED_KANJI_VERIFICATION_LIMITATION_STATUSES.includes(limitation.status)) {
+            failures.push(`${prefix}.status must be one of: ${ALLOWED_KANJI_VERIFICATION_LIMITATION_STATUSES.join(", ")}`);
+        }
+        if (!limitation.label) {
+            failures.push(`${prefix}.label is required`);
+        } else if (!/\bunverified\b|not verified|limited verification/i.test(limitation.label)) {
+            failures.push(`${prefix}.label must visibly say what is unverified or has limited verification`);
+        }
+        if (!limitation.reviewNote) {
+            failures.push(`${prefix}.reviewNote must describe the review attempt and limitation`);
         }
     }
 
@@ -280,6 +395,17 @@ function validateKanjiEvidenceBindings({ entry = {}, row = {} } = {}) {
         label: "final kanji-card product judgment",
         snippets: [kanji, "individual-kanji", "learner"],
     }));
+    for (const limitation of normalizeKanjiVerificationLimitations(entry.verificationLimitations)) {
+        failures.push(...validateEvidenceSnippets({
+            sourceEvidence,
+            type: "manual-review",
+            label: `verification limitation ${limitation.field}`,
+            snippets: [kanji, limitation.label],
+        }));
+        if (!includesAll(row.notes, [limitation.label])) {
+            failures.push(`Notes must include verification limitation label: ${limitation.label}`);
+        }
+    }
 
     return failures;
 }
@@ -346,6 +472,9 @@ function evaluatePlatinumKanjiEntry({
         status: status || "(blank)",
         passed: failures.length === 0,
         failures,
+        verificationLimitations: ACTIVE_PLATINUM_STATUSES.includes(status)
+            ? normalizeKanjiVerificationLimitations(entry.verificationLimitations)
+            : [],
     };
 }
 
@@ -418,12 +547,17 @@ function evaluatePlatinumKanjiReviewSet({
 
     const passedCount = results.filter((result) => result.passed).length;
     const failedCount = results.length - passedCount;
+    const verificationLimitationSummary = buildKanjiVerificationLimitationSummary(activeEntries);
 
     return {
         totalEntries: reviewEntries.length,
         activePlatinumCount: activeEntries.length,
         nonShippingCount: nonShippingEntries.length,
         needsReviewCount: needsReviewEntries.length,
+        verificationLimitationCount: verificationLimitationSummary.limitationCount,
+        verificationLimitationKanjiCount: verificationLimitationSummary.kanjiCount,
+        verificationLimitationFieldCounts: verificationLimitationSummary.fieldCounts,
+        verificationLimitations: verificationLimitationSummary.limitations,
         passedCount,
         failedCount,
         passed: failedCount === 0 && coverageFailures.length === 0,
@@ -440,6 +574,8 @@ function formatPlatinumKanjiReviewReport(report = {}, { title = "Japanese Kanji 
         "",
         `Review entries: ${report.totalEntries || 0}`,
         `Active platinum cards: ${report.activePlatinumCount || 0}`,
+        `Active cards with verification limitations: ${report.verificationLimitationKanjiCount || 0}`,
+        `Verification limitations: ${report.verificationLimitationCount || 0}`,
         `Deferred/removed tracked: ${report.nonShippingCount || 0}`,
         `Needs review: ${report.needsReviewCount || 0}`,
         `Passed entries: ${report.passedCount || 0}`,
@@ -466,6 +602,13 @@ function formatPlatinumKanjiReviewReport(report = {}, { title = "Japanese Kanji 
         }
     }
 
+    if (Array.isArray(report.verificationLimitations) && report.verificationLimitations.length > 0) {
+        lines.push("", "Verification limitations:");
+        for (const limitation of report.verificationLimitations) {
+            lines.push(`- ${limitation.kanji}: ${limitation.field} (${limitation.status}) - ${limitation.label}`);
+        }
+    }
+
     for (const result of report.results || []) {
         lines.push("", `- ${result.label}: ${result.status} ${result.passed ? "pass" : "fail"}`);
         if (!result.passed) {
@@ -481,11 +624,17 @@ function formatPlatinumKanjiReviewReport(report = {}, { title = "Japanese Kanji 
 module.exports = {
     ACTIVE_PLATINUM_STATUSES,
     ALLOWED_PLATINUM_STATUSES,
+    ALLOWED_KANJI_VERIFICATION_LIMITATION_FIELDS,
+    ALLOWED_KANJI_VERIFICATION_LIMITATION_STATUSES,
+    BLOCKED_KANJI_VERIFICATION_LIMITATION_FIELDS,
     NON_SHIPPING_STATUSES,
     REQUIRED_KANJI_EVIDENCE_TYPES,
     REQUIRED_KANJI_QUALITY_GATES,
     REVIEW_ONLY_STATUSES,
+    buildKanjiVerificationLimitationSummary,
     evaluatePlatinumKanjiReviewSet,
     formatPlatinumKanjiReviewReport,
+    normalizeKanjiVerificationLimitations,
     validateGeneratedKanjiRow,
+    validateKanjiVerificationLimitations,
 };

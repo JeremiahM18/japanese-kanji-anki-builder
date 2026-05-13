@@ -11,7 +11,10 @@ const {
     buildAdditionalKanjiExportPath,
     selectPhysicalAdditionalEntries,
 } = require("./additionalKanjiDeckService");
-const { ACTIVE_PLATINUM_STATUSES } = require("./platinumKanjiReviewService");
+const {
+    ACTIVE_PLATINUM_STATUSES,
+    buildKanjiVerificationLimitationSummary,
+} = require("./platinumKanjiReviewService");
 
 function toSortedArray(values = []) {
     return [...values].sort((a, b) => a.localeCompare(b, "ja"));
@@ -69,6 +72,7 @@ function buildReviewStatusRow({
     generated,
     goldenSet,
     platinumSet,
+    verificationLimitationSummary = {},
     plannedCount = null,
 } = {}) {
     const missingGolden = difference(generated.kanji, goldenSet);
@@ -102,6 +106,10 @@ function buildReviewStatusRow({
         presentUnique: generated.unique,
         goldenCount: goldenSet.size,
         platinumCount: platinumSet.size,
+        verificationLimitationKanjiCount: verificationLimitationSummary.kanjiCount || 0,
+        verificationLimitationCount: verificationLimitationSummary.limitationCount || 0,
+        verificationLimitationFieldCounts: verificationLimitationSummary.fieldCounts || {},
+        verificationLimitations: verificationLimitationSummary.limitations || [],
         missingGolden,
         missingPlatinum,
         extraGolden,
@@ -140,6 +148,11 @@ function buildAdditionalGeneratedRows({
     for (const level of levels) {
         const plannedEntries = selection.entriesByLevel.get(level) || [];
         const exportPath = buildAdditionalKanjiExportPath(additionalOutDir, level);
+        const platinumReviewSet = loadReviewSet(
+            rootDir,
+            `platinum_additional_unverified_n${level}_review_set.json`,
+            { exists, readFile, missingAsEmpty: true }
+        );
         rows.push({
             level,
             generated: readGeneratedKanjiSet(exportPath, { exists, readFile }),
@@ -150,11 +163,8 @@ function buildAdditionalGeneratedRows({
                 `golden_additional_unverified_n${level}_review_set.json`,
                 { exists, readFile, missingAsEmpty: true }
             )),
-            platinumSet: buildActivePlatinumSet(loadReviewSet(
-                rootDir,
-                `platinum_additional_unverified_n${level}_review_set.json`,
-                { exists, readFile, missingAsEmpty: true }
-            )),
+            platinumSet: buildActivePlatinumSet(platinumReviewSet),
+            verificationLimitationSummary: buildKanjiVerificationLimitationSummary(platinumReviewSet),
         });
     }
 
@@ -240,16 +250,17 @@ function buildKanjiDeckReviewStatus({
 
     const coreRows = normalizedLevels.map((level) => {
         const exportPath = path.join(resolvedCoreOutDir, "exports", `jlpt-n${level}.tsv`);
+        const platinumReviewSet = loadReviewSet(
+            resolvedRoot,
+            `platinum_n${level}_review_set.json`,
+            { exists, readFile }
+        );
         const goldenSet = buildKanjiSetFromReviewSet(loadReviewSet(
             resolvedRoot,
             `golden_n${level}_review_set.json`,
             { exists, readFile }
         ));
-        const platinumSet = buildActivePlatinumSet(loadReviewSet(
-            resolvedRoot,
-            `platinum_n${level}_review_set.json`,
-            { exists, readFile }
-        ));
+        const platinumSet = buildActivePlatinumSet(platinumReviewSet);
         return buildReviewStatusRow({
             deckId: `core_N${level}`,
             deckType: "core",
@@ -258,6 +269,7 @@ function buildKanjiDeckReviewStatus({
             generated: readGeneratedKanjiSet(exportPath, { exists, readFile }),
             goldenSet,
             platinumSet,
+            verificationLimitationSummary: buildKanjiVerificationLimitationSummary(platinumReviewSet),
             plannedCount: contractSets.get(level)?.size || 0,
         });
     });
@@ -265,7 +277,7 @@ function buildKanjiDeckReviewStatus({
     const partitionPlan = buildKanjiDeckPartitionPlan({
         contract: loadedContract,
         deltaReport,
-        levels: normalizedLevels,
+        levels: JLPT_LEVELS,
         includeDisputed,
         candidateScope,
     });
@@ -285,6 +297,7 @@ function buildKanjiDeckReviewStatus({
         generated: row.generated,
         goldenSet: row.goldenSet,
         platinumSet: row.platinumSet,
+        verificationLimitationSummary: row.verificationLimitationSummary,
         plannedCount: row.plannedCount,
     }));
     const duplicateAdditionalClaims = summarizeDuplicateAdditionalClaims(
@@ -337,8 +350,8 @@ function formatKanjiDeckReviewStatus(report = {}) {
         `Additional candidate scope: ${report.candidateScope}`,
         `Disputed rows included: ${report.includeDisputed ? "yes" : "no"}`,
         "",
-        "| Deck | Level | Present | Golden | Platinum | Missing Golden | Missing Platinum | Structural |",
-        "| --- | --- | ---: | ---: | ---: | ---: | ---: | --- |",
+        "| Deck | Level | Present | Golden | Platinum | Limitations | Missing Golden | Missing Platinum | Structural |",
+        "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |",
     ];
 
     for (const row of report.rows || []) {
@@ -348,6 +361,7 @@ function formatKanjiDeckReviewStatus(report = {}) {
             row.exportExists ? `${row.presentUnique}/${row.presentRows}` : "missing",
             formatRatio(row.goldenCount, row.presentUnique),
             formatRatio(row.platinumCount, row.presentUnique),
+            row.verificationLimitationCount || 0,
             row.missingGolden.length,
             row.missingPlatinum.length,
             row.passed ? "ok" : "failing",
@@ -374,6 +388,24 @@ function formatKanjiDeckReviewStatus(report = {}) {
                 ? `selected additional N${duplicate.selectedTargetLevel}`
                 : "no additional duplicate selected";
             lines.push(`- ${duplicate.kanji}: ${core}; ${selected}; ${appearances}`);
+        }
+    }
+
+    const rowsWithLimitations = (report.rows || [])
+        .filter((row) => (row.verificationLimitationCount || 0) > 0);
+    if (rowsWithLimitations.length > 0) {
+        lines.push("", "Verification Limitations:");
+        for (const row of rowsWithLimitations) {
+            lines.push(
+                `- ${row.deckId}: ${row.verificationLimitationCount} limitation(s) `
+                + `on ${row.verificationLimitationKanjiCount} active platinum card(s)`
+            );
+            for (const limitation of (row.verificationLimitations || []).slice(0, 12)) {
+                lines.push(`  - ${limitation.kanji}: ${limitation.field} (${limitation.status}) - ${limitation.label}`);
+            }
+            if ((row.verificationLimitations || []).length > 12) {
+                lines.push(`  - ... ${row.verificationLimitations.length - 12} more`);
+            }
         }
     }
 

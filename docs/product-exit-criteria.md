@@ -27,6 +27,8 @@ Golden coverage is required before a level can be trusted for ongoing work. Plat
 
 Platinum evidence must name the specific card, exported reading, and learner-facing values being verified. A broad statement that a field was reviewed is not enough.
 
+When a real review attempt cannot verify a non-core or externally unavailable facet, record the limitation instead of silently blocking or pretending verification. The card may ship only if the unresolved facet is visibly labeled or documented, governed provenance is present, and the remaining card is accurate and learner-safe. Core written form, reading, meaning, example correctness, and product-fit uncertainty still require fix, defer, or remove.
+
 For active word platinum, `japanese-source` evidence must cite a source registered in `templates/platinum_card_source_manifest.json` for `word-field-verification`. Generated output, golden expectations, tracked starter templates, ignored local data, source-claim lists, and local caches are internal evidence only; they do not satisfy Japanese-source verification by themselves. One-kanji word cards may use a registered `single-kanji-word-field-verification` source.
 
 For active word platinum, the reviewed word level must follow the word-level placement policy: a word is anchored by kanji from its own deck level, support kanji from any other level must be visibly labeled, all-easier-kanji words may ship later only with an explicit learner-fit rationale, and words with no current-level anchor must not ship earlier than their harder support kanji justify.
@@ -65,13 +67,13 @@ A word level ships only when all criteria are true:
 - Active triage is either resolved or intentionally deferred.
 - Sentence orthography review has no unresolved blocker.
 - Any shipped audio is governed, audited, and review-clean.
-- Pitch accent is governed and source-verified. A non-empty pitch field is not enough; the rendered contour must match the tracked source pattern, and that source entry must match the shipped written word and reading.
+- Pitch accent is governed and source-matched when dictionary-backed. Generated pitch guidance may ship only when governed provenance is present and the rendered card visibly labels it as unverified; a non-empty pitch field is not enough, and source/render or identity mismatches still block readiness.
 - Accessibility review has no unresolved blocker.
 
 ## Current product posture
 
 - N5 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum-reviewed at `80/80` active entries under field-bound evidence validation
-- N4 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum review has started with `12/212` active entries and remains blocked until the rest of the level is reviewed
+- N4 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum review has started with `42/212` active entries and remains blocked until the rest of the level is reviewed
 - N3 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N2 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N1 kanji: golden-reviewed at `1230/1230`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started

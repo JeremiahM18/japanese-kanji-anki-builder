@@ -255,12 +255,17 @@ function buildBlockedReadingSet(curatedEntry = null) {
 
 function filterBlockedReadings(readings, curatedEntry = null) {
     const blockedReadings = buildBlockedReadingSet(curatedEntry);
-    if (blockedReadings.size === 0) {
-        return readings;
-    }
+    const seenReadings = new Set();
 
-    return (Array.isArray(readings) ? readings : [])
-        .filter((reading) => !blockedReadings.has(normalizeReading(reading)));
+    return (Array.isArray(readings) ? readings : []).filter((reading) => {
+        const normalizedReading = normalizeReading(reading);
+        if (!normalizedReading || blockedReadings.has(normalizedReading) || seenReadings.has(normalizedReading)) {
+            return false;
+        }
+
+        seenReadings.add(normalizedReading);
+        return true;
+    });
 }
 
 function formatKanjiMeanings({ kanjiInfo, fallbackMeaning = "", curatedEntry = null } = {}) {

@@ -735,7 +735,7 @@ test("buildInferenceForKanji preserves single-kanji words with okurigana as prim
     assert.equal(inference.meaningJP, "see / watch");
 });
 
-test("buildInferenceForKanji filters curated blocked readings from learner-facing labels", async () => {
+test("buildInferenceForKanji filters curated blocked readings and duplicate normalized readings from learner-facing labels", async () => {
     const exportService = createExportService({
         curatedStudyData: {
             志: {
@@ -767,7 +767,7 @@ test("buildInferenceForKanji filters curated blocked readings from learner-facin
             jlpt: 1,
             meanings: ["will", "aspiration", "shilling"],
             on_readings: ["シ"],
-            kun_readings: ["こころざ.す", "こころざし", "シリング"],
+            kun_readings: ["こころざ.す", "こころざす", "こころざし", "シリング"],
         },
         kanjiApiClient: {
             async getKanji() {

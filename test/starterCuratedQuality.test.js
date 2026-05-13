@@ -373,6 +373,7 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
     assert.deepEqual(curatedStudyData["用"].blockedMeanings, ["service"]);
     assert.deepEqual(curatedStudyData["田"].displayWord, { written: "田", pron: "た" });
     assert.equal(curatedStudyData["田"].exampleSentence.japanese, "家の近くに田んぼがあります。");
+    assert.deepEqual(curatedStudyData["立"].blockedReadings, ["リットル"]);
     assert.deepEqual(curatedStudyData["真"].displayWord, { written: "真", pron: "ま" });
     assert.deepEqual(curatedStudyData["真"].blockedMeanings, ["Buddhist sect"]);
     assert.equal(curatedStudyData["真"].exampleSentence.japanese, "この紙は真っ白です。");
@@ -381,6 +382,14 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
     assert.deepEqual(curatedStudyData["発"].blockedMeanings, ["counter for gunshots", "disclose", "start from"]);
     assert.deepEqual(curatedStudyData["目"].blockedMeanings, ["care", "class", "experience", "favor", "insight", "look"]);
     assert.deepEqual(curatedStudyData["県"].blockedReadings, ["かける"]);
+    assert.deepEqual(curatedStudyData["英"].blockedMeanings, ["calyx", "hero", "outstanding"]);
+    assert.deepEqual(curatedStudyData["茶"].displayWord, { written: "茶", pron: "ちゃ" });
+    assert.deepEqual(curatedStudyData["薬"].blockedMeanings, ["benefit", "chemical", "enamel", "gunpowder"]);
+    assert.deepEqual(curatedStudyData["親"].blockedMeanings, ["dealer (cards)", "familiarity", "intimacy", "relative"]);
+    assert.deepEqual(curatedStudyData["質"].blockedReadings, ["わりふ"]);
+    assert.deepEqual(curatedStudyData["計"].blockedMeanings, ["plot", "scheme"]);
+    assert.deepEqual(curatedStudyData["試"].blockedMeanings, ["ordeal"]);
+    assert.deepEqual(curatedStudyData["軽"].blockedReadings, ["キョウ"]);
     assert.deepEqual(curatedStudyData["間"].displayWord, { written: "間", pron: "あいだ" });
     assert.deepEqual(curatedStudyData["食"].displayWord, { written: "食べる", pron: "たべる" });
     assert.deepEqual(curatedStudyData["生"].displayWord, { written: "生きる", pron: "いきる" });

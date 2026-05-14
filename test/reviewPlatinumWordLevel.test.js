@@ -3,6 +3,7 @@ const assert = require("node:assert/strict");
 
 const { buildWordExportOptions, parseArgs, parseWordTsvForPlatinum } = require("../scripts/reviewPlatinumWordLevel");
 const { parseArgs: parseBatchReportArgs } = require("../scripts/platinumWordBatchReport");
+const { parseArgs: parseRereviewStatusArgs } = require("../scripts/reportPlatinumWordRereviewStatus");
 
 test("parseArgs accepts platinum word review options", () => {
     const options = parseArgs(["--level=5", "--json", "--require-all", "--allow-empty"]);
@@ -41,6 +42,16 @@ test("platinumWordBatchReport defaults word review batches to eight cards", () =
     const options = parseBatchReportArgs(["--level=N5"]);
 
     assert.equal(options.limit, 8);
+});
+
+test("platinum word rereview status parseArgs accepts scoped read-only status options", () => {
+    const options = parseRereviewStatusArgs(["--levels=5,4", "--json", "--oops"]);
+
+    assert.deepEqual(options, {
+        json: true,
+        levels: [5, 4],
+        unknownArgs: ["--oops"],
+    });
 });
 
 test("platinum word row builder uses the managed media root for exact word audio", () => {

@@ -265,6 +265,7 @@ npm run deck:platinum:batch -- --level=5 --kanji=父,生,男
 npm run deck:platinum:rereview-status -- --levels=5,4
 npm run deck:words:platinum:batch -- --level=5 --limit=8
 npm run deck:words:platinum:batch -- --level=5 --words=今日:きょう,八日:ようか
+npm run deck:words:platinum:rereview-status -- --levels=5,4
 npm run deck:words:level-anchor-audit -- --level=5
 npm run deck:platinum:n5
 npm run deck:platinum:n4
@@ -285,6 +286,8 @@ npm run deck:words:platinum:n4
 `deck:platinum:rereview-status` is a read-only kanji rereview provenance report. It separates current v3 structural pass from explicit substantive post-v3 human rereview proof. It must not infer proof from `revalidatedAt` or lane-valid `current-standard-review` text alone; missing proof is reported with the searchable marker `missing_substantive_current_standard_rereview_proof`. Use it to classify before rereviewing rather than globally blocking structurally valid cards or silently overclaiming human rereview provenance.
 
 `deck:words:platinum:batch` is the matching read-only word pre-review report. It does not create entries or prove release readiness. Use it before editing a word platinum manifest to see exact written-reading identity, generated card fields, sentence lines, exact word audio, pitch source/render status, source lookup links, risk flags, existing platinum status, and the next missing queue.
+
+`deck:words:platinum:rereview-status` is the read-only word rereview provenance report. It separates current v3 structural pass from explicit substantive post-v3 human rereview proof. It must not infer proof from `revalidatedAt` or lane-valid `current-standard-review` text alone; missing proof is reported with the searchable marker `missing_substantive_current_standard_word_rereview_proof`. Generated rows without active current-standard word platinum entries are classified as `blocked_or_failing` rather than hidden in the rereview backlog.
 
 Each kanji platinum command requires every generated card for that level and surface to have an active current-standard platinum entry by default. Use `--allow-legacy-standard` only to inspect historical field-bound entries while planning revalidation; it must not be used as version 1 release evidence.
 

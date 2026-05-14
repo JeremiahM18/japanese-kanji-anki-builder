@@ -1864,6 +1864,31 @@ test("tracked starter word data protects current-standard N5 platinum examples a
     assert.match(starterEntries["椅子|いす"].notes, /outside the JLPT kanji contract/);
     assert.match(starterEntries["月曜日|げつようび"].notes, /Core weekday word for Monday/);
     assert.match(starterEntries["火曜日|かようび"].notes, /火 -> か and 日 -> び/);
+    assert.equal(starterEntries["男子|だんし"].exampleSentence.japanese, "男子は先に入ります。");
+    assert.match(starterEntries["男子|だんし"].notes, /recognition\/support for 男 -> だん/);
+    assert.match(starterEntries["金曜日|きんようび"].notes, /Core weekday word for Friday/);
+    assert.equal(starterEntries["誕生日|たんじょうび"].exampleSentence.japanese, "今日は私の誕生日です。");
+    assert.match(starterEntries["誕生日|たんじょうび"].notes, /誕 is higher-level support/);
+    assert.equal(starterEntries["水曜日|すいようび"].exampleSentence.japanese, "水曜日に学校へ行きます。");
+    assert.match(starterEntries["自転車|じてんしゃ"].notes, /自 and 転 are higher-level support/);
+    assert.equal(starterEntries["金具|かなぐ"].exampleSentence.japanese, "かばんの金具は小さいです。");
+    assert.match(starterEntries["金具|かなぐ"].notes, /具 visibly labeled as higher-level/);
+    assert.equal(starterEntries["四月|しがつ"].exampleSentence.japanese, "四月に学校が始まります。");
+    assert.equal(starterEntries["左折|させつ"].exampleSentence.japanese, "ここで左折します。");
+    assert.equal(starterEntries["葉書|はがき"].exampleSentence.japanese, "友だちに葉書を書きます。");
+    assert.match(starterEntries["葉書|はがき"].notes, /often written はがき or ハガキ/);
+    assert.match(starterEntries["万事|ばんじ"].notes, /not the default beginner word/);
+    assert.match(starterEntries["上着|うわぎ"].notes, /着 visibly labeled as higher-level/);
+    assert.equal(starterEntries["小指|こゆび"].exampleSentence.japanese, "小指が痛いです。");
+    assert.match(starterEntries["小指|こゆび"].notes, /指 visibly labeled as higher-level/);
+    assert.equal(starterEntries["外科|げか"].exampleSentence.japanese, "父は外科へ行きます。");
+    assert.equal(starterEntries["生地|きじ"].exampleSentence.japanese, "この生地はやわらかいです。");
+    assert.match(starterEntries["生地|きじ"].notes, /生地 is ambiguous/);
+    assert.equal(starterEntries["土地|とち"].exampleSentence.japanese, "この土地は大きいです。");
+    assert.match(starterEntries["大使館|たいしかん"].notes, /generated pitch remains visibly labeled/);
+    assert.equal(starterEntries["木陰|こかげ"].exampleSentence.japanese, "木陰で少し休みます。");
+    assert.equal(starterEntries["手本|てほん"].exampleSentence.japanese, "手本を見て書きます。");
+    assert.match(starterEntries["十回|じっかい"].notes, /generated pitch visibly labeled/);
 });
 
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {

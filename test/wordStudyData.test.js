@@ -1698,6 +1698,26 @@ test("tracked starter word data protects second N4 platinum surface fixes", () =
     ]);
 });
 
+test("tracked starter word data protects third N4 platinum surface fixes", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assert.equal(starterEntries["住む|すむ"].exampleSentence.japanese, "家族と近くの町に住む予定です。");
+    assert.equal(starterEntries["住む|すむ"].exampleSentence.reading, "かぞくとちかくのまちにすむよていです。");
+    assert.equal(starterEntries["乗る|のる"].exampleSentence.japanese, "朝の電車に乗る人が多いです。");
+    assert.equal(starterEntries["乗る|のる"].exampleSentence.reading, "あさのでんしゃにのるひとがおおいです。");
+    assert.match(starterEntries["手|て"].notes, /word-card reading is て/);
+    assert.match(starterEntries["魚|さかな"].notes, /word-card reading is さかな/);
+    assert.match(starterEntries["屋|や"].notes, /shop\/seller suffix/);
+    assert.match(starterEntries["屋|や"].notes, /word-card reading is や/);
+    assertCoverageReadings(starterEntries, [
+        ["住む|すむ", "住", "すむ"],
+        ["乗る|のる", "乗", "のる"],
+        ["手|て", "手", "て"],
+        ["魚|さかな", "魚", "さかな"],
+        ["青い|あおい", "青", "あおい"],
+    ]);
+});
+
 test("tracked starter word data includes the first N5 enhancement batch without duplicate junk", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

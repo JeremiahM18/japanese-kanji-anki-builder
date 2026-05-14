@@ -1889,6 +1889,11 @@ test("tracked starter word data protects current-standard N5 platinum examples a
     assert.equal(starterEntries["木陰|こかげ"].exampleSentence.japanese, "木陰で少し休みます。");
     assert.equal(starterEntries["手本|てほん"].exampleSentence.japanese, "手本を見て書きます。");
     assert.match(starterEntries["十回|じっかい"].notes, /generated pitch visibly labeled/);
+    assert.match(starterEntries["行事|ぎょうじ"].notes, /事 visibly labeled as higher-level/);
+    assert.match(starterEntries["帽子|ぼうし"].notes, /Core clothing word/);
+    assert.match(starterEntries["五月|ごがつ"].notes, /Core month word for May/);
+    assert.match(starterEntries["飛行機|ひこうき"].notes, /generated pitch remains visibly labeled/);
+    assert.match(starterEntries["下手|へた"].notes, /上手 counterpart/);
 });
 
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
@@ -2029,6 +2034,9 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
         ["上り|のぼり", "上", "のぼり"],
         ["下り|くだり", "下", "くだり"],
         ["左折|させつ", "左", "さ"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["行う|おこなう", "<ruby>行<rt>おこな</rt></ruby>う"],
     ]);
     assertCoverageRoles(starterEntries, [
         ["新聞|しんぶん", "both"],

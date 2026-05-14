@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Revalidated three N5 word platinum batches under `word-platinum-v2-limitation-aware` (`高い`, `川`, `食べる`, `友だち`, `今`, `母`, `車`, `人`, `読む`, `間`, `五つ`, `見える`, `二`, `後で`, `山`, `東`, `話す`, `女`, `年`, `長い`, `白`, `西`, `百`, `入る`), preserving explicit generated-pitch labels where dictionary-backed pitch is still unverified and raising current-standard N5 word platinum to `48/287`.
 - Revalidated the next N5 word platinum batch under `word-platinum-v2-limitation-aware` (`書く`, `出る`, `国`, `日`, `左`, `雨`, `お金`, `四`), fixing the `出る` example to expose exact `出る|でる` dictionary-form evidence, adding golden-protected notes/support surfaces, and raising current-standard N5 word platinum to `24/287`.
 - Revalidated the first N5 word platinum batch under `word-platinum-v2-limitation-aware` (`万`, `分かる`, `三つ`, `月`, `下`, `上げる`, `小さい`, `右`), raising current-standard N5 word platinum to `16/287` and tightening the seven previously empty notes/support surfaces with golden-protected learner-facing notes.
 - Clarified that the current additional-kanji surface is a `0`-card source-claim diagnostic, not an extra learner backlog, and updated the additional-ready report, release docs, and platinum policy language to make governed suppression explicit.

@@ -1757,7 +1757,10 @@ test("tracked starter word data includes the second N5 enhancement batch without
         ["四日|よっか", "<ruby>四日<rt>よっか</rt></ruby>"],
     ]);
     assert.match(starterEntries["一日|いちにち"].notes, /distinguish from 一日\|ついたち/);
+    assert.match(starterEntries["一緒|いっしょ"].notes, /doing something together/);
+    assert.equal(starterEntries["一緒|いっしょ"].exampleSentence.japanese, "友だちと一緒に行きます。");
     assert.equal(starterEntries["大好き|だいすき"].exampleSentence.japanese, "日本語が大好きです。");
+    assert.equal(starterEntries["毎晩|まいばん"].exampleSentence.japanese, "毎晩、本を読みます。");
 });
 
 test("tracked starter word data includes the third N5 enhancement batch with higher-level labels", () => {
@@ -1811,8 +1814,10 @@ test("tracked starter word data includes the third N5 enhancement batch with hig
         ["八百屋|やおや", "<ruby>八百屋<rt>やおや</rt></ruby>"],
     ]);
     assert.match(starterEntries["昨日|きのう"].notes, /whole-word reading/);
+    assert.match(starterEntries["生徒|せいと"].notes, /higher-level kanji/);
     assert.match(starterEntries["二十歳|はたち"].notes, /must not be split/);
     assert.equal(starterEntries["飛行機|ひこうき"].exampleSentence.japanese, "飛行機で行きます。");
+    assert.equal(starterEntries["廊下|ろうか"].exampleSentence.japanese, "廊下を歩きます。");
 });
 
 test("tracked starter word data includes the final N5 source expansion keepers", () => {
@@ -2019,4 +2024,11 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
         ["七日|なのか", "日", "か"],
         ["十日|とおか", "十", "とお"],
     ]);
+    assert.match(starterEntries["小雨|こさめ"].notes, /support-only/);
+    assert.match(starterEntries["三百|さんびゃく"].notes, /number-sound change/);
+    assert.equal(starterEntries["上手|じょうず"].exampleSentence.japanese, "友だちは日本語が上手です。");
+    assert.equal(starterEntries["生える|はえる"].exampleSentence.japanese, "草が生えています。");
+    assert.equal(starterEntries["北東|ほくとう"].exampleSentence.japanese, "学校は北東にあります。");
+    assert.equal(starterEntries["小川|おがわ"].exampleSentence.japanese, "小川があります。");
+    assert.equal(starterEntries["上下|じょうげ"].exampleSentence.japanese, "上下に動きます。");
 });

@@ -5144,11 +5144,14 @@
       "書: しょ"
     ],
     "breakdownIncludes": [
-      "辞 （じ） ／ quit / resign / dictionary word",
-      "書 （しょ） ／ write"
+      "辞 （じ）",
+      "書 （しょ）"
     ],
     "exampleIncludes": [
       "新しい辞書を買いました。"
+    ],
+    "notesIncludes": [
+      "Core school/tool word for dictionary; 辞 is higher-level kanji support and the N5 focus remains 書 -> しょ."
     ]
   },
   {
@@ -5172,11 +5175,14 @@
       "出: で"
     ],
     "breakdownIncludes": [
-      "出 （で） ／ exit / go out",
-      "口 （ぐち） ／ mouth / opening"
+      "出 （で）",
+      "口 （ぐち）"
     ],
     "exampleIncludes": [
       "出口で友だちを待ちます。"
+    ],
+    "notesIncludes": [
+      "Core navigation word for exit; 口 is higher-level support and the N5 focus remains 出 -> で."
     ]
   },
   {
@@ -5200,14 +5206,14 @@
       "日: にち"
     ],
     "breakdownIncludes": [
-      "日 （にち） ／ day",
-      "曜 （よう） ／ weekday marker"
+      "日 （にち）",
+      "曜 （よう）"
     ],
     "exampleIncludes": [
       "日曜日は家で休みます。"
     ],
     "notesIncludes": [
-      "final 日 is read び"
+      "Core N5 weekday word; covers the contextual 日 -> にち reading in 日曜日 while the final 日 is read び in the same word."
     ]
   },
   {
@@ -5231,11 +5237,14 @@
       "左: ひだり"
     ],
     "breakdownIncludes": [
-      "左 （ひだり） ／ left",
-      "手 （て） ／ hand"
+      "左 （ひだり）",
+      "手 （て）"
     ],
     "exampleIncludes": [
       "左手でコップを持ちます。"
+    ],
+    "notesIncludes": [
+      "Core body/direction word for left hand; 手 is higher-level kanji support and the N5 focus remains 左 -> ひだり."
     ]
   },
   {
@@ -5261,11 +5270,14 @@
       "気: き"
     ],
     "breakdownIncludes": [
-      "元 （げん） ／ origin / source",
-      "気 （き） ／ energy / spirit"
+      "元 （げん）",
+      "気 （き）"
     ],
     "exampleIncludes": [
       "今日は元気です。"
+    ],
+    "notesIncludes": [
+      "Core beginner word for being well or energetic; 元 is higher-level support and the N5 focus remains 気 -> き."
     ]
   },
   {
@@ -5289,11 +5301,14 @@
       "北: きた"
     ],
     "breakdownIncludes": [
-      "北 （きた） ／ north",
-      "口 （ぐち） ／ mouth / opening"
+      "北 （きた）",
+      "口 （ぐち）"
     ],
     "exampleIncludes": [
       "駅の北口で会いましょう。"
+    ],
+    "notesIncludes": [
+      "Practical station/signage word for north exit; 口 is higher-level support and the N5 focus remains 北 -> きた, with generated pitch visibly labeled."
     ]
   },
   {
@@ -5317,12 +5332,15 @@
       "土: ど"
     ],
     "breakdownIncludes": [
-      "土 （ど） ／ soil / earth",
-      "曜 （よう） ／ weekday marker",
-      "日 （び） ／ day / sun"
+      "土 （ど）",
+      "曜 （よう）",
+      "日 （び）"
     ],
     "exampleIncludes": [
       "土曜日に友だちと会います。"
+    ],
+    "notesIncludes": [
+      "Core weekday word for Saturday; 曜 is higher-level support and the N5 focus remains 土 -> ど."
     ]
   },
   {
@@ -5378,14 +5396,14 @@
       "雨: さめ"
     ],
     "breakdownIncludes": [
-      "小 （こ） ／ small",
-      "雨 （さめ） ／ rain"
+      "小 （こ）",
+      "雨 （さめ）"
     ],
     "exampleIncludes": [
       "朝から小雨が降っています。"
     ],
     "notesIncludes": [
-      "Reading-coverage support word for the 雨 -> さめ pattern."
+      "Dictionary-backed weather support word for light rain; useful for 雨 -> さめ coverage but support-only, not a core substitute for 雨."
     ]
   },
   {
@@ -5409,14 +5427,14 @@
       "百: びゃく"
     ],
     "breakdownIncludes": [
-      "三 （さん） ／ three",
-      "百 （びゃく） ／ hundred"
+      "三 （さん）",
+      "百 （びゃく）"
     ],
     "exampleIncludes": [
       "この本は三百円です。"
     ],
     "notesIncludes": [
-      "Reading-coverage support word for the common 百 -> びゃく number pattern."
+      "Common number word for three hundred; kept for 百 -> びゃく number-sound change without unrelated dictionary senses."
     ]
   },
   {
@@ -5435,19 +5453,20 @@
       "JLPT core + reading coverage"
     ],
     "focusIncludes": [
-      "上",
-      "手"
+      "上、手"
     ],
     "coversReadingIncludes": [
-      "上: じょう",
-      "手: ず"
+      "上: じょう ／ 手: ず"
     ],
     "breakdownIncludes": [
-      "上 （じょう） ／ up / above",
-      "手 （ず） ／ hand"
+      "上 （じょう）",
+      "手 （ず）"
     ],
     "exampleIncludes": [
-      "姉は料理が上手です。"
+      "友だちは日本語が上手です。"
+    ],
+    "notesIncludes": [
+      "Core beginner adjective for being good at something; 手 is higher-level support and 上 -> じょう anchors the N5 placement."
     ]
   },
   {
@@ -5466,16 +5485,14 @@
       "Reading coverage support"
     ],
     "focusIncludes": [
-      "左",
-      "右"
+      "左、右"
     ],
     "coversReadingIncludes": [
-      "左: さ",
-      "右: ゆう"
+      "左: さ ／ 右: ゆう"
     ],
     "breakdownIncludes": [
-      "左 （さ） ／ left",
-      "右 （ゆう） ／ right"
+      "左 （さ）",
+      "右 （ゆう）"
     ],
     "exampleIncludes": [
       "左右を見てから道を渡ってください。"
@@ -5535,13 +5552,13 @@
       "生: はえる"
     ],
     "breakdownIncludes": [
-      "生 （は） ／ live / life / birth / raw"
+      "生 （は）"
     ],
     "exampleIncludes": [
-      "庭に草がたくさん生えています。"
+      "草が生えています。"
     ],
     "notesIncludes": [
-      "Reading-coverage support word for the 生 -> はえる pattern."
+      "Dictionary-backed support verb for growing or sprouting; useful for 生 -> はえる coverage but support-only for N5."
     ]
   },
   {
@@ -5566,7 +5583,7 @@
       "外: はずす"
     ],
     "breakdownIncludes": [
-      "外 （はず） ／ outside"
+      "外 （はず）"
     ],
     "exampleIncludes": [
       "メガネを外します。"
@@ -5597,14 +5614,14 @@
       "小: お"
     ],
     "breakdownIncludes": [
-      "小 （お） ／ small",
-      "川 （がわ） ／ river"
+      "小 （お）",
+      "川 （がわ）"
     ],
     "exampleIncludes": [
-      "公園の横に小川が流れています。"
+      "小川があります。"
     ],
     "notesIncludes": [
-      "Reading-coverage support word for the 小 -> お pattern."
+      "Dictionary-backed nature/place word for stream; useful for 小 -> お coverage but support-only for N5."
     ]
   },
   {
@@ -6054,14 +6071,14 @@
       "北: ほく"
     ],
     "breakdownIncludes": [
-      "北 （ほく） ／ north",
-      "東 （とう） ／ east"
+      "北 （ほく）",
+      "東 （とう）"
     ],
     "exampleIncludes": [
-      "北東の空が明るいです。"
+      "学校は北東にあります。"
     ],
     "notesIncludes": [
-      "Reading-coverage support word for the common 北 -> ほく pattern."
+      "Dictionary-backed direction word for northeast; useful for 北 -> ほく coverage and basic map/direction contexts."
     ]
   },
   {
@@ -6117,14 +6134,14 @@
       "下: げ"
     ],
     "breakdownIncludes": [
-      "上 （じょう） ／ up / above",
-      "下 （げ） ／ down / below"
+      "上 （じょう）",
+      "下 （げ）"
     ],
     "exampleIncludes": [
-      "このシャツは上下の色がちがいます。"
+      "上下に動きます。"
     ],
     "notesIncludes": [
-      "Reading-coverage support word for the common 下 -> げ pattern."
+      "Dictionary-backed direction/position word for up and down; useful for 下 -> げ coverage but support-only for N5."
     ]
   },
   {
@@ -8128,18 +8145,20 @@
       "JLPT core + reading coverage"
     ],
     "focusIncludes": [
-      "一",
-      "緒"
+      "一、緒"
     ],
     "coversReadingIncludes": [
-      "一: いっ",
-      "緒: しょ"
+      "一: いっ ／ 緒: しょ"
     ],
     "exampleIncludes": [
-      "友だちと一緒に勉強します。"
+      "友だちと一緒に行きます。"
     ],
     "notesIncludes": [
-      "Common N5 word"
+      "Core beginner word for doing something together; 緒 is higher-level kanji support and generated pitch remains visibly labeled."
+    ],
+    "breakdownIncludes": [
+      "一 （いっ）",
+      "緒 （しょ）"
     ]
   },
   {
@@ -8342,18 +8361,20 @@
       "JLPT core + reading coverage"
     ],
     "focusIncludes": [
-      "毎",
-      "晩"
+      "毎、晩"
     ],
     "coversReadingIncludes": [
-      "毎: まい",
-      "晩: ばん"
+      "毎: まい ／ 晩: ばん"
     ],
     "exampleIncludes": [
-      "毎晩本を読みます。"
+      "毎晩、本を読みます。"
     ],
     "notesIncludes": [
-      "Common N5 time word"
+      "Core beginner frequency word for every night; 晩 is higher-level kanji support and generated pitch remains visibly labeled."
+    ],
+    "breakdownIncludes": [
+      "毎 （まい）",
+      "晩 （ばん）"
     ]
   },
   {
@@ -8518,8 +8539,7 @@
       "JLPT core + reading coverage"
     ],
     "focusIncludes": [
-      "昨",
-      "日"
+      "昨、日"
     ],
     "coversReadingIncludes": [
       "昨日: きのう"
@@ -8528,7 +8548,10 @@
       "昨日、映画を見ました。"
     ],
     "notesIncludes": [
-      "Common N5 time word with a whole-word reading"
+      "Common N5 time word with a whole-word reading; 昨 is a higher-level kanji and the card must not be split into false per-kanji readings."
+    ],
+    "breakdownIncludes": [
+      "昨日 （きのう） ／ yesterday"
     ]
   },
   {
@@ -8546,18 +8569,20 @@
       "JLPT core + reading coverage"
     ],
     "focusIncludes": [
-      "靴",
-      "下"
+      "靴、下"
     ],
     "coversReadingIncludes": [
-      "靴: くつ",
-      "下: した"
+      "靴: くつ ／ 下: した"
     ],
     "exampleIncludes": [
       "靴下をはきます。"
     ],
     "notesIncludes": [
-      "Common N5 clothing word"
+      "Common N5 clothing word; 靴 is a higher-level kanji and must stay labeled on the N5 card."
+    ],
+    "breakdownIncludes": [
+      "靴 （くつ）",
+      "下 （した）"
     ]
   },
   {
@@ -8575,8 +8600,7 @@
       "JLPT core + reading coverage"
     ],
     "focusIncludes": [
-      "今",
-      "朝"
+      "今、朝"
     ],
     "coversReadingIncludes": [
       "今朝: けさ"
@@ -8585,7 +8609,10 @@
       "今朝、水を飲みました。"
     ],
     "notesIncludes": [
-      "Common N5 time word with a whole-word reading"
+      "Common N5 time word with a whole-word reading; 朝 is a higher-level kanji and the card must not be split into false per-kanji readings."
+    ],
+    "breakdownIncludes": [
+      "今朝 （けさ） ／ this morning"
     ]
   },
   {
@@ -8604,18 +8631,20 @@
       "JLPT core + reading coverage"
     ],
     "focusIncludes": [
-      "自",
-      "分"
+      "自、分"
     ],
     "coversReadingIncludes": [
-      "自: じ",
-      "分: ぶん"
+      "自: じ ／ 分: ぶん"
     ],
     "exampleIncludes": [
       "自分の名前を書きます。"
     ],
     "notesIncludes": [
-      "Common N5 pronoun"
+      "Common N5 pronoun; 自 is a higher-level kanji and must stay labeled on the N5 card."
+    ],
+    "breakdownIncludes": [
+      "自 （じ）",
+      "分 （ぶん）"
     ]
   },
   {
@@ -8634,18 +8663,20 @@
       "JLPT core + reading coverage"
     ],
     "focusIncludes": [
-      "生",
-      "徒"
+      "生、徒"
     ],
     "coversReadingIncludes": [
-      "生: せい",
-      "徒: と"
+      "生: せい ／ 徒: と"
     ],
     "exampleIncludes": [
       "生徒が学校にいます。"
     ],
     "notesIncludes": [
-      "Common N5 school word"
+      "Common N5 school word; 徒 is a higher-level kanji and must stay labeled on the N5 card."
+    ],
+    "breakdownIncludes": [
+      "生 （せい）",
+      "徒 （と）"
     ]
   },
   {
@@ -8788,18 +8819,20 @@
       "JLPT core + reading coverage"
     ],
     "focusIncludes": [
-      "廊",
-      "下"
+      "廊、下"
     ],
     "coversReadingIncludes": [
-      "廊: ろう",
-      "下: か"
+      "廊: ろう ／ 下: か"
     ],
     "exampleIncludes": [
       "廊下を歩きます。"
     ],
     "notesIncludes": [
-      "Common N5 building word"
+      "Common N5 building word; 廊 is a higher-level kanji and must stay labeled on the N5 card."
+    ],
+    "breakdownIncludes": [
+      "廊 （ろう）",
+      "下 （か）"
     ]
   },
   {

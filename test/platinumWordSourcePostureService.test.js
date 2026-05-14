@@ -109,6 +109,7 @@ test("formatted word source posture report is explicit about source independence
 
     assert.match(formatted, /Platinum Word Source Posture/);
     assert.match(formatted, /Independent source families proven/);
+    assert.match(formatted, /not the rereview selection pool or substantive platinum proof/);
     assert.match(formatted, new RegExp(WORD_SOURCE_INDEPENDENCE_LIMITATION_MARKER));
     assert.match(formatted, new RegExp(WORD_SOURCE_ORIGIN_LIMITATION_MARKER));
     assert.match(formatted, /This report is read-only/);

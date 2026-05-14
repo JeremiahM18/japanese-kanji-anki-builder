@@ -6,7 +6,15 @@ const {
     exampleReadingContainsWordReading,
     exampleSentenceContainsWrittenWord,
     formatPlatinumWordBatchReport,
+    WORD_BATCH_QUEUE_MODES,
 } = require("../src/services/platinumWordBatchReportService");
+const {
+    CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
+    REQUIRED_WORD_INTERNAL_CHECK_TYPES,
+    REQUIRED_WORD_QUALITY_GATES,
+    REQUIRED_WORD_REVIEW_EVIDENCE_TYPES,
+    REQUIRED_WORD_SOURCE_EVIDENCE_TYPES,
+} = require("../src/services/platinumReviewService");
 
 const kanjiumSource = "kanjium-cc-by-sa-4.0";
 const generatedSource = "voicevox-nemo-accent-query";
@@ -71,6 +79,24 @@ const rows = [
     },
 ];
 
+function buildStructuralCurrentWordEntry(overrides = {}) {
+    return {
+        word: "今日",
+        status: "platinum",
+        readingIncludes: ["きょう"],
+        reviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
+        revalidatedAt: "2026-05-14",
+        revalidationSummary: "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+        notesIncludes: ["Common word."],
+        selectionRationale: "Fixture current-standard structural entry.",
+        qualityGates: Object.fromEntries(REQUIRED_WORD_QUALITY_GATES.map((gate) => [gate, true])),
+        sourceEvidence: REQUIRED_WORD_SOURCE_EVIDENCE_TYPES.map((type) => ({ type, source: "fixture source", detail: "fixture detail" })),
+        internalChecks: REQUIRED_WORD_INTERNAL_CHECK_TYPES.map((type) => ({ type, source: "fixture source", detail: "fixture detail" })),
+        reviewEvidence: REQUIRED_WORD_REVIEW_EVIDENCE_TYPES.map((type) => ({ type, source: "fixture source", detail: "fixture detail" })),
+        ...overrides,
+    };
+}
+
 test("word batch report selects rows missing current-standard platinum and surfaces review risks", () => {
     const report = buildPlatinumWordBatchReport({
         rows,
@@ -96,7 +122,41 @@ test("word batch report selects rows missing current-standard platinum and surfa
     assert.ok(report.cards[1].riskFlags.some((flag) => /single-kanji word/.test(flag)));
     assert.match(report.cards[1].suggestedReviewStep, /source-check pitch/);
     assert.match(formatPlatinumWordBatchReport(report), /This report is read-only/);
-    assert.match(formatPlatinumWordBatchReport(report), /Next missing current-standard queue/);
+    assert.match(formatPlatinumWordBatchReport(report), /Next substantive rereview queue/);
+    assert.match(formatPlatinumWordBatchReport(report), /structural current-standard entries remain in scope/);
+});
+
+test("word batch report keeps structural-only current-standard entries in the default rereview queue", () => {
+    const report = buildPlatinumWordBatchReport({
+        rows,
+        entries: [buildStructuralCurrentWordEntry()],
+        wordPitchAccentData,
+        level: 5,
+        limit: 1,
+    });
+
+    assert.equal(report.queue, WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW);
+    assert.equal(report.summary.currentStandardPlatinum, 1);
+    assert.equal(report.summary.substantiveRereviewProven, 0);
+    assert.equal(report.summary.remainingSubstantiveRereview, 2);
+    assert.equal(report.cards[0].identity, "今日|きょう");
+    assert.equal(report.cards[0].reviewStatus, "current_standard_structural_only");
+    assert.match(report.cards[0].suggestedReviewStep, /structural v3 pass is not proof/);
+});
+
+test("word batch report can still expose the missing current-standard structure queue explicitly", () => {
+    const report = buildPlatinumWordBatchReport({
+        rows,
+        entries: [buildStructuralCurrentWordEntry()],
+        wordPitchAccentData,
+        level: 5,
+        queue: WORD_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD,
+        limit: 1,
+    });
+
+    assert.equal(report.cards[0].identity, "八|はち");
+    assert.equal(report.summary.remainingCurrentStandard, 1);
+    assert.match(formatPlatinumWordBatchReport(report), /Next missing current-standard structure queue/);
 });
 
 test("scoped word batch report keeps formatted output focused on requested cards", () => {

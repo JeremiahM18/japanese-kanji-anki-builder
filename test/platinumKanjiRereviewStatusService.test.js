@@ -230,8 +230,9 @@ test("formatted rereview report is clear and read-only", () => {
     const formatted = formatPlatinumKanjiRereviewStatusReport(summary);
 
     assert.match(formatted, /Platinum Kanji Rereview Status/);
-    assert.match(formatted, /Current v3 structural pass/);
-    assert.match(formatted, /Needs substantive rereview/);
+    assert.match(formatted, /Structural v3 gate pass \(not proof\)/);
+    assert.match(formatted, /Generated deck rows are the rereview-program denominator/);
+    assert.match(formatted, /Structural-only entries needing rereview/);
     assert.match(formatted, new RegExp(MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER));
     assert.match(formatted, /This report is read-only/);
 });

@@ -135,10 +135,10 @@ function buildBlockedReasons({
     const reasons = [];
 
     if (reviewReport.missingPlatinumRows?.includes(kanji)) {
-        reasons.push("missing current-standard active platinum entry");
+        reasons.push("missing current-standard structural entry");
     }
     if (reviewReport.duplicateActiveEntries?.includes(kanji)) {
-        reasons.push("duplicate active current-standard platinum entries");
+        reasons.push("duplicate active current-standard structural entries");
     }
     for (const result of matchingResults) {
         if (!result.passed && result.failures?.length > 0) {
@@ -326,7 +326,7 @@ function formatPlatinumKanjiRereviewStatusReport(summary = {}) {
         `Generated active kanji rows: ${totals.generatedRows || 0}`,
         `Review entries: ${totals.reviewEntries || 0}`,
         "",
-        "| Scope | Generated | Current v3 structural pass | Substantive current-standard review proven | Needs substantive rereview | Blocked/failing |",
+        "| Scope | Generated deck rows | Structural v3 gate pass (not proof) | Substantive rereview proven (real proof) | Structural-only entries needing rereview | Blocked/failing deck rows |",
         "| --- | ---: | ---: | ---: | ---: | ---: |",
     ];
 
@@ -354,6 +354,7 @@ function formatPlatinumKanjiRereviewStatusReport(summary = {}) {
     lines.push(
         "",
         "Proof policy:",
+        "- Generated deck rows are the rereview-program denominator. Structural-only subsets do not shrink the queue.",
         `- ${summary.missingProofMarker || MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER}: structural v3 lane validity is not counted as substantive rereview proof by itself.`,
         `- To count as proven, an entry must carry explicit ${summary.proofMarker || SUBSTANTIVE_REREVIEW_PROOF_MARKER} provenance and ${summary.nonMechanicalMarker || NON_MECHANICAL_PROOF_MARKER} language, or equivalent structured rereviewProvenance metadata.`,
         "- This report is read-only. It does not promote, defer, reject, or edit cards."

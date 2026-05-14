@@ -163,7 +163,7 @@ function buildPlatinumWordSourcePostureReport({
         },
         policy: {
             note: "A governed single source can satisfy structural word-field verification, but it does not prove independent source-family corroboration. Word placement/source-claim origin independence is surfaced as not evaluated until a word source-origin manifest exists.",
-            structuralGate: "missing_governed_source must be zero for active current-standard word platinum entries",
+            structuralGate: "missing_governed_source must be zero for structurally current-standard word entries",
             independenceClaimGate: "independent_source_families_proven is required before claiming independent word-source corroboration",
         },
         counts,
@@ -219,9 +219,10 @@ function formatPlatinumWordSourcePostureReport(summary = {}) {
         "",
         `Current review standard: ${summary.currentReviewStandard || CURRENT_WORD_PLATINUM_REVIEW_STANDARD}`,
         `Result: ${summary.passed ? "passing" : "failing"}`,
-        `Active current-standard word platinum entries: ${totals.activeCurrentStandardEntries || 0}`,
+        `Structural word entries inspected: ${totals.activeCurrentStandardEntries || 0}`,
+        "Source-family counts are posture diagnostics only; they are not the rereview selection pool or substantive platinum proof.",
         "",
-        "| Scope | Active current-standard | Independent source families proven | Single source family | Missing governed source |",
+        "| Scope | Structural entries inspected | Independent source families proven | Single source family | Missing governed source |",
         "| --- | ---: | ---: | ---: | ---: |",
     ];
 
@@ -247,6 +248,7 @@ function formatPlatinumWordSourcePostureReport(summary = {}) {
     lines.push(
         "",
         "Policy:",
+        "- This report is scoped to structurally current-standard word entries only. It does not count generated rows that still lack structural review.",
         `- ${summary.markers?.sourceIndependenceNotProven || WORD_SOURCE_INDEPENDENCE_LIMITATION_MARKER}: a structurally governed single-source entry must not be described as independently corroborated.`,
         `- ${summary.markers?.sourceOriginIndependenceNotEvaluated || WORD_SOURCE_ORIGIN_LIMITATION_MARKER}: word source-claim origin independence is not evaluated until a word source-origin manifest exists.`,
         "- This report is read-only. It does not promote, defer, reject, or edit cards."

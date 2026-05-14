@@ -71,13 +71,14 @@ test("parseKanjiTsvForPlatinum preserves release-critical kanji card fields", ()
 });
 
 test("platinumKanjiBatchReport parseArgs accepts scoped read-only batch options", () => {
-    const options = parseBatchReportArgs(["--level=N5", "--kanji=日,本", "--limit=2", "--json", "--oops"]);
+    const options = parseBatchReportArgs(["--level=N5", "--kanji=日,本", "--limit=2", "--queue=missing-current-standard", "--json", "--oops"]);
 
     assert.deepEqual(options, {
         json: true,
         kanji: ["日", "本"],
         level: 5,
         limit: 2,
+        queue: "missing-current-standard",
         unknownArgs: ["--oops"],
     });
 });

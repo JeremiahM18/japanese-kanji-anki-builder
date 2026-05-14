@@ -172,7 +172,7 @@ function buildBlockedReasons({
         reasons.push("missing active platinum entry for generated word");
     }
     if (reviewReport.missingCurrentStandardRows?.includes(label) || reviewReport.missingCurrentStandardRows?.includes(identity)) {
-        reasons.push("missing current-standard active platinum entry");
+        reasons.push("missing current-standard structural entry");
     }
     if (reviewReport.duplicateActiveEntries?.includes(label) || reviewReport.duplicateActiveEntries?.includes(identity)) {
         reasons.push("duplicate active platinum entries");
@@ -385,7 +385,7 @@ function formatPlatinumWordRereviewStatusReport(summary = {}) {
         `Generated active word rows: ${totals.generatedRows || 0}`,
         `Review entries: ${totals.reviewEntries || 0}`,
         "",
-        "| Scope | Generated | Current v3 structural pass | Substantive current-standard review proven | Needs substantive rereview | Blocked/failing |",
+        "| Scope | Generated deck rows | Structural v3 gate pass (not proof) | Substantive rereview proven (real proof) | Structural-only entries needing rereview | Blocked/failing deck rows |",
         "| --- | ---: | ---: | ---: | ---: | ---: |",
     ];
 
@@ -413,6 +413,7 @@ function formatPlatinumWordRereviewStatusReport(summary = {}) {
     lines.push(
         "",
         "Proof policy:",
+        "- Generated deck rows are the rereview-program denominator. Structural-only subsets do not shrink the queue.",
         `- ${summary.missingProofMarker || MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER}: structural v3 lane validity is not counted as substantive rereview proof by itself.`,
         `- To count as proven, an entry must carry explicit ${summary.proofMarker || SUBSTANTIVE_REREVIEW_PROOF_MARKER} provenance and ${summary.nonMechanicalMarker || NON_MECHANICAL_PROOF_MARKER} language, or equivalent structured rereviewProvenance metadata.`,
         "- This report is read-only. It does not promote, defer, reject, or edit cards."

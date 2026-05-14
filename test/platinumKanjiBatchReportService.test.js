@@ -2,6 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const {
+    KANJI_BATCH_QUEUE_MODES,
     buildPlatinumKanjiBatchReport,
     buildRiskFlags,
     describeCuratedReadingConflict,
@@ -89,7 +90,7 @@ test("normalizeReadingEvidence sees dictionary punctuation and katakana readings
     assert.equal(normalizeReadingEvidence("On: ジ、 Kun: か.く"), "onじkunかく");
 });
 
-test("selectBatchRows defaults to next missing rows in generated deck order", () => {
+test("selectBatchRows defaults to substantive rereview queue in generated deck order", () => {
     const rows = [
         buildRow({ kanji: "一", displayWord: "一" }),
         buildRow({ kanji: "二", displayWord: "二" }),
@@ -97,7 +98,23 @@ test("selectBatchRows defaults to next missing rows in generated deck order", ()
     ];
     const entries = [buildCurrentStandardEntry("一")];
 
-    assert.deepEqual(selectBatchRows({ rows, entries, limit: 2 }).map((row) => row.kanji), ["二", "三"]);
+    assert.deepEqual(selectBatchRows({ rows, entries, limit: 2 }).map((row) => row.kanji), ["一", "二"]);
+});
+
+test("selectBatchRows can still expose the missing current-standard structure queue explicitly", () => {
+    const rows = [
+        buildRow({ kanji: "一", displayWord: "一" }),
+        buildRow({ kanji: "二", displayWord: "二" }),
+        buildRow({ kanji: "三", displayWord: "三" }),
+    ];
+    const entries = [buildCurrentStandardEntry("一")];
+
+    assert.deepEqual(selectBatchRows({
+        rows,
+        entries,
+        limit: 2,
+        queue: KANJI_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD,
+    }).map((row) => row.kanji), ["二", "三"]);
 });
 
 test("buildPlatinumKanjiBatchReport summarizes surfaces checks and risks without writing entries", () => {
@@ -125,10 +142,13 @@ test("buildPlatinumKanjiBatchReport summarizes surfaces checks and risks without
     assert.equal(report.summary.generatedRows, 2);
     assert.equal(report.summary.activePlatinum, 1);
     assert.equal(report.summary.remainingPlatinum, 1);
-    assert.deepEqual(report.cards.map((card) => card.kanji), ["月"]);
-    assert.equal(report.cards[0].hardChecksPassed, true);
-    assert.match(report.cards[0].riskFlags.join("\n"), /notes do not visibly include the target kanji/);
-    assert.match(report.cards[0].riskFlags.join("\n"), /MeaningJP has several glosses/);
+    assert.equal(report.summary.substantiveRereviewProven, 0);
+    assert.equal(report.summary.remainingSubstantiveRereview, 2);
+    assert.deepEqual(report.cards.map((card) => card.kanji), ["日", "月"]);
+    assert.equal(report.cards[1].hardChecksPassed, true);
+    assert.match(report.cards[0].riskFlags.join("\n"), /square-zero substantive rereview proof is still required/);
+    assert.match(report.cards[1].riskFlags.join("\n"), /notes do not visibly include the target kanji/);
+    assert.match(report.cards[1].riskFlags.join("\n"), /MeaningJP has several glosses/);
 });
 
 test("buildRiskFlags calls out active entries and generated support risks", () => {

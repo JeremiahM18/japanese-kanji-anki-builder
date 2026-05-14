@@ -5,8 +5,10 @@ const { loadConfig } = require("../src/config");
 const { loadWordPitchAccentData } = require("../src/datasets/wordPitchAccentData");
 const { buildWordRowsForLevel } = require("./reviewPlatinumWordLevel");
 const {
+    WORD_BATCH_QUEUE_MODES,
     buildPlatinumWordBatchReport,
     formatPlatinumWordBatchReport,
+    normalizeQueueMode,
 } = require("../src/services/platinumWordBatchReportService");
 
 function parseLevel(value) {
@@ -36,6 +38,7 @@ function parseArgs(argv) {
         json: false,
         level: null,
         limit: 8,
+        queue: WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
         unknownArgs: [],
         words: [],
     };
@@ -47,6 +50,8 @@ function parseArgs(argv) {
             options.level = parseLevel(parseStringOption(arg, "level"));
         } else if (arg.startsWith("--limit=")) {
             options.limit = parseNumericOption(arg, "limit");
+        } else if (arg.startsWith("--queue=")) {
+            options.queue = normalizeQueueMode(parseStringOption(arg, "queue"));
         } else if (arg.startsWith("--words=")) {
             options.words = parseWordIdentities(arg, "words");
         } else {
@@ -81,6 +86,7 @@ async function main() {
         level: options.level,
         words: options.words,
         limit: options.limit,
+        queue: options.queue,
     });
 
     if (options.json) {

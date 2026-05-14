@@ -26,12 +26,13 @@ test("parseArgs can opt into legacy word platinum inspection", () => {
 });
 
 test("platinumWordBatchReport parseArgs accepts scoped read-only batch options", () => {
-    const options = parseBatchReportArgs(["--level=N5", "--words=今日:きょう,八日|ようか", "--limit=2", "--json", "--oops"]);
+    const options = parseBatchReportArgs(["--level=N5", "--words=今日:きょう,八日|ようか", "--limit=2", "--queue=missing-current-standard", "--json", "--oops"]);
 
     assert.deepEqual(options, {
         json: true,
         level: 5,
         limit: 2,
+        queue: "missing-current-standard",
         unknownArgs: ["--oops"],
         words: [
             { word: "今日", reading: "きょう" },
@@ -44,6 +45,7 @@ test("platinumWordBatchReport defaults word review batches to eight cards", () =
     const options = parseBatchReportArgs(["--level=N5"]);
 
     assert.equal(options.limit, 8);
+    assert.equal(options.queue, "substantive-rereview");
 });
 
 test("platinum word rereview status parseArgs accepts scoped read-only status options", () => {

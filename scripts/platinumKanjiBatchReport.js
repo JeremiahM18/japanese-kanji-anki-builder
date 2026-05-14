@@ -5,8 +5,10 @@ const { loadConfig } = require("../src/config");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const { buildKanjiRowsForLevel } = require("./reviewPlatinumKanjiLevel");
 const {
+    KANJI_BATCH_QUEUE_MODES,
     buildPlatinumKanjiBatchReport,
     formatPlatinumKanjiBatchReport,
+    normalizeQueueMode,
 } = require("../src/services/platinumKanjiBatchReportService");
 
 function parseLevel(value) {
@@ -21,6 +23,7 @@ function parseArgs(argv) {
         kanji: [],
         level: null,
         limit: 12,
+        queue: KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
         unknownArgs: [],
     };
 
@@ -33,6 +36,8 @@ function parseArgs(argv) {
             options.level = parseLevel(parseStringOption(arg, "level"));
         } else if (arg.startsWith("--limit=")) {
             options.limit = parseNumericOption(arg, "limit");
+        } else if (arg.startsWith("--queue=")) {
+            options.queue = normalizeQueueMode(parseStringOption(arg, "queue"));
         } else {
             collectUnknownArg(options, arg);
         }
@@ -64,6 +69,7 @@ async function main() {
         level: options.level,
         kanji: options.kanji,
         limit: options.limit,
+        queue: options.queue,
         curatedStudyData,
     });
 

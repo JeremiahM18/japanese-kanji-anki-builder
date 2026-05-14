@@ -108,7 +108,7 @@ function isAllowedMissingWordPlatinumCard(card = {}) {
     const reasons = Array.isArray(card.reasons) ? card.reasons : [];
     return card.blockedOrFailing === true
         && reasons.length > 0
-        && reasons.every((reason) => /missing .*platinum entry/i.test(reason));
+        && reasons.every((reason) => /missing .*platinum entry|missing current-standard structural entry/i.test(reason));
 }
 
 function evaluatePlatinumGovernanceGate({
@@ -140,7 +140,7 @@ function evaluatePlatinumGovernanceGate({
         if (blockedCount > 0 && (!levelAllowedIncomplete || !onlyKnownMissing)) {
             issues.push(`N${report.level} word platinum has unexpected blocked/failing generated rows: ${blockedCount}`);
         } else if (blockedCount > 0) {
-            warnings.push(`${GOVERNANCE_MARKERS.ALLOWED_INCOMPLETE_WORD_PLATINUM_LEVEL}: N${report.level} word platinum is incomplete with ${blockedCount} generated rows missing active current-standard platinum entries`);
+            warnings.push(`${GOVERNANCE_MARKERS.ALLOWED_INCOMPLETE_WORD_PLATINUM_LEVEL}: N${report.level} word platinum is incomplete with ${blockedCount} generated rows missing active current-standard structural entries`);
         }
         if ((report.counts?.needs_substantive_rereview || 0) > 0) {
             warnings.push(`N${report.level} word ${report.counts.needs_substantive_rereview} structurally passing entries still lack substantive rereview proof`);
@@ -152,7 +152,7 @@ function evaluatePlatinumGovernanceGate({
         issues.push(`Word platinum source posture has active entries missing governed source evidence: ${sourceTotals.missing_governed_source}`);
     }
     if ((sourceTotals.single_source_family || 0) > 0) {
-        warnings.push(`word_source_independence_not_proven: ${sourceTotals.single_source_family} active current-standard word platinum entries use one source family`);
+        warnings.push(`word_source_independence_not_proven: ${sourceTotals.single_source_family} structurally current-standard word entries use one source family`);
     }
 
     for (const posture of Array.isArray(manifestPostures) ? manifestPostures : []) {
@@ -199,7 +199,7 @@ function formatPlatinumGovernanceGateReport(report = {}) {
     if (manifestPostures.length > 0) {
         lines.push(
             "",
-            "| Manifest | Active current-standard | Distinct summaries | Card-specific summaries | Entries with limitations | Limitation count | Example quality automation |",
+            "| Manifest | Structural current-standard entries | Distinct summaries | Card-specific summaries | Entries with limitations | Limitation count | Example quality automation |",
             "| --- | ---: | ---: | ---: | ---: | ---: | --- |"
         );
         for (const posture of manifestPostures) {
@@ -219,8 +219,9 @@ function formatPlatinumGovernanceGateReport(report = {}) {
         "",
         "Scope note:",
         "- This gate exercises local real generated rows when local ignored data is present.",
+        "- Structural counts and source-posture counts are diagnostics only; only explicit non-mechanical rereview provenance counts as substantive proof.",
         "- It does not promote, defer, reject, or edit cards.",
-        "- N4 word platinum incompleteness is allowed only when every blocked row is missing active current-standard platinum coverage; dirty reviewed entries still fail the gate."
+        "- N4 word platinum incompleteness is allowed only when every blocked row is missing active current-standard structural coverage; dirty reviewed entries still fail the gate."
     );
 
     return `${lines.join("\n")}\n`;

@@ -15,8 +15,68 @@ const {
 } = require("./wordPitchAccentVerificationService");
 const { katakanaToHiragana } = require("../utils/japanese");
 
+const WORD_BATCH_QUEUE_MODES = {
+    MISSING_CURRENT_STANDARD: "missing-current-standard",
+    SUBSTANTIVE_REREVIEW: "substantive-rereview",
+};
+const SUBSTANTIVE_REREVIEW_PROOF_MARKER = "substantive post-v3 human rereview";
+const NON_MECHANICAL_PROOF_MARKER = "not mechanically migrated";
+
 function normalizeText(value) {
     return String(value ?? "").trim();
+}
+
+function normalizeProofText(value) {
+    return normalizeText(value).toLowerCase().replace(/[-_]+/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function normalizeEvidenceEntries(entries = []) {
+    return Array.isArray(entries) ? entries : [];
+}
+
+function buildRereviewProvenanceText(entry = {}) {
+    const evidenceText = [
+        entry.revalidationSummary,
+        ...normalizeEvidenceEntries(entry.reviewEvidence).map((evidence) => `${evidence.type || ""} ${evidence.source || ""} ${evidence.detail || ""}`),
+    ].join(" ");
+    const provenance = entry.rereviewProvenance && typeof entry.rereviewProvenance === "object"
+        ? entry.rereviewProvenance
+        : {};
+    const provenanceText = Object.entries(provenance)
+        .map(([key, value]) => `${key} ${value}`)
+        .join(" ");
+
+    return normalizeProofText(`${evidenceText} ${provenanceText}`);
+}
+
+function hasStructuredRereviewProvenance(entry = {}) {
+    const provenance = entry.rereviewProvenance;
+    if (!provenance || typeof provenance !== "object" || Array.isArray(provenance)) {
+        return false;
+    }
+
+    return normalizeProofText(provenance.type) === "substantive current standard rereview"
+        && normalizeText(provenance.reviewStandard) === CURRENT_WORD_PLATINUM_REVIEW_STANDARD
+        && provenance.reviewedAfterStandard === true
+        && provenance.mechanicalMigration === false
+        && Boolean(normalizeText(provenance.reviewer || entry.reviewer));
+}
+
+function hasTextualRereviewProvenance(entry = {}) {
+    const proofText = buildRereviewProvenanceText(entry);
+    const hasSubstantiveMarker = proofText.includes(normalizeProofText(SUBSTANTIVE_REREVIEW_PROOF_MARKER))
+        || proofText.includes("substantive current standard rereview");
+    const hasHumanMarker = /\b(human|manual)\b/.test(proofText);
+    const hasNonMechanicalMarker = proofText.includes(normalizeProofText(NON_MECHANICAL_PROOF_MARKER))
+        || proofText.includes("not a mechanical migration")
+        || proofText.includes("not migration only")
+        || proofText.includes("non mechanical");
+
+    return hasSubstantiveMarker && hasHumanMarker && hasNonMechanicalMarker;
+}
+
+function entryHasSubstantiveCurrentStandardRereviewProof(entry = {}) {
+    return hasStructuredRereviewProvenance(entry) || hasTextualRereviewProvenance(entry);
 }
 
 function stripMarkup(value) {
@@ -171,6 +231,7 @@ function buildEntryReviewStateByIdentity(entries = []) {
                     statuses: [],
                     hasActivePlatinum: false,
                     hasCurrentStandardPlatinum: false,
+                    hasSubstantiveCurrentStandardRereview: false,
                     hasLegacyOrUnversionedPlatinum: false,
                 });
             }
@@ -180,6 +241,9 @@ function buildEntryReviewStateByIdentity(entries = []) {
                 state.hasActivePlatinum = true;
                 if (entryUsesCurrentWordPlatinumStandard(entry)) {
                     state.hasCurrentStandardPlatinum = true;
+                    if (entryHasSubstantiveCurrentStandardRereviewProof(entry)) {
+                        state.hasSubstantiveCurrentStandardRereview = true;
+                    }
                 } else {
                     state.hasLegacyOrUnversionedPlatinum = true;
                 }
@@ -193,8 +257,11 @@ function buildEntryReviewStateByIdentity(entries = []) {
 function classifyReviewState(state = {}) {
     const statuses = Array.isArray(state.statuses) ? state.statuses : [];
 
+    if (state.hasSubstantiveCurrentStandardRereview) {
+        return "substantive_rereview_proven";
+    }
     if (state.hasCurrentStandardPlatinum) {
-        return "current_standard_platinum";
+        return "current_standard_structural_only";
     }
     if (state.hasActivePlatinum) {
         return "legacy_unversioned_platinum";
@@ -362,10 +429,12 @@ function buildRiskFlags(row = {}, {
     const outsideLevelLabels = [...normalizeText(row.kanjiBreakdown).matchAll(/JLPT N[1-4] kanji/g)]
         .map((match) => match[0]);
 
-    if (reviewStatus === "active_platinum") {
+    if (reviewStatus === "substantive_rereview_proven") {
+        flags.push("already has substantive current-standard rereview proof; skip unless intentionally replacing prior evidence");
+    } else if (reviewStatus === "current_standard_structural_only") {
+        flags.push("has current-standard structure only; square-zero substantive rereview proof is still required");
+    } else if (reviewStatus === "active_platinum") {
         flags.push("already has active platinum; re-review only if intentionally replacing prior evidence");
-    } else if (reviewStatus === "current_standard_platinum") {
-        flags.push("already has current-standard platinum; re-review only if intentionally replacing prior evidence");
     } else if (reviewStatus === "legacy_unversioned_platinum") {
         flags.push("active platinum is legacy/unversioned; current-standard revalidation required");
     } else if (reviewStatus === "needs_review") {
@@ -408,8 +477,11 @@ function buildSuggestedReviewStep({ hardChecksPassed, reviewStatus, riskFlags = 
     if (!hardChecksPassed) {
         return "fix generated surface before platinum";
     }
-    if (reviewStatus === "current_standard_platinum") {
-        return "already current-standard reviewed";
+    if (reviewStatus === "substantive_rereview_proven") {
+        return "already substantively rereviewed";
+    }
+    if (reviewStatus === "current_standard_structural_only") {
+        return "substantive rereview required; structural v3 pass is not proof";
     }
     if (reviewStatus === "legacy_unversioned_platinum") {
         return "revalidate existing platinum under current standard";
@@ -432,7 +504,15 @@ function buildSuggestedReviewStep({ hardChecksPassed, reviewStatus, riskFlags = 
     return "likely platinum after dictionary/source check";
 }
 
-function selectBatchRows({ rows = [], entries = [], words = [], limit = 12 } = {}) {
+function normalizeQueueMode(queue = WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW) {
+    const normalized = normalizeText(queue);
+    return Object.values(WORD_BATCH_QUEUE_MODES).includes(normalized)
+        ? normalized
+        : WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW;
+}
+
+function selectBatchRows({ rows = [], entries = [], words = [], limit = 12, queue = WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW } = {}) {
+    const queueMode = normalizeQueueMode(queue);
     const stateByIdentity = buildEntryReviewStateByIdentity(entries);
     const generatedRows = Array.isArray(rows) ? rows : [];
 
@@ -446,7 +526,15 @@ function selectBatchRows({ rows = [], entries = [], words = [], limit = 12 } = {
     }
 
     return generatedRows
-        .filter((row) => classifyReviewState(stateByIdentity.get(buildWordIdentity(row)) || {}) !== "current_standard_platinum")
+        .filter((row) => {
+            const state = stateByIdentity.get(buildWordIdentity(row)) || {};
+            const reviewState = classifyReviewState(state);
+            if (queueMode === WORD_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD) {
+                return reviewState !== "current_standard_structural_only"
+                    && reviewState !== "substantive_rereview_proven";
+            }
+            return !state.hasSubstantiveCurrentStandardRereview;
+        })
         .slice(0, Math.max(1, Number.isFinite(limit) ? Math.floor(limit) : 12));
 }
 
@@ -457,15 +545,22 @@ function buildPlatinumWordBatchReport({
     level,
     words = [],
     limit = 12,
+    queue = WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
 } = {}) {
     const generatedRows = Array.isArray(rows) ? rows : [];
     const reviewEntries = Array.isArray(entries) ? entries : [];
     const stateByIdentity = buildEntryReviewStateByIdentity(reviewEntries);
-    const selectedRows = selectBatchRows({ rows: generatedRows, entries: reviewEntries, words, limit });
+    const queueMode = normalizeQueueMode(queue);
+    const selectedRows = selectBatchRows({ rows: generatedRows, entries: reviewEntries, words, limit, queue: queueMode });
     const activeCount = reviewEntries.filter((entry) => ACTIVE_PLATINUM_STATUSES.includes(normalizeText(entry.status))).length;
     const currentStandardCount = reviewEntries.filter((entry) => (
         ACTIVE_PLATINUM_STATUSES.includes(normalizeText(entry.status))
         && entryUsesCurrentWordPlatinumStandard(entry)
+    )).length;
+    const substantiveRereviewProvenCount = reviewEntries.filter((entry) => (
+        ACTIVE_PLATINUM_STATUSES.includes(normalizeText(entry.status))
+        && entryUsesCurrentWordPlatinumStandard(entry)
+        && entryHasSubstantiveCurrentStandardRereviewProof(entry)
     )).length;
     const legacyOrUnversionedCount = activeCount - currentStandardCount;
     const missingRows = generatedRows.filter((row) => {
@@ -474,7 +569,13 @@ function buildPlatinumWordBatchReport({
     });
     const missingCurrentStandardRows = generatedRows.filter((row) => {
         const state = stateByIdentity.get(buildWordIdentity(row)) || {};
-        return classifyReviewState(state) !== "current_standard_platinum";
+        const reviewState = classifyReviewState(state);
+        return reviewState !== "current_standard_structural_only"
+            && reviewState !== "substantive_rereview_proven";
+    });
+    const needsSubstantiveRereviewRows = generatedRows.filter((row) => {
+        const state = stateByIdentity.get(buildWordIdentity(row)) || {};
+        return !state.hasSubstantiveCurrentStandardRereview;
     });
     const requestedMissing = Array.isArray(words)
         ? words
@@ -531,21 +632,25 @@ function buildPlatinumWordBatchReport({
         level,
         scope: scopedToRequestedWords
             ? `words=${words.map(buildWordIdentity).join(",")}`
-            : `next-missing limit=${limit}`,
+            : `queue=${queueMode} limit=${limit}`,
+        queue: queueMode,
         scopedToRequestedWords,
         summary: {
             generatedRows: generatedRows.length,
             activePlatinum: activeCount,
             currentReviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
             currentStandardPlatinum: currentStandardCount,
+            substantiveRereviewProven: substantiveRereviewProvenCount,
             legacyOrUnversionedPlatinum: legacyOrUnversionedCount,
             remainingPlatinum: missingRows.length,
             remainingCurrentStandard: missingCurrentStandardRows.length,
+            remainingSubstantiveRereview: needsSubstantiveRereviewRows.length,
             selectedCards: cards.length,
             requestedMissing: requestedMissing.length,
         },
         requestedMissing,
         nextMissingWords: missingCurrentStandardRows.map(buildWordIdentity),
+        nextSubstantiveRereviewWords: needsSubstantiveRereviewRows.map(buildWordIdentity),
         cards,
     };
 }
@@ -558,12 +663,15 @@ function formatPlatinumWordBatchReport(report = {}) {
         "",
         `Scope: ${report.scope || "(unknown)"}`,
         `Generated cards: ${summary.generatedRows || 0}`,
-        `Active platinum: ${summary.activePlatinum || 0}`,
+        `Queue: ${report.queue || WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW}`,
+        `Active structural entries: ${summary.activePlatinum || 0}`,
         `Current review standard: ${summary.currentReviewStandard || CURRENT_WORD_PLATINUM_REVIEW_STANDARD}`,
-        `Current-standard platinum: ${summary.currentStandardPlatinum || 0}`,
+        `Current-standard structural entries: ${summary.currentStandardPlatinum || 0}`,
+        `Substantive rereview proven: ${summary.substantiveRereviewProven || 0}`,
         `Legacy/unversioned platinum: ${summary.legacyOrUnversionedPlatinum || 0}`,
-        `Remaining platinum: ${summary.remainingPlatinum || 0}`,
-        `Remaining current-standard: ${summary.remainingCurrentStandard || 0}`,
+        `Missing active structural entries: ${summary.remainingPlatinum || 0}`,
+        `Missing current-standard structure: ${summary.remainingCurrentStandard || 0}`,
+        `Remaining substantive rereview: ${summary.remainingSubstantiveRereview || 0}`,
         `Selected cards: ${summary.selectedCards || 0}`,
     ];
 
@@ -574,13 +682,19 @@ function formatPlatinumWordBatchReport(report = {}) {
         }
     }
 
-    if (!report.scopedToRequestedWords && Array.isArray(report.nextMissingWords) && report.nextMissingWords.length > 0) {
-        lines.push("", `Next missing current-standard queue (${Math.min(report.nextMissingWords.length, 30)}/${report.nextMissingWords.length}):`);
-        for (const identity of report.nextMissingWords.slice(0, 30)) {
+    const queueWords = report.queue === WORD_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD
+        ? report.nextMissingWords
+        : report.nextSubstantiveRereviewWords;
+    const queueLabel = report.queue === WORD_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD
+        ? "Next missing current-standard structure queue"
+        : "Next substantive rereview queue";
+    if (!report.scopedToRequestedWords && Array.isArray(queueWords) && queueWords.length > 0) {
+        lines.push("", `${queueLabel} (${Math.min(queueWords.length, 30)}/${queueWords.length}):`);
+        for (const identity of queueWords.slice(0, 30)) {
             lines.push(`- ${identity}`);
         }
-        if (report.nextMissingWords.length > 30) {
-            lines.push(`- ... ${report.nextMissingWords.length - 30} more`);
+        if (queueWords.length > 30) {
+            lines.push(`- ... ${queueWords.length - 30} more`);
         }
     }
 
@@ -613,11 +727,16 @@ function formatPlatinumWordBatchReport(report = {}) {
         lines.push(`  Suggested review step: ${card.suggestedReviewStep}`);
     }
 
-    lines.push("", "This report is read-only. It prepares review; it does not create platinum entries or prove release readiness.");
+    lines.push(
+        "",
+        "This report is read-only. It prepares review; it does not create platinum entries or prove release readiness.",
+        "Default queue is substantive rereview: structural current-standard entries remain in scope until explicit non-mechanical rereview proof exists."
+    );
     return `${lines.join("\n")}\n`;
 }
 
 module.exports = {
+    WORD_BATCH_QUEUE_MODES,
     buildEntryStatusByIdentity,
     buildHardChecks,
     buildInflectionEvidenceFragments,
@@ -633,6 +752,7 @@ module.exports = {
     exampleSentenceContainsWrittenWord,
     exampleReadingContainsWordReading,
     formatPlatinumWordBatchReport,
+    normalizeQueueMode,
     parseExampleParts,
     selectBatchRows,
     stripMarkup,

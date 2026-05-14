@@ -1,5 +1,6 @@
 const {
     ACTIVE_PLATINUM_STATUSES,
+    CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
     NON_SHIPPING_STATUSES,
     REVALIDATION_STATUSES,
     REVIEW_ONLY_STATUSES,
@@ -9,9 +10,68 @@ const {
 const { katakanaToHiragana } = require("../utils/japanese");
 
 const SINGLE_KANJI_RE = /^\p{Script=Han}$/u;
+const KANJI_BATCH_QUEUE_MODES = {
+    MISSING_CURRENT_STANDARD: "missing-current-standard",
+    SUBSTANTIVE_REREVIEW: "substantive-rereview",
+};
+const SUBSTANTIVE_REREVIEW_PROOF_MARKER = "substantive post-v3 human rereview";
+const NON_MECHANICAL_PROOF_MARKER = "not mechanically migrated";
 
 function normalizeText(value) {
     return String(value ?? "").trim();
+}
+
+function normalizeProofText(value) {
+    return normalizeText(value).toLowerCase().replace(/[-_]+/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function normalizeEvidenceEntries(entries = []) {
+    return Array.isArray(entries) ? entries : [];
+}
+
+function buildRereviewProvenanceText(entry = {}) {
+    const evidenceText = [
+        entry.revalidationSummary,
+        ...normalizeEvidenceEntries(entry.reviewEvidence).map((evidence) => `${evidence.type || ""} ${evidence.source || ""} ${evidence.detail || ""}`),
+    ].join(" ");
+    const provenance = entry.rereviewProvenance && typeof entry.rereviewProvenance === "object"
+        ? entry.rereviewProvenance
+        : {};
+    const provenanceText = Object.entries(provenance)
+        .map(([key, value]) => `${key} ${value}`)
+        .join(" ");
+
+    return normalizeProofText(`${evidenceText} ${provenanceText}`);
+}
+
+function hasStructuredRereviewProvenance(entry = {}) {
+    const provenance = entry.rereviewProvenance;
+    if (!provenance || typeof provenance !== "object" || Array.isArray(provenance)) {
+        return false;
+    }
+
+    return normalizeProofText(provenance.type) === "substantive current standard rereview"
+        && normalizeText(provenance.reviewStandard) === CURRENT_KANJI_PLATINUM_REVIEW_STANDARD
+        && provenance.reviewedAfterStandard === true
+        && provenance.mechanicalMigration === false
+        && Boolean(normalizeText(provenance.reviewer || entry.reviewer));
+}
+
+function hasTextualRereviewProvenance(entry = {}) {
+    const proofText = buildRereviewProvenanceText(entry);
+    const hasSubstantiveMarker = proofText.includes(normalizeProofText(SUBSTANTIVE_REREVIEW_PROOF_MARKER))
+        || proofText.includes("substantive current standard rereview");
+    const hasHumanMarker = /\b(human|manual)\b/.test(proofText);
+    const hasNonMechanicalMarker = proofText.includes(normalizeProofText(NON_MECHANICAL_PROOF_MARKER))
+        || proofText.includes("not a mechanical migration")
+        || proofText.includes("not migration only")
+        || proofText.includes("non mechanical");
+
+    return hasSubstantiveMarker && hasHumanMarker && hasNonMechanicalMarker;
+}
+
+function entryHasSubstantiveCurrentStandardRereviewProof(entry = {}) {
+    return hasStructuredRereviewProvenance(entry) || hasTextualRereviewProvenance(entry);
 }
 
 function stripMarkup(value) {
@@ -88,8 +148,12 @@ function buildEntryStateByKanji(entries = []) {
 }
 
 function classifyReviewStatus(statuses = [], entries = []) {
-    if ((Array.isArray(entries) ? entries : []).some(isCurrentStandardPlatinumEntry)) {
-        return "active_platinum";
+    const entryList = Array.isArray(entries) ? entries : [];
+    if (entryList.some((entry) => isCurrentStandardPlatinumEntry(entry) && entryHasSubstantiveCurrentStandardRereviewProof(entry))) {
+        return "substantive_rereview_proven";
+    }
+    if (entryList.some(isCurrentStandardPlatinumEntry)) {
+        return "current_standard_structural_only";
     }
     if (statuses.some((status) => ACTIVE_PLATINUM_STATUSES.includes(status) || REVALIDATION_STATUSES.includes(status))) {
         return "needs_revalidation";
@@ -166,7 +230,11 @@ function buildRiskFlags(row = {}, { reviewStatus = "missing_platinum", statuses 
         row.exampleSentence,
     ].join(" "));
 
-    if (reviewStatus === "active_platinum") {
+    if (reviewStatus === "substantive_rereview_proven") {
+        flags.push("already has substantive current-standard rereview proof; skip unless intentionally replacing prior evidence");
+    } else if (reviewStatus === "current_standard_structural_only") {
+        flags.push("has current-standard structure only; square-zero substantive rereview proof is still required");
+    } else if (reviewStatus === "active_platinum") {
         flags.push("already has active platinum; re-review only if intentionally replacing prior evidence");
     } else if (reviewStatus === "needs_revalidation") {
         flags.push("existing legacy/unversioned review history does not count as platinum until current-standard revalidation");
@@ -204,10 +272,16 @@ function buildRiskFlags(row = {}, { reviewStatus = "missing_platinum", statuses 
     return flags;
 }
 
-function selectBatchRows({ rows = [], entries = [], kanji = [], limit = 12 } = {}) {
-    const activeKanji = new Set((Array.isArray(entries) ? entries : [])
-        .filter(isCurrentStandardPlatinumEntry)
-        .map((entry) => normalizeText(entry.kanji)));
+function normalizeQueueMode(queue = KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW) {
+    const normalized = normalizeText(queue);
+    return Object.values(KANJI_BATCH_QUEUE_MODES).includes(normalized)
+        ? normalized
+        : KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW;
+}
+
+function selectBatchRows({ rows = [], entries = [], kanji = [], limit = 12, queue = KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW } = {}) {
+    const queueMode = normalizeQueueMode(queue);
+    const stateByKanji = buildEntryStateByKanji(entries);
 
     if (Array.isArray(kanji) && kanji.length > 0) {
         return kanji
@@ -216,19 +290,46 @@ function selectBatchRows({ rows = [], entries = [], kanji = [], limit = 12 } = {
     }
 
     return rows
-        .filter((row) => !activeKanji.has(row.kanji))
+        .filter((row) => {
+            const state = stateByKanji.get(row.kanji) || { statuses: [], entries: [] };
+            const reviewStatus = classifyReviewStatus(state.statuses, state.entries);
+            if (queueMode === KANJI_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD) {
+                return reviewStatus !== "current_standard_structural_only"
+                    && reviewStatus !== "substantive_rereview_proven";
+            }
+            return reviewStatus !== "substantive_rereview_proven";
+        })
         .slice(0, Math.max(1, Number.isFinite(limit) ? Math.floor(limit) : 12));
 }
 
-function buildPlatinumKanjiBatchReport({ rows = [], entries = [], level, kanji = [], limit = 12, curatedStudyData = {} } = {}) {
+function buildPlatinumKanjiBatchReport({
+    rows = [],
+    entries = [],
+    level,
+    kanji = [],
+    limit = 12,
+    curatedStudyData = {},
+    queue = KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
+} = {}) {
     const generatedRows = Array.isArray(rows) ? rows : [];
     const reviewEntries = Array.isArray(entries) ? entries : [];
     const stateByKanji = buildEntryStateByKanji(reviewEntries);
-    const selectedRows = selectBatchRows({ rows: generatedRows, entries: reviewEntries, kanji, limit });
+    const queueMode = normalizeQueueMode(queue);
+    const selectedRows = selectBatchRows({ rows: generatedRows, entries: reviewEntries, kanji, limit, queue: queueMode });
     const activeCount = reviewEntries.filter(isCurrentStandardPlatinumEntry).length;
+    const substantiveRereviewProvenCount = reviewEntries.filter((entry) => (
+        isCurrentStandardPlatinumEntry(entry)
+        && entryHasSubstantiveCurrentStandardRereviewProof(entry)
+    )).length;
     const missingRows = generatedRows.filter((row) => {
         const state = stateByKanji.get(row.kanji) || { statuses: [], entries: [] };
-        return classifyReviewStatus(state.statuses, state.entries) !== "active_platinum";
+        const reviewStatus = classifyReviewStatus(state.statuses, state.entries);
+        return reviewStatus !== "current_standard_structural_only"
+            && reviewStatus !== "substantive_rereview_proven";
+    });
+    const needsSubstantiveRereviewRows = generatedRows.filter((row) => {
+        const state = stateByKanji.get(row.kanji) || { statuses: [], entries: [] };
+        return classifyReviewStatus(state.statuses, state.entries) !== "substantive_rereview_proven";
     });
 
     const cards = selectedRows.map((row) => {
@@ -265,14 +366,18 @@ function buildPlatinumKanjiBatchReport({ rows = [], entries = [], level, kanji =
 
     return {
         level,
-        scope: Array.isArray(kanji) && kanji.length > 0 ? `kanji=${kanji.join(",")}` : `next-missing limit=${limit}`,
+        scope: Array.isArray(kanji) && kanji.length > 0 ? `kanji=${kanji.join(",")}` : `queue=${queueMode} limit=${limit}`,
+        queue: queueMode,
         summary: {
             generatedRows: generatedRows.length,
             activePlatinum: activeCount,
+            substantiveRereviewProven: substantiveRereviewProvenCount,
             remainingPlatinum: missingRows.length,
+            remainingSubstantiveRereview: needsSubstantiveRereviewRows.length,
             selectedCards: cards.length,
         },
         nextMissingKanji: missingRows.map((row) => row.kanji),
+        nextSubstantiveRereviewKanji: needsSubstantiveRereviewRows.map((row) => row.kanji),
         cards,
     };
 }
@@ -285,14 +390,23 @@ function formatPlatinumKanjiBatchReport(report = {}) {
         "",
         `Scope: ${report.scope || "(unknown)"}`,
         `Generated cards: ${summary.generatedRows || 0}`,
-        `Active current-standard platinum: ${summary.activePlatinum || 0}`,
-        `Remaining platinum: ${summary.remainingPlatinum || 0}`,
+        `Queue: ${report.queue || KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW}`,
+        `Current-standard structural entries: ${summary.activePlatinum || 0}`,
+        `Substantive rereview proven: ${summary.substantiveRereviewProven || 0}`,
+        `Missing current-standard structure: ${summary.remainingPlatinum || 0}`,
+        `Remaining substantive rereview: ${summary.remainingSubstantiveRereview || 0}`,
         `Selected cards: ${summary.selectedCards || 0}`,
     ];
 
-    if (Array.isArray(report.nextMissingKanji) && report.nextMissingKanji.length > 0) {
-        lines.push("", `Next missing queue (${Math.min(report.nextMissingKanji.length, 30)}/${report.nextMissingKanji.length}):`);
-        lines.push(report.nextMissingKanji.slice(0, 30).join(", "));
+    const queueKanji = report.queue === KANJI_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD
+        ? report.nextMissingKanji
+        : report.nextSubstantiveRereviewKanji;
+    const queueLabel = report.queue === KANJI_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD
+        ? "Next missing current-standard structure queue"
+        : "Next substantive rereview queue";
+    if (Array.isArray(queueKanji) && queueKanji.length > 0) {
+        lines.push("", `${queueLabel} (${Math.min(queueKanji.length, 30)}/${queueKanji.length}):`);
+        lines.push(queueKanji.slice(0, 30).join(", "));
     }
 
     for (const card of report.cards || []) {
@@ -318,17 +432,23 @@ function formatPlatinumKanjiBatchReport(report = {}) {
         }
     }
 
-    lines.push("", "This report is read-only. It prepares review; it does not create platinum entries or prove release readiness.");
+    lines.push(
+        "",
+        "This report is read-only. It prepares review; it does not create platinum entries or prove release readiness.",
+        "Default queue is substantive rereview: structural current-standard entries remain in scope until explicit non-mechanical rereview proof exists."
+    );
     return `${lines.join("\n")}\n`;
 }
 
 module.exports = {
+    KANJI_BATCH_QUEUE_MODES,
     buildHardChecks,
     buildPlatinumKanjiBatchReport,
     buildRiskFlags,
     classifyReviewStatus,
     describeCuratedReadingConflict,
     formatPlatinumKanjiBatchReport,
+    normalizeQueueMode,
     normalizeReadingEvidence,
     selectBatchRows,
 };

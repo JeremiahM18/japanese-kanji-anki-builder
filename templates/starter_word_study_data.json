@@ -870,7 +870,8 @@
       "japanese": "何を飲みますか。",
       "reading": "なにをのみますか。",
       "english": "What will you drink?"
-    }
+    },
+    "notes": "Core question word for what; this card teaches 何 as なに, separate from なん contexts."
   },
   "何ですか|なんですか": {
     "written": "何ですか",
@@ -1076,7 +1077,8 @@
       "japanese": "火を消してください。",
       "reading": "ひをけしてください。",
       "english": "Please put out the fire."
-    }
+    },
+    "notes": "Core noun for fire; this word-card reading is ひ, separate from weekday and compound readings."
   },
   "火曜日|かようび": {
     "written": "火曜日",
@@ -1950,7 +1952,8 @@
       "japanese": "皿が九つあります。",
       "reading": "さらがここのつあります。",
       "english": "There are nine plates."
-    }
+    },
+    "notes": "Core counter form for nine things; this card teaches the ここのつ reading for general counting."
   },
   "九時|くじ": {
     "written": "九時",
@@ -2591,7 +2594,8 @@
       "japanese": "学校へ行きます。",
       "reading": "がっこうへいきます。",
       "english": "I go to school."
-    }
+    },
+    "notes": "Core verb for going; the example uses a simple school destination context."
   },
   "行きます|いきます": {
     "written": "行きます",
@@ -3336,7 +3340,8 @@
       "japanese": "子どもが公園で遊んでいます。",
       "reading": "こどもがこうえんであそんでいます。",
       "english": "A child is playing in the park."
-    }
+    },
+    "notes": "Core word for child; this mixed 子ども form is learner-friendly and equivalent to 子供."
   },
   "子犬|こいぬ": {
     "written": "子犬",
@@ -3412,7 +3417,8 @@
       "japanese": "時々公園で友だちに会います。",
       "reading": "ときどきこうえんでともだちにあいます。",
       "english": "I sometimes meet my friend at the park."
-    }
+    },
+    "notes": "Core frequency adverb meaning sometimes; this card teaches 時々 as ときどき."
   },
   "自転車|じてんしゃ": {
     "written": "自転車",
@@ -3610,7 +3616,7 @@
         "十": "じゅう"
       }
     },
-    "notes": "Common standalone number form for counting sequences and number ranges.",
+    "notes": "Core standalone number form for ten; this card teaches じゅう for number and number-sequence use.",
     "exampleSentence": {
       "japanese": "数字を一から十まで言います。",
       "reading": "すうじをいちからじゅうまでいいます。",
@@ -4287,7 +4293,8 @@
       "japanese": "水を一杯ください。",
       "reading": "みずをいっぱいください。",
       "english": "Please give me a glass of water."
-    }
+    },
+    "notes": "Core noun for water; this word-card reading is みず, separate from weekday and compound readings."
   },
   "水曜日|すいようび": {
     "written": "水曜日",
@@ -4767,7 +4774,8 @@
       "japanese": "先に行ってください。",
       "reading": "さきにいってください。",
       "english": "Please go ahead."
-    }
+    },
+    "notes": "Core word for ahead, before, or the front; the example teaches the beginner-useful 先に pattern."
   },
   "先月|せんげつ": {
     "written": "先月",
@@ -4947,7 +4955,8 @@
       "japanese": "このかばんは大きいです。",
       "reading": "このかばんはおおきいです。",
       "english": "This bag is big."
-    }
+    },
+    "notes": "Core adjective for big or large; the example uses a simple physical-size context."
   },
   "大変|たいへん": {
     "written": "大変",
@@ -5089,7 +5098,8 @@
       "coversReadings": {
         "中": "なか"
       }
-    }
+    },
+    "notes": "Core location word for inside or middle; the example uses the beginner-useful かばんの中 pattern."
   },
   "中国|ちゅうごく": {
     "written": "中国",
@@ -5304,7 +5314,8 @@
       "japanese": "晩ご飯に天ぷらを食べました。",
       "reading": "ばんごはんにてんぷらをたべました。",
       "english": "I ate tempura for dinner."
-    }
+    },
+    "notes": "Common food word for tempura; this mixed form uses 天 for てん while ぷら stays kana."
   },
   "天気|てんき": {
     "written": "天気",
@@ -5627,7 +5638,7 @@
       "common",
       "n5"
     ],
-    "notes": "Polite form of 読む. Useful for hearing the よみ reading directly.",
+    "notes": "Polite form of 読む; useful for hearing the よみ reading directly, but it is reviewed as a conjugated support form rather than a separate JMdict headword.",
     "exampleSentence": {
       "japanese": "毎晩、本を読みます。",
       "reading": "まいばん、ほんをよみます。",
@@ -5777,7 +5788,8 @@
       "japanese": "南の国へ行きたいです。",
       "reading": "みなみのくにへいきたいです。",
       "english": "I want to go to a southern country."
-    }
+    },
+    "notes": "Core direction word for south; this word-card reading is みなみ, separate from compound readings."
   },
   "南口|みなみぐち": {
     "written": "南口",
@@ -6296,7 +6308,8 @@
       "japanese": "みかんを八つもらいました。",
       "reading": "みかんをやっつもらいました。",
       "english": "I received eight mandarins."
-    }
+    },
+    "notes": "Core counter form for eight things; this card teaches the やっつ reading for general counting."
   },
   "八時|はちじ": {
     "written": "八時",
@@ -6700,7 +6713,8 @@
       "japanese": "先生に日本語の読み方を聞きます。",
       "reading": "せんせいににほんごのよみかたをききます。",
       "english": "I ask the teacher how to read it in Japanese."
-    }
+    },
+    "notes": "Core verb for hearing, listening, or asking; the example uses the practical ask sense."
   },
   "聞こえる|きこえる": {
     "written": "聞こえる",
@@ -7167,7 +7181,8 @@
       "japanese": "大きい木の下で休みます。",
       "reading": "おおきいきのしたでやすみます。",
       "english": "I rest under the big tree."
-    }
+    },
+    "notes": "Core noun for tree; this word-card reading is き, separate from weekday and compound readings."
   },
   "木曜日|もくようび": {
     "written": "木曜日",
@@ -7392,7 +7407,7 @@
       "core",
       "n5"
     ],
-    "notes": "Irregular verb. Learn the reading together with the word.",
+    "notes": "Core irregular verb for coming; learn the くる reading together with the word.",
     "exampleSentence": {
       "japanese": "明日、友だちが家に来る。",
       "reading": "あした、ともだちがいえにくる。",
@@ -7529,7 +7544,7 @@
         "六": "ろく"
       }
     },
-    "notes": "Common standalone number form for counting sequences and number ranges.",
+    "notes": "Core standalone number form for six; this card teaches ろく for number and number-sequence use.",
     "exampleSentence": {
       "japanese": "数字を六から十まで言います。",
       "reading": "すうじをろくからじゅうまでいいます。",
@@ -21883,7 +21898,7 @@
         "千": "せん"
       }
     },
-    "notes": "Useful standalone number form that complements 千円.",
+    "notes": "Core number word for one thousand; this card teaches 千 as せん for standalone number use.",
     "exampleSentence": {
       "japanese": "千まで数えます。",
       "reading": "せんまでかぞえます。",
@@ -21962,7 +21977,7 @@
         "半": "はん"
       }
     },
-    "notes": "Useful standalone and suffix-like word for half, especially time expressions such as half past.",
+    "notes": "Core word for half and half-past time expressions; this card teaches 半 as はん.",
     "exampleSentence": {
       "japanese": "今は三時半です。",
       "reading": "いまはさんじはんです。",
@@ -22014,7 +22029,7 @@
         "前": "まえ"
       }
     },
-    "notes": "Common standalone noun/adverbial word that complements 午前, 駅前, 目の前, and 名前.",
+    "notes": "Core word for front or before; the example uses the practical 駅の前 location pattern.",
     "exampleSentence": {
       "japanese": "駅の前で待ちます。",
       "reading": "えきのまえでまちます。",

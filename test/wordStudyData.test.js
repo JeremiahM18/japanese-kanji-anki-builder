@@ -1665,6 +1665,21 @@ test("tracked starter word data includes the ninth N4 active reading backlog bat
     assert.match(starterEntries["低める|ひくめる"].notes, /低まる/);
 });
 
+test("tracked starter word data protects first N4 platinum examples and notes", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assert.equal(starterEntries["言う|いう"].exampleSentence.japanese, "正しい答えを言う練習をします。");
+    assert.equal(starterEntries["言う|いう"].exampleSentence.reading, "ただしいこたえをいうれんしゅうをします。");
+    assert.equal(starterEntries["洗う|あらう"].exampleSentence.japanese, "食事の前に手を洗うことは大切です。");
+    assert.equal(starterEntries["洗う|あらう"].exampleSentence.reading, "しょくじのまえにてをあらうことはたいせつです。");
+    assert.equal(starterEntries["引く|ひく"].exampleSentence.japanese, "このドアは手前に引くと開きます。");
+    assert.equal(starterEntries["引く|ひく"].exampleSentence.reading, "このドアはてまえにひくとあきます。");
+    assert.match(starterEntries["弟|おとうと"].notes, /word-card reading is おとうと/);
+    assertCoverageReadings(starterEntries, [
+        ["弟|おとうと", "弟", "おとうと"],
+    ]);
+});
+
 test("tracked starter word data includes the first N5 enhancement batch without duplicate junk", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

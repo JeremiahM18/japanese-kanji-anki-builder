@@ -33,7 +33,7 @@ Kanji platinum limitations must be structured in `verificationLimitations`, visi
 
 Word platinum limitations must be structured in `verificationLimitations`, visible in the affected word card `Notes` surface, and countable in the word platinum report. They are allowed only for non-core facets; uncertainty about written form, reading, meaning, example correctness, or product fit remains a blocker.
 
-Kanji platinum release coverage must use the current versioned standard `kanji-platinum-v2-limitation-aware`. Legacy or unversioned kanji review history must be marked `needs_revalidation`, not active platinum. It is useful context, but it is not current version 1 lock evidence until revalidated with `reviewStandard`, `revalidatedAt`, and a summary that confirms the generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations were checked under the current policy.
+Kanji platinum release coverage must use the current versioned standard `kanji-platinum-v3-evidence-lanes`. Legacy or unversioned kanji review history must be marked `needs_revalidation`, not active platinum. It is useful context, but it is not current version 1 lock evidence until revalidated with `reviewStandard`, `revalidatedAt`, `sourceEvidence`, `internalChecks`, `reviewEvidence`, and a summary that confirms evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations were checked under the current policy. Kanji `sourceEvidence` is reserved for governed Japanese-source card-field truth; generated output, golden regression, media/audio/stroke-order checks, and manual judgment belong in separate internal or review lanes.
 
 For active word platinum, `japanese-source` evidence must cite a source registered in `templates/platinum_card_source_manifest.json` for `word-field-verification`. Generated output, golden expectations, tracked starter templates, ignored local data, source-claim lists, and local caches are internal evidence only; they do not satisfy Japanese-source verification by themselves. One-kanji word cards may use a registered `single-kanji-word-field-verification` source.
 
@@ -80,8 +80,8 @@ A word level ships only when all criteria are true:
 
 ## Current product posture
 
-- N5 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; current-standard platinum revalidation passes at `80/80` under `kanji-platinum-v2-limitation-aware`
-- N4 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; current-standard platinum revalidation passes at `212/212` under `kanji-platinum-v2-limitation-aware` with `0` active verification limitations and `0` remaining core N4 platinum gaps
+- N5 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; current-standard platinum revalidation passes at `80/80` under `kanji-platinum-v3-evidence-lanes`
+- N4 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; current-standard platinum revalidation passes at `212/212` under `kanji-platinum-v3-evidence-lanes` with `0` active verification limitations and `0` remaining core N4 platinum gaps
 - N3 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N2 kanji: golden-reviewed and current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started
 - N1 kanji: golden-reviewed at `1230/1230`; current local deck readiness passes with complete exported media and exact primary-reading audio; platinum not started

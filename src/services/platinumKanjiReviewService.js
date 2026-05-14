@@ -17,9 +17,10 @@ const ALLOWED_PLATINUM_STATUSES = Object.freeze([
     ...REVIEW_ONLY_STATUSES,
 ]);
 
-const CURRENT_KANJI_PLATINUM_REVIEW_STANDARD = "kanji-platinum-v2-limitation-aware";
+const CURRENT_KANJI_PLATINUM_REVIEW_STANDARD = "kanji-platinum-v3-evidence-lanes";
 
 const CURRENT_STANDARD_REVALIDATION_SUMMARY_CHECKS = Object.freeze([
+    Object.freeze({ label: "evidence lanes", requiredPatterns: [/evidence/i, /lanes?/i] }),
     Object.freeze({ label: "generated surface", requiredPatterns: [/generated/i, /surface/i] }),
     Object.freeze({ label: "Japanese source evidence", requiredPatterns: [/japanese[- ]source/i, /evidence/i] }),
     Object.freeze({ label: "example sentence", requiredPatterns: [/example/i, /sentence/i] }),
@@ -48,14 +49,27 @@ const REQUIRED_KANJI_QUALITY_GATES = Object.freeze([
     "noSilentFallback",
 ]);
 
-const REQUIRED_KANJI_EVIDENCE_TYPES = Object.freeze([
-    "generated-surface",
-    "golden-review",
+const REQUIRED_KANJI_SOURCE_EVIDENCE_TYPES = Object.freeze([
     "japanese-source",
+]);
+
+const REQUIRED_KANJI_INTERNAL_CHECK_TYPES = Object.freeze([
+    "generated-surface",
+    "golden-regression",
     "media-audit",
     "audio-review",
     "stroke-order-review",
+]);
+
+const REQUIRED_KANJI_REVIEW_EVIDENCE_TYPES = Object.freeze([
     "manual-review",
+    "current-standard-review",
+]);
+
+const BLOCKED_KANJI_SOURCE_EVIDENCE_TYPES = Object.freeze([
+    "golden-review",
+    ...REQUIRED_KANJI_INTERNAL_CHECK_TYPES,
+    ...REQUIRED_KANJI_REVIEW_EVIDENCE_TYPES,
 ]);
 
 const ALLOWED_KANJI_VERIFICATION_LIMITATION_FIELDS = Object.freeze([
@@ -127,8 +141,58 @@ function normalizeReviewStandard(value) {
     return normalizeText(value);
 }
 
+function validateStructuredEvidenceLane(value, {
+    fieldName = "sourceEvidence",
+    requiredTypes = [],
+    blockedTypes = [],
+} = {}) {
+    const failures = [];
+    const entries = normalizeEvidenceEntries(value);
+    if (entries.length === 0) {
+        failures.push(`${fieldName} must contain structured evidence entries`);
+    }
+    for (const evidence of entries) {
+        if (!evidence.type || !evidence.source || !evidence.detail) {
+            failures.push(`${fieldName} entries must include type, source, and detail`);
+        }
+    }
+    const evidenceTypes = new Set(entries.map((evidence) => evidence.type));
+    for (const blockedType of blockedTypes) {
+        if (evidenceTypes.has(blockedType)) {
+            failures.push(`${blockedType} must not be used in ${fieldName}`);
+        }
+    }
+    for (const requiredType of requiredTypes) {
+        if (!evidenceTypes.has(requiredType)) {
+            failures.push(`${fieldName} must include evidence type: ${requiredType}`);
+        }
+    }
+
+    return failures;
+}
+
+function validateCurrentKanjiEvidenceLaneStructure(entry = {}) {
+    return [
+        ...validateStructuredEvidenceLane(entry.sourceEvidence, {
+            fieldName: "sourceEvidence",
+            requiredTypes: REQUIRED_KANJI_SOURCE_EVIDENCE_TYPES,
+            blockedTypes: BLOCKED_KANJI_SOURCE_EVIDENCE_TYPES,
+        }),
+        ...validateStructuredEvidenceLane(entry.internalChecks, {
+            fieldName: "internalChecks",
+            requiredTypes: REQUIRED_KANJI_INTERNAL_CHECK_TYPES,
+        }),
+        ...validateStructuredEvidenceLane(entry.reviewEvidence, {
+            fieldName: "reviewEvidence",
+            requiredTypes: REQUIRED_KANJI_REVIEW_EVIDENCE_TYPES,
+            blockedTypes: ["golden-review"],
+        }),
+    ];
+}
+
 function entryUsesCurrentKanjiPlatinumStandard(entry = {}) {
-    return validateCurrentKanjiPlatinumReviewStandard(entry).length === 0;
+    return validateCurrentKanjiPlatinumReviewStandard(entry).length === 0
+        && validateCurrentKanjiEvidenceLaneStructure(entry).length === 0;
 }
 
 function hasActivePlatinumStatus(entry = {}) {
@@ -150,8 +214,8 @@ function validateCurrentKanjiPlatinumReviewStandard(entry = {}) {
     const reviewStandard = normalizeReviewStandard(entry.reviewStandard);
     const revalidatedAt = normalizeText(entry.revalidatedAt);
     const revalidationSummary = normalizeText(entry.revalidationSummary);
-    const sourceEvidence = normalizeEvidenceEntries(entry.sourceEvidence);
-    const evidenceTypes = new Set(sourceEvidence.map((evidence) => evidence.type));
+    const reviewEvidence = normalizeEvidenceEntries(entry.reviewEvidence);
+    const evidenceTypes = new Set(reviewEvidence.map((evidence) => evidence.type));
 
     if (reviewStandard !== CURRENT_KANJI_PLATINUM_REVIEW_STANDARD) {
         failures.push(`reviewStandard must be ${CURRENT_KANJI_PLATINUM_REVIEW_STANDARD}`);
@@ -169,7 +233,7 @@ function validateCurrentKanjiPlatinumReviewStandard(entry = {}) {
         }
     }
     if (!evidenceTypes.has("current-standard-review")) {
-        failures.push("sourceEvidence must include evidence type: current-standard-review for the current kanji platinum standard");
+        failures.push("reviewEvidence must include evidence type: current-standard-review for the current kanji platinum standard");
     }
 
     return failures;
@@ -295,20 +359,20 @@ function validateActivePlatinumEntry(entry = {}, {
     }
 
     const sourceEvidence = normalizeEvidenceEntries(entry.sourceEvidence);
-    if (sourceEvidence.length === 0) {
-        failures.push("sourceEvidence must contain structured evidence entries");
-    }
-    for (const evidence of sourceEvidence) {
-        if (!evidence.type || !evidence.source || !evidence.detail) {
-            failures.push("sourceEvidence entries must include type, source, and detail");
-        }
-    }
-    const evidenceTypes = new Set(sourceEvidence.map((evidence) => evidence.type));
-    for (const requiredType of REQUIRED_KANJI_EVIDENCE_TYPES) {
-        if (!evidenceTypes.has(requiredType)) {
-            failures.push(`sourceEvidence must include evidence type: ${requiredType}`);
-        }
-    }
+    failures.push(...validateStructuredEvidenceLane(entry.sourceEvidence, {
+        fieldName: "sourceEvidence",
+        requiredTypes: REQUIRED_KANJI_SOURCE_EVIDENCE_TYPES,
+        blockedTypes: BLOCKED_KANJI_SOURCE_EVIDENCE_TYPES,
+    }));
+    failures.push(...validateStructuredEvidenceLane(entry.internalChecks, {
+        fieldName: "internalChecks",
+        requiredTypes: REQUIRED_KANJI_INTERNAL_CHECK_TYPES,
+    }));
+    failures.push(...validateStructuredEvidenceLane(entry.reviewEvidence, {
+        fieldName: "reviewEvidence",
+        requiredTypes: REQUIRED_KANJI_REVIEW_EVIDENCE_TYPES,
+        blockedTypes: ["golden-review"],
+    }));
     failures.push(...validateJapaneseSourceEvidence(sourceEvidence, {
         context: "kanji card accuracy",
         requiredUse: "kanji-field-verification",
@@ -479,6 +543,8 @@ function validateKanjiEvidenceBindings({
     const primaryReading = normalizeStringArray(entry.readingIncludes)[0] || row.primaryReading;
     const exactAudioFragment = `kanji-reading-${kanji}-${primaryReading}`;
     const sourceEvidence = entry.sourceEvidence || [];
+    const internalChecks = entry.internalChecks || [];
+    const reviewEvidence = entry.reviewEvidence || [];
     const requiresCurrentStandardEvidence = (
         requireCurrentReviewStandard
         || entry.reviewStandard !== undefined
@@ -487,7 +553,7 @@ function validateKanjiEvidenceBindings({
     );
 
     failures.push(...validateEvidenceSnippets({
-        sourceEvidence,
+        sourceEvidence: internalChecks,
         type: "generated-surface",
         label: "generated kanji surface",
         snippets: [kanji, primaryReading, "single-kanji", "meaning", "notes", "example", "audio", "stroke-order"],
@@ -504,19 +570,31 @@ function validateKanjiEvidenceBindings({
         ],
     }));
     failures.push(...validateEvidenceSnippets({
-        sourceEvidence,
+        sourceEvidence: internalChecks,
+        type: "golden-regression",
+        label: "separate golden regression gate",
+        snippets: [kanji, "separate", "regression", "not", "source"],
+    }));
+    failures.push(...validateEvidenceSnippets({
+        sourceEvidence: internalChecks,
+        type: "media-audit",
+        label: "managed media provenance",
+        snippets: [kanji, exactAudioFragment, "stroke-order", "media"],
+    }));
+    failures.push(...validateEvidenceSnippets({
+        sourceEvidence: internalChecks,
         type: "audio-review",
         label: "exact kanji-reading audio",
         snippets: [kanji, exactAudioFragment],
     }));
     failures.push(...validateEvidenceSnippets({
-        sourceEvidence,
+        sourceEvidence: internalChecks,
         type: "stroke-order-review",
         label: "stroke-order target and provenance",
         snippets: [kanji, "visual", "source"],
     }));
     failures.push(...validateEvidenceSnippets({
-        sourceEvidence,
+        sourceEvidence: reviewEvidence,
         type: "manual-review",
         label: "final kanji-card product judgment",
         snippets: [kanji, "individual-kanji", "learner"],
@@ -534,6 +612,7 @@ function validateKanjiEvidenceBindings({
             ...normalizeStringArray(entry.exampleIncludes),
             ...normalizeStringArray(entry.notesIncludes),
             exactAudioFragment,
+            "evidence lanes",
             "generated surface",
             "Japanese-source",
             "example sentence",
@@ -563,7 +642,7 @@ function validateKanjiEvidenceBindings({
             currentStandardSnippets.push(...limitations.map((limitation) => limitation.label));
         }
         failures.push(...validateEvidenceSnippets({
-            sourceEvidence,
+            sourceEvidence: reviewEvidence,
             type: "current-standard-review",
             label: "current-standard whole-card revalidation",
             snippets: currentStandardSnippets,
@@ -571,7 +650,7 @@ function validateKanjiEvidenceBindings({
     }
     for (const limitation of normalizeKanjiVerificationLimitations(entry.verificationLimitations)) {
         failures.push(...validateEvidenceSnippets({
-            sourceEvidence,
+            sourceEvidence: reviewEvidence,
             type: "manual-review",
             label: `verification limitation ${limitation.field}`,
             snippets: [kanji, limitation.label],
@@ -600,7 +679,7 @@ function evaluatePlatinumKanjiEntry({
 
     if (ACTIVE_PLATINUM_STATUSES.includes(status)) {
         if (!entryUsesCurrentKanjiPlatinumStandard(entry)) {
-            failures.push("active platinum status requires current-standard revalidation; use needs_revalidation for legacy/unversioned review history");
+            failures.push("active platinum status requires current-standard revalidation with required evidence lanes; use needs_revalidation for legacy/unversioned review history");
         }
         failures.push(...sourceOriginFailures);
         failures.push(...validateActivePlatinumEntry(entry, {
@@ -857,8 +936,10 @@ module.exports = {
     CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
     NON_SHIPPING_STATUSES,
     REVALIDATION_STATUSES,
-    REQUIRED_KANJI_EVIDENCE_TYPES,
+    REQUIRED_KANJI_INTERNAL_CHECK_TYPES,
     REQUIRED_KANJI_QUALITY_GATES,
+    REQUIRED_KANJI_REVIEW_EVIDENCE_TYPES,
+    REQUIRED_KANJI_SOURCE_EVIDENCE_TYPES,
     REVIEW_ONLY_STATUSES,
     buildKanjiReviewStandardSummary,
     buildKanjiVerificationLimitationSummary,

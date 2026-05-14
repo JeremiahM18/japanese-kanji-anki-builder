@@ -4,8 +4,10 @@ const assert = require("node:assert/strict");
 const {
     ALLOWED_KANJI_VERIFICATION_LIMITATION_FIELDS,
     CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
-    REQUIRED_KANJI_EVIDENCE_TYPES,
+    REQUIRED_KANJI_INTERNAL_CHECK_TYPES,
     REQUIRED_KANJI_QUALITY_GATES,
+    REQUIRED_KANJI_REVIEW_EVIDENCE_TYPES,
+    REQUIRED_KANJI_SOURCE_EVIDENCE_TYPES,
     evaluatePlatinumKanjiReviewSet,
     formatPlatinumKanjiReviewReport,
 } = require("../src/services/platinumKanjiReviewService");
@@ -36,31 +38,43 @@ function buildRow(overrides = {}) {
 
 function buildSourceEvidence() {
     const details = {
-        "generated-surface": "Generated card surface inspected for 日: single-kanji anchor, primary reading ひ, meaning, notes, example 雨の日です。, audio, and stroke-order fields.",
-        "golden-review": "N5 golden review protects 日.",
         "japanese-source": "Japanese dictionary-style source verified 日 primary reading ひ, primary meaning day, and broader meanings day and sun.",
-        "media-audit": "Managed media provenance audit checked 日 audio and stroke-order source policy.",
-        "audio-review": "Audio review checked 日 exact asset fragment kanji-reading-日-ひ.",
-        "stroke-order-review": "Visual stroke-order review checked target 日 against source-policy governed media.",
-        "manual-review": "Manual review judged 日 as an individual-kanji learner card.",
     };
 
-    return REQUIRED_KANJI_EVIDENCE_TYPES.map((type) => ({
+    return REQUIRED_KANJI_SOURCE_EVIDENCE_TYPES.map((type) => ({
         type,
-        source: type === "japanese-source"
-            ? "Kanjipedia https://www.kanjipedia.jp/kanji/0006416300; Bunka Joyo Kanji reading index"
-            : "test fixture source",
+        source: "Kanjipedia https://www.kanjipedia.jp/kanji/0006416300; Bunka Joyo Kanji reading index",
         detail: details[type],
     }));
 }
 
-function buildCurrentStandardSourceEvidence() {
+function buildInternalChecks() {
+    const details = {
+        "generated-surface": "Generated card surface inspected for 日: single-kanji anchor, primary reading ひ, meaning, notes, example 雨の日です。, audio, and stroke-order fields.",
+        "golden-regression": "Separate golden regression gate checked 日; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "media-audit": "Managed media provenance audit checked 日 exact audio media fragment kanji-reading-日-ひ and stroke-order media source policy.",
+        "audio-review": "Audio review checked 日 exact asset fragment kanji-reading-日-ひ.",
+        "stroke-order-review": "Visual stroke-order review checked target 日 against source-policy governed media.",
+    };
+
+    return REQUIRED_KANJI_INTERNAL_CHECK_TYPES.map((type) => ({
+        type,
+        source: "test fixture source",
+        detail: details[type],
+    }));
+}
+
+function buildReviewEvidence() {
     return [
-        ...buildSourceEvidence(),
+        {
+            type: "manual-review",
+            source: "manual kanji product review fixture",
+            detail: "Manual review judged 日 as an individual-kanji learner card.",
+        },
         {
             type: "current-standard-review",
             source: "current-standard fixture review",
-            detail: "Current-standard review revalidated 日|ひ generated surface, Japanese-source evidence, PrimaryReading ひ, MeaningJP day, KanjiMeanings day and sun, example sentence 雨の日です。, reading あめのひです。, translation It is a rainy day., notes/support surface 日 and 日本, audio kanji-reading-日-ひ, stroke-order media, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present.",
+            detail: "Current-standard review revalidated 日|ひ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ひ, MeaningJP day, KanjiMeanings day and sun, example sentence 雨の日です。, reading あめのひです。, translation It is a rainy day., notes/support surface 日 and 日本, audio kanji-reading-日-ひ, stroke-order media, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present.",
         },
     ];
 }
@@ -79,6 +93,8 @@ function buildLegacyEntry(overrides = {}) {
         reviewedAt: "2026-05-02",
         reviewer: "content-review",
         sourceEvidence: buildSourceEvidence(),
+        internalChecks: buildInternalChecks(),
+        reviewEvidence: buildReviewEvidence(),
         qualityGates: buildQualityGates(),
         ...overrides,
     };
@@ -88,8 +104,10 @@ function buildEntry(overrides = {}) {
     return buildLegacyEntry({
         reviewStandard: CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
         revalidatedAt: "2026-05-13",
-        revalidationSummary: "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
-        sourceEvidence: buildCurrentStandardSourceEvidence(),
+        revalidationSummary: "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+        sourceEvidence: buildSourceEvidence(),
+        internalChecks: buildInternalChecks(),
+        reviewEvidence: buildReviewEvidence(),
         ...overrides,
     });
 }
@@ -112,7 +130,7 @@ test("evaluatePlatinumKanjiReviewSet passes active platinum entries with strict 
 
 test("evaluatePlatinumKanjiReviewSet tracks explicit non-core verification limitations", () => {
     const limitationLabel = "Stroke-order sequence unverified";
-    const sourceEvidence = buildCurrentStandardSourceEvidence().map((evidence) => (
+    const reviewEvidence = buildReviewEvidence().map((evidence) => (
         evidence.type === "manual-review" || evidence.type === "current-standard-review"
             ? {
                 ...evidence,
@@ -126,7 +144,7 @@ test("evaluatePlatinumKanjiReviewSet tracks explicit non-core verification limit
             notes: `<ruby>日<rt>ひ</rt></ruby> - day ／ ${limitationLabel}`,
         })],
         entries: [buildEntry({
-            sourceEvidence,
+            reviewEvidence,
             notesIncludes: ["日", limitationLabel],
             verificationLimitations: [{
                 field: "strokeOrderSequence",
@@ -202,7 +220,8 @@ test("evaluatePlatinumKanjiReviewSet requires complete current-standard revalida
         entries: [buildLegacyEntry({
             reviewStandard: CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
             revalidatedAt: "2026-05-13",
-            revalidationSummary: "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+            revalidationSummary: "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+            reviewEvidence: buildReviewEvidence().filter((evidence) => evidence.type !== "current-standard-review"),
         })],
         requireAllRows: true,
         requireCurrentReviewStandard: true,
@@ -219,7 +238,7 @@ test("evaluatePlatinumKanjiReviewSet requires complete current-standard revalida
     assert.equal(missingEvidenceReport.passed, false);
     assert.match(
         missingEvidenceReport.results[0].failures.join("\n"),
-        /sourceEvidence must include evidence type: current-standard-review/
+        /reviewEvidence must include evidence type: current-standard-review/
     );
     const failures = report.results[0].failures.join("\n");
     assert.equal(report.passed, false);
@@ -230,7 +249,7 @@ test("evaluatePlatinumKanjiReviewSet requires complete current-standard revalida
 
 test("evaluatePlatinumKanjiReviewSet rejects core-field or hidden verification limitations", () => {
     const hiddenLabel = "Stroke-order sequence unverified";
-    const sourceEvidence = buildSourceEvidence().map((evidence) => (
+    const reviewEvidence = buildReviewEvidence().map((evidence) => (
         evidence.type === "manual-review"
             ? {
                 ...evidence,
@@ -241,7 +260,7 @@ test("evaluatePlatinumKanjiReviewSet rejects core-field or hidden verification l
     const coreFieldReport = evaluatePlatinumKanjiReviewSet({
         rows: [buildRow({ notes: `<ruby>日<rt>ひ</rt></ruby> - day ／ ${hiddenLabel}` })],
         entries: [buildEntry({
-            sourceEvidence,
+            reviewEvidence,
             verificationLimitations: [{
                 field: "primaryReading",
                 status: "externally_unverified",
@@ -253,7 +272,7 @@ test("evaluatePlatinumKanjiReviewSet rejects core-field or hidden verification l
     const hiddenReport = evaluatePlatinumKanjiReviewSet({
         rows: [buildRow()],
         entries: [buildEntry({
-            sourceEvidence,
+            reviewEvidence,
             verificationLimitations: [{
                 field: "strokeOrderSequence",
                 status: "externally_unverified",
@@ -323,16 +342,45 @@ test("evaluatePlatinumKanjiReviewSet requires primary-reading rationale and stru
     assert.match(failures, /sourceEvidence must include evidence type: japanese-source/);
 });
 
+test("evaluatePlatinumKanjiReviewSet rejects golden review as source evidence", () => {
+    const report = evaluatePlatinumKanjiReviewSet({
+        rows: [buildRow()],
+        entries: [
+            buildEntry({
+                sourceEvidence: [
+                    ...buildSourceEvidence(),
+                    {
+                        type: "golden-review",
+                        source: "templates/golden_n5_review_set.json",
+                        detail: "N5 golden review protects 日.",
+                    },
+                ],
+            }),
+        ],
+    });
+
+    assert.equal(report.passed, false);
+    assert.match(report.results[0].failures.join("\n"), /golden-review must not be used in sourceEvidence/);
+});
+
 test("evaluatePlatinumKanjiReviewSet rejects source evidence that does not bind to reviewed field values", () => {
     const report = evaluatePlatinumKanjiReviewSet({
         rows: [buildRow()],
         entries: [
             buildEntry({
-                sourceEvidence: REQUIRED_KANJI_EVIDENCE_TYPES.map((type) => ({
+                sourceEvidence: REQUIRED_KANJI_SOURCE_EVIDENCE_TYPES.map((type) => ({
                     type,
-                    source: type === "japanese-source"
-                        ? "Kanjipedia https://www.kanjipedia.jp/kanji/0006416300"
-                        : "test fixture source",
+                    source: "Kanjipedia https://www.kanjipedia.jp/kanji/0006416300",
+                    detail: "Reviewed this field.",
+                })),
+                internalChecks: REQUIRED_KANJI_INTERNAL_CHECK_TYPES.map((type) => ({
+                    type,
+                    source: "test fixture source",
+                    detail: "Reviewed this field.",
+                })),
+                reviewEvidence: REQUIRED_KANJI_REVIEW_EVIDENCE_TYPES.map((type) => ({
+                    type,
+                    source: "review fixture source",
                     detail: "Reviewed this field.",
                 })),
             }),
@@ -372,7 +420,7 @@ test("evaluatePlatinumKanjiReviewSet requires every structured evidence type", (
         rows: [buildRow()],
         entries: [
             buildEntry({
-                sourceEvidence: REQUIRED_KANJI_EVIDENCE_TYPES
+                internalChecks: REQUIRED_KANJI_INTERNAL_CHECK_TYPES
                     .filter((type) => type !== "audio-review")
                     .map((type) => ({
                         type,
@@ -384,7 +432,7 @@ test("evaluatePlatinumKanjiReviewSet requires every structured evidence type", (
     });
 
     assert.equal(report.passed, false);
-    assert.match(report.results[0].failures.join("\n"), /sourceEvidence must include evidence type: audio-review/);
+    assert.match(report.results[0].failures.join("\n"), /internalChecks must include evidence type: audio-review/);
 });
 
 test("evaluatePlatinumKanjiReviewSet can require every generated kanji to be platinum reviewed", () => {

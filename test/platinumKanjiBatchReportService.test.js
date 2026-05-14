@@ -37,8 +37,51 @@ function buildCurrentStandardEntry(kanji = "日") {
         status: "platinum",
         reviewStandard: CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
         revalidatedAt: "2026-05-13",
-        revalidationSummary: "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
-        sourceEvidence: [{ type: "current-standard-review" }],
+        revalidationSummary: "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+        sourceEvidence: [{
+            type: "japanese-source",
+            source: "fixture Japanese source",
+            detail: `Fixture Japanese source verified ${kanji} card-field truth.`,
+        }],
+        internalChecks: [
+            {
+                type: "generated-surface",
+                source: "fixture generated-surface audit",
+                detail: `Fixture generated surface was checked for ${kanji}.`,
+            },
+            {
+                type: "golden-regression",
+                source: "fixture golden regression",
+                detail: `Fixture separate golden regression gate was checked for ${kanji} and is not source evidence.`,
+            },
+            {
+                type: "media-audit",
+                source: "fixture media audit",
+                detail: `Fixture media audit checked ${kanji} audio and stroke-order media.`,
+            },
+            {
+                type: "audio-review",
+                source: "fixture audio review",
+                detail: `Fixture exact audio identity was checked for ${kanji}.`,
+            },
+            {
+                type: "stroke-order-review",
+                source: "fixture stroke-order review",
+                detail: `Fixture stroke-order media target was checked for ${kanji}.`,
+            },
+        ],
+        reviewEvidence: [
+            {
+                type: "manual-review",
+                source: "fixture manual review",
+                detail: `Manual reviewer judged the fixture ${kanji} card.`,
+            },
+            {
+                type: "current-standard-review",
+                source: "fixture current-standard review",
+                detail: `Current-standard review with evidence lanes checked fixture kanji ${kanji}.`,
+            },
+        ],
     };
 }
 

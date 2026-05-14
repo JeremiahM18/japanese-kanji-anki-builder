@@ -1718,6 +1718,25 @@ test("tracked starter word data protects third N4 platinum surface fixes", () =>
     ]);
 });
 
+test("tracked starter word data protects fourth N4 platinum surface fixes", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assert.equal(starterEntries["晩|ばん"].exampleSentence.japanese, "その晩は家でゆっくり休みました。");
+    assert.equal(starterEntries["晩|ばん"].exampleSentence.reading, "そのばんはいえでゆっくりやすみました。");
+    assert.equal(starterEntries["死ぬ|しぬ"].exampleSentence.japanese, "水が少ないと魚が死ぬことがあります。");
+    assert.equal(starterEntries["死ぬ|しぬ"].exampleSentence.reading, "みずがすくないとさかながしぬことがあります。");
+    assert.equal(starterEntries["待つ|まつ"].exampleSentence.japanese, "駅で友だちを待つのは少し寒いです。");
+    assert.equal(starterEntries["待つ|まつ"].exampleSentence.reading, "えきでともだちをまつのはすこしさむいです。");
+    assert.match(starterEntries["海|うみ"].notes, /word-card reading is うみ/);
+    assertCoverageReadings(starterEntries, [
+        ["赤い|あかい", "赤", "あかい"],
+        ["歩く|あるく", "歩", "あるく"],
+        ["海|うみ", "海", "うみ"],
+        ["起きる|おきる", "起", "おきる"],
+        ["使う|つかう", "使", "つかう"],
+    ]);
+});
+
 test("tracked starter word data includes the first N5 enhancement batch without duplicate junk", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

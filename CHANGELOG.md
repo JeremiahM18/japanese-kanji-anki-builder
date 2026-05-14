@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Revalidated the next N5 word platinum batch under `word-platinum-v2-limitation-aware` (`書く`, `出る`, `国`, `日`, `左`, `雨`, `お金`, `四`), fixing the `出る` example to expose exact `出る|でる` dictionary-form evidence, adding golden-protected notes/support surfaces, and raising current-standard N5 word platinum to `24/287`.
 - Revalidated the first N5 word platinum batch under `word-platinum-v2-limitation-aware` (`万`, `分かる`, `三つ`, `月`, `下`, `上げる`, `小さい`, `右`), raising current-standard N5 word platinum to `16/287` and tightening the seven previously empty notes/support surfaces with golden-protected learner-facing notes.
 - Clarified that the current additional-kanji surface is a `0`-card source-claim diagnostic, not an extra learner backlog, and updated the additional-ready report, release docs, and platinum policy language to make governed suppression explicit.
 - Suppressed core-collision source claims from the physical additional-unverified kanji decks, leaving source-level evidence in governance reports instead of duplicate Anki cards. `deck:kanji:additional:ready` now selects `0` additional cards from `421` raw source claims, with `406` unique core-retained kanji and `421` suppressed source claims; all additional golden/platinum review fixtures are empty and pass as empty surfaces. Added additional N4-N1 platinum aliases.

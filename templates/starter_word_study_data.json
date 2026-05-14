@@ -75,7 +75,8 @@
       "japanese": "お父さんは会社から帰りました。",
       "reading": "おとうさんはかいしゃからかえりました。",
       "english": "My father came home from work."
-    }
+    },
+    "notes": "Polite or familiar family term for father in beginner conversation; keeps 父 -> とう visible."
   },
   "お母さん|おかあさん": {
     "written": "お母さん",
@@ -101,7 +102,8 @@
       "japanese": "お母さんは台所で料理しています。",
       "reading": "おかあさんはだいどころでりょうりしています。",
       "english": "My mother is cooking in the kitchen."
-    }
+    },
+    "notes": "Polite or familiar family term for mother in beginner conversation; keeps 母 -> かあ visible."
   },
   "ご飯|ごはん": {
     "written": "ご飯",
@@ -231,7 +233,8 @@
       "japanese": "りんごを一つください。",
       "reading": "りんごをひとつください。",
       "english": "Please give me one apple."
-    }
+    },
+    "notes": "Core native counter form for one thing; useful for beginner requests."
   },
   "一時|いちじ": {
     "written": "一時",
@@ -765,7 +768,8 @@
       "japanese": "ねだんが下がりました。",
       "reading": "ねだんがさがりました。",
       "english": "The price went down."
-    }
+    },
+    "notes": "Common intransitive verb for going down or falling; useful for prices and levels."
   },
   "下げる|さげる": {
     "written": "下げる",
@@ -883,7 +887,7 @@
       "common",
       "n5"
     ],
-    "notes": "Very common polite question pattern.",
+    "notes": "Fixed polite beginner question expression built from 何 plus ですか; useful for classroom and basic conversation, not arbitrary phrase approval.",
     "exampleSentence": {
       "japanese": "これは何ですか。",
       "reading": "これはなんですか。",
@@ -1931,7 +1935,7 @@
         "九": "きゅう"
       }
     },
-    "notes": "Common standalone number form for counting sequences and number ranges.",
+    "notes": "Core standalone number form for nine; useful for number sequences and counting contexts.",
     "exampleSentence": {
       "japanese": "数字を一から九まで言います。",
       "reading": "すうじをいちからきゅうまでいいます。",
@@ -2110,7 +2114,8 @@
       "coversReadings": {
         "見": "みせる"
       }
-    }
+    },
+    "notes": "Common transitive verb for showing something; keeps 見せる distinct from 見る."
   },
   "見る|みる": {
     "written": "見る",
@@ -2135,7 +2140,8 @@
       "coversReadings": {
         "見": "みる"
       }
-    }
+    },
+    "notes": "Common verb for seeing or watching; keeps 見る distinct from 見せる."
   },
   "見学|けんがく": {
     "written": "見学",
@@ -2325,7 +2331,7 @@
         "五": "ご"
       }
     },
-    "notes": "Common standalone number form for counting sequences and number ranges.",
+    "notes": "Core standalone number form for five; useful for number sequences and counting contexts.",
     "exampleSentence": {
       "japanese": "数字を五から八まで言います。",
       "reading": "すうじをごからはちまでいいます。",
@@ -2527,7 +2533,8 @@
       "japanese": "家の後ろに小さい公園があります。",
       "reading": "いえのうしろにちいさいこうえんがあります。",
       "english": "There is a small park behind the house."
-    }
+    },
+    "notes": "Common location noun for behind or back; complements 後 and 後で without replacing them."
   },
   "公園|こうえん": {
     "written": "公園",
@@ -2607,7 +2614,7 @@
       "common",
       "n5"
     ],
-    "notes": "Polite form of 行く. Useful for hearing the いきます reading directly.",
+    "notes": "Polite form of 行く; useful for hearing いきます directly, but reviewed as a conjugated support form rather than a separate JMdict headword.",
     "exampleSentence": {
       "japanese": "毎朝七時に学校へ行きます。",
       "reading": "まいあさしちじにがっこうへいきます。",
@@ -3082,7 +3089,7 @@
         "三": "さん"
       }
     },
-    "notes": "Common standalone number form for counting sequences and number ranges.",
+    "notes": "Core standalone number form for three; useful for number sequences and counting contexts.",
     "exampleSentence": {
       "japanese": "数字を三から六まで言います。",
       "reading": "すうじをさんからろくまでいいます。",
@@ -3246,7 +3253,8 @@
       "japanese": "コップが四つあります。",
       "reading": "こっぷがよっつあります。",
       "english": "There are four cups."
-    }
+    },
+    "notes": "Core native counter form for four things; useful for everyday quantities."
   },
   "四時|よじ": {
     "written": "四時",
@@ -3492,7 +3500,8 @@
       "japanese": "質問が七つあります。",
       "reading": "しつもんがななつあります。",
       "english": "There are seven questions."
-    }
+    },
+    "notes": "Core native counter form for seven things; useful for everyday quantities."
   },
   "七日|なのか": {
     "written": "七日",
@@ -3782,7 +3791,8 @@
       "japanese": "かばんから本を出します。",
       "reading": "かばんからほんをだします。",
       "english": "I take a book out of my bag."
-    }
+    },
+    "notes": "Common transitive verb for taking or putting something out; keeps 出す distinct from 出る."
   },
   "書く|かく": {
     "written": "書く",
@@ -3985,7 +3995,8 @@
       "japanese": "机の上に本があります。",
       "reading": "つくえのうえにほんがあります。",
       "english": "There is a book on the desk."
-    }
+    },
+    "notes": "Common location noun for up, above, or on top; distinct from 上る and 上げる."
   },
   "上手|じょうず": {
     "written": "上手",
@@ -5847,7 +5858,8 @@
       "japanese": "コーヒーを二つお願いします。",
       "reading": "こーひーをふたつおねがいします。",
       "english": "Two coffees, please."
-    }
+    },
+    "notes": "Core native counter form for two things; useful for beginner quantity requests."
   },
   "二人|ふたり": {
     "written": "二人",
@@ -6005,7 +6017,8 @@
       "japanese": "かばんに本を入れます。",
       "reading": "かばんにほんをいれます。",
       "english": "I put the book into my bag."
-    }
+    },
+    "notes": "Common transitive verb for putting something in; keeps 入れる distinct from 入る."
   },
   "入る|はいる": {
     "written": "入る",
@@ -6141,7 +6154,8 @@
       "japanese": "白い猫がいます。",
       "reading": "しろいねこがいます。",
       "english": "There is a white cat."
-    }
+    },
+    "notes": "Core i-adjective for white; learner-friendly color word and 白 reading support."
   },
   "白米|はくまい": {
     "written": "白米",
@@ -6287,7 +6301,7 @@
         "八": "はち"
       }
     },
-    "notes": "Common standalone number form for counting sequences and number ranges.",
+    "notes": "Core standalone number form for eight; useful for number sequences and counting contexts.",
     "exampleSentence": {
       "japanese": "数字を八から十まで言います。",
       "reading": "すうじをはちからじゅうまでいいます。",
@@ -7390,7 +7404,7 @@
       "core",
       "n5"
     ],
-    "notes": "Polite form of 来る. Useful for hearing the きます reading directly.",
+    "notes": "Polite form of 来る; useful for hearing きます directly, but reviewed as a conjugated support form rather than a separate JMdict headword.",
     "exampleSentence": {
       "japanese": "明日、友だちが家に来ます。",
       "reading": "あした、ともだちがいえにきます。",
@@ -7565,7 +7579,8 @@
       "japanese": "箱が六つあります。",
       "reading": "はこがむっつあります。",
       "english": "There are six boxes."
-    }
+    },
+    "notes": "Core native counter form for six things; useful for everyday quantities."
   },
   "六時|ろくじ": {
     "written": "六時",
@@ -21789,7 +21804,7 @@
         "後": "あと"
       }
     },
-    "notes": "Common standalone time/reference noun that complements 後で and 後ろ without replacing them.",
+    "notes": "Common time/reference noun for after or later; complements 後で and 後ろ without replacing them.",
     "exampleSentence": {
       "japanese": "ご飯の後で水を飲みます。",
       "reading": "ごはんのあとでみずをのみます。",
@@ -21925,7 +21940,7 @@
         "出": "で"
       }
     },
-    "notes": "Common beginner verb for leaving or going out.",
+    "notes": "Common beginner verb for going out or leaving; useful everyday action word.",
     "exampleSentence": {
       "japanese": "明日、友だちと出かけます。",
       "reading": "あした、ともだちとでかけます。",

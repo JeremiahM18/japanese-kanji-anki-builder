@@ -904,7 +904,7 @@
       "core",
       "n5"
     ],
-    "notes": "Question word used for asking the time.",
+    "notes": "Core question word for asking what time; useful with 何時ですか.",
     "exampleSentence": {
       "japanese": "今、何時ですか。",
       "reading": "いま、なんじですか。",
@@ -1575,7 +1575,8 @@
       "japanese": "あの人は学生です。",
       "reading": "あのひとはがくせいです。",
       "english": "That person is a student."
-    }
+    },
+    "notes": "Core school/person word for student; useful for introductions and classroom contexts."
   },
   "楽しい|たのしい": {
     "written": "楽しい",
@@ -1656,7 +1657,7 @@
       "starter",
       "reading-coverage"
     ],
-    "notes": "Common noun form built from 休む.",
+    "notes": "Common noun for a break, day off, or holiday; distinct from the verb 休む.",
     "exampleSentence": {
       "japanese": "今日は学校が休みです。",
       "reading": "きょうはがっこうがやすみです。",
@@ -2421,7 +2422,8 @@
       "japanese": "午後は図書館で本を読みます。",
       "reading": "ごごはとしょかんでほんをよみます。",
       "english": "In the afternoon I read books at the library."
-    }
+    },
+    "notes": "Core time-of-day word for afternoon or p.m.; complements 午前."
   },
   "午前|ごぜん": {
     "written": "午前",
@@ -3127,7 +3129,8 @@
       "japanese": "三時に図書館で会いましょう。",
       "reading": "さんじにとしょかんであいましょう。",
       "english": "Let's meet at the library at three o'clock."
-    }
+    },
+    "notes": "Core time expression for three o'clock; useful for schedules and meeting times."
   },
   "三人|さんにん": {
     "written": "三人",
@@ -3408,7 +3411,8 @@
       "japanese": "今日は勉強する時間があります。",
       "reading": "きょうはべんきょうするじかんがあります。",
       "english": "Today I have time to study."
-    }
+    },
+    "notes": "Core word for time or hour; useful for schedules, study, and availability."
   },
   "時々|ときどき": {
     "written": "時々",
@@ -3720,7 +3724,7 @@
         "十": "とお"
       }
     },
-    "notes": "Important calendar and counter reading for 十.",
+    "notes": "Common date and duration word with a whole-word reading; do not split it into false per-kanji readings.",
     "exampleSentence": {
       "japanese": "テストは十日にあります。",
       "reading": "てすとはとおかにあります。",
@@ -3842,7 +3846,8 @@
       "japanese": "あの女の子は元気です。",
       "reading": "あのおんなのこはげんきです。",
       "english": "That girl is energetic."
-    }
+    },
+    "notes": "Common beginner word for girl; fixed の expression that belongs as a word card, not arbitrary phrase padding."
   },
   "小さい|ちいさい": {
     "written": "小さい",
@@ -4039,7 +4044,8 @@
       "japanese": "かいだんを上がります。",
       "reading": "かいだんをあがります。",
       "english": "I go up the stairs."
-    }
+    },
+    "notes": "Common motion/change verb for going up or rising; keeps 上がる distinct from 上る and 上げる."
   },
   "上げる|あげる": {
     "written": "上げる",
@@ -4813,7 +4819,8 @@
       "japanese": "先月、新しい車を買いました。",
       "reading": "せんげつ、あたらしいくるまをかいました。",
       "english": "Last month I bought a new car."
-    }
+    },
+    "notes": "Core time word for last month; useful for past events and schedules."
   },
   "先週|せんしゅう": {
     "written": "先週",
@@ -5391,7 +5398,8 @@
       "japanese": "部屋の電気をつけます。",
       "reading": "へやのでんきをつけます。",
       "english": "I turn on the room light."
-    }
+    },
+    "notes": "Core everyday word for electricity or lights; useful for room and household contexts."
   },
   "眼鏡|めがね": {
     "written": "眼鏡",
@@ -5468,7 +5476,8 @@
       "japanese": "友だちに電話をかけます。",
       "reading": "ともだちにでんわをかけます。",
       "english": "I call my friend on the phone."
-    }
+    },
+    "notes": "Core communication word for phone or phone call; useful with 電話をかける."
   },
   "地下|ちか": {
     "written": "地下",
@@ -6339,7 +6348,8 @@
       "japanese": "学校は八時に始まります。",
       "reading": "がっこうははちじにはじまります。",
       "english": "School starts at eight o'clock."
-    }
+    },
+    "notes": "Core time expression for eight o'clock; useful for schedules and daily routines."
   },
   "八日|ようか": {
     "written": "八日",
@@ -6480,7 +6490,8 @@
       "japanese": "このペンは百円です。",
       "reading": "このぺんはひゃくえんです。",
       "english": "This pen is 100 yen."
-    }
+    },
+    "notes": "Core price expression for 100 yen; useful for shopping examples."
   },
   "円高|えんだか": {
     "written": "円高",
@@ -7153,7 +7164,8 @@
       "coversReadings": {
         "名": "な"
       }
-    }
+    },
+    "notes": "Core self-introduction word for name; useful in polite question patterns."
   },
   "名字|みょうじ": {
     "written": "名字",
@@ -7453,7 +7465,8 @@
       "japanese": "来月、日本へ行きます。",
       "reading": "らいげつ、にほんへいきます。",
       "english": "Next month I will go to Japan."
-    }
+    },
+    "notes": "Core time word for next month; practical for plans and dates."
   },
   "来い|こい": {
     "written": "来い",
@@ -7520,7 +7533,8 @@
       "japanese": "来年、大学に入ります。",
       "reading": "らいねん、だいがくにはいります。",
       "english": "Next year I will enter university."
-    }
+    },
+    "notes": "Core time word for next year; practical for plans and future events."
   },
   "料理|りょうり": {
     "written": "料理",
@@ -7821,7 +7835,8 @@
       "japanese": "階段を下ります。",
       "reading": "かいだんをおります。",
       "english": "I go down the stairs."
-    }
+    },
+    "notes": "Common motion verb for going down or getting off; keeps 下りる distinct from 下がる and 下る."
   },
   "下ろす|おろす": {
     "written": "下ろす",
@@ -7964,7 +7979,8 @@
       "japanese": "山に上ります。",
       "reading": "やまにのぼります。",
       "english": "I climb the mountain."
-    }
+    },
+    "notes": "Common climbing/ascending verb; useful for mountains, stairs, and route descriptions."
   },
   "上り|のぼり": {
     "written": "上り",
@@ -21833,7 +21849,7 @@
         "子": "こ"
       }
     },
-    "notes": "Common beginner word that pairs naturally with 女の子.",
+    "notes": "Common beginner word for boy; fixed の expression that belongs as a word card, not arbitrary phrase padding.",
     "exampleSentence": {
       "japanese": "公園に男の子がいます。",
       "reading": "こうえんにおとこのこがいます。",
@@ -21861,7 +21877,7 @@
         "大人": "おとな"
       }
     },
-    "notes": "Common whole-word reading; do not split 大人 into fake per-kanji readings.",
+    "notes": "Common whole-word reading for adult; do not split 大人 into fake per-kanji readings.",
     "exampleSentence": {
       "japanese": "大人はここで待ちます。",
       "reading": "おとなはここでまちます。",

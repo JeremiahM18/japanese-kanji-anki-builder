@@ -3,6 +3,10 @@ const {
     CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
     NON_SHIPPING_STATUSES,
     REVALIDATION_STATUSES,
+    REQUIRED_KANJI_INTERNAL_CHECK_TYPES,
+    REQUIRED_KANJI_QUALITY_GATES,
+    REQUIRED_KANJI_REVIEW_EVIDENCE_TYPES,
+    REQUIRED_KANJI_SOURCE_EVIDENCE_TYPES,
     REVIEW_ONLY_STATUSES,
     isCurrentStandardPlatinumEntry,
     validateGeneratedKanjiRow,
@@ -16,6 +20,19 @@ const KANJI_BATCH_QUEUE_MODES = {
 };
 const SUBSTANTIVE_REREVIEW_PROOF_MARKER = "substantive post-v3 human rereview";
 const NON_MECHANICAL_PROOF_MARKER = "not mechanically migrated";
+const KANJI_REREVIEW_RUBRIC_VERSION = "kanji-platinum-rereview-rubric-v1";
+const REVIEW_RUBRIC_STATUSES = Object.freeze({
+    PASS: "pass",
+    ATTENTION: "attention",
+    MANUAL_JUDGMENT_REQUIRED: "manual_judgment_required",
+    NOT_PROVEN: "not_proven",
+    BLOCKED: "blocked",
+});
+const REVIEW_RUBRIC_RESULTS = Object.freeze({
+    ALREADY_PROVEN: "already_proven",
+    READY_FOR_SUBSTANTIVE_REVIEW: "ready_for_substantive_review",
+    BLOCKED: "blocked",
+});
 
 function normalizeText(value) {
     return String(value ?? "").trim();
@@ -27,6 +44,77 @@ function normalizeProofText(value) {
 
 function normalizeEvidenceEntries(entries = []) {
     return Array.isArray(entries) ? entries : [];
+}
+
+function buildRubricItem({
+    id,
+    label,
+    status,
+    evidence = [],
+    reviewerAction = "",
+    limitation = "",
+} = {}) {
+    return {
+        id,
+        label,
+        status,
+        evidence: evidence.map(normalizeText).filter(Boolean),
+        reviewerAction: normalizeText(reviewerAction),
+        limitation: normalizeText(limitation),
+    };
+}
+
+function buildEvidenceTypeSet(entry = {}, lane = "") {
+    return new Set(
+        normalizeEvidenceEntries(entry[lane])
+            .map((evidence) => normalizeText(evidence.type))
+            .filter(Boolean)
+    );
+}
+
+function findMissingEvidenceTypes(entry = {}, lane = "", requiredTypes = []) {
+    const evidenceTypes = buildEvidenceTypeSet(entry, lane);
+    return requiredTypes.filter((type) => !evidenceTypes.has(type));
+}
+
+function findCurrentStandardEntry(entries = []) {
+    return (Array.isArray(entries) ? entries : []).find(isCurrentStandardPlatinumEntry) || null;
+}
+
+function countDelimitedGlosses(value) {
+    return normalizeText(value).split(/\s+\/\s+/).filter(Boolean).length;
+}
+
+function formatStatusCounts(items = []) {
+    return Object.values(REVIEW_RUBRIC_STATUSES).reduce((counts, status) => {
+        counts[status] = (Array.isArray(items) ? items : []).filter((item) => item.status === status).length;
+        return counts;
+    }, {});
+}
+
+function buildSelectedRubricSummary(cards = []) {
+    const resultCounts = {};
+    const itemStatusCounts = Object.values(REVIEW_RUBRIC_STATUSES).reduce((counts, status) => {
+        counts[status] = 0;
+        return counts;
+    }, {});
+
+    for (const card of Array.isArray(cards) ? cards : []) {
+        const result = card.reviewRubric?.result || "(missing)";
+        resultCounts[result] = (resultCounts[result] || 0) + 1;
+        for (const item of card.reviewRubric?.items || []) {
+            if (Object.prototype.hasOwnProperty.call(itemStatusCounts, item.status)) {
+                itemStatusCounts[item.status] += 1;
+            }
+        }
+    }
+
+    return {
+        version: KANJI_REREVIEW_RUBRIC_VERSION,
+        selectedCards: Array.isArray(cards) ? cards.length : 0,
+        resultCounts,
+        itemStatusCounts,
+    };
 }
 
 function buildRereviewProvenanceText(entry = {}) {
@@ -272,6 +360,212 @@ function buildRiskFlags(row = {}, { reviewStatus = "missing_platinum", statuses 
     return flags;
 }
 
+function buildReviewRubric(row = {}, {
+    reviewStatus = "missing_platinum",
+    statuses = [],
+    currentStandardEntry = null,
+    hardChecks = [],
+    generatedFailures = [],
+    curatedEntry = null,
+} = {}) {
+    const kanji = normalizeText(row.kanji);
+    const primaryReading = normalizeText(row.primaryReading);
+    const evidenceText = normalizeReadingEvidence([
+        row.onReading,
+        row.kunReading,
+        row.notes,
+        row.exampleSentence,
+    ].join(" "));
+    const primaryReadingVisible = primaryReading
+        ? evidenceText.includes(normalizeReadingEvidence(primaryReading))
+        : false;
+    const totalReadingOptions = countReadingOptions(row.onReading) + countReadingOptions(row.kunReading);
+    const curatedConflict = describeCuratedReadingConflict(row, curatedEntry);
+    const hardCheckFailures = (Array.isArray(hardChecks) ? hardChecks : [])
+        .filter((check) => !check.passed)
+        .map((check) => check.name);
+    const sourceMissing = currentStandardEntry
+        ? findMissingEvidenceTypes(currentStandardEntry, "sourceEvidence", REQUIRED_KANJI_SOURCE_EVIDENCE_TYPES)
+        : [...REQUIRED_KANJI_SOURCE_EVIDENCE_TYPES];
+    const internalMissing = currentStandardEntry
+        ? findMissingEvidenceTypes(currentStandardEntry, "internalChecks", REQUIRED_KANJI_INTERNAL_CHECK_TYPES)
+        : [...REQUIRED_KANJI_INTERNAL_CHECK_TYPES];
+    const reviewMissing = currentStandardEntry
+        ? findMissingEvidenceTypes(currentStandardEntry, "reviewEvidence", REQUIRED_KANJI_REVIEW_EVIDENCE_TYPES)
+        : [...REQUIRED_KANJI_REVIEW_EVIDENCE_TYPES];
+    const gateFailures = currentStandardEntry
+        ? REQUIRED_KANJI_QUALITY_GATES.filter((gate) => currentStandardEntry.qualityGates?.[gate] !== true)
+        : [];
+    const limitations = Array.isArray(currentStandardEntry?.verificationLimitations)
+        ? currentStandardEntry.verificationLimitations
+        : [];
+    const hasSubstantiveProof = currentStandardEntry
+        ? entryHasSubstantiveCurrentStandardRereviewProof(currentStandardEntry)
+        : false;
+    const meaningGlosses = countDelimitedGlosses(row.meaningJP);
+    const broaderMeaningGlosses = countDelimitedGlosses(row.kanjiMeanings);
+    const notesIncludeKanji = kanji ? stripMarkup(row.notes).includes(kanji) : false;
+    const exampleIncludesKanji = kanji ? stripMarkup(row.exampleSentence).includes(kanji) : false;
+
+    const items = [
+        buildRubricItem({
+            id: "kanji_card_contract",
+            label: "Kanji card contract",
+            status: hardCheckFailures.length > 0 || generatedFailures.length > 0
+                ? REVIEW_RUBRIC_STATUSES.BLOCKED
+                : REVIEW_RUBRIC_STATUSES.PASS,
+            evidence: [
+                `Kanji=${kanji || "(blank)"}`,
+                `DisplayWord=${normalizeText(row.displayWord) || "(blank)"}`,
+                `StudyWordKanji=${normalizeText(row.studyWordKanji) || "(blank)"}`,
+                hardCheckFailures.length > 0 ? `hard check failures: ${hardCheckFailures.join("; ")}` : "hard checks pass",
+                generatedFailures.length > 0 ? `generated failures: ${generatedFailures.join("; ")}` : "generated row validator pass",
+            ],
+            reviewerAction: hardCheckFailures.length > 0 || generatedFailures.length > 0
+                ? "Fix the generated kanji-card contract before substantive rereview."
+                : "No card-anchor contract issue surfaced by automation.",
+        }),
+        buildRubricItem({
+            id: "primary_reading_choice",
+            label: "Primary reading choice",
+            status: !primaryReading
+                ? REVIEW_RUBRIC_STATUSES.BLOCKED
+                : totalReadingOptions > 2 || !primaryReadingVisible || curatedConflict || !normalizeText(currentStandardEntry?.primaryReadingRationale)
+                    ? REVIEW_RUBRIC_STATUSES.ATTENTION
+                    : REVIEW_RUBRIC_STATUSES.PASS,
+            evidence: [
+                `PrimaryReading=${primaryReading || "(blank)"}`,
+                `listed reading options=${totalReadingOptions}`,
+                primaryReadingVisible ? "primary reading visible in generated reading/support surface" : "primary reading not plainly visible in generated reading/support surface",
+                normalizeText(currentStandardEntry?.primaryReadingRationale)
+                    ? `rationale=${currentStandardEntry.primaryReadingRationale}`
+                    : "primary reading rationale missing from current-standard entry",
+                curatedConflict,
+            ],
+            reviewerAction: "Confirm the selected reading is the most learner-useful, level-appropriate individual-kanji reading; do not rely on dictionary order or existing audio.",
+        }),
+        buildRubricItem({
+            id: "meaning_scope",
+            label: "Meaning scope",
+            status: !normalizeText(row.meaningJP) || !normalizeText(row.kanjiMeanings)
+                ? REVIEW_RUBRIC_STATUSES.BLOCKED
+                : meaningGlosses > 2 || broaderMeaningGlosses > 6
+                    ? REVIEW_RUBRIC_STATUSES.ATTENTION
+                    : REVIEW_RUBRIC_STATUSES.PASS,
+            evidence: [
+                `MeaningJP=${normalizeText(row.meaningJP) || "(blank)"}`,
+                `MeaningJP gloss count=${meaningGlosses}`,
+                `KanjiMeanings=${normalizeText(row.kanjiMeanings) || "(blank)"}`,
+                `KanjiMeanings gloss count=${broaderMeaningGlosses}`,
+            ],
+            reviewerAction: "Confirm MeaningJP is tied to the primary reading and KanjiMeanings contains useful broader meanings without low-value dictionary noise.",
+        }),
+        buildRubricItem({
+            id: "source_evidence_lane",
+            label: "Governed Japanese-source evidence",
+            status: !currentStandardEntry || sourceMissing.length > 0
+                ? REVIEW_RUBRIC_STATUSES.BLOCKED
+                : REVIEW_RUBRIC_STATUSES.MANUAL_JUDGMENT_REQUIRED,
+            evidence: [
+                currentStandardEntry ? "current-standard manifest entry present" : "current-standard manifest entry missing",
+                sourceMissing.length > 0 ? `missing sourceEvidence types: ${sourceMissing.join(", ")}` : "required sourceEvidence types present",
+                `status history=${statuses.join(", ") || "(none)"}`,
+            ],
+            reviewerAction: "Open the governed Japanese source during substantive rereview and confirm it supports the exact kanji, primary reading, primary meaning, and broader meaning fields.",
+            limitation: "The report checks lane presence and binding posture; it does not independently prove source correctness.",
+        }),
+        buildRubricItem({
+            id: "evidence_lane_separation",
+            label: "Evidence lane separation and gates",
+            status: !currentStandardEntry || internalMissing.length > 0 || reviewMissing.length > 0 || gateFailures.length > 0
+                ? REVIEW_RUBRIC_STATUSES.BLOCKED
+                : REVIEW_RUBRIC_STATUSES.PASS,
+            evidence: [
+                internalMissing.length > 0 ? `missing internalChecks: ${internalMissing.join(", ")}` : "required internalChecks present",
+                reviewMissing.length > 0 ? `missing reviewEvidence: ${reviewMissing.join(", ")}` : "required reviewEvidence present",
+                gateFailures.length > 0 ? `quality gate failures: ${gateFailures.join(", ")}` : "required quality gates true",
+                "golden regression is internal regression only, not source truth",
+            ],
+            reviewerAction: "Keep source truth, internal checks, and reviewer judgment in separate lanes before adding rereview provenance.",
+        }),
+        buildRubricItem({
+            id: "example_and_support_usage",
+            label: "Example and support usage",
+            status: !normalizeText(row.exampleSentence)
+                ? REVIEW_RUBRIC_STATUSES.BLOCKED
+                : !notesIncludeKanji || !exampleIncludesKanji
+                    ? REVIEW_RUBRIC_STATUSES.ATTENTION
+                    : REVIEW_RUBRIC_STATUSES.MANUAL_JUDGMENT_REQUIRED,
+            evidence: [
+                `notes include target kanji=${notesIncludeKanji}`,
+                `example includes target kanji=${exampleIncludesKanji}`,
+                `example=${stripMarkup(row.exampleSentence) || "(blank)"}`,
+            ],
+            reviewerAction: "Judge whether notes and the example are support-only, natural enough, useful, learner-friendly, level-appropriate, and do not replace the individual-kanji anchor.",
+            limitation: "Automation can check presence and binding, but naturalness and pedagogy are reviewer-owned best-effort judgments.",
+        }),
+        buildRubricItem({
+            id: "media_identity",
+            label: "Audio and stroke-order identity",
+            status: hardCheckFailures.some((failure) => /Audio|StrokeOrder/.test(failure)) || internalMissing.some((type) => ["media-audit", "audio-review", "stroke-order-review"].includes(type))
+                ? REVIEW_RUBRIC_STATUSES.BLOCKED
+                : REVIEW_RUBRIC_STATUSES.MANUAL_JUDGMENT_REQUIRED,
+            evidence: [
+                `Audio=${normalizeText(row.audio) || "(blank)"}`,
+                `StrokeOrder=${normalizeText(row.strokeOrder) || "(blank)"}`,
+                internalMissing.some((type) => ["media-audit", "audio-review", "stroke-order-review"].includes(type))
+                    ? "media evidence lanes incomplete"
+                    : "media evidence lanes present",
+            ],
+            reviewerAction: "Confirm exact primary-reading audio identity and managed provenance; listening QA and visual stroke-order sequence review remain human release tasks.",
+            limitation: "The report verifies field identity/provenance posture, not audio naturalness or stroke sequence correctness by itself.",
+        }),
+        buildRubricItem({
+            id: "verification_limitations",
+            label: "Verification limitations",
+            status: limitations.length > 0
+                ? REVIEW_RUBRIC_STATUSES.ATTENTION
+                : REVIEW_RUBRIC_STATUSES.MANUAL_JUDGMENT_REQUIRED,
+            evidence: [
+                `active limitations=${limitations.length}`,
+                limitations.length > 0
+                    ? limitations.map((limitation) => `${limitation.field || "(unknown field)"}:${limitation.status || "(unknown status)"}`).join(", ")
+                    : "no active limitations recorded",
+            ],
+            reviewerAction: "Actively decide whether any non-core limitation exists; if one exists, record it explicitly instead of silently passing it.",
+        }),
+        buildRubricItem({
+            id: "substantive_rereview_provenance",
+            label: "Substantive rereview provenance",
+            status: hasSubstantiveProof
+                ? REVIEW_RUBRIC_STATUSES.PASS
+                : currentStandardEntry
+                    ? REVIEW_RUBRIC_STATUSES.NOT_PROVEN
+                    : REVIEW_RUBRIC_STATUSES.BLOCKED,
+            evidence: [
+                currentStandardEntry ? "current-standard structural entry present" : "current-standard structural entry missing",
+                hasSubstantiveProof ? "explicit non-mechanical substantive rereview proof present" : "explicit non-mechanical substantive rereview proof missing",
+            ],
+            reviewerAction: hasSubstantiveProof
+                ? "Do not replace provenance unless intentionally correcting prior review evidence."
+                : "Add rereviewProvenance only after the substantive review has actually been performed.",
+        }),
+    ];
+    const itemStatusCounts = formatStatusCounts(items);
+    const result = itemStatusCounts[REVIEW_RUBRIC_STATUSES.BLOCKED] > 0
+        ? REVIEW_RUBRIC_RESULTS.BLOCKED
+        : reviewStatus === "substantive_rereview_proven"
+            ? REVIEW_RUBRIC_RESULTS.ALREADY_PROVEN
+            : REVIEW_RUBRIC_RESULTS.READY_FOR_SUBSTANTIVE_REVIEW;
+
+    return {
+        version: KANJI_REREVIEW_RUBRIC_VERSION,
+        result,
+        itemStatusCounts,
+        items,
+    };
+}
+
 function normalizeQueueMode(queue = KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW) {
     const normalized = normalizeText(queue);
     return Object.values(KANJI_BATCH_QUEUE_MODES).includes(normalized)
@@ -339,6 +633,16 @@ function buildPlatinumKanjiBatchReport({
         const hardChecks = buildHardChecks(row);
         const generatedFailures = validateGeneratedKanjiRow(row);
         const curatedEntry = curatedStudyData?.[row.kanji] || null;
+        const currentStandardEntry = findCurrentStandardEntry(state.entries);
+        const riskFlags = buildRiskFlags(row, { reviewStatus, statuses, curatedEntry });
+        const reviewRubric = buildReviewRubric(row, {
+            reviewStatus,
+            statuses,
+            currentStandardEntry,
+            hardChecks,
+            generatedFailures,
+            curatedEntry,
+        });
         return {
             kanji: row.kanji,
             levelLabel: row.levelLabel || (Number.isInteger(level) ? `N${level}` : ""),
@@ -360,7 +664,8 @@ function buildPlatinumKanjiBatchReport({
             hardChecks,
             generatedFailures,
             hardChecksPassed: hardChecks.every((check) => check.passed) && generatedFailures.length === 0,
-            riskFlags: buildRiskFlags(row, { reviewStatus, statuses, curatedEntry }),
+            riskFlags,
+            reviewRubric,
         };
     });
 
@@ -376,6 +681,7 @@ function buildPlatinumKanjiBatchReport({
             remainingSubstantiveRereview: needsSubstantiveRereviewRows.length,
             selectedCards: cards.length,
         },
+        reviewRubricSummary: buildSelectedRubricSummary(cards),
         nextMissingKanji: missingRows.map((row) => row.kanji),
         nextSubstantiveRereviewKanji: needsSubstantiveRereviewRows.map((row) => row.kanji),
         cards,
@@ -397,6 +703,14 @@ function formatPlatinumKanjiBatchReport(report = {}) {
         `Remaining substantive rereview: ${summary.remainingSubstantiveRereview || 0}`,
         `Selected cards: ${summary.selectedCards || 0}`,
     ];
+    const rubricSummary = report.reviewRubricSummary || {};
+    if (rubricSummary.version) {
+        lines.push(
+            `Rubric: ${rubricSummary.version}`,
+            `Rubric selected-card results: ${Object.entries(rubricSummary.resultCounts || {}).map(([key, value]) => `${key}=${value}`).join(", ") || "(none)"}`,
+            `Rubric item statuses: ${Object.entries(rubricSummary.itemStatusCounts || {}).map(([key, value]) => `${key}=${value}`).join(", ") || "(none)"}`
+        );
+    }
 
     const queueKanji = report.queue === KANJI_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD
         ? report.nextMissingKanji
@@ -430,6 +744,18 @@ function formatPlatinumKanjiBatchReport(report = {}) {
         } else {
             lines.push("  Risk flags: none");
         }
+        if (card.reviewRubric?.items?.length > 0) {
+            lines.push(`  Review rubric: ${card.reviewRubric.result}`);
+            for (const item of card.reviewRubric.items) {
+                lines.push(`    - ${item.id}: ${item.status} - ${item.label}`);
+                if (item.reviewerAction) {
+                    lines.push(`      action: ${item.reviewerAction}`);
+                }
+                if (item.limitation) {
+                    lines.push(`      limitation: ${item.limitation}`);
+                }
+            }
+        }
     }
 
     lines.push(
@@ -442,9 +768,13 @@ function formatPlatinumKanjiBatchReport(report = {}) {
 
 module.exports = {
     KANJI_BATCH_QUEUE_MODES,
+    KANJI_REREVIEW_RUBRIC_VERSION,
+    REVIEW_RUBRIC_RESULTS,
+    REVIEW_RUBRIC_STATUSES,
     buildHardChecks,
     buildPlatinumKanjiBatchReport,
     buildRiskFlags,
+    buildReviewRubric,
     classifyReviewStatus,
     describeCuratedReadingConflict,
     formatPlatinumKanjiBatchReport,

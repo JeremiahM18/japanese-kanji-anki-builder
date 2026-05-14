@@ -3,14 +3,20 @@ const assert = require("node:assert/strict");
 
 const {
     KANJI_BATCH_QUEUE_MODES,
+    REVIEW_RUBRIC_RESULTS,
+    REVIEW_RUBRIC_STATUSES,
     buildPlatinumKanjiBatchReport,
     buildRiskFlags,
+    buildReviewRubric,
     describeCuratedReadingConflict,
     formatPlatinumKanjiBatchReport,
     normalizeReadingEvidence,
     selectBatchRows,
 } = require("../src/services/platinumKanjiBatchReportService");
-const { CURRENT_KANJI_PLATINUM_REVIEW_STANDARD } = require("../src/services/platinumKanjiReviewService");
+const {
+    CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
+    REQUIRED_KANJI_QUALITY_GATES,
+} = require("../src/services/platinumKanjiReviewService");
 
 function buildRow(overrides = {}) {
     return {
@@ -39,6 +45,7 @@ function buildCurrentStandardEntry(kanji = "日") {
         reviewStandard: CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
         revalidatedAt: "2026-05-13",
         revalidationSummary: "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+        primaryReadingRationale: `Uses the exported primary reading for ${kanji} because it is learner-facing at this level.`,
         sourceEvidence: [{
             type: "japanese-source",
             source: "fixture Japanese source",
@@ -83,6 +90,7 @@ function buildCurrentStandardEntry(kanji = "日") {
                 detail: `Current-standard review with evidence lanes checked fixture kanji ${kanji}.`,
             },
         ],
+        qualityGates: Object.fromEntries(REQUIRED_KANJI_QUALITY_GATES.map((gate) => [gate, true])),
     };
 }
 
@@ -146,9 +154,53 @@ test("buildPlatinumKanjiBatchReport summarizes surfaces checks and risks without
     assert.equal(report.summary.remainingSubstantiveRereview, 2);
     assert.deepEqual(report.cards.map((card) => card.kanji), ["日", "月"]);
     assert.equal(report.cards[1].hardChecksPassed, true);
+    assert.equal(report.reviewRubricSummary.version, "kanji-platinum-rereview-rubric-v1");
+    assert.equal(report.cards[0].reviewRubric.result, REVIEW_RUBRIC_RESULTS.READY_FOR_SUBSTANTIVE_REVIEW);
+    assert.equal(
+        report.cards[0].reviewRubric.items.find((item) => item.id === "substantive_rereview_provenance").status,
+        REVIEW_RUBRIC_STATUSES.NOT_PROVEN
+    );
+    assert.equal(
+        report.cards[0].reviewRubric.items.find((item) => item.id === "source_evidence_lane").status,
+        REVIEW_RUBRIC_STATUSES.MANUAL_JUDGMENT_REQUIRED
+    );
+    assert.equal(
+        report.cards[0].reviewRubric.items.find((item) => item.id === "example_and_support_usage").status,
+        REVIEW_RUBRIC_STATUSES.MANUAL_JUDGMENT_REQUIRED
+    );
     assert.match(report.cards[0].riskFlags.join("\n"), /square-zero substantive rereview proof is still required/);
     assert.match(report.cards[1].riskFlags.join("\n"), /notes do not visibly include the target kanji/);
     assert.match(report.cards[1].riskFlags.join("\n"), /MeaningJP has several glosses/);
+});
+
+test("buildReviewRubric blocks dirty generated cards before provenance work", () => {
+    const row = buildRow({
+        displayWord: "日本",
+        studyWordKanji: "日本",
+        audio: "[sound:65E5_日-kanji-reading-日-にち.wav]",
+    });
+    const hardChecks = [
+        { name: "DisplayWord equals target kanji", passed: false },
+        { name: "StudyWordKanji is blank", passed: false },
+        { name: "Audio is exact target plus primary reading", passed: false },
+    ];
+    const rubric = buildReviewRubric(row, {
+        reviewStatus: "current_standard_structural_only",
+        statuses: ["platinum"],
+        currentStandardEntry: buildCurrentStandardEntry("日"),
+        hardChecks,
+        generatedFailures: ["DisplayWord must equal the target kanji."],
+    });
+
+    assert.equal(rubric.result, REVIEW_RUBRIC_RESULTS.BLOCKED);
+    assert.equal(
+        rubric.items.find((item) => item.id === "kanji_card_contract").status,
+        REVIEW_RUBRIC_STATUSES.BLOCKED
+    );
+    assert.equal(
+        rubric.items.find((item) => item.id === "media_identity").status,
+        REVIEW_RUBRIC_STATUSES.BLOCKED
+    );
 });
 
 test("buildRiskFlags calls out active entries and generated support risks", () => {
@@ -222,6 +274,9 @@ test("formatPlatinumKanjiBatchReport states that the report is read-only", () =>
 
     const formatted = formatPlatinumKanjiBatchReport(report);
     assert.match(formatted, /Platinum N5 Kanji Batch Report/);
+    assert.match(formatted, /Rubric: kanji-platinum-rereview-rubric-v1/);
+    assert.match(formatted, /Review rubric: blocked/);
+    assert.match(formatted, /manual_judgment_required/);
     assert.match(formatted, /This report is read-only/);
     assert.match(formatted, /日 \[missing_platinum\]/);
 });

@@ -83,6 +83,8 @@ Each platinum kanji card must pass all rules below:
 - The `japanese-source` evidence cites a governed `kanji-field-verification` source for the exported primary reading, primary meaning, and broader meanings. It does not certify the JLPT placement or source-governance confidence, and it must be independent from any source-claim origin family used by the source-governance layer for that kanji-level claim.
 - The card does not depend on ignored local files, untracked generated content, or silent fallback behavior.
 
+Before adding kanji `rereviewProvenance`, run `deck:platinum:batch` for the target level and use the per-card `reviewRubric` as the square-zero checklist. The rubric is a read-only preflight: it exposes structural blocks, attention risks, and explicit `manual_judgment_required` items for source confirmation, example pedagogy, audio listening, stroke-order visual judgment, and verification limitations. A passing or ready rubric does not itself prove substantive review; provenance may be added only after the reviewer actually checks the card against the rubric and records any limitation instead of silently passing it.
+
 ## Outcomes
 
 Every platinum pass decision must use one explicit outcome:

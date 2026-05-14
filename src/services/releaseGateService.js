@@ -20,9 +20,12 @@ const RELEASE_GATE_SCOPE = Object.freeze({
         "public product deck readiness",
         "tracked-source N5/N4 deck coverage",
         "level golden review benchmarks",
+        "level platinum review benchmarks",
+        "substantive platinum rereview provenance",
+        "word source-family independence posture",
         "manual Anki import or learner UX review",
     ],
-    followUp: "Run level-specific readiness, golden review, accessibility, provenance, and manual QA checks before public release.",
+    followUp: "Run level-specific readiness, golden review, platinum review, rereview provenance, source posture, accessibility, and manual QA checks before public release.",
 });
 
 function assertPathExists(filePath) {

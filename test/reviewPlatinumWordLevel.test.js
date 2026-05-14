@@ -4,6 +4,8 @@ const assert = require("node:assert/strict");
 const { buildWordExportOptions, parseArgs, parseWordTsvForPlatinum } = require("../scripts/reviewPlatinumWordLevel");
 const { parseArgs: parseBatchReportArgs } = require("../scripts/platinumWordBatchReport");
 const { parseArgs: parseRereviewStatusArgs } = require("../scripts/reportPlatinumWordRereviewStatus");
+const { parseArgs: parseSourcePostureArgs } = require("../scripts/reportPlatinumWordSourcePosture");
+const { parseArgs: parsePlatinumGovernanceGateArgs } = require("../scripts/runPlatinumGovernanceGate");
 
 test("parseArgs accepts platinum word review options", () => {
     const options = parseArgs(["--level=5", "--json", "--require-all", "--allow-empty"]);
@@ -50,6 +52,27 @@ test("platinum word rereview status parseArgs accepts scoped read-only status op
     assert.deepEqual(options, {
         json: true,
         levels: [5, 4],
+        unknownArgs: ["--oops"],
+    });
+});
+
+test("platinum word source posture parseArgs accepts scoped read-only posture options", () => {
+    const options = parseSourcePostureArgs(["--level=5", "--json", "--oops"]);
+
+    assert.deepEqual(options, {
+        json: true,
+        levels: [5],
+        unknownArgs: ["--oops"],
+    });
+});
+
+test("platinum governance gate parseArgs accepts scoped real-row gate options", () => {
+    const options = parsePlatinumGovernanceGateArgs(["--kanji-levels=5,4", "--word-levels=5", "--json", "--oops"]);
+
+    assert.deepEqual(options, {
+        json: true,
+        kanjiLevels: [5, 4],
+        wordLevels: [5],
         unknownArgs: ["--oops"],
     });
 });

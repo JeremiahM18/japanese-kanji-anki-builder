@@ -28,6 +28,9 @@ test("runReleaseGate verifies deterministic artifact contracts", async () => {
         assert.deepEqual(report.validationScope, RELEASE_GATE_SCOPE);
         assert.equal(report.validationScope.doesNotValidate.includes("public product deck readiness"), true);
         assert.equal(report.validationScope.doesNotValidate.includes("level golden review benchmarks"), true);
+        assert.equal(report.validationScope.doesNotValidate.includes("level platinum review benchmarks"), true);
+        assert.equal(report.validationScope.doesNotValidate.includes("substantive platinum rereview provenance"), true);
+        assert.equal(report.validationScope.doesNotValidate.includes("word source-family independence posture"), true);
         assert.equal(report.audioPolicy.valid, true);
         assert.deepEqual(report.audioPolicy.uniqueSources, ["voicevox-nemo"]);
         assert.equal(fs.existsSync(path.join(tempRoot, "out", "build", "exports", "jlpt-n5.tsv")), true);

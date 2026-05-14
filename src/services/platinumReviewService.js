@@ -738,13 +738,14 @@ function evaluatePlatinumEntry({
         } else {
             failures.push(...validateGeneratedPlatinumRow(row));
             failures.push(...validateSameLevelWordAnchor({ row, entry, kanjiLevelData }));
-            const fieldReport = evaluateGoldenWordReviewSet({ rows, expectations: [entry] });
-            const fieldResult = fieldReport.results?.[0];
-            if (fieldResult && !fieldResult.passed) {
-                failures.push(...fieldResult.failures);
+            // Golden word review is regression coverage for exported fields, not Japanese-source truth.
+            const goldenRegressionFieldReport = evaluateGoldenWordReviewSet({ rows, expectations: [entry] });
+            const goldenRegressionFieldResult = goldenRegressionFieldReport.results?.[0];
+            if (goldenRegressionFieldResult && !goldenRegressionFieldResult.passed) {
+                failures.push(...goldenRegressionFieldResult.failures);
             }
-            if (fieldReport.coverageFailures?.length > 0) {
-                failures.push(...fieldReport.coverageFailures);
+            if (goldenRegressionFieldReport.coverageFailures?.length > 0) {
+                failures.push(...goldenRegressionFieldReport.coverageFailures);
             }
             if (!includesAllLiteral(row.pitchAccent, entry.pitchAccentIncludes)) {
                 failures.push(`pitch accent did not include: ${normalizeStringArray(entry.pitchAccentIncludes).join(", ")}`);

@@ -263,9 +263,11 @@ Deferred and removed kanji entries must include `kanji`, `reviewedAt`, `reviewer
 npm run deck:platinum:batch -- --level=5 --limit=12
 npm run deck:platinum:batch -- --level=5 --kanji=父,生,男
 npm run deck:platinum:rereview-status -- --levels=5,4
+npm run deck:platinum:governance-gate
 npm run deck:words:platinum:batch -- --level=5 --limit=8
 npm run deck:words:platinum:batch -- --level=5 --words=今日:きょう,八日:ようか
 npm run deck:words:platinum:rereview-status -- --levels=5,4
+npm run deck:words:platinum:source-posture -- --levels=5,4
 npm run deck:words:level-anchor-audit -- --level=5
 npm run deck:platinum:n5
 npm run deck:platinum:n4
@@ -288,6 +290,10 @@ npm run deck:words:platinum:n4
 `deck:words:platinum:batch` is the matching read-only word pre-review report. It does not create entries or prove release readiness. Use it before editing a word platinum manifest to see exact written-reading identity, generated card fields, sentence lines, exact word audio, pitch source/render status, source lookup links, risk flags, existing platinum status, and the next missing queue.
 
 `deck:words:platinum:rereview-status` is the read-only word rereview provenance report. It separates current v3 structural pass from explicit substantive post-v3 human rereview proof. It must not infer proof from `revalidatedAt` or lane-valid `current-standard-review` text alone; missing proof is reported with the searchable marker `missing_substantive_current_standard_word_rereview_proof`. Generated rows without active current-standard word platinum entries are classified as `blocked_or_failing` rather than hidden in the rereview backlog.
+
+`deck:words:platinum:source-posture` is the read-only word source-family posture report. A governed single source can satisfy structural word-field verification, but it does not prove independent source-family corroboration and is marked `word_source_independence_not_proven`. Word source-claim origin independence is marked `word_source_claim_origin_independence_not_evaluated` until a word source-origin manifest exists; do not imply that word placement/source-origin circularity was checked before that data exists.
+
+`deck:platinum:governance-gate` is the local-data real-row governance gate for N5/N4 platinum posture. It fails dirty reviewed entries and missing governed word sources, surfaces bulk-template `revalidationSummary` patterns, marker-only example-quality automation, and zero verification-limitations populations, and allows known incomplete N4 word platinum only when every blocked row is missing active current-standard coverage. It does not edit cards or replace level-specific release commands.
 
 Each kanji platinum command requires every generated card for that level and surface to have an active current-standard platinum entry by default. Use `--allow-legacy-standard` only to inspect historical field-bound entries while planning revalidation; it must not be used as version 1 release evidence.
 

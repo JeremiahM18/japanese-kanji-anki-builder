@@ -1,5 +1,6 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
 
 const {
     loadPlatinumCardSourceManifest,
@@ -96,4 +97,18 @@ test("tracked platinum card source manifest loads with field and non-field sourc
     assert.equal(manifest.sources.jlptstudy_net.disallowedUse.includes("word-field-verification"), true);
     assert.equal(manifest.sources.source_governance_manifest.disallowedUse.includes("kanji-field-verification"), true);
     assert.equal(manifest.sources.kanjidic2_legacy.allowedUse.includes("placement-claim-origin"), true);
+});
+
+test("kanji platinum japanese-source lanes do not cite generated local artifacts as source names", () => {
+    for (const level of [5, 4]) {
+        const entries = JSON.parse(fs.readFileSync(`templates/platinum_n${level}_review_set.json`, "utf-8"));
+        const polluted = entries.flatMap((entry) => (
+            (entry.sourceEvidence || [])
+                .filter((evidence) => evidence.type === "japanese-source")
+                .filter((evidence) => /data\/kanji_jlpt_only\.json|templates\/starter_curated_study_data\.json|templates\/golden_/i.test(evidence.source || ""))
+                .map((evidence) => `${entry.kanji}: ${evidence.source}`)
+        ));
+
+        assert.deepEqual(polluted, [], `N${level} kanji sourceEvidence japanese-source lane must cite governed external/Japanese-source truth only`);
+    }
 });

@@ -49,6 +49,13 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Run manifest-only word platinum source posture
+        run: npm run deck:words:platinum:source-posture -- --levels=5,4
+
+      - name: Run local-data platinum governance gate
+        run: npm run deck:platinum:governance-gate
+        if: ${{ hashFiles('data/kanji_jlpt_only.json') != '' && hashFiles('data/curated_study_data.json') != '' && hashFiles('data/word_study_data.json') != '' }}
+
       - name: Verify tracked JLPT taxonomy alignment
         run: npm run data:audit:jlpt -- --strict
         if: ${{ hashFiles('data/kanji_jlpt_only.json') != '' }}

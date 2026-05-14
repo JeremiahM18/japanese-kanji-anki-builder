@@ -92,6 +92,8 @@ A word level ships only when all criteria are true:
 - N5 word: expanded to `287` canonical governed rows plus `20` tracked source-only phrase exclusions; current word-level placement, golden, tracked-source artifact, automated readiness, and current-standard word platinum checks pass at `287/287` under `word-platinum-v3-evidence-lanes`, but explicit non-mechanical substantive rereview provenance is not proven for any N5 word entry yet; manual import QA, accessibility, and listening checks are still required before release-ready status
 - N4 word: expanded to `667` governed rows and current word-level placement and golden review pass, but readiness remains incomplete. Current-standard word platinum has started at `96/667` under `word-platinum-v3-evidence-lanes`, with `571` generated rows still missing current-standard platinum review and no explicit non-mechanical substantive rereview provenance proven for the 96 structurally passing entries. Current live checks report completion `incomplete` with one active planning item (`元 -> げん`), and `deck:words:ready -- --levels=4 --require-no-active-triage` remains blocked by active triage before full platinum completion, import QA, accessibility, and listening checks
 - Word platinum rereview provenance: `deck:words:platinum:rereview-status -- --levels=5,4` currently reports N5/N4 combined `954` generated active word rows, `383/954` current v3 structural pass, `0/383` substantive current-standard review proven, `383/383` structurally passing entries needing substantive rereview, and `571/954` blocked/failing because N4 word platinum is incomplete. The missing-proof marker is `missing_substantive_current_standard_word_rereview_proof`; `revalidatedAt` and lane-valid `current-standard-review` text are not treated as standalone proof of substantive post-v3 human rereview.
+- Word platinum source posture: `deck:words:platinum:source-posture -- --levels=5,4` currently reports `383` active current-standard word platinum entries, `115` with independent source families proven, `268` with a single source family, and `0` missing governed source evidence. Single-source-family entries remain structurally governed but must not be described as independently corroborated; the searchable marker is `word_source_independence_not_proven`. Word source-claim origin independence is not evaluated until a word source-origin manifest exists; the searchable marker is `word_source_claim_origin_independence_not_evaluated`.
+- Platinum governance gate: `deck:platinum:governance-gate` currently passes against local real generated N5/N4 rows, with warnings for N5/N4 kanji and word missing substantive rereview proof, N4 word incomplete platinum coverage, word single-source-family posture, bulk-template revalidation summaries, missing card-specific revalidation summaries, marker-only example-quality automation, and zero active verification limitations. This gate does not edit cards and intentionally allows known incomplete N4 word coverage only when blocked rows are missing active current-standard platinum entries rather than dirty reviewed entries.
 
 ## Required gates before shipping
 
@@ -149,6 +151,8 @@ npm run deck:words:level-anchor-audit -- --level=5
 npm run deck:words:platinum:n5
 npm run deck:words:platinum:n4
 npm run deck:words:platinum:rereview-status -- --levels=5,4
+npm run deck:words:platinum:source-posture -- --levels=5,4
+npm run deck:platinum:governance-gate
 ```
 
 ## What still requires manual review

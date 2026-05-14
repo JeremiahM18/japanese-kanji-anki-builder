@@ -683,16 +683,21 @@
     "reviewer": "codex-platinum-review",
     "fixSummary": "Replaced generated VOICEVOX pitch provenance with externally checked Wiktionary Japanese pronunciation evidence for 一|いち.",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-13",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Substantive current-standard word rereview for 一|いち on 2026-05-14, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations; kept no active limitations for the exported card surface.",
     "notesIncludes": [
       "Common standalone number form for counting sequences and number ranges."
     ],
     "sourceEvidence": [
       {
         "type": "japanese-source",
-        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%80 and Wiktionary Japanese pronunciation https://en.wiktionary.org/wiki/%E4%B8%80",
-        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%80 verified 一|いち as JLPT N5 common word with reading いち and meaning one; Wiktionary Japanese pronunciation https://en.wiktionary.org/wiki/%E4%B8%80 verified Tokyo pitch accent for 一|いち; product review checked example 一から十まで言います。 for the shipped card."
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%80",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%80 verified 一|いち as JLPT N5 common word with reading いち and meaning one; product review checked example 一から十まで言います。 for the shipped card."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1160790 verifies 一|いち, reading いち, senses one; 1; best; first; foremost; beginning; start; a single; one of many, and priority markers ichi1,news2,nf33; product review kept learner meaning one and checked example 一から十まで言います。 against that word sense for 一|いち."
       }
     ],
     "qualityGates": {
@@ -768,7 +773,31 @@
         "source": "manual current-standard word review using generated N5 word batch report and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 一|いち checked generated surface, Japanese-source evidence, example sentence 一から十まで言います。, notes/support surface Common standalone number form for counting sequences and number ranges., reading breakdown 一 （いち）; one, meaning one, labels JLPT N5; JLPT core + reading coverage; focus 一; covers 一: いち, audio word-reading-一-いち, pitch accent source wiktionary-ja-pronunciation pattern 2 [odaka] rendered Pitch 1: 2, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-14",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-platinum-rereview-batch-001",
+      "scope": "N5 word batch 1 of square-zero substantive rereview",
+      "evidenceChecked": [
+        "generated word surface for 一|いち",
+        "governed Japanese-source word evidence for 一|いち",
+        "learner-facing meaning one",
+        "example sentence 一から十まで言います。 and exported reading/translation fit",
+        "notes/support surface: Common standalone number form for counting sequences and number ranges.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity in managed media manifest",
+        "pitch accent source and rendered pitch label: wiktionary-ja-pronunciation pattern 2 [odaka] rendered Pitch 1: 2",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "JLearn plus exact governed JMdict row; Wiktionary pitch evidence kept in pitch-accent review instead of sourceEvidence",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "七",
@@ -1381,7 +1410,7 @@
     ],
     "reviewStandard": "word-platinum-v3-evidence-lanes",
     "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidationSummary": "Substantive current-standard word rereview for お母さん|おかあさん on 2026-05-14, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations; kept no active limitations for the exported card surface.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -1435,7 +1464,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages or indexed dictionary evidence, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for お母さん|おかあさん checked generated surface, Japanese-source evidence, example sentence お母さんは台所で料理しています。, notes/support surface Polite or familiar family term for mother in beginner conversation; keeps 母 -> かあ visible., reading breakdown 母 （かあ） ／ mother, meaning mother / mom, labels JLPT N5 / JLPT core + reading coverage / focus 母 / covered readings 母: かあ, audio word-reading-お母さん-おかあさん, pitch accent Pitch 1: 2 from kanjium-cc-by-sa-4.0 pattern 2 [nakadaka], media provenance, release judgment, common useful learner-friendly level-appropriate natural card fit, and verification limitations: no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-14",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-platinum-rereview-batch-001",
+      "scope": "N5 word batch 1 of square-zero substantive rereview",
+      "evidenceChecked": [
+        "generated word surface for お母さん|おかあさん",
+        "governed Japanese-source word evidence for お母さん|おかあさん",
+        "learner-facing meaning mother / mom",
+        "example sentence お母さんは台所で料理しています。 and exported reading/translation fit",
+        "notes/support surface: Polite or familiar family term for mother in beginner conversation; keeps 母 -> かあ visible.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity in managed media manifest",
+        "pitch accent source and rendered pitch label: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "JLearn plus JMdict governed source families; exact JMdict おかあさん row confirmed despite adjacent おかーさん variant",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "お父さん",
@@ -1509,7 +1562,7 @@
     ],
     "reviewStandard": "word-platinum-v3-evidence-lanes",
     "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidationSummary": "Substantive current-standard word rereview for お父さん|おとうさん on 2026-05-14, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations; kept no active limitations for the exported card surface.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -1563,7 +1616,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages or indexed dictionary evidence, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for お父さん|おとうさん checked generated surface, Japanese-source evidence, example sentence お父さんは会社から帰りました。, notes/support surface Polite or familiar family term for father in beginner conversation; keeps 父 -> とう visible., reading breakdown 父 （とう） ／ father, meaning father / dad, labels JLPT N5 / JLPT core + reading coverage / focus 父 / covered readings 父: とう, audio word-reading-お父さん-おとうさん, pitch accent Pitch 1: 2 from kanjium-cc-by-sa-4.0 pattern 2 [nakadaka], media provenance, release judgment, common useful learner-friendly level-appropriate natural card fit, and verification limitations: no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-14",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-platinum-rereview-batch-001",
+      "scope": "N5 word batch 1 of square-zero substantive rereview",
+      "evidenceChecked": [
+        "generated word surface for お父さん|おとうさん",
+        "governed Japanese-source word evidence for お父さん|おとうさん",
+        "learner-facing meaning father / dad",
+        "example sentence お父さんは会社から帰りました。 and exported reading/translation fit",
+        "notes/support surface: Polite or familiar family term for father in beginner conversation; keeps 父 -> とう visible.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity in managed media manifest",
+        "pitch accent source and rendered pitch label: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "JLearn plus JMdict governed source families",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "お茶",
@@ -1643,8 +1720,8 @@
       "noSilentFallback": true
     },
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-13",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Substantive current-standard word rereview for お金|おかね on 2026-05-14, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations; kept no active limitations for the exported card surface.",
     "notesIncludes": [
       "Core money word; the polite お keeps this distinct from 金 as metal or gold."
     ],
@@ -1701,7 +1778,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for お金|おかね checked generated surface, Japanese-source evidence, example sentence お金がありません。, notes/support surface Core money word; the polite お keeps this distinct from 金 as metal or gold., reading breakdown 金 （かね） / money / gold, meaning money, labels JLPT N5 / JLPT core + reading coverage / focus 金 / covered readings 金: かね, audio word-reading-お金-おかね, pitch accent Pitch 1: 0 from kanjium-cc-by-sa-4.0 pattern 0 [heiban], media provenance, release judgment, common useful learner-friendly level-appropriate natural card fit, and verification limitations: no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-14",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-platinum-rereview-batch-001",
+      "scope": "N5 word batch 1 of square-zero substantive rereview",
+      "evidenceChecked": [
+        "generated word surface for お金|おかね",
+        "governed Japanese-source word evidence for お金|おかね",
+        "learner-facing meaning money",
+        "example sentence お金がありません。 and exported reading/translation fit",
+        "notes/support surface: Core money word; the polite お keeps this distinct from 金 as metal or gold.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity in managed media manifest",
+        "pitch accent source and rendered pitch label: kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "JLearn plus JMdict governed source families",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "ご飯",
@@ -1784,7 +1885,7 @@
     ],
     "reviewStandard": "word-platinum-v3-evidence-lanes",
     "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidationSummary": "Substantive current-standard word rereview for 一つ|ひとつ on 2026-05-14, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations; kept no active limitations for the exported card surface.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -1838,7 +1939,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows and JLearn dictionary evidence, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 一つ|ひとつ checked generated surface, Japanese-source evidence, example sentence りんごを一つください。, notes/support surface Core native counter form for one thing; useful for beginner requests., reading breakdown 一 （ひと） ／ one, meaning one thing, labels JLPT N5 / JLPT core + reading coverage / focus 一 / covered readings 一: ひとつ, audio word-reading-一つ-ひとつ, pitch accent Pitch 1: 2 from kanjium-cc-by-sa-4.0 pattern 2 [nakadaka], media provenance, release judgment, common useful learner-friendly level-appropriate natural card fit, and verification limitations: no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-14",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-platinum-rereview-batch-001",
+      "scope": "N5 word batch 1 of square-zero substantive rereview",
+      "evidenceChecked": [
+        "generated word surface for 一つ|ひとつ",
+        "governed Japanese-source word evidence for 一つ|ひとつ",
+        "learner-facing meaning one thing",
+        "example sentence りんごを一つください。 and exported reading/translation fit",
+        "notes/support surface: Core native counter form for one thing; useful for beginner requests.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity in managed media manifest",
+        "pitch accent source and rendered pitch label: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "JLearn plus JMdict governed source families",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "一万円",
@@ -2280,7 +2405,7 @@
     ],
     "reviewStandard": "word-platinum-v3-evidence-lanes",
     "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidationSummary": "Substantive current-standard word rereview for 一時|いちじ on 2026-05-14, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations; kept no active limitations for the exported card surface.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -2334,7 +2459,31 @@
         "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 一時|いちじ checked generated surface, Japanese-source evidence from JMdict entrySeq 1576100, example sentence 一時に会いましょう。, reading いちじにあいましょう。, translation Let's meet at one o'clock., notes/support surface Core time expression for one o'clock; reviewed for the clock-time sense., reading breakdown 一 （いち） ／ one; 時 （じ） ／ time / o'clock, meaning one o'clock, labels JLPT N5; JLPT core + reading coverage; focus 一、時; covers 一: いち ／ 時: じ, audio word-reading-一時-いちじ, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-14",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-platinum-rereview-batch-001",
+      "scope": "N5 word batch 1 of square-zero substantive rereview",
+      "evidenceChecked": [
+        "generated word surface for 一時|いちじ",
+        "governed Japanese-source word evidence for 一時|いちじ",
+        "learner-facing meaning one o'clock",
+        "example sentence 一時に会いましょう。 and exported reading/translation fit",
+        "notes/support surface: Core time expression for one o'clock; reviewed for the clock-time sense.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity in managed media manifest",
+        "pitch accent source and rendered pitch label: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single governed JMdict source family; independent source-family corroboration not proven by word source posture",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "一時半",
@@ -26892,7 +27041,7 @@
     "fixSummary": "Revalidated 椅子|いす under the current word platinum standard and protected the generated example, notes/support surface, labels, audio, pitch, and source-bound field evidence.",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
     "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidationSummary": "Substantive current-standard word rereview for 椅子|いす on 2026-05-14, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations; kept no active limitations for the exported card surface.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -26946,7 +27095,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 椅子|いす checked generated surface, Japanese-source evidence from JMdict entrySeq 1157070, example sentence 椅子に座ってください。, reading いすにすわってください。, translation Please sit in the chair., notes/support surface Core classroom/household noun for chair; 椅 is outside the JLPT kanji contract and the N5 reading support remains 子 -> す., reading breakdown 椅 （い） ／ chair; 子 （す） ／ child, meaning chair, labels JLPT N5; Reading coverage support; focus 子; covers 子: す, audio word-reading-椅子-いす, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-14",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-platinum-rereview-batch-001",
+      "scope": "N5 word batch 1 of square-zero substantive rereview",
+      "evidenceChecked": [
+        "generated word surface for 椅子|いす",
+        "governed Japanese-source word evidence for 椅子|いす",
+        "learner-facing meaning chair",
+        "example sentence 椅子に座ってください。 and exported reading/translation fit",
+        "notes/support surface: Core classroom/household noun for chair; 椅 is outside the JLPT kanji contract and the N5 reading support remains 子 -> す.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity in managed media manifest",
+        "pitch accent source and rendered pitch label: kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single governed JMdict source family; independent source-family corroboration not proven by word source posture",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "火曜日",
@@ -31512,7 +31685,7 @@
     "fixSummary": "Revalidated お菓子|おかし under the current word platinum standard and protected the generated example, notes/support surface, labels, audio, pitch, and source-bound field evidence.",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
     "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidationSummary": "Substantive current-standard word rereview for お菓子|おかし on 2026-05-14, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations; kept no active limitations for the exported card surface.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -31566,7 +31739,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for お菓子|おかし checked generated surface, Japanese-source evidence from JMdict entrySeq 1001710, example sentence お菓子を少し食べます。, reading おかしをすこしたべます。, translation I eat a few sweets., notes/support surface Common N5 food word; 菓 is a higher-level kanji and must stay labeled on the N5 card., reading breakdown 菓 （か）; 子 （し）, meaning sweets / snacks, labels JLPT N5; JLPT core + reading coverage; focus 菓; focus 子; covers 菓: か; covers 子: し, audio word-reading-お菓子-おかし, pitch accent source voicevox-nemo-accent-query pattern 1 [atamadaka] rendered Pitch 1: 1; Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-14",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-platinum-rereview-batch-001",
+      "scope": "N5 word batch 1 of square-zero substantive rereview",
+      "evidenceChecked": [
+        "generated word surface for お菓子|おかし",
+        "governed Japanese-source word evidence for お菓子|おかし",
+        "learner-facing meaning sweets / snacks",
+        "example sentence お菓子を少し食べます。 and exported reading/translation fit",
+        "notes/support surface: Common N5 food word; 菓 is a higher-level kanji and must stay labeled on the N5 card.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity in managed media manifest",
+        "pitch accent source and rendered pitch label: voicevox-nemo-accent-query pattern 1 [atamadaka] rendered Pitch 1: 1 with visible generated-pitch label",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single governed JMdict source family; independent source-family corroboration not proven by word source posture",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "昨日",

@@ -250,7 +250,8 @@
       "japanese": "一時に会いましょう。",
       "reading": "いちじにあいましょう。",
       "english": "Let's meet at one o'clock."
-    }
+    },
+    "notes": "Core time expression for one o'clock; reviewed for the clock-time sense."
   },
   "一生|いっしょう": {
     "written": "一生",
@@ -1351,7 +1352,8 @@
       "japanese": "外国へ行きたいです。",
       "reading": "がいこくへいきたいです。",
       "english": "I want to go abroad."
-    }
+    },
+    "notes": "Core word for a foreign country or abroad; useful for travel and comparison contexts."
   },
   "外科|げか": {
     "written": "外科",
@@ -2370,7 +2372,8 @@
       "japanese": "五時に店が閉まります。",
       "reading": "ごじにみせがしまります。",
       "english": "The shop closes at five o'clock."
-    }
+    },
+    "notes": "Core time expression for five o'clock; useful for schedules and closing times."
   },
   "五分|ごふん": {
     "written": "五分",
@@ -2815,10 +2818,11 @@
       }
     },
     "exampleSentence": {
-      "japanese": "姉は高校で勉強しています。",
-      "reading": "あねはこうこうでべんきょうしています。",
-      "english": "My older sister studies at high school."
-    }
+      "japanese": "高校で勉強します。",
+      "reading": "こうこうでべんきょうします。",
+      "english": "I study at a high school."
+    },
+    "notes": "Core school word for high school; useful for education and student contexts."
   },
   "社長|しゃちょう": {
     "written": "社長",
@@ -2902,10 +2906,11 @@
       }
     },
     "exampleSentence": {
-      "japanese": "今月は忙しいです。",
-      "reading": "こんげつはいそがしいです。",
-      "english": "I am busy this month."
-    }
+      "japanese": "今月、日本へ行きます。",
+      "reading": "こんげつ、にほんへいきます。",
+      "english": "This month I will go to Japan."
+    },
+    "notes": "Core time word for this month; useful for current plans."
   },
   "今日|きょう": {
     "written": "今日",
@@ -2946,7 +2951,7 @@
       "core",
       "n5"
     ],
-    "notes": "Irregular reading. Learn this as a whole word.",
+    "notes": "Core time word for this year; useful for plans and annual events. Learn 今年 as the whole-word reading ことし.",
     "exampleSentence": {
       "japanese": "今年は日本へ行きます。",
       "reading": "ことしはにほんへいきます。",
@@ -3146,7 +3151,8 @@
       "japanese": "三人で映画を見ます。",
       "reading": "さんにんでえいがをみます。",
       "english": "The three of us will watch a movie."
-    }
+    },
+    "notes": "Core people-count word for three people; useful for group-size examples."
   },
   "山|やま": {
     "written": "山",
@@ -3273,7 +3279,8 @@
       "japanese": "四時に家へ帰ります。",
       "reading": "よじにいえへかえります。",
       "english": "I go home at four o'clock."
-    }
+    },
+    "notes": "Core time expression for four o'clock; useful for schedules and returning home."
   },
   "四月|しがつ": {
     "written": "四月",
@@ -3528,11 +3535,11 @@
         "日": "か"
       }
     },
-    "notes": "Important calendar and counter reading for 七; also shows the 日 -> か date suffix.",
+    "notes": "Common date and duration word; treat なのか as a fixed calendar reading, with 日 -> か as the date suffix.",
     "exampleSentence": {
-      "japanese": "会議は七日にあります。",
-      "reading": "かいぎはなのかにあります。",
-      "english": "The meeting is on the seventh."
+      "japanese": "テストは七日にあります。",
+      "reading": "テストはなのかにあります。",
+      "english": "The test is on the seventh."
     }
   },
   "七時|しちじ": {
@@ -3558,7 +3565,8 @@
       "japanese": "七時に朝ご飯を食べます。",
       "reading": "しちじにあさごはんをたべます。",
       "english": "I eat breakfast at seven o'clock."
-    }
+    },
+    "notes": "Core time expression for seven o'clock; useful for daily routines."
   },
   "車|くるま": {
     "written": "車",
@@ -3703,7 +3711,8 @@
       "japanese": "駅まで十分かかります。",
       "reading": "えきまでじゅっぷんかかります。",
       "english": "It takes ten minutes to get to the station."
-    }
+    },
+    "notes": "Core duration word for ten minutes; reviewed as じゅっぷん, not 十分|じゅうぶん meaning enough."
   },
   "十日|とおか": {
     "written": "十日",
@@ -4868,7 +4877,8 @@
       "japanese": "この本は千円です。",
       "reading": "このほんはせんえんです。",
       "english": "This book costs 1,000 yen."
-    }
+    },
+    "notes": "Core price expression for 1,000 yen; useful for shopping examples."
   },
   "川|かわ": {
     "written": "川",
@@ -5013,10 +5023,11 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "姉は大学で日本語を勉強しています。",
-      "reading": "あねはだいがくでにほんごをべんきょうしています。",
-      "english": "My older sister studies Japanese at university."
-    }
+      "japanese": "大学で日本語を勉強します。",
+      "reading": "だいがくでにほんごをべんきょうします。",
+      "english": "I study Japanese at a university."
+    },
+    "notes": "Core school word for university; useful for education and study contexts."
   },
   "誕生日|たんじょうび": {
     "written": "誕生日",
@@ -5091,7 +5102,8 @@
       "japanese": "あの男の人は先生です。",
       "reading": "あのおとこのひとはせんせいです。",
       "english": "That man is a teacher."
-    }
+    },
+    "notes": "Common beginner word for man; dictionary-backed fixed の expression, not arbitrary phrase padding."
   },
   "中|なか": {
     "written": "中",
@@ -5349,7 +5361,8 @@
       "japanese": "今日は天気がいいです。",
       "reading": "きょうはてんきがいいです。",
       "english": "The weather is nice today."
-    }
+    },
+    "notes": "Core weather word; useful for daily small talk and planning."
   },
   "店|みせ": {
     "written": "店",
@@ -5451,7 +5464,8 @@
       "japanese": "電車で学校へ行きます。",
       "reading": "でんしゃでがっこうへいきます。",
       "english": "I go to school by train."
-    }
+    },
+    "notes": "Core transportation word for train; useful for commuting and school examples."
   },
   "電話|でんわ": {
     "written": "電話",
@@ -5880,7 +5894,7 @@
       "core",
       "n5"
     ],
-    "notes": "Irregular counter reading. Learn this as a whole word.",
+    "notes": "Core people-count word for two people; useful for pairs and small-group examples. Learn 二人 as the fixed reading ふたり.",
     "exampleSentence": {
       "japanese": "友だちと二人で映画を見ます。",
       "reading": "ともだちとふたりでえいがをみます。",
@@ -5951,7 +5965,8 @@
       "japanese": "日本へ行きたいです。",
       "reading": "にほんへいきたいです。",
       "english": "I want to go to Japan."
-    }
+    },
+    "notes": "Core country name for Japan; useful for travel, identity, and language examples."
   },
   "日本語|にほんご": {
     "written": "日本語",
@@ -6402,7 +6417,8 @@
       "japanese": "ケーキを半分食べました。",
       "reading": "けーきをはんぶんたべました。",
       "english": "I ate half of the cake."
-    }
+    },
+    "notes": "Core quantity word for half; useful for food and sharing contexts."
   },
   "半ば|なかば": {
     "written": "半ば",
@@ -7070,9 +7086,9 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "毎月、本を一冊買います。",
-      "reading": "まいつき、ほんをいっさつかいます。",
-      "english": "I buy one book every month."
+      "japanese": "毎月、本を買います。",
+      "reading": "まいつき、ほんをかいます。",
+      "english": "I buy books every month."
     },
     "coverage": {
       "role": "both",
@@ -7082,7 +7098,8 @@
       "coversReadings": {
         "月": "つき"
       }
-    }
+    },
+    "notes": "Core frequency word for every month; useful for routines and repeated plans."
   },
   "毎週|まいしゅう": {
     "written": "毎週",
@@ -7123,7 +7140,8 @@
       "japanese": "毎日、日本語を勉強します。",
       "reading": "まいにち、にほんごをべんきょうします。",
       "english": "I study Japanese every day."
-    }
+    },
+    "notes": "Core frequency word for every day; useful for habit and study routine examples."
   },
   "毎年|まいとし": {
     "written": "毎年",
@@ -22143,7 +22161,7 @@
         "日": "にち"
       }
     },
-    "notes": "Useful duration word; distinguish from 一日|ついたち, which means the first day of the month.",
+    "notes": "Core duration word for one day or all day; distinguish from 一日|ついたち, the first day of the month.",
     "exampleSentence": {
       "japanese": "一日だけ休みます。",
       "reading": "いちにちだけやすみます。",

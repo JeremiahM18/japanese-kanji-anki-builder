@@ -2150,27 +2150,27 @@
       {
         "type": "generated-surface",
         "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 一時|いちじ: word 一時, reading いちじ, meaning one o'clock, example 一時に会いましょう。, audio word-reading-一時-いちじ, breakdown 一 （いち） ／ one / 時 （じ） ／ time / o'clock, labels JLPT N5 JLPT core + reading coverage."
+        "detail": "Generated word-card surface inspected for 一時|いちじ: word 一時, reading いちじ, meaning one o'clock, example 一時に会いましょう。, reading line いちじにあいましょう。, English line Let's meet at one o'clock., audio word-reading-一時-いちじ, breakdown 一 （いち） ／ one; 時 （じ） ／ time / o'clock, labels JLPT N5 JLPT core + reading coverage, focus 一、時, covers 一: いち ／ 時: じ, notes/support surface Core time expression for one o'clock; reviewed for the clock-time sense., and pitch label Pitch 1: 2."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 一時|いちじ, reading いちじ, meaning one o'clock, example 一時に会いましょう。, breakdown 一 （いち） ／ one / 時 （じ） ／ time / o'clock, and pitch label Pitch 1: 2."
+        "detail": "N5 golden word review protects 一時|いちじ, reading いちじ, meaning one o'clock, example 一時に会いましょう。, notes/support surface Core time expression for one o'clock; reviewed for the clock-time sense., breakdown 一 （いち） ／ one; 時 （じ） ／ time / o'clock, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 2."
       },
       {
         "type": "japanese-source",
-        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%80%E6%99%82; MLC Japanese N5 time table https://www.mlcjapanese.co.jp/n5_01_02.html",
-        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%80%E6%99%82; MLC Japanese N5 time table https://www.mlcjapanese.co.jp/n5_01_02.html verified 一時|いちじ, reading いちじ, learner meaning one o'clock, and product review checked example 一時に会いましょう。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1576100 exact row verified 一時|いちじ, reading いちじ, dictionary meaning one o'clock; once; at one time; formerly; before; for a time; for a while; for the time being; for the moment; temporarily; a time; one time, priority ichi1,news1,nf01, learner meaning one o'clock, and product review checked example sentence 一時に会いましょう。 with reading いちじにあいましょう。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
         "source": "templates/jlpt_word_level_contract.json",
-        "detail": "templates/jlpt_word_level_contract.json lists 一時|いちじ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+        "detail": "templates/jlpt_word_level_contract.json lists 一時|いちじ for JLPT N5; product review confirmed 一時|いちじ belongs in the N5 word deck as JLPT core + reading coverage."
       },
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 一時|いちじ, reading いちじ, sentence 一時に会いましょう。, and the exported reading line for release quality."
+        "detail": "Example review checked 一時|いちじ, reading いちじ, sentence 一時に会いましょう。, reading line いちじにあいましょう。, English line Let's meet at one o'clock., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
@@ -2190,12 +2190,17 @@
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 一時|いちじ JLPT N5, JLPT core + reading coverage, focus 一、時, and covered readings 一: いち / 時: じ."
+        "detail": "Label review checked 一時|いちじ JLPT N5, JLPT core + reading coverage, focus 一、時, covered readings 一: いち ／ 時: じ, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 一時|いちじ common and learner-friendly for the N5 word deck, with accurate reading いちじ, meaning one o'clock, and example 一時に会いましょう。."
+        "detail": "Manual review judged 一時|いちじ common and learner-friendly for the N5 word deck, with accurate written form 一時, reading いちじ, meaning one o'clock, example 一時に会いましょう。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 一時|いちじ checked generated surface, Japanese-source evidence from JMdict entrySeq 1576100, example sentence 一時に会いましょう。, reading いちじにあいましょう。, translation Let's meet at one o'clock., notes/support surface Core time expression for one o'clock; reviewed for the clock-time sense., reading breakdown 一 （いち） ／ one; 時 （じ） ／ time / o'clock, meaning one o'clock, labels JLPT N5; JLPT core + reading coverage; focus 一、時; covers 一: いち ／ 時: じ, audio word-reading-一時-いちじ, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -2217,7 +2222,13 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Core time expression for one o'clock; reviewed for the clock-time sense."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard."
   },
   {
     "word": "一時半",
@@ -2493,7 +2504,7 @@
   },
   {
     "word": "七日",
-    "status": "platinum",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
       "なのか"
     ],
@@ -2519,7 +2530,7 @@
       "日 （か） ／ day / sun"
     ],
     "exampleIncludes": [
-      "会議は七日にあります。"
+      "テストは七日にあります。"
     ],
     "pitchAccentIncludes": [
       "Pitch 1: 0"
@@ -2531,27 +2542,27 @@
       {
         "type": "generated-surface",
         "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 七日|なのか: word 七日, reading なのか, meaning seventh day / seven days, example 会議は七日にあります。, audio word-reading-七日-なのか, breakdown 七 （なの） ／ seven / 日 （か） ／ day / sun, labels JLPT N5 JLPT core + reading coverage."
+        "detail": "Generated word-card surface inspected for 七日|なのか: word 七日, reading なのか, meaning seventh day / seven days, example テストは七日にあります。, reading line テストはなのかにあります。, English line The test is on the seventh., audio word-reading-七日-なのか, breakdown 七 （なの） ／ seven; 日 （か） ／ day / sun, labels JLPT N5 JLPT core + reading coverage, focus 七、日, covers 七: なの ／ 日: か, notes/support surface Common date and duration word; treat なのか as a fixed calendar reading, with 日 -> か as the date suffix., and pitch label Pitch 1: 0."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 七日|なのか, reading なのか, meaning seventh day / seven days, example 会議は七日にあります。, breakdown 七 （なの） ／ seven / 日 （か） ／ day / sun, and pitch label Pitch 1: 0."
+        "detail": "N5 golden word review protects 七日|なのか, reading なのか, meaning seventh day / seven days, example テストは七日にあります。, notes/support surface Common date and duration word; treat なのか as a fixed calendar reading, with 日 -> か as the date suffix., breakdown 七 （なの） ／ seven; 日 （か） ／ day / sun, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
       },
       {
         "type": "japanese-source",
-        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%83%E6%97%A5",
-        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%83%E6%97%A5 verified 七日|なのか, reading なのか, learner meaning seventh day / seven days, and product review checked example 会議は七日にあります。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1579630 exact row verified 七日|なのか, reading なのか, dictionary meaning 7th day of the month; seven days, priority ichi1,spec1, learner meaning seventh day / seven days, and product review checked example sentence テストは七日にあります。 with reading テストはなのかにあります。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
         "source": "templates/jlpt_word_level_contract.json",
-        "detail": "templates/jlpt_word_level_contract.json lists 七日|なのか for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+        "detail": "templates/jlpt_word_level_contract.json lists 七日|なのか for JLPT N5; product review confirmed 七日|なのか belongs in the N5 word deck as JLPT core + reading coverage."
       },
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 七日|なのか, reading なのか, sentence 会議は七日にあります。, reading line かいぎはなのかにあります。, and the exported reading line for release quality."
+        "detail": "Example review checked 七日|なのか, reading なのか, sentence テストは七日にあります。, reading line テストはなのかにあります。, English line The test is on the seventh., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
@@ -2571,12 +2582,17 @@
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 七日|なのか JLPT N5, JLPT core + reading coverage, focus 七、日, and covered readings 七: なの / 日: か."
+        "detail": "Label review checked 七日|なのか JLPT N5, JLPT core + reading coverage, focus 七、日, covered readings 七: なの ／ 日: か, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 七日|なのか common and learner-friendly for the N5 word deck, with accurate reading なのか, meaning seventh day / seven days, and example 会議は七日にあります。."
+        "detail": "Manual review judged 七日|なのか common and learner-friendly for the N5 word deck, with accurate written form 七日, reading なのか, meaning seventh day / seven days, example テストは七日にあります。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 七日|なのか checked generated surface, Japanese-source evidence from JMdict entrySeq 1579630, example sentence テストは七日にあります。, reading テストはなのかにあります。, translation The test is on the seventh., notes/support surface Common date and duration word; treat なのか as a fixed calendar reading, with 日 -> か as the date suffix., reading breakdown 七 （なの） ／ seven; 日 （か） ／ day / sun, meaning seventh day / seven days, labels JLPT N5; JLPT core + reading coverage; focus 七、日; covers 七: なの ／ 日: か, audio word-reading-七日-なのか, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -2598,7 +2614,14 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Common date and duration word; treat なのか as a fixed calendar reading, with 日 -> か as the date suffix."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "fixSummary": "Replaced the less beginner-friendly 会議 example with a simpler test-date sentence that demonstrates 七日 directly."
   },
   {
     "word": "三人",
@@ -2639,27 +2662,27 @@
       {
         "type": "generated-surface",
         "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 三人|さんにん: word 三人, reading さんにん, meaning three people, example 三人で映画を見ます。, audio word-reading-三人-さんにん, breakdown 三 （さん） ／ three people / 人 （にん） ／ people counter, labels JLPT N5 JLPT core + reading coverage."
+        "detail": "Generated word-card surface inspected for 三人|さんにん: word 三人, reading さんにん, meaning three people, example 三人で映画を見ます。, reading line さんにんでえいがをみます。, English line The three of us will watch a movie., audio word-reading-三人-さんにん, breakdown 三 （さん） ／ three people; 人 （にん） ／ people counter, labels JLPT N5 JLPT core + reading coverage, focus 三、人, covers 三: さん ／ 人: にん, notes/support surface Core people-count word for three people; useful for group-size examples., and pitch label Pitch 1: 3."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 三人|さんにん, reading さんにん, meaning three people, example 三人で映画を見ます。, breakdown 三 （さん） ／ three people / 人 （にん） ／ people counter, and pitch label Pitch 1: 3."
+        "detail": "N5 golden word review protects 三人|さんにん, reading さんにん, meaning three people, example 三人で映画を見ます。, notes/support surface Core people-count word for three people; useful for group-size examples., breakdown 三 （さん） ／ three people; 人 （にん） ／ people counter, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 3."
       },
       {
         "type": "japanese-source",
-        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%89%E4%BA%BA",
-        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%89%E4%BA%BA verified 三人|さんにん, reading さんにん, learner meaning three people, and product review checked example 三人で映画を見ます。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1301000 exact row verified 三人|さんにん, reading さんにん, dictionary meaning three people, priority news1,nf01, learner meaning three people, and product review checked example sentence 三人で映画を見ます。 with reading さんにんでえいがをみます。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
         "source": "templates/jlpt_word_level_contract.json",
-        "detail": "templates/jlpt_word_level_contract.json lists 三人|さんにん for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+        "detail": "templates/jlpt_word_level_contract.json lists 三人|さんにん for JLPT N5; product review confirmed 三人|さんにん belongs in the N5 word deck as JLPT core + reading coverage."
       },
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 三人|さんにん, reading さんにん, sentence 三人で映画を見ます。, reading line さんにんでえいがをみます。, and the exported reading line for release quality."
+        "detail": "Example review checked 三人|さんにん, reading さんにん, sentence 三人で映画を見ます。, reading line さんにんでえいがをみます。, English line The three of us will watch a movie., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
@@ -2679,12 +2702,17 @@
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 三人|さんにん JLPT N5, JLPT core + reading coverage, focus 三、人, and covered readings 三: さん / 人: にん."
+        "detail": "Label review checked 三人|さんにん JLPT N5, JLPT core + reading coverage, focus 三、人, covered readings 三: さん ／ 人: にん, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 三人|さんにん common and learner-friendly for the N5 word deck, with accurate reading さんにん, meaning three people, and example 三人で映画を見ます。."
+        "detail": "Manual review judged 三人|さんにん common and learner-friendly for the N5 word deck, with accurate written form 三人, reading さんにん, meaning three people, example 三人で映画を見ます。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 三人|さんにん checked generated surface, Japanese-source evidence from JMdict entrySeq 1301000, example sentence 三人で映画を見ます。, reading さんにんでえいがをみます。, translation The three of us will watch a movie., notes/support surface Core people-count word for three people; useful for group-size examples., reading breakdown 三 （さん） ／ three people; 人 （にん） ／ people counter, meaning three people, labels JLPT N5; JLPT core + reading coverage; focus 三、人; covers 三: さん ／ 人: にん, audio word-reading-三人-さんにん, pitch accent source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] rendered Pitch 1: 3, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -2706,7 +2734,13 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Core people-count word for three people; useful for group-size examples."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard."
   },
   {
     "word": "三時",
@@ -3225,27 +3259,27 @@
       {
         "type": "generated-surface",
         "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 七時|しちじ: word 七時, reading しちじ, meaning seven o'clock, example 七時に朝ご飯を食べます。, audio word-reading-七時-しちじ, breakdown 七 （しち） ／ seven / 時 （じ） ／ time / o'clock, labels JLPT N5 JLPT core + reading coverage, and generated pitch label Generated pitch (unverified)."
+        "detail": "Generated word-card surface inspected for 七時|しちじ: word 七時, reading しちじ, meaning seven o'clock, example 七時に朝ご飯を食べます。, reading line しちじにあさごはんをたべます。, English line I eat breakfast at seven o'clock., audio word-reading-七時-しちじ, breakdown 七 （しち） ／ seven; 時 （じ） ／ time / o'clock, labels JLPT N5 JLPT core + reading coverage, focus 七, covers 七: しち, notes/support surface Core time expression for seven o'clock; useful for daily routines., and pitch label Pitch 1: 2 / Generated pitch (unverified)."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 七時|しちじ, reading しちじ, meaning seven o'clock, example 七時に朝ご飯を食べます。, breakdown 七 （しち） ／ seven / 時 （じ） ／ time / o'clock, and pitch label Pitch 1: 2; platinum review additionally checks the Generated pitch (unverified) label."
+        "detail": "N5 golden word review protects 七時|しちじ, reading しちじ, meaning seven o'clock, example 七時に朝ご飯を食べます。, notes/support surface Core time expression for seven o'clock; useful for daily routines., breakdown 七 （しち） ／ seven; 時 （じ） ／ time / o'clock, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 2 / Generated pitch (unverified)."
       },
       {
         "type": "japanese-source",
-        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%EF%BC%97%E6%99%82",
-        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%EF%BC%97%E6%99%82 verified 七時|しちじ, reading しちじ, learner meaning seven o'clock, and product review checked example 七時に朝ご飯を食べます。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 2845363 exact row verified 七時|しちじ, reading しちじ, dictionary meaning seven o'clock, priority spec1, learner meaning seven o'clock, and product review checked example sentence 七時に朝ご飯を食べます。 with reading しちじにあさごはんをたべます。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
         "source": "templates/jlpt_word_level_contract.json",
-        "detail": "templates/jlpt_word_level_contract.json lists 七時|しちじ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+        "detail": "templates/jlpt_word_level_contract.json lists 七時|しちじ for JLPT N5; product review confirmed 七時|しちじ belongs in the N5 word deck as JLPT core + reading coverage."
       },
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 七時|しちじ, reading しちじ, sentence 七時に朝ご飯を食べます。, reading line しちじにあさごはんをたべます。, and the exported reading line for release quality."
+        "detail": "Example review checked 七時|しちじ, reading しちじ, sentence 七時に朝ご飯を食べます。, reading line しちじにあさごはんをたべます。, English line I eat breakfast at seven o'clock., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
@@ -3260,17 +3294,22 @@
       {
         "type": "pitch-accent-review",
         "source": "templates/word_pitch_accent_data.json",
-        "detail": "Pitch accent review checked 七時|しちじ source voicevox-nemo-accent-query pattern 2 [nakadaka] and rendered label Pitch 1: 2 / Generated pitch (unverified). This is generated guidance, not dictionary-verified pitch."
+        "detail": "Pitch accent review checked 七時|しちじ source voicevox-nemo-accent-query pattern 2 [nakadaka] and rendered label Pitch 1: 2 / Generated pitch (unverified) with visible Generated pitch (unverified) label."
       },
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 七時|しちじ JLPT N5, JLPT core + reading coverage, focus 七, and covered readings 七: しち."
+        "detail": "Label review checked 七時|しちじ JLPT N5, JLPT core + reading coverage, focus 七, covered readings 七: しち, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 七時|しちじ common and learner-friendly for the N5 word deck, with accurate reading しちじ, meaning seven o'clock, example 七時に朝ご飯を食べます。, and clearly labeled unverified generated pitch."
+        "detail": "Manual review judged 七時|しちじ common and learner-friendly for the N5 word deck, with accurate written form 七時, reading しちじ, meaning seven o'clock, example 七時に朝ご飯を食べます。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 七時|しちじ checked generated surface, Japanese-source evidence from JMdict entrySeq 2845363, example sentence 七時に朝ご飯を食べます。, reading しちじにあさごはんをたべます。, translation I eat breakfast at seven o'clock., notes/support surface Core time expression for seven o'clock; useful for daily routines., reading breakdown 七 （しち） ／ seven; 時 （じ） ／ time / o'clock, meaning seven o'clock, labels JLPT N5; JLPT core + reading coverage; focus 七; covers 七: しち, audio word-reading-七時-しちじ, pitch accent source voicevox-nemo-accent-query pattern 2 [nakadaka] rendered Pitch 1: 2 / Generated pitch (unverified) with visible Generated pitch (unverified) label, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -3292,7 +3331,13 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Core time expression for seven o'clock; useful for daily routines."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard."
   },
   {
     "word": "三",
@@ -4761,27 +4806,27 @@
       {
         "type": "generated-surface",
         "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 二人|ふたり: word 二人, reading ふたり, meaning two people, example 友だちと二人で映画を見ます。, audio word-reading-二人-ふたり, breakdown 二 （ふた） ／ two / 人 （り） ／ person / people, labels JLPT N5 JLPT core + reading coverage."
+        "detail": "Generated word-card surface inspected for 二人|ふたり: word 二人, reading ふたり, meaning two people, example 友だちと二人で映画を見ます。, reading line ともだちとふたりでえいがをみます。, English line My friend and I will watch a movie together., audio word-reading-二人-ふたり, breakdown 二 （ふた） ／ two; 人 （り） ／ person / people, labels JLPT N5 JLPT core + reading coverage, focus 二、人, covers 二: ふた ／ 人: り, notes/support surface Core people-count word for two people; useful for pairs and small-group examples. Learn 二人 as the fixed reading ふたり., and pitch label Pitch 1: 3."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 二人|ふたり, reading ふたり, meaning two people, example 友だちと二人で映画を見ます。, breakdown 二 （ふた） ／ two / 人 （り） ／ person / people, and pitch label Pitch 1: 3."
+        "detail": "N5 golden word review protects 二人|ふたり, reading ふたり, meaning two people, example 友だちと二人で映画を見ます。, notes/support surface Core people-count word for two people; useful for pairs and small-group examples. Learn 二人 as the fixed reading ふたり., breakdown 二 （ふた） ／ two; 人 （り） ／ person / people, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 3."
       },
       {
         "type": "japanese-source",
-        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BA%8C%E4%BA%BA",
-        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BA%8C%E4%BA%BA verified 二人|ふたり, reading ふたり, learner meaning two people, and product review checked example 友だちと二人で映画を見ます。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1582670 exact row verified 二人|ふたり, reading ふたり, dictionary meaning two persons; two people; pair; couple, priority ichi1,news1,nf01, learner meaning two people, and product review checked example sentence 友だちと二人で映画を見ます。 with reading ともだちとふたりでえいがをみます。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
         "source": "templates/jlpt_word_level_contract.json",
-        "detail": "templates/jlpt_word_level_contract.json lists 二人|ふたり for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+        "detail": "templates/jlpt_word_level_contract.json lists 二人|ふたり for JLPT N5; product review confirmed 二人|ふたり belongs in the N5 word deck as JLPT core + reading coverage."
       },
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 二人|ふたり, reading ふたり, sentence 友だちと二人で映画を見ます。, reading line ともだちとふたりでえいがをみます。, and the exported reading line for release quality."
+        "detail": "Example review checked 二人|ふたり, reading ふたり, sentence 友だちと二人で映画を見ます。, reading line ともだちとふたりでえいがをみます。, English line My friend and I will watch a movie together., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
@@ -4801,12 +4846,17 @@
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 二人|ふたり JLPT N5, JLPT core + reading coverage, focus 二、人, and covered readings 二: ふた / 人: り."
+        "detail": "Label review checked 二人|ふたり JLPT N5, JLPT core + reading coverage, focus 二、人, covered readings 二: ふた ／ 人: り, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 二人|ふたり common and learner-friendly for the N5 word deck, with accurate reading ふたり, meaning two people, and example 友だちと二人で映画を見ます。."
+        "detail": "Manual review judged 二人|ふたり common and learner-friendly for the N5 word deck, with accurate written form 二人, reading ふたり, meaning two people, example 友だちと二人で映画を見ます。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 二人|ふたり checked generated surface, Japanese-source evidence from JMdict entrySeq 1582670, example sentence 友だちと二人で映画を見ます。, reading ともだちとふたりでえいがをみます。, translation My friend and I will watch a movie together., notes/support surface Core people-count word for two people; useful for pairs and small-group examples. Learn 二人 as the fixed reading ふたり., reading breakdown 二 （ふた） ／ two; 人 （り） ／ person / people, meaning two people, labels JLPT N5; JLPT core + reading coverage; focus 二、人; covers 二: ふた ／ 人: り, audio word-reading-二人-ふたり, pitch accent source kanjium-cc-by-sa-4.0 pattern 3 [odaka] rendered Pitch 1: 3, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -4828,7 +4878,13 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Core people-count word for two people; useful for pairs and small-group examples. Learn 二人 as the fixed reading ふたり."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard."
   },
   {
     "word": "二日",
@@ -5456,27 +5512,27 @@
       {
         "type": "generated-surface",
         "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 五時|ごじ: word 五時, reading ごじ, meaning five o'clock, example 五時に店が閉まります。, audio word-reading-五時-ごじ, coverage JLPT core + reading coverage, focus 五、時, covered readings 五: ご ／ 時: じ, and generated pitch label Generated pitch (unverified)."
+        "detail": "Generated word-card surface inspected for 五時|ごじ: word 五時, reading ごじ, meaning five o'clock, example 五時に店が閉まります。, reading line ごじにみせがしまります。, English line The shop closes at five o'clock., audio word-reading-五時-ごじ, breakdown 五 （ご） ／ five; 時 （じ） ／ time / o'clock, labels JLPT N5 JLPT core + reading coverage, focus 五、時, covers 五: ご ／ 時: じ, notes/support surface Core time expression for five o'clock; useful for schedules and closing times., and pitch label Pitch 1: 1 / Generated pitch (unverified)."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 五時|ごじ, reading ごじ, meaning five o'clock, example 五時に店が閉まります。, covered readings 五: ご ／ 時: じ, and pitch label Pitch 1: 1 / Generated pitch (unverified)."
+        "detail": "N5 golden word review protects 五時|ごじ, reading ごじ, meaning five o'clock, example 五時に店が閉まります。, notes/support surface Core time expression for five o'clock; useful for schedules and closing times., breakdown 五 （ご） ／ five; 時 （じ） ／ time / o'clock, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 1 / Generated pitch (unverified)."
       },
       {
         "type": "japanese-source",
-        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%EF%BC%95%E6%99%82",
-        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%EF%BC%95%E6%99%82 verified 五時|ごじ, reading ごじ and learner meaning five o'clock, and product review checked example 五時に店が閉まります。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 2845367 exact row verified 五時|ごじ, reading ごじ, dictionary meaning five o'clock, priority none, learner meaning five o'clock, and product review checked example sentence 五時に店が閉まります。 with reading ごじにみせがしまります。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
         "source": "templates/jlpt_word_level_contract.json",
-        "detail": "templates/jlpt_word_level_contract.json lists 五時|ごじ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+        "detail": "templates/jlpt_word_level_contract.json lists 五時|ごじ for JLPT N5; product review confirmed 五時|ごじ belongs in the N5 word deck as JLPT core + reading coverage."
       },
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 五時|ごじ, reading ごじ, sentence 五時に店が閉まります。, reading line ごじにみせがしまります。, and the exported reading line for release quality."
+        "detail": "Example review checked 五時|ごじ, reading ごじ, sentence 五時に店が閉まります。, reading line ごじにみせがしまります。, English line The shop closes at five o'clock., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
@@ -5491,17 +5547,22 @@
       {
         "type": "pitch-accent-review",
         "source": "templates/word_pitch_accent_data.json",
-        "detail": "Pitch accent review checked 五時|ごじ source voicevox-nemo-accent-query (VOICEVOX Nemo accent query; 五時 / ごじ) pattern 1 [atamadaka] and rendered label Pitch 1: 1 / Generated pitch (unverified). This is generated guidance, not dictionary-verified pitch."
+        "detail": "Pitch accent review checked 五時|ごじ source voicevox-nemo-accent-query pattern 1 [atamadaka] and rendered label Pitch 1: 1 / Generated pitch (unverified) with visible Generated pitch (unverified) label."
       },
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 五時|ごじ JLPT N5, JLPT core + reading coverage, focus 五、時, and covered readings 五: ご ／ 時: じ."
+        "detail": "Label review checked 五時|ごじ JLPT N5, JLPT core + reading coverage, focus 五、時, covered readings 五: ご ／ 時: じ, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 五時|ごじ common and learner-friendly for the N5 word deck, with accurate reading ごじ, meaning five o'clock, and example 五時に店が閉まります。, and clearly labeled unverified generated pitch."
+        "detail": "Manual review judged 五時|ごじ common and learner-friendly for the N5 word deck, with accurate written form 五時, reading ごじ, meaning five o'clock, example 五時に店が閉まります。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 五時|ごじ checked generated surface, Japanese-source evidence from JMdict entrySeq 2845367, example sentence 五時に店が閉まります。, reading ごじにみせがしまります。, translation The shop closes at five o'clock., notes/support surface Core time expression for five o'clock; useful for schedules and closing times., reading breakdown 五 （ご） ／ five; 時 （じ） ／ time / o'clock, meaning five o'clock, labels JLPT N5; JLPT core + reading coverage; focus 五、時; covers 五: ご ／ 時: じ, audio word-reading-五時-ごじ, pitch accent source voicevox-nemo-accent-query pattern 1 [atamadaka] rendered Pitch 1: 1 / Generated pitch (unverified) with visible Generated pitch (unverified) label, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -5523,7 +5584,13 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Core time expression for five o'clock; useful for schedules and closing times."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard."
   },
   {
     "word": "五月",
@@ -5919,27 +5986,27 @@
       {
         "type": "generated-surface",
         "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 今年|ことし: word 今年, reading ことし, meaning this year, example 今年は日本へ行きます。, audio word-reading-今年-ことし, coverage JLPT core + reading coverage, focus 今、年, covered readings 今年: ことし."
+        "detail": "Generated word-card surface inspected for 今年|ことし: word 今年, reading ことし, meaning this year, example 今年は日本へ行きます。, reading line ことしはにほんへいきます。, English line This year I will go to Japan., audio word-reading-今年-ことし, breakdown word reading: ことし; 今年 （ことし） ／ this year, labels JLPT N5 JLPT core + reading coverage, focus 今、年, covers 今年: ことし, notes/support surface Core time word for this year; useful for plans and annual events. Learn 今年 as the whole-word reading ことし., and pitch label Pitch 1: 0."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 今年|ことし, reading ことし, meaning this year, example 今年は日本へ行きます。, covered readings 今年: ことし, and pitch label Pitch 1: 0."
+        "detail": "N5 golden word review protects 今年|ことし, reading ことし, meaning this year, example 今年は日本へ行きます。, notes/support surface Core time word for this year; useful for plans and annual events. Learn 今年 as the whole-word reading ことし., breakdown word reading: ことし; 今年 （ことし） ／ this year, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
       },
       {
         "type": "japanese-source",
-        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BB%8A%E5%B9%B4",
-        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BB%8A%E5%B9%B4 verified 今年|ことし, reading ことし and learner meaning this year, and product review checked example 今年は日本へ行きます。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1579130 exact row verified 今年|ことし, reading ことし, dictionary meaning this year, priority ichi1,news1,nf01, learner meaning this year, and product review checked example sentence 今年は日本へ行きます。 with reading ことしはにほんへいきます。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
         "source": "templates/jlpt_word_level_contract.json",
-        "detail": "templates/jlpt_word_level_contract.json lists 今年|ことし for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+        "detail": "templates/jlpt_word_level_contract.json lists 今年|ことし for JLPT N5; product review confirmed 今年|ことし belongs in the N5 word deck as JLPT core + reading coverage."
       },
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 今年|ことし, reading ことし, sentence 今年は日本へ行きます。, reading line ことしはにほんへいきます。, and the exported reading line for release quality."
+        "detail": "Example review checked 今年|ことし, reading ことし, sentence 今年は日本へ行きます。, reading line ことしはにほんへいきます。, English line This year I will go to Japan., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
@@ -5954,17 +6021,22 @@
       {
         "type": "pitch-accent-review",
         "source": "templates/word_pitch_accent_data.json",
-        "detail": "Pitch accent review checked 今年|ことし source kanjium-cc-by-sa-4.0 (Kanjium pitch accent database; 今年 / ことし) pattern 0 [heiban] and rendered label Pitch 1: 0."
+        "detail": "Pitch accent review checked 今年|ことし source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
       },
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 今年|ことし JLPT N5, JLPT core + reading coverage, focus 今、年, and covered readings 今年: ことし."
+        "detail": "Label review checked 今年|ことし JLPT N5, JLPT core + reading coverage, focus 今、年, covered readings 今年: ことし, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 今年|ことし common and learner-friendly for the N5 word deck, with accurate reading ことし, meaning this year, and example 今年は日本へ行きます。."
+        "detail": "Manual review judged 今年|ことし common and learner-friendly for the N5 word deck, with accurate written form 今年, reading ことし, meaning this year, example 今年は日本へ行きます。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 今年|ことし checked generated surface, Japanese-source evidence from JMdict entrySeq 1579130, example sentence 今年は日本へ行きます。, reading ことしはにほんへいきます。, translation This year I will go to Japan., notes/support surface Core time word for this year; useful for plans and annual events. Learn 今年 as the whole-word reading ことし., reading breakdown word reading: ことし; 今年 （ことし） ／ this year, meaning this year, labels JLPT N5; JLPT core + reading coverage; focus 今、年; covers 今年: ことし, audio word-reading-今年-ことし, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -5986,7 +6058,13 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Core time word for this year; useful for plans and annual events. Learn 今年 as the whole-word reading ことし."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard."
   },
   {
     "word": "今日",
@@ -6323,7 +6401,7 @@
   },
   {
     "word": "今月",
-    "status": "platinum",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
       "こんげつ"
     ],
@@ -6349,7 +6427,7 @@
       "月 （げつ） ／ month / moon"
     ],
     "exampleIncludes": [
-      "今月は忙しいです。"
+      "今月、日本へ行きます。"
     ],
     "pitchAccentIncludes": [
       "Pitch 1: 0"
@@ -6361,27 +6439,27 @@
       {
         "type": "generated-surface",
         "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 今月|こんげつ: word 今月, reading こんげつ, meaning this month, example 今月は忙しいです。, audio word-reading-今月-こんげつ, reading breakdown 今 （こん）月 （げつ）, labels JLPT N5 JLPT core + reading coverage, focus 今、月, covered readings 今: こん ／ 月: げつ."
+        "detail": "Generated word-card surface inspected for 今月|こんげつ: word 今月, reading こんげつ, meaning this month, example 今月、日本へ行きます。, reading line こんげつ、にほんへいきます。, English line This month I will go to Japan., audio word-reading-今月-こんげつ, breakdown 今 （こん） ／ now; 月 （げつ） ／ month / moon, labels JLPT N5 JLPT core + reading coverage, focus 今、月, covers 今: こん ／ 月: げつ, notes/support surface Core time word for this month; useful for current plans., and pitch label Pitch 1: 0."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 今月|こんげつ, reading こんげつ, meaning this month, example 今月は忙しいです。, covered readings 今: こん ／ 月: げつ, and pitch label Pitch 1: 0."
+        "detail": "N5 golden word review protects 今月|こんげつ, reading こんげつ, meaning this month, example 今月、日本へ行きます。, notes/support surface Core time word for this month; useful for current plans., breakdown 今 （こん） ／ now; 月 （げつ） ／ month / moon, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
       },
       {
         "type": "japanese-source",
-        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BB%8A%E6%9C%88",
-        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BB%8A%E6%9C%88 verified 今月|こんげつ, reading こんげつ, source sense this month, learner meaning this month, and product review checked example 今月は忙しいです。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1289100 exact row verified 今月|こんげつ, reading こんげつ, dictionary meaning this month, priority ichi1,news1,nf01, learner meaning this month, and product review checked example sentence 今月、日本へ行きます。 with reading こんげつ、にほんへいきます。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
         "source": "templates/jlpt_word_level_contract.json",
-        "detail": "templates/jlpt_word_level_contract.json lists 今月|こんげつ for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+        "detail": "templates/jlpt_word_level_contract.json lists 今月|こんげつ for JLPT N5; product review confirmed 今月|こんげつ belongs in the N5 word deck as JLPT core + reading coverage."
       },
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 今月|こんげつ, reading こんげつ, sentence 今月は忙しいです。, reading line こんげつはいそがしいです。, English line I am busy this month., and the exported reading line for release quality."
+        "detail": "Example review checked 今月|こんげつ, reading こんげつ, sentence 今月、日本へ行きます。, reading line こんげつ、にほんへいきます。, English line This month I will go to Japan., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
@@ -6396,17 +6474,22 @@
       {
         "type": "pitch-accent-review",
         "source": "templates/word_pitch_accent_data.json",
-        "detail": "Pitch accent review checked 今月|こんげつ source kanjium-cc-by-sa-4.0 (Kanjium pitch accent database; 今月 / こんげつ) pattern 0 [heiban] and rendered label Pitch 1: 0."
+        "detail": "Pitch accent review checked 今月|こんげつ source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
       },
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 今月|こんげつ JLPT N5, JLPT core + reading coverage, focus 今、月, covered readings 今: こん ／ 月: げつ, and visible higher-level kanji labels where applicable."
+        "detail": "Label review checked 今月|こんげつ JLPT N5, JLPT core + reading coverage, focus 今、月, covered readings 今: こん ／ 月: げつ, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 今月|こんげつ common and learner-friendly for the N5 word deck, with accurate reading こんげつ, meaning this month, and example 今月は忙しいです。."
+        "detail": "Manual review judged 今月|こんげつ common and learner-friendly for the N5 word deck, with accurate written form 今月, reading こんげつ, meaning this month, example 今月、日本へ行きます。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 今月|こんげつ checked generated surface, Japanese-source evidence from JMdict entrySeq 1289100, example sentence 今月、日本へ行きます。, reading こんげつ、にほんへいきます。, translation This month I will go to Japan., notes/support surface Core time word for this month; useful for current plans., reading breakdown 今 （こん） ／ now; 月 （げつ） ／ month / moon, meaning this month, labels JLPT N5; JLPT core + reading coverage; focus 今、月; covers 今: こん ／ 月: げつ, audio word-reading-今月-こんげつ, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -6428,7 +6511,14 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Core time word for this month; useful for current plans."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "fixSummary": "Replaced the 忙しい example with a simpler current-plan sentence that demonstrates 今月 directly."
   },
   {
     "word": "休み",
@@ -16831,18 +16921,18 @@
     "sourceEvidence": [
       {
         "type": "generated-surface",
-        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
-        "detail": "Generated word-card surface inspected for 外国|がいこく: word 外国, reading がいこく, meaning foreign country / abroad, example 外国へ行きたいです。, audio word-reading-外国-がいこく, breakdown 外 （がい） ／ outside / 国 （こく） ／ country, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 外国|がいこく: word 外国, reading がいこく, meaning foreign country / abroad, example 外国へ行きたいです。, reading line がいこくへいきたいです。, English line I want to go abroad., audio word-reading-外国-がいこく, breakdown 外 （がい） ／ outside; 国 （こく） ／ country, labels JLPT N5 JLPT core + reading coverage, focus 外、国, covers 外: がい ／ 国: こく, notes/support surface Core word for a foreign country or abroad; useful for travel and comparison contexts., and pitch label Pitch 1: 0."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 外国|がいこく, reading がいこく, meaning foreign country / abroad, example 外国へ行きたいです。, breakdown 外 （がい） ／ outside / 国 （こく） ／ country, and pitch label Pitch 1: 0."
+        "detail": "N5 golden word review protects 外国|がいこく, reading がいこく, meaning foreign country / abroad, example 外国へ行きたいです。, notes/support surface Core word for a foreign country or abroad; useful for travel and comparison contexts., breakdown 外 （がい） ／ outside; 国 （こく） ／ country, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
       },
       {
         "type": "japanese-source",
-        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%A4%96%E5%9B%BD",
-        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%A4%96%E5%9B%BD verified 外国|がいこく, reading がいこく, learner meaning foreign country / abroad, and product review checked example 外国へ行きたいです。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1203620 exact row verified 外国|がいこく, reading がいこく, dictionary meaning foreign country, priority ichi1,news1,nf01, learner meaning foreign country / abroad, and product review checked example sentence 外国へ行きたいです。 with reading がいこくへいきたいです。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
@@ -16852,7 +16942,7 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 外国|がいこく, reading がいこく, sentence 外国へ行きたいです。, reading line がいこくへいきたいです。, English line I want to go abroad.."
+        "detail": "Example review checked 外国|がいこく, reading がいこく, sentence 外国へ行きたいです。, reading line がいこくへいきたいです。, English line I want to go abroad., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
@@ -16872,12 +16962,17 @@
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 外国|がいこく JLPT N5, JLPT core + reading coverage, focus 外、国, and covered readings 外: がい ／ 国: こく."
+        "detail": "Label review checked 外国|がいこく JLPT N5, JLPT core + reading coverage, focus 外、国, covered readings 外: がい ／ 国: こく, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 外国|がいこく common and learner-friendly for the N5 word deck, with accurate reading がいこく, meaning foreign country / abroad, and example 外国へ行きたいです。."
+        "detail": "Manual review judged 外国|がいこく common and learner-friendly for the N5 word deck, with accurate written form 外国, reading がいこく, meaning foreign country / abroad, example 外国へ行きたいです。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 外国|がいこく checked generated surface, Japanese-source evidence from JMdict entrySeq 1203620, example sentence 外国へ行きたいです。, reading がいこくへいきたいです。, translation I want to go abroad., notes/support surface Core word for a foreign country or abroad; useful for travel and comparison contexts., reading breakdown 外 （がい） ／ outside; 国 （こく） ／ country, meaning foreign country / abroad, labels JLPT N5; JLPT core + reading coverage; focus 外、国; covers 外: がい ／ 国: こく, audio word-reading-外国-がいこく, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -16899,7 +16994,13 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Core word for a foreign country or abroad; useful for travel and comparison contexts."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard."
   },
   {
     "word": "電車",
@@ -16939,18 +17040,18 @@
     "sourceEvidence": [
       {
         "type": "generated-surface",
-        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
-        "detail": "Generated word-card surface inspected for 電車|でんしゃ: word 電車, reading でんしゃ, meaning train, example 電車で学校へ行きます。, audio word-reading-電車-でんしゃ, breakdown 電 （でん） ／ electric / 車 （しゃ） ／ car / vehicle, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0 / Pitch 2: 1."
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 電車|でんしゃ: word 電車, reading でんしゃ, meaning train, example 電車で学校へ行きます。, reading line でんしゃでがっこうへいきます。, English line I go to school by train., audio word-reading-電車-でんしゃ, breakdown 電 （でん） ／ electric; 車 （しゃ） ／ car / vehicle, labels JLPT N5 JLPT core + reading coverage, focus 車, covers 車: しゃ, notes/support surface Core transportation word for train; useful for commuting and school examples., and pitch label Pitch 1: 0 / Pitch 2: 1."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 電車|でんしゃ, reading でんしゃ, meaning train, example 電車で学校へ行きます。, breakdown 電 （でん） ／ electric / 車 （しゃ） ／ car / vehicle, and pitch label Pitch 1: 0 / Pitch 2: 1."
+        "detail": "N5 golden word review protects 電車|でんしゃ, reading でんしゃ, meaning train, example 電車で学校へ行きます。, notes/support surface Core transportation word for train; useful for commuting and school examples., breakdown 電 （でん） ／ electric; 車 （しゃ） ／ car / vehicle, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0 / Pitch 2: 1."
       },
       {
         "type": "japanese-source",
-        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%9B%BB%E8%BB%8A",
-        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%9B%BB%E8%BB%8A verified 電車|でんしゃ, reading でんしゃ, learner meaning train, and product review checked example 電車で学校へ行きます。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1443530 exact row verified 電車|でんしゃ, reading でんしゃ, dictionary meaning train; electric train, priority ichi1,news1,nf04, learner meaning train, and product review checked example sentence 電車で学校へ行きます。 with reading でんしゃでがっこうへいきます。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
@@ -16960,7 +17061,7 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 電車|でんしゃ, reading でんしゃ, sentence 電車で学校へ行きます。, reading line でんしゃでがっこうへいきます。, English line I go to school by train.."
+        "detail": "Example review checked 電車|でんしゃ, reading でんしゃ, sentence 電車で学校へ行きます。, reading line でんしゃでがっこうへいきます。, English line I go to school by train., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
@@ -16980,12 +17081,17 @@
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 電車|でんしゃ JLPT N5, JLPT core + reading coverage, focus 車, and covered readings 車: しゃ."
+        "detail": "Label review checked 電車|でんしゃ JLPT N5, JLPT core + reading coverage, focus 車, covered readings 車: しゃ, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 電車|でんしゃ common and learner-friendly for the N5 word deck, with accurate reading でんしゃ, meaning train, and example 電車で学校へ行きます。."
+        "detail": "Manual review judged 電車|でんしゃ common and learner-friendly for the N5 word deck, with accurate written form 電車, reading でんしゃ, meaning train, example 電車で学校へ行きます。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 電車|でんしゃ checked generated surface, Japanese-source evidence from JMdict entrySeq 1443530, example sentence 電車で学校へ行きます。, reading でんしゃでがっこうへいきます。, translation I go to school by train., notes/support surface Core transportation word for train; useful for commuting and school examples., reading breakdown 電 （でん） ／ electric; 車 （しゃ） ／ car / vehicle, meaning train, labels JLPT N5; JLPT core + reading coverage; focus 車; covers 車: しゃ, audio word-reading-電車-でんしゃ, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] / 1 [atamadaka] rendered Pitch 1: 0 / Pitch 2: 1, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -17007,7 +17113,13 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Core transportation word for train; useful for commuting and school examples."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard."
   },
   {
     "word": "友人",
@@ -17080,18 +17192,18 @@
     "sourceEvidence": [
       {
         "type": "generated-surface",
-        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
-        "detail": "Generated word-card surface inspected for 男の人|おとこのひと: word 男の人, reading おとこのひと, meaning man, example あの男の人は先生です。, audio word-reading-男の人-おとこのひと, breakdown 男 （おとこ） ／ man / male / 人 （ひと） ／ person / people, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 3 / Pitch 2: 2 / Generated pitch (unverified)."
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 男の人|おとこのひと: word 男の人, reading おとこのひと, meaning man, example あの男の人は先生です。, reading line あのおとこのひとはせんせいです。, English line That man is a teacher., audio word-reading-男の人-おとこのひと, breakdown 男 （おとこ） ／ man / male; 人 （ひと） ／ person / people, labels JLPT N5 JLPT core + reading coverage, focus 男、人, covers 男: おとこ ／ 人: ひと, notes/support surface Common beginner word for man; dictionary-backed fixed の expression, not arbitrary phrase padding., and pitch label Pitch 1: 3 / Pitch 2: 2 / Generated pitch (unverified)."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 男の人|おとこのひと, reading おとこのひと, meaning man, example あの男の人は先生です。, breakdown 男 （おとこ） ／ man / male / 人 （ひと） ／ person / people, and the JLPT N5 word-card labels."
+        "detail": "N5 golden word review protects 男の人|おとこのひと, reading おとこのひと, meaning man, example あの男の人は先生です。, notes/support surface Common beginner word for man; dictionary-backed fixed の expression, not arbitrary phrase padding., breakdown 男 （おとこ） ／ man / male; 人 （ひと） ／ person / people, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 3 / Pitch 2: 2 / Generated pitch (unverified)."
       },
       {
         "type": "japanese-source",
-        "source": "Bunpro Japanese vocabulary https://bunpro.jp/vocabs/%E7%94%B7%E3%81%AE%E4%BA%BA and JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E7%94%B7%E3%81%AE%E4%BA%BA",
-        "detail": "Bunpro and JLearn verified 男の人|おとこのひと, reading おとこのひと, learner meaning man, common expression/noun status, and product review checked example あの男の人は先生です。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1420020 exact row verified 男の人|おとこのひと, reading おとこのひと, dictionary meaning man, priority spec1, learner meaning man, and product review checked example sentence あの男の人は先生です。 with reading あのおとこのひとはせんせいです。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
@@ -17101,7 +17213,7 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 男の人|おとこのひと, reading おとこのひと, sentence あの男の人は先生です。, reading line あのおとこのひとはせんせいです。, English line That man is a teacher.."
+        "detail": "Example review checked 男の人|おとこのひと, reading おとこのひと, sentence あの男の人は先生です。, reading line あのおとこのひとはせんせいです。, English line That man is a teacher., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
@@ -17116,17 +17228,22 @@
       {
         "type": "pitch-accent-review",
         "source": "templates/word_pitch_accent_data.json",
-        "detail": "Pitch accent review checked 男の人|おとこのひと source voicevox-nemo-accent-query pattern 3 [nakadaka] / 2 [odaka] and rendered label Pitch 1: 3 / Pitch 2: 2 / Generated pitch (unverified). This is generated guidance, not dictionary-verified pitch."
+        "detail": "Pitch accent review checked 男の人|おとこのひと source voicevox-nemo-accent-query pattern 3 [nakadaka] / 2 [odaka] and rendered label Pitch 1: 3 / Pitch 2: 2 / Generated pitch (unverified) with visible Generated pitch (unverified) label."
       },
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 男の人|おとこのひと JLPT N5, JLPT core + reading coverage, focus 男、人, and covered readings 男: おとこ ／ 人: ひと."
+        "detail": "Label review checked 男の人|おとこのひと JLPT N5, JLPT core + reading coverage, focus 男、人, covered readings 男: おとこ ／ 人: ひと, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 男の人|おとこのひと common and learner-friendly for the N5 word deck, with accurate reading おとこのひと, meaning man, and example あの男の人は先生です。."
+        "detail": "Manual review judged 男の人|おとこのひと common and learner-friendly for the N5 word deck, with accurate written form 男の人, reading おとこのひと, meaning man, example あの男の人は先生です。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 男の人|おとこのひと checked generated surface, Japanese-source evidence from JMdict entrySeq 1420020, example sentence あの男の人は先生です。, reading あのおとこのひとはせんせいです。, translation That man is a teacher., notes/support surface Common beginner word for man; dictionary-backed fixed の expression, not arbitrary phrase padding., reading breakdown 男 （おとこ） ／ man / male; 人 （ひと） ／ person / people, meaning man, labels JLPT N5; JLPT core + reading coverage; focus 男、人; covers 男: おとこ ／ 人: ひと, audio word-reading-男の人-おとこのひと, pitch accent source voicevox-nemo-accent-query pattern 3 [nakadaka] / 2 [odaka] rendered Pitch 1: 3 / Pitch 2: 2 / Generated pitch (unverified) with visible Generated pitch (unverified) label, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -17148,7 +17265,13 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Common beginner word for man; dictionary-backed fixed の expression, not arbitrary phrase padding."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard."
   },
   {
     "word": "日本",
@@ -17189,18 +17312,18 @@
     "sourceEvidence": [
       {
         "type": "generated-surface",
-        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
-        "detail": "Generated word-card surface inspected for 日本|にほん: word 日本, reading にほん, meaning Japan, example 日本へ行きたいです。, audio word-reading-日本-にほん, breakdown 日 （に） ／ day / sun / 本 （ほん） ／ book, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 2."
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 日本|にほん: word 日本, reading にほん, meaning Japan, example 日本へ行きたいです。, reading line にほんへいきたいです。, English line I want to go to Japan., audio word-reading-日本-にほん, breakdown 日 （に） ／ day / sun; 本 （ほん） ／ book, labels JLPT N5 JLPT core + reading coverage, focus 日、本, covers 日: に ／ 本: ほん, notes/support surface Core country name for Japan; useful for travel, identity, and language examples., and pitch label Pitch 1: 2."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 日本|にほん, reading にほん, meaning Japan, example 日本へ行きたいです。, breakdown 日 （に） ／ day / sun / 本 （ほん） ／ book, and the JLPT N5 word-card labels."
+        "detail": "N5 golden word review protects 日本|にほん, reading にほん, meaning Japan, example 日本へ行きたいです。, notes/support surface Core country name for Japan; useful for travel, identity, and language examples., breakdown 日 （に） ／ day / sun; 本 （ほん） ／ book, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 2."
       },
       {
         "type": "japanese-source",
-        "source": "Bunpro Japanese vocabulary https://bunpro.jp/vocabs/%E6%97%A5%E6%9C%AC and JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%97%A5%E6%9C%AC",
-        "detail": "Bunpro and JLearn verified 日本|にほん, reading にほん, learner meaning Japan, common noun status, and product review checked example 日本へ行きたいです。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1582710 exact row verified 日本|にほん, reading にほん, dictionary meaning Japan, priority news2,nf25,spec1, learner meaning Japan, and product review checked example sentence 日本へ行きたいです。 with reading にほんへいきたいです。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
@@ -17210,7 +17333,7 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 日本|にほん, reading にほん, sentence 日本へ行きたいです。, reading line にほんへいきたいです。, English line I want to go to Japan.."
+        "detail": "Example review checked 日本|にほん, reading にほん, sentence 日本へ行きたいです。, reading line にほんへいきたいです。, English line I want to go to Japan., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
@@ -17230,12 +17353,17 @@
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 日本|にほん JLPT N5, JLPT core + reading coverage, focus 日、本, and covered readings 日: に ／ 本: ほん."
+        "detail": "Label review checked 日本|にほん JLPT N5, JLPT core + reading coverage, focus 日、本, covered readings 日: に ／ 本: ほん, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 日本|にほん common and learner-friendly for the N5 word deck, with accurate reading にほん, meaning Japan, and example 日本へ行きたいです。."
+        "detail": "Manual review judged 日本|にほん common and learner-friendly for the N5 word deck, with accurate written form 日本, reading にほん, meaning Japan, example 日本へ行きたいです。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 日本|にほん checked generated surface, Japanese-source evidence from JMdict entrySeq 1582710, example sentence 日本へ行きたいです。, reading にほんへいきたいです。, translation I want to go to Japan., notes/support surface Core country name for Japan; useful for travel, identity, and language examples., reading breakdown 日 （に） ／ day / sun; 本 （ほん） ／ book, meaning Japan, labels JLPT N5; JLPT core + reading coverage; focus 日、本; covers 日: に ／ 本: ほん, audio word-reading-日本-にほん, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -17257,7 +17385,13 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Core country name for Japan; useful for travel, identity, and language examples."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard."
   },
   {
     "word": "近い",
@@ -17318,18 +17452,18 @@
     "sourceEvidence": [
       {
         "type": "generated-surface",
-        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
-        "detail": "Generated word-card surface inspected for 四時|よじ: word 四時, reading よじ, meaning four o'clock, example 四時に家へ帰ります。, audio word-reading-四時-よじ, breakdown 四 （よ） ／ four / 時 （じ） ／ time / o'clock, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 1."
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 四時|よじ: word 四時, reading よじ, meaning four o'clock, example 四時に家へ帰ります。, reading line よじにいえへかえります。, English line I go home at four o'clock., audio word-reading-四時-よじ, breakdown 四 （よ） ／ four; 時 （じ） ／ time / o'clock, labels JLPT N5 JLPT core + reading coverage, focus 四、時, covers 四: よ ／ 時: じ, notes/support surface Core time expression for four o'clock; useful for schedules and returning home., and pitch label Pitch 1: 1."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 四時|よじ, reading よじ, meaning four o'clock, example 四時に家へ帰ります。, breakdown 四 （よ） ／ four / 時 （じ） ／ time / o'clock, and the JLPT N5 word-card labels."
+        "detail": "N5 golden word review protects 四時|よじ, reading よじ, meaning four o'clock, example 四時に家へ帰ります。, notes/support surface Core time expression for four o'clock; useful for schedules and returning home., breakdown 四 （よ） ／ four; 時 （じ） ／ time / o'clock, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 1."
       },
       {
         "type": "japanese-source",
-        "source": "JapaneseClass.jp Japanese-English Dictionary https://japaneseclass.jp/dictionary/%E5%9B%9B%E6%99%82 and MLC Japanese JLPT N5 time reference https://www.mlcjapanese.co.jp/n5_01_02.html",
-        "detail": "JapaneseClass.jp and MLC verified 四時|よじ, reading よじ, learner meaning four o'clock, common N5 time usage, and product review checked example 四時に家へ帰ります。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1307230 exact row verified 四時|よじ, reading よじ, dictionary meaning four o'clock, priority spec1, learner meaning four o'clock, and product review checked example sentence 四時に家へ帰ります。 with reading よじにいえへかえります。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
@@ -17339,7 +17473,7 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 四時|よじ, reading よじ, sentence 四時に家へ帰ります。, reading line よじにいえへかえります。, English line I go home at four o'clock.."
+        "detail": "Example review checked 四時|よじ, reading よじ, sentence 四時に家へ帰ります。, reading line よじにいえへかえります。, English line I go home at four o'clock., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
@@ -17359,12 +17493,17 @@
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 四時|よじ JLPT N5, JLPT core + reading coverage, focus 四、時, and covered readings 四: よ ／ 時: じ."
+        "detail": "Label review checked 四時|よじ JLPT N5, JLPT core + reading coverage, focus 四、時, covered readings 四: よ ／ 時: じ, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 四時|よじ common and learner-friendly for the N5 word deck, with accurate reading よじ, meaning four o'clock, and example 四時に家へ帰ります。."
+        "detail": "Manual review judged 四時|よじ common and learner-friendly for the N5 word deck, with accurate written form 四時, reading よじ, meaning four o'clock, example 四時に家へ帰ります。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 四時|よじ checked generated surface, Japanese-source evidence from JMdict entrySeq 1307230, example sentence 四時に家へ帰ります。, reading よじにいえへかえります。, translation I go home at four o'clock., notes/support surface Core time expression for four o'clock; useful for schedules and returning home., reading breakdown 四 （よ） ／ four; 時 （じ） ／ time / o'clock, meaning four o'clock, labels JLPT N5; JLPT core + reading coverage; focus 四、時; covers 四: よ ／ 時: じ, audio word-reading-四時-よじ, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -17386,11 +17525,17 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Core time expression for four o'clock; useful for schedules and returning home."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard."
   },
   {
     "word": "大学",
-    "status": "platinum",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
       "だいがく"
     ],
@@ -17416,7 +17561,7 @@
       "学 （がく） ／ study / learning"
     ],
     "exampleIncludes": [
-      "姉は大学で日本語を勉強しています。"
+      "大学で日本語を勉強します。"
     ],
     "pitchAccentIncludes": [
       "Pitch 1: 0"
@@ -17427,18 +17572,18 @@
     "sourceEvidence": [
       {
         "type": "generated-surface",
-        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
-        "detail": "Generated word-card surface inspected for 大学|だいがく: word 大学, reading だいがく, meaning university, example 姉は大学で日本語を勉強しています。, audio word-reading-大学-だいがく, breakdown 大 （だい） ／ big / large / 学 （がく） ／ study / learning, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 大学|だいがく: word 大学, reading だいがく, meaning university, example 大学で日本語を勉強します。, reading line だいがくでにほんごをべんきょうします。, English line I study Japanese at a university., audio word-reading-大学-だいがく, breakdown 大 （だい） ／ big / large; 学 （がく） ／ study / learning, labels JLPT N5 JLPT core + reading coverage, focus 大、学, covers 大: だい ／ 学: がく, notes/support surface Core school word for university; useful for education and study contexts., and pitch label Pitch 1: 0."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 大学|だいがく, reading だいがく, meaning university, example 姉は大学で日本語を勉強しています。, breakdown 大 （だい） ／ big / large / 学 （がく） ／ study / learning, and the JLPT N5 word-card labels."
+        "detail": "N5 golden word review protects 大学|だいがく, reading だいがく, meaning university, example 大学で日本語を勉強します。, notes/support surface Core school word for university; useful for education and study contexts., breakdown 大 （だい） ／ big / large; 学 （がく） ／ study / learning, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
       },
       {
         "type": "japanese-source",
-        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%A4%A7%E5%AD%A6",
-        "detail": "JLearn.net verified 大学|だいがく, reading だいがく, learner meaning university, common JLPT N5 noun status, and product review checked example 姉は大学で日本語を勉強しています。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1413240 exact row verified 大学|だいがく, reading だいがく, dictionary meaning university; college; former imperial university of Japan (established under the ritsuryō system for the training of government administrators); the Great Learning (one of the Four Books), priority ichi1,news1,nf01, learner meaning university, and product review checked example sentence 大学で日本語を勉強します。 with reading だいがくでにほんごをべんきょうします。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
@@ -17448,7 +17593,7 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 大学|だいがく, reading だいがく, sentence 姉は大学で日本語を勉強しています。, reading line あねはだいがくでにほんごをべんきょうしています。, English line My older sister studies Japanese at university.."
+        "detail": "Example review checked 大学|だいがく, reading だいがく, sentence 大学で日本語を勉強します。, reading line だいがくでにほんごをべんきょうします。, English line I study Japanese at a university., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
@@ -17468,12 +17613,17 @@
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 大学|だいがく JLPT N5, JLPT core + reading coverage, focus 大、学, and covered readings 大: だい ／ 学: がく."
+        "detail": "Label review checked 大学|だいがく JLPT N5, JLPT core + reading coverage, focus 大、学, covered readings 大: だい ／ 学: がく, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 大学|だいがく common and learner-friendly for the N5 word deck, with accurate reading だいがく, meaning university, and example 姉は大学で日本語を勉強しています。."
+        "detail": "Manual review judged 大学|だいがく common and learner-friendly for the N5 word deck, with accurate written form 大学, reading だいがく, meaning university, example 大学で日本語を勉強します。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 大学|だいがく checked generated surface, Japanese-source evidence from JMdict entrySeq 1413240, example sentence 大学で日本語を勉強します。, reading だいがくでにほんごをべんきょうします。, translation I study Japanese at a university., notes/support surface Core school word for university; useful for education and study contexts., reading breakdown 大 （だい） ／ big / large; 学 （がく） ／ study / learning, meaning university, labels JLPT N5; JLPT core + reading coverage; focus 大、学; covers 大: だい ／ 学: がく, audio word-reading-大学-だいがく, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -17495,11 +17645,18 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Core school word for university; useful for education and study contexts."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "fixSummary": "Replaced the older 姉/ています example with a simpler learner-facing sentence that demonstrates 大学 directly."
   },
   {
     "word": "高校",
-    "status": "platinum",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
       "こうこう"
     ],
@@ -17523,7 +17680,7 @@
       "校 （こう） ／ school campus"
     ],
     "exampleIncludes": [
-      "姉は高校で勉強しています。"
+      "高校で勉強します。"
     ],
     "pitchAccentIncludes": [
       "Pitch 1: 0"
@@ -17534,18 +17691,18 @@
     "sourceEvidence": [
       {
         "type": "generated-surface",
-        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
-        "detail": "Generated word-card surface inspected for 高校|こうこう: word 高校, reading こうこう, meaning high school, example 姉は高校で勉強しています。, audio word-reading-高校-こうこう, breakdown 高 （こう） ／ high / expensive / 校 （こう） ／ school campus, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 高校|こうこう: word 高校, reading こうこう, meaning high school, example 高校で勉強します。, reading line こうこうでべんきょうします。, English line I study at a high school., audio word-reading-高校-こうこう, breakdown 高 （こう） ／ high / expensive; 校 （こう） ／ school campus, labels JLPT N5 JLPT core + reading coverage, focus 高, covers 高: こう, notes/support surface Core school word for high school; useful for education and student contexts., and pitch label Pitch 1: 0."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 高校|こうこう, reading こうこう, meaning high school, example 姉は高校で勉強しています。, breakdown 高 （こう） ／ high / expensive / 校 （こう） ／ school campus, and the JLPT N5 word-card labels."
+        "detail": "N5 golden word review protects 高校|こうこう, reading こうこう, meaning high school, example 高校で勉強します。, notes/support surface Core school word for high school; useful for education and student contexts., breakdown 高 （こう） ／ high / expensive; 校 （こう） ／ school campus, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
       },
       {
         "type": "japanese-source",
-        "source": "Bunpro Japanese vocabulary https://bunpro.jp/vocabs/%E9%AB%98%E6%A0%A1 and JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%AB%98%E6%A0%A1",
-        "detail": "Bunpro and JLearn verified 高校|こうこう, reading こうこう, learner meaning high school, common noun status, and product review checked example 姉は高校で勉強しています。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1283500 exact row verified 高校|こうこう, reading こうこう, dictionary meaning senior high school; high school, priority ichi1,news1,nf01, learner meaning high school, and product review checked example sentence 高校で勉強します。 with reading こうこうでべんきょうします。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
@@ -17555,7 +17712,7 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 高校|こうこう, reading こうこう, sentence 姉は高校で勉強しています。, reading line あねはこうこうでべんきょうしています。, English line My older sister studies at high school.."
+        "detail": "Example review checked 高校|こうこう, reading こうこう, sentence 高校で勉強します。, reading line こうこうでべんきょうします。, English line I study at a high school., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
@@ -17575,12 +17732,17 @@
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 高校|こうこう JLPT N5, JLPT core + reading coverage, focus 高, and covered reading 高: こう."
+        "detail": "Label review checked 高校|こうこう JLPT N5, JLPT core + reading coverage, focus 高, covered readings 高: こう, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 高校|こうこう common and learner-friendly for the N5 word deck, with accurate reading こうこう, meaning high school, and example 姉は高校で勉強しています。."
+        "detail": "Manual review judged 高校|こうこう common and learner-friendly for the N5 word deck, with accurate written form 高校, reading こうこう, meaning high school, example 高校で勉強します。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 高校|こうこう checked generated surface, Japanese-source evidence from JMdict entrySeq 1283500, example sentence 高校で勉強します。, reading こうこうでべんきょうします。, translation I study at a high school., notes/support surface Core school word for high school; useful for education and student contexts., reading breakdown 高 （こう） ／ high / expensive; 校 （こう） ／ school campus, meaning high school, labels JLPT N5; JLPT core + reading coverage; focus 高; covers 高: こう, audio word-reading-高校-こうこう, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -17602,7 +17764,14 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Core school word for high school; useful for education and student contexts."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "fixSummary": "Replaced the older 姉/ています example with a simpler learner-facing sentence that demonstrates 高校 directly."
   },
   {
     "word": "天気",
@@ -17643,18 +17812,18 @@
     "sourceEvidence": [
       {
         "type": "generated-surface",
-        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
-        "detail": "Generated word-card surface inspected for 天気|てんき: word 天気, reading てんき, meaning weather, example 今日は天気がいいです。, audio word-reading-天気-てんき, breakdown 天 （てん） ／ weather / sky / 気 （き） ／ energy / spirit, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 1."
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 天気|てんき: word 天気, reading てんき, meaning weather, example 今日は天気がいいです。, reading line きょうはてんきがいいです。, English line The weather is nice today., audio word-reading-天気-てんき, breakdown 天 （てん） ／ weather / sky; 気 （き） ／ energy / spirit, labels JLPT N5 JLPT core + reading coverage, focus 天、気, covers 天: てん ／ 気: き, notes/support surface Core weather word; useful for daily small talk and planning., and pitch label Pitch 1: 1."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 天気|てんき, reading てんき, meaning weather, example 今日は天気がいいです。, breakdown 天 （てん） ／ weather / sky / 気 （き） ／ energy / spirit, and the JLPT N5 word-card labels."
+        "detail": "N5 golden word review protects 天気|てんき, reading てんき, meaning weather, example 今日は天気がいいです。, notes/support surface Core weather word; useful for daily small talk and planning., breakdown 天 （てん） ／ weather / sky; 気 （き） ／ energy / spirit, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 1."
       },
       {
         "type": "japanese-source",
-        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%A4%A9%E6%B0%97",
-        "detail": "JLearn.net verified 天気|てんき, reading てんき, learner meaning weather, common JLPT N5 noun status, and product review checked example 今日は天気がいいです。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1438690 exact row verified 天気|てんき, reading てんき, dictionary meaning weather; fair weather; fine weather, priority ichi1,news1,nf06, learner meaning weather, and product review checked example sentence 今日は天気がいいです。 with reading きょうはてんきがいいです。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
@@ -17664,7 +17833,7 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 天気|てんき, reading てんき, sentence 今日は天気がいいです。, reading line きょうはてんきがいいです。, English line The weather is nice today.."
+        "detail": "Example review checked 天気|てんき, reading てんき, sentence 今日は天気がいいです。, reading line きょうはてんきがいいです。, English line The weather is nice today., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
@@ -17684,12 +17853,17 @@
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 天気|てんき JLPT N5, JLPT core + reading coverage, focus 天、気, and covered readings 天: てん ／ 気: き."
+        "detail": "Label review checked 天気|てんき JLPT N5, JLPT core + reading coverage, focus 天、気, covered readings 天: てん ／ 気: き, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 天気|てんき common and learner-friendly for the N5 word deck, with accurate reading てんき, meaning weather, and example 今日は天気がいいです。."
+        "detail": "Manual review judged 天気|てんき common and learner-friendly for the N5 word deck, with accurate written form 天気, reading てんき, meaning weather, example 今日は天気がいいです。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 天気|てんき checked generated surface, Japanese-source evidence from JMdict entrySeq 1438690, example sentence 今日は天気がいいです。, reading きょうはてんきがいいです。, translation The weather is nice today., notes/support surface Core weather word; useful for daily small talk and planning., reading breakdown 天 （てん） ／ weather / sky; 気 （き） ／ energy / spirit, meaning weather, labels JLPT N5; JLPT core + reading coverage; focus 天、気; covers 天: てん ／ 気: き, audio word-reading-天気-てんき, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -17711,7 +17885,13 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Core weather word; useful for daily small talk and planning."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard."
   },
   {
     "word": "帰る",
@@ -17762,18 +17942,18 @@
     "sourceEvidence": [
       {
         "type": "generated-surface",
-        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
-        "detail": "Generated word-card surface inspected for 半分|はんぶん: word 半分, reading はんぶん, meaning half, example ケーキを半分食べました。, audio word-reading-半分-はんぶん, breakdown 半 （はん） ／ half / 分 （ぶん） ／ part / portion, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 3."
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 半分|はんぶん: word 半分, reading はんぶん, meaning half, example ケーキを半分食べました。, reading line けーきをはんぶんたべました。, English line I ate half of the cake., audio word-reading-半分-はんぶん, breakdown 半 （はん） ／ half; 分 （ぶん） ／ part / portion, labels JLPT N5 JLPT core + reading coverage, focus 半、分, covers 半: はん ／ 分: ぶん, notes/support surface Core quantity word for half; useful for food and sharing contexts., and pitch label Pitch 1: 3."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 半分|はんぶん, reading はんぶん, meaning half, example ケーキを半分食べました。, breakdown 半 （はん） ／ half / 分 （ぶん） ／ part / portion, and the JLPT N5 word-card labels."
+        "detail": "N5 golden word review protects 半分|はんぶん, reading はんぶん, meaning half, example ケーキを半分食べました。, notes/support surface Core quantity word for half; useful for food and sharing contexts., breakdown 半 （はん） ／ half; 分 （ぶん） ／ part / portion, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 3."
       },
       {
         "type": "japanese-source",
-        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8D%8A%E5%88%86",
-        "detail": "JLearn.net verified 半分|はんぶん, reading はんぶん, learner meaning half, common JLPT N5 noun/adverbial noun status, and product review checked example ケーキを半分食べました。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1479890 exact row verified 半分|はんぶん, reading はんぶん, dictionary meaning half, priority ichi1,news1,nf02, learner meaning half, and product review checked example sentence ケーキを半分食べました。 with reading けーきをはんぶんたべました。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
@@ -17783,7 +17963,7 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 半分|はんぶん, reading はんぶん, sentence ケーキを半分食べました。, reading line ケーキをはんぶんたべました。, English line I ate half of the cake.."
+        "detail": "Example review checked 半分|はんぶん, reading はんぶん, sentence ケーキを半分食べました。, reading line けーきをはんぶんたべました。, English line I ate half of the cake., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
@@ -17803,12 +17983,17 @@
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 半分|はんぶん JLPT N5, JLPT core + reading coverage, focus 半、分, and covered readings 半: はん ／ 分: ぶん."
+        "detail": "Label review checked 半分|はんぶん JLPT N5, JLPT core + reading coverage, focus 半、分, covered readings 半: はん ／ 分: ぶん, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 半分|はんぶん common and learner-friendly for the N5 word deck, with accurate reading はんぶん, meaning half, and example ケーキを半分食べました。."
+        "detail": "Manual review judged 半分|はんぶん common and learner-friendly for the N5 word deck, with accurate written form 半分, reading はんぶん, meaning half, example ケーキを半分食べました。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 半分|はんぶん checked generated surface, Japanese-source evidence from JMdict entrySeq 1479890, example sentence ケーキを半分食べました。, reading けーきをはんぶんたべました。, translation I ate half of the cake., notes/support surface Core quantity word for half; useful for food and sharing contexts., reading breakdown 半 （はん） ／ half; 分 （ぶん） ／ part / portion, meaning half, labels JLPT N5; JLPT core + reading coverage; focus 半、分; covers 半: はん ／ 分: ぶん, audio word-reading-半分-はんぶん, pitch accent source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] rendered Pitch 1: 3, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -17830,7 +18015,13 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Core quantity word for half; useful for food and sharing contexts."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard."
   },
   {
     "word": "十分",
@@ -17872,18 +18063,18 @@
     "sourceEvidence": [
       {
         "type": "generated-surface",
-        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
-        "detail": "Generated word-card surface inspected for 十分|じゅっぷん: word 十分, reading じゅっぷん, meaning ten minutes, example 駅まで十分かかります。, audio word-reading-十分-じゅっぷん, breakdown 十 （じゅっ） ／ ten / 分 （ぷん） ／ minute, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 1 / Generated pitch (unverified)."
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 十分|じゅっぷん: word 十分, reading じゅっぷん, meaning ten minutes, example 駅まで十分かかります。, reading line えきまでじゅっぷんかかります。, English line It takes ten minutes to get to the station., audio word-reading-十分-じゅっぷん, breakdown 十 （じゅっ） ／ ten; 分 （ぷん） ／ minute, labels JLPT N5 JLPT core + reading coverage, focus 十、分, covers 十: じゅっ ／ 分: ぷん, notes/support surface Core duration word for ten minutes; reviewed as じゅっぷん, not 十分|じゅうぶん meaning enough., and pitch label Pitch 1: 1 / Generated pitch (unverified)."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 十分|じゅっぷん, reading じゅっぷん, meaning ten minutes, example 駅まで十分かかります。, breakdown 十 （じゅっ） ／ ten / 分 （ぷん） ／ minute, and pitch label Pitch 1: 1 / Generated pitch (unverified)."
+        "detail": "N5 golden word review protects 十分|じゅっぷん, reading じゅっぷん, meaning ten minutes, example 駅まで十分かかります。, notes/support surface Core duration word for ten minutes; reviewed as じゅっぷん, not 十分|じゅうぶん meaning enough., breakdown 十 （じゅっ） ／ ten; 分 （ぷん） ／ minute, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 1 / Generated pitch (unverified)."
       },
       {
         "type": "japanese-source",
-        "source": "JapaneseClass.jp Japanese-English Dictionary https://japaneseclass.jp/dictionary/%E5%8D%81%E5%88%86 and MLC Japanese JLPT N5 time reference https://www.mlcjapanese.co.jp/n5_01_02.html",
-        "detail": "JapaneseClass.jp and MLC verified 十分|じゅっぷん, reading じゅっぷん, learner meaning ten minutes, common N5 minute expression, and product review checked example 駅まで十分かかります。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1335070 exact row verified 十分|じゅっぷん, reading じゅっぷん, dictionary meaning ten minutes, priority none, learner meaning ten minutes, and product review checked example sentence 駅まで十分かかります。 with reading えきまでじゅっぷんかかります。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
@@ -17893,7 +18084,7 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 十分|じゅっぷん, reading じゅっぷん, sentence 駅まで十分かかります。, reading line えきまでじゅっぷんかかります。, English line It takes ten minutes to get to the station.."
+        "detail": "Example review checked 十分|じゅっぷん, reading じゅっぷん, sentence 駅まで十分かかります。, reading line えきまでじゅっぷんかかります。, English line It takes ten minutes to get to the station., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
@@ -17908,17 +18099,22 @@
       {
         "type": "pitch-accent-review",
         "source": "templates/word_pitch_accent_data.json",
-        "detail": "Pitch accent review checked 十分|じゅっぷん source voicevox-nemo-reading-query pattern 1 [atamadaka] / 1 [atamadaka] and rendered label Pitch 1: 1 / Generated pitch (unverified). This is generated guidance, not dictionary-verified pitch."
+        "detail": "Pitch accent review checked 十分|じゅっぷん source voicevox-nemo-reading-query pattern 1 [atamadaka] / 1 [atamadaka] and rendered label Pitch 1: 1 / Generated pitch (unverified) with visible Generated pitch (unverified) label."
       },
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 十分|じゅっぷん JLPT N5, JLPT core + reading coverage, focus 十、分, and covered readings 十: じゅっ ／ 分: ぷん."
+        "detail": "Label review checked 十分|じゅっぷん JLPT N5, JLPT core + reading coverage, focus 十、分, covered readings 十: じゅっ ／ 分: ぷん, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 十分|じゅっぷん common and learner-friendly for the N5 word deck, with accurate reading じゅっぷん, meaning ten minutes, and example 駅まで十分かかります。."
+        "detail": "Manual review judged 十分|じゅっぷん common and learner-friendly for the N5 word deck, with accurate written form 十分, reading じゅっぷん, meaning ten minutes, example 駅まで十分かかります。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 十分|じゅっぷん checked generated surface, Japanese-source evidence from JMdict entrySeq 1335070, example sentence 駅まで十分かかります。, reading えきまでじゅっぷんかかります。, translation It takes ten minutes to get to the station., notes/support surface Core duration word for ten minutes; reviewed as じゅっぷん, not 十分|じゅうぶん meaning enough., reading breakdown 十 （じゅっ） ／ ten; 分 （ぷん） ／ minute, meaning ten minutes, labels JLPT N5; JLPT core + reading coverage; focus 十、分; covers 十: じゅっ ／ 分: ぷん, audio word-reading-十分-じゅっぷん, pitch accent source voicevox-nemo-reading-query pattern 1 [atamadaka] / 1 [atamadaka] rendered Pitch 1: 1 / Generated pitch (unverified) with visible Generated pitch (unverified) label, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -17940,11 +18136,17 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Core duration word for ten minutes; reviewed as じゅっぷん, not 十分|じゅうぶん meaning enough."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard."
   },
   {
     "word": "毎月",
-    "status": "platinum",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
       "まいつき"
     ],
@@ -17968,7 +18170,7 @@
       "月 （つき） ／ month / moon"
     ],
     "exampleIncludes": [
-      "毎月、本を一冊買います。"
+      "毎月、本を買います。"
     ],
     "pitchAccentIncludes": [
       "Pitch 1: 0"
@@ -17979,18 +18181,18 @@
     "sourceEvidence": [
       {
         "type": "generated-surface",
-        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
-        "detail": "Generated word-card surface inspected for 毎月|まいつき: word 毎月, reading まいつき, meaning every month, example 毎月、本を一冊買います。, audio word-reading-毎月-まいつき, breakdown 毎 （まい） ／ every / 月 （つき） ／ month / moon, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 毎月|まいつき: word 毎月, reading まいつき, meaning every month, example 毎月、本を買います。, reading line まいつき、ほんをかいます。, English line I buy books every month., audio word-reading-毎月-まいつき, breakdown 毎 （まい） ／ every; 月 （つき） ／ month / moon, labels JLPT N5 JLPT core + reading coverage, focus 月, covers 月: つき, notes/support surface Core frequency word for every month; useful for routines and repeated plans., and pitch label Pitch 1: 0."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 毎月|まいつき, reading まいつき, meaning every month, example 毎月、本を一冊買います。, breakdown 毎 （まい） ／ every / 月 （つき） ／ month / moon, and the JLPT N5 word-card labels."
+        "detail": "N5 golden word review protects 毎月|まいつき, reading まいつき, meaning every month, example 毎月、本を買います。, notes/support surface Core frequency word for every month; useful for routines and repeated plans., breakdown 毎 （まい） ／ every; 月 （つき） ／ month / moon, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
       },
       {
         "type": "japanese-source",
-        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%AF%8E%E6%9C%88",
-        "detail": "JLearn.net verified 毎月|まいつき, reading まいつき, learner meaning every month, common JLPT N5 noun/adverbial noun status, and product review checked example 毎月、本を一冊買います。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1584350 exact row verified 毎月|まいつき, reading まいつき, dictionary meaning every month; each month; monthly, priority ichi1,news1,nf05, learner meaning every month, and product review checked example sentence 毎月、本を買います。 with reading まいつき、ほんをかいます。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
@@ -18000,7 +18202,7 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 毎月|まいつき, reading まいつき, sentence 毎月、本を一冊買います。, reading line まいつき、ほんをいっさつかいます。, English line I buy one book every month.."
+        "detail": "Example review checked 毎月|まいつき, reading まいつき, sentence 毎月、本を買います。, reading line まいつき、ほんをかいます。, English line I buy books every month., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
@@ -18020,12 +18222,17 @@
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 毎月|まいつき JLPT N5, JLPT core + reading coverage, focus 月, and covered reading 月: つき."
+        "detail": "Label review checked 毎月|まいつき JLPT N5, JLPT core + reading coverage, focus 月, covered readings 月: つき, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 毎月|まいつき common and learner-friendly for the N5 word deck, with accurate reading まいつき, meaning every month, and example 毎月、本を一冊買います。."
+        "detail": "Manual review judged 毎月|まいつき common and learner-friendly for the N5 word deck, with accurate written form 毎月, reading まいつき, meaning every month, example 毎月、本を買います。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 毎月|まいつき checked generated surface, Japanese-source evidence from JMdict entrySeq 1584350, example sentence 毎月、本を買います。, reading まいつき、ほんをかいます。, translation I buy books every month., notes/support surface Core frequency word for every month; useful for routines and repeated plans., reading breakdown 毎 （まい） ／ every; 月 （つき） ／ month / moon, meaning every month, labels JLPT N5; JLPT core + reading coverage; focus 月; covers 月: つき, audio word-reading-毎月-まいつき, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -18047,7 +18254,14 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Core frequency word for every month; useful for routines and repeated plans."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "fixSummary": "Removed the extra 一冊 counter from the example so the sentence stays simpler and more N5-facing."
   },
   {
     "word": "下る",
@@ -18122,18 +18336,18 @@
     "sourceEvidence": [
       {
         "type": "generated-surface",
-        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
-        "detail": "Generated word-card surface inspected for 毎日|まいにち: word 毎日, reading まいにち, meaning every day, example 毎日、日本語を勉強します。, audio word-reading-毎日-まいにち, breakdown 毎 （まい） ／ every / 日 （にち） ／ day / sun, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 1."
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 毎日|まいにち: word 毎日, reading まいにち, meaning every day, example 毎日、日本語を勉強します。, reading line まいにち、にほんごをべんきょうします。, English line I study Japanese every day., audio word-reading-毎日-まいにち, breakdown 毎 （まい） ／ every; 日 （にち） ／ day / sun, labels JLPT N5 JLPT core + reading coverage, focus 日, covers 日: にち, notes/support surface Core frequency word for every day; useful for habit and study routine examples., and pitch label Pitch 1: 1."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 毎日|まいにち, reading まいにち, meaning every day, example 毎日、日本語を勉強します。, breakdown 毎 （まい） ／ every / 日 （にち） ／ day / sun, and the JLPT N5 word-card labels."
+        "detail": "N5 golden word review protects 毎日|まいにち, reading まいにち, meaning every day, example 毎日、日本語を勉強します。, notes/support surface Core frequency word for every day; useful for habit and study routine examples., breakdown 毎 （まい） ／ every; 日 （にち） ／ day / sun, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 1."
       },
       {
         "type": "japanese-source",
-        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E6%AF%8E%E6%97%A5",
-        "detail": "JLearn.net verified 毎日|まいにち, reading まいにち, learner meaning every day, common or dictionary-backed learner word status, and product review checked example 毎日、日本語を勉強します。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1524720 exact row verified 毎日|まいにち, reading まいにち, dictionary meaning every day; daily, priority ichi1,news1,nf01, learner meaning every day, and product review checked example sentence 毎日、日本語を勉強します。 with reading まいにち、にほんごをべんきょうします。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
@@ -18143,7 +18357,7 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 毎日|まいにち, reading まいにち, sentence 毎日、日本語を勉強します。, reading line まいにち、にほんごをべんきょうします。, English line I study Japanese every day.."
+        "detail": "Example review checked 毎日|まいにち, reading まいにち, sentence 毎日、日本語を勉強します。, reading line まいにち、にほんごをべんきょうします。, English line I study Japanese every day., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
@@ -18163,12 +18377,17 @@
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 毎日|まいにち JLPT N5, JLPT core + reading coverage, focus 日, and covered readings 日: にち."
+        "detail": "Label review checked 毎日|まいにち JLPT N5, JLPT core + reading coverage, focus 日, covered readings 日: にち, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 毎日|まいにち common and learner-friendly for the N5 word deck, with accurate reading まいにち, meaning every day, and example 毎日、日本語を勉強します。."
+        "detail": "Manual review judged 毎日|まいにち common and learner-friendly for the N5 word deck, with accurate written form 毎日, reading まいにち, meaning every day, example 毎日、日本語を勉強します。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 毎日|まいにち checked generated surface, Japanese-source evidence from JMdict entrySeq 1524720, example sentence 毎日、日本語を勉強します。, reading まいにち、にほんごをべんきょうします。, translation I study Japanese every day., notes/support surface Core frequency word for every day; useful for habit and study routine examples., reading breakdown 毎 （まい） ／ every; 日 （にち） ／ day / sun, meaning every day, labels JLPT N5; JLPT core + reading coverage; focus 日; covers 日: にち, audio word-reading-毎日-まいにち, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -18190,7 +18409,13 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Core frequency word for every day; useful for habit and study routine examples."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard."
   },
   {
     "word": "外国人",
@@ -18343,18 +18568,18 @@
     "sourceEvidence": [
       {
         "type": "generated-surface",
-        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js",
-        "detail": "Generated word-card surface inspected for 千円|せんえん: word 千円, reading せんえん, meaning 1,000 yen, example この本は千円です。, audio word-reading-千円-せんえん, breakdown 千 （せん） ／ thousand / 円 （えん） ／ yen / circle, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 千円|せんえん: word 千円, reading せんえん, meaning 1,000 yen, example この本は千円です。, reading line このほんはせんえんです。, English line This book costs 1,000 yen., audio word-reading-千円-せんえん, breakdown 千 （せん） ／ thousand; 円 （えん） ／ yen / circle, labels JLPT N5 JLPT core + reading coverage, focus 千、円, covers 千: せん ／ 円: えん, notes/support surface Core price expression for 1,000 yen; useful for shopping examples., and pitch label Pitch 1: 0."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 千円|せんえん, reading せんえん, meaning 1,000 yen, example この本は千円です。, breakdown 千 （せん） ／ thousand / 円 （えん） ／ yen / circle, and the JLPT N5 word-card labels."
+        "detail": "N5 golden word review protects 千円|せんえん, reading せんえん, meaning 1,000 yen, example この本は千円です。, notes/support surface Core price expression for 1,000 yen; useful for shopping examples., breakdown 千 （せん） ／ thousand; 円 （えん） ／ yen / circle, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 0."
       },
       {
         "type": "japanese-source",
-        "source": "JapanDict Japanese Dictionary https://www.japandict.com/%E5%8D%83%E5%86%86",
-        "detail": "JapanDict verified 千円|せんえん, reading せんえん, learner meaning 1,000 yen, common or dictionary-backed learner word status, and product review checked example この本は千円です。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1388780 exact row verified 千円|せんえん, reading せんえん, dictionary meaning 1000 yen, priority spec1, learner meaning 1,000 yen, and product review checked example sentence この本は千円です。 with reading このほんはせんえんです。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
@@ -18364,7 +18589,7 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 千円|せんえん, reading せんえん, sentence この本は千円です。, reading line このほんはせんえんです。, English line This book costs 1,000 yen.."
+        "detail": "Example review checked 千円|せんえん, reading せんえん, sentence この本は千円です。, reading line このほんはせんえんです。, English line This book costs 1,000 yen., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
@@ -18384,12 +18609,17 @@
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 千円|せんえん JLPT N5, JLPT core + reading coverage, focus 千、円, and covered readings 千: せん ／ 円: えん."
+        "detail": "Label review checked 千円|せんえん JLPT N5, JLPT core + reading coverage, focus 千、円, covered readings 千: せん ／ 円: えん, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 千円|せんえん common and learner-friendly for the N5 word deck, with accurate reading せんえん, meaning 1,000 yen, and example この本は千円です。."
+        "detail": "Manual review judged 千円|せんえん common and learner-friendly for the N5 word deck, with accurate written form 千円, reading せんえん, meaning 1,000 yen, example この本は千円です。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 千円|せんえん checked generated surface, Japanese-source evidence from JMdict entrySeq 1388780, example sentence この本は千円です。, reading このほんはせんえんです。, translation This book costs 1,000 yen., notes/support surface Core price expression for 1,000 yen; useful for shopping examples., reading breakdown 千 （せん） ／ thousand; 円 （えん） ／ yen / circle, meaning 1,000 yen, labels JLPT N5; JLPT core + reading coverage; focus 千、円; covers 千: せん ／ 円: えん, audio word-reading-千円-せんえん, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -18411,7 +18641,13 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Core price expression for 1,000 yen; useful for shopping examples."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard."
   },
   {
     "word": "毎年",
@@ -27603,32 +27839,32 @@
       {
         "type": "generated-surface",
         "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 五日|いつか: word 五日, reading いつか, meaning the fifth day / five days, example 来月の五日に会います。, audio word-reading-五日-いつか, breakdown word reading: いつか / 五日 （いつか） ／ the fifth day / five days, labels JLPT N5 JLPT core + reading coverage."
+        "detail": "Generated word-card surface inspected for 五日|いつか: word 五日, reading いつか, meaning the fifth day / five days, example 来月の五日に会います。, reading line らいげつのいつかにあいます。, English line I will meet on the fifth of next month., audio word-reading-五日-いつか, breakdown word reading: いつか; 五日 （いつか） ／ the fifth day / five days, labels JLPT N5 JLPT core + reading coverage, focus 五、日, covers 五日: いつか, notes/support surface Common date and duration word with a whole-word reading; do not split it into false per-kanji readings., and pitch label Pitch 1: 3 / Generated pitch (unverified)."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 五日|いつか, reading いつか, meaning fifth day / five days, example 来月の五日に会います。, breakdown word reading: いつか / 五日 （いつか） ／ the fifth day / five days."
+        "detail": "N5 golden word review protects 五日|いつか, reading いつか, meaning the fifth day / five days, example 来月の五日に会います。, notes/support surface Common date and duration word with a whole-word reading; do not split it into false per-kanji readings., breakdown word reading: いつか; 五日 （いつか） ／ the fifth day / five days, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 3 / Generated pitch (unverified)."
       },
       {
         "type": "japanese-source",
-        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BA%94%E6%97%A5",
-        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BA%94%E6%97%A5 verified 五日|いつか as a JLPT N5 common word with reading いつか, learner meaning the fifth day / five days, and product review checked example 来月の五日に会います。 for the shipped word-card surface."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1268570 exact row verified 五日|いつか, reading いつか, dictionary meaning 5th day of the month; five days, priority ichi1,spec1, learner meaning the fifth day / five days, and product review checked example sentence 来月の五日に会います。 with reading らいげつのいつかにあいます。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
         "source": "templates/jlpt_word_level_contract.json",
-        "detail": "templates/jlpt_word_level_contract.json lists 五日|いつか for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+        "detail": "templates/jlpt_word_level_contract.json lists 五日|いつか for JLPT N5; product review confirmed 五日|いつか belongs in the N5 word deck as JLPT core + reading coverage."
       },
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 五日|いつか, reading いつか, sentence 来月の五日に会います。, and the exported reading line for release quality."
+        "detail": "Example review checked 五日|いつか, reading いつか, sentence 来月の五日に会います。, reading line らいげつのいつかにあいます。, English line I will meet on the fifth of next month., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
-        "source": "npm run deck:words:ready -- --levels=5",
-        "detail": "Managed media provenance audit checked 五日|いつか; generated export includes exact word audio and media references without silent fallback."
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 五日|いつか; generated export includes audio and media references without silent fallback."
       },
       {
         "type": "audio-review",
@@ -27638,17 +27874,22 @@
       {
         "type": "pitch-accent-review",
         "source": "templates/word_pitch_accent_data.json",
-        "detail": "Pitch accent review checked 五日|いつか source voicevox-nemo-accent-query pattern 3 [odaka] and rendered label Pitch 1: 3 / Generated pitch (unverified)."
+        "detail": "Pitch accent review checked 五日|いつか source voicevox-nemo-accent-query pattern 3 [odaka] and rendered label Pitch 1: 3 / Generated pitch (unverified) with visible Generated pitch (unverified) label."
       },
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 五日|いつか JLPT N5, JLPT core + reading coverage, focus 五、日, and covered readings 五日: いつか."
+        "detail": "Label review checked 五日|いつか JLPT N5, JLPT core + reading coverage, focus 五、日, covered readings 五日: いつか, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 五日|いつか common and learner-friendly for the N5 word deck, with accurate reading いつか, meaning fifth day / five days, and example 来月の五日に会います。."
+        "detail": "Manual review judged 五日|いつか common and learner-friendly for the N5 word deck, with accurate written form 五日, reading いつか, meaning the fifth day / five days, example 来月の五日に会います。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 五日|いつか checked generated surface, Japanese-source evidence from JMdict entrySeq 1268570, example sentence 来月の五日に会います。, reading らいげつのいつかにあいます。, translation I will meet on the fifth of next month., notes/support surface Common date and duration word with a whole-word reading; do not split it into false per-kanji readings., reading breakdown word reading: いつか; 五日 （いつか） ／ the fifth day / five days, meaning the fifth day / five days, labels JLPT N5; JLPT core + reading coverage; focus 五、日; covers 五日: いつか, audio word-reading-五日-いつか, pitch accent source voicevox-nemo-accent-query pattern 3 [odaka] rendered Pitch 1: 3 / Generated pitch (unverified) with visible Generated pitch (unverified) label, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -27671,7 +27912,13 @@
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
     },
-    "fixSummary": "Fixed word export context handling so group-only ruby like 五日（いつか） remains a labeled whole-word reading instead of falling through to fake per-kanji readings."
+    "fixSummary": "Fixed word export context handling so group-only ruby like 五日（いつか） remains a labeled whole-word reading instead of falling through to fake per-kanji readings.",
+    "notesIncludes": [
+      "Common date and duration word with a whole-word reading; do not split it into false per-kanji readings."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard."
   },
   {
     "word": "一日",
@@ -27715,57 +27962,57 @@
       {
         "type": "generated-surface",
         "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 一日|いちにち: word 一日, reading いちにち, meaning one day / all day, example 一日だけ休みます。, exact word audio, reading breakdown <ruby>一<rt>いち</rt></ruby><ruby>日<rt>にち</rt></ruby>, labels JLPT N5 JLPT core + reading coverage."
+        "detail": "Generated word-card surface inspected for 一日|いちにち: word 一日, reading いちにち, meaning one day / all day, example 一日だけ休みます。, reading line いちにちだけやすみます。, English line I will rest for one day., audio word-reading-一日-いちにち, breakdown 一 （いち）; 日 （にち）, labels JLPT N5 JLPT core + reading coverage, focus 一、日, covers 一: いち ／ 日: にち, notes/support surface Core duration word for one day or all day; distinguish from 一日|ついたち, the first day of the month., and pitch label Pitch 1: 4 / Generated pitch (unverified)."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 一日|いちにち, reading いちにち, meaning one day / all day, example 一日だけ休みます。, and card-back labels."
+        "detail": "N5 golden word review protects 一日|いちにち, reading いちにち, meaning one day / all day, example 一日だけ休みます。, notes/support surface Core duration word for one day or all day; distinguish from 一日|ついたち, the first day of the month., breakdown 一 （いち）; 日 （にち）, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 4 / Generated pitch (unverified)."
       },
       {
         "type": "japanese-source",
-        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%80%E6%97%A5",
-        "detail": "JLearn.net verifies 一日|いちにち as a JLPT N5 common word with reading いちにち and meanings one day / all day; product review kept it distinct from 一日|ついたち. Product review checked example 一日だけ休みます。 for the shipped word-card surface."
-      },
-      {
-        "type": "japanese-source",
-        "source": "JLPTStudy.net N5 vocabulary list https://jlptstudy.net/N5/lists/n5_vocab-list.html",
-        "detail": "JLPTStudy.net N5 vocabulary list includes 一日|いちにち in the cited N5 vocabulary source used by the read-only expansion candidate report."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1576260 exact row verified 一日|いちにち, reading いちにち, dictionary meaning one day; all day (long); the whole day; from morning till night; first day of the month, priority ichi1,spec1, learner meaning one day / all day, and product review checked example sentence 一日だけ休みます。 with reading いちにちだけやすみます。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
         "source": "templates/jlpt_word_level_contract.json",
-        "detail": "templates/jlpt_word_level_contract.json lists 一日|いちにち for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+        "detail": "templates/jlpt_word_level_contract.json lists 一日|いちにち for JLPT N5; product review confirmed 一日|いちにち belongs in the N5 word deck as JLPT core + reading coverage."
       },
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 一日|いちにち, reading いちにち, sentence 一日だけ休みます。, exported sentence reading いちにちだけやすみます。, and English gloss I will rest for one day.."
+        "detail": "Example review checked 一日|いちにち, reading いちにち, sentence 一日だけ休みます。, reading line いちにちだけやすみます。, English line I will rest for one day., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
-        "source": "npm run deck:words:ready -- --levels=5",
-        "detail": "Managed media provenance audit must check 一日|いちにち; generated export includes exact word audio and media references without silent fallback."
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 一日|いちにち; generated export includes audio and media references without silent fallback."
       },
       {
         "type": "audio-review",
         "source": "managed word audio artifact manifest and generated TSV Audio field",
-        "detail": "Audio review checks 一日|いちにち exact asset fragment word-reading-一日-いちにち for the exported word reading いちにち."
+        "detail": "Audio review checked 一日|いちにち exact asset fragment word-reading-一日-いちにち for the exported word reading いちにち."
       },
       {
         "type": "pitch-accent-review",
         "source": "templates/word_pitch_accent_data.json",
-        "detail": "Pitch accent review checked 一日|いちにち source voicevox-nemo-accent-query pattern 4 [odaka], rendered label Pitch 1: 4, and visible Generated pitch (unverified) label."
+        "detail": "Pitch accent review checked 一日|いちにち source voicevox-nemo-accent-query pattern 4 [odaka] and rendered label Pitch 1: 4 / Generated pitch (unverified) with visible Generated pitch (unverified) label."
       },
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 一日|いちにち JLPT N5, JLPT core + reading coverage, focus 一、日, and covered readings 一: いち / 日: にち."
+        "detail": "Label review checked 一日|いちにち JLPT N5, JLPT core + reading coverage, focus 一、日, covered readings 一: いち ／ 日: にち, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 一日|いちにち common and learner-friendly for the N5 word deck, with accurate reading いちにち, meaning one day / all day, and example 一日だけ休みます。."
+        "detail": "Manual review judged 一日|いちにち common and learner-friendly for the N5 word deck, with accurate written form 一日, reading いちにち, meaning one day / all day, example 一日だけ休みます。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 一日|いちにち checked generated surface, Japanese-source evidence from JMdict entrySeq 1576260, example sentence 一日だけ休みます。, reading いちにちだけやすみます。, translation I will rest for one day., notes/support surface Core duration word for one day or all day; distinguish from 一日|ついたち, the first day of the month., reading breakdown 一 （いち）; 日 （にち）, meaning one day / all day, labels JLPT N5; JLPT core + reading coverage; focus 一、日; covers 一: いち ／ 日: にち, audio word-reading-一日-いちにち, pitch accent source voicevox-nemo-accent-query pattern 4 [odaka] rendered Pitch 1: 4 / Generated pitch (unverified) with visible Generated pitch (unverified) label, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -27787,7 +28034,13 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Core duration word for one day or all day; distinguish from 一日|ついたち, the first day of the month."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard."
   },
   {
     "word": "一緒",
@@ -29015,57 +29268,57 @@
       {
         "type": "generated-surface",
         "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 四日|よっか: word 四日, reading よっか, meaning the fourth day / four days, example 四日に電話します。, exact word audio, reading breakdown <ruby>四日<rt>よっか</rt></ruby>, labels JLPT N5 JLPT core + reading coverage."
+        "detail": "Generated word-card surface inspected for 四日|よっか: word 四日, reading よっか, meaning the fourth day / four days, example 四日に電話します。, reading line よっかにでんわします。, English line I will call on the fourth., audio word-reading-四日-よっか, breakdown word reading: よっか; 四日 （よっか） ／ the fourth day / four days, labels JLPT N5 JLPT core + reading coverage, focus 四、日, covers 四日: よっか, notes/support surface Common date and duration word with a whole-word reading; do not split it into false per-kanji readings., and pitch label Pitch 1: 3 / Generated pitch (unverified)."
       },
       {
         "type": "golden-review",
         "source": "templates/golden_n5_word_review_set.json",
-        "detail": "N5 golden word review protects 四日|よっか, reading よっか, meaning the fourth day / four days, example 四日に電話します。, and card-back labels."
+        "detail": "N5 golden word review protects 四日|よっか, reading よっか, meaning the fourth day / four days, example 四日に電話します。, notes/support surface Common date and duration word with a whole-word reading; do not split it into false per-kanji readings., breakdown word reading: よっか; 四日 （よっか） ／ the fourth day / four days, labels JLPT N5 JLPT core + reading coverage, and pitch label Pitch 1: 3 / Generated pitch (unverified)."
       },
       {
         "type": "japanese-source",
-        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%9B%9B%E6%97%A5",
-        "detail": "JLearn.net verifies 四日|よっか as a JLPT N5 common word with reading よっか and meanings the fourth day / four days. Product review checked example 四日に電話します。 for the shipped word-card surface."
-      },
-      {
-        "type": "japanese-source",
-        "source": "JLPTStudy.net N5 vocabulary list https://jlptstudy.net/N5/lists/n5_vocab-list.html",
-        "detail": "JLPTStudy.net N5 vocabulary list includes 四日|よっか in the cited N5 vocabulary source used by the read-only expansion candidate report."
+        "source": "JMdict / EDRDG pinned local TSV downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict entrySeq 1307320 exact row verified 四日|よっか, reading よっか, dictionary meaning 4th day of the month; four days, priority ichi1,spec1, learner meaning the fourth day / four days, and product review checked example sentence 四日に電話します。 with reading よっかにでんわします。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
         "source": "templates/jlpt_word_level_contract.json",
-        "detail": "templates/jlpt_word_level_contract.json lists 四日|よっか for JLPT N5; product review confirmed the word belongs in the N5 word deck as JLPT core + reading coverage."
+        "detail": "templates/jlpt_word_level_contract.json lists 四日|よっか for JLPT N5; product review confirmed 四日|よっか belongs in the N5 word deck as JLPT core + reading coverage."
       },
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 四日|よっか, reading よっか, sentence 四日に電話します。, exported sentence reading よっかにでんわします。, and English gloss I will call on the fourth.."
+        "detail": "Example review checked 四日|よっか, reading よっか, sentence 四日に電話します。, reading line よっかにでんわします。, English line I will call on the fourth., and judged the example natural, useful, learner-friendly, level-appropriate, and release-quality."
       },
       {
         "type": "media-audit",
-        "source": "npm run deck:words:ready -- --levels=5",
-        "detail": "Managed media provenance audit must check 四日|よっか; generated export includes exact word audio and media references without silent fallback."
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 四日|よっか; generated export includes audio and media references without silent fallback."
       },
       {
         "type": "audio-review",
         "source": "managed word audio artifact manifest and generated TSV Audio field",
-        "detail": "Audio review checks 四日|よっか exact asset fragment word-reading-四日-よっか for the exported word reading よっか."
+        "detail": "Audio review checked 四日|よっか exact asset fragment word-reading-四日-よっか for the exported word reading よっか."
       },
       {
         "type": "pitch-accent-review",
         "source": "templates/word_pitch_accent_data.json",
-        "detail": "Pitch accent review checked 四日|よっか source voicevox-nemo-accent-query pattern 3 [odaka], rendered label Pitch 1: 3, and visible Generated pitch (unverified) label."
+        "detail": "Pitch accent review checked 四日|よっか source voicevox-nemo-accent-query pattern 3 [odaka] and rendered label Pitch 1: 3 / Generated pitch (unverified) with visible Generated pitch (unverified) label."
       },
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 四日|よっか JLPT N5, JLPT core + reading coverage, focus 四、日, and covered readings 四日: よっか."
+        "detail": "Label review checked 四日|よっか JLPT N5, JLPT core + reading coverage, focus 四、日, covered readings 四日: よっか, and visible harder/support-kanji labels in the generated kanji breakdown surface."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 四日|よっか common and learner-friendly for the N5 word deck, with accurate reading よっか, meaning the fourth day / four days, and example 四日に電話します。."
+        "detail": "Manual review judged 四日|よっか common and learner-friendly for the N5 word deck, with accurate written form 四日, reading よっか, meaning the fourth day / four days, example 四日に電話します。, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report and governed JMdict evidence",
+        "detail": "Current-standard whole-card revalidation for 四日|よっか checked generated surface, Japanese-source evidence from JMdict entrySeq 1307320, example sentence 四日に電話します。, reading よっかにでんわします。, translation I will call on the fourth., notes/support surface Common date and duration word with a whole-word reading; do not split it into false per-kanji readings., reading breakdown word reading: よっか; 四日 （よっか） ／ the fourth day / four days, meaning the fourth day / four days, labels JLPT N5; JLPT core + reading coverage; focus 四、日; covers 四日: よっか, audio word-reading-四日-よっか, pitch accent source voicevox-nemo-accent-query pattern 3 [odaka] rendered Pitch 1: 3 / Generated pitch (unverified) with visible Generated pitch (unverified) label, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -29087,7 +29340,13 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    }
+    },
+    "notesIncludes": [
+      "Common date and duration word with a whole-word reading; do not split it into false per-kanji readings."
+    ],
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-14",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard."
   },
   {
     "word": "大勢",

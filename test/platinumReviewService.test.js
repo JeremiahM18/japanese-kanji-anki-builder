@@ -3,8 +3,10 @@ const assert = require("node:assert/strict");
 
 const {
     CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
-    REQUIRED_WORD_EVIDENCE_TYPES,
+    REQUIRED_WORD_INTERNAL_CHECK_TYPES,
     REQUIRED_WORD_QUALITY_GATES,
+    REQUIRED_WORD_REVIEW_EVIDENCE_TYPES,
+    REQUIRED_WORD_SOURCE_EVIDENCE_TYPES,
     evaluatePlatinumWordReviewSet,
     formatPlatinumWordReviewReport,
 } = require("../src/services/platinumReviewService");
@@ -54,38 +56,54 @@ function evaluateWordPlatinum(options = {}) {
 
 function buildSourceEvidence() {
     const details = {
-        "generated-surface": "Generated word-card surface inspected for 今日|きょう: word, reading, meaning today, example 今日は図書館へ行きます。, audio, and pitch accent fields.",
         "japanese-source": "JMdict dictionary source verified 今日|きょう, reading きょう, learner meaning today, and example 今日は図書館へ行きます。",
-        "level-contract": "templates/jlpt_word_level_contract.json lists 今日|きょう for JLPT N5.",
-        "example-review": "Example review checked 今日|きょう, reading きょう, and sentence 今日は図書館へ行きます。",
-        "media-audit": "Managed media provenance audit checked 今日|きょう.",
-        "audio-review": "Audio review checked 今日|きょう exact asset fragment word-reading-今日-きょう.",
-        "pitch-accent-review": "Pitch accent review checked 今日|きょう source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0.",
-        "label-review": "Label review checked 今日|きょう JLPT N5, JLPT core, focus 今 and 日, and covered readings 今: いま and 日: ひ.",
-        "manual-review": "Manual review judged 今日|きょう common and learner-friendly.",
     };
 
-    return REQUIRED_WORD_EVIDENCE_TYPES.map((type) => ({
+    return REQUIRED_WORD_SOURCE_EVIDENCE_TYPES.map((type) => ({
         type,
         source: "test fixture source",
         detail: details[type],
     }));
 }
 
-function buildCurrentStandardSourceEvidence({ limitationLabel = "" } = {}) {
-    const evidence = buildSourceEvidence();
+function buildInternalChecks() {
+    const details = {
+        "generated-surface": "Generated word-card surface inspected for 今日|きょう: word, reading, meaning today, example 今日は図書館へ行きます。, audio, and pitch accent fields.",
+        "golden-regression": "Separate golden regression gate checked 今日|きょう; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "level-contract": "templates/jlpt_word_level_contract.json lists 今日|きょう for JLPT N5.",
+        "media-audit": "Managed media provenance audit checked 今日|きょう exact asset fragment word-reading-今日-きょう in tracked media.",
+        "audio-review": "Audio review checked 今日|きょう exact asset fragment word-reading-今日-きょう.",
+        "pitch-accent-review": "Pitch accent review checked 今日|きょう source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0.",
+        "label-review": "Label review checked 今日|きょう JLPT N5, JLPT core, focus 今 and 日, and covered readings 今: いま and 日: ひ.",
+    };
+
+    return REQUIRED_WORD_INTERNAL_CHECK_TYPES.map((type) => ({
+        type,
+        source: "test fixture source",
+        detail: details[type],
+    }));
+}
+
+function buildReviewEvidence({ limitationLabel = "" } = {}) {
     const currentStandardDetail = [
-        "Current-standard whole-card revalidation for 今日|きょう checked generated surface, Japanese-source evidence, example sentence 今日は図書館へ行きます。, notes/support surface Common N5 word., reading breakdown 今 （いま） and 日 （ひ）, meaning today, labels JLPT N5, JLPT core, focus 今 and 日, covers 今: いま and 日: ひ, audio word-reading-今日-きょう, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations.",
+        "Current-standard whole-card revalidation for 今日|きょう checked separated evidence lanes, generated surface, Japanese-source evidence, example sentence 今日は図書館へ行きます。, notes/support surface Common N5 word., reading breakdown 今 （いま） and 日 （ひ）, meaning today, labels JLPT N5, JLPT core, focus 今 and 日, covers 今: いま and 日: ひ, audio word-reading-今日-きょう, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations.",
         limitationLabel ? `Visible limitation label: ${limitationLabel}.` : "",
     ].filter(Boolean).join(" ");
 
     return [
-        ...evidence.map((entry) => entry.type === "manual-review" && limitationLabel
-            ? {
-                ...entry,
-                detail: `${entry.detail} Verification limitation: ${limitationLabel}.`,
-            }
-            : entry),
+        {
+            type: "example-review",
+            source: "manual example review fixture",
+            detail: "Example review checked 今日|きょう, reading きょう, and sentence 今日は図書館へ行きます。 Natural, useful, learner-friendly, and level-appropriate.",
+        },
+        {
+            type: "manual-review",
+            source: "manual product review fixture",
+            detail: [
+                "Manual review judged 今日|きょう common and learner-friendly.",
+                limitationLabel ? `Verification limitation: ${limitationLabel}.` : "",
+            ].filter(Boolean).join(" "),
+        },
         {
             type: "current-standard-review",
             source: "manual current-standard word review fixture",
@@ -130,6 +148,8 @@ function buildEntry(overrides = {}) {
         reviewedAt: "2026-05-02",
         reviewer: "content-review",
         sourceEvidence: buildSourceEvidence(),
+        internalChecks: buildInternalChecks(),
+        reviewEvidence: buildReviewEvidence(),
         qualityGates: buildQualityGates(),
         ...overrides,
     };
@@ -139,9 +159,11 @@ function buildCurrentStandardEntry(overrides = {}) {
     return buildEntry({
         reviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
         revalidatedAt: "2026-05-13",
-        revalidationSummary: "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, and verification limitations under the current word platinum standard.",
+        revalidationSummary: "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
         notesIncludes: ["Common N5 word."],
-        sourceEvidence: buildCurrentStandardSourceEvidence(),
+        sourceEvidence: buildSourceEvidence(),
+        internalChecks: buildInternalChecks(),
+        reviewEvidence: buildReviewEvidence(),
         ...overrides,
     });
 }
@@ -176,7 +198,7 @@ test("evaluatePlatinumWordReviewSet gates current-standard revalidation separate
     assert.equal(legacyReport.currentStandardPlatinumCount, 0);
     assert.equal(legacyReport.legacyOrUnversionedPlatinumCount, 1);
     assert.deepEqual(legacyReport.missingCurrentStandardRows, ["今日 (きょう)"]);
-    assert.match(legacyReport.results[0].failures.join("\n"), /reviewStandard must be word-platinum-v2-limitation-aware/);
+    assert.match(legacyReport.results[0].failures.join("\n"), new RegExp(`reviewStandard must be ${CURRENT_WORD_PLATINUM_REVIEW_STANDARD}`));
 
     assert.equal(currentReport.passed, true);
     assert.equal(currentReport.currentStandardPlatinumCount, 1);
@@ -188,14 +210,12 @@ test("evaluatePlatinumWordReviewSet requires current-standard evidence to bind t
     const report = evaluateWordPlatinum({
         rows: [buildRow()],
         entries: [buildCurrentStandardEntry({
-            sourceEvidence: [
-                ...buildSourceEvidence(),
-                {
-                    type: "current-standard-review",
-                    source: "manual current-standard word review fixture",
+            reviewEvidence: buildReviewEvidence().map((evidence) => evidence.type === "current-standard-review"
+                ? {
+                    ...evidence,
                     detail: "Current-standard review completed for 今日|きょう.",
-                },
-            ],
+                }
+                : evidence),
         })],
         requireCurrentReviewStandard: true,
     });
@@ -209,7 +229,7 @@ test("evaluatePlatinumWordReviewSet tracks word verification limitations without
     const report = evaluateWordPlatinum({
         rows: [buildRow({ notes: `Common N5 word. ${limitationLabel}.` })],
         entries: [buildCurrentStandardEntry({
-            sourceEvidence: buildCurrentStandardSourceEvidence({ limitationLabel }),
+            reviewEvidence: buildReviewEvidence({ limitationLabel }),
             verificationLimitations: [{
                 field: "pitchAccent",
                 status: "limited_source",
@@ -290,7 +310,7 @@ test("evaluatePlatinumWordReviewSet accepts later learner-fit placement with act
         entries: [buildEntry({
             jlptLevelIncludes: ["JLPT N4"],
             selectionRationale: "Common and useful, but better introduced at N4 than N5 because the word load is later than the kanji.",
-            sourceEvidence: buildSourceEvidence().map((evidence) => ({
+            internalChecks: buildInternalChecks().map((evidence) => ({
                 ...evidence,
                 detail: evidence.detail.replace(/N5/g, "N4"),
             })),
@@ -319,7 +339,7 @@ test("evaluatePlatinumWordReviewSet requires selection rationale and structured 
     assert.equal(report.passed, false);
     assert.match(failures, /selectionRationale must explain/);
     assert.match(failures, /sourceEvidence must contain structured evidence entries/);
-    assert.match(failures, /sourceEvidence must include evidence type: pitch-accent-review/);
+    assert.match(failures, /sourceEvidence must include evidence type: japanese-source/);
 });
 
 test("evaluatePlatinumWordReviewSet rejects golden review as source evidence", () => {
@@ -328,7 +348,7 @@ test("evaluatePlatinumWordReviewSet rejects golden review as source evidence", (
         entries: [
             buildCurrentStandardEntry({
                 sourceEvidence: [
-                    ...buildCurrentStandardSourceEvidence(),
+                    ...buildSourceEvidence(),
                     {
                         type: "golden-review",
                         source: "templates/golden_n5_word_review_set.json",
@@ -343,7 +363,7 @@ test("evaluatePlatinumWordReviewSet rejects golden review as source evidence", (
     assert.equal(report.passed, false);
     assert.match(
         report.results[0].failures.join("\n"),
-        /golden-review must not be used as word platinum sourceEvidence/
+        /golden-review must not be used in sourceEvidence/
     );
 });
 
@@ -352,9 +372,19 @@ test("evaluatePlatinumWordReviewSet rejects source evidence that does not bind t
         rows: [buildRow()],
         entries: [
             buildEntry({
-                sourceEvidence: REQUIRED_WORD_EVIDENCE_TYPES.map((type) => ({
+                sourceEvidence: REQUIRED_WORD_SOURCE_EVIDENCE_TYPES.map((type) => ({
                     type,
                     source: "dictionary source",
+                    detail: "Reviewed this field.",
+                })),
+                internalChecks: REQUIRED_WORD_INTERNAL_CHECK_TYPES.map((type) => ({
+                    type,
+                    source: "internal source",
+                    detail: "Reviewed this field.",
+                })),
+                reviewEvidence: REQUIRED_WORD_REVIEW_EVIDENCE_TYPES.map((type) => ({
+                    type,
+                    source: "review source",
                     detail: "Reviewed this field.",
                 })),
             }),
@@ -431,7 +461,7 @@ test("evaluatePlatinumWordReviewSet rejects pitch source data that belongs to a 
 });
 
 test("evaluatePlatinumWordReviewSet requires generated pitch to be visibly labeled", () => {
-    const sourceEvidence = buildSourceEvidence().map((entry) => entry.type === "pitch-accent-review"
+    const internalChecks = buildInternalChecks().map((entry) => entry.type === "pitch-accent-review"
         ? {
             ...entry,
             detail: "Pitch accent review checked 今日|きょう source voicevox-nemo-accent-query pattern 0 [heiban] and rendered label Pitch 1: 0 / Generated pitch (unverified).",
@@ -439,7 +469,7 @@ test("evaluatePlatinumWordReviewSet requires generated pitch to be visibly label
         : entry);
     const entry = buildEntry({
         pitchAccentIncludes: ["Pitch 1: 0", "Generated pitch (unverified)"],
-        sourceEvidence,
+        internalChecks,
     });
     const wordPitchAccentData = buildWordPitchAccentData({
         "今日|きょう": {
@@ -530,7 +560,7 @@ test("formatPlatinumWordReviewReport summarizes current-standard and legacy word
     });
     const formatted = formatPlatinumWordReviewReport(report);
 
-    assert.match(formatted, /Current review standard: word-platinum-v2-limitation-aware/);
+    assert.match(formatted, new RegExp(`Current review standard: ${CURRENT_WORD_PLATINUM_REVIEW_STANDARD}`));
     assert.match(formatted, /Current-standard platinum cards: 0/);
     assert.match(formatted, /Legacy\/unversioned platinum cards: 1/);
     assert.match(formatted, /missing current-standard platinum entries for generated words: 1/);

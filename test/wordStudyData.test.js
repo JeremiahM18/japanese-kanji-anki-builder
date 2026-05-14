@@ -1844,6 +1844,28 @@ test("tracked starter word data includes the final N5 source expansion keepers",
     assert.match(starterEntries["留学生|りゅうがくせい"].notes, /higher-level kanji/);
 });
 
+test("tracked starter word data protects current-standard N5 platinum examples and support notes", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assert.equal(starterEntries["一日|ついたち"].exampleSentence.japanese, "来月の一日に学校へ行きます。");
+    assert.match(starterEntries["子犬|こいぬ"].notes, /犬 is higher-level support/);
+    assert.equal(starterEntries["子犬|こいぬ"].exampleSentence.japanese, "小さい子犬がいます。");
+    assert.match(starterEntries["駅前|えきまえ"].notes, /駅 is higher-level support/);
+    assert.equal(starterEntries["行き先|ゆきさき"].exampleSentence.japanese, "行き先を書いてください。");
+    assert.equal(starterEntries["東京|とうきょう"].exampleSentence.japanese, "東京へ行きます。");
+    assert.equal(starterEntries["会話|かいわ"].exampleSentence.japanese, "友だちと会話をします。");
+    assert.match(starterEntries["来い|こい"].notes, /blunt and commanding/);
+    assert.equal(starterEntries["来い|こい"].exampleSentence.japanese, "いぬに「来い」と言います。");
+    assert.equal(starterEntries["英語|えいご"].exampleSentence.japanese, "英語を勉強します。");
+    assert.equal(starterEntries["二日|ふつか"].exampleSentence.japanese, "二日に学校へ行きます。");
+    assert.equal(starterEntries["食事|しょくじ"].exampleSentence.japanese, "家で食事をします。");
+    assert.equal(starterEntries["今晩|こんばん"].exampleSentence.japanese, "今晩、家で本を読みます。");
+    assert.match(starterEntries["生ビール|なまびーる"].notes, /adult restaurant word/);
+    assert.match(starterEntries["椅子|いす"].notes, /outside the JLPT kanji contract/);
+    assert.match(starterEntries["月曜日|げつようび"].notes, /Core weekday word for Monday/);
+    assert.match(starterEntries["火曜日|かようび"].notes, /火 -> か and 日 -> び/);
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

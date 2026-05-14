@@ -899,6 +899,12 @@
     "reviewedAt": "2026-05-03",
     "reviewer": "codex-platinum-review",
     "fixSummary": "Added a context-specific 分かる breakdown override so the kanji panel renders 分 （わ） / understand instead of the misleading standalone minute meaning.",
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, release judgment, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "High-utility verb for understanding; the 分 reading is word-specific and separate from minute/part senses."
+    ],
     "sourceEvidence": [
       {
         "type": "generated-surface",
@@ -914,6 +920,11 @@
         "type": "japanese-source",
         "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%88%86%E3%81%8B%E3%82%8B",
         "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%88%86%E3%81%8B%E3%82%8B verified 分かる|わかる as JLPT N5 common word with reading わかる and meaning understand; product review checked example 日本語が少し分かります。 for the shipped card."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1606560 verifies 分かる|わかる, reading わかる, senses to understand / to comprehend / to grasp, and priority markers ichi1, news2, nf39, spec1; product review kept learner meaning understand and example 日本語が少し分かります。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
@@ -949,6 +960,11 @@
         "type": "manual-review",
         "source": "platinum product review and context-specific breakdown override",
         "detail": "Manual review judged 分かる|わかる common and learner-friendly for the N5 word deck, with accurate reading わかる, meaning understand, and example 日本語が少し分かります。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and governed platinum evidence",
+        "detail": "Current-standard whole-card revalidation for 分かる|わかる checked generated surface, Japanese-source evidence, example sentence 日本語が少し分かります。, notes/support surface High-utility verb for understanding; the 分 reading is word-specific and separate from minute/part senses., reading breakdown 分 （わ） ／ understand, meaning understand, labels JLPT N5; JLPT core + reading coverage; focus 分; covers 分: わかる, audio word-reading-分かる-わかる, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -1005,6 +1021,12 @@
     "selectionRationale": "Common counter expression for three things; useful N5 vocabulary and distinct from the bare kanji/number card.",
     "reviewedAt": "2026-05-03",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, release judgment, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common counter form for three things; learn みっつ as a whole counter word."
+    ],
     "sourceEvidence": [
       {
         "type": "generated-surface",
@@ -1020,6 +1042,11 @@
         "type": "japanese-source",
         "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%89%E3%81%A4",
         "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%89%E3%81%A4 verified 三つ|みっつ, reading みっつ, learner meaning three things, and product review checked example りんごを三つ買いました。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1299740 verifies 三つ|みっつ, reading みっつ, numeric sense three, and priority markers ichi1, news1, nf03; product review kept learner meaning three things and example りんごを三つ買いました。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
@@ -1055,6 +1082,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Manual review judged 三つ|みっつ common and learner-friendly for the N5 word deck, with accurate reading みっつ, meaning three things, and example りんごを三つ買いました。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and governed platinum evidence",
+        "detail": "Current-standard whole-card revalidation for 三つ|みっつ checked generated surface, Japanese-source evidence, example sentence りんごを三つ買いました。, notes/support surface Common counter form for three things; learn みっつ as a whole counter word., reading breakdown 三 （みっ） ／ three, meaning three things, labels JLPT N5; JLPT core + reading coverage; focus 三; covers 三: みっつ, audio word-reading-三つ-みっつ, pitch accent source kanjium-cc-by-sa-4.0 pattern 3 [odaka] rendered Pitch 1: 3, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -1112,6 +1144,12 @@
     "selectionRationale": "Common noun for the moon; useful beginner vocabulary and now aligned with the N5 current-kanji anchor policy.",
     "reviewedAt": "2026-05-11",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, release judgment, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common standalone word for the moon; this word-card reading つき is separate from month names like 一月."
+    ],
     "sourceEvidence": [
       {
         "type": "generated-surface",
@@ -1127,6 +1165,11 @@
         "type": "japanese-source",
         "source": "templates/platinum_n5_review_set.json; https://www.kanjipedia.jp/kanji/0001884000; Bunka Joyo Kanji reading index",
         "detail": "Tracked Japanese kanji source evidence verifies 月|つき: Kanjipedia lists 訓 つき and meanings moon/month. Product review checked 月|つき, reading つき, learner meaning moon, and example 今夜は月がきれいです。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1255430 verifies 月|つき, reading つき, senses Moon / month / moonlight, and priority marker ichi1; product review kept learner meaning moon and example 今夜は月がきれいです。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
@@ -1162,6 +1205,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Manual review judged 月|つき common and learner-friendly for the N5 word deck, with accurate reading つき, meaning moon, and example 今夜は月がきれいです。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and governed platinum evidence",
+        "detail": "Current-standard whole-card revalidation for 月|つき checked generated surface, Japanese-source evidence, example sentence 今夜は月がきれいです。, notes/support surface Common standalone word for the moon; this word-card reading つき is separate from month names like 一月., reading breakdown 月 （つき）; moon, meaning moon, labels JLPT N5; JLPT core + reading coverage; focus 月; covers 月: つき, audio word-reading-月-つき, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [odaka] rendered Pitch 1: 2, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -2936,6 +2984,12 @@
     "selectionRationale": "Common learner-friendly verb for raising or lifting; the example is a basic classroom-style command and the card cleanly teaches the word reading.",
     "reviewedAt": "2026-05-03",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, release judgment, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common verb for raising or lifting; keeps 上 -> あ in a practical classroom command."
+    ],
     "sourceEvidence": [
       {
         "type": "generated-surface",
@@ -2951,6 +3005,11 @@
         "type": "japanese-source",
         "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%8A%E3%81%92%E3%82%8B",
         "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%8A%E3%81%92%E3%82%8B verified 上げる|あげる, reading あげる, learner meaning to raise / lift, and product review checked example 手を上げてください。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1352320 verifies 上げる|あげる, reading あげる, senses to raise / to elevate / to move something to a higher place, and priority markers ichi1, news2, nf42; product review kept learner meaning to raise / lift and example 手を上げてください。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
@@ -2986,6 +3045,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Manual review judged 上げる|あげる common and learner-friendly for the N5 word deck, with accurate reading あげる, meaning to raise / lift, and example 手を上げてください。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and governed platinum evidence",
+        "detail": "Current-standard whole-card revalidation for 上げる|あげる checked generated surface, Japanese-source evidence, example sentence 手を上げてください。, notes/support surface Common verb for raising or lifting; keeps 上 -> あ in a practical classroom command., reading breakdown 上 （あ） ／ up / above, meaning to raise; lift, labels JLPT N5; JLPT core + reading coverage; focus 上; covers 上: あげる, audio word-reading-上げる-あげる, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -3471,6 +3535,12 @@
     "selectionRationale": "Core N5 location word for under or below; common and immediately useful for basic location sentences.",
     "reviewedAt": "2026-05-04",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, release judgment, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Core location word for under/below; this word-card reading is した."
+    ],
     "sourceEvidence": [
       {
         "type": "generated-surface",
@@ -3486,6 +3556,11 @@
         "type": "japanese-source",
         "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%8B",
         "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%8B verified 下|した, reading した, learner meaning down / under / below, and product review checked example いすの下に猫がいます。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1184140 verifies 下|した, reading した, senses below / down / under / beneath / underneath, and priority marker ichi1; product review kept learner meaning down / under / below and example いすの下に猫がいます。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
@@ -3521,6 +3596,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Manual review judged 下|した common and learner-friendly for the N5 word deck, with accurate reading した, meaning down / under / below, and example いすの下に猫がいます。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and governed platinum evidence",
+        "detail": "Current-standard whole-card revalidation for 下|した checked generated surface, Japanese-source evidence, example sentence いすの下に猫がいます。, notes/support surface Core location word for under/below; this word-card reading is した., reading breakdown 下 （した） ／ down / under / below, meaning down / under / below, labels JLPT N5; JLPT core + reading coverage; focus 下; covers 下: した, audio word-reading-下-した, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -8288,6 +8368,12 @@
     "selectionRationale": "Common N5 adjective and a high-use learner word; the card teaches 小さい|ちいさい as vocabulary while the kanji deck remains separate.",
     "reviewedAt": "2026-05-04",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, release judgment, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Core adjective for small; this word-card reading is ちいさい."
+    ],
     "sourceEvidence": [
       {
         "type": "generated-surface",
@@ -8303,6 +8389,11 @@
         "type": "japanese-source",
         "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%B0%8F%E3%81%95%E3%81%84",
         "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%B0%8F%E3%81%95%E3%81%84 verified 小さい|ちいさい, reading ちいさい, source sense small / little / tiny, learner meaning small, and product review checked example この犬は小さいです。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1347750 verifies 小さい|ちいさい, reading ちいさい, senses small / little / tiny, and priority markers ichi1, news1, nf24; product review kept learner meaning small and example この犬は小さいです。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
@@ -8338,6 +8429,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Manual review judged 小さい|ちいさい common and learner-friendly for the N5 word deck, with accurate reading ちいさい, meaning small, and example この犬は小さいです。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and governed platinum evidence",
+        "detail": "Current-standard whole-card revalidation for 小さい|ちいさい checked generated surface, Japanese-source evidence, example sentence この犬は小さいです。, notes/support surface Core adjective for small; this word-card reading is ちいさい., reading breakdown 小 （ちい）; small, meaning small, labels JLPT N5; JLPT core + reading coverage; focus 小; covers 小: ちいさい, audio word-reading-小さい-ちいさい, pitch accent source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] rendered Pitch 1: 3, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -8395,6 +8491,12 @@
     "selectionRationale": "Common N5 direction word; although it is a single-kanji written form, 右|みぎ is useful vocabulary and is reviewed as a word card by exact written form and reading.",
     "reviewedAt": "2026-05-04",
     "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, release judgment, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Core direction word for right; this word-card reading is みぎ, separate from on-readings in compounds."
+    ],
     "sourceEvidence": [
       {
         "type": "generated-surface",
@@ -8410,6 +8512,11 @@
         "type": "japanese-source",
         "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8F%B3",
         "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8F%B3 verified 右|みぎ, reading みぎ, source sense right / right-hand side, learner meaning right, and product review checked example 右に曲がります。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1171010 verifies 右|みぎ, reading みぎ, senses right / right-hand side / right hand, and priority markers ichi1, news1, nf01; product review kept learner meaning right and example 右に曲がります。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
@@ -8445,6 +8552,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Manual review judged 右|みぎ common and learner-friendly for the N5 word deck, with accurate reading みぎ, meaning right, and example 右に曲がります。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and governed platinum evidence",
+        "detail": "Current-standard whole-card revalidation for 右|みぎ checked generated surface, Japanese-source evidence, example sentence 右に曲がります。, notes/support surface Core direction word for right; this word-card reading is みぎ, separate from on-readings in compounds., reading breakdown 右 （みぎ）; right, meaning right, labels JLPT N5; JLPT core + reading coverage; focus 右; covers 右: みぎ, audio word-reading-右-みぎ, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -25752,6 +25864,13 @@
     "selectionRationale": "Core N5 numeric word for ten thousand; useful immediately in prices and counts, with a reviewed natural example.",
     "reviewedAt": "2026-05-04",
     "reviewer": "codex-platinum-review",
+    "fixSummary": "Replaced the unnatural example 万まで数えます。 with 一万まで数えます。 so the learner sentence demonstrates the numeric unit naturally.",
+    "reviewStandard": "word-platinum-v2-limitation-aware",
+    "revalidatedAt": "2026-05-13",
+    "revalidationSummary": "Revalidated generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, release judgment, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Useful standalone number form that complements 一万円 and 万事."
+    ],
     "sourceEvidence": [
       {
         "type": "generated-surface",
@@ -25767,6 +25886,11 @@
         "type": "japanese-source",
         "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%87",
         "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%87 verified 万|まん as a JLPT N5 common numeric word with reading まん, learner meaning ten thousand, and product review checked example 一万まで数えます。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1584460 verifies 万|まん, reading まん, senses 10,000 / ten thousand / myriad, and priority marker ichi1; product review kept learner meaning ten thousand and example 一万まで数えます。 for the shipped word-card surface."
       },
       {
         "type": "level-contract",
@@ -25802,6 +25926,11 @@
         "type": "manual-review",
         "source": "platinum product review",
         "detail": "Manual review judged 万|まん common and learner-friendly for the N5 word deck, with accurate reading まん, meaning ten thousand, and example 一万まで数えます。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and governed platinum evidence",
+        "detail": "Current-standard whole-card revalidation for 万|まん checked generated surface, Japanese-source evidence, example sentence 一万まで数えます。, notes/support surface Useful standalone number form that complements 一万円 and 万事., reading breakdown 万 （まん） ／ ten thousand, meaning ten thousand, labels JLPT N5; JLPT core + reading coverage; focus 万; covers 万: まん, audio word-reading-万-まん, pitch accent source voicevox-nemo-accent-query pattern 1 [atamadaka] rendered Pitch 1: 1; Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -25823,8 +25952,7 @@
       "pitchAccentSourceVerified": true,
       "mediaProvenanceVerified": true,
       "noSilentFallback": true
-    },
-    "fixSummary": "Replaced the unnatural example 万まで数えます。 with 一万まで数えます。 so the learner sentence demonstrates the numeric unit naturally."
+    }
   },
   {
     "word": "五日",

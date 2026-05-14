@@ -44,7 +44,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 ## Kanji deck manual spot review
 
 - Import each kanji level being shipped into Anki. Current ready local kanji levels are N5, N4, N3, N2, and N1. Current-standard platinum review is still required before any level is version-1 locked.
-- Import additional unverified kanji decks separately from core decks. Confirm they are labeled as additional/unverified and do not include suppressed duplicate-claim kanji or any already-core kanji unless an explicit governed variant-selection build was requested.
+- Import additional unverified kanji decks separately from core decks only when `deck:kanji:additional:ready` reports selected physical additional cards. The current governed build selects `0` additional cards; in that state, confirm the empty generated surface and suppression report instead of looking for learner cards to review.
 - Confirm platinum-reviewed cards preserve the individual-kanji anchor and do not ship weak, noisy, or compound-led teaching surfaces.
 - Confirm any kanji `verificationLimitations` are non-core, visibly labeled on the affected card surface, and reflected in `deck:kanji:review-status` counts.
 - Confirm each card front is the individual target kanji.

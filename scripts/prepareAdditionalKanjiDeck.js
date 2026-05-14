@@ -127,6 +127,11 @@ function formatReport(summary) {
         `Disputed rows included: ${summary.includeDisputed ? "yes" : "no"}`,
         `Raw additional claims: ${summary.rawAdditionalEntries}`,
         `Selected unique additional cards: ${summary.selectedAdditionalEntries}`,
+        `Physical additional card surface: ${
+            summary.selectedAdditionalEntries === 0
+                ? "empty; source claims remain governance evidence only"
+                : "contains selected optional additional cards"
+        }`,
         `Core-retained source-claim kanji: ${summary.coreRetainedDuplicateKanji}`,
         `Suppressed additional source claims: ${summary.suppressedDuplicateClaims}`,
         "",
@@ -153,7 +158,11 @@ function formatReport(summary) {
         lines.push("Next step: acquire missing kanji media, then rerun this command.");
     } else {
         lines.push("", "Result: passing");
-        lines.push("Next step: run additional-kanji golden review before release use.");
+        if (summary.selectedAdditionalEntries === 0) {
+            lines.push("Next step: run deck:kanji:review-status to confirm the empty additional surface remains governed.");
+        } else {
+            lines.push("Next step: run additional-kanji golden review before release use.");
+        }
     }
 
     return `${lines.join("\n")}\n`;

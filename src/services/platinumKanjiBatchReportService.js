@@ -118,10 +118,10 @@ function buildSelectedRubricSummary(cards = []) {
 }
 
 function buildRereviewProvenanceText(entry = {}) {
-    const evidenceText = [
-        entry.revalidationSummary,
-        ...normalizeEvidenceEntries(entry.reviewEvidence).map((evidence) => `${evidence.type || ""} ${evidence.source || ""} ${evidence.detail || ""}`),
-    ].join(" ");
+    const evidenceText = normalizeEvidenceEntries(entry.reviewEvidence)
+        .filter((evidence) => ["manual-review", "current-standard-review"].includes(evidence.type))
+        .map((evidence) => `${evidence.type || ""} ${evidence.source || ""} ${evidence.detail || ""}`)
+        .join(" ");
     const provenance = entry.rereviewProvenance && typeof entry.rereviewProvenance === "object"
         ? entry.rereviewProvenance
         : {};

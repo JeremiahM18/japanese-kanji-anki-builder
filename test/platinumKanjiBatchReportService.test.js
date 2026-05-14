@@ -109,6 +109,26 @@ test("selectBatchRows defaults to substantive rereview queue in generated deck o
     assert.deepEqual(selectBatchRows({ rows, entries, limit: 2 }).map((row) => row.kanji), ["一", "二"]);
 });
 
+test("batch report does not count revalidationSummary prose as rereview proof", () => {
+    const entry = buildCurrentStandardEntry("一");
+    entry.revalidationSummary += " Substantive current-standard rereview for 一|いち: checked all evidence lanes and not a mechanical migration.";
+
+    const report = buildPlatinumKanjiBatchReport({
+        rows: [buildRow({ kanji: "一", displayWord: "一", primaryReading: "いち" })],
+        entries: [entry],
+        level: 5,
+        limit: 1,
+    });
+
+    assert.equal(report.summary.substantiveRereviewProven, 0);
+    assert.equal(report.summary.remainingSubstantiveRereview, 1);
+    assert.equal(report.cards[0].reviewStatus, "current_standard_structural_only");
+    assert.equal(
+        report.cards[0].reviewRubric.items.find((item) => item.id === "substantive_rereview_provenance").status,
+        REVIEW_RUBRIC_STATUSES.NOT_PROVEN
+    );
+});
+
 test("selectBatchRows can still expose the missing current-standard structure queue explicitly", () => {
     const rows = [
         buildRow({ kanji: "一", displayWord: "一" }),

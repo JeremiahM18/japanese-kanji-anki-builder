@@ -249,6 +249,10 @@ npm run deck:platinum:n3
 npm run deck:platinum:n2
 npm run deck:platinum:n1
 npm run deck:kanji:additional:platinum:n5
+npm run deck:kanji:additional:platinum:n4
+npm run deck:kanji:additional:platinum:n3
+npm run deck:kanji:additional:platinum:n2
+npm run deck:kanji:additional:platinum:n1
 npm run deck:words:platinum:n5
 npm run deck:words:platinum:n4
 ```
@@ -261,6 +265,6 @@ Each kanji platinum command requires every generated card for that level and sur
 
 Each word platinum command requires every generated word card for that level and surface to have an active current-standard platinum entry by default. Use `--allow-legacy-standard` only to inspect historical field-bound entries while planning revalidation; it must not be used as version 1 release evidence.
 
-Additional platinum commands apply only to the optional `additional_unverified_Nx` surface. They do not move the core JLPT kanji contract, certify source-evidence confidence, or satisfy core kanji platinum coverage.
+Additional platinum commands apply only to the optional `additional_unverified_Nx` surface. They do not move the core JLPT kanji contract, certify source-evidence confidence, or satisfy core kanji platinum coverage. The npm aliases pass `--allow-empty` because the governed default suppresses already-core source claims from the physical additional decks; an empty generated additional surface is valid only when `deck:kanji:additional:ready` and `deck:kanji:review-status` prove the source claims were suppressed rather than silently skipped.
 
-The platinum command intentionally fails for an empty platinum manifest. Do not use golden coverage as a substitute for platinum review.
+Core kanji and word platinum commands intentionally fail for an empty platinum manifest. Do not use golden coverage as a substitute for platinum review.

@@ -81,6 +81,12 @@ function selectPhysicalAdditionalEntries(additionalDecks = [], { duplicatePolicy
     const coreRetainedDuplicateKanji = [];
 
     for (const [kanji, entries] of buildEntriesByKanji(additionalDecks)) {
+        if (duplicatePolicy === "core-only" && entries.some((entry) => Number(entry.currentContractLevel))) {
+            coreRetainedDuplicateKanji.push(kanji);
+            suppressedDuplicateClaims.push(...entries);
+            continue;
+        }
+
         if (entries.length > 1 && duplicatePolicy !== "select-best") {
             if (entries.some((entry) => Number(entry.currentContractLevel))) {
                 coreRetainedDuplicateKanji.push(kanji);

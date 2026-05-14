@@ -45,3 +45,17 @@ test("addCoverageFailures requires expectations for every generated additional k
     assert.deepEqual(report.missingExpectations, ["本"]);
     assert.deepEqual(report.coverageFailures, ["missing expectations for generated kanji: 本"]);
 });
+
+test("addCoverageFailures allows an empty suppressed additional surface", () => {
+    const report = addCoverageFailures({
+        passed: false,
+        results: [],
+    }, {
+        rows: [],
+        expectations: [],
+        requireAllRows: true,
+    });
+
+    assert.equal(report.passed, true);
+    assert.deepEqual(report.coverageFailures, []);
+});

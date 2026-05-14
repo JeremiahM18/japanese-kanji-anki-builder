@@ -50,7 +50,7 @@ test("buildKanjiDeckReviewStatus reports core and additional review coverage", (
         }]);
         writeTsv(path.join(tempRoot, "out", "build", "exports", "jlpt-n5.tsv"), ["一"]);
         writeTsv(path.join(tempRoot, "out", "build", "exports", "jlpt-n1.tsv"), ["亜"]);
-        writeTsv(path.join(tempRoot, "out", "build", "additional_unverified", "exports", "additional-unverified-n5.tsv"), ["本"]);
+        writeTsv(path.join(tempRoot, "out", "build", "additional_unverified", "exports", "additional-unverified-n5.tsv"), []);
         writeTsv(path.join(tempRoot, "out", "build", "additional_unverified", "exports", "additional-unverified-n1.tsv"), []);
 
         const report = buildKanjiDeckReviewStatus({
@@ -115,13 +115,13 @@ test("buildKanjiDeckReviewStatus reports core and additional review coverage", (
         assert.equal(coreN1.revalidationBacklogCount, 1);
         assert.deepEqual(coreN1.revalidationBacklogKanji, ["亜"]);
         assert.deepEqual(coreN1.missingPlatinum, ["亜"]);
-        assert.equal(additionalN5.presentUnique, 1);
-        assert.equal(additionalN5.plannedCount, 1);
+        assert.equal(additionalN5.presentUnique, 0);
+        assert.equal(additionalN5.plannedCount, 0);
         assert.equal(additionalN5.goldenCount, 0);
-        assert.equal(additionalN5.missingGolden.length, 1);
+        assert.equal(additionalN5.missingGolden.length, 0);
         assert.equal(report.duplicateAdditionalClaims.duplicateKanjiCount, 1);
-        assert.equal(report.duplicateAdditionalClaims.coreRetainedDuplicateKanjiCount, 1);
-        assert.equal(report.duplicateAdditionalClaims.suppressedDuplicateClaimCount, 2);
+        assert.equal(report.duplicateAdditionalClaims.coreRetainedDuplicateKanjiCount, 2);
+        assert.equal(report.duplicateAdditionalClaims.suppressedDuplicateClaimCount, 3);
         assert.equal(report.duplicateAdditionalClaims.unresolvedDuplicateKanjiCount, 0);
         assert.equal(report.passed, true);
         assert.match(formatKanjiDeckReviewStatus(report), /duplicate kanji: 1/);

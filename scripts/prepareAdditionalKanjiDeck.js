@@ -127,8 +127,8 @@ function formatReport(summary) {
         `Disputed rows included: ${summary.includeDisputed ? "yes" : "no"}`,
         `Raw additional claims: ${summary.rawAdditionalEntries}`,
         `Selected unique additional cards: ${summary.selectedAdditionalEntries}`,
-        `Core-retained duplicate kanji: ${summary.coreRetainedDuplicateKanji}`,
-        `Suppressed duplicate additional claims: ${summary.suppressedDuplicateClaims}`,
+        `Core-retained source-claim kanji: ${summary.coreRetainedDuplicateKanji}`,
+        `Suppressed additional source claims: ${summary.suppressedDuplicateClaims}`,
         "",
         "Exports:",
     ];

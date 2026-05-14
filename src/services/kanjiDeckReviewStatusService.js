@@ -385,8 +385,8 @@ function formatKanjiDeckReviewStatus(report = {}) {
         "",
         "Duplicate Additional Source Claims:",
         `- duplicate kanji: ${duplicates.duplicateKanjiCount || 0}`,
-        `- core-retained duplicate kanji: ${duplicates.coreRetainedDuplicateKanjiCount || 0}`,
-        `- suppressed duplicate additional claims: ${duplicates.suppressedDuplicateClaimCount || 0}`,
+        `- core-retained source-claim kanji: ${duplicates.coreRetainedDuplicateKanjiCount || 0}`,
+        `- suppressed additional source claims: ${duplicates.suppressedDuplicateClaimCount || 0}`,
         `- unresolved duplicate kanji: ${duplicates.unresolvedDuplicateKanjiCount || 0}`
     );
 

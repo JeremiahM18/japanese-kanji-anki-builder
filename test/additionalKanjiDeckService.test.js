@@ -22,6 +22,24 @@ function buildEntry(overrides = {}) {
     };
 }
 
+test("selectPhysicalAdditionalEntries suppresses core-collision source claims by default", () => {
+    const selection = selectPhysicalAdditionalEntries([
+        {
+            level: 5,
+            deckId: "additional_unverified_N5",
+            entries: [
+                buildEntry({ kanji: "本", currentContractLevel: 4, targetLevel: 5 }),
+            ],
+        },
+    ]);
+
+    assert.deepEqual(selection.selectedEntries, []);
+    assert.deepEqual(selection.coreRetainedDuplicateKanji, ["本"]);
+    assert.deepEqual(selection.suppressedDuplicateClaims.map((entry) => `${entry.kanji}:N${entry.targetLevel}`), [
+        "本:N5",
+    ]);
+});
+
 test("selectPhysicalAdditionalEntries suppresses repeated additional source claims by default", () => {
     const selection = selectPhysicalAdditionalEntries([
         {
@@ -29,7 +47,7 @@ test("selectPhysicalAdditionalEntries suppresses repeated additional source clai
             deckId: "additional_unverified_N5",
             entries: [
                 buildEntry({ kanji: "古", targetLevel: 5, confidence: "weak_evidence" }),
-                buildEntry({ kanji: "本", targetLevel: 5, category: "source_consensus_candidate", confidence: "standard_confidence" }),
+                buildEntry({ kanji: "本", currentContractLevel: null, targetLevel: 5, category: "source_consensus_candidate", confidence: "standard_confidence" }),
             ],
         },
         {

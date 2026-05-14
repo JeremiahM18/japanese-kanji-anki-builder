@@ -91,6 +91,7 @@ function addCoverageFailures(report, { rows = [], expectations = [], requireAllR
             .filter((kanji) => !expectationSet.has(kanji))
             .sort((a, b) => a.localeCompare(b, "ja"))
         : [];
+    const emptyAdditionalSurface = rowKanji.length === 0 && expectationKanji.length === 0;
 
     if (duplicateExpectations.length > 0) {
         coverageFailures.push(`duplicate expectations: ${duplicateExpectations.join(", ")}`);
@@ -108,7 +109,7 @@ function addCoverageFailures(report, { rows = [], expectations = [], requireAllR
         duplicateExpectations,
         extraExpectations,
         missingExpectations,
-        passed: report.passed && coverageFailures.length === 0,
+        passed: (report.passed || emptyAdditionalSurface) && coverageFailures.length === 0,
     };
 }
 

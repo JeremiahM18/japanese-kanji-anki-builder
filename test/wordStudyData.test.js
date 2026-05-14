@@ -1680,6 +1680,24 @@ test("tracked starter word data protects first N4 platinum examples and notes", 
     ]);
 });
 
+test("tracked starter word data protects second N4 platinum surface fixes", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assert.equal(starterEntries["通う|かよう"].exampleSentence.japanese, "毎日電車で学校に通うのは大変です。");
+    assert.equal(starterEntries["通う|かよう"].exampleSentence.reading, "まいにちでんしゃでがっこうにかようのはたいへんです。");
+    assert.match(starterEntries["夜|よる"].notes, /Core N4 time word/);
+    assert.match(starterEntries["朝|あさ"].notes, /Core N4 time word/);
+    assert.match(starterEntries["急ぐ|いそぐ"].notes, /Common N4 action verb/);
+    assert.match(starterEntries["兄|あに"].notes, /word-card reading is あに/);
+    assertCoverageReadings(starterEntries, [
+        ["夜|よる", "夜", "よる"],
+        ["朝|あさ", "朝", "あさ"],
+        ["会う|あう", "会", "あう"],
+        ["急ぐ|いそぐ", "急", "いそぐ"],
+        ["兄|あに", "兄", "あに"],
+    ]);
+});
+
 test("tracked starter word data includes the first N5 enhancement batch without duplicate junk", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

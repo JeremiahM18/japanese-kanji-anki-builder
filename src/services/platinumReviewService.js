@@ -66,7 +66,6 @@ const REQUIRED_WORD_QUALITY_GATES = Object.freeze([
 
 const REQUIRED_WORD_EVIDENCE_TYPES = Object.freeze([
     "generated-surface",
-    "golden-review",
     "japanese-source",
     "level-contract",
     "example-review",
@@ -75,6 +74,10 @@ const REQUIRED_WORD_EVIDENCE_TYPES = Object.freeze([
     "pitch-accent-review",
     "label-review",
     "manual-review",
+]);
+
+const BLOCKED_WORD_EVIDENCE_TYPES = Object.freeze([
+    "golden-review",
 ]);
 
 const ALLOWED_WORD_VERIFICATION_LIMITATION_FIELDS = Object.freeze([
@@ -352,6 +355,11 @@ function validateActivePlatinumEntry(entry = {}, { requireCurrentReviewStandard 
         }
     }
     const evidenceTypes = new Set(sourceEvidence.map((evidence) => evidence.type));
+    for (const blockedType of BLOCKED_WORD_EVIDENCE_TYPES) {
+        if (evidenceTypes.has(blockedType)) {
+            failures.push(`${blockedType} must not be used as word platinum sourceEvidence; run golden review as a separate regression gate instead`);
+        }
+    }
     for (const requiredType of REQUIRED_WORD_EVIDENCE_TYPES) {
         if (!evidenceTypes.has(requiredType)) {
             failures.push(`sourceEvidence must include evidence type: ${requiredType}`);

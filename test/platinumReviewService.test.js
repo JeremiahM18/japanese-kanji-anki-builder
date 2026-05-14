@@ -55,7 +55,6 @@ function evaluateWordPlatinum(options = {}) {
 function buildSourceEvidence() {
     const details = {
         "generated-surface": "Generated word-card surface inspected for 今日|きょう: word, reading, meaning today, example 今日は図書館へ行きます。, audio, and pitch accent fields.",
-        "golden-review": "N5 golden word review protects 今日|きょう.",
         "japanese-source": "JMdict dictionary source verified 今日|きょう, reading きょう, learner meaning today, and example 今日は図書館へ行きます。",
         "level-contract": "templates/jlpt_word_level_contract.json lists 今日|きょう for JLPT N5.",
         "example-review": "Example review checked 今日|きょう, reading きょう, and sentence 今日は図書館へ行きます。",
@@ -321,6 +320,31 @@ test("evaluatePlatinumWordReviewSet requires selection rationale and structured 
     assert.match(failures, /selectionRationale must explain/);
     assert.match(failures, /sourceEvidence must contain structured evidence entries/);
     assert.match(failures, /sourceEvidence must include evidence type: pitch-accent-review/);
+});
+
+test("evaluatePlatinumWordReviewSet rejects golden review as source evidence", () => {
+    const report = evaluateWordPlatinum({
+        rows: [buildRow()],
+        entries: [
+            buildCurrentStandardEntry({
+                sourceEvidence: [
+                    ...buildCurrentStandardSourceEvidence(),
+                    {
+                        type: "golden-review",
+                        source: "templates/golden_n5_word_review_set.json",
+                        detail: "N5 golden word review protects 今日|きょう.",
+                    },
+                ],
+            }),
+        ],
+        requireCurrentReviewStandard: true,
+    });
+
+    assert.equal(report.passed, false);
+    assert.match(
+        report.results[0].failures.join("\n"),
+        /golden-review must not be used as word platinum sourceEvidence/
+    );
 });
 
 test("evaluatePlatinumWordReviewSet rejects source evidence that does not bind to reviewed field values", () => {

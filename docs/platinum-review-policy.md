@@ -134,7 +134,6 @@ Word `sourceEvidence` must be an array of structured objects. Each object must i
 Active word entries must include all evidence types below:
 
 - `generated-surface`: the generated word-card surface was inspected.
-- `golden-review`: the golden regression expectation was checked.
 - `japanese-source`: written form, reading, meaning, and example were checked against a governed `word-field-verification` source; one-kanji word cards may use a registered `single-kanji-word-field-verification` source.
 - `level-contract`: the word belongs in the reviewed word-product level.
 - `example-review`: the example sentence and reading were checked for release quality.
@@ -143,6 +142,8 @@ Active word entries must include all evidence types below:
 - `pitch-accent-review`: pitch-accent value, source identity, source-to-render match, and any generated-pitch label were reviewed.
 - `label-review`: JLPT/outside-JLPT labels, focus kanji, coverage role, and reading coverage were reviewed.
 - `manual-review`: a final product judgment was made.
+
+Golden word review remains a required regression gate where applicable, but it is not word platinum source evidence and must not appear in word `sourceEvidence`.
 
 Required `qualityGates`:
 

@@ -331,11 +331,11 @@
         "半": "はん"
       }
     },
-    "notes": "Learn this as a common time expression.",
+    "notes": "Learn this as a common time expression: 一時半 means half past one / 1:30.",
     "exampleSentence": {
-      "japanese": "一時半に昼ご飯を食べます。",
-      "reading": "いちじはんにひるごはんをたべます。",
-      "english": "I eat lunch at half past one."
+      "japanese": "一時半に会いましょう。",
+      "reading": "いちじはんにあいましょう。",
+      "english": "Let's meet at half past one."
     }
   },
   "一日|ついたち": {
@@ -384,7 +384,7 @@
         "人": "り"
       }
     },
-    "notes": "Irregular counter reading. Learn this as a whole word.",
+    "notes": "Irregular counter reading. Learn this as a whole word: 一人 is the core people-count word for one person or alone.",
     "exampleSentence": {
       "japanese": "今日は一人で帰ります。",
       "reading": "きょうはひとりでかえります。",
@@ -486,7 +486,8 @@
       "japanese": "この時計は一万円です。",
       "reading": "このとけいはいちまんえんです。",
       "english": "This watch costs 10,000 yen."
-    }
+    },
+    "notes": "Core price expression for 10,000 yen; useful for shopping examples."
   },
   "飲み物|のみもの": {
     "written": "飲み物",
@@ -1044,11 +1045,11 @@
         "天": "あま"
       }
     },
-    "notes": "Reading-coverage support word for the 天 -> あま pattern.",
+    "notes": "Reading-coverage support word for the 天 -> あま pattern; fixed lexical item for the Milky Way, not arbitrary phrase padding.",
     "exampleSentence": {
-      "japanese": "夏の夜に天の川が見えました。",
-      "reading": "なつのよるにあまのがわがみえました。",
-      "english": "I could see the Milky Way on the summer night."
+      "japanese": "夜、天の川を見ます。",
+      "reading": "よる、あまのがわをみます。",
+      "english": "I see the Milky Way at night."
     }
   },
   "家の中|いえのなか": {
@@ -1384,7 +1385,7 @@
   "外国人|がいこくじん": {
     "written": "外国人",
     "reading": "がいこくじん",
-    "meaning": "foreigner",
+    "meaning": "foreign person / foreign national",
     "jlpt": 5,
     "tags": [
       "starter",
@@ -1392,10 +1393,11 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "あの外国人は日本語が上手です。",
-      "reading": "あのがいこくじんはにほんごがじょうずです。",
-      "english": "That foreigner is good at Japanese."
-    }
+      "japanese": "外国人の友だちがいます。",
+      "reading": "がいこくじんのともだちがいます。",
+      "english": "I have a foreign friend."
+    },
+    "notes": "Common word for a foreign person or foreign national; use with context and avoid reducing people to labels."
   },
   "火山|かざん": {
     "written": "火山",
@@ -1529,10 +1531,11 @@
       }
     },
     "exampleSentence": {
-      "japanese": "学校は八時に始まります。",
-      "reading": "がっこうははちじにはじまります。",
-      "english": "School starts at eight o'clock."
-    }
+      "japanese": "八時に学校へ行きます。",
+      "reading": "はちじにがっこうへいきます。",
+      "english": "I go to school at eight o'clock."
+    },
+    "notes": "Core school word; useful for everyday education and schedule contexts."
   },
   "校長|こうちょう": {
     "written": "校長",
@@ -1982,10 +1985,11 @@
       }
     },
     "exampleSentence": {
-      "japanese": "九時に会社へ行きます。",
-      "reading": "くじにかいしゃへいきます。",
-      "english": "I go to the company at nine o'clock."
-    }
+      "japanese": "九時に学校へ行きます。",
+      "reading": "くじにがっこうへいきます。",
+      "english": "I go to school at nine o'clock."
+    },
+    "notes": "Core time expression for nine o'clock; useful for schedules and school routines."
   },
   "空|そら": {
     "written": "空",
@@ -2395,10 +2399,11 @@
       }
     },
     "exampleSentence": {
-      "japanese": "駅まで五分で着きます。",
-      "reading": "えきまでごふんでつきます。",
-      "english": "You can get to the station in five minutes."
-    }
+      "japanese": "駅まで五分かかります。",
+      "reading": "えきまでごふんかかります。",
+      "english": "It takes five minutes to get to the station."
+    },
+    "notes": "Core duration word for five minutes; useful for travel-time and schedule examples."
   },
   "午後|ごご": {
     "written": "午後",
@@ -2453,7 +2458,8 @@
       "japanese": "午前九時に学校へ行きます。",
       "reading": "ごぜんくじにがっこうへいきます。",
       "english": "I go to school at 9 a.m."
-    }
+    },
+    "notes": "Core time-of-day word for morning or a.m.; complements 午後."
   },
   "後で|あとで": {
     "written": "後で",
@@ -2933,11 +2939,11 @@
         "今日": "きょう"
       }
     },
-    "notes": "Irregular reading. Learn this as a whole word.",
+    "notes": "Irregular reading. Learn this as a whole word: 今日 is the core time word for today.",
     "exampleSentence": {
-      "japanese": "今日は図書館へ行きます。",
-      "reading": "きょうはとしょかんへいきます。",
-      "english": "Today I am going to the library."
+      "japanese": "今日は学校へ行きます。",
+      "reading": "きょうはがっこうへいきます。",
+      "english": "Today I am going to school."
     }
   },
   "今年|ことし": {
@@ -3388,10 +3394,11 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "子猫が部屋で寝ています。",
-      "reading": "こねこがへやでねています。",
-      "english": "A kitten is sleeping in the room."
-    }
+      "japanese": "子猫がいます。",
+      "reading": "こねこがいます。",
+      "english": "There is a kitten."
+    },
+    "notes": "Common word for kitten; 猫 is a higher-level support kanji and must stay visibly labeled."
   },
   "時間|じかん": {
     "written": "時間",
@@ -3658,7 +3665,8 @@
       "japanese": "十時に寝ます。",
       "reading": "じゅうじにねます。",
       "english": "I go to bed at ten o'clock."
-    }
+    },
+    "notes": "Core time expression for ten o'clock; useful for daily routines."
   },
   "十回|じっかい": {
     "written": "十回",
@@ -3990,10 +3998,11 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "弟は小学校へ歩いて行きます。",
-      "reading": "おとうとはしょうがっこうへあるいていきます。",
-      "english": "My younger brother walks to elementary school."
-    }
+      "japanese": "弟は小学校へ行きます。",
+      "reading": "おとうとはしょうがっこうへいきます。",
+      "english": "My younger brother goes to elementary school."
+    },
+    "notes": "Core school word for elementary school; useful for education contexts."
   },
   "上|うえ": {
     "written": "上",
@@ -4858,10 +4867,11 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "先生に質問します。",
-      "reading": "せんせいにしつもんします。",
-      "english": "I ask the teacher a question."
-    }
+      "japanese": "先生は学校にいます。",
+      "reading": "せんせいはがっこうにいます。",
+      "english": "The teacher is at school."
+    },
+    "notes": "Core classroom word for teacher; useful for school and polite address contexts."
   },
   "千円|せんえん": {
     "written": "千円",
@@ -5150,11 +5160,11 @@
         "中": "ちゅう"
       }
     },
-    "notes": "Reading-coverage support word for the common 中 -> ちゅう pattern.",
+    "notes": "Reading-coverage support word for the common 中 -> ちゅう pattern; also a common country name for China.",
     "exampleSentence": {
-      "japanese": "友だちは中国の料理が好きです。",
-      "reading": "ともだちはちゅうごくのりょうりがすきです。",
-      "english": "My friend likes Chinese food."
+      "japanese": "中国へ行きます。",
+      "reading": "ちゅうごくへいきます。",
+      "english": "I am going to China."
     }
   },
   "二日|ふつか": {
@@ -5836,10 +5846,11 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "南口にコンビニがあります。",
-      "reading": "みなみぐちにこんびにがあります。",
-      "english": "There is a convenience store by the south exit."
-    }
+      "japanese": "駅の南口で会います。",
+      "reading": "えきのみなみぐちであいます。",
+      "english": "I will meet at the station's south exit."
+    },
+    "notes": "Useful station/location word for south exit; 口 is a higher-level support kanji and must stay visibly labeled."
   },
   "二|に": {
     "written": "二",
@@ -5982,7 +5993,8 @@
       "japanese": "日本語を毎日勉強します。",
       "reading": "にほんごをまいにちべんきょうします。",
       "english": "I study Japanese every day."
-    }
+    },
+    "notes": "Core language word for Japanese; useful for study and classroom contexts."
   },
   "日本人|にほんじん": {
     "written": "日本人",
@@ -5995,10 +6007,11 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "彼は日本人です。",
-      "reading": "かれはにほんじんです。",
-      "english": "He is Japanese."
-    }
+      "japanese": "この人は日本人です。",
+      "reading": "このひとはにほんじんです。",
+      "english": "This person is Japanese."
+    },
+    "notes": "Core word for a Japanese person; useful for nationality and identity examples."
   },
   "日曜日|にちようび": {
     "written": "日曜日",
@@ -6985,10 +6998,11 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "駅前の本屋で辞書を買います。",
-      "reading": "えきまえのほんやでじしょをかいます。",
-      "english": "I buy a dictionary at the bookstore in front of the station."
-    }
+      "japanese": "本屋で本を買います。",
+      "reading": "ほんやでほんをかいます。",
+      "english": "I buy a book at the bookstore."
+    },
+    "notes": "Common store word for bookstore; 屋 is a higher-level support kanji and must stay visibly labeled."
   },
   "手本|てほん": {
     "written": "手本",
@@ -7154,10 +7168,11 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "毎年、家族と旅行します。",
-      "reading": "まいとし、かぞくとりょこうします。",
-      "english": "Every year I travel with my family."
-    }
+      "japanese": "毎年、日本へ行きます。",
+      "reading": "まいとし、にほんへいきます。",
+      "english": "I go to Japan every year."
+    },
+    "notes": "Core frequency word for every year; useful for annual routines and plans."
   },
   "名前|なまえ": {
     "written": "名前",
@@ -7625,10 +7640,11 @@
       "n5"
     ],
     "exampleSentence": {
-      "japanese": "毎朝六時に起きます。",
-      "reading": "まいあさろくじにおきます。",
-      "english": "I get up at six every morning."
-    }
+      "japanese": "六時に起きます。",
+      "reading": "ろくじにおきます。",
+      "english": "I wake up at six o'clock."
+    },
+    "notes": "Core time expression for six o'clock; useful for daily routines."
   },
   "五月|ごがつ": {
     "written": "五月",
@@ -22505,11 +22521,11 @@
         "勢": "ぜい"
       }
     },
-    "notes": "Common N5 quantity word; 勢 is a higher-level kanji and must stay labeled on the N5 card.",
+    "notes": "Common N5 quantity word for many people; 勢 is a higher-level support kanji and must stay visibly labeled.",
     "exampleSentence": {
-      "japanese": "公園に人が大勢います。",
-      "reading": "こうえんにひとがおおぜいいます。",
-      "english": "There are many people in the park."
+      "japanese": "人が大勢います。",
+      "reading": "ひとがおおぜいいます。",
+      "english": "There are many people."
     }
   },
   "お菓子|おかし": {

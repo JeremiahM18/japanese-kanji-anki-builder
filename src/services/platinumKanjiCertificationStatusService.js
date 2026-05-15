@@ -9,6 +9,18 @@ const {
 } = require("./platinumKanjiRereviewStatusService");
 
 const MANUAL_SENTENCE_REVIEW_BOUNDARY_NOTE = "Automation can verify structure, source binding, protected snippets, audio identity, stroke-order identity, and the presence of card-bound sentence-quality review evidence. The human reviewer still owns the actual natural-Japanese and pedagogy judgment.";
+const REQUIRED_ZERO_COUNTS = Object.freeze(["blocked_or_failing", "needs_substantive_rereview"]);
+const CERTIFICATION_AUTOMATION_CHECKS = Object.freeze([
+    "current-standard Platinum structure",
+    "governed Japanese-source binding",
+    "protected field snippets",
+    "exact primary-reading audio identity",
+    "stroke-order media identity",
+    "card-bound Obsidian rereview provenance",
+    "presence of actual example sentence quality review proof",
+]);
+const NEEDS_REREVIEW_EXPECTED = "explicit non-mechanical substantive current-standard human rereview provenance after the Platinum structural gate, including actual example sentence quality review proof";
+const NEEDS_REREVIEW_ACTION = "Perform the Obsidian rereview from the live generated card. Inspect and fix the actual example sentence if needed, then record rereviewProvenance with reviewedAfterStandard=true, mechanicalMigration=false, reviewer, reviewedAt, cardReviewed, checked evidence, limitation decision, and example sentence quality review evidence covering natural Japanese, learner usefulness, level appropriateness, support-only usage, reading, and translation.";
 
 function normalizeText(value) {
     return String(value ?? "").trim();
@@ -20,10 +32,10 @@ function buildNeedsRereviewFailure({ card = {}, level = null } = {}) {
         card: card.kanji || "(unknown)",
         category: REREVIEW_STATUS_CATEGORIES.NEEDS_SUBSTANTIVE_REREVIEW,
         field: "rereviewProvenance",
-        expected: "explicit non-mechanical substantive current-standard human rereview provenance after the Platinum structural gate, including actual example sentence quality review proof",
+        expected: NEEDS_REREVIEW_EXPECTED,
         actual: normalizeText((card.reasons || []).join("; ")) || `${MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER}: missing proof`,
         evidenceLane: "reviewEvidence.current-standard-review + rereviewProvenance",
-        reviewerAction: "Perform the Obsidian rereview from the live generated card. Inspect and fix the actual example sentence if needed, then record rereviewProvenance with reviewedAfterStandard=true, mechanicalMigration=false, reviewer, reviewedAt, cardReviewed, checked evidence, limitation decision, and example sentence quality review evidence covering natural Japanese, learner usefulness, level appropriateness, support-only usage, reading, and translation.",
+        reviewerAction: NEEDS_REREVIEW_ACTION,
     };
 }
 
@@ -146,16 +158,8 @@ function buildPlatinumKanjiCertificationStatusSummary(levelReports = []) {
         certificationGate: {
             name: "kanji Platinum-to-Obsidian certification",
             currentReviewStandard: CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
-            requiredZeroCounts: ["blocked_or_failing", "needs_substantive_rereview"],
-            automationChecks: [
-                "current-standard Platinum structure",
-                "governed Japanese-source binding",
-                "protected field snippets",
-                "exact primary-reading audio identity",
-                "stroke-order media identity",
-                "card-bound Obsidian rereview provenance",
-                "presence of actual example sentence quality review proof",
-            ],
+            requiredZeroCounts: [...REQUIRED_ZERO_COUNTS],
+            automationChecks: [...CERTIFICATION_AUTOMATION_CHECKS],
             requiredSentenceReviewProof: SENTENCE_QUALITY_REVIEW_PROOF_MARKER,
             manualJudgmentBoundary: MANUAL_SENTENCE_REVIEW_BOUNDARY_NOTE,
         },

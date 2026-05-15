@@ -160,6 +160,22 @@ test("pull request template calls out release-gate and code-owner expectations",
     assert.equal(template.includes("CODEOWNERS review requested when touching protected paths"), true);
 });
 
+test("README presents the review tier model before status snapshots", () => {
+    const readme = readRepoFile("README.md");
+    const tierIndex = readme.indexOf("## Review Tiers");
+    const baselineIndex = readme.indexOf("## Current Baseline");
+    const tierSection = extractReadmeSection(readme, "Review Tiers");
+
+    assert.notEqual(tierIndex, -1, "README must have a prominent Review Tiers section.");
+    assert.notEqual(baselineIndex, -1, "README must keep the Current Baseline section.");
+    assert.ok(tierIndex < baselineIndex, "Review Tiers should appear before Current Baseline so the status counts have context.");
+
+    for (const tier of ["Silver", "Gold", "Platinum", "Obsidian"]) {
+        assert.match(tierSection, new RegExp(`\\| ${tier} \\|`), `README Review Tiers missing ${tier}.`);
+    }
+    assert.match(tierSection, /Kanji and word decks run them separately/);
+});
+
 test("README source-evidence lane table matches the governed source manifest", () => {
     const readme = readRepoFile("README.md");
     const evidence = JSON.parse(readRepoFile(path.join("templates", "jlpt_kanji_source_evidence.json")));

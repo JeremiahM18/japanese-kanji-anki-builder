@@ -16,6 +16,18 @@ const SUBSTANTIVE_REREVIEW_PROOF_MARKER = "substantive post-v3 human rereview";
 const NON_MECHANICAL_PROOF_MARKER = "not mechanically migrated";
 const MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER = "missing_substantive_current_standard_rereview_proof";
 const SENTENCE_QUALITY_REVIEW_PROOF_MARKER = "example sentence quality review";
+const STRUCTURED_REREVIEW_PROVENANCE_TYPE = "substantive current standard rereview";
+const SENTENCE_QUALITY_REVIEW_BOOLEAN_FIELDS = Object.freeze([
+    "naturalJapanese",
+    "learnerUseful",
+    "levelAppropriate",
+    "supportOnly",
+]);
+const SENTENCE_REVIEW_TEXT_MARKERS = Object.freeze([
+    "example review",
+    "sentence quality review",
+    normalizeProofText(SENTENCE_QUALITY_REVIEW_PROOF_MARKER),
+]);
 
 function normalizeText(value) {
     return String(value ?? "").trim();
@@ -42,6 +54,32 @@ function flattenProofValue(value) {
 
 function normalizeKanji(value) {
     return normalizeText(value);
+}
+
+function isPlainRecord(value) {
+    return Boolean(value && typeof value === "object" && !Array.isArray(value));
+}
+
+function normalizeProofParts(parts = []) {
+    return normalizeProofText((Array.isArray(parts) ? parts : [parts])
+        .map(flattenProofValue)
+        .join(" "));
+}
+
+function getRereviewProvenance(entry = {}) {
+    return isPlainRecord(entry.rereviewProvenance) ? entry.rereviewProvenance : null;
+}
+
+function normalizeStringArray(value) {
+    return Array.isArray(value) ? value.map(normalizeProofText).filter(Boolean) : [];
+}
+
+function proofTextIncludesEvery(proofText, snippets = []) {
+    return snippets.every((snippet) => proofText.includes(snippet));
+}
+
+function proofTextIncludesAny(proofText, snippets = []) {
+    return snippets.some((snippet) => proofText.includes(snippet));
 }
 
 function buildResultByKanji(results = []) {
@@ -83,9 +121,7 @@ function buildRereviewProvenanceText(entry = {}) {
         .filter((evidence) => ["manual-review", "current-standard-review"].includes(evidence.type))
         .map((evidence) => `${evidence.source} ${evidence.detail}`)
         .join(" ");
-    const provenance = entry.rereviewProvenance && typeof entry.rereviewProvenance === "object"
-        ? entry.rereviewProvenance
-        : {};
+    const provenance = getRereviewProvenance(entry) || {};
     const provenanceText = Object.entries(provenance)
         .map(([key, value]) => `${key} ${flattenProofValue(value)}`)
         .join(" ");
@@ -94,12 +130,12 @@ function buildRereviewProvenanceText(entry = {}) {
 }
 
 function hasBaseStructuredRereviewProvenance(entry = {}) {
-    const provenance = entry.rereviewProvenance;
-    if (!provenance || typeof provenance !== "object" || Array.isArray(provenance)) {
+    const provenance = getRereviewProvenance(entry);
+    if (!provenance) {
         return false;
     }
 
-    return normalizeProofText(provenance.type) === "substantive current standard rereview"
+    return normalizeProofText(provenance.type) === STRUCTURED_REREVIEW_PROVENANCE_TYPE
         && normalizeText(provenance.reviewStandard) === CURRENT_KANJI_PLATINUM_REVIEW_STANDARD
         && provenance.reviewedAfterStandard === true
         && provenance.mechanicalMigration === false
@@ -107,19 +143,17 @@ function hasBaseStructuredRereviewProvenance(entry = {}) {
 }
 
 function hasCardIdentityProof(entry = {}) {
-    const provenance = entry.rereviewProvenance;
-    if (!provenance || typeof provenance !== "object" || Array.isArray(provenance)) {
+    const provenance = getRereviewProvenance(entry);
+    if (!provenance) {
         return false;
     }
-    const proofText = normalizeProofText([
+    const proofText = normalizeProofParts([
         provenance.cardReviewed,
         provenance.evidenceChecked,
         provenance.sentenceQualityReview,
-    ].map(flattenProofValue).join(" "));
+    ]);
     const kanji = normalizeProofText(entry.kanji);
-    const readings = Array.isArray(entry.readingIncludes)
-        ? entry.readingIncludes.map(normalizeProofText).filter(Boolean)
-        : [];
+    const readings = normalizeStringArray(entry.readingIncludes);
     const hasKanji = kanji && proofText.includes(kanji);
     const hasReading = readings.length === 0 || readings.some((reading) => proofText.includes(reading));
 
@@ -127,35 +161,24 @@ function hasCardIdentityProof(entry = {}) {
 }
 
 function structuredSentenceQualityReviewPasses(entry = {}) {
-    const review = entry.rereviewProvenance?.sentenceQualityReview;
-    if (!review || typeof review !== "object" || Array.isArray(review)) {
+    const review = getRereviewProvenance(entry)?.sentenceQualityReview;
+    if (!isPlainRecord(review)) {
         return false;
     }
 
-    const reviewText = normalizeProofText(flattenProofValue(review));
-    const examples = Array.isArray(entry.exampleIncludes)
-        ? entry.exampleIncludes.map(normalizeProofText).filter(Boolean)
-        : [];
-    const hasExampleBinding = examples.length === 0 || examples.every((example) => reviewText.includes(example));
-    const requiredTruths = [
-        review.naturalJapanese,
-        review.learnerUseful,
-        review.levelAppropriate,
-        review.supportOnly,
-    ];
+    const reviewText = normalizeProofParts(review);
+    const examples = normalizeStringArray(entry.exampleIncludes);
+    const hasExampleBinding = proofTextIncludesEvery(reviewText, examples);
+    const requiredTruths = SENTENCE_QUALITY_REVIEW_BOOLEAN_FIELDS.map((field) => review[field]);
 
     return hasExampleBinding && requiredTruths.every((value) => value === true);
 }
 
 function textualSentenceQualityReviewPasses(entry = {}) {
     const proofText = buildRereviewProvenanceText(entry);
-    const examples = Array.isArray(entry.exampleIncludes)
-        ? entry.exampleIncludes.map(normalizeProofText).filter(Boolean)
-        : [];
-    const hasSentenceReviewMarker = proofText.includes("example review")
-        || proofText.includes("sentence quality review")
-        || proofText.includes(normalizeProofText(SENTENCE_QUALITY_REVIEW_PROOF_MARKER));
-    const hasExampleBinding = examples.length === 0 || examples.every((example) => proofText.includes(example));
+    const examples = normalizeStringArray(entry.exampleIncludes);
+    const hasSentenceReviewMarker = proofTextIncludesAny(proofText, SENTENCE_REVIEW_TEXT_MARKERS);
+    const hasExampleBinding = proofTextIncludesEvery(proofText, examples);
     const hasNaturalJudgment = /\bnatural(\s+japanese|\s+enough)?\b/.test(proofText);
     const hasLearnerUtilityJudgment = proofText.includes("learner useful")
         || proofText.includes("learner friendly")

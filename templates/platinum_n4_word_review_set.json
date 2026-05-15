@@ -29362,5 +29362,2951 @@
       }
     ],
     "fixSummary": "Tightened the learner meaning, replaced the inflected example with an exact-form 親しむ sentence, and made the support note less coverage-only before Platinum certification."
+  },
+  {
+    "word": "京",
+    "status": "platinum",
+    "readingIncludes": [
+      "みやこ"
+    ],
+    "meaningIncludes": [
+      "capital",
+      "imperial city"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "京"
+    ],
+    "coversReadingIncludes": [
+      "京: みやこ"
+    ],
+    "breakdownIncludes": [
+      "京 みやこ 京 （みやこ） ／ capital / imperial city Stroke order On: キョウ、 キン、 ケイ Kun: みやこ"
+    ],
+    "exampleIncludes": [
+      "昔の京には多くの文化が集まりました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 京|みやこ; reviewed as learner-friendly Reading coverage support vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common N4 support word that covers the 京 -> みやこ reading."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 京|みやこ, reading みやこ, learner meaning capital / imperial city, protected meaning capital / imperial city, and product review checked example 昔の京には多くの文化が集まりました。 ／ むかしのみやこにはおおくのぶんかがあつまりました。 ／ Many kinds of culture gathered in the old capital. for the shipped word-card surface; row meaning support: capital (esp. Kyoto, Japan's former capital); seat of government; capital (of music, fashion, etc.); city (e.g. of light); location of the Imperial Palace; source row: jmdict written=京; reading=みやこ; frequencyRank=100; source=jmdict; entrySeq=1444950; jmdictPriority=ichi1,news1,nf03; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 京|みやこ: word 京, reading みやこ, meaning capital / imperial city, example 昔の京には多くの文化が集まりました。 ／ むかしのみやこにはおおくのぶんかがあつまりました。 ／ Many kinds of culture gathered in the old capital., audio word-reading-京-みやこ, reading breakdown 京 みやこ, kanji breakdown 京 みやこ 京 （みやこ） ／ capital / imperial city Stroke order On: キョウ、 キン、 ケイ Kun: みやこ, labels JLPT N4; Reading coverage support; focus 京; covers 京: みやこ, notes/support surface Common N4 support word that covers the 京 -> みやこ reading.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 京|みやこ as JLPT N4; focus 京 and reading labels 京: みやこ were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 京|みやこ: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-京-みやこ was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 京|みやこ: generated Audio field includes word-reading-京-みやこ and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 京|みやこ: source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered labels Pitch 1: 0, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 京|みやこ: JLPT N4; Reading coverage support; focus 京; covers 京: みやこ; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 京|みやこ; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 京|みやこ: 昔の京には多くの文化が集まりました。 ／ むかしのみやこにはおおくのぶんかがあつまりました。 ／ Many kinds of culture gathered in the old capital.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading みやこ."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 京|みやこ common and learner-friendly for the N4 word deck, with accurate reading みやこ, meaning capital / imperial city, example 昔の京には多くの文化が集まりました。 ／ むかしのみやこにはおおくのぶんかがあつまりました。 ／ Many kinds of culture gathered in the old capital., notes/support surface Common N4 support word that covers the 京 -> みやこ reading., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 京|みやこ checked generated surface, Japanese-source evidence, example sentence 昔の京には多くの文化が集まりました。 ／ むかしのみやこにはおおくのぶんかがあつまりました。 ／ Many kinds of culture gathered in the old capital., notes/support surface Common N4 support word that covers the 京 -> みやこ reading., reading breakdown 京 みやこ and kanji breakdown 京 みやこ 京 （みやこ） ／ capital / imperial city Stroke order On: キョウ、 キン、 ケイ Kun: みやこ, meaning capital / imperial city (capital / imperial city), labels JLPT N4; Reading coverage support; focus 京; covers 京: みやこ, audio word-reading-京-みやこ, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment 京|みやこ common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ]
+  },
+  {
+    "word": "小説",
+    "status": "platinum",
+    "readingIncludes": [
+      "しょうせつ"
+    ],
+    "meaningIncludes": [
+      "novel",
+      "story"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "小",
+      "説"
+    ],
+    "coversReadingIncludes": [
+      "小: しょう",
+      "説: せつ"
+    ],
+    "breakdownIncludes": [
+      "小 JLPT N5 kanji しょう 小 （しょう） ／ small Stroke order On: ショウ Kun: お-、 こ-、 さ-、 ちい.さい 説 せつ 説 （せつ） ／ explain / theory Stroke order On: セツ、 ゼイ Kun: と.く"
+    ],
+    "exampleIncludes": [
+      "毎晩、小説を読みます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 小説|しょうせつ; reviewed as learner-friendly JLPT core + reading coverage vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common reading/media N4 word with an N4 説 anchor and easy 小 support."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 小説|しょうせつ, reading しょうせつ, learner meaning novel / story, protected meaning novel / story, and product review checked example 毎晩、小説を読みます。 ／ まいばん、しょうせつをよみます。 ／ I read novels every night. for the shipped word-card surface; row meaning support: novel; story; (work of) fiction; source row: jmdict written=小説; reading=しょうせつ; frequencyRank=100; source=jmdict; entrySeq=1348430; jmdictPriority=ichi1,news1,nf03; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 小説|しょうせつ: word 小説, reading しょうせつ, meaning novel / story, example 毎晩、小説を読みます。 ／ まいばん、しょうせつをよみます。 ／ I read novels every night., audio word-reading-小説-しょうせつ, reading breakdown 小 しょう説 せつ, kanji breakdown 小 JLPT N5 kanji しょう 小 （しょう） ／ small Stroke order On: ショウ Kun: お-、 こ-、 さ-、 ちい.さい 説 せつ 説 （せつ） ／ explain / theory Stroke order On: セツ、 ゼイ Kun: と.く, labels JLPT N4; JLPT core + reading coverage; focus 小、説; covers 小: しょう ／ 説: せつ, notes/support surface Common reading/media N4 word with an N4 説 anchor and easy 小 support.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 小説|しょうせつ as JLPT N4; focus 小、説 and reading labels 小: しょう ／ 説: せつ were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 小説|しょうせつ: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-小説-しょうせつ was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 小説|しょうせつ: generated Audio field includes word-reading-小説-しょうせつ and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 小説|しょうせつ: source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered labels Pitch 1: 0, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 小説|しょうせつ: JLPT N4; JLPT core + reading coverage; focus 小、説; covers 小: しょう ／ 説: せつ; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 小説|しょうせつ; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 小説|しょうせつ: 毎晩、小説を読みます。 ／ まいばん、しょうせつをよみます。 ／ I read novels every night.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading しょうせつ."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 小説|しょうせつ common and learner-friendly for the N4 word deck, with accurate reading しょうせつ, meaning novel / story, example 毎晩、小説を読みます。 ／ まいばん、しょうせつをよみます。 ／ I read novels every night., notes/support surface Common reading/media N4 word with an N4 説 anchor and easy 小 support., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 小説|しょうせつ checked generated surface, Japanese-source evidence, example sentence 毎晩、小説を読みます。 ／ まいばん、しょうせつをよみます。 ／ I read novels every night., notes/support surface Common reading/media N4 word with an N4 説 anchor and easy 小 support., reading breakdown 小 しょう説 せつ and kanji breakdown 小 JLPT N5 kanji しょう 小 （しょう） ／ small Stroke order On: ショウ Kun: お-、 こ-、 さ-、 ちい.さい 説 せつ 説 （せつ） ／ explain / theory Stroke order On: セツ、 ゼイ Kun: と.く, meaning novel / story (novel / story), labels JLPT N4; JLPT core + reading coverage; focus 小、説; covers 小: しょう ／ 説: せつ, audio word-reading-小説-しょうせつ, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment 小説|しょうせつ common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ]
+  },
+  {
+    "word": "一度",
+    "status": "platinum",
+    "readingIncludes": [
+      "いちど"
+    ],
+    "meaningIncludes": [
+      "once",
+      "one time"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "一",
+      "度"
+    ],
+    "coversReadingIncludes": [
+      "一: いち",
+      "度: ど"
+    ],
+    "breakdownIncludes": [
+      "一 JLPT N5 kanji いち 一 （いち） ／ one Stroke order On: イチ、 イツ Kun: ひと-、 ひと.つ 度 ど 度 （ど） ／ degree / time / occurrence Stroke order On: タク、 ト、 ド Kun: -た.い、 たび"
+    ],
+    "exampleIncludes": [
+      "一度この店に行きました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 一度|いちど; reviewed as learner-friendly JLPT core + reading coverage vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Very common frequency word with practical learner value and clean 度 reading support."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 一度|いちど, reading いちど, learner meaning once / one time, protected meaning once / one time, and product review checked example 一度この店に行きました。 ／ いちどこのみせにいきました。 ／ I went to this shop once. for the shipped word-card surface; row meaning support: once; one time; on one occasion; one degree; one tone; one musical interval; source row: jmdict written=一度; reading=いちど; frequencyRank=100; source=jmdict; entrySeq=1576250; jmdictPriority=news1,nf03; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 一度|いちど: word 一度, reading いちど, meaning once / one time, example 一度この店に行きました。 ／ いちどこのみせにいきました。 ／ I went to this shop once., audio word-reading-一度-いちど, reading breakdown 一 いち度 ど, kanji breakdown 一 JLPT N5 kanji いち 一 （いち） ／ one Stroke order On: イチ、 イツ Kun: ひと-、 ひと.つ 度 ど 度 （ど） ／ degree / time / occurrence Stroke order On: タク、 ト、 ド Kun: -た.い、 たび, labels JLPT N4; JLPT core + reading coverage; focus 一、度; covers 一: いち ／ 度: ど, notes/support surface Very common frequency word with practical learner value and clean 度 reading support.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 一度|いちど as JLPT N4; focus 一、度 and reading labels 一: いち ／ 度: ど were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 一度|いちど: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-一度-いちど was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 一度|いちど: generated Audio field includes word-reading-一度-いちど and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 一度|いちど: source kanjium-cc-by-sa-4.0 pattern 3 [odaka], rendered labels Pitch 1: 3, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 一度|いちど: JLPT N4; JLPT core + reading coverage; focus 一、度; covers 一: いち ／ 度: ど; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 一度|いちど; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 一度|いちど: 一度この店に行きました。 ／ いちどこのみせにいきました。 ／ I went to this shop once.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading いちど."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 一度|いちど common and learner-friendly for the N4 word deck, with accurate reading いちど, meaning once / one time, example 一度この店に行きました。 ／ いちどこのみせにいきました。 ／ I went to this shop once., notes/support surface Very common frequency word with practical learner value and clean 度 reading support., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 一度|いちど checked generated surface, Japanese-source evidence, example sentence 一度この店に行きました。 ／ いちどこのみせにいきました。 ／ I went to this shop once., notes/support surface Very common frequency word with practical learner value and clean 度 reading support., reading breakdown 一 いち度 ど and kanji breakdown 一 JLPT N5 kanji いち 一 （いち） ／ one Stroke order On: イチ、 イツ Kun: ひと-、 ひと.つ 度 ど 度 （ど） ／ degree / time / occurrence Stroke order On: タク、 ト、 ド Kun: -た.い、 たび, meaning once / one time (once / one time), labels JLPT N4; JLPT core + reading coverage; focus 一、度; covers 一: いち ／ 度: ど, audio word-reading-一度-いちど, pitch accent source kanjium-cc-by-sa-4.0 pattern 3 [odaka] rendered Pitch 1: 3, media provenance, release judgment 一度|いちど common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ]
+  },
+  {
+    "word": "教室",
+    "status": "platinum",
+    "readingIncludes": [
+      "きょうしつ"
+    ],
+    "meaningIncludes": [
+      "classroom"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "教"
+    ],
+    "coversReadingIncludes": [
+      "教: きょう"
+    ],
+    "breakdownIncludes": [
+      "教 きょう 教 （きょう） ／ teach Stroke order On: キョウ Kun: おし.える、 おそ.わる 室 しつ 室 （しつ） ／ room Stroke order On: シツ Kun: むろ"
+    ],
+    "exampleIncludes": [
+      "授業の前に教室の窓を開けました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 教室|きょうしつ; reviewed as learner-friendly Reading coverage support vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common N4 support word that covers the 教 -> きょう reading."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 教室|きょうしつ, reading きょうしつ, learner meaning classroom, protected meaning classroom, and product review checked example 授業の前に教室の窓を開けました。 ／ じゅぎょうのまえにきょうしつのまどをあけました。 ／ I opened the classroom window before class. for the shipped word-card surface; row meaning support: classroom; lecture room; department (in a university); class; lessons; course; school (for a particular discipline); teaching establishment; source row: jmdict written=教室; reading=きょうしつ; frequencyRank=100; source=jmdict; entrySeq=1237150; jmdictPriority=ichi1,news1,nf03; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 教室|きょうしつ: word 教室, reading きょうしつ, meaning classroom, example 授業の前に教室の窓を開けました。 ／ じゅぎょうのまえにきょうしつのまどをあけました。 ／ I opened the classroom window before class., audio word-reading-教室-きょうしつ, reading breakdown 教 きょう室 しつ, kanji breakdown 教 きょう 教 （きょう） ／ teach Stroke order On: キョウ Kun: おし.える、 おそ.わる 室 しつ 室 （しつ） ／ room Stroke order On: シツ Kun: むろ, labels JLPT N4; Reading coverage support; focus 教; covers 教: きょう, notes/support surface Common N4 support word that covers the 教 -> きょう reading.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 教室|きょうしつ as JLPT N4; focus 教 and reading labels 教: きょう were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 教室|きょうしつ: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-教室-きょうしつ was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 教室|きょうしつ: generated Audio field includes word-reading-教室-きょうしつ and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 教室|きょうしつ: source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered labels Pitch 1: 0, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 教室|きょうしつ: JLPT N4; Reading coverage support; focus 教; covers 教: きょう; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 教室|きょうしつ; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 教室|きょうしつ: 授業の前に教室の窓を開けました。 ／ じゅぎょうのまえにきょうしつのまどをあけました。 ／ I opened the classroom window before class.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading きょうしつ."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 教室|きょうしつ common and learner-friendly for the N4 word deck, with accurate reading きょうしつ, meaning classroom, example 授業の前に教室の窓を開けました。 ／ じゅぎょうのまえにきょうしつのまどをあけました。 ／ I opened the classroom window before class., notes/support surface Common N4 support word that covers the 教 -> きょう reading., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 教室|きょうしつ checked generated surface, Japanese-source evidence, example sentence 授業の前に教室の窓を開けました。 ／ じゅぎょうのまえにきょうしつのまどをあけました。 ／ I opened the classroom window before class., notes/support surface Common N4 support word that covers the 教 -> きょう reading., reading breakdown 教 きょう室 しつ and kanji breakdown 教 きょう 教 （きょう） ／ teach Stroke order On: キョウ Kun: おし.える、 おそ.わる 室 しつ 室 （しつ） ／ room Stroke order On: シツ Kun: むろ, meaning classroom (classroom), labels JLPT N4; Reading coverage support; focus 教; covers 教: きょう, audio word-reading-教室-きょうしつ, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment 教室|きょうしつ common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ]
+  },
+  {
+    "word": "両方",
+    "status": "platinum",
+    "readingIncludes": [
+      "りょうほう"
+    ],
+    "meaningIncludes": [
+      "both",
+      "both sides"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "両",
+      "方"
+    ],
+    "coversReadingIncludes": [
+      "両: りょう",
+      "方: ほう"
+    ],
+    "breakdownIncludes": [
+      "両 JLPT N3 kanji りょう 両 （りょう） ／ both / two Stroke order On: リョウ Kun: てる、 ふたつ 方 ほう 方 （ほう） ／ direction / side Stroke order On: ホウ Kun: -かた、 -がた"
+    ],
+    "exampleIncludes": [
+      "両方とも好きです。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Pitch 2: 0"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 両方|りょうほう; reviewed as learner-friendly JLPT core + reading coverage vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common learner-useful word for both sides or both options; 両 is higher-level and must stay visibly labeled on the N4 card."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 両方|りょうほう, reading りょうほう, learner meaning both / both sides, protected meaning both / both sides, and product review checked example 両方とも好きです。 ／ りょうほうともすきです。 ／ I like both. for the shipped word-card surface; row meaning support: both; both sides; both parties; source row: jmdict written=両方; reading=りょうほう; frequencyRank=100; source=jmdict; entrySeq=1554010; jmdictPriority=ichi1,news1,nf07; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 両方|りょうほう: word 両方, reading りょうほう, meaning both / both sides, example 両方とも好きです。 ／ りょうほうともすきです。 ／ I like both., audio word-reading-両方-りょうほう, reading breakdown 両 りょう方 ほう, kanji breakdown 両 JLPT N3 kanji りょう 両 （りょう） ／ both / two Stroke order On: リョウ Kun: てる、 ふたつ 方 ほう 方 （ほう） ／ direction / side Stroke order On: ホウ Kun: -かた、 -がた, labels JLPT N4; JLPT core + reading coverage; focus 両、方; covers 両: りょう ／ 方: ほう, notes/support surface Common learner-useful word for both sides or both options; 両 is higher-level and must stay visibly labeled on the N4 card.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 両方|りょうほう as JLPT N4; focus 両、方 and reading labels 両: りょう ／ 方: ほう were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 両方|りょうほう: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-両方-りょうほう was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 両方|りょうほう: generated Audio field includes word-reading-両方-りょうほう and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 両方|りょうほう: source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] / 0 [heiban], rendered labels Pitch 1: 3, Pitch 2: 0, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 両方|りょうほう: JLPT N4; JLPT core + reading coverage; focus 両、方; covers 両: りょう ／ 方: ほう; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 両方|りょうほう; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 両方|りょうほう: 両方とも好きです。 ／ りょうほうともすきです。 ／ I like both.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading りょうほう."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 両方|りょうほう common and learner-friendly for the N4 word deck, with accurate reading りょうほう, meaning both / both sides, example 両方とも好きです。 ／ りょうほうともすきです。 ／ I like both., notes/support surface Common learner-useful word for both sides or both options; 両 is higher-level and must stay visibly labeled on the N4 card., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 両方|りょうほう checked generated surface, Japanese-source evidence, example sentence 両方とも好きです。 ／ りょうほうともすきです。 ／ I like both., notes/support surface Common learner-useful word for both sides or both options; 両 is higher-level and must stay visibly labeled on the N4 card., reading breakdown 両 りょう方 ほう and kanji breakdown 両 JLPT N3 kanji りょう 両 （りょう） ／ both / two Stroke order On: リョウ Kun: てる、 ふたつ 方 ほう 方 （ほう） ／ direction / side Stroke order On: ホウ Kun: -かた、 -がた, meaning both / both sides (both / both sides), labels JLPT N4; JLPT core + reading coverage; focus 両、方; covers 両: りょう ／ 方: ほう, audio word-reading-両方-りょうほう, pitch accent source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] / 0 [heiban] rendered Pitch 1: 3, Pitch 2: 0, media provenance, release judgment 両方|りょうほう common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ]
+  },
+  {
+    "word": "姉妹",
+    "status": "platinum",
+    "readingIncludes": [
+      "しまい"
+    ],
+    "meaningIncludes": [
+      "sisters"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "姉",
+      "妹"
+    ],
+    "coversReadingIncludes": [
+      "姉: し",
+      "妹: まい"
+    ],
+    "breakdownIncludes": [
+      "姉 し 姉 （し） ／ older sister Stroke order On: シ Kun: あね、 はは 妹 まい 妹 （まい） ／ younger sister Stroke order On: マイ Kun: いもうと"
+    ],
+    "exampleIncludes": [
+      "あの姉妹は二人とも歌が上手です。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 姉妹|しまい; reviewed as learner-friendly Reading coverage support vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common N4 support word that covers the 姉 -> し and 妹 -> まい readings."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 姉妹|しまい, reading しまい, learner meaning sisters, protected meaning sisters, and product review checked example あの姉妹は二人とも歌が上手です。 ／ あのしまいはふたりともうたがじょうずです。 ／ Those sisters are both good at singing. for the shipped word-card surface; row meaning support: sisters; source row: jmdict written=姉妹; reading=しまい; frequencyRank=100; source=jmdict; entrySeq=1579490; jmdictPriority=ichi1,news1,nf08; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 姉妹|しまい: word 姉妹, reading しまい, meaning sisters, example あの姉妹は二人とも歌が上手です。 ／ あのしまいはふたりともうたがじょうずです。 ／ Those sisters are both good at singing., audio word-reading-姉妹-しまい, reading breakdown 姉 し妹 まい, kanji breakdown 姉 し 姉 （し） ／ older sister Stroke order On: シ Kun: あね、 はは 妹 まい 妹 （まい） ／ younger sister Stroke order On: マイ Kun: いもうと, labels JLPT N4; Reading coverage support; focus 姉、妹; covers 姉: し ／ 妹: まい, notes/support surface Common N4 support word that covers the 姉 -> し and 妹 -> まい readings.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 姉妹|しまい as JLPT N4; focus 姉、妹 and reading labels 姉: し ／ 妹: まい were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 姉妹|しまい: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-姉妹-しまい was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 姉妹|しまい: generated Audio field includes word-reading-姉妹-しまい and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 姉妹|しまい: source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], rendered labels Pitch 1: 1, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 姉妹|しまい: JLPT N4; Reading coverage support; focus 姉、妹; covers 姉: し ／ 妹: まい; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 姉妹|しまい; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 姉妹|しまい: あの姉妹は二人とも歌が上手です。 ／ あのしまいはふたりともうたがじょうずです。 ／ Those sisters are both good at singing.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading しまい."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 姉妹|しまい common and learner-friendly for the N4 word deck, with accurate reading しまい, meaning sisters, example あの姉妹は二人とも歌が上手です。 ／ あのしまいはふたりともうたがじょうずです。 ／ Those sisters are both good at singing., notes/support surface Common N4 support word that covers the 姉 -> し and 妹 -> まい readings., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 姉妹|しまい checked generated surface, Japanese-source evidence, example sentence あの姉妹は二人とも歌が上手です。 ／ あのしまいはふたりともうたがじょうずです。 ／ Those sisters are both good at singing., notes/support surface Common N4 support word that covers the 姉 -> し and 妹 -> まい readings., reading breakdown 姉 し妹 まい and kanji breakdown 姉 し 姉 （し） ／ older sister Stroke order On: シ Kun: あね、 はは 妹 まい 妹 （まい） ／ younger sister Stroke order On: マイ Kun: いもうと, meaning sisters (sisters), labels JLPT N4; Reading coverage support; focus 姉、妹; covers 姉: し ／ 妹: まい, audio word-reading-姉妹-しまい, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, media provenance, release judgment 姉妹|しまい common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ]
+  },
+  {
+    "word": "郵便",
+    "status": "platinum",
+    "readingIncludes": [
+      "ゆうびん"
+    ],
+    "meaningIncludes": [
+      "mail",
+      "post"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "郵",
+      "便"
+    ],
+    "coversReadingIncludes": [
+      "郵: ゆう",
+      "便: びん"
+    ],
+    "breakdownIncludes": [
+      "郵 JLPT N2 kanji ゆう 郵 （ゆう） ／ mail Stroke order On: ユウ 便 びん 便 （びん） ／ convenience / mail service Stroke order On: ビン、 ベン Kun: たよ.り"
+    ],
+    "exampleIncludes": [
+      "郵便は毎日午後に届きます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 郵便|ゆうびん; reviewed as learner-friendly JLPT core + reading coverage vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Core N4 study word that covers 郵 -> ゆう and 便 -> びん in the everyday mail sense."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 郵便|ゆうびん, reading ゆうびん, learner meaning mail / post, protected meaning mail / post, and product review checked example 郵便は毎日午後に届きます。 ／ ゆうびんはまいにちごごにとどきます。 ／ The mail arrives every afternoon. for the shipped word-card surface; row meaning support: mail service; postal service; mail; post; postal matter; postal items; source row: jmdict written=郵便; reading=ゆうびん; frequencyRank=100; source=jmdict; entrySeq=1605680; jmdictPriority=ichi1,news1,nf04; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 郵便|ゆうびん: word 郵便, reading ゆうびん, meaning mail / post, example 郵便は毎日午後に届きます。 ／ ゆうびんはまいにちごごにとどきます。 ／ The mail arrives every afternoon., audio word-reading-郵便-ゆうびん, reading breakdown 郵 ゆう便 びん, kanji breakdown 郵 JLPT N2 kanji ゆう 郵 （ゆう） ／ mail Stroke order On: ユウ 便 びん 便 （びん） ／ convenience / mail service Stroke order On: ビン、 ベン Kun: たよ.り, labels JLPT N4; JLPT core + reading coverage; focus 郵、便; covers 郵: ゆう ／ 便: びん, notes/support surface Core N4 study word that covers 郵 -> ゆう and 便 -> びん in the everyday mail sense.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 郵便|ゆうびん as JLPT N4; focus 郵、便 and reading labels 郵: ゆう ／ 便: びん were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 郵便|ゆうびん: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-郵便-ゆうびん was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 郵便|ゆうびん: generated Audio field includes word-reading-郵便-ゆうびん and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 郵便|ゆうびん: source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered labels Pitch 1: 0, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 郵便|ゆうびん: JLPT N4; JLPT core + reading coverage; focus 郵、便; covers 郵: ゆう ／ 便: びん; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 郵便|ゆうびん; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 郵便|ゆうびん: 郵便は毎日午後に届きます。 ／ ゆうびんはまいにちごごにとどきます。 ／ The mail arrives every afternoon.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading ゆうびん."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 郵便|ゆうびん common and learner-friendly for the N4 word deck, with accurate reading ゆうびん, meaning mail / post, example 郵便は毎日午後に届きます。 ／ ゆうびんはまいにちごごにとどきます。 ／ The mail arrives every afternoon., notes/support surface Core N4 study word that covers 郵 -> ゆう and 便 -> びん in the everyday mail sense., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 郵便|ゆうびん checked generated surface, Japanese-source evidence, example sentence 郵便は毎日午後に届きます。 ／ ゆうびんはまいにちごごにとどきます。 ／ The mail arrives every afternoon., notes/support surface Core N4 study word that covers 郵 -> ゆう and 便 -> びん in the everyday mail sense., reading breakdown 郵 ゆう便 びん and kanji breakdown 郵 JLPT N2 kanji ゆう 郵 （ゆう） ／ mail Stroke order On: ユウ 便 びん 便 （びん） ／ convenience / mail service Stroke order On: ビン、 ベン Kun: たよ.り, meaning mail / post (mail / post), labels JLPT N4; JLPT core + reading coverage; focus 郵、便; covers 郵: ゆう ／ 便: びん, audio word-reading-郵便-ゆうびん, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment 郵便|ゆうびん common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ]
+  },
+  {
+    "word": "足る",
+    "status": "platinum",
+    "readingIncludes": [
+      "たる"
+    ],
+    "meaningIncludes": [
+      "to be sufficient"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "足"
+    ],
+    "coversReadingIncludes": [
+      "足: たる"
+    ],
+    "breakdownIncludes": [
+      "足 た 足 （た） ／ foot / leg / enough Stroke order On: ソク Kun: あし、 た.す、 た.りる、 た.る"
+    ],
+    "exampleIncludes": [
+      "今の説明で足るでしょう。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 足る|たる; reviewed as learner-friendly Reading coverage support vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common N4 support word that covers the 足 -> たる reading."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 足る|たる, reading たる, learner meaning to be sufficient, protected meaning to be sufficient, and product review checked example 今の説明で足るでしょう。 ／ いまのせつめいでたるでしょう。 ／ The current explanation should be sufficient. for the shipped word-card surface; row meaning support: to be sufficient; to be enough; to be worth doing; to be worthy of; to deserve; to do (the job); to serve; to answer; source row: jmdict written=足る; reading=たる; frequencyRank=110; source=jmdict; entrySeq=1404750; jmdictPriority=ichi1,news2,nf25; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 足る|たる: word 足る, reading たる, meaning to be sufficient, example 今の説明で足るでしょう。 ／ いまのせつめいでたるでしょう。 ／ The current explanation should be sufficient., audio word-reading-足る-たる, reading breakdown 足 たる, kanji breakdown 足 た 足 （た） ／ foot / leg / enough Stroke order On: ソク Kun: あし、 た.す、 た.りる、 た.る, labels JLPT N4; Reading coverage support; focus 足; covers 足: たる, notes/support surface Common N4 support word that covers the 足 -> たる reading.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 足る|たる as JLPT N4; focus 足 and reading labels 足: たる were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 足る|たる: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-足る-たる was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 足る|たる: generated Audio field includes word-reading-足る-たる and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 足る|たる: source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered labels Pitch 1: 0, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 足る|たる: JLPT N4; Reading coverage support; focus 足; covers 足: たる; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 足る|たる; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 足る|たる: 今の説明で足るでしょう。 ／ いまのせつめいでたるでしょう。 ／ The current explanation should be sufficient.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading たる."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 足る|たる common and learner-friendly for the N4 word deck, with accurate reading たる, meaning to be sufficient, example 今の説明で足るでしょう。 ／ いまのせつめいでたるでしょう。 ／ The current explanation should be sufficient., notes/support surface Common N4 support word that covers the 足 -> たる reading., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 足る|たる checked generated surface, Japanese-source evidence, example sentence 今の説明で足るでしょう。 ／ いまのせつめいでたるでしょう。 ／ The current explanation should be sufficient., notes/support surface Common N4 support word that covers the 足 -> たる reading., reading breakdown 足 たる and kanji breakdown 足 た 足 （た） ／ foot / leg / enough Stroke order On: ソク Kun: あし、 た.す、 た.りる、 た.る, meaning to be sufficient (to be sufficient), labels JLPT N4; Reading coverage support; focus 足; covers 足: たる, audio word-reading-足る-たる, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment 足る|たる common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ]
+  },
+  {
+    "word": "画家",
+    "status": "platinum",
+    "readingIncludes": [
+      "がか"
+    ],
+    "meaningIncludes": [
+      "painter",
+      "artist"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "画"
+    ],
+    "coversReadingIncludes": [
+      "画: が"
+    ],
+    "breakdownIncludes": [
+      "画 が 画 （が） ／ picture / drawing Stroke order On: エ、 カイ、 カク、 ガ Kun: えが.く、 かぎ.る、 かく.する、 はか.る、 はかりごと 家 か 家 （か） ／ specialist / person Stroke order On: カ、 ケ Kun: いえ、 うち、 や"
+    ],
+    "exampleIncludes": [
+      "有名な画家の作品を美術館で見ました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 画家|がか; reviewed as learner-friendly Reading coverage support vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common N4 support word that covers the 画 -> が reading."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 画家|がか, reading がか, learner meaning painter / artist, protected meaning painter / artist, and product review checked example 有名な画家の作品を美術館で見ました。 ／ ゆうめいながかのさくひんをびじゅつかんでみました。 ／ I saw works by a famous painter at the art museum. for the shipped word-card surface; row meaning support: painter; artist; source row: jmdict written=画家; reading=がか; frequencyRank=100; source=jmdict; entrySeq=1197120; jmdictPriority=ichi1,news1,nf05; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 画家|がか: word 画家, reading がか, meaning painter / artist, example 有名な画家の作品を美術館で見ました。 ／ ゆうめいながかのさくひんをびじゅつかんでみました。 ／ I saw works by a famous painter at the art museum., audio word-reading-画家-がか, reading breakdown 画 が家 か, kanji breakdown 画 が 画 （が） ／ picture / drawing Stroke order On: エ、 カイ、 カク、 ガ Kun: えが.く、 かぎ.る、 かく.する、 はか.る、 はかりごと 家 か 家 （か） ／ specialist / person Stroke order On: カ、 ケ Kun: いえ、 うち、 や, labels JLPT N4; Reading coverage support; focus 画; covers 画: が, notes/support surface Common N4 support word that covers the 画 -> が reading.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 画家|がか as JLPT N4; focus 画 and reading labels 画: が were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 画家|がか: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-画家-がか was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 画家|がか: generated Audio field includes word-reading-画家-がか and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 画家|がか: source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered labels Pitch 1: 0, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 画家|がか: JLPT N4; Reading coverage support; focus 画; covers 画: が; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 画家|がか; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 画家|がか: 有名な画家の作品を美術館で見ました。 ／ ゆうめいながかのさくひんをびじゅつかんでみました。 ／ I saw works by a famous painter at the art museum.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading がか."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 画家|がか common and learner-friendly for the N4 word deck, with accurate reading がか, meaning painter / artist, example 有名な画家の作品を美術館で見ました。 ／ ゆうめいながかのさくひんをびじゅつかんでみました。 ／ I saw works by a famous painter at the art museum., notes/support surface Common N4 support word that covers the 画 -> が reading., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 画家|がか checked generated surface, Japanese-source evidence, example sentence 有名な画家の作品を美術館で見ました。 ／ ゆうめいながかのさくひんをびじゅつかんでみました。 ／ I saw works by a famous painter at the art museum., notes/support surface Common N4 support word that covers the 画 -> が reading., reading breakdown 画 が家 か and kanji breakdown 画 が 画 （が） ／ picture / drawing Stroke order On: エ、 カイ、 カク、 ガ Kun: えが.く、 かぎ.る、 かく.する、 はか.る、 はかりごと 家 か 家 （か） ／ specialist / person Stroke order On: カ、 ケ Kun: いえ、 うち、 や, meaning painter / artist (painter / artist), labels JLPT N4; Reading coverage support; focus 画; covers 画: が, audio word-reading-画家-がか, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment 画家|がか common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ]
+  },
+  {
+    "word": "花見",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "はなみ"
+    ],
+    "meaningIncludes": [
+      "flower viewing",
+      "cherry blossom viewing"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "花"
+    ],
+    "coversReadingIncludes": [
+      "花: はな"
+    ],
+    "breakdownIncludes": [
+      "花 はな 花 （はな） ／ flower Stroke order On: カ、 ケ Kun: はな 見 JLPT N5 kanji み 見 （み） ／ viewing Stroke order On: ケン Kun: み.える、 み.せる、 み.る"
+    ],
+    "exampleIncludes": [
+      "来週友だちと公園で花見をします。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 花見|はなみ; reviewed as learner-friendly JLPT core + reading coverage vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common seasonal N4 word for flower viewing; covers the 花 -> はな reading in a learner-friendly context."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 花見|はなみ, reading はなみ, learner meaning flower viewing / cherry blossom viewing, protected meaning flower viewing / cherry blossom viewing, and product review checked example 来週友だちと公園で花見をします。 ／ らいしゅうともだちとこうえんではなみをします。 ／ Next week I will go flower viewing with friends in the park. for the shipped word-card surface; row meaning support: cherry blossom viewing; flower viewing; source row: jmdict written=花見; reading=はなみ; frequencyRank=100; source=jmdict; entrySeq=1194660; jmdictPriority=ichi1,news1,nf12; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 花見|はなみ: word 花見, reading はなみ, meaning flower viewing / cherry blossom viewing, example 来週友だちと公園で花見をします。 ／ らいしゅうともだちとこうえんではなみをします。 ／ Next week I will go flower viewing with friends in the park., audio word-reading-花見-はなみ, reading breakdown 花 はな見 み, kanji breakdown 花 はな 花 （はな） ／ flower Stroke order On: カ、 ケ Kun: はな 見 JLPT N5 kanji み 見 （み） ／ viewing Stroke order On: ケン Kun: み.える、 み.せる、 み.る, labels JLPT N4; JLPT core + reading coverage; focus 花; covers 花: はな, notes/support surface Common seasonal N4 word for flower viewing; covers the 花 -> はな reading in a learner-friendly context.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 花見|はなみ as JLPT N4; focus 花 and reading labels 花: はな were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 花見|はなみ: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-花見-はなみ was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 花見|はなみ: generated Audio field includes word-reading-花見-はなみ and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 花見|はなみ: source kanjium-cc-by-sa-4.0 pattern 3 [odaka], rendered labels Pitch 1: 3, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 花見|はなみ: JLPT N4; JLPT core + reading coverage; focus 花; covers 花: はな; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 花見|はなみ; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 花見|はなみ: 来週友だちと公園で花見をします。 ／ らいしゅうともだちとこうえんではなみをします。 ／ Next week I will go flower viewing with friends in the park.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading はなみ."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 花見|はなみ common and learner-friendly for the N4 word deck, with accurate reading はなみ, meaning flower viewing / cherry blossom viewing, example 来週友だちと公園で花見をします。 ／ らいしゅうともだちとこうえんではなみをします。 ／ Next week I will go flower viewing with friends in the park., notes/support surface Common seasonal N4 word for flower viewing; covers the 花 -> はな reading in a learner-friendly context., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 花見|はなみ checked generated surface, Japanese-source evidence, example sentence 来週友だちと公園で花見をします。 ／ らいしゅうともだちとこうえんではなみをします。 ／ Next week I will go flower viewing with friends in the park., notes/support surface Common seasonal N4 word for flower viewing; covers the 花 -> はな reading in a learner-friendly context., reading breakdown 花 はな見 み and kanji breakdown 花 はな 花 （はな） ／ flower Stroke order On: カ、 ケ Kun: はな 見 JLPT N5 kanji み 見 （み） ／ viewing Stroke order On: ケン Kun: み.える、 み.せる、 み.る, meaning flower viewing / cherry blossom viewing (flower viewing / cherry blossom viewing), labels JLPT N4; JLPT core + reading coverage; focus 花; covers 花: はな, audio word-reading-花見-はなみ, pitch accent source kanjium-cc-by-sa-4.0 pattern 3 [odaka] rendered Pitch 1: 3, media provenance, release judgment 花見|はなみ common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "fixSummary": "Added the missing protected notes/support surface before Platinum approval."
+  },
+  {
+    "word": "事故",
+    "status": "platinum",
+    "readingIncludes": [
+      "じこ"
+    ],
+    "meaningIncludes": [
+      "accident"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "事",
+      "故"
+    ],
+    "coversReadingIncludes": [
+      "事: じ",
+      "故: こ"
+    ],
+    "breakdownIncludes": [
+      "事 じ 事 （じ） ／ matter / task Stroke order On: ジ、 ズ Kun: こと、 つか.う、 つか.える 故 JLPT N1 kanji こ 故 （こ） ／ hometown / former Stroke order On: コ Kun: ふる.い、 もと、 ゆえ"
+    ],
+    "exampleIncludes": [
+      "駅前で事故がありました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 事故|じこ; reviewed as learner-friendly JLPT core + reading coverage vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common practical safety/news word; 故 is higher-level and must stay visibly labeled on the N4 card."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 事故|じこ, reading じこ, learner meaning accident, protected meaning accident, and product review checked example 駅前で事故がありました。 ／ えきまえでじこがありました。 ／ There was an accident in front of the station. for the shipped word-card surface; row meaning support: accident; incident; trouble; circumstances; reasons; source row: jmdict written=事故; reading=じこ; frequencyRank=100; source=jmdict; entrySeq=1313850; jmdictPriority=ichi1,news1,nf01; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 事故|じこ: word 事故, reading じこ, meaning accident, example 駅前で事故がありました。 ／ えきまえでじこがありました。 ／ There was an accident in front of the station., audio word-reading-事故-じこ, reading breakdown 事 じ故 こ, kanji breakdown 事 じ 事 （じ） ／ matter / task Stroke order On: ジ、 ズ Kun: こと、 つか.う、 つか.える 故 JLPT N1 kanji こ 故 （こ） ／ hometown / former Stroke order On: コ Kun: ふる.い、 もと、 ゆえ, labels JLPT N4; JLPT core + reading coverage; focus 事、故; covers 事: じ ／ 故: こ, notes/support surface Common practical safety/news word; 故 is higher-level and must stay visibly labeled on the N4 card.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 事故|じこ as JLPT N4; focus 事、故 and reading labels 事: じ ／ 故: こ were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 事故|じこ: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-事故-じこ was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 事故|じこ: generated Audio field includes word-reading-事故-じこ and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 事故|じこ: source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], rendered labels Pitch 1: 1, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 事故|じこ: JLPT N4; JLPT core + reading coverage; focus 事、故; covers 事: じ ／ 故: こ; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 事故|じこ; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 事故|じこ: 駅前で事故がありました。 ／ えきまえでじこがありました。 ／ There was an accident in front of the station.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading じこ."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 事故|じこ common and learner-friendly for the N4 word deck, with accurate reading じこ, meaning accident, example 駅前で事故がありました。 ／ えきまえでじこがありました。 ／ There was an accident in front of the station., notes/support surface Common practical safety/news word; 故 is higher-level and must stay visibly labeled on the N4 card., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 事故|じこ checked generated surface, Japanese-source evidence, example sentence 駅前で事故がありました。 ／ えきまえでじこがありました。 ／ There was an accident in front of the station., notes/support surface Common practical safety/news word; 故 is higher-level and must stay visibly labeled on the N4 card., reading breakdown 事 じ故 こ and kanji breakdown 事 じ 事 （じ） ／ matter / task Stroke order On: ジ、 ズ Kun: こと、 つか.う、 つか.える 故 JLPT N1 kanji こ 故 （こ） ／ hometown / former Stroke order On: コ Kun: ふる.い、 もと、 ゆえ, meaning accident (accident), labels JLPT N4; JLPT core + reading coverage; focus 事、故; covers 事: じ ／ 故: こ, audio word-reading-事故-じこ, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, media provenance, release judgment 事故|じこ common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ]
+  },
+  {
+    "word": "開き",
+    "status": "platinum",
+    "readingIncludes": [
+      "ひらき"
+    ],
+    "meaningIncludes": [
+      "opening",
+      "gap"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "開"
+    ],
+    "coversReadingIncludes": [
+      "開: ひらき"
+    ],
+    "breakdownIncludes": [
+      "開 ひら 開 （ひら） ／ open Stroke order On: カイ Kun: -びら.き、 あ.く、 あ.ける、 ひら.き、 ひら.く、 ひら.ける"
+    ],
+    "exampleIncludes": [
+      "ドアの開きが小さいので、気をつけて通ってください。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 開き|ひらき; reviewed as learner-friendly Reading coverage support vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common N4 support word that covers the 開 -> ひらき reading."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 開き|ひらき, reading ひらき, learner meaning opening / gap, protected meaning opening / gap, and product review checked example ドアの開きが小さいので、気をつけて通ってください。 ／ ドアのひらきがちいさいので、きをつけてとおってください。 ／ The door opening is narrow, so please be careful as you go through. for the shipped word-card surface; row meaning support: opening; gap; dried and opened fish; extension; source row: jmdict written=開き; reading=ひらき; frequencyRank=100; source=jmdict; entrySeq=1989500; jmdictPriority=news1,nf08; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 開き|ひらき: word 開き, reading ひらき, meaning opening / gap, example ドアの開きが小さいので、気をつけて通ってください。 ／ ドアのひらきがちいさいので、きをつけてとおってください。 ／ The door opening is narrow, so please be careful as you go through., audio word-reading-開き-ひらき, reading breakdown 開 ひらき, kanji breakdown 開 ひら 開 （ひら） ／ open Stroke order On: カイ Kun: -びら.き、 あ.く、 あ.ける、 ひら.き、 ひら.く、 ひら.ける, labels JLPT N4; Reading coverage support; focus 開; covers 開: ひらき, notes/support surface Common N4 support word that covers the 開 -> ひらき reading.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 開き|ひらき as JLPT N4; focus 開 and reading labels 開: ひらき were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 開き|ひらき: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-開き-ひらき was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 開き|ひらき: generated Audio field includes word-reading-開き-ひらき and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 開き|ひらき: source kanjium-cc-by-sa-4.0 pattern 3 [odaka], rendered labels Pitch 1: 3, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 開き|ひらき: JLPT N4; Reading coverage support; focus 開; covers 開: ひらき; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 開き|ひらき; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 開き|ひらき: ドアの開きが小さいので、気をつけて通ってください。 ／ ドアのひらきがちいさいので、きをつけてとおってください。 ／ The door opening is narrow, so please be careful as you go through.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading ひらき."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 開き|ひらき common and learner-friendly for the N4 word deck, with accurate reading ひらき, meaning opening / gap, example ドアの開きが小さいので、気をつけて通ってください。 ／ ドアのひらきがちいさいので、きをつけてとおってください。 ／ The door opening is narrow, so please be careful as you go through., notes/support surface Common N4 support word that covers the 開 -> ひらき reading., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 開き|ひらき checked generated surface, Japanese-source evidence, example sentence ドアの開きが小さいので、気をつけて通ってください。 ／ ドアのひらきがちいさいので、きをつけてとおってください。 ／ The door opening is narrow, so please be careful as you go through., notes/support surface Common N4 support word that covers the 開 -> ひらき reading., reading breakdown 開 ひらき and kanji breakdown 開 ひら 開 （ひら） ／ open Stroke order On: カイ Kun: -びら.き、 あ.く、 あ.ける、 ひら.き、 ひら.く、 ひら.ける, meaning opening / gap (opening / gap), labels JLPT N4; Reading coverage support; focus 開; covers 開: ひらき, audio word-reading-開き-ひらき, pitch accent source kanjium-cc-by-sa-4.0 pattern 3 [odaka] rendered Pitch 1: 3, media provenance, release judgment 開き|ひらき common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ]
+  },
+  {
+    "word": "広げる",
+    "status": "platinum",
+    "readingIncludes": [
+      "ひろげる"
+    ],
+    "meaningIncludes": [
+      "to spread out",
+      "to expand"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "広"
+    ],
+    "coversReadingIncludes": [
+      "広: ひろげる"
+    ],
+    "breakdownIncludes": [
+      "広 ひろ 広 （ひろ） ／ wide / spacious Stroke order On: コウ Kun: ひろ.い、 ひろ.がる、 ひろ.げる、 ひろ.まる、 ひろ.める"
+    ],
+    "exampleIncludes": [
+      "机の上に地図を広げました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 広げる|ひろげる; reviewed as learner-friendly Reading coverage support vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common N4 support word that covers the 広 -> ひろげる reading."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 広げる|ひろげる, reading ひろげる, learner meaning to spread out / to expand, protected meaning to spread out / to expand, and product review checked example 机の上に地図を広げました。 ／ つくえのうえにちずをひろげました。 ／ I spread the map out on the desk. for the shipped word-card surface; row meaning support: to spread; to extend; to expand; to enlarge; to widen; to broaden; to unfold; to open; to unroll; to unwrap; to scatter about; to spread around; source row: jmdict written=広げる; reading=ひろげる; frequencyRank=100; source=jmdict; entrySeq=1602370; jmdictPriority=ichi1,news1,nf07; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 広げる|ひろげる: word 広げる, reading ひろげる, meaning to spread out / to expand, example 机の上に地図を広げました。 ／ つくえのうえにちずをひろげました。 ／ I spread the map out on the desk., audio word-reading-広げる-ひろげる, reading breakdown 広 ひろげる, kanji breakdown 広 ひろ 広 （ひろ） ／ wide / spacious Stroke order On: コウ Kun: ひろ.い、 ひろ.がる、 ひろ.げる、 ひろ.まる、 ひろ.める, labels JLPT N4; Reading coverage support; focus 広; covers 広: ひろげる, notes/support surface Common N4 support word that covers the 広 -> ひろげる reading.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 広げる|ひろげる as JLPT N4; focus 広 and reading labels 広: ひろげる were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 広げる|ひろげる: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-広げる-ひろげる was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 広げる|ひろげる: generated Audio field includes word-reading-広げる-ひろげる and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 広げる|ひろげる: source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered labels Pitch 1: 0, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 広げる|ひろげる: JLPT N4; Reading coverage support; focus 広; covers 広: ひろげる; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 広げる|ひろげる; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 広げる|ひろげる: 机の上に地図を広げました。 ／ つくえのうえにちずをひろげました。 ／ I spread the map out on the desk.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading ひろげる."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 広げる|ひろげる common and learner-friendly for the N4 word deck, with accurate reading ひろげる, meaning to spread out / to expand, example 机の上に地図を広げました。 ／ つくえのうえにちずをひろげました。 ／ I spread the map out on the desk., notes/support surface Common N4 support word that covers the 広 -> ひろげる reading., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 広げる|ひろげる checked generated surface, Japanese-source evidence, example sentence 机の上に地図を広げました。 ／ つくえのうえにちずをひろげました。 ／ I spread the map out on the desk., notes/support surface Common N4 support word that covers the 広 -> ひろげる reading., reading breakdown 広 ひろげる and kanji breakdown 広 ひろ 広 （ひろ） ／ wide / spacious Stroke order On: コウ Kun: ひろ.い、 ひろ.がる、 ひろ.げる、 ひろ.まる、 ひろ.める, meaning to spread out / to expand (to spread out / to expand), labels JLPT N4; Reading coverage support; focus 広; covers 広: ひろげる, audio word-reading-広げる-ひろげる, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment 広げる|ひろげる common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ]
+  },
+  {
+    "word": "専門",
+    "status": "platinum",
+    "readingIncludes": [
+      "せんもん"
+    ],
+    "meaningIncludes": [
+      "specialty",
+      "field of study"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "専",
+      "門"
+    ],
+    "coversReadingIncludes": [
+      "専: せん",
+      "門: もん"
+    ],
+    "breakdownIncludes": [
+      "専 JLPT N3 kanji せん 専 （せん） ／ specialize / exclusive Stroke order On: セン Kun: もっぱ.ら 門 もん 門 （もん） ／ gate / field Stroke order On: モン Kun: かど、 と"
+    ],
+    "exampleIncludes": [
+      "兄の専門は日本文学です。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 専門|せんもん; reviewed as learner-friendly JLPT core + reading coverage vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common school/work word that covers 門 -> もん and labels the higher-level 専 -> せん support on the card."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 専門|せんもん, reading せんもん, learner meaning specialty / field of study, protected meaning specialty / field of study, and product review checked example 兄の専門は日本文学です。 ／ あにのせんもんはにほんぶんがくです。 ／ My older brother's specialty is Japanese literature. for the shipped word-card surface; row meaning support: speciality; specialty; special subject of study; area of expertise; (one's) field; (one's) major; sole interest; single focus; concentrating exclusively on; doing exclusively; sticking to; source row: jmdict written=専門; reading=せんもん; frequencyRank=100; source=jmdict; entrySeq=1389880; jmdictPriority=ichi1,news1,nf02; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 専門|せんもん: word 専門, reading せんもん, meaning specialty / field of study, example 兄の専門は日本文学です。 ／ あにのせんもんはにほんぶんがくです。 ／ My older brother's specialty is Japanese literature., audio word-reading-専門-せんもん, reading breakdown 専 せん門 もん, kanji breakdown 専 JLPT N3 kanji せん 専 （せん） ／ specialize / exclusive Stroke order On: セン Kun: もっぱ.ら 門 もん 門 （もん） ／ gate / field Stroke order On: モン Kun: かど、 と, labels JLPT N4; JLPT core + reading coverage; focus 専、門; covers 専: せん ／ 門: もん, notes/support surface Common school/work word that covers 門 -> もん and labels the higher-level 専 -> せん support on the card.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 専門|せんもん as JLPT N4; focus 専、門 and reading labels 専: せん ／ 門: もん were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 専門|せんもん: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-専門-せんもん was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 専門|せんもん: generated Audio field includes word-reading-専門-せんもん and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 専門|せんもん: source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered labels Pitch 1: 0, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 専門|せんもん: JLPT N4; JLPT core + reading coverage; focus 専、門; covers 専: せん ／ 門: もん; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 専門|せんもん; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 専門|せんもん: 兄の専門は日本文学です。 ／ あにのせんもんはにほんぶんがくです。 ／ My older brother's specialty is Japanese literature.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading せんもん."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 専門|せんもん common and learner-friendly for the N4 word deck, with accurate reading せんもん, meaning specialty / field of study, example 兄の専門は日本文学です。 ／ あにのせんもんはにほんぶんがくです。 ／ My older brother's specialty is Japanese literature., notes/support surface Common school/work word that covers 門 -> もん and labels the higher-level 専 -> せん support on the card., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 専門|せんもん checked generated surface, Japanese-source evidence, example sentence 兄の専門は日本文学です。 ／ あにのせんもんはにほんぶんがくです。 ／ My older brother's specialty is Japanese literature., notes/support surface Common school/work word that covers 門 -> もん and labels the higher-level 専 -> せん support on the card., reading breakdown 専 せん門 もん and kanji breakdown 専 JLPT N3 kanji せん 専 （せん） ／ specialize / exclusive Stroke order On: セン Kun: もっぱ.ら 門 もん 門 （もん） ／ gate / field Stroke order On: モン Kun: かど、 と, meaning specialty / field of study (specialty / field of study), labels JLPT N4; JLPT core + reading coverage; focus 専、門; covers 専: せん ／ 門: もん, audio word-reading-専門-せんもん, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment 専門|せんもん common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ]
+  },
+  {
+    "word": "文学",
+    "status": "platinum",
+    "readingIncludes": [
+      "ぶんがく"
+    ],
+    "meaningIncludes": [
+      "literature"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "文",
+      "学"
+    ],
+    "coversReadingIncludes": [
+      "文: ぶん",
+      "学: がく"
+    ],
+    "breakdownIncludes": [
+      "文 ぶん 文 （ぶん） ／ sentence / writing Stroke order On: ブン、 モン Kun: あや、 ふみ 学 JLPT N5 kanji がく 学 （がく） ／ study / learning Stroke order On: ガク Kun: まな.ぶ"
+    ],
+    "exampleIncludes": [
+      "日本の文学を読みます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 文学|ぶんがく; reviewed as learner-friendly JLPT core + reading coverage vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Useful school/academic word with clean 文 support and easier 学."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 文学|ぶんがく, reading ぶんがく, learner meaning literature, protected meaning literature, and product review checked example 日本の文学を読みます。 ／ にほんのぶんがくをよみます。 ／ I read Japanese literature. for the shipped word-card surface; row meaning support: literature; source row: jmdict written=文学; reading=ぶんがく; frequencyRank=100; source=jmdict; entrySeq=1505190; jmdictPriority=ichi1,news1,nf02; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 文学|ぶんがく: word 文学, reading ぶんがく, meaning literature, example 日本の文学を読みます。 ／ にほんのぶんがくをよみます。 ／ I read Japanese literature., audio word-reading-文学-ぶんがく, reading breakdown 文 ぶん学 がく, kanji breakdown 文 ぶん 文 （ぶん） ／ sentence / writing Stroke order On: ブン、 モン Kun: あや、 ふみ 学 JLPT N5 kanji がく 学 （がく） ／ study / learning Stroke order On: ガク Kun: まな.ぶ, labels JLPT N4; JLPT core + reading coverage; focus 文、学; covers 文: ぶん ／ 学: がく, notes/support surface Useful school/academic word with clean 文 support and easier 学.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 文学|ぶんがく as JLPT N4; focus 文、学 and reading labels 文: ぶん ／ 学: がく were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 文学|ぶんがく: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-文学-ぶんがく was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 文学|ぶんがく: generated Audio field includes word-reading-文学-ぶんがく and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 文学|ぶんがく: source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], rendered labels Pitch 1: 1, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 文学|ぶんがく: JLPT N4; JLPT core + reading coverage; focus 文、学; covers 文: ぶん ／ 学: がく; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 文学|ぶんがく; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 文学|ぶんがく: 日本の文学を読みます。 ／ にほんのぶんがくをよみます。 ／ I read Japanese literature.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading ぶんがく."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 文学|ぶんがく common and learner-friendly for the N4 word deck, with accurate reading ぶんがく, meaning literature, example 日本の文学を読みます。 ／ にほんのぶんがくをよみます。 ／ I read Japanese literature., notes/support surface Useful school/academic word with clean 文 support and easier 学., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 文学|ぶんがく checked generated surface, Japanese-source evidence, example sentence 日本の文学を読みます。 ／ にほんのぶんがくをよみます。 ／ I read Japanese literature., notes/support surface Useful school/academic word with clean 文 support and easier 学., reading breakdown 文 ぶん学 がく and kanji breakdown 文 ぶん 文 （ぶん） ／ sentence / writing Stroke order On: ブン、 モン Kun: あや、 ふみ 学 JLPT N5 kanji がく 学 （がく） ／ study / learning Stroke order On: ガク Kun: まな.ぶ, meaning literature (literature), labels JLPT N4; JLPT core + reading coverage; focus 文、学; covers 文: ぶん ／ 学: がく, audio word-reading-文学-ぶんがく, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, media provenance, release judgment 文学|ぶんがく common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ]
+  },
+  {
+    "word": "料金",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "りょうきん"
+    ],
+    "meaningIncludes": [
+      "fee",
+      "charge"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "料"
+    ],
+    "coversReadingIncludes": [
+      "料: りょう"
+    ],
+    "breakdownIncludes": [
+      "料 りょう 料 （りょう） ／ fee / materials Stroke order On: リョウ 金 JLPT N5 kanji きん 金 （きん） ／ money / charge Stroke order On: キン、 コン、 ゴン Kun: -がね、 かな-、 かね"
+    ],
+    "exampleIncludes": [
+      "このホテルの料金は少し高いです。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 料金|りょうきん; reviewed as learner-friendly JLPT core + reading coverage vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Core N4 study word that also covers the 料 -> りょう reading."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 料金|りょうきん, reading りょうきん, learner meaning fee / charge, protected meaning fee / charge, and product review checked example このホテルの料金は少し高いです。 ／ このホテルのりょうきんはすこしたかいです。 ／ The rate at this hotel is a little high. for the shipped word-card surface; row meaning support: fee; charge; fare; source row: jmdict written=料金; reading=りょうきん; frequencyRank=100; source=jmdict; entrySeq=1554280; jmdictPriority=ichi1,news1,nf02; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 料金|りょうきん: word 料金, reading りょうきん, meaning fee / charge, example このホテルの料金は少し高いです。 ／ このホテルのりょうきんはすこしたかいです。 ／ The rate at this hotel is a little high., audio word-reading-料金-りょうきん, reading breakdown 料 りょう金 きん, kanji breakdown 料 りょう 料 （りょう） ／ fee / materials Stroke order On: リョウ 金 JLPT N5 kanji きん 金 （きん） ／ money / charge Stroke order On: キン、 コン、 ゴン Kun: -がね、 かな-、 かね, labels JLPT N4; JLPT core + reading coverage; focus 料; covers 料: りょう, notes/support surface Core N4 study word that also covers the 料 -> りょう reading.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 料金|りょうきん as JLPT N4; focus 料 and reading labels 料: りょう were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 料金|りょうきん: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-料金-りょうきん was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 料金|りょうきん: generated Audio field includes word-reading-料金-りょうきん and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 料金|りょうきん: source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], rendered labels Pitch 1: 1, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 料金|りょうきん: JLPT N4; JLPT core + reading coverage; focus 料; covers 料: りょう; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 料金|りょうきん; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 料金|りょうきん: このホテルの料金は少し高いです。 ／ このホテルのりょうきんはすこしたかいです。 ／ The rate at this hotel is a little high.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading りょうきん."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 料金|りょうきん common and learner-friendly for the N4 word deck, with accurate reading りょうきん, meaning fee / charge, example このホテルの料金は少し高いです。 ／ このホテルのりょうきんはすこしたかいです。 ／ The rate at this hotel is a little high., notes/support surface Core N4 study word that also covers the 料 -> りょう reading., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 料金|りょうきん checked generated surface, Japanese-source evidence, example sentence このホテルの料金は少し高いです。 ／ このホテルのりょうきんはすこしたかいです。 ／ The rate at this hotel is a little high., notes/support surface Core N4 study word that also covers the 料 -> りょう reading., reading breakdown 料 りょう金 きん and kanji breakdown 料 りょう 料 （りょう） ／ fee / materials Stroke order On: リョウ 金 JLPT N5 kanji きん 金 （きん） ／ money / charge Stroke order On: キン、 コン、 ゴン Kun: -がね、 かな-、 かね, meaning fee / charge (fee / charge), labels JLPT N4; JLPT core + reading coverage; focus 料; covers 料: りょう, audio word-reading-料金-りょうきん, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, media provenance, release judgment 料金|りょうきん common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "fixSummary": "Tightened the English example translation before Platinum approval."
+  },
+  {
+    "word": "写真",
+    "status": "platinum",
+    "readingIncludes": [
+      "しゃしん"
+    ],
+    "meaningIncludes": [
+      "photograph"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "写",
+      "真"
+    ],
+    "coversReadingIncludes": [
+      "写: しゃ ／ 真: しん"
+    ],
+    "breakdownIncludes": [
+      "写 しゃ 写 （しゃ） ／ photograph / copy Stroke order On: シャ、 ジャ Kun: うつ-、 うつ.し、 うつ.す、 うつ.る 真 しん 真 （しん） ／ true / real / pure Stroke order On: シン Kun: ま、 まこと"
+    ],
+    "exampleIncludes": [
+      "旅行の写真を家族に見せました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 写真|しゃしん; reviewed as learner-friendly Reading coverage support vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common N4 support word that covers the 写 -> しゃ and 真 -> しん readings."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 写真|しゃしん, reading しゃしん, learner meaning photograph, protected meaning photograph, and product review checked example 旅行の写真を家族に見せました。 ／ りょこうのしゃしんをかぞくにみせました。 ／ I showed my family photos from the trip. for the shipped word-card surface; row meaning support: photograph; photo; picture; photography; moving picture; movie; source row: jmdict written=写真; reading=しゃしん; frequencyRank=100; source=jmdict; entrySeq=1321900; jmdictPriority=ichi1,news1,nf01; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 写真|しゃしん: word 写真, reading しゃしん, meaning photograph, example 旅行の写真を家族に見せました。 ／ りょこうのしゃしんをかぞくにみせました。 ／ I showed my family photos from the trip., audio word-reading-写真-しゃしん, reading breakdown 写 しゃ真 しん, kanji breakdown 写 しゃ 写 （しゃ） ／ photograph / copy Stroke order On: シャ、 ジャ Kun: うつ-、 うつ.し、 うつ.す、 うつ.る 真 しん 真 （しん） ／ true / real / pure Stroke order On: シン Kun: ま、 まこと, labels JLPT N4; Reading coverage support; focus 写、真; covers 写: しゃ ／ 真: しん, notes/support surface Common N4 support word that covers the 写 -> しゃ and 真 -> しん readings.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 写真|しゃしん as JLPT N4; focus 写、真 and reading labels 写: しゃ ／ 真: しん were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 写真|しゃしん: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-写真-しゃしん was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 写真|しゃしん: generated Audio field includes word-reading-写真-しゃしん and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 写真|しゃしん: source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered labels Pitch 1: 0, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 写真|しゃしん: JLPT N4; Reading coverage support; focus 写、真; covers 写: しゃ ／ 真: しん; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 写真|しゃしん; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 写真|しゃしん: 旅行の写真を家族に見せました。 ／ りょこうのしゃしんをかぞくにみせました。 ／ I showed my family photos from the trip.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading しゃしん."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 写真|しゃしん common and learner-friendly for the N4 word deck, with accurate reading しゃしん, meaning photograph, example 旅行の写真を家族に見せました。 ／ りょこうのしゃしんをかぞくにみせました。 ／ I showed my family photos from the trip., notes/support surface Common N4 support word that covers the 写 -> しゃ and 真 -> しん readings., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 写真|しゃしん checked generated surface, Japanese-source evidence, example sentence 旅行の写真を家族に見せました。 ／ りょこうのしゃしんをかぞくにみせました。 ／ I showed my family photos from the trip., notes/support surface Common N4 support word that covers the 写 -> しゃ and 真 -> しん readings., reading breakdown 写 しゃ真 しん and kanji breakdown 写 しゃ 写 （しゃ） ／ photograph / copy Stroke order On: シャ、 ジャ Kun: うつ-、 うつ.し、 うつ.す、 うつ.る 真 しん 真 （しん） ／ true / real / pure Stroke order On: シン Kun: ま、 まこと, meaning photograph (photograph), labels JLPT N4; Reading coverage support; focus 写、真; covers 写: しゃ ／ 真: しん, audio word-reading-写真-しゃしん, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment 写真|しゃしん common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ]
+  },
+  {
+    "word": "森林",
+    "status": "platinum",
+    "readingIncludes": [
+      "しんりん"
+    ],
+    "meaningIncludes": [
+      "forest",
+      "woodland"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "森",
+      "林"
+    ],
+    "coversReadingIncludes": [
+      "森: しん ／ 林: りん"
+    ],
+    "breakdownIncludes": [
+      "森 しん 森 （しん） ／ forest Stroke order On: シン Kun: もり 林 りん 林 （りん） ／ woods Stroke order On: リン Kun: はやし"
+    ],
+    "exampleIncludes": [
+      "この地域には広い森林があります。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 森林|しんりん; reviewed as learner-friendly Reading coverage support vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common nature word with clean N4 森 -> しん and 林 -> りん anchors."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 森林|しんりん, reading しんりん, learner meaning forest / woodland, protected meaning forest / woodland, and product review checked example この地域には広い森林があります。 ／ このちいきにはひろいしんりんがあります。 ／ This area has a large forest. for the shipped word-card surface; row meaning support: forest; woods; source row: jmdict written=森林; reading=しんりん; frequencyRank=100; source=jmdict; entrySeq=1362530; jmdictPriority=ichi1,news1,nf04; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 森林|しんりん: word 森林, reading しんりん, meaning forest / woodland, example この地域には広い森林があります。 ／ このちいきにはひろいしんりんがあります。 ／ This area has a large forest., audio word-reading-森林-しんりん, reading breakdown 森 しん林 りん, kanji breakdown 森 しん 森 （しん） ／ forest Stroke order On: シン Kun: もり 林 りん 林 （りん） ／ woods Stroke order On: リン Kun: はやし, labels JLPT N4; Reading coverage support; focus 森、林; covers 森: しん ／ 林: りん, notes/support surface Common nature word with clean N4 森 -> しん and 林 -> りん anchors.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 森林|しんりん as JLPT N4; focus 森、林 and reading labels 森: しん ／ 林: りん were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 森林|しんりん: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-森林-しんりん was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 森林|しんりん: generated Audio field includes word-reading-森林-しんりん and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 森林|しんりん: source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered labels Pitch 1: 0, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 森林|しんりん: JLPT N4; Reading coverage support; focus 森、林; covers 森: しん ／ 林: りん; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 森林|しんりん; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 森林|しんりん: この地域には広い森林があります。 ／ このちいきにはひろいしんりんがあります。 ／ This area has a large forest.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading しんりん."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 森林|しんりん common and learner-friendly for the N4 word deck, with accurate reading しんりん, meaning forest / woodland, example この地域には広い森林があります。 ／ このちいきにはひろいしんりんがあります。 ／ This area has a large forest., notes/support surface Common nature word with clean N4 森 -> しん and 林 -> りん anchors., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 森林|しんりん checked generated surface, Japanese-source evidence, example sentence この地域には広い森林があります。 ／ このちいきにはひろいしんりんがあります。 ／ This area has a large forest., notes/support surface Common nature word with clean N4 森 -> しん and 林 -> りん anchors., reading breakdown 森 しん林 りん and kanji breakdown 森 しん 森 （しん） ／ forest Stroke order On: シン Kun: もり 林 りん 林 （りん） ／ woods Stroke order On: リン Kun: はやし, meaning forest / woodland (forest / woodland), labels JLPT N4; Reading coverage support; focus 森、林; covers 森: しん ／ 林: りん, audio word-reading-森林-しんりん, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment 森林|しんりん common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ]
+  },
+  {
+    "word": "開店",
+    "status": "platinum",
+    "readingIncludes": [
+      "かいてん"
+    ],
+    "meaningIncludes": [
+      "opening of a shop",
+      "open for business"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "開"
+    ],
+    "coversReadingIncludes": [
+      "開: かい"
+    ],
+    "breakdownIncludes": [
+      "開 かい 開 （かい） ／ open Stroke order On: カイ Kun: -びら.き、 あ.く、 あ.ける、 ひら.き、 ひら.く、 ひら.ける 店 てん 店 （てん） ／ shop / store Stroke order On: テン Kun: たな、 みせ"
+    ],
+    "exampleIncludes": [
+      "新しい店は九時に開店します。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 開店|かいてん; reviewed as learner-friendly Reading coverage support vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common N4 support word that covers the 開 -> かい reading."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 開店|かいてん, reading かいてん, learner meaning opening of a shop / open for business, protected meaning opening of a shop / open for business, and product review checked example 新しい店は九時に開店します。 ／ あたらしいみせはくじにかいてんします。 ／ The new store opens at nine o'clock. for the shipped word-card surface; row meaning support: opening a new shop; opening a shop (for the day); source row: jmdict written=開店; reading=かいてん; frequencyRank=100; source=jmdict; entrySeq=1202870; jmdictPriority=ichi1,news1,nf13; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 開店|かいてん: word 開店, reading かいてん, meaning opening of a shop / open for business, example 新しい店は九時に開店します。 ／ あたらしいみせはくじにかいてんします。 ／ The new store opens at nine o'clock., audio word-reading-開店-かいてん, reading breakdown 開 かい店 てん, kanji breakdown 開 かい 開 （かい） ／ open Stroke order On: カイ Kun: -びら.き、 あ.く、 あ.ける、 ひら.き、 ひら.く、 ひら.ける 店 てん 店 （てん） ／ shop / store Stroke order On: テン Kun: たな、 みせ, labels JLPT N4; Reading coverage support; focus 開; covers 開: かい, notes/support surface Common N4 support word that covers the 開 -> かい reading.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 開店|かいてん as JLPT N4; focus 開 and reading labels 開: かい were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 開店|かいてん: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-開店-かいてん was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 開店|かいてん: generated Audio field includes word-reading-開店-かいてん and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 開店|かいてん: source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered labels Pitch 1: 0, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 開店|かいてん: JLPT N4; Reading coverage support; focus 開; covers 開: かい; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 開店|かいてん; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 開店|かいてん: 新しい店は九時に開店します。 ／ あたらしいみせはくじにかいてんします。 ／ The new store opens at nine o'clock.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading かいてん."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 開店|かいてん common and learner-friendly for the N4 word deck, with accurate reading かいてん, meaning opening of a shop / open for business, example 新しい店は九時に開店します。 ／ あたらしいみせはくじにかいてんします。 ／ The new store opens at nine o'clock., notes/support surface Common N4 support word that covers the 開 -> かい reading., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 開店|かいてん checked generated surface, Japanese-source evidence, example sentence 新しい店は九時に開店します。 ／ あたらしいみせはくじにかいてんします。 ／ The new store opens at nine o'clock., notes/support surface Common N4 support word that covers the 開 -> かい reading., reading breakdown 開 かい店 てん and kanji breakdown 開 かい 開 （かい） ／ open Stroke order On: カイ Kun: -びら.き、 あ.く、 あ.ける、 ひら.き、 ひら.く、 ひら.ける 店 てん 店 （てん） ／ shop / store Stroke order On: テン Kun: たな、 みせ, meaning opening of a shop / open for business (opening of a shop / open for business), labels JLPT N4; Reading coverage support; focus 開; covers 開: かい, audio word-reading-開店-かいてん, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment 開店|かいてん common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ]
+  },
+  {
+    "word": "番組",
+    "status": "platinum",
+    "readingIncludes": [
+      "ばんぐみ"
+    ],
+    "meaningIncludes": [
+      "program",
+      "broadcast show"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "番",
+      "組"
+    ],
+    "coversReadingIncludes": [
+      "番: ばん ／ 組: ぐみ"
+    ],
+    "breakdownIncludes": [
+      "番 ばん 番 （ばん） ／ number / turn Stroke order On: バン Kun: つが.い 組 JLPT N3 kanji ぐみ 組 （ぐみ） ／ program / group Stroke order On: ソ Kun: -ぐみ、 く.む、 くみ"
+    ],
+    "exampleIncludes": [
+      "この番組は毎週見ています。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 番組|ばんぐみ; reviewed as learner-friendly JLPT core + reading coverage vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common N4 media word that covers 番 -> ばん and labels the higher-level 組 -> ぐみ support on the card."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 番組|ばんぐみ, reading ばんぐみ, learner meaning program / broadcast show, protected meaning program / broadcast show, and product review checked example この番組は毎週見ています。 ／ このばんぐみはまいしゅうみています。 ／ I watch this program every week. for the shipped word-card surface; row meaning support: program (e.g. TV); programme; source row: jmdict written=番組; reading=ばんぐみ; frequencyRank=100; source=jmdict; entrySeq=1482340; jmdictPriority=ichi1,news1,nf01; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 番組|ばんぐみ: word 番組, reading ばんぐみ, meaning program / broadcast show, example この番組は毎週見ています。 ／ このばんぐみはまいしゅうみています。 ／ I watch this program every week., audio word-reading-番組-ばんぐみ, reading breakdown 番 ばん組 ぐみ, kanji breakdown 番 ばん 番 （ばん） ／ number / turn Stroke order On: バン Kun: つが.い 組 JLPT N3 kanji ぐみ 組 （ぐみ） ／ program / group Stroke order On: ソ Kun: -ぐみ、 く.む、 くみ, labels JLPT N4; JLPT core + reading coverage; focus 番、組; covers 番: ばん ／ 組: ぐみ, notes/support surface Common N4 media word that covers 番 -> ばん and labels the higher-level 組 -> ぐみ support on the card.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 番組|ばんぐみ as JLPT N4; focus 番、組 and reading labels 番: ばん ／ 組: ぐみ were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 番組|ばんぐみ: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-番組-ばんぐみ was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 番組|ばんぐみ: generated Audio field includes word-reading-番組-ばんぐみ and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 番組|ばんぐみ: source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered labels Pitch 1: 0, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 番組|ばんぐみ: JLPT N4; JLPT core + reading coverage; focus 番、組; covers 番: ばん ／ 組: ぐみ; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 番組|ばんぐみ; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 番組|ばんぐみ: この番組は毎週見ています。 ／ このばんぐみはまいしゅうみています。 ／ I watch this program every week.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading ばんぐみ."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 番組|ばんぐみ common and learner-friendly for the N4 word deck, with accurate reading ばんぐみ, meaning program / broadcast show, example この番組は毎週見ています。 ／ このばんぐみはまいしゅうみています。 ／ I watch this program every week., notes/support surface Common N4 media word that covers 番 -> ばん and labels the higher-level 組 -> ぐみ support on the card., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 番組|ばんぐみ checked generated surface, Japanese-source evidence, example sentence この番組は毎週見ています。 ／ このばんぐみはまいしゅうみています。 ／ I watch this program every week., notes/support surface Common N4 media word that covers 番 -> ばん and labels the higher-level 組 -> ぐみ support on the card., reading breakdown 番 ばん組 ぐみ and kanji breakdown 番 ばん 番 （ばん） ／ number / turn Stroke order On: バン Kun: つが.い 組 JLPT N3 kanji ぐみ 組 （ぐみ） ／ program / group Stroke order On: ソ Kun: -ぐみ、 く.む、 くみ, meaning program / broadcast show (program / broadcast show), labels JLPT N4; JLPT core + reading coverage; focus 番、組; covers 番: ばん ／ 組: ぐみ, audio word-reading-番組-ばんぐみ, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment 番組|ばんぐみ common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ]
+  },
+  {
+    "word": "全て",
+    "status": "platinum",
+    "readingIncludes": [
+      "すべて"
+    ],
+    "meaningIncludes": [
+      "all",
+      "everything"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "全"
+    ],
+    "coversReadingIncludes": [
+      "全: すべて"
+    ],
+    "breakdownIncludes": [
+      "全 すべ 全 （すべ） ／ all / whole Stroke order On: ゼン Kun: すべ.て、 まった.く"
+    ],
+    "exampleIncludes": [
+      "宿題を全て終えました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 全て|すべて; reviewed as learner-friendly Reading coverage support vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common all/everything word with a clean N4 全 -> すべて anchor; keeps the kanji spelling visible while the kana reading stays transparent."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 全て|すべて, reading すべて, learner meaning all / everything, protected meaning all / everything, and product review checked example 宿題を全て終えました。 ／ しゅくだいをすべておえました。 ／ I finished all of my homework. for the shipped word-card surface; row meaning support: everything; all; the whole; entirely; completely; wholly; source row: jmdict written=全て; reading=すべて; frequencyRank=110; source=jmdict; entrySeq=1595730; jmdictPriority=ichi1; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 全て|すべて: word 全て, reading すべて, meaning all / everything, example 宿題を全て終えました。 ／ しゅくだいをすべておえました。 ／ I finished all of my homework., audio word-reading-全て-すべて, reading breakdown 全 すべて, kanji breakdown 全 すべ 全 （すべ） ／ all / whole Stroke order On: ゼン Kun: すべ.て、 まった.く, labels JLPT N4; Reading coverage support; focus 全; covers 全: すべて, notes/support surface Common all/everything word with a clean N4 全 -> すべて anchor; keeps the kanji spelling visible while the kana reading stays transparent.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 全て|すべて as JLPT N4; focus 全 and reading labels 全: すべて were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 全て|すべて: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-全て-すべて was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 全て|すべて: generated Audio field includes word-reading-全て-すべて and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 全て|すべて: source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], rendered labels Pitch 1: 1, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 全て|すべて: JLPT N4; Reading coverage support; focus 全; covers 全: すべて; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 全て|すべて; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 全て|すべて: 宿題を全て終えました。 ／ しゅくだいをすべておえました。 ／ I finished all of my homework.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading すべて."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 全て|すべて common and learner-friendly for the N4 word deck, with accurate reading すべて, meaning all / everything, example 宿題を全て終えました。 ／ しゅくだいをすべておえました。 ／ I finished all of my homework., notes/support surface Common all/everything word with a clean N4 全 -> すべて anchor; keeps the kanji spelling visible while the kana reading stays transparent., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 全て|すべて checked generated surface, Japanese-source evidence, example sentence 宿題を全て終えました。 ／ しゅくだいをすべておえました。 ／ I finished all of my homework., notes/support surface Common all/everything word with a clean N4 全 -> すべて anchor; keeps the kanji spelling visible while the kana reading stays transparent., reading breakdown 全 すべて and kanji breakdown 全 すべ 全 （すべ） ／ all / whole Stroke order On: ゼン Kun: すべ.て、 まった.く, meaning all / everything (all / everything), labels JLPT N4; Reading coverage support; focus 全; covers 全: すべて, audio word-reading-全て-すべて, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, media provenance, release judgment 全て|すべて common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ]
+  },
+  {
+    "word": "忘れ物",
+    "status": "platinum",
+    "readingIncludes": [
+      "わすれもの"
+    ],
+    "meaningIncludes": [
+      "lost item",
+      "forgotten item"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "忘",
+      "物"
+    ],
+    "coversReadingIncludes": [
+      "忘: わすれ ／ 物: もの"
+    ],
+    "breakdownIncludes": [
+      "忘 JLPT N3 kanji わすれ 忘 （わすれ） ／ forget Stroke order On: ボウ Kun: わす.れる 物 もの 物 （もの） ／ thing / item Stroke order On: ブツ、 モツ Kun: もの"
+    ],
+    "exampleIncludes": [
+      "電車に忘れ物をしました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 忘れ物|わすれもの; reviewed as learner-friendly JLPT core + reading coverage vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Very useful everyday word; 忘 is higher-level and must stay visibly labeled on the N4 card."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 忘れ物|わすれもの, reading わすれもの, learner meaning lost item / forgotten item, protected meaning lost item / forgotten item, and product review checked example 電車に忘れ物をしました。 ／ でんしゃにわすれものをしました。 ／ I left something on the train. for the shipped word-card surface; row meaning support: lost article; thing left behind; leaving something behind; forgetting something; source row: jmdict written=忘れ物; reading=わすれもの; frequencyRank=110; source=jmdict; entrySeq=1519230; jmdictPriority=ichi1,news2,nf33; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 忘れ物|わすれもの: word 忘れ物, reading わすれもの, meaning lost item / forgotten item, example 電車に忘れ物をしました。 ／ でんしゃにわすれものをしました。 ／ I left something on the train., audio word-reading-忘れ物-わすれもの, reading breakdown 忘れ わすれ物 もの, kanji breakdown 忘 JLPT N3 kanji わすれ 忘 （わすれ） ／ forget Stroke order On: ボウ Kun: わす.れる 物 もの 物 （もの） ／ thing / item Stroke order On: ブツ、 モツ Kun: もの, labels JLPT N4; JLPT core + reading coverage; focus 忘、物; covers 忘: わすれ ／ 物: もの, notes/support surface Very useful everyday word; 忘 is higher-level and must stay visibly labeled on the N4 card.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 忘れ物|わすれもの as JLPT N4; focus 忘、物 and reading labels 忘: わすれ ／ 物: もの were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 忘れ物|わすれもの: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-忘れ物-わすれもの was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 忘れ物|わすれもの: generated Audio field includes word-reading-忘れ物-わすれもの and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 忘れ物|わすれもの: source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered labels Pitch 1: 0, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 忘れ物|わすれもの: JLPT N4; JLPT core + reading coverage; focus 忘、物; covers 忘: わすれ ／ 物: もの; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 忘れ物|わすれもの; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 忘れ物|わすれもの: 電車に忘れ物をしました。 ／ でんしゃにわすれものをしました。 ／ I left something on the train.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading わすれもの."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 忘れ物|わすれもの common and learner-friendly for the N4 word deck, with accurate reading わすれもの, meaning lost item / forgotten item, example 電車に忘れ物をしました。 ／ でんしゃにわすれものをしました。 ／ I left something on the train., notes/support surface Very useful everyday word; 忘 is higher-level and must stay visibly labeled on the N4 card., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 忘れ物|わすれもの checked generated surface, Japanese-source evidence, example sentence 電車に忘れ物をしました。 ／ でんしゃにわすれものをしました。 ／ I left something on the train., notes/support surface Very useful everyday word; 忘 is higher-level and must stay visibly labeled on the N4 card., reading breakdown 忘れ わすれ物 もの and kanji breakdown 忘 JLPT N3 kanji わすれ 忘 （わすれ） ／ forget Stroke order On: ボウ Kun: わす.れる 物 もの 物 （もの） ／ thing / item Stroke order On: ブツ、 モツ Kun: もの, meaning lost item / forgotten item (lost item / forgotten item), labels JLPT N4; JLPT core + reading coverage; focus 忘、物; covers 忘: わすれ ／ 物: もの, audio word-reading-忘れ物-わすれもの, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment 忘れ物|わすれもの common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ]
+  },
+  {
+    "word": "歩む",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "あゆむ"
+    ],
+    "meaningIncludes": [
+      "to walk",
+      "to proceed"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "歩"
+    ],
+    "coversReadingIncludes": [
+      "歩: あゆむ"
+    ],
+    "breakdownIncludes": [
+      "歩 あゆ 歩 （あゆ） ／ walk Stroke order On: フ、 ブ、 ホ Kun: あゆ.む、 ある.く"
+    ],
+    "exampleIncludes": [
+      "自分の道を歩むことは大切です。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 歩む|あゆむ; reviewed as learner-friendly Reading coverage support vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common N4 support word that covers the 歩 -> あゆむ reading."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 歩む|あゆむ, reading あゆむ, learner meaning to walk / to proceed, protected meaning to walk / to proceed, and product review checked example 自分の道を歩むことは大切です。 ／ じぶんのみちをあゆむことはたいせつです。 ／ It is important to walk your own path. for the shipped word-card surface; row meaning support: to walk; to go on foot; to tread (a figurative path); to follow; to lead (a life); to experience; to advance towards (e.g. a solution); to set out (e.g. on the path to destruction, ruin, etc.); to embark (on the road to ...); source row: jmdict written=歩む; reading=あゆむ; frequencyRank=110; source=jmdict; entrySeq=1514360; jmdictPriority=ichi1,news2,nf46; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 歩む|あゆむ: word 歩む, reading あゆむ, meaning to walk / to proceed, example 自分の道を歩むことは大切です。 ／ じぶんのみちをあゆむことはたいせつです。 ／ It is important to walk your own path., audio word-reading-歩む-あゆむ, reading breakdown 歩 あゆむ, kanji breakdown 歩 あゆ 歩 （あゆ） ／ walk Stroke order On: フ、 ブ、 ホ Kun: あゆ.む、 ある.く, labels JLPT N4; Reading coverage support; focus 歩; covers 歩: あゆむ, notes/support surface Common N4 support word that covers the 歩 -> あゆむ reading.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 歩む|あゆむ as JLPT N4; focus 歩 and reading labels 歩: あゆむ were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 歩む|あゆむ: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-歩む-あゆむ was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 歩む|あゆむ: generated Audio field includes word-reading-歩む-あゆむ and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 歩む|あゆむ: source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka], rendered labels Pitch 1: 2, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 歩む|あゆむ: JLPT N4; Reading coverage support; focus 歩; covers 歩: あゆむ; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 歩む|あゆむ; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 歩む|あゆむ: 自分の道を歩むことは大切です。 ／ じぶんのみちをあゆむことはたいせつです。 ／ It is important to walk your own path.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading あゆむ."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 歩む|あゆむ common and learner-friendly for the N4 word deck, with accurate reading あゆむ, meaning to walk / to proceed, example 自分の道を歩むことは大切です。 ／ じぶんのみちをあゆむことはたいせつです。 ／ It is important to walk your own path., notes/support surface Common N4 support word that covers the 歩 -> あゆむ reading., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 歩む|あゆむ checked generated surface, Japanese-source evidence, example sentence 自分の道を歩むことは大切です。 ／ じぶんのみちをあゆむことはたいせつです。 ／ It is important to walk your own path., notes/support surface Common N4 support word that covers the 歩 -> あゆむ reading., reading breakdown 歩 あゆむ and kanji breakdown 歩 あゆ 歩 （あゆ） ／ walk Stroke order On: フ、 ブ、 ホ Kun: あゆ.む、 ある.く, meaning to walk / to proceed (to walk / to proceed), labels JLPT N4; Reading coverage support; focus 歩; covers 歩: あゆむ, audio word-reading-歩む-あゆむ, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2, media provenance, release judgment 歩む|あゆむ common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "fixSummary": "Replaced the inflected example with an exact 歩む|あゆむ dictionary-form sentence and matching reading before Platinum approval."
+  },
+  {
+    "word": "公",
+    "status": "platinum",
+    "readingIncludes": [
+      "おおやけ"
+    ],
+    "meaningIncludes": [
+      "public",
+      "official"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "公"
+    ],
+    "coversReadingIncludes": [
+      "公: おおやけ"
+    ],
+    "breakdownIncludes": [
+      "公 おおやけ 公 （おおやけ） ／ public / official Stroke order On: ク、 コウ Kun: おおやけ"
+    ],
+    "exampleIncludes": [
+      "その情報はまだ公にはされていません。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common/useful N4 word with governed word identity 公|おおやけ; reviewed as learner-friendly Reading coverage support vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-05-15",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-15",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "notesIncludes": [
+      "Common N4 support word that covers the 公 -> おおやけ reading."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 公|おおやけ, reading おおやけ, learner meaning public / official, protected meaning public / official, and product review checked example その情報はまだ公にはされていません。 ／ そのじょうほうはまだおおやけにはされていません。 ／ That information has not been made public yet. for the shipped word-card surface; row meaning support: official; governmental; formal; public (use, matter, forum, etc.); common; being public knowledge; being out in the open; exposure to public view; source row: jmdict written=公; reading=おおやけ; frequencyRank=110; source=jmdict; entrySeq=1273170; jmdictPriority=ichi1; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 公|おおやけ: word 公, reading おおやけ, meaning public / official, example その情報はまだ公にはされていません。 ／ そのじょうほうはまだおおやけにはされていません。 ／ That information has not been made public yet., audio word-reading-公-おおやけ, reading breakdown 公 おおやけ, kanji breakdown 公 おおやけ 公 （おおやけ） ／ public / official Stroke order On: ク、 コウ Kun: おおやけ, labels JLPT N4; Reading coverage support; focus 公; covers 公: おおやけ, notes/support surface Common N4 support word that covers the 公 -> おおやけ reading.."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and word level anchor audit",
+        "detail": "N4 word level contract keeps 公|おおやけ as JLPT N4; focus 公 and reading labels 公: おおやけ were checked for word-deck placement without using kanji-deck decisions as source truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "word deck media/package audit",
+        "detail": "Media provenance checked for 公|おおやけ: generated word card uses governed packaged media in the kanji breakdown, no untracked generated media dependency, and no silent media fallback in the reviewed surface. Exact audio media fragment word-reading-公-おおやけ was checked as part of managed media provenance."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word-reading audio manifest and word deck readiness audit",
+        "detail": "Exact word-reading audio reviewed for 公|おおやけ: generated Audio field includes word-reading-公-おおやけ and current readiness reports exact word audio present for the card."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and pitch accent render audit",
+        "detail": "Pitch accent reviewed for 公|おおやけ: source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered labels Pitch 1: 0, source/render identity valid. Dictionary-backed pitch evidence is bound to the exact word-reading identity."
+      },
+      {
+        "type": "label-review",
+        "source": "generated word labels and word level anchor audit",
+        "detail": "Label review for 公|おおやけ: JLPT N4; Reading coverage support; focus 公; covers 公: おおやけ; support labels checked where applicable."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json and npm run deck:words:review:n4",
+        "detail": "Separate golden regression gate checked 公|おおやけ; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example sentence review for 公|おおやけ: その情報はまだ公にはされていません。 ／ そのじょうほうはまだおおやけにはされていません。 ／ That information has not been made public yet.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading おおやけ."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex product/pedagogy review",
+        "detail": "Manual review judged 公|おおやけ common and learner-friendly for the N4 word deck, with accurate reading おおやけ, meaning public / official, example その情報はまだ公にはされていません。 ／ そのじょうほうはまだおおやけにはされていません。 ／ That information has not been made public yet., notes/support surface Common N4 support word that covers the 公 -> おおやけ reading., and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 公|おおやけ checked generated surface, Japanese-source evidence, example sentence その情報はまだ公にはされていません。 ／ そのじょうほうはまだおおやけにはされていません。 ／ That information has not been made public yet., notes/support surface Common N4 support word that covers the 公 -> おおやけ reading., reading breakdown 公 おおやけ and kanji breakdown 公 おおやけ 公 （おおやけ） ／ public / official Stroke order On: ク、 コウ Kun: おおやけ, meaning public / official (public / official), labels JLPT N4; Reading coverage support; focus 公; covers 公: おおやけ, audio word-reading-公-おおやけ, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment 公|おおやけ common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ]
   }
 ]

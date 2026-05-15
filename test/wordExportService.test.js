@@ -1158,6 +1158,21 @@ test("starter curated data provides learner-friendly kanji breakdown fallbacks",
             englishMeaning: "picture / drawing",
             displayWord: { written: "画", pron: "が" },
         },
+        {
+            matchWord: "映画館",
+            englishMeaning: "picture / drawing",
+            displayWord: { written: "画", pron: "が" },
+        },
+        {
+            matchWord: "画家",
+            englishMeaning: "picture / drawing",
+            displayWord: { written: "画", pron: "が" },
+        },
+        {
+            matchWord: "漫画",
+            englishMeaning: "picture / drawing",
+            displayWord: { written: "画", pron: "が" },
+        },
     ]);
 });
 

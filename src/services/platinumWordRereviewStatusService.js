@@ -385,7 +385,7 @@ function formatPlatinumWordRereviewStatusReport(summary = {}) {
         `Generated active word rows: ${totals.generatedRows || 0}`,
         `Review entries: ${totals.reviewEntries || 0}`,
         "",
-        "| Scope | Generated deck rows | Platinum Candidate pass (not certification) | Platinum certified (substantive proof) | Candidate-only entries needing certification | Blocked/failing deck rows |",
+        "| Scope | Generated deck rows | Platinum pass (structural gate) | Obsidian certified (substantive proof) | Platinum entries needing Obsidian | Blocked/failing deck rows |",
         "| --- | ---: | ---: | ---: | ---: | ---: |",
     ];
 
@@ -413,10 +413,10 @@ function formatPlatinumWordRereviewStatusReport(summary = {}) {
     lines.push(
         "",
         "Proof policy:",
-        "- Tier model: Silver = generated surface exists, Gold = golden regression, Platinum Candidate = current-standard structural gate, Platinum = substantive current-version certification, Obsidian = reserved for a future fluent/native-level audit.",
-        "- Generated deck rows are the certification denominator. Platinum Candidate subsets do not shrink the queue.",
-        `- ${summary.missingProofMarker || MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER}: Platinum Candidate lane validity is not counted as Platinum certification proof by itself.`,
-        `- To count as Platinum certified, an entry must carry explicit ${summary.proofMarker || SUBSTANTIVE_REREVIEW_PROOF_MARKER} provenance and ${summary.nonMechanicalMarker || NON_MECHANICAL_PROOF_MARKER} language, or equivalent structured rereviewProvenance metadata.`,
+        "- Tier model: Silver = generated surface exists, Gold = golden regression, Platinum = current-standard structural gate, Obsidian = explicit non-mechanical current-version certification proof.",
+        "- Generated deck rows are the certification denominator. Platinum subsets do not shrink the Obsidian queue.",
+        `- ${summary.missingProofMarker || MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER}: Platinum lane validity is not counted as Obsidian certification proof by itself.`,
+        `- To count as Obsidian certified, an entry must carry explicit ${summary.proofMarker || SUBSTANTIVE_REREVIEW_PROOF_MARKER} provenance and ${summary.nonMechanicalMarker || NON_MECHANICAL_PROOF_MARKER} language, or equivalent structured rereviewProvenance metadata.`,
         "- This report is read-only. It does not promote, defer, reject, or edit cards."
     );
 
@@ -427,8 +427,8 @@ function formatPlatinumWordRereviewStatusReport(summary = {}) {
         lines.push(
             "",
             `N${report.level} details:`,
-            `- Platinum certified sample: ${formatSample(proven)}`,
-            `- needs Platinum certification sample: ${formatSample(needs)}`,
+            `- Obsidian certified sample: ${formatSample(proven)}`,
+            `- needs Obsidian sample: ${formatSample(needs)}`,
             `- blocked/failing sample: ${formatSample(blocked)}`
         );
         if (blocked.length > 0) {

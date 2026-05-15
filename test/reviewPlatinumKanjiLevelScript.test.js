@@ -8,7 +8,7 @@ const {
     REQUIRED_KANJI_SOURCE_EVIDENCE_TYPES,
 } = require("../src/services/platinumKanjiReviewService");
 const {
-    assertKanjiPlatinumCandidatePreflight,
+    assertKanjiPlatinumPreflight,
 } = require("../scripts/reviewPlatinumKanjiLevel");
 
 function buildEvidence(types = []) {
@@ -19,7 +19,7 @@ function buildEvidence(types = []) {
     }));
 }
 
-function buildPlatinumCandidateEntry(overrides = {}) {
+function buildPlatinumEntry(overrides = {}) {
     return {
         kanji: "日",
         status: "platinum",
@@ -33,9 +33,9 @@ function buildPlatinumCandidateEntry(overrides = {}) {
     };
 }
 
-test("kanji platinum level script fails fast when required candidate coverage is empty", () => {
+test("kanji platinum level script fails fast when required Platinum coverage is empty", () => {
     assert.throws(
-        () => assertKanjiPlatinumCandidatePreflight({
+        () => assertKanjiPlatinumPreflight({
             entries: [],
             level: 3,
             options: {
@@ -44,12 +44,12 @@ test("kanji platinum level script fails fast when required candidate coverage is
                 requireCurrentReviewStandard: true,
             },
         }),
-        /N3 has 0 Platinum Candidate entries/
+        /N3 has 0 Platinum entries/
     );
 });
 
 test("kanji platinum level script allows intentional empty diagnostic surfaces", () => {
-    const result = assertKanjiPlatinumCandidatePreflight({
+    const result = assertKanjiPlatinumPreflight({
         entries: [],
         level: 3,
         options: {
@@ -59,12 +59,12 @@ test("kanji platinum level script allows intentional empty diagnostic surfaces",
         },
     });
 
-    assert.equal(result.candidateCount, 0);
+    assert.equal(result.platinumCount, 0);
 });
 
-test("kanji platinum level script allows real candidate coverage to continue to generated-row checks", () => {
-    const result = assertKanjiPlatinumCandidatePreflight({
-        entries: [buildPlatinumCandidateEntry()],
+test("kanji platinum level script allows real Platinum coverage to continue to generated-row checks", () => {
+    const result = assertKanjiPlatinumPreflight({
+        entries: [buildPlatinumEntry()],
         level: 5,
         options: {
             allowEmpty: false,
@@ -73,5 +73,5 @@ test("kanji platinum level script allows real candidate coverage to continue to 
         },
     });
 
-    assert.equal(result.candidateCount, 1);
+    assert.equal(result.platinumCount, 1);
 });

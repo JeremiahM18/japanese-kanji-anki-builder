@@ -230,10 +230,10 @@ test("formatted rereview report is clear and read-only", () => {
     const formatted = formatPlatinumKanjiRereviewStatusReport(summary);
 
     assert.match(formatted, /Platinum Kanji Rereview Status/);
-    assert.match(formatted, /Platinum Candidate pass \(not certification\)/);
+    assert.match(formatted, /Platinum pass \(structural gate\)/);
     assert.match(formatted, /Generated deck rows are the certification denominator/);
-    assert.match(formatted, /Candidate-only entries needing certification/);
-    assert.match(formatted, /Obsidian = reserved for a future fluent\/native-level audit/);
+    assert.match(formatted, /Platinum entries needing Obsidian/);
+    assert.match(formatted, /Obsidian = explicit non-mechanical current-version certification proof/);
     assert.match(formatted, new RegExp(MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER));
     assert.match(formatted, /This report is read-only/);
 });

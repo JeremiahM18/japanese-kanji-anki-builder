@@ -167,7 +167,7 @@ test("buildKanjiDeckReviewStatus reports core and additional review coverage", (
         assert.match(formatKanjiDeckReviewStatus(report), /duplicate kanji: 1/);
         assert.match(formatKanjiDeckReviewStatus(report), /core N4 retained; no additional duplicate selected/);
         assert.match(formatKanjiDeckReviewStatus(report), /Verification Limitations:/);
-        assert.match(formatKanjiDeckReviewStatus(report), /core_N5: 1 limitation\(s\) on 1 active Platinum Candidate card\(s\)/);
+        assert.match(formatKanjiDeckReviewStatus(report), /core_N5: 1 limitation\(s\) on 1 active Platinum card\(s\)/);
         assert.match(formatKanjiDeckReviewStatus(report), /Current Std/);
         assert.match(formatKanjiDeckReviewStatus(report), /Revalidation Backlog\/History:/);
         assert.match(formatKanjiDeckReviewStatus(report), /core_N1: 1 non-certifying review-history card\(s\) need current-standard revalidation/);

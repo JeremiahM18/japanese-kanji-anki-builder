@@ -2,7 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const {
-    DEFAULT_LANGUAGE_REVIEW_SCOPE,
+    MANUAL_SENTENCE_REVIEW_BOUNDARY_NOTE,
     buildPlatinumKanjiCertificationStatusSummary,
     formatPlatinumKanjiCertificationStatusReport,
 } = require("../src/services/platinumKanjiCertificationStatusService");
@@ -38,7 +38,8 @@ test("kanji certification gate passes only when every generated row has Obsidian
 
     assert.equal(summary.passed, true);
     assert.equal(summary.failureCount, 0);
-    assert.equal(summary.certificationGate.languageReviewScope, DEFAULT_LANGUAGE_REVIEW_SCOPE);
+    assert.match(summary.certificationGate.manualJudgmentBoundary, /human reviewer still owns/);
+    assert.equal(summary.certificationGate.manualJudgmentBoundary, MANUAL_SENTENCE_REVIEW_BOUNDARY_NOTE);
 });
 
 test("kanji certification gate fails structural Platinum rows that still need Obsidian proof", () => {
@@ -69,7 +70,9 @@ test("kanji certification gate fails structural Platinum rows that still need Ob
     assert.equal(summary.failures[0].card, "月");
     assert.equal(summary.failures[0].field, "rereviewProvenance");
     assert.equal(summary.failures[0].evidenceLane, "reviewEvidence.current-standard-review + rereviewProvenance");
-    assert.match(summary.failures[0].reviewerAction, /best-effort non-native language-review scope/);
+    assert.match(summary.failures[0].expected, /example sentence quality review proof/);
+    assert.match(summary.failures[0].reviewerAction, /Inspect and fix the actual example sentence if needed/);
+    assert.match(summary.failures[0].reviewerAction, /natural Japanese/);
 });
 
 test("kanji certification gate turns structural blockers into loud actionable failure objects", () => {
@@ -96,7 +99,7 @@ test("kanji certification gate turns structural blockers into loud actionable fa
     assert.equal(summary.failures[1].expected, "true");
 });
 
-test("formatted kanji certification report includes all failed cards and honest language scope", () => {
+test("formatted kanji certification report includes all failed cards and sentence-review boundary", () => {
     const summary = buildPlatinumKanjiCertificationStatusSummary([buildLevelReport({
         cards: [
             {
@@ -123,8 +126,8 @@ test("formatted kanji certification report includes all failed cards and honest 
 
     assert.match(formatted, /Certification target: Obsidian/);
     assert.match(formatted, /Result: failing/);
-    assert.match(formatted, /Language review scope: best_effort_non_native_review/);
-    assert.match(formatted, /cannot fully prove natural Japanese/);
+    assert.match(formatted, /actual example sentence quality review evidence/);
+    assert.match(formatted, /human reviewer still owns the actual natural-Japanese and pedagogy judgment/);
     assert.match(formatted, /N5 月; field=rereviewProvenance/);
     assert.match(formatted, /N5 火; field=sourceEvidence/);
     assert.match(formatted, /reviewer action=/);

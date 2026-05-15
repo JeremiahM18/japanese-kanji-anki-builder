@@ -490,7 +490,7 @@ function buildReviewRubric(row = {}, {
         }),
         buildRubricItem({
             id: "example_and_support_usage",
-            label: "Example and support usage",
+            label: "Example sentence quality and support usage",
             status: !normalizeText(row.exampleSentence)
                 ? REVIEW_RUBRIC_STATUSES.BLOCKED
                 : !notesIncludeKanji || !exampleIncludesKanji
@@ -501,8 +501,8 @@ function buildReviewRubric(row = {}, {
                 `example includes target kanji=${exampleIncludesKanji}`,
                 `example=${stripMarkup(row.exampleSentence) || "(blank)"}`,
             ],
-            reviewerAction: "Judge whether notes and the example are support-only, natural enough, useful, learner-friendly, level-appropriate, and do not replace the individual-kanji anchor.",
-            limitation: "Automation can check presence and binding, but naturalness and pedagogy are reviewer-owned best-effort judgments.",
+            reviewerAction: "Read the actual Japanese sentence, reading, and translation. Fix the sentence if needed, then confirm the final sentence is natural enough, learner-useful, level-appropriate, support-only, and does not replace the individual-kanji anchor.",
+            limitation: "Automation can check presence and binding, but the sentence naturalness and pedagogy decision must be made from the actual card content during Obsidian rereview.",
         }),
         buildRubricItem({
             id: "media_identity",

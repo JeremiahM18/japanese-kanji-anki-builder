@@ -14,6 +14,7 @@ const {
     buildPlatinumKanjiRereviewStatusSummary,
     entryHasSubstantiveCurrentStandardRereviewProof,
     formatPlatinumKanjiRereviewStatusReport,
+    hasKanjiSentenceQualityReviewProof,
 } = require("../src/services/platinumKanjiRereviewStatusService");
 
 function buildQualityGates(overrides = {}) {
@@ -103,6 +104,40 @@ function buildReviewEvidence({
     });
 }
 
+function buildRereviewProvenance({
+    kanji = "日",
+    reading = "ひ",
+    meaning = "day",
+    broader = ["day", "sun"],
+    example = "雨の日です。",
+    exampleReading = "あめのひです。",
+    exampleTranslation = "It is a rainy day.",
+    includeSentenceQualityProof = true,
+} = {}) {
+    return {
+        type: "substantive current standard rereview",
+        reviewStandard: CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
+        batchId: "test-kanji-platinum-rereview-batch-001",
+        reviewedAt: "2026-05-14",
+        reviewer: "content-review",
+        reviewedAfterStandard: true,
+        mechanicalMigration: false,
+        result: "approved_for_current_standard_platinum",
+        scope: "full kanji card rereview from square zero",
+        cardReviewed: `${kanji}|${reading}`,
+        evidenceChecked: [
+            `generated surface: Kanji and DisplayWord are ${kanji}, StudyWordKanji is blank, PrimaryReading is ${reading}`,
+            `primary field review: MeaningJP ${meaning}; KanjiMeanings ${broader.join(" / ")}`,
+            includeSentenceQualityProof
+                ? `example review: ${example} / ${exampleReading} / ${exampleTranslation}; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment`
+                : "",
+            "evidence lanes checked separately",
+            "verification limitations actively considered",
+        ].filter(Boolean),
+        limitationDecision: "no active non-core verification limitations recorded after this batch review",
+    };
+}
+
 function buildEntry({
     kanji = "日",
     reading = "ひ",
@@ -149,6 +184,17 @@ function buildEntry({
             exampleTranslation,
             substantiveProof,
         }),
+        ...(substantiveProof ? {
+            rereviewProvenance: buildRereviewProvenance({
+                kanji,
+                reading,
+                meaning,
+                broader,
+                example,
+                exampleReading,
+                exampleTranslation,
+            }),
+        } : {}),
         qualityGates: buildQualityGates(),
         ...overrides,
     };
@@ -198,6 +244,48 @@ test("rereview status does not infer substantive proof from revalidatedAt or v3 
 
     assert.equal(entry.revalidatedAt, "2026-05-13");
     assert.equal(entryHasSubstantiveCurrentStandardRereviewProof(entry), false);
+});
+
+test("rereview status does not count base provenance without actual sentence quality proof", () => {
+    const entry = buildEntry({
+        overrides: {
+            rereviewProvenance: buildRereviewProvenance({ includeSentenceQualityProof: false }),
+        },
+    });
+    const report = buildPlatinumKanjiRereviewStatusReport({
+        rows: [buildRow()],
+        entries: [entry],
+        level: 5,
+        kanjiSourceEvidence: { assignments: {}, sources: {} },
+    });
+
+    assert.equal(hasKanjiSentenceQualityReviewProof(entry), false);
+    assert.equal(entryHasSubstantiveCurrentStandardRereviewProof(entry), false);
+    assert.equal(report.counts.substantive_current_standard_review_proven, 0);
+    assert.equal(report.cards[0].status, "needs_substantive_rereview");
+    assert.match(report.cards[0].reasons.join("\n"), /actual example sentence quality review proof/);
+});
+
+test("rereview status accepts structured sentence-quality evidence bound to the card", () => {
+    const entry = buildEntry({
+        overrides: {
+            rereviewProvenance: {
+                ...buildRereviewProvenance({ includeSentenceQualityProof: false }),
+                sentenceQualityReview: {
+                    japaneseSentence: "雨の日です。",
+                    reading: "あめのひです。",
+                    translation: "It is a rainy day.",
+                    naturalJapanese: true,
+                    learnerUseful: true,
+                    levelAppropriate: true,
+                    supportOnly: true,
+                },
+            },
+        },
+    });
+
+    assert.equal(hasKanjiSentenceQualityReviewProof(entry), true);
+    assert.equal(entryHasSubstantiveCurrentStandardRereviewProof(entry), true);
 });
 
 test("rereview status reports dirty evidence lanes as blocked or failing", () => {

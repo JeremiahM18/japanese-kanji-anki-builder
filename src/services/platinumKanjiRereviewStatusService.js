@@ -15,6 +15,7 @@ const REREVIEW_STATUS_CATEGORIES = Object.freeze({
 const SUBSTANTIVE_REREVIEW_PROOF_MARKER = "substantive post-v3 human rereview";
 const NON_MECHANICAL_PROOF_MARKER = "not mechanically migrated";
 const MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER = "missing_substantive_current_standard_rereview_proof";
+const SENTENCE_QUALITY_REVIEW_PROOF_MARKER = "example sentence quality review";
 
 function normalizeText(value) {
     return String(value ?? "").trim();
@@ -25,6 +26,18 @@ function normalizeProofText(value) {
         .replace(/[_-]+/g, " ")
         .replace(/\s+/g, " ")
         .toLowerCase();
+}
+
+function flattenProofValue(value) {
+    if (Array.isArray(value)) {
+        return value.map(flattenProofValue).join(" ");
+    }
+    if (value && typeof value === "object") {
+        return Object.entries(value)
+            .map(([key, nestedValue]) => `${key} ${flattenProofValue(nestedValue)}`)
+            .join(" ");
+    }
+    return normalizeText(value);
 }
 
 function normalizeKanji(value) {
@@ -74,13 +87,13 @@ function buildRereviewProvenanceText(entry = {}) {
         ? entry.rereviewProvenance
         : {};
     const provenanceText = Object.entries(provenance)
-        .map(([key, value]) => `${key} ${value}`)
+        .map(([key, value]) => `${key} ${flattenProofValue(value)}`)
         .join(" ");
 
     return normalizeProofText(`${evidenceText} ${provenanceText}`);
 }
 
-function hasStructuredRereviewProvenance(entry = {}) {
+function hasBaseStructuredRereviewProvenance(entry = {}) {
     const provenance = entry.rereviewProvenance;
     if (!provenance || typeof provenance !== "object" || Array.isArray(provenance)) {
         return false;
@@ -93,35 +106,106 @@ function hasStructuredRereviewProvenance(entry = {}) {
         && Boolean(normalizeText(provenance.reviewer || entry.reviewer));
 }
 
-function hasTextualRereviewProvenance(entry = {}) {
-    const proofText = buildRereviewProvenanceText(entry);
-    const hasSubstantiveMarker = proofText.includes(normalizeProofText(SUBSTANTIVE_REREVIEW_PROOF_MARKER))
-        || proofText.includes("substantive current standard rereview");
-    const hasHumanMarker = /\b(human|manual)\b/.test(proofText);
-    const hasNonMechanicalMarker = proofText.includes(normalizeProofText(NON_MECHANICAL_PROOF_MARKER))
-        || proofText.includes("not a mechanical migration")
-        || proofText.includes("not migration only")
-        || proofText.includes("non mechanical");
+function hasCardIdentityProof(entry = {}) {
+    const provenance = entry.rereviewProvenance;
+    if (!provenance || typeof provenance !== "object" || Array.isArray(provenance)) {
+        return false;
+    }
+    const proofText = normalizeProofText([
+        provenance.cardReviewed,
+        provenance.evidenceChecked,
+        provenance.sentenceQualityReview,
+    ].map(flattenProofValue).join(" "));
+    const kanji = normalizeProofText(entry.kanji);
+    const readings = Array.isArray(entry.readingIncludes)
+        ? entry.readingIncludes.map(normalizeProofText).filter(Boolean)
+        : [];
+    const hasKanji = kanji && proofText.includes(kanji);
+    const hasReading = readings.length === 0 || readings.some((reading) => proofText.includes(reading));
 
-    return hasSubstantiveMarker && hasHumanMarker && hasNonMechanicalMarker;
+    return Boolean(hasKanji && hasReading);
+}
+
+function structuredSentenceQualityReviewPasses(entry = {}) {
+    const review = entry.rereviewProvenance?.sentenceQualityReview;
+    if (!review || typeof review !== "object" || Array.isArray(review)) {
+        return false;
+    }
+
+    const reviewText = normalizeProofText(flattenProofValue(review));
+    const examples = Array.isArray(entry.exampleIncludes)
+        ? entry.exampleIncludes.map(normalizeProofText).filter(Boolean)
+        : [];
+    const hasExampleBinding = examples.length === 0 || examples.every((example) => reviewText.includes(example));
+    const requiredTruths = [
+        review.naturalJapanese,
+        review.learnerUseful,
+        review.levelAppropriate,
+        review.supportOnly,
+    ];
+
+    return hasExampleBinding && requiredTruths.every((value) => value === true);
+}
+
+function textualSentenceQualityReviewPasses(entry = {}) {
+    const proofText = buildRereviewProvenanceText(entry);
+    const examples = Array.isArray(entry.exampleIncludes)
+        ? entry.exampleIncludes.map(normalizeProofText).filter(Boolean)
+        : [];
+    const hasSentenceReviewMarker = proofText.includes("example review")
+        || proofText.includes("sentence quality review")
+        || proofText.includes(normalizeProofText(SENTENCE_QUALITY_REVIEW_PROOF_MARKER));
+    const hasExampleBinding = examples.length === 0 || examples.every((example) => proofText.includes(example));
+    const hasNaturalJudgment = /\bnatural(\s+japanese|\s+enough)?\b/.test(proofText);
+    const hasLearnerUtilityJudgment = proofText.includes("learner useful")
+        || proofText.includes("learner friendly")
+        || /\buseful\b/.test(proofText);
+    const hasLevelJudgment = proofText.includes("level appropriate");
+    const hasSupportOnlyJudgment = proofText.includes("support only");
+    const hasReviewerJudgment = proofText.includes("reviewer judgment")
+        || /\b(human|manual)\b/.test(proofText);
+
+    return hasSentenceReviewMarker
+        && hasExampleBinding
+        && hasNaturalJudgment
+        && hasLearnerUtilityJudgment
+        && hasLevelJudgment
+        && hasSupportOnlyJudgment
+        && hasReviewerJudgment;
+}
+
+function hasKanjiSentenceQualityReviewProof(entry = {}) {
+    return structuredSentenceQualityReviewPasses(entry) || textualSentenceQualityReviewPasses(entry);
+}
+
+function hasStructuredRereviewProvenance(entry = {}) {
+    return hasBaseStructuredRereviewProvenance(entry)
+        && hasCardIdentityProof(entry)
+        && hasKanjiSentenceQualityReviewProof(entry);
 }
 
 function entryHasSubstantiveCurrentStandardRereviewProof(entry = {}) {
-    return hasStructuredRereviewProvenance(entry) || hasTextualRereviewProvenance(entry);
+    return hasStructuredRereviewProvenance(entry);
 }
 
 function buildMissingRereviewProofReason(entry = {}) {
     const hasRevalidatedAt = Boolean(normalizeText(entry.revalidatedAt));
     const currentStandardEvidence = normalizeEvidenceEntries(entry.reviewEvidence)
         .some((evidence) => evidence.type === "current-standard-review");
+    const hasBaseProvenance = hasBaseStructuredRereviewProvenance(entry);
+    const hasCardIdentity = hasCardIdentityProof(entry);
+    const hasSentenceQualityProof = hasKanjiSentenceQualityReviewProof(entry);
     const observed = [
         hasRevalidatedAt ? "revalidatedAt" : "",
         currentStandardEvidence ? "current-standard-review lane" : "",
+        hasBaseProvenance ? "base rereviewProvenance metadata" : "",
+        hasBaseProvenance && !hasCardIdentity ? "rereviewProvenance without card identity binding" : "",
+        hasBaseProvenance && !hasSentenceQualityProof ? "rereviewProvenance without actual example sentence quality review proof" : "",
     ].filter(Boolean);
 
     return [
         MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER,
-        "requires explicit non-mechanical post-v3 human rereview provenance",
+        "requires explicit non-mechanical post-v3 human rereview provenance with actual example sentence quality review proof",
         observed.length > 0 ? `observed ${observed.join(" and ")} only` : "no current-standard rereview provenance observed",
     ].join(": ");
 }
@@ -265,7 +349,8 @@ function buildPlatinumKanjiRereviewStatusReport({
             proofMarker: SUBSTANTIVE_REREVIEW_PROOF_MARKER,
             nonMechanicalMarker: NON_MECHANICAL_PROOF_MARKER,
             missingProofMarker: MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER,
-            note: "revalidatedAt and required v3 current-standard-review lane text are structural evidence, not standalone proof of substantive post-v3 human rereview",
+            sentenceQualityReviewProofMarker: SENTENCE_QUALITY_REVIEW_PROOF_MARKER,
+            note: "revalidatedAt and required v3 current-standard-review lane text are structural evidence, not standalone proof of substantive post-v3 human rereview or actual example sentence quality review",
         },
         counts,
         passed: counts.blocked_or_failing === 0,
@@ -300,6 +385,7 @@ function buildPlatinumKanjiRereviewStatusSummary(levelReports = []) {
         proofMarker: SUBSTANTIVE_REREVIEW_PROOF_MARKER,
         nonMechanicalMarker: NON_MECHANICAL_PROOF_MARKER,
         missingProofMarker: MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER,
+        sentenceQualityReviewProofMarker: SENTENCE_QUALITY_REVIEW_PROOF_MARKER,
         passed: reports.every((report) => report.passed),
         totals: buildAggregateCounts(reports),
         levels: reports,
@@ -357,7 +443,7 @@ function formatPlatinumKanjiRereviewStatusReport(summary = {}) {
         "- Tier model: Silver = generated surface exists, Gold = golden regression, Platinum = current-standard structural gate, Obsidian = explicit non-mechanical current-version certification proof.",
         "- Generated deck rows are the certification denominator. Platinum subsets do not shrink the Obsidian queue.",
         `- ${summary.missingProofMarker || MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER}: Platinum lane validity is not counted as Obsidian certification proof by itself.`,
-        `- To count as Obsidian certified, an entry must carry explicit ${summary.proofMarker || SUBSTANTIVE_REREVIEW_PROOF_MARKER} provenance and ${summary.nonMechanicalMarker || NON_MECHANICAL_PROOF_MARKER} language, or equivalent structured rereviewProvenance metadata.`,
+        `- To count as Obsidian certified, an entry must carry structured rereviewProvenance with explicit ${summary.proofMarker || SUBSTANTIVE_REREVIEW_PROOF_MARKER} provenance, ${summary.nonMechanicalMarker || NON_MECHANICAL_PROOF_MARKER} language, card identity binding, and actual ${summary.sentenceQualityReviewProofMarker || SENTENCE_QUALITY_REVIEW_PROOF_MARKER} evidence.`,
         "- This report is read-only. It does not promote, defer, reject, or edit cards."
     );
 
@@ -386,9 +472,11 @@ module.exports = {
     MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER,
     NON_MECHANICAL_PROOF_MARKER,
     REREVIEW_STATUS_CATEGORIES,
+    SENTENCE_QUALITY_REVIEW_PROOF_MARKER,
     SUBSTANTIVE_REREVIEW_PROOF_MARKER,
     buildPlatinumKanjiRereviewStatusReport,
     buildPlatinumKanjiRereviewStatusSummary,
     entryHasSubstantiveCurrentStandardRereviewProof,
     formatPlatinumKanjiRereviewStatusReport,
+    hasKanjiSentenceQualityReviewProof,
 };

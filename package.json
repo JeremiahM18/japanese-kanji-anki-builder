@@ -75,6 +75,7 @@
     "deck:kanji:partition-plan": "node scripts/reportKanjiDeckPartitionPlan.js",
     "deck:kanji:review-status": "node scripts/reportKanjiDeckReviewStatus.js",
     "deck:platinum:rereview-status": "node scripts/reportPlatinumKanjiRereviewStatus.js",
+    "deck:kanji:platinum:certify-status": "node scripts/reportPlatinumKanjiCertificationStatus.js",
     "deck:kanji:additional:ready": "node scripts/prepareAdditionalKanjiDeck.js",
     "deck:kanji:additional:review:n5": "node scripts/reviewGoldenAdditionalKanjiLevel.js --level=5 --require-all",
     "deck:kanji:additional:review:n4": "node scripts/reviewGoldenAdditionalKanjiLevel.js --level=4 --require-all",

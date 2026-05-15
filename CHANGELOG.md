@@ -16,6 +16,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added `deck:kanji:platinum:certify-status`, a fail-closed kanji Obsidian certification gate. It fails on any `blocked_or_failing` or `needs_substantive_rereview` generated row, emits structured card/field/expected/actual/evidence-lane/reviewer-action failures, and records the current language-review scope as `best_effort_non_native_review`.
 - Added a fail-fast preflight to the core kanji Platinum level command so empty required manifests such as unstarted N3/N2/N1 stop before generated-row construction and explain why the gate cannot run.
 - Added explicit square-zero substantive rereview provenance for the next three N4 kanji batches (`字`, `安`, `室`, `家`, `寒`, `少`, `屋`, `工`, `市`, `帰`, `広`, `店`, `度`, `建`, `引`, `弟`, `弱`, `強`, `待`, `心`, `思`, `急`, `悪`, `意`, `所`, `手`, `持`, `教`, `文`, and `料`), raising N4 kanji substantive current-standard proof to `90/212` and N5/N4 combined kanji proof to `170/292` while leaving card content unchanged.
 - Added explicit square-zero substantive rereview provenance for the next three N4 kanji batches (`動`, `区`, `医`, `去`, `口`, `古`, `台`, `合`, `同`, `味`, `品`, `員`, `問`, `回`, `図`, `園`, `地`, `堂`, `場`, `声`, `売`, `夏`, `夕`, `多`, `夜`, `太`, `好`, `妹`, `姉`, and `始`), raising N4 kanji substantive current-standard proof to `60/212` and N5/N4 combined kanji proof to `140/292` while leaving card content unchanged.

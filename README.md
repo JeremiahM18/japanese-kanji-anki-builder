@@ -134,7 +134,7 @@ Run live commands for release decisions. This section is an orientation snapshot
 | Surface | Current state | Main gates |
 | --- | --- | --- |
 | N5 kanji | `80/80` Gold, `80/80` Platinum, `80/80` Obsidian. | `deck:platinum:n5`, `deck:kanji:platinum:certify-status -- --levels=5`, `deck:ready -- --levels=5` |
-| N4 kanji | `212/212` Gold and Platinum. `90/212` are Obsidian; `122` remain in the square-zero Obsidian queue. | `deck:platinum:n4`, `deck:platinum:rereview-status -- --levels=5,4`, `deck:ready -- --levels=4` |
+| N4 kanji | `212/212` Gold and Platinum. `120/212` are Obsidian; `92` remain in the square-zero Obsidian queue. | `deck:platinum:n4`, `deck:platinum:rereview-status -- --levels=5,4`, `deck:ready -- --levels=4` |
 | N3 kanji | `341/341` Gold; Platinum not started. | `deck:kanji:review-status`, `deck:ready -- --levels=3` |
 | N2 kanji | `349/349` Gold; Platinum not started. | `deck:kanji:review-status`, `deck:ready -- --levels=2` |
 | N1 kanji | `1230/1230` Gold; Platinum not started. | `deck:kanji:review-status`, `deck:ready -- --levels=1` |
@@ -154,8 +154,8 @@ Word Platinum uses `word-platinum-v3-evidence-lanes`. Current N5/N4 word Obsidia
 
 ### Cross-Product Gates
 
-- `deck:platinum:rereview-status -- --levels=5,4` currently reports N5/N4 kanji as `292/292` Platinum, `170/292` Obsidian, `122/292` needing Obsidian, and `0/292` blocked/failing.
-- `deck:kanji:platinum:certify-status -- --levels=5,4` is the fail-closed kanji Obsidian gate. It currently fails on the `122` N4 kanji that still need Obsidian proof.
+- `deck:platinum:rereview-status -- --levels=5,4` currently reports N5/N4 kanji as `292/292` Platinum, `200/292` Obsidian, `92/292` needing Obsidian, and `0/292` blocked/failing.
+- `deck:kanji:platinum:certify-status -- --levels=5,4` is the fail-closed kanji Obsidian gate. It currently fails on the `92` N4 kanji that still need Obsidian proof.
 - `deck:words:platinum:rereview-status -- --levels=5,4` uses generated word rows as the denominator. N4 word `0/667` Obsidian means `0/667`, not `0/96`.
 - `deck:platinum:governance-gate` exercises real generated N5/N4 kanji and word rows when ignored local inputs are present. It currently passes with governance warnings for missing Obsidian proof, marker-only example-quality automation, zero active verification limitations, incomplete N4 word Platinum, and word single-source-family posture.
 - JLPT kanji source evidence is governed separately from deck readiness. The source audit currently passes source-use governance with `--governance-strict` while evidence-depth work remains incomplete.

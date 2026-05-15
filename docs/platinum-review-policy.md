@@ -1,51 +1,53 @@
-# Platinum review policy
+# Platinum Review Policy
 
-Platinum review is the final version 1 content-quality pass. It is stricter than golden review.
+Platinum is the current structural and card-quality gate. It is stricter than Gold regression and separate from Obsidian certification.
 
-Golden review means the exported card surface has been manually reviewed and is protected against regression. Platinum review means the card deserves to ship.
+Gold regression means the exported card surface is protected against drift. Platinum means the live generated card passes current field-bound evidence and quality requirements. Obsidian means explicit non-mechanical current-version rereview proof exists for the live card.
 
-## Golden vs platinum
+## Review Layers
 
 | Layer | Purpose | Proves | Does not prove |
 | --- | --- | --- | --- |
-| Golden | Stabilize current generated card output. | The reviewed export fields match the governed card contract and should not regress silently. | Final release quality, common/useful learner value, source-evidence review, or version 1 approval. |
-| Platinum | Lock version 1 content. | The card is accurate, useful, learner-friendly, sourced, governed, and should ship. | A replacement for golden export regression coverage. |
+| Gold | Stabilize current generated card output. | The reviewed export fields match the governed card contract and should not regress silently. | Final release quality, source-truth evidence, Obsidian proof, or version 1 approval. |
+| Platinum | Gate current structural and card-quality requirements. | The card is accurate, useful, learner-friendly, sourced, governed, and structurally current. | A replacement for Gold regression or Obsidian proof. |
+| Obsidian | Certify substantive current-version rereview. | Explicit non-mechanical rereview proof exists for the live card. | A later fluent/native audit unless that provenance is separately recorded. |
 
 Rules:
 
-- Golden comes first. It protects the generated card surface while product review is still moving.
-- Platinum comes last. It can keep, fix, defer, or remove cards.
-- A card can be golden-reviewed and still fail platinum.
-- A level can be golden-reviewed and still not be release-ready.
-- Do not use golden coverage as a substitute for platinum review.
-- Do not use platinum review as a substitute for golden regression coverage.
-- Empty platinum manifests fail intentionally.
+- Gold comes first. It protects the generated card surface while product review is still moving.
+- Platinum can keep, fix, defer, or remove cards.
+- Obsidian is recorded only after actual current-version rereview proof exists.
+- A card can be Gold-reviewed and still fail Platinum.
+- A level can be Gold-reviewed and still not be release-ready.
+- Do not use Gold coverage as a substitute for Platinum.
+- Do not use Platinum coverage as a substitute for Gold regression or Obsidian proof.
+- Empty Platinum manifests fail intentionally.
 
 ## Product rule
 
-A card only becomes platinum when it is accurate, useful, learner-friendly, and governed. If a card is uncommon, awkward, too advanced for the level, misleading, or only present to chase reading coverage, remove or defer it instead of promoting it.
+A card only becomes Platinum when it is accurate, useful, learner-friendly, and governed. If a card is uncommon, awkward, too advanced for the level, misleading, or only present to chase reading coverage, remove or defer it instead of promoting it.
 
 Platinum evidence is field-bound. A source entry that only says "reviewed" is not enough. The evidence text for an active card must explicitly name the reviewed word or kanji, the exported reading, and the learner-facing values it supports. Automated checks enforce that evidence is tied to the generated card surface; human review still owns the judgment that the cited source and final card are correct.
 
 If a real review attempt cannot verify a non-core or externally unavailable facet, do not silently block forever and do not mark it as verified. Ship only when the card remains accurate and learner-safe, the unresolved facet is visibly labeled or recorded as a known limitation, and the platinum evidence explains the review attempt and limitation. Generated pitch accent guidance is the model precedent: it may ship only with a visible `Generated pitch (unverified)` label and governed provenance, not as dictionary-backed proof. If the unverifiable item is core to the card's written form, reading, meaning, example correctness, or product fit, defer or remove the card instead of promoting it.
 
-For kanji platinum, record any allowed non-core limitation in `verificationLimitations` instead of burying it in prose. Each limitation must name the exact facet, use an explicit visible label such as `... unverified`, describe the review attempt, appear in the exported `Notes` surface, and be mentioned in `manual-review` evidence. Core truth fields such as the target kanji, `DisplayWord`, `PrimaryReading`, `MeaningJP`, `KanjiMeanings`, example correctness, and product fit cannot use this escape hatch; unresolved uncertainty there still blocks platinum.
+For kanji Platinum, record any allowed non-core limitation in `verificationLimitations` instead of burying it in prose. Each limitation must name the exact facet, use an explicit visible label such as `... unverified`, describe the review attempt, appear in the exported `Notes` surface, and be mentioned in `manual-review` evidence. Core truth fields such as the target kanji, `DisplayWord`, `PrimaryReading`, `MeaningJP`, `KanjiMeanings`, example correctness, and product fit cannot use this escape hatch; unresolved uncertainty there still blocks Platinum.
 
-For word platinum, record any allowed non-core limitation in `verificationLimitations` instead of burying it in prose. Each limitation must name the exact facet, use an explicit visible label such as `... unverified` or `... limited verification`, describe the review attempt, appear in the exported `Notes` surface, and be mentioned in `manual-review` evidence. Core truth fields such as written form, reading, meaning, example correctness, and product fit cannot use this escape hatch; unresolved uncertainty there still blocks platinum.
+For word Platinum, record any allowed non-core limitation in `verificationLimitations` instead of burying it in prose. Each limitation must name the exact facet, use an explicit visible label such as `... unverified` or `... limited verification`, describe the review attempt, appear in the exported `Notes` surface, and be mentioned in `manual-review` evidence. Core truth fields such as written form, reading, meaning, example correctness, and product fit cannot use this escape hatch; unresolved uncertainty there still blocks Platinum.
 
-For active word cards, `japanese-source` evidence must cite a source registered in `templates/platinum_card_source_manifest.json` for `word-field-verification`. Generated output, golden review expectations, tracked starter templates, ignored local data, source-claim lists, and local caches are useful internal evidence, but they are not Japanese-source verification by themselves. Kanji-reference sources may support `single-kanji-word-field-verification` only for one-kanji word cards.
+For active word cards, `japanese-source` evidence must cite a source registered in `templates/platinum_card_source_manifest.json` for `word-field-verification`. Generated output, Gold regression expectations, tracked starter templates, ignored local data, source-claim lists, and local caches are useful internal evidence, but they are not Japanese-source verification by themselves. Kanji-reference sources may support `single-kanji-word-field-verification` only for one-kanji word cards.
 
 For active word cards, the reviewed deck level must be governed by the written word and learner fit. A card is anchored by kanji from its own deck level; other constituent kanji are support kanji and must be visibly labeled. If the word has no current-level anchor, all-easier-kanji words may ship later only with an explicit learner-fit rationale, and words that depend only on harder support kanji must move, defer, or be removed.
 
-For active kanji cards, `japanese-source` evidence must cite a source registered in `templates/platinum_card_source_manifest.json` for `kanji-field-verification`. Generated output, golden review expectations, tracked starter templates, source-governance manifests, source-claim lists, ignored local data, and local caches are useful internal evidence, but they are not Japanese-source verification by themselves. The same source may support both kanji and word product reviews when it directly verifies each card's own fields; the requirement is accuracy and field binding, not source uniqueness across products. This card-field source check is not a JLPT placement proof; placement confidence remains owned by the source-governance layer. Platinum may read JLPT kanji source-governance origin ids only to reject circular field verification against the same source family.
+For active kanji cards, `japanese-source` evidence must cite a source registered in `templates/platinum_card_source_manifest.json` for `kanji-field-verification`. Generated output, Gold regression expectations, tracked starter templates, source-governance manifests, source-claim lists, ignored local data, and local caches are useful internal evidence, but they are not Japanese-source verification by themselves. The same source may support both kanji and word product reviews when it directly verifies each card's own fields; the requirement is accuracy and field binding, not source uniqueness across products. This card-field source check is not a JLPT placement proof; placement confidence remains owned by the source-governance layer. Platinum may read JLPT kanji source-governance origin ids only to reject circular field verification against the same source family.
 
-Current word Platinum review uses the versioned standard `word-platinum-v3-evidence-lanes`. Active word entries count toward current-standard Platinum coverage only when they include `reviewStandard`, `revalidatedAt`, `revalidationSummary`, `notesIncludes`, `sourceEvidence`, `internalChecks`, and `reviewEvidence`. Word `sourceEvidence` is reserved for governed external Japanese-source truth evidence and must not contain generated-output checks, golden review, media checks, or manual judgment. `internalChecks` carries generated-surface, golden-regression, level-contract, media, audio, pitch-accent, and label checks. `reviewEvidence` carries example review, manual product judgment, and current-standard whole-card revalidation. That current-standard review evidence must explicitly bind the generated surface, Japanese-source field check, example sentence, notes/support surface, reading breakdown, level/label surface, exact audio identity, pitch-accent source/render state, media provenance, and verification limitations to the exact written-reading card. It must also record the example sentence judgment: natural, useful, learner-friendly, level-appropriate, and release-quality. Existing active word platinum entries created before this standard are legacy/unversioned: keep them for historical context, but do not count them as current version 1 release coverage until they are revalidated.
+Current word Platinum coverage uses the versioned standard `word-platinum-v3-evidence-lanes`. Active word entries count toward current-standard Platinum coverage only when they include `reviewStandard`, `revalidatedAt`, `revalidationSummary`, `notesIncludes`, `sourceEvidence`, `internalChecks`, and `reviewEvidence`. Word `sourceEvidence` is reserved for governed external Japanese-source truth evidence and must not contain generated-output checks, Gold regression, media checks, or manual judgment. `internalChecks` carries generated-surface, golden-regression, level-contract, media, audio, pitch-accent, and label checks. `reviewEvidence` carries example review, manual product judgment, and current-standard whole-card revalidation. That current-standard review evidence must explicitly bind the generated surface, Japanese-source field check, example sentence, notes/support surface, reading breakdown, level/label surface, exact audio identity, pitch-accent source/render state, media provenance, and verification limitations to the exact written-reading card. It must also record the example sentence judgment: natural, useful, learner-friendly, level-appropriate, and release-quality. Existing active word Platinum entries created before this standard are legacy/unversioned: keep them for historical context, but do not count them as current version 1 release coverage until they are revalidated.
 
-Current kanji platinum uses the versioned standard `kanji-platinum-v3-evidence-lanes`. Active kanji entries count as platinum only when they include `reviewStandard`, `revalidatedAt`, `revalidationSummary`, `sourceEvidence`, `internalChecks`, and `reviewEvidence`. Kanji `sourceEvidence` is reserved for governed external Japanese-source card-field truth and must not contain generated-output checks, golden review, media checks, or manual judgment. `internalChecks` carries generated-surface, golden-regression, media, audio, and stroke-order checks. `reviewEvidence` carries manual product judgment and current-standard whole-card revalidation. That current-standard review evidence must explicitly bind the generated surface, Japanese-source field check, example sentence, notes/support surface, audio, stroke-order media, and verification limitations to the exact card. It must also record the example sentence judgment: natural, useful, learner-friendly, level-appropriate, release-quality, and support-only. Legacy or unversioned kanji review history must be recorded as `needs_revalidation`; it is non-certifying backlog/history and must not use active platinum statuses until the card is revalidated under the current standard.
+Current kanji Platinum uses the versioned standard `kanji-platinum-v3-evidence-lanes`. Active kanji entries count as Platinum only when they include `reviewStandard`, `revalidatedAt`, `revalidationSummary`, `sourceEvidence`, `internalChecks`, and `reviewEvidence`. Kanji `sourceEvidence` is reserved for governed external Japanese-source card-field truth and must not contain generated-output checks, Gold regression, media checks, or manual judgment. `internalChecks` carries generated-surface, golden-regression, media, audio, and stroke-order checks. `reviewEvidence` carries manual product judgment and current-standard whole-card revalidation. That current-standard review evidence must explicitly bind the generated surface, Japanese-source field check, example sentence, notes/support surface, audio, stroke-order media, and verification limitations to the exact card. It must also record the example sentence judgment: natural, useful, learner-friendly, level-appropriate, release-quality, and support-only. Legacy or unversioned kanji review history must be recorded as `needs_revalidation`; it is non-certifying backlog/history and must not use active Platinum statuses until the card is revalidated under the current standard.
 
-## Word-card platinum rules
+## Word-Card Platinum Rules
 
-Each platinum word card must pass all rules below:
+Each Platinum word card must pass all rules below:
 
 - The word belongs in the word-deck product and in the reviewed level.
 - The written word has a current-level kanji anchor, or an explicit learner-fit rationale explains later placement for an all-easier-kanji word.
@@ -62,9 +64,9 @@ Each platinum word card must pass all rules below:
 - Evidence lanes explicitly name the shipped written form, reading, meaning, example sentence, level/label claims, exact audio identity, pitch-accent source pattern, and whether pitch is dictionary-verified or generated guidance. `sourceEvidence` proves external Japanese-source card truth only; `internalChecks` and `reviewEvidence` prove generated/release gates and reviewer judgment.
 - The card does not depend on ignored local files, untracked generated content, or silent fallback behavior.
 
-## Kanji-card platinum rules
+## Kanji-Card Platinum Rules
 
-Each platinum kanji card must pass all rules below:
+Each Platinum kanji card must pass all rules below:
 
 - The card belongs in the kanji-deck product and in the reviewed JLPT level.
 - The front/`Kanji` field is exactly one target kanji.
@@ -151,7 +153,7 @@ Active word `sourceEvidence` must include only the evidence type below:
 Active word `internalChecks` must include all evidence types below:
 
 - `generated-surface`: the generated word-card surface was inspected.
-- `golden-regression`: the separate golden review regression gate was checked and is explicitly not source truth.
+- `golden-regression`: the separate Gold regression gate was checked and is explicitly not source truth.
 - `level-contract`: the word belongs in the reviewed word-product level.
 - `media-audit`: governed media provenance was checked.
 - `audio-review`: generated audio artifact identity, provenance, and exact word-reading match were reviewed.
@@ -164,7 +166,7 @@ Active word `reviewEvidence` must include all evidence types below:
 - `manual-review`: a final product judgment was made.
 - `current-standard-review`: the whole-card surface was revalidated under `word-platinum-v3-evidence-lanes`.
 
-Golden word review remains a required regression gate where applicable, but it is not word platinum source truth. It must appear as `golden-regression` in `internalChecks` and must not appear in word `sourceEvidence`.
+Gold word regression remains required where applicable, but it is not word Platinum source truth. It must appear as `golden-regression` in `internalChecks` and must not appear in word `sourceEvidence`.
 
 Required `qualityGates`:
 
@@ -231,7 +233,7 @@ Active kanji `sourceEvidence` must include only the evidence type below:
 Active kanji `internalChecks` must include all evidence types below:
 
 - `generated-surface`: the generated card surface was inspected.
-- `golden-regression`: the separate golden review regression gate was checked and is explicitly not source truth.
+- `golden-regression`: the separate Gold regression gate was checked and is explicitly not source truth.
 - `media-audit`: governed media provenance was checked.
 - `audio-review`: generated audio artifact identity, provenance, and exact target-reading match were reviewed.
 - `stroke-order-review`: stroke-order media was visually checked for the reviewed target kanji.
@@ -241,7 +243,7 @@ Active kanji `reviewEvidence` must include all evidence types below:
 - `manual-review`: a final product judgment was made.
 - `current-standard-review`: the whole-card surface was revalidated under `kanji-platinum-v3-evidence-lanes`.
 
-Golden kanji review remains a required regression gate where applicable, but it is not kanji platinum source truth. It must appear as `golden-regression` in `internalChecks` and must not appear in kanji `sourceEvidence`.
+Gold kanji regression remains required where applicable, but it is not kanji Platinum source truth. It must appear as `golden-regression` in `internalChecks` and must not appear in kanji `sourceEvidence`.
 
 Required kanji `qualityGates`:
 
@@ -314,6 +316,6 @@ Each kanji Platinum command requires every generated card for that level and sur
 
 Each word Platinum command requires every generated word card for that level and surface to have an active current-standard structural entry by default. Use `--allow-legacy-standard` only to inspect historical field-bound entries while planning revalidation; it must not be used as version 1 release evidence.
 
-Additional platinum commands apply only to the optional `additional_unverified_Nx` surface. They do not move the core JLPT kanji contract, certify source-evidence confidence, or satisfy core kanji platinum coverage. The npm aliases pass `--allow-empty` because the governed default currently suppresses all already-core source claims from the physical additional decks, leaving `0` selected additional cards. An empty generated additional surface is valid only when `deck:kanji:additional:ready` and `deck:kanji:review-status` prove the source claims were suppressed rather than silently skipped.
+Additional Platinum commands apply only to the optional `additional_unverified_Nx` surface. They do not move the core JLPT kanji contract, certify source-evidence confidence, or satisfy core kanji Platinum coverage. The npm aliases pass `--allow-empty` because the governed default currently suppresses all already-core source claims from the physical additional decks, leaving `0` selected additional cards. An empty generated additional surface is valid only when `deck:kanji:additional:ready` and `deck:kanji:review-status` prove the source claims were suppressed rather than silently skipped.
 
-Core kanji and word Platinum commands intentionally fail for an empty manifest. Do not use Gold regression coverage as a substitute for Platinum review, and do not use Platinum coverage as a substitute for Obsidian certification.
+Core kanji and word Platinum commands intentionally fail for an empty manifest. Do not use Gold regression coverage as a substitute for Platinum, and do not use Platinum coverage as a substitute for Obsidian certification.

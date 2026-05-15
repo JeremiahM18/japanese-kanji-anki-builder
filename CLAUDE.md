@@ -110,22 +110,23 @@ For word-deck expansion:
 - prefer useful, common, learner-friendly cards over raw coverage gain
 - keep reading coverage, labels, examples, audio, pitch accent, and card-back fields governed from the first batch
 
-## Golden vs Platinum
+## Gold, Platinum, and Obsidian
 
 Keep the review layers separate.
 
-- Golden review protects generated card output from regression. It checks reviewed learner-facing fields against the current governed contract.
-- Golden review does not mean a card deserves to ship in version 1.
-- Platinum review is the final version 1 content-quality decision.
-- Platinum review requires source evidence, explicit quality gates, and a keep/fix/defer/remove decision.
-- A card can be golden-reviewed and still fail platinum.
-- A level can be golden-reviewed and still not be release-ready.
-- Do not use golden coverage as a substitute for platinum review.
-- Do not use platinum review as a substitute for golden regression coverage.
+- Gold regression protects generated card output from drift. It checks reviewed learner-facing fields against the current governed contract.
+- Gold regression does not mean a card deserves to ship in version 1.
+- Platinum is the current structural and card-quality gate.
+- Platinum requires source evidence, explicit quality gates, and a keep/fix/defer/remove decision.
+- Obsidian requires explicit non-mechanical current-version rereview proof.
+- A card can be Gold-reviewed and still fail Platinum.
+- A level can be Gold-reviewed and still not be release-ready.
+- Do not use Gold coverage as a substitute for Platinum.
+- Do not use Platinum coverage as a substitute for Gold regression or Obsidian proof.
 
 ## N5/N4 Word Freeze
 
-N5 and N4 word work are now stabilized at the golden-review level.
+N5 and N4 word work are now stabilized at the Gold regression level.
 
 That means:
 

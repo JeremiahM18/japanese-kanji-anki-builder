@@ -60,13 +60,13 @@ See the tracked mini fixture in [examples/n5-mini](examples/n5-mini) for sample 
 
 ```mermaid
 flowchart TD
-    A["JLPT contracts + curated data + sentence corpus + media manifests"] --> B["Dataset loaders"]
-    B --> C["Inference, ranking, and validation"]
-    C --> D["Kanji cards"]
-    C --> E["Word cards"]
-    D --> F["TSV exports + optional APKG packages"]
+    A["Governed inputs<br/>JLPT contracts + curated study data<br/>sentence corpus + media manifests"] --> B["Loaders + normalizers"]
+    B --> C["Inference + ranking + validation"]
+    C --> D["Kanji deck rows"]
+    C --> E["Word deck rows"]
+    D --> F["TSV exports + optional APKG packaging"]
     E --> F
-    F --> G["Golden review + platinum review + release gates"]
+    F --> G["Gold regression + Platinum gate<br/>Obsidian proof + release gates"]
 ```
 
 ## About
@@ -86,7 +86,7 @@ Ignored local files under `data/` are workspace inputs. They are not product tru
 
 - [Repository governance tests](test/repositoryGovernance.test.js) protect source-of-truth boundaries, README/source-lane consistency, CI contract names, CODEOWNERS coverage, and source-evidence routing.
 - The tracked [examples/n5-mini](examples/n5-mini) fixture locks exact generated TSV rows against the live note schemas so schema or export drift is visible immediately.
-- Golden review protects generated card output from regression; platinum review decides whether a card deserves to ship.
+- Gold regression protects generated card output from drift; Platinum gates check current structural evidence; Obsidian proof records substantive current-version rereview.
 
 ## Scope
 
@@ -121,7 +121,7 @@ These tier names are product gates, not marketing labels. Kanji and word decks r
 | Tier | What it means | What it does not prove |
 | --- | --- | --- |
 | Silver | A generated card surface exists for the product. | Reviewed content, source truth, release quality, or learner usefulness. |
-| Gold | Golden regression protects reviewed generated output from drift. | Source truth, release approval, or substantive current-version rereview. |
+| Gold | Gold regression protects reviewed generated output from drift. | Source truth, release approval, or substantive current-version rereview. |
 | Platinum | The card passes the current product's structural Platinum gate against live generated rows. Evidence lanes are separated into governed source truth, internal checks, and reviewer judgment. | Obsidian proof, native-level language judgment, or permission to shrink the square-zero certification denominator. |
 | Obsidian | Explicit non-mechanical current-version rereview proof exists for the live card. For kanji, this includes structured rereview provenance and actual example-sentence review evidence for naturalness, learner usefulness, level fit, support-only usage, reading, and translation. | A later fluent/native audit unless that provenance is separately recorded. |
 
@@ -180,10 +180,10 @@ Tracked contracts define release behavior:
 - Audio source policy: [templates/audio_source_policy.json](templates/audio_source_policy.json)
 - Kanji note schema: [src/config/ankiNoteSchema.json](src/config/ankiNoteSchema.json)
 - Word note schema: [src/config/ankiWordNoteSchema.json](src/config/ankiWordNoteSchema.json)
-- Golden kanji review sets: [templates/golden_n5_review_set.json](templates/golden_n5_review_set.json), [templates/golden_n4_review_set.json](templates/golden_n4_review_set.json), [templates/golden_n3_review_set.json](templates/golden_n3_review_set.json), [templates/golden_n2_review_set.json](templates/golden_n2_review_set.json), [templates/golden_n1_review_set.json](templates/golden_n1_review_set.json)
-- Golden additional unverified kanji review sets: [templates/golden_additional_unverified_n5_review_set.json](templates/golden_additional_unverified_n5_review_set.json), [templates/golden_additional_unverified_n4_review_set.json](templates/golden_additional_unverified_n4_review_set.json), [templates/golden_additional_unverified_n3_review_set.json](templates/golden_additional_unverified_n3_review_set.json), [templates/golden_additional_unverified_n2_review_set.json](templates/golden_additional_unverified_n2_review_set.json), [templates/golden_additional_unverified_n1_review_set.json](templates/golden_additional_unverified_n1_review_set.json)
-- Golden word review sets: [templates/golden_n5_word_review_set.json](templates/golden_n5_word_review_set.json), [templates/golden_n4_word_review_set.json](templates/golden_n4_word_review_set.json)
-- Platinum review policy: [docs/platinum-review-policy.md](docs/platinum-review-policy.md)
+- Gold kanji regression sets: [templates/golden_n5_review_set.json](templates/golden_n5_review_set.json), [templates/golden_n4_review_set.json](templates/golden_n4_review_set.json), [templates/golden_n3_review_set.json](templates/golden_n3_review_set.json), [templates/golden_n2_review_set.json](templates/golden_n2_review_set.json), [templates/golden_n1_review_set.json](templates/golden_n1_review_set.json)
+- Gold additional-unverified kanji regression sets: [templates/golden_additional_unverified_n5_review_set.json](templates/golden_additional_unverified_n5_review_set.json), [templates/golden_additional_unverified_n4_review_set.json](templates/golden_additional_unverified_n4_review_set.json), [templates/golden_additional_unverified_n3_review_set.json](templates/golden_additional_unverified_n3_review_set.json), [templates/golden_additional_unverified_n2_review_set.json](templates/golden_additional_unverified_n2_review_set.json), [templates/golden_additional_unverified_n1_review_set.json](templates/golden_additional_unverified_n1_review_set.json)
+- Gold word regression sets: [templates/golden_n5_word_review_set.json](templates/golden_n5_word_review_set.json), [templates/golden_n4_word_review_set.json](templates/golden_n4_word_review_set.json)
+- Platinum policy: [docs/platinum-review-policy.md](docs/platinum-review-policy.md)
 - Platinum kanji review sets: [templates/platinum_n5_review_set.json](templates/platinum_n5_review_set.json), [templates/platinum_n4_review_set.json](templates/platinum_n4_review_set.json), [templates/platinum_n3_review_set.json](templates/platinum_n3_review_set.json), [templates/platinum_n2_review_set.json](templates/platinum_n2_review_set.json), [templates/platinum_n1_review_set.json](templates/platinum_n1_review_set.json)
 - Platinum additional unverified kanji review sets: [templates/platinum_additional_unverified_n5_review_set.json](templates/platinum_additional_unverified_n5_review_set.json), [templates/platinum_additional_unverified_n4_review_set.json](templates/platinum_additional_unverified_n4_review_set.json), [templates/platinum_additional_unverified_n3_review_set.json](templates/platinum_additional_unverified_n3_review_set.json), [templates/platinum_additional_unverified_n2_review_set.json](templates/platinum_additional_unverified_n2_review_set.json), [templates/platinum_additional_unverified_n1_review_set.json](templates/platinum_additional_unverified_n1_review_set.json)
 - Platinum word review sets: [templates/platinum_n5_word_review_set.json](templates/platinum_n5_word_review_set.json), [templates/platinum_n4_word_review_set.json](templates/platinum_n4_word_review_set.json)
@@ -227,8 +227,8 @@ Kanji decks:
 
 - Each shipped kanji belongs to the tracked JLPT kanji contract.
 - The JLPT kanji contract is the current operational taxonomy, not sole source truth. Non-disputed source consensus can be promoted only by an explicit governed contract migration; source confidence is still audited separately by the JLPT kanji source-evidence audit.
-- N5, N4, N3, N2, and N1 kanji are fully protected by golden review coverage.
-- N1 kanji golden review coverage is complete: `1230/1230` reviewed. N1 can only be treated as ready when exact primary-reading audio and level readiness both pass.
+- N5, N4, N3, N2, and N1 kanji are fully protected by Gold regression coverage.
+- N1 kanji Gold regression coverage is complete: `1230/1230` reviewed. N1 can only be treated as ready when exact primary-reading audio and level readiness both pass.
 - The kanji deck learning target is the individual kanji. `DisplayWord` is the target kanji itself, and `PrimaryReading` is the most learner-useful, level-appropriate reading for that kanji.
 - Compound words belong in notes, examples, and word decks; they must not replace the kanji-card anchor.
 - `deck:ready` fails on export fallbacks unless `--allow-export-fallbacks` is explicit.
@@ -236,7 +236,7 @@ Kanji decks:
 - Audio is governed by policy and required for kanji deck readiness. Exported kanji cards must use exact audio for the target kanji and exported primary reading.
 - Additional kanji is currently a source-claim diagnostic with `0` physical cards, not an extra learner backlog. It does not move the core JLPT contract, prove source-evidence confidence, or replace core deck readiness.
 - Duplicate additional source claims and source claims for kanji already present in a core deck are suppressed by default so the kanji remains in its core deck placement and no duplicate additional card is generated. Unresolved duplicate additional claims fail `deck:kanji:review-status`.
-- Additional golden/platinum review protects only generated `additional_unverified_Nx` output if selected cards exist. Empty additional surfaces are valid only when `deck:kanji:additional:ready` and `deck:kanji:review-status` prove the source claims were governed and suppressed.
+- Additional Gold and Platinum gates protect only generated `additional_unverified_Nx` output if selected cards exist. Empty additional surfaces are valid only when `deck:kanji:additional:ready` and `deck:kanji:review-status` prove the source claims were governed and suppressed.
 
 Word decks:
 
@@ -252,19 +252,20 @@ Word decks:
 - Track reading-coverage intent with `coverage.role`, `coverage.focusKanji`, and `coverage.coversReadings` when the card exists for coverage.
 - Sentence orthography review is advisory. It flags likely kana-only regressions without banning natural kana usage.
 
-Golden and platinum review:
+Gold, Platinum, and Obsidian:
 
-- Golden review protects reviewed generated output from regression. It checks that exported learner-facing fields match the current governed contract.
-- Golden review does not mean version 1 release approval.
-- Platinum review decides whether a card deserves to ship in version 1.
-- Platinum review requires field-bound source evidence, explicit quality gates, and a keep/fix/defer/remove decision. Evidence that only says a field was "reviewed" is not enough; it must name the card, exported reading, and learner-facing values it supports.
-- Active word-card `japanese-source` evidence must cite a source registered in [templates/platinum_card_source_manifest.json](templates/platinum_card_source_manifest.json) for `word-field-verification`. Generated output, golden expectations, tracked starter templates, ignored local data, source-claim lists, and local caches do not satisfy that role by themselves. Kanji-reference evidence may support `single-kanji-word-field-verification` only for one-kanji word cards.
+- Gold regression protects reviewed generated output from drift. It checks that exported learner-facing fields match the current governed contract.
+- Gold regression does not mean release approval.
+- Platinum gates current structural and card-quality requirements against live generated rows.
+- Platinum requires field-bound source evidence, explicit quality gates, and a keep/fix/defer/remove decision. Evidence that only says a field was "reviewed" is not enough; it must name the card, exported reading, and learner-facing values it supports.
+- Active word-card `japanese-source` evidence must cite a source registered in [templates/platinum_card_source_manifest.json](templates/platinum_card_source_manifest.json) for `word-field-verification`. Generated output, Gold regression expectations, tracked starter templates, ignored local data, source-claim lists, and local caches do not satisfy that role by themselves. Kanji-reference evidence may support `single-kanji-word-field-verification` only for one-kanji word cards.
 - Active kanji-card `japanese-source` evidence must cite a source registered for `kanji-field-verification` for card-field accuracy. This does not certify JLPT placement or source-governance confidence, and the same source may support kanji and word product reviews when it directly verifies each card's fields. Platinum uses JLPT kanji source-governance origins only to reject circular field verification against the same source family.
-- Active word platinum also enforces word-level placement: a card needs a current-level kanji anchor, or a learner-fit rationale for later all-easier-kanji placement.
-- Platinum review removes or defers noise instead of preserving cards that are uncommon, awkward, too advanced for the level, or only present to chase coverage.
-- Platinum review may improve source data and example sentences before promotion.
+- Active word Platinum also enforces word-level placement: a card needs a current-level kanji anchor, or a learner-fit rationale for later all-easier-kanji placement.
+- Platinum removes or defers noise instead of preserving cards that are uncommon, awkward, too advanced for the level, or only present to chase coverage.
+- Platinum may improve source data and example sentences before promotion.
+- Obsidian certification requires explicit non-mechanical current-version rereview proof. Platinum entries without that proof remain in the Obsidian queue.
 - Platinum manifests are in progress. Only active `platinum` and `fixed_then_platinum` entries can count as reviewed release coverage, and release coverage must also pass the current versioned platinum standard for that product surface.
-- Kanji platinum entries created before `kanji-platinum-v3-evidence-lanes`, and word platinum entries created before `word-platinum-v3-evidence-lanes`, are legacy/unversioned history, not trusted release coverage, until they are revalidated and pass the default platinum command.
+- Kanji Platinum entries created before `kanji-platinum-v3-evidence-lanes`, and word Platinum entries created before `word-platinum-v3-evidence-lanes`, are legacy/unversioned history, not trusted release coverage, until they are revalidated and pass the default Platinum command.
 
 ## Standard Verification
 
@@ -339,9 +340,9 @@ npm run release:gate
 
 `data:template:jlpt:source-input` creates an ignored worksheet for one selected manual source lane, such as `jlptsensei` or a Japanese-published textbook source. It deliberately leaves `level`, `citation`, and `evidenceRef` blank so no row can become evidence until a reviewer fills permitted source citations, pins the TSV integrity in `templates/jlpt_kanji_source_inputs.json`, and activates that individual source intentionally. Use `--priority=source-review-worklist --limit=<n> --out=<ignored-batch.tsv>` for the default governed batch flow: it orders all levels together by source-lane batch value, disputed consensus first, then missing evidence, missing Japanese-published evidence, contract/consensus mismatches, independence gaps, and weak evidence; within each priority bucket it reviews N5 through N1. Broad source-review worklists from `11` to `99` rows require `--source-access-note="<exact source surface reviewed>"`; unbounded or `100+` row worklists require `--source-access-packet=<ignored-packet.json>`. Source inputs may declare `supportedLevels`; when present, source-review worklists keep only rows whose review levels intersect that source's declared levels. It skips rows already `reviewed`, `blocked`, or `source_access_gap` in the selected full worksheet, and requires explicit `--out` so it cannot overwrite that worksheet. Use `--priority=source-gaps` only when intentionally scanning the operational contract order by evidence-depth issue, and use `--priority=source-level-deltas --source-level=<N1-N5> --out=<ignored-batch.tsv>` only for a targeted source-claimed level delta investigation. For batch review, pass `--limit=<n>` with a reusable `--out` path rather than creating numbered files. Shin Kanzen Master, Nihongo Sou Matome, TRY!, and ASK Hajimete JLPT Kanji remain `manual-citation-only`: review from actual source access, store only reviewer level judgment plus citation/evidenceRef/notes, and do not copy textbook lists or passages. A row becomes `reviewed` only when the source material supports that exact source level judgment; adjacent-level schedules, cumulative review/basic-kanji appendices inside higher-level volumes, review tables, vocabulary-only lists, or appearance-only evidence are not assignment proof. Keep rows `needs_review` until they are actually checked. Use `source_access_gap` only when available permitted source material has been checked and does not provide exact assignment proof yet; use `blocked` only for a source-use or worksheet defect that makes the row unusable for that source lane. The TSV still exposes only import-safe manual-review fields; priority metadata appears in the command report and JSON output, not as source truth. `data:template:jlpt:textbook-source` remains an alias for the same governed worksheet flow. `japanese_textbook_consensus` is derived from individual textbook lanes and is not manually imported.
 
-`product:readiness:n5` runs the current automated N5 product checkpoint: JLPT kanji and word audits, governed audio provenance, tracked-source N5 word TSV generation, N5 word-level placement audit, and N5 kanji and word golden reviews. It currently passes. It does not run or gate on the JLPT kanji source-evidence audit yet; that audit is currently read-only transparency until taxonomy confidence is governed and passing. It still does not validate tracked-source kanji TSVs, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA. Run the applicable platinum command separately when a level is being version-1 locked.
+`product:readiness:n5` runs the current automated N5 product checkpoint: JLPT kanji and word audits, governed audio provenance, tracked-source N5 word TSV generation, N5 word-level placement audit, and N5 kanji and word Gold regression checks. It currently passes. It does not run or gate on the JLPT kanji source-evidence audit yet; that audit is currently read-only transparency until taxonomy confidence is governed and passing. It still does not validate tracked-source kanji TSVs, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA. Run the applicable Platinum command separately when a level is being version-1 locked.
 
-`release:gate` validates deterministic smoke-fixture artifacts and packaging contracts. It does not certify public product deck readiness. Add level-specific readiness, golden review, accessibility, provenance, and manual QA commands for the surface being changed.
+`release:gate` validates deterministic smoke-fixture artifacts and packaging contracts. It does not certify public product deck readiness. Add level-specific readiness, Gold regression, accessibility, provenance, and manual QA commands for the surface being changed.
 
 ## Core Workflows
 
@@ -403,10 +404,11 @@ npm run deck:review:coverage
 npm run deck:review:coverage -- --level=1
 node scripts/reviewPlatinumKanjiLevel.js --level=5
 npm run deck:words:review:n5
+npm run deck:words:review:n4
 node scripts/reviewPlatinumWordLevel.js --level=5
 ```
 
-Tier names: Silver means generated surface, Gold means golden regression, Platinum means current-standard structural gate, and Obsidian means explicit non-mechanical current-version rereview proof. `deck:platinum:batch` and `deck:words:platinum:batch` are read-only pre-review reports; they do not create entries or prove release readiness. Use `--queue=missing-current-standard` only when intentionally inspecting structural coverage gaps. The `npm run deck:platinum:n5` and `npm run deck:words:platinum:n5` commands are full-level Platinum gates and fail until every generated N5 card has an active current-standard structural entry.
+Tier names: Silver means generated surface, Gold means regression protection, Platinum means current-standard structural gate, and Obsidian means explicit non-mechanical current-version rereview proof. `deck:platinum:batch` and `deck:words:platinum:batch` are read-only pre-review reports; they do not create entries or prove release readiness. Use `--queue=missing-current-standard` only when intentionally inspecting structural coverage gaps. The `npm run deck:platinum:n5` and `npm run deck:words:platinum:n5` commands are full-level Platinum gates and fail until every generated N5 card has an active current-standard structural entry.
 
 ### Build Kanji Decks
 
@@ -420,7 +422,7 @@ npm run deck:kanji:additional:ready
 
 Use `--allow-export-fallbacks` only for an explicitly degraded local artifact.
 
-`deck:kanji:additional:ready` writes separate `additional_unverified_Nx` exports under `out/build/additional_unverified` and packages them as a separate `kanji-additional` APKG. The governed default currently writes empty `0`-row exports because all raw additional source claims are already-core source-claim collisions and are suppressed from the physical surface. Do not merge those rows into the core deck or treat their golden manifests as source-evidence proof.
+`deck:kanji:additional:ready` writes separate `additional_unverified_Nx` exports under `out/build/additional_unverified` and packages them as a separate `kanji-additional` APKG. The governed default currently writes empty `0`-row exports because all raw additional source claims are already-core source-claim collisions and are suppressed from the physical surface. Do not merge those rows into the core deck or treat their Gold manifests as source-evidence proof.
 
 ### Build Word Decks
 
@@ -482,11 +484,11 @@ The expansion candidate report is a read-only post-coverage tool. Use it after t
 - `known-jlpt` allows harder known JLPT kanji but reports them for review.
 - `any` allows outside-JLPT kanji but reports them for review.
 
-Expansion candidates are not product truth. A candidate list may reveal useful vocabulary, but every promoted word still needs source/commonness review, level-fit review, examples, reading breakdowns, kanji labels, audio, pitch policy compliance, golden/platinum review, and readiness validation.
+Expansion candidates are not product truth. A candidate list may reveal useful vocabulary, but every promoted word still needs source/commonness review, level-fit review, examples, reading breakdowns, kanji labels, audio, pitch policy compliance, Gold regression, Platinum evidence, and readiness validation.
 
 The report deduplicates exact `written|reading` identities and also flags same-written candidates that already have another governed or excluded reading. Those warnings are review prompts, not automatic rejection: approve multiple readings only when the extra card is useful, common, level-fit, and worth teaching as its own word identity.
 
-Tracked triage decisions live in [templates/word_inventory_expansion_triage.json](templates/word_inventory_expansion_triage.json). These decisions are read-only planning metadata, not card approvals. `keep_candidate` means "worth source-checking next"; it does not bypass the 8-card word platinum review batch size, generated-surface inspection, golden review, platinum evidence, media review, or readiness gates.
+Tracked triage decisions live in [templates/word_inventory_expansion_triage.json](templates/word_inventory_expansion_triage.json). These decisions are read-only planning metadata, not card approvals. `keep_candidate` means "worth source-checking next"; it does not bypass the 8-card word Platinum batch size, generated-surface inspection, Gold regression, Platinum evidence, media review, or readiness gates.
 
 When `--source` is omitted, the report resolves the single active `candidate-discovery` source for the requested level from [templates/word_source_manifest.json](templates/word_source_manifest.json), applies its source label, format, candidate policy, and local integrity pins, then fails instead of trusting a mismatched ignored TSV.
 
@@ -504,7 +506,7 @@ The expansion signal command answers the narrow "fully expanded under current re
 
 The configured source TSVs under `downloads/` are ignored local inputs, so the signal source config pins their source URL, source label, SHA-256, byte size, and parsed row count. The enhancement signal verifies those pins before reporting `exhausted`; a mismatch reports `source_mismatch` and strict mode fails instead of trusting an unverified local file.
 
-The signal is deliberately not a release claim. It does not replace golden review, platinum review, APKG import QA, accessibility checks, media/listening QA, or readiness gates. Levels without configured source lists, matching source integrity, generated TSV exports, or resolved placement policy report that blocker instead of pretending to be complete.
+The signal is deliberately not a release claim. It does not replace Gold regression, Platinum gates, Obsidian proof, APKG import QA, accessibility checks, media/listening QA, or readiness gates. Levels without configured source lists, matching source integrity, generated TSV exports, or resolved placement policy report that blocker instead of pretending to be complete.
 
 ## Media Workflows
 
@@ -527,7 +529,7 @@ Managed animation priority:
 
 True animation coverage requires real looping animation assets. Static images and SVG fallbacks do not satisfy that rule. Use the configured GitHub animation mirrors or reviewed local source files.
 
-Stroke-order release provenance is governed by `templates/stroke_order_source_policy.json`; run the audit before treating new media as release-ready. The automated gate verifies approved source policy, managed manifests, and target-bound review evidence. It does not prove stroke-sequence correctness by itself. Platinum review must state that the stroke-order media was visually checked for the target kanji.
+Stroke-order release provenance is governed by `templates/stroke_order_source_policy.json`; run the audit before treating new media as release-ready. The automated gate verifies approved source policy, managed manifests, and target-bound review evidence. It does not prove stroke-sequence correctness by itself. Platinum evidence must state that the stroke-order media was visually checked for the target kanji.
 
 ### Audio
 
@@ -589,28 +591,28 @@ Repository governance:
 | `npm run doctor:voicevox` | Verify local governed VOICEVOX setup |
 | `npm run deck:readiness` | Report per-level quality gates |
 | `npm run deck:preview` | Preview kanji cards |
-| `npm run deck:platinum:batch -- --level=5 --limit=12` | Build a read-only kanji Obsidian pre-review packet |
+| `npm run deck:platinum:batch -- --level=5 --limit=12` | Build a read-only kanji review packet for the selected queue |
 | `npm run deck:kanji:platinum:certify-status -- --levels=5,4` | Fail-closed kanji Obsidian certification status |
 | `npm run deck:ready` | Build and package kanji TSV artifacts |
 | `npm run deck:apkg` | Build kanji `.apkg` artifacts |
 | `npm run deck:kanji:additional:ready` | Build the separate optional additional-unverified kanji TSV/APKG surface |
 | `npm run deck:kanji:review-status` | Report core/additional kanji generated, Gold, Platinum, revalidation backlog, and duplicate-claim status |
-| `npm run deck:review:n5` | Run the N5 kanji golden benchmark |
-| `npm run deck:review:n4` | Run the N4 kanji golden benchmark |
-| `npm run deck:review:n3` | Run the N3 kanji golden benchmark |
-| `npm run deck:review:n2` | Run the N2 kanji golden benchmark |
-| `npm run deck:review:n1` | Run the N1 kanji golden benchmark |
-| `npm run deck:kanji:additional:review:n5` | Run the additional-unverified N5 kanji golden benchmark |
-| `npm run deck:kanji:additional:review:n4` | Run the additional-unverified N4 kanji golden benchmark |
-| `npm run deck:kanji:additional:review:n3` | Run the additional-unverified N3 kanji golden benchmark |
-| `npm run deck:kanji:additional:review:n2` | Run the additional-unverified N2 kanji golden benchmark |
-| `npm run deck:kanji:additional:review:n1` | Run the additional-unverified N1 kanji golden benchmark |
-| `npm run deck:kanji:additional:platinum:n5` | Run the additional-unverified N5 kanji platinum benchmark |
-| `npm run deck:kanji:additional:platinum:n4` | Run the additional-unverified N4 kanji platinum benchmark |
-| `npm run deck:kanji:additional:platinum:n3` | Run the additional-unverified N3 kanji platinum benchmark |
-| `npm run deck:kanji:additional:platinum:n2` | Run the additional-unverified N2 kanji platinum benchmark |
-| `npm run deck:kanji:additional:platinum:n1` | Run the additional-unverified N1 kanji platinum benchmark |
-| `npm run deck:review:coverage` | Audit golden-review coverage |
+| `npm run deck:review:n5` | Run the N5 kanji Gold regression benchmark |
+| `npm run deck:review:n4` | Run the N4 kanji Gold regression benchmark |
+| `npm run deck:review:n3` | Run the N3 kanji Gold regression benchmark |
+| `npm run deck:review:n2` | Run the N2 kanji Gold regression benchmark |
+| `npm run deck:review:n1` | Run the N1 kanji Gold regression benchmark |
+| `npm run deck:kanji:additional:review:n5` | Run the additional-unverified N5 kanji Gold regression benchmark |
+| `npm run deck:kanji:additional:review:n4` | Run the additional-unverified N4 kanji Gold regression benchmark |
+| `npm run deck:kanji:additional:review:n3` | Run the additional-unverified N3 kanji Gold regression benchmark |
+| `npm run deck:kanji:additional:review:n2` | Run the additional-unverified N2 kanji Gold regression benchmark |
+| `npm run deck:kanji:additional:review:n1` | Run the additional-unverified N1 kanji Gold regression benchmark |
+| `npm run deck:kanji:additional:platinum:n5` | Run the additional-unverified N5 kanji Platinum gate |
+| `npm run deck:kanji:additional:platinum:n4` | Run the additional-unverified N4 kanji Platinum gate |
+| `npm run deck:kanji:additional:platinum:n3` | Run the additional-unverified N3 kanji Platinum gate |
+| `npm run deck:kanji:additional:platinum:n2` | Run the additional-unverified N2 kanji Platinum gate |
+| `npm run deck:kanji:additional:platinum:n1` | Run the additional-unverified N1 kanji Platinum gate |
+| `npm run deck:review:coverage` | Audit Gold regression coverage |
 | `npm run deck:platinum:governance-gate` | Run the local-data Platinum governance gate against real generated N5/N4 rows |
 | `npm run deck:platinum:n5` | Run the N5 kanji Platinum gate |
 | `npm run deck:platinum:n4` | Run the N4 kanji Platinum gate |
@@ -619,8 +621,9 @@ Repository governance:
 | `npm run deck:platinum:n1` | Run the N1 kanji Platinum gate |
 | `npm run deck:words:ready` | Build and package word TSV artifacts |
 | `npm run deck:words:apkg` | Build word `.apkg` artifacts |
-| `npm run deck:words:platinum:batch -- --level=5 --limit=8` | Build a read-only word Obsidian pre-review packet |
-| `npm run deck:words:review:n5` | Run the N5 word golden benchmark |
+| `npm run deck:words:platinum:batch -- --level=5 --limit=8` | Build a read-only word review packet for the selected queue |
+| `npm run deck:words:review:n5` | Run the N5 word Gold regression benchmark |
+| `npm run deck:words:review:n4` | Run the N4 word Gold regression benchmark |
 | `npm run deck:words:platinum:n5` | Run the N5 word Platinum gate |
 | `npm run deck:words:platinum:n4` | Run the N4 word Platinum gate |
 | `npm run deck:words:platinum:rereview-status -- --levels=5,4` | Classify word Platinum pass versus Obsidian proof |

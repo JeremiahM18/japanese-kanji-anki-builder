@@ -1,6 +1,6 @@
 # JLPT Kanji Source Evidence Batching
 
-This workflow applies only to the JLPT kanji source-evidence layer. It does not move kanji, move words, update deck content, change golden or platinum review, or alter readiness.
+This workflow applies only to the JLPT kanji source-evidence layer. It does not move kanji, move words, update deck content, change Gold regression or Platinum coverage, or alter readiness.
 
 ## Research Basis
 
@@ -77,7 +77,7 @@ Review only the permitted manual fields in the batch:
 - `evidenceRef`
 - `notes`
 
-Do not copy textbook lists, passages, prompts, questions, answers, or source excerpts into the TSV. Do not include deck previews or golden/platinum decisions in the source batch.
+Do not copy textbook lists, passages, prompts, questions, answers, or source excerpts into the TSV. Do not include deck previews or Gold/Platinum decisions in the source batch.
 
 Dry-run the merge:
 

@@ -50,7 +50,7 @@ Guidance:
 - Use `--merge` when you want new tracked starter content without overwriting local editorial work.
 - Use `--refresh-starter` when tracked starter kanji entries improved and you want stale starter-derived local copies refreshed while keeping true local custom entries intact.
 - Run `npm run data:verify:jlpt` after replacing or editing `kanji_jlpt_only.json` so missing rows or broken JLPT counts fail fast before they skew deck audits.
-- Run `npm run data:audit:jlpt` when you want the full contract audit across local JLPT data, tracked starter curation, and tracked golden review placement.
+- Run `npm run data:audit:jlpt` when you want the full contract audit across local JLPT data, tracked starter curation, and tracked Gold regression placement.
 - Run `npm run data:audit:jlpt:words` when you want to confirm the tracked starter word dataset still matches the repo-owned JLPT word-level contract.
 - Run `npm run data:sync:jlpt` when a workstation copy of `kanji_jlpt_only.json` has drifted and you want to rewrite its `jlpt` levels to match the tracked contract.
 

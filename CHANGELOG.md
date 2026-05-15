@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Changed
 
+- Aligned the README and live documentation around the Silver/Gold/Platinum/Obsidian tier language, keeping Gold as regression coverage, Platinum as the current structural gate, and Obsidian as explicit current-version rereview proof.
 - Adopted the Silver/Gold/Platinum/Obsidian tier language for the current review pipeline: Gold remains regression coverage, Platinum means current-standard structural gate pass, and Obsidian means explicit non-mechanical current-version certification proof.
 - Clarified platinum rereview and source-posture reporting so generated deck rows remain the square-zero Obsidian denominator. Current live Obsidian status is N5 kanji `80/80`, N4 kanji `212/212`, N5 word `8/287`, and N4 word `0/667`; Platinum entries remain diagnostics until explicit non-mechanical rereview proof exists.
 - Changed kanji and word platinum batch reports to default to the substantive rereview queue instead of the missing-structural-entry queue. Use `--queue=missing-current-standard` only when intentionally inspecting structural coverage gaps.

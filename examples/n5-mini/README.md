@@ -2,7 +2,7 @@
 
 This fixture gives a first-time reviewer a small, tracked look at the generated deck surfaces without requiring the full ignored local `data/`, media cache, or `out/` directories.
 
-It is a demo fixture only. It does not replace readiness, golden review, platinum review, audio listening QA, Anki import QA, or `.apkg` packaging.
+It is a demo fixture only. It does not replace readiness, Gold regression, Platinum gates, audio listening QA, Anki import QA, or `.apkg` packaging.
 
 The sample rows were copied from current generated N5 exports after running:
 

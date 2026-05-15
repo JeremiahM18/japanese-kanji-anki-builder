@@ -875,16 +875,16 @@ function evaluatePlatinumWordReviewSet({
         : [];
 
     if (!allowEmpty && activeEntries.length === 0) {
-        coverageFailures.push("no active platinum entries have been reviewed");
+        coverageFailures.push("no Platinum Candidate entries have been reviewed");
     }
     if (duplicateActiveEntries.length > 0) {
         coverageFailures.push(`duplicate active platinum entries: ${duplicateActiveEntries.join(", ")}`);
     }
     if (missingPlatinumRows.length > 0) {
-        coverageFailures.push(`missing platinum entries for generated words: ${missingPlatinumRows.length}`);
+        coverageFailures.push(`missing Platinum Candidate entries for generated words: ${missingPlatinumRows.length}`);
     }
     if (missingCurrentStandardRows.length > 0) {
-        coverageFailures.push(`missing current-standard platinum entries for generated words: ${missingCurrentStandardRows.length}`);
+        coverageFailures.push(`missing current-standard candidate entries for generated words: ${missingCurrentStandardRows.length}`);
     }
 
     const passedCount = results.filter((result) => result.passed).length;
@@ -921,9 +921,10 @@ function formatPlatinumWordReviewReport(report = {}, { title = "Japanese Kanji B
         title,
         "",
         `Review entries: ${report.totalEntries || 0}`,
-        `Active platinum cards: ${report.activePlatinumCount || 0}`,
+        "Tier: Platinum Candidate (current-standard structural gate; not substantive certification)",
+        `Platinum Candidate cards: ${report.activePlatinumCount || 0}`,
         `Current review standard: ${report.currentReviewStandard || CURRENT_WORD_PLATINUM_REVIEW_STANDARD}`,
-        `Current-standard platinum cards: ${report.currentStandardPlatinumCount || 0}`,
+        `Current-standard candidate cards: ${report.currentStandardPlatinumCount || 0}`,
         `Legacy/unversioned platinum cards: ${report.legacyOrUnversionedPlatinumCount || 0}`,
         `Active cards with verification limitations: ${report.verificationLimitationWordCount || 0}`,
         `Verification limitations: ${report.verificationLimitationCount || 0}`,
@@ -944,7 +945,7 @@ function formatPlatinumWordReviewReport(report = {}, { title = "Japanese Kanji B
     if (Array.isArray(report.missingPlatinumRows) && report.missingPlatinumRows.length > 0) {
         const sampleSize = 30;
         const sample = report.missingPlatinumRows.slice(0, sampleSize);
-        lines.push("", `Missing platinum row sample (${sample.length}/${report.missingPlatinumRows.length}):`);
+        lines.push("", `Missing Platinum Candidate row sample (${sample.length}/${report.missingPlatinumRows.length}):`);
         for (const row of sample) {
             lines.push(`- ${row}`);
         }
@@ -956,7 +957,7 @@ function formatPlatinumWordReviewReport(report = {}, { title = "Japanese Kanji B
     if (Array.isArray(report.missingCurrentStandardRows) && report.missingCurrentStandardRows.length > 0) {
         const sampleSize = 30;
         const sample = report.missingCurrentStandardRows.slice(0, sampleSize);
-        lines.push("", `Missing current-standard platinum row sample (${sample.length}/${report.missingCurrentStandardRows.length}):`);
+        lines.push("", `Missing current-standard candidate row sample (${sample.length}/${report.missingCurrentStandardRows.length}):`);
         for (const row of sample) {
             lines.push(`- ${row}`);
         }
@@ -973,7 +974,7 @@ function formatPlatinumWordReviewReport(report = {}, { title = "Japanese Kanji B
     }
 
     for (const result of report.results || []) {
-        lines.push("", `- ${result.label}: ${result.status} ${result.passed ? "pass" : "fail"}`);
+        lines.push("", `- ${result.label}: manifest status=${result.status}; candidate gate ${result.passed ? "pass" : "fail"}`);
         if (!result.passed) {
             for (const failure of result.failures) {
                 lines.push(`  ${failure}`);

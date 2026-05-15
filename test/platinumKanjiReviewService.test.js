@@ -447,7 +447,7 @@ test("evaluatePlatinumKanjiReviewSet can require every generated kanji to be pla
 
     assert.equal(report.passed, false);
     assert.deepEqual(report.missingPlatinumRows, ["月"]);
-    assert.match(formatPlatinumKanjiReviewReport(report), /missing platinum entries for generated kanji: 1/);
+    assert.match(formatPlatinumKanjiReviewReport(report), /missing Platinum Candidate entries for generated kanji: 1/);
     assert.match(formatPlatinumKanjiReviewReport(report), /月/);
 });
 
@@ -458,7 +458,7 @@ test("evaluatePlatinumKanjiReviewSet does not pass an empty platinum set by defa
     });
 
     assert.equal(report.passed, false);
-    assert.deepEqual(report.coverageFailures, ["no current-standard platinum entries have been reviewed"]);
+    assert.deepEqual(report.coverageFailures, ["no Platinum Candidate entries have been reviewed"]);
 });
 
 test("evaluatePlatinumKanjiReviewSet requires reviewer and date for non-shipping decisions", () => {

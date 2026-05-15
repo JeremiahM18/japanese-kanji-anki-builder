@@ -410,7 +410,7 @@ function formatKanjiDeckReviewStatus(report = {}) {
         for (const row of rowsWithLimitations) {
             lines.push(
                 `- ${row.deckId}: ${row.verificationLimitationCount} limitation(s) `
-                + `on ${row.verificationLimitationKanjiCount} active current-standard platinum card(s)`
+                + `on ${row.verificationLimitationKanjiCount} active Platinum Candidate card(s)`
             );
             for (const limitation of (row.verificationLimitations || []).slice(0, 12)) {
                 lines.push(`  - ${limitation.kanji}: ${limitation.field} (${limitation.status}) - ${limitation.label}`);

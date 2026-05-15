@@ -127,7 +127,7 @@ function evaluatePlatinumGovernanceGate({
             issues.push(`N${report.level} kanji platinum has blocked/failing generated rows: ${report.counts.blocked_or_failing}`);
         }
         if ((report.counts?.needs_substantive_rereview || 0) > 0) {
-            warnings.push(`N${report.level} kanji ${report.counts.needs_substantive_rereview} structurally passing entries still lack substantive rereview proof`);
+            warnings.push(`N${report.level} kanji ${report.counts.needs_substantive_rereview} Platinum Candidate entries still lack Platinum certification proof`);
         }
     }
 
@@ -140,10 +140,10 @@ function evaluatePlatinumGovernanceGate({
         if (blockedCount > 0 && (!levelAllowedIncomplete || !onlyKnownMissing)) {
             issues.push(`N${report.level} word platinum has unexpected blocked/failing generated rows: ${blockedCount}`);
         } else if (blockedCount > 0) {
-            warnings.push(`${GOVERNANCE_MARKERS.ALLOWED_INCOMPLETE_WORD_PLATINUM_LEVEL}: N${report.level} word platinum is incomplete with ${blockedCount} generated rows missing active current-standard structural entries`);
+            warnings.push(`${GOVERNANCE_MARKERS.ALLOWED_INCOMPLETE_WORD_PLATINUM_LEVEL}: N${report.level} word Platinum Candidate coverage is incomplete with ${blockedCount} generated rows missing active current-standard structural entries`);
         }
         if ((report.counts?.needs_substantive_rereview || 0) > 0) {
-            warnings.push(`N${report.level} word ${report.counts.needs_substantive_rereview} structurally passing entries still lack substantive rereview proof`);
+            warnings.push(`N${report.level} word ${report.counts.needs_substantive_rereview} Platinum Candidate entries still lack Platinum certification proof`);
         }
     }
 
@@ -199,7 +199,7 @@ function formatPlatinumGovernanceGateReport(report = {}) {
     if (manifestPostures.length > 0) {
         lines.push(
             "",
-            "| Manifest | Structural current-standard entries | Distinct summaries | Card-specific summaries | Entries with limitations | Limitation count | Example quality automation |",
+        "| Manifest | Platinum Candidate entries | Distinct summaries | Card-specific summaries | Entries with limitations | Limitation count | Example quality automation |",
             "| --- | ---: | ---: | ---: | ---: | ---: | --- |"
         );
         for (const posture of manifestPostures) {
@@ -219,9 +219,9 @@ function formatPlatinumGovernanceGateReport(report = {}) {
         "",
         "Scope note:",
         "- This gate exercises local real generated rows when local ignored data is present.",
-        "- Structural counts and source-posture counts are diagnostics only; only explicit non-mechanical rereview provenance counts as substantive proof.",
+        "- Platinum Candidate counts and source-posture counts are diagnostics only; only explicit non-mechanical rereview provenance counts as Platinum certification proof.",
         "- It does not promote, defer, reject, or edit cards.",
-        "- N4 word platinum incompleteness is allowed only when every blocked row is missing active current-standard structural coverage; dirty reviewed entries still fail the gate."
+        "- N4 word Platinum Candidate incompleteness is allowed only when every blocked row is missing active current-standard structural coverage; dirty reviewed entries still fail the gate."
     );
 
     return `${lines.join("\n")}\n`;

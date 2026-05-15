@@ -326,7 +326,7 @@ function formatPlatinumKanjiRereviewStatusReport(summary = {}) {
         `Generated active kanji rows: ${totals.generatedRows || 0}`,
         `Review entries: ${totals.reviewEntries || 0}`,
         "",
-        "| Scope | Generated deck rows | Structural v3 gate pass (not proof) | Substantive rereview proven (real proof) | Structural-only entries needing rereview | Blocked/failing deck rows |",
+        "| Scope | Generated deck rows | Platinum Candidate pass (not certification) | Platinum certified (substantive proof) | Candidate-only entries needing certification | Blocked/failing deck rows |",
         "| --- | ---: | ---: | ---: | ---: | ---: |",
     ];
 
@@ -354,9 +354,10 @@ function formatPlatinumKanjiRereviewStatusReport(summary = {}) {
     lines.push(
         "",
         "Proof policy:",
-        "- Generated deck rows are the rereview-program denominator. Structural-only subsets do not shrink the queue.",
-        `- ${summary.missingProofMarker || MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER}: structural v3 lane validity is not counted as substantive rereview proof by itself.`,
-        `- To count as proven, an entry must carry explicit ${summary.proofMarker || SUBSTANTIVE_REREVIEW_PROOF_MARKER} provenance and ${summary.nonMechanicalMarker || NON_MECHANICAL_PROOF_MARKER} language, or equivalent structured rereviewProvenance metadata.`,
+        "- Tier model: Silver = generated surface exists, Gold = golden regression, Platinum Candidate = current-standard structural gate, Platinum = substantive current-version certification, Obsidian = reserved for a future fluent/native-level audit.",
+        "- Generated deck rows are the certification denominator. Platinum Candidate subsets do not shrink the queue.",
+        `- ${summary.missingProofMarker || MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER}: Platinum Candidate lane validity is not counted as Platinum certification proof by itself.`,
+        `- To count as Platinum certified, an entry must carry explicit ${summary.proofMarker || SUBSTANTIVE_REREVIEW_PROOF_MARKER} provenance and ${summary.nonMechanicalMarker || NON_MECHANICAL_PROOF_MARKER} language, or equivalent structured rereviewProvenance metadata.`,
         "- This report is read-only. It does not promote, defer, reject, or edit cards."
     );
 
@@ -367,8 +368,8 @@ function formatPlatinumKanjiRereviewStatusReport(summary = {}) {
         lines.push(
             "",
             `N${report.level} details:`,
-            `- substantive proven sample: ${formatSample(proven)}`,
-            `- needs substantive rereview sample: ${formatSample(needs)}`,
+            `- Platinum certified sample: ${formatSample(proven)}`,
+            `- needs Platinum certification sample: ${formatSample(needs)}`,
             `- blocked/failing sample: ${formatSample(blocked)}`
         );
         if (blocked.length > 0) {

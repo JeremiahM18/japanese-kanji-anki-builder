@@ -12,8 +12,10 @@ const { createInferenceEngine } = require("../src/inference/inferenceEngine");
 const { createExportService } = require("../src/services/exportService");
 const { createMediaServices } = require("../src/services/mediaServiceFactory");
 const {
+    CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
     evaluatePlatinumKanjiReviewSet,
     formatPlatinumKanjiReviewReport,
+    isCurrentStandardPlatinumEntry,
 } = require("../src/services/platinumKanjiReviewService");
 
 function parseArgs(argv) {
@@ -103,6 +105,24 @@ async function buildKanjiRowsForLevel({ level, config }) {
     return parseKanjiTsvForPlatinum(tsv, { level });
 }
 
+function assertKanjiPlatinumCandidatePreflight({ entries = [], level, options = {} } = {}) {
+    const reviewEntries = Array.isArray(entries) ? entries : [];
+    const candidateCount = reviewEntries.filter(isCurrentStandardPlatinumEntry).length;
+    const requiresCandidateCoverage = options.requireAllRows
+        && options.requireCurrentReviewStandard
+        && !options.allowEmpty;
+
+    if (requiresCandidateCoverage && candidateCount === 0) {
+        throw new Error([
+            `N${level} has 0 Platinum Candidate entries for ${CURRENT_KANJI_PLATINUM_REVIEW_STANDARD}.`,
+            "Generated-row build skipped because --require-all needs current-standard candidate coverage before export checks.",
+            "Start the governed candidate manifest first, or use --allow-empty only for intentional empty diagnostic surfaces.",
+        ].join(" "));
+    }
+
+    return { candidateCount };
+}
+
 async function main() {
     const options = parseArgs(process.argv.slice(2));
     const level = options.level;
@@ -125,6 +145,7 @@ async function main() {
     }
 
     const entries = JSON.parse(fs.readFileSync(reviewSetPath, "utf-8"));
+    assertKanjiPlatinumCandidatePreflight({ entries, level, options });
     const rows = await buildKanjiRowsForLevel({ level, config });
     const report = evaluatePlatinumKanjiReviewSet({
         rows,
@@ -140,7 +161,7 @@ async function main() {
     }
 
     process.stdout.write(formatPlatinumKanjiReviewReport(report, {
-        title: "Japanese Kanji Builder Platinum N" + level + " Kanji Review",
+        title: "Japanese Kanji Builder Platinum Candidate N" + level + " Kanji Gate",
     }));
     process.exit(report.passed ? 0 : 1);
 }
@@ -153,6 +174,7 @@ if (require.main === module) {
 }
 
 module.exports = {
+    assertKanjiPlatinumCandidatePreflight,
     buildKanjiRowsForLevel,
     main,
     parseArgs,

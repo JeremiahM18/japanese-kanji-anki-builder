@@ -809,16 +809,16 @@ function evaluatePlatinumKanjiReviewSet({
         : [];
 
     if (!allowEmpty && activeEntries.length === 0) {
-        coverageFailures.push("no current-standard platinum entries have been reviewed");
+        coverageFailures.push("no Platinum Candidate entries have been reviewed");
     }
     if (duplicateActiveEntries.length > 0) {
         coverageFailures.push(`duplicate active platinum entries: ${duplicateActiveEntries.join(", ")}`);
     }
     if (missingPlatinumRows.length > 0) {
-        coverageFailures.push(`missing platinum entries for generated kanji: ${missingPlatinumRows.length} (platinum requires current-standard revalidation)`);
+        coverageFailures.push(`missing Platinum Candidate entries for generated kanji: ${missingPlatinumRows.length} (candidate coverage requires current-standard revalidation)`);
     }
     if (missingCurrentStandardRows.length > 0 && missingCurrentStandardRows.length !== missingPlatinumRows.length) {
-        coverageFailures.push(`missing current-standard platinum entries for generated kanji: ${missingCurrentStandardRows.length}`);
+        coverageFailures.push(`missing current-standard candidate entries for generated kanji: ${missingCurrentStandardRows.length}`);
     }
 
     const passedCount = results.filter((result) => result.passed).length;
@@ -859,9 +859,10 @@ function formatPlatinumKanjiReviewReport(report = {}, { title = "Japanese Kanji 
         title,
         "",
         `Review entries: ${report.totalEntries || 0}`,
-        `Active current-standard platinum cards: ${report.activePlatinumCount || 0}`,
+        "Tier: Platinum Candidate (current-standard structural gate; not substantive certification)",
+        `Platinum Candidate cards: ${report.activePlatinumCount || 0}`,
         `Current review standard: ${report.currentReviewStandard || CURRENT_KANJI_PLATINUM_REVIEW_STANDARD}`,
-        `Current-standard platinum cards: ${report.currentStandardPlatinumCount || 0}`,
+        `Current-standard candidate cards: ${report.currentStandardPlatinumCount || 0}`,
         `Revalidation backlog/history cards: ${report.revalidationBacklogCount ?? report.legacyOrUnversionedPlatinumCount ?? 0}`,
         `Active cards with verification limitations: ${report.verificationLimitationKanjiCount || 0}`,
         `Verification limitations: ${report.verificationLimitationCount || 0}`,
@@ -883,7 +884,7 @@ function formatPlatinumKanjiReviewReport(report = {}, { title = "Japanese Kanji 
     if (Array.isArray(report.missingPlatinumRows) && report.missingPlatinumRows.length > 0) {
         const sampleSize = 30;
         const sample = report.missingPlatinumRows.slice(0, sampleSize);
-        lines.push("", `Missing platinum kanji sample (${sample.length}/${report.missingPlatinumRows.length}):`);
+        lines.push("", `Missing Platinum Candidate kanji sample (${sample.length}/${report.missingPlatinumRows.length}):`);
         for (const kanji of sample) {
             lines.push(`- ${kanji}`);
         }
@@ -899,7 +900,7 @@ function formatPlatinumKanjiReviewReport(report = {}, { title = "Japanese Kanji 
     ) {
         const sampleSize = 30;
         const sample = report.missingCurrentStandardRows.slice(0, sampleSize);
-        lines.push("", `Missing current-standard platinum sample (${sample.length}/${report.missingCurrentStandardRows.length}):`);
+        lines.push("", `Missing current-standard candidate sample (${sample.length}/${report.missingCurrentStandardRows.length}):`);
         for (const kanji of sample) {
             lines.push(`- ${kanji}`);
         }
@@ -916,7 +917,7 @@ function formatPlatinumKanjiReviewReport(report = {}, { title = "Japanese Kanji 
     }
 
     for (const result of report.results || []) {
-        lines.push("", `- ${result.label}: ${result.status} ${result.passed ? "pass" : "fail"}`);
+        lines.push("", `- ${result.label}: manifest status=${result.status}; candidate gate ${result.passed ? "pass" : "fail"}`);
         if (!result.passed) {
             for (const failure of result.failures) {
                 lines.push(`  ${failure}`);

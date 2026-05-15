@@ -547,7 +547,7 @@ test("evaluatePlatinumWordReviewSet can require every generated row to be platin
 
     assert.equal(report.passed, false);
     assert.deepEqual(report.missingPlatinumRows, ["明日 (あした)"]);
-    assert.match(formatPlatinumWordReviewReport(report), /missing platinum entries for generated words: 1/);
+    assert.match(formatPlatinumWordReviewReport(report), /missing Platinum Candidate entries for generated words: 1/);
     assert.match(formatPlatinumWordReviewReport(report), /明日 \(あした\)/);
 });
 
@@ -561,10 +561,10 @@ test("formatPlatinumWordReviewReport summarizes current-standard and legacy word
     const formatted = formatPlatinumWordReviewReport(report);
 
     assert.match(formatted, new RegExp(`Current review standard: ${CURRENT_WORD_PLATINUM_REVIEW_STANDARD}`));
-    assert.match(formatted, /Current-standard platinum cards: 0/);
+    assert.match(formatted, /Current-standard candidate cards: 0/);
     assert.match(formatted, /Legacy\/unversioned platinum cards: 1/);
-    assert.match(formatted, /missing current-standard platinum entries for generated words: 1/);
-    assert.match(formatted, /Missing current-standard platinum row sample \(1\/1\):/);
+    assert.match(formatted, /missing current-standard candidate entries for generated words: 1/);
+    assert.match(formatted, /Missing current-standard candidate row sample \(1\/1\):/);
 });
 
 test("evaluatePlatinumWordReviewSet does not pass an empty platinum set by default", () => {
@@ -574,7 +574,7 @@ test("evaluatePlatinumWordReviewSet does not pass an empty platinum set by defau
     });
 
     assert.equal(report.passed, false);
-    assert.deepEqual(report.coverageFailures, ["no active platinum entries have been reviewed"]);
+    assert.deepEqual(report.coverageFailures, ["no Platinum Candidate entries have been reviewed"]);
 });
 
 test("evaluatePlatinumWordReviewSet requires reviewer and date for non-shipping decisions", () => {

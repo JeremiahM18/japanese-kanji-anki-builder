@@ -697,10 +697,10 @@ function formatPlatinumKanjiBatchReport(report = {}) {
         `Scope: ${report.scope || "(unknown)"}`,
         `Generated cards: ${summary.generatedRows || 0}`,
         `Queue: ${report.queue || KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW}`,
-        `Current-standard structural entries: ${summary.activePlatinum || 0}`,
-        `Substantive rereview proven: ${summary.substantiveRereviewProven || 0}`,
-        `Missing current-standard structure: ${summary.remainingPlatinum || 0}`,
-        `Remaining substantive rereview: ${summary.remainingSubstantiveRereview || 0}`,
+        `Platinum Candidate entries: ${summary.activePlatinum || 0}`,
+        `Platinum certified: ${summary.substantiveRereviewProven || 0}`,
+        `Missing Platinum Candidate structure: ${summary.remainingPlatinum || 0}`,
+        `Remaining Platinum certification: ${summary.remainingSubstantiveRereview || 0}`,
         `Selected cards: ${summary.selectedCards || 0}`,
     ];
     const rubricSummary = report.reviewRubricSummary || {};

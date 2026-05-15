@@ -5278,7 +5278,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 有|ある generated surface, Japanese-source evidence, PrimaryReading ある, MeaningJP exist / have, KanjiMeanings have / exist / possess, example sentence まだ時間が有るので、少し休みます。, reading まだじかんがあるので、すこしやすみます。, translation There is still time, so I will rest a little., notes/support surface 有る, 有名, audio 6709_有-kanji-reading-有-ある.wav, stroke-order media 6709_有-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-013",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "有|ある",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 有, StudyWordKanji is blank, PrimaryReading is ある",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0006845600; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 有|ある; Japanese-source re-review for 有|ある: Kanjipedia lists 音 ユウ・ウ and 訓 ある with outside-table もつ, and meanings for existing, having/possessing, and further/additional. Bunka Joyo reading governance supports the Joyo reading set. The generated card fields PrimaryReading ある, MeaningJP exist / have, broader meanings have / exist / possess, and support notes 有る and 有名 are source-supported after suppressing indirect dictionary noise; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is Kanjipedia/Bunka governance, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji, tanos_legacy_direct",
+        "primary field review: MeaningJP exist / have; KanjiMeanings have / exist / possess",
+        "meaning-scope decision: exist/have are direct learner-facing meanings through 有る; 有名 keeps the ユウ on-reading visible as support vocabulary without changing the primary card anchor.",
+        "notes/support review: 有(あ)る - exist / have ／ 有名(ゆうめい) - famous stays support-only for the single-kanji card anchor",
+        "example review: まだ時間が有るので、少し休みます。 / まだじかんがあるので、すこしやすみます。 / There is still time, so I will rest a little.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 6709_有-kanji-reading-有-ある.wav; source voicevox-nemo; locale ja-JP; exact primary reading ある",
+        "stroke-order identity: 6709_有-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "まだ時間が有るので、少し休みます。",
+        "reading": "まだじかんがあるので、すこしやすみます。",
+        "translation": "There is still time, so I will rest a little.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: まだ時間が有るので、少し休みます。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 有|ある without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "服",
@@ -5373,7 +5410,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 服|ふく generated surface, Japanese-source evidence, PrimaryReading ふく, MeaningJP clothes, KanjiMeanings clothes / clothing, example sentence 旅行の前に暖かい服を買いました。, reading りょこうのまえにあたたかいふくをかいました。, translation I bought warm clothes before the trip., notes/support surface 服, 洋服, audio 670D_服-kanji-reading-服-ふく.wav, stroke-order media 670D_服-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-013",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "服|ふく",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 服, StudyWordKanji is blank, PrimaryReading is ふく",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0006103700; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 服|ふく; Japanese-source re-review for 服|ふく: Kanjipedia lists 音 フク and outside-table きもの・きる・したがう・のむ, with the primary learner sense clothes/clothing supported by 衣服 and 洋服. Bunka Joyo reading governance supports the Joyo reading set. The generated card fields PrimaryReading ふく, MeaningJP clothes, broader meanings clothes / clothing, and support notes 服 and 洋服 are source-supported after suppressing advanced non-clothing senses; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is Kanjipedia/Bunka governance, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji, tanos_legacy_direct",
+        "primary field review: MeaningJP clothes; KanjiMeanings clothes / clothing",
+        "meaning-scope decision: clothes is the clean primary learner meaning; 洋服 keeps clothing support visible while advanced obey/admit/drink senses stay out of the N4 surface.",
+        "notes/support review: 服(ふく) - clothes ／ 洋服(ようふく) - Western clothes stays support-only for the single-kanji card anchor",
+        "example review: 旅行の前に暖かい服を買いました。 / りょこうのまえにあたたかいふくをかいました。 / I bought warm clothes before the trip.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 670D_服-kanji-reading-服-ふく.wav; source voicevox-nemo; locale ja-JP; exact primary reading ふく",
+        "stroke-order identity: 670D_服-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "旅行の前に暖かい服を買いました。",
+        "reading": "りょこうのまえにあたたかいふくをかいました。",
+        "translation": "I bought warm clothes before the trip.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 旅行の前に暖かい服を買いました。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 服|ふく without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "朝",
@@ -5467,7 +5541,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 朝|あさ generated surface, Japanese-source evidence, PrimaryReading あさ, MeaningJP morning, KanjiMeanings morning, example sentence 朝はいつもパンとコーヒーを飲みます。, reading あさはいつもパンとコーヒーをのみます。, translation I always have bread and coffee in the morning., notes/support surface 朝, 今朝, audio 671D_朝-kanji-reading-朝-あさ.wav, stroke-order media 671D_朝-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-013",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "朝|あさ",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 朝, StudyWordKanji is blank, PrimaryReading is あさ",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0004807600; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 朝|あさ; Japanese-source re-review for 朝|あさ: Kanjipedia lists 音 チョウ and 訓 あさ with meanings for morning and several government/dynasty/Korea-related secondary senses. Bunka Joyo reading governance supports the Joyo reading set. The generated card fields PrimaryReading あさ, MeaningJP morning, broader meaning morning, and support notes 朝 and 今朝 are source-supported after suppressing secondary historical/geopolitical senses; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is Kanjipedia/Bunka governance, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji, tanos_legacy_direct",
+        "primary field review: MeaningJP morning; KanjiMeanings morning",
+        "meaning-scope decision: morning is the direct learner-facing meaning through 朝|あさ; 今朝 remains useful support while government/dynasty/Korea-related senses stay suppressed.",
+        "notes/support review: 朝(あさ) - morning ／ 今朝(けさ) - this morning stays support-only for the single-kanji card anchor",
+        "example review: 朝はいつもパンとコーヒーを飲みます。 / あさはいつもパンとコーヒーをのみます。 / I always have bread and coffee in the morning.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 671D_朝-kanji-reading-朝-あさ.wav; source voicevox-nemo; locale ja-JP; exact primary reading あさ",
+        "stroke-order identity: 671D_朝-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "朝はいつもパンとコーヒーを飲みます。",
+        "reading": "あさはいつもパンとコーヒーをのみます。",
+        "translation": "I always have bread and coffee in the morning.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 朝はいつもパンとコーヒーを飲みます。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 朝|あさ without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "村",
@@ -5561,7 +5672,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 村|むら generated surface, Japanese-source evidence, PrimaryReading むら, MeaningJP village, KanjiMeanings village / town, example sentence その村は山の近くにあります。, reading そのむらはやまのちかくにあります。, translation That village is near the mountains., notes/support surface 村, 村人, audio 6751_村-kanji-reading-村-むら.wav, stroke-order media 6751_村-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-013",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "村|むら",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 村, StudyWordKanji is blank, PrimaryReading is むら",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0004380300; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 村|むら; Japanese-source re-review for 村|むら: Kanjipedia lists 音 ソン and 訓 むら with meanings for a rural village and village/town as a local government unit. Bunka Joyo reading governance supports the Joyo reading set. The generated card fields PrimaryReading むら, MeaningJP village, broader meanings village / town, and support notes 村 and 村人 are source-supported; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is Kanjipedia/Bunka governance, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji",
+        "primary field review: MeaningJP village; KanjiMeanings village / town",
+        "meaning-scope decision: village is the direct primary meaning through 村|むら; town remains a broader local-government sense supported by the source without adding noise.",
+        "notes/support review: 村(むら) - village ／ 村人(むらびと) - villager stays support-only for the single-kanji card anchor",
+        "example review: その村は山の近くにあります。 / そのむらはやまのちかくにあります。 / That village is near the mountains.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 6751_村-kanji-reading-村-むら.wav; source voicevox-nemo; locale ja-JP; exact primary reading むら",
+        "stroke-order identity: 6751_村-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "その村は山の近くにあります。",
+        "reading": "そのむらはやまのちかくにあります。",
+        "translation": "That village is near the mountains.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: その村は山の近くにあります。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 村|むら without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "林",
@@ -5656,7 +5804,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 林|はやし generated surface, Japanese-source evidence, PrimaryReading はやし, MeaningJP woods, KanjiMeanings woods / forest / grove, example sentence 駅の近くに小さな林があります。, reading えきのちかくにちいさなはやしがあります。, translation There is a small grove near the station., notes/support surface 林, 林業, audio 6797_林-kanji-reading-林-はやし.wav, stroke-order media 6797_林-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-013",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "林|はやし",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 林, StudyWordKanji is blank, PrimaryReading is はやし",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0007198600; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 林|はやし; Japanese-source re-review for 林|はやし: Kanjipedia lists 音 リン and 訓 はやし with meanings for woods/grove where trees or bamboo grow together, and many collected things. Bunka Joyo reading governance supports the Joyo reading set. The generated card fields PrimaryReading はやし, MeaningJP woods, broader meanings woods / forest / grove, and support notes 林 and 林業 are source-supported; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is Kanjipedia/Bunka governance, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji",
+        "primary field review: MeaningJP woods; KanjiMeanings woods / forest / grove",
+        "meaning-scope decision: woods is the primary learner meaning through 林|はやし; forest/grove are useful broader meanings and 林業 keeps the リン on-reading visible as support.",
+        "notes/support review: 林(はやし) - woods ／ 林業(りんぎょう) - forestry stays support-only for the single-kanji card anchor",
+        "example review: 駅の近くに小さな林があります。 / えきのちかくにちいさなはやしがあります。 / There is a small grove near the station.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 6797_林-kanji-reading-林-はやし.wav; source voicevox-nemo; locale ja-JP; exact primary reading はやし",
+        "stroke-order identity: 6797_林-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "駅の近くに小さな林があります。",
+        "reading": "えきのちかくにちいさなはやしがあります。",
+        "translation": "There is a small grove near the station.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 駅の近くに小さな林があります。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 林|はやし without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "森",
@@ -5750,7 +5935,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 森|もり generated surface, Japanese-source evidence, PrimaryReading もり, MeaningJP forest, KanjiMeanings forest / woods, example sentence 朝の森はとても静かでした。, reading あさのもりはとてもしずかでした。, translation The forest was very quiet in the morning., notes/support surface 森, 森林, audio 68EE_森-kanji-reading-森-もり.wav, stroke-order media 68EE_森-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-013",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "森|もり",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 森, StudyWordKanji is blank, PrimaryReading is もり",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0003641700; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 森|もり; Japanese-source re-review for 森|もり: Kanjipedia lists 音 シン and 訓 もり with meanings for a forest where many trees grow thickly, plus dense/solemn secondary senses. Bunka Joyo reading governance supports the Joyo reading set. The generated card fields PrimaryReading もり, MeaningJP forest, broader meanings forest / woods, and support notes 森 and 森林 are source-supported; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is Kanjipedia/Bunka governance, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji",
+        "primary field review: MeaningJP forest; KanjiMeanings forest / woods",
+        "meaning-scope decision: forest is the direct primary meaning through 森|もり; woods remains a useful broader gloss and 森林 keeps the シン on-reading visible as support.",
+        "notes/support review: 森(もり) - forest ／ 森林(しんりん) - forest / woodland stays support-only for the single-kanji card anchor",
+        "example review: 朝の森はとても静かでした。 / あさのもりはとてもしずかでした。 / The forest was very quiet in the morning.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 68EE_森-kanji-reading-森-もり.wav; source voicevox-nemo; locale ja-JP; exact primary reading もり",
+        "stroke-order identity: 68EE_森-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "朝の森はとても静かでした。",
+        "reading": "あさのもりはとてもしずかでした。",
+        "translation": "The forest was very quiet in the morning.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 朝の森はとても静かでした。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 森|もり without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "業",
@@ -5776,7 +5998,7 @@
       "作業"
     ],
     "exampleIncludes": [
-      "午後の授業で日本の歴史を勉強しました。"
+      "午後の授業で日本語を勉強しました。"
     ],
     "reviewedAt": "2026-05-13",
     "reviewer": "codex-platinum-review",
@@ -5814,7 +6036,7 @@
       {
         "type": "generated-surface",
         "source": "npm run deck:platinum:batch -- --level=4 --kanji=品,員,有,服,朝,村,林,森,業,楽 --json",
-        "detail": "Generated card surface re-reviewed for 業|ぎょう: single-kanji anchor; Kanji and DisplayWord 業; PrimaryReading ぎょう; MeaningJP business / work / study; KanjiMeanings business / work / study; notes/support surface 授業, 作業; example 午後の授業で日本の歴史を勉強しました。; reading ごごのじゅぎょうでにほんのれきしをべんきょうしました。; translation We studied Japanese history in the afternoon class.; audio field includes 696D_業-kanji-reading-業-ぎょう.wav; stroke-order field includes 696D_業-stroke-order.gif."
+        "detail": "Generated card surface re-reviewed for 業|ぎょう: single-kanji anchor; Kanji and DisplayWord 業; PrimaryReading ぎょう; MeaningJP business / work / study; KanjiMeanings business / work / study; notes/support surface 授業, 作業; example 午後の授業で日本語を勉強しました。; reading ごごのじゅぎょうでにほんごをべんきょうしました。; translation We studied Japanese in the afternoon class.; audio field includes 696D_業-kanji-reading-業-ぎょう.wav; stroke-order field includes 696D_業-stroke-order.gif."
       },
       {
         "type": "media-audit",
@@ -5846,9 +6068,46 @@
       {
         "type": "current-standard-review",
         "source": "core N4 current-standard whole-card review",
-        "detail": "Current-standard review revalidated 業|ぎょう generated surface, Japanese-source evidence, PrimaryReading ぎょう, MeaningJP business / work / study, KanjiMeanings business / work / study, example sentence 午後の授業で日本の歴史を勉強しました。, reading ごごのじゅぎょうでにほんのれきしをべんきょうしました。, translation We studied Japanese history in the afternoon class., notes/support surface 授業, 作業, audio 696D_業-kanji-reading-業-ぎょう.wav, stroke-order media 696D_業-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
+        "detail": "Current-standard review revalidated 業|ぎょう generated surface, Japanese-source evidence, PrimaryReading ぎょう, MeaningJP business / work / study, KanjiMeanings business / work / study, example sentence 午後の授業で日本語を勉強しました。, reading ごごのじゅぎょうでにほんごをべんきょうしました。, translation We studied Japanese in the afternoon class., notes/support surface 授業, 作業, audio 696D_業-kanji-reading-業-ぎょう.wav, stroke-order media 696D_業-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-013",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "業|ぎょう",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 業, StudyWordKanji is blank, PrimaryReading is ぎょう",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0001564200; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 業|ぎょう; Japanese-source re-review for 業|ぎょう: Kanjipedia lists 音 ギョウ・ゴウ and 訓 わざ, with meanings for work/duty/livelihood and academic or technical study/skill. Bunka Joyo reading governance supports the Joyo reading set. The generated card fields PrimaryReading ぎょう, MeaningJP business / work / study, broader meanings business / work / study, and support notes 授業 and 作業 are source-supported after suppressing lower-value abstract glosses; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is Kanjipedia/Bunka governance, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji, tanos_legacy_direct",
+        "primary field review: MeaningJP business / work / study; KanjiMeanings business / work / study",
+        "meaning-scope decision: business/work/study are source-backed learner meanings through work/study compounds; the revised example uses 日本語 instead of N2 歴史 to keep support complexity lower while still anchoring 授業|じゅぎょう.",
+        "notes/support review: 授業(じゅぎょう) - class ／ 作業(さぎょう) - work / task stays support-only for the single-kanji card anchor",
+        "example review: 午後の授業で日本語を勉強しました。 / ごごのじゅぎょうでにほんごをべんきょうしました。 / We studied Japanese in the afternoon class.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 696D_業-kanji-reading-業-ぎょう.wav; source voicevox-nemo; locale ja-JP; exact primary reading ぎょう",
+        "stroke-order identity: 696D_業-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "午後の授業で日本語を勉強しました。",
+        "reading": "ごごのじゅぎょうでにほんごをべんきょうしました。",
+        "translation": "We studied Japanese in the afternoon class.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 午後の授業で日本語を勉強しました。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 業|ぎょう without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "楽",
@@ -6078,7 +6337,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 次|つぎ generated surface, Japanese-source evidence, PrimaryReading つぎ, MeaningJP next, KanjiMeanings next / order / sequence, example sentence 次の駅で降ります。, reading つぎのえきでおります。, translation I will get off at the next station., notes/support surface 次, 次回, 順次, audio 6B21_次-kanji-reading-次-つぎ.wav, stroke-order media 6B21_次-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-013",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "次|つぎ",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 次, StudyWordKanji is blank, PrimaryReading is つぎ",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0002846100; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 次|つぎ; Japanese-source re-review for 次|つぎ: Kanjipedia lists 音 ジ・シ and 訓 つぐ・つぎ, with meanings for next/following, order/sequence, arrangement, and occurrence count. Bunka Joyo reading governance supports the Joyo reading set. The generated card fields PrimaryReading つぎ, MeaningJP next, broader meanings next / order / sequence, and support notes 次, 次回, and 順次 are source-supported; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is Kanjipedia/Bunka governance, separate from placement/source-origin families shin_kanzen_master_kanji",
+        "primary field review: MeaningJP next; KanjiMeanings next / order / sequence",
+        "meaning-scope decision: next is the direct primary learner meaning through 次|つぎ; order/sequence remain useful broader meanings through 次回 and 順次 support.",
+        "notes/support review: 次(つぎ) - next ／ 次回(じかい) - next time ／ 順次(じゅんじ) - in order / sequentially stays support-only for the single-kanji card anchor",
+        "example review: 次の駅で降ります。 / つぎのえきでおります。 / I will get off at the next station.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 6B21_次-kanji-reading-次-つぎ.wav; source voicevox-nemo; locale ja-JP; exact primary reading つぎ",
+        "stroke-order identity: 6B21_次-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "次の駅で降ります。",
+        "reading": "つぎのえきでおります。",
+        "translation": "I will get off at the next station.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 次の駅で降ります。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 次|つぎ without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "歌",
@@ -6304,7 +6600,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 止|とまる generated surface, Japanese-source evidence, PrimaryReading とまる, MeaningJP stop, KanjiMeanings stop / halt, example sentence バスが駅前で止まりました。, reading バスがえきまえでとまりました。, translation The bus stopped near the station., notes/support surface 止まる, 止める, audio 6B62_止-kanji-reading-止-とまる.wav, stroke-order media 6B62_止-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-013",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "止|とまる",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 止, StudyWordKanji is blank, PrimaryReading is とまる",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0002704800/; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 止|とまる; Japanese-source re-review for 止|とまる: Kanjipedia lists 音 シ and 訓 とまる・とめる plus outside-table stop/cease readings, with meanings for stopping, making something stop, ceasing, and behavior. Bunka Joyo reading governance supports the Joyo reading set. The generated card fields PrimaryReading とまる, MeaningJP stop, broader meanings stop / halt, and support notes 止まる and 止める are source-supported after replacing the やむ-only example; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is Kanjipedia/Bunka governance, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji, tanos_legacy_direct",
+        "primary field review: MeaningJP stop; KanjiMeanings stop / halt",
+        "meaning-scope decision: stop is the direct primary meaning through the intransitive とまる reading; 止める remains transitive support without replacing the selected anchor.",
+        "notes/support review: 止(と)まる - stop ／ 止(と)める - stop something stays support-only for the single-kanji card anchor",
+        "example review: バスが駅前で止まりました。 / バスがえきまえでとまりました。 / The bus stopped near the station.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 6B62_止-kanji-reading-止-とまる.wav; source voicevox-nemo; locale ja-JP; exact primary reading とまる",
+        "stroke-order identity: 6B62_止-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "バスが駅前で止まりました。",
+        "reading": "バスがえきまえでとまりました。",
+        "translation": "The bus stopped near the station.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: バスが駅前で止まりました。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 止|とまる without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "正",
@@ -6401,7 +6734,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 正|ただしい generated surface, Japanese-source evidence, PrimaryReading ただしい, MeaningJP correct, KanjiMeanings correct / proper / justice / righteous, example sentence 答えが正しいかどうか先生に聞きました。, reading こたえがただしいかどうかせんせいにききました。, translation I asked the teacher whether the answer was correct., notes/support surface 正しい, 正午, audio 6B63_正-kanji-reading-正-ただしい.wav, stroke-order media 6B63_正-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-013",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "正|ただしい",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 正, StudyWordKanji is blank, PrimaryReading is ただしい",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0003825900; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 正|ただしい; Japanese-source re-review for 正|ただしい: Kanjipedia lists 音 セイ・ショウ and 訓 ただしい・ただす・まさ, with meanings for correct/proper, correcting, exact/just, main/original, positive, and beginning of the year. Bunka Joyo reading governance supports the Joyo reading set. The generated card fields PrimaryReading ただしい, MeaningJP correct, broader meanings correct / proper / justice / righteous, and support notes 正しい and 正午 are source-supported after suppressing numeric dictionary noise; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is Kanjipedia/Bunka governance, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji, tanos_legacy_direct",
+        "primary field review: MeaningJP correct; KanjiMeanings correct / proper / justice / righteous",
+        "meaning-scope decision: correct is the direct primary learner meaning through 正しい; proper/justice/righteous remain useful broader meanings and 正午 keeps ショウ support visible.",
+        "notes/support review: 正(ただ)しい - correct ／ 正午(しょうご) - noon stays support-only for the single-kanji card anchor",
+        "example review: 答えが正しいかどうか先生に聞きました。 / こたえがただしいかどうかせんせいにききました。 / I asked the teacher whether the answer was correct.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 6B63_正-kanji-reading-正-ただしい.wav; source voicevox-nemo; locale ja-JP; exact primary reading ただしい",
+        "stroke-order identity: 6B63_正-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "答えが正しいかどうか先生に聞きました。",
+        "reading": "こたえがただしいかどうかせんせいにききました。",
+        "translation": "I asked the teacher whether the answer was correct.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 答えが正しいかどうか先生に聞きました。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 正|ただしい without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "歩",
@@ -6495,7 +6865,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 歩|あるく generated surface, Japanese-source evidence, PrimaryReading あるく, MeaningJP walk, KanjiMeanings walk / counter for steps, example sentence 駅まで歩くと十五分ぐらいかかります。, reading えきまであるくとじゅうごふんぐらいかかります。, translation It takes about fifteen minutes to walk to the station., notes/support surface 歩く, 散歩, audio 6B69_歩-kanji-reading-歩-あるく.wav, stroke-order media 6B69_歩-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-014",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "歩|あるく",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 歩, StudyWordKanji is blank, PrimaryReading is あるく",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0006296200; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 歩|あるく; Japanese-source re-review for 歩|あるく: Kanjipedia lists 音 ホ・ブ・フ and 訓 あるく・あゆむ, with meanings for walking/steps, progress, position, stride, area/unit, rate, and shogi pawn. Bunka Joyo reading governance supports the Joyo reading set. The generated card fields PrimaryReading あるく, MeaningJP walk, broader meanings walk / counter for steps, and support notes 歩く and 散歩 are source-supported; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is governed Kanjipedia/Bunka card-accuracy evidence, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji, tanos_legacy_direct",
+        "primary field review: MeaningJP walk; KanjiMeanings walk / counter for steps",
+        "meaning-scope decision: walk is the direct everyday verb meaning through 歩く; counter-for-steps stays broader source-backed context while 散歩 keeps the on-reading visible.",
+        "notes/support review: 歩(ある)く - walk ／ 散歩(さんぽ) - walk / stroll stays support-only for the single-kanji card anchor",
+        "example review: 駅まで歩くと十五分ぐらいかかります。 / えきまであるくとじゅうごふんぐらいかかります。 / It takes about fifteen minutes to walk to the station.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 6B69_歩-kanji-reading-歩-あるく.wav; source voicevox-nemo; locale ja-JP; exact primary reading あるく",
+        "stroke-order identity: 6B69_歩-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "駅まで歩くと十五分ぐらいかかります。",
+        "reading": "えきまであるくとじゅうごふんぐらいかかります。",
+        "translation": "It takes about fifteen minutes to walk to the station.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 駅まで歩くと十五分ぐらいかかります。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 歩|あるく without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "死",
@@ -6590,7 +6997,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 死|しぬ generated surface, Japanese-source evidence, PrimaryReading しぬ, MeaningJP die, KanjiMeanings death / die, example sentence 水がないと花はすぐ死んでしまいます。, reading みずがないとはなはすぐしんでしまいます。, translation Without water, flowers quickly die., notes/support surface 死ぬ, 必死, audio 6B7B_死-kanji-reading-死-しぬ.wav, stroke-order media 6B7B_死-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-014",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "死|しぬ",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 死, StudyWordKanji is blank, PrimaryReading is しぬ",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0002730300; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 死|しぬ; Japanese-source re-review for 死|しぬ: Kanjipedia lists 音 シ and 訓 しぬ, with meanings for dying/death, ending or becoming inactive, desperate/life-risking, and danger involving life. Bunka Joyo reading governance supports the Joyo reading set. The generated card fields PrimaryReading しぬ, MeaningJP die, broader meanings death / die, and support notes 死ぬ and 必死 are source-supported after replacing the more emotionally loaded animal-death example; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is governed Kanjipedia/Bunka card-accuracy evidence, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji, tanos_legacy_direct",
+        "primary field review: MeaningJP die; KanjiMeanings death / die",
+        "meaning-scope decision: die is the direct everyday verb meaning through 死ぬ; the flower example avoids avoidable emotional load while still naturally demonstrating the target kanji.",
+        "notes/support review: 死(し)ぬ - die ／ 必死(ひっし) - desperate stays support-only for the single-kanji card anchor",
+        "example review: 水がないと花はすぐ死んでしまいます。 / みずがないとはなはすぐしんでしまいます。 / Without water, flowers quickly die.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 6B7B_死-kanji-reading-死-しぬ.wav; source voicevox-nemo; locale ja-JP; exact primary reading しぬ",
+        "stroke-order identity: 6B7B_死-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "水がないと花はすぐ死んでしまいます。",
+        "reading": "みずがないとはなはすぐしんでしまいます。",
+        "translation": "Without water, flowers quickly die.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 水がないと花はすぐ死んでしまいます。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 死|しぬ without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "民",
@@ -6689,7 +7133,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 民|みん generated surface, Japanese-source evidence, PrimaryReading みん, MeaningJP citizens / people, KanjiMeanings citizens / people / nation / subjects, example sentence この町には多くの住民がいます。, reading このまちにはおおくのじゅうみんがいます。, translation There are many residents in this town., notes/support surface 国民, 住民, 市民, audio 6C11_民-kanji-reading-民-みん.wav, stroke-order media 6C11_民-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-014",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "民|みん",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 民, StudyWordKanji is blank, PrimaryReading is みん",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0006629300; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 民|みん; Japanese-source re-review for 民|みん: Kanjipedia lists 音 ミン and 訓 たみ, with meanings for people/citizens who form a national or social community and examples such as 国民, 市民, and 住民. Bunka Joyo reading governance supports the Joyo reading set. The generated card fields PrimaryReading みん, MeaningJP citizens / people, broader meanings citizens / people / nation / subjects, and support notes 国民, 住民, and 市民 are source-supported after replacing the abstract civic-slogan example; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is governed Kanjipedia/Bunka card-accuracy evidence, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji",
+        "primary field review: MeaningJP citizens / people; KanjiMeanings citizens / people / nation / subjects",
+        "meaning-scope decision: citizens/people is anchored in common on-reading words 国民, 住民, and 市民; nation/subjects remains broader source-backed context without becoming the learner-facing gloss.",
+        "notes/support review: 国民(こくみん) - citizens / people of a country ／ 住民(じゅうみん) - residents ／ 市民(しみん) - citizen stays support-only for the single-kanji card anchor",
+        "example review: この町には多くの住民がいます。 / このまちにはおおくのじゅうみんがいます。 / There are many residents in this town.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 6C11_民-kanji-reading-民-みん.wav; source voicevox-nemo; locale ja-JP; exact primary reading みん",
+        "stroke-order identity: 6C11_民-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "この町には多くの住民がいます。",
+        "reading": "このまちにはおおくのじゅうみんがいます。",
+        "translation": "There are many residents in this town.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: この町には多くの住民がいます。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 民|みん without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "池",
@@ -6785,7 +7266,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 池|いけ generated surface, Japanese-source evidence, PrimaryReading いけ, MeaningJP pond, KanjiMeanings pond / cistern / pool / reservoir, example sentence 公園の池で魚が泳いでいます。, reading こうえんのいけでさかながおよいでいます。, translation Fish are swimming in the park pond., notes/support surface 池, 電池, audio 6C60_池-kanji-reading-池-いけ.wav, stroke-order media 6C60_池-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-014",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "池|いけ",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 池, StudyWordKanji is blank, PrimaryReading is いけ",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0004667800; https://www.kanjipedia.jp/kotoba/0004668300; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 池|いけ; Japanese-source re-review for 池|いけ: Kanjipedia lists 音 チ and 訓 いけ, with meanings for a pond/small lake or water storage place, and the 池 word page supports いけ as a natural or artificial water-holding place. Bunka Joyo reading governance supports the Joyo reading set. The generated card fields PrimaryReading いけ, MeaningJP pond, broader meanings pond / cistern / pool / reservoir, and support notes 池 and 電池 are source-supported; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is governed Kanjipedia/Bunka card-accuracy evidence, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji",
+        "primary field review: MeaningJP pond; KanjiMeanings pond / cistern / pool / reservoir",
+        "meaning-scope decision: pond is the direct standalone reading/meaning through 池|いけ; 電池 keeps the チ on-reading visible as support vocabulary.",
+        "notes/support review: 池(いけ) - pond ／ 電池(でんち) - battery stays support-only for the single-kanji card anchor",
+        "example review: 公園の池で魚が泳いでいます。 / こうえんのいけでさかながおよいでいます。 / Fish are swimming in the park pond.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 6C60_池-kanji-reading-池-いけ.wav; source voicevox-nemo; locale ja-JP; exact primary reading いけ",
+        "stroke-order identity: 6C60_池-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "公園の池で魚が泳いでいます。",
+        "reading": "こうえんのいけでさかながおよいでいます。",
+        "translation": "Fish are swimming in the park pond.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 公園の池で魚が泳いでいます。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 池|いけ without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "注",
@@ -6884,7 +7402,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 注|ちゅう generated surface, Japanese-source evidence, PrimaryReading ちゅう, MeaningJP attention / note / order, KanjiMeanings attention / note / order / pour, example sentence 大事なところに注意して読んでください。, reading だいじなところにちゅういしてよんでください。, translation Please read carefully and pay attention to the important parts., notes/support surface 注意, 注文, audio 6CE8_注-kanji-reading-注-ちゅう.wav, stroke-order media 6CE8_注-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-014",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "注|ちゅう",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 注, StudyWordKanji is blank, PrimaryReading is ちゅう",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0004740400; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 注|ちゅう; Japanese-source re-review for 注|ちゅう: Kanjipedia lists 音 チュウ and 訓 そそぐ with outside-table つぐ・さす, and meanings for pouring, directing attention, explaining in detail, writing notes, and ordering in 注文/発注. Bunka Joyo reading governance supports the Joyo reading set. The generated card fields PrimaryReading ちゅう, MeaningJP attention / note / order, broader meanings attention / note / order / pour, and support notes 注意 and 注文 are source-supported after suppressing dictionary-dump noise; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is governed Kanjipedia/Bunka card-accuracy evidence, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji, tanos_legacy_direct",
+        "primary field review: MeaningJP attention / note / order; KanjiMeanings attention / note / order / pour",
+        "meaning-scope decision: attention/note/order is anchored in 注意 and 注文; pour remains a broader source-backed meaning visible through the reading field without crowding the primary N4 surface.",
+        "notes/support review: 注意(ちゅうい) - attention / caution ／ 注文(ちゅうもん) - order stays support-only for the single-kanji card anchor",
+        "example review: 大事なところに注意して読んでください。 / だいじなところにちゅういしてよんでください。 / Please read carefully and pay attention to the important parts.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 6CE8_注-kanji-reading-注-ちゅう.wav; source voicevox-nemo; locale ja-JP; exact primary reading ちゅう",
+        "stroke-order identity: 6CE8_注-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "大事なところに注意して読んでください。",
+        "reading": "だいじなところにちゅういしてよんでください。",
+        "translation": "Please read carefully and pay attention to the important parts.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 大事なところに注意して読んでください。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 注|ちゅう without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "洋",
@@ -6983,7 +7538,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 洋|よう generated surface, Japanese-source evidence, PrimaryReading よう, MeaningJP ocean / Western, KanjiMeanings ocean / Western / Western style / foreign / sea, example sentence 今日は駅前で洋食を食べる予定です。, reading きょうはえきまえでようしょくをたべるよていです。, translation Today I plan to eat Western food near the station., notes/support surface 洋服, 洋食, audio 6D0B_洋-kanji-reading-洋-よう.wav, stroke-order media 6D0B_洋-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-014",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "洋|よう",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 洋, StudyWordKanji is blank, PrimaryReading is よう",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0006939400; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 洋|よう; Japanese-source re-review for 洋|よう: Kanjipedia lists 音 ヨウ with outside-table うみ・なだ・ひろい, with meanings for a large ocean/sea, East/West world division, abbreviated Western/Western-style usage, and broad/spacious. Bunka Joyo reading governance supports the Joyo reading set. The generated card fields PrimaryReading よう, MeaningJP ocean / Western, broader meanings ocean / Western / Western style / foreign / sea, and support notes 洋服 and 洋食 are source-supported after tightening the English example translation; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is governed Kanjipedia/Bunka card-accuracy evidence, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji, tanos_legacy_direct",
+        "primary field review: MeaningJP ocean / Western; KanjiMeanings ocean / Western / Western style / foreign / sea",
+        "meaning-scope decision: ocean/Western is source-backed through the ヨウ reading and common support words 洋服 and 洋食; the example naturally demonstrates Western-food usage.",
+        "notes/support review: 洋服(ようふく) - Western clothes ／ 洋食(ようしょく) - Western food stays support-only for the single-kanji card anchor",
+        "example review: 今日は駅前で洋食を食べる予定です。 / きょうはえきまえでようしょくをたべるよていです。 / Today I plan to eat Western food near the station.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 6D0B_洋-kanji-reading-洋-よう.wav; source voicevox-nemo; locale ja-JP; exact primary reading よう",
+        "stroke-order identity: 6D0B_洋-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "今日は駅前で洋食を食べる予定です。",
+        "reading": "きょうはえきまえでようしょくをたべるよていです。",
+        "translation": "Today I plan to eat Western food near the station.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 今日は駅前で洋食を食べる予定です。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 洋|よう without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "洗",
@@ -7078,7 +7670,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 洗|あらう generated surface, Japanese-source evidence, PrimaryReading あらう, MeaningJP wash, KanjiMeanings wash, example sentence 帰ったらすぐ手を洗ってください。, reading かえったらすぐてをあらってください。, translation Please wash your hands as soon as you get back., notes/support surface 洗う, 洗濯, 洗面所, audio 6D17_洗-kanji-reading-洗-あらう.wav, stroke-order media 6D17_洗-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-014",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "洗|あらう",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 洗, StudyWordKanji is blank, PrimaryReading is あらう",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0004061700; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 洗|あらう; Japanese-source re-review for 洗|あらう: Kanjipedia lists 音 セン and 訓 あらう, with meanings for washing, rinsing, and cleaning, and examples such as 洗濯, 洗面, and 水洗. Bunka Joyo reading governance supports the Joyo reading set. The generated card fields PrimaryReading あらう, MeaningJP wash, KanjiMeanings wash, and support notes 洗う, 洗濯, and 洗面所 are source-supported after suppressing inquire/probe dictionary noise; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is governed Kanjipedia/Bunka card-accuracy evidence, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji",
+        "primary field review: MeaningJP wash; KanjiMeanings wash",
+        "meaning-scope decision: wash is the direct verb meaning through 洗う; 洗濯 and 洗面所 keep the セン support reading visible without changing the primary anchor.",
+        "notes/support review: 洗(あら)う - wash ／ 洗濯(せんたく) - laundry ／ 洗面所(せんめんじょ) - washroom stays support-only for the single-kanji card anchor",
+        "example review: 帰ったらすぐ手を洗ってください。 / かえったらすぐてをあらってください。 / Please wash your hands as soon as you get back.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 6D17_洗-kanji-reading-洗-あらう.wav; source voicevox-nemo; locale ja-JP; exact primary reading あらう",
+        "stroke-order identity: 6D17_洗-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "帰ったらすぐ手を洗ってください。",
+        "reading": "かえったらすぐてをあらってください。",
+        "translation": "Please wash your hands as soon as you get back.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 帰ったらすぐ手を洗ってください。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 洗|あらう without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "海",
@@ -7437,7 +8066,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 牛|ぎゅう generated surface, Japanese-source evidence, PrimaryReading ぎゅう, MeaningJP cow / beef, KanjiMeanings cow / beef, example sentence 夕食に牛肉の料理を作りました。, reading ゆうしょくにぎゅうにくのりょうりをつくりました。, translation I made a beef dish for dinner., notes/support surface 牛肉, 牛乳, audio 725B_牛-kanji-reading-牛-ぎゅう.wav, stroke-order media 725B_牛-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-014",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "牛|ぎゅう",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 牛, StudyWordKanji is blank, PrimaryReading is ぎゅう",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0001417100; https://www.kanjipedia.jp/kanji/0005428500; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 牛|ぎゅう; Japanese-source re-review for 牛|ぎゅう: Kanjipedia lists 牛 with 音 ギュウ and 訓 うし, with meanings for cow/cattle; the 肉 entry lists 牛肉 among meat words, supporting the visible beef support word on the card. Bunka Joyo reading governance supports the Joyo reading set. The generated card fields PrimaryReading ぎゅう, MeaningJP cow / beef, KanjiMeanings cow / beef, and support notes 牛肉 and 牛乳 are source-supported with beef treated as support-word scoped; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is governed Kanjipedia/Bunka card-accuracy evidence, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji, tanos_legacy_direct",
+        "primary field review: MeaningJP cow / beef; KanjiMeanings cow / beef",
+        "meaning-scope decision: cow/beef is source-backed with beef treated as support-word-scoped through 牛肉; 牛乳 reinforces the same ギュウ reading while うし remains visible in the reading field.",
+        "notes/support review: 牛肉(ぎゅうにく) - beef ／ 牛乳(ぎゅうにゅう) - milk stays support-only for the single-kanji card anchor",
+        "example review: 夕食に牛肉の料理を作りました。 / ゆうしょくにぎゅうにくのりょうりをつくりました。 / I made a beef dish for dinner.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 725B_牛-kanji-reading-牛-ぎゅう.wav; source voicevox-nemo; locale ja-JP; exact primary reading ぎゅう",
+        "stroke-order identity: 725B_牛-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "夕食に牛肉の料理を作りました。",
+        "reading": "ゆうしょくにぎゅうにくのりょうりをつくりました。",
+        "translation": "I made a beef dish for dinner.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 夕食に牛肉の料理を作りました。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 牛|ぎゅう without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "物",
@@ -7533,16 +8199,53 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 物|もの generated surface, Japanese-source evidence, PrimaryReading もの, MeaningJP thing, KanjiMeanings thing / item / matter / object, example sentence 旅行の前に必要な物を全部買いました。, reading りょこうのまえにひつようなものをぜんぶかいました。, translation I bought everything I needed before the trip., notes/support surface 買い物, 物, audio 7269_物-kanji-reading-物-もの.wav, stroke-order media 7269_物-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-014",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "物|もの",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 物, StudyWordKanji is blank, PrimaryReading is もの",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0006144500; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 物|もの; Japanese-source re-review for 物|もの: Kanjipedia lists 音 ブツ・モツ and 訓 もの, with meanings for things, matters/affairs, persons by character, and the world, plus examples such as 物体, 万物, 物理, and 禁物. Bunka Joyo reading governance supports the Joyo reading set. The generated card fields PrimaryReading もの, MeaningJP thing, KanjiMeanings thing / item / matter / object, and support notes 買い物 and 物 are source-supported while keeping lower-value senses out of the learner-facing surface; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is governed Kanjipedia/Bunka card-accuracy evidence, separate from placement/source-origin families kanjidic2_legacy, nihongo_sou_matome_kanji, shin_kanzen_master_kanji, tanos_legacy_direct",
+        "primary field review: MeaningJP thing; KanjiMeanings thing / item / matter / object",
+        "meaning-scope decision: thing is the direct もの reading/meaning; item/matter/object remain useful broader meanings while 買い物 provides support-only vocabulary.",
+        "notes/support review: 買(か)い物(もの) - shopping ／ 物(もの) - thing stays support-only for the single-kanji card anchor",
+        "example review: 旅行の前に必要な物を全部買いました。 / りょこうのまえにひつようなものをぜんぶかいました。 / I bought everything I needed before the trip.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 7269_物-kanji-reading-物-もの.wav; source voicevox-nemo; locale ja-JP; exact primary reading もの",
+        "stroke-order identity: 7269_物-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "旅行の前に必要な物を全部買いました。",
+        "reading": "りょこうのまえにひつようなものをぜんぶかいました。",
+        "translation": "I bought everything I needed before the trip.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 旅行の前に必要な物を全部買いました。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 物|もの without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "特",
-    "status": "platinum",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
-      "とくに"
+      "とく"
     ],
     "meaningIncludes": [
-      "especially"
+      "special"
     ],
     "kanjiMeaningsIncludes": [
       "special"
@@ -7563,7 +8266,7 @@
       {
         "type": "japanese-source",
         "source": "https://www.kanjipedia.jp/kanji/0005298200/; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
-        "detail": "Japanese-source re-review for 特|とくに: Kanjipedia lists 音 トク with outside-table readings including とりわけ, and meanings for especially, standing out, special, and one/alone, with examples such as 特色 and 特別. Bunka Joyo reading governance supports the Joyo reading set. The generated card fields PrimaryReading とくに, MeaningJP especially, KanjiMeanings special, and support notes 特に and 特別 are source-supported; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins."
+        "detail": "Japanese-source re-review for 特|とく: Kanjipedia lists 音 トク and meanings for especially/to be outstanding/special, with examples such as 特色 and 特別; the Bunka Joyo reading index remains the governed reading-reference source. The generated card fields PrimaryReading とく, MeaningJP special, KanjiMeanings special, and support notes 特に and 特別 are source-supported while 特に remains support-only example vocabulary; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins."
       }
     ],
     "qualityGates": {
@@ -7584,25 +8287,25 @@
       "strokeOrderTargetVerified": true,
       "noSilentFallback": true
     },
-    "primaryReadingRationale": "Uses とくに because it is a high-value learner word directly showing the target kanji in 特に; トク remains visible in the on-reading field and in 特別.",
+    "primaryReadingRationale": "Uses とく as the individual-kanji on-reading behind learner-facing support words 特に and 特別, matching the 主|おも pattern by keeping the whole adverb support-only instead of making 特に the kanji-card anchor.",
     "reviewStandard": "kanji-platinum-v3-evidence-lanes",
     "revalidatedAt": "2026-05-13",
     "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
     "internalChecks": [
       {
         "type": "generated-surface",
-        "source": "npm run deck:platinum:batch -- --level=4 --kanji=洗,海,漢,牛,物,特,犬,理,産,用 --json",
-        "detail": "Generated card surface re-reviewed for 特|とくに: single-kanji anchor; Kanji and DisplayWord 特; PrimaryReading とくに; MeaningJP especially; KanjiMeanings special; notes/support surface 特に, 特別; example この店のカレーは特に人気があります。; reading このみせのカレーはとくににんきがあります。; translation The curry at this restaurant is especially popular.; audio field includes 7279_特-kanji-reading-特-とくに.wav; stroke-order field includes 7279_特-stroke-order.gif."
+        "source": "npm run deck:platinum:batch -- --level=4 --kanji=歩,死,民,池,注,洋,洗,牛,物,特 --json",
+        "detail": "Generated card surface re-reviewed for 特|とく: single-kanji anchor; Kanji and DisplayWord 特; PrimaryReading とく; MeaningJP special; KanjiMeanings special; notes/support surface 特に, 特別; example この店のカレーは特に人気があります。; reading このみせのカレーはとくににんきがあります。; translation The curry at this restaurant is especially popular.; audio field includes 7279_特-kanji-reading-特-とく.wav; stroke-order field includes 7279_特-stroke-order.gif."
       },
       {
         "type": "media-audit",
-        "source": "data/media/kanji manifests; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
-        "detail": "Managed media provenance inspected for 特: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source remote-stroke-order-animation; no silent fallback accepted. Managed media provenance also checked 特 exact audio media fragment kanji-reading-特-とくに."
+        "source": "data/media/kanji manifests; data/media_sources/audio; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
+        "detail": "Managed media provenance inspected for 特: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source remote-stroke-order-animation; no silent fallback accepted. Managed media provenance also checked 特 exact audio media fragment kanji-reading-特-とく. The exact とく waveform was imported from an existing governed VOICEVOX Nemo kana-reading source asset because kanji-reading audio is synthesized from the kana reading."
       },
       {
         "type": "audio-review",
         "source": "exported Audio field and data/media/kanji manifest",
-        "detail": "Audio artifact re-reviewed for 特|とくに: exact kanji-reading audio 7279_特-kanji-reading-特-とくに.wav; source voicevox-nemo; category kanji-reading; target 特; exported PrimaryReading とくに."
+        "detail": "Audio artifact re-reviewed for 特|とく: exact kanji-reading audio 7279_特-kanji-reading-特-とく.wav; source voicevox-nemo; category kanji-reading; target 特; exported PrimaryReading とく."
       },
       {
         "type": "stroke-order-review",
@@ -7619,14 +8322,52 @@
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Final product judgment for 特|とくに: individual-kanji card for an N4 learner, primary reading and meanings reviewed against Japanese source evidence, release-quality support-only example usage, learner-friendly and useful card surface, level-appropriate natural sentence, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+        "detail": "Final product judgment for 特|とく: individual-kanji card for an N4 learner, primary reading and meanings reviewed against Japanese source evidence, release-quality support-only example usage through 特に, learner-friendly and useful card surface, level-appropriate natural sentence, blank StudyWordKanji, no silent fallback, and no active verification limitations."
       },
       {
         "type": "current-standard-review",
         "source": "core N4 current-standard whole-card review",
-        "detail": "Current-standard review revalidated 特|とくに generated surface, Japanese-source evidence, PrimaryReading とくに, MeaningJP especially, KanjiMeanings special, example sentence この店のカレーは特に人気があります。, reading このみせのカレーはとくににんきがあります。, translation The curry at this restaurant is especially popular., notes/support surface 特に, 特別, audio 7279_特-kanji-reading-特-とくに.wav, stroke-order media 7279_特-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
+        "detail": "Current-standard review revalidated 特|とく generated surface, Japanese-source evidence, PrimaryReading とく, MeaningJP special, KanjiMeanings special, example sentence この店のカレーは特に人気があります。, reading このみせのカレーはとくににんきがあります。, translation The curry at this restaurant is especially popular., notes/support surface 特に, 特別, audio 7279_特-kanji-reading-特-とく.wav, stroke-order media 7279_特-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "fixSummary": "Changed the kanji-card anchor from 特に|とくに to 特|とく, imported exact governed VOICEVOX Nemo kana-reading audio for 特|とく, and kept 特に as support-only example/notes usage.",
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-014",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "特|とく",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 特, StudyWordKanji is blank, PrimaryReading is とく",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0005298200/; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 特|とく; Japanese-source re-review for 特|とく: Kanjipedia lists 音 トク and meanings for especially/to be outstanding/special, with examples such as 特色 and 特別; the Bunka Joyo reading index remains the governed reading-reference source. The generated card fields PrimaryReading とく, MeaningJP special, KanjiMeanings special, and support notes 特に and 特別 are source-supported while 特に remains support-only example vocabulary; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is governed Kanjipedia/Bunka card-accuracy evidence, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji, tanos_legacy_direct",
+        "primary field review: MeaningJP special; KanjiMeanings special",
+        "meaning-scope decision: special is the corrected individual-kanji anchor through トク/とく; 特に is now support-only example vocabulary instead of the primary kanji-card reading.",
+        "notes/support review: 特(とく)に - especially ／ 特別(とくべつ) - special stays support-only for the single-kanji card anchor",
+        "example review: この店のカレーは特に人気があります。 / このみせのカレーはとくににんきがあります。 / The curry at this restaurant is especially popular.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 7279_特-kanji-reading-特-とく.wav; source voicevox-nemo; locale ja-JP; exact primary reading とく",
+        "stroke-order identity: 7279_特-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "この店のカレーは特に人気があります。",
+        "reading": "このみせのカレーはとくににんきがあります。",
+        "translation": "The curry at this restaurant is especially popular.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: この店のカレーは特に人気があります。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 特|とく without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "犬",
@@ -7719,7 +8460,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 犬|いぬ generated surface, Japanese-source evidence, PrimaryReading いぬ, MeaningJP dog, KanjiMeanings dog, example sentence 近所の犬は朝になると元気に走ります。, reading きんじょのいぬはあさになるとげんきにはしります。, translation The neighborhood dog runs energetically in the morning., notes/support surface 犬, 子犬, audio 72AC_犬-kanji-reading-犬-いぬ.wav, stroke-order media 72AC_犬-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-015",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "犬|いぬ",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 犬, StudyWordKanji is blank, PrimaryReading is いぬ",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0001892600/; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 犬|いぬ; Japanese-source re-review for 犬|いぬ: Kanjipedia lists 音 ケン and 訓 いぬ, with primary meaning いぬ/dog; Bunka Joyo index was opened for official reading-governance context. The generated card fields PrimaryReading いぬ, MeaningJP dog, broader meanings dog, and support notes 犬, 子犬 are source-supported; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is governed Kanjipedia/Bunka card-accuracy evidence, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji, tanos_legacy_direct",
+        "primary field review: MeaningJP dog; KanjiMeanings dog",
+        "meaning-scope decision: dog is the direct everyday standalone meaning and reading; ケン remains visible as on-reading support without displacing the 犬|いぬ anchor.",
+        "notes/support review: 犬, 子犬 stays support-only for the single-kanji card anchor",
+        "example review: 近所の犬は朝になると元気に走ります。 / きんじょのいぬはあさになるとげんきにはしります。 / The neighborhood dog runs energetically in the morning.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 72AC_犬-kanji-reading-犬-いぬ.wav; source voicevox-nemo; locale ja-JP; exact primary reading いぬ",
+        "stroke-order identity: 72AC_犬-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "近所の犬は朝になると元気に走ります。",
+        "reading": "きんじょのいぬはあさになるとげんきにはしります。",
+        "translation": "The neighborhood dog runs energetically in the morning.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 近所の犬は朝になると元気に走ります。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 犬|いぬ without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "理",
@@ -7817,7 +8595,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 理|り generated surface, Japanese-source evidence, PrimaryReading り, MeaningJP reason / logic, KanjiMeanings reason / logic / arrangement / truth, example sentence 休んだ理由を先生に説明しました。, reading やすんだりゆうをせんせいにせつめいしました。, translation I explained the reason I was absent to the teacher., notes/support surface 理由, 料理, audio 7406_理-kanji-reading-理-り.wav, stroke-order media 7406_理-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-015",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "理|り",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 理, StudyWordKanji is blank, PrimaryReading is り",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0007083200; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 理|り; Japanese-source re-review for 理|り: Kanjipedia lists 音 リ and outside-table 訓 ことわり/すじ/おさめる, with meanings around reason/principle, texture/arrangement, managing/ordering, and science; Bunka Joyo index was opened for official reading-governance context. The generated card fields PrimaryReading り, MeaningJP reason / logic, broader meanings reason / logic / arrangement / truth, and support notes 理由, 料理 are source-supported; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is governed Kanjipedia/Bunka card-accuracy evidence, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji, tanos_legacy_direct",
+        "primary field review: MeaningJP reason / logic; KanjiMeanings reason / logic / arrangement / truth",
+        "meaning-scope decision: reason / logic is the learner-facing scope through 理由 and related リ compounds; arrangement/truth stay broader source-backed context without overloading the primary card prompt.",
+        "notes/support review: 理由, 料理 stays support-only for the single-kanji card anchor",
+        "example review: 休んだ理由を先生に説明しました。 / やすんだりゆうをせんせいにせつめいしました。 / I explained the reason I was absent to the teacher.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 7406_理-kanji-reading-理-り.wav; source voicevox-nemo; locale ja-JP; exact primary reading り",
+        "stroke-order identity: 7406_理-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "休んだ理由を先生に説明しました。",
+        "reading": "やすんだりゆうをせんせいにせつめいしました。",
+        "translation": "I explained the reason I was absent to the teacher.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 休んだ理由を先生に説明しました。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 理|り without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "産",
@@ -7916,7 +8731,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 産|さん generated surface, Japanese-source evidence, PrimaryReading さん, MeaningJP production / childbirth, KanjiMeanings production / childbirth / products / property, example sentence この工場では車をたくさん生産しています。, reading このこうじょうではくるまをたくさんせいさんしています。, translation This factory produces many cars., notes/support surface 生産, 出産, 産業, audio 7523_産-kanji-reading-産-さん.wav, stroke-order media 7523_産-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-015",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "産|さん",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 産, StudyWordKanji is blank, PrimaryReading is さん",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0002656400; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 産|さん; Japanese-source re-review for 産|さん: Kanjipedia lists 音 サン and 訓 うむ/うまれる/うぶ, with meanings for childbirth, producing, produced goods, property, and newborn/unchanged state; Bunka Joyo index was opened for official reading-governance context. The generated card fields PrimaryReading さん, MeaningJP production / childbirth, broader meanings production / childbirth / products / property, and support notes 生産, 出産, 産業 are source-supported; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is governed Kanjipedia/Bunka card-accuracy evidence, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji",
+        "primary field review: MeaningJP production / childbirth; KanjiMeanings production / childbirth / products / property",
+        "meaning-scope decision: production / childbirth is the high-value N4 learner scope for サン compounds; products/property remain broader kanji-meaning context.",
+        "notes/support review: 生産, 出産, 産業 stays support-only for the single-kanji card anchor",
+        "example review: この工場では車をたくさん生産しています。 / このこうじょうではくるまをたくさんせいさんしています。 / This factory produces many cars.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 7523_産-kanji-reading-産-さん.wav; source voicevox-nemo; locale ja-JP; exact primary reading さん",
+        "stroke-order identity: 7523_産-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "この工場では車をたくさん生産しています。",
+        "reading": "このこうじょうではくるまをたくさんせいさんしています。",
+        "translation": "This factory produces many cars.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: この工場では車をたくさん生産しています。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 産|さん without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "用",
@@ -8014,7 +8866,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 用|よう generated surface, Japanese-source evidence, PrimaryReading よう, MeaningJP use / business, KanjiMeanings use / business / employ / utilize, example sentence 午後は銀行へ行く用事があります。, reading ごごはぎんこうへいくようじがあります。, translation I have an errand to run at the bank this afternoon., notes/support surface 用事, 使用, audio 7528_用-kanji-reading-用-よう.wav, stroke-order media 7528_用-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-015",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "用|よう",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 用, StudyWordKanji is blank, PrimaryReading is よう",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0006927500; https://www.kanjipedia.jp/kotoba/0006929200; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 用|よう; Japanese-source re-review for 用|よう: Kanjipedia lists 音 ヨウ and 訓 もちいる, with meanings for use/employ, function/effect, necessary business/errands, purpose, and means; the Kanjipedia 用事 word page supports ヨウジ as a thing one must do/errand; Bunka Joyo index was opened for official reading-governance context. The generated card fields PrimaryReading よう, MeaningJP use / business, broader meanings use / business / employ / utilize, and support notes 用事, 使用 are source-supported; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is governed Kanjipedia/Bunka card-accuracy evidence, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji, tanos_legacy_direct",
+        "primary field review: MeaningJP use / business; KanjiMeanings use / business / employ / utilize",
+        "meaning-scope decision: use / business keeps the card tied to high-frequency よう compounds such as 用事 and 使用; employ/utilize stay broader source-backed context.",
+        "notes/support review: 用事, 使用 stays support-only for the single-kanji card anchor",
+        "example review: 午後は銀行へ行く用事があります。 / ごごはぎんこうへいくようじがあります。 / I have an errand to run at the bank this afternoon.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 7528_用-kanji-reading-用-よう.wav; source voicevox-nemo; locale ja-JP; exact primary reading よう",
+        "stroke-order identity: 7528_用-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "午後は銀行へ行く用事があります。",
+        "reading": "ごごはぎんこうへいくようじがあります。",
+        "translation": "I have an errand to run at the bank this afternoon.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 午後は銀行へ行く用事があります。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 用|よう without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "田",
@@ -8109,7 +8998,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 田|た generated surface, Japanese-source evidence, PrimaryReading た, MeaningJP rice field, KanjiMeanings rice field / rice paddy, example sentence 家の近くに田んぼがあります。, reading いえのちかくにたんぼがあります。, translation There is a rice field near my house., notes/support surface 田んぼ, 水田, audio 7530_田-kanji-reading-田-た.wav, stroke-order media 7530_田-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-015",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "田|た",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 田, StudyWordKanji is blank, PrimaryReading is た",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0005083100; https://www.kanjipedia.jp/kotoba/0005083800; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 田|た; Japanese-source re-review for 田|た: Kanjipedia lists 音 デン and 訓 た, with meanings for rice fields/farmland and paddy fields; the Kanjipedia 田 word page supports た as land cultivated for rice/water field/たんぼ; Bunka Joyo index was opened for official reading-governance context. The generated card fields PrimaryReading た, MeaningJP rice field, broader meanings rice field / rice paddy, and support notes 田んぼ, 水田 are source-supported; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is governed Kanjipedia/Bunka card-accuracy evidence, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji, tanos_legacy_direct",
+        "primary field review: MeaningJP rice field; KanjiMeanings rice field / rice paddy",
+        "meaning-scope decision: rice field is the direct standalone た meaning; 水田 keeps デン visible as support without changing the primary learner anchor.",
+        "notes/support review: 田んぼ, 水田 stays support-only for the single-kanji card anchor",
+        "example review: 家の近くに田んぼがあります。 / いえのちかくにたんぼがあります。 / There is a rice field near my house.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 7530_田-kanji-reading-田-た.wav; source voicevox-nemo; locale ja-JP; exact primary reading た",
+        "stroke-order identity: 7530_田-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "家の近くに田んぼがあります。",
+        "reading": "いえのちかくにたんぼがあります。",
+        "translation": "There is a rice field near my house.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 家の近くに田んぼがあります。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 田|た without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "町",
@@ -8205,7 +9131,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 町|まち generated surface, Japanese-source evidence, PrimaryReading まち, MeaningJP town, KanjiMeanings town / block / street / village, example sentence この町は静かで住みやすいです。, reading このまちはしずかですみやすいです。, translation This town is quiet and easy to live in., notes/support surface 町, 町長, audio 753A_町-kanji-reading-町-まち.wav, stroke-order media 753A_町-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-015",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "町|まち",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 町, StudyWordKanji is blank, PrimaryReading is まち",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0004781400; https://www.kanjipedia.jp/kotoba/0004782100; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 町|まち; Japanese-source re-review for 町|まち: Kanjipedia lists 音 チョウ and 訓 まち, with meanings for town/municipality, city district, measurement units, and ridge/path sense; the Kanjipedia 町 word page supports まち as a populated town/municipality/district; Bunka Joyo index was opened for official reading-governance context. The generated card fields PrimaryReading まち, MeaningJP town, broader meanings town / block / street / village, and support notes 町, 町長 are source-supported; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is governed Kanjipedia/Bunka card-accuracy evidence, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji, tanos_legacy_direct",
+        "primary field review: MeaningJP town; KanjiMeanings town / block / street / village",
+        "meaning-scope decision: town is the direct everyday standalone まち meaning; block/street/village remain broader source-backed context while 町長 exposes チョウ support.",
+        "notes/support review: 町, 町長 stays support-only for the single-kanji card anchor",
+        "example review: この町は静かで住みやすいです。 / このまちはしずかですみやすいです。 / This town is quiet and easy to live in.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 753A_町-kanji-reading-町-まち.wav; source voicevox-nemo; locale ja-JP; exact primary reading まち",
+        "stroke-order identity: 753A_町-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "この町は静かで住みやすいです。",
+        "reading": "このまちはしずかですみやすいです。",
+        "translation": "This town is quiet and easy to live in.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: この町は静かで住みやすいです。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 町|まち without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "画",
@@ -8566,7 +9529,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 番|ばん generated surface, Japanese-source evidence, PrimaryReading ばん, MeaningJP number / turn, KanjiMeanings number / turn / number in a series, example sentence 受付で呼ばれる番号を待っています。, reading うけつけでよばれるばんごうをまっています。, translation I am waiting for the number that will be called at reception., notes/support surface 番号, 順番, 番組, audio 756A_番-kanji-reading-番-ばん.wav, stroke-order media 756A_番-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-015",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "番|ばん",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 番, StudyWordKanji is blank, PrimaryReading is ばん",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0005780000; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 番|ばん; Japanese-source re-review for 番|ばん: Kanjipedia lists 音 バン with outside-table ハン/ハ and meanings for taking turns, sequence/rank/number, watch/guard, ordinary/common items, and pairings/programs; Bunka Joyo index was opened for official reading-governance context. The generated card fields PrimaryReading ばん, MeaningJP number / turn, broader meanings number / turn / number in a series, and support notes 番号, 順番, 番組 are source-supported; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is governed Kanjipedia/Bunka card-accuracy evidence, separate from placement/source-origin families shin_kanzen_master_kanji",
+        "primary field review: MeaningJP number / turn; KanjiMeanings number / turn / number in a series",
+        "meaning-scope decision: number / turn is the compact learner-facing scope through 番号 and 順番; 番組 is useful support for the program/show sense without broadening the main prompt too far.",
+        "notes/support review: 番号, 順番, 番組 stays support-only for the single-kanji card anchor",
+        "example review: 受付で呼ばれる番号を待っています。 / うけつけでよばれるばんごうをまっています。 / I am waiting for the number that will be called at reception.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 756A_番-kanji-reading-番-ばん.wav; source voicevox-nemo; locale ja-JP; exact primary reading ばん",
+        "stroke-order identity: 756A_番-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "受付で呼ばれる番号を待っています。",
+        "reading": "うけつけでよばれるばんごうをまっています。",
+        "translation": "I am waiting for the number that will be called at reception.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 受付で呼ばれる番号を待っています。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 番|ばん without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "疲",
@@ -8664,7 +9664,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 疲|つかれる generated surface, Japanese-source evidence, PrimaryReading つかれる, MeaningJP get tired, KanjiMeanings tired / fatigue / exhausted / tire / weary, example sentence 今日は仕事でとても疲れました。, reading きょうはしごとでとてもつかれました。, translation I got very tired from work today., notes/support surface 疲れる, 疲れ, 疲労, audio 75B2_疲-kanji-reading-疲-つかれる.wav, stroke-order media 75B2_疲-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-015",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "疲|つかれる",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 疲, StudyWordKanji is blank, PrimaryReading is つかれる",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0005823500; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 疲|つかれる; Japanese-source re-review for 疲|つかれる: Kanjipedia lists 音 ヒ and 訓 つかれる, with meaning つかれる/decline and compounds 疲弊 and 疲労; Bunka Joyo index was opened for official reading-governance context. The generated card fields PrimaryReading つかれる, MeaningJP get tired, broader meanings tired / fatigue / exhausted / tire / weary, and support notes 疲れる, 疲れ, 疲労 are source-supported; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is governed Kanjipedia/Bunka card-accuracy evidence, separate from placement/source-origin families shin_kanzen_master_kanji",
+        "primary field review: MeaningJP get tired; KanjiMeanings tired / fatigue / exhausted / tire / weary",
+        "meaning-scope decision: get tired is the direct verb reading taught by 疲れる and the example sentence; fatigue/tired/exhausted remain broader source-backed support with ヒ visible through 疲労.",
+        "notes/support review: 疲れる, 疲れ, 疲労 stays support-only for the single-kanji card anchor",
+        "example review: 今日は仕事でとても疲れました。 / きょうはしごとでとてもつかれました。 / I got very tired from work today.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 75B2_疲-kanji-reading-疲-つかれる.wav; source voicevox-nemo; locale ja-JP; exact primary reading つかれる",
+        "stroke-order identity: 75B2_疲-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "今日は仕事でとても疲れました。",
+        "reading": "きょうはしごとでとてもつかれました。",
+        "translation": "I got very tired from work today.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 今日は仕事でとても疲れました。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 疲|つかれる without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "病",
@@ -8760,7 +9797,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 病|びょう generated surface, Japanese-source evidence, PrimaryReading びょう, MeaningJP illness / sick, KanjiMeanings illness / sick / ill, example sentence 病気なので今日は病院へ行きます。, reading びょうきなのできょうはびょういんへいきます。, translation Since I am sick, I am going to the hospital today., notes/support surface 病院, 病気, audio 75C5_病-kanji-reading-病-びょう.wav, stroke-order media 75C5_病-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-015",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "病|びょう",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 病, StudyWordKanji is blank, PrimaryReading is びょう",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0005957400; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 病|びょう; Japanese-source re-review for 病|びょう: Kanjipedia lists 音 ビョウ/ヘイ and 訓 やむ/やまい, with meanings for sickness/illness and flaw/weak point, and includes 病院 and 病気 as useful ビョウ words; Bunka Joyo index was opened for official reading-governance context. The generated card fields PrimaryReading びょう, MeaningJP illness / sick, broader meanings illness / sick / ill, and support notes 病院, 病気 are source-supported; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is governed Kanjipedia/Bunka card-accuracy evidence, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji, tanos_legacy_direct",
+        "primary field review: MeaningJP illness / sick; KanjiMeanings illness / sick / ill",
+        "meaning-scope decision: illness / sick is the learner-facing scope for 病院 and 病気; ヘイ and やむ/やまい remain secondary reading-list support.",
+        "notes/support review: 病院, 病気 stays support-only for the single-kanji card anchor",
+        "example review: 病気なので今日は病院へ行きます。 / びょうきなのできょうはびょういんへいきます。 / Since I am sick, I am going to the hospital today.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 75C5_病-kanji-reading-病-びょう.wav; source voicevox-nemo; locale ja-JP; exact primary reading びょう",
+        "stroke-order identity: 75C5_病-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "病気なので今日は病院へ行きます。",
+        "reading": "びょうきなのできょうはびょういんへいきます。",
+        "translation": "Since I am sick, I am going to the hospital today.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 病気なので今日は病院へ行きます。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 病|びょう without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "発",
@@ -8861,7 +9935,44 @@
         "source": "core N4 current-standard whole-card review",
         "detail": "Current-standard review revalidated 発|はつ generated surface, Japanese-source evidence, PrimaryReading はつ, MeaningJP depart / emit / start, KanjiMeanings depart / emit / start / departure / discharge / publish, example sentence 電車は七時に駅を出発します。, reading でんしゃはしちじにえきをしゅっぱつします。, translation The train departs the station at seven o'clock., notes/support surface 出発, 発表, audio 767A_発-kanji-reading-発-はつ.wav, stroke-order media 767A_発-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n4-kanji-platinum-rereview-batch-015",
+      "reviewedAt": "2026-05-15",
+      "reviewer": "codex-platinum-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "発|はつ",
+      "evidenceChecked": [
+        "generated surface: Kanji and DisplayWord are 発, StudyWordKanji is blank, PrimaryReading is はつ",
+        "governed Japanese source: https://www.kanjipedia.jp/kanji/0005684700/; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html was opened/checked for 発|はつ; Japanese-source re-review for 発|はつ: Kanjipedia lists 音 ハツ/ホツ with meanings for release/emit, depart/send out, occur/start, develop, open, appear/publish, and expose; Bunka Joyo index was opened for official reading-governance context. The generated card fields PrimaryReading はつ, MeaningJP depart / emit / start, broader meanings depart / emit / start / departure / discharge / publish, and support notes 出発, 発表 are source-supported; this verifies kanji-field accuracy, not JLPT placement, independently of source-governance origins.",
+        "source-origin independence: platinum field source is governed Kanjipedia/Bunka card-accuracy evidence, separate from placement/source-origin families kanjidic2_legacy, shin_kanzen_master_kanji, tanos_legacy_direct",
+        "primary field review: MeaningJP depart / emit / start; KanjiMeanings depart / emit / start / departure / discharge / publish",
+        "meaning-scope decision: depart / emit / start captures the high-value ハツ scope behind 出発 and 発表; departure/discharge/publish stay broader source-backed meaning context.",
+        "notes/support review: 出発, 発表 stays support-only for the single-kanji card anchor",
+        "example review: 電車は七時に駅を出発します。 / でんしゃはしちじにえきをしゅっぱつします。 / The train departs the station at seven o'clock.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        "audio identity: 767A_発-kanji-reading-発-はつ.wav; source voicevox-nemo; locale ja-JP; exact primary reading はつ",
+        "stroke-order identity: 767A_発-stroke-order.gif; source remote-stroke-order-animation; visual target checked; sequence correctness remains visual-review based",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
+        "quality gates checked true; no golden review counted as source truth",
+        "verification limitations actively considered; no active non-core limitations recorded"
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "電車は七時に駅を出発します。",
+        "reading": "でんしゃはしちじにえきをしゅっぱつします。",
+        "translation": "The train departs the station at seven o'clock.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 電車は七時に駅を出発します。 is natural enough, learner-useful, level-appropriate for the N4 kanji card, and supports 発|はつ without replacing the individual-kanji anchor."
+      }
+    }
   },
   {
     "kanji": "目",

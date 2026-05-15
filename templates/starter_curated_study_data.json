@@ -35279,9 +35279,9 @@
     "notes": "授業 （じゅぎょう） - class ／ 作業 （さぎょう） - work / task",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "午後の授業で日本の歴史を勉強しました。",
-      "reading": "ごごのじゅぎょうでにほんのれきしをべんきょうしました。",
-      "english": "We studied Japanese history in the afternoon class.",
+      "japanese": "午後の授業で日本語を勉強しました。",
+      "reading": "ごごのじゅぎょうでにほんごをべんきょうしました。",
+      "english": "We studied Japanese in the afternoon class.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -42451,7 +42451,28 @@
   },
   "特": {
     "englishMeaning": "special",
-    "breakdownOverrides": [],
+    "displayWord": {
+      "written": "特",
+      "pron": "とく"
+    },
+    "breakdownOverrides": [
+      {
+        "matchWord": "特に",
+        "englishMeaning": "special",
+        "displayWord": {
+          "written": "特",
+          "pron": "とく"
+        }
+      },
+      {
+        "matchWord": "特別",
+        "englishMeaning": "special",
+        "displayWord": {
+          "written": "特",
+          "pron": "とく"
+        }
+      }
+    ],
     "source": "starter-curated",
     "tags": [
       "n4",
@@ -42459,9 +42480,12 @@
     ],
     "jlpt": 4,
     "preferredWords": [
-      "特に"
+      "特に",
+      "特別"
     ],
     "blockedWords": [],
+    "blockedMeanings": [],
+    "blockedReadings": [],
     "blockedSentencePhrases": [],
     "notes": "特に （とくに） - especially ／ 特別 （とくべつ） - special",
     "alternativeNotes": [],

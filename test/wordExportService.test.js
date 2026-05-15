@@ -1025,7 +1025,7 @@ test("starter curated data provides learner-friendly kanji breakdown fallbacks",
     assert.deepEqual(curatedStudyData["楽"].displayWord, { written: "楽しい", pron: "たのしい" });
     assert.deepEqual(curatedStudyData["近"].displayWord, { written: "近い", pron: "ちかい" });
     assert.deepEqual(curatedStudyData["社"].displayWord, { written: "社", pron: "しゃ" });
-    assert.deepEqual(curatedStudyData["銀"].displayWord, { written: "銀行", pron: "ぎんこう" });
+    assert.deepEqual(curatedStudyData["銀"].displayWord, { written: "銀色", pron: "ぎんいろ" });
     assert.deepEqual(curatedStudyData["銀"].breakdownDisplayWord, { written: "銀", pron: "ぎん" });
     assert.deepEqual(curatedStudyData["強"].displayWord, { written: "強い", pron: "つよい" });
     assert.deepEqual(curatedStudyData["題"].displayWord, { written: "題", pron: "だい" });

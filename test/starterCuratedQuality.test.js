@@ -332,8 +332,8 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
     assert.deepEqual(curatedStudyData["画"].displayWord, { written: "計画", pron: "けいかく" });
     assert.equal(curatedStudyData["画"].englishMeaning, "plan");
 
-    assert.deepEqual(curatedStudyData["銀"].displayWord, { written: "銀行", pron: "ぎんこう" });
-    assert.equal(curatedStudyData["銀"].englishMeaning, "bank / silver");
+    assert.deepEqual(curatedStudyData["銀"].displayWord, { written: "銀色", pron: "ぎんいろ" });
+    assert.equal(curatedStudyData["銀"].englishMeaning, "silver");
 
     assert.deepEqual(curatedStudyData["局"].displayWord, { written: "郵便局", pron: "ゆうびんきょく" });
     assert.deepEqual(curatedStudyData["局"].preferredWords, ["郵便局", "放送局"]);

@@ -147,16 +147,16 @@ Kanji Platinum uses `kanji-platinum-v3-evidence-lanes`. Only current-standard `p
 | Surface | Current state | Main gates |
 | --- | --- | --- |
 | N5 word | `287` canonical rows plus `20` source-only phrase exclusions. Gold, readiness, tracked-source artifact, and Platinum pass at `287/287`; `8/287` are Obsidian and `279` remain in the square-zero Obsidian queue. | `deck:words:platinum:n5`, `deck:words:platinum:rereview-status -- --levels=5,4` |
-| N4 word | `667` canonical rows. Gold and word-level placement pass, but readiness is still `incomplete`. Platinum coverage is `360/667`; Obsidian is `0/667`; `307` rows still lack active current-standard structural entries. | `deck:words:platinum:n4`, `deck:words:completion:n4`, `deck:words:gap-plan:n4` |
+| N4 word | `667` canonical rows. Gold and word-level placement pass, but readiness is still `incomplete`. Platinum coverage is `384/667`; Obsidian is `0/667`; `283` rows still lack active current-standard structural entries. | `deck:words:platinum:n4`, `deck:words:completion:n4`, `deck:words:gap-plan:n4` |
 | N3/N2/N1 word inventory | Current tracked canonical inventory is N3 `19`, N2 `18`, and N1 `16`. These are inventory surfaces, not completed release levels. | `data:audit:jlpt:words` |
 
-Word Platinum uses `word-platinum-v3-evidence-lanes`. Current N5/N4 word status is `647/954` Platinum pass, `8/954` Obsidian certified, `639` Platinum entries needing Obsidian, and `307` blocked/failing rows due to incomplete N4 structural coverage. The word source-posture report currently marks `115/647` structurally current-standard word entries with independent source families proven, `532/647` as single-source-family, and `0/647` as missing governed source evidence; single-source entries carry `word_source_independence_not_proven`.
+Word Platinum uses `word-platinum-v3-evidence-lanes`. Current N5/N4 word status is `671/954` Platinum pass, `8/954` Obsidian certified, `663` Platinum entries needing Obsidian, and `283` blocked/failing rows due to incomplete N4 structural coverage. The word source-posture report currently marks `115/671` structurally current-standard word entries with independent source families proven, `556/671` as single-source-family, and `0/671` as missing governed source evidence; single-source entries carry `word_source_independence_not_proven`.
 
 ### Cross-Product Gates
 
 - `deck:platinum:rereview-status -- --levels=5,4` currently reports N5/N4 kanji as `292/292` Platinum, `292/292` Obsidian, `0/292` needing Obsidian, and `0/292` blocked/failing.
 - `deck:kanji:platinum:certify-status -- --levels=5,4` is the fail-closed kanji Obsidian gate. It currently passes for the full N5/N4 kanji square-zero certification denominator.
-- `deck:words:platinum:rereview-status -- --levels=5,4` uses generated word rows as the denominator. N4 word `0/667` Obsidian means `0/667`, not `0/360`.
+- `deck:words:platinum:rereview-status -- --levels=5,4` uses generated word rows as the denominator. N4 word `0/667` Obsidian means `0/667`, not `0/384`.
 - `deck:platinum:governance-gate` exercises real generated N5/N4 kanji and word rows when ignored local inputs are present. It currently passes with governance warnings for missing Obsidian proof, marker-only example-quality automation, zero active verification limitations, incomplete N4 word Platinum, and word single-source-family posture.
 - JLPT kanji source evidence is governed separately from deck readiness. The source audit currently passes source-use governance with `--governance-strict` while evidence-depth work remains incomplete.
 

@@ -11,8 +11,10 @@ const TANOS_WORD_LEVEL_SOURCES = Object.freeze({
     2: {
         sourceId: "tanos-n2-vocab",
         sourceLabel: "Tanos JLPT N2 vocabulary list",
-        sourceUrl: "https://www.tanos.co.uk/jlpt/jlpt2/vocab/VocabList.N2.pdf",
-        defaultInput: "downloads/tanos/n2/VocabList.N2.txt",
+        sourceUrl: "https://www.tanos.co.uk/jlpt/jlpt2/vocab/n2-vocab-kanji-eng.mem",
+        defaultInput: "downloads/tanos/n2/n2-vocab-kanji-eng.mem",
+        defaultReadingInput: "downloads/tanos/n2/n2-vocab-kanji-hiragana.mem",
+        defaultInputKind: "mnemosyne-pair",
         defaultOutput: "downloads/tanos-n2-vocab.tsv",
     },
     3: {
@@ -155,10 +157,15 @@ function readRow(lines, index) {
     };
 }
 
-function buildNotes({ levelConfig, sourceRowNumber }) {
+function buildNotes({
+    levelConfig,
+    sourceRowNumber,
+    sourceDescriptor = "extracted PDF text",
+    attribution = DEFAULT_ATTRIBUTION,
+}) {
     return [
-        DEFAULT_ATTRIBUTION,
-        `${levelConfig.sourceLabel}; normalized from extracted PDF text row ${sourceRowNumber}.`,
+        attribution,
+        `${levelConfig.sourceLabel}; normalized from ${sourceDescriptor} row ${sourceRowNumber}.`,
         "Discovery and weak level hint only; not card approval, dictionary evidence, meaning evidence, pitch evidence, or frequency evidence.",
     ].join(" ");
 }
@@ -221,6 +228,100 @@ function parseTanosJlptWordRows(sourceText, { level, sourceId = "", sourceLabel 
     };
 }
 
+function parseMnemosyneValue(rawValue = "") {
+    const value = String(rawValue || "").trim();
+    if (value.startsWith("\"") && value.endsWith("\"")) {
+        return JSON.parse(value);
+    }
+    return value;
+}
+
+function parseMnemosyneItems(sourceText = "") {
+    const itemBlocks = String(sourceText || "")
+        .split(/\(imnemosyne\.core\.mnemosyne_core\r?\nItem/u)
+        .slice(1);
+    return itemBlocks
+        .map((block) => {
+            const answerMatch = block.match(/S'a'\r?\nV([^\r\n]+)/u);
+            const questionMatch = block.match(/S'q'\r?\nV([^\r\n]+)/u);
+            if (!answerMatch || !questionMatch) {
+                return null;
+            }
+            return {
+                question: parseMnemosyneValue(questionMatch[1]),
+                answer: parseMnemosyneValue(answerMatch[1]),
+            };
+        })
+        .filter(Boolean);
+}
+
+function buildReadingMap(readingItems = []) {
+    const readingMap = new Map();
+    for (const item of readingItems) {
+        if (!readingMap.has(item.question)) {
+            readingMap.set(item.question, []);
+        }
+        const readings = readingMap.get(item.question);
+        if (!readings.includes(item.answer)) {
+            readings.push(item.answer);
+        }
+    }
+    return readingMap;
+}
+
+function parseTanosJlptWordMnemosyneRows({
+    englishMemText = "",
+    readingMemText = "",
+    level,
+    sourceId = "",
+    sourceLabel = "",
+} = {}) {
+    const normalizedLevel = normalizeLevel(level);
+    const levelConfig = TANOS_WORD_LEVEL_SOURCES[normalizedLevel];
+    const resolvedSourceId = sourceId || levelConfig.sourceId;
+    const resolvedSourceLabel = sourceLabel || levelConfig.sourceLabel;
+    const englishItems = parseMnemosyneItems(englishMemText);
+    const readingItems = parseMnemosyneItems(readingMemText);
+    const readingMap = buildReadingMap(readingItems);
+    const mnemosyneAttribution = "Tanos JLPT vocabulary Mnemosyne exports; Jonathan Waller; Creative Commons BY per https://www.tanos.co.uk/jlpt/sharing/.";
+    const rows = [];
+
+    englishItems.forEach((item, index) => {
+        const readings = readingMap.get(item.question) || [item.question];
+        for (const reading of readings) {
+            rows.push({
+                written: item.question,
+                reading,
+                meaning: item.answer,
+                jlpt: `N${normalizedLevel}`,
+                source: resolvedSourceId,
+                notes: buildNotes({
+                    levelConfig: {
+                        ...levelConfig,
+                        sourceLabel: resolvedSourceLabel,
+                    },
+                    sourceDescriptor: "paired Mnemosyne export",
+                    attribution: mnemosyneAttribution,
+                    sourceRowNumber: index + 1,
+                }),
+            });
+        }
+    });
+
+    return {
+        rows,
+        rowCount: rows.length,
+        skippedLines: [],
+        sourceLineCount: englishItems.length,
+        sourceRecordCount: englishItems.length + readingItems.length,
+        sourceId: resolvedSourceId,
+        sourceLabel: resolvedSourceLabel,
+        sourceUrl: levelConfig.sourceUrl,
+        englishItemCount: englishItems.length,
+        readingItemCount: readingItems.length,
+    };
+}
+
 function escapeTsvCell(value) {
     return String(value ?? "")
         .replace(/\r?\n/g, " ")
@@ -247,12 +348,35 @@ function buildTanosJlptWordSource({ sourceText = "", level, sourceId = "", sourc
     };
 }
 
+function buildTanosJlptWordSourceFromMnemosyne({
+    englishMemText = "",
+    readingMemText = "",
+    level,
+    sourceId = "",
+    sourceLabel = "",
+} = {}) {
+    const parsed = parseTanosJlptWordMnemosyneRows({
+        englishMemText,
+        readingMemText,
+        level,
+        sourceId,
+        sourceLabel,
+    });
+    return {
+        ...parsed,
+        tsv: formatTanosWordRowsAsTsv(parsed.rows),
+    };
+}
+
 module.exports = {
     DEFAULT_ATTRIBUTION,
     TANOS_WORD_LEVEL_SOURCES,
     buildTanosJlptWordSource,
+    buildTanosJlptWordSourceFromMnemosyne,
     cleanExtractedLines,
     formatTanosWordRowsAsTsv,
     normalizeLevel,
+    parseMnemosyneItems,
+    parseTanosJlptWordMnemosyneRows,
     parseTanosJlptWordRows,
 };

@@ -17,6 +17,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Activated the Tanos N2 word candidate-discovery lane with source-use attribution, paired Mnemosyne English/hiragana export normalization, local integrity pins for the ignored `downloads/tanos-n2-vocab.tsv` (`1835` rows), and manifest-driven `deck:words:expansion-candidates:n2` output without approving cards or changing readiness.
 - Activated the Tanos N3 word candidate-discovery lane with source-use attribution, a reproducible extracted-text normalizer, local integrity pins for the ignored `downloads/tanos-n3-vocab.tsv` (`1832` rows), and manifest-driven `deck:words:expansion-candidates:n3` output showing `609` read-only review candidates without approving cards or changing readiness.
 - Added the N3 word expansion-candidates alias and made missing manifest-backed candidate-discovery sources fail with a level-specific governance message that names the active source lanes and the required pins before any N3 source file can be trusted.
 - Added matching N2 and N1 word expansion-candidates aliases as fail-closed higher-level preflights, documenting that they require explicit reviewed source paths until manifest-pinned candidate-discovery lanes exist.

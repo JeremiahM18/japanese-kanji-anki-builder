@@ -271,26 +271,45 @@
     "tanos-n2-vocab": {
       "name": "Tanos JLPT N2 vocabulary list",
       "tier": 4,
-      "status": "registered",
+      "status": "active",
       "sourceType": "jlpt_level_list",
       "origin": {
-        "url": "https://www.tanos.co.uk/jlpt/jlpt2/vocab/VocabList.N2.pdf",
+        "url": "https://www.tanos.co.uk/jlpt/jlpt2/vocab/n2-vocab-kanji-eng.mem",
         "localPath": "downloads/tanos-n2-vocab.tsv",
-        "notes": "Registered future N2 candidate-discovery lane from the public Tanos N2 vocabulary PDF. Not active until source-use review, ignored local TSV normalization, and integrity pins are complete."
+        "notes": "Ignored local TSV normalized from the public Tanos N2 Mnemosyne English and hiragana exports for candidate discovery and weak level hints only."
       },
       "licenseUse": {
-        "status": "needs_review",
-        "notes": "Do not copy or republish list content. Use only as an ignored local discovery signal after source-use review and local integrity pins are added."
+        "status": "approved",
+        "license": "CC BY",
+        "notes": "Tanos sharing terms permit non-sold site data sharing with attribution. Keep raw/extracted files and normalized list content ignored; use only as a local discovery signal, not card approval or dictionary evidence."
       },
       "checkedAt": "2026-05-17",
       "levels": [
         2
       ],
+      "local": {
+        "path": "downloads/tanos-n2-vocab.tsv",
+        "format": "tsv",
+        "sha256": "19a827aaf110b06601dc48908151c698f41f46eb141a5b908eb014582b3d52e9",
+        "byteSize": 730252,
+        "rowCount": 1835,
+        "columns": [
+          "written",
+          "reading",
+          "meaning",
+          "jlpt",
+          "source",
+          "notes"
+        ]
+      },
       "intendedUse": [
         "candidate-discovery",
         "level-hint"
       ],
-      "allowedUse": [],
+      "allowedUse": [
+        "candidate-discovery",
+        "level-hint"
+      ],
       "disallowedUse": [
         "card-approval",
         "dictionary-verification",

@@ -4,9 +4,12 @@ const assert = require("node:assert/strict");
 const {
     DEFAULT_ATTRIBUTION,
     buildTanosJlptWordSource,
+    buildTanosJlptWordSourceFromMnemosyne,
     cleanExtractedLines,
     formatTanosWordRowsAsTsv,
     normalizeLevel,
+    parseMnemosyneItems,
+    parseTanosJlptWordMnemosyneRows,
     parseTanosJlptWordRows,
 } = require("../src/services/tanosJlptWordSourceService");
 const {
@@ -108,16 +111,81 @@ test("buildTanosJlptWordSource formats normalized TSV", () => {
     assert.match(result.tsv, new RegExp(DEFAULT_ATTRIBUTION.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
 });
 
+function mnemosyneItem({ question, answer }) {
+    return [
+        "(imnemosyne.core.mnemosyne_core",
+        "Item",
+        "(dp1",
+        "S'a'",
+        `V${JSON.stringify(answer)}`,
+        "p2",
+        "sS'q'",
+        `V${JSON.stringify(question)}`,
+        "p3",
+        "sba",
+    ].join("\n");
+}
+
+test("parseTanosJlptWordMnemosyneRows pairs English and reading exports", () => {
+    const englishMemText = [
+        mnemosyneItem({ question: "あいかわらず", answer: "as ever,as usual,the same" }),
+        mnemosyneItem({ question: "遭う", answer: "to meet,to encounter" }),
+        mnemosyneItem({ question: "紅葉", answer: "autumn colours,maple" }),
+    ].join("\n");
+    const readingMemText = [
+        mnemosyneItem({ question: "遭う", answer: "あう" }),
+        mnemosyneItem({ question: "紅葉", answer: "こうよう" }),
+        mnemosyneItem({ question: "紅葉", answer: "もみじ" }),
+    ].join("\n");
+
+    const result = parseTanosJlptWordMnemosyneRows({
+        englishMemText,
+        readingMemText,
+        level: 2,
+        sourceId: "fixture-tanos-n2",
+        sourceLabel: "Fixture Tanos N2",
+    });
+
+    assert.deepEqual(result.rows.map((row) => [row.written, row.reading, row.meaning]), [
+        ["あいかわらず", "あいかわらず", "as ever,as usual,the same"],
+        ["遭う", "あう", "to meet,to encounter"],
+        ["紅葉", "こうよう", "autumn colours,maple"],
+        ["紅葉", "もみじ", "autumn colours,maple"],
+    ]);
+    assert.equal(result.englishItemCount, 3);
+    assert.equal(result.readingItemCount, 3);
+    assert.equal(result.sourceRecordCount, 6);
+    assert.match(result.rows[0].notes, /paired Mnemosyne export/);
+
+    assert.deepEqual(parseMnemosyneItems(englishMemText).map((item) => [item.question, item.answer]), [
+        ["あいかわらず", "as ever,as usual,the same"],
+        ["遭う", "to meet,to encounter"],
+        ["紅葉", "autumn colours,maple"],
+    ]);
+
+    const built = buildTanosJlptWordSourceFromMnemosyne({
+        englishMemText,
+        readingMemText,
+        level: "N2",
+        sourceId: "fixture-tanos-n2",
+        sourceLabel: "Fixture Tanos N2",
+    });
+    assert.equal(built.rowCount, 4);
+    assert.match(built.tsv, /紅葉\tもみじ\tautumn colours,maple\tN2\tfixture-tanos-n2/);
+});
+
 test("normalizeTanosJlptWordSource script parses args and reports read-only scope", () => {
     const options = parseArgs([
         "--level=N2",
-        "--input=downloads/tanos/n2/VocabList.N2.txt",
+        "--input=downloads/tanos/n2/n2-vocab-kanji-eng.mem",
+        "--reading-input=downloads/tanos/n2/n2-vocab-kanji-hiragana.mem",
         "--out=downloads/tanos-n2-vocab.tsv",
         "--json",
     ]);
 
     assert.equal(normalizeLevel(options.level), 2);
-    assert.equal(options.input, "downloads/tanos/n2/VocabList.N2.txt");
+    assert.equal(options.input, "downloads/tanos/n2/n2-vocab-kanji-eng.mem");
+    assert.equal(options.readingInput, "downloads/tanos/n2/n2-vocab-kanji-hiragana.mem");
     assert.equal(options.out, "downloads/tanos-n2-vocab.tsv");
     assert.equal(options.json, true);
 
@@ -128,12 +196,15 @@ test("normalizeTanosJlptWordSource script parses args and reports read-only scop
             rows: [{ jlpt: "N2" }],
             sourceLabel: "Fixture Tanos N2",
             sourceUrl: "https://example.com/n2.pdf",
-            sourceLineCount: 3,
+            sourceRecordCount: 6,
+            englishItemCount: 3,
+            readingItemCount: 3,
             rowCount: 1,
             skippedLines: [],
         },
     });
 
     assert.match(text, /Level: N2/);
+    assert.match(text, /Source records parsed: 6/);
     assert.match(text, /does not approve cards, verify dictionary identity, move words, generate decks, or change readiness/);
 });

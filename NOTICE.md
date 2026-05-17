@@ -30,6 +30,16 @@ KanjiVG-derived static SVG stroke-order images are distributed under Creative Co
 
 kanji.gif and AnimCJK animation mirrors are allowed release sources only while source attribution and provenance remain preserved in managed media manifests. Release artifacts that include those animations should include the corresponding upstream attribution from the manifest/source review.
 
+## Kanji dictionary attribution
+
+Current kanji-card readings, meanings, and kanji word-candidate data are fetched from `kanjiapi.dev` unless a local fallback or curated override supplies the field. The upstream API project builds these endpoints from EDRDG KANJIDIC2 and JMdict dictionary files.
+
+KANJIDIC2 and JMdict are property of the Electronic Dictionary Research and Development Group and are made available under Creative Commons Attribution-ShareAlike 4.0. Public kanji deck releases that include kanjiapi-derived readings, meanings, or word data must include attribution equivalent to:
+
+`Kanji readings, meanings, and word data derived from kanjiapi.dev using EDRDG KANJIDIC2 and JMdict data, licensed under CC BY-SA 4.0`
+
+Public redistributed kanji deck artifacts that include these fields should be treated as incorporating CC BY-SA 4.0 dictionary-derived content. Private local builds still need provenance preserved in generated artifacts and release notes before any public sharing.
+
 ## Additional release responsibility
 
 Before publishing a release artifact, confirm:

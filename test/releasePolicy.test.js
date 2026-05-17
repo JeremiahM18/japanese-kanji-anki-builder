@@ -3,6 +3,8 @@ const path = require("node:path");
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
+const { loadConfig } = require("../src/config");
+
 const repoRoot = path.resolve(__dirname, "..");
 
 function readRepoFile(relativePath) {
@@ -53,6 +55,18 @@ test("product hardening docs exist for exit criteria, accessibility, and content
     assert.equal(compatibilityMatrix.includes("Compatibility Matrix"), true);
     assert.equal(releaseQaChecklist.includes("Release QA Checklist"), true);
     assert.equal(notice.includes("VOICEVOX Nemo"), true);
+});
+
+test("NOTICE attributes the configured kanji dictionary API and upstream EDRDG data", () => {
+    const notice = readRepoFile("NOTICE.md");
+    const config = loadConfig({ cwd: repoRoot, env: {}, dotEnvFileName: ".missing-test-env" });
+    const apiHost = new URL(config.kanjiApiBaseUrl).hostname;
+
+    assert.equal(notice.includes(apiHost), true, `NOTICE.md must attribute configured kanji API host ${apiHost}.`);
+    assert.match(notice, /KANJIDIC2/);
+    assert.match(notice, /JMdict/);
+    assert.match(notice, /Electronic Dictionary Research and Development Group/);
+    assert.match(notice, /CC BY-SA 4\.0/);
 });
 
 test("platinum review npm scripts are full-level release gates", () => {

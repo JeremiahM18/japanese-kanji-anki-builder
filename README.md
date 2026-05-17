@@ -150,11 +150,11 @@ Kanji Platinum uses `kanji-platinum-v3-evidence-lanes`. Only current-standard `p
 | N4 word | `667` canonical rows. Gold, word-level placement, and Platinum pass at `667/667`, but readiness is still `incomplete`. Obsidian is `0/667`, so all N4 word rows remain in the square-zero Obsidian queue. | `deck:words:platinum:n4`, `deck:words:completion:n4`, `deck:words:gap-plan:n4` |
 | N3 word | `29` canonical rows. Silver generated surface now builds at `29/29` with required back-side fields `319/319`, word audio `29/29`, Kanjium pitch `29/29`, reading breakdowns, and deck-policy checks passing for those rows; readiness is still `incomplete`, reading coverage is `5.7%`, the Tanos N3 vocabulary lane has `599` remaining untriaged review candidates, and Gold/Platinum/Obsidian are not started. | `deck:words:ready -- --levels=3`, `deck:words:completion:n3`, `deck:words:reading-audit:n3`, `deck:words:triage:n3`, `deck:words:gap-plan:n3`, `deck:words:expansion-candidates:n3` |
 | N2 word | `28` canonical rows. Silver generated surface now builds at `28/28` with required back-side fields `308/308`, word audio `28/28`, Kanjium pitch `28/28`, reading breakdowns, and deck-policy checks passing for those rows; readiness is still `incomplete`, reading coverage is `2.9%`, the Tanos N2 vocabulary lane has `415` remaining untriaged review candidates, and Gold/Platinum/Obsidian are not started. | `deck:words:ready -- --levels=2`, `deck:words:completion:n2`, `deck:words:reading-audit:n2`, `deck:words:triage:n2`, `deck:words:gap-plan:n2`, `deck:words:expansion-candidates:n2` |
-| N1 word inventory | Current tracked canonical inventory is N1 `16`. This is an inventory surface, not a completed release level. The Tanos N1 vocabulary lane is active as a pinned ignored candidate-discovery source. | `data:audit:jlpt:words`, `deck:words:gap-plan:n1`, `deck:words:expansion-candidates:n1` |
+| N1 word | `26` canonical rows. Silver generated surface now builds at `26/26` with required back-side fields `286/286`, word audio `26/26`, Kanjium pitch `26/26`, reading breakdowns, and deck-policy checks passing for those rows; readiness is still `incomplete`, reading coverage is `0.8%`, the Tanos N1 vocabulary lane has `1008` remaining untriaged review candidates, and Gold/Platinum/Obsidian are not started. | `deck:words:ready -- --levels=1`, `deck:words:completion:n1`, `deck:words:reading-audit:n1`, `deck:words:triage:n1`, `deck:words:gap-plan:n1`, `deck:words:expansion-candidates:n1` |
 
 Word Platinum uses `word-platinum-v3-evidence-lanes`. Current N5/N4 word status is `954/954` Platinum pass, `8/954` Obsidian certified, `946` Platinum entries needing Obsidian, and `0` blocked/failing rows. The word source-posture report currently marks `115/954` structurally current-standard word entries with independent source families proven, `839/954` as single-source-family, and `0/954` as missing governed source evidence; single-source entries carry `word_source_independence_not_proven`.
 
-N3 and N2 word Silver are generated-surface baselines only. There are no `templates/golden_n3_word_review_set.json`, `templates/platinum_n3_word_review_set.json`, `templates/golden_n2_word_review_set.json`, or `templates/platinum_n2_word_review_set.json` files. The active `tanos-n3-vocab` and `tanos-n2-vocab` lanes are pinned to ignored normalized TSV files for candidate discovery and weak level hints only; they are not card approval, dictionary evidence, reading evidence, meaning evidence, pitch evidence, frequency evidence, or release readiness. N1 word inventory rows are earlier deferred-placement surfaces, not a release-ready higher-level word deck. The active `tanos-n1-vocab` lane has the same candidate-discovery-only boundary as N3/N2.
+N3, N2, and N1 word Silver are generated-surface baselines only. There are no `templates/golden_n3_word_review_set.json`, `templates/platinum_n3_word_review_set.json`, `templates/golden_n2_word_review_set.json`, `templates/platinum_n2_word_review_set.json`, `templates/golden_n1_word_review_set.json`, or `templates/platinum_n1_word_review_set.json` files. The active `tanos-n3-vocab`, `tanos-n2-vocab`, and `tanos-n1-vocab` lanes are pinned to ignored normalized TSV files for candidate discovery and weak level hints only; they are not card approval, dictionary evidence, reading evidence, meaning evidence, pitch evidence, frequency evidence, or release readiness.
 
 ### Cross-Product Gates
 
@@ -657,15 +657,19 @@ Repository governance:
 | `npm run deck:words:completion:n4` | Audit N4 word inventory and reading coverage |
 | `npm run deck:words:completion:n3` | Audit N3 word Silver inventory and reading coverage |
 | `npm run deck:words:completion:n2` | Audit N2 word Silver inventory and reading coverage |
+| `npm run deck:words:completion:n1` | Audit N1 word Silver inventory and reading coverage |
 | `npm run deck:words:reading-audit:n4` | Audit N4 word reading coverage |
 | `npm run deck:words:reading-audit:n3` | Audit N3 word reading coverage |
 | `npm run deck:words:reading-audit:n2` | Audit N2 word reading coverage |
+| `npm run deck:words:reading-audit:n1` | Audit N1 word reading coverage |
 | `npm run deck:words:triage:n4` | Classify N4 word reading gaps |
 | `npm run deck:words:triage:n3` | Classify N3 word reading gaps |
 | `npm run deck:words:triage:n2` | Classify N2 word reading gaps |
+| `npm run deck:words:triage:n1` | Classify N1 word reading gaps |
 | `npm run deck:words:gap-plan:n4 -- --limit=50` | Rank the next N4 word coverage batch |
 | `npm run deck:words:gap-plan:n3 -- --limit=50` | Rank the current N3 word gap queue; generated candidate suggestions remain separate from source activation and review |
 | `npm run deck:words:gap-plan:n2 -- --limit=50` | Rank the current N2 word gap queue; generated candidate suggestions remain separate from source activation and review |
+| `npm run deck:words:gap-plan:n1 -- --limit=50` | Rank the current N1 word gap queue; generated candidate suggestions remain separate from source activation and review |
 | `npm run deck:words:expansion-candidates:n4 -- --limit=50` | Diff the manifest-pinned level source into read-only word expansion candidates |
 | `npm run data:normalize:tanos-jlpt-words -- --level=3` | Normalize ignored Tanos N3 extracted vocabulary text into the pinned local source TSV |
 | `npm run deck:words:expansion-candidates:n3 -- --limit=50` | Diff the manifest-pinned Tanos N3 candidate-discovery source into read-only word expansion candidates |

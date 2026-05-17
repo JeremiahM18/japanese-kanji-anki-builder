@@ -185,6 +185,47 @@ test("tracked starter word data includes the first N2 Silver source-expansion ba
     ]);
 });
 
+test("tracked starter word data includes the first N1 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["間柄|あいだがら", "柄", "がら"],
+        ["敢えて|あえて", "敢", "あえて"],
+        ["仰ぐ|あおぐ", "仰", "あおぐ"],
+        ["証|あかし", "証", "あかし"],
+        ["憧れ|あこがれ", "憧", "あこがれ"],
+        ["麻|あさ", "麻", "あさ"],
+        ["欺く|あざむく", "欺", "あざむく"],
+        ["鮮やか|あざやか", "鮮", "あざやか"],
+        ["焦る|あせる", "焦", "あせる"],
+        ["圧迫|あっぱく", "迫", "ぱく"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["間柄|あいだがら", "both"],
+        ["敢えて|あえて", "both"],
+        ["仰ぐ|あおぐ", "both"],
+        ["証|あかし", "both"],
+        ["憧れ|あこがれ", "both"],
+        ["麻|あさ", "both"],
+        ["欺く|あざむく", "both"],
+        ["鮮やか|あざやか", "both"],
+        ["焦る|あせる", "both"],
+        ["圧迫|あっぱく", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["間柄|あいだがら", "<ruby>間<rt>あいだ</rt></ruby><ruby>柄<rt>がら</rt></ruby>"],
+        ["敢えて|あえて", "<ruby>敢<rt>あ</rt></ruby>えて"],
+        ["仰ぐ|あおぐ", "<ruby>仰<rt>あお</rt></ruby>ぐ"],
+        ["証|あかし", "<ruby>証<rt>あかし</rt></ruby>"],
+        ["憧れ|あこがれ", "<ruby>憧<rt>あこが</rt></ruby>れ"],
+        ["麻|あさ", "<ruby>麻<rt>あさ</rt></ruby>"],
+        ["欺く|あざむく", "<ruby>欺<rt>あざむ</rt></ruby>く"],
+        ["鮮やか|あざやか", "<ruby>鮮<rt>あざ</rt></ruby>やか"],
+        ["焦る|あせる", "<ruby>焦<rt>あせ</rt></ruby>る"],
+        ["圧迫|あっぱく", "<ruby>圧<rt>あっ</rt></ruby><ruby>迫<rt>ぱく</rt></ruby>"],
+    ]);
+});
+
 test("buildWordStudyEntryKey uses written and reading", () => {
     assert.equal(buildWordStudyEntryKey({ written: "今日", reading: "きょう" }), "今日|きょう");
 });

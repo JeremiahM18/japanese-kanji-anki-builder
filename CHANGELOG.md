@@ -21,6 +21,8 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added the first N1 word Silver source-expansion batch (`間柄`, `敢えて`, `仰ぐ`, `証`, `憧れ`, `麻`, `欺く`, `鮮やか`, `焦る`, and `圧迫`) with exact JMdict verification notes, N1 contract coverage, Kanjium pitch, governed VOICEVOX word audio, and regression tests, raising N1 word Silver to `26/26` generated rows while readiness remains incomplete.
+- Added dedicated N1 word Silver audit aliases (`deck:words:completion:n1`, `deck:words:reading-audit:n1`, and `deck:words:triage:n1`) to mirror the N3/N2 lane commands.
 - Added the N1 Tanos candidate-discovery TSV to the word expansion signal source pins so `deck:words:expansion-signals -- --levels=1` evaluates the active N1 enhancement lane instead of reporting a stale missing-source blocker.
 - Added the first N2 word Silver source-expansion batch (`足跡`, `厚かましい`, `圧縮`, `暴れる`, `脂`, `甘やかす`, `編物`, `編む`, `荒い`, and `改めて`) with exact JMdict verification notes, N2 contract coverage, Kanjium pitch, governed VOICEVOX word audio, and regression tests, raising N2 word Silver to `28/28` generated rows while readiness remains incomplete.
 - Added dedicated N2 word Silver audit aliases (`deck:words:completion:n2`, `deck:words:reading-audit:n2`, and `deck:words:triage:n2`) to mirror the N3 lane commands.

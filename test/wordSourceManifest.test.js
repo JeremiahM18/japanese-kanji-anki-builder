@@ -154,6 +154,9 @@ test("tracked word source manifest loads", () => {
     assert.equal(manifest.sources["tanos-n3-vocab"].status, "registered");
     assert.deepEqual(manifest.sources["tanos-n3-vocab"].candidatePolicy.levels, [3]);
     assert.deepEqual(manifest.sources["tanos-n3-vocab"].allowedUse, []);
+    assert.equal(manifest.sources["tanos-n2-vocab"].status, "registered");
+    assert.deepEqual(manifest.sources["tanos-n2-vocab"].candidatePolicy.levels, [2]);
+    assert.deepEqual(manifest.sources["tanos-n2-vocab"].allowedUse, []);
     assert.equal(manifest.sources["jpdb-frequency"].status, "blocked");
     assert.equal(manifest.sources.jmdict.status, "active");
     assert.equal(manifest.sources["jmdict-priority-commonness"].status, "active");

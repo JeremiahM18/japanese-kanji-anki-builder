@@ -149,11 +149,11 @@ Kanji Platinum uses `kanji-platinum-v3-evidence-lanes`. Only current-standard `p
 | N5 word | `287` canonical rows plus `20` source-only phrase exclusions. Gold, readiness, tracked-source artifact, and Platinum pass at `287/287`; `8/287` are Obsidian and `279` remain in the square-zero Obsidian queue. | `deck:words:platinum:n5`, `deck:words:platinum:rereview-status -- --levels=5,4` |
 | N4 word | `667` canonical rows. Gold, word-level placement, and Platinum pass at `667/667`, but readiness is still `incomplete`. Obsidian is `0/667`, so all N4 word rows remain in the square-zero Obsidian queue. | `deck:words:platinum:n4`, `deck:words:completion:n4`, `deck:words:gap-plan:n4` |
 | N3 word | `19` canonical rows. Silver generated surface now builds at `19/19` with required back-side fields, word audio, pitch, reading breakdowns, and deck-policy checks passing for those rows; readiness is still `incomplete`, reading coverage is `5%`, the Tanos N3 vocabulary lane is active as a pinned ignored candidate-discovery source, and Gold/Platinum/Obsidian are not started. | `deck:words:ready -- --levels=5,4,3`, `deck:words:completion:n3`, `deck:words:reading-audit:n3`, `deck:words:triage:n3`, `deck:words:gap-plan:n3`, `deck:words:expansion-candidates:n3` |
-| N2/N1 word inventory | Current tracked canonical inventory is N2 `18` and N1 `16`. These are inventory surfaces, not completed release levels. The Tanos N2 vocabulary lane is active as a pinned ignored candidate-discovery source; the Tanos N1 lane is still registered but inactive with no pinned local source yet. | `data:audit:jlpt:words`, `deck:words:gap-plan:n2`, `deck:words:gap-plan:n1`, `deck:words:expansion-candidates:n2`, `deck:words:expansion-candidates:n1` |
+| N2/N1 word inventory | Current tracked canonical inventory is N2 `18` and N1 `16`. These are inventory surfaces, not completed release levels. The Tanos N2 and N1 vocabulary lanes are active as pinned ignored candidate-discovery sources. | `data:audit:jlpt:words`, `deck:words:gap-plan:n2`, `deck:words:gap-plan:n1`, `deck:words:expansion-candidates:n2`, `deck:words:expansion-candidates:n1` |
 
 Word Platinum uses `word-platinum-v3-evidence-lanes`. Current N5/N4 word status is `954/954` Platinum pass, `8/954` Obsidian certified, `946` Platinum entries needing Obsidian, and `0` blocked/failing rows. The word source-posture report currently marks `115/954` structurally current-standard word entries with independent source families proven, `839/954` as single-source-family, and `0/954` as missing governed source evidence; single-source entries carry `word_source_independence_not_proven`.
 
-N3 word Silver is a generated-surface baseline only. There is no `templates/golden_n3_word_review_set.json` and no `templates/platinum_n3_word_review_set.json`. The active `tanos-n3-vocab` lane is pinned to an ignored normalized TSV for candidate discovery and weak level hints only; it is not card approval, dictionary evidence, reading evidence, meaning evidence, pitch evidence, frequency evidence, or release readiness. N2/N1 word inventory rows are earlier deferred-placement surfaces, not release-ready higher-level word decks. The active `tanos-n2-vocab` lane has the same candidate-discovery-only boundary as N3, and the inactive `tanos-n1-vocab` lane remains non-counting until its own source-use review, TSV normalization, integrity pins, and explicit activation are complete.
+N3 word Silver is a generated-surface baseline only. There is no `templates/golden_n3_word_review_set.json` and no `templates/platinum_n3_word_review_set.json`. The active `tanos-n3-vocab` lane is pinned to an ignored normalized TSV for candidate discovery and weak level hints only; it is not card approval, dictionary evidence, reading evidence, meaning evidence, pitch evidence, frequency evidence, or release readiness. N2/N1 word inventory rows are earlier deferred-placement surfaces, not release-ready higher-level word decks. The active `tanos-n2-vocab` and `tanos-n1-vocab` lanes have the same candidate-discovery-only boundary as N3.
 
 ### Cross-Product Gates
 
@@ -482,7 +482,8 @@ npm run data:normalize:tanos-jlpt-words -- --level=3
 npm run deck:words:expansion-candidates:n3 -- --limit=50
 npm run data:normalize:tanos-jlpt-words -- --level=2
 npm run deck:words:expansion-candidates:n2 -- --limit=50
-npm run deck:words:expansion-candidates:n1 -- --source=<reviewed-n1-vocab.tsv> --source-label=<reviewed-n1-source-id> --limit=50
+npm run data:normalize:tanos-jlpt-words -- --level=1
+npm run deck:words:expansion-candidates:n1 -- --limit=50
 ```
 
 The expansion candidate report is a read-only post-coverage tool. Use it after the current reading-coverage pass to compare an explicit sourced vocabulary list against the governed word contract. It filters for written-reading rows that contain target-level kanji, are not already governed or excluded, and fit the requested kanji scope:
@@ -498,7 +499,7 @@ The report deduplicates exact `written|reading` identities and also flags same-w
 
 Tracked triage decisions live in [templates/word_inventory_expansion_triage.json](templates/word_inventory_expansion_triage.json). These decisions are read-only planning metadata, not card approvals. `keep_candidate` means "worth source-checking next"; it does not bypass the 8-card word Platinum batch size, generated-surface inspection, Gold regression, Platinum evidence, media review, or readiness gates.
 
-When `--source` is omitted, the report resolves the single active `candidate-discovery` source for the requested level from [templates/word_source_manifest.json](templates/word_source_manifest.json), applies its source label, format, candidate policy, and local integrity pins, then fails instead of trusting a mismatched ignored TSV. N3 resolves the active pinned `tanos-n3-vocab` lane by default, and N2 resolves the active pinned `tanos-n2-vocab` lane by default. N1 still has an inactive registered Tanos lane; its alias currently fails fast unless an explicit reviewed source path and label are provided or the inactive lane is pinned and activated in its own source lane.
+When `--source` is omitted, the report resolves the single active `candidate-discovery` source for the requested level from [templates/word_source_manifest.json](templates/word_source_manifest.json), applies its source label, format, candidate policy, and local integrity pins, then fails instead of trusting a mismatched ignored TSV. N3 resolves the active pinned `tanos-n3-vocab` lane by default, N2 resolves the active pinned `tanos-n2-vocab` lane by default, and N1 resolves the active pinned `tanos-n1-vocab` lane by default.
 
 ### Check Word Expansion Signals
 
@@ -651,7 +652,8 @@ Repository governance:
 | `npm run deck:words:expansion-candidates:n3 -- --limit=50` | Diff the manifest-pinned Tanos N3 candidate-discovery source into read-only word expansion candidates |
 | `npm run data:normalize:tanos-jlpt-words -- --level=2` | Normalize ignored Tanos N2 Mnemosyne English and hiragana exports into the pinned local source TSV |
 | `npm run deck:words:expansion-candidates:n2 -- --limit=50` | Diff the manifest-pinned Tanos N2 candidate-discovery source into read-only word expansion candidates |
-| `npm run deck:words:expansion-candidates:n1 -- --source=<reviewed.tsv> --source-label=<source-id>` | Diff an explicit reviewed N1 source into read-only expansion candidates until a manifest-pinned N1 source lane exists |
+| `npm run data:normalize:tanos-jlpt-words -- --level=1` | Normalize ignored Tanos N1 Mnemosyne English and hiragana exports into the pinned local source TSV |
+| `npm run deck:words:expansion-candidates:n1 -- --limit=50` | Diff the manifest-pinned Tanos N1 candidate-discovery source into read-only word expansion candidates |
 | `npm run data:normalize:words:jmdict` | Normalize ignored local JMdict XML into the pinned word dictionary/commonness TSV shape |
 | `npm run deck:words:candidate-agreement -- --levels=5,4` | Rebuild the N5/N4 candidate universe from the governed word source manifest with source-purpose, agreement, triage, and placement signals |
 | `npm run deck:words:expansion-signals -- --levels=5,4` | Summarize per-level reading and enhancement expansion exhaustion without claiming release readiness |

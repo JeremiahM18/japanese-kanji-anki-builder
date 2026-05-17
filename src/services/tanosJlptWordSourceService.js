@@ -4,8 +4,10 @@ const TANOS_WORD_LEVEL_SOURCES = Object.freeze({
     1: {
         sourceId: "tanos-n1-vocab",
         sourceLabel: "Tanos JLPT N1 vocabulary list",
-        sourceUrl: "https://www.tanos.co.uk/jlpt/jlpt1/vocab/VocabList.N1.pdf",
-        defaultInput: "downloads/tanos/n1/VocabList.N1.txt",
+        sourceUrl: "https://www.tanos.co.uk/jlpt/jlpt1/vocab/n1-vocab-kanji-eng.mem",
+        defaultInput: "downloads/tanos/n1/n1-vocab-kanji-eng.mem",
+        defaultReadingInput: "downloads/tanos/n1/n1-vocab-kanji-hiragana.mem",
+        defaultInputKind: "mnemosyne-pair",
         defaultOutput: "downloads/tanos-n1-vocab.tsv",
     },
     2: {

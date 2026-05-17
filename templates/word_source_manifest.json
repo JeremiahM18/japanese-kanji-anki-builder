@@ -329,26 +329,45 @@
     "tanos-n1-vocab": {
       "name": "Tanos JLPT N1 vocabulary list",
       "tier": 4,
-      "status": "registered",
+      "status": "active",
       "sourceType": "jlpt_level_list",
       "origin": {
-        "url": "https://www.tanos.co.uk/jlpt/jlpt1/vocab/VocabList.N1.pdf",
+        "url": "https://www.tanos.co.uk/jlpt/jlpt1/vocab/n1-vocab-kanji-eng.mem",
         "localPath": "downloads/tanos-n1-vocab.tsv",
-        "notes": "Registered future N1 candidate-discovery lane from the public Tanos N1 vocabulary PDF. Not active until source-use review, ignored local TSV normalization, and integrity pins are complete."
+        "notes": "Ignored local TSV normalized from the public Tanos N1 Mnemosyne English and hiragana exports for candidate discovery and weak level hints only."
       },
       "licenseUse": {
-        "status": "needs_review",
-        "notes": "Do not copy or republish list content. Use only as an ignored local discovery signal after source-use review and local integrity pins are added."
+        "status": "approved",
+        "license": "CC BY",
+        "notes": "Tanos sharing terms permit non-sold site data sharing with attribution. Keep raw/extracted files and normalized list content ignored; use only as a local discovery signal, not card approval or dictionary evidence."
       },
       "checkedAt": "2026-05-17",
       "levels": [
         1
       ],
+      "local": {
+        "path": "downloads/tanos-n1-vocab.tsv",
+        "format": "tsv",
+        "sha256": "7cfbcd253d088249d27a7d41e567b22a662b92fc02fa835512112c1bba8c7032",
+        "byteSize": 1400489,
+        "rowCount": 3494,
+        "columns": [
+          "written",
+          "reading",
+          "meaning",
+          "jlpt",
+          "source",
+          "notes"
+        ]
+      },
       "intendedUse": [
         "candidate-discovery",
         "level-hint"
       ],
-      "allowedUse": [],
+      "allowedUse": [
+        "candidate-discovery",
+        "level-hint"
+      ],
       "disallowedUse": [
         "card-approval",
         "dictionary-verification",

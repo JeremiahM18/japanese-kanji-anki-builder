@@ -221,7 +221,7 @@ function formatPlatinumGovernanceGateReport(report = {}) {
         "- This gate exercises local real generated rows when local ignored data is present.",
         "- Platinum counts and source-posture counts are diagnostics only; only explicit non-mechanical rereview provenance counts as Obsidian proof.",
         "- It does not promote, defer, reject, or edit cards.",
-        "- N4 word Platinum incompleteness is allowed only when every blocked row is missing active current-standard structural coverage; dirty reviewed entries still fail the gate."
+        "- For explicitly configured incomplete word levels, only rows missing active current-standard structural coverage can be allowed; dirty reviewed entries still fail the gate."
     );
 
     return `${lines.join("\n")}\n`;

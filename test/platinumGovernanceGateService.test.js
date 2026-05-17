@@ -93,7 +93,7 @@ test("manifest governance posture counts word card-specific summaries and limita
     assert.equal(posture.markers.includes(GOVERNANCE_MARKERS.ZERO_VERIFICATION_LIMITATIONS), false);
 });
 
-test("platinum governance gate allows known incomplete N4 word coverage but fails dirty reviewed blockers", () => {
+test("platinum governance gate allows configured incomplete word coverage but fails dirty reviewed blockers", () => {
     const allowed = evaluatePlatinumGovernanceGate({
         kanjiRereviewReports: [{
             level: 5,

@@ -148,9 +148,12 @@ Kanji Platinum uses `kanji-platinum-v3-evidence-lanes`. Only current-standard `p
 | --- | --- | --- |
 | N5 word | `287` canonical rows plus `20` source-only phrase exclusions. Gold, readiness, tracked-source artifact, and Platinum pass at `287/287`; `8/287` are Obsidian and `279` remain in the square-zero Obsidian queue. | `deck:words:platinum:n5`, `deck:words:platinum:rereview-status -- --levels=5,4` |
 | N4 word | `667` canonical rows. Gold, word-level placement, and Platinum pass at `667/667`, but readiness is still `incomplete`. Obsidian is `0/667`, so all N4 word rows remain in the square-zero Obsidian queue. | `deck:words:platinum:n4`, `deck:words:completion:n4`, `deck:words:gap-plan:n4` |
-| N3/N2/N1 word inventory | Current tracked canonical inventory is N3 `19`, N2 `18`, and N1 `16`. These are inventory surfaces, not completed release levels. | `data:audit:jlpt:words` |
+| N3 word | `19` canonical rows. Silver generated surface now builds at `19/19` with required back-side fields, word audio, pitch, reading breakdowns, and deck-policy checks passing for those rows; readiness is still `incomplete`, reading coverage is `5%`, the N3 candidate-discovery source lane is not registered yet, and Gold/Platinum/Obsidian are not started. | `deck:words:ready -- --levels=5,4,3`, `deck:words:completion:n3`, `deck:words:reading-audit:n3`, `deck:words:triage:n3`, `deck:words:gap-plan:n3` |
+| N2/N1 word inventory | Current tracked canonical inventory is N2 `18` and N1 `16`. These are inventory surfaces, not completed release levels. | `data:audit:jlpt:words` |
 
 Word Platinum uses `word-platinum-v3-evidence-lanes`. Current N5/N4 word status is `954/954` Platinum pass, `8/954` Obsidian certified, `946` Platinum entries needing Obsidian, and `0` blocked/failing rows. The word source-posture report currently marks `115/954` structurally current-standard word entries with independent source families proven, `839/954` as single-source-family, and `0/954` as missing governed source evidence; single-source entries carry `word_source_independence_not_proven`.
+
+N3 word Silver is a generated-surface baseline only. There is no `templates/golden_n3_word_review_set.json`, no `templates/platinum_n3_word_review_set.json`, and no active N3 `candidate-discovery` word source in `templates/word_source_manifest.json`.
 
 ### Cross-Product Gates
 
@@ -631,9 +634,13 @@ Repository governance:
 | `npm run deck:words:level-anchor-audit -- --level=5` | Fail when canonical word rows lack a current-level kanji anchor or later all-easier-kanji placement lacks learner-fit rationale |
 | `npm run deck:words:completion:n5` | Audit N5 word inventory and reading coverage |
 | `npm run deck:words:completion:n4` | Audit N4 word inventory and reading coverage |
+| `npm run deck:words:completion:n3` | Audit N3 word Silver inventory and reading coverage |
 | `npm run deck:words:reading-audit:n4` | Audit N4 word reading coverage |
+| `npm run deck:words:reading-audit:n3` | Audit N3 word reading coverage |
 | `npm run deck:words:triage:n4` | Classify N4 word reading gaps |
+| `npm run deck:words:triage:n3` | Classify N3 word reading gaps |
 | `npm run deck:words:gap-plan:n4 -- --limit=50` | Rank the next N4 word coverage batch |
+| `npm run deck:words:gap-plan:n3 -- --limit=50` | Rank the current N3 word gap queue without candidate suggestions; an N3 candidate-discovery source lane is not registered yet |
 | `npm run deck:words:expansion-candidates:n4 -- --limit=50` | Diff the manifest-pinned level source into read-only word expansion candidates |
 | `npm run data:normalize:words:jmdict` | Normalize ignored local JMdict XML into the pinned word dictionary/commonness TSV shape |
 | `npm run deck:words:candidate-agreement -- --levels=5,4` | Rebuild the N5/N4 candidate universe from the governed word source manifest with source-purpose, agreement, triage, and placement signals |

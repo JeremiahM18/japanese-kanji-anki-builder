@@ -89,10 +89,18 @@ function parseDockerInspect(stdout) {
 
 function getPublishedHostPorts(container, containerPort = DEFAULT_CONTAINER_PORT) {
     const target = `${containerPort}/tcp`;
-    const bindings = container?.NetworkSettings?.Ports?.[target];
-    if (!Array.isArray(bindings)) {
-        return [];
-    }
+    const bindings = [
+        ...(
+            Array.isArray(container?.NetworkSettings?.Ports?.[target])
+                ? container.NetworkSettings.Ports[target]
+                : []
+        ),
+        ...(
+            Array.isArray(container?.HostConfig?.PortBindings?.[target])
+                ? container.HostConfig.PortBindings[target]
+                : []
+        ),
+    ];
 
     return bindings
         .map((binding) => binding?.HostPort)

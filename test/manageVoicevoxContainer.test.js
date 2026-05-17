@@ -10,11 +10,14 @@ const {
     parseDockerInspect,
 } = require("../scripts/manageVoicevoxContainer");
 
-function containerFixture({ running = false, ports = null } = {}) {
+function containerFixture({ running = false, ports = null, portBindings = null } = {}) {
     return {
         Name: "/voicevox-nemo",
         Config: {
             Image: "voicevox/voicevox_nemo_engine:cpu-ubuntu20.04-latest",
+        },
+        HostConfig: {
+            PortBindings: portBindings,
         },
         State: {
             Running: running,
@@ -40,6 +43,23 @@ test("hasExpectedPortMapping rejects containers created without publishing the N
     const container = containerFixture({ running: false, ports: {} });
     assert.equal(hasExpectedPortMapping(container), false);
     assert.deepEqual(getPublishedHostPorts(container, 50121), []);
+});
+
+test("hasExpectedPortMapping accepts stopped containers with preserved host port bindings", () => {
+    const container = containerFixture({
+        running: false,
+        ports: {},
+        portBindings: {
+            "50121/tcp": [{ HostIp: "", HostPort: "50021" }],
+        },
+    });
+
+    assert.equal(hasExpectedPortMapping(container), true);
+    assert.deepEqual(getPublishedHostPorts(container, 50121), ["50021"]);
+    assert.deepEqual(buildStartPlan(container), {
+        action: "start",
+        reason: "container exists with 50021:50121",
+    });
 });
 
 test("buildStartPlan refuses a stale container unless recreation is explicit", () => {

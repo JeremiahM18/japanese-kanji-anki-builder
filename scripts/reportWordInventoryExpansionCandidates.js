@@ -72,20 +72,46 @@ function resolveManifestPath(manifestPath = DEFAULT_WORD_SOURCE_MANIFEST) {
     return path.resolve(process.cwd(), manifestPath || DEFAULT_WORD_SOURCE_MANIFEST);
 }
 
-function resolveSourcePath(source, { manifest, level } = {}) {
+function formatCandidateDiscoverySource(sourceId, sourceConfig = {}) {
+    const levels = Array.isArray(sourceConfig.candidatePolicy?.levels) && sourceConfig.candidatePolicy.levels.length > 0
+        ? sourceConfig.candidatePolicy.levels.map((sourceLevel) => `N${sourceLevel}`).join(",")
+        : "all levels";
+    const localPath = sourceConfig.local?.path || "no local path";
+    return `${sourceId} (${levels}; ${localPath})`;
+}
+
+function getActiveCandidateDiscoverySources(manifest = {}) {
+    return Object.entries(manifest.sources || {})
+        .filter(([, sourceConfig]) => (
+            sourceConfig.status === "active"
+            && Array.isArray(sourceConfig.allowedUse)
+            && sourceConfig.allowedUse.includes("candidate-discovery")
+            && sourceConfig.local?.path
+        ));
+}
+
+function sourceSupportsLevel(sourceConfig = {}, level) {
+    return !Array.isArray(sourceConfig.candidatePolicy?.levels)
+        || sourceConfig.candidatePolicy.levels.length === 0
+        || sourceConfig.candidatePolicy.levels.includes(level);
+}
+
+function formatMissingManifestSourceError({ manifest, manifestPath = DEFAULT_WORD_SOURCE_MANIFEST, level } = {}) {
+    const activeSources = getActiveCandidateDiscoverySources(manifest);
+    const sourceSummary = activeSources.length > 0
+        ? activeSources.map(([sourceId, sourceConfig]) => formatCandidateDiscoverySource(sourceId, sourceConfig)).join("; ")
+        : "none";
+    return [
+        `No active candidate-discovery word source is registered for N${level} in ${manifestPath}.`,
+        `Active candidate-discovery sources: ${sourceSummary}.`,
+        `Register an active source with allowedUse candidate-discovery, local.path, integrity pins, and candidatePolicy.levels including ${level}, or pass --source=... with --source-label=... for an explicit read-only inspection.`
+    ].join(" ");
+}
+
+function resolveSourcePath(source, { manifest, manifestPath = DEFAULT_WORD_SOURCE_MANIFEST, level } = {}) {
     if (!source && manifest) {
-        const matchingSources = Object.entries(manifest.sources || {})
-            .filter(([, sourceConfig]) => (
-                sourceConfig.status === "active"
-                && Array.isArray(sourceConfig.allowedUse)
-                && sourceConfig.allowedUse.includes("candidate-discovery")
-                && sourceConfig.local?.path
-                && (
-                    !Array.isArray(sourceConfig.candidatePolicy?.levels)
-                    || sourceConfig.candidatePolicy.levels.length === 0
-                    || sourceConfig.candidatePolicy.levels.includes(level)
-                )
-            ));
+        const matchingSources = getActiveCandidateDiscoverySources(manifest)
+            .filter(([, sourceConfig]) => sourceSupportsLevel(sourceConfig, level));
 
         if (matchingSources.length === 1) {
             return path.resolve(process.cwd(), matchingSources[0][1].local.path);
@@ -93,6 +119,7 @@ function resolveSourcePath(source, { manifest, level } = {}) {
         if (matchingSources.length > 1) {
             throw new Error(`Multiple candidate-discovery sources match N${level}; provide --source explicitly.`);
         }
+        throw new Error(formatMissingManifestSourceError({ manifest, manifestPath, level }));
     }
 
     if (!source) {
@@ -164,10 +191,11 @@ async function main() {
         throw new Error("Expansion candidate limit must be a positive integer.");
     }
 
-    const manifest = fs.existsSync(resolveManifestPath(options.manifest))
-        ? loadWordSourceManifest(resolveManifestPath(options.manifest))
+    const manifestPath = resolveManifestPath(options.manifest);
+    const manifest = fs.existsSync(manifestPath)
+        ? loadWordSourceManifest(manifestPath)
         : null;
-    const sourcePath = resolveSourcePath(options.source, { manifest, level });
+    const sourcePath = resolveSourcePath(options.source, { manifest, manifestPath: options.manifest, level });
     if (!fs.existsSync(sourcePath)) {
         throw new Error(`Candidate source does not exist: ${sourcePath}`);
     }
@@ -229,6 +257,8 @@ if (require.main === module) {
 
 module.exports = {
     DEFAULT_WORD_SOURCE_MANIFEST,
+    formatMissingManifestSourceError,
+    getActiveCandidateDiscoverySources,
     loadTriageDecisions,
     main,
     parseArgs,

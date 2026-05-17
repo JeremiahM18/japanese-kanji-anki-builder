@@ -478,6 +478,7 @@ Planner output is advisory. A suggested card still needs canonical contract cove
 npm run deck:words:expansion-candidates:n5 -- --source=downloads/n5-vocab.tsv --source-label=jlptstudy.net-n5 --limit=50
 npm run deck:words:expansion-candidates:n5 -- --source=downloads/n5-vocab.tsv --source-label=jlptstudy.net-n5 --kanji-scope=target-level --require-source-level
 npm run deck:words:expansion-candidates:n4 -- --limit=50
+npm run deck:words:expansion-candidates:n3 -- --source=<reviewed-n3-vocab.tsv> --source-label=<reviewed-n3-source-id> --limit=50
 ```
 
 The expansion candidate report is a read-only post-coverage tool. Use it after the current reading-coverage pass to compare an explicit sourced vocabulary list against the governed word contract. It filters for written-reading rows that contain target-level kanji, are not already governed or excluded, and fit the requested kanji scope:
@@ -493,7 +494,7 @@ The report deduplicates exact `written|reading` identities and also flags same-w
 
 Tracked triage decisions live in [templates/word_inventory_expansion_triage.json](templates/word_inventory_expansion_triage.json). These decisions are read-only planning metadata, not card approvals. `keep_candidate` means "worth source-checking next"; it does not bypass the 8-card word Platinum batch size, generated-surface inspection, Gold regression, Platinum evidence, media review, or readiness gates.
 
-When `--source` is omitted, the report resolves the single active `candidate-discovery` source for the requested level from [templates/word_source_manifest.json](templates/word_source_manifest.json), applies its source label, format, candidate policy, and local integrity pins, then fails instead of trusting a mismatched ignored TSV.
+When `--source` is omitted, the report resolves the single active `candidate-discovery` source for the requested level from [templates/word_source_manifest.json](templates/word_source_manifest.json), applies its source label, format, candidate policy, and local integrity pins, then fails instead of trusting a mismatched ignored TSV. N3 has an alias, but no active N3 candidate-discovery source is registered yet, so the N3 alias currently fails fast unless an explicit reviewed source path and label are provided.
 
 ### Check Word Expansion Signals
 
@@ -642,6 +643,7 @@ Repository governance:
 | `npm run deck:words:gap-plan:n4 -- --limit=50` | Rank the next N4 word coverage batch |
 | `npm run deck:words:gap-plan:n3 -- --limit=50` | Rank the current N3 word gap queue without candidate suggestions; an N3 candidate-discovery source lane is not registered yet |
 | `npm run deck:words:expansion-candidates:n4 -- --limit=50` | Diff the manifest-pinned level source into read-only word expansion candidates |
+| `npm run deck:words:expansion-candidates:n3 -- --source=<reviewed.tsv> --source-label=<source-id>` | Diff an explicit reviewed N3 source into read-only expansion candidates until a manifest-pinned N3 source lane exists |
 | `npm run data:normalize:words:jmdict` | Normalize ignored local JMdict XML into the pinned word dictionary/commonness TSV shape |
 | `npm run deck:words:candidate-agreement -- --levels=5,4` | Rebuild the N5/N4 candidate universe from the governed word source manifest with source-purpose, agreement, triage, and placement signals |
 | `npm run deck:words:expansion-signals -- --levels=5,4` | Summarize per-level reading and enhancement expansion exhaustion without claiming release readiness |

@@ -4,6 +4,8 @@ const path = require("node:path");
 
 const {
     DEFAULT_WORD_SOURCE_MANIFEST,
+    formatMissingManifestSourceError,
+    getActiveCandidateDiscoverySources,
     loadTriageDecisions,
     parseArgs,
     resolveManifestPath,
@@ -67,6 +69,35 @@ test("resolveSourcePath can use the tracked manifest candidate source for a leve
     assert.equal(
         resolveSourcePath("", { manifest, level: 4 }),
         path.resolve(process.cwd(), "downloads", "n4-vocab.tsv")
+    );
+});
+
+test("resolveSourcePath explains missing manifest candidate sources by level", () => {
+    const manifest = {
+        sources: {
+            "fixture-n4": {
+                status: "active",
+                allowedUse: ["candidate-discovery"],
+                local: { path: "downloads/n4-vocab.tsv" },
+                candidatePolicy: { levels: [4] },
+            },
+            "registered-future": {
+                status: "registered",
+                allowedUse: [],
+                local: { path: "downloads/n3-vocab.tsv" },
+                candidatePolicy: { levels: [3] },
+            },
+        },
+    };
+
+    assert.equal(getActiveCandidateDiscoverySources(manifest).length, 1);
+    assert.throws(
+        () => resolveSourcePath("", { manifest, manifestPath: "templates/word_source_manifest.json", level: 3 }),
+        /No active candidate-discovery word source is registered for N3/
+    );
+    assert.match(
+        formatMissingManifestSourceError({ manifest, manifestPath: "templates/word_source_manifest.json", level: 3 }),
+        /fixture-n4 \(N4; downloads\/n4-vocab.tsv\)/
     );
 });
 

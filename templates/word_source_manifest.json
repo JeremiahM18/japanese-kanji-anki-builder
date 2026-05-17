@@ -210,6 +210,45 @@
         "requireSourceLevel": true
       }
     },
+    "tanos-n3-vocab": {
+      "name": "Tanos JLPT N3 vocabulary list",
+      "tier": 4,
+      "status": "registered",
+      "sourceType": "jlpt_level_list",
+      "origin": {
+        "url": "https://www.tanos.co.uk/jlpt/jlpt3/vocab/VocabList.N3.pdf",
+        "localPath": "downloads/tanos-n3-vocab.tsv",
+        "notes": "Registered future N3 candidate-discovery lane from the public Tanos N3 vocabulary PDF. Not active until source-use review, ignored local TSV normalization, and integrity pins are complete."
+      },
+      "licenseUse": {
+        "status": "needs_review",
+        "notes": "Do not copy or republish list content. Use only as an ignored local discovery signal after source-use review and local integrity pins are added."
+      },
+      "checkedAt": "2026-05-17",
+      "levels": [
+        3
+      ],
+      "intendedUse": [
+        "candidate-discovery",
+        "level-hint"
+      ],
+      "allowedUse": [],
+      "disallowedUse": [
+        "card-approval",
+        "dictionary-verification",
+        "reading-verification",
+        "meaning-verification",
+        "pitch-verification",
+        "frequency-sanity"
+      ],
+      "candidatePolicy": {
+        "levels": [
+          3
+        ],
+        "kanjiScope": "known-jlpt",
+        "requireSourceLevel": true
+      }
+    },
     "kanjium-pitch-accent": {
       "name": "Kanjium pitch accent database",
       "tier": 2,

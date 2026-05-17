@@ -151,6 +151,9 @@ test("parseWordSourceManifest validates source-purpose rules and active local pi
 test("tracked word source manifest loads", () => {
     const manifest = loadWordSourceManifest("templates/word_source_manifest.json");
     assert.equal(manifest.sources["jlptstudy.net-n5"].status, "active");
+    assert.equal(manifest.sources["tanos-n3-vocab"].status, "registered");
+    assert.deepEqual(manifest.sources["tanos-n3-vocab"].candidatePolicy.levels, [3]);
+    assert.deepEqual(manifest.sources["tanos-n3-vocab"].allowedUse, []);
     assert.equal(manifest.sources["jpdb-frequency"].status, "blocked");
     assert.equal(manifest.sources.jmdict.status, "active");
     assert.equal(manifest.sources["jmdict-priority-commonness"].status, "active");

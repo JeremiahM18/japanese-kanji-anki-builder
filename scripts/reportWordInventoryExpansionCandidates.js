@@ -76,8 +76,11 @@ function formatCandidateDiscoverySource(sourceId, sourceConfig = {}) {
     const levels = Array.isArray(sourceConfig.candidatePolicy?.levels) && sourceConfig.candidatePolicy.levels.length > 0
         ? sourceConfig.candidatePolicy.levels.map((sourceLevel) => `N${sourceLevel}`).join(",")
         : "all levels";
-    const localPath = sourceConfig.local?.path || "no local path";
-    return `${sourceId} (${levels}; ${localPath})`;
+    const localPath = sourceConfig.local?.path || sourceConfig.origin?.localPath || "no local path";
+    const status = sourceConfig.status && sourceConfig.status !== "active"
+        ? `${sourceConfig.status}; `
+        : "";
+    return `${sourceId} (${status}${levels}; ${localPath})`;
 }
 
 function getActiveCandidateDiscoverySources(manifest = {}) {
@@ -90,10 +93,39 @@ function getActiveCandidateDiscoverySources(manifest = {}) {
         ));
 }
 
+function hasCandidateDiscoveryIntent(sourceConfig = {}) {
+    return (
+        Array.isArray(sourceConfig.intendedUse)
+        && sourceConfig.intendedUse.includes("candidate-discovery")
+    ) || (
+        Array.isArray(sourceConfig.allowedUse)
+        && sourceConfig.allowedUse.includes("candidate-discovery")
+    );
+}
+
 function sourceSupportsLevel(sourceConfig = {}, level) {
     return !Array.isArray(sourceConfig.candidatePolicy?.levels)
         || sourceConfig.candidatePolicy.levels.length === 0
         || sourceConfig.candidatePolicy.levels.includes(level);
+}
+
+function sourceDeclaresLevel(sourceConfig = {}, level) {
+    return (
+        Array.isArray(sourceConfig.candidatePolicy?.levels)
+        && sourceConfig.candidatePolicy.levels.includes(level)
+    ) || (
+        Array.isArray(sourceConfig.levels)
+        && sourceConfig.levels.includes(level)
+    );
+}
+
+function getInactiveCandidateDiscoverySourcesForLevel(manifest = {}, level) {
+    return Object.entries(manifest.sources || {})
+        .filter(([, sourceConfig]) => (
+            sourceConfig.status !== "active"
+            && hasCandidateDiscoveryIntent(sourceConfig)
+            && sourceDeclaresLevel(sourceConfig, level)
+        ));
 }
 
 function formatMissingManifestSourceError({ manifest, manifestPath = DEFAULT_WORD_SOURCE_MANIFEST, level } = {}) {
@@ -101,11 +133,16 @@ function formatMissingManifestSourceError({ manifest, manifestPath = DEFAULT_WOR
     const sourceSummary = activeSources.length > 0
         ? activeSources.map(([sourceId, sourceConfig]) => formatCandidateDiscoverySource(sourceId, sourceConfig)).join("; ")
         : "none";
-    return [
+    const inactiveSources = getInactiveCandidateDiscoverySourcesForLevel(manifest, level);
+    const messages = [
         `No active candidate-discovery word source is registered for N${level} in ${manifestPath}.`,
         `Active candidate-discovery sources: ${sourceSummary}.`,
-        `Register an active source with allowedUse candidate-discovery, local.path, integrity pins, and candidatePolicy.levels including ${level}, or pass --source=... with --source-label=... for an explicit read-only inspection.`
-    ].join(" ");
+    ];
+    if (inactiveSources.length > 0) {
+        messages.push(`Registered inactive candidate-discovery sources for N${level}: ${inactiveSources.map(([sourceId, sourceConfig]) => formatCandidateDiscoverySource(sourceId, sourceConfig)).join("; ")}.`);
+    }
+    messages.push(`Register an active source with allowedUse candidate-discovery, local.path, integrity pins, and candidatePolicy.levels including ${level}, or pass --source=... with --source-label=... for an explicit read-only inspection.`);
+    return messages.join(" ");
 }
 
 function resolveSourcePath(source, { manifest, manifestPath = DEFAULT_WORD_SOURCE_MANIFEST, level } = {}) {
@@ -259,6 +296,7 @@ module.exports = {
     DEFAULT_WORD_SOURCE_MANIFEST,
     formatMissingManifestSourceError,
     getActiveCandidateDiscoverySources,
+    getInactiveCandidateDiscoverySourcesForLevel,
     loadTriageDecisions,
     main,
     parseArgs,

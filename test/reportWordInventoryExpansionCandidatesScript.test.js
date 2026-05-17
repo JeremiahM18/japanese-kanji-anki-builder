@@ -6,6 +6,7 @@ const {
     DEFAULT_WORD_SOURCE_MANIFEST,
     formatMissingManifestSourceError,
     getActiveCandidateDiscoverySources,
+    getInactiveCandidateDiscoverySourcesForLevel,
     loadTriageDecisions,
     parseArgs,
     resolveManifestPath,
@@ -83,20 +84,23 @@ test("resolveSourcePath explains missing manifest candidate sources by level", (
             },
             "registered-future-n3": {
                 status: "registered",
+                intendedUse: ["candidate-discovery"],
                 allowedUse: [],
-                local: { path: "downloads/n3-vocab.tsv" },
+                origin: { localPath: "downloads/n3-vocab.tsv" },
                 candidatePolicy: { levels: [3] },
             },
             "registered-future-n2-n1": {
                 status: "registered",
+                intendedUse: ["candidate-discovery"],
                 allowedUse: [],
-                local: { path: "downloads/n2-n1-vocab.tsv" },
+                origin: { localPath: "downloads/n2-n1-vocab.tsv" },
                 candidatePolicy: { levels: [2, 1] },
             },
         },
     };
 
     assert.equal(getActiveCandidateDiscoverySources(manifest).length, 1);
+    assert.equal(getInactiveCandidateDiscoverySourcesForLevel(manifest, 3).length, 1);
     for (const level of [3, 2, 1]) {
         assert.throws(
             () => resolveSourcePath("", { manifest, manifestPath: "templates/word_source_manifest.json", level }),
@@ -106,6 +110,10 @@ test("resolveSourcePath explains missing manifest candidate sources by level", (
     assert.match(
         formatMissingManifestSourceError({ manifest, manifestPath: "templates/word_source_manifest.json", level: 3 }),
         /fixture-n4 \(N4; downloads\/n4-vocab.tsv\)/
+    );
+    assert.match(
+        formatMissingManifestSourceError({ manifest, manifestPath: "templates/word_source_manifest.json", level: 3 }),
+        /registered-future-n3 \(registered; N3; downloads\/n3-vocab.tsv\)/
     );
 });
 

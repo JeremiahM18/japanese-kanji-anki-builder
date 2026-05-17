@@ -102,6 +102,48 @@ test("tracked starter word data includes the first governed N4 source-expansion 
     ]);
 });
 
+test("tracked starter word data includes the first N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["愛|あい", "愛", "あい"],
+        ["愛情|あいじょう", "愛", "あい"],
+        ["愛情|あいじょう", "情", "じょう"],
+        ["愛する|あいする", "愛", "あい"],
+        ["相手|あいて", "相", "あい"],
+        ["預ける|あずける", "預", "あずける"],
+        ["与える|あたえる", "与", "あたえる"],
+        ["辺り|あたり", "辺", "あたり"],
+        ["当たる|あたる", "当", "あたる"],
+        ["当てる|あてる", "当", "あてる"],
+        ["油|あぶら", "油", "あぶら"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["愛|あい", "both"],
+        ["愛情|あいじょう", "both"],
+        ["愛する|あいする", "both"],
+        ["相手|あいて", "both"],
+        ["預ける|あずける", "both"],
+        ["与える|あたえる", "both"],
+        ["辺り|あたり", "both"],
+        ["当たる|あたる", "both"],
+        ["当てる|あてる", "both"],
+        ["油|あぶら", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["愛|あい", "<ruby>愛<rt>あい</rt></ruby>"],
+        ["愛情|あいじょう", "<ruby>愛<rt>あい</rt></ruby><ruby>情<rt>じょう</rt></ruby>"],
+        ["愛する|あいする", "<ruby>愛<rt>あい</rt></ruby>する"],
+        ["相手|あいて", "<ruby>相<rt>あい</rt></ruby><ruby>手<rt>て</rt></ruby>"],
+        ["預ける|あずける", "<ruby>預<rt>あず</rt></ruby>ける"],
+        ["与える|あたえる", "<ruby>与<rt>あた</rt></ruby>える"],
+        ["辺り|あたり", "<ruby>辺<rt>あた</rt></ruby>り"],
+        ["当たる|あたる", "<ruby>当<rt>あ</rt></ruby>たる"],
+        ["当てる|あてる", "<ruby>当<rt>あ</rt></ruby>てる"],
+        ["油|あぶら", "<ruby>油<rt>あぶら</rt></ruby>"],
+    ]);
+});
+
 test("buildWordStudyEntryKey uses written and reading", () => {
     assert.equal(buildWordStudyEntryKey({ written: "今日", reading: "きょう" }), "今日|きょう");
 });

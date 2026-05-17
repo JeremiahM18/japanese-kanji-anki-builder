@@ -97,7 +97,7 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
 
     assert.equal(contract.inventoryCounts["1"], 16);
     assert.equal(contract.inventoryCounts["2"], 18);
-    assert.equal(contract.inventoryCounts["3"], 19);
+    assert.equal(contract.inventoryCounts["3"], 29);
     assert.equal(contract.inventoryCounts["4"], 667);
     assert.equal(contract.inventoryCounts["5"], 287);
     assert.equal(contract.excludedCounts["5"], 20);
@@ -203,6 +203,16 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
     assert.equal(getJlptWordLevel(contract, "下る|くだる"), 2);
     assert.equal(getJlptWordLevel(contract, "下ろす|おろす"), 3);
     assert.equal(getJlptWordLevel(contract, "学ぶ|まなぶ"), 3);
+    assert.equal(getJlptWordLevel(contract, "愛|あい"), 3);
+    assert.equal(getJlptWordLevel(contract, "愛情|あいじょう"), 3);
+    assert.equal(getJlptWordLevel(contract, "愛する|あいする"), 3);
+    assert.equal(getJlptWordLevel(contract, "相手|あいて"), 3);
+    assert.equal(getJlptWordLevel(contract, "預ける|あずける"), 3);
+    assert.equal(getJlptWordLevel(contract, "与える|あたえる"), 3);
+    assert.equal(getJlptWordLevel(contract, "辺り|あたり"), 3);
+    assert.equal(getJlptWordLevel(contract, "当たる|あたる"), 3);
+    assert.equal(getJlptWordLevel(contract, "当てる|あてる"), 3);
+    assert.equal(getJlptWordLevel(contract, "油|あぶら"), 3);
     assert.equal(getJlptWordLevel(contract, "急ぐ|いそぐ"), 4);
     assert.equal(getJlptWordLevel(contract, "海岸|かいがん"), 4);
     assert.equal(getJlptWordLevel(contract, "世界|せかい"), 4);

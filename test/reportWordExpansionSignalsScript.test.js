@@ -7,6 +7,7 @@ const {
     buildReadingSignalFromCompletionReport,
     buildSourceFileIntegrity,
     formatWordExpansionSignalReport,
+    loadExpansionSignalSources,
     parseArgs,
     validateExpansionSourceIntegrity,
 } = require("../scripts/reportWordExpansionSignals");
@@ -184,6 +185,18 @@ test("enhancement source integrity pins ignored local source files", () => {
     assert.match(blockers[0], /sha256 mismatch/);
     assert.match(blockers[1], /byte size mismatch/);
     assert.match(blockers[2], /row count mismatch/);
+});
+
+test("tracked expansion signal sources include the active N3 candidate lane", () => {
+    const sourceConfig = loadExpansionSignalSources();
+    const n3 = sourceConfig.levels.N3;
+
+    assert.equal(n3.sourceLabel, "tanos-n3-vocab");
+    assert.equal(n3.sourcePath, "downloads/tanos-n3-vocab.tsv");
+    assert.equal(n3.kanjiScope, "known-jlpt");
+    assert.equal(n3.requireSourceLevel, true);
+    assert.equal(n3.rowCount, 1832);
+    assert.equal(n3.sha256, "528412527fa54fcb5a1853ae9d3da80553cc16b5c683fd21c6a8cf86ae282404");
 });
 
 test("formatted expansion signal report does not overclaim release readiness", () => {

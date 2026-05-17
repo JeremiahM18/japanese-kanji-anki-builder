@@ -21,6 +21,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added the N3 Tanos candidate-discovery TSV to the word expansion signal source pins so `deck:words:expansion-signals -- --levels=3` evaluates the active N3 enhancement lane instead of reporting a stale missing-source blocker.
 - Activated the Tanos N1 word candidate-discovery lane with source-use attribution, paired Mnemosyne English/hiragana export normalization, local integrity pins for the ignored `downloads/tanos-n1-vocab.tsv` (`3494` rows), and manifest-driven `deck:words:expansion-candidates:n1` output without approving cards or changing readiness.
 - Activated the Tanos N2 word candidate-discovery lane with source-use attribution, paired Mnemosyne English/hiragana export normalization, local integrity pins for the ignored `downloads/tanos-n2-vocab.tsv` (`1835` rows), and manifest-driven `deck:words:expansion-candidates:n2` output without approving cards or changing readiness.
 - Activated the Tanos N3 word candidate-discovery lane with source-use attribution, a reproducible extracted-text normalizer, local integrity pins for the ignored `downloads/tanos-n3-vocab.tsv` (`1832` rows), and manifest-driven `deck:words:expansion-candidates:n3` output showing `609` read-only review candidates without approving cards or changing readiness.

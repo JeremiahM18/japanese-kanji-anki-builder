@@ -211,6 +211,18 @@ test("tracked expansion signal sources include the active N2 candidate lane", ()
     assert.equal(n2.sha256, "19a827aaf110b06601dc48908151c698f41f46eb141a5b908eb014582b3d52e9");
 });
 
+test("tracked expansion signal sources include the active N1 candidate lane", () => {
+    const sourceConfig = loadExpansionSignalSources();
+    const n1 = sourceConfig.levels.N1;
+
+    assert.equal(n1.sourceLabel, "tanos-n1-vocab");
+    assert.equal(n1.sourcePath, "downloads/tanos-n1-vocab.tsv");
+    assert.equal(n1.kanjiScope, "known-jlpt");
+    assert.equal(n1.requireSourceLevel, true);
+    assert.equal(n1.rowCount, 3494);
+    assert.equal(n1.sha256, "7cfbcd253d088249d27a7d41e567b22a662b92fc02fa835512112c1bba8c7032");
+});
+
 test("formatted expansion signal report does not overclaim release readiness", () => {
     const text = formatWordExpansionSignalReport({
         signals: [{

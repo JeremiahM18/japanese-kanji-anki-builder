@@ -51,6 +51,19 @@
       "byteSize": 730252,
       "rowCount": 1835,
       "integrityPolicy": "The ignored local TSV must match this tracked hash, byte size, and parsed row count before the enhancement signal can report exhausted."
+    },
+    "N1": {
+      "sourcePath": "downloads/tanos-n1-vocab.tsv",
+      "sourceLabel": "tanos-n1-vocab",
+      "sourceUrl": "https://www.tanos.co.uk/jlpt/jlpt1/vocab/n1-vocab-kanji-eng.mem",
+      "format": "tsv",
+      "kanjiScope": "known-jlpt",
+      "requireSourceLevel": true,
+      "checkedAt": "2026-05-17",
+      "sha256": "7cfbcd253d088249d27a7d41e567b22a662b92fc02fa835512112c1bba8c7032",
+      "byteSize": 1400489,
+      "rowCount": 3494,
+      "integrityPolicy": "The ignored local TSV must match this tracked hash, byte size, and parsed row count before the enhancement signal can report exhausted."
     }
   }
 }

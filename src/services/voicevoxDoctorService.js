@@ -6,11 +6,11 @@ function describeVoicevoxError(error, engineUrl) {
     const lower = message.toLowerCase();
 
     if (lower.includes("fetch failed")) {
-        return `VOICEVOX engine is not reachable at ${engineUrl}. Start the local VOICEVOX Nemo engine or set VOICEVOX_ENGINE_URL correctly.`;
+        return `VOICEVOX engine is not reachable at ${engineUrl}. Run npm run voicevox:start and verify the local VOICEVOX Nemo container publishes 127.0.0.1:50021, or set VOICEVOX_ENGINE_URL correctly.`;
     }
 
     if (lower.includes("econnrefused") || lower.includes("connect")) {
-        return `VOICEVOX engine refused the connection at ${engineUrl}. Make sure the engine is running and listening on that URL.`;
+        return `VOICEVOX engine refused the connection at ${engineUrl}. Run npm run voicevox:status to confirm the container publishes 127.0.0.1:50021, then run npm run voicevox:start or npm run voicevox:start:fresh as needed.`;
     }
 
     return message || `VOICEVOX verification failed at ${engineUrl}.`;
@@ -71,8 +71,10 @@ async function buildVoicevoxDoctorReport({
         }
     } catch (error) {
         report.error = describeVoicevoxError(error, config.voicevoxEngineUrl);
-        report.nextSteps.push(`Start the local VOICEVOX Nemo engine and verify it answers at ${config.voicevoxEngineUrl}.`);
+        report.nextSteps.push("Run `npm run voicevox:status` and verify the local container publishes `50021:50021`.");
+        report.nextSteps.push(`Run \`npm run voicevox:start\`; if it reports a missing port mapping, run \`npm run voicevox:start:fresh\` to recreate the container with \`-p 50021:50021\`.`);
         report.nextSteps.push("Run `npm run doctor:voicevox` again before generating governed audio.");
+        report.nextSteps.push("Run `npm run voicevox:stop` when finished with governed audio work.");
     }
 
     if (report.reachable && report.speakerVerified) {

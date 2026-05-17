@@ -12,6 +12,7 @@ test("describeVoicevoxError turns generic fetch failures into actionable guidanc
     const message = describeVoicevoxError(new Error("fetch failed"), "http://127.0.0.1:50021");
     assert.match(message, /not reachable/);
     assert.match(message, /127\.0\.0\.1:50021/);
+    assert.match(message, /voicevox:start/);
 });
 
 test("findSpeakerByStyleId resolves the pinned style from speaker metadata", () => {
@@ -67,6 +68,8 @@ test("buildVoicevoxDoctorReport reports a clear issue when the engine is unreach
     assert.equal(report.ready, false);
     assert.equal(report.reachable, false);
     assert.match(report.error, /not reachable/);
+    assert.equal(report.nextSteps.some((step) => step.includes("voicevox:start:fresh")), true);
+    assert.equal(report.nextSteps.some((step) => step.includes("voicevox:stop")), true);
     assert.equal(report.nextSteps.some((step) => step.includes("doctor:voicevox")), true);
 });
 
@@ -104,10 +107,10 @@ test("formatVoicevoxDoctorReport renders the release-audio preflight clearly", (
         speakerCount: 0,
         error: "VOICEVOX engine is not reachable.",
         ready: false,
-        nextSteps: ["Start the local VOICEVOX Nemo engine."],
+        nextSteps: ["Run `npm run voicevox:start`."],
     });
 
     assert.match(text, /Pinned release speaker: 女声1 \(style id 10005\)/);
     assert.match(text, /Release voice ready: no/);
-    assert.match(text, /Start the local VOICEVOX Nemo engine/);
+    assert.match(text, /npm run voicevox:start/);
 });

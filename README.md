@@ -353,11 +353,16 @@ npm run release:gate
 
 ```bash
 npm run doctor
+npm run voicevox:status
+npm run voicevox:start
 npm run doctor:voicevox
+npm run voicevox:stop
 npm run deck:readiness
 ```
 
 - `doctor` checks datasets, local files, media folders, managed media, tooling, and next steps.
+- `voicevox:status`, `voicevox:start`, and `voicevox:stop` manage the local Docker container named `voicevox-nemo`.
+- `voicevox:start:fresh` intentionally recreates that container with `-p 50021:50021` when an old local container exists without the required port mapping.
 - `doctor:voicevox` verifies the local VOICEVOX Nemo engine and pinned release speaker.
 - `deck:readiness` reports per-level deck readiness.
 
@@ -543,9 +548,13 @@ Stroke-order release provenance is governed by `templates/stroke_order_source_po
 ### Audio
 
 ```bash
+npm run voicevox:status
+npm run voicevox:start
+npm run doctor:voicevox
 npm run media:voicevox -- --list-speakers
 npm run media:voicevox -- --level=5 --speaker-id=10005 --concurrency=4
 npm run media:voicevox:words -- --level=5 --speaker-id=10005 --concurrency=4
+npm run voicevox:stop
 npm run media:sync -- --level=5 --limit=100
 npm run media:sync:words -- --level=5
 npm run media:review:audio -- --level=5 --limit=25
@@ -557,6 +566,7 @@ The release audio policy requires:
 
 - VOICEVOX Nemo
 - pinned release speaker `女声1`, style id `10005`
+- local engine reachable at `http://127.0.0.1:50021`; the `voicevox-nemo` Docker container must publish `50021:50021`
 - explicit source, voice, locale, and category provenance
 - one release audio source
 - no remote-audio release provider
@@ -598,6 +608,10 @@ Repository governance:
 | `npm run product:readiness:n5` | Run the automated N5 product readiness checkpoint |
 | `npm run doctor` | Check setup, coverage, readiness, and next steps |
 | `npm run doctor:voicevox` | Verify local governed VOICEVOX setup |
+| `npm run voicevox:status` | Inspect the local VOICEVOX Docker container and required port mapping |
+| `npm run voicevox:start` | Start the governed local VOICEVOX Docker container when it already has the required port mapping |
+| `npm run voicevox:start:fresh` | Recreate the local VOICEVOX Docker container with `50021:50021` when the old container shape is wrong |
+| `npm run voicevox:stop` | Stop the local VOICEVOX Docker container after governed audio work |
 | `npm run deck:readiness` | Report per-level quality gates |
 | `npm run deck:preview` | Preview kanji cards |
 | `npm run deck:platinum:batch -- --level=5 --limit=12` | Build a read-only kanji review packet for the selected queue |

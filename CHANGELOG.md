@@ -21,6 +21,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added governed local VOICEVOX container management commands (`voicevox:status`, `voicevox:start`, `voicevox:start:fresh`, and `voicevox:stop`) plus doctor/docs/tests that detect the stale `voicevox-nemo` container shape where Docker starts the container but no `50021:50021` port is published.
 - Added the N3 Tanos candidate-discovery TSV to the word expansion signal source pins so `deck:words:expansion-signals -- --levels=3` evaluates the active N3 enhancement lane instead of reporting a stale missing-source blocker.
 - Activated the Tanos N1 word candidate-discovery lane with source-use attribution, paired Mnemosyne English/hiragana export normalization, local integrity pins for the ignored `downloads/tanos-n1-vocab.tsv` (`3494` rows), and manifest-driven `deck:words:expansion-candidates:n1` output without approving cards or changing readiness.
 - Activated the Tanos N2 word candidate-discovery lane with source-use attribution, paired Mnemosyne English/hiragana export normalization, local integrity pins for the ignored `downloads/tanos-n2-vocab.tsv` (`1835` rows), and manifest-driven `deck:words:expansion-candidates:n2` output without approving cards or changing readiness.

@@ -2107,6 +2107,8 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
     ]);
     assertCoverageReadings(starterEntries, [
         ["時間|じかん", "間", "かん"],
+        ["元気|げんき", "元", "げん"],
+        ["元気|げんき", "気", "き"],
         ["五分|ごふん", "分", "ふん"],
         ["午前|ごぜん", "前", "ぜん"],
         ["今月|こんげつ", "今", "こん"],
@@ -2282,4 +2284,5 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
     assert.equal(starterEntries["北東|ほくとう"].exampleSentence.japanese, "学校は北東にあります。");
     assert.equal(starterEntries["小川|おがわ"].exampleSentence.japanese, "小川があります。");
     assert.equal(starterEntries["上下|じょうげ"].exampleSentence.japanese, "上下に動きます。");
+    assert.match(starterEntries["元気|げんき"].notes, /N4 元 -> げん/);
 });

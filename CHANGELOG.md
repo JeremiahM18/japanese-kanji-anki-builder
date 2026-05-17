@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Changed
 
+- Completed N4 word expansion/readiness by extending the existing `元気|げんき` N5 card's explicit coverage contract to include N4 `元 -> げん` while preserving the N5 placement anchor `気 -> き`; N4 word readiness now reports `ready_with_deferred_variants`, expansion signals are exhausted, and reading coverage is `578/755` (`76.6%`) without adding a new card.
 - Centralized shared JLPT bucket construction and Japanese reading/target-kanji helpers so coverage, export, and offline fallback paths no longer carry duplicated implementations that can drift.
 - Moved word-deck phrase exclusion patterns and kanji-deck noisy meaning filters into tracked `templates/deck_editorial_policy.json`, preserving current behavior while making editorial deck-membership and meaning-cleanup rules inspectable and test-covered.
 - Pinned tracked text artifacts such as JSON, Markdown, TSV, CSV, JavaScript, YAML, and text fixtures to LF line endings in `.gitattributes`, with a governance test protecting byte-stable release fixtures from contributor `core.autocrlf` drift.

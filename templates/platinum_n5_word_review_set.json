@@ -7627,9 +7627,11 @@
       "JLPT core + reading coverage"
     ],
     "focusIncludes": [
+      "元",
       "気"
     ],
     "coversReadingIncludes": [
+      "元: げん",
       "気: き"
     ],
     "breakdownIncludes": [
@@ -7673,9 +7675,9 @@
       "noSilentFallback": true
     },
     "notesIncludes": [
-      "Core beginner word for being well or energetic; 元 is higher-level support and the N5 focus remains 気 -> き."
+      "Core beginner word for being well or energetic; 元 is higher-level support that covers the N4 元 -> げん reading, while the N5 placement remains anchored by 気 -> き."
     ],
-    "fixSummary": "Added a protected note clarifying the learner-facing healthy/energetic sense and labeling 元 as higher-level support.",
+    "fixSummary": "Added a protected note clarifying the learner-facing healthy/energetic sense and labeling 元 as higher-level support; later extended the explicit coverage contract so 元気 also covers N4 元 -> げん without moving the N5 placement anchor.",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
     "revalidatedAt": "2026-05-14",
     "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
@@ -7683,7 +7685,7 @@
       {
         "type": "generated-surface",
         "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js and scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 元気|げんき: word 元気, reading げんき, meaning healthy / energetic / well, example 今日は元気です。, audio word-reading-元気-げんき, reading breakdown 元 （げん）; 気 （き）, labels JLPT N5; JLPT core + reading coverage; focus 気; covers 気: き, pitch accent Pitch 1: 1, and notes/support surface Core beginner word for being well or energetic; 元 is higher-level support and the N5 focus remains 気 -> き.."
+        "detail": "Generated word-card surface inspected for 元気|げんき: word 元気, reading げんき, meaning healthy / energetic / well, example 今日は元気です。, audio word-reading-元気-げんき, reading breakdown 元 （げん）; 気 （き）, labels JLPT N5; JLPT core + reading coverage; focus 元、気; covers 元: げん ／ 気: き, pitch accent Pitch 1: 1, and notes/support surface Core beginner word for being well or energetic; 元 is higher-level support that covers the N4 元 -> げん reading, while the N5 placement remains anchored by 気 -> き."
       },
       {
         "type": "level-contract",
@@ -7708,7 +7710,7 @@
       {
         "type": "label-review",
         "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
-        "detail": "Label review checked 元気|げんき JLPT N5, JLPT core + reading coverage, focus 気, covered readings 気: き, and visible higher-level support-kanji labels where applicable."
+        "detail": "Label review checked 元気|げんき JLPT N5, JLPT core + reading coverage, focus 元、気, covered readings 元: げん ／ 気: き, and visible higher-level support-kanji labels where applicable."
       },
       {
         "type": "golden-regression",
@@ -7725,12 +7727,12 @@
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 元気|げんき common or useful, learner-friendly, level-appropriate, and natural for the N5 word deck, with accurate reading げんき, meaning healthy / energetic / well, example sentence 今日は元気です。, notes/support surface Core beginner word for being well or energetic; 元 is higher-level support and the N5 focus remains 気 -> き., and no active verification limitations."
+        "detail": "Manual review judged 元気|げんき common or useful, learner-friendly, level-appropriate, and natural for the N5 word deck, with accurate reading げんき, meaning healthy / energetic / well, example sentence 今日は元気です。, notes/support surface Core beginner word for being well or energetic; 元 is higher-level support that covers the N4 元 -> げん reading, while the N5 placement remains anchored by 気 -> き., and no active verification limitations."
       },
       {
         "type": "current-standard-review",
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
-        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 元気|げんき checked generated surface, Japanese-source evidence from JMdict entrySeq 1260720, example sentence 今日は元気です。, reading きょうはげんきです。, translation I am well today., notes/support surface Core beginner word for being well or energetic; 元 is higher-level support and the N5 focus remains 気 -> き., reading breakdown 元 （げん）; 気 （き）, meaning healthy / energetic / well, labels JLPT N5; JLPT core + reading coverage; focus 気; covers 気: き, audio word-reading-元気-げんき, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1. Dictionary-backed pitch evidence is bound to the exact word-reading identity., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 元気|げんき checked generated surface, Japanese-source evidence from JMdict entrySeq 1260720, example sentence 今日は元気です。, reading きょうはげんきです。, translation I am well today., notes/support surface Core beginner word for being well or energetic; 元 is higher-level support that covers the N4 元 -> げん reading, while the N5 placement remains anchored by 気 -> き., reading breakdown 元 （げん）; 気 （き）, meaning healthy / energetic / well, labels JLPT N5; JLPT core + reading coverage; focus 元、気; covers 元: げん ／ 気: き, audio word-reading-元気-げんき, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1. Dictionary-backed pitch evidence is bound to the exact word-reading identity., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ]
   },

@@ -328,3 +328,19 @@ test("JLPT runtime dataset readers use the governed JLPT JSON loader", () => {
         "Scripts and services should use loadJlptOnlyJson(config.jlptJsonPath) so JLPT runtime data stays schema-validated."
     );
 });
+
+test("tracked text release artifacts pin LF line endings", () => {
+    const attributes = readRepoFile(".gitattributes");
+    const requiredPatterns = [
+        "*.json text eol=lf",
+        "*.md text eol=lf",
+        "*.tsv text eol=lf",
+    ];
+
+    for (const pattern of requiredPatterns) {
+        assert.equal(attributes.includes(pattern), true, `.gitattributes missing ${pattern}`);
+    }
+
+    const fixture = readRepoFile(path.join("examples", "n5-mini", "sample-kanji-output.tsv"));
+    assert.equal(fixture.includes("\r"), false, "sample kanji TSV fixture must stay LF-only on disk.");
+});

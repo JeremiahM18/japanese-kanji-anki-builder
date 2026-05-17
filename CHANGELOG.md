@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Changed
 
+- Pinned tracked text artifacts such as JSON, Markdown, TSV, CSV, JavaScript, YAML, and text fixtures to LF line endings in `.gitattributes`, with a governance test protecting byte-stable release fixtures from contributor `core.autocrlf` drift.
 - Made kanji TSV export selection use the same deterministic sorted JLPT bucket order as media sync and packaging before applying `--limit`, so limited preview builds no longer export a different kanji subset than the media scope and identical tracked contracts produce byte-stable row order independent of ignored JSON insertion order.
 - Aligned the README and live documentation around the Silver/Gold/Platinum/Obsidian tier language, keeping Gold as regression coverage, Platinum as the current structural gate, and Obsidian as explicit current-version rereview proof.
 - Adopted the Silver/Gold/Platinum/Obsidian tier language for the current review pipeline: Gold remains regression coverage, Platinum means current-standard structural gate pass, and Obsidian means explicit non-mechanical current-version certification proof.

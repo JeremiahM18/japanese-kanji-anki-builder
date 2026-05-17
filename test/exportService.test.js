@@ -1412,6 +1412,73 @@ test("buildTsvForJlptLevel builds the kanji level lookup once per TSV build", as
     assert.equal(ownKeysCalls, 2);
 });
 
+test("buildTsvForJlptLevel uses deterministic sorted level order before applying limits", async () => {
+    const exportService = createExportService({
+        inferenceEngine: {
+            hasFullyCuratedKanjiEntry() {
+                return true;
+            },
+            inferKanjiStudyData({ kanji }) {
+                return {
+                    displayWord: { written: kanji, pron: "よみ" },
+                    bestWord: null,
+                    meaningJP: `${kanji} （よみ） ／ meaning`,
+                    notes: `${kanji} （よみ） - meaning`,
+                    sentenceCandidates: [],
+                };
+            },
+        },
+    });
+    const commonOptions = {
+        levelNumber: 5,
+        kradMap: new Map([
+            ["日", ["日"]],
+            ["本", ["木"]],
+        ]),
+        pickMainComponent(components) {
+            return components[0] || "";
+        },
+        kanjiApiClient: {
+            async getKanji() {
+                throw new Error("should use fully curated local rows");
+            },
+            async getWords() {
+                throw new Error("should skip word fetch for fully curated rows");
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+        concurrency: 1,
+    };
+
+    const first = await exportService.buildTsvForJlptLevel({
+        ...commonOptions,
+        jlptOnlyJson: {
+            本: { jlpt: 5, meanings: ["book"], on_readings: ["ホン"], kun_readings: ["もと"] },
+            日: { jlpt: 5, meanings: ["day"], on_readings: ["ニチ"], kun_readings: ["ひ"] },
+        },
+    });
+    const second = await exportService.buildTsvForJlptLevel({
+        ...commonOptions,
+        jlptOnlyJson: {
+            日: { jlpt: 5, meanings: ["day"], on_readings: ["ニチ"], kun_readings: ["ひ"] },
+            本: { jlpt: 5, meanings: ["book"], on_readings: ["ホン"], kun_readings: ["もと"] },
+        },
+    });
+    const limited = await exportService.buildTsvForJlptLevel({
+        ...commonOptions,
+        jlptOnlyJson: {
+            本: { jlpt: 5, meanings: ["book"], on_readings: ["ホン"], kun_readings: ["もと"] },
+            日: { jlpt: 5, meanings: ["day"], on_readings: ["ニチ"], kun_readings: ["ひ"] },
+        },
+        limit: 1,
+    });
+
+    assert.equal(first, second);
+    assert.deepEqual(first.trim().split("\n").slice(1).map((line) => line.split("\t")[0]), ["日", "本"]);
+    assert.deepEqual(limited.trim().split("\n").slice(1).map((line) => line.split("\t")[0]), ["日"]);
+});
+
 
 test("buildRowForKanji falls back to local data instead of leaking raw timeout errors", async () => {
     const exportIssues = [];

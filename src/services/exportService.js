@@ -3,6 +3,7 @@ const { performance } = require("node:perf_hooks");
 
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
+const { buildJlptBuckets } = require("../datasets/sentenceCorpusCoverage");
 const { buildOfflineFallbackCard } = require("./offlineKanjiFallback");
 const { selectBestAudioAsset } = require("./audioService");
 const { mapWithConcurrency } = require("../utils/concurrency");
@@ -895,9 +896,7 @@ function createExportService({
         const header = ANKI_FIELD_NAMES.join("\t");
         const kanjiLevelLookup = buildKanjiLevelLookup({ jlptOnlyJson });
 
-        const kanjiList = Object.entries(jlptOnlyJson)
-            .filter(([, value]) => value?.jlpt === levelNumber)
-            .map(([kanji]) => kanji);
+        const kanjiList = buildJlptBuckets(jlptOnlyJson).get(levelNumber) || [];
 
         const list = Number.isFinite(limit)
             ? kanjiList.slice(0, limit)

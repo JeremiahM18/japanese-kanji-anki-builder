@@ -21,6 +21,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added the N2 Tanos candidate-discovery TSV to the word expansion signal source pins so `deck:words:expansion-signals -- --levels=2` evaluates the active N2 enhancement lane instead of reporting a stale missing-source blocker.
 - Added the first N3 word Silver source-expansion batch (`愛`, `愛情`, `愛する`, `相手`, `預ける`, `与える`, `辺り`, `当たる`, `当てる`, and `油`) with exact JMdict verification notes, N3 contract coverage, Kanjium pitch, governed VOICEVOX word audio, and regression tests, raising N3 word Silver to `29/29` generated rows while readiness remains incomplete.
 - Added governed local VOICEVOX container management commands (`voicevox:status`, `voicevox:start`, `voicevox:start:fresh`, and `voicevox:stop`) plus doctor/docs/tests that detect the stale `voicevox-nemo` container shape where Docker starts the container but does not map host `50021` to Nemo container port `50121`.
 - Added the N3 Tanos candidate-discovery TSV to the word expansion signal source pins so `deck:words:expansion-signals -- --levels=3` evaluates the active N3 enhancement lane instead of reporting a stale missing-source blocker.

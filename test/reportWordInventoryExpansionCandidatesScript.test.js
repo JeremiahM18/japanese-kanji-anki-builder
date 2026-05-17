@@ -81,20 +81,28 @@ test("resolveSourcePath explains missing manifest candidate sources by level", (
                 local: { path: "downloads/n4-vocab.tsv" },
                 candidatePolicy: { levels: [4] },
             },
-            "registered-future": {
+            "registered-future-n3": {
                 status: "registered",
                 allowedUse: [],
                 local: { path: "downloads/n3-vocab.tsv" },
                 candidatePolicy: { levels: [3] },
             },
+            "registered-future-n2-n1": {
+                status: "registered",
+                allowedUse: [],
+                local: { path: "downloads/n2-n1-vocab.tsv" },
+                candidatePolicy: { levels: [2, 1] },
+            },
         },
     };
 
     assert.equal(getActiveCandidateDiscoverySources(manifest).length, 1);
-    assert.throws(
-        () => resolveSourcePath("", { manifest, manifestPath: "templates/word_source_manifest.json", level: 3 }),
-        /No active candidate-discovery word source is registered for N3/
-    );
+    for (const level of [3, 2, 1]) {
+        assert.throws(
+            () => resolveSourcePath("", { manifest, manifestPath: "templates/word_source_manifest.json", level }),
+            new RegExp(`No active candidate-discovery word source is registered for N${level}`)
+        );
+    }
     assert.match(
         formatMissingManifestSourceError({ manifest, manifestPath: "templates/word_source_manifest.json", level: 3 }),
         /fixture-n4 \(N4; downloads\/n4-vocab.tsv\)/

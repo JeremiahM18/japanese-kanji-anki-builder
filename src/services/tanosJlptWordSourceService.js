@@ -1,0 +1,258 @@
+const DEFAULT_ATTRIBUTION = "Tanos JLPT vocabulary PDF; Jonathan Waller; Creative Commons BY per https://www.tanos.co.uk/jlpt/sharing/.";
+
+const TANOS_WORD_LEVEL_SOURCES = Object.freeze({
+    1: {
+        sourceId: "tanos-n1-vocab",
+        sourceLabel: "Tanos JLPT N1 vocabulary list",
+        sourceUrl: "https://www.tanos.co.uk/jlpt/jlpt1/vocab/VocabList.N1.pdf",
+        defaultInput: "downloads/tanos/n1/VocabList.N1.txt",
+        defaultOutput: "downloads/tanos-n1-vocab.tsv",
+    },
+    2: {
+        sourceId: "tanos-n2-vocab",
+        sourceLabel: "Tanos JLPT N2 vocabulary list",
+        sourceUrl: "https://www.tanos.co.uk/jlpt/jlpt2/vocab/VocabList.N2.pdf",
+        defaultInput: "downloads/tanos/n2/VocabList.N2.txt",
+        defaultOutput: "downloads/tanos-n2-vocab.tsv",
+    },
+    3: {
+        sourceId: "tanos-n3-vocab",
+        sourceLabel: "Tanos JLPT N3 vocabulary list",
+        sourceUrl: "https://www.tanos.co.uk/jlpt/jlpt3/vocab/VocabList.N3.pdf",
+        defaultInput: "downloads/tanos/n3/VocabList.N3.txt",
+        defaultOutput: "downloads/tanos-n3-vocab.tsv",
+    },
+});
+
+function normalizeLevel(value) {
+    const level = Number.parseInt(String(value || "").replace(/^n/i, ""), 10);
+    if (!Number.isInteger(level) || !TANOS_WORD_LEVEL_SOURCES[level]) {
+        throw new Error("Tanos JLPT word source level must be one of N1, N2, or N3.");
+    }
+    return level;
+}
+
+function normalizeLine(value) {
+    return String(value || "")
+        .replace(/\uFEFF/g, "")
+        .trim();
+}
+
+function isBoilerplateLine(line) {
+    return !line
+        || /JLPT Resources/u.test(line)
+        || /^\d+$/.test(line)
+        || /^JLPT N[1-5] Vocab List$/u.test(line)
+        || /^This is not a cumulative list/u.test(line)
+        || /^and below\)\.?$/u.test(line)
+        || /^(Kanji|Hiragana|English)$/u.test(line);
+}
+
+function cleanExtractedLines(text) {
+    return String(text || "")
+        .split(/\r?\n/)
+        .map(normalizeLine)
+        .filter((line) => !isBoilerplateLine(line));
+}
+
+function startsCandidateLine(line) {
+    return /^[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー々〆ヶ〇Ａ-Ｚａ-ｚ０-９]/u.test(line);
+}
+
+function hasKanji(line) {
+    return /\p{Script=Han}/u.test(line);
+}
+
+function isReadingToken(line) {
+    return /^[\p{Script=Hiragana}\p{Script=Katakana}ー・\s()（）.\-]+$/u.test(line)
+        && /[\p{Script=Hiragana}\p{Script=Katakana}ー]/u.test(line);
+}
+
+function isMeaningStart(line) {
+    return !startsCandidateLine(line);
+}
+
+function isJapaneseParentheticalContinuation(line, meaningLines = []) {
+    return meaningLines.length > 0 && /[）)]$/.test(line);
+}
+
+function shouldContinueMeaning(lines, index, meaningLines = []) {
+    const line = lines[index];
+    if (!line) {
+        return false;
+    }
+    if (isMeaningStart(line)) {
+        return true;
+    }
+    return isJapaneseParentheticalContinuation(line, meaningLines);
+}
+
+function normalizeMeaning(meaningLines = []) {
+    return meaningLines
+        .join(" ")
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
+function readSplitWrittenRow(lines, index) {
+    const written = lines[index];
+    const next = lines[index + 1] || "";
+    const following = lines[index + 2] || "";
+
+    if (!next || !following) {
+        return null;
+    }
+
+    if (startsCandidateLine(next) && isReadingToken(following)) {
+        return {
+            written: `${written}${next}`,
+            reading: following,
+            nextIndex: index + 3,
+        };
+    }
+
+    if (isReadingToken(next) && isReadingToken(following)) {
+        return {
+            written: `${written}${next}`,
+            reading: following,
+            nextIndex: index + 3,
+        };
+    }
+
+    if (!hasKanji(written) && isReadingToken(next) && /^[（(]/u.test(following)) {
+        const joined = `${written}${next}`;
+        return {
+            written: joined,
+            reading: joined,
+            nextIndex: index + 2,
+        };
+    }
+
+    return null;
+}
+
+function readRow(lines, index) {
+    const written = lines[index];
+    const splitRow = readSplitWrittenRow(lines, index);
+    if (splitRow) {
+        return splitRow;
+    }
+
+    const next = lines[index + 1] || "";
+    const following = lines[index + 2] || "";
+    if (isReadingToken(next) && (hasKanji(written) || isMeaningStart(following) || next === written)) {
+        return {
+            written,
+            reading: next,
+            nextIndex: index + 2,
+        };
+    }
+
+    return {
+        written,
+        reading: written,
+        nextIndex: index + 1,
+    };
+}
+
+function buildNotes({ levelConfig, sourceRowNumber }) {
+    return [
+        DEFAULT_ATTRIBUTION,
+        `${levelConfig.sourceLabel}; normalized from extracted PDF text row ${sourceRowNumber}.`,
+        "Discovery and weak level hint only; not card approval, dictionary evidence, meaning evidence, pitch evidence, or frequency evidence.",
+    ].join(" ");
+}
+
+function parseTanosJlptWordRows(sourceText, { level, sourceId = "", sourceLabel = "" } = {}) {
+    const normalizedLevel = normalizeLevel(level);
+    const levelConfig = TANOS_WORD_LEVEL_SOURCES[normalizedLevel];
+    const resolvedSourceId = sourceId || levelConfig.sourceId;
+    const resolvedSourceLabel = sourceLabel || levelConfig.sourceLabel;
+    const lines = cleanExtractedLines(sourceText);
+    const rows = [];
+    const skippedLines = [];
+
+    for (let index = 0; index < lines.length;) {
+        const line = lines[index];
+        if (!startsCandidateLine(line)) {
+            skippedLines.push({
+                lineNumber: index + 1,
+                text: line,
+                reason: "not a candidate word start",
+            });
+            index += 1;
+            continue;
+        }
+
+        const sourceRowNumber = rows.length + 1;
+        const row = readRow(lines, index);
+        index = row.nextIndex;
+
+        const meaningLines = [];
+        while (index < lines.length && shouldContinueMeaning(lines, index, meaningLines)) {
+            meaningLines.push(lines[index]);
+            index += 1;
+        }
+
+        rows.push({
+            written: row.written,
+            reading: row.reading,
+            meaning: normalizeMeaning(meaningLines),
+            jlpt: `N${normalizedLevel}`,
+            source: resolvedSourceId,
+            notes: buildNotes({
+                levelConfig: {
+                    ...levelConfig,
+                    sourceLabel: resolvedSourceLabel,
+                },
+                sourceRowNumber,
+            }),
+        });
+    }
+
+    return {
+        rows,
+        rowCount: rows.length,
+        skippedLines,
+        sourceLineCount: lines.length,
+        sourceId: resolvedSourceId,
+        sourceLabel: resolvedSourceLabel,
+        sourceUrl: levelConfig.sourceUrl,
+    };
+}
+
+function escapeTsvCell(value) {
+    return String(value ?? "")
+        .replace(/\r?\n/g, " ")
+        .replace(/\t/g, " ");
+}
+
+function formatTanosWordRowsAsTsv(rows = []) {
+    const headers = ["written", "reading", "meaning", "jlpt", "source", "notes"];
+    return [
+        headers.join("\t"),
+        ...rows.map((row) => headers.map((header) => escapeTsvCell(row[header])).join("\t")),
+    ].join("\n") + "\n";
+}
+
+function buildTanosJlptWordSource({ sourceText = "", level, sourceId = "", sourceLabel = "" } = {}) {
+    const parsed = parseTanosJlptWordRows(sourceText, {
+        level,
+        sourceId,
+        sourceLabel,
+    });
+    return {
+        ...parsed,
+        tsv: formatTanosWordRowsAsTsv(parsed.rows),
+    };
+}
+
+module.exports = {
+    DEFAULT_ATTRIBUTION,
+    TANOS_WORD_LEVEL_SOURCES,
+    buildTanosJlptWordSource,
+    cleanExtractedLines,
+    formatTanosWordRowsAsTsv,
+    normalizeLevel,
+    parseTanosJlptWordRows,
+};

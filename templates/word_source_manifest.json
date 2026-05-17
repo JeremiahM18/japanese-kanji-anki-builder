@@ -213,26 +213,45 @@
     "tanos-n3-vocab": {
       "name": "Tanos JLPT N3 vocabulary list",
       "tier": 4,
-      "status": "registered",
+      "status": "active",
       "sourceType": "jlpt_level_list",
       "origin": {
         "url": "https://www.tanos.co.uk/jlpt/jlpt3/vocab/VocabList.N3.pdf",
         "localPath": "downloads/tanos-n3-vocab.tsv",
-        "notes": "Registered future N3 candidate-discovery lane from the public Tanos N3 vocabulary PDF. Not active until source-use review, ignored local TSV normalization, and integrity pins are complete."
+        "notes": "Ignored local TSV normalized from the public Tanos N3 vocabulary PDF for candidate discovery and weak level hints only."
       },
       "licenseUse": {
-        "status": "needs_review",
-        "notes": "Do not copy or republish list content. Use only as an ignored local discovery signal after source-use review and local integrity pins are added."
+        "status": "approved",
+        "license": "CC BY",
+        "notes": "Tanos sharing terms permit non-sold site data sharing with attribution. Keep raw/extracted files and normalized list content ignored; use only as a local discovery signal, not card approval or dictionary evidence."
       },
       "checkedAt": "2026-05-17",
       "levels": [
         3
       ],
+      "local": {
+        "path": "downloads/tanos-n3-vocab.tsv",
+        "format": "tsv",
+        "sha256": "528412527fa54fcb5a1853ae9d3da80553cc16b5c683fd21c6a8cf86ae282404",
+        "byteSize": 689451,
+        "rowCount": 1832,
+        "columns": [
+          "written",
+          "reading",
+          "meaning",
+          "jlpt",
+          "source",
+          "notes"
+        ]
+      },
       "intendedUse": [
         "candidate-discovery",
         "level-hint"
       ],
-      "allowedUse": [],
+      "allowedUse": [
+        "candidate-discovery",
+        "level-hint"
+      ],
       "disallowedUse": [
         "card-approval",
         "dictionary-verification",

@@ -144,6 +144,47 @@ test("tracked starter word data includes the first N3 Silver source-expansion ba
     ]);
 });
 
+test("tracked starter word data includes the first N2 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["足跡|あしあと", "跡", "あと"],
+        ["厚かましい|あつかましい", "厚", "あつかましい"],
+        ["圧縮|あっしゅく", "圧", "あっ"],
+        ["暴れる|あばれる", "暴", "あばれる"],
+        ["脂|あぶら", "脂", "あぶら"],
+        ["甘やかす|あまやかす", "甘", "あまやかす"],
+        ["編物|あみもの", "編", "あみ"],
+        ["編む|あむ", "編", "あむ"],
+        ["荒い|あらい", "荒", "あらい"],
+        ["改めて|あらためて", "改", "あらためて"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["足跡|あしあと", "both"],
+        ["厚かましい|あつかましい", "both"],
+        ["圧縮|あっしゅく", "both"],
+        ["暴れる|あばれる", "both"],
+        ["脂|あぶら", "both"],
+        ["甘やかす|あまやかす", "both"],
+        ["編物|あみもの", "both"],
+        ["編む|あむ", "both"],
+        ["荒い|あらい", "both"],
+        ["改めて|あらためて", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["足跡|あしあと", "<ruby>足<rt>あし</rt></ruby><ruby>跡<rt>あと</rt></ruby>"],
+        ["厚かましい|あつかましい", "<ruby>厚<rt>あつ</rt></ruby>かましい"],
+        ["圧縮|あっしゅく", "<ruby>圧<rt>あっ</rt></ruby><ruby>縮<rt>しゅく</rt></ruby>"],
+        ["暴れる|あばれる", "<ruby>暴<rt>あば</rt></ruby>れる"],
+        ["脂|あぶら", "<ruby>脂<rt>あぶら</rt></ruby>"],
+        ["甘やかす|あまやかす", "<ruby>甘<rt>あま</rt></ruby>やかす"],
+        ["編物|あみもの", "<ruby>編<rt>あみ</rt></ruby><ruby>物<rt>もの</rt></ruby>"],
+        ["編む|あむ", "<ruby>編<rt>あ</rt></ruby>む"],
+        ["荒い|あらい", "<ruby>荒<rt>あら</rt></ruby>い"],
+        ["改めて|あらためて", "<ruby>改<rt>あらた</rt></ruby>めて"],
+    ]);
+});
+
 test("buildWordStudyEntryKey uses written and reading", () => {
     assert.equal(buildWordStudyEntryKey({ written: "今日", reading: "きょう" }), "今日|きょう");
 });

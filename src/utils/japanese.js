@@ -29,14 +29,29 @@ function isKanaOnly(value) {
     return KANA_ONLY_RE.test(String(value ?? ""));
 }
 
+function normalizeJapaneseReading(value) {
+    return katakanaToHiragana(String(value || ""))
+        .replace(/[.・]/g, "")
+        .replace(/-/g, "")
+        .replace(/\s+/g, "")
+        .trim();
+}
+
+function hasOnlyTargetKanji(value, kanji) {
+    const kanjiChars = String(value || "").match(/\p{Script=Han}/gu) || [];
+    return kanjiChars.length > 0 && kanjiChars.every((char) => char === kanji);
+}
+
 module.exports = {
     HAN_CHAR_RE,
     HIRAGANA_ONLY_RE,
     KANA_ONLY_RE,
     KATAKANA_ONLY_RE,
     hasHanChar,
+    hasOnlyTargetKanji,
     isHiraganaOnly,
     isKanaOnly,
     isKatakanaOnly,
     katakanaToHiragana,
+    normalizeJapaneseReading,
 };

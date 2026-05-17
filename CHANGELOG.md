@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Changed
 
+- Centralized shared JLPT bucket construction and Japanese reading/target-kanji helpers so coverage, export, and offline fallback paths no longer carry duplicated implementations that can drift.
 - Moved word-deck phrase exclusion patterns and kanji-deck noisy meaning filters into tracked `templates/deck_editorial_policy.json`, preserving current behavior while making editorial deck-membership and meaning-cleanup rules inspectable and test-covered.
 - Pinned tracked text artifacts such as JSON, Markdown, TSV, CSV, JavaScript, YAML, and text fixtures to LF line endings in `.gitattributes`, with a governance test protecting byte-stable release fixtures from contributor `core.autocrlf` drift.
 - Made kanji TSV export selection use the same deterministic sorted JLPT bucket order as media sync and packaging before applying `--limit`, so limited preview builds no longer export a different kanji subset than the media scope and identical tracked contracts produce byte-stable row order independent of ignored JSON insertion order.

@@ -1,25 +1,12 @@
 const { pickMainComponent } = require("../datasets/kradfile");
 const { labelKunReading, labelOnReading } = require("../utils/text");
-const { katakanaToHiragana } = require("../utils/japanese");
-
-function normalizeOfflineReading(value) {
-    return katakanaToHiragana(String(value || ""))
-        .replace(/[.・]/g, "")
-        .replace(/-/g, "")
-        .replace(/\s+/g, "")
-        .trim();
-}
-
-function hasOnlyTargetKanji(value, kanji) {
-    const kanjiChars = String(value || "").match(/\p{Script=Han}/gu) || [];
-    return kanjiChars.length > 0 && kanjiChars.every((char) => char === kanji);
-}
+const { hasOnlyTargetKanji, normalizeJapaneseReading } = require("../utils/japanese");
 
 function selectFallbackReadingFromJlptEntry(jlptEntry) {
     const readings = [
         ...(Array.isArray(jlptEntry?.kun_readings) ? jlptEntry.kun_readings : []),
         ...(Array.isArray(jlptEntry?.on_readings) ? jlptEntry.on_readings : []),
-    ].map(normalizeOfflineReading).filter(Boolean);
+    ].map(normalizeJapaneseReading).filter(Boolean);
 
     return readings[0] || "";
 }

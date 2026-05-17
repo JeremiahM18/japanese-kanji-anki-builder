@@ -4,12 +4,12 @@ const { performance } = require("node:perf_hooks");
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 const { compilePolicyRegexList, loadDeckEditorialPolicy } = require("../datasets/deckEditorialPolicy");
-const { buildJlptBuckets } = require("../datasets/sentenceCorpusCoverage");
+const { buildJlptBuckets } = require("../datasets/jlptBuckets");
 const { buildOfflineFallbackCard } = require("./offlineKanjiFallback");
 const { selectBestAudioAsset } = require("./audioService");
 const { mapWithConcurrency } = require("../utils/concurrency");
 const { labelKunReading, labelOnReading, normalizeText, tsvEscape } = require("../utils/text");
-const { katakanaToHiragana } = require("../utils/japanese");
+const { hasOnlyTargetKanji, katakanaToHiragana, normalizeJapaneseReading } = require("../utils/japanese");
 
 const ANKI_FIELD_NAMES = loadAnkiNoteSchema().fieldNames;
 const NOISY_KANJI_MEANING_RES = compilePolicyRegexList(loadDeckEditorialPolicy().kanjiDeck.noisyMeaningPatterns);
@@ -147,18 +147,7 @@ function extractConstituentKanji(text) {
     return [...new Set(String(text || "").match(/\p{Script=Han}/gu) || [])];
 }
 
-function normalizeReading(value) {
-    return katakanaToHiragana(String(value || ""))
-        .replace(/[.・]/g, "")
-        .replace(/-/g, "")
-        .replace(/\s+/g, "")
-        .trim();
-}
-
-function hasOnlyTargetKanji(value, kanji) {
-    const kanjiChars = extractConstituentKanji(value);
-    return kanjiChars.length > 0 && kanjiChars.every((char) => char === kanji);
-}
+const normalizeReading = normalizeJapaneseReading;
 
 function collectNormalizedKanjiReadings(kanjiInfo) {
     return [

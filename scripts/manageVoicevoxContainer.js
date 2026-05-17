@@ -3,7 +3,8 @@ const { spawnSync } = require("node:child_process");
 
 const DEFAULT_CONTAINER_NAME = "voicevox-nemo";
 const DEFAULT_IMAGE = "voicevox/voicevox_nemo_engine:cpu-ubuntu20.04-latest";
-const DEFAULT_PORT = 50021;
+const DEFAULT_HOST_PORT = 50021;
+const DEFAULT_CONTAINER_PORT = 50121;
 
 function parseArgs(argv = []) {
     const args = [...argv];
@@ -13,7 +14,8 @@ function parseArgs(argv = []) {
         recreate: false,
         containerName: DEFAULT_CONTAINER_NAME,
         image: DEFAULT_IMAGE,
-        port: DEFAULT_PORT,
+        hostPort: DEFAULT_HOST_PORT,
+        containerPort: DEFAULT_CONTAINER_PORT,
     };
 
     for (let i = 0; i < args.length; i += 1) {
@@ -29,9 +31,17 @@ function parseArgs(argv = []) {
         } else if (arg.startsWith("--image=")) {
             parsed.image = arg.slice("--image=".length);
         } else if (arg === "--port") {
-            parsed.port = Number(args[++i]);
+            parsed.hostPort = Number(args[++i]);
         } else if (arg.startsWith("--port=")) {
-            parsed.port = Number(arg.slice("--port=".length));
+            parsed.hostPort = Number(arg.slice("--port=".length));
+        } else if (arg === "--host-port") {
+            parsed.hostPort = Number(args[++i]);
+        } else if (arg.startsWith("--host-port=")) {
+            parsed.hostPort = Number(arg.slice("--host-port=".length));
+        } else if (arg === "--container-port") {
+            parsed.containerPort = Number(args[++i]);
+        } else if (arg.startsWith("--container-port=")) {
+            parsed.containerPort = Number(arg.slice("--container-port=".length));
         } else {
             throw new Error(`Unknown voicevox container option: ${arg}`);
         }
@@ -40,8 +50,11 @@ function parseArgs(argv = []) {
     if (!["status", "start", "stop"].includes(parsed.action)) {
         throw new Error(`Unknown voicevox container action: ${parsed.action}`);
     }
-    if (!Number.isInteger(parsed.port) || parsed.port <= 0) {
-        throw new Error(`Invalid VOICEVOX port: ${parsed.port}`);
+    if (!Number.isInteger(parsed.hostPort) || parsed.hostPort <= 0) {
+        throw new Error(`Invalid VOICEVOX host port: ${parsed.hostPort}`);
+    }
+    if (!Number.isInteger(parsed.containerPort) || parsed.containerPort <= 0) {
+        throw new Error(`Invalid VOICEVOX container port: ${parsed.containerPort}`);
     }
     if (!parsed.containerName) {
         throw new Error("Missing VOICEVOX container name.");
@@ -74,8 +87,8 @@ function parseDockerInspect(stdout) {
     return Array.isArray(parsed) && parsed.length > 0 ? parsed[0] : null;
 }
 
-function getPublishedHostPorts(container, port) {
-    const target = `${port}/tcp`;
+function getPublishedHostPorts(container, containerPort = DEFAULT_CONTAINER_PORT) {
+    const target = `${containerPort}/tcp`;
     const bindings = container?.NetworkSettings?.Ports?.[target];
     if (!Array.isArray(bindings)) {
         return [];
@@ -86,8 +99,8 @@ function getPublishedHostPorts(container, port) {
         .filter((hostPort) => typeof hostPort === "string" && hostPort.length > 0);
 }
 
-function hasExpectedPortMapping(container, port = DEFAULT_PORT) {
-    return getPublishedHostPorts(container, port).includes(String(port));
+function hasExpectedPortMapping(container, hostPort = DEFAULT_HOST_PORT, containerPort = DEFAULT_CONTAINER_PORT) {
+    return getPublishedHostPorts(container, containerPort).includes(String(hostPort));
 }
 
 function getContainerState(container) {
@@ -97,24 +110,28 @@ function getContainerState(container) {
     return container?.State?.Running ? "running" : "stopped";
 }
 
-function buildStartPlan(container, { recreate = false, port = DEFAULT_PORT } = {}) {
+function buildStartPlan(container, {
+    recreate = false,
+    hostPort = DEFAULT_HOST_PORT,
+    containerPort = DEFAULT_CONTAINER_PORT,
+} = {}) {
     if (!container) {
         return { action: "create", reason: "container is missing" };
     }
 
     const state = getContainerState(container);
-    const portReady = hasExpectedPortMapping(container, port);
+    const portReady = hasExpectedPortMapping(container, hostPort, containerPort);
     if (portReady && state === "running") {
-        return { action: "ready", reason: `container is already running with ${port}:${port}` };
+        return { action: "ready", reason: `container is already running with ${hostPort}:${containerPort}` };
     }
     if (portReady) {
-        return { action: "start", reason: `container exists with ${port}:${port}` };
+        return { action: "start", reason: `container exists with ${hostPort}:${containerPort}` };
     }
     if (recreate) {
-        return { action: "recreate", reason: `container exists without published ${port}:${port}` };
+        return { action: "recreate", reason: `container exists without published ${hostPort}:${containerPort}` };
     }
 
-    return { action: "needs_recreate", reason: `container exists without published ${port}:${port}` };
+    return { action: "needs_recreate", reason: `container exists without published ${hostPort}:${containerPort}` };
 }
 
 function inspectContainer(containerName) {
@@ -125,25 +142,26 @@ function inspectContainer(containerName) {
     return parseDockerInspect(result.stdout);
 }
 
-function formatContainerStatus(container, port = DEFAULT_PORT) {
+function formatContainerStatus(container, hostPort = DEFAULT_HOST_PORT, containerPort = DEFAULT_CONTAINER_PORT) {
     if (!container) {
         return `VOICEVOX container ${DEFAULT_CONTAINER_NAME}: missing`;
     }
     const state = getContainerState(container);
-    const hostPorts = getPublishedHostPorts(container, port);
+    const hostPorts = getPublishedHostPorts(container, containerPort);
     const published = hostPorts.length > 0 ? hostPorts.join(", ") : "none";
     return [
         `VOICEVOX container ${container.Name || DEFAULT_CONTAINER_NAME}: ${state}`,
         `Image: ${container.Config?.Image || container.Image || "unknown"}`,
-        `Published ${port}/tcp host ports: ${published}`,
+        `Required mapping: host ${hostPort} -> container ${containerPort}`,
+        `Published ${containerPort}/tcp host ports: ${published}`,
     ].join("\n");
 }
 
 function runStatus(options) {
     const container = inspectContainer(options.containerName);
-    console.log(formatContainerStatus(container, options.port));
-    if (container && !hasExpectedPortMapping(container, options.port)) {
-        console.log(`Missing required ${options.port}:${options.port} port mapping. Run npm run voicevox:start:fresh to recreate it intentionally.`);
+    console.log(formatContainerStatus(container, options.hostPort, options.containerPort));
+    if (container && !hasExpectedPortMapping(container, options.hostPort, options.containerPort)) {
+        console.log(`Missing required ${options.hostPort}:${options.containerPort} port mapping. Run npm run voicevox:start:fresh to recreate it intentionally.`);
     }
 }
 
@@ -173,10 +191,10 @@ function runStart(options) {
         "--name",
         options.containerName,
         "-p",
-        `${options.port}:${options.port}`,
+        `${options.hostPort}:${options.containerPort}`,
         options.image,
     ]);
-    console.log(`Started VOICEVOX container ${options.containerName} from ${options.image} on 127.0.0.1:${options.port}.`);
+    console.log(`Started VOICEVOX container ${options.containerName} from ${options.image} on 127.0.0.1:${options.hostPort} -> container ${options.containerPort}.`);
 }
 
 function runStop(options) {

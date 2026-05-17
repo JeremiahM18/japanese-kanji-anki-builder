@@ -10,7 +10,7 @@ function describeVoicevoxError(error, engineUrl) {
     }
 
     if (lower.includes("econnrefused") || lower.includes("connect")) {
-        return `VOICEVOX engine refused the connection at ${engineUrl}. Run npm run voicevox:status to confirm the container publishes 127.0.0.1:50021, then run npm run voicevox:start or npm run voicevox:start:fresh as needed.`;
+        return `VOICEVOX engine refused the connection at ${engineUrl}. Run npm run voicevox:status to confirm the container maps host 50021 to Nemo container port 50121, then run npm run voicevox:start or npm run voicevox:start:fresh as needed.`;
     }
 
     return message || `VOICEVOX verification failed at ${engineUrl}.`;
@@ -71,8 +71,8 @@ async function buildVoicevoxDoctorReport({
         }
     } catch (error) {
         report.error = describeVoicevoxError(error, config.voicevoxEngineUrl);
-        report.nextSteps.push("Run `npm run voicevox:status` and verify the local container publishes `50021:50021`.");
-        report.nextSteps.push(`Run \`npm run voicevox:start\`; if it reports a missing port mapping, run \`npm run voicevox:start:fresh\` to recreate the container with \`-p 50021:50021\`.`);
+        report.nextSteps.push("Run `npm run voicevox:status` and verify the local container maps host `50021` to Nemo container port `50121`.");
+        report.nextSteps.push(`Run \`npm run voicevox:start\`; if it reports a missing port mapping, run \`npm run voicevox:start:fresh\` to recreate the container with \`-p 50021:50121\`.`);
         report.nextSteps.push("Run `npm run doctor:voicevox` again before generating governed audio.");
         report.nextSteps.push("Run `npm run voicevox:stop` when finished with governed audio work.");
     }

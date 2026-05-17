@@ -31,25 +31,26 @@ test("parseArgs defaults to the governed local VOICEVOX container", () => {
         recreate: false,
         containerName: "voicevox-nemo",
         image: "voicevox/voicevox_nemo_engine:cpu-ubuntu20.04-latest",
-        port: 50021,
+        hostPort: 50021,
+        containerPort: 50121,
     });
 });
 
-test("hasExpectedPortMapping rejects containers created without publishing 50021", () => {
+test("hasExpectedPortMapping rejects containers created without publishing the Nemo engine port", () => {
     const container = containerFixture({ running: false, ports: {} });
     assert.equal(hasExpectedPortMapping(container), false);
-    assert.deepEqual(getPublishedHostPorts(container, 50021), []);
+    assert.deepEqual(getPublishedHostPorts(container, 50121), []);
 });
 
 test("buildStartPlan refuses a stale container unless recreation is explicit", () => {
     const container = containerFixture({ running: false, ports: {} });
     assert.deepEqual(buildStartPlan(container), {
         action: "needs_recreate",
-        reason: "container exists without published 50021:50021",
+        reason: "container exists without published 50021:50121",
     });
-    assert.deepEqual(buildStartPlan(container, { recreate: true, port: 50021 }), {
+    assert.deepEqual(buildStartPlan(container, { recreate: true, hostPort: 50021, containerPort: 50121 }), {
         action: "recreate",
-        reason: "container exists without published 50021:50021",
+        reason: "container exists without published 50021:50121",
     });
 });
 
@@ -57,13 +58,13 @@ test("buildStartPlan starts a stopped container only when the port mapping is al
     const container = containerFixture({
         running: false,
         ports: {
-            "50021/tcp": [{ HostIp: "0.0.0.0", HostPort: "50021" }],
+            "50121/tcp": [{ HostIp: "0.0.0.0", HostPort: "50021" }],
         },
     });
 
     assert.deepEqual(buildStartPlan(container), {
         action: "start",
-        reason: "container exists with 50021:50021",
+        reason: "container exists with 50021:50121",
     });
 });
 
@@ -73,5 +74,6 @@ test("parseDockerInspect and formatContainerStatus expose the bad-container shap
 
     assert.equal(parsed.Name, "/voicevox-nemo");
     assert.match(status, /stopped/);
-    assert.match(status, /Published 50021\/tcp host ports: none/);
+    assert.match(status, /Required mapping: host 50021 -> container 50121/);
+    assert.match(status, /Published 50121\/tcp host ports: none/);
 });

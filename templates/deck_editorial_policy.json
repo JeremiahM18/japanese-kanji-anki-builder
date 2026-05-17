@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "wordDeck": {
+    "excludedWordCardTags": [
+      "phrase"
+    ],
+    "phraseEndingPatterns": [
+      {
+        "id": "nearby-location-phrase",
+        "pattern": "の近く$",
+        "flags": "u",
+        "notes": "Compositional location phrases remain source-only unless explicitly curated."
+      },
+      {
+        "id": "room-possessive-phrase",
+        "pattern": "の部屋$",
+        "flags": "u",
+        "notes": "Compositional possessive room phrases remain source-only unless explicitly curated."
+      },
+      {
+        "id": "friend-possessive-phrase",
+        "pattern": "の友だち$",
+        "flags": "u",
+        "notes": "Compositional possessive friend phrases remain source-only unless explicitly curated."
+      },
+      {
+        "id": "under-location-phrase",
+        "pattern": "の下$",
+        "flags": "u",
+        "notes": "Compositional location phrases remain source-only unless explicitly curated."
+      }
+    ],
+    "lexicalizedUsageSuffixPatterns": [
+      {
+        "id": "lexicalized-usage-way",
+        "pattern": "[\\p{Script=Han}々]い方$",
+        "flags": "u",
+        "notes": "Usage-form words such as 使い方 are not excluded by the adjective-noun phrase guard."
+      }
+    ],
+    "adjectiveNounPhrasePatterns": [
+      {
+        "id": "i-adjective-plus-kanji-noun",
+        "pattern": "\\p{Script=Hiragana}*い[\\p{Script=Han}々]+$",
+        "flags": "u",
+        "notes": "Compositional adjective+noun phrases with multiple constituent kanji remain out of the default word deck unless explicitly curated."
+      }
+    ]
+  },
+  "kanjiDeck": {
+    "noisyMeaningPatterns": [
+      {
+        "id": "radical-gloss",
+        "pattern": "\\bradical\\b",
+        "flags": "i",
+        "notes": "Dictionary radical labels are not learner-facing kanji meanings."
+      },
+      {
+        "id": "radical-number",
+        "pattern": "\\bno\\.\\s*\\d+",
+        "flags": "i",
+        "notes": "Radical index numbers are not learner-facing kanji meanings."
+      },
+      {
+        "id": "percent-symbol",
+        "pattern": "^%$",
+        "flags": "i",
+        "notes": "Symbol noise is not a learner-facing kanji meaning."
+      },
+      {
+        "id": "unsafe-rape-gloss",
+        "pattern": "^rape$",
+        "flags": "i",
+        "notes": "Unsafe low-value dictionary gloss noise is blocked from primary learner-facing kanji meanings."
+      }
+    ]
+  }
+}

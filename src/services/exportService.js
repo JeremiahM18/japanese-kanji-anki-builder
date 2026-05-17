@@ -3,6 +3,7 @@ const { performance } = require("node:perf_hooks");
 
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
+const { compilePolicyRegexList, loadDeckEditorialPolicy } = require("../datasets/deckEditorialPolicy");
 const { buildJlptBuckets } = require("../datasets/sentenceCorpusCoverage");
 const { buildOfflineFallbackCard } = require("./offlineKanjiFallback");
 const { selectBestAudioAsset } = require("./audioService");
@@ -11,6 +12,7 @@ const { labelKunReading, labelOnReading, normalizeText, tsvEscape } = require(".
 const { katakanaToHiragana } = require("../utils/japanese");
 
 const ANKI_FIELD_NAMES = loadAnkiNoteSchema().fieldNames;
+const NOISY_KANJI_MEANING_RES = compilePolicyRegexList(loadDeckEditorialPolicy().kanjiDeck.noisyMeaningPatterns);
 const MAX_INFERENCE_EXAMPLES = 3;
 const MAX_INFERENCE_SENTENCES = 3;
 const HAN_CHAR_RE = /\p{Script=Han}/u;
@@ -236,10 +238,7 @@ function splitMeaningList(value) {
 
 function isNoisyKanjiMeaning(meaning) {
     const text = String(meaning || "").trim();
-    return /\bradical\b/i.test(text)
-        || /\bno\.\s*\d+/i.test(text)
-        || /^%$/i.test(text)
-        || /^rape$/i.test(text);
+    return NOISY_KANJI_MEANING_RES.some((regex) => regex.test(text));
 }
 
 function buildBlockedMeaningSet(curatedEntry = null) {

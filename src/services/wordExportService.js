@@ -12,6 +12,7 @@ const { mapWithConcurrency } = require("../utils/concurrency");
 const { tsvEscape } = require("../utils/text");
 const { HAN_CHAR_RE, KATAKANA_ONLY_RE, isKanaOnly, katakanaToHiragana } = require("../utils/japanese");
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
+const { compilePolicyRegexList, loadDeckEditorialPolicy } = require("../datasets/deckEditorialPolicy");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 const { resolveWordPitchAccent } = require("../datasets/wordPitchAccentData");
 const { buildPitchAccentHtml, escapeHtml } = require("./pitchAccentRenderService");
@@ -21,11 +22,12 @@ const {
 } = require("./wordPitchAccentVerificationService");
 const { findManagedWordAudioAsset } = require("./wordAudioService");
 
+const deckEditorialPolicy = loadDeckEditorialPolicy();
 const WORD_FIELD_NAMES = loadAnkiNoteSchema("word").fieldNames;
-const EXCLUDED_WORD_CARD_TAGS = new Set(["phrase"]);
-const PHRASE_ENDING_RE = /(の近く|の部屋|の友だち|の下)$/u;
-const LEXICALIZED_USAGE_SUFFIX_RE = /[\p{Script=Han}々]い方$/u;
-const ADJECTIVE_NOUN_PHRASE_RE = /\p{Script=Hiragana}*い[\p{Script=Han}々]+$/u;
+const EXCLUDED_WORD_CARD_TAGS = new Set(deckEditorialPolicy.wordDeck.excludedWordCardTags);
+const PHRASE_ENDING_RES = compilePolicyRegexList(deckEditorialPolicy.wordDeck.phraseEndingPatterns);
+const LEXICALIZED_USAGE_SUFFIX_RES = compilePolicyRegexList(deckEditorialPolicy.wordDeck.lexicalizedUsageSuffixPatterns);
+const ADJECTIVE_NOUN_PHRASE_RES = compilePolicyRegexList(deckEditorialPolicy.wordDeck.adjectiveNounPhrasePatterns);
 const DEFAULT_WORD_DECK_ORDER_SEED = "jkb-word-deck-study-order-v1";
 
 function extractConstituentKanji(text) {
@@ -38,21 +40,25 @@ function hasExcludedWordCardTag(entry) {
         .some((tag) => EXCLUDED_WORD_CARD_TAGS.has(tag));
 }
 
+function matchesAnyPolicyRegex(value, regexes) {
+    return regexes.some((regex) => regex.test(value));
+}
+
 function isLikelyPhraseCard(candidate) {
     const written = String(candidate?.written || "").trim();
     if (!written) {
         return false;
     }
 
-    if (PHRASE_ENDING_RE.test(written)) {
+    if (matchesAnyPolicyRegex(written, PHRASE_ENDING_RES)) {
         return true;
     }
 
-    if (LEXICALIZED_USAGE_SUFFIX_RE.test(written)) {
+    if (matchesAnyPolicyRegex(written, LEXICALIZED_USAGE_SUFFIX_RES)) {
         return false;
     }
 
-    return ADJECTIVE_NOUN_PHRASE_RE.test(written) && extractConstituentKanji(written).length >= 2;
+    return matchesAnyPolicyRegex(written, ADJECTIVE_NOUN_PHRASE_RES) && extractConstituentKanji(written).length >= 2;
 }
 
 function inferWordLevel({ written, jlptOnlyJson, fallbackLevel = null }) {

@@ -165,6 +165,13 @@ test("normalizeTriageDecisions keeps only decisions with a reason", () => {
             nextStep: "promote later",
         },
     });
+
+    assert.throws(() => normalizeTriageDecisions({
+        "山川|さんせん": {
+            decision: "maybe_candidate",
+            reason: "Unsupported review state.",
+        },
+    }), /Unsupported word expansion triage decision for 山川\|さんせん: maybe_candidate/);
 });
 
 test("source normalization splits slash readings into exact word identities", () => {

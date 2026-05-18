@@ -8,6 +8,7 @@ const { auditWordLevelAnchors } = require("./wordLevelAnchorAuditService");
 const {
     classifyKanjiScope,
     normalizeCandidateSourceRows,
+    normalizeTriageDecision,
     parseCandidateSourceText,
 } = require("./wordInventoryExpansionCandidateService");
 
@@ -372,7 +373,8 @@ function addSourceRowsToLevels({
 }
 
 function getTriageDecision({ triageDecisionsByLevelSource = {}, targetLevel, sourceId, key }) {
-    return triageDecisionsByLevelSource?.[`N${targetLevel}`]?.[sourceId]?.[key] || null;
+    const decision = triageDecisionsByLevelSource?.[`N${targetLevel}`]?.[sourceId]?.[key] || null;
+    return normalizeTriageDecision(decision, { key: `N${targetLevel}/${sourceId}/${key}` });
 }
 
 function addSourceAppearance(candidate, sourceId, source, row, {

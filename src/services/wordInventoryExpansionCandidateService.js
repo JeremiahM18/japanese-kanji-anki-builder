@@ -2,6 +2,7 @@ const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 const { extractConstituentKanji, isLikelyPhraseCard } = require("./wordExportService");
 
 const LEVEL_RE = /^\s*(?:jlpt\s*)?n?\s*([1-5])\s*$/i;
+const TRIAGE_DECISIONS = new Set(["keep_candidate", "defer_candidate", "reject_candidate"]);
 
 function normalizeHeader(value) {
     return String(value || "")
@@ -387,7 +388,7 @@ function compareCandidateRows(a, b) {
     );
 }
 
-function normalizeTriageDecision(decision) {
+function normalizeTriageDecision(decision, { key = "" } = {}) {
     if (!decision || typeof decision !== "object") {
         return null;
     }
@@ -395,6 +396,10 @@ function normalizeTriageDecision(decision) {
     const reason = String(decision.reason || "").trim();
     if (!normalizedDecision || !reason) {
         return null;
+    }
+    if (!TRIAGE_DECISIONS.has(normalizedDecision)) {
+        const context = key ? ` for ${key}` : "";
+        throw new Error(`Unsupported word expansion triage decision${context}: ${normalizedDecision}. Expected one of: ${[...TRIAGE_DECISIONS].join(", ")}.`);
     }
 
     return {
@@ -408,7 +413,7 @@ function normalizeTriageDecision(decision) {
 function normalizeTriageDecisions(triageDecisions = {}) {
     const normalized = {};
     for (const [key, decision] of Object.entries(triageDecisions || {})) {
-        const normalizedDecision = normalizeTriageDecision(decision);
+        const normalizedDecision = normalizeTriageDecision(decision, { key });
         if (normalizedDecision) {
             normalized[key] = normalizedDecision;
         }
@@ -591,6 +596,7 @@ module.exports = {
     classifyKanjiScope,
     formatWordInventoryExpansionCandidateReport,
     formatSameWrittenContractEntries,
+    normalizeTriageDecision,
     normalizeTriageDecisions,
     normalizeCandidateSourceRow,
     normalizeCandidateSourceRows,

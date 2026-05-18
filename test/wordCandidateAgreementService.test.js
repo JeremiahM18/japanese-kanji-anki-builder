@@ -259,3 +259,47 @@ test("buildWordCandidateAgreementReport does not count dictionary ranks as frequ
     assert.equal(mountainRiver.frequencySupported, false);
     assert.match(mountainRiver.nextRequiredEvidence.join("; "), /frequency\/commonness support/);
 });
+
+test("buildWordCandidateAgreementReport rejects unsupported triage decision values", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-candidate-agreement-"));
+    const candidateSource = writeFixtureSource(
+        dir,
+        "jlpt.tsv",
+        "written\treading\tmeaning\tjlpt\n山川\tさんせん\tmountains and rivers\tN5\n"
+    );
+    const dictionarySource = writeFixtureSource(
+        dir,
+        "dict.tsv",
+        "written\treading\tmeaning\n山川\tさんせん\tmountains and rivers\n"
+    );
+    const frequencySource = writeFixtureSource(
+        dir,
+        "priority.tsv",
+        "written\treading\tmeaning\tfrequencyRank\n山川\tさんせん\tmountains and rivers\t100\n"
+    );
+
+    assert.throws(() => buildWordCandidateAgreementReport({
+        levels: [5],
+        manifest: buildManifest({ candidateSource, dictionarySource, frequencySource }),
+        jlptLevelContract: {
+            kanjiLevels: {
+                山: 5,
+                川: 5,
+            },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {},
+            excludedWordLevels: {},
+        },
+        triageDecisionsByLevelSource: {
+            N5: {
+                "fixture-jlpt": {
+                    "山川|さんせん": {
+                        decision: "maybe_candidate",
+                        reason: "Unsupported review state.",
+                    },
+                },
+            },
+        },
+    }), /Unsupported word expansion triage decision for N5\/fixture-jlpt\/山川\|さんせん: maybe_candidate/);
+});

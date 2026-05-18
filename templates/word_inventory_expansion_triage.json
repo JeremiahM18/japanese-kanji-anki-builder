@@ -1214,6 +1214,24 @@
         "priority": "medium",
         "reason": "Exact row has dictionary/commonness and Kanjium support for the rank/level sense, but the Tanos gloss also points at the kana-like about usage; avoid promoting the standalone kanji surface until a deliberate meaning-scope review chooses the rank/level card.",
         "nextStep": "Reconsider in a same-written/suffix-usage pass, or promote later as rank/level only with an example that does not imply the kana くらい approximate-amount usage."
+      },
+      "昨|さく": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Exact row has dictionary and Kanjium support, but it lacks JMdict priority/commonness support in the governed source lane and should not be promoted ahead of stronger N3 Silver candidates.",
+        "nextStep": "Reconsider only after frequency/commonness support verifies 昨|さく or a manual learner-usefulness pass records explicit evidence."
+      },
+      "賛成|賛成": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "The Tanos normalized row has a corrupted non-kana reading and no exact governed JMdict or Kanjium identity for 賛成|賛成.",
+        "nextStep": "Do not promote this exact source row; review 賛成|さんせい only if a clean governed source row is available."
+      },
+      "直|じき": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Exact row has source support, but the standalone kanji adverb is lower learner value than cleaner N3 rows and the adjacent 直に|じかに card covers the direct/in-person adverbial use more clearly.",
+        "nextStep": "Reconsider in a same-written or adverbial-usage pass after higher-value N3 vocabulary rows are reviewed."
       }
     }
   }

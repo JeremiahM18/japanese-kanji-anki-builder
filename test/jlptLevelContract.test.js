@@ -159,11 +159,12 @@ test("syncJlptInventoryToContract rewrites mismatched jlpt levels", () => {
     assert.deepEqual(result.syncedDataset.日.meanings, ["day"]);
 });
 
-test("auditJlptAlignment parseArgs accepts json strict and limit", () => {
-    const options = parseAuditArgs(["--json", "--strict", "--limit=10"]);
+test("auditJlptAlignment parseArgs accepts json strict tracked-only and limit", () => {
+    const options = parseAuditArgs(["--json", "--strict", "--tracked-only", "--limit=10"]);
 
     assert.equal(options.json, true);
     assert.equal(options.strict, true);
+    assert.equal(options.trackedOnly, true);
     assert.equal(options.limit, 10);
     assert.deepEqual(options.unknownArgs, []);
 });

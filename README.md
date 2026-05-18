@@ -348,6 +348,8 @@ npm run release:gate
 
 `release:gate` validates deterministic smoke-fixture artifacts and packaging contracts. It does not certify public product deck readiness. Add level-specific readiness, Gold regression, accessibility, provenance, and manual QA commands for the surface being changed.
 
+Clean CI runs `data:audit:jlpt -- --strict --tracked-only`, `data:audit:jlpt:sources -- --governance-strict --limit=25`, `data:audit:jlpt:words`, and `deck:words:platinum:source-posture -- --levels=5,4` from tracked inputs. Full `data:audit:jlpt` and `deck:platinum:governance-gate` remain local-data gates because they validate ignored runtime/generated-row inputs under `data/`; their absence from clean CI is a release-scope limitation, not proof that real generated rows were validated.
+
 ## Core Workflows
 
 ### Setup
@@ -581,8 +583,10 @@ Generated audio must pass review before release.
 GitHub Actions verification:
 
 - Ubuntu lint and full test matrix on Node 18, 20, and 22.
+- Tracked-template JLPT kanji source-governance, kanji taxonomy, word taxonomy, and word Platinum source-posture checks on Node 18, 20, and 22.
 - Cross-platform smoke matrix on Ubuntu, Windows, and macOS for Node 18 and 22.
 - Ubuntu release smoke gate on Node 22 with native `.apkg` packaging validation for fixture artifacts.
+- Clean CI does not run `deck:platinum:governance-gate` because that command exercises ignored local `data/*` real generated-row inputs. Run it in a local-data workspace before release claims that depend on current generated N5/N4 rows.
 
 Release process:
 
@@ -639,7 +643,7 @@ Repository governance:
 | `npm run deck:kanji:additional:platinum:n2` | Run the additional-unverified N2 kanji Platinum gate |
 | `npm run deck:kanji:additional:platinum:n1` | Run the additional-unverified N1 kanji Platinum gate |
 | `npm run deck:review:coverage` | Audit Gold regression coverage |
-| `npm run deck:platinum:governance-gate` | Run the local-data Platinum governance gate against real generated N5/N4 rows |
+| `npm run deck:platinum:governance-gate` | Run the local-data Platinum governance gate against real generated N5/N4 rows before release claims that depend on those rows |
 | `npm run deck:platinum:n5` | Run the N5 kanji Platinum gate |
 | `npm run deck:platinum:n4` | Run the N4 kanji Platinum gate |
 | `npm run deck:platinum:n3` | Run the N3 kanji Platinum gate |
@@ -682,7 +686,7 @@ Repository governance:
 | `npm run data:normalize:words:jmdict` | Normalize ignored local JMdict XML into the pinned word dictionary/commonness TSV shape |
 | `npm run deck:words:candidate-agreement -- --levels=5,4` | Rebuild the N5/N4 candidate universe from the governed word source manifest with source-purpose, agreement, triage, and placement signals |
 | `npm run deck:words:expansion-signals -- --levels=5,4` | Summarize per-level reading and enhancement expansion exhaustion without claiming release readiness |
-| `npm run data:audit:jlpt` | Audit kanji taxonomy and starter alignment |
+| `npm run data:audit:jlpt` | Audit local-data kanji taxonomy, starter alignment, and Gold review placement; use `-- --strict --tracked-only` for clean CI tracked-input alignment |
 | `npm run data:audit:jlpt:sources -- --governance-strict` | Audit JLPT kanji source evidence and fail only on source-governance regressions while evidence depth remains incomplete |
 | `npm run data:audit:jlpt:source-levels -- --worklist-only --limit=10` | Report the focused all-level governed review packet with current level, candidate levels, consensus, vote weights, and resolved source-input worksheet progress without changing decks or readiness |
 | `npm run data:audit:jlpt:source-access` | Rank source lanes by governed usefulness and current source-access state before spending another manual review batch |

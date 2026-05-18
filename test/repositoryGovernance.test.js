@@ -151,6 +151,21 @@ test("branch protection baseline names the required GitHub checks", () => {
     assert.equal(branchProtection.includes("require conversation resolution before merge"), true);
 });
 
+test("CI workflow uses tracked-input governance checks and documents local-data gates", () => {
+    const workflow = readRepoFile(path.join(".github", "workflows", "ci.yml"));
+    const readme = readRepoFile("README.md");
+
+    assert.equal(workflow.includes("npm run data:audit:jlpt:sources -- --governance-strict --limit=25"), true);
+    assert.equal(workflow.includes("npm run data:audit:jlpt -- --strict --tracked-only"), true);
+    assert.equal(workflow.includes("npm run data:audit:jlpt:words"), true);
+    assert.equal(workflow.includes("npm run deck:words:platinum:source-posture -- --levels=5,4"), true);
+    assert.equal(workflow.includes("npm run deck:platinum:governance-gate"), false);
+    assert.equal(workflow.includes("hashFiles('data/"), false);
+    assert.match(workflow, /deck:platinum:governance-gate is intentionally local-data release QA/);
+    assert.match(readme, /Clean CI does not run `deck:platinum:governance-gate`/);
+    assert.match(readme, /data:audit:jlpt -- --strict --tracked-only/);
+});
+
 test("pull request template calls out release-gate and code-owner expectations", () => {
     const template = readRepoFile(path.join(".github", "PULL_REQUEST_TEMPLATE", "pull_request_template.md"));
 

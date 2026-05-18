@@ -49,16 +49,20 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Run tracked JLPT kanji source governance audit
+        run: npm run data:audit:jlpt:sources -- --governance-strict --limit=25
+
+      - name: Verify tracked JLPT kanji taxonomy alignment
+        run: npm run data:audit:jlpt -- --strict --tracked-only
+
+      - name: Verify tracked JLPT word taxonomy alignment
+        run: npm run data:audit:jlpt:words
+
       - name: Run manifest-only word platinum source posture
         run: npm run deck:words:platinum:source-posture -- --levels=5,4
 
-      - name: Run local-data platinum governance gate
-        run: npm run deck:platinum:governance-gate
-        if: ${{ hashFiles('data/kanji_jlpt_only.json') != '' && hashFiles('data/curated_study_data.json') != '' && hashFiles('data/word_study_data.json') != '' }}
-
-      - name: Verify tracked JLPT taxonomy alignment
-        run: npm run data:audit:jlpt -- --strict
-        if: ${{ hashFiles('data/kanji_jlpt_only.json') != '' }}
+      # deck:platinum:governance-gate is intentionally local-data release QA.
+      # Clean GitHub Actions checkouts do not include ignored data/* generated-row inputs.
 
   smoke:
     name: Smoke ${{ matrix.os }} Node ${{ matrix.node-version }}

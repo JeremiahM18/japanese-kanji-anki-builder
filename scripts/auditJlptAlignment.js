@@ -17,6 +17,7 @@ function parseArgs(argv) {
         json: false,
         strict: false,
         limit: 25,
+        trackedOnly: false,
         unknownArgs: [],
     };
 
@@ -25,6 +26,8 @@ function parseArgs(argv) {
             options.json = true;
         } else if (arg === "--strict") {
             options.strict = true;
+        } else if (arg === "--tracked-only") {
+            options.trackedOnly = true;
         } else if (arg.startsWith("--limit=")) {
             options.limit = Number(arg.split("=")[1]);
         } else {
@@ -65,19 +68,38 @@ function truncate(items, limit) {
     return (Array.isArray(items) ? items : []).slice(0, Math.max(1, limit || 25));
 }
 
+function buildSkippedLocalDatasetAudit(contract) {
+    return {
+        valid: true,
+        skipped: true,
+        reason: "tracked-only mode",
+        contractKanjiCount: Object.keys(contract?.kanjiLevels || {}).length,
+        datasetKanjiCount: 0,
+        contractCounts: contract?.inventoryCounts || {},
+        datasetCounts: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+        missingKanji: [],
+        unexpectedKanji: [],
+        levelMismatches: [],
+        countMismatches: [],
+    };
+}
+
 function formatAlignmentReport({ contractPath, datasetPath, localDatasetAudit, starterAudit, goldenAudit }) {
+    const localDatasetStatus = localDatasetAudit.skipped
+        ? `skipped (${localDatasetAudit.reason})`
+        : localDatasetAudit.valid ? "passing" : "failing";
     const lines = [
         "JLPT Alignment Audit",
         "",
         `Contract: ${contractPath}`,
         `Local dataset: ${datasetPath}`,
         "",
-        `Local dataset alignment: ${localDatasetAudit.valid ? "passing" : "failing"}`,
+        `Local dataset alignment: ${localDatasetStatus}`,
         `Starter alignment: ${starterAudit.valid ? "passing" : "failing"}`,
         `Golden review alignment: ${goldenAudit.valid ? "passing" : "failing"}`,
     ];
 
-    if (!localDatasetAudit.valid) {
+    if (!localDatasetAudit.skipped && !localDatasetAudit.valid) {
         lines.push(
             "",
             `Local dataset mismatches: missing ${localDatasetAudit.missingKanji.length}, unexpected ${localDatasetAudit.unexpectedKanji.length}, wrong level ${localDatasetAudit.levelMismatches.length}, count mismatches ${localDatasetAudit.countMismatches.length}`
@@ -106,15 +128,17 @@ function main() {
     if (!fs.existsSync(contractPath)) {
         throw new Error(`Missing JLPT level contract at ${contractPath}`);
     }
-    if (!fs.existsSync(config.jlptJsonPath)) {
+    if (!options.trackedOnly && !fs.existsSync(config.jlptJsonPath)) {
         throw new Error(`Missing JLPT JSON file at ${config.jlptJsonPath}`);
     }
 
     const contract = loadJlptLevelContract(contractPath);
-    const localDatasetAudit = auditJlptInventoryAgainstContract(
-        loadJlptOnlyJson(config.jlptJsonPath, { contractPath: null }),
-        contract
-    );
+    const localDatasetAudit = options.trackedOnly
+        ? buildSkippedLocalDatasetAudit(contract)
+        : auditJlptInventoryAgainstContract(
+            loadJlptOnlyJson(config.jlptJsonPath, { contractPath: null }),
+            contract
+        );
     const starterAudit = auditStarterEntriesAgainstContract(loadTrackedStarterEntries(templatesDir), contract);
     const goldenAudit = auditGoldenReviewSetsAgainstContract(loadGoldenReviewSets(templatesDir), contract);
 

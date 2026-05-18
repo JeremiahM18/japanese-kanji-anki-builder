@@ -1208,6 +1208,12 @@
         "priority": "medium",
         "reason": "Exact row has dictionary and Kanjium pitch support, but it currently lacks JMdict priority/commonness support in the governed source lane; keep it out of Silver until usefulness support is independently strengthened.",
         "nextStep": "Reconsider after a frequency/commonness source can verify お互い|おたがい, or in a later manual learner-usefulness pass with explicit evidence."
+      },
+      "位|くらい": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Exact row has dictionary/commonness and Kanjium support for the rank/level sense, but the Tanos gloss also points at the kana-like about usage; avoid promoting the standalone kanji surface until a deliberate meaning-scope review chooses the rank/level card.",
+        "nextStep": "Reconsider in a same-written/suffix-usage pass, or promote later as rank/level only with an example that does not imply the kana くらい approximate-amount usage."
       }
     }
   }

@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Changed
 
+- Triaged the first 10 N5 cross-level routing rows from the `jlptstudy.net-n5` source lane, recording 9 target-level `move_candidate` decisions and rejecting the duplicate full-kanji `朝御飯|あさごはん` source row without moving or approving any cards.
 - Made word expansion candidate reports surface known-JLPT source rows with no current-level anchor as a separate cross-level routing backlog, preserving source-level hints without counting them as current-level promotion candidates or moving cards automatically.
 - Added `move_candidate` as a governed word expansion triage decision with a required target JLPT level, so valid vocabulary that belongs in another learner deck is routed explicitly instead of being flattened into defer/reject status.
 - Made word candidate agreement reports rank same-status candidates by ready evidence signals and remaining evidence work before falling back to source count and alphabetical order, with each shown row displaying its review-readiness counts.

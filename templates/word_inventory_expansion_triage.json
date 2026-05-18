@@ -372,6 +372,75 @@
         "priority": "medium",
         "reason": "Useful common N5 learner-relevant word, but it was held for the next batch because of the strict 12-word cap.",
         "nextStep": "Source-check and promote in a future <=12-word enhancement batch if card-surface review passes."
+      },
+      "青|あお": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "medium",
+        "reason": "Useful color noun, but it has no N5 kanji anchor; governed 青い|あおい already covers the N4 adjective reading, so this exact noun belongs in N4 review if it is worth a separate card.",
+        "nextStep": "Route only through the N4 word contract and starter-data review; do not backfill it into N5."
+      },
+      "赤|あか": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "medium",
+        "reason": "Useful color noun, but it has no N5 kanji anchor; governed 赤い|あかい already covers the N4 adjective reading, so this exact noun belongs in N4 review if it is worth a separate card.",
+        "nextStep": "Route only through the N4 word contract and starter-data review; do not backfill it into N5."
+      },
+      "朝御飯|あさごはん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source row uses the full-kanji 朝御飯 spelling, duplicates governed N4 朝ご飯|あさごはん, and adds N2 御 spelling load without learner value.",
+        "nextStep": "Do not move this exact row; keep the governed mixed-spelling 朝ご飯 card as the learner-facing breakfast identity."
+      },
+      "遊ぶ|あそぶ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common useful verb, but the only kanji anchor is N3 遊; it should be reviewed as an N3 word card rather than forced into the N5 source lane.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with normal source, example, audio, pitch, and breakdown gates."
+      },
+      "暖かい|あたたかい": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Useful adjective from the source list, but the exact kanji anchor is N1 暖; target-level review must decide whether this simple word is useful as an N1 kanji-reading card.",
+        "nextStep": "Route only through the N1 word contract and starter-data review; do not treat the N5 source label as placement approval."
+      },
+      "暑い|あつい": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Common weather adjective, but the only kanji anchor is N1 暑; it belongs in N1 routing review if the card is useful for that kanji reading.",
+        "nextStep": "Route only through the N1 word contract and starter-data review; review with the あつい adjective cluster before any promotion."
+      },
+      "熱い|あつい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common hot-to-touch adjective, but the only kanji anchor is N3 熱; it should be reviewed in the N3 lane alongside related あつい spellings.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; require clear example context that distinguishes 熱い from 暑い."
+      },
+      "厚い|あつい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Valid adjective with an N2 厚 anchor, but its broad source gloss and same-reading cluster require target-level sense review before any card exists.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; require examples that teach the thick/deep sense cleanly."
+      },
+      "危ない|あぶない": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common safety adjective, but the only kanji anchor is N3 危; route it to N3 review rather than forcing a no-anchor N5 placement.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with normal card-surface gates."
+      },
+      "甘い|あまい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common adjective, but the only kanji anchor is N2 甘 and the source gloss mixes sweet/generous senses; N2 review must choose the learner-facing sense before promotion.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; require a clean sense-specific example."
       }
     }
   },

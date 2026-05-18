@@ -1,16 +1,20 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
 
 const {
     buildWordInventoryExpansionCandidateReport,
     classifyCandidateDisposition,
+    classifyKanjiScope,
     formatWordInventoryExpansionCandidateReport,
     normalizeTriageDecisions,
+    normalizeTriageDecision,
     normalizeCandidateSourceRow,
     normalizeCandidateSourceRows,
     parseCandidateSourceText,
     parseDelimitedLine,
     parseSourceLevel,
+    resolveCrossLevelRoutingTargetLevel,
     splitReadingVariants,
 } = require("../src/services/wordInventoryExpansionCandidateService");
 
@@ -198,6 +202,45 @@ test("cross-level source rows are visible without becoming current-level promoti
     assert.match(text, /手紙 \(てがみ\)/);
     assert.match(text, /suggested anchor review level: N4/);
     assert.match(text, /triage target level: N4/);
+});
+
+test("tracked cross-level move_candidate decisions target the computed anchor review level", () => {
+    const trackedJlptLevelContract = JSON.parse(fs.readFileSync("templates/jlpt_level_contract.json", "utf8"));
+    const trackedTriage = JSON.parse(fs.readFileSync("templates/word_inventory_expansion_triage.json", "utf8"));
+    const mismatches = [];
+    let checkedCrossLevelMoves = 0;
+
+    for (const [levelLabel, sourceDecisions] of Object.entries(trackedTriage || {})) {
+        const targetLevel = Number(String(levelLabel).replace(/^N/i, ""));
+        assert.ok(Number.isInteger(targetLevel) && targetLevel >= 1 && targetLevel <= 5, `Unexpected triage level: ${levelLabel}`);
+
+        for (const [sourceLabel, decisions] of Object.entries(sourceDecisions || {})) {
+            for (const [key, decision] of Object.entries(decisions || {})) {
+                const normalizedDecision = normalizeTriageDecision(decision, { key, currentLevel: targetLevel });
+                if (normalizedDecision?.decision !== "move_candidate") {
+                    continue;
+                }
+
+                const written = String(key).split("|")[0] || "";
+                const scope = classifyKanjiScope({ written }, {
+                    targetLevel,
+                    jlptLevelContract: trackedJlptLevelContract,
+                });
+                const routedLevel = resolveCrossLevelRoutingTargetLevel(scope, targetLevel);
+                if (!Number.isInteger(routedLevel)) {
+                    continue;
+                }
+
+                checkedCrossLevelMoves += 1;
+                if (normalizedDecision.targetLevel !== routedLevel) {
+                    mismatches.push(`${levelLabel}/${sourceLabel}/${key}: target N${normalizedDecision.targetLevel}, expected N${routedLevel}`);
+                }
+            }
+        }
+    }
+
+    assert.ok(checkedCrossLevelMoves > 0, "Expected at least one tracked cross-level move_candidate decision.");
+    assert.deepEqual(mismatches, []);
 });
 
 test("normalizeTriageDecisions keeps only decisions with a reason", () => {

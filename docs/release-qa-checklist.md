@@ -67,7 +67,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 
 ## Word deck manual spot review
 
-- Import each word level being shipped into Anki only after the current word-level placement audit, readiness audit, Gold regression, applicable Platinum gate, and Obsidian status pass. N5 word currently passes placement, readiness, Gold, tracked-source artifact, and Platinum checks at `287/287` under `word-platinum-v3-evidence-lanes`; N4 word placement, Gold regression, and Platinum structural coverage pass at `667/667`, but readiness remains incomplete and `0/667` N4 word rows are Obsidian certified, so N4 remains blocked before manual QA/release.
+- Import each word level being shipped into Anki only after the current word-level placement audit, readiness audit, Gold regression, applicable Platinum gate, and Obsidian status pass. N5 word currently passes placement, readiness, Gold, tracked-source artifact, and Platinum checks at `287/287` under `word-platinum-v3-evidence-lanes`; N4 word placement, readiness, Gold regression, and Platinum structural coverage pass at `667/667`, but `0/667` N4 word rows are Obsidian certified, so N4 remains blocked before manual QA/release.
 - Confirm Platinum-reviewed cards are useful, common enough, learner-friendly, and not present only for reading coverage.
 - Review beginner core words.
 - Review support words.

@@ -441,6 +441,76 @@
         "priority": "medium",
         "reason": "Common adjective, but the only kanji anchor is N2 甘 and the source gloss mixes sweet/generous senses; N2 review must choose the learner-facing sense before promotion.",
         "nextStep": "Route only through the N2 word contract and starter-data review; require a clean sense-specific example."
+      },
+      "痛い|いたい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common adjective with exact governed JMdict identity support, but the only kanji anchor is N3 痛; existing pain-family cards such as 痛み, 頭痛, and 苦痛 do not make this exact adjective an N5 card.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; decide whether a separate adjective card is useful before promotion."
+      },
+      "嫌|いや": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Common exact adjectival-noun identity with JMdict priority support, but the only kanji anchor is N1 嫌 and the source gloss spans unwillingness, unpleasantness, and no-response senses.",
+        "nextStep": "Route only through the N1 word contract and starter-data review; choose a learner-facing sense and example deliberately before promotion."
+      },
+      "居る|いる": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common animate-existence verb with exact governed JMdict identity support, but the kanji spelling has only an N2 居 anchor and must not be forced into the N5 source lane.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; review kanji-vs-kana surface value and distinguish it from 要る|いる before promotion."
+      },
+      "要る|いる": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common need/require verb with exact governed JMdict identity support, but the only kanji anchor is N3 要 and the same reading as 居る requires target-level sense separation.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; require an example that clearly teaches the need/require sense."
+      },
+      "薄い|うすい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common adjective with exact governed JMdict identity support, but the only kanji anchor is N2 薄 and the source gloss spans physical thinness, weak taste, and low-probability senses.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; select one learner-facing sense and example before promotion."
+      },
+      "絵|え": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common picture/drawing noun with exact governed JMdict identity support, but the only kanji anchor is N3 絵; existing 絵画|かいが does not cover the standalone 絵 -> え word identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; verify whether the simple noun card is useful enough for target-level promotion."
+      },
+      "鉛筆|えんぴつ": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common pencil noun with exact governed JMdict identity support, but it has no N5 anchor; 筆 is N2 and 鉛 is harder N1 support that must stay visibly labeled.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; require explicit support-kanji labeling for 鉛 before any promotion."
+      },
+      "置く|おく": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common put/place verb with exact governed JMdict identity support, but the only kanji anchor is N3 置 and the source-level N5 hint is not placement approval.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a concrete physical-placement example."
+      },
+      "奥さん|おくさん": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common wife/your-wife expression with exact governed JMdict identity support, but the only kanji anchor is N3 奥 and existing 奥|おく does not govern this exact social expression.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; review social register and example wording carefully before promotion."
+      },
+      "お酒|おさけ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "low",
+        "reason": "Exact governed JMdict identity exists for the polite alcohol/sake form, but the only kanji anchor is N3 酒 and governed 酒|さけ already covers the base word.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; promote only if the polite お酒 form is worth a separate card from 酒|さけ."
       }
     }
   },

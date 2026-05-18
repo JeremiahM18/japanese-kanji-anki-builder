@@ -1202,6 +1202,12 @@
         "priority": "low",
         "reason": "The exact kanji spelling 彼等 is lower-value than the common modern 彼ら surface for a starter Silver word and would add alternate-spelling clutter.",
         "nextStep": "Reconsider only if the word deck adds an alternate-spelling lane with explicit learner-value rules."
+      },
+      "お互い|おたがい": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Exact row has dictionary and Kanjium pitch support, but it currently lacks JMdict priority/commonness support in the governed source lane; keep it out of Silver until usefulness support is independently strengthened.",
+        "nextStep": "Reconsider after a frequency/commonness source can verify お互い|おたがい, or in a later manual learner-usefulness pass with explicit evidence."
       }
     }
   }

@@ -109,6 +109,8 @@ Every platinum pass decision must use one explicit outcome:
 
 Only current-standard `platinum` and `fixed_then_platinum` manifest entries count as **Platinum** structural coverage until they also carry explicit substantive rereview provenance for Obsidian. `deferred` and `removed` entries must not appear in generated exports. `needs_revalidation` is allowed as non-certifying history and still counts as missing Platinum coverage. `needs_review` always fails the Platinum gate.
 
+Platinum validates the generated card in its current deck level; it does not itself move a word to another deck. For expansion candidates that are valid but belong elsewhere, use the expansion triage decision `move_candidate` with a target JLPT level, then physically place the word only by updating the target level's `jlpt_word_level_contract` and starter word data and running that target lane's gates.
+
 ## Required manifest fields
 
 Active platinum word entries must include:

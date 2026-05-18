@@ -214,6 +214,64 @@ test("buildWordCandidateAgreementReport seeds candidates from discovery sources 
     assert.match(formatWordCandidateAgreementReport(report), /Placement gate: 0\/1 word-level placement violations/);
 });
 
+test("buildWordCandidateAgreementReport surfaces moved candidates with target levels", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-candidate-agreement-"));
+    const candidateSource = writeFixtureSource(
+        dir,
+        "jlpt.tsv",
+        "written\treading\tmeaning\tjlpt\n山川\tさんせん\tmountains and rivers\tN5\n"
+    );
+    const dictionarySource = writeFixtureSource(
+        dir,
+        "dict.tsv",
+        "written\treading\tmeaning\n山川\tさんせん\tmountains and rivers\n"
+    );
+    const frequencySource = writeFixtureSource(
+        dir,
+        "priority.tsv",
+        "written\treading\tmeaning\tfrequencyRank\n山川\tさんせん\tmountains and rivers\t100\n"
+    );
+
+    const report = buildWordCandidateAgreementReport({
+        levels: [5],
+        limit: 10,
+        manifest: buildManifest({ candidateSource, dictionarySource, frequencySource }),
+        jlptLevelContract: {
+            kanjiLevels: {
+                山: 5,
+                川: 5,
+            },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {},
+            excludedWordLevels: {},
+        },
+        triageDecisionsByLevelSource: {
+            N5: {
+                "fixture-jlpt": {
+                    "山川|さんせん": {
+                        decision: "move_candidate",
+                        targetLevel: "N4",
+                        priority: "high",
+                        reason: "Valid source identity, but better reviewed for N4 learners.",
+                        nextStep: "Move only by adding the N4 contract and starter row.",
+                    },
+                },
+            },
+        },
+    });
+
+    const row = report.levelReports[0].rows.find((candidate) => candidate.key === "山川|さんせん");
+    assert.equal(row.triageStatus, "move_candidate");
+    assert.equal(row.candidateStatus, "move_candidate");
+    assert.equal(row.triageDecisions[0].targetLevel, 4);
+    assert.equal(report.levelReports[0].summary.candidateStatusCounts.move_candidate, 1);
+
+    const text = formatWordCandidateAgreementReport(report);
+    assert.match(text, /\| N5 \| 1 \| 0 \| 1 \| 0 \| 0 \| 0 \| 0 \| 0 \| 0 \| 1 \| 1 \| 0 \| 0 \|/);
+    assert.match(text, /triage target level: N4/);
+});
+
 test("buildWordCandidateAgreementReport ranks candidates with more ready evidence before alphabetical order", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-candidate-agreement-"));
     const candidateSource = writeFixtureSource(

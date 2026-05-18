@@ -84,15 +84,17 @@ test("enhancement signal separates keep, untriaged, and exhausted source candida
             triagedCandidateRows: 3,
             untriagedCandidateRows: 0,
             triageDecisions: {
+                move_candidate: 1,
                 defer_candidate: 2,
-                reject_candidate: 1,
             },
         },
     });
 
     assert.equal(exhausted.status, "exhausted");
     assert.equal(exhausted.keepCandidates, 0);
+    assert.equal(exhausted.moveCandidates, 1);
     assert.equal(exhausted.untriagedCandidateRows, 0);
+    assert.match(exhausted.reason, /move candidates are tracked for target-level placement/);
 
     const active = buildEnhancementSignalFromCandidateReport({
         sourceLabel: "fixture",

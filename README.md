@@ -254,6 +254,7 @@ Word decks:
 - Cross-level and outside-JLPT constituent kanji must be visibly labeled on the card.
 - Reading coverage is scoped to the selected word-product levels. A higher-level word card can cover a lower-level reading target when those levels are built together.
 - Track reading-coverage intent with `coverage.role`, `coverage.focusKanji`, and `coverage.coversReadings` when the card exists for coverage.
+- Expansion triage uses `move_candidate` with a target level for valid source words that belong in another learner deck. That is a routing decision only; the word is physically moved only when the target level's word contract and starter data are updated and pass that level's gates.
 - Sentence orthography review is advisory. It flags likely kana-only regressions without banning natural kana usage.
 
 Gold, Platinum, and Obsidian:

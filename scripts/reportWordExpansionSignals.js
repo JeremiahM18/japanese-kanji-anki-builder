@@ -324,10 +324,14 @@ function countDecision(summary, decision) {
 function buildEnhancementSignalFromCandidateReport(report) {
     const summary = report?.summary || {};
     const keepCandidates = countDecision(summary, "keep_candidate");
+    const moveCandidates = countDecision(summary, "move_candidate");
     const untriagedCandidates = summary.untriagedCandidateRows || 0;
 
     let status = "exhausted";
     let reason = "Configured source-list enhancement review has no keep candidates and no untriaged candidates.";
+    if (moveCandidates > 0) {
+        reason = "Configured source-list enhancement review has no current-level keep candidates and no untriaged candidates; move candidates are tracked for target-level placement.";
+    }
     if (untriagedCandidates > 0) {
         status = "needs_triage";
         reason = "Configured source-list enhancement review still has untriaged candidates.";
@@ -345,6 +349,7 @@ function buildEnhancementSignalFromCandidateReport(report) {
         triagedCandidateRows: summary.triagedCandidateRows || 0,
         untriagedCandidateRows: untriagedCandidates,
         keepCandidates,
+        moveCandidates,
         deferCandidates: countDecision(summary, "defer_candidate"),
         rejectCandidates: countDecision(summary, "reject_candidate"),
         kanjiScope: summary.kanjiScope || "",
@@ -366,6 +371,7 @@ function buildEnhancementSignal({ level, sourceConfig, shared }) {
             triagedCandidateRows: null,
             untriagedCandidateRows: null,
             keepCandidates: null,
+            moveCandidates: null,
             deferCandidates: null,
             rejectCandidates: null,
             kanjiScope: "",
@@ -388,6 +394,7 @@ function buildEnhancementSignal({ level, sourceConfig, shared }) {
             triagedCandidateRows: null,
             untriagedCandidateRows: null,
             keepCandidates: null,
+            moveCandidates: null,
             deferCandidates: null,
             rejectCandidates: null,
             kanjiScope: sourceConfig.kanjiScope || "",
@@ -416,6 +423,7 @@ function buildEnhancementSignal({ level, sourceConfig, shared }) {
                 triagedCandidateRows: null,
                 untriagedCandidateRows: null,
                 keepCandidates: null,
+                moveCandidates: null,
                 deferCandidates: null,
                 rejectCandidates: null,
                 kanjiScope: sourceConfig.kanjiScope || "",
@@ -459,6 +467,7 @@ function buildEnhancementSignal({ level, sourceConfig, shared }) {
             triagedCandidateRows: null,
             untriagedCandidateRows: null,
             keepCandidates: null,
+            moveCandidates: null,
             deferCandidates: null,
             rejectCandidates: null,
             kanjiScope: sourceConfig.kanjiScope || "",
@@ -539,7 +548,7 @@ function formatStatusWithCounts(signal, type) {
 
     if (signal.status === "exhausted" || signal.status === "active" || signal.status === "needs_triage") {
         const source = signal.sourceLabel ? `; source ${signal.sourceLabel}` : "";
-        return `${signal.status} (keep ${signal.keepCandidates}; untriaged ${signal.untriagedCandidateRows}; defer ${signal.deferCandidates}; reject ${signal.rejectCandidates}${source})`;
+        return `${signal.status} (keep ${signal.keepCandidates}; move ${signal.moveCandidates}; untriaged ${signal.untriagedCandidateRows}; defer ${signal.deferCandidates}; reject ${signal.rejectCandidates}${source})`;
     }
     if (type === "placement") {
         if (signal.status === "resolved" || signal.status === "blocked") {
@@ -555,7 +564,7 @@ function formatWordExpansionSignalReport(report) {
         "",
         "Signal meaning:",
         "- Reading exhausted means active reading-gap triage is cleared; coverage percent remains informational.",
-        "- Enhancement exhausted means the configured source list has no keep candidates and no untriaged candidates.",
+        "- Enhancement exhausted means the configured source list has no current-level keep candidates and no untriaged candidates; move candidates remain target-level routing work, not current-level promotion work.",
         "- Placement resolved means each word has a current-level kanji anchor, or has a tracked learner-fit reason for later all-easier-kanji placement.",
         "- This is not golden review, platinum review, APKG QA, or release readiness.",
         "",

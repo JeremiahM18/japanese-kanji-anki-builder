@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Changed
 
+- Added `move_candidate` as a governed word expansion triage decision with a required target JLPT level, so valid vocabulary that belongs in another learner deck is routed explicitly instead of being flattened into defer/reject status.
 - Made word candidate agreement reports rank same-status candidates by ready evidence signals and remaining evidence work before falling back to source count and alphabetical order, with each shown row displaying its review-readiness counts.
 - Made word expansion triage decisions fail on unsupported decision values across both expansion-candidate and candidate-agreement reports, keeping tracked triage status vocabulary consistent.
 - Restricted word candidate agreement frequency/commonness support to sources explicitly allowed for `frequency-sanity` or `usefulness-support`, so dictionary verification rows with rank columns cannot satisfy the commonness evidence lane by accident.

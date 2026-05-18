@@ -2,7 +2,7 @@ const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 const { extractConstituentKanji, isLikelyPhraseCard } = require("./wordExportService");
 
 const LEVEL_RE = /^\s*(?:jlpt\s*)?n?\s*([1-5])\s*$/i;
-const TRIAGE_DECISIONS = new Set(["keep_candidate", "defer_candidate", "reject_candidate"]);
+const TRIAGE_DECISIONS = new Set(["keep_candidate", "move_candidate", "defer_candidate", "reject_candidate"]);
 
 function normalizeHeader(value) {
     return String(value || "")
@@ -388,7 +388,12 @@ function compareCandidateRows(a, b) {
     );
 }
 
-function normalizeTriageDecision(decision, { key = "" } = {}) {
+function normalizeMoveTargetLevel(value) {
+    const match = String(value ?? "").trim().match(/^(?:jlpt\s*)?n?\s*([1-5])$/i);
+    return match ? Number(match[1]) : null;
+}
+
+function normalizeTriageDecision(decision, { key = "", currentLevel = null } = {}) {
     if (!decision || typeof decision !== "object") {
         return null;
     }
@@ -402,18 +407,33 @@ function normalizeTriageDecision(decision, { key = "" } = {}) {
         throw new Error(`Unsupported word expansion triage decision${context}: ${normalizedDecision}. Expected one of: ${[...TRIAGE_DECISIONS].join(", ")}.`);
     }
 
-    return {
+    const normalized = {
         decision: normalizedDecision,
         priority: String(decision.priority || "").trim() || "normal",
         reason,
         nextStep: String(decision.nextStep || "").trim(),
     };
+
+    if (normalizedDecision === "move_candidate") {
+        const targetLevel = normalizeMoveTargetLevel(decision.targetLevel ?? decision.moveToLevel ?? decision.targetJlpt);
+        if (!Number.isInteger(targetLevel)) {
+            const context = key ? ` for ${key}` : "";
+            throw new Error(`move_candidate triage decision${context} must include targetLevel N1-N5.`);
+        }
+        if (Number.isInteger(currentLevel) && targetLevel === currentLevel) {
+            const context = key ? ` for ${key}` : "";
+            throw new Error(`move_candidate triage decision${context} targets the current level N${currentLevel}; use keep_candidate instead.`);
+        }
+        normalized.targetLevel = targetLevel;
+    }
+
+    return normalized;
 }
 
-function normalizeTriageDecisions(triageDecisions = {}) {
+function normalizeTriageDecisions(triageDecisions = {}, { currentLevel = null } = {}) {
     const normalized = {};
     for (const [key, decision] of Object.entries(triageDecisions || {})) {
-        const normalizedDecision = normalizeTriageDecision(decision, { key });
+        const normalizedDecision = normalizeTriageDecision(decision, { key, currentLevel });
         if (normalizedDecision) {
             normalized[key] = normalizedDecision;
         }
@@ -457,7 +477,7 @@ function buildWordInventoryExpansionCandidateReport({
     });
 
     const sameWrittenContractIndex = buildSameWrittenContractIndex(jlptWordLevelContract);
-    const normalizedTriageDecisions = normalizeTriageDecisions(triageDecisions);
+    const normalizedTriageDecisions = normalizeTriageDecisions(triageDecisions, { currentLevel: targetLevel });
     const reviewedRows = [...rowsByKey.values()]
         .map((row) => {
             const classified = classifyCandidateDisposition(row, {
@@ -575,6 +595,9 @@ function formatWordInventoryExpansionCandidateReport(report) {
         }
         if (row.triageDecision) {
             lines.push(`   triage: ${row.triageDecision.decision} [${row.triageDecision.priority}]`);
+            if (Number.isInteger(row.triageDecision.targetLevel)) {
+                lines.push(`   triage target level: N${row.triageDecision.targetLevel}`);
+            }
             lines.push(`   triage reason: ${row.triageDecision.reason}`);
             if (row.triageDecision.nextStep) {
                 lines.push(`   triage next step: ${row.triageDecision.nextStep}`);
@@ -596,6 +619,7 @@ module.exports = {
     classifyKanjiScope,
     formatWordInventoryExpansionCandidateReport,
     formatSameWrittenContractEntries,
+    normalizeMoveTargetLevel,
     normalizeTriageDecision,
     normalizeTriageDecisions,
     normalizeCandidateSourceRow,

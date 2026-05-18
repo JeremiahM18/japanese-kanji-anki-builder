@@ -103,10 +103,11 @@ test("buildWordInventoryExpansionCandidateReport keeps only new source words tha
         sourceLabel: "fixture",
         triageDecisions: {
             "山川|さんせん": {
-                decision: "keep_candidate",
+                decision: "move_candidate",
+                targetLevel: "N4",
                 priority: "high",
-                reason: "Useful sourced word for review.",
-                nextStep: "Promote only after source review.",
+                reason: "Useful sourced word, but it belongs in the N4 learner lane.",
+                nextStep: "Promote only through the N4 contract and starter data.",
             },
             "行く|ゆく": {
                 decision: "reject_candidate",
@@ -125,11 +126,12 @@ test("buildWordInventoryExpansionCandidateReport keeps only new source words tha
     assert.equal(report.summary.triagedCandidateRows, 2);
     assert.equal(report.summary.untriagedCandidateRows, 0);
     assert.deepEqual(report.summary.triageDecisions, {
-        keep_candidate: 1,
+        move_candidate: 1,
         reject_candidate: 1,
     });
     assert.equal(report.candidates[0].key, "山川|さんせん");
-    assert.equal(report.candidates[0].triageDecision.decision, "keep_candidate");
+    assert.equal(report.candidates[0].triageDecision.decision, "move_candidate");
+    assert.equal(report.candidates[0].triageDecision.targetLevel, 4);
     assert.equal(report.candidates[1].key, "行く|ゆく");
     assert.deepEqual(report.candidates[1].sameWrittenContractEntries, [{
         key: "行く|いく",
@@ -149,7 +151,8 @@ test("buildWordInventoryExpansionCandidateReport keeps only new source words tha
 test("normalizeTriageDecisions keeps only decisions with a reason", () => {
     assert.deepEqual(normalizeTriageDecisions({
         "山川|さんせん": {
-            decision: " keep_candidate ",
+            decision: " move_candidate ",
+            targetLevel: " n4 ",
             priority: " high ",
             reason: " review this ",
             nextStep: " promote later ",
@@ -159,12 +162,28 @@ test("normalizeTriageDecisions keeps only decisions with a reason", () => {
         },
     }), {
         "山川|さんせん": {
-            decision: "keep_candidate",
+            decision: "move_candidate",
+            targetLevel: 4,
             priority: "high",
             reason: "review this",
             nextStep: "promote later",
         },
     });
+
+    assert.throws(() => normalizeTriageDecisions({
+        "山川|さんせん": {
+            decision: "move_candidate",
+            reason: "Move without target.",
+        },
+    }), /move_candidate triage decision for 山川\|さんせん must include targetLevel N1-N5/);
+
+    assert.throws(() => normalizeTriageDecisions({
+        "山川|さんせん": {
+            decision: "move_candidate",
+            targetLevel: 5,
+            reason: "Same-level move should be keep.",
+        },
+    }, { currentLevel: 5 }), /targets the current level N5; use keep_candidate instead/);
 
     assert.throws(() => normalizeTriageDecisions({
         "山川|さんせん": {
@@ -228,10 +247,11 @@ test("formatWordInventoryExpansionCandidateReport flags same-written governed re
         sourceLabel: "fixture",
         triageDecisions: {
             "行く|ゆく": {
-                decision: "reject_candidate",
+                decision: "move_candidate",
+                targetLevel: "N4",
                 priority: "low",
-                reason: "Same written duplicate.",
-                nextStep: "Do not promote.",
+                reason: "Valid source identity, but better reviewed in N4.",
+                nextStep: "Move only by adding the N4 contract and starter row.",
             },
         },
     });
@@ -241,7 +261,8 @@ test("formatWordInventoryExpansionCandidateReport flags same-written governed re
     assert.match(text, /Same-written candidate warnings: 1/);
     assert.match(text, /same-written warning: already tracked with reading\(s\) いく \(N5\)/);
     assert.match(text, /Triaged review candidates: 1\/1/);
-    assert.match(text, /triage: reject_candidate \[low\]/);
-    assert.match(text, /triage reason: Same written duplicate\./);
-    assert.match(text, /triage next step: Do not promote\./);
+    assert.match(text, /triage: move_candidate \[low\]/);
+    assert.match(text, /triage target level: N4/);
+    assert.match(text, /triage reason: Valid source identity, but better reviewed in N4\./);
+    assert.match(text, /triage next step: Move only by adding the N4 contract and starter row\./);
 });

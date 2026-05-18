@@ -376,7 +376,10 @@ function addSourceRowsToLevels({
 
 function getTriageDecision({ triageDecisionsByLevelSource = {}, targetLevel, sourceId, key }) {
     const decision = triageDecisionsByLevelSource?.[`N${targetLevel}`]?.[sourceId]?.[key] || null;
-    return normalizeTriageDecision(decision, { key: `N${targetLevel}/${sourceId}/${key}` });
+    return normalizeTriageDecision(decision, {
+        key: `N${targetLevel}/${sourceId}/${key}`,
+        currentLevel: targetLevel,
+    });
 }
 
 function addSourceAppearance(candidate, sourceId, source, row, {
@@ -422,6 +425,9 @@ function resolveTriageStatus(row = {}) {
     const decisions = new Set((row.triageDecisions || []).map((decision) => decision.decision));
     if (decisions.has("keep_candidate")) {
         return "keep_candidate";
+    }
+    if (decisions.has("move_candidate")) {
+        return "move_candidate";
     }
     if (decisions.has("defer_candidate")) {
         return "defer_candidate";
@@ -491,11 +497,12 @@ function compareAgreementRows(a, b) {
     const statusOrder = {
         keep_candidate: 0,
         untriaged_candidate: 1,
-        defer_candidate: 2,
-        identity_blocked: 3,
-        reject_candidate: 4,
-        already_governed: 5,
-        already_excluded: 6,
+        move_candidate: 2,
+        defer_candidate: 3,
+        identity_blocked: 4,
+        reject_candidate: 5,
+        already_governed: 6,
+        already_excluded: 7,
     };
     return (
         (statusOrder[a.candidateStatus] ?? 9) - (statusOrder[b.candidateStatus] ?? 9)
@@ -620,14 +627,15 @@ function formatWordCandidateAgreementReport(report = {}) {
     }
 
     lines.push("", "Level candidate universe:");
-    lines.push("| Level | Rows | Keep | Untriaged | Defer | Reject | Identity blocked | Already governed | Already excluded | Dictionary | Frequency | Sentence | Pitch |");
-    lines.push("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |");
+    lines.push("| Level | Rows | Keep | Move | Untriaged | Defer | Reject | Identity blocked | Already governed | Already excluded | Dictionary | Frequency | Sentence | Pitch |");
+    lines.push("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |");
     for (const levelReport of report.levelReports) {
         const counts = levelReport.summary.candidateStatusCounts;
         lines.push([
             `| ${levelReport.levelLabel}`,
             levelReport.summary.targetRows,
             counts.keep_candidate || 0,
+            counts.move_candidate || 0,
             counts.untriaged_candidate || 0,
             counts.defer_candidate || 0,
             counts.reject_candidate || 0,
@@ -653,6 +661,9 @@ function formatWordCandidateAgreementReport(report = {}) {
             if (row.triageDecisions.length > 0) {
                 for (const decision of row.triageDecisions) {
                     lines.push(`   triage (${decision.sourceId}): ${decision.decision} [${decision.priority || "normal"}] - ${decision.reason}`);
+                    if (Number.isInteger(decision.targetLevel)) {
+                        lines.push(`   triage target level: N${decision.targetLevel}`);
+                    }
                     if (decision.nextStep) {
                         lines.push(`   triage next step: ${decision.nextStep}`);
                     }

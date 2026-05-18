@@ -341,6 +341,66 @@ test("corrupted cache is discarded and refetched", async () => {
     }
 });
 
+test("schema-invalid sharded cache is discarded and refetched", async () => {
+    const cacheDir = makeTempDir();
+    const originalFetch = global.fetch;
+
+    let fetchCalls = 0;
+
+    try {
+        const cacheFile = buildCacheFilePath(cacheDir, "kanji__E6_B0_B4");
+        fs.mkdirSync(path.dirname(cacheFile), { recursive: true });
+        fs.writeFileSync(cacheFile, JSON.stringify({
+            kanji: "水",
+            meanings: "water",
+            on_readings: ["スイ"],
+            kun_readings: ["みず"],
+        }, null, 2), "utf-8");
+
+        global.fetch = async () => {
+            fetchCalls++;
+            return {
+                ok: true,
+                async json() {
+                    return {
+                        kanji: "水",
+                        meanings: ["water"],
+                        on_readings: ["スイ"],
+                        kun_readings: ["みず"],
+                    };
+                },
+                async text() {
+                    return "";
+                },
+            };
+        };
+
+        const client = createKanjiApiClient({
+            baseUrl: "https://example.test",
+            cacheDir,
+            fetchTimeoutMs: 1000,
+        });
+
+        const result = await client.getKanji("水");
+        const metrics = client.getMetrics();
+
+        assert.equal(fetchCalls, 1);
+        assert.equal(result.kanji, "水");
+        assert.deepEqual(result.meanings, ["water"]);
+        assert.equal(metrics.cacheHits, 0);
+        assert.equal(metrics.cacheMisses, 1);
+        assert.equal(metrics.networkFetches, 1);
+        assert.equal(metrics.cacheWrites, 1);
+        assert.equal(metrics.payloadValidationFailures, 1);
+
+        const cachedJson = JSON.parse(fs.readFileSync(cacheFile, "utf-8"));
+        assert.deepEqual(cachedJson.meanings, ["water"]);
+    } finally {
+        global.fetch = originalFetch;
+        cleanupTempDir(cacheDir);
+    }
+});
+
 test("legacy root cache is reused and migrated into the sharded cache layout", async () => {
     const cacheDir = makeTempDir();
     const originalFetch = global.fetch;
@@ -377,6 +437,65 @@ test("legacy root cache is reused and migrated into the sharded cache layout", a
         assert.equal(metrics.networkFetches, 0);
         assert.equal(metrics.cacheWrites, 1);
         assert.equal(fs.existsSync(shardedFile), true);
+    } finally {
+        global.fetch = originalFetch;
+        cleanupTempDir(cacheDir);
+    }
+});
+
+test("schema-invalid legacy root cache is discarded and refetched", async () => {
+    const cacheDir = makeTempDir();
+    const originalFetch = global.fetch;
+
+    let fetchCalls = 0;
+
+    try {
+        const legacyFile = buildLegacyCacheFilePath(cacheDir, "kanji__E4_B8_8D");
+        fs.writeFileSync(legacyFile, JSON.stringify({
+            kanji: "不",
+            meanings: "bad",
+            on_readings: ["フ"],
+            kun_readings: [],
+        }, null, 2), "utf-8");
+
+        global.fetch = async () => {
+            fetchCalls += 1;
+            return {
+                ok: true,
+                async json() {
+                    return {
+                        kanji: "不",
+                        meanings: ["not"],
+                        on_readings: ["フ"],
+                        kun_readings: [],
+                    };
+                },
+                async text() {
+                    return "";
+                },
+            };
+        };
+
+        const client = createKanjiApiClient({
+            baseUrl: "https://example.test",
+            cacheDir,
+            fetchTimeoutMs: 1000,
+        });
+
+        const result = await client.getKanji("不");
+        const metrics = client.getMetrics();
+        const shardedFile = buildCacheFilePath(cacheDir, "kanji__E4_B8_8D");
+
+        assert.equal(fetchCalls, 1);
+        assert.equal(result.kanji, "不");
+        assert.deepEqual(result.meanings, ["not"]);
+        assert.equal(fs.existsSync(legacyFile), false);
+        assert.equal(fs.existsSync(shardedFile), true);
+        assert.equal(metrics.cacheHits, 0);
+        assert.equal(metrics.cacheMisses, 1);
+        assert.equal(metrics.networkFetches, 1);
+        assert.equal(metrics.cacheWrites, 1);
+        assert.equal(metrics.payloadValidationFailures, 1);
     } finally {
         global.fetch = originalFetch;
         cleanupTempDir(cacheDir);

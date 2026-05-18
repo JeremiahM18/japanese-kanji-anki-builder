@@ -59,6 +59,13 @@ function cloneClientMetrics(metrics) {
     return { ...metrics };
 }
 
+class PayloadValidationError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = "PayloadValidationError";
+    }
+}
+
 function validateKanjiInput(value, fieldName) {
     if (typeof value !== "string") {
         throw new TypeError(`${fieldName} must be a string`);
@@ -79,10 +86,14 @@ function validatePayload(schema, data, label, metrics) {
     if (!parsed.success) {
         metrics.payloadValidationFailures += 1;
         const issue = parsed.error.issues[0];
-        throw new Error(`Invalid ${label} payload: ${issue?.path?.join(".") || "root"} ${issue?.message || "failed validation"}`);
+        throw new PayloadValidationError(`Invalid ${label} payload: ${issue?.path?.join(".") || "root"} ${issue?.message || "failed validation"}`);
     }
 
     return parsed.data;
+}
+
+function isDiscardableCacheReadError(err) {
+    return err instanceof SyntaxError || err instanceof PayloadValidationError;
 }
 
 async function readJsonIfExists(filePath) {
@@ -161,11 +172,12 @@ function createKanjiApiClient({ baseUrl, cacheDir, fetchTimeoutMs = 10000 }) {
         try {
             const cached = await readJsonIfExists(filePath);
             if (cached !== null) {
+                const validated = validatePayload(schema, cached, `${label} cache`, metrics);
                 metrics.cacheHits += 1;
-                return validatePayload(schema, cached, `${label} cache`, metrics);
+                return validated;
             }
         } catch (err) {
-            if (err instanceof SyntaxError) {
+            if (isDiscardableCacheReadError(err)) {
                 await deleteFileIfExists(filePath);
             } else {
                 throw err;
@@ -182,7 +194,7 @@ function createKanjiApiClient({ baseUrl, cacheDir, fetchTimeoutMs = 10000 }) {
                 return validated;
             }
         } catch (err) {
-            if (err instanceof SyntaxError) {
+            if (isDiscardableCacheReadError(err)) {
                 await deleteFileIfExists(legacyFilePath);
             } else {
                 throw err;

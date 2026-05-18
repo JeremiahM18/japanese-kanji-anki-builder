@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Changed
 
+- Made Kanji API cache reads self-heal valid JSON that no longer matches the expected payload schema by deleting the stale cache entry and refetching, while keeping invalid upstream network payloads fail-closed.
 - Made clean CI run tracked-input JLPT kanji source-governance, kanji taxonomy, word taxonomy, and word Platinum source-posture checks, while documenting `deck:platinum:governance-gate` as a local-data release QA gate instead of a silently skipped `data/*` workflow condition.
 - Deferred `昨|さく` and `直|じき`, and rejected the corrupted `賛成|賛成` Tanos row, so the N3 Silver expansion keeps exact identity, learner value, and source-quality decisions explicit before promotion.
 - Deferred four low-value or mismatched N3 Tanos candidate rows (`否|いや`, `お目に掛かる|おめにかかる`, `額|がく`, and `彼等|かれら`) with explicit learner-fit reasons so the N3 Silver expansion queue does not silently promote alternate spellings, phrase-like rows, or same-written meaning mismatches.

@@ -13,6 +13,7 @@ const { tsvEscape } = require("../utils/text");
 const { HAN_CHAR_RE, KATAKANA_ONLY_RE, isKanaOnly, katakanaToHiragana } = require("../utils/japanese");
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 const { compilePolicyRegexList, loadDeckEditorialPolicy } = require("../datasets/deckEditorialPolicy");
+const { buildJlptBuckets } = require("../datasets/jlptBuckets");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 const { resolveWordPitchAccent } = require("../datasets/wordPitchAccentData");
 const { buildPitchAccentHtml, escapeHtml } = require("./pitchAccentRenderService");
@@ -1456,9 +1457,7 @@ function createWordExportService({
         minimumCandidateScore = 20,
         includeInferred = false,
     }) {
-        const sourceKanjiList = Object.entries(jlptOnlyJson || {})
-            .filter(([, value]) => value?.jlpt === levelNumber)
-            .map(([kanji]) => kanji);
+        const sourceKanjiList = buildJlptBuckets(jlptOnlyJson).get(levelNumber) || [];
         const scopedSourceKanji = Number.isFinite(limit)
             ? sourceKanjiList.slice(0, limit)
             : sourceKanjiList;

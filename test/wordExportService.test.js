@@ -498,6 +498,43 @@ test("buildWordTsvForJlptLevel leaves JLPTLevel blank for inferred-only explorat
     assert.equal(columns[7], "Inferred support word");
 });
 
+test("buildWordTsvForJlptLevel applies limits after deterministic JLPT bucket ordering", async () => {
+    const wordExportService = createWordExportService({
+        sentenceCorpus: [],
+        curatedStudyData: {},
+        wordStudyData: {},
+    });
+    const kanjiApiClient = {
+        async getKanji(kanji) {
+            return kanji === "日"
+                ? { meanings: ["day"], on_readings: ["ニチ"], kun_readings: ["ひ"] }
+                : { meanings: ["moon"], on_readings: ["ゲツ"], kun_readings: ["つき"] };
+        },
+        async getWords(kanji) {
+            return [{
+                variants: [{ written: kanji, pronounced: kanji === "日" ? "ひ" : "つき", priorities: ["ichi1"] }],
+                meanings: [{ glosses: [kanji === "日" ? "day" : "moon"] }],
+            }];
+        },
+    };
+    const buildLimitedTsv = (jlptOnlyJson) => wordExportService.buildWordTsvForJlptLevel({
+        levelNumber: 5,
+        jlptOnlyJson,
+        jlptWordLevelContract: { wordLevels: {} },
+        includeInferred: true,
+        kanjiApiClient,
+        limit: 1,
+        concurrency: 1,
+    });
+
+    const orderedA = await buildLimitedTsv({ 月: { jlpt: 5 }, 日: { jlpt: 5 } });
+    const orderedB = await buildLimitedTsv({ 日: { jlpt: 5 }, 月: { jlpt: 5 } });
+
+    assert.equal(orderedA.tsv, orderedB.tsv);
+    assert.equal(orderedA.rowCount, 1);
+    assert.equal(orderedB.rowCount, 1);
+});
+
 test("normalizeBreakdownReadingField strips internal reading prefixes for learner-facing output", () => {
     assert.equal(normalizeBreakdownReadingField("オン: キュウ", /^(on|オン)\s*:\s*/i), "キュウ");
     assert.equal(normalizeBreakdownReadingField("くん: やす.む", /^(kun|くん)\s*:\s*/i), "やす.む");

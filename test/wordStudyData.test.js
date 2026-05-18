@@ -782,6 +782,137 @@ test("tracked starter word data includes the sixteenth N3 Silver source-expansio
     ]);
 });
 
+test("tracked starter word data includes the seventeenth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["傾向|けいこう", "向", "こう"],
+        ["警告|けいこく", "警", "けい"],
+        ["警告|けいこく", "告", "こく"],
+        ["計算|けいさん", "算", "さん"],
+        ["掲示|けいじ", "示", "じ"],
+        ["芸術|げいじゅつ", "芸", "げい"],
+        ["芸術|げいじゅつ", "術", "じゅつ"],
+        ["契約|けいやく", "約", "やく"],
+        ["経由|けいゆ", "経", "けい"],
+        ["経由|けいゆ", "由", "ゆ"],
+        ["結果|けっか", "果", "か"],
+        ["欠陥|けっかん", "欠", "けっ"],
+        ["欠席|けっせき", "欠", "けっ"],
+        ["欠席|けっせき", "席", "せき"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["傾向|けいこう", "both"],
+        ["警告|けいこく", "both"],
+        ["計算|けいさん", "both"],
+        ["掲示|けいじ", "both"],
+        ["芸術|げいじゅつ", "both"],
+        ["契約|けいやく", "both"],
+        ["経由|けいゆ", "both"],
+        ["結果|けっか", "both"],
+        ["欠陥|けっかん", "both"],
+        ["欠席|けっせき", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["傾向|けいこう", "<ruby>傾<rt>けい</rt></ruby><ruby>向<rt>こう</rt></ruby>"],
+        ["警告|けいこく", "<ruby>警<rt>けい</rt></ruby><ruby>告<rt>こく</rt></ruby>"],
+        ["計算|けいさん", "<ruby>計<rt>けい</rt></ruby><ruby>算<rt>さん</rt></ruby>"],
+        ["掲示|けいじ", "<ruby>掲<rt>けい</rt></ruby><ruby>示<rt>じ</rt></ruby>"],
+        ["芸術|げいじゅつ", "<ruby>芸<rt>げい</rt></ruby><ruby>術<rt>じゅつ</rt></ruby>"],
+        ["契約|けいやく", "<ruby>契<rt>けい</rt></ruby><ruby>約<rt>やく</rt></ruby>"],
+        ["経由|けいゆ", "<ruby>経<rt>けい</rt></ruby><ruby>由<rt>ゆ</rt></ruby>"],
+        ["結果|けっか", "<ruby>結<rt>けっ</rt></ruby><ruby>果<rt>か</rt></ruby>"],
+        ["欠陥|けっかん", "<ruby>欠<rt>けっ</rt></ruby><ruby>陥<rt>かん</rt></ruby>"],
+        ["欠席|けっせき", "<ruby>欠<rt>けっ</rt></ruby><ruby>席<rt>せき</rt></ruby>"],
+    ]);
+});
+
+test("tracked starter word data includes the eighteenth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["欠点|けってん", "欠", "けっ"],
+        ["結論|けつろん", "論", "ろん"],
+        ["見解|けんかい", "解", "かい"],
+        ["現金|げんきん", "現", "げん"],
+        ["現在|げんざい", "現", "げん"],
+        ["現在|げんざい", "在", "ざい"],
+        ["現実|げんじつ", "現", "げん"],
+        ["現実|げんじつ", "実", "じつ"],
+        ["現象|げんしょう", "現", "げん"],
+        ["現状|げんじょう", "現", "げん"],
+        ["現状|げんじょう", "状", "じょう"],
+        ["現代|げんだい", "現", "げん"],
+        ["見当|けんとう", "当", "とう"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["欠点|けってん", "both"],
+        ["結論|けつろん", "both"],
+        ["見解|けんかい", "both"],
+        ["現金|げんきん", "both"],
+        ["現在|げんざい", "both"],
+        ["現実|げんじつ", "both"],
+        ["現象|げんしょう", "both"],
+        ["現状|げんじょう", "both"],
+        ["現代|げんだい", "both"],
+        ["見当|けんとう", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["欠点|けってん", "<ruby>欠<rt>けっ</rt></ruby><ruby>点<rt>てん</rt></ruby>"],
+        ["結論|けつろん", "<ruby>結<rt>けつ</rt></ruby><ruby>論<rt>ろん</rt></ruby>"],
+        ["見解|けんかい", "<ruby>見<rt>けん</rt></ruby><ruby>解<rt>かい</rt></ruby>"],
+        ["現金|げんきん", "<ruby>現<rt>げん</rt></ruby><ruby>金<rt>きん</rt></ruby>"],
+        ["現在|げんざい", "<ruby>現<rt>げん</rt></ruby><ruby>在<rt>ざい</rt></ruby>"],
+        ["現実|げんじつ", "<ruby>現<rt>げん</rt></ruby><ruby>実<rt>じつ</rt></ruby>"],
+        ["現象|げんしょう", "<ruby>現<rt>げん</rt></ruby><ruby>象<rt>しょう</rt></ruby>"],
+        ["現状|げんじょう", "<ruby>現<rt>げん</rt></ruby><ruby>状<rt>じょう</rt></ruby>"],
+        ["現代|げんだい", "<ruby>現<rt>げん</rt></ruby><ruby>代<rt>だい</rt></ruby>"],
+        ["見当|けんとう", "<ruby>見<rt>けん</rt></ruby><ruby>当<rt>とう</rt></ruby>"],
+    ]);
+});
+
+test("tracked starter word data includes the nineteenth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["現場|げんば", "現", "げん"],
+        ["憲法|けんぽう", "法", "ぽう"],
+        ["権利|けんり", "権", "けん"],
+        ["幸運|こううん", "幸", "こう"],
+        ["講演|こうえん", "演", "えん"],
+        ["効果|こうか", "果", "か"],
+        ["高価|こうか", "価", "か"],
+        ["合格|ごうかく", "格", "かく"],
+        ["交換|こうかん", "交", "こう"],
+        ["交換|こうかん", "換", "かん"],
+        ["光景|こうけい", "景", "けい"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["現場|げんば", "both"],
+        ["憲法|けんぽう", "both"],
+        ["権利|けんり", "both"],
+        ["幸運|こううん", "both"],
+        ["講演|こうえん", "both"],
+        ["効果|こうか", "both"],
+        ["高価|こうか", "both"],
+        ["合格|ごうかく", "both"],
+        ["交換|こうかん", "both"],
+        ["光景|こうけい", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["現場|げんば", "<ruby>現<rt>げん</rt></ruby><ruby>場<rt>ば</rt></ruby>"],
+        ["憲法|けんぽう", "<ruby>憲<rt>けん</rt></ruby><ruby>法<rt>ぽう</rt></ruby>"],
+        ["権利|けんり", "<ruby>権<rt>けん</rt></ruby><ruby>利<rt>り</rt></ruby>"],
+        ["幸運|こううん", "<ruby>幸<rt>こう</rt></ruby><ruby>運<rt>うん</rt></ruby>"],
+        ["講演|こうえん", "<ruby>講<rt>こう</rt></ruby><ruby>演<rt>えん</rt></ruby>"],
+        ["効果|こうか", "<ruby>効<rt>こう</rt></ruby><ruby>果<rt>か</rt></ruby>"],
+        ["高価|こうか", "<ruby>高<rt>こう</rt></ruby><ruby>価<rt>か</rt></ruby>"],
+        ["合格|ごうかく", "<ruby>合<rt>ごう</rt></ruby><ruby>格<rt>かく</rt></ruby>"],
+        ["交換|こうかん", "<ruby>交<rt>こう</rt></ruby><ruby>換<rt>かん</rt></ruby>"],
+        ["光景|こうけい", "<ruby>光<rt>こう</rt></ruby><ruby>景<rt>けい</rt></ruby>"],
+    ]);
+});
+
 test("tracked starter word data includes the first N2 Silver source-expansion batch", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Changed
 
+- Restricted word candidate agreement frequency/commonness support to sources explicitly allowed for `frequency-sanity` or `usefulness-support`, so dictionary verification rows with rank columns cannot satisfy the commonness evidence lane by accident.
 - Made word TSV export source-kanji selection use the shared deterministic JLPT bucket order before applying `--limit`, aligning limited word preview exports with the media/package selection path.
 - Made kanji build summaries count exported TSV data rows from the validated deck-contract report, so export fallback ratios use the written artifact as their denominator instead of the planned selection list.
 - Clarified benchmark budget commands as manual/local performance guardrails instead of GitHub Actions CI gates, including the ready-workspace requirement for `bench:build:gate`.

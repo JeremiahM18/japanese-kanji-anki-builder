@@ -208,6 +208,7 @@ function buildSourceSummaries({ manifest, readFile = fs.readFileSync } = {}) {
                     sourceAllows(source, "candidate-discovery")
                     || sourceAllows(source, "dictionary-verification")
                     || sourceAllows(source, "frequency-sanity")
+                    || sourceAllows(source, "usefulness-support")
                 ),
             candidateDiscoveryActive: source.status === "active" && sourceAllows(source, "candidate-discovery"),
             blockers: [],
@@ -405,7 +406,10 @@ function addSourceAppearance(candidate, sourceId, source, row, {
     if (sourceAllows(source, "dictionary-verification")) {
         candidate.dictionaryVerified = true;
     }
-    if (Number.isInteger(row.frequencyRank)) {
+    if (
+        Number.isInteger(row.frequencyRank)
+        && (sourceAllows(source, "frequency-sanity") || sourceAllows(source, "usefulness-support"))
+    ) {
         candidate.frequencySupported = true;
     }
 }

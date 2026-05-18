@@ -213,3 +213,49 @@ test("buildWordCandidateAgreementReport seeds candidates from discovery sources 
     assert.match(formatWordCandidateAgreementReport(report), /Read-only report/);
     assert.match(formatWordCandidateAgreementReport(report), /Placement gate: 0\/1 word-level placement violations/);
 });
+
+test("buildWordCandidateAgreementReport does not count dictionary ranks as frequency support without frequency permission", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-candidate-agreement-"));
+    const candidateSource = writeFixtureSource(
+        dir,
+        "jlpt.tsv",
+        "written\treading\tmeaning\tjlpt\n山川\tさんせん\tmountains and rivers\tN5\n"
+    );
+    const dictionarySource = writeFixtureSource(
+        dir,
+        "dict.tsv",
+        "written\treading\tmeaning\tfrequencyRank\n山川\tさんせん\tmountains and rivers\t100\n"
+    );
+
+    const manifest = buildManifest({
+        candidateSource,
+        dictionarySource,
+        frequencySource: writeFixtureSource(
+            dir,
+            "unused-priority.tsv",
+            "written\treading\tmeaning\tfrequencyRank\n辞書\tじしょ\tdictionary\t200\n"
+        ),
+    });
+    delete manifest.sources["fixture-priority"];
+
+    const report = buildWordCandidateAgreementReport({
+        levels: [5],
+        limit: 10,
+        manifest,
+        jlptLevelContract: {
+            kanjiLevels: {
+                山: 5,
+                川: 5,
+            },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {},
+            excludedWordLevels: {},
+        },
+    });
+
+    const mountainRiver = report.levelReports[0].rows.find((row) => row.key === "山川|さんせん");
+    assert.equal(mountainRiver.dictionaryVerified, true);
+    assert.equal(mountainRiver.frequencySupported, false);
+    assert.match(mountainRiver.nextRequiredEvidence.join("; "), /frequency\/commonness support/);
+});

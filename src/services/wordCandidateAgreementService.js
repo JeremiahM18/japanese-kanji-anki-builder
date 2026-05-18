@@ -360,13 +360,15 @@ function addSourceRowsToLevels({
             const sourceIds = [...new Set(row.sourceAppearances.map((appearance) => appearance.sourceId))].sort();
             const triageStatus = resolveTriageStatus(row);
             const candidateStatus = resolveCandidateStatus(row, triageStatus);
+            const nextRequiredEvidence = buildNextRequiredEvidence(row);
             return {
                 ...row,
                 sourceIds,
                 sourceAppearanceCount: sourceIds.length,
                 triageStatus,
                 candidateStatus,
-                nextRequiredEvidence: buildNextRequiredEvidence(row),
+                nextRequiredEvidence,
+                reviewReadiness: buildReviewReadiness(row, nextRequiredEvidence),
             };
         }).sort(compareAgreementRows),
     ]));
@@ -466,6 +468,25 @@ function buildNextRequiredEvidence(row = {}) {
     return required;
 }
 
+function buildReviewReadiness(row = {}, nextRequiredEvidence = []) {
+    const supportedEvidenceCount = [
+        row.dictionaryVerified,
+        row.frequencySupported,
+        row.sentenceSupported,
+        row.pitchSupported,
+        row.cleanIdentity,
+    ].filter(Boolean).length;
+
+    return {
+        supportedEvidenceCount,
+        supportedEvidenceTotal: 5,
+        nextEvidenceCount: nextRequiredEvidence.length,
+        learnerFitRiskCount: (row.learnerFitRisks || []).length,
+        sameWrittenConflictCount: (row.sameWrittenConflicts || []).length,
+        identityRiskCount: (row.identityRisks || []).length,
+    };
+}
+
 function compareAgreementRows(a, b) {
     const statusOrder = {
         keep_candidate: 0,
@@ -478,6 +499,11 @@ function compareAgreementRows(a, b) {
     };
     return (
         (statusOrder[a.candidateStatus] ?? 9) - (statusOrder[b.candidateStatus] ?? 9)
+        || a.reviewReadiness.nextEvidenceCount - b.reviewReadiness.nextEvidenceCount
+        || b.reviewReadiness.supportedEvidenceCount - a.reviewReadiness.supportedEvidenceCount
+        || a.reviewReadiness.learnerFitRiskCount - b.reviewReadiness.learnerFitRiskCount
+        || a.reviewReadiness.sameWrittenConflictCount - b.reviewReadiness.sameWrittenConflictCount
+        || a.reviewReadiness.identityRiskCount - b.reviewReadiness.identityRiskCount
         || b.sourceAppearanceCount - a.sourceAppearanceCount
         || a.written.localeCompare(b.written, "ja")
         || a.reading.localeCompare(b.reading, "ja")
@@ -634,6 +660,7 @@ function formatWordCandidateAgreementReport(report = {}) {
             }
             lines.push(`   sources: ${row.sourceIds.join(", ")}; kanji: ${formatKanjiLevels(row.kanjiLevels)}`);
             lines.push(`   support: dictionary ${formatBoolean(row.dictionaryVerified)}, frequency ${formatBoolean(row.frequencySupported)}, sentence ${formatBoolean(row.sentenceSupported)}, pitch ${formatBoolean(row.pitchSupported)}, clean identity ${formatBoolean(row.cleanIdentity)}`);
+            lines.push(`   review readiness: evidence signals ${row.reviewReadiness.supportedEvidenceCount}/${row.reviewReadiness.supportedEvidenceTotal}; remaining evidence ${row.reviewReadiness.nextEvidenceCount}; learner-fit risks ${row.reviewReadiness.learnerFitRiskCount}`);
             if (row.sameWrittenConflicts.length > 0) {
                 lines.push(`   same-written conflicts: ${row.sameWrittenConflicts.map((entry) => `${entry.reading} (${entry.status}${entry.jlpt ? ` N${entry.jlpt}` : ""})`).join(", ")}`);
             }
@@ -648,6 +675,7 @@ function formatWordCandidateAgreementReport(report = {}) {
 }
 
 module.exports = {
+    buildReviewReadiness,
     buildSourceFileIntegrity,
     buildWordCandidateAgreementReport,
     formatWordCandidateAgreementReport,

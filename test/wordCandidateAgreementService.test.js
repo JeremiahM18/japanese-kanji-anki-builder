@@ -214,6 +214,63 @@ test("buildWordCandidateAgreementReport seeds candidates from discovery sources 
     assert.match(formatWordCandidateAgreementReport(report), /Placement gate: 0\/1 word-level placement violations/);
 });
 
+test("buildWordCandidateAgreementReport ranks candidates with more ready evidence before alphabetical order", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-candidate-agreement-"));
+    const candidateSource = writeFixtureSource(
+        dir,
+        "jlpt.tsv",
+        "written\treading\tmeaning\tjlpt\n山あ\tやまあ\tmountain a\tN5\n山い\tやまい\tmountain i\tN5\n"
+    );
+    const dictionarySource = writeFixtureSource(
+        dir,
+        "dict.tsv",
+        "written\treading\tmeaning\n山あ\tやまあ\tmountain a\n山い\tやまい\tmountain i\n"
+    );
+    const frequencySource = writeFixtureSource(
+        dir,
+        "priority.tsv",
+        "written\treading\tmeaning\tfrequencyRank\n山あ\tやまあ\tmountain a\t100\n山い\tやまい\tmountain i\t100\n"
+    );
+
+    const report = buildWordCandidateAgreementReport({
+        levels: [5],
+        limit: 2,
+        manifest: buildManifest({ candidateSource, dictionarySource, frequencySource }),
+        jlptLevelContract: {
+            kanjiLevels: {
+                山: 5,
+            },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {},
+            excludedWordLevels: {},
+        },
+        starterEntries: {
+            "山い|やまい": {
+                exampleSentence: {
+                    japanese: "山いを見ます。",
+                    english: "I see mountain i.",
+                },
+            },
+        },
+        wordPitchAccentData: {
+            entries: {
+                "山い|やまい": {
+                    pattern: "0 [heiban]",
+                },
+            },
+        },
+    });
+
+    assert.deepEqual(report.levelReports[0].shownRows.map((row) => row.key), [
+        "山い|やまい",
+        "山あ|やまあ",
+    ]);
+    assert.equal(report.levelReports[0].shownRows[0].reviewReadiness.nextEvidenceCount, 4);
+    assert.equal(report.levelReports[0].shownRows[1].reviewReadiness.nextEvidenceCount, 6);
+    assert.match(formatWordCandidateAgreementReport(report), /review readiness: evidence signals 5\/5; remaining evidence 4/);
+});
+
 test("buildWordCandidateAgreementReport does not count dictionary ranks as frequency support without frequency permission", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-candidate-agreement-"));
     const candidateSource = writeFixtureSource(

@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Changed
 
+- Made word candidate agreement reports rank same-status candidates by ready evidence signals and remaining evidence work before falling back to source count and alphabetical order, with each shown row displaying its review-readiness counts.
 - Made word expansion triage decisions fail on unsupported decision values across both expansion-candidate and candidate-agreement reports, keeping tracked triage status vocabulary consistent.
 - Restricted word candidate agreement frequency/commonness support to sources explicitly allowed for `frequency-sanity` or `usefulness-support`, so dictionary verification rows with rank columns cannot satisfy the commonness evidence lane by accident.
 - Made word TSV export source-kanji selection use the shared deterministic JLPT bucket order before applying `--limit`, aligning limited word preview exports with the media/package selection path.

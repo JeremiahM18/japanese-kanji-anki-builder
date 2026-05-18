@@ -82,6 +82,14 @@ function runDocker(args, { allowFailure = false } = {}) {
     return result;
 }
 
+function isMissingContainerInspectResult(result) {
+    if (!result || result.status === 0) {
+        return false;
+    }
+    const output = `${result.stderr || ""}\n${result.stdout || ""}`.toLowerCase();
+    return output.includes("no such object") || output.includes("no such container");
+}
+
 function parseDockerInspect(stdout) {
     const parsed = JSON.parse(stdout || "[]");
     return Array.isArray(parsed) && parsed.length > 0 ? parsed[0] : null;
@@ -144,8 +152,14 @@ function buildStartPlan(container, {
 
 function inspectContainer(containerName) {
     const result = runDocker(["inspect", containerName], { allowFailure: true });
+    if (result.error) {
+        throw result.error;
+    }
     if (result.status !== 0) {
-        return null;
+        if (isMissingContainerInspectResult(result)) {
+            return null;
+        }
+        throw new Error((result.stderr || result.stdout || `docker inspect ${containerName} failed`).trim());
     }
     return parseDockerInspect(result.stdout);
 }
@@ -246,6 +260,7 @@ module.exports = {
     getContainerState,
     getPublishedHostPorts,
     hasExpectedPortMapping,
+    isMissingContainerInspectResult,
     parseArgs,
     parseDockerInspect,
 };

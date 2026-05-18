@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Changed
 
+- Hardened the local VOICEVOX container manager so Docker permission errors no longer get swallowed as a false `missing` container state; only a real Docker `No such object/container` inspect result is treated as absent.
 - Completed N4 word expansion/readiness by extending the existing `元気|げんき` N5 card's explicit coverage contract to include N4 `元 -> げん` while preserving the N5 placement anchor `気 -> き`; N4 word readiness now reports `ready_with_deferred_variants`, expansion signals are exhausted, and reading coverage is `578/755` (`76.6%`) without adding a new card.
 - Centralized shared JLPT bucket construction and Japanese reading/target-kanji helpers so coverage, export, and offline fallback paths no longer carry duplicated implementations that can drift.
 - Moved word-deck phrase exclusion patterns and kanji-deck noisy meaning filters into tracked `templates/deck_editorial_policy.json`, preserving current behavior while making editorial deck-membership and meaning-cleanup rules inspectable and test-covered.
@@ -22,6 +23,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added the next three N3 word Silver source-expansion batches (`裏切る`, `笑顔`, `演技`, `援助`, `演説`, `演奏`, `追い付く`, `追う`, `横断`, `奥`, `収める`, `汚染`, `恐れる`, `恐ろしい`, `お腹`, `降ろす`, `温度`, `絵画`, `解決`, `回復`, `換える`, `香り`, `抱える`, `価格`, `係`, `確実`, `確認`, `欠ける`, `菓子`, and `数える`) with exact JMdict verification notes, N3 contract coverage, Kanjium pitch, governed VOICEVOX word audio, and regression tests, raising N3 word Silver to `89/89` generated rows while readiness remains incomplete.
 - Added the next three N3 word Silver source-expansion batches (`余り`, `誤り`, `表す`, `現す`, `現れ`, `現れる`, `息`, `幾つ`, `幾ら`, `医師`, `意識`, `異常`, `泉`, `抱く`, `頂く`, `痛み`, `位置`, `一種`, `移動`, `居眠り`, `命`, `違反`, `依頼`, `岩`, `引退`, `受け取る`, `失う`, `疑う`, `移す`, and `馬`) with exact JMdict verification notes, N3 contract coverage, Kanjium pitch, governed VOICEVOX word audio, and regression tests, raising N3 word Silver to `59/59` generated rows while readiness remains incomplete.
 - Added the first N1 word Silver source-expansion batch (`間柄`, `敢えて`, `仰ぐ`, `証`, `憧れ`, `麻`, `欺く`, `鮮やか`, `焦る`, and `圧迫`) with exact JMdict verification notes, N1 contract coverage, Kanjium pitch, governed VOICEVOX word audio, and regression tests, raising N1 word Silver to `26/26` generated rows while readiness remains incomplete.
 - Added dedicated N1 word Silver audit aliases (`deck:words:completion:n1`, `deck:words:reading-audit:n1`, and `deck:words:triage:n1`) to mirror the N3/N2 lane commands.

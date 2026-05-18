@@ -6,6 +6,7 @@ const {
     formatContainerStatus,
     getPublishedHostPorts,
     hasExpectedPortMapping,
+    isMissingContainerInspectResult,
     parseArgs,
     parseDockerInspect,
 } = require("../scripts/manageVoicevoxContainer");
@@ -96,4 +97,17 @@ test("parseDockerInspect and formatContainerStatus expose the bad-container shap
     assert.match(status, /stopped/);
     assert.match(status, /Required mapping: host 50021 -> container 50121/);
     assert.match(status, /Published 50121\/tcp host ports: none/);
+});
+
+test("isMissingContainerInspectResult does not treat Docker permission errors as missing containers", () => {
+    assert.equal(isMissingContainerInspectResult({
+        status: 1,
+        stderr: "Error: No such object: voicevox-nemo",
+        stdout: "",
+    }), true);
+    assert.equal(isMissingContainerInspectResult({
+        status: 1,
+        stderr: "permission denied while trying to connect to the docker API",
+        stdout: "",
+    }), false);
 });

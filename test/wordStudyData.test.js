@@ -269,6 +269,134 @@ test("tracked starter word data includes the fourth N3 Silver source-expansion b
     ]);
 });
 
+test("tracked starter word data includes the fifth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["裏切る|うらぎる", "裏", "うら"],
+        ["笑顔|えがお", "笑", "え"],
+        ["演技|えんぎ", "演", "えん"],
+        ["援助|えんじょ", "助", "じょ"],
+        ["演説|えんぜつ", "演", "えん"],
+        ["演奏|えんそう", "演", "えん"],
+        ["追い付く|おいつく", "追", "お"],
+        ["追い付く|おいつく", "付", "つく"],
+        ["追う|おう", "追", "おう"],
+        ["横断|おうだん", "横", "おう"],
+        ["横断|おうだん", "断", "だん"],
+        ["奥|おく", "奥", "おく"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["裏切る|うらぎる", "both"],
+        ["笑顔|えがお", "both"],
+        ["演技|えんぎ", "both"],
+        ["援助|えんじょ", "both"],
+        ["演説|えんぜつ", "both"],
+        ["演奏|えんそう", "both"],
+        ["追い付く|おいつく", "both"],
+        ["追う|おう", "both"],
+        ["横断|おうだん", "both"],
+        ["奥|おく", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["裏切る|うらぎる", "<ruby>裏<rt>うら</rt></ruby><ruby>切<rt>ぎ</rt></ruby>る"],
+        ["笑顔|えがお", "<ruby>笑<rt>え</rt></ruby><ruby>顔<rt>がお</rt></ruby>"],
+        ["演技|えんぎ", "<ruby>演<rt>えん</rt></ruby><ruby>技<rt>ぎ</rt></ruby>"],
+        ["援助|えんじょ", "<ruby>援<rt>えん</rt></ruby><ruby>助<rt>じょ</rt></ruby>"],
+        ["演説|えんぜつ", "<ruby>演<rt>えん</rt></ruby><ruby>説<rt>ぜつ</rt></ruby>"],
+        ["演奏|えんそう", "<ruby>演<rt>えん</rt></ruby><ruby>奏<rt>そう</rt></ruby>"],
+        ["追い付く|おいつく", "<ruby>追<rt>お</rt></ruby>い<ruby>付<rt>つ</rt></ruby>く"],
+        ["追う|おう", "<ruby>追<rt>お</rt></ruby>う"],
+        ["横断|おうだん", "<ruby>横<rt>おう</rt></ruby><ruby>断<rt>だん</rt></ruby>"],
+        ["奥|おく", "<ruby>奥<rt>おく</rt></ruby>"],
+    ]);
+});
+
+test("tracked starter word data includes the sixth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["収める|おさめる", "収", "おさめる"],
+        ["汚染|おせん", "汚", "お"],
+        ["恐れる|おそれる", "恐", "おそれる"],
+        ["恐ろしい|おそろしい", "恐", "おそ"],
+        ["お腹|おなか", "腹", "なか"],
+        ["降ろす|おろす", "降", "おろす"],
+        ["温度|おんど", "温", "おん"],
+        ["絵画|かいが", "絵", "かい"],
+        ["解決|かいけつ", "解", "かい"],
+        ["回復|かいふく", "復", "ふく"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["収める|おさめる", "both"],
+        ["汚染|おせん", "both"],
+        ["恐れる|おそれる", "both"],
+        ["恐ろしい|おそろしい", "both"],
+        ["お腹|おなか", "both"],
+        ["降ろす|おろす", "both"],
+        ["温度|おんど", "both"],
+        ["絵画|かいが", "both"],
+        ["解決|かいけつ", "both"],
+        ["回復|かいふく", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["収める|おさめる", "<ruby>収<rt>おさ</rt></ruby>める"],
+        ["汚染|おせん", "<ruby>汚<rt>お</rt></ruby><ruby>染<rt>せん</rt></ruby>"],
+        ["恐れる|おそれる", "<ruby>恐<rt>おそ</rt></ruby>れる"],
+        ["恐ろしい|おそろしい", "<ruby>恐<rt>おそ</rt></ruby>ろしい"],
+        ["お腹|おなか", "お<ruby>腹<rt>なか</rt></ruby>"],
+        ["降ろす|おろす", "<ruby>降<rt>お</rt></ruby>ろす"],
+        ["温度|おんど", "<ruby>温<rt>おん</rt></ruby><ruby>度<rt>ど</rt></ruby>"],
+        ["絵画|かいが", "<ruby>絵<rt>かい</rt></ruby><ruby>画<rt>が</rt></ruby>"],
+        ["解決|かいけつ", "<ruby>解<rt>かい</rt></ruby><ruby>決<rt>けつ</rt></ruby>"],
+        ["回復|かいふく", "<ruby>回<rt>かい</rt></ruby><ruby>復<rt>ふく</rt></ruby>"],
+    ]);
+});
+
+test("tracked starter word data includes the seventh N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["換える|かえる", "換", "かえる"],
+        ["香り|かおり", "香", "かおり"],
+        ["抱える|かかえる", "抱", "かかえる"],
+        ["価格|かかく", "価", "か"],
+        ["価格|かかく", "格", "かく"],
+        ["係|かかり", "係", "かかり"],
+        ["確実|かくじつ", "確", "かく"],
+        ["確実|かくじつ", "実", "じつ"],
+        ["確認|かくにん", "確", "かく"],
+        ["確認|かくにん", "認", "にん"],
+        ["欠ける|かける", "欠", "かける"],
+        ["菓子|かし", "菓", "か"],
+        ["数える|かぞえる", "数", "かぞえる"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["換える|かえる", "both"],
+        ["香り|かおり", "both"],
+        ["抱える|かかえる", "both"],
+        ["価格|かかく", "both"],
+        ["係|かかり", "both"],
+        ["確実|かくじつ", "both"],
+        ["確認|かくにん", "both"],
+        ["欠ける|かける", "both"],
+        ["菓子|かし", "both"],
+        ["数える|かぞえる", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["換える|かえる", "<ruby>換<rt>か</rt></ruby>える"],
+        ["香り|かおり", "<ruby>香<rt>かお</rt></ruby>り"],
+        ["抱える|かかえる", "<ruby>抱<rt>かか</rt></ruby>える"],
+        ["価格|かかく", "<ruby>価<rt>か</rt></ruby><ruby>格<rt>かく</rt></ruby>"],
+        ["係|かかり", "<ruby>係<rt>かかり</rt></ruby>"],
+        ["確実|かくじつ", "<ruby>確<rt>かく</rt></ruby><ruby>実<rt>じつ</rt></ruby>"],
+        ["確認|かくにん", "<ruby>確<rt>かく</rt></ruby><ruby>認<rt>にん</rt></ruby>"],
+        ["欠ける|かける", "<ruby>欠<rt>か</rt></ruby>ける"],
+        ["菓子|かし", "<ruby>菓<rt>か</rt></ruby><ruby>子<rt>し</rt></ruby>"],
+        ["数える|かぞえる", "<ruby>数<rt>かぞ</rt></ruby>える"],
+    ]);
+});
+
 test("tracked starter word data includes the first N2 Silver source-expansion batch", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

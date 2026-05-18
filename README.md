@@ -273,7 +273,7 @@ Gold, Platinum, and Obsidian:
 
 ## Standard Verification
 
-Run before merging changes that affect decks, contracts, media, or release behavior:
+Run before merging changes that affect decks, contracts, media, or release behavior. Benchmark budget commands are manual/local performance guardrails, not GitHub Actions CI gates, because timing budgets depend on runner hardware and the build benchmark requires a ready local workspace.
 
 ```bash
 npm test
@@ -324,7 +324,7 @@ npm run release:gate
 
 `data:audit:jlpt:source-ocr-intake` inventories ignored private source scans under `downloads/private/shin-kanzen-master/` and checks local OCR prerequisites before a purchased-book source review. It is read-only and does not extract evidence, import assignments, move kanji, move words, update decks, or change readiness. Use `--strict` only when private scans and local OCR tooling are expected to be ready.
 
-`data:benchmark:jlpt:sources` is a read-only cost report for the JLPT kanji source-evidence workflow. It measures evidence-manifest load, source-input preflight, source-input import dry-run/materialization, full evidence-manifest serialization, and source-evidence audit timing plus observed Node process memory snapshots, parent-manifest and assignment-file storage, line counts, assignment counts, rollup count, and selected-source citation repetition. Memory deltas are process snapshots, not allocation-profiler output, so use repeated runs for trends. Add `--budget=default` or run `data:benchmark:jlpt:sources:gate` to fail when configured source-review timing budgets are exceeded. Use it before choosing performance refactors such as assignment-file evidence-record deduplication or audit caching. It does not import assignments, move kanji, move words, update decks, or change readiness.
+`data:benchmark:jlpt:sources` is a read-only cost report for the JLPT kanji source-evidence workflow. It measures evidence-manifest load, source-input preflight, source-input import dry-run/materialization, full evidence-manifest serialization, and source-evidence audit timing plus observed Node process memory snapshots, parent-manifest and assignment-file storage, line counts, assignment counts, rollup count, and selected-source citation repetition. Memory deltas are process snapshots, not allocation-profiler output, so use repeated runs for trends. Add `--budget=default` or run `data:benchmark:jlpt:sources:gate` as a manual budget guardrail when source-review timing budgets matter. Use it before choosing performance refactors such as assignment-file evidence-record deduplication or audit caching. It does not import assignments, move kanji, move words, update decks, or change readiness, and it is not a GitHub Actions CI gate.
 
 `data:packet:jlpt:source-review` emits a compact read-only JSON packet for AI or human source-review planning. It filters the all-level governed source worklist for the selected lane's supported levels, skips rows already resolved in that lane's local worksheet, and includes current level, review levels, source candidates, consensus, vote weights, confidence, compact source-input status, and blocker reason. The packet is planning context only: it does not create source-access proof, import evidence, move kanji, move words, update decks, or change readiness.
 
@@ -587,6 +587,7 @@ GitHub Actions verification:
 - Cross-platform smoke matrix on Ubuntu, Windows, and macOS for Node 18 and 22.
 - Ubuntu release smoke gate on Node 22 with native `.apkg` packaging validation for fixture artifacts.
 - Clean CI does not run `deck:platinum:governance-gate` because that command exercises ignored local `data/*` real generated-row inputs. Run it in a local-data workspace before release claims that depend on current generated N5/N4 rows.
+- Benchmark budget commands such as `data:benchmark:jlpt:sources:gate` and `bench:build:gate` are manual/local performance guardrails, not GitHub Actions CI gates. Run them when source-evidence storage, audit performance, build performance, or packaging performance changes; `bench:build:gate` requires a ready local workspace and writes benchmark output under the configured benchmark output directory.
 
 Release process:
 
@@ -692,7 +693,8 @@ Repository governance:
 | `npm run data:audit:jlpt:source-access` | Rank source lanes by governed usefulness and current source-access state before spending another manual review batch |
 | `npm run data:audit:jlpt:source-ocr-intake` | Inventory ignored private Shin scan files and OCR prerequisites before purchased-book extraction |
 | `npm run data:audit:jlpt:official-occurrences` | Report or extract official JLPT positive occurrence evidence without storing question text or assigning levels |
-| `npm run data:benchmark:jlpt:sources:gate -- --source=<source-id>` | Fail when source-evidence benchmark timing exceeds configured default budgets |
+| `npm run data:benchmark:jlpt:sources:gate -- --source=<source-id>` | Manual source-evidence performance guardrail; fail locally when benchmark timing exceeds configured default budgets |
+| `npm run bench:build:gate` | Manual local-data build performance guardrail; requires a ready workspace and writes benchmark output |
 | `npm run data:packet:jlpt:source-review -- --source=<source-id> --limit=25` | Emit compact read-only JSON planning rows for the next governed source-review packet |
 | `npm run data:audit:jlpt:source-inputs -- --source=tanos_legacy_direct` | Preflight the pinned local Tanos direct legacy normalized source file before source-evidence import |
 | `npm run data:audit:jlpt:source-inputs -- --source=tanos_estimated_split` | Preflight the pinned local Tanos estimated N2/N3 normalized source file before source-evidence import |

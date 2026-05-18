@@ -166,6 +166,20 @@ test("CI workflow uses tracked-input governance checks and documents local-data 
     assert.match(readme, /data:audit:jlpt -- --strict --tracked-only/);
 });
 
+test("README scopes benchmark budget commands as manual local guardrails unless CI wires them", () => {
+    const workflow = readRepoFile(path.join(".github", "workflows", "ci.yml"));
+    const releaseWorkflow = readRepoFile(path.join(".github", "workflows", "release.yml"));
+    const readme = readRepoFile("README.md");
+
+    assert.equal(workflow.includes("bench:build:gate"), false);
+    assert.equal(workflow.includes("data:benchmark:jlpt:sources:gate"), false);
+    assert.equal(releaseWorkflow.includes("bench:build:gate"), false);
+    assert.equal(releaseWorkflow.includes("data:benchmark:jlpt:sources:gate"), false);
+    assert.match(readme, /Benchmark budget commands are manual\/local performance guardrails, not GitHub Actions CI gates/);
+    assert.match(readme, /`data:benchmark:jlpt:sources:gate` and `bench:build:gate` are manual\/local performance guardrails/);
+    assert.match(readme, /`bench:build:gate` requires a ready local workspace and writes benchmark output/);
+});
+
 test("pull request template calls out release-gate and code-owner expectations", () => {
     const template = readRepoFile(path.join(".github", "PULL_REQUEST_TEMPLATE", "pull_request_template.md"));
 

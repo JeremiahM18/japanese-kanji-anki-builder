@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Changed
 
+- Clarified benchmark budget commands as manual/local performance guardrails instead of GitHub Actions CI gates, including the ready-workspace requirement for `bench:build:gate`.
 - Made Kanji API cache reads self-heal valid JSON that no longer matches the expected payload schema by deleting the stale cache entry and refetching, while keeping invalid upstream network payloads fail-closed.
 - Made clean CI run tracked-input JLPT kanji source-governance, kanji taxonomy, word taxonomy, and word Platinum source-posture checks, while documenting `deck:platinum:governance-gate` as a local-data release QA gate instead of a silently skipped `data/*` workflow condition.
 - Deferred `昨|さく` and `直|じき`, and rejected the corrupted `賛成|賛成` Tanos row, so the N3 Silver expansion keeps exact identity, learner value, and source-quality decisions explicit before promotion.

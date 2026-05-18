@@ -397,6 +397,134 @@ test("tracked starter word data includes the seventh N3 Silver source-expansion 
     ]);
 });
 
+test("tracked starter word data includes the eighth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["課|か", "課", "か"],
+        ["害|がい", "害", "がい"],
+        ["外交|がいこう", "交", "こう"],
+        ["解釈|かいしゃく", "解", "かい"],
+        ["快適|かいてき", "適", "てき"],
+        ["掛かる|かかる", "掛", "かかる"],
+        ["覚悟|かくご", "覚", "かく"],
+        ["加減|かげん", "加", "か"],
+        ["数|かず", "数", "かず"],
+        ["型|かた", "型", "かた"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["課|か", "both"],
+        ["害|がい", "both"],
+        ["外交|がいこう", "both"],
+        ["解釈|かいしゃく", "both"],
+        ["快適|かいてき", "both"],
+        ["掛かる|かかる", "both"],
+        ["覚悟|かくご", "both"],
+        ["加減|かげん", "both"],
+        ["数|かず", "both"],
+        ["型|かた", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["課|か", "<ruby>課<rt>か</rt></ruby>"],
+        ["害|がい", "<ruby>害<rt>がい</rt></ruby>"],
+        ["外交|がいこう", "<ruby>外<rt>がい</rt></ruby><ruby>交<rt>こう</rt></ruby>"],
+        ["解釈|かいしゃく", "<ruby>解<rt>かい</rt></ruby><ruby>釈<rt>しゃく</rt></ruby>"],
+        ["快適|かいてき", "<ruby>快<rt>かい</rt></ruby><ruby>適<rt>てき</rt></ruby>"],
+        ["掛かる|かかる", "<ruby>掛<rt>か</rt></ruby>かる"],
+        ["覚悟|かくご", "<ruby>覚<rt>かく</rt></ruby><ruby>悟<rt>ご</rt></ruby>"],
+        ["加減|かげん", "<ruby>加<rt>か</rt></ruby><ruby>減<rt>げん</rt></ruby>"],
+        ["数|かず", "<ruby>数<rt>かず</rt></ruby>"],
+        ["型|かた", "<ruby>型<rt>かた</rt></ruby>"],
+    ]);
+});
+
+test("tracked starter word data includes the ninth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["勝ち|かち", "勝", "かち"],
+        ["価値|かち", "価", "か"],
+        ["価値|かち", "値", "ち"],
+        ["活気|かっき", "活", "かっ"],
+        ["格好|かっこう", "格", "かっ"],
+        ["活動|かつどう", "活", "かつ"],
+        ["活用|かつよう", "活", "かつ"],
+        ["悲しむ|かなしむ", "悲", "かなしむ"],
+        ["必ずしも|かならずしも", "必", "かなら"],
+        ["構う|かまう", "構", "かまう"],
+        ["神|かみ", "神", "かみ"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["勝ち|かち", "both"],
+        ["価値|かち", "both"],
+        ["活気|かっき", "both"],
+        ["格好|かっこう", "both"],
+        ["活動|かつどう", "both"],
+        ["活用|かつよう", "both"],
+        ["悲しむ|かなしむ", "both"],
+        ["必ずしも|かならずしも", "both"],
+        ["構う|かまう", "both"],
+        ["神|かみ", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["勝ち|かち", "<ruby>勝<rt>か</rt></ruby>ち"],
+        ["価値|かち", "<ruby>価<rt>か</rt></ruby><ruby>値<rt>ち</rt></ruby>"],
+        ["活気|かっき", "<ruby>活<rt>かっ</rt></ruby><ruby>気<rt>き</rt></ruby>"],
+        ["格好|かっこう", "<ruby>格<rt>かっ</rt></ruby><ruby>好<rt>こう</rt></ruby>"],
+        ["活動|かつどう", "<ruby>活<rt>かつ</rt></ruby><ruby>動<rt>どう</rt></ruby>"],
+        ["活用|かつよう", "<ruby>活<rt>かつ</rt></ruby><ruby>用<rt>よう</rt></ruby>"],
+        ["悲しむ|かなしむ", "<ruby>悲<rt>かな</rt></ruby>しむ"],
+        ["必ずしも|かならずしも", "<ruby>必<rt>かなら</rt></ruby>ずしも"],
+        ["構う|かまう", "<ruby>構<rt>かま</rt></ruby>う"],
+        ["神|かみ", "<ruby>神<rt>かみ</rt></ruby>"],
+    ]);
+});
+
+test("tracked starter word data includes the tenth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["感覚|かんかく", "感", "かん"],
+        ["感覚|かんかく", "覚", "かく"],
+        ["観客|かんきゃく", "観", "かん"],
+        ["歓迎|かんげい", "迎", "げい"],
+        ["観察|かんさつ", "観", "かん"],
+        ["観察|かんさつ", "察", "さつ"],
+        ["感じ|かんじ", "感", "かんじ"],
+        ["感謝|かんしゃ", "感", "かん"],
+        ["感情|かんじょう", "感", "かん"],
+        ["感情|かんじょう", "情", "じょう"],
+        ["感じる|かんじる", "感", "かんじる"],
+        ["関心|かんしん", "関", "かん"],
+        ["関連|かんれん", "関", "かん"],
+        ["関連|かんれん", "連", "れん"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["感覚|かんかく", "both"],
+        ["観客|かんきゃく", "both"],
+        ["歓迎|かんげい", "both"],
+        ["観察|かんさつ", "both"],
+        ["感じ|かんじ", "both"],
+        ["感謝|かんしゃ", "both"],
+        ["感情|かんじょう", "both"],
+        ["感じる|かんじる", "both"],
+        ["関心|かんしん", "both"],
+        ["関連|かんれん", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["感覚|かんかく", "<ruby>感<rt>かん</rt></ruby><ruby>覚<rt>かく</rt></ruby>"],
+        ["観客|かんきゃく", "<ruby>観<rt>かん</rt></ruby><ruby>客<rt>きゃく</rt></ruby>"],
+        ["歓迎|かんげい", "<ruby>歓<rt>かん</rt></ruby><ruby>迎<rt>げい</rt></ruby>"],
+        ["観察|かんさつ", "<ruby>観<rt>かん</rt></ruby><ruby>察<rt>さつ</rt></ruby>"],
+        ["感じ|かんじ", "<ruby>感<rt>かん</rt></ruby>じ"],
+        ["感謝|かんしゃ", "<ruby>感<rt>かん</rt></ruby><ruby>謝<rt>しゃ</rt></ruby>"],
+        ["感情|かんじょう", "<ruby>感<rt>かん</rt></ruby><ruby>情<rt>じょう</rt></ruby>"],
+        ["感じる|かんじる", "<ruby>感<rt>かん</rt></ruby>じる"],
+        ["関心|かんしん", "<ruby>関<rt>かん</rt></ruby><ruby>心<rt>しん</rt></ruby>"],
+        ["関連|かんれん", "<ruby>関<rt>かん</rt></ruby><ruby>連<rt>れん</rt></ruby>"],
+    ]);
+});
+
 test("tracked starter word data includes the first N2 Silver source-expansion batch", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

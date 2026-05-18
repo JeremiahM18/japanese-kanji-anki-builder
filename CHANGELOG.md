@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Changed
 
+- Deferred four low-value or mismatched N3 Tanos candidate rows (`否|いや`, `お目に掛かる|おめにかかる`, `額|がく`, and `彼等|かれら`) with explicit learner-fit reasons so the N3 Silver expansion queue does not silently promote alternate spellings, phrase-like rows, or same-written meaning mismatches.
 - Hardened the local VOICEVOX container manager so Docker permission errors no longer get swallowed as a false `missing` container state; only a real Docker `No such object/container` inspect result is treated as absent.
 - Completed N4 word expansion/readiness by extending the existing `元気|げんき` N5 card's explicit coverage contract to include N4 `元 -> げん` while preserving the N5 placement anchor `気 -> き`; N4 word readiness now reports `ready_with_deferred_variants`, expansion signals are exhausted, and reading coverage is `578/755` (`76.6%`) without adding a new card.
 - Centralized shared JLPT bucket construction and Japanese reading/target-kanji helpers so coverage, export, and offline fallback paths no longer carry duplicated implementations that can drift.
@@ -23,6 +24,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Added
 
+- Added the next three N3 word Silver source-expansion batches (`課|か`, `害|がい`, `外交|がいこう`, `解釈|かいしゃく`, `快適|かいてき`, `掛かる|かかる`, `覚悟|かくご`, `加減|かげん`, `数|かず`, `型|かた`, `勝ち|かち`, `価値|かち`, `活気|かっき`, `格好|かっこう`, `活動|かつどう`, `活用|かつよう`, `悲しむ|かなしむ`, `必ずしも|かならずしも`, `構う|かまう`, `神|かみ`, `感覚|かんかく`, `観客|かんきゃく`, `歓迎|かんげい`, `観察|かんさつ`, `感じ|かんじ`, `感謝|かんしゃ`, `感情|かんじょう`, `感じる|かんじる`, `関心|かんしん`, and `関連|かんれん`) with exact JMdict verification notes, N3 contract coverage, Kanjium pitch, governed VOICEVOX word audio, and regression tests, raising N3 word Silver to `119/119` generated rows while readiness remains incomplete.
 - Added the next three N3 word Silver source-expansion batches (`裏切る`, `笑顔`, `演技`, `援助`, `演説`, `演奏`, `追い付く`, `追う`, `横断`, `奥`, `収める`, `汚染`, `恐れる`, `恐ろしい`, `お腹`, `降ろす`, `温度`, `絵画`, `解決`, `回復`, `換える`, `香り`, `抱える`, `価格`, `係`, `確実`, `確認`, `欠ける`, `菓子`, and `数える`) with exact JMdict verification notes, N3 contract coverage, Kanjium pitch, governed VOICEVOX word audio, and regression tests, raising N3 word Silver to `89/89` generated rows while readiness remains incomplete.
 - Added the next three N3 word Silver source-expansion batches (`余り`, `誤り`, `表す`, `現す`, `現れ`, `現れる`, `息`, `幾つ`, `幾ら`, `医師`, `意識`, `異常`, `泉`, `抱く`, `頂く`, `痛み`, `位置`, `一種`, `移動`, `居眠り`, `命`, `違反`, `依頼`, `岩`, `引退`, `受け取る`, `失う`, `疑う`, `移す`, and `馬`) with exact JMdict verification notes, N3 contract coverage, Kanjium pitch, governed VOICEVOX word audio, and regression tests, raising N3 word Silver to `59/59` generated rows while readiness remains incomplete.
 - Added the first N1 word Silver source-expansion batch (`間柄`, `敢えて`, `仰ぐ`, `証`, `憧れ`, `麻`, `欺く`, `鮮やか`, `焦る`, and `圧迫`) with exact JMdict verification notes, N1 contract coverage, Kanjium pitch, governed VOICEVOX word audio, and regression tests, raising N1 word Silver to `26/26` generated rows while readiness remains incomplete.

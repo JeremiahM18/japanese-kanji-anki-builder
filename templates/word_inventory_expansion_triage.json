@@ -1176,5 +1176,33 @@
         "nextStep": "Promote after higher-priority daily-life N4 candidates, with visible 割=N3 labeling."
       }
     }
+  },
+  "N3": {
+    "tanos-n3-vocab": {
+      "否|いや": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Exact row has dictionary/commonness support, but standalone kanji spelling for いや is lower learner value than stronger N3 vocabulary rows in the current Silver expansion.",
+        "nextStep": "Reconsider only if a later alternate-spelling review explicitly wants standalone kanji spellings for common kana-first words."
+      },
+      "お目に掛かる|おめにかかる": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Honorific expression row has no Tanos meaning and lacks immediate pitch/commonness support in the current governed lane; it behaves more like an expression/phrase review item than a starter Silver word.",
+        "nextStep": "Review later only in an expression-focused pass with exact sentence, pitch, and learner-usefulness evidence."
+      },
+      "額|がく": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Tanos gloss says forehead/brow, which fits 額|ひたい rather than the exact 額|がく row; the がく row needs a deliberate same-written reading and meaning-scope review before promotion.",
+        "nextStep": "Prefer 金額|きんがく or another unambiguous amount/frame word if the N3 deck needs 額 support before resolving this standalone row."
+      },
+      "彼等|かれら": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "The exact kanji spelling 彼等 is lower-value than the common modern 彼ら surface for a starter Silver word and would add alternate-spelling clutter.",
+        "nextStep": "Reconsider only if the word deck adds an alternate-spelling lane with explicit learner-value rules."
+      }
+    }
   }
 }

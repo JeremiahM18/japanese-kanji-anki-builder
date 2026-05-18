@@ -5,9 +5,18 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const { spawnSync } = require("node:child_process");
 
+const { loadAnkiNoteSchema } = require("../src/config/ankiNoteSchema");
 const { buildMediaBasePath } = require("../src/services/mediaStore");
 const { buildScopedCoverageRatio, buildTemporaryWritePath, parseLevelsArgument, runBuildPipeline, summarizeExportIssues } = require("../src/services/buildPipeline");
 const { resolvePythonCommand } = require("../src/services/toolchainService");
+
+function buildKanjiTsv(rows = []) {
+    const fieldNames = loadAnkiNoteSchema("kanji").fieldNames;
+    return [
+        fieldNames.join("\t"),
+        ...rows.map((row) => fieldNames.map((fieldName) => row[fieldName] || "").join("\t")),
+    ].join("\n");
+}
 
 test("parseLevelsArgument supports all and normalized JLPT levels", () => {
     assert.deepEqual(parseLevelsArgument(), [5, 4, 3, 2, 1]);
@@ -40,6 +49,83 @@ test("summarizeExportIssues tracks fallback ratios and threshold breaches", () =
     assert.equal(summary.fallbackRatio, 0.2);
     assert.equal(summary.maxAllowedFallbackRatio, 0.1);
     assert.equal(summary.thresholdExceeded, true);
+});
+
+test("runBuildPipeline counts actual TSV data rows for export fallback ratios", async () => {
+    const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "kanji-build-pipeline-row-count-"));
+    const dataDir = path.join(tempRoot, "data");
+    const outDir = path.join(tempRoot, "out", "build");
+    const mediaRootDir = path.join(dataDir, "media");
+
+    fs.mkdirSync(dataDir, { recursive: true });
+
+    const jlptJsonPath = path.join(dataDir, "kanji_jlpt_only.json");
+    const kradfilePath = path.join(dataDir, "KRADFILE");
+    const sentenceCorpusPath = path.join(dataDir, "sentence_corpus.json");
+    const curatedStudyDataPath = path.join(dataDir, "curated_study_data.json");
+
+    fs.writeFileSync(jlptJsonPath, `${JSON.stringify({ 日: { jlpt: 5 }, 月: { jlpt: 5 } }, null, 2)}\n`, "utf-8");
+    fs.writeFileSync(kradfilePath, "日 : 日\n月 : 月\n", "utf-8");
+    fs.writeFileSync(sentenceCorpusPath, "[]\n", "utf-8");
+    fs.writeFileSync(curatedStudyDataPath, "{}\n", "utf-8");
+
+    let packagedExports = null;
+    const summary = await runBuildPipeline({
+        config: {
+            jlptJsonPath,
+            kradfilePath,
+            sentenceCorpusPath,
+            curatedStudyDataPath,
+            mediaRootDir,
+            cacheDir: path.join(tempRoot, "cache"),
+            kanjiApiBaseUrl: "https://kanjiapi.dev",
+            fetchTimeoutMs: 10000,
+            exportConcurrency: 1,
+            buildOutDir: outDir,
+        },
+        outDir,
+        levels: [5],
+        skipMediaSync: true,
+        maxFallbackRatio: 0.75,
+        selectKanjiForSyncFn: () => ["日", "月"],
+        createMediaServicesFn: () => ({
+            strokeOrderService: {},
+            audioService: {},
+        }),
+        createExportServiceFn: () => ({
+            async buildTsvForJlptLevel({ exportIssues }) {
+                exportIssues.push({
+                    severity: "warning",
+                    resolution: "offline-local-fallback",
+                    kanji: "日",
+                });
+                return buildKanjiTsv([{
+                    Kanji: "日",
+                    DisplayWord: "日",
+                    PrimaryReading: "ひ",
+                }]);
+            },
+        }),
+        buildDeckPackageFn: async ({ exports }) => {
+            packagedExports = exports;
+            return {
+                rootDir: path.join(outDir, "package"),
+                exportsDir: path.join(outDir, "package", "exports"),
+                mediaDir: path.join(outDir, "package", "media"),
+                readmePath: path.join(outDir, "package", "IMPORT.txt"),
+                exportCount: exports.length,
+                mediaAssetCount: 0,
+                mediaCounts: {},
+                ankiPackage: { skipped: true, skipReason: "test" },
+            };
+        },
+    });
+
+    assert.equal(summary.exports[0].rows, 1);
+    assert.equal(packagedExports[0].rows, 1);
+    assert.equal(summary.exportIssues.fallbackCount, 1);
+    assert.equal(summary.exportIssues.fallbackRatio, 1);
+    assert.equal(summary.exportIssues.thresholdExceeded, true);
 });
 
 test("buildTemporaryWritePath stays unique within the same millisecond", () => {

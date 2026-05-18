@@ -370,13 +370,14 @@ async function runBuildPipeline({
             concurrency: effectiveConcurrency,
             exportIssues,
         });
-        assertKanjiDeckContract(buildKanjiDeckContractReport({ tsv, level }));
+        const contractReport = buildKanjiDeckContractReport({ tsv, level });
+        assertKanjiDeckContract(contractReport);
         const filePath = path.join(buildPaths.exportsDir, `jlpt-n${level}.tsv`);
         writeTextFile(filePath, `${tsv}\n`);
         exports.push({
             level,
             filePath,
-            rows: selectedKanjiByLevel[level]?.length || 0,
+            rows: contractReport.rowCount,
         });
     }
     capturePhaseTiming(timingsMs, "export", exportStartedAt);

@@ -96,6 +96,31 @@ test("enhancement signal separates keep, untriaged, and exhausted source candida
     assert.equal(exhausted.untriagedCandidateRows, 0);
     assert.match(exhausted.reason, /move candidates are tracked for target-level placement/);
 
+    const crossLevelOnly = buildEnhancementSignalFromCandidateReport({
+        sourceLabel: "fixture",
+        summary: {
+            reviewCandidateRows: 0,
+            triagedCandidateRows: 0,
+            untriagedCandidateRows: 0,
+            crossLevelRoutingRows: 3,
+            triagedCrossLevelRoutingRows: 1,
+            untriagedCrossLevelRoutingRows: 2,
+            crossLevelRoutingTriageDecisions: {
+                move_candidate: 1,
+                untriaged: 2,
+            },
+            triageDecisions: {},
+        },
+    });
+
+    assert.equal(crossLevelOnly.status, "exhausted");
+    assert.equal(crossLevelOnly.reviewCandidateRows, 0);
+    assert.equal(crossLevelOnly.crossLevelRoutingRows, 3);
+    assert.equal(crossLevelOnly.crossLevelMoveCandidates, 1);
+    assert.equal(crossLevelOnly.untriagedCrossLevelRoutingRows, 2);
+    assert.match(crossLevelOnly.reason, /cross-level move candidates are tracked for target-level placement/);
+    assert.match(crossLevelOnly.reason, /Untriaged cross-level routing rows remain advisory backlog/);
+
     const active = buildEnhancementSignalFromCandidateReport({
         sourceLabel: "fixture",
         summary: {
@@ -243,7 +268,9 @@ test("formatted expansion signal report does not overclaim release readiness", (
             enhancement: {
                 status: "exhausted",
                 keepCandidates: 0,
+                moveCandidates: 0,
                 untriagedCandidateRows: 0,
+                crossLevelRoutingRows: 0,
                 deferCandidates: 17,
                 rejectCandidates: 6,
                 blockers: [],
@@ -262,5 +289,6 @@ test("formatted expansion signal report does not overclaim release readiness", (
     assert.match(text, /N5 \| yes \| exhausted/);
     assert.match(text, /Placement resolved means/);
     assert.match(text, /no anchor 0/);
+    assert.match(text, /cross-level route 0/);
     assert.match(text, /This is not golden review, platinum review, APKG QA, or release readiness/);
 });

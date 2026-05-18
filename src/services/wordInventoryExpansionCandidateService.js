@@ -327,6 +327,25 @@ function classifyCandidateDisposition(row, {
     };
 }
 
+function resolveCrossLevelRoutingTargetLevel(scope, targetLevel) {
+    if (!scope || !Number.isInteger(targetLevel) || targetLevel < 1 || targetLevel > 5) {
+        return null;
+    }
+    if (scope.targetKanji.length > 0 || scope.outsideJlptKanji.length > 0) {
+        return null;
+    }
+
+    const harderLevels = scope.harderKanji
+        .map((entry) => entry.level)
+        .filter((level) => Number.isInteger(level) && level >= 1 && level < targetLevel);
+
+    if (harderLevels.length === 0) {
+        return null;
+    }
+
+    return Math.max(...harderLevels);
+}
+
 function summarizeDispositions(rows) {
     return rows.reduce((summary, row) => {
         summary[row.disposition] = (summary[row.disposition] || 0) + 1;
@@ -491,6 +510,7 @@ function buildWordInventoryExpansionCandidateReport({
                 ...row,
                 disposition: classified.disposition,
                 reason: classified.reason,
+                crossLevelRoutingTargetLevel: resolveCrossLevelRoutingTargetLevel(classified.scope, targetLevel),
                 constituentKanji: classified.scope.constituentKanji,
                 kanjiLevels: classified.scope.kanjiLevels,
                 targetKanji: classified.scope.targetKanji.map((entry) => entry.kanji),
@@ -503,9 +523,15 @@ function buildWordInventoryExpansionCandidateReport({
         })
         .sort(compareCandidateRows);
     const candidateRows = reviewedRows.filter((row) => row.disposition === "review_candidate");
+    const crossLevelRoutingRows = reviewedRows.filter((row) => (
+        row.disposition === "no_target_kanji"
+        && Number.isInteger(row.crossLevelRoutingTargetLevel)
+    ));
     const sameWrittenCandidateRows = candidateRows
         .filter((row) => row.sameWrittenContractEntries.length > 0);
     const triagedCandidateRows = candidateRows
+        .filter((row) => row.triageDecision);
+    const triagedCrossLevelRoutingRows = crossLevelRoutingRows
         .filter((row) => row.triageDecision);
 
     return {
@@ -524,9 +550,15 @@ function buildWordInventoryExpansionCandidateReport({
             triagedCandidateRows: triagedCandidateRows.length,
             untriagedCandidateRows: candidateRows.length - triagedCandidateRows.length,
             triageDecisions: summarizeCandidateTriage(candidateRows),
+            crossLevelRoutingRows: crossLevelRoutingRows.length,
+            shownCrossLevelRoutingRows: Math.min(crossLevelRoutingRows.length, limit),
+            triagedCrossLevelRoutingRows: triagedCrossLevelRoutingRows.length,
+            untriagedCrossLevelRoutingRows: crossLevelRoutingRows.length - triagedCrossLevelRoutingRows.length,
+            crossLevelRoutingTriageDecisions: summarizeCandidateTriage(crossLevelRoutingRows),
             dispositions: summarizeDispositions(reviewedRows),
         },
         candidates: candidateRows.slice(0, limit),
+        crossLevelRoutingCandidates: crossLevelRoutingRows.slice(0, limit),
         allRows: reviewedRows,
     };
 }
@@ -550,6 +582,21 @@ function formatSameWrittenContractEntries(entries = []) {
     }).join(", ");
 }
 
+function appendTriageLines(lines, row) {
+    if (row.triageDecision) {
+        lines.push(`   triage: ${row.triageDecision.decision} [${row.triageDecision.priority}]`);
+        if (Number.isInteger(row.triageDecision.targetLevel)) {
+            lines.push(`   triage target level: N${row.triageDecision.targetLevel}`);
+        }
+        lines.push(`   triage reason: ${row.triageDecision.reason}`);
+        if (row.triageDecision.nextStep) {
+            lines.push(`   triage next step: ${row.triageDecision.nextStep}`);
+        }
+    } else {
+        lines.push("   triage: untriaged");
+    }
+}
+
 function formatWordInventoryExpansionCandidateReport(report) {
     const lines = [];
     lines.push(`Japanese Kanji Builder Word Inventory Expansion Candidates (${report.levelLabel})`);
@@ -566,6 +613,8 @@ function formatWordInventoryExpansionCandidateReport(report) {
     lines.push(`Review candidates: ${report.summary.reviewCandidateRows}`);
     lines.push(`Same-written candidate warnings: ${report.summary.sameWrittenCandidateRows}`);
     lines.push(`Triaged review candidates: ${report.summary.triagedCandidateRows}/${report.summary.reviewCandidateRows}`);
+    lines.push(`Cross-level routing rows: ${report.summary.crossLevelRoutingRows || 0}`);
+    lines.push(`Triaged cross-level routing rows: ${report.summary.triagedCrossLevelRoutingRows || 0}/${report.summary.crossLevelRoutingRows || 0}`);
     lines.push("");
     lines.push("Disposition counts:");
     for (const [disposition, count] of Object.entries(report.summary.dispositions).sort()) {
@@ -578,37 +627,57 @@ function formatWordInventoryExpansionCandidateReport(report) {
     }
     lines.push("");
 
-    if (report.candidates.length === 0) {
-        lines.push("No review candidates matched the requested source and kanji scope.");
+    if ((report.summary.crossLevelRoutingRows || 0) > 0) {
+        lines.push("Cross-level routing decision counts:");
+        for (const [decision, count] of Object.entries(report.summary.crossLevelRoutingTriageDecisions || {}).sort()) {
+            lines.push(`- ${decision}: ${count}`);
+        }
+        lines.push("");
+    }
+
+    if (report.candidates.length === 0 && (report.crossLevelRoutingCandidates || []).length === 0) {
+        lines.push("No review candidates or cross-level routing rows matched the requested source and kanji scope.");
         return lines.join("\n") + "\n";
     }
 
-    lines.push(`Candidates shown (${report.candidates.length}):`);
-    report.candidates.forEach((row, index) => {
-        lines.push(`${index + 1}. ${row.written} (${row.reading})`);
-        lines.push(`   meaning: ${row.meaning || "source did not provide one"}`);
-        lines.push(`   kanji: ${formatKanjiLevels(row)}`);
-        lines.push(`   source: ${row.source}${row.sourceLevel ? `; source level N${row.sourceLevel}` : ""}`);
-        lines.push(`   review: ${row.reason}`);
-        if (row.sameWrittenContractEntries.length > 0) {
-            lines.push(`   same-written warning: already tracked with reading(s) ${formatSameWrittenContractEntries(row.sameWrittenContractEntries)}`);
-        }
-        if (row.triageDecision) {
-            lines.push(`   triage: ${row.triageDecision.decision} [${row.triageDecision.priority}]`);
-            if (Number.isInteger(row.triageDecision.targetLevel)) {
-                lines.push(`   triage target level: N${row.triageDecision.targetLevel}`);
+    if (report.candidates.length > 0) {
+        lines.push(`Candidates shown (${report.candidates.length}):`);
+        report.candidates.forEach((row, index) => {
+            lines.push(`${index + 1}. ${row.written} (${row.reading})`);
+            lines.push(`   meaning: ${row.meaning || "source did not provide one"}`);
+            lines.push(`   kanji: ${formatKanjiLevels(row)}`);
+            lines.push(`   source: ${row.source}${row.sourceLevel ? `; source level N${row.sourceLevel}` : ""}`);
+            lines.push(`   review: ${row.reason}`);
+            if (row.sameWrittenContractEntries.length > 0) {
+                lines.push(`   same-written warning: already tracked with reading(s) ${formatSameWrittenContractEntries(row.sameWrittenContractEntries)}`);
             }
-            lines.push(`   triage reason: ${row.triageDecision.reason}`);
-            if (row.triageDecision.nextStep) {
-                lines.push(`   triage next step: ${row.triageDecision.nextStep}`);
+            appendTriageLines(lines, row);
+            if (row.notes) {
+                lines.push(`   notes: ${row.notes}`);
             }
-        } else {
-            lines.push("   triage: untriaged");
-        }
-        if (row.notes) {
-            lines.push(`   notes: ${row.notes}`);
-        }
-    });
+        });
+        lines.push("");
+    } else {
+        lines.push("No review candidates matched the requested source and kanji scope.");
+        lines.push("");
+    }
+
+    if ((report.crossLevelRoutingCandidates || []).length > 0) {
+        lines.push(`Cross-level routing rows shown (${report.crossLevelRoutingCandidates.length}):`);
+        lines.push("These rows are not current-level promotion candidates; move them only through explicit target-level contract and starter-data review.");
+        report.crossLevelRoutingCandidates.forEach((row, index) => {
+            lines.push(`${index + 1}. ${row.written} (${row.reading})`);
+            lines.push(`   meaning: ${row.meaning || "source did not provide one"}`);
+            lines.push(`   kanji: ${formatKanjiLevels(row)}`);
+            lines.push(`   source: ${row.source}${row.sourceLevel ? `; source level N${row.sourceLevel}` : ""}`);
+            lines.push(`   current-level disposition: ${row.reason}`);
+            lines.push(`   suggested anchor review level: N${row.crossLevelRoutingTargetLevel}`);
+            appendTriageLines(lines, row);
+            if (row.notes) {
+                lines.push(`   notes: ${row.notes}`);
+            }
+        });
+    }
 
     return lines.join("\n") + "\n";
 }
@@ -627,5 +696,6 @@ module.exports = {
     parseCandidateSourceText,
     parseDelimitedLine,
     parseSourceLevel,
+    resolveCrossLevelRoutingTargetLevel,
     splitReadingVariants,
 };

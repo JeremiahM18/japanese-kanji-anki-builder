@@ -255,6 +255,7 @@ Word decks:
 - Reading coverage is scoped to the selected word-product levels. A higher-level word card can cover a lower-level reading target when those levels are built together.
 - Track reading-coverage intent with `coverage.role`, `coverage.focusKanji`, and `coverage.coversReadings` when the card exists for coverage.
 - Expansion triage uses `move_candidate` with a target level for valid source words that belong in another learner deck. That is a routing decision only; the word is physically moved only when the target level's word contract and starter data are updated and pass that level's gates.
+- Source rows with known JLPT kanji but no current-level anchor stay out of current-level promotion counts. Expansion reports track them as cross-level routing backlog so source-level hints are preserved without forcing the word into the wrong deck.
 - Sentence orthography review is advisory. It flags likely kana-only regressions without banning natural kana usage.
 
 Gold, Platinum, and Obsidian:
@@ -503,6 +504,8 @@ The expansion candidate report is a read-only post-coverage tool. Use it after t
 - `any` allows outside-JLPT kanji but reports them for review.
 
 Expansion candidates are not product truth. A candidate list may reveal useful vocabulary, but every promoted word still needs source/commonness review, level-fit review, examples, reading breakdowns, kanji labels, audio, pitch policy compliance, Gold regression, Platinum evidence, and readiness validation.
+
+Rows that contain known JLPT kanji but no current-level kanji are reported separately as cross-level routing rows. They are not current-level promotion candidates and do not make the current level active by themselves; physical movement still requires explicit target-level contract and starter-data review.
 
 The report deduplicates exact `written|reading` identities and also flags same-written candidates that already have another governed or excluded reading. Those warnings are review prompts, not automatic rejection: approve multiple readings only when the extra card is useful, common, level-fit, and worth teaching as its own word identity.
 

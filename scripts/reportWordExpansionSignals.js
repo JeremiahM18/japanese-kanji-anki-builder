@@ -321,16 +321,32 @@ function countDecision(summary, decision) {
     return summary?.triageDecisions?.[decision] || 0;
 }
 
+function countCrossLevelRoutingDecision(summary, decision) {
+    return summary?.crossLevelRoutingTriageDecisions?.[decision] || 0;
+}
+
 function buildEnhancementSignalFromCandidateReport(report) {
     const summary = report?.summary || {};
     const keepCandidates = countDecision(summary, "keep_candidate");
     const moveCandidates = countDecision(summary, "move_candidate");
     const untriagedCandidates = summary.untriagedCandidateRows || 0;
+    const crossLevelRoutingRows = summary.crossLevelRoutingRows || 0;
+    const untriagedCrossLevelRoutingRows = summary.untriagedCrossLevelRoutingRows || 0;
+    const crossLevelMoveCandidates = countCrossLevelRoutingDecision(summary, "move_candidate");
 
     let status = "exhausted";
     let reason = "Configured source-list enhancement review has no keep candidates and no untriaged candidates.";
     if (moveCandidates > 0) {
         reason = "Configured source-list enhancement review has no current-level keep candidates and no untriaged candidates; move candidates are tracked for target-level placement.";
+    }
+    if (crossLevelRoutingRows > 0) {
+        reason += " Cross-level routing rows are tracked separately and do not count as current-level promotion work.";
+    }
+    if (crossLevelMoveCandidates > 0 && moveCandidates === 0) {
+        reason = "Configured source-list enhancement review has no current-level keep candidates and no untriaged candidates; cross-level move candidates are tracked for target-level placement.";
+    }
+    if (untriagedCrossLevelRoutingRows > 0 && untriagedCandidates === 0 && keepCandidates === 0) {
+        reason += " Untriaged cross-level routing rows remain advisory backlog.";
     }
     if (untriagedCandidates > 0) {
         status = "needs_triage";
@@ -348,8 +364,15 @@ function buildEnhancementSignalFromCandidateReport(report) {
         reviewCandidateRows: summary.reviewCandidateRows || 0,
         triagedCandidateRows: summary.triagedCandidateRows || 0,
         untriagedCandidateRows: untriagedCandidates,
+        crossLevelRoutingRows,
+        triagedCrossLevelRoutingRows: summary.triagedCrossLevelRoutingRows || 0,
+        untriagedCrossLevelRoutingRows,
         keepCandidates,
         moveCandidates,
+        crossLevelMoveCandidates,
+        crossLevelKeepCandidates: countCrossLevelRoutingDecision(summary, "keep_candidate"),
+        crossLevelDeferCandidates: countCrossLevelRoutingDecision(summary, "defer_candidate"),
+        crossLevelRejectCandidates: countCrossLevelRoutingDecision(summary, "reject_candidate"),
         deferCandidates: countDecision(summary, "defer_candidate"),
         rejectCandidates: countDecision(summary, "reject_candidate"),
         kanjiScope: summary.kanjiScope || "",
@@ -370,8 +393,12 @@ function buildEnhancementSignal({ level, sourceConfig, shared }) {
             reviewCandidateRows: null,
             triagedCandidateRows: null,
             untriagedCandidateRows: null,
+            crossLevelRoutingRows: null,
+            triagedCrossLevelRoutingRows: null,
+            untriagedCrossLevelRoutingRows: null,
             keepCandidates: null,
             moveCandidates: null,
+            crossLevelMoveCandidates: null,
             deferCandidates: null,
             rejectCandidates: null,
             kanjiScope: "",
@@ -393,8 +420,12 @@ function buildEnhancementSignal({ level, sourceConfig, shared }) {
             reviewCandidateRows: null,
             triagedCandidateRows: null,
             untriagedCandidateRows: null,
+            crossLevelRoutingRows: null,
+            triagedCrossLevelRoutingRows: null,
+            untriagedCrossLevelRoutingRows: null,
             keepCandidates: null,
             moveCandidates: null,
+            crossLevelMoveCandidates: null,
             deferCandidates: null,
             rejectCandidates: null,
             kanjiScope: sourceConfig.kanjiScope || "",
@@ -422,8 +453,12 @@ function buildEnhancementSignal({ level, sourceConfig, shared }) {
                 reviewCandidateRows: null,
                 triagedCandidateRows: null,
                 untriagedCandidateRows: null,
+                crossLevelRoutingRows: null,
+                triagedCrossLevelRoutingRows: null,
+                untriagedCrossLevelRoutingRows: null,
                 keepCandidates: null,
                 moveCandidates: null,
+                crossLevelMoveCandidates: null,
                 deferCandidates: null,
                 rejectCandidates: null,
                 kanjiScope: sourceConfig.kanjiScope || "",
@@ -466,8 +501,12 @@ function buildEnhancementSignal({ level, sourceConfig, shared }) {
             reviewCandidateRows: null,
             triagedCandidateRows: null,
             untriagedCandidateRows: null,
+            crossLevelRoutingRows: null,
+            triagedCrossLevelRoutingRows: null,
+            untriagedCrossLevelRoutingRows: null,
             keepCandidates: null,
             moveCandidates: null,
+            crossLevelMoveCandidates: null,
             deferCandidates: null,
             rejectCandidates: null,
             kanjiScope: sourceConfig.kanjiScope || "",
@@ -548,7 +587,10 @@ function formatStatusWithCounts(signal, type) {
 
     if (signal.status === "exhausted" || signal.status === "active" || signal.status === "needs_triage") {
         const source = signal.sourceLabel ? `; source ${signal.sourceLabel}` : "";
-        return `${signal.status} (keep ${signal.keepCandidates}; move ${signal.moveCandidates}; untriaged ${signal.untriagedCandidateRows}; defer ${signal.deferCandidates}; reject ${signal.rejectCandidates}${source})`;
+        const routing = Number.isInteger(signal.crossLevelRoutingRows)
+            ? `; cross-level route ${signal.crossLevelRoutingRows}`
+            : "";
+        return `${signal.status} (keep ${signal.keepCandidates}; move ${signal.moveCandidates}; untriaged ${signal.untriagedCandidateRows}; defer ${signal.deferCandidates}; reject ${signal.rejectCandidates}${routing}${source})`;
     }
     if (type === "placement") {
         if (signal.status === "resolved" || signal.status === "blocked") {

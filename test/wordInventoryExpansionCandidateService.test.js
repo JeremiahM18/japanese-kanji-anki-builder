@@ -21,6 +21,8 @@ const jlptLevelContract = {
         学: 5,
         校: 5,
         行: 5,
+        手: 4,
+        紙: 4,
         茶: 4,
         新: 4,
         幹: 4,
@@ -146,6 +148,56 @@ test("buildWordInventoryExpansionCandidateReport keeps only new source words tha
     assert.equal(report.summary.dispositions.kanji_scope_mismatch, 1);
     assert.equal(report.summary.dispositions.already_excluded, 1);
     assert.equal(report.summary.dispositions.source_template, 1);
+});
+
+test("cross-level source rows are visible without becoming current-level promotion candidates", () => {
+    const report = buildWordInventoryExpansionCandidateReport({
+        sourceRows: [{
+            written: "手紙",
+            reading: "てがみ",
+            meaning: "letter",
+            jlpt: "N5",
+            source: "fixture",
+        }],
+        targetLevel: 5,
+        kanjiScope: "at-or-below",
+        requireSourceLevel: true,
+        jlptLevelContract,
+        jlptWordLevelContract,
+        sourceLabel: "fixture",
+        triageDecisions: {
+            "手紙|てがみ": {
+                decision: "move_candidate",
+                targetLevel: "N4",
+                priority: "normal",
+                reason: "Source lists this as N5, but every known constituent kanji anchors in N4.",
+                nextStep: "Review only through the N4 word contract and starter data.",
+            },
+        },
+    });
+
+    assert.equal(report.summary.reviewCandidateRows, 0);
+    assert.equal(report.summary.triagedCandidateRows, 0);
+    assert.equal(report.summary.crossLevelRoutingRows, 1);
+    assert.equal(report.summary.triagedCrossLevelRoutingRows, 1);
+    assert.equal(report.summary.untriagedCrossLevelRoutingRows, 0);
+    assert.deepEqual(report.summary.crossLevelRoutingTriageDecisions, {
+        move_candidate: 1,
+    });
+    assert.equal(report.candidates.length, 0);
+    assert.equal(report.crossLevelRoutingCandidates[0].key, "手紙|てがみ");
+    assert.equal(report.crossLevelRoutingCandidates[0].disposition, "no_target_kanji");
+    assert.equal(report.crossLevelRoutingCandidates[0].reason, "does not contain N5 kanji");
+    assert.equal(report.crossLevelRoutingCandidates[0].crossLevelRoutingTargetLevel, 4);
+    assert.equal(report.crossLevelRoutingCandidates[0].triageDecision.targetLevel, 4);
+
+    const text = formatWordInventoryExpansionCandidateReport(report);
+    assert.match(text, /No review candidates matched the requested source and kanji scope\./);
+    assert.match(text, /Cross-level routing rows shown \(1\):/);
+    assert.match(text, /not current-level promotion candidates/);
+    assert.match(text, /手紙 \(てがみ\)/);
+    assert.match(text, /suggested anchor review level: N4/);
+    assert.match(text, /triage target level: N4/);
 });
 
 test("normalizeTriageDecisions keeps only decisions with a reason", () => {

@@ -1132,8 +1132,8 @@
     "reviewer": "codex-platinum-review",
     "fixSummary": "Added a context-specific 分かる breakdown override so the kanji panel renders 分 （わ） / understand instead of the misleading standalone minute meaning.",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-13",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 分かる|わかる on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "High-utility verb for understanding; the 分 reading is word-specific and separate from minute/part senses."
     ],
@@ -1222,7 +1222,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 分かる|わかる checked generated surface, Japanese-source evidence, example sentence 日本語が少し分かります。, notes/support surface High-utility verb for understanding; the 分 reading is word-specific and separate from minute/part senses., reading breakdown 分 （わ） ／ understand, meaning understand, labels JLPT N5; JLPT core + reading coverage; focus 分; covers 分: わかる, audio word-reading-分かる-わかる, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-003",
+      "scope": "N5 word Obsidian lane batch 3 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 分かる|わかる from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 分かる|わかる: JMdict entrySeq=1606560 plus tracked JLearn lane",
+        "learner-facing meaning understand",
+        "example sentence 日本語が少し分かります。 and exported reading/translation fit",
+        "notes/support surface: High-utility verb for understanding; the 分 reading is word-specific and separate from minute/part senses.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-分かる-わかる exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "三つ",
@@ -1258,8 +1282,8 @@
     "reviewedAt": "2026-05-03",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-13",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 三つ|みっつ on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Common counter form for three things; learn みっつ as a whole counter word."
     ],
@@ -1348,7 +1372,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 三つ|みっつ checked generated surface, Japanese-source evidence, example sentence りんごを三つ買いました。, notes/support surface Common counter form for three things; learn みっつ as a whole counter word., reading breakdown 三 （みっ） ／ three, meaning three things, labels JLPT N5; JLPT core + reading coverage; focus 三; covers 三: みっつ, audio word-reading-三つ-みっつ, pitch accent source kanjium-cc-by-sa-4.0 pattern 3 [odaka] rendered Pitch 1: 3, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-003",
+      "scope": "N5 word Obsidian lane batch 3 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 三つ|みっつ from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 三つ|みっつ: JMdict entrySeq=1299740 plus tracked JLearn lane",
+        "learner-facing meaning three things",
+        "example sentence りんごを三つ買いました。 and exported reading/translation fit",
+        "notes/support surface: Common counter form for three things; learn みっつ as a whole counter word.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-三つ-みっつ exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 3 [odaka]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "月",
@@ -1385,8 +1433,8 @@
     "reviewedAt": "2026-05-11",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-13",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 月|つき on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Common standalone word for the moon; this word-card reading つき is separate from month names like 一月."
     ],
@@ -1475,7 +1523,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 月|つき checked generated surface, Japanese-source evidence, example sentence 今夜は月がきれいです。, notes/support surface Common standalone word for the moon; this word-card reading つき is separate from month names like 一月., reading breakdown 月 （つき）; moon, meaning moon, labels JLPT N5; JLPT core + reading coverage; focus 月; covers 月: つき, audio word-reading-月-つき, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [odaka] rendered Pitch 1: 2, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-003",
+      "scope": "N5 word Obsidian lane batch 3 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 月|つき from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 月|つき: JMdict entrySeq=1255430 plus tracked kanji-source evidence lane",
+        "learner-facing meaning moon",
+        "example sentence 今夜は月がきれいです。 and exported reading/translation fit",
+        "notes/support surface: Common standalone word for the moon; this word-card reading つき is separate from month names like 一月.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-月-つき exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 2 [odaka]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "下げる",
@@ -3618,8 +3690,8 @@
     "reviewedAt": "2026-05-03",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-13",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 上げる|あげる on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Common verb for raising or lifting; keeps 上 -> あ in a practical classroom command."
     ],
@@ -3708,7 +3780,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 上げる|あげる checked generated surface, Japanese-source evidence, example sentence 手を上げてください。, notes/support surface Common verb for raising or lifting; keeps 上 -> あ in a practical classroom command., reading breakdown 上 （あ） ／ up / above, meaning to raise; lift, labels JLPT N5; JLPT core + reading coverage; focus 上; covers 上: あげる, audio word-reading-上げる-あげる, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-003",
+      "scope": "N5 word Obsidian lane batch 3 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 上げる|あげる from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 上げる|あげる: JMdict entrySeq=1352320 plus tracked JLearn lane",
+        "learner-facing meaning to raise / lift",
+        "example sentence 手を上げてください。 and exported reading/translation fit",
+        "notes/support surface: Common verb for raising or lifting; keeps 上 -> あ in a practical classroom command.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-上げる-あげる exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 0 [heiban]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "七時",
@@ -4244,8 +4340,8 @@
     "reviewedAt": "2026-05-04",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-13",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 下|した on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Core location word for under/below; this word-card reading is した."
     ],
@@ -4334,7 +4430,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 下|した checked generated surface, Japanese-source evidence, example sentence いすの下に猫がいます。, notes/support surface Core location word for under/below; this word-card reading is した., reading breakdown 下 （した） ／ down / under / below, meaning down / under / below, labels JLPT N5; JLPT core + reading coverage; focus 下; covers 下: した, audio word-reading-下-した, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-003",
+      "scope": "N5 word Obsidian lane batch 3 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 下|した from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 下|した: JMdict entrySeq=1184140 plus tracked JLearn lane",
+        "learner-facing meaning down / under / below",
+        "example sentence いすの下に猫がいます。 and exported reading/translation fit",
+        "notes/support surface: Core location word for under/below; this word-card reading is した.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-下-した exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 0 [heiban]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "下りる",
@@ -6414,8 +6534,8 @@
       "noSilentFallback": true
     },
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 人|ひと on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Core noun for person; this word-card reading is ひと, separate from counters and suffix readings like にん and じん."
     ],
@@ -6472,7 +6592,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages or indexed dictionary evidence, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 人|ひと checked generated surface, Japanese-source evidence, example sentence あの人は先生です。, notes/support surface Core noun for person; this word-card reading is ひと, separate from counters and suffix readings like にん and じん., reading breakdown 人 （ひと） / person, meaning person, labels JLPT N5 / JLPT core + reading coverage / focus 人 / covered readings 人: ひと, audio word-reading-人-ひと, pitch accent Pitch 1: 0 from kanjium-cc-by-sa-4.0 pattern 0 [heiban], media provenance, release judgment, common useful learner-friendly level-appropriate natural card fit, and verification limitations: no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-005",
+      "scope": "N5 word Obsidian lane batch 5 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 人|ひと from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 人|ひと: JMdict entrySeq=1580640 plus tracked JLearn lane",
+        "learner-facing meaning person",
+        "example sentence あの人は先生です。 and exported reading/translation fit",
+        "notes/support surface: Core noun for person; this word-card reading is ひと, separate from counters and suffix readings like にん and じん.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-人-ひと exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 0 [heiban]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "今",
@@ -6541,8 +6685,8 @@
       "noSilentFallback": true
     },
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 今|いま on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Core time word for now; this word-card reading is いま, separate from compound readings like 今日."
     ],
@@ -6599,7 +6743,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages or indexed dictionary evidence, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 今|いま checked generated surface, Japanese-source evidence, example sentence 今、家に帰ります。, notes/support surface Core time word for now; this word-card reading is いま, separate from compound readings like 今日., reading breakdown 今 （いま） / now, meaning now, labels JLPT N5 / JLPT core + reading coverage / focus 今 / covered readings 今: いま, audio word-reading-今-いま, pitch accent Pitch 1: 1 from kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], media provenance, release judgment, common useful learner-friendly level-appropriate natural card fit, and verification limitations: no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-005",
+      "scope": "N5 word Obsidian lane batch 5 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 今|いま from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 今|いま: JMdict entrySeq=1288850 plus tracked JLearn lane",
+        "learner-facing meaning now",
+        "example sentence 今、家に帰ります。 and exported reading/translation fit",
+        "notes/support surface: Core time word for now; this word-card reading is いま, separate from compound readings like 今日.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-今-いま exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 1 [atamadaka]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "今年",
@@ -8619,8 +8787,8 @@
     },
     "fixSummary": "Replaced the example from polite 出ます to exact dictionary-form 出る so the reviewed word identity and reading are visible on the card.",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-13",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 出る|でる on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Core verb for leaving or going out; the example keeps 出る visible in dictionary form for the でる reading."
     ],
@@ -8677,7 +8845,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 出る|でる checked generated surface, Japanese-source evidence, example sentence 朝、家を出る。, notes/support surface Core verb for leaving or going out; the example keeps 出る visible in dictionary form for the でる reading., reading breakdown 出 （で） / exit / go out, meaning to go out / leave, labels JLPT N5 / JLPT core + reading coverage / focus 出 / covered readings 出: でる, audio word-reading-出る-でる, pitch accent Pitch 1: 1 from kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], media provenance, release judgment, common useful learner-friendly level-appropriate natural card fit, and verification limitations: no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-004",
+      "scope": "N5 word Obsidian lane batch 4 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 出る|でる from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 出る|でる: JMdict entrySeq=1338240 plus tracked JLearn lane",
+        "learner-facing meaning to go out / leave",
+        "example sentence 朝、家を出る。 and exported reading/translation fit",
+        "notes/support surface: Core verb for leaving or going out; the example keeps 出る visible in dictionary form for the でる reading.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-出る-でる exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 1 [atamadaka]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "上がる",
@@ -9889,8 +10081,8 @@
     "reviewedAt": "2026-05-04",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-13",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 小さい|ちいさい on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Core adjective for small; this word-card reading is ちいさい."
     ],
@@ -9979,7 +10171,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 小さい|ちいさい checked generated surface, Japanese-source evidence, example sentence この犬は小さいです。, notes/support surface Core adjective for small; this word-card reading is ちいさい., reading breakdown 小 （ちい）; small, meaning small, labels JLPT N5; JLPT core + reading coverage; focus 小; covers 小: ちいさい, audio word-reading-小さい-ちいさい, pitch accent source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] rendered Pitch 1: 3, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-003",
+      "scope": "N5 word Obsidian lane batch 3 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 小さい|ちいさい from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 小さい|ちいさい: JMdict entrySeq=1347750 plus tracked JLearn lane",
+        "learner-facing meaning small",
+        "example sentence この犬は小さいです。 and exported reading/translation fit",
+        "notes/support surface: Core adjective for small; this word-card reading is ちいさい.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-小さい-ちいさい exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 3 [nakadaka]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "右",
@@ -10016,8 +10232,8 @@
     "reviewedAt": "2026-05-04",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-13",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 右|みぎ on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Core direction word for right; this word-card reading is みぎ, separate from on-readings in compounds."
     ],
@@ -10106,7 +10322,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 右|みぎ checked generated surface, Japanese-source evidence, example sentence 右に曲がります。, notes/support surface Core direction word for right; this word-card reading is みぎ, separate from on-readings in compounds., reading breakdown 右 （みぎ）; right, meaning right, labels JLPT N5; JLPT core + reading coverage; focus 右; covers 右: みぎ, audio word-reading-右-みぎ, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-003",
+      "scope": "N5 word Obsidian lane batch 3 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 右|みぎ from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 右|みぎ: JMdict entrySeq=1171010 plus tracked JLearn lane",
+        "learner-facing meaning right",
+        "example sentence 右に曲がります。 and exported reading/translation fit",
+        "notes/support surface: Core direction word for right; this word-card reading is みぎ, separate from on-readings in compounds.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-右-みぎ exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 0 [heiban]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "書く",
@@ -10175,8 +10415,8 @@
       "noSilentFallback": true
     },
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-13",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 書く|かく on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Core verb for writing; the example keeps 書く in a practical name-writing context."
     ],
@@ -10233,7 +10473,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 書く|かく checked generated surface, Japanese-source evidence, example sentence ノートに名前を書きます。, notes/support surface Core verb for writing; the example keeps 書く in a practical name-writing context., reading breakdown 書 （か） / write, meaning to write, labels JLPT N5 / JLPT core + reading coverage / focus 書 / covered readings 書: かく, audio word-reading-書く-かく, pitch accent Pitch 1: 1 from kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], media provenance, release judgment, common useful learner-friendly level-appropriate natural card fit, and verification limitations: no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-003",
+      "scope": "N5 word Obsidian lane batch 3 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 書く|かく from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 書く|かく: JMdict entrySeq=1343950 plus tracked JLearn lane",
+        "learner-facing meaning to write",
+        "example sentence ノートに名前を書きます。 and exported reading/translation fit",
+        "notes/support surface: Core verb for writing; the example keeps 書く in a practical name-writing context.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-書く-かく exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 1 [atamadaka]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "国",
@@ -10302,8 +10566,8 @@
       "noSilentFallback": true
     },
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-13",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 国|くに on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Core noun for country; this word-card reading is くに, separate from compound readings like 国語."
     ],
@@ -10360,7 +10624,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 国|くに checked generated surface, Japanese-source evidence, example sentence 日本はきれいな国です。, notes/support surface Core noun for country; this word-card reading is くに, separate from compound readings like 国語., reading breakdown 国 （くに） / country, meaning country, labels JLPT N5 / JLPT core + reading coverage / focus 国 / covered readings 国: くに, audio word-reading-国-くに, pitch accent Pitch 1: 0 from kanjium-cc-by-sa-4.0 pattern 0 [heiban], media provenance, release judgment, common useful learner-friendly level-appropriate natural card fit, and verification limitations: no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-004",
+      "scope": "N5 word Obsidian lane batch 4 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 国|くに from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 国|くに: JMdict entrySeq=1592250 plus tracked JLearn lane",
+        "learner-facing meaning country",
+        "example sentence 日本はきれいな国です。 and exported reading/translation fit",
+        "notes/support surface: Core noun for country; this word-card reading is くに, separate from compound readings like 国語.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-国-くに exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 0 [heiban]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "日",
@@ -10430,8 +10718,8 @@
       "noSilentFallback": true
     },
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-13",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 日|ひ on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Core word for day or sun; this card teaches 日 as ひ, separate from date and weekday readings."
     ],
@@ -10488,7 +10776,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 日|ひ checked generated surface, Japanese-source evidence, example sentence 今日はいい日です。, notes/support surface Core word for day or sun; this card teaches 日 as ひ, separate from date and weekday readings., reading breakdown 日 （ひ） / day / sun, meaning day / sun, labels JLPT N5 / JLPT core + reading coverage / focus 日 / covered readings 日: ひ, audio word-reading-日-ひ, pitch accent Pitch 1: 0 from kanjium-cc-by-sa-4.0 pattern 0 [heiban], media provenance, release judgment, common useful learner-friendly level-appropriate natural card fit, and verification limitations: no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-004",
+      "scope": "N5 word Obsidian lane batch 4 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 日|ひ from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 日|ひ: JMdict entrySeq=1463770 plus tracked JLearn lane",
+        "learner-facing meaning day / sun",
+        "example sentence 今日はいい日です。 and exported reading/translation fit",
+        "notes/support surface: Core word for day or sun; this card teaches 日 as ひ, separate from date and weekday readings.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-日-ひ exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 0 [heiban]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "左",
@@ -10557,8 +10869,8 @@
       "noSilentFallback": true
     },
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-13",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 左|ひだり on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Core direction word for left; this word-card reading is ひだり, separate from compound readings."
     ],
@@ -10615,7 +10927,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 左|ひだり checked generated surface, Japanese-source evidence, example sentence 左に郵便局があります。, notes/support surface Core direction word for left; this word-card reading is ひだり, separate from compound readings., reading breakdown 左 （ひだり） / left, meaning left, labels JLPT N5 / JLPT core + reading coverage / focus 左 / covered readings 左: ひだり, audio word-reading-左-ひだり, pitch accent Pitch 1: 0 from kanjium-cc-by-sa-4.0 pattern 0 [heiban], media provenance, release judgment, common useful learner-friendly level-appropriate natural card fit, and verification limitations: no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-004",
+      "scope": "N5 word Obsidian lane batch 4 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 左|ひだり from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 左|ひだり: JMdict entrySeq=1290800 plus tracked JLearn lane",
+        "learner-facing meaning left",
+        "example sentence 左に郵便局があります。 and exported reading/translation fit",
+        "notes/support surface: Core direction word for left; this word-card reading is ひだり, separate from compound readings.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-左-ひだり exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 0 [heiban]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "雨",
@@ -10684,8 +11020,8 @@
       "noSilentFallback": true
     },
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-13",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 雨|あめ on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Core weather word for rain; this word-card reading is あめ and uses a simple weather example."
     ],
@@ -10742,7 +11078,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 雨|あめ checked generated surface, Japanese-source evidence, example sentence 今日は雨です。, notes/support surface Core weather word for rain; this word-card reading is あめ and uses a simple weather example., reading breakdown 雨 （あめ） / rain, meaning rain, labels JLPT N5 / JLPT core + reading coverage / focus 雨 / covered readings 雨: あめ, audio word-reading-雨-あめ, pitch accent Pitch 1: 1 from kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], media provenance, release judgment, common useful learner-friendly level-appropriate natural card fit, and verification limitations: no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-004",
+      "scope": "N5 word Obsidian lane batch 4 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 雨|あめ from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 雨|あめ: JMdict entrySeq=1171900 plus tracked JLearn lane",
+        "learner-facing meaning rain",
+        "example sentence 今日は雨です。 and exported reading/translation fit",
+        "notes/support surface: Core weather word for rain; this word-card reading is あめ and uses a simple weather example.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-雨-あめ exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 1 [atamadaka]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "四",
@@ -10811,8 +11171,8 @@
       "noSilentFallback": true
     },
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-13",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 四|よん on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Common standalone number form for counting sequences and number ranges."
     ],
@@ -10869,7 +11229,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 四|よん checked generated surface, Japanese-source evidence, example sentence 数字を四から七まで言います。, notes/support surface Common standalone number form for counting sequences and number ranges., reading breakdown 四 （よん） / four, meaning four, labels JLPT N5 / JLPT core + reading coverage / focus 四 / covered readings 四: よん, audio word-reading-四-よん, pitch accent Pitch 1: 1 from kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], media provenance, release judgment, common useful learner-friendly level-appropriate natural card fit, and verification limitations: no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-004",
+      "scope": "N5 word Obsidian lane batch 4 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 四|よん from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 四|よん: JMdict entrySeq=1579470 plus tracked JLearn lane",
+        "learner-facing meaning four",
+        "example sentence 数字を四から七まで言います。 and exported reading/translation fit",
+        "notes/support surface: Common standalone number form for counting sequences and number ranges.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-四-よん exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 1 [atamadaka]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "高い",
@@ -10939,8 +11323,8 @@
       "noSilentFallback": true
     },
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 高い|たかい on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Core adjective for height or price; the example uses the beginner-useful expensive sense."
     ],
@@ -10997,7 +11381,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages or indexed dictionary evidence, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 高い|たかい checked generated surface, Japanese-source evidence, example sentence このりんごは高いです。, notes/support surface Core adjective for height or price; the example uses the beginner-useful expensive sense., reading breakdown 高 （たか） / high / expensive, meaning high / expensive, labels JLPT N5 / JLPT core + reading coverage / focus 高 / covered readings 高: たかい, audio word-reading-高い-たかい, pitch accent Pitch 1: 2 from kanjium-cc-by-sa-4.0 pattern 2 [nakadaka], media provenance, release judgment, common useful learner-friendly level-appropriate natural card fit, and verification limitations: no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-004",
+      "scope": "N5 word Obsidian lane batch 4 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 高い|たかい from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 高い|たかい: JMdict entrySeq=1283190 plus tracked JLearn lane",
+        "learner-facing meaning high / expensive",
+        "example sentence このりんごは高いです。 and exported reading/translation fit",
+        "notes/support surface: Core adjective for height or price; the example uses the beginner-useful expensive sense.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-高い-たかい exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "川",
@@ -11066,8 +11474,8 @@
       "noSilentFallback": true
     },
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 川|かわ on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Core nature noun for river; this word-card reading is かわ, separate from the suffix reading がわ."
     ],
@@ -11124,7 +11532,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages or indexed dictionary evidence, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 川|かわ checked generated surface, Japanese-source evidence, example sentence 川の水がきれいです。, notes/support surface Core nature noun for river; this word-card reading is かわ, separate from the suffix reading がわ., reading breakdown 川 （かわ） / river, meaning river, labels JLPT N5 / JLPT core + reading coverage / focus 川 / covered readings 川: かわ, audio word-reading-川-かわ, pitch accent Pitch 1: 2 from kanjium-cc-by-sa-4.0 pattern 2 [odaka], media provenance, release judgment, common useful learner-friendly level-appropriate natural card fit, and verification limitations: no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-004",
+      "scope": "N5 word Obsidian lane batch 4 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 川|かわ from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 川|かわ: JMdict entrySeq=1390020 plus tracked JLearn lane",
+        "learner-facing meaning river",
+        "example sentence 川の水がきれいです。 and exported reading/translation fit",
+        "notes/support surface: Core nature noun for river; this word-card reading is かわ, separate from the suffix reading がわ.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-川-かわ exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 2 [odaka]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "食べる",
@@ -11193,8 +11625,8 @@
       "noSilentFallback": true
     },
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 食べる|たべる on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Core verb for eating; the example keeps 食べる in a daily breakfast context."
     ],
@@ -11251,7 +11683,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages or indexed dictionary evidence, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 食べる|たべる checked generated surface, Japanese-source evidence, example sentence 毎朝パンを食べます。, notes/support surface Core verb for eating; the example keeps 食べる in a daily breakfast context., reading breakdown 食 （た） / eat / food, meaning to eat, labels JLPT N5 / JLPT core + reading coverage / focus 食 / covered readings 食: たべる, audio word-reading-食べる-たべる, pitch accent Pitch 1: 2 from kanjium-cc-by-sa-4.0 pattern 2 [nakadaka], media provenance, release judgment, common useful learner-friendly level-appropriate natural card fit, and verification limitations: no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-005",
+      "scope": "N5 word Obsidian lane batch 5 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 食べる|たべる from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 食べる|たべる: JMdict entrySeq=1358280 plus tracked JLearn lane",
+        "learner-facing meaning to eat",
+        "example sentence 毎朝パンを食べます。 and exported reading/translation fit",
+        "notes/support surface: Core verb for eating; the example keeps 食べる in a daily breakfast context.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-食べる-たべる exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "友だち",
@@ -11320,8 +11776,8 @@
       "noSilentFallback": true
     },
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 友だち|ともだち on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Core friend word; this mixed 友だち form is learner-friendly and equivalent to 友達."
     ],
@@ -11378,7 +11834,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages or indexed dictionary evidence, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 友だち|ともだち checked generated surface, Japanese-source evidence, example sentence 友だちと映画を見ます。, notes/support surface Core friend word; this mixed 友だち form is learner-friendly and equivalent to 友達., reading breakdown 友 （とも） / friend, meaning friend, labels JLPT N5 / JLPT core + reading coverage / focus 友 / covered readings 友: ともだち, audio word-reading-友だち-ともだち, pitch accent Pitch 1: 0 from kanjium-cc-by-sa-4.0 pattern 0 [heiban], media provenance, release judgment, common useful learner-friendly level-appropriate natural card fit, and verification limitations: no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-005",
+      "scope": "N5 word Obsidian lane batch 5 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 友だち|ともだち from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 友だち|ともだち: JMdict entrySeq=1540170 plus tracked JLearn lane",
+        "learner-facing meaning friend",
+        "example sentence 友だちと映画を見ます。 and exported reading/translation fit",
+        "notes/support surface: Core friend word; this mixed 友だち form is learner-friendly and equivalent to 友達.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-友だち-ともだち exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 0 [heiban]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "母",
@@ -11451,8 +11931,8 @@
       "noSilentFallback": true
     },
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 母|はは on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -11506,7 +11986,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages or indexed dictionary evidence, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 母|はは checked generated surface, Japanese-source evidence, example sentence 母は毎朝早く起きます。, notes/support surface Humble/plain way to refer to your own mother; use お母さん for someone else's mother., reading breakdown 母 （はは） / mother, meaning mother, labels JLPT N5 / JLPT core + reading coverage / focus 母 / covered readings 母: はは, audio word-reading-母-はは, pitch accent Pitch 1: 1 from kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], media provenance, release judgment, common useful learner-friendly level-appropriate natural card fit, and verification limitations: no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-005",
+      "scope": "N5 word Obsidian lane batch 5 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 母|はは from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 母|はは: JMdict entrySeq=1514990 plus tracked JLearn lane",
+        "learner-facing meaning mother",
+        "example sentence 母は毎朝早く起きます。 and exported reading/translation fit",
+        "notes/support surface: Humble/plain way to refer to your own mother; use お母さん for someone else's mother.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-母-はは exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 1 [atamadaka]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "車",
@@ -11575,8 +12079,8 @@
       "noSilentFallback": true
     },
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 車|くるま on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Core noun for car or vehicle; this word-card reading is くるま."
     ],
@@ -11633,7 +12137,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages or indexed dictionary evidence, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 車|くるま checked generated surface, Japanese-source evidence, example sentence 白い車があります。, notes/support surface Core noun for car or vehicle; this word-card reading is くるま., reading breakdown 車 （くるま） / car, meaning car, labels JLPT N5 / JLPT core + reading coverage / focus 車 / covered readings 車: くるま, audio word-reading-車-くるま, pitch accent Pitch 1: 0 from kanjium-cc-by-sa-4.0 pattern 0 [heiban], media provenance, release judgment, common useful learner-friendly level-appropriate natural card fit, and verification limitations: no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-005",
+      "scope": "N5 word Obsidian lane batch 5 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 車|くるま from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 車|くるま: JMdict entrySeq=1323080 plus tracked JLearn lane",
+        "learner-facing meaning car",
+        "example sentence 白い車があります。 and exported reading/translation fit",
+        "notes/support surface: Core noun for car or vehicle; this word-card reading is くるま.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-車-くるま exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 0 [heiban]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "読む",
@@ -11702,8 +12230,8 @@
       "noSilentFallback": true
     },
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 読む|よむ on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Core verb for reading; the example keeps 読む in a practical book-reading context."
     ],
@@ -11760,7 +12288,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages or indexed dictionary evidence, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 読む|よむ checked generated surface, Japanese-source evidence, example sentence 毎晩、本を読みます。, notes/support surface Core verb for reading; the example keeps 読む in a practical book-reading context., reading breakdown 読 （よ） / read, meaning to read, labels JLPT N5 / JLPT core + reading coverage / focus 読 / covered readings 読: よむ, audio word-reading-読む-よむ, pitch accent Pitch 1: 1 from kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], media provenance, release judgment, common useful learner-friendly level-appropriate natural card fit, and verification limitations: no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-005",
+      "scope": "N5 word Obsidian lane batch 5 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 読む|よむ from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 読む|よむ: JMdict entrySeq=1456360 plus tracked JLearn lane",
+        "learner-facing meaning to read",
+        "example sentence 毎晩、本を読みます。 and exported reading/translation fit",
+        "notes/support surface: Core verb for reading; the example keeps 読む in a practical book-reading context.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-読む-よむ exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 1 [atamadaka]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "間",
@@ -11830,8 +12382,8 @@
       "noSilentFallback": true
     },
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 間|あいだ on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
     "notesIncludes": [
       "Core word for an interval, space between things, or while span; this card teaches 間 as あいだ."
     ],
@@ -11888,7 +12440,31 @@
         "source": "manual current-standard word review using generated N5 word batch report, JMdict exact rows, JLearn dictionary pages or indexed dictionary evidence, and separated source/internal/review evidence lanes",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 間|あいだ checked generated surface, Japanese-source evidence, example sentence 休みの間、本を読みます。, notes/support surface Core word for an interval, space between things, or while span; this card teaches 間 as あいだ., reading breakdown 間 （あいだ） / between / while, meaning between / while, labels JLPT N5 / JLPT core + reading coverage / focus 間 / covered readings 間: あいだ, audio word-reading-間-あいだ, pitch accent Pitch 1: 0 from kanjium-cc-by-sa-4.0 pattern 0 [heiban], media provenance, release judgment, common useful learner-friendly level-appropriate natural card fit, and verification limitations: no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-005",
+      "scope": "N5 word Obsidian lane batch 5 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated word surface for 間|あいだ from out/word-build/exports/jlpt-n5-words.tsv",
+        "governed Japanese-source word evidence for 間|あいだ: JMdict entrySeq=1215230 plus tracked JLearn lane",
+        "learner-facing meaning between / while",
+        "example sentence 休みの間、本を読みます。 and exported reading/translation fit",
+        "notes/support surface: Core word for an interval, space between things, or while span; this card teaches 間 as あいだ.",
+        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+        "exact word-reading audio identity word-reading-間-あいだ exists in out/word-build/package/media",
+        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 0 [heiban]",
+        "managed media provenance and no silent fallback",
+        "golden regression as internal regression only, not source truth",
+        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
+        "verification limitations considered; no active core-card limitations recorded"
+      ]
+    }
   },
   {
     "word": "見える",

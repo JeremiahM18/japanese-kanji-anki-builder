@@ -3971,6 +3971,34 @@
         "priority": "medium",
         "reason": "Common boil/heat-liquid verb with exact JMdict verification and strong priority support, but the only kanji anchor is N2 沸.",
         "nextStep": "Route only through the N2 word contract and starter-data review; distinguish it from intransitive 沸く before promotion."
+      },
+      "沸く|わく": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common intransitive boil/become-hot/get-excited verb with exact JMdict verification and strong priority support, but the only kanji anchor is N2 沸.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; distinguish it from transitive 沸かす and choose the boil/become-hot sense before promotion."
+      },
+      "訳|わけ": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Very common reason/meaning noun with exact JMdict verification and strong priority support, but the only kanji anchor is N1 訳 and the entry is sense-broad.",
+        "nextStep": "Route only through the N1 word contract and starter-data review; choose a learner-facing reason or meaning sense before promotion."
+      },
+      "笑う|わらう": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Very common laugh/smile verb with exact JMdict verification and strong priority support, but the only kanji anchor is N3 笑.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple laugh or smile example."
+      },
+      "割れる|われる": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common intransitive break/crack/split verb with exact JMdict verification and strong priority support, but the only kanji anchor is N3 割.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; distinguish it from transitive 割る before promotion."
       }
     }
   },

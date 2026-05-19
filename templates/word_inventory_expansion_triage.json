@@ -3721,6 +3721,256 @@
         "priority": "high",
         "reason": "Common everyone/all noun-adverb with exact JMdict verification and strong priority support, but the only kanji anchor is N3 皆.",
         "nextStep": "Route only through the N3 word contract and starter-data review; compare with 皆さん|みなさん and みんな before choosing the learner-facing surface."
+      },
+      "港|みなと": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common harbour/port noun with exact JMdict verification and strong priority support, but the only kanji anchor is N3 港.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple harbour/port example."
+      },
+      "迎える|むかえる": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common meet/welcome/receive verb with exact JMdict verification and strong priority support, but the only kanji anchor is N3 迎.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; choose a concrete meet/welcome sense before promotion."
+      },
+      "向かう|むかう": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common face/head-toward verb with exact JMdict verification and strong priority support, but the only kanji anchor is N3 向.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a direction/travel example that distinguishes it from 向こう."
+      },
+      "昔|むかし": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common old-days/past-time word with exact JMdict verification and strong priority support, but the only kanji anchor is N3 昔.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple past-time example."
+      },
+      "虫|むし": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common insect/bug noun with exact JMdict verification and strong priority support, but the only kanji anchor is N2 虫.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a concrete insect/bug example."
+      },
+      "息子|むすこ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common son noun with exact JMdict verification and strong priority support; 息 is the N3 target anchor while 子 is easier N5 support.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a family-member example."
+      },
+      "娘|むすめ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common daughter/girl noun with exact JMdict verification and strong priority support, but the only kanji anchor is N3 娘.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a family-member example."
+      },
+      "召し上がる|めしあがる": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common polite eat/drink verb with exact JMdict verification and priority support; 召 is the N2 target anchor while 上 is easier N5 support.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; keep the honorific register explicit and choose an eat/drink example before promotion."
+      },
+      "珍しい|めずらしい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common rare/unusual adjective with exact JMdict verification and priority support, but the only kanji anchor is N2 珍.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a clear rare/unusual example."
+      },
+      "申し上げる|もうしあげる": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common humble say/tell/express verb with exact JMdict verification and strong priority support; 申 is the N3 target anchor while 上 is easier N5 support.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; keep the humble register explicit and choose a say/tell or formal-greeting sense before promotion."
+      },
+      "申す|もうす": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common humble say/be-called verb with exact JMdict verification and strong priority support, but the only kanji anchor is N3 申.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; keep the humble register explicit with a self-introduction or say/be-called example."
+      },
+      "戻る|もどる": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common return/go-back verb with exact JMdict verification and priority support, but the only kanji anchor is N2 戻.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a simple return/go-back example."
+      },
+      "木綿|もめん": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common cotton-material noun with exact JMdict verification and strong priority support; 綿 is the N2 target anchor while 木 is easier N5 support.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a concrete cotton/fabric example."
+      },
+      "焼く|やく": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common bake/grill/burn verb with exact JMdict verification and priority support, but the only kanji anchor is N3 焼.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; choose a simple cooking sense before broader burn/tan senses."
+      },
+      "約束|やくそく": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Very common promise/arrangement noun with exact JMdict verification and strong priority support, and both kanji anchors are N3 約 and 束.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a clear promise or appointment example."
+      },
+      "焼ける|やける": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common intransitive burn/be-roasted/be-sunburned verb with exact JMdict verification and priority support, but the only kanji anchor is N3 焼.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; distinguish it from transitive 焼く before promotion."
+      },
+      "優しい|やさしい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common kind/gentle adjective with exact JMdict verification and strong priority support, but the only kanji anchor is N3 優.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a kindness/gentleness example that stays distinct from 易しい|やさしい."
+      },
+      "柔らかい|やわらかい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common soft/tender/flexible adjective with exact JMdict verification and strong priority support, but the only kanji anchor is N2 柔.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a physical soft/tender example before figurative flexibility senses."
+      },
+      "湯|ゆ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common hot-water/bath word with exact JMdict verification and strong priority support, but the only kanji anchor is N3 湯.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a hot-water or bath example."
+      },
+      "輸出|ゆしゅつ・する": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source reading includes the ・する template marker and has no exact JMdict identity; the clean dictionary-backed word is 輸出|ゆしゅつ.",
+        "nextStep": "Do not move this exact source row; review 輸出|ゆしゅつ separately through the N2 word contract if needed."
+      },
+      "輸入|ゆにゅう・する": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source reading includes the ・する template marker and has no exact JMdict identity; the clean dictionary-backed word is 輸入|ゆにゅう.",
+        "nextStep": "Do not move this exact source row; review 輸入|ゆにゅう separately through the N2 word contract if needed."
+      },
+      "指|ゆび": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common finger/toe noun with exact JMdict verification and strong priority support, but the only kanji anchor is N3 指.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple body-part example."
+      },
+      "指輪|ゆびわ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common ring noun with exact JMdict verification and strong priority support, and both kanji anchors are N3 指 and 輪.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a finger-ring example."
+      },
+      "夢|ゆめ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common dream/hope noun with exact JMdict verification and strong priority support, but the only kanji anchor is N3 夢.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; choose a dream or hope sense explicitly before promotion."
+      },
+      "揺れる|ゆれる": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Common shake/sway verb with exact JMdict verification and priority support, but the only kanji anchor is N1 揺.",
+        "nextStep": "Route only through the N1 word contract and starter-data review; any earlier placement would need explicit learner-fit justification and visible N1 support labeling."
+      },
+      "様|よう": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Dictionary-backed way/manner/form item with exact JMdict verification and priority support, but the only kanji anchor is N2 様 and the usage is grammar-like/sense-broad.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; choose a learner-facing way/manner/form sense and avoid honorific suffix confusion before promotion."
+      },
+      "汚れる|よごれる": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common get-dirty/become-dirty verb with exact JMdict verification and priority support, but the only kanji anchor is N3 汚.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a concrete dirt/cleanliness example."
+      },
+      "予定|よてい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Very common plan/schedule noun with exact JMdict verification and strong priority support; 予 is the N3 target anchor while 定 is harder N2 support.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with visible 定=N2 support labeling."
+      },
+      "予約|よやく": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common reservation/booking noun with exact JMdict verification and strong priority support, and both kanji anchors are N3 予 and 約.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a hotel, restaurant, or appointment reservation example."
+      },
+      "寄る|よる": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common stop-by/drop-in verb with exact JMdict verification and priority support, but the only kanji anchor is N3 寄 and the entry has several senses.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; choose the drop-in/stop-by sense before promotion."
+      },
+      "喜ぶ|よろこぶ": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common be-delighted/be-glad verb with exact JMdict verification and strong priority support, but the only kanji anchor is N2 喜.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a clear glad/delighted example."
+      },
+      "留守|るす": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common absence/away-from-home noun with exact JMdict verification and strong priority support, and both kanji anchors are N3 留 and 守.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a being-away-from-home example."
+      },
+      "冷房|れいぼう": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common air-conditioning/cooling noun with exact JMdict verification and strong priority support; 冷 is the N3 target anchor while 房 is harder N1 support.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with visible 房=N1 support labeling."
+      },
+      "歴史|れきし": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Very common history noun with exact JMdict verification and strong priority support, and both kanji anchors are N2 歴 and 史.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a school/history example."
+      },
+      "連絡|れんらく": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Very common contact/communication noun with exact JMdict verification and strong priority support, and both kanji anchors are N3 連 and 絡.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a phone/email/contact example."
+      },
+      "沸かす|わかす": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common boil/heat-liquid verb with exact JMdict verification and strong priority support, but the only kanji anchor is N2 沸.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; distinguish it from intransitive 沸く before promotion."
       }
     }
   },

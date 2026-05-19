@@ -720,6 +720,214 @@
         "priority": "medium",
         "reason": "Useful color noun with exact JMdict verification and priority support, but it has no N5 kanji anchor; governed 黒い|くろい already covers the N4 adjective reading, so this exact noun belongs in N4 review if it is worth a separate card.",
         "nextStep": "Route only through the N4 word contract and starter-data review; review alongside the other color noun/adjective pairs."
+      },
+      "警官|けいかん": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common police-officer noun with exact JMdict verification and priority support, but both kanji anchors are N3 警 and 官 and no current N5 word card can anchor it.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; review alongside police/public-safety vocabulary before promotion."
+      },
+      "消す|けす": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common erase/delete/turn-off verb with exact JMdict verification and priority support, but the only kanji anchor is N3 消; it should be reviewed with the related intransitive 消える.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a clear transitive erase/delete or turn-off example."
+      },
+      "結構|けっこう": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common enough/fine/nice expression with exact JMdict verification and priority support, but it has no N5 anchor; 構 is N3 and 結 is harder N1 support that must stay visibly labeled.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; choose one learner-facing sense before promotion."
+      },
+      "結婚|けっこん（する）": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common marriage/suru-verb noun with clean JMdict verification for 結婚|けっこん, but the source reading includes parenthetical する and the card must not preserve that as the reading field.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; normalize any promoted card to 結婚|けっこん and keep 結 as harder N1 support."
+      },
+      "玄関|げんかん": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common entryway/front-door noun with exact JMdict verification and priority support, but it has no N5 anchor; 関 is N3 and 玄 is harder N1 support that must stay visibly labeled.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a concrete entryway/front-door example."
+      },
+      "交差点|こうさてん": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common intersection noun with exact JMdict verification and priority support, but it has no N5 anchor; 交 and 差 are N3 while 点 is harder N2 support that must stay visibly labeled.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with an intersection/crossing example."
+      },
+      "紅茶|こうちゃ": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "high",
+        "reason": "Common black-tea noun with exact JMdict verification and priority support, but it has no N5 anchor; 茶 is N4 and 紅 is harder N2 support that must stay visibly labeled.",
+        "nextStep": "Route only through the N4 word contract and starter-data review; review alongside governed お茶 and 茶色."
+      },
+      "交番|こうばん": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "medium",
+        "reason": "Common police-box noun with exact JMdict verification and priority support, but it has no N5 anchor; 番 is N4 and 交 is harder N3 support that must stay visibly labeled.",
+        "nextStep": "Route only through the N4 word contract and starter-data review; keep the police-box sense distinct from broader 交番 alternation senses."
+      },
+      "御飯|ごはん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact JMdict identity exists, but governed N4 ご飯|ごはん already teaches the learner-facing meal/cooked-rice word with the common mixed spelling.",
+        "nextStep": "Do not move this full-kanji variant row; keep ご飯|ごはん as the governed card unless a future spelling-variant policy says otherwise."
+      },
+      "困る|こまる": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common be-troubled/have-difficulty verb with exact JMdict verification and priority support, but the only kanji anchor is N2 困 and no current lower-level card covers this exact word identity.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a clear trouble/difficulty example."
+      },
+      "財布|さいふ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common wallet/purse noun with exact JMdict verification and priority support, but it has no N5 anchor; 財 is N3 and 布 is harder N2 support that must stay visibly labeled.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a concrete wallet/purse example."
+      },
+      "咲く|さく": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common bloom/flower verb with exact JMdict verification and priority support, but the only kanji anchor is N2 咲 and no current lower-level card covers this exact word identity.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a clear flower-blooming example."
+      },
+      "差す|さす": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common hold-up/raise/insert verb with exact JMdict verification and priority support, but the only kanji anchor is N3 差 and the source gloss spans several senses.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; choose one learner-facing sense, likely umbrella/light, before promotion."
+      },
+      "雑誌|ざっし": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common magazine/journal noun with exact JMdict verification and priority support, but it has no N5 anchor; 雑 is N3 and 誌 is harder N2 support that must stay visibly labeled.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a clean magazine example."
+      },
+      "砂糖|さとう": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common sugar noun with exact JMdict verification and priority support, but it has no N5 anchor; 砂 is N2 and 糖 is harder N1 support that must stay visibly labeled.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with explicit support-kanji labeling for 糖."
+      },
+      "散歩|さんぽ（する）": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source row carries a parenthetical する marker, while governed N3 散歩|さんぽ already teaches the clean walk/stroll word identity.",
+        "nextStep": "Do not move this exact source row; keep 散歩|さんぽ as the governed card unless a future process explicitly normalizes source-template readings."
+      },
+      "塩|しお": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common salt noun with exact JMdict verification and priority support, but the only kanji anchor is N2 塩 and no current lower-level card covers this exact word identity.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a simple table-salt or cooking example."
+      },
+      "静か|しずか": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common quiet/calm adjectival noun with exact JMdict verification and priority support, but the only kanji anchor is N2 静 and no current lower-level card covers this exact word identity.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a clear quiet/calm example."
+      },
+      "字引|じびき": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "low",
+        "reason": "Dictionary noun with exact JMdict verification and priority support, but both kanji anchors are N4 字 and 引 and target-level review must decide whether this surface is learner-facing enough.",
+        "nextStep": "Route only through the N4 word contract and starter-data review; compare against the preferred dictionary vocabulary before promotion."
+      },
+      "締める|しめる": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Common tie/fasten/tighten verb with exact JMdict verification and priority support, but the only kanji anchor is N1 締 and the source-level N5 hint is not placement approval.",
+        "nextStep": "Route only through the N1 word contract and starter-data review; choose a concrete tie/fasten/tighten sense before promotion."
+      },
+      "吸う|すう": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common breathe-in/smoke/suck verb with exact JMdict verification and priority support, but the only kanji anchor is N3 吸; related 吸収 and 呼吸 do not cover this exact verb.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; choose a learner-facing breathe-in, smoke, or suck sense before promotion."
+      },
+      "好き|すき": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "high",
+        "reason": "Common liking/fondness adjectival noun with exact JMdict verification and priority support, but the only kanji anchor is N4 好; governed 大好き|だいすき does not cover this base word identity.",
+        "nextStep": "Route only through the N4 word contract and starter-data review with a clear like/fondness example."
+      },
+      "涼しい|すずしい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common cool/refreshing adjective with exact JMdict verification and priority support, but the only kanji anchor is N2 涼 and no current lower-level card covers this exact word identity.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a clear weather/temperature example."
+      },
+      "背|せい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common height/stature noun reading with exact JMdict verification and priority support, but the only kanji anchor is N3 背 and the written form has multiple common readings.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; require a height/stature example and avoid conflating it with 背|せ."
+      },
+      "背広|せびろ": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "low",
+        "reason": "Business-suit noun with exact JMdict verification and priority support, but it has no N5 anchor; 広 is N4 and 背 is harder N3 support that must stay visibly labeled.",
+        "nextStep": "Route only through the N4 word contract and starter-data review; decide whether this clothing word is useful enough before promotion."
+      },
+      "狭い|せまい": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Common narrow/cramped adjective with exact JMdict verification and priority support, but the only kanji anchor is N1 狭 and the source-level N5 hint is not placement approval.",
+        "nextStep": "Route only through the N1 word contract and starter-data review with a concrete narrow/cramped example."
+      },
+      "洗濯|せんたく": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "high",
+        "reason": "Common laundry/washing noun with exact JMdict verification and priority support, but it has no N5 anchor; 洗 is N4 and 濯 is harder N2 support that must stay visibly labeled.",
+        "nextStep": "Route only through the N4 word contract and starter-data review; review alongside governed 洗う|あらう and support-kanji labeling for 濯."
+      },
+      "全部|ぜんぶ": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "high",
+        "reason": "Common all/whole adverbial noun with exact JMdict verification and priority support, but both kanji anchors are N4 全 and 部 with no N5 anchor.",
+        "nextStep": "Route only through the N4 word contract and starter-data review with a clear all/whole example."
+      },
+      "掃除|そうじ（する）": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common cleaning/sweeping noun with clean JMdict verification for 掃除|そうじ, but the source reading includes parenthetical する and the card must not preserve that as the reading field.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; normalize any promoted card to 掃除|そうじ."
+      },
+      "建物|たてもの": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "high",
+        "reason": "Common building noun with exact JMdict verification and priority support, but it has no N5 anchor; both kanji anchors are N4 建 and 物.",
+        "nextStep": "Route only through the N4 word contract and starter-data review; keep it distinct from governed 建てる|たてる and 物|もの."
       }
     }
   },

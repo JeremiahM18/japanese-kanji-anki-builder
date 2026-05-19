@@ -105,6 +105,62 @@
     },
     "notes": "Polite or familiar family term for mother in beginner conversation; keeps 母 -> かあ visible."
   },
+  "お兄さん|おにいさん": {
+    "written": "お兄さん",
+    "reading": "おにいさん",
+    "readingBreakdown": "お<ruby>兄<rt>にい</rt></ruby>さん",
+    "meaning": "older brother",
+    "jlpt": 4,
+    "source": "jlptstudy.net-n5",
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "兄"
+      ],
+      "coversReadings": {
+        "兄": "にい"
+      }
+    },
+    "notes": "Common N4 polite or familiar older-brother term from the routed N5 source lane; keeps 兄 -> にい visible as an exact social expression.",
+    "exampleSentence": {
+      "japanese": "彼のお兄さんは大学生です。",
+      "reading": "かれのおにいさんはだいがくせいです。",
+      "english": "His older brother is a university student."
+    }
+  },
+  "お姉さん|おねえさん": {
+    "written": "お姉さん",
+    "reading": "おねえさん",
+    "readingBreakdown": "お<ruby>姉<rt>ねえ</rt></ruby>さん",
+    "meaning": "older sister",
+    "jlpt": 4,
+    "source": "jlptstudy.net-n5",
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "姉"
+      ],
+      "coversReadings": {
+        "姉": "ねえ"
+      }
+    },
+    "notes": "Common N4 polite or familiar older-sister term from the routed N5 source lane; keeps 姉 -> ねえ visible as an exact social expression.",
+    "exampleSentence": {
+      "japanese": "彼のお姉さんは先生です。",
+      "reading": "かれのおねえさんはせんせいです。",
+      "english": "His older sister is a teacher."
+    }
+  },
   "ご飯|ごはん": {
     "written": "ご飯",
     "reading": "ごはん",
@@ -8741,6 +8797,34 @@
       "english": "I bought new clothes for the trip."
     }
   },
+  "服|ふく": {
+    "written": "服",
+    "reading": "ふく",
+    "readingBreakdown": "<ruby>服<rt>ふく</rt></ruby>",
+    "meaning": "clothes / clothing",
+    "jlpt": 4,
+    "source": "jlptstudy.net-n5",
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "服"
+      ],
+      "coversReadings": {
+        "服": "ふく"
+      }
+    },
+    "notes": "Common N4 standalone clothes noun from the routed N5 source lane; related compounds do not replace this core exact word identity.",
+    "exampleSentence": {
+      "japanese": "新しい服を買いました。",
+      "reading": "あたらしいふくをかいました。",
+      "english": "I bought new clothes."
+    }
+  },
   "理由|りゆう": {
     "written": "理由",
     "reading": "りゆう",
@@ -8947,6 +9031,36 @@
       "japanese": "この場所は駅から遠くて少し不便です。",
       "reading": "このばしょはえきからとおくてすこしふべんです。",
       "english": "This place is a little inconvenient because it is far from the station."
+    }
+  },
+  "便利|べんり": {
+    "written": "便利",
+    "reading": "べんり",
+    "readingBreakdown": "<ruby>便<rt>べん</rt></ruby><ruby>利<rt>り</rt></ruby>",
+    "meaning": "convenient / handy / useful",
+    "jlpt": 4,
+    "source": "jlptstudy.net-n5",
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "便",
+        "利"
+      ],
+      "coversReadings": {
+        "便": "べん",
+        "利": "り"
+      }
+    },
+    "notes": "Common N4 adjective-noun from the routed N5 source lane; both 便 and 利 are N4 anchors.",
+    "exampleSentence": {
+      "japanese": "このかばんは便利です。",
+      "reading": "このかばんはべんりです。",
+      "english": "This bag is convenient."
     }
   },
   "歌|うた": {
@@ -11867,6 +11981,34 @@
       "japanese": "夏休みに京都で写真をたくさん撮りました。",
       "reading": "なつやすみにきょうとでしゃしんをたくさんとりました。",
       "english": "I took many photos in Kyoto during summer vacation."
+    }
+  },
+  "夏|なつ": {
+    "written": "夏",
+    "reading": "なつ",
+    "readingBreakdown": "<ruby>夏<rt>なつ</rt></ruby>",
+    "meaning": "summer",
+    "jlpt": 4,
+    "source": "jlptstudy.net-n5",
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "夏"
+      ],
+      "coversReadings": {
+        "夏": "なつ"
+      }
+    },
+    "notes": "Common N4 standalone summer noun from the routed N5 source lane; keeps 夏 -> なつ visible as its own word, not only inside compounds.",
+    "exampleSentence": {
+      "japanese": "夏は海に行きたいです。",
+      "reading": "なつはうみにいきたいです。",
+      "english": "I want to go to the sea in summer."
     }
   },
   "始まる|はじまる": {
@@ -21913,6 +22055,36 @@
       "english": "I read Japanese literature."
     }
   },
+  "文章|ぶんしょう": {
+    "written": "文章",
+    "reading": "ぶんしょう",
+    "readingBreakdown": "<ruby>文<rt>ぶん</rt></ruby><ruby>章<rt>しょう</rt></ruby>",
+    "meaning": "sentence / text / passage",
+    "jlpt": 4,
+    "source": "jlptstudy.net-n5",
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "文",
+        "章"
+      ],
+      "coversReadings": {
+        "文": "ぶん",
+        "章": "しょう"
+      }
+    },
+    "notes": "Common N4 writing/text noun with a 文 -> ぶん anchor; 章 is harder N2 support and stays visibly labeled.",
+    "exampleSentence": {
+      "japanese": "この文章は少し長いです。",
+      "reading": "このぶんしょうはすこしながいです。",
+      "english": "This text is a little long."
+    }
+  },
   "文法|ぶんぽう": {
     "written": "文法",
     "reading": "ぶんぽう",
@@ -22181,6 +22353,36 @@
       "japanese": "両方とも好きです。",
       "reading": "りょうほうともすきです。",
       "english": "I like both."
+    }
+  },
+  "両親|りょうしん": {
+    "written": "両親",
+    "reading": "りょうしん",
+    "readingBreakdown": "<ruby>両<rt>りょう</rt></ruby><ruby>親<rt>しん</rt></ruby>",
+    "meaning": "parents / both parents",
+    "jlpt": 4,
+    "source": "jlptstudy.net-n5",
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "両",
+        "親"
+      ],
+      "coversReadings": {
+        "両": "りょう",
+        "親": "しん"
+      }
+    },
+    "notes": "Common N4 family noun with a 親 -> しん anchor; 両 is harder N3 support and stays visibly labeled.",
+    "exampleSentence": {
+      "japanese": "両親と旅行に行きました。",
+      "reading": "りょうしんとりょこうにいきました。",
+      "english": "I went on a trip with my parents."
     }
   },
   "旅館|りょかん": {
@@ -23347,6 +23549,36 @@
       "japanese": "この番組は毎週見ています。",
       "reading": "このばんぐみはまいしゅうみています。",
       "english": "I watch this program every week."
+    }
+  },
+  "番号|ばんごう": {
+    "written": "番号",
+    "reading": "ばんごう",
+    "readingBreakdown": "<ruby>番<rt>ばん</rt></ruby><ruby>号<rt>ごう</rt></ruby>",
+    "meaning": "number / series of digits",
+    "jlpt": 4,
+    "source": "jlptstudy.net-n5",
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "番",
+        "号"
+      ],
+      "coversReadings": {
+        "番": "ばん",
+        "号": "ごう"
+      }
+    },
+    "notes": "Common N4 number noun with a 番 -> ばん anchor; 号 is harder N3 support and stays visibly labeled.",
+    "exampleSentence": {
+      "japanese": "電話番号を書いてください。",
+      "reading": "でんわばんごうをかいてください。",
+      "english": "Please write your phone number."
     }
   },
   "市民|しみん": {

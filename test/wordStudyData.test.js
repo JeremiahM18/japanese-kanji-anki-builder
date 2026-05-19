@@ -102,6 +102,55 @@ test("tracked starter word data includes the first governed N4 source-expansion 
     ]);
 });
 
+test("tracked starter word data includes the first governed routed N4 move-candidate batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    for (const key of [
+        "牛乳|ぎゅうにゅう",
+        "果物|くだもの",
+        "紅茶|こうちゃ",
+        "好き|すき",
+        "洗濯|せんたく",
+        "全部|ぜんぶ",
+        "建物|たてもの",
+        "手紙|てがみ",
+    ]) {
+        assert.equal(starterEntries[key]?.jlpt, 4, key);
+        assert.equal(starterEntries[key]?.source, "jlptstudy.net-n5", key);
+        assert.equal(starterEntries[key]?.coverage?.role, "both", key);
+        assert.equal(starterEntries[key]?.tags?.includes("n4"), true, key);
+    }
+
+    assertCoverageReadings(starterEntries, [
+        ["牛乳|ぎゅうにゅう", "牛", "ぎゅう"],
+        ["牛乳|ぎゅうにゅう", "乳", "にゅう"],
+        ["果物|くだもの", "果", "くだ"],
+        ["果物|くだもの", "物", "もの"],
+        ["紅茶|こうちゃ", "紅", "こう"],
+        ["紅茶|こうちゃ", "茶", "ちゃ"],
+        ["好き|すき", "好", "す"],
+        ["洗濯|せんたく", "洗", "せん"],
+        ["洗濯|せんたく", "濯", "たく"],
+        ["全部|ぜんぶ", "全", "ぜん"],
+        ["全部|ぜんぶ", "部", "ぶ"],
+        ["建物|たてもの", "建", "たて"],
+        ["建物|たてもの", "物", "もの"],
+        ["手紙|てがみ", "手", "て"],
+        ["手紙|てがみ", "紙", "がみ"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["牛乳|ぎゅうにゅう", "<ruby>牛<rt>ぎゅう</rt></ruby><ruby>乳<rt>にゅう</rt></ruby>"],
+        ["果物|くだもの", "<ruby>果<rt>くだ</rt></ruby><ruby>物<rt>もの</rt></ruby>"],
+        ["紅茶|こうちゃ", "<ruby>紅<rt>こう</rt></ruby><ruby>茶<rt>ちゃ</rt></ruby>"],
+        ["手紙|てがみ", "<ruby>手<rt>て</rt></ruby><ruby>紙<rt>がみ</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["牛乳|ぎゅうにゅう"].notes, /乳 is harder N2 support/);
+    assert.match(starterEntries["果物|くだもの"].notes, /果 is harder N3 support/);
+    assert.match(starterEntries["紅茶|こうちゃ"].notes, /紅 is harder N2 support/);
+    assert.match(starterEntries["洗濯|せんたく"].notes, /濯 is harder N2 support/);
+    assert.match(starterEntries["手紙|てがみ"].notes, /手 -> て and 紙 -> がみ/);
+});
+
 test("tracked starter word data includes the first N3 Silver source-expansion batch", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

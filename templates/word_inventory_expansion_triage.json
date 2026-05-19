@@ -1137,6 +1137,213 @@
         "priority": "high",
         "reason": "Common fast/quick adjective with exact JMdict verification and priority support, but the only kanji anchor is N3 速; governed 早い|はやい is related but teaches early/soon rather than this speed spelling.",
         "nextStep": "Route only through the N3 word contract and starter-data review with a speed-focused example that distinguishes it from 早い."
+      },
+      "晴れ|はれ": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common clear-weather noun with exact JMdict verification and priority support, but the only kanji anchor is N2 晴 and no current lower-level card covers this exact word identity.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; compare with 晴れる before deciding whether both noun and verb surfaces are useful."
+      },
+      "晴れる|はれる": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common clear-up/be-sunny verb with exact JMdict verification and priority support, but the only kanji anchor is N2 晴 and no current lower-level card covers this exact word identity.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a clear weather example."
+      },
+      "番号|ばんごう": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "high",
+        "reason": "Common number/series-of-digits noun with exact JMdict verification and priority support; 番 is an N4 anchor while 号 is harder N3 support that must stay visibly labeled.",
+        "nextStep": "Route only through the N4 word contract and starter-data review; label 号 as N3 support if promoted."
+      },
+      "晩御飯|ばんごはん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source and JMdict row exists, but governed 晩ご飯|ばんごはん already teaches the learner-facing dinner word with the common mixed spelling and avoids extra N2 御 spelling load.",
+        "nextStep": "Do not move this full-kanji variant row; keep 晩ご飯|ばんごはん as the governed card unless a future spelling-variant policy says otherwise."
+      },
+      "弾く|ひく": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Common play-a-stringed-or-keyboard-instrument verb with exact JMdict verification and priority support, but the only kanji anchor is N1 弾 and the N5 source label is not placement approval.",
+        "nextStep": "Route only through the N1 word contract and starter-data review with a musical-instrument example that distinguishes 弾く from 引く."
+      },
+      "暇|ひま": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Common free-time/leisure noun or adjectival noun with exact JMdict verification and priority support, but the only kanji anchor is N1 暇 and no current lower-level card covers this exact word identity.",
+        "nextStep": "Route only through the N1 word contract and starter-data review with a simple free-time example."
+      },
+      "昼御飯|ひるごはん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source and JMdict row exists, but governed 昼ご飯|ひるごはん already teaches the learner-facing lunch word with the common mixed spelling and avoids extra N2 御 spelling load.",
+        "nextStep": "Do not move this full-kanji variant row; keep 昼ご飯|ひるごはん as the governed card unless a future spelling-variant policy says otherwise."
+      },
+      "封筒|ふうとう": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common envelope noun with exact JMdict verification and priority support, but both kanji anchors are N2 封 and 筒 and no current lower-level card covers this exact word identity.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a practical mail/envelope example."
+      },
+      "吹く|ふく": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common blow/wind-blow verb with exact JMdict verification and priority support, but the only kanji anchor is N3 吹 and no current lower-level card covers this exact word identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a wind or breath example."
+      },
+      "服|ふく": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "high",
+        "reason": "Common clothes noun with exact JMdict verification and priority support, but the only kanji anchor is N4 服; governed 洋服 and 夏服 are related compounds but do not cover this standalone reading.",
+        "nextStep": "Route only through the N4 word contract and starter-data review; compare against clothing compounds before deciding whether the standalone card is needed."
+      },
+      "豚肉|ぶたにく": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "medium",
+        "reason": "Common pork noun with exact JMdict verification and priority support; 肉 is an N4 anchor while 豚 is harder N1 support that must stay visibly labeled.",
+        "nextStep": "Route only through the N4 word contract and starter-data review; compare against governed 肉 and 牛肉 before deciding whether this meat compound is needed."
+      },
+      "降る|ふる": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common fall/precipitate verb for rain or snow with exact JMdict verification and priority support, but the only kanji anchor is N3 降; governed 降ろす|おろす is related but does not cover this reading.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a rain/snow example."
+      },
+      "文章|ぶんしょう": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "high",
+        "reason": "Common writing/sentence/text noun with exact JMdict verification and priority support; 文 is an N4 anchor while 章 is harder N2 support that must stay visibly labeled.",
+        "nextStep": "Route only through the N4 word contract and starter-data review; label 章 as N2 support if promoted."
+      },
+      "辺|へん": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Area/vicinity/side noun with exact JMdict verification and priority support, but the only kanji anchor is N3 辺; governed 辺り|あたり is related but does not cover this standalone reading.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a clear vicinity or side/edge example."
+      },
+      "勉強|べんきょう（する）": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "The source row carries a parenthetical する marker, while governed 勉強|べんきょう already teaches the clean study word identity.",
+        "nextStep": "Do not move this exact source row; keep 勉強|べんきょう as the governed card unless a future source-template normalization policy says otherwise."
+      },
+      "便利|べんり": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "high",
+        "reason": "Common convenient/handy adjectival noun with exact JMdict verification and priority support, and both kanji anchors are N4 便 and 利.",
+        "nextStep": "Route only through the N4 word contract and starter-data review with a practical convenience example."
+      },
+      "欲しい|ほしい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common want/desire adjective with exact JMdict verification and priority support, but the only kanji anchor is N3 欲 and no current lower-level card covers this exact word identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a clear wanting/desiring example."
+      },
+      "細い|ほそい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common thin/slender/fine adjective with exact JMdict verification and priority support, but the only kanji anchor is N2 細 and no current lower-level card covers this exact word identity.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a physical thin/slender example."
+      },
+      "曲る|まがる": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "The source row and JMdict both support 曲る|まがる, but the sparse-okurigana spelling needs deliberate target-lane surface review before it becomes a learner card; the kanji anchor is N2 曲.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; decide whether any promoted card should normalize to modern 曲がる|まがる instead of preserving 曲る."
+      },
+      "窓|まど": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common window noun with exact JMdict verification and priority support, but the only kanji anchor is N3 窓 and no current lower-level card covers this exact word identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple window example."
+      },
+      "磨く|みがく": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common brush/polish verb with exact JMdict verification and priority support, but the only kanji anchor is N2 磨 and no current lower-level card covers this exact word identity.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a tooth-brushing or polishing example."
+      },
+      "緑|みどり": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common green/greenery noun with exact JMdict verification and priority support, but the only kanji anchor is N3 緑 and no current lower-level card covers this exact word identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; compare against lower-level color adjectives before deciding if the standalone noun is needed."
+      },
+      "皆さん|みなさん": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common polite everyone/everybody word with exact JMdict verification and priority support, but the only kanji anchor is N3 皆 and no current lower-level card covers this exact word identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; compare with 皆|みんな and kana-first みなさん before promotion."
+      },
+      "耳|みみ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common ear noun with exact JMdict verification and priority support, but the only kanji anchor is N3 耳 and no current lower-level card covers this exact word identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple body-part example."
+      },
+      "向こう|むこう": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common over-there/opposite-side noun with exact JMdict verification and priority support, but the only kanji anchor is N3 向 and no current lower-level card covers this exact word identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with an over-there/opposite-side example."
+      },
+      "難しい|むずかしい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common difficult adjective with exact JMdict verification and priority support, but the only kanji anchor is N2 難 and no current lower-level card covers this exact word identity.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a clear difficult/hard example."
+      },
+      "門|もん": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "medium",
+        "reason": "Common gate noun with exact JMdict verification and priority support, but the only kanji anchor is N4 門; related compounds such as 専門 do not cover this standalone reading.",
+        "nextStep": "Route only through the N4 word contract and starter-data review with a physical gate example."
+      },
+      "易しい|やさしい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common easy/plain/simple adjective with exact JMdict verification and priority support, but the only kanji anchor is N3 易 and it must stay distinct from 優しい|やさしい.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with an easy/simple example that does not imply kind/gentle 優しい."
+      },
+      "昨夜|ゆうべ": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "medium",
+        "reason": "Common last-night noun with exact JMdict verification and priority support; 夜 is an N4 anchor while 昨 is harder N3 support that must stay visibly labeled.",
+        "nextStep": "Route only through the N4 word contract and starter-data review; label 昨 as N3 support and compare with other yesterday/evening words before promotion."
+      },
+      "雪|ゆき": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common snow noun with exact JMdict verification and priority support, but the only kanji anchor is N3 雪 and no current lower-level card covers this exact word identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple snow/weather example."
       }
     }
   },

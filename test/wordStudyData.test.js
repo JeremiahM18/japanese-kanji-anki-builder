@@ -246,6 +246,56 @@ test("tracked starter word data includes the third governed routed N4 move-candi
     assert.match(starterEntries["風邪|かぜ"].notes, /whole-word reading/);
 });
 
+test("tracked starter word data includes the final governed routed N4 move-candidate batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    for (const key of [
+        "花瓶|かびん",
+        "交番|こうばん",
+        "字引|じびき",
+        "背広|せびろ",
+        "近く|ちかく",
+        "とり肉|とりにく",
+        "豚肉|ぶたにく",
+        "門|もん",
+        "昨夜|ゆうべ",
+    ]) {
+        assert.equal(starterEntries[key]?.jlpt, 4, key);
+        assert.equal(starterEntries[key]?.source, "jlptstudy.net-n5", key);
+        assert.equal(starterEntries[key]?.coverage?.role, "both", key);
+        assert.equal(starterEntries[key]?.tags?.includes("n4"), true, key);
+    }
+
+    assertCoverageReadings(starterEntries, [
+        ["花瓶|かびん", "花", "か"],
+        ["花瓶|かびん", "瓶", "びん"],
+        ["交番|こうばん", "交", "こう"],
+        ["交番|こうばん", "番", "ばん"],
+        ["字引|じびき", "字", "じ"],
+        ["字引|じびき", "引", "びき"],
+        ["背広|せびろ", "背", "せ"],
+        ["背広|せびろ", "広", "びろ"],
+        ["近く|ちかく", "近", "ちか"],
+        ["とり肉|とりにく", "肉", "にく"],
+        ["豚肉|ぶたにく", "豚", "ぶた"],
+        ["豚肉|ぶたにく", "肉", "にく"],
+        ["門|もん", "門", "もん"],
+        ["昨夜|ゆうべ", "昨夜", "ゆうべ"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["花瓶|かびん", "<ruby>花<rt>か</rt></ruby><ruby>瓶<rt>びん</rt></ruby>"],
+        ["字引|じびき", "<ruby>字<rt>じ</rt></ruby><ruby>引<rt>びき</rt></ruby>"],
+        ["近く|ちかく", "<ruby>近<rt>ちか</rt></ruby>く"],
+        ["とり肉|とりにく", "とり<ruby>肉<rt>にく</rt></ruby>"],
+        ["昨夜|ゆうべ", "<ruby>昨夜<rt>ゆうべ</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["花瓶|かびん"].notes, /瓶 is harder N2 support/);
+    assert.match(starterEntries["交番|こうばん"].notes, /交 is harder N3 support/);
+    assert.match(starterEntries["背広|せびろ"].notes, /背 is harder N3 support/);
+    assert.match(starterEntries["豚肉|ぶたにく"].notes, /豚 is harder N1 support/);
+    assert.match(starterEntries["昨夜|ゆうべ"].notes, /whole-word reading/);
+});
+
 test("tracked starter word data includes the first N3 Silver source-expansion batch", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

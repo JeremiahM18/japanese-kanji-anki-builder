@@ -98,7 +98,7 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
     assert.equal(contract.inventoryCounts["1"], 26);
     assert.equal(contract.inventoryCounts["2"], 28);
     assert.equal(contract.inventoryCounts["3"], 269);
-    assert.equal(contract.inventoryCounts["4"], 691);
+    assert.equal(contract.inventoryCounts["4"], 700);
     assert.equal(contract.inventoryCounts["5"], 287);
     assert.equal(contract.excludedCounts["5"], 20);
     for (const key of n5StandaloneNumberWords) {
@@ -138,6 +138,15 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
     assert.equal(getJlptWordLevel(contract, "お手洗い|おてあらい"), 4);
     assert.equal(getJlptWordLevel(contract, "お風呂|おふろ"), 4);
     assert.equal(getJlptWordLevel(contract, "風邪|かぜ"), 4);
+    assert.equal(getJlptWordLevel(contract, "花瓶|かびん"), 4);
+    assert.equal(getJlptWordLevel(contract, "交番|こうばん"), 4);
+    assert.equal(getJlptWordLevel(contract, "字引|じびき"), 4);
+    assert.equal(getJlptWordLevel(contract, "背広|せびろ"), 4);
+    assert.equal(getJlptWordLevel(contract, "近く|ちかく"), 4);
+    assert.equal(getJlptWordLevel(contract, "とり肉|とりにく"), 4);
+    assert.equal(getJlptWordLevel(contract, "豚肉|ぶたにく"), 4);
+    assert.equal(getJlptWordLevel(contract, "門|もん"), 4);
+    assert.equal(getJlptWordLevel(contract, "昨夜|ゆうべ"), 4);
     assert.equal(getJlptWordLevel(contract, "合う|あう"), 4);
     assert.equal(getJlptWordLevel(contract, "お土産|おみやげ"), 4);
     assert.equal(getJlptWordLevel(contract, "科学|かがく"), 4);

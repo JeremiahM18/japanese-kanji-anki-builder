@@ -3625,8 +3625,8 @@
     ],
     "fixSummary": "Tightened the note to scope 三百 to the number reading and exclude unrelated dictionary senses.",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 三百|さんびゃく on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact three-hundred number identity without unrelated JMdict secondary senses on the card surface, natural price example, exact JMdict row entrySeq=1301490, and Kanjium pitch; retained 百 -> びゃく sound-change usefulness and no active core-card limitations.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -3680,7 +3680,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 三百|さんびゃく checked generated surface, Japanese-source evidence from JMdict entrySeq 1301490, example sentence この本は三百円です。, reading このほんはさんびゃくえんです。, translation This book costs three hundred yen., notes/support surface Common number word for three hundred; kept for 百 -> びゃく number-sound change without unrelated dictionary senses., reading breakdown 三 （さん）; 百 （びゃく）, meaning three hundred, labels JLPT N5; Reading coverage support; focus 百; covers 百: びゃく, audio word-reading-三百-さんびゃく, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1. Dictionary-backed pitch evidence is bound to the exact word-reading identity., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-026",
+      "scope": "N5 word Obsidian lane batch 26 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "上",
@@ -8740,8 +8760,8 @@
     ],
     "fixSummary": "Added a protected note clarifying the learner-facing healthy/energetic sense and labeling 元 as higher-level support; later extended the explicit coverage contract so 元気 also covers N4 元 -> げん without moving the N5 placement anchor.",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 元気|げんき on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact healthy/energetic/well learner-facing identity without noisy secondary glosses, natural wellness example, exact JMdict row entrySeq=1260720, higher-level 元 support label, and Kanjium pitch; retained core beginner greeting/condition usefulness and no active core-card limitations.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -8795,7 +8815,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 元気|げんき checked generated surface, Japanese-source evidence from JMdict entrySeq 1260720, example sentence 今日は元気です。, reading きょうはげんきです。, translation I am well today., notes/support surface Core beginner word for being well or energetic; 元 is higher-level support that covers the N4 元 -> げん reading, while the N5 placement remains anchored by 気 -> き., reading breakdown 元 （げん）; 気 （き）, meaning healthy / energetic / well, labels JLPT N5; JLPT core + reading coverage; focus 元、気; covers 元: げん ／ 気: き, audio word-reading-元気-げんき, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1. Dictionary-backed pitch evidence is bound to the exact word-reading identity., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-025",
+      "scope": "N5 word Obsidian lane batch 25 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "先月",
@@ -10805,8 +10845,8 @@
       "noSilentFallback": true
     },
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 八日|ようか on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact eighth-day/eight-days date identity, natural school date example, exact JMdict row entrySeq=1476920, and Kanjium heiban pitch; retained whole-word date-reading guidance and no active core-card limitations.",
     "notesIncludes": [
       "Common date and duration word with a whole-word date reading; kept for 八 -> よう support without pretending it is a regular 八 plus 日 compound."
     ],
@@ -10864,7 +10904,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 八日|ようか checked generated surface, Japanese-source evidence from JMdict entrySeq 1476920, example sentence 八日に学校へ行きます。, reading ようかにがっこうへいきます。, translation I go to school on the eighth., notes/support surface Common date and duration word with a whole-word date reading; kept for 八 -> よう support without pretending it is a regular 八 plus 日 compound., reading breakdown 八 （よう） ／ eight; 日 （か） ／ day / sun, meaning the eighth day / eight days, labels JLPT N5; Reading coverage support; focus 八; covers 八: よう, audio word-reading-八日-ようか, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-024",
+      "scope": "N5 word Obsidian lane batch 24 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "生まれる",
@@ -26216,8 +26276,8 @@
       }
     ],
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 語らう|かたらう on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact talk-together/converse verb identity, natural friend conversation example, exact JMdict row entrySeq=1270920, and Kanjium pitch; retained support-only note because it is useful for 語 reading coverage but not a core beginner substitute for 話す.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -26271,7 +26331,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 語らう|かたらう checked generated surface, Japanese-source evidence from JMdict entrySeq 1270920, example sentence 友だちと楽しく語らう。, reading ともだちとたのしくかたらう。, translation I enjoy talking together with my friend., notes/support surface Dictionary-backed support verb for 語 -> かたらう; kept support-only and not as a core substitute for beginner 話す or 話., reading breakdown 語 （かた） ／ language / word, meaning talk together / converse, labels JLPT N5; Reading coverage support; focus 語; covers 語: かたらう, audio word-reading-語らう-かたらう, pitch accent source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] rendered Pitch 1: 3, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-024",
+      "scope": "N5 word Obsidian lane batch 24 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "料理",
@@ -26348,8 +26428,8 @@
       }
     ],
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 円高|えんだか on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact strong-yen identity, natural currency-context example, exact JMdict row entrySeq=1175820, and Kanjium heiban pitch; retained support-only money/news-context framing and no active core-card limitations.",
     "fixSummary": "Replaced the advanced 最近/話題 example with a simpler sentence and clarified that 円高 is support-only for currency/exchange contexts.",
     "internalChecks": [
       {
@@ -26404,7 +26484,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 円高|えんだか checked generated surface, Japanese-source evidence from JMdict entrySeq 1175820, example sentence 今は円高です。, reading いまはえんだかです。, translation The yen is strong now., notes/support surface Dictionary-backed money/news support word for 高 -> だか; useful for yen exchange contexts, but not a core beginner conversation word., reading breakdown 円 （えん） ／ yen / circle; 高 （だか） ／ high / expensive, meaning strong yen, labels JLPT N5; Reading coverage support; focus 高; covers 高: だか, audio word-reading-円高-えんだか, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-024",
+      "scope": "N5 word Obsidian lane batch 24 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "後ほど",
@@ -26471,8 +26571,8 @@
       }
     ],
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 後ほど|のちほど on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact later/afterward polite adverb identity, natural phone-call example, exact JMdict row entrySeq=1269940, and Kanjium heiban pitch; retained support-only service/message usefulness and no active core-card limitations.",
     "fixSummary": "Replaced the harder 詳しい話/メール example with a simpler phone sentence and clarified the polite support-only scope.",
     "internalChecks": [
       {
@@ -26527,7 +26627,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 後ほど|のちほど checked generated surface, Japanese-source evidence from JMdict entrySeq 1269940, example sentence 後ほど電話します。, reading のちほどでんわします。, translation I will call later., notes/support surface Polite later/afterward support word for 後 -> のち; useful in messages and service contexts but support-only for N5., reading breakdown 後 （のち） ／ after / later, meaning later / afterward, labels JLPT N5; Reading coverage support; focus 後; covers 後: のち, audio word-reading-後ほど-のちほど, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-024",
+      "scope": "N5 word Obsidian lane batch 24 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "宿題",
@@ -26615,8 +26735,8 @@
       }
     ],
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 母語|ぼご on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact mother-tongue/native-language identity, natural learner-identity example, exact JMdict row entrySeq=1515030, and Kanjium pitch; retained support-only note for 母 -> ぼ and no active core-card limitations.",
     "fixSummary": "Tightened the support note so 母語 is certified as useful language vocabulary, not forced family-word coverage.",
     "internalChecks": [
       {
@@ -26671,7 +26791,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 母語|ぼご checked generated surface, Japanese-source evidence from JMdict entrySeq 1515030, example sentence 私の母語は英語です。, reading わたしのぼごはえいごです。, translation My native language is English., notes/support surface Dictionary-backed language word for native language; useful for learner identity and 母 -> ぼ support, but support-only rather than core beginner family vocabulary., reading breakdown 母 （ぼ） ／ mother; 語 （ご） ／ language / word, meaning mother tongue / native language, labels JLPT N5; Reading coverage support; focus 母; covers 母: ぼ, audio word-reading-母語-ぼご, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-024",
+      "scope": "N5 word Obsidian lane batch 24 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "食う",
@@ -26746,8 +26886,8 @@
       }
     ],
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 食べ物|たべもの on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact food noun identity, natural Japanese-food preference example, exact JMdict row entrySeq=1358340, higher-level 物 support label, and Kanjium pitch variants 3/2; retained core beginner usefulness and no active core-card limitations.",
     "notesIncludes": [
       "Core beginner noun for food; 物 is higher-level kanji support and the N5 focus remains 食 -> た."
     ],
@@ -26805,7 +26945,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 食べ物|たべもの checked generated surface, Japanese-source evidence from JMdict entrySeq 1358340, example sentence 日本の食べ物が好きです。, reading にほんのたべものがすきです。, translation I like Japanese food., notes/support surface Core beginner noun for food; 物 is higher-level kanji support and the N5 focus remains 食 -> た., reading breakdown 食 （た） ／ eat / food; 物 （もの） ／ thing, meaning food, labels JLPT N5; JLPT core + reading coverage; focus 食; covers 食: た, audio word-reading-食べ物-たべもの, pitch accent source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] / 2 [nakadaka] rendered Pitch 1: 3 / Pitch 2: 2, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-024",
+      "scope": "N5 word Obsidian lane batch 24 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "毎週",
@@ -26869,8 +27029,8 @@
       }
     ],
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 毎週|まいしゅう on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact every-week frequency identity, natural repeated-reading example, exact JMdict row entrySeq=1524690, higher-level 週 support label, and Kanjium heiban pitch; retained core beginner usefulness and no active core-card limitations.",
     "notesIncludes": [
       "Core beginner frequency word for every week; 週 is higher-level kanji support and the N5 focus remains 毎 -> まい."
     ],
@@ -26928,7 +27088,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 毎週|まいしゅう checked generated surface, Japanese-source evidence from JMdict entrySeq 1524690, example sentence 毎週、本を読みます。, reading まいしゅう、ほんをよみます。, translation I read a book every week., notes/support surface Core beginner frequency word for every week; 週 is higher-level kanji support and the N5 focus remains 毎 -> まい., reading breakdown 毎 （まい） ／ every; 週 （しゅう） ／ week, meaning every week, labels JLPT N5; JLPT core + reading coverage; focus 毎; covers 毎: まい, audio word-reading-毎週-まいしゅう, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-024",
+      "scope": "N5 word Obsidian lane batch 24 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "勉強",
@@ -27012,8 +27192,8 @@
       }
     ],
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 右手|みぎて on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact right-hand identity, natural writing-with-right-hand example, exact JMdict row entrySeq=1171120, same-written 右手|めて checked and kept separate, higher-level 手 support label, and Kanjium heiban pitch; retained no active core-card limitations.",
     "notesIncludes": [
       "Core body/direction word for right hand; 手 is higher-level kanji support and the N5 focus remains 右 -> みぎ."
     ],
@@ -27071,7 +27251,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 右手|みぎて checked generated surface, Japanese-source evidence from JMdict entrySeq 1171120, example sentence 右手で書いています。, reading みぎてでかいています。, translation I am writing with my right hand., notes/support surface Core body/direction word for right hand; 手 is higher-level kanji support and the N5 focus remains 右 -> みぎ., reading breakdown 右 （みぎ） ／ right; 手 （て） ／ hand, meaning right hand, labels JLPT N5; JLPT core + reading coverage; focus 右; covers 右: みぎ, audio word-reading-右手-みぎて, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-025",
+      "scope": "N5 word Obsidian lane batch 25 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "飲み物",
@@ -27149,8 +27349,8 @@
     ],
     "fixSummary": "Added a protected note labeling 辞 as higher-level support while keeping 書 -> しょ as the N5 focus.",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 辞書|じしょ on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact dictionary identity despite broader JMdict glosses, natural school/tool example, exact JMdict row entrySeq=1318970, higher-level 辞 support label, and Kanjium pitch; retained core learner-tool usefulness and no active core-card limitations.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -27204,7 +27404,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 辞書|じしょ checked generated surface, Japanese-source evidence from JMdict entrySeq 1318970, example sentence 新しい辞書を買いました。, reading あたらしいじしょをかいました。, translation I bought a new dictionary., notes/support surface Core school/tool word for dictionary; 辞 is higher-level kanji support and the N5 focus remains 書 -> しょ., reading breakdown 辞 （じ）; 書 （しょ）, meaning dictionary, labels JLPT N5; JLPT core + reading coverage; focus 書; covers 書: しょ, audio word-reading-辞書-じしょ, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1. Dictionary-backed pitch evidence is bound to the exact word-reading identity., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-025",
+      "scope": "N5 word Obsidian lane batch 25 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "出口",
@@ -27272,8 +27492,8 @@
     ],
     "fixSummary": "Added a protected note labeling 口 as higher-level support while keeping 出 -> で as the N5 focus.",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 出口|でぐち on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact exit identity, natural station/meeting-point example, exact JMdict row entrySeq=1338850, higher-level 口 support label, and Kanjium pitch; retained core navigation usefulness and no active core-card limitations.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -27327,7 +27547,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 出口|でぐち checked generated surface, Japanese-source evidence from JMdict entrySeq 1338850, example sentence 出口で友だちを待ちます。, reading でぐちでともだちをまちます。, translation I will wait for my friend at the exit., notes/support surface Core navigation word for exit; 口 is higher-level support and the N5 focus remains 出 -> で., reading breakdown 出 （で）; 口 （ぐち）, meaning exit, labels JLPT N5; JLPT core + reading coverage; focus 出; covers 出: で, audio word-reading-出口-でぐち, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1. Dictionary-backed pitch evidence is bound to the exact word-reading identity., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-025",
+      "scope": "N5 word Obsidian lane batch 25 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "日曜日",
@@ -27518,8 +27758,8 @@
     ],
     "fixSummary": "Added a protected note labeling 手 as higher-level support while keeping 左 -> ひだり as the N5 focus.",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 左手|ひだりて on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact left-hand identity, natural cup-holding example, exact JMdict row entrySeq=1290900, same-written 左手|ゆんで checked and kept separate, higher-level 手 support label, and Kanjium heiban pitch; retained no active core-card limitations.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -27573,7 +27813,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 左手|ひだりて checked generated surface, Japanese-source evidence from JMdict entrySeq 1290900, example sentence 左手でコップを持ちます。, reading ひだりてでコップをもちます。, translation I hold the cup with my left hand., notes/support surface Core body/direction word for left hand; 手 is higher-level kanji support and the N5 focus remains 左 -> ひだり., reading breakdown 左 （ひだり）; 手 （て）, meaning left hand, labels JLPT N5; JLPT core + reading coverage; focus 左; covers 左: ひだり, audio word-reading-左手-ひだりて, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0. Dictionary-backed pitch evidence is bound to the exact word-reading identity., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-025",
+      "scope": "N5 word Obsidian lane batch 25 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "部屋",
@@ -27662,8 +27922,8 @@
     ],
     "fixSummary": "Added a protected station/signage note labeling 口 as higher-level support and preserving the generated-pitch label.",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 北口|きたぐち on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact north-exit station/signage identity, natural meeting example, exact JMdict row entrySeq=1520970, higher-level 口 support label, and visible generated-pitch disclosure; retained practical navigation usefulness and no active core-card limitations.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -27717,7 +27977,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 北口|きたぐち checked generated surface, Japanese-source evidence from JMdict entrySeq 1520970, example sentence 駅の北口で会いましょう。, reading えきのきたぐちであいましょう。, translation Let's meet at the station's north exit., notes/support surface Practical station/signage word for north exit; 口 is higher-level support and the N5 focus remains 北 -> きた, with generated pitch visibly labeled., reading breakdown 北 （きた）; 口 （ぐち）, meaning north exit, labels JLPT N5; JLPT core + reading coverage; focus 北; covers 北: きた, audio word-reading-北口-きたぐち, pitch accent source voicevox-nemo-accent-query pattern 4 [odaka] rendered Pitch 1: 4 / Generated pitch (unverified). Governed generated pitch evidence is visibly labeled Generated pitch (unverified); dictionary-backed pitch remains unverified., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-025",
+      "scope": "N5 word Obsidian lane batch 25 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "朝ご飯",
@@ -27806,8 +28086,8 @@
     ],
     "fixSummary": "Added a protected weekday note labeling 曜 as higher-level support while keeping 土 -> ど as the N5 focus.",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 土曜日|どようび on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact Saturday weekday identity, natural weekend meeting example, exact JMdict row entrySeq=1445590, higher-level 曜 support label, and Kanjium pitch; retained core weekday usefulness and no active core-card limitations.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -27861,7 +28141,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 土曜日|どようび checked generated surface, Japanese-source evidence from JMdict entrySeq 1445590, example sentence 土曜日に友だちと会います。, reading どようびにともだちとあいます。, translation I meet a friend on Saturday., notes/support surface Core weekday word for Saturday; 曜 is higher-level support and the N5 focus remains 土 -> ど., reading breakdown 土 （ど）; 曜 （よう）; 日 （び）, meaning Saturday, labels JLPT N5; JLPT core + reading coverage; focus 土; covers 土: ど, audio word-reading-土曜日-どようび, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2. Dictionary-backed pitch evidence is bound to the exact word-reading identity., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-026",
+      "scope": "N5 word Obsidian lane batch 26 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "切符",
@@ -28063,8 +28363,8 @@
     ],
     "fixSummary": "Tightened the note to keep 小雨 support-only and avoid treating it as a core substitute for 雨.",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 小雨|こさめ on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact light-rain/drizzle identity, natural weather example, exact JMdict row entrySeq=1347810, same-written 小雨|こあめ and 小雨|しょうう checked and kept separate, and Kanjium heiban pitch; retained support-only 雨 -> さめ usefulness and no active core-card limitations.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -28118,7 +28418,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 小雨|こさめ checked generated surface, Japanese-source evidence from JMdict entrySeq 1347810, example sentence 朝から小雨が降っています。, reading あさからこさめがふっています。, translation A light rain has been falling since morning., notes/support surface Dictionary-backed weather support word for light rain; useful for 雨 -> さめ coverage but support-only, not a core substitute for 雨., reading breakdown 小 （こ）; 雨 （さめ）, meaning light rain / drizzle, labels JLPT N5; Reading coverage support; focus 雨; covers 雨: さめ, audio word-reading-小雨-こさめ, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0. Dictionary-backed pitch evidence is bound to the exact word-reading identity., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-026",
+      "scope": "N5 word Obsidian lane batch 26 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "外す",
@@ -28186,8 +28506,8 @@
       }
     ],
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 外す|はずす on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact remove/take-off identity, natural glasses-removal example, exact JMdict row entrySeq=1203270, and Kanjium heiban pitch; retained support-only note distinguishing 外す from shoe/clothing 脱ぐ use and no active core-card limitations.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -28241,7 +28561,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 外す|はずす checked generated surface, Japanese-source evidence from JMdict entrySeq 1203270, example sentence メガネを外します。, reading メガネをはずします。, translation I take off my glasses., notes/support surface Common support word for 外 -> はずす. Use it for removing things like glasses, buttons, or parts; shoes are normally 脱ぐ., reading breakdown 外 （はず）, meaning to remove / take off, labels JLPT N5; Reading coverage support; focus 外; covers 外: はずす, audio word-reading-外す-はずす, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0. Dictionary-backed pitch evidence is bound to the exact word-reading identity., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-026",
+      "scope": "N5 word Obsidian lane batch 26 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "生える",
@@ -34126,8 +34466,8 @@
     ],
     "fixSummary": "Replaced the harder 勉強 example with a simpler together-with-a-friend sentence and protected the higher-level 緒 support label.",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 一緒|いっしょ on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact together identity without noisy secondary JMdict senses on the card surface, natural friend-going-together example, exact JMdict row entrySeq=1163400, higher-level 緒 support label, and visible generated-pitch disclosure; retained core beginner usefulness and no active core-card limitations.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -34181,7 +34521,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 一緒|いっしょ checked generated surface, Japanese-source evidence from JMdict entrySeq 1163400, example sentence 友だちと一緒に行きます。, reading ともだちといっしょにいきます。, translation I go together with my friend., notes/support surface Core beginner word for doing something together; 緒 is higher-level kanji support and generated pitch remains visibly labeled., reading breakdown 一 （いっ）; 緒 （しょ）, meaning together, labels JLPT N5; JLPT core + reading coverage; focus 一、緒; covers 一: いっ ／ 緒: しょ, audio word-reading-一緒-いっしょ, pitch accent source voicevox-nemo-accent-query pattern 3 [odaka] rendered Pitch 1: 3 / Generated pitch (unverified). Governed generated pitch evidence is visibly labeled Generated pitch (unverified); dictionary-backed pitch remains unverified., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-026",
+      "scope": "N5 word Obsidian lane batch 26 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "九日",
@@ -34407,8 +34767,8 @@
       "noSilentFallback": true
     },
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 今週|こんしゅう on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact this-week identity, natural school-time example, exact JMdict row entrySeq=1289220, higher-level 週 support label, and visible generated-pitch disclosure; retained core beginner time usefulness and no active core-card limitations.",
     "notesIncludes": [
       "Core beginner time word for this week; 週 is higher-level kanji support and generated pitch remains visibly labeled."
     ],
@@ -34466,7 +34826,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 今週|こんしゅう checked generated surface, Japanese-source evidence from JMdict entrySeq 1289220, example sentence 今週、学校へ行きます。, reading こんしゅう、がっこうへいきます。, translation I will go to school this week., notes/support surface Core beginner time word for this week; 週 is higher-level kanji support and generated pitch remains visibly labeled., reading breakdown 今 （こん）; 週 （しゅう）, meaning this week, labels JLPT N5; JLPT core + reading coverage; focus 今、週; covers 今: こん ／ 週: しゅう, audio word-reading-今週-こんしゅう, pitch accent source voicevox-nemo-accent-query pattern 4 [odaka] rendered Pitch 1: 4 / Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-025",
+      "scope": "N5 word Obsidian lane batch 25 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "時計",
@@ -35958,8 +36338,8 @@
     ],
     "fixSummary": "Tightened the protected note to say the whole-word reading must not be split into false per-kanji readings.",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 昨日|きのう on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact yesterday identity and whole-word reading, natural movie-past-tense example, exact JMdict row entrySeq=1579260, same-written 昨日|さくじつ checked and kept separate, higher-level 昨 support label, and visible generated-pitch disclosure; retained no active core-card limitations.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -36013,7 +36393,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 昨日|きのう checked generated surface, Japanese-source evidence from JMdict entrySeq 1579260, example sentence 昨日、映画を見ました。, reading きのう、えいがをみました。, translation I watched a movie yesterday., notes/support surface Common N5 time word with a whole-word reading; 昨 is a higher-level kanji and the card must not be split into false per-kanji readings., reading breakdown 昨日 （きのう） ／ yesterday, meaning yesterday, labels JLPT N5; JLPT core + reading coverage; focus 昨、日; covers 昨日: きのう, audio word-reading-昨日-きのう, pitch accent source voicevox-nemo-reading-query pattern 3 [odaka] rendered Pitch 1: 3 / Generated pitch (unverified). Governed generated pitch evidence is visibly labeled Generated pitch (unverified); dictionary-backed pitch remains unverified., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-025",
+      "scope": "N5 word Obsidian lane batch 25 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "靴下",
@@ -36082,8 +36482,8 @@
     ],
     "fixSummary": "Revalidated the existing socks example and protected the higher-level 靴 support label plus generated pitch label.",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 靴下|くつした on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact socks identity, natural clothing example, exact JMdict row entrySeq=1246740, higher-level 靴 support label, and visible generated-pitch disclosure; retained core clothing usefulness and no active core-card limitations.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -36137,7 +36537,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 靴下|くつした checked generated surface, Japanese-source evidence from JMdict entrySeq 1246740, example sentence 靴下をはきます。, reading くつしたをはきます。, translation I put on socks., notes/support surface Common N5 clothing word; 靴 is a higher-level kanji and must stay labeled on the N5 card., reading breakdown 靴 （くつ）; 下 （した）, meaning socks, labels JLPT N5; JLPT core + reading coverage; focus 靴、下; covers 靴: くつ ／ 下: した, audio word-reading-靴下-くつした, pitch accent source voicevox-nemo-accent-query pattern 2 [nakadaka] rendered Pitch 1: 2 / Generated pitch (unverified). Governed generated pitch evidence is visibly labeled Generated pitch (unverified); dictionary-backed pitch remains unverified., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-026",
+      "scope": "N5 word Obsidian lane batch 26 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "今朝",
@@ -36330,8 +36750,8 @@
     ],
     "fixSummary": "Revalidated the existing own-name example and protected the higher-level 自 support label plus generated pitch label.",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 自分|じぶん on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact oneself/myself identity, natural own-name example, exact JMdict row entrySeq=1318610, higher-level 自 support label, and visible generated-pitch disclosure; retained core pronoun/reflexive usefulness and no active core-card limitations.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -36385,7 +36805,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 自分|じぶん checked generated surface, Japanese-source evidence from JMdict entrySeq 1318610, example sentence 自分の名前を書きます。, reading じぶんのなまえをかきます。, translation I write my own name., notes/support surface Common N5 pronoun; 自 is a higher-level kanji and must stay labeled on the N5 card., reading breakdown 自 （じ）; 分 （ぶん）, meaning oneself / myself, labels JLPT N5; JLPT core + reading coverage; focus 自、分; covers 自: じ ／ 分: ぶん, audio word-reading-自分-じぶん, pitch accent source voicevox-nemo-accent-query pattern 3 [odaka] rendered Pitch 1: 3 / Generated pitch (unverified). Governed generated pitch evidence is visibly labeled Generated pitch (unverified); dictionary-backed pitch remains unverified., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-026",
+      "scope": "N5 word Obsidian lane batch 26 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "生徒",
@@ -36455,8 +36895,8 @@
     ],
     "fixSummary": "Revalidated the existing school example and protected the higher-level 徒 support label plus generated pitch label.",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 生徒|せいと on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact student/pupil identity, natural school-location example, exact JMdict row entrySeq=1379380, higher-level 徒 support label, and visible generated-pitch disclosure; retained core school-word usefulness and no active core-card limitations.",
     "internalChecks": [
       {
         "type": "generated-surface",
@@ -36510,7 +36950,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 生徒|せいと checked generated surface, Japanese-source evidence from JMdict entrySeq 1379380, example sentence 生徒が学校にいます。, reading せいとががっこうにいます。, translation The student is at school., notes/support surface Common N5 school word; 徒 is a higher-level kanji and must stay labeled on the N5 card., reading breakdown 生 （せい）; 徒 （と）, meaning student / pupil, labels JLPT N5; JLPT core + reading coverage; focus 生、徒; covers 生: せい ／ 徒: と, audio word-reading-生徒-せいと, pitch accent source voicevox-nemo-reading-query pattern 1 [atamadaka] rendered Pitch 1: 1 / Generated pitch (unverified). Governed generated pitch evidence is visibly labeled Generated pitch (unverified); dictionary-backed pitch remains unverified., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-026",
+      "scope": "N5 word Obsidian lane batch 26 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "大使館",
@@ -36702,8 +37162,8 @@
       "noSilentFallback": true
     },
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-19",
+    "revalidationSummary": "Substantive current-standard Obsidian rereview for 二十歳|はたち on 2026-05-19, not a mechanical migration: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; confirmed exact twenty-years-old whole-word age identity, natural person-age example, exact JMdict row entrySeq=1600790, same-written readings にじっさい/にじゅっさい/はたとせ checked and kept separate, higher-level 歳 support label, and visible generated-pitch disclosure; retained no active core-card limitations.",
     "notesIncludes": [
       "Common age word with a whole-word reading; 歳 is a higher-level kanji and the card must not be split into false per-kanji readings."
     ],
@@ -36761,7 +37221,27 @@
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 二十歳|はたち checked generated surface, Japanese-source evidence from JMdict entrySeq 1600790, example sentence この人は二十歳です。, reading このひとははたちです。, translation This person is twenty years old., notes/support surface Common age word with a whole-word reading; 歳 is a higher-level kanji and the card must not be split into false per-kanji readings., reading breakdown 二十歳 （はたち） ／ twenty years old, meaning twenty years old, labels JLPT N5; JLPT core + reading coverage; focus 二、十、歳; covers 二十歳: はたち, audio word-reading-二十歳-はたち, pitch accent source voicevox-nemo-reading-query pattern 1 [atamadaka] rendered Pitch 1: 1 / Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-19",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-platinum-review",
+      "mechanicalMigration": false,
+      "batchId": "n5-word-obsidian-rereview-batch-024",
+      "scope": "N5 word Obsidian lane batch 24 generated-order substantive rereview",
+      "evidenceChecked": [
+        "live generated N5 word TSV row and exact written+reading identity",
+        "starter, golden, and platinum evidence lane bindings",
+        "governed local JMdict verification row and same-written reading collisions where present",
+        "example sentence, kana reading, English translation, and learner usefulness",
+        "audio filename identity and packaged media presence",
+        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
+        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
+        "notes, verification limitations, internal checks, source evidence, and review evidence"
+      ]
+    }
   },
   {
     "word": "飛行機",

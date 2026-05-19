@@ -198,6 +198,54 @@ test("tracked starter word data includes the second governed routed N4 move-cand
     assert.match(starterEntries["お姉さん|おねえさん"].notes, /姉 -> ねえ/);
 });
 
+test("tracked starter word data includes the third governed routed N4 move-candidate batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    for (const key of [
+        "青|あお",
+        "赤|あか",
+        "黄色|きいろ",
+        "黄色い|きいろい",
+        "黒|くろ",
+        "お手洗い|おてあらい",
+        "お風呂|おふろ",
+        "風邪|かぜ",
+    ]) {
+        assert.equal(starterEntries[key]?.jlpt, 4, key);
+        assert.equal(starterEntries[key]?.source, "jlptstudy.net-n5", key);
+        assert.equal(starterEntries[key]?.coverage?.role, "both", key);
+        assert.equal(starterEntries[key]?.tags?.includes("n4"), true, key);
+    }
+
+    assertCoverageReadings(starterEntries, [
+        ["青|あお", "青", "あお"],
+        ["赤|あか", "赤", "あか"],
+        ["黄色|きいろ", "黄", "き"],
+        ["黄色|きいろ", "色", "いろ"],
+        ["黄色い|きいろい", "黄", "き"],
+        ["黄色い|きいろい", "色", "いろ"],
+        ["黒|くろ", "黒", "くろ"],
+        ["お手洗い|おてあらい", "手", "て"],
+        ["お手洗い|おてあらい", "洗", "あら"],
+        ["お風呂|おふろ", "風", "ふ"],
+        ["お風呂|おふろ", "呂", "ろ"],
+        ["風邪|かぜ", "風邪", "かぜ"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["青|あお", "<ruby>青<rt>あお</rt></ruby>"],
+        ["赤|あか", "<ruby>赤<rt>あか</rt></ruby>"],
+        ["黄色|きいろ", "<ruby>黄<rt>き</rt></ruby><ruby>色<rt>いろ</rt></ruby>"],
+        ["黄色い|きいろい", "<ruby>黄<rt>き</rt></ruby><ruby>色<rt>いろ</rt></ruby>い"],
+        ["お手洗い|おてあらい", "お<ruby>手<rt>て</rt></ruby><ruby>洗<rt>あら</rt></ruby>い"],
+        ["お風呂|おふろ", "お<ruby>風<rt>ふ</rt></ruby><ruby>呂<rt>ろ</rt></ruby>"],
+        ["風邪|かぜ", "<ruby>風邪<rt>かぜ</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["黄色|きいろ"].notes, /黄 is harder N3 support/);
+    assert.match(starterEntries["黄色い|きいろい"].notes, /黄 is harder N3 support/);
+    assert.match(starterEntries["お風呂|おふろ"].notes, /呂 is harder N1 support/);
+    assert.match(starterEntries["風邪|かぜ"].notes, /whole-word reading/);
+});
+
 test("tracked starter word data includes the first N3 Silver source-expansion batch", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

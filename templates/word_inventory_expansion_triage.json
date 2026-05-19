@@ -1344,6 +1344,81 @@
         "priority": "high",
         "reason": "Common snow noun with exact JMdict verification and priority support, but the only kanji anchor is N3 雪 and no current lower-level card covers this exact word identity.",
         "nextStep": "Route only through the N3 word contract and starter-data review with a simple snow/weather example."
+      },
+      "横|よこ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common side/width noun with exact JMdict verification and priority support, but the only kanji anchor is N3 横 and related 横断 does not cover this standalone よこ identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a clear side/width example."
+      },
+      "呼ぶ|よぶ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common call/invite verb with exact JMdict verification and priority support, but the only kanji anchor is N3 呼; related 呼吸 does not cover this verb reading.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple call/invite example."
+      },
+      "両親|りょうしん": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "high",
+        "reason": "Common parents noun with exact JMdict verification and priority support; 親 provides the N4 anchor while 両 remains a harder N3 support-kanji label.",
+        "nextStep": "Route only through the N4 word contract and starter-data review; keep 両 labeled as harder support if promoted."
+      },
+      "零|れい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Exact zero/nought noun has JMdict priority support, but the only kanji anchor is N2 零 and it should not be forced into the N5 source lane as a standalone number card.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; decide there whether a standalone 零 card is useful beside easier zero vocabulary."
+      },
+      "冷蔵庫|れいぞうこ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common refrigerator noun with exact JMdict verification and priority support; 冷 provides the N3 anchor while 蔵 and 庫 remain harder N2 support-kanji labels.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; keep 蔵 and 庫 labeled as harder support if promoted."
+      },
+      "練習|れんしゅう（する）": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Source reading includes parenthetical する and duplicates governed N4 練習|れんしゅう, which already teaches the learner-facing practice identity cleanly.",
+        "nextStep": "Do not move this exact parenthetical-reading source row; keep the governed clean 練習|れんしゅう card."
+      },
+      "若い|わかい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common young adjective with exact JMdict verification and priority support, but the only kanji anchor is N3 若 and no current lower-level card covers this exact word identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple age/youth example."
+      },
+      "忘れる|わすれる": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common forget verb with exact JMdict verification and priority support, but the only kanji anchor is N3 忘 and governed 忘れ物 does not cover this verb identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple forgetting example."
+      },
+      "私|わたくし": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Same written front as governed N4 私|わたし; the formal わたくし reading is valid but belongs to a deliberate alternate-reading policy, not this source-list routing pass.",
+        "nextStep": "Do not move this exact duplicate-front row unless a future alternate-pronoun reading lane explicitly adds it."
+      },
+      "渡す|わたす": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common hand-over/pass verb with exact JMdict verification and priority support, but the only kanji anchor is N3 渡 and it is distinct from 渡る.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with an example that teaches the transitive hand-over sense."
+      },
+      "渡る|わたる": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common cross/go-across verb with exact JMdict verification and priority support, but the only kanji anchor is N3 渡 and it is distinct from 渡す.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with an example that teaches the intransitive crossing sense."
       }
     }
   },

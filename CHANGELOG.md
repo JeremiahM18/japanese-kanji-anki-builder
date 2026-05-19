@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Changed
 
+- Refreshed the README source-list routing snapshot so it matches live `deck:words:expansion-signals -- --levels=5,4 --json`: N5 cross-level routing is now `151/151` triaged, and N4 cross-level routing is `144/256` triaged with remaining N4 rows documented as advisory target-level backlog rather than current-level expansion work.
 - Triaged the next 10 N5 cross-level routing rows from the `jlptstudy.net-n5` source lane (`痛い|いたい`, `嫌|いや`, `居る|いる`, `要る|いる`, `薄い|うすい`, `絵|え`, `鉛筆|えんぴつ`, `置く|おく`, `奥さん|おくさん`, and `お酒|おさけ`), raising N5 cross-level routing triage to `20/151` rows (`19` move candidates, `1` rejected duplicate source row, `131` advisory rows still untriaged) without moving or approving any cards.
 - Corrected documentation drift after a full docs review: N4 word readiness now reflects live `ready_with_deferred_variants` completion with `578/755` (`76.6%`) reading coverage, N2 word coverage now reads `44/1061` (`4.1%`), N1 word coverage now reads `39/3284` (`1.2%`), and `data/README.md` now describes the tracked Silver N3/N2/N1 starter surfaces instead of saying higher word levels are still uncatalogued.
 - Added a tracked governance test that computes each cross-level `move_candidate` target from the JLPT kanji contract and fails if the recorded target level drifts from the actual no-current-anchor route.

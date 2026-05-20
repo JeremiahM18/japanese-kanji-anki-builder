@@ -24,15 +24,18 @@
   "runtimes": {
     "transformers-js": {
       "name": "Transformers.js",
-      "status": "registered",
+      "status": "active",
       "runtimeType": "javascript",
       "packageName": "@huggingface/transformers",
+      "packageVersion": "4.2.0",
+      "packageIntegrity": "sha512-8BRCoBMH0XsWaEIamuR0LrJGAfftgHAfb2Vrffy0VKlSAE/MnUJ5/h/zTfEP3fDIft+nk7TqB8xXEyABGitBjQ==",
       "origin": {
         "url": "https://huggingface.co/docs/transformers.js/"
       },
       "licenseUse": {
-        "status": "needs_review",
-        "notes": "Registered as a candidate JavaScript inference runtime. No model output is active until package version, lockfile, model license, local model integrity, and deterministic runtime policy are pinned."
+        "status": "approved",
+        "license": "Apache-2.0",
+        "notes": "Approved as the local JavaScript runtime for future assistive embedding, classification, and reranking after package version, package-lock integrity, and installed package metadata were pinned. No model output is active until model license, local model integrity, and deterministic model evaluation are pinned."
       },
       "allowedTasks": [
         "embedding",

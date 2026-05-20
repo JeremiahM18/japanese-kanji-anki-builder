@@ -12,7 +12,7 @@ The first governed surface is the tracked model registry:
 npm run nlp:models:audit
 ```
 
-The registry lives at [../templates/nlp_model_manifest.json](../templates/nlp_model_manifest.json). It currently has one active runtime, `kuromoji-js`, for local morphological tokenization. No model is active yet.
+The registry lives at [../templates/nlp_model_manifest.json](../templates/nlp_model_manifest.json). It currently has two active runtimes: `kuromoji-js` for local morphological tokenization and `transformers-js` for future local model inference. No model is active yet.
 
 The second governed surface is the suggestion artifact validator:
 

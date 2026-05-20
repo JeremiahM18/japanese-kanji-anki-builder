@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Changed
 
+- Activated the pinned `@huggingface/transformers@4.2.0` JavaScript runtime for future assistive embedding, classification, and reranking lanes after package-lock integrity and installed package metadata verification; no NLP model output is active, and runtime activation still cannot certify cards, write tracked templates, or claim release readiness.
 - Extended active NLP model artifact governance to support pinned directory bundles as well as single files, with recursive file-count, byte-size, and SHA-256 checks so future embedding model packages can be activated without weakening runtime-doctor evidence.
 - Added `npm run nlp:embeddings:validate`, a governed embedding artifact validation lane for ignored `out/nlp-embeddings/` JSON artifacts, with active-model binding, embedding-task enforcement, vector-dimension checks, exact word-reading target identity, and explicit no-certification/no-template-write/no-release-readiness authority.
 - Added `npm run nlp:tokenization:audit`, a read-only tokenization summary layer that converts validated NLP tokenization artifacts into assistive review-packet signals for multi-token surfaces, unknown tokens, missing token readings, artifact warnings, and token/card reading mismatches without certifying cards, writing tracked templates directly, or claiming release readiness.

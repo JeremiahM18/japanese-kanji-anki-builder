@@ -202,7 +202,8 @@ test("tracked NLP model manifest loads with assistive-only boundaries", () => {
     assert.equal(manifest.policy.authority, "assistive_only");
     assert.equal(manifest.policy.promotionPolicy, "human_review_required");
     assert.equal(Object.keys(manifest.models).length, 0);
-    assert.equal(manifest.runtimes["transformers-js"].status, "registered");
+    assert.equal(manifest.runtimes["transformers-js"].status, "active");
+    assert.equal(manifest.runtimes["transformers-js"].packageVersion, "4.2.0");
     assert.equal(manifest.runtimes["onnxruntime-node"].status, "registered");
     assert.equal(manifest.runtimes["kuromoji-js"].status, "active");
     assert.equal(manifest.runtimes["kuromoji-js"].packageVersion, "0.1.2");

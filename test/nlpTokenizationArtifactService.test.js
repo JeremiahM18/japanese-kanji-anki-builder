@@ -177,7 +177,8 @@ test("buildNlpTokenizationArtifactReport reports invalid tokenization JSON witho
     });
 
     assert.equal(report.passed, false);
-    assert.match(report.errors.join("\n"), /Expected property name/);
+    assert.match(report.errors.join("\n"), /NLP tokenization artifact contains invalid JSON/);
+    assert.match(report.errors.join("\n"), /Parser detail:/);
 });
 
 test("formatNlpTokenizationArtifactReport renders the release boundary", () => {

@@ -8,6 +8,9 @@ const {
 const {
     parseNlpTokenizationArtifact,
 } = require("../datasets/nlpTokenizationArtifact");
+const {
+    readJsonFile,
+} = require("../utils/jsonFile");
 
 function buildDefaultNlpTokenizationDir() {
     return path.resolve(__dirname, "../../out/nlp-tokenization");
@@ -15,10 +18,6 @@ function buildDefaultNlpTokenizationDir() {
 
 function incrementCount(counts, key) {
     counts[key] = (counts[key] || 0) + 1;
-}
-
-function readJsonFile(filePath) {
-    return JSON.parse(fs.readFileSync(filePath, "utf8"));
 }
 
 function resolveNlpTokenizationArtifactPaths({ artifactPath = null, artifactDir = buildDefaultNlpTokenizationDir() } = {}) {
@@ -94,7 +93,9 @@ function validateTokenizationArtifactAgainstManifest(artifact, manifest) {
 function validateNlpTokenizationArtifactFile({ filePath, manifest }) {
     const resolvedPath = path.resolve(filePath);
     try {
-        const artifact = parseNlpTokenizationArtifact(readJsonFile(resolvedPath));
+        const artifact = parseNlpTokenizationArtifact(readJsonFile(resolvedPath, {
+            label: "NLP tokenization artifact",
+        }));
         const errors = validateTokenizationArtifactAgainstManifest(artifact, manifest);
         const itemsByTargetKind = {};
         let tokenCount = 0;

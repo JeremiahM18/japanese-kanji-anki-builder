@@ -154,7 +154,8 @@ test("buildNlpSuggestionArtifactReport reports invalid artifact JSON without thr
     });
 
     assert.equal(report.passed, false);
-    assert.match(report.errors.join("\n"), /Expected property name/);
+    assert.match(report.errors.join("\n"), /NLP suggestion artifact contains invalid JSON/);
+    assert.match(report.errors.join("\n"), /Parser detail:/);
 });
 
 test("formatNlpSuggestionArtifactReport renders the release boundary", () => {

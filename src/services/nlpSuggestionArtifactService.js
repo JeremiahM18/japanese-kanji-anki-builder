@@ -8,6 +8,9 @@ const {
 const {
     parseNlpSuggestionArtifact,
 } = require("../datasets/nlpSuggestionArtifact");
+const {
+    readJsonFile,
+} = require("../utils/jsonFile");
 
 function buildDefaultNlpSuggestionDir() {
     return path.resolve(__dirname, "../../out/nlp-suggestions");
@@ -15,10 +18,6 @@ function buildDefaultNlpSuggestionDir() {
 
 function incrementCount(counts, key) {
     counts[key] = (counts[key] || 0) + 1;
-}
-
-function readJsonFile(filePath) {
-    return JSON.parse(fs.readFileSync(filePath, "utf8"));
 }
 
 function resolveNlpSuggestionArtifactPaths({ artifactPath = null, artifactDir = buildDefaultNlpSuggestionDir() } = {}) {
@@ -100,7 +99,9 @@ function validateArtifactAgainstManifest(artifact, manifest) {
 function validateNlpSuggestionArtifactFile({ filePath, manifest }) {
     const resolvedPath = path.resolve(filePath);
     try {
-        const artifact = parseNlpSuggestionArtifact(readJsonFile(resolvedPath));
+        const artifact = parseNlpSuggestionArtifact(readJsonFile(resolvedPath, {
+            label: "NLP suggestion artifact",
+        }));
         const errors = validateArtifactAgainstManifest(artifact, manifest);
         const suggestionsByTask = {};
         const suggestionsByDeckKind = {};

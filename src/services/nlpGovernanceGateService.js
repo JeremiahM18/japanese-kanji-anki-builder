@@ -8,6 +8,9 @@ const {
     buildNlpSuggestionArtifactReport,
 } = require("./nlpSuggestionArtifactService");
 const {
+    buildNlpReviewPacketArtifactReport,
+} = require("./nlpReviewPacketArtifactService");
+const {
     buildNlpTokenizationArtifactReport,
 } = require("./nlpTokenizationArtifactService");
 const {
@@ -46,11 +49,14 @@ function buildNlpGovernanceGateReport({
     tokenizationArtifactPath,
     embeddingArtifactDir,
     embeddingArtifactPath,
+    reviewPacketArtifactDir,
+    reviewPacketArtifactPath,
     workspaceRoot,
     packageJsonPath,
     packageLockJsonPath,
     buildModelReportFn = buildNlpModelGovernanceReport,
     buildSuggestionReportFn = buildNlpSuggestionArtifactReport,
+    buildReviewPacketReportFn = buildNlpReviewPacketArtifactReport,
     buildTokenizationReportFn = buildNlpTokenizationArtifactReport,
     buildTokenizationAuditReportFn = buildNlpTokenizationAuditReport,
     buildEmbeddingReportFn = buildNlpEmbeddingArtifactReport,
@@ -98,6 +104,14 @@ function buildNlpGovernanceGateReport({
                 manifestPath: manifestPath || undefined,
                 artifactDir: suggestionArtifactDir || undefined,
                 artifactPath: suggestionArtifactPath || undefined,
+            }),
+        }),
+        captureGateCheck({
+            id: "review-packets",
+            label: "NLP review packets",
+            buildReportFn: () => buildReviewPacketReportFn({
+                artifactDir: reviewPacketArtifactDir || undefined,
+                artifactPath: reviewPacketArtifactPath || undefined,
             }),
         }),
         captureGateCheck({

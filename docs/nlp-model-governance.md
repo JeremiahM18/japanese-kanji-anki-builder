@@ -21,9 +21,13 @@ npm run nlp:examples:rerank -- --level=5
 npm run nlp:sense-fit:audit -- --level=5
 npm run nlp:reading-gaps:discover -- --level=5 --include-deferred
 npm run nlp:suggestions:validate
+npm run nlp:review-packets:generate -- --level=5
+npm run nlp:review-packets:validate
 ```
 
-The example reranker reads generated word rows, the local sentence corpus, and validated word-card embedding artifacts, then emits ranked review suggestions under `out/nlp-suggestions/`. The sense-fit audit reads generated word rows and validated word-card embeddings, compares meaning-focused and example-focused embedding views, and emits warning suggestions for possible meaning/example/translation alignment risks. The reading-gap discovery command reads the governed word reading-gap plan, optionally including explicitly deferred gaps, and emits candidate suggestions without changing any gap disposition. By default the validator checks JSON artifacts under `out/nlp-suggestions/`. A missing directory is treated as an empty suggestion lane. Non-empty suggestion artifacts must bind to an active model in the manifest, use an allowed assistive lane, include pinned input hashes, carry per-suggestion evidence and limitations, and repeat the human-promotion boundary on each suggestion.
+The example reranker reads generated word rows, the local sentence corpus, and validated word-card embedding artifacts, then emits ranked review suggestions under `out/nlp-suggestions/`. The sense-fit audit reads generated word rows and validated word-card embeddings, compares meaning-focused and example-focused embedding views, and emits warning suggestions for possible meaning/example/translation alignment risks. The reading-gap discovery command reads the governed word reading-gap plan, optionally including explicitly deferred gaps, and emits candidate suggestions without changing any gap disposition. By default the suggestion validator checks JSON artifacts under `out/nlp-suggestions/`. A missing directory is treated as an empty suggestion lane. Non-empty suggestion artifacts must bind to an active model in the manifest, use an allowed assistive lane, include pinned input hashes, carry per-suggestion evidence and limitations, and repeat the human-promotion boundary on each suggestion.
+
+The human review packet generator aggregates validated suggestion artifacts and tokenization audit signals into ignored JSON and Markdown packets under `out/nlp-review-packets/`. Packets are a review convenience layer only: they point humans to exact targets, signal summaries, evidence digests, limitations, and checklist items, but they do not promote data, certify cards, or claim readiness.
 
 The first capability lane is governed tokenization:
 
@@ -59,7 +63,7 @@ The aggregate gate for CI and release preflight is:
 npm run nlp:governance-gate
 ```
 
-It runs the model manifest audit, tokenization artifact validator, tokenization audit signal report, embedding artifact validator, suggestion artifact validator, and runtime doctor together. It fails closed when any sub-check fails, while still reporting that NLP gates do not certify cards, write tracked templates, or claim release readiness.
+It runs the model manifest audit, tokenization artifact validator, tokenization audit signal report, embedding artifact validator, suggestion artifact validator, review packet validator, and runtime doctor together. It fails closed when any sub-check fails, while still reporting that NLP gates do not certify cards, write tracked templates, or claim release readiness.
 
 ## Authority boundary
 

@@ -19,6 +19,8 @@ function parseArgs(argv) {
         tokenizationArtifactPath: null,
         embeddingArtifactDir: null,
         embeddingArtifactPath: null,
+        reviewPacketArtifactDir: null,
+        reviewPacketArtifactPath: null,
         workspaceRoot: null,
         packageJsonPath: null,
         packageLockJsonPath: null,
@@ -42,6 +44,10 @@ function parseArgs(argv) {
             options.embeddingArtifactDir = parseStringOption(arg, "embeddings-dir").trim();
         } else if (arg.startsWith("--embedding-path=")) {
             options.embeddingArtifactPath = parseStringOption(arg, "embedding-path").trim();
+        } else if (arg.startsWith("--review-packets-dir=")) {
+            options.reviewPacketArtifactDir = parseStringOption(arg, "review-packets-dir").trim();
+        } else if (arg.startsWith("--review-packet-path=")) {
+            options.reviewPacketArtifactPath = parseStringOption(arg, "review-packet-path").trim();
         } else if (arg.startsWith("--workspace-root=")) {
             options.workspaceRoot = parseStringOption(arg, "workspace-root").trim();
         } else if (arg.startsWith("--package-json=")) {
@@ -62,6 +68,9 @@ function parseArgs(argv) {
     if (options.embeddingArtifactDir && options.embeddingArtifactPath) {
         collectUnknownArg(options, "use only one of --embeddings-dir or --embedding-path");
     }
+    if (options.reviewPacketArtifactDir && options.reviewPacketArtifactPath) {
+        collectUnknownArg(options, "use only one of --review-packets-dir or --review-packet-path");
+    }
 
     return options;
 }
@@ -78,6 +87,8 @@ async function main() {
         tokenizationArtifactPath: options.tokenizationArtifactPath || undefined,
         embeddingArtifactDir: options.embeddingArtifactDir || undefined,
         embeddingArtifactPath: options.embeddingArtifactPath || undefined,
+        reviewPacketArtifactDir: options.reviewPacketArtifactDir || undefined,
+        reviewPacketArtifactPath: options.reviewPacketArtifactPath || undefined,
         workspaceRoot: options.workspaceRoot || undefined,
         packageJsonPath: options.packageJsonPath || undefined,
         packageLockJsonPath: options.packageLockJsonPath || undefined,

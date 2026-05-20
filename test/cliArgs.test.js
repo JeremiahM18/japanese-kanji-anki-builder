@@ -34,6 +34,8 @@ const { parseArgs: parseNlpExampleRerankArgs } = require("../scripts/rerankNlpEx
 const { parseArgs: parseNlpSenseFitAuditArgs } = require("../scripts/auditNlpSenseFit");
 const { parseArgs: parseNlpReadingGapDiscoveryArgs } = require("../scripts/discoverNlpReadingGapCandidates");
 const { parseArgs: parseNlpSuggestionArgs } = require("../scripts/validateNlpSuggestions");
+const { parseArgs: parseNlpReviewPacketGenerateArgs } = require("../scripts/generateNlpReviewPackets");
+const { parseArgs: parseNlpReviewPacketArgs } = require("../scripts/validateNlpReviewPackets");
 const { parseArgs: parseNlpDoctorArgs } = require("../scripts/doctorNlpRuntime");
 const { parseArgs: parseNlpGovernanceGateArgs } = require("../scripts/runNlpGovernanceGate");
 
@@ -571,12 +573,67 @@ test("NLP runtime doctor parseArgs records manifest and workspace overrides", ()
     assert.deepEqual(options.unknownArgs, ["--oops"]);
 });
 
+test("NLP review packet parseArgs records generation and validation inputs", () => {
+    const generateOptions = parseNlpReviewPacketGenerateArgs([
+        "--deck=word",
+        "--level=5",
+        "--limit=8",
+        "--out=out/nlp-review-packets/word-n5.json",
+        "--markdown-out=out/nlp-review-packets/word-n5.md",
+        "--suggestions-dir=out/nlp-suggestions",
+        "--tokenization-dir=out/nlp-tokenization",
+        "--manifest=templates/nlp_model_manifest.json",
+        "--workspace-root=.",
+        "--json",
+        "--oops",
+    ]);
+
+    assert.equal(generateOptions.deckKind, "word");
+    assert.equal(generateOptions.level, 5);
+    assert.equal(generateOptions.limit, 8);
+    assert.equal(generateOptions.outPath, "out/nlp-review-packets/word-n5.json");
+    assert.equal(generateOptions.markdownOutPath, "out/nlp-review-packets/word-n5.md");
+    assert.equal(generateOptions.suggestionArtifactDir, "out/nlp-suggestions");
+    assert.equal(generateOptions.tokenizationArtifactDir, "out/nlp-tokenization");
+    assert.equal(generateOptions.manifestPath, "templates/nlp_model_manifest.json");
+    assert.equal(generateOptions.workspaceRoot, ".");
+    assert.equal(generateOptions.json, true);
+    assert.deepEqual(generateOptions.unknownArgs, ["--oops"]);
+
+    const invalidGenerate = parseNlpReviewPacketGenerateArgs([
+        "--deck=nope",
+        "--level=9",
+        "--limit=0",
+        "--suggestions-dir=out/nlp-suggestions",
+        "--suggestion-path=out/nlp-suggestions/batch.json",
+        "--tokenization-dir=out/nlp-tokenization",
+        "--tokenization-path=out/nlp-tokenization/batch.json",
+    ]);
+    assert.deepEqual(invalidGenerate.unknownArgs, [
+        "--deck must be one of: kanji, word, all",
+        "--level must be an integer from 1 to 5",
+        "--limit must be a positive integer",
+        "use only one of --suggestions-dir or --suggestion-path",
+        "use only one of --tokenization-dir or --tokenization-path",
+    ]);
+
+    const validateOptions = parseNlpReviewPacketArgs([
+        "--artifact-dir=out/nlp-review-packets",
+        "--json",
+        "--oops",
+    ]);
+    assert.equal(validateOptions.artifactDir, "out/nlp-review-packets");
+    assert.equal(validateOptions.json, true);
+    assert.deepEqual(validateOptions.unknownArgs, ["--oops"]);
+});
+
 test("NLP governance gate parseArgs records all gate inputs", () => {
     const options = parseNlpGovernanceGateArgs([
         "--manifest=templates/nlp_model_manifest.json",
         "--suggestions-dir=out/nlp-suggestions",
         "--tokenization-dir=out/nlp-tokenization",
         "--embeddings-dir=out/nlp-embeddings",
+        "--review-packets-dir=out/nlp-review-packets",
         "--workspace-root=.",
         "--package-json=package.json",
         "--package-lock=package-lock.json",
@@ -588,6 +645,7 @@ test("NLP governance gate parseArgs records all gate inputs", () => {
     assert.equal(options.suggestionArtifactDir, "out/nlp-suggestions");
     assert.equal(options.tokenizationArtifactDir, "out/nlp-tokenization");
     assert.equal(options.embeddingArtifactDir, "out/nlp-embeddings");
+    assert.equal(options.reviewPacketArtifactDir, "out/nlp-review-packets");
     assert.equal(options.workspaceRoot, ".");
     assert.equal(options.packageJsonPath, "package.json");
     assert.equal(options.packageLockJsonPath, "package-lock.json");
@@ -611,6 +669,12 @@ test("NLP governance gate parseArgs records all gate inputs", () => {
         "--embedding-path=out/nlp-embeddings/batch.json",
     ]);
     assert.deepEqual(conflictingEmbeddingOptions.unknownArgs, ["use only one of --embeddings-dir or --embedding-path"]);
+
+    const conflictingReviewPacketOptions = parseNlpGovernanceGateArgs([
+        "--review-packets-dir=out/nlp-review-packets",
+        "--review-packet-path=out/nlp-review-packets/batch.json",
+    ]);
+    assert.deepEqual(conflictingReviewPacketOptions.unknownArgs, ["use only one of --review-packets-dir or --review-packet-path"]);
 });
 
 test("word audio review parseArgs records filters and unsupported flags", () => {

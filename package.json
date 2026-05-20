@@ -144,6 +144,8 @@
     "nlp:sense-fit:audit": "node scripts/auditNlpSenseFit.js",
     "nlp:reading-gaps:discover": "node scripts/discoverNlpReadingGapCandidates.js",
     "nlp:suggestions:validate": "node scripts/validateNlpSuggestions.js",
+    "nlp:review-packets:generate": "node scripts/generateNlpReviewPackets.js",
+    "nlp:review-packets:validate": "node scripts/validateNlpReviewPackets.js",
     "nlp:doctor": "node scripts/doctorNlpRuntime.js",
     "nlp:governance-gate": "node scripts/runNlpGovernanceGate.js",
     "deck:words:expansion-candidates": "node scripts/reportWordInventoryExpansionCandidates.js",

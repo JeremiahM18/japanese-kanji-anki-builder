@@ -142,6 +142,7 @@
     "nlp:embeddings:validate": "node scripts/validateNlpEmbeddings.js",
     "nlp:examples:rerank": "node scripts/rerankNlpExamples.js",
     "nlp:sense-fit:audit": "node scripts/auditNlpSenseFit.js",
+    "nlp:reading-gaps:discover": "node scripts/discoverNlpReadingGapCandidates.js",
     "nlp:suggestions:validate": "node scripts/validateNlpSuggestions.js",
     "nlp:doctor": "node scripts/doctorNlpRuntime.js",
     "nlp:governance-gate": "node scripts/runNlpGovernanceGate.js",

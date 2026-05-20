@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Changed
 
+- Added `npm run nlp:reading-gaps:discover -- --level=5 --include-deferred`, an assistive-only candidate-discovery lane that reads the governed word reading-gap plan, optionally includes explicitly deferred gaps, rescored candidate words with the active embedding model, and emits review-only `assistive-candidate-discovery` artifacts without changing gap disposition, tracked templates, or card certification.
 - Added `npm run nlp:sense-fit:audit -- --level=5`, an assistive-only warning lane that compares generated word-card meaning and example/translation embedding views, emits governed `assistive-sense-fit-audit` suggestions for possible alignment risks, and keeps all warnings out of card certification and tracked-template writes.
 - Added `npm run nlp:examples:rerank -- --level=5`, an assistive-only example reranking lane that reads generated word rows, local sentence corpus candidates, and validated word-card embedding artifacts, then writes governed suggestion artifacts with exact written-reading target binding, model-score evidence, input hashes, limitations, and human-promotion boundaries.
 - Added `npm run nlp:embeddings:generate -- --level=5`, which reads generated word TSV rows, builds exact written-reading-bound embedding inputs from word, reading, meaning, example sentence, and notes, writes ignored `out/nlp-embeddings/` artifacts, and preserves the assistive-only/no-certification/no-template-write boundary through validation.

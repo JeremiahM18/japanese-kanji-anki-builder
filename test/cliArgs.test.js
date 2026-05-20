@@ -32,6 +32,7 @@ const { parseArgs: parseNlpEmbeddingGenerateArgs } = require("../scripts/generat
 const { parseArgs: parseNlpEmbeddingArgs } = require("../scripts/validateNlpEmbeddings");
 const { parseArgs: parseNlpExampleRerankArgs } = require("../scripts/rerankNlpExamples");
 const { parseArgs: parseNlpSenseFitAuditArgs } = require("../scripts/auditNlpSenseFit");
+const { parseArgs: parseNlpReadingGapDiscoveryArgs } = require("../scripts/discoverNlpReadingGapCandidates");
 const { parseArgs: parseNlpSuggestionArgs } = require("../scripts/validateNlpSuggestions");
 const { parseArgs: parseNlpDoctorArgs } = require("../scripts/doctorNlpRuntime");
 const { parseArgs: parseNlpGovernanceGateArgs } = require("../scripts/runNlpGovernanceGate");
@@ -494,6 +495,61 @@ test("NLP sense-fit audit parseArgs records source and threshold inputs", () => 
     assert.deepEqual(invalid.unknownArgs, [
         "--level must be an integer from 1 to 5",
         "--threshold must be a number from 0 to 1",
+    ]);
+});
+
+test("NLP reading-gap discovery parseArgs records gap-plan and model inputs", () => {
+    const options = parseNlpReadingGapDiscoveryArgs([
+        "--level=4",
+        "--limit=8",
+        "--suggestions=2",
+        "--min-suggestion-score=75",
+        "--quality=review",
+        "--only=contract-extensions",
+        "--min-model-score=0.6",
+        "--include-deferred",
+        "--out=out/nlp-suggestions/reading-gaps.json",
+        "--manifest=templates/nlp_model_manifest.json",
+        "--model-id=fixtureEmbeddingModel",
+        "--workspace-root=.",
+        "--cache-dir=cache/nlp-models/transformers-js",
+        "--allow-remote-models",
+        "--json",
+        "--oops",
+    ]);
+
+    assert.equal(options.level, 4);
+    assert.equal(options.limit, 8);
+    assert.equal(options.suggestions, 2);
+    assert.equal(options.minSuggestionScore, 75);
+    assert.equal(options.quality, "review");
+    assert.equal(options.only, "contract-extensions");
+    assert.equal(options.minModelScore, 0.6);
+    assert.equal(options.includeDeferred, true);
+    assert.equal(options.outPath, "out/nlp-suggestions/reading-gaps.json");
+    assert.equal(options.manifestPath, "templates/nlp_model_manifest.json");
+    assert.equal(options.modelId, "fixtureEmbeddingModel");
+    assert.equal(options.workspaceRoot, ".");
+    assert.equal(options.cacheDir, "cache/nlp-models/transformers-js");
+    assert.equal(options.allowRemoteModels, true);
+    assert.equal(options.json, true);
+    assert.deepEqual(options.unknownArgs, ["--oops"]);
+
+    const invalid = parseNlpReadingGapDiscoveryArgs([
+        "--level=0",
+        "--limit=0",
+        "--suggestions=-1",
+        "--only=nope",
+        "--quality=nope",
+        "--min-model-score=2",
+    ]);
+    assert.deepEqual(invalid.unknownArgs, [
+        "--level must be an integer from 1 to 5",
+        "--limit must be a positive integer",
+        "--suggestions must be a non-negative integer",
+        "--only must be one of: all, contract-extensions",
+        "--quality must be one of: weak, review, strong",
+        "--min-model-score must be a number from 0 to 1",
     ]);
 });
 

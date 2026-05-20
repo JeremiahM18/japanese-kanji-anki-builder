@@ -30,6 +30,14 @@ npm run nlp:doctor
 
 This preflight compares the manifest against the local workspace. Registered JavaScript runtimes may be missing until they are selected, but active JavaScript runtimes must be declared in `package.json` and resolvable from the workspace. Active external workers must declare a local worker path. Active model artifacts must exist and match their tracked byte size and SHA-256 pins. Passing runtime readiness does not activate card-certification authority.
 
+The aggregate gate for CI and release preflight is:
+
+```bash
+npm run nlp:governance-gate
+```
+
+It runs the model manifest audit, suggestion artifact validator, and runtime doctor together. It fails closed when any sub-check fails, while still reporting that NLP gates do not certify cards, write tracked templates, or claim release readiness.
+
 ## Authority boundary
 
 NLP output must stay assistive-only:

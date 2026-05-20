@@ -23,6 +23,7 @@ const { parseArgs: parseNormalizeSentenceCorpusArgs } = require("../scripts/norm
 const { parseArgs: parseProductReadinessArgs } = require("../scripts/productReadiness");
 const { parseArgs: parseWordAudioReviewArgs } = require("../scripts/reportWordAudioReview");
 const { parseArgs: parseMissingManagedAnimationsArgs } = require("../scripts/reportMissingManagedAnimations");
+const { parseArgs: parseNlpModelGovernanceArgs } = require("../scripts/reportNlpModelGovernance");
 
 test("syncMedia parseArgs accepts --levels alias for one level", () => {
     const options = parseSyncArgs(["--levels=5", "--limit=79"]);
@@ -210,6 +211,18 @@ test("corpus and product parseArgs functions record unsupported flags", () => {
     assert.equal(readiness.level, 5);
     assert.equal(readiness.json, true);
     assert.deepEqual(readiness.unknownArgs, ["--oops"]);
+});
+
+test("NLP model governance parseArgs records manifest overrides and unsupported flags", () => {
+    const options = parseNlpModelGovernanceArgs([
+        "--manifest=templates/nlp_model_manifest.json",
+        "--json",
+        "--oops",
+    ]);
+
+    assert.equal(options.manifestPath, "templates/nlp_model_manifest.json");
+    assert.equal(options.json, true);
+    assert.deepEqual(options.unknownArgs, ["--oops"]);
 });
 
 test("word audio review parseArgs records filters and unsupported flags", () => {

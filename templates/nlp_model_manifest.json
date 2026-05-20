@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "checkedAt": "2026-05-20",
+  "policy": {
+    "authority": "assistive_only",
+    "description": "Deep NLP outputs may create review packets, rankings, and warnings only. They must not certify, approve, or directly ship learner-facing card content.",
+    "allowedUses": [
+      "assistive-candidate-discovery",
+      "assistive-example-reranking",
+      "assistive-sense-fit-audit",
+      "assistive-duplicate-clustering",
+      "assistive-level-fit-audit",
+      "assistive-review-prioritization"
+    ],
+    "disallowedUses": [
+      "direct-template-write",
+      "gold-approval",
+      "platinum-approval",
+      "obsidian-certification",
+      "release-readiness-claim"
+    ],
+    "promotionPolicy": "human_review_required"
+  },
+  "runtimes": {
+    "transformers-js": {
+      "name": "Transformers.js",
+      "status": "registered",
+      "runtimeType": "javascript",
+      "packageName": "@huggingface/transformers",
+      "origin": {
+        "url": "https://huggingface.co/docs/transformers.js/"
+      },
+      "licenseUse": {
+        "status": "needs_review",
+        "notes": "Registered as a candidate JavaScript inference runtime. No model output is active until package version, lockfile, model license, local model integrity, and deterministic runtime policy are pinned."
+      },
+      "allowedTasks": [
+        "embedding",
+        "classification",
+        "reranking"
+      ],
+      "checkedAt": "2026-05-20"
+    },
+    "onnxruntime-node": {
+      "name": "ONNX Runtime Node.js",
+      "status": "registered",
+      "runtimeType": "javascript",
+      "packageName": "onnxruntime-node",
+      "origin": {
+        "url": "https://onnxruntime.ai/docs/get-started/with-javascript/"
+      },
+      "licenseUse": {
+        "status": "needs_review",
+        "notes": "Registered as a candidate pinned local-model runtime. No ONNX model output is active until model artifact integrity, runtime version, and reproducibility checks are tracked."
+      },
+      "allowedTasks": [
+        "embedding",
+        "classification",
+        "reranking"
+      ],
+      "checkedAt": "2026-05-20"
+    },
+    "kuromoji-js": {
+      "name": "kuromoji.js",
+      "status": "registered",
+      "runtimeType": "javascript",
+      "packageName": "kuromoji",
+      "origin": {
+        "url": "https://github.com/takuyaa/kuromoji.js"
+      },
+      "licenseUse": {
+        "status": "needs_review",
+        "notes": "Registered as a candidate Japanese tokenizer. Tokenization output may support model features and review packets only after dictionary files and package version are pinned."
+      },
+      "allowedTasks": [
+        "tokenization"
+      ],
+      "checkedAt": "2026-05-20"
+    },
+    "python-worker": {
+      "name": "Governed Python NLP worker",
+      "status": "registered",
+      "runtimeType": "external-worker",
+      "origin": {
+        "notes": "Optional future worker boundary for models that are not practical in JavaScript. The Node pipeline remains the contract owner."
+      },
+      "licenseUse": {
+        "status": "needs_review",
+        "notes": "Registered as a runtime boundary only. Any Python dependencies, model artifacts, and generated outputs must be separately pinned and audited before active use."
+      },
+      "allowedTasks": [
+        "embedding",
+        "classification",
+        "reranking"
+      ],
+      "checkedAt": "2026-05-20"
+    }
+  },
+  "models": {}
+}

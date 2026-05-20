@@ -46,9 +46,11 @@ const licenseUseSchema = z.object({
 }).strict();
 
 const localArtifactSchema = z.object({
+    artifactKind: z.enum(["file", "directory"]).default("file"),
     path: z.string().min(1),
     sha256: z.string().regex(/^[a-f0-9]{64}$/i),
     byteSize: z.number().int().positive(),
+    fileCount: z.number().int().positive().optional(),
 }).strict();
 
 const runtimeDictionarySchema = z.object({
@@ -193,6 +195,9 @@ function parseNlpModelManifest(value) {
             }
             if (!model.localArtifact) {
                 throw new Error(`Active NLP model ${modelId} must pin a local model artifact.`);
+            }
+            if (model.localArtifact.artifactKind === "directory" && !model.localArtifact.fileCount) {
+                throw new Error(`Active NLP model ${modelId} directory artifact must pin fileCount.`);
             }
             if (!model.evaluation) {
                 throw new Error(`Active NLP model ${modelId} must include tracked evaluation evidence.`);

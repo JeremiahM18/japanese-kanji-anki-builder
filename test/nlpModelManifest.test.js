@@ -127,6 +127,22 @@ test("parseNlpModelManifest validates active model governance", () => {
             models: {
                 fixtureModel: {
                     ...buildManifest().models.fixtureModel,
+                    localArtifact: {
+                        artifactKind: "directory",
+                        path: "models/fixture",
+                        sha256: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                        byteSize: 128,
+                    },
+                },
+            },
+        },
+    })), /directory artifact must pin fileCount/);
+
+    assert.throws(() => parseNlpModelManifest(buildManifest({
+        manifest: {
+            models: {
+                fixtureModel: {
+                    ...buildManifest().models.fixtureModel,
                     evaluation: undefined,
                 },
             },

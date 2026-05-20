@@ -81,7 +81,8 @@ Before a model can become active, the manifest must track:
 - runtime id and task compatibility
 - package or worker boundary
 - license/use approval
-- model artifact path, SHA-256, and byte size
+- model artifact path, artifact kind (`file` or `directory`), SHA-256, and byte size
+- file count for directory model bundles
 - deterministic input and runtime policy
 - evaluation benchmark path and metrics
 - known limitations

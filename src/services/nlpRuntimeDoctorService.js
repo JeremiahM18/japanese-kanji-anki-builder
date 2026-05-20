@@ -136,6 +136,68 @@ function sha256File(filePath) {
     return hash.digest("hex");
 }
 
+function listRecursiveFiles(dirPath) {
+    const files = [];
+    const stack = [dirPath];
+
+    while (stack.length > 0) {
+        const current = stack.pop();
+        for (const entry of fs.readdirSync(current, { withFileTypes: true })) {
+            const entryPath = path.join(current, entry.name);
+            if (entry.isDirectory()) {
+                stack.push(entryPath);
+            } else if (entry.isFile()) {
+                files.push(entryPath);
+            }
+        }
+    }
+
+    return files.sort((a, b) => a.localeCompare(b));
+}
+
+function describeDirectoryArtifact(localArtifact, workspaceRoot = buildDefaultWorkspaceRoot()) {
+    const resolvedPath = path.resolve(workspaceRoot, localArtifact.path);
+    const exists = fs.existsSync(resolvedPath) && fs.statSync(resolvedPath).isDirectory();
+    let fileCountActual = null;
+    let byteSizeActual = null;
+    let sha256Actual = null;
+
+    if (exists) {
+        const filePaths = listRecursiveFiles(resolvedPath);
+        const hash = crypto.createHash("sha256");
+        let byteSize = 0;
+
+        for (const filePath of filePaths) {
+            const relativePath = path.relative(resolvedPath, filePath).split(path.sep).join("/");
+            const fileBytes = fs.readFileSync(filePath);
+            byteSize += fileBytes.length;
+            hash.update(relativePath);
+            hash.update("\0");
+            hash.update(fileBytes);
+        }
+
+        fileCountActual = filePaths.length;
+        byteSizeActual = byteSize;
+        sha256Actual = hash.digest("hex");
+    }
+
+    return {
+        artifactKind: "directory",
+        path: localArtifact.path,
+        resolvedPath,
+        exists,
+        fileCountExpected: localArtifact.fileCount || null,
+        fileCountActual,
+        byteSizeExpected: localArtifact.byteSize,
+        byteSizeActual,
+        sha256Expected: localArtifact.sha256,
+        sha256Actual,
+        fileCountMatches: exists && Number.isInteger(localArtifact.fileCount) && fileCountActual === localArtifact.fileCount,
+        byteSizeMatches: exists && byteSizeActual === localArtifact.byteSize,
+        sha256Matches: exists && sha256Actual === localArtifact.sha256,
+    };
+}
+
 function describeDictionaryArtifact(dictionary, workspaceRoot = buildDefaultWorkspaceRoot()) {
     if (!dictionary) {
         return {
@@ -200,16 +262,24 @@ function describeModelArtifact(model, workspaceRoot = buildDefaultWorkspaceRoot(
     const localArtifact = model.localArtifact || null;
     if (!localArtifact) {
         return {
+            artifactKind: null,
             path: null,
             resolvedPath: null,
             exists: false,
+            fileCountExpected: null,
+            fileCountActual: null,
             byteSizeExpected: null,
             byteSizeActual: null,
             sha256Expected: null,
             sha256Actual: null,
+            fileCountMatches: false,
             byteSizeMatches: false,
             sha256Matches: false,
         };
+    }
+
+    if (localArtifact.artifactKind === "directory") {
+        return describeDirectoryArtifact(localArtifact, workspaceRoot);
     }
 
     const resolvedPath = path.resolve(workspaceRoot, localArtifact.path);
@@ -218,13 +288,17 @@ function describeModelArtifact(model, workspaceRoot = buildDefaultWorkspaceRoot(
     const sha256Actual = exists ? sha256File(resolvedPath) : null;
 
     return {
+        artifactKind: "file",
         path: localArtifact.path,
         resolvedPath,
         exists,
+        fileCountExpected: null,
+        fileCountActual: null,
         byteSizeExpected: localArtifact.byteSize,
         byteSizeActual,
         sha256Expected: localArtifact.sha256,
         sha256Actual,
+        fileCountMatches: false,
         byteSizeMatches: exists && byteSizeActual === localArtifact.byteSize,
         sha256Matches: exists && sha256Actual === localArtifact.sha256,
     };
@@ -359,6 +433,9 @@ function describeModelReadiness({ modelId, model, manifest, workspaceRoot }) {
         } else {
             if (!artifact.exists) {
                 errors.push(`Active NLP model ${modelId} artifact is missing: ${artifact.resolvedPath}`);
+            }
+            if (artifact.artifactKind === "directory" && artifact.exists && !artifact.fileCountMatches) {
+                errors.push(`Active NLP model ${modelId} artifact fileCount mismatch: expected ${artifact.fileCountExpected}, got ${artifact.fileCountActual}.`);
             }
             if (artifact.exists && !artifact.byteSizeMatches) {
                 errors.push(`Active NLP model ${modelId} artifact byteSize mismatch: expected ${artifact.byteSizeExpected}, got ${artifact.byteSizeActual}.`);
@@ -516,7 +593,10 @@ function formatNlpRuntimeDoctorReport(report = {}) {
     if ((report.modelChecks || []).length > 0) {
         lines.push("", "Models:");
         for (const model of report.modelChecks) {
-            lines.push(`- ${model.id}: ${model.status}; runtime ${model.runtimeId}; artifact ${model.artifact.path || "none"}; exists=${model.artifact.exists ? "yes" : "no"}`);
+            const fileCountText = model.artifact.artifactKind === "directory"
+                ? `; files=${model.artifact.fileCountActual ?? "missing"}`
+                : "";
+            lines.push(`- ${model.id}: ${model.status}; runtime ${model.runtimeId}; artifact ${model.artifact.path || "none"}; kind=${model.artifact.artifactKind || "none"}; exists=${model.artifact.exists ? "yes" : "no"}${fileCountText}`);
             for (const error of model.errors || []) {
                 lines.push(`  - ${error}`);
             }
@@ -540,6 +620,7 @@ module.exports = {
     buildDefaultPackageJsonPath,
     buildDefaultWorkspaceRoot,
     buildNlpRuntimeDoctorReport,
+    describeDirectoryArtifact,
     describeDictionaryArtifact,
     describeModelArtifact,
     describeModelReadiness,

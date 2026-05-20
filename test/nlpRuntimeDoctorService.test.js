@@ -35,6 +35,46 @@ function sha256Dictionary(dir) {
     };
 }
 
+function listRecursiveFiles(dirPath) {
+    const files = [];
+    const stack = [dirPath];
+
+    while (stack.length > 0) {
+        const current = stack.pop();
+        for (const entry of fs.readdirSync(current, { withFileTypes: true })) {
+            const entryPath = path.join(current, entry.name);
+            if (entry.isDirectory()) {
+                stack.push(entryPath);
+            } else if (entry.isFile()) {
+                files.push(entryPath);
+            }
+        }
+    }
+
+    return files.sort((a, b) => a.localeCompare(b));
+}
+
+function sha256ModelDirectory(dir) {
+    const hash = crypto.createHash("sha256");
+    let byteSize = 0;
+    const files = listRecursiveFiles(dir);
+
+    for (const filePath of files) {
+        const relativePath = path.relative(dir, filePath).split(path.sep).join("/");
+        const bytes = fs.readFileSync(filePath);
+        byteSize += bytes.length;
+        hash.update(relativePath);
+        hash.update("\0");
+        hash.update(bytes);
+    }
+
+    return {
+        fileCount: files.length,
+        byteSize,
+        sha256: hash.digest("hex"),
+    };
+}
+
 function writeInstalledPackage(workspaceRoot, packageName, metadata = {}) {
     const packageDir = path.join(workspaceRoot, "node_modules", ...packageName.split("/"));
     fs.mkdirSync(packageDir, { recursive: true });
@@ -54,7 +94,7 @@ function buildManifest({ runtimeOverrides = {}, modelOverrides = {}, artifactPat
             sha256: sha256Text(artifactText),
             byteSize: Buffer.byteLength(artifactText),
         }
-        : undefined;
+        : modelOverrides.localArtifact;
 
     return {
         manifestPath: "templates/nlp_model_manifest.json",
@@ -172,6 +212,46 @@ test("buildNlpRuntimeDoctorReport verifies active runtime packages and model art
     assert.equal(report.modelChecks[0].artifact.sha256Matches, true);
 });
 
+test("buildNlpRuntimeDoctorReport verifies active model directory artifacts", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-runtime-"));
+    const modelDir = path.join(dir, "models", "fixture-embedding");
+    fs.mkdirSync(path.join(modelDir, "onnx"), { recursive: true });
+    fs.writeFileSync(path.join(modelDir, "config.json"), "{\"model\":\"fixture\"}");
+    fs.writeFileSync(path.join(modelDir, "tokenizer.json"), "{\"tokenizer\":\"fixture\"}");
+    fs.writeFileSync(path.join(modelDir, "onnx", "model.onnx"), "fixture model");
+    writeInstalledPackage(dir, "fixture-runtime");
+    const localArtifact = {
+        artifactKind: "directory",
+        path: "models/fixture-embedding",
+        ...sha256ModelDirectory(modelDir),
+    };
+
+    const report = buildNlpRuntimeDoctorReport({
+        workspaceRoot: dir,
+        loadManifestFn: () => buildManifest({
+            modelOverrides: {
+                localArtifact,
+            },
+        }),
+        loadPackageJsonFn: () => ({ dependencies: { "fixture-runtime": "1.0.0" } }),
+        loadPackageLockJsonFn: () => ({
+            packages: {
+                "node_modules/fixture-runtime": {
+                    version: "1.0.0",
+                    integrity: "sha512-fixture",
+                },
+            },
+        }),
+        requireResolveFn: () => path.join(dir, "node_modules/fixture-runtime/index.js"),
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.modelChecks[0].artifact.artifactKind, "directory");
+    assert.equal(report.modelChecks[0].artifact.fileCountMatches, true);
+    assert.equal(report.modelChecks[0].artifact.byteSizeMatches, true);
+    assert.equal(report.modelChecks[0].artifact.sha256Matches, true);
+});
+
 test("buildNlpRuntimeDoctorReport verifies active tokenizer dictionary pins", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-runtime-"));
     const dictionaryDir = path.join(dir, "dict");
@@ -234,6 +314,44 @@ test("buildNlpRuntimeDoctorReport fails active runtime and artifact mismatches",
     assert.match(report.errors.join("\n"), /installed package metadata is missing/);
     assert.match(report.errors.join("\n"), /byteSize mismatch/);
     assert.match(report.errors.join("\n"), /sha256 mismatch/);
+});
+
+test("buildNlpRuntimeDoctorReport fails active model directory artifact drift", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-runtime-"));
+    const modelDir = path.join(dir, "models", "fixture-embedding");
+    fs.mkdirSync(modelDir, { recursive: true });
+    fs.writeFileSync(path.join(modelDir, "config.json"), "changed config");
+    writeInstalledPackage(dir, "fixture-runtime");
+
+    const report = buildNlpRuntimeDoctorReport({
+        workspaceRoot: dir,
+        loadManifestFn: () => buildManifest({
+            modelOverrides: {
+                localArtifact: {
+                    artifactKind: "directory",
+                    path: "models/fixture-embedding",
+                    sha256: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    byteSize: 999,
+                    fileCount: 2,
+                },
+            },
+        }),
+        loadPackageJsonFn: () => ({ dependencies: { "fixture-runtime": "1.0.0" } }),
+        loadPackageLockJsonFn: () => ({
+            packages: {
+                "node_modules/fixture-runtime": {
+                    version: "1.0.0",
+                    integrity: "sha512-fixture",
+                },
+            },
+        }),
+        requireResolveFn: () => path.join(dir, "node_modules/fixture-runtime/index.js"),
+    });
+
+    assert.equal(report.passed, false);
+    assert.match(report.errors.join("\n"), /artifact fileCount mismatch/);
+    assert.match(report.errors.join("\n"), /artifact byteSize mismatch/);
+    assert.match(report.errors.join("\n"), /artifact sha256 mismatch/);
 });
 
 test("describeDictionaryArtifact reports missing dictionary paths", () => {

@@ -17,6 +17,8 @@ function parseArgs(argv) {
         suggestionArtifactPath: null,
         tokenizationArtifactDir: null,
         tokenizationArtifactPath: null,
+        embeddingArtifactDir: null,
+        embeddingArtifactPath: null,
         workspaceRoot: null,
         packageJsonPath: null,
         packageLockJsonPath: null,
@@ -36,6 +38,10 @@ function parseArgs(argv) {
             options.tokenizationArtifactDir = parseStringOption(arg, "tokenization-dir").trim();
         } else if (arg.startsWith("--tokenization-path=")) {
             options.tokenizationArtifactPath = parseStringOption(arg, "tokenization-path").trim();
+        } else if (arg.startsWith("--embeddings-dir=")) {
+            options.embeddingArtifactDir = parseStringOption(arg, "embeddings-dir").trim();
+        } else if (arg.startsWith("--embedding-path=")) {
+            options.embeddingArtifactPath = parseStringOption(arg, "embedding-path").trim();
         } else if (arg.startsWith("--workspace-root=")) {
             options.workspaceRoot = parseStringOption(arg, "workspace-root").trim();
         } else if (arg.startsWith("--package-json=")) {
@@ -53,6 +59,9 @@ function parseArgs(argv) {
     if (options.tokenizationArtifactDir && options.tokenizationArtifactPath) {
         collectUnknownArg(options, "use only one of --tokenization-dir or --tokenization-path");
     }
+    if (options.embeddingArtifactDir && options.embeddingArtifactPath) {
+        collectUnknownArg(options, "use only one of --embeddings-dir or --embedding-path");
+    }
 
     return options;
 }
@@ -67,6 +76,8 @@ async function main() {
         suggestionArtifactPath: options.suggestionArtifactPath || undefined,
         tokenizationArtifactDir: options.tokenizationArtifactDir || undefined,
         tokenizationArtifactPath: options.tokenizationArtifactPath || undefined,
+        embeddingArtifactDir: options.embeddingArtifactDir || undefined,
+        embeddingArtifactPath: options.embeddingArtifactPath || undefined,
         workspaceRoot: options.workspaceRoot || undefined,
         packageJsonPath: options.packageJsonPath || undefined,
         packageLockJsonPath: options.packageLockJsonPath || undefined,

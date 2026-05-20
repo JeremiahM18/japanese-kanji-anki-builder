@@ -13,6 +13,9 @@ const {
 const {
     buildNlpTokenizationAuditReport,
 } = require("./nlpTokenizationAuditService");
+const {
+    buildNlpEmbeddingArtifactReport,
+} = require("./nlpEmbeddingArtifactService");
 
 function captureGateCheck({ id, label, buildReportFn }) {
     try {
@@ -41,6 +44,8 @@ function buildNlpGovernanceGateReport({
     suggestionArtifactPath,
     tokenizationArtifactDir,
     tokenizationArtifactPath,
+    embeddingArtifactDir,
+    embeddingArtifactPath,
     workspaceRoot,
     packageJsonPath,
     packageLockJsonPath,
@@ -48,6 +53,7 @@ function buildNlpGovernanceGateReport({
     buildSuggestionReportFn = buildNlpSuggestionArtifactReport,
     buildTokenizationReportFn = buildNlpTokenizationArtifactReport,
     buildTokenizationAuditReportFn = buildNlpTokenizationAuditReport,
+    buildEmbeddingReportFn = buildNlpEmbeddingArtifactReport,
     buildRuntimeReportFn = buildNlpRuntimeDoctorReport,
 } = {}) {
     const checks = [
@@ -56,15 +62,6 @@ function buildNlpGovernanceGateReport({
             label: "NLP model manifest",
             buildReportFn: () => buildModelReportFn({
                 manifestPath: manifestPath || undefined,
-            }),
-        }),
-        captureGateCheck({
-            id: "suggestion-artifacts",
-            label: "NLP suggestion artifacts",
-            buildReportFn: () => buildSuggestionReportFn({
-                manifestPath: manifestPath || undefined,
-                artifactDir: suggestionArtifactDir || undefined,
-                artifactPath: suggestionArtifactPath || undefined,
             }),
         }),
         captureGateCheck({
@@ -83,6 +80,24 @@ function buildNlpGovernanceGateReport({
                 manifestPath: manifestPath || undefined,
                 artifactDir: tokenizationArtifactDir || undefined,
                 artifactPath: tokenizationArtifactPath || undefined,
+            }),
+        }),
+        captureGateCheck({
+            id: "embedding-artifacts",
+            label: "NLP embedding artifacts",
+            buildReportFn: () => buildEmbeddingReportFn({
+                manifestPath: manifestPath || undefined,
+                artifactDir: embeddingArtifactDir || undefined,
+                artifactPath: embeddingArtifactPath || undefined,
+            }),
+        }),
+        captureGateCheck({
+            id: "suggestion-artifacts",
+            label: "NLP suggestion artifacts",
+            buildReportFn: () => buildSuggestionReportFn({
+                manifestPath: manifestPath || undefined,
+                artifactDir: suggestionArtifactDir || undefined,
+                artifactPath: suggestionArtifactPath || undefined,
             }),
         }),
         captureGateCheck({

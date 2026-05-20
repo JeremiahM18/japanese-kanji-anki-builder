@@ -699,9 +699,10 @@ Repository governance:
 | `npm run nlp:tokenization:generate -- --level=5` | Generate governed assistive-only `kuromoji-js` tokenization artifacts from the generated word TSV |
 | `npm run nlp:tokenization:validate` | Validate governed morphological tokenization artifacts under `out/nlp-tokenization/`; tokenization remains assistive-only and cannot certify cards |
 | `npm run nlp:tokenization:audit` | Summarize validated tokenization artifacts into assistive review-packet signals without certifying cards or writing tracked templates |
+| `npm run nlp:embeddings:validate` | Validate governed embedding artifacts under `out/nlp-embeddings/`; embeddings remain assistive-only and require an active pinned embedding model before non-empty artifacts pass |
 | `npm run nlp:suggestions:validate` | Validate governed NLP suggestion artifacts under `out/nlp-suggestions/`; artifacts remain assistive-only and require human promotion |
 | `npm run nlp:doctor` | Preflight NLP runtimes, package-lock integrity, installed package metadata, tokenizer dictionaries, pinned model artifacts, and assistive-only release boundaries |
-| `npm run nlp:governance-gate` | Run the complete NLP fail-closed gate: model manifest audit, tokenization artifact validation, tokenization audit signals, suggestion artifact validation, and runtime/model-artifact preflight |
+| `npm run nlp:governance-gate` | Run the complete NLP fail-closed gate: model manifest audit, tokenization artifact validation, tokenization audit signals, embedding artifact validation, suggestion artifact validation, and runtime/model-artifact preflight |
 | `npm run data:audit:jlpt` | Audit local-data kanji taxonomy, starter alignment, and Gold review placement; use `-- --strict --tracked-only` for clean CI tracked-input alignment |
 | `npm run data:audit:jlpt:sources -- --governance-strict` | Audit JLPT kanji source evidence and fail only on source-governance regressions while evidence depth remains incomplete |
 | `npm run data:audit:jlpt:source-levels -- --worklist-only --limit=10` | Report the focused all-level governed review packet with current level, candidate levels, consensus, vote weights, and resolved source-input worksheet progress without changing decks or readiness |

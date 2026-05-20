@@ -32,7 +32,15 @@ npm run nlp:tokenization:audit
 
 The generator reads the generated word TSV, tokenizes each written card surface with the active `kuromoji-js` runtime, and writes an ignored JSON artifact under `out/nlp-tokenization/`. The validator treats a missing directory as an empty tokenizer lane. Non-empty tokenization artifacts must bind to an active runtime in the manifest, use a runtime that allows `tokenization`, carry pinned input hashes, preserve contiguous token spans over the input text, and bind word-card targets by exact written plus reading identity. The audit command converts validated tokenization artifacts into assistive review-packet signals such as multi-token surfaces, unknown tokens, missing token readings, and token/card reading mismatches.
 
-The third governed surface is runtime readiness:
+The next governed capability surface is the embedding artifact validator:
+
+```bash
+npm run nlp:embeddings:validate
+```
+
+By default it validates JSON artifacts under `out/nlp-embeddings/`. A missing directory is treated as an empty embedding lane. Non-empty embedding artifacts must bind to an active model in the manifest whose task is `embedding`, use an allowed assistive lane, carry pinned input hashes, include model evidence and deterministic policy, bind word-like targets by exact written plus reading identity, and keep every vector length aligned with the declared embedding dimension. This validates embedding outputs only; it does not generate vectors or activate any model.
+
+The runtime governed surface is runtime readiness:
 
 ```bash
 npm run nlp:doctor
@@ -46,7 +54,7 @@ The aggregate gate for CI and release preflight is:
 npm run nlp:governance-gate
 ```
 
-It runs the model manifest audit, tokenization artifact validator, tokenization audit signal report, suggestion artifact validator, and runtime doctor together. It fails closed when any sub-check fails, while still reporting that NLP gates do not certify cards, write tracked templates, or claim release readiness.
+It runs the model manifest audit, tokenization artifact validator, tokenization audit signal report, embedding artifact validator, suggestion artifact validator, and runtime doctor together. It fails closed when any sub-check fails, while still reporting that NLP gates do not certify cards, write tracked templates, or claim release readiness.
 
 ## Authority boundary
 
@@ -86,11 +94,11 @@ Active models must use `outputAuthority: "assistive_only"` and `promotionPolicy:
 Future NLP work should be layered in this order:
 
 1. Tokenization and corpus enrichment.
-2. Embedding or reranking artifact generation.
-3. Suggestion artifact schema validation.
-4. Example reranking for word cards.
-5. Sense-fit and translation-alignment warnings.
-6. Candidate discovery for reading-gap and expansion queues.
-7. Review packet generation for human promotion.
+2. Embedding artifact validation, then model-pinned embedding generation.
+3. Example reranking for word cards.
+4. Sense-fit and translation-alignment warnings.
+5. Candidate discovery for reading-gap and expansion queues.
+6. Human review packet generation for promotion decisions.
+7. Model-assisted drafting only after the earlier audit lanes are proven useful and governed.
 
-Generated NLP artifacts should live under ignored output paths such as `out/nlp-suggestions/`. Tracked templates should change only through reviewed promotion commits.
+Generated NLP artifacts should live under ignored output paths such as `out/nlp-tokenization/`, `out/nlp-embeddings/`, and `out/nlp-suggestions/`. Tracked templates should change only through reviewed promotion commits.

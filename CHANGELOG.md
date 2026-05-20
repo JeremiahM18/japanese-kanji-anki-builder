@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Changed
 
+- Added `npm run nlp:embeddings:validate`, a governed embedding artifact validation lane for ignored `out/nlp-embeddings/` JSON artifacts, with active-model binding, embedding-task enforcement, vector-dimension checks, exact word-reading target identity, and explicit no-certification/no-template-write/no-release-readiness authority.
 - Added `npm run nlp:tokenization:audit`, a read-only tokenization summary layer that converts validated NLP tokenization artifacts into assistive review-packet signals for multi-token surfaces, unknown tokens, missing token readings, artifact warnings, and token/card reading mismatches without certifying cards, writing tracked templates directly, or claiming release readiness.
 - Normalized invalid JSON diagnostics for governed NLP suggestion and tokenization artifact validators so CI does not depend on Node-version-specific `JSON.parse` wording.
 - Added `npm run nlp:tokenization:generate -- --level=5`, which reads generated word TSV rows, tokenizes exact word-card written surfaces with the active `kuromoji-js` runtime, binds each item to exact written+reading identity, writes ignored artifacts under `out/nlp-tokenization/`, and keeps those artifacts assistive-only through the existing validator and aggregate NLP gate.

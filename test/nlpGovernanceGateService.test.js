@@ -34,11 +34,12 @@ test("buildNlpGovernanceGateReport passes only when every NLP check passes", () 
         buildSuggestionReportFn: passingReport,
         buildTokenizationReportFn: passingReport,
         buildTokenizationAuditReportFn: passingReport,
+        buildEmbeddingReportFn: passingReport,
         buildRuntimeReportFn: passingReport,
     });
 
     assert.equal(report.passed, true);
-    assert.equal(report.checks.length, 5);
+    assert.equal(report.checks.length, 6);
     assert.equal(report.releaseBoundary.nlpGateCertifiesCards, false);
     assert.equal(report.releaseBoundary.nlpGateWritesTrackedTemplates, false);
     assert.equal(report.releaseBoundary.nlpGateClaimsReleaseReadiness, false);
@@ -53,6 +54,7 @@ test("buildNlpGovernanceGateReport fails closed on any NLP check error", () => {
         }),
         buildTokenizationReportFn: passingReport,
         buildTokenizationAuditReportFn: passingReport,
+        buildEmbeddingReportFn: passingReport,
         buildRuntimeReportFn: passingReport,
     });
 
@@ -81,6 +83,11 @@ test("formatNlpGovernanceGateReport renders checks and release boundaries", () =
             },
             {
                 label: "NLP tokenization audit signals",
+                passed: true,
+                errors: [],
+            },
+            {
+                label: "NLP embedding artifacts",
                 passed: true,
                 errors: [],
             },

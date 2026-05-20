@@ -14,6 +14,14 @@ npm run nlp:models:audit
 
 The registry lives at [../templates/nlp_model_manifest.json](../templates/nlp_model_manifest.json). It currently registers candidate runtimes only. No model is active yet.
 
+The second governed surface is the suggestion artifact validator:
+
+```bash
+npm run nlp:suggestions:validate
+```
+
+By default it validates JSON artifacts under `out/nlp-suggestions/`. A missing directory is treated as an empty suggestion lane. Non-empty suggestion artifacts must bind to an active model in the manifest, use an allowed assistive lane, include pinned input hashes, carry per-suggestion evidence and limitations, and repeat the human-promotion boundary on each suggestion.
+
 ## Authority boundary
 
 NLP output must stay assistive-only:

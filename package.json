@@ -134,6 +134,7 @@
     "deck:words:gap-plan:n1": "node scripts/reportWordReadingGapPlan.js --level=1",
     "data:normalize:words:jmdict": "node scripts/normalizeJmdictWordSource.js",
     "nlp:models:audit": "node scripts/reportNlpModelGovernance.js",
+    "nlp:suggestions:validate": "node scripts/validateNlpSuggestions.js",
     "deck:words:expansion-candidates": "node scripts/reportWordInventoryExpansionCandidates.js",
     "deck:words:expansion-candidates:n5": "node scripts/reportWordInventoryExpansionCandidates.js --level=5",
     "deck:words:expansion-candidates:n4": "node scripts/reportWordInventoryExpansionCandidates.js --level=4",

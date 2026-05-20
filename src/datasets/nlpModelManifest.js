@@ -2,29 +2,33 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { z } = require("zod");
 
-const allowedUseSchema = z.enum([
+const ALLOWED_NLP_USES = [
     "assistive-candidate-discovery",
     "assistive-example-reranking",
     "assistive-sense-fit-audit",
     "assistive-duplicate-clustering",
     "assistive-level-fit-audit",
     "assistive-review-prioritization",
-]);
+];
 
-const disallowedUseSchema = z.enum([
+const DISALLOWED_NLP_USES = [
     "direct-template-write",
     "gold-approval",
     "platinum-approval",
     "obsidian-certification",
     "release-readiness-claim",
-]);
+];
 
-const runtimeTaskSchema = z.enum([
+const NLP_RUNTIME_TASKS = [
     "tokenization",
     "embedding",
     "classification",
     "reranking",
-]);
+];
+
+const allowedUseSchema = z.enum(ALLOWED_NLP_USES);
+const disallowedUseSchema = z.enum(DISALLOWED_NLP_USES);
+const runtimeTaskSchema = z.enum(NLP_RUNTIME_TASKS);
 
 const modelStatusSchema = z.enum(["registered", "active", "blocked", "retired"]);
 const runtimeStatusSchema = z.enum(["registered", "active", "blocked", "retired"]);
@@ -187,8 +191,11 @@ function loadNlpModelManifest(manifestPath = buildDefaultNlpModelManifestPath())
 }
 
 module.exports = {
+    ALLOWED_NLP_USES,
     buildDefaultNlpModelManifestPath,
+    DISALLOWED_NLP_USES,
     loadNlpModelManifest,
+    NLP_RUNTIME_TASKS,
     nlpModelManifestSchema,
     parseNlpModelManifest,
 };

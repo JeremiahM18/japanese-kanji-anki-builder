@@ -23,6 +23,8 @@ function buildManifest(overrides = {}) {
                 status: "active",
                 runtimeType: "javascript",
                 packageName: "fixture-runtime",
+                packageVersion: "1.0.0",
+                packageIntegrity: "sha512-fixture",
                 origin: {
                     url: "https://example.com/runtime",
                 },
@@ -143,6 +145,42 @@ test("parseNlpModelManifest validates active model governance", () => {
     })), /global NLP policy does not allow/);
 });
 
+test("parseNlpModelManifest requires pinned active runtime evidence", () => {
+    assert.throws(() => parseNlpModelManifest(buildManifest({
+        manifest: {
+            runtimes: {
+                fixtureRuntime: {
+                    ...buildManifest().runtimes.fixtureRuntime,
+                    packageVersion: undefined,
+                },
+            },
+        },
+    })), /must declare packageVersion/);
+
+    assert.throws(() => parseNlpModelManifest(buildManifest({
+        manifest: {
+            runtimes: {
+                fixtureRuntime: {
+                    ...buildManifest().runtimes.fixtureRuntime,
+                    packageIntegrity: undefined,
+                },
+            },
+        },
+    })), /must declare packageIntegrity/);
+
+    assert.throws(() => parseNlpModelManifest(buildManifest({
+        manifest: {
+            runtimes: {
+                fixtureRuntime: {
+                    ...buildManifest().runtimes.fixtureRuntime,
+                    allowedTasks: ["tokenization"],
+                },
+            },
+            models: {},
+        },
+    })), /must pin dictionary evidence/);
+});
+
 test("tracked NLP model manifest loads with assistive-only boundaries", () => {
     const manifest = loadNlpModelManifest();
     assert.equal(manifest.policy.authority, "assistive_only");
@@ -150,5 +188,7 @@ test("tracked NLP model manifest loads with assistive-only boundaries", () => {
     assert.equal(Object.keys(manifest.models).length, 0);
     assert.equal(manifest.runtimes["transformers-js"].status, "registered");
     assert.equal(manifest.runtimes["onnxruntime-node"].status, "registered");
-    assert.equal(manifest.runtimes["kuromoji-js"].status, "registered");
+    assert.equal(manifest.runtimes["kuromoji-js"].status, "active");
+    assert.equal(manifest.runtimes["kuromoji-js"].packageVersion, "0.1.2");
+    assert.equal(manifest.runtimes["kuromoji-js"].dictionary.fileCount, 12);
 });

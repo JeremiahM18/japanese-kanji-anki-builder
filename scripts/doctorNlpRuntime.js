@@ -14,6 +14,7 @@ function parseArgs(argv) {
         json: false,
         manifestPath: null,
         packageJsonPath: null,
+        packageLockJsonPath: null,
         workspaceRoot: null,
         unknownArgs: [],
     };
@@ -25,6 +26,8 @@ function parseArgs(argv) {
             options.manifestPath = parseStringOption(arg, "manifest").trim();
         } else if (arg.startsWith("--package-json=")) {
             options.packageJsonPath = parseStringOption(arg, "package-json").trim();
+        } else if (arg.startsWith("--package-lock=")) {
+            options.packageLockJsonPath = parseStringOption(arg, "package-lock").trim();
         } else if (arg.startsWith("--workspace-root=")) {
             options.workspaceRoot = parseStringOption(arg, "workspace-root").trim();
         } else {
@@ -42,6 +45,7 @@ async function main() {
     const report = buildNlpRuntimeDoctorReport({
         manifestPath: options.manifestPath || undefined,
         packageJsonPath: options.packageJsonPath || undefined,
+        packageLockJsonPath: options.packageLockJsonPath || undefined,
         workspaceRoot: options.workspaceRoot || undefined,
     });
 

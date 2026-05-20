@@ -51,14 +51,24 @@ const localArtifactSchema = z.object({
     byteSize: z.number().int().positive(),
 }).strict();
 
+const runtimeDictionarySchema = z.object({
+    path: z.string().min(1),
+    sha256: z.string().regex(/^[a-f0-9]{64}$/i),
+    byteSize: z.number().int().positive(),
+    fileCount: z.number().int().positive(),
+}).strict();
+
 const runtimeSchema = z.object({
     name: z.string().min(1),
     status: runtimeStatusSchema,
     runtimeType: z.enum(["javascript", "external-worker"]),
     packageName: z.string().min(1).optional(),
+    packageVersion: z.string().min(1).optional(),
+    packageIntegrity: z.string().min(1).optional(),
     origin: originSchema,
     licenseUse: licenseUseSchema,
     allowedTasks: z.array(runtimeTaskSchema).min(1),
+    dictionary: runtimeDictionarySchema.optional(),
     checkedAt: z.string().min(1),
 }).strict();
 
@@ -132,6 +142,20 @@ function parseNlpModelManifest(value) {
     for (const [runtimeId, runtime] of Object.entries(parsed.runtimes)) {
         if (runtime.status === "active" && runtime.licenseUse.status !== "approved") {
             throw new Error(`Active NLP runtime ${runtimeId} must have approved license/use status.`);
+        }
+        if (runtime.status === "active" && runtime.runtimeType === "javascript") {
+            if (!runtime.packageName) {
+                throw new Error(`Active JavaScript NLP runtime ${runtimeId} must declare packageName.`);
+            }
+            if (!runtime.packageVersion) {
+                throw new Error(`Active JavaScript NLP runtime ${runtimeId} must declare packageVersion.`);
+            }
+            if (!runtime.packageIntegrity) {
+                throw new Error(`Active JavaScript NLP runtime ${runtimeId} must declare packageIntegrity.`);
+            }
+        }
+        if (runtime.status === "active" && runtime.allowedTasks.includes("tokenization") && !runtime.dictionary) {
+            throw new Error(`Active tokenization NLP runtime ${runtimeId} must pin dictionary evidence.`);
         }
         if (runtime.status === "blocked" && runtime.allowedTasks.length > 0) {
             throw new Error(`Blocked NLP runtime ${runtimeId} must not allow tasks.`);

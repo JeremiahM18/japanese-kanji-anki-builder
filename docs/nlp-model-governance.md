@@ -12,7 +12,7 @@ The first governed surface is the tracked model registry:
 npm run nlp:models:audit
 ```
 
-The registry lives at [../templates/nlp_model_manifest.json](../templates/nlp_model_manifest.json). It currently registers candidate runtimes only. No model is active yet.
+The registry lives at [../templates/nlp_model_manifest.json](../templates/nlp_model_manifest.json). It currently has one active runtime, `kuromoji-js`, for local morphological tokenization. No model is active yet.
 
 The second governed surface is the suggestion artifact validator:
 
@@ -36,7 +36,7 @@ The third governed surface is runtime readiness:
 npm run nlp:doctor
 ```
 
-This preflight compares the manifest against the local workspace. Registered JavaScript runtimes may be missing until they are selected, but active JavaScript runtimes must be declared in `package.json` and resolvable from the workspace. Active external workers must declare a local worker path. Active model artifacts must exist and match their tracked byte size and SHA-256 pins. Passing runtime readiness does not activate card-certification authority.
+This preflight compares the manifest against the local workspace. Registered JavaScript runtimes may be missing until they are selected, but active JavaScript runtimes must be declared in `package.json`, pinned in `package-lock.json`, resolvable from the workspace, and matched to installed package metadata. Active tokenization runtimes must also pin dictionary file count, byte size, and SHA-256 evidence. Active external workers must declare a local worker path. Active model artifacts must exist and match their tracked byte size and SHA-256 pins. Passing runtime readiness does not activate card-certification authority.
 
 The aggregate gate for CI and release preflight is:
 
@@ -57,6 +57,14 @@ NLP output must stay assistive-only:
 - Human review must promote any accepted suggestion into tracked contracts.
 
 ## Activation requirements
+
+Before a runtime can become active, the manifest must track:
+
+- runtime id and task compatibility
+- package or worker boundary
+- exact package version and package-lock integrity for JavaScript runtimes
+- license/use approval
+- tokenizer dictionary path, file count, byte size, and SHA-256 when the runtime performs tokenization
 
 Before a model can become active, the manifest must track:
 

@@ -88,7 +88,7 @@ function formatNlpModelGovernanceReport(report = {}) {
 
     lines.push(
         "",
-        "Next step: add suggestion-artifact schemas before activating any model output lane."
+        "Next step: generate governed tokenization artifacts before activating any model output lane."
     );
 
     return `${lines.join("\n")}\n`;

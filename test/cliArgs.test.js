@@ -281,6 +281,7 @@ test("NLP runtime doctor parseArgs records manifest and workspace overrides", ()
     const options = parseNlpDoctorArgs([
         "--manifest=templates/nlp_model_manifest.json",
         "--package-json=package.json",
+        "--package-lock=package-lock.json",
         "--workspace-root=.",
         "--json",
         "--oops",
@@ -288,6 +289,7 @@ test("NLP runtime doctor parseArgs records manifest and workspace overrides", ()
 
     assert.equal(options.manifestPath, "templates/nlp_model_manifest.json");
     assert.equal(options.packageJsonPath, "package.json");
+    assert.equal(options.packageLockJsonPath, "package-lock.json");
     assert.equal(options.workspaceRoot, ".");
     assert.equal(options.json, true);
     assert.deepEqual(options.unknownArgs, ["--oops"]);
@@ -300,6 +302,7 @@ test("NLP governance gate parseArgs records all gate inputs", () => {
         "--tokenization-dir=out/nlp-tokenization",
         "--workspace-root=.",
         "--package-json=package.json",
+        "--package-lock=package-lock.json",
         "--json",
         "--oops",
     ]);
@@ -309,6 +312,7 @@ test("NLP governance gate parseArgs records all gate inputs", () => {
     assert.equal(options.tokenizationArtifactDir, "out/nlp-tokenization");
     assert.equal(options.workspaceRoot, ".");
     assert.equal(options.packageJsonPath, "package.json");
+    assert.equal(options.packageLockJsonPath, "package-lock.json");
     assert.equal(options.json, true);
     assert.deepEqual(options.unknownArgs, ["--oops"]);
 

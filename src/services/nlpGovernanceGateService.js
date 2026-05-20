@@ -40,6 +40,7 @@ function buildNlpGovernanceGateReport({
     tokenizationArtifactPath,
     workspaceRoot,
     packageJsonPath,
+    packageLockJsonPath,
     buildModelReportFn = buildNlpModelGovernanceReport,
     buildSuggestionReportFn = buildNlpSuggestionArtifactReport,
     buildTokenizationReportFn = buildNlpTokenizationArtifactReport,
@@ -78,6 +79,7 @@ function buildNlpGovernanceGateReport({
                 manifestPath: manifestPath || undefined,
                 workspaceRoot: workspaceRoot || undefined,
                 packageJsonPath: packageJsonPath || undefined,
+                packageLockJsonPath: packageLockJsonPath || undefined,
             }),
         }),
     ];

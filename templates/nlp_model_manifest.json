@@ -62,19 +62,28 @@
     },
     "kuromoji-js": {
       "name": "kuromoji.js",
-      "status": "registered",
+      "status": "active",
       "runtimeType": "javascript",
       "packageName": "kuromoji",
+      "packageVersion": "0.1.2",
+      "packageIntegrity": "sha512-V0dUf+C2LpcPEXhoHLMAop/bOht16Dyr+mDiIE39yX3vqau7p80De/koFqpiTcL1zzdZlc3xuHZ8u5gjYRfFaQ==",
       "origin": {
         "url": "https://github.com/takuyaa/kuromoji.js"
       },
       "licenseUse": {
-        "status": "needs_review",
-        "notes": "Registered as a candidate Japanese tokenizer. Tokenization output may support model features and review packets only after dictionary files and package version are pinned."
+        "status": "approved",
+        "license": "Apache-2.0",
+        "notes": "Approved for local assistive Japanese tokenization after package-lock integrity, installed package metadata, and bundled dictionary bytes were pinned. Tokenization output may support review packets only and cannot certify or directly write cards."
       },
       "allowedTasks": [
         "tokenization"
       ],
+      "dictionary": {
+        "path": "node_modules/kuromoji/dict",
+        "fileCount": 12,
+        "byteSize": 17791956,
+        "sha256": "484ee6b00d145650e82421d330463809e4b7b500ba0140064efd1849544adb86"
+      },
       "checkedAt": "2026-05-20"
     },
     "python-worker": {

@@ -19,6 +19,7 @@ function parseArgs(argv) {
         tokenizationArtifactPath: null,
         workspaceRoot: null,
         packageJsonPath: null,
+        packageLockJsonPath: null,
         unknownArgs: [],
     };
 
@@ -39,6 +40,8 @@ function parseArgs(argv) {
             options.workspaceRoot = parseStringOption(arg, "workspace-root").trim();
         } else if (arg.startsWith("--package-json=")) {
             options.packageJsonPath = parseStringOption(arg, "package-json").trim();
+        } else if (arg.startsWith("--package-lock=")) {
+            options.packageLockJsonPath = parseStringOption(arg, "package-lock").trim();
         } else {
             collectUnknownArg(options, arg);
         }
@@ -66,6 +69,7 @@ async function main() {
         tokenizationArtifactPath: options.tokenizationArtifactPath || undefined,
         workspaceRoot: options.workspaceRoot || undefined,
         packageJsonPath: options.packageJsonPath || undefined,
+        packageLockJsonPath: options.packageLockJsonPath || undefined,
     });
 
     if (options.json) {

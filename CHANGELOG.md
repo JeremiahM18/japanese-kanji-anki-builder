@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Changed
 
+- Added `npm run nlp:tokenization:audit`, a read-only tokenization summary layer that converts validated NLP tokenization artifacts into assistive review-packet signals for multi-token surfaces, unknown tokens, missing token readings, artifact warnings, and token/card reading mismatches without certifying cards, writing tracked templates directly, or claiming release readiness.
 - Normalized invalid JSON diagnostics for governed NLP suggestion and tokenization artifact validators so CI does not depend on Node-version-specific `JSON.parse` wording.
 - Added `npm run nlp:tokenization:generate -- --level=5`, which reads generated word TSV rows, tokenizes exact word-card written surfaces with the active `kuromoji-js` runtime, binds each item to exact written+reading identity, writes ignored artifacts under `out/nlp-tokenization/`, and keeps those artifacts assistive-only through the existing validator and aggregate NLP gate.
 - Activated the governed `kuromoji-js` NLP runtime for assistive-only tokenization after pinning `kuromoji@0.1.2`, package-lock integrity, Apache-2.0 license approval, installed package metadata, and the bundled 12-file dictionary SHA-256/byte-size evidence. No NLP model is active, and runtime activation still cannot certify cards, write tracked templates, or claim release readiness.

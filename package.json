@@ -136,6 +136,7 @@
     "nlp:models:audit": "node scripts/reportNlpModelGovernance.js",
     "nlp:tokenization:generate": "node scripts/generateNlpTokenization.js",
     "nlp:tokenization:validate": "node scripts/validateNlpTokenization.js",
+    "nlp:tokenization:audit": "node scripts/auditNlpTokenization.js",
     "nlp:suggestions:validate": "node scripts/validateNlpSuggestions.js",
     "nlp:doctor": "node scripts/doctorNlpRuntime.js",
     "nlp:governance-gate": "node scripts/runNlpGovernanceGate.js",

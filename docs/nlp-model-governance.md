@@ -27,9 +27,10 @@ The first capability lane is governed tokenization:
 ```bash
 npm run nlp:tokenization:generate -- --level=5
 npm run nlp:tokenization:validate
+npm run nlp:tokenization:audit
 ```
 
-The generator reads the generated word TSV, tokenizes each written card surface with the active `kuromoji-js` runtime, and writes an ignored JSON artifact under `out/nlp-tokenization/`. The validator treats a missing directory as an empty tokenizer lane. Non-empty tokenization artifacts must bind to an active runtime in the manifest, use a runtime that allows `tokenization`, carry pinned input hashes, preserve contiguous token spans over the input text, and bind word-card targets by exact written plus reading identity.
+The generator reads the generated word TSV, tokenizes each written card surface with the active `kuromoji-js` runtime, and writes an ignored JSON artifact under `out/nlp-tokenization/`. The validator treats a missing directory as an empty tokenizer lane. Non-empty tokenization artifacts must bind to an active runtime in the manifest, use a runtime that allows `tokenization`, carry pinned input hashes, preserve contiguous token spans over the input text, and bind word-card targets by exact written plus reading identity. The audit command converts validated tokenization artifacts into assistive review-packet signals such as multi-token surfaces, unknown tokens, missing token readings, and token/card reading mismatches.
 
 The third governed surface is runtime readiness:
 
@@ -45,7 +46,7 @@ The aggregate gate for CI and release preflight is:
 npm run nlp:governance-gate
 ```
 
-It runs the model manifest audit, tokenization artifact validator, suggestion artifact validator, and runtime doctor together. It fails closed when any sub-check fails, while still reporting that NLP gates do not certify cards, write tracked templates, or claim release readiness.
+It runs the model manifest audit, tokenization artifact validator, tokenization audit signal report, suggestion artifact validator, and runtime doctor together. It fails closed when any sub-check fails, while still reporting that NLP gates do not certify cards, write tracked templates, or claim release readiness.
 
 ## Authority boundary
 

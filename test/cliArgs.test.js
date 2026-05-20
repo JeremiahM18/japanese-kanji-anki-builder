@@ -26,6 +26,7 @@ const { parseArgs: parseMissingManagedAnimationsArgs } = require("../scripts/rep
 const { parseArgs: parseNlpModelGovernanceArgs } = require("../scripts/reportNlpModelGovernance");
 const { parseArgs: parseNlpTokenizationGenerateArgs } = require("../scripts/generateNlpTokenization");
 const { parseArgs: parseNlpTokenizationArgs } = require("../scripts/validateNlpTokenization");
+const { parseArgs: parseNlpTokenizationAuditArgs } = require("../scripts/auditNlpTokenization");
 const { parseArgs: parseNlpSuggestionArgs } = require("../scripts/validateNlpSuggestions");
 const { parseArgs: parseNlpDoctorArgs } = require("../scripts/doctorNlpRuntime");
 const { parseArgs: parseNlpGovernanceGateArgs } = require("../scripts/runNlpGovernanceGate");
@@ -303,6 +304,35 @@ test("NLP tokenization generation parseArgs records source and output inputs", (
 
     const invalidLevel = parseNlpTokenizationGenerateArgs(["--level=9"]);
     assert.deepEqual(invalidLevel.unknownArgs, ["--level must be an integer from 1 to 5"]);
+});
+
+test("NLP tokenization audit parseArgs records artifact inputs and signal limits", () => {
+    const options = parseNlpTokenizationAuditArgs([
+        "--dir=out/nlp-tokenization",
+        "--manifest=templates/nlp_model_manifest.json",
+        "--signal-limit=5",
+        "--json",
+        "--oops",
+    ]);
+
+    assert.equal(options.artifactDir, "out/nlp-tokenization");
+    assert.equal(options.manifestPath, "templates/nlp_model_manifest.json");
+    assert.equal(options.signalLimit, 5);
+    assert.equal(options.json, true);
+    assert.deepEqual(options.unknownArgs, ["--oops"]);
+
+    const pathOptions = parseNlpTokenizationAuditArgs(["--path=out/nlp-tokenization/batch.json"]);
+    assert.equal(pathOptions.artifactPath, "out/nlp-tokenization/batch.json");
+    assert.deepEqual(pathOptions.unknownArgs, []);
+
+    const conflictingOptions = parseNlpTokenizationAuditArgs([
+        "--dir=out/nlp-tokenization",
+        "--path=out/nlp-tokenization/batch.json",
+    ]);
+    assert.deepEqual(conflictingOptions.unknownArgs, ["use only one of --dir or --path"]);
+
+    const invalidLimit = parseNlpTokenizationAuditArgs(["--signal-limit=-1"]);
+    assert.deepEqual(invalidLimit.unknownArgs, ["--signal-limit must be a non-negative integer"]);
 });
 
 test("NLP runtime doctor parseArgs records manifest and workspace overrides", () => {

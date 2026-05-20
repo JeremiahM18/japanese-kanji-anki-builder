@@ -25,10 +25,11 @@ By default it validates JSON artifacts under `out/nlp-suggestions/`. A missing d
 The first capability lane is governed tokenization:
 
 ```bash
+npm run nlp:tokenization:generate -- --level=5
 npm run nlp:tokenization:validate
 ```
 
-By default it validates JSON artifacts under `out/nlp-tokenization/`. A missing directory is treated as an empty tokenizer lane. Non-empty tokenization artifacts must bind to an active runtime in the manifest, use a runtime that allows `tokenization`, carry pinned input hashes, preserve contiguous token spans over the input text, and bind word-card targets by exact written plus reading identity.
+The generator reads the generated word TSV, tokenizes each written card surface with the active `kuromoji-js` runtime, and writes an ignored JSON artifact under `out/nlp-tokenization/`. The validator treats a missing directory as an empty tokenizer lane. Non-empty tokenization artifacts must bind to an active runtime in the manifest, use a runtime that allows `tokenization`, carry pinned input hashes, preserve contiguous token spans over the input text, and bind word-card targets by exact written plus reading identity.
 
 The third governed surface is runtime readiness:
 

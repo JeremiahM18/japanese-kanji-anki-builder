@@ -24,6 +24,7 @@ const { parseArgs: parseProductReadinessArgs } = require("../scripts/productRead
 const { parseArgs: parseWordAudioReviewArgs } = require("../scripts/reportWordAudioReview");
 const { parseArgs: parseMissingManagedAnimationsArgs } = require("../scripts/reportMissingManagedAnimations");
 const { parseArgs: parseNlpModelGovernanceArgs } = require("../scripts/reportNlpModelGovernance");
+const { parseArgs: parseNlpTokenizationGenerateArgs } = require("../scripts/generateNlpTokenization");
 const { parseArgs: parseNlpTokenizationArgs } = require("../scripts/validateNlpTokenization");
 const { parseArgs: parseNlpSuggestionArgs } = require("../scripts/validateNlpSuggestions");
 const { parseArgs: parseNlpDoctorArgs } = require("../scripts/doctorNlpRuntime");
@@ -275,6 +276,33 @@ test("NLP tokenization validation parseArgs records artifact inputs and unsuppor
         "--path=out/nlp-tokenization/batch.json",
     ]);
     assert.deepEqual(conflictingOptions.unknownArgs, ["use only one of --dir or --path"]);
+});
+
+test("NLP tokenization generation parseArgs records source and output inputs", () => {
+    const options = parseNlpTokenizationGenerateArgs([
+        "--level=5",
+        "--limit=8",
+        "--word-tsv=out/word-build/exports/jlpt-n5-words.tsv",
+        "--out=out/nlp-tokenization/word-n5-kuromoji.json",
+        "--manifest=templates/nlp_model_manifest.json",
+        "--runtime-id=kuromoji-js",
+        "--workspace-root=.",
+        "--json",
+        "--oops",
+    ]);
+
+    assert.equal(options.level, 5);
+    assert.equal(options.limit, 8);
+    assert.equal(options.wordTsvPath, "out/word-build/exports/jlpt-n5-words.tsv");
+    assert.equal(options.outPath, "out/nlp-tokenization/word-n5-kuromoji.json");
+    assert.equal(options.manifestPath, "templates/nlp_model_manifest.json");
+    assert.equal(options.runtimeId, "kuromoji-js");
+    assert.equal(options.workspaceRoot, ".");
+    assert.equal(options.json, true);
+    assert.deepEqual(options.unknownArgs, ["--oops"]);
+
+    const invalidLevel = parseNlpTokenizationGenerateArgs(["--level=9"]);
+    assert.deepEqual(invalidLevel.unknownArgs, ["--level must be an integer from 1 to 5"]);
 });
 
 test("NLP runtime doctor parseArgs records manifest and workspace overrides", () => {

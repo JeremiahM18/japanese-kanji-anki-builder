@@ -134,6 +134,7 @@
     "deck:words:gap-plan:n1": "node scripts/reportWordReadingGapPlan.js --level=1",
     "data:normalize:words:jmdict": "node scripts/normalizeJmdictWordSource.js",
     "nlp:models:audit": "node scripts/reportNlpModelGovernance.js",
+    "nlp:tokenization:generate": "node scripts/generateNlpTokenization.js",
     "nlp:tokenization:validate": "node scripts/validateNlpTokenization.js",
     "nlp:suggestions:validate": "node scripts/validateNlpSuggestions.js",
     "nlp:doctor": "node scripts/doctorNlpRuntime.js",

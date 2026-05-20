@@ -10,6 +10,21 @@ npm run doctor
 
 Kanji cards and word cards are separate learning products. A kanji card teaches one target kanji; a word card teaches one exact written form and reading.
 
+## Pipeline At A Glance
+
+This is the core shape of the project: tracked inputs are normalized, ranked, and validated into separate kanji and word rows, then exported and checked by review and release gates. The important part is the separation: generated rows, review proof, package artifacts, and release claims are not the same thing.
+
+```mermaid
+flowchart TD
+    A["Governed inputs<br/>JLPT contracts + curated study data<br/>sentence corpus + media manifests"] --> B["Loaders + normalizers"]
+    B --> C["Inference + ranking + validation"]
+    C --> D["Kanji deck rows"]
+    C --> E["Word deck rows"]
+    D --> F["TSV exports + optional APKG packaging"]
+    E --> F
+    F --> G["Gold regression + Platinum gate<br/>Obsidian proof + release gates"]
+```
+
 Kanji card field preview:
 
 ```text
@@ -57,17 +72,6 @@ Surface	Reading	Meaning	Example
 ```
 
 See the tracked mini fixture in [examples/n5-mini](examples/n5-mini) for sample input metadata and exact generated TSV rows. The field previews above are plain text summaries of those exported fields.
-
-```mermaid
-flowchart TD
-    A["Governed inputs<br/>JLPT contracts + curated study data<br/>sentence corpus + media manifests"] --> B["Loaders + normalizers"]
-    B --> C["Inference + ranking + validation"]
-    C --> D["Kanji deck rows"]
-    C --> E["Word deck rows"]
-    D --> F["TSV exports + optional APKG packaging"]
-    E --> F
-    F --> G["Gold regression + Platinum gate<br/>Obsidian proof + release gates"]
-```
 
 ## About
 

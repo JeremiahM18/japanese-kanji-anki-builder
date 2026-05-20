@@ -36,6 +36,8 @@ const { parseArgs: parseNlpReadingGapDiscoveryArgs } = require("../scripts/disco
 const { parseArgs: parseNlpSuggestionArgs } = require("../scripts/validateNlpSuggestions");
 const { parseArgs: parseNlpReviewPacketGenerateArgs } = require("../scripts/generateNlpReviewPackets");
 const { parseArgs: parseNlpReviewPacketArgs } = require("../scripts/validateNlpReviewPackets");
+const { parseArgs: parseNlpDraftGenerateArgs } = require("../scripts/generateNlpDraftProposals");
+const { parseArgs: parseNlpDraftArgs } = require("../scripts/validateNlpDraftProposals");
 const { parseArgs: parseNlpDoctorArgs } = require("../scripts/doctorNlpRuntime");
 const { parseArgs: parseNlpGovernanceGateArgs } = require("../scripts/runNlpGovernanceGate");
 
@@ -627,6 +629,64 @@ test("NLP review packet parseArgs records generation and validation inputs", () 
     assert.deepEqual(validateOptions.unknownArgs, ["--oops"]);
 });
 
+test("NLP draft proposal parseArgs records generation and validation inputs", () => {
+    const generateOptions = parseNlpDraftGenerateArgs([
+        "--deck=word",
+        "--level=5",
+        "--limit=12",
+        "--out=out/nlp-drafts/word-n5.json",
+        "--markdown-out=out/nlp-drafts/word-n5.md",
+        "--suggestions-dir=out/nlp-suggestions",
+        "--review-packets-dir=out/nlp-review-packets",
+        "--manifest=templates/nlp_model_manifest.json",
+        "--workspace-root=.",
+        "--no-tokenization-drafts",
+        "--json",
+        "--oops",
+    ]);
+
+    assert.equal(generateOptions.deckKind, "word");
+    assert.equal(generateOptions.level, 5);
+    assert.equal(generateOptions.limit, 12);
+    assert.equal(generateOptions.outPath, "out/nlp-drafts/word-n5.json");
+    assert.equal(generateOptions.markdownOutPath, "out/nlp-drafts/word-n5.md");
+    assert.equal(generateOptions.suggestionArtifactDir, "out/nlp-suggestions");
+    assert.equal(generateOptions.reviewPacketArtifactDir, "out/nlp-review-packets");
+    assert.equal(generateOptions.manifestPath, "templates/nlp_model_manifest.json");
+    assert.equal(generateOptions.workspaceRoot, ".");
+    assert.equal(generateOptions.includeTokenizationDrafts, false);
+    assert.equal(generateOptions.json, true);
+    assert.deepEqual(generateOptions.unknownArgs, ["--oops"]);
+
+    const invalidGenerate = parseNlpDraftGenerateArgs([
+        "--deck=nope",
+        "--level=0",
+        "--limit=0",
+        "--suggestions-dir=out/nlp-suggestions",
+        "--suggestion-path=out/nlp-suggestions/batch.json",
+        "--review-packets-dir=out/nlp-review-packets",
+        "--review-packet-path=out/nlp-review-packets/batch.json",
+    ]);
+    assert.deepEqual(invalidGenerate.unknownArgs, [
+        "--deck must be one of: kanji, word, all",
+        "--level must be an integer from 1 to 5",
+        "--limit must be a positive integer",
+        "use only one of --suggestions-dir or --suggestion-path",
+        "use only one of --review-packets-dir or --review-packet-path",
+    ]);
+
+    const validateOptions = parseNlpDraftArgs([
+        "--artifact-dir=out/nlp-drafts",
+        "--manifest=templates/nlp_model_manifest.json",
+        "--json",
+        "--oops",
+    ]);
+    assert.equal(validateOptions.artifactDir, "out/nlp-drafts");
+    assert.equal(validateOptions.manifestPath, "templates/nlp_model_manifest.json");
+    assert.equal(validateOptions.json, true);
+    assert.deepEqual(validateOptions.unknownArgs, ["--oops"]);
+});
+
 test("NLP governance gate parseArgs records all gate inputs", () => {
     const options = parseNlpGovernanceGateArgs([
         "--manifest=templates/nlp_model_manifest.json",
@@ -634,6 +694,7 @@ test("NLP governance gate parseArgs records all gate inputs", () => {
         "--tokenization-dir=out/nlp-tokenization",
         "--embeddings-dir=out/nlp-embeddings",
         "--review-packets-dir=out/nlp-review-packets",
+        "--drafts-dir=out/nlp-drafts",
         "--workspace-root=.",
         "--package-json=package.json",
         "--package-lock=package-lock.json",
@@ -646,6 +707,7 @@ test("NLP governance gate parseArgs records all gate inputs", () => {
     assert.equal(options.tokenizationArtifactDir, "out/nlp-tokenization");
     assert.equal(options.embeddingArtifactDir, "out/nlp-embeddings");
     assert.equal(options.reviewPacketArtifactDir, "out/nlp-review-packets");
+    assert.equal(options.draftProposalArtifactDir, "out/nlp-drafts");
     assert.equal(options.workspaceRoot, ".");
     assert.equal(options.packageJsonPath, "package.json");
     assert.equal(options.packageLockJsonPath, "package-lock.json");
@@ -675,6 +737,12 @@ test("NLP governance gate parseArgs records all gate inputs", () => {
         "--review-packet-path=out/nlp-review-packets/batch.json",
     ]);
     assert.deepEqual(conflictingReviewPacketOptions.unknownArgs, ["use only one of --review-packets-dir or --review-packet-path"]);
+
+    const conflictingDraftOptions = parseNlpGovernanceGateArgs([
+        "--drafts-dir=out/nlp-drafts",
+        "--draft-path=out/nlp-drafts/batch.json",
+    ]);
+    assert.deepEqual(conflictingDraftOptions.unknownArgs, ["use only one of --drafts-dir or --draft-path"]);
 });
 
 test("word audio review parseArgs records filters and unsupported flags", () => {

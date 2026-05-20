@@ -1,8 +1,8 @@
 # NLP Model Governance
 
-This document defines the future deep NLP boundary for Japanese Kanji Builder.
+This document defines the governed deep NLP boundary for Japanese Kanji Builder.
 
-The current deck pipeline remains contract-driven. NLP models may assist candidate discovery, example reranking, sense-fit audits, duplicate clustering, level-fit audits, and review prioritization. NLP model output is not Gold, Platinum, Obsidian, release readiness, or source truth.
+The current deck pipeline remains contract-driven. NLP models may assist candidate discovery, example reranking, sense-fit audits, duplicate clustering, level-fit audits, review prioritization, and draft-proposal scaffolding. NLP model output is not Gold, Platinum, Obsidian, release readiness, or source truth.
 
 ## Current state
 
@@ -23,11 +23,15 @@ npm run nlp:reading-gaps:discover -- --level=5 --include-deferred
 npm run nlp:suggestions:validate
 npm run nlp:review-packets:generate -- --level=5
 npm run nlp:review-packets:validate
+npm run nlp:drafts:generate -- --level=5
+npm run nlp:drafts:validate
 ```
 
 The example reranker reads generated word rows, the local sentence corpus, and validated word-card embedding artifacts, then emits ranked review suggestions under `out/nlp-suggestions/`. The sense-fit audit reads generated word rows and validated word-card embeddings, compares meaning-focused and example-focused embedding views, and emits warning suggestions for possible meaning/example/translation alignment risks. The reading-gap discovery command reads the governed word reading-gap plan, optionally including explicitly deferred gaps, and emits candidate suggestions without changing any gap disposition. By default the suggestion validator checks JSON artifacts under `out/nlp-suggestions/`. A missing directory is treated as an empty suggestion lane. Non-empty suggestion artifacts must bind to an active model in the manifest, use an allowed assistive lane, include pinned input hashes, carry per-suggestion evidence and limitations, and repeat the human-promotion boundary on each suggestion.
 
 The human review packet generator aggregates validated suggestion artifacts and tokenization audit signals into ignored JSON and Markdown packets under `out/nlp-review-packets/`. Packets are a review convenience layer only: they point humans to exact targets, signal summaries, evidence digests, limitations, and checklist items, but they do not promote data, certify cards, or claim readiness.
+
+The draft-proposal generator reads validated model-backed suggestion artifacts and validated human review packets, then writes ignored JSON and Markdown draft packets under `out/nlp-drafts/`. These drafts can scaffold candidate fields and review notes for humans, but they are not free-form generative truth: model-backed draft kinds must declare active manifest-authorized source model IDs, preserve suggestion/source evidence refs, carry blockers and promotion checklists, and keep the no-certification/no-template-write/no-readiness boundary. Tokenization-only draft notes are allowed as review scaffolds, but they do not count as model-backed evidence.
 
 The first capability lane is governed tokenization:
 
@@ -63,13 +67,13 @@ The aggregate gate for CI and release preflight is:
 npm run nlp:governance-gate
 ```
 
-It runs the model manifest audit, tokenization artifact validator, tokenization audit signal report, embedding artifact validator, suggestion artifact validator, review packet validator, and runtime doctor together. It fails closed when any sub-check fails, while still reporting that NLP gates do not certify cards, write tracked templates, or claim release readiness.
+It runs the model manifest audit, tokenization artifact validator, tokenization audit signal report, embedding artifact validator, suggestion artifact validator, review packet validator, draft-proposal validator, and runtime doctor together. It fails closed when any sub-check fails, while still reporting that NLP gates do not certify cards, write tracked templates, or claim release readiness.
 
 ## Authority boundary
 
 NLP output must stay assistive-only:
 
-- It may create generated review packets, rankings, warnings, and candidate queues.
+- It may create generated review packets, rankings, warnings, candidate queues, and draft-proposal scaffolds.
 - It must not write tracked templates directly.
 - It must not count as card certification evidence.
 - It must not approve Gold, Platinum, Obsidian, or release readiness.
@@ -100,9 +104,9 @@ Before a model can become active, the manifest must track:
 
 Active models must use `outputAuthority: "assistive_only"` and `promotionPolicy: "human_review_required"`.
 
-## Planned architecture
+## Active architecture
 
-Future NLP work should be layered in this order:
+NLP work is layered in this order:
 
 1. Tokenization and corpus enrichment.
 2. Embedding artifact validation, then model-pinned embedding generation.
@@ -110,6 +114,6 @@ Future NLP work should be layered in this order:
 4. Sense-fit and translation-alignment warnings.
 5. Candidate discovery for reading-gap and expansion queues.
 6. Human review packet generation for promotion decisions.
-7. Model-assisted drafting only after the earlier audit lanes are proven useful and governed.
+7. Draft-proposal scaffolding from validated suggestions and review packets.
 
-Generated NLP artifacts should live under ignored output paths such as `out/nlp-tokenization/`, `out/nlp-embeddings/`, and `out/nlp-suggestions/`. Tracked templates should change only through reviewed promotion commits.
+Generated NLP artifacts should live under ignored output paths such as `out/nlp-tokenization/`, `out/nlp-embeddings/`, `out/nlp-suggestions/`, `out/nlp-review-packets/`, and `out/nlp-drafts/`. Tracked templates should change only through reviewed promotion commits.

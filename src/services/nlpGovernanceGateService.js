@@ -11,6 +11,9 @@ const {
     buildNlpReviewPacketArtifactReport,
 } = require("./nlpReviewPacketArtifactService");
 const {
+    buildNlpDraftProposalArtifactReport,
+} = require("./nlpDraftProposalArtifactService");
+const {
     buildNlpTokenizationArtifactReport,
 } = require("./nlpTokenizationArtifactService");
 const {
@@ -51,12 +54,15 @@ function buildNlpGovernanceGateReport({
     embeddingArtifactPath,
     reviewPacketArtifactDir,
     reviewPacketArtifactPath,
+    draftProposalArtifactDir,
+    draftProposalArtifactPath,
     workspaceRoot,
     packageJsonPath,
     packageLockJsonPath,
     buildModelReportFn = buildNlpModelGovernanceReport,
     buildSuggestionReportFn = buildNlpSuggestionArtifactReport,
     buildReviewPacketReportFn = buildNlpReviewPacketArtifactReport,
+    buildDraftProposalReportFn = buildNlpDraftProposalArtifactReport,
     buildTokenizationReportFn = buildNlpTokenizationArtifactReport,
     buildTokenizationAuditReportFn = buildNlpTokenizationAuditReport,
     buildEmbeddingReportFn = buildNlpEmbeddingArtifactReport,
@@ -112,6 +118,15 @@ function buildNlpGovernanceGateReport({
             buildReportFn: () => buildReviewPacketReportFn({
                 artifactDir: reviewPacketArtifactDir || undefined,
                 artifactPath: reviewPacketArtifactPath || undefined,
+            }),
+        }),
+        captureGateCheck({
+            id: "draft-proposals",
+            label: "NLP draft proposals",
+            buildReportFn: () => buildDraftProposalReportFn({
+                manifestPath: manifestPath || undefined,
+                artifactDir: draftProposalArtifactDir || undefined,
+                artifactPath: draftProposalArtifactPath || undefined,
             }),
         }),
         captureGateCheck({

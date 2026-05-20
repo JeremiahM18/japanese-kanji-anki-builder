@@ -709,7 +709,9 @@ Repository governance:
 | `npm run nlp:suggestions:validate` | Validate governed NLP suggestion artifacts under `out/nlp-suggestions/`; artifacts remain assistive-only and require human promotion |
 | `npm run nlp:review-packets:generate -- --level=5` | Generate assistive human review packets from validated suggestion artifacts and tokenization audit signals |
 | `npm run nlp:review-packets:validate` | Validate governed review packet artifacts under `out/nlp-review-packets/`; packets aggregate signals only and cannot certify cards |
-| `npm run nlp:governance-gate` | Run the complete NLP fail-closed gate: model manifest audit, tokenization artifact validation, tokenization audit signals, embedding artifact validation, suggestion artifact validation, review packet validation, and runtime/model-artifact preflight |
+| `npm run nlp:drafts:generate -- --level=5` | Generate governed draft-proposal artifacts from validated model-backed suggestions and review packets without writing tracked templates or certifying cards |
+| `npm run nlp:drafts:validate` | Validate governed draft-proposal artifacts under `out/nlp-drafts/`; model-backed drafts must bind to active assistive models and remain human-promotion-only |
+| `npm run nlp:governance-gate` | Run the complete NLP fail-closed gate: model manifest audit, tokenization artifact validation, tokenization audit signals, embedding artifact validation, suggestion artifact validation, review packet validation, draft-proposal validation, and runtime/model-artifact preflight |
 | `npm run data:audit:jlpt` | Audit local-data kanji taxonomy, starter alignment, and Gold review placement; use `-- --strict --tracked-only` for clean CI tracked-input alignment |
 | `npm run data:audit:jlpt:sources -- --governance-strict` | Audit JLPT kanji source evidence and fail only on source-governance regressions while evidence depth remains incomplete |
 | `npm run data:audit:jlpt:source-levels -- --worklist-only --limit=10` | Report the focused all-level governed review packet with current level, candidate levels, consensus, vote weights, and resolved source-input worksheet progress without changing decks or readiness |

@@ -9,6 +9,7 @@ const ALLOWED_NLP_USES = [
     "assistive-duplicate-clustering",
     "assistive-level-fit-audit",
     "assistive-review-prioritization",
+    "assistive-draft-proposal",
 ];
 
 const DISALLOWED_NLP_USES = [

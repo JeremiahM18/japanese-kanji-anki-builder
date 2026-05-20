@@ -146,6 +146,8 @@
     "nlp:suggestions:validate": "node scripts/validateNlpSuggestions.js",
     "nlp:review-packets:generate": "node scripts/generateNlpReviewPackets.js",
     "nlp:review-packets:validate": "node scripts/validateNlpReviewPackets.js",
+    "nlp:drafts:generate": "node scripts/generateNlpDraftProposals.js",
+    "nlp:drafts:validate": "node scripts/validateNlpDraftProposals.js",
     "nlp:doctor": "node scripts/doctorNlpRuntime.js",
     "nlp:governance-gate": "node scripts/runNlpGovernanceGate.js",
     "deck:words:expansion-candidates": "node scripts/reportWordInventoryExpansionCandidates.js",

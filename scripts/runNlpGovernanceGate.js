@@ -21,6 +21,8 @@ function parseArgs(argv) {
         embeddingArtifactPath: null,
         reviewPacketArtifactDir: null,
         reviewPacketArtifactPath: null,
+        draftProposalArtifactDir: null,
+        draftProposalArtifactPath: null,
         workspaceRoot: null,
         packageJsonPath: null,
         packageLockJsonPath: null,
@@ -48,6 +50,10 @@ function parseArgs(argv) {
             options.reviewPacketArtifactDir = parseStringOption(arg, "review-packets-dir").trim();
         } else if (arg.startsWith("--review-packet-path=")) {
             options.reviewPacketArtifactPath = parseStringOption(arg, "review-packet-path").trim();
+        } else if (arg.startsWith("--drafts-dir=")) {
+            options.draftProposalArtifactDir = parseStringOption(arg, "drafts-dir").trim();
+        } else if (arg.startsWith("--draft-path=")) {
+            options.draftProposalArtifactPath = parseStringOption(arg, "draft-path").trim();
         } else if (arg.startsWith("--workspace-root=")) {
             options.workspaceRoot = parseStringOption(arg, "workspace-root").trim();
         } else if (arg.startsWith("--package-json=")) {
@@ -71,6 +77,9 @@ function parseArgs(argv) {
     if (options.reviewPacketArtifactDir && options.reviewPacketArtifactPath) {
         collectUnknownArg(options, "use only one of --review-packets-dir or --review-packet-path");
     }
+    if (options.draftProposalArtifactDir && options.draftProposalArtifactPath) {
+        collectUnknownArg(options, "use only one of --drafts-dir or --draft-path");
+    }
 
     return options;
 }
@@ -89,6 +98,8 @@ async function main() {
         embeddingArtifactPath: options.embeddingArtifactPath || undefined,
         reviewPacketArtifactDir: options.reviewPacketArtifactDir || undefined,
         reviewPacketArtifactPath: options.reviewPacketArtifactPath || undefined,
+        draftProposalArtifactDir: options.draftProposalArtifactDir || undefined,
+        draftProposalArtifactPath: options.draftProposalArtifactPath || undefined,
         workspaceRoot: options.workspaceRoot || undefined,
         packageJsonPath: options.packageJsonPath || undefined,
         packageLockJsonPath: options.packageLockJsonPath || undefined,

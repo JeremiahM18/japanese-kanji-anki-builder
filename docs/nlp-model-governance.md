@@ -22,6 +22,14 @@ npm run nlp:suggestions:validate
 
 By default it validates JSON artifacts under `out/nlp-suggestions/`. A missing directory is treated as an empty suggestion lane. Non-empty suggestion artifacts must bind to an active model in the manifest, use an allowed assistive lane, include pinned input hashes, carry per-suggestion evidence and limitations, and repeat the human-promotion boundary on each suggestion.
 
+The first capability lane is governed tokenization:
+
+```bash
+npm run nlp:tokenization:validate
+```
+
+By default it validates JSON artifacts under `out/nlp-tokenization/`. A missing directory is treated as an empty tokenizer lane. Non-empty tokenization artifacts must bind to an active runtime in the manifest, use a runtime that allows `tokenization`, carry pinned input hashes, preserve contiguous token spans over the input text, and bind word-card targets by exact written plus reading identity.
+
 The third governed surface is runtime readiness:
 
 ```bash
@@ -36,7 +44,7 @@ The aggregate gate for CI and release preflight is:
 npm run nlp:governance-gate
 ```
 
-It runs the model manifest audit, suggestion artifact validator, and runtime doctor together. It fails closed when any sub-check fails, while still reporting that NLP gates do not certify cards, write tracked templates, or claim release readiness.
+It runs the model manifest audit, tokenization artifact validator, suggestion artifact validator, and runtime doctor together. It fails closed when any sub-check fails, while still reporting that NLP gates do not certify cards, write tracked templates, or claim release readiness.
 
 ## Authority boundary
 

@@ -7,6 +7,9 @@ const {
 const {
     buildNlpSuggestionArtifactReport,
 } = require("./nlpSuggestionArtifactService");
+const {
+    buildNlpTokenizationArtifactReport,
+} = require("./nlpTokenizationArtifactService");
 
 function captureGateCheck({ id, label, buildReportFn }) {
     try {
@@ -33,10 +36,13 @@ function buildNlpGovernanceGateReport({
     manifestPath,
     suggestionArtifactDir,
     suggestionArtifactPath,
+    tokenizationArtifactDir,
+    tokenizationArtifactPath,
     workspaceRoot,
     packageJsonPath,
     buildModelReportFn = buildNlpModelGovernanceReport,
     buildSuggestionReportFn = buildNlpSuggestionArtifactReport,
+    buildTokenizationReportFn = buildNlpTokenizationArtifactReport,
     buildRuntimeReportFn = buildNlpRuntimeDoctorReport,
 } = {}) {
     const checks = [
@@ -54,6 +60,15 @@ function buildNlpGovernanceGateReport({
                 manifestPath: manifestPath || undefined,
                 artifactDir: suggestionArtifactDir || undefined,
                 artifactPath: suggestionArtifactPath || undefined,
+            }),
+        }),
+        captureGateCheck({
+            id: "tokenization-artifacts",
+            label: "NLP tokenization artifacts",
+            buildReportFn: () => buildTokenizationReportFn({
+                manifestPath: manifestPath || undefined,
+                artifactDir: tokenizationArtifactDir || undefined,
+                artifactPath: tokenizationArtifactPath || undefined,
             }),
         }),
         captureGateCheck({

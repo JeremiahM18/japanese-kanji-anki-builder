@@ -24,6 +24,7 @@ const { parseArgs: parseProductReadinessArgs } = require("../scripts/productRead
 const { parseArgs: parseWordAudioReviewArgs } = require("../scripts/reportWordAudioReview");
 const { parseArgs: parseMissingManagedAnimationsArgs } = require("../scripts/reportMissingManagedAnimations");
 const { parseArgs: parseNlpModelGovernanceArgs } = require("../scripts/reportNlpModelGovernance");
+const { parseArgs: parseNlpTokenizationArgs } = require("../scripts/validateNlpTokenization");
 const { parseArgs: parseNlpSuggestionArgs } = require("../scripts/validateNlpSuggestions");
 const { parseArgs: parseNlpDoctorArgs } = require("../scripts/doctorNlpRuntime");
 const { parseArgs: parseNlpGovernanceGateArgs } = require("../scripts/runNlpGovernanceGate");
@@ -252,6 +253,30 @@ test("NLP suggestion validation parseArgs records artifact inputs and unsupporte
     assert.deepEqual(conflictingOptions.unknownArgs, ["use only one of --dir or --path"]);
 });
 
+test("NLP tokenization validation parseArgs records artifact inputs and unsupported flags", () => {
+    const options = parseNlpTokenizationArgs([
+        "--dir=out/nlp-tokenization",
+        "--manifest=templates/nlp_model_manifest.json",
+        "--json",
+        "--oops",
+    ]);
+
+    assert.equal(options.artifactDir, "out/nlp-tokenization");
+    assert.equal(options.manifestPath, "templates/nlp_model_manifest.json");
+    assert.equal(options.json, true);
+    assert.deepEqual(options.unknownArgs, ["--oops"]);
+
+    const pathOptions = parseNlpTokenizationArgs(["--path=out/nlp-tokenization/batch.json"]);
+    assert.equal(pathOptions.artifactPath, "out/nlp-tokenization/batch.json");
+    assert.deepEqual(pathOptions.unknownArgs, []);
+
+    const conflictingOptions = parseNlpTokenizationArgs([
+        "--dir=out/nlp-tokenization",
+        "--path=out/nlp-tokenization/batch.json",
+    ]);
+    assert.deepEqual(conflictingOptions.unknownArgs, ["use only one of --dir or --path"]);
+});
+
 test("NLP runtime doctor parseArgs records manifest and workspace overrides", () => {
     const options = parseNlpDoctorArgs([
         "--manifest=templates/nlp_model_manifest.json",
@@ -272,6 +297,7 @@ test("NLP governance gate parseArgs records all gate inputs", () => {
     const options = parseNlpGovernanceGateArgs([
         "--manifest=templates/nlp_model_manifest.json",
         "--suggestions-dir=out/nlp-suggestions",
+        "--tokenization-dir=out/nlp-tokenization",
         "--workspace-root=.",
         "--package-json=package.json",
         "--json",
@@ -280,6 +306,7 @@ test("NLP governance gate parseArgs records all gate inputs", () => {
 
     assert.equal(options.manifestPath, "templates/nlp_model_manifest.json");
     assert.equal(options.suggestionArtifactDir, "out/nlp-suggestions");
+    assert.equal(options.tokenizationArtifactDir, "out/nlp-tokenization");
     assert.equal(options.workspaceRoot, ".");
     assert.equal(options.packageJsonPath, "package.json");
     assert.equal(options.json, true);
@@ -290,6 +317,12 @@ test("NLP governance gate parseArgs records all gate inputs", () => {
         "--suggestion-path=out/nlp-suggestions/batch.json",
     ]);
     assert.deepEqual(conflictingOptions.unknownArgs, ["use only one of --suggestions-dir or --suggestion-path"]);
+
+    const conflictingTokenizationOptions = parseNlpGovernanceGateArgs([
+        "--tokenization-dir=out/nlp-tokenization",
+        "--tokenization-path=out/nlp-tokenization/batch.json",
+    ]);
+    assert.deepEqual(conflictingTokenizationOptions.unknownArgs, ["use only one of --tokenization-dir or --tokenization-path"]);
 });
 
 test("word audio review parseArgs records filters and unsupported flags", () => {

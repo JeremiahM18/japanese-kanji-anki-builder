@@ -15,6 +15,8 @@ function parseArgs(argv) {
         manifestPath: null,
         suggestionArtifactDir: null,
         suggestionArtifactPath: null,
+        tokenizationArtifactDir: null,
+        tokenizationArtifactPath: null,
         workspaceRoot: null,
         packageJsonPath: null,
         unknownArgs: [],
@@ -29,6 +31,10 @@ function parseArgs(argv) {
             options.suggestionArtifactDir = parseStringOption(arg, "suggestions-dir").trim();
         } else if (arg.startsWith("--suggestion-path=")) {
             options.suggestionArtifactPath = parseStringOption(arg, "suggestion-path").trim();
+        } else if (arg.startsWith("--tokenization-dir=")) {
+            options.tokenizationArtifactDir = parseStringOption(arg, "tokenization-dir").trim();
+        } else if (arg.startsWith("--tokenization-path=")) {
+            options.tokenizationArtifactPath = parseStringOption(arg, "tokenization-path").trim();
         } else if (arg.startsWith("--workspace-root=")) {
             options.workspaceRoot = parseStringOption(arg, "workspace-root").trim();
         } else if (arg.startsWith("--package-json=")) {
@@ -40,6 +46,9 @@ function parseArgs(argv) {
 
     if (options.suggestionArtifactDir && options.suggestionArtifactPath) {
         collectUnknownArg(options, "use only one of --suggestions-dir or --suggestion-path");
+    }
+    if (options.tokenizationArtifactDir && options.tokenizationArtifactPath) {
+        collectUnknownArg(options, "use only one of --tokenization-dir or --tokenization-path");
     }
 
     return options;
@@ -53,6 +62,8 @@ async function main() {
         manifestPath: options.manifestPath || undefined,
         suggestionArtifactDir: options.suggestionArtifactDir || undefined,
         suggestionArtifactPath: options.suggestionArtifactPath || undefined,
+        tokenizationArtifactDir: options.tokenizationArtifactDir || undefined,
+        tokenizationArtifactPath: options.tokenizationArtifactPath || undefined,
         workspaceRoot: options.workspaceRoot || undefined,
         packageJsonPath: options.packageJsonPath || undefined,
     });

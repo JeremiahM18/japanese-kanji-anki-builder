@@ -32,11 +32,12 @@ test("buildNlpGovernanceGateReport passes only when every NLP check passes", () 
     const report = buildNlpGovernanceGateReport({
         buildModelReportFn: passingReport,
         buildSuggestionReportFn: passingReport,
+        buildTokenizationReportFn: passingReport,
         buildRuntimeReportFn: passingReport,
     });
 
     assert.equal(report.passed, true);
-    assert.equal(report.checks.length, 3);
+    assert.equal(report.checks.length, 4);
     assert.equal(report.releaseBoundary.nlpGateCertifiesCards, false);
     assert.equal(report.releaseBoundary.nlpGateWritesTrackedTemplates, false);
     assert.equal(report.releaseBoundary.nlpGateClaimsReleaseReadiness, false);
@@ -49,6 +50,7 @@ test("buildNlpGovernanceGateReport fails closed on any NLP check error", () => {
             passed: false,
             errors: ["suggestion artifact invalid"],
         }),
+        buildTokenizationReportFn: passingReport,
         buildRuntimeReportFn: passingReport,
     });
 
@@ -69,6 +71,11 @@ test("formatNlpGovernanceGateReport renders checks and release boundaries", () =
                 label: "NLP suggestion artifacts",
                 passed: false,
                 errors: ["bad artifact"],
+            },
+            {
+                label: "NLP tokenization artifacts",
+                passed: true,
+                errors: [],
             },
         ],
         errors: ["suggestion-artifacts: bad artifact"],

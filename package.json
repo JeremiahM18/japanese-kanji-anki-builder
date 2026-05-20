@@ -105,6 +105,7 @@
     "deck:words:platinum:n5": "node scripts/reviewPlatinumWordLevel.js --level=5 --require-all",
     "deck:words:platinum:n4": "node scripts/reviewPlatinumWordLevel.js --level=4 --require-all",
     "deck:words:platinum:rereview-status": "node scripts/reportPlatinumWordRereviewStatus.js",
+    "deck:words:platinum:certify-status": "node scripts/reportPlatinumWordCertificationStatus.js",
     "deck:words:platinum:source-posture": "node scripts/reportPlatinumWordSourcePosture.js",
     "deck:words:completion": "node scripts/reportWordDeckCompletion.js",
     "deck:words:completion:n5": "node scripts/reportWordDeckCompletion.js --level=5",

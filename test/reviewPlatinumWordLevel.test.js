@@ -4,6 +4,7 @@ const assert = require("node:assert/strict");
 const { buildWordExportOptions, parseArgs, parseWordTsvForPlatinum } = require("../scripts/reviewPlatinumWordLevel");
 const { parseArgs: parseBatchReportArgs } = require("../scripts/platinumWordBatchReport");
 const { parseArgs: parseRereviewStatusArgs } = require("../scripts/reportPlatinumWordRereviewStatus");
+const { parseArgs: parseCertificationStatusArgs } = require("../scripts/reportPlatinumWordCertificationStatus");
 const { parseArgs: parseSourcePostureArgs } = require("../scripts/reportPlatinumWordSourcePosture");
 const { parseArgs: parsePlatinumGovernanceGateArgs } = require("../scripts/runPlatinumGovernanceGate");
 
@@ -50,6 +51,16 @@ test("platinumWordBatchReport defaults word review batches to eight cards", () =
 
 test("platinum word rereview status parseArgs accepts scoped read-only status options", () => {
     const options = parseRereviewStatusArgs(["--levels=5,4", "--json", "--oops"]);
+
+    assert.deepEqual(options, {
+        json: true,
+        levels: [5, 4],
+        unknownArgs: ["--oops"],
+    });
+});
+
+test("platinum word certification status parseArgs accepts scoped fail-closed status options", () => {
+    const options = parseCertificationStatusArgs(["--levels=5,4", "--json", "--oops"]);
 
     assert.deepEqual(options, {
         json: true,

@@ -14,6 +14,8 @@ const {
     buildPlatinumWordRereviewStatusSummary,
     entryHasSubstantiveCurrentStandardRereviewProof,
     formatPlatinumWordRereviewStatusReport,
+    hasWordSentenceQualityReviewProof,
+    wordRereviewEvidenceChecklistPasses,
 } = require("../src/services/platinumWordRereviewStatusService");
 
 function buildQualityGates(overrides = {}) {
@@ -165,6 +167,61 @@ function buildReviewEvidence({
     }));
 }
 
+function buildRereviewProvenance({
+    word = "今日",
+    reading = "きょう",
+    meaning = "today",
+    example = "今日は図書館へ行きます。",
+    notes = "Common N5 word.",
+    breakdown = ["今 （いま）", "日 （ひ）"],
+    focus = ["今", "日"],
+    covers = ["今: いま", "日: ひ"],
+    pitchLabel = "Pitch 1: 0",
+    pitchPattern = "0 [heiban]",
+    includeEvidenceChecklist = true,
+    includeSentenceQualityReview = false,
+} = {}) {
+    return {
+        type: "substantive current standard rereview",
+        reviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
+        reviewedAt: "2026-05-14",
+        reviewer: "content-review",
+        reviewedAfterStandard: true,
+        mechanicalMigration: false,
+        batchId: "test-word-platinum-rereview-batch-001",
+        scope: "full word-card rereview from square zero",
+        cardReviewed: `${word}|${reading}`,
+        ...(includeEvidenceChecklist ? {
+            evidenceChecked: [
+                `live generated word surface for ${word}|${reading}`,
+                `governed Japanese-source word evidence for ${word}|${reading}`,
+                `learner-facing meaning ${meaning}`,
+                `example sentence ${example} and exported reading/translation fit`,
+                `notes/support surface ${notes}`,
+                `reading breakdown ${breakdown.join(" and ")}; kanji breakdown checked`,
+                `JLPT level, coverage role, focus ${focus.join(" and ")}, and covers ${covers.join(" and ")}`,
+                `exact word-reading audio identity word-reading-${word}-${reading}`,
+                `pitch accent source pattern ${pitchPattern} and rendered label ${pitchLabel}`,
+                "managed media provenance and no silent fallback",
+                "golden regression as internal regression only, not source truth",
+                "word vocabulary deck placement and product fit considered; learner useful",
+                "verification limitations considered; no active core-card limitations recorded",
+            ],
+        } : {}),
+        ...(includeSentenceQualityReview ? {
+            sentenceQualityReview: {
+                japaneseSentence: example,
+                reading,
+                translation: "fixture translation",
+                naturalJapanese: true,
+                learnerUseful: true,
+                levelAppropriate: true,
+                releaseQuality: true,
+            },
+        } : {}),
+    };
+}
+
 function buildEntry(overrides = {}) {
     const word = overrides.word || "今日";
     const reading = overrides.reading || "きょう";
@@ -220,6 +277,20 @@ function buildEntry(overrides = {}) {
             pitchPattern,
             substantiveProof: overrides.substantiveProof,
         }),
+        ...(overrides.substantiveProof ? {
+            rereviewProvenance: buildRereviewProvenance({
+                word,
+                reading,
+                meaning,
+                example,
+                notes,
+                breakdown,
+                focus,
+                covers,
+                pitchLabel,
+                pitchPattern,
+            }),
+        } : {}),
         qualityGates: buildQualityGates(),
         ...overrides.entryOverrides,
     };
@@ -264,6 +335,51 @@ test("word rereview status does not infer substantive proof from revalidatedAt o
 
     assert.equal(entry.revalidatedAt, "2026-05-13");
     assert.equal(entryHasSubstantiveCurrentStandardRereviewProof(entry), false);
+});
+
+test("word rereview status does not accept loose textual proof without structured card-bound provenance", () => {
+    const entry = buildEntry({ substantiveProof: true });
+    const looseTextOnly = {
+        ...entry,
+        rereviewProvenance: undefined,
+    };
+
+    assert.equal(entryHasSubstantiveCurrentStandardRereviewProof(looseTextOnly), false);
+});
+
+test("word rereview status does not count base provenance without full word evidence proof", () => {
+    const entry = buildEntry({
+        entryOverrides: {
+            rereviewProvenance: buildRereviewProvenance({
+                includeEvidenceChecklist: false,
+            }),
+        },
+    });
+    const report = buildReport({
+        rows: [buildRow()],
+        entries: [entry],
+        level: 5,
+    });
+
+    assert.equal(wordRereviewEvidenceChecklistPasses(entry), false);
+    assert.equal(entryHasSubstantiveCurrentStandardRereviewProof(entry), false);
+    assert.equal(report.counts.substantive_current_standard_review_proven, 0);
+    assert.equal(report.cards[0].status, "needs_substantive_rereview");
+    assert.match(report.cards[0].reasons.join("\n"), /full word-card evidence checklist/);
+});
+
+test("word rereview status accepts structured sentence-quality evidence bound to the exact word card", () => {
+    const entry = buildEntry({
+        entryOverrides: {
+            rereviewProvenance: buildRereviewProvenance({
+                includeSentenceQualityReview: true,
+            }),
+        },
+    });
+
+    assert.equal(wordRereviewEvidenceChecklistPasses(entry), true);
+    assert.equal(hasWordSentenceQualityReviewProof(entry), true);
+    assert.equal(entryHasSubstantiveCurrentStandardRereviewProof(entry), true);
 });
 
 test("word rereview status reports dirty evidence lanes as blocked or failing", () => {
@@ -314,6 +430,8 @@ test("formatted word rereview report is clear and read-only", () => {
     assert.match(formatted, /Generated deck rows are the certification denominator/);
     assert.match(formatted, /Platinum entries needing Obsidian/);
     assert.match(formatted, /Obsidian = explicit non-mechanical current-version certification proof/);
+    assert.match(formatted, /exact word-reading card identity binding/);
+    assert.match(formatted, /full word-card evidence checklist/);
     assert.match(formatted, new RegExp(MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER));
     assert.match(formatted, /This report is read-only/);
 });

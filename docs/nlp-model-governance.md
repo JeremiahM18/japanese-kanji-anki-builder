@@ -36,10 +36,11 @@ The next governed capability surface is the embedding artifact validator:
 
 ```bash
 npm run nlp:embeddings:evaluate
+npm run nlp:embeddings:generate -- --level=5
 npm run nlp:embeddings:validate
 ```
 
-The evaluation command re-runs the tracked Japanese semantic-similarity smoke benchmark at [../templates/nlp_embedding_model_benchmark.json](../templates/nlp_embedding_model_benchmark.json) against the active local embedding model. It is a runtime/model wiring and coarse-separation check only, not production model-quality proof or card certification evidence. By default the validator checks JSON artifacts under `out/nlp-embeddings/`. A missing directory is treated as an empty embedding lane. Non-empty embedding artifacts must bind to an active model in the manifest whose task is `embedding`, use an allowed assistive lane, carry pinned input hashes, include model evidence and deterministic policy, bind word-like targets by exact written plus reading identity, and keep every vector length aligned with the declared embedding dimension. This validates embedding outputs only.
+The evaluation command re-runs the tracked Japanese semantic-similarity smoke benchmark at [../templates/nlp_embedding_model_benchmark.json](../templates/nlp_embedding_model_benchmark.json) against the active local embedding model. It is a runtime/model wiring and coarse-separation check only, not production model-quality proof or card certification evidence. The generator reads generated word TSV rows, builds exact written-reading-bound embedding inputs from word, reading, meaning, example sentence, and notes, and writes ignored artifacts under `out/nlp-embeddings/`. By default the validator checks JSON artifacts under that directory. A missing directory is treated as an empty embedding lane. Non-empty embedding artifacts must bind to an active model in the manifest whose task is `embedding`, use an allowed assistive lane, carry pinned input hashes, include model evidence and deterministic policy, bind word-like targets by exact written plus reading identity, and keep every vector length aligned with the declared embedding dimension. This validates embedding outputs only.
 
 The runtime governed surface is runtime readiness:
 

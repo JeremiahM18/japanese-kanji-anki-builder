@@ -28,6 +28,7 @@ const { parseArgs: parseNlpTokenizationGenerateArgs } = require("../scripts/gene
 const { parseArgs: parseNlpTokenizationArgs } = require("../scripts/validateNlpTokenization");
 const { parseArgs: parseNlpTokenizationAuditArgs } = require("../scripts/auditNlpTokenization");
 const { parseArgs: parseNlpEmbeddingEvaluateArgs } = require("../scripts/evaluateNlpEmbeddingModel");
+const { parseArgs: parseNlpEmbeddingGenerateArgs } = require("../scripts/generateNlpEmbeddings");
 const { parseArgs: parseNlpEmbeddingArgs } = require("../scripts/validateNlpEmbeddings");
 const { parseArgs: parseNlpSuggestionArgs } = require("../scripts/validateNlpSuggestions");
 const { parseArgs: parseNlpDoctorArgs } = require("../scripts/doctorNlpRuntime");
@@ -359,6 +360,39 @@ test("NLP embedding validation parseArgs records artifact inputs and unsupported
         "--path=out/nlp-embeddings/batch.json",
     ]);
     assert.deepEqual(conflictingOptions.unknownArgs, ["use only one of --dir or --path"]);
+});
+
+test("NLP embedding generation parseArgs records source, model, and output inputs", () => {
+    const options = parseNlpEmbeddingGenerateArgs([
+        "--level=5",
+        "--limit=8",
+        "--word-tsv=out/word-build/exports/jlpt-n5-words.tsv",
+        "--out=out/nlp-embeddings/word-n5.json",
+        "--manifest=templates/nlp_model_manifest.json",
+        "--model-id=fixtureEmbeddingModel",
+        "--lane=assistive-example-reranking",
+        "--workspace-root=.",
+        "--cache-dir=cache/nlp-models/transformers-js",
+        "--allow-remote-models",
+        "--json",
+        "--oops",
+    ]);
+
+    assert.equal(options.level, 5);
+    assert.equal(options.limit, 8);
+    assert.equal(options.wordTsvPath, "out/word-build/exports/jlpt-n5-words.tsv");
+    assert.equal(options.outPath, "out/nlp-embeddings/word-n5.json");
+    assert.equal(options.manifestPath, "templates/nlp_model_manifest.json");
+    assert.equal(options.modelId, "fixtureEmbeddingModel");
+    assert.equal(options.lane, "assistive-example-reranking");
+    assert.equal(options.workspaceRoot, ".");
+    assert.equal(options.cacheDir, "cache/nlp-models/transformers-js");
+    assert.equal(options.allowRemoteModels, true);
+    assert.equal(options.json, true);
+    assert.deepEqual(options.unknownArgs, ["--oops"]);
+
+    const invalidLevel = parseNlpEmbeddingGenerateArgs(["--level=9"]);
+    assert.deepEqual(invalidLevel.unknownArgs, ["--level must be an integer from 1 to 5"]);
 });
 
 test("NLP embedding evaluation parseArgs records model inputs and unsupported flags", () => {

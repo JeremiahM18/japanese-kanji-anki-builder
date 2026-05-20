@@ -100,9 +100,9 @@ Do not widen scope just because higher levels exist.
 
 Current posture:
 
-- N5 word work is stabilized and should stay frozen except for regressions or explicit editorial decisions
-- N4 word work is golden-reviewed and should stay frozen except for regressions, platinum decisions, or explicit editorial decisions
-- higher word levels remain future work until their contracts and review gates are ready
+- N5 word work is stabilized through Gold, Platinum, and strict Obsidian proof; keep it frozen except for regressions or explicit editorial decisions
+- N4 word work is stabilized through Gold and Platinum structural review; strict Obsidian proof is still in progress
+- N3/N2/N1 word work has Silver generated surfaces only until their Gold, Platinum, and Obsidian lanes are populated
 
 For word-deck expansion:
 
@@ -126,7 +126,7 @@ Keep the review layers separate.
 
 ## N5/N4 Word Freeze
 
-N5 and N4 word work are now stabilized at the Gold regression level.
+N5 and N4 word rows are stabilized at the Gold regression and Platinum structural levels. N5 strict Obsidian proof is complete; N4 strict Obsidian proof is not.
 
 That means:
 

@@ -183,7 +183,8 @@ test("README scopes benchmark budget commands as manual local guardrails unless 
 test("pull request template calls out release-gate and code-owner expectations", () => {
     const template = readRepoFile(path.join(".github", "PULL_REQUEST_TEMPLATE", "pull_request_template.md"));
 
-    assert.equal(template.includes("`data:audit:jlpt`, read-only `data:audit:jlpt:sources -- --limit=25`, and relevant strict `data:audit:jlpt:source-inputs -- --source=<source-id> --strict` run when JLPT taxonomy, source-evidence inputs, starter curation, golden review placement, or deck-membership logic changed"), true);
+    assert.equal(template.includes("`data:audit:jlpt`, read-only `data:audit:jlpt:sources -- --governance-strict --limit=25`, and relevant strict `data:audit:jlpt:source-inputs -- --source=<source-id> --strict` run when JLPT taxonomy, source-evidence inputs, starter curation, golden review placement, or deck-membership logic changed"), true);
+    assert.equal(template.includes("`nlp:governance-gate` run when assistive NLP manifests, runtimes, artifact contracts, or governance docs changed"), true);
     assert.equal(template.includes("Source-evidence imports dry-run `data:import:jlpt:source-input -- --source=<source-id>` before any `--write`"), true);
     assert.equal(template.includes("`release:gate` run when packaging, CI, or toolchain behavior changed"), true);
     assert.equal(template.includes("CODEOWNERS review requested when touching protected paths"), true);

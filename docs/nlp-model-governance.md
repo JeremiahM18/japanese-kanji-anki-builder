@@ -14,7 +14,7 @@ npm run nlp:models:audit
 
 The registry lives at [../templates/nlp_model_manifest.json](../templates/nlp_model_manifest.json). It currently has two active runtimes: `kuromoji-js` for local morphological tokenization and `transformers-js` for local model inference. It has one active embedding model, `paraphrase-multilingual-minilm-l12-v2-q8`, backed by the local ignored cache path recorded in the manifest. Model output remains assistive-only.
 
-The second governed surface is the suggestion artifact validator:
+The governed model-backed artifact surface starts with suggestion validation:
 
 ```bash
 npm run nlp:examples:rerank -- --level=5
@@ -43,7 +43,7 @@ npm run nlp:tokenization:audit
 
 The generator reads the generated word TSV, tokenizes each written card surface with the active `kuromoji-js` runtime, and writes an ignored JSON artifact under `out/nlp-tokenization/`. The validator treats a missing directory as an empty tokenizer lane. Non-empty tokenization artifacts must bind to an active runtime in the manifest, use a runtime that allows `tokenization`, carry pinned input hashes, preserve contiguous token spans over the input text, and bind word-card targets by exact written plus reading identity. The audit command converts validated tokenization artifacts into assistive review-packet signals such as multi-token surfaces, unknown tokens, missing token readings, and token/card reading mismatches.
 
-The next governed capability surface is the embedding artifact validator:
+The embedding artifact surface is:
 
 ```bash
 npm run nlp:embeddings:evaluate

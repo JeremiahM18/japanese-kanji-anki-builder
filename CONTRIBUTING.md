@@ -30,10 +30,17 @@ Run the standard checks before opening a pull request:
 
 ```bash
 npm run lint
+npm run typecheck
 npm test
 npm run ci:smoke
 npm run release:gate
 npm run deck:package -- --levels=5 --limit=1 --skip-media-sync
+```
+
+If your change affects assistive NLP manifests, runtimes, model artifacts, generated NLP artifact contracts, or NLP governance docs, also run:
+
+```bash
+npm run nlp:governance-gate
 ```
 
 If your change affects corpus or curated data workflows, also run:

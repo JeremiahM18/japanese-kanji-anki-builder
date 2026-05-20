@@ -13,6 +13,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 - `npm run product:artifacts:n5` when N5 word ships
 - `npm run product:artifacts:kanji:n5:preflight` when N5 kanji ships
 - `npm run product:readiness:n5` when N5 ships
+- `npm run nlp:governance-gate` when assistive NLP manifests, runtimes, artifact contracts, or governance docs changed
 - `npm run ci:smoke`
 - `npm run release:gate`
 

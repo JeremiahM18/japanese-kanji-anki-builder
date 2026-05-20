@@ -2,7 +2,7 @@
 
 This register tracks source-access and source-use work for JLPT kanji evidence. It is not a deck-readiness claim and does not store copied source content.
 
-Last verified: 2026-05-11 from live repo audits and source-use review.
+Last verified: 2026-05-20 from live repo audits and source-use review.
 
 ## Rules
 

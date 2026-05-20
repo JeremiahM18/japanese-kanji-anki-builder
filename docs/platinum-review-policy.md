@@ -278,10 +278,12 @@ Deferred and removed kanji entries must include `kanji`, `reviewedAt`, `reviewer
 npm run deck:platinum:batch -- --level=5 --limit=12
 npm run deck:platinum:batch -- --level=5 --kanji=父,生,男
 npm run deck:platinum:rereview-status -- --levels=5,4
+npm run deck:kanji:platinum:certify-status -- --levels=5,4
 npm run deck:platinum:governance-gate
 npm run deck:words:platinum:batch -- --level=5 --limit=8
 npm run deck:words:platinum:batch -- --level=5 --words=今日:きょう,八日:ようか
 npm run deck:words:platinum:rereview-status -- --levels=5,4
+npm run deck:words:platinum:certify-status -- --levels=5,4
 npm run deck:words:platinum:source-posture -- --levels=5,4
 npm run deck:words:level-anchor-audit -- --level=5
 npm run deck:platinum:n5

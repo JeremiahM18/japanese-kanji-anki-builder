@@ -140,6 +140,7 @@
     "nlp:embeddings:evaluate": "node scripts/evaluateNlpEmbeddingModel.js",
     "nlp:embeddings:generate": "node scripts/generateNlpEmbeddings.js",
     "nlp:embeddings:validate": "node scripts/validateNlpEmbeddings.js",
+    "nlp:examples:rerank": "node scripts/rerankNlpExamples.js",
     "nlp:suggestions:validate": "node scripts/validateNlpSuggestions.js",
     "nlp:doctor": "node scripts/doctorNlpRuntime.js",
     "nlp:governance-gate": "node scripts/runNlpGovernanceGate.js",

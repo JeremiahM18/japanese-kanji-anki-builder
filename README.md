@@ -703,6 +703,7 @@ Repository governance:
 | `npm run nlp:embeddings:evaluate` | Re-run the tracked Japanese smoke benchmark for the active local embedding model; evaluation remains assistive-only and cannot certify cards |
 | `npm run nlp:embeddings:generate -- --level=5` | Generate governed assistive-only word-card embedding artifacts from the generated word TSV |
 | `npm run nlp:embeddings:validate` | Validate governed embedding artifacts under `out/nlp-embeddings/`; embeddings remain assistive-only and require an active pinned embedding model before non-empty artifacts pass |
+| `npm run nlp:examples:rerank -- --level=5` | Generate assistive example-reranking suggestions from generated word rows, sentence corpus candidates, and validated word-card embeddings |
 | `npm run nlp:suggestions:validate` | Validate governed NLP suggestion artifacts under `out/nlp-suggestions/`; artifacts remain assistive-only and require human promotion |
 | `npm run nlp:governance-gate` | Run the complete NLP fail-closed gate: model manifest audit, tokenization artifact validation, tokenization audit signals, embedding artifact validation, suggestion artifact validation, and runtime/model-artifact preflight |
 | `npm run data:audit:jlpt` | Audit local-data kanji taxonomy, starter alignment, and Gold review placement; use `-- --strict --tracked-only` for clean CI tracked-input alignment |

@@ -30,6 +30,7 @@ const { parseArgs: parseNlpTokenizationAuditArgs } = require("../scripts/auditNl
 const { parseArgs: parseNlpEmbeddingEvaluateArgs } = require("../scripts/evaluateNlpEmbeddingModel");
 const { parseArgs: parseNlpEmbeddingGenerateArgs } = require("../scripts/generateNlpEmbeddings");
 const { parseArgs: parseNlpEmbeddingArgs } = require("../scripts/validateNlpEmbeddings");
+const { parseArgs: parseNlpExampleRerankArgs } = require("../scripts/rerankNlpExamples");
 const { parseArgs: parseNlpSuggestionArgs } = require("../scripts/validateNlpSuggestions");
 const { parseArgs: parseNlpDoctorArgs } = require("../scripts/doctorNlpRuntime");
 const { parseArgs: parseNlpGovernanceGateArgs } = require("../scripts/runNlpGovernanceGate");
@@ -415,6 +416,46 @@ test("NLP embedding evaluation parseArgs records model inputs and unsupported fl
     assert.equal(options.allowRemoteModels, true);
     assert.equal(options.json, true);
     assert.deepEqual(options.unknownArgs, ["--oops"]);
+});
+
+test("NLP example reranking parseArgs records source and artifact inputs", () => {
+    const options = parseNlpExampleRerankArgs([
+        "--level=5",
+        "--limit=8",
+        "--min-candidates=2",
+        "--word-tsv=out/word-build/exports/jlpt-n5-words.tsv",
+        "--sentence-corpus=data/sentence_corpus.json",
+        "--embeddings=out/nlp-embeddings/word-n5.json",
+        "--out=out/nlp-suggestions/rerank.json",
+        "--manifest=templates/nlp_model_manifest.json",
+        "--model-id=fixtureEmbeddingModel",
+        "--workspace-root=.",
+        "--cache-dir=cache/nlp-models/transformers-js",
+        "--allow-remote-models",
+        "--json",
+        "--oops",
+    ]);
+
+    assert.equal(options.level, 5);
+    assert.equal(options.limit, 8);
+    assert.equal(options.minCandidates, 2);
+    assert.equal(options.wordTsvPath, "out/word-build/exports/jlpt-n5-words.tsv");
+    assert.equal(options.sentenceCorpusPath, "data/sentence_corpus.json");
+    assert.equal(options.embeddingArtifactPath, "out/nlp-embeddings/word-n5.json");
+    assert.equal(options.outPath, "out/nlp-suggestions/rerank.json");
+    assert.equal(options.manifestPath, "templates/nlp_model_manifest.json");
+    assert.equal(options.modelId, "fixtureEmbeddingModel");
+    assert.equal(options.workspaceRoot, ".");
+    assert.equal(options.cacheDir, "cache/nlp-models/transformers-js");
+    assert.equal(options.allowRemoteModels, true);
+    assert.equal(options.json, true);
+    assert.deepEqual(options.unknownArgs, ["--oops"]);
+
+    const invalidLevel = parseNlpExampleRerankArgs(["--level=9", "--min-candidates=0"]);
+    assert.deepEqual(invalidLevel.unknownArgs, [
+        "--level must be an integer from 1 to 5",
+        "--min-candidates must be a positive integer",
+    ]);
 });
 
 test("NLP runtime doctor parseArgs records manifest and workspace overrides", () => {

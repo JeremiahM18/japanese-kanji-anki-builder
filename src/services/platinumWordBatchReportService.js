@@ -8,6 +8,9 @@ const {
     entryUsesCurrentWordPlatinumStandard,
 } = require("./platinumReviewService");
 const {
+    entryHasSubstantiveCurrentStandardRereviewProof,
+} = require("./platinumWordObsidianProofService");
+const {
     GENERATED_PITCH_LABEL,
     arraysMatch,
     isGeneratedPitchAccentSource,
@@ -19,64 +22,9 @@ const WORD_BATCH_QUEUE_MODES = {
     MISSING_CURRENT_STANDARD: "missing-current-standard",
     SUBSTANTIVE_REREVIEW: "substantive-rereview",
 };
-const SUBSTANTIVE_REREVIEW_PROOF_MARKER = "substantive post-v3 human rereview";
-const NON_MECHANICAL_PROOF_MARKER = "not mechanically migrated";
 
 function normalizeText(value) {
     return String(value ?? "").trim();
-}
-
-function normalizeProofText(value) {
-    return normalizeText(value).toLowerCase().replace(/[-_]+/g, " ").replace(/\s+/g, " ").trim();
-}
-
-function normalizeEvidenceEntries(entries = []) {
-    return Array.isArray(entries) ? entries : [];
-}
-
-function buildRereviewProvenanceText(entry = {}) {
-    const evidenceText = [
-        entry.revalidationSummary,
-        ...normalizeEvidenceEntries(entry.reviewEvidence).map((evidence) => `${evidence.type || ""} ${evidence.source || ""} ${evidence.detail || ""}`),
-    ].join(" ");
-    const provenance = entry.rereviewProvenance && typeof entry.rereviewProvenance === "object"
-        ? entry.rereviewProvenance
-        : {};
-    const provenanceText = Object.entries(provenance)
-        .map(([key, value]) => `${key} ${value}`)
-        .join(" ");
-
-    return normalizeProofText(`${evidenceText} ${provenanceText}`);
-}
-
-function hasStructuredRereviewProvenance(entry = {}) {
-    const provenance = entry.rereviewProvenance;
-    if (!provenance || typeof provenance !== "object" || Array.isArray(provenance)) {
-        return false;
-    }
-
-    return normalizeProofText(provenance.type) === "substantive current standard rereview"
-        && normalizeText(provenance.reviewStandard) === CURRENT_WORD_PLATINUM_REVIEW_STANDARD
-        && provenance.reviewedAfterStandard === true
-        && provenance.mechanicalMigration === false
-        && Boolean(normalizeText(provenance.reviewer || entry.reviewer));
-}
-
-function hasTextualRereviewProvenance(entry = {}) {
-    const proofText = buildRereviewProvenanceText(entry);
-    const hasSubstantiveMarker = proofText.includes(normalizeProofText(SUBSTANTIVE_REREVIEW_PROOF_MARKER))
-        || proofText.includes("substantive current standard rereview");
-    const hasHumanMarker = /\b(human|manual)\b/.test(proofText);
-    const hasNonMechanicalMarker = proofText.includes(normalizeProofText(NON_MECHANICAL_PROOF_MARKER))
-        || proofText.includes("not a mechanical migration")
-        || proofText.includes("not migration only")
-        || proofText.includes("non mechanical");
-
-    return hasSubstantiveMarker && hasHumanMarker && hasNonMechanicalMarker;
-}
-
-function entryHasSubstantiveCurrentStandardRereviewProof(entry = {}) {
-    return hasStructuredRereviewProvenance(entry) || hasTextualRereviewProvenance(entry);
 }
 
 function stripMarkup(value) {

@@ -144,6 +144,29 @@ test("word batch report keeps structural-only current-standard entries in the de
     assert.match(report.cards[0].suggestedReviewStep, /structural v3 pass is not proof/);
 });
 
+test("word batch report does not treat base rereview provenance as Obsidian proof", () => {
+    const report = buildPlatinumWordBatchReport({
+        rows,
+        entries: [buildStructuralCurrentWordEntry({
+            rereviewProvenance: {
+                type: "substantive current standard rereview",
+                reviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
+                reviewedAfterStandard: true,
+                mechanicalMigration: false,
+                reviewer: "content-review",
+            },
+        })],
+        wordPitchAccentData,
+        level: 5,
+        limit: 1,
+    });
+
+    assert.equal(report.summary.substantiveRereviewProven, 0);
+    assert.equal(report.summary.remainingSubstantiveRereview, 2);
+    assert.equal(report.cards[0].identity, "今日|きょう");
+    assert.equal(report.cards[0].reviewStatus, "current_standard_structural_only");
+});
+
 test("word batch report can still expose the missing current-standard structure queue explicitly", () => {
     const report = buildPlatinumWordBatchReport({
         rows,

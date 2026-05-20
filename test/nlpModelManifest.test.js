@@ -63,6 +63,13 @@ function buildManifest(overrides = {}) {
                     requiresPinnedRuntime: true,
                     seedPolicy: "not-applicable",
                 },
+                embeddingConfig: {
+                    embeddingDimension: 3,
+                    pooling: "mean",
+                    normalized: true,
+                    distanceMetric: "cosine",
+                    dtype: "q8",
+                },
                 checkedAt: "2026-05-20",
                 localArtifact: {
                     path: "models/fixture.onnx",
@@ -154,6 +161,17 @@ test("parseNlpModelManifest validates active model governance", () => {
             models: {
                 fixtureModel: {
                     ...buildManifest().models.fixtureModel,
+                    embeddingConfig: undefined,
+                },
+            },
+        },
+    })), /must declare embeddingConfig/);
+
+    assert.throws(() => parseNlpModelManifest(buildManifest({
+        manifest: {
+            models: {
+                fixtureModel: {
+                    ...buildManifest().models.fixtureModel,
                     allowedUses: ["assistive-sense-fit-audit"],
                 },
             },
@@ -201,7 +219,9 @@ test("tracked NLP model manifest loads with assistive-only boundaries", () => {
     const manifest = loadNlpModelManifest();
     assert.equal(manifest.policy.authority, "assistive_only");
     assert.equal(manifest.policy.promotionPolicy, "human_review_required");
-    assert.equal(Object.keys(manifest.models).length, 0);
+    assert.equal(Object.keys(manifest.models).length, 1);
+    assert.equal(manifest.models["paraphrase-multilingual-minilm-l12-v2-q8"].status, "active");
+    assert.equal(manifest.models["paraphrase-multilingual-minilm-l12-v2-q8"].embeddingConfig.embeddingDimension, 384);
     assert.equal(manifest.runtimes["transformers-js"].status, "active");
     assert.equal(manifest.runtimes["transformers-js"].packageVersion, "4.2.0");
     assert.equal(manifest.runtimes["onnxruntime-node"].status, "registered");

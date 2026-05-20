@@ -108,5 +108,79 @@
       "checkedAt": "2026-05-20"
     }
   },
-  "models": {}
+  "models": {
+    "paraphrase-multilingual-minilm-l12-v2-q8": {
+      "name": "Paraphrase Multilingual MiniLM L12 v2 q8",
+      "status": "active",
+      "runtimeId": "transformers-js",
+      "task": "embedding",
+      "modelFamily": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+      "modelVersion": "Xenova Transformers.js ONNX cache; directory sha256 25db91fdef29abfaa952d97173b9c1c6ac221c85a4bc94ec5ee570e897de8cfc",
+      "origin": {
+        "url": "https://huggingface.co/Xenova/paraphrase-multilingual-MiniLM-L12-v2",
+        "huggingFaceModelId": "Xenova/paraphrase-multilingual-MiniLM-L12-v2",
+        "notes": "Transformers.js-compatible ONNX mirror of sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2. Hugging Face lists the base model as a 50-language sentence-similarity model with Apache-2.0 license and 384-dimensional embeddings."
+      },
+      "licenseUse": {
+        "status": "approved",
+        "license": "Apache-2.0",
+        "notes": "Approved for local assistive embedding, reranking, warning, clustering, and prioritization lanes after verifying the base model card license, Transformers.js ONNX compatibility, local cached artifact identity, and a tracked Japanese smoke benchmark. Model output remains assistive-only and cannot certify cards, write tracked templates, or claim release readiness."
+      },
+      "allowedUses": [
+        "assistive-candidate-discovery",
+        "assistive-example-reranking",
+        "assistive-sense-fit-audit",
+        "assistive-duplicate-clustering",
+        "assistive-level-fit-audit",
+        "assistive-review-prioritization"
+      ],
+      "disallowedUses": [
+        "direct-template-write",
+        "gold-approval",
+        "platinum-approval",
+        "obsidian-certification",
+        "release-readiness-claim"
+      ],
+      "outputAuthority": "assistive_only",
+      "promotionPolicy": "human_review_required",
+      "deterministic": {
+        "requiresPinnedModel": true,
+        "requiresPinnedInputs": true,
+        "requiresPinnedRuntime": true,
+        "seedPolicy": "not-applicable"
+      },
+      "embeddingConfig": {
+        "embeddingDimension": 384,
+        "pooling": "mean",
+        "normalized": true,
+        "distanceMetric": "cosine",
+        "dtype": "q8"
+      },
+      "checkedAt": "2026-05-20",
+      "localArtifact": {
+        "artifactKind": "directory",
+        "path": "cache/nlp-models/transformers-js/Xenova/paraphrase-multilingual-MiniLM-L12-v2",
+        "sha256": "25db91fdef29abfaa952d97173b9c1c6ac221c85a4bc94ec5ee570e897de8cfc",
+        "byteSize": 135392208,
+        "fileCount": 4
+      },
+      "evaluation": {
+        "benchmarkId": "jkb-ja-embedding-smoke-v1",
+        "benchmarkPath": "templates/nlp_embedding_model_benchmark.json",
+        "evaluatedAt": "2026-05-20",
+        "metrics": {
+          "positiveMean": 0.9688339614903972,
+          "negativeMean": 0.17439978322461092,
+          "margin": 0.7944341782657863,
+          "positiveMin": 0.9607480683334383,
+          "negativeMax": 0.26965201551344026
+        },
+        "limitations": [
+          "Tiny smoke benchmark only; it confirms local runtime/model wiring and coarse semantic separation, not production quality.",
+          "The benchmark is not card-certification evidence and does not validate JLPT level fit, naturalness, pitch accent, audio, examples, or source truth.",
+          "Any downstream suggestion still requires human review and tracked promotion evidence."
+        ]
+      }
+    }
+  }
 }

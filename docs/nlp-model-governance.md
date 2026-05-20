@@ -12,7 +12,7 @@ The first governed surface is the tracked model registry:
 npm run nlp:models:audit
 ```
 
-The registry lives at [../templates/nlp_model_manifest.json](../templates/nlp_model_manifest.json). It currently has two active runtimes: `kuromoji-js` for local morphological tokenization and `transformers-js` for future local model inference. No model is active yet.
+The registry lives at [../templates/nlp_model_manifest.json](../templates/nlp_model_manifest.json). It currently has two active runtimes: `kuromoji-js` for local morphological tokenization and `transformers-js` for local model inference. It has one active embedding model, `paraphrase-multilingual-minilm-l12-v2-q8`, backed by the local ignored cache path recorded in the manifest. Model output remains assistive-only.
 
 The second governed surface is the suggestion artifact validator:
 
@@ -35,10 +35,11 @@ The generator reads the generated word TSV, tokenizes each written card surface 
 The next governed capability surface is the embedding artifact validator:
 
 ```bash
+npm run nlp:embeddings:evaluate
 npm run nlp:embeddings:validate
 ```
 
-By default it validates JSON artifacts under `out/nlp-embeddings/`. A missing directory is treated as an empty embedding lane. Non-empty embedding artifacts must bind to an active model in the manifest whose task is `embedding`, use an allowed assistive lane, carry pinned input hashes, include model evidence and deterministic policy, bind word-like targets by exact written plus reading identity, and keep every vector length aligned with the declared embedding dimension. This validates embedding outputs only; it does not generate vectors or activate any model.
+The evaluation command re-runs the tracked Japanese semantic-similarity smoke benchmark at [../templates/nlp_embedding_model_benchmark.json](../templates/nlp_embedding_model_benchmark.json) against the active local embedding model. It is a runtime/model wiring and coarse-separation check only, not production model-quality proof or card certification evidence. By default the validator checks JSON artifacts under `out/nlp-embeddings/`. A missing directory is treated as an empty embedding lane. Non-empty embedding artifacts must bind to an active model in the manifest whose task is `embedding`, use an allowed assistive lane, carry pinned input hashes, include model evidence and deterministic policy, bind word-like targets by exact written plus reading identity, and keep every vector length aligned with the declared embedding dimension. This validates embedding outputs only.
 
 The runtime governed surface is runtime readiness:
 
@@ -83,6 +84,7 @@ Before a model can become active, the manifest must track:
 - license/use approval
 - model artifact path, artifact kind (`file` or `directory`), SHA-256, and byte size
 - file count for directory model bundles
+- embedding dimension, pooling, normalization, distance metric, and dtype for embedding models
 - deterministic input and runtime policy
 - evaluation benchmark path and metrics
 - known limitations

@@ -36,6 +36,7 @@ const runtimeStatusSchema = z.enum(["registered", "active", "blocked", "retired"
 const originSchema = z.object({
     url: z.string().url().optional(),
     localPath: z.string().min(1).optional(),
+    huggingFaceModelId: z.string().min(1).optional(),
     notes: z.string().min(1).optional(),
 }).strict();
 
@@ -89,6 +90,14 @@ const modelDeterminismSchema = z.object({
     seedPolicy: z.enum(["not-applicable", "fixed-seed-required"]),
 }).strict();
 
+const embeddingConfigSchema = z.object({
+    embeddingDimension: z.number().int().positive(),
+    pooling: z.enum(["model-default", "mean", "cls", "none"]),
+    normalized: z.boolean(),
+    distanceMetric: z.enum(["cosine", "dot-product", "euclidean"]),
+    dtype: z.string().min(1).optional(),
+}).strict();
+
 const modelSchema = z.object({
     name: z.string().min(1),
     status: modelStatusSchema,
@@ -103,6 +112,7 @@ const modelSchema = z.object({
     outputAuthority: z.literal("assistive_only"),
     promotionPolicy: z.literal("human_review_required"),
     deterministic: modelDeterminismSchema,
+    embeddingConfig: embeddingConfigSchema.optional(),
     checkedAt: z.string().min(1),
     localArtifact: localArtifactSchema.optional(),
     evaluation: modelEvaluationSchema.optional(),
@@ -201,6 +211,9 @@ function parseNlpModelManifest(value) {
             }
             if (!model.evaluation) {
                 throw new Error(`Active NLP model ${modelId} must include tracked evaluation evidence.`);
+            }
+            if (model.task === "embedding" && !model.embeddingConfig) {
+                throw new Error(`Active embedding NLP model ${modelId} must declare embeddingConfig.`);
             }
             if (model.allowedUses.length === 0) {
                 throw new Error(`Active NLP model ${modelId} must declare at least one allowed assistive use.`);

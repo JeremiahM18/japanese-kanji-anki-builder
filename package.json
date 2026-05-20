@@ -137,6 +137,7 @@
     "nlp:tokenization:generate": "node scripts/generateNlpTokenization.js",
     "nlp:tokenization:validate": "node scripts/validateNlpTokenization.js",
     "nlp:tokenization:audit": "node scripts/auditNlpTokenization.js",
+    "nlp:embeddings:evaluate": "node scripts/evaluateNlpEmbeddingModel.js",
     "nlp:embeddings:validate": "node scripts/validateNlpEmbeddings.js",
     "nlp:suggestions:validate": "node scripts/validateNlpSuggestions.js",
     "nlp:doctor": "node scripts/doctorNlpRuntime.js",

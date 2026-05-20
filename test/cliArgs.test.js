@@ -27,6 +27,7 @@ const { parseArgs: parseNlpModelGovernanceArgs } = require("../scripts/reportNlp
 const { parseArgs: parseNlpTokenizationGenerateArgs } = require("../scripts/generateNlpTokenization");
 const { parseArgs: parseNlpTokenizationArgs } = require("../scripts/validateNlpTokenization");
 const { parseArgs: parseNlpTokenizationAuditArgs } = require("../scripts/auditNlpTokenization");
+const { parseArgs: parseNlpEmbeddingEvaluateArgs } = require("../scripts/evaluateNlpEmbeddingModel");
 const { parseArgs: parseNlpEmbeddingArgs } = require("../scripts/validateNlpEmbeddings");
 const { parseArgs: parseNlpSuggestionArgs } = require("../scripts/validateNlpSuggestions");
 const { parseArgs: parseNlpDoctorArgs } = require("../scripts/doctorNlpRuntime");
@@ -358,6 +359,28 @@ test("NLP embedding validation parseArgs records artifact inputs and unsupported
         "--path=out/nlp-embeddings/batch.json",
     ]);
     assert.deepEqual(conflictingOptions.unknownArgs, ["use only one of --dir or --path"]);
+});
+
+test("NLP embedding evaluation parseArgs records model inputs and unsupported flags", () => {
+    const options = parseNlpEmbeddingEvaluateArgs([
+        "--manifest=templates/nlp_model_manifest.json",
+        "--benchmark=templates/nlp_embedding_model_benchmark.json",
+        "--model-id=fixtureEmbeddingModel",
+        "--cache-dir=cache/nlp-models/transformers-js",
+        "--output=out/nlp-embedding-eval/report.json",
+        "--allow-remote-models",
+        "--json",
+        "--oops",
+    ]);
+
+    assert.equal(options.manifestPath, "templates/nlp_model_manifest.json");
+    assert.equal(options.benchmarkPath, "templates/nlp_embedding_model_benchmark.json");
+    assert.equal(options.modelId, "fixtureEmbeddingModel");
+    assert.equal(options.cacheDir, "cache/nlp-models/transformers-js");
+    assert.equal(options.outputPath, "out/nlp-embedding-eval/report.json");
+    assert.equal(options.allowRemoteModels, true);
+    assert.equal(options.json, true);
+    assert.deepEqual(options.unknownArgs, ["--oops"]);
 });
 
 test("NLP runtime doctor parseArgs records manifest and workspace overrides", () => {

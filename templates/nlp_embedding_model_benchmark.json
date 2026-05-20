@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "benchmarkId": "jkb-ja-embedding-smoke-v1",
+  "description": "Small deterministic Japanese semantic-similarity smoke benchmark for the assistive embedding lane. This checks basic local model separation only; it is not card certification or a pedagogy evaluation.",
+  "task": "embedding",
+  "pairs": [
+    {
+      "id": "ja-study-paraphrase",
+      "label": "positive",
+      "textA": "日本語を勉強します。",
+      "textB": "日本語を学びます。",
+      "rationale": "Near-paraphrase with the same Japanese-study meaning."
+    },
+    {
+      "id": "ja-station-front-paraphrase",
+      "label": "positive",
+      "textA": "駅前で友だちを待ちます。",
+      "textB": "駅の前で友達を待ちます。",
+      "rationale": "Near-paraphrase with the same station-front waiting scene."
+    },
+    {
+      "id": "ja-water-drink-paraphrase",
+      "label": "positive",
+      "textA": "水を飲みます。",
+      "textB": "お水を飲んでいます。",
+      "rationale": "Near-paraphrase with the same water-drinking action."
+    },
+    {
+      "id": "ja-water-vs-mountain",
+      "label": "negative",
+      "textA": "水を飲みます。",
+      "textB": "山に登ります。",
+      "rationale": "Different action and topic."
+    },
+    {
+      "id": "ja-station-vs-kanji-writing",
+      "label": "negative",
+      "textA": "駅前で友だちを待ちます。",
+      "textB": "漢字を三つ書きます。",
+      "rationale": "Different scene, action, and study object."
+    },
+    {
+      "id": "ja-study-vs-red-flower",
+      "label": "negative",
+      "textA": "日本語を勉強します。",
+      "textB": "赤い花を買います。",
+      "rationale": "Different topic and object."
+    }
+  ],
+  "thresholds": {
+    "minimumMargin": 0.5,
+    "requirePositiveMinAboveNegativeMax": true
+  },
+  "limitations": [
+    "Tiny smoke benchmark only; it confirms local runtime/model wiring and coarse semantic separation, not production quality.",
+    "The benchmark is not card-certification evidence and does not validate JLPT level fit, naturalness, pitch accent, audio, examples, or source truth.",
+    "Any downstream suggestion still requires human review and tracked promotion evidence."
+  ]
+}

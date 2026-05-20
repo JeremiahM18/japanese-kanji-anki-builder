@@ -25,6 +25,7 @@ const { parseArgs: parseWordAudioReviewArgs } = require("../scripts/reportWordAu
 const { parseArgs: parseMissingManagedAnimationsArgs } = require("../scripts/reportMissingManagedAnimations");
 const { parseArgs: parseNlpModelGovernanceArgs } = require("../scripts/reportNlpModelGovernance");
 const { parseArgs: parseNlpSuggestionArgs } = require("../scripts/validateNlpSuggestions");
+const { parseArgs: parseNlpDoctorArgs } = require("../scripts/doctorNlpRuntime");
 
 test("syncMedia parseArgs accepts --levels alias for one level", () => {
     const options = parseSyncArgs(["--levels=5", "--limit=79"]);
@@ -248,6 +249,22 @@ test("NLP suggestion validation parseArgs records artifact inputs and unsupporte
         "--path=out/nlp-suggestions/batch.json",
     ]);
     assert.deepEqual(conflictingOptions.unknownArgs, ["use only one of --dir or --path"]);
+});
+
+test("NLP runtime doctor parseArgs records manifest and workspace overrides", () => {
+    const options = parseNlpDoctorArgs([
+        "--manifest=templates/nlp_model_manifest.json",
+        "--package-json=package.json",
+        "--workspace-root=.",
+        "--json",
+        "--oops",
+    ]);
+
+    assert.equal(options.manifestPath, "templates/nlp_model_manifest.json");
+    assert.equal(options.packageJsonPath, "package.json");
+    assert.equal(options.workspaceRoot, ".");
+    assert.equal(options.json, true);
+    assert.deepEqual(options.unknownArgs, ["--oops"]);
 });
 
 test("word audio review parseArgs records filters and unsupported flags", () => {

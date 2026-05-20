@@ -22,6 +22,14 @@ npm run nlp:suggestions:validate
 
 By default it validates JSON artifacts under `out/nlp-suggestions/`. A missing directory is treated as an empty suggestion lane. Non-empty suggestion artifacts must bind to an active model in the manifest, use an allowed assistive lane, include pinned input hashes, carry per-suggestion evidence and limitations, and repeat the human-promotion boundary on each suggestion.
 
+The third governed surface is runtime readiness:
+
+```bash
+npm run nlp:doctor
+```
+
+This preflight compares the manifest against the local workspace. Registered JavaScript runtimes may be missing until they are selected, but active JavaScript runtimes must be declared in `package.json` and resolvable from the workspace. Active external workers must declare a local worker path. Active model artifacts must exist and match their tracked byte size and SHA-256 pins. Passing runtime readiness does not activate card-certification authority.
+
 ## Authority boundary
 
 NLP output must stay assistive-only:

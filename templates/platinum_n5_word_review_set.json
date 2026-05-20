@@ -8158,22 +8158,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-032",
-      "scope": "N5 word Obsidian lane batch 32 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-017",
+      "scope": "N5 word strict Obsidian rereview batch 17 from live generated rows",
+      "cardReviewed": {
+        "word": "上着",
+        "reading": "うわぎ",
+        "generatedRow": "上着|うわぎ",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 上着|うわぎ from out/word-build/exports/jlpt-n5-words.tsv: meaning jacket / outerwear; example sentence 寒いので上着を着ます。; reading さむいのでうわぎをきます。; translation I wear a jacket because it is cold.. Generated word-card surface inspected for 上着|うわぎ: word 上着, reading うわぎ, meaning jacket / outerwear, example 寒いので上着を着ます。, audio word-reading-上着-うわぎ, reading breakdown 上 （うわ） ／ up / above; 着 （ぎ） ／ arrive / wear, labels JLPT N5; Reading coverage support; focus 上; covers 上: うわ, pitch accent Pitch 1: 0, and notes/support surface Common clothing word for jacket or outerwear; useful support for 上 -> うわ with 着 visibly labeled as higher-level..",
+        "governed Japanese-source word evidence checked for 上着|うわぎ: JMdict exact row entrySeq=1580340 verifies 上着|うわぎ, dictionary meaning coat; jacket; outerwear; top; upper-body garment, priority markers ichi1,news1,nf17; product review kept learner meaning jacket / outerwear and checked example sentence 寒いので上着を着ます。 with reading さむいのでうわぎをきます。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 上着|うわぎ: jacket / outerwear",
+        "example sentence with reading/translation fit checked for 上着|うわぎ: 寒いので上着を着ます。 / さむいのでうわぎをきます。 / I wear a jacket because it is cold.",
+        "notes/support surface checked for 上着|うわぎ: Common clothing word for jacket or outerwear; useful support for 上 -> うわ with 着 visibly labeled as higher-level.; Risk review: 上着 is a common clothing word bound to exact うわぎ for jacket/outerwear; 着 remains visibly labeled as higher-level support, and the cold-weather example naturally anchors the outerwear sense.",
+        "reading breakdown checked for 上着|うわぎ: 上 うわ 着 ぎ; kanji breakdown checked in the generated row: 上 うわ 上 （うわ） ／ up / above Stroke order On: シャン、 ショウ、 ジョウ Kun: -あ.がり、 -あ.がる、 -あ.げる、 -うえ、 うわ-、 かみ、 たてまつ.る、 のぼ.す、 のぼ.せる、 のぼ.り、 のぼ.る 着 JLPT N4 kanji ぎ 着 （ぎ） ／ arrive / wear Stroke order On: ジャク、 チャク Kun: き.せる、 き.る、 つ.く、 つ.ける",
+        "JLPT, coverage, focus, and covers labels checked for 上着|うわぎ: JLPT N5; Reading coverage support; focus 上; covers 上: うわ",
+        "exact word-reading audio identity checked for 上着|うわぎ: expected word-reading-上着-うわぎ; Audio review checked 上着|うわぎ exact asset fragment word-reading-上着-うわぎ for the exported word reading うわぎ. Exported audio field is [sound:4E0A_上-word-reading-上着-うわぎ.wav].",
+        "pitch accent source and rendered label checked for 上着|うわぎ: source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0 source word 上着 source reading うわぎ source accent 0. Pitch accent review checked 上着|うわぎ source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0. Dictionary-backed pitch evidence is bound to the exact word-reading identity.",
+        "managed media provenance checked for 上着|うわぎ: Managed media provenance audit checked 上着|うわぎ; generated export includes exact word audio word-reading-上着-うわぎ, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 上着|うわぎ as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 上着|うわぎ; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 上着|うわぎ: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 上着|うわぎ: 上着 is a common clothing word bound to exact うわぎ for jacket/outerwear; 着 remains visibly labeled as higher-level support, and the cold-weather example naturally anchors the outerwear sense. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "寒いので上着を着ます。",
+        "wordReading": "うわぎ",
+        "sentenceReading": "さむいのでうわぎをきます。",
+        "translation": "I wear a jacket because it is cold.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 上着|うわぎ: natural Japanese, exact word reading うわぎ, live sentence reading さむいのでうわぎをきます。, translation I wear a jacket because it is cold., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 上着 is a common clothing word bound to exact うわぎ for jacket/outerwear; 着 remains visibly labeled as higher-level support, and the cold-weather example naturally anchors the outerwear sense."
+      },
+      "limitationDecision": "Verification limitations considered for 上着|うわぎ: 上着 is a common clothing word bound to exact うわぎ for jacket/outerwear; 着 remains visibly labeled as higher-level support, and the cold-weather example naturally anchors the outerwear sense. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -10708,22 +10732,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-033",
-      "scope": "N5 word Obsidian lane batch 33 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-017",
+      "scope": "N5 word strict Obsidian rereview batch 17 from live generated rows",
+      "cardReviewed": {
+        "word": "休日",
+        "reading": "きゅうじつ",
+        "generatedRow": "休日|きゅうじつ",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 休日|きゅうじつ from out/word-build/exports/jlpt-n5-words.tsv: meaning holiday / day off; example sentence 休日は家でゆっくり休みます。; reading きゅうじつはいえでゆっくりやすみます。; translation I rest at home on my day off.. Generated word-card surface inspected for 休日|きゅうじつ: word 休日, reading きゅうじつ, meaning holiday / day off, example 休日は家でゆっくり休みます。, audio word-reading-休日-きゅうじつ, reading breakdown 休 （きゅう） ／ rest / holiday; 日 （じつ） ／ day / sun, labels JLPT N5; Reading coverage support; focus 休、日; covers 休: きゅう ／ 日: じつ, pitch accent Pitch 1: 0, and notes/support surface Common schedule word for a holiday or day off; useful support for 休 -> きゅう and 日 -> じつ..",
+        "governed Japanese-source word evidence checked for 休日|きゅうじつ: JMdict exact row entrySeq=1228040 verifies 休日|きゅうじつ, dictionary meaning holiday; day off, priority markers ichi1,news1,nf05; product review kept learner meaning holiday / day off and checked example sentence 休日は家でゆっくり休みます。 with reading きゅうじつはいえでゆっくりやすみます。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 休日|きゅうじつ: holiday / day off",
+        "example sentence with reading/translation fit checked for 休日|きゅうじつ: 休日は家でゆっくり休みます。 / きゅうじつはいえでゆっくりやすみます。 / I rest at home on my day off.",
+        "notes/support surface checked for 休日|きゅうじつ: Common schedule word for a holiday or day off; useful support for 休 -> きゅう and 日 -> じつ.; Risk review: 休日 is a common schedule word bound to exact きゅうじつ for holiday/day off; the example naturally anchors a rest-at-home context and supports 休 -> きゅう plus 日 -> じつ.",
+        "reading breakdown checked for 休日|きゅうじつ: 休 きゅう 日 じつ; kanji breakdown checked in the generated row: 休 きゅう 休 （きゅう） ／ rest / holiday Stroke order On: キュウ Kun: やす.まる、 やす.む、 やす.める 日 じつ 日 （じつ） ／ day / sun Stroke order On: ジツ、 ニチ Kun: -か、 -び、 ひ",
+        "JLPT, coverage, focus, and covers labels checked for 休日|きゅうじつ: JLPT N5; Reading coverage support; focus 休、日; covers 休: きゅう ／ 日: じつ",
+        "exact word-reading audio identity checked for 休日|きゅうじつ: expected word-reading-休日-きゅうじつ; Audio review checked 休日|きゅうじつ exact asset fragment word-reading-休日-きゅうじつ for the exported word reading きゅうじつ. Exported audio field is [sound:4F11_休-word-reading-休日-きゅうじつ.wav].",
+        "pitch accent source and rendered label checked for 休日|きゅうじつ: source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0 source word 休日 source reading きゅうじつ source accent 0. Pitch accent review checked 休日|きゅうじつ source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0. Dictionary-backed pitch evidence is bound to the exact word-reading identity.",
+        "managed media provenance checked for 休日|きゅうじつ: Managed media provenance audit checked 休日|きゅうじつ; generated export includes exact word audio word-reading-休日-きゅうじつ, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 休日|きゅうじつ as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 休日|きゅうじつ; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 休日|きゅうじつ: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 休日|きゅうじつ: 休日 is a common schedule word bound to exact きゅうじつ for holiday/day off; the example naturally anchors a rest-at-home context and supports 休 -> きゅう plus 日 -> じつ. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "休日は家でゆっくり休みます。",
+        "wordReading": "きゅうじつ",
+        "sentenceReading": "きゅうじつはいえでゆっくりやすみます。",
+        "translation": "I rest at home on my day off.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 休日|きゅうじつ: natural Japanese, exact word reading きゅうじつ, live sentence reading きゅうじつはいえでゆっくりやすみます。, translation I rest at home on my day off., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 休日 is a common schedule word bound to exact きゅうじつ for holiday/day off; the example naturally anchors a rest-at-home context and supports 休 -> きゅう plus 日 -> じつ."
+      },
+      "limitationDecision": "Verification limitations considered for 休日|きゅうじつ: 休日 is a common schedule word bound to exact きゅうじつ for holiday/day off; the example naturally anchors a rest-at-home context and supports 休 -> きゅう plus 日 -> じつ. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -34143,22 +34191,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-031",
-      "scope": "N5 word Obsidian lane batch 31 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-016",
+      "scope": "N5 word strict Obsidian rereview batch 16 from live generated rows",
+      "cardReviewed": {
+        "word": "子年",
+        "reading": "ねどし",
+        "generatedRow": "子年|ねどし",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 子年|ねどし from out/word-build/exports/jlpt-n5-words.tsv: meaning Year of the Rat; example sentence 私は子年です。; reading わたしはねどしです。; translation I was born in the Year of the Rat.. Generated word-card surface inspected for 子年|ねどし: word 子年, reading ねどし, meaning Year of the Rat, example 私は子年です。, audio word-reading-子年-ねどし, reading breakdown 子 （ね） ／ child; 年 （どし） ／ year, labels JLPT N5; Reading coverage support; focus 子; covers 子: ね, pitch accent Pitch 1: 1, and notes/support surface Zodiac-year support word for 子 -> ね; useful for recognizing birth-year contexts, not everyday 子 -> こ, and generated pitch remains visibly labeled..",
+        "governed Japanese-source word evidence checked for 子年|ねどし: JMdict exact row entrySeq=1308020 verifies 子年|ねどし, dictionary meaning year of the Rat, priority markers none; product review kept learner meaning Year of the Rat and checked example sentence 私は子年です。 with reading わたしはねどしです。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 子年|ねどし: Year of the Rat",
+        "example sentence with reading/translation fit checked for 子年|ねどし: 私は子年です。 / わたしはねどしです。 / I was born in the Year of the Rat.",
+        "notes/support surface checked for 子年|ねどし: Zodiac-year support word for 子 -> ね; useful for recognizing birth-year contexts, not everyday 子 -> こ, and generated pitch remains visibly labeled.; Risk review: 子年 is a zodiac-year support word bound to exact ねどし, useful for recognizing birth-year contexts but not everyday 子 -> こ; the JMdict row has no priority marker, and the generated pitch remains visibly labeled, so this stays support/recognition rather than a default beginner production word.",
+        "reading breakdown checked for 子年|ねどし: 子 ね 年 どし; kanji breakdown checked in the generated row: 子 ね 子 （ね） ／ child Stroke order On: シ、 ス、 ツ Kun: -こ、 ね 年 どし 年 （どし） ／ year Stroke order On: ネン Kun: とし",
+        "JLPT, coverage, focus, and covers labels checked for 子年|ねどし: JLPT N5; Reading coverage support; focus 子; covers 子: ね",
+        "exact word-reading audio identity checked for 子年|ねどし: expected word-reading-子年-ねどし; Audio review checked 子年|ねどし exact asset fragment word-reading-子年-ねどし for the exported word reading ねどし. Exported audio field is [sound:5B50_子-word-reading-子年-ねどし.wav].",
+        "pitch accent source and rendered label checked for 子年|ねどし: source voicevox-nemo-reading-query pattern 1 [atamadaka] rendered Pitch 1: 1 query ねどし generated reading ねどし; generated pitch remains visibly labeled on the card. Pitch accent review checked 子年|ねどし source voicevox-nemo-reading-query pattern 1 [atamadaka] rendered Pitch 1: 1. Generated pitch remains visibly labeled on the card.",
+        "managed media provenance checked for 子年|ねどし: Managed media provenance audit checked 子年|ねどし; generated export includes exact word audio word-reading-子年-ねどし, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 子年|ねどし as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 子年|ねどし; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 子年|ねどし: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 子年|ねどし: 子年 is a zodiac-year support word bound to exact ねどし, useful for recognizing birth-year contexts but not everyday 子 -> こ; the JMdict row has no priority marker, and the generated pitch remains visibly labeled, so this stays support/recognition rather than a default beginner production word. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "私は子年です。",
+        "wordReading": "ねどし",
+        "sentenceReading": "わたしはねどしです。",
+        "translation": "I was born in the Year of the Rat.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 子年|ねどし: natural Japanese, exact word reading ねどし, live sentence reading わたしはねどしです。, translation I was born in the Year of the Rat., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 子年 is a zodiac-year support word bound to exact ねどし, useful for recognizing birth-year contexts but not everyday 子 -> こ; the JMdict row has no priority marker, and the generated pitch remains visibly labeled, so this stays support/recognition rather than a default beginner production word."
+      },
+      "limitationDecision": "Verification limitations considered for 子年|ねどし: 子年 is a zodiac-year support word bound to exact ねどし, useful for recognizing birth-year contexts but not everyday 子 -> こ; the JMdict row has no priority marker, and the generated pitch remains visibly labeled, so this stays support/recognition rather than a default beginner production word. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -34288,22 +34360,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-031",
-      "scope": "N5 word Obsidian lane batch 31 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-016",
+      "scope": "N5 word strict Obsidian rereview batch 16 from live generated rows",
+      "cardReviewed": {
+        "word": "誕生日",
+        "reading": "たんじょうび",
+        "generatedRow": "誕生日|たんじょうび",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 誕生日|たんじょうび from out/word-build/exports/jlpt-n5-words.tsv: meaning birthday; example sentence 今日は私の誕生日です。; reading きょうはわたしのたんじょうびです。; translation Today is my birthday.. Generated word-card surface inspected for 誕生日|たんじょうび: word 誕生日, reading たんじょうび, meaning birthday, example 今日は私の誕生日です。, audio word-reading-誕生日-たんじょうび, reading breakdown 誕 （たん） ／ birth; 生 （じょう） ／ life / birth; 日 （び） ／ day / sun, labels JLPT N5; JLPT core + reading coverage; focus 生、日; covers 生: じょう ／ 日: び, pitch accent Pitch 1: 3, and notes/support surface Core birthday word; 誕 is higher-level support and the N5 focus covers 生 -> じょう and 日 -> び..",
+        "governed Japanese-source word evidence checked for 誕生日|たんじょうび: JMdict exact row entrySeq=1419110 verifies 誕生日|たんじょうび, dictionary meaning birthday, priority markers ichi1; product review kept learner meaning birthday and checked example sentence 今日は私の誕生日です。 with reading きょうはわたしのたんじょうびです。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 誕生日|たんじょうび: birthday",
+        "example sentence with reading/translation fit checked for 誕生日|たんじょうび: 今日は私の誕生日です。 / きょうはわたしのたんじょうびです。 / Today is my birthday.",
+        "notes/support surface checked for 誕生日|たんじょうび: Core birthday word; 誕 is higher-level support and the N5 focus covers 生 -> じょう and 日 -> び.; Risk review: 誕生日 is a core birthday word bound to exact たんじょうび; 誕 remains visibly labeled as higher-level support, while 生 -> じょう and 日 -> び are the N5 covered readings and the birthday example is natural and common.",
+        "reading breakdown checked for 誕生日|たんじょうび: 誕 たん 生 じょう 日 び; kanji breakdown checked in the generated row: 誕 JLPT N3 kanji たん 誕 （たん） ／ birth Stroke order On: タン 生 じょう 生 （じょう） ／ life / birth Stroke order On: ショウ、 セイ Kun: -う、 い.かす、 い.きる、 い.ける、 う.まれ、 う.まれる、 う.む、 お.う、 き、 な.す、 な.る、 なま、 は.える、 は.やす、 む.す 日 び 日 （び） ／ day / sun Stroke order On: ジツ、 ニチ Kun: -か、 -び、 ひ",
+        "JLPT, coverage, focus, and covers labels checked for 誕生日|たんじょうび: JLPT N5; JLPT core + reading coverage; focus 生、日; covers 生: じょう ／ 日: び",
+        "exact word-reading audio identity checked for 誕生日|たんじょうび: expected word-reading-誕生日-たんじょうび; Audio review checked 誕生日|たんじょうび exact asset fragment word-reading-誕生日-たんじょうび for the exported word reading たんじょうび. Exported audio field is [sound:751F_生-word-reading-誕生日-たんじょうび.wav].",
+        "pitch accent source and rendered label checked for 誕生日|たんじょうび: source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] rendered Pitch 1: 3 source word 誕生日 source reading たんじょうび source accent 3. Pitch accent review checked 誕生日|たんじょうび source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] rendered Pitch 1: 3. Dictionary-backed pitch evidence is bound to the exact word-reading identity.",
+        "managed media provenance checked for 誕生日|たんじょうび: Managed media provenance audit checked 誕生日|たんじょうび; generated export includes exact word audio word-reading-誕生日-たんじょうび, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 誕生日|たんじょうび as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 誕生日|たんじょうび; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 誕生日|たんじょうび: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 誕生日|たんじょうび: 誕生日 is a core birthday word bound to exact たんじょうび; 誕 remains visibly labeled as higher-level support, while 生 -> じょう and 日 -> び are the N5 covered readings and the birthday example is natural and common. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "今日は私の誕生日です。",
+        "wordReading": "たんじょうび",
+        "sentenceReading": "きょうはわたしのたんじょうびです。",
+        "translation": "Today is my birthday.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 誕生日|たんじょうび: natural Japanese, exact word reading たんじょうび, live sentence reading きょうはわたしのたんじょうびです。, translation Today is my birthday., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 誕生日 is a core birthday word bound to exact たんじょうび; 誕 remains visibly labeled as higher-level support, while 生 -> じょう and 日 -> び are the N5 covered readings and the birthday example is natural and common."
+      },
+      "limitationDecision": "Verification limitations considered for 誕生日|たんじょうび: 誕生日 is a core birthday word bound to exact たんじょうび; 誕 remains visibly labeled as higher-level support, while 生 -> じょう and 日 -> び are the N5 covered readings and the birthday example is natural and common. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -34433,22 +34529,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-031",
-      "scope": "N5 word Obsidian lane batch 31 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-016",
+      "scope": "N5 word strict Obsidian rereview batch 16 from live generated rows",
+      "cardReviewed": {
+        "word": "水曜日",
+        "reading": "すいようび",
+        "generatedRow": "水曜日|すいようび",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 水曜日|すいようび from out/word-build/exports/jlpt-n5-words.tsv: meaning Wednesday; example sentence 水曜日に学校へ行きます。; reading すいようびにがっこうへいきます。; translation I go to school on Wednesday.. Generated word-card surface inspected for 水曜日|すいようび: word 水曜日, reading すいようび, meaning Wednesday, example 水曜日に学校へ行きます。, audio word-reading-水曜日-すいようび, reading breakdown 水 （すい） ／ water; 曜 （よう） ／ weekday marker; 日 （び） ／ day / sun, labels JLPT N5; JLPT core + reading coverage; focus 水、日; covers 水: すい ／ 日: び, pitch accent Pitch 1: 3, and notes/support surface Core weekday word for Wednesday; 曜 is higher-level support and the N5 focus covers 水 -> すい and 日 -> び..",
+        "governed Japanese-source word evidence checked for 水曜日|すいようび: JMdict exact row entrySeq=1372190 verifies 水曜日|すいようび, dictionary meaning Wednesday, priority markers ichi1; product review kept learner meaning Wednesday and checked example sentence 水曜日に学校へ行きます。 with reading すいようびにがっこうへいきます。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 水曜日|すいようび: Wednesday",
+        "example sentence with reading/translation fit checked for 水曜日|すいようび: 水曜日に学校へ行きます。 / すいようびにがっこうへいきます。 / I go to school on Wednesday.",
+        "notes/support surface checked for 水曜日|すいようび: Core weekday word for Wednesday; 曜 is higher-level support and the N5 focus covers 水 -> すい and 日 -> び.; Risk review: 水曜日 is a core weekday word bound to exact すいようび; 曜 remains visibly labeled as higher-level support, and the card preserves 水 -> すい plus 日 -> び in a common schedule context.",
+        "reading breakdown checked for 水曜日|すいようび: 水 すい 曜 よう 日 び; kanji breakdown checked in the generated row: 水 すい 水 （すい） ／ water Stroke order On: スイ Kun: みず 曜 JLPT N4 kanji よう 曜 （よう） ／ weekday marker Stroke order On: ヨウ 日 び 日 （び） ／ day / sun Stroke order On: ジツ、 ニチ Kun: -か、 -び、 ひ",
+        "JLPT, coverage, focus, and covers labels checked for 水曜日|すいようび: JLPT N5; JLPT core + reading coverage; focus 水、日; covers 水: すい ／ 日: び",
+        "exact word-reading audio identity checked for 水曜日|すいようび: expected word-reading-水曜日-すいようび; Audio review checked 水曜日|すいようび exact asset fragment word-reading-水曜日-すいようび for the exported word reading すいようび. Exported audio field is [sound:6C34_水-word-reading-水曜日-すいようび.wav].",
+        "pitch accent source and rendered label checked for 水曜日|すいようび: source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] rendered Pitch 1: 3 source word 水曜日 source reading すいようび source accent 3. Pitch accent review checked 水曜日|すいようび source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] rendered Pitch 1: 3. Dictionary-backed pitch evidence is bound to the exact word-reading identity.",
+        "managed media provenance checked for 水曜日|すいようび: Managed media provenance audit checked 水曜日|すいようび; generated export includes exact word audio word-reading-水曜日-すいようび, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 水曜日|すいようび as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 水曜日|すいようび; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 水曜日|すいようび: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 水曜日|すいようび: 水曜日 is a core weekday word bound to exact すいようび; 曜 remains visibly labeled as higher-level support, and the card preserves 水 -> すい plus 日 -> び in a common schedule context. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "水曜日に学校へ行きます。",
+        "wordReading": "すいようび",
+        "sentenceReading": "すいようびにがっこうへいきます。",
+        "translation": "I go to school on Wednesday.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 水曜日|すいようび: natural Japanese, exact word reading すいようび, live sentence reading すいようびにがっこうへいきます。, translation I go to school on Wednesday., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 水曜日 is a core weekday word bound to exact すいようび; 曜 remains visibly labeled as higher-level support, and the card preserves 水 -> すい plus 日 -> び in a common schedule context."
+      },
+      "limitationDecision": "Verification limitations considered for 水曜日|すいようび: 水曜日 is a core weekday word bound to exact すいようび; 曜 remains visibly labeled as higher-level support, and the card preserves 水 -> すい plus 日 -> び in a common schedule context. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -34578,22 +34698,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-031",
-      "scope": "N5 word Obsidian lane batch 31 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-016",
+      "scope": "N5 word strict Obsidian rereview batch 16 from live generated rows",
+      "cardReviewed": {
+        "word": "自転車",
+        "reading": "じてんしゃ",
+        "generatedRow": "自転車|じてんしゃ",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 自転車|じてんしゃ from out/word-build/exports/jlpt-n5-words.tsv: meaning bicycle; example sentence 自転車で学校へ行きます。; reading じてんしゃでがっこうへいきます。; translation I go to school by bicycle.. Generated word-card surface inspected for 自転車|じてんしゃ: word 自転車, reading じてんしゃ, meaning bicycle, example 自転車で学校へ行きます。, audio word-reading-自転車-じてんしゃ, reading breakdown 自 （じ） ／ self / own; 転 （てん） ／ turn / fall; 車 （しゃ） ／ car / vehicle, labels JLPT N5; JLPT core + reading coverage; focus 車; covers 車: しゃ, pitch accent Pitch 1: 2; Pitch 2: 0, and notes/support surface Core bicycle word; 自 and 転 are higher-level support and the N5 focus remains 車 -> しゃ..",
+        "governed Japanese-source word evidence checked for 自転車|じてんしゃ: JMdict exact row entrySeq=1318290 verifies 自転車|じてんしゃ, dictionary meaning bicycle; bike, priority markers ichi1,news1,nf04; product review kept learner meaning bicycle and checked example sentence 自転車で学校へ行きます。 with reading じてんしゃでがっこうへいきます。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 自転車|じてんしゃ: bicycle",
+        "example sentence with reading/translation fit checked for 自転車|じてんしゃ: 自転車で学校へ行きます。 / じてんしゃでがっこうへいきます。 / I go to school by bicycle.",
+        "notes/support surface checked for 自転車|じてんしゃ: Core bicycle word; 自 and 転 are higher-level support and the N5 focus remains 車 -> しゃ.; Risk review: 自転車 is a core bicycle word bound to exact じてんしゃ; 自 and 転 remain visibly labeled as higher-level support, 車 -> しゃ is the N5 focus, and both Kanjium pitch variants 2 and 0 remain preserved.",
+        "reading breakdown checked for 自転車|じてんしゃ: 自 じ 転 てん 車 しゃ; kanji breakdown checked in the generated row: 自 JLPT N4 kanji じ 自 （じ） ／ self / own Stroke order On: シ、 ジ Kun: おの.ずから、 おの.ずと、 みずか.ら 転 JLPT N4 kanji てん 転 （てん） ／ turn / fall Stroke order On: テン Kun: うたた、 うつ.る、 くる.めく、 ころ.がす、 ころ.がる、 ころ.げる、 ころ.ぶ、 まろ.ぶ 車 しゃ 車 （しゃ） ／ car / vehicle Stroke order On: シャ Kun: くるま",
+        "JLPT, coverage, focus, and covers labels checked for 自転車|じてんしゃ: JLPT N5; JLPT core + reading coverage; focus 車; covers 車: しゃ",
+        "exact word-reading audio identity checked for 自転車|じてんしゃ: expected word-reading-自転車-じてんしゃ; Audio review checked 自転車|じてんしゃ exact asset fragment word-reading-自転車-じてんしゃ for the exported word reading じてんしゃ. Exported audio field is [sound:8ECA_車-word-reading-自転車-じてんしゃ.wav].",
+        "pitch accent source and rendered label checked for 自転車|じてんしゃ: source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] / 0 [heiban] rendered Pitch 1: 2 / Pitch 2: 0 source word 自転車 source reading じてんしゃ source accent 2,0. Pitch accent review checked 自転車|じてんしゃ source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] / 0 [heiban] rendered Pitch 1: 2; Pitch 2: 0. Dictionary-backed pitch evidence is bound to the exact word-reading identity.",
+        "managed media provenance checked for 自転車|じてんしゃ: Managed media provenance audit checked 自転車|じてんしゃ; generated export includes exact word audio word-reading-自転車-じてんしゃ, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 自転車|じてんしゃ as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 自転車|じてんしゃ; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 自転車|じてんしゃ: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 自転車|じてんしゃ: 自転車 is a core bicycle word bound to exact じてんしゃ; 自 and 転 remain visibly labeled as higher-level support, 車 -> しゃ is the N5 focus, and both Kanjium pitch variants 2 and 0 remain preserved. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "自転車で学校へ行きます。",
+        "wordReading": "じてんしゃ",
+        "sentenceReading": "じてんしゃでがっこうへいきます。",
+        "translation": "I go to school by bicycle.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 自転車|じてんしゃ: natural Japanese, exact word reading じてんしゃ, live sentence reading じてんしゃでがっこうへいきます。, translation I go to school by bicycle., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 自転車 is a core bicycle word bound to exact じてんしゃ; 自 and 転 remain visibly labeled as higher-level support, 車 -> しゃ is the N5 focus, and both Kanjium pitch variants 2 and 0 remain preserved."
+      },
+      "limitationDecision": "Verification limitations considered for 自転車|じてんしゃ: 自転車 is a core bicycle word bound to exact じてんしゃ; 自 and 転 remain visibly labeled as higher-level support, 車 -> しゃ is the N5 focus, and both Kanjium pitch variants 2 and 0 remain preserved. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -34722,22 +34866,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-031",
-      "scope": "N5 word Obsidian lane batch 31 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-016",
+      "scope": "N5 word strict Obsidian rereview batch 16 from live generated rows",
+      "cardReviewed": {
+        "word": "四月",
+        "reading": "しがつ",
+        "generatedRow": "四月|しがつ",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 四月|しがつ from out/word-build/exports/jlpt-n5-words.tsv: meaning April; example sentence 四月に学校が始まります。; reading しがつにがっこうがはじまります。; translation School starts in April.. Generated word-card surface inspected for 四月|しがつ: word 四月, reading しがつ, meaning April, example 四月に学校が始まります。, audio word-reading-四月-しがつ, reading breakdown 四 （し） ／ four; 月 （がつ） ／ month / moon, labels JLPT N5; Reading coverage support; focus 四、月; covers 四: し ／ 月: がつ, pitch accent Pitch 1: 3, and notes/support surface Core month word for April; reinforces 四 -> し and 月 -> がつ in a common calendar word..",
+        "governed Japanese-source word evidence checked for 四月|しがつ: JMdict exact row entrySeq=1307180 verifies 四月|しがつ, dictionary meaning April; fourth month in the lunar calendar, priority markers news1,nf01,spec1; product review kept learner meaning April and checked example sentence 四月に学校が始まります。 with reading しがつにがっこうがはじまります。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 四月|しがつ: April",
+        "example sentence with reading/translation fit checked for 四月|しがつ: 四月に学校が始まります。 / しがつにがっこうがはじまります。 / School starts in April.",
+        "notes/support surface checked for 四月|しがつ: Core month word for April; reinforces 四 -> し and 月 -> がつ in a common calendar word.; Risk review: 四月 is a core calendar month word bound to exact しがつ, not よんがつ; the learner card keeps the modern April sense and excludes the source row lunar-calendar gloss from the beginner-facing meaning.",
+        "reading breakdown checked for 四月|しがつ: 四 し 月 がつ; kanji breakdown checked in the generated row: 四 し 四 （し） ／ four Stroke order On: シ Kun: よ、 よ.つ、 よっ.つ、 よん 月 がつ 月 （がつ） ／ month / moon Stroke order On: ガツ、 ゲツ Kun: つき",
+        "JLPT, coverage, focus, and covers labels checked for 四月|しがつ: JLPT N5; Reading coverage support; focus 四、月; covers 四: し ／ 月: がつ",
+        "exact word-reading audio identity checked for 四月|しがつ: expected word-reading-四月-しがつ; Audio review checked 四月|しがつ exact asset fragment word-reading-四月-しがつ for the exported word reading しがつ. Exported audio field is [sound:56DB_四-word-reading-四月-しがつ.wav].",
+        "pitch accent source and rendered label checked for 四月|しがつ: source kanjium-cc-by-sa-4.0 pattern 3 [odaka] rendered Pitch 1: 3 source word 四月 source reading しがつ source accent 3. Pitch accent review checked 四月|しがつ source kanjium-cc-by-sa-4.0 pattern 3 [odaka] rendered Pitch 1: 3. Dictionary-backed pitch evidence is bound to the exact word-reading identity.",
+        "managed media provenance checked for 四月|しがつ: Managed media provenance audit checked 四月|しがつ; generated export includes exact word audio word-reading-四月-しがつ, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 四月|しがつ as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 四月|しがつ; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 四月|しがつ: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 四月|しがつ: 四月 is a core calendar month word bound to exact しがつ, not よんがつ; the learner card keeps the modern April sense and excludes the source row lunar-calendar gloss from the beginner-facing meaning. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "四月に学校が始まります。",
+        "wordReading": "しがつ",
+        "sentenceReading": "しがつにがっこうがはじまります。",
+        "translation": "School starts in April.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 四月|しがつ: natural Japanese, exact word reading しがつ, live sentence reading しがつにがっこうがはじまります。, translation School starts in April., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 四月 is a core calendar month word bound to exact しがつ, not よんがつ; the learner card keeps the modern April sense and excludes the source row lunar-calendar gloss from the beginner-facing meaning."
+      },
+      "limitationDecision": "Verification limitations considered for 四月|しがつ: 四月 is a core calendar month word bound to exact しがつ, not よんがつ; the learner card keeps the modern April sense and excludes the source row lunar-calendar gloss from the beginner-facing meaning. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -34865,22 +35033,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-032",
-      "scope": "N5 word Obsidian lane batch 32 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-016",
+      "scope": "N5 word strict Obsidian rereview batch 16 from live generated rows",
+      "cardReviewed": {
+        "word": "左折",
+        "reading": "させつ",
+        "generatedRow": "左折|させつ",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 左折|させつ from out/word-build/exports/jlpt-n5-words.tsv: meaning left turn; example sentence ここで左折します。; reading ここでさせつします。; translation I turn left here.. Generated word-card surface inspected for 左折|させつ: word 左折, reading させつ, meaning left turn, example ここで左折します。, audio word-reading-左折-させつ, reading breakdown 左 （さ） ／ left; 折 （せつ） ／ fold / break, labels JLPT N5; Reading coverage support; focus 左; covers 左: さ, pitch accent Pitch 1: 0, and notes/support surface Common navigation and signage word for a left turn; useful support for 左 -> さ, while ひだり remains the everyday standalone left..",
+        "governed Japanese-source word evidence checked for 左折|させつ: JMdict exact row entrySeq=1290930 verifies 左折|させつ, dictionary meaning turning to the left; left turn, priority markers news2,nf47,spec1; product review kept learner meaning left turn and checked example sentence ここで左折します。 with reading ここでさせつします。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 左折|させつ: left turn",
+        "example sentence with reading/translation fit checked for 左折|させつ: ここで左折します。 / ここでさせつします。 / I turn left here.",
+        "notes/support surface checked for 左折|させつ: Common navigation and signage word for a left turn; useful support for 左 -> さ, while ひだり remains the everyday standalone left.; Risk review: 左折 is a navigation/signage support word bound to exact させつ; it usefully shows 左 -> さ while ひだり remains the ordinary standalone N5 left word, and 折 remains visibly labeled as higher-level support.",
+        "reading breakdown checked for 左折|させつ: 左 さ 折 せつ; kanji breakdown checked in the generated row: 左 さ 左 （さ） ／ left Stroke order On: サ、 シャ Kun: ひだり 折 JLPT N3 kanji せつ 折 （せつ） ／ fold / break Stroke order On: シャク、 セツ Kun: -お.り、 お.る、 お.れる",
+        "JLPT, coverage, focus, and covers labels checked for 左折|させつ: JLPT N5; Reading coverage support; focus 左; covers 左: さ",
+        "exact word-reading audio identity checked for 左折|させつ: expected word-reading-左折-させつ; Audio review checked 左折|させつ exact asset fragment word-reading-左折-させつ for the exported word reading させつ. Exported audio field is [sound:5DE6_左-word-reading-左折-させつ.wav].",
+        "pitch accent source and rendered label checked for 左折|させつ: source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0 source word 左折 source reading させつ source accent 0. Pitch accent review checked 左折|させつ source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0. Dictionary-backed pitch evidence is bound to the exact word-reading identity.",
+        "managed media provenance checked for 左折|させつ: Managed media provenance audit checked 左折|させつ; generated export includes exact word audio word-reading-左折-させつ, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 左折|させつ as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 左折|させつ; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 左折|させつ: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 左折|させつ: 左折 is a navigation/signage support word bound to exact させつ; it usefully shows 左 -> さ while ひだり remains the ordinary standalone N5 left word, and 折 remains visibly labeled as higher-level support. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "ここで左折します。",
+        "wordReading": "させつ",
+        "sentenceReading": "ここでさせつします。",
+        "translation": "I turn left here.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 左折|させつ: natural Japanese, exact word reading させつ, live sentence reading ここでさせつします。, translation I turn left here., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 左折 is a navigation/signage support word bound to exact させつ; it usefully shows 左 -> さ while ひだり remains the ordinary standalone N5 left word, and 折 remains visibly labeled as higher-level support."
+      },
+      "limitationDecision": "Verification limitations considered for 左折|させつ: 左折 is a navigation/signage support word bound to exact させつ; it usefully shows 左 -> さ while ひだり remains the ordinary standalone N5 left word, and 折 remains visibly labeled as higher-level support. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -35008,22 +35200,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-032",
-      "scope": "N5 word Obsidian lane batch 32 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-017",
+      "scope": "N5 word strict Obsidian rereview batch 17 from live generated rows",
+      "cardReviewed": {
+        "word": "葉書",
+        "reading": "はがき",
+        "generatedRow": "葉書|はがき",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 葉書|はがき from out/word-build/exports/jlpt-n5-words.tsv: meaning postcard; example sentence 友だちに葉書を書きます。; reading ともだちにはがきをかきます。; translation I write a postcard to my friend.. Generated word-card surface inspected for 葉書|はがき: word 葉書, reading はがき, meaning postcard, example 友だちに葉書を書きます。, audio word-reading-葉書-はがき, reading breakdown 葉 （は） ／ leaf; 書 （がき） ／ write, labels JLPT N5; Reading coverage support; focus 書; covers 書: がき, pitch accent Pitch 1: 0, and notes/support surface Common postcard word, but often written はがき or ハガキ; the kanji form is useful for recognition and covers 書 -> がき with 葉 visibly labeled as higher-level..",
+        "governed Japanese-source word evidence checked for 葉書|はがき: JMdict exact row entrySeq=1546590 verifies 葉書|はがき, dictionary meaning postcard; memo; note; card, priority markers ichi1; product review kept learner meaning postcard and checked example sentence 友だちに葉書を書きます。 with reading ともだちにはがきをかきます。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 葉書|はがき: postcard",
+        "example sentence with reading/translation fit checked for 葉書|はがき: 友だちに葉書を書きます。 / ともだちにはがきをかきます。 / I write a postcard to my friend.",
+        "notes/support surface checked for 葉書|はがき: Common postcard word, but often written はがき or ハガキ; the kanji form is useful for recognition and covers 書 -> がき with 葉 visibly labeled as higher-level.; Risk review: 葉書 is bound to exact はがき and the postcard sense; memo/note/card senses are not learner-facing here, the kana/katakana spellings are common, and 葉 remains visibly labeled as higher-level support while 書 -> がき is the covered reading.",
+        "reading breakdown checked for 葉書|はがき: 葉 は 書 がき; kanji breakdown checked in the generated row: 葉 JLPT N3 kanji は 葉 （は） ／ leaf Stroke order On: ヨウ Kun: は 書 がき 書 （がき） ／ write Stroke order On: ショ Kun: -が.き、 か.く",
+        "JLPT, coverage, focus, and covers labels checked for 葉書|はがき: JLPT N5; Reading coverage support; focus 書; covers 書: がき",
+        "exact word-reading audio identity checked for 葉書|はがき: expected word-reading-葉書-はがき; Audio review checked 葉書|はがき exact asset fragment word-reading-葉書-はがき for the exported word reading はがき. Exported audio field is [sound:66F8_書-word-reading-葉書-はがき.wav].",
+        "pitch accent source and rendered label checked for 葉書|はがき: source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0 source word 葉書 source reading はがき source accent 0. Pitch accent review checked 葉書|はがき source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0. Dictionary-backed pitch evidence is bound to the exact word-reading identity.",
+        "managed media provenance checked for 葉書|はがき: Managed media provenance audit checked 葉書|はがき; generated export includes exact word audio word-reading-葉書-はがき, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 葉書|はがき as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 葉書|はがき; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 葉書|はがき: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 葉書|はがき: 葉書 is bound to exact はがき and the postcard sense; memo/note/card senses are not learner-facing here, the kana/katakana spellings are common, and 葉 remains visibly labeled as higher-level support while 書 -> がき is the covered reading. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "友だちに葉書を書きます。",
+        "wordReading": "はがき",
+        "sentenceReading": "ともだちにはがきをかきます。",
+        "translation": "I write a postcard to my friend.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 葉書|はがき: natural Japanese, exact word reading はがき, live sentence reading ともだちにはがきをかきます。, translation I write a postcard to my friend., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 葉書 is bound to exact はがき and the postcard sense; memo/note/card senses are not learner-facing here, the kana/katakana spellings are common, and 葉 remains visibly labeled as higher-level support while 書 -> がき is the covered reading."
+      },
+      "limitationDecision": "Verification limitations considered for 葉書|はがき: 葉書 is bound to exact はがき and the postcard sense; memo/note/card senses are not learner-facing here, the kana/katakana spellings are common, and 葉 remains visibly labeled as higher-level support while 書 -> がき is the covered reading. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -40192,22 +40408,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-033",
-      "scope": "N5 word Obsidian lane batch 33 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-018",
+      "scope": "N5 word strict Obsidian rereview batch 18 from live generated rows",
+      "cardReviewed": {
+        "word": "大使館",
+        "reading": "たいしかん",
+        "generatedRow": "大使館|たいしかん",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 大使館|たいしかん from out/word-build/exports/jlpt-n5-words.tsv: meaning embassy; example sentence 大使館は駅の近くです。; reading たいしかんはえきのちかくです。; translation The embassy is near the station.. Generated word-card surface inspected for 大使館|たいしかん: word 大使館, reading たいしかん, meaning embassy, example 大使館は駅の近くです。, audio word-reading-大使館-たいしかん, reading breakdown 大 （たい） ／ big / large; 使 （し） ／ use; 館 （かん） ／ building / hall, labels JLPT N5; JLPT core + reading coverage; focus 大、使、館; covers 大: たい ／ 使: し ／ 館: かん, pitch accent Pitch 1: 3, and notes/support surface Core place/travel word for embassy; 使 and 館 are higher-level support, and generated pitch remains visibly labeled..",
+        "governed Japanese-source word evidence checked for 大使館|たいしかん: JMdict exact row entrySeq=1413890 verifies 大使館|たいしかん, dictionary meaning embassy, priority markers ichi1,news1,nf03; product review kept learner meaning embassy and checked example sentence 大使館は駅の近くです。 with reading たいしかんはえきのちかくです。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 大使館|たいしかん: embassy",
+        "example sentence with reading/translation fit checked for 大使館|たいしかん: 大使館は駅の近くです。 / たいしかんはえきのちかくです。 / The embassy is near the station.",
+        "notes/support surface checked for 大使館|たいしかん: Core place/travel word for embassy; 使 and 館 are higher-level support, and generated pitch remains visibly labeled.; Risk review: 大使館 is a useful embassy/place word bound to exact たいしかん; 使 and 館 remain visibly labeled as higher-level support, the travel/place example is natural, and generated pitch remains visibly labeled.",
+        "reading breakdown checked for 大使館|たいしかん: 大 たい 使 し 館 かん; kanji breakdown checked in the generated row: 大 たい 大 （たい） ／ big / large Stroke order On: タイ、 ダイ Kun: -おお.いに、 おお-、 おお.きい 使 JLPT N4 kanji し 使 （し） ／ use Stroke order On: シ Kun: -つか.い、 -づか.い、 つか.う 館 JLPT N4 kanji かん 館 （かん） ／ building / hall Stroke order On: カン Kun: たて、 やかた",
+        "JLPT, coverage, focus, and covers labels checked for 大使館|たいしかん: JLPT N5; JLPT core + reading coverage; focus 大、使、館; covers 大: たい ／ 使: し ／ 館: かん",
+        "exact word-reading audio identity checked for 大使館|たいしかん: expected word-reading-大使館-たいしかん; Audio review checked 大使館|たいしかん exact asset fragment word-reading-大使館-たいしかん for the exported word reading たいしかん. Exported audio field is [sound:5927_大-word-reading-大使館-たいしかん.wav].",
+        "pitch accent source and rendered label checked for 大使館|たいしかん: source voicevox-nemo-accent-query pattern 3 [nakadaka] rendered Pitch 1: 3 query 大使館 generated reading たいしかん; generated pitch remains visibly labeled on the card. Pitch accent review checked 大使館|たいしかん source voicevox-nemo-accent-query pattern 3 [nakadaka] rendered Pitch 1: 3. Generated pitch remains visibly labeled on the card.",
+        "managed media provenance checked for 大使館|たいしかん: Managed media provenance audit checked 大使館|たいしかん; generated export includes exact word audio word-reading-大使館-たいしかん, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 大使館|たいしかん as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 大使館|たいしかん; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 大使館|たいしかん: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 大使館|たいしかん: 大使館 is a useful embassy/place word bound to exact たいしかん; 使 and 館 remain visibly labeled as higher-level support, the travel/place example is natural, and generated pitch remains visibly labeled. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "大使館は駅の近くです。",
+        "wordReading": "たいしかん",
+        "sentenceReading": "たいしかんはえきのちかくです。",
+        "translation": "The embassy is near the station.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 大使館|たいしかん: natural Japanese, exact word reading たいしかん, live sentence reading たいしかんはえきのちかくです。, translation The embassy is near the station., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 大使館 is a useful embassy/place word bound to exact たいしかん; 使 and 館 remain visibly labeled as higher-level support, the travel/place example is natural, and generated pitch remains visibly labeled."
+      },
+      "limitationDecision": "Verification limitations considered for 大使館|たいしかん: 大使館 is a useful embassy/place word bound to exact たいしかん; 使 and 館 remain visibly labeled as higher-level support, the travel/place example is natural, and generated pitch remains visibly labeled. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -40993,22 +41233,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-031",
-      "scope": "N5 word Obsidian lane batch 31 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-016",
+      "scope": "N5 word strict Obsidian rereview batch 16 from live generated rows",
+      "cardReviewed": {
+        "word": "金具",
+        "reading": "かなぐ",
+        "generatedRow": "金具|かなぐ",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 金具|かなぐ from out/word-build/exports/jlpt-n5-words.tsv: meaning metal fitting / hardware; example sentence かばんの金具は小さいです。; reading かばんのかなぐはちいさいです。; translation The metal fitting on the bag is small.. Generated word-card surface inspected for 金具|かなぐ: word 金具, reading かなぐ, meaning metal fitting / hardware, example かばんの金具は小さいです。, audio word-reading-金具-かなぐ, reading breakdown 金 （かな） ／ money / gold; 具 （ぐ） ／ tool / ingredient, labels JLPT N5; Reading coverage support; focus 金; covers 金: かな, pitch accent Pitch 1: 0, and notes/support surface Common concrete hardware word for metal fittings; useful support for 金 -> かな with 具 visibly labeled as higher-level..",
+        "governed Japanese-source word evidence checked for 金具|かなぐ: JMdict exact row entrySeq=1242790 verifies 金具|かなぐ, dictionary meaning metal fittings; metal fixtures, priority markers news1,nf22; product review kept learner meaning metal fitting / hardware and checked example sentence かばんの金具は小さいです。 with reading かばんのかなぐはちいさいです。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 金具|かなぐ: metal fitting / hardware",
+        "example sentence with reading/translation fit checked for 金具|かなぐ: かばんの金具は小さいです。 / かばんのかなぐはちいさいです。 / The metal fitting on the bag is small.",
+        "notes/support surface checked for 金具|かなぐ: Common concrete hardware word for metal fittings; useful support for 金 -> かな with 具 visibly labeled as higher-level.; Risk review: 金具 is a concrete metal-fitting/hardware support word bound to exact かなぐ; it is useful for 金 -> かな but 具 remains visibly labeled as higher-level support, and the learner meaning excludes broad tool/ingredient readings.",
+        "reading breakdown checked for 金具|かなぐ: 金 かな 具 ぐ; kanji breakdown checked in the generated row: 金 かな 金 （かな） ／ money / gold Stroke order On: キン、 コン、 ゴン Kun: -がね、 かな-、 かね 具 JLPT N2 kanji ぐ 具 （ぐ） ／ tool / ingredient Stroke order On: グ Kun: そな.える、 つぶさ.に",
+        "JLPT, coverage, focus, and covers labels checked for 金具|かなぐ: JLPT N5; Reading coverage support; focus 金; covers 金: かな",
+        "exact word-reading audio identity checked for 金具|かなぐ: expected word-reading-金具-かなぐ; Audio review checked 金具|かなぐ exact asset fragment word-reading-金具-かなぐ for the exported word reading かなぐ. Exported audio field is [sound:91D1_金-word-reading-金具-かなぐ.wav].",
+        "pitch accent source and rendered label checked for 金具|かなぐ: source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0 source word 金具 source reading かなぐ source accent 0. Pitch accent review checked 金具|かなぐ source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0. Dictionary-backed pitch evidence is bound to the exact word-reading identity.",
+        "managed media provenance checked for 金具|かなぐ: Managed media provenance audit checked 金具|かなぐ; generated export includes exact word audio word-reading-金具-かなぐ, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 金具|かなぐ as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 金具|かなぐ; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 金具|かなぐ: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 金具|かなぐ: 金具 is a concrete metal-fitting/hardware support word bound to exact かなぐ; it is useful for 金 -> かな but 具 remains visibly labeled as higher-level support, and the learner meaning excludes broad tool/ingredient readings. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "かばんの金具は小さいです。",
+        "wordReading": "かなぐ",
+        "sentenceReading": "かばんのかなぐはちいさいです。",
+        "translation": "The metal fitting on the bag is small.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 金具|かなぐ: natural Japanese, exact word reading かなぐ, live sentence reading かばんのかなぐはちいさいです。, translation The metal fitting on the bag is small., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 金具 is a concrete metal-fitting/hardware support word bound to exact かなぐ; it is useful for 金 -> かな but 具 remains visibly labeled as higher-level support, and the learner meaning excludes broad tool/ingredient readings."
+      },
+      "limitationDecision": "Verification limitations considered for 金具|かなぐ: 金具 is a concrete metal-fitting/hardware support word bound to exact かなぐ; it is useful for 金 -> かな but 具 remains visibly labeled as higher-level support, and the learner meaning excludes broad tool/ingredient readings. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -41137,22 +41401,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-032",
-      "scope": "N5 word Obsidian lane batch 32 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-016",
+      "scope": "N5 word strict Obsidian rereview batch 16 from live generated rows",
+      "cardReviewed": {
+        "word": "春雨",
+        "reading": "はるさめ",
+        "generatedRow": "春雨|はるさめ",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 春雨|はるさめ from out/word-build/exports/jlpt-n5-words.tsv: meaning glass noodles / spring rain; example sentence 春雨スープを食べます。; reading はるさめスープをたべます。; translation I eat harusame soup.. Generated word-card surface inspected for 春雨|はるさめ: word 春雨, reading はるさめ, meaning glass noodles / spring rain, example 春雨スープを食べます。, audio word-reading-春雨-はるさめ, reading breakdown 春 （はる） ／ spring; 雨 （さめ） ／ rain, labels JLPT N5; Reading coverage support; focus 雨; covers 雨: さめ, pitch accent Pitch 1: 0, and notes/support surface Common food and seasonal word; retained because it gives real learner-facing 雨 -> さめ usage with 春 visibly labeled as higher-level..",
+        "governed Japanese-source word evidence checked for 春雨|はるさめ: JMdict exact row entrySeq=1580180 verifies 春雨|はるさめ, dictionary meaning gentle spring rain; glass noodles; cellophane noodles; thin noodles made from bean starch (or potato starch), priority markers news2,nf40; product review kept learner meaning glass noodles / spring rain and checked example sentence 春雨スープを食べます。 with reading はるさめスープをたべます。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 春雨|はるさめ: glass noodles / spring rain",
+        "example sentence with reading/translation fit checked for 春雨|はるさめ: 春雨スープを食べます。 / はるさめスープをたべます。 / I eat harusame soup.",
+        "notes/support surface checked for 春雨|はるさめ: Common food and seasonal word; retained because it gives real learner-facing 雨 -> さめ usage with 春 visibly labeled as higher-level.; Risk review: 春雨 is bound to exact はるさめ with both glass-noodle and spring-rain source senses available; the example anchors the common food use, 春 remains visibly labeled as higher-level support, and 雨 -> さめ is the N5 support reading.",
+        "reading breakdown checked for 春雨|はるさめ: 春 はる 雨 さめ; kanji breakdown checked in the generated row: 春 JLPT N4 kanji はる 春 （はる） ／ spring Stroke order On: シュン Kun: はる 雨 さめ 雨 （さめ） ／ rain Stroke order On: ウ Kun: -さめ、 あま-、 あめ",
+        "JLPT, coverage, focus, and covers labels checked for 春雨|はるさめ: JLPT N5; Reading coverage support; focus 雨; covers 雨: さめ",
+        "exact word-reading audio identity checked for 春雨|はるさめ: expected word-reading-春雨-はるさめ; Audio review checked 春雨|はるさめ exact asset fragment word-reading-春雨-はるさめ for the exported word reading はるさめ. Exported audio field is [sound:96E8_雨-word-reading-春雨-はるさめ.wav].",
+        "pitch accent source and rendered label checked for 春雨|はるさめ: source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0 source word 春雨 source reading はるさめ source accent 0. Pitch accent review checked 春雨|はるさめ source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0. Dictionary-backed pitch evidence is bound to the exact word-reading identity.",
+        "managed media provenance checked for 春雨|はるさめ: Managed media provenance audit checked 春雨|はるさめ; generated export includes exact word audio word-reading-春雨-はるさめ, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 春雨|はるさめ as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 春雨|はるさめ; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 春雨|はるさめ: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 春雨|はるさめ: 春雨 is bound to exact はるさめ with both glass-noodle and spring-rain source senses available; the example anchors the common food use, 春 remains visibly labeled as higher-level support, and 雨 -> さめ is the N5 support reading. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "春雨スープを食べます。",
+        "wordReading": "はるさめ",
+        "sentenceReading": "はるさめスープをたべます。",
+        "translation": "I eat harusame soup.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 春雨|はるさめ: natural Japanese, exact word reading はるさめ, live sentence reading はるさめスープをたべます。, translation I eat harusame soup., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 春雨 is bound to exact はるさめ with both glass-noodle and spring-rain source senses available; the example anchors the common food use, 春 remains visibly labeled as higher-level support, and 雨 -> さめ is the N5 support reading."
+      },
+      "limitationDecision": "Verification limitations considered for 春雨|はるさめ: 春雨 is bound to exact はるさめ with both glass-noodle and spring-rain source senses available; the example anchors the common food use, 春 remains visibly labeled as higher-level support, and 雨 -> さめ is the N5 support reading. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -41281,22 +41569,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-032",
-      "scope": "N5 word Obsidian lane batch 32 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-017",
+      "scope": "N5 word strict Obsidian rereview batch 17 from live generated rows",
+      "cardReviewed": {
+        "word": "万事",
+        "reading": "ばんじ",
+        "generatedRow": "万事|ばんじ",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 万事|ばんじ from out/word-build/exports/jlpt-n5-words.tsv: meaning all things / everything; example sentence 万事うまくいきます。; reading ばんじうまくいきます。; translation Everything goes well.. Generated word-card surface inspected for 万事|ばんじ: word 万事, reading ばんじ, meaning all things / everything, example 万事うまくいきます。, audio word-reading-万事-ばんじ, reading breakdown 万 （ばん） ／ ten thousand; 事 （じ） ／ matter / task, labels JLPT N5; Reading coverage support; focus 万; covers 万: ばん, pitch accent Pitch 1: 1, and notes/support surface Common set-expression word for everything or all things; support-only for 万 -> ばん and not the default beginner word for 'everything'..",
+        "governed Japanese-source word evidence checked for 万事|ばんじ: JMdict exact row entrySeq=1526080 verifies 万事|ばんじ, dictionary meaning all; everything, priority markers ichi1,news1,nf23; product review kept learner meaning all things / everything and checked example sentence 万事うまくいきます。 with reading ばんじうまくいきます。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 万事|ばんじ: all things / everything",
+        "example sentence with reading/translation fit checked for 万事|ばんじ: 万事うまくいきます。 / ばんじうまくいきます。 / Everything goes well.",
+        "notes/support surface checked for 万事|ばんじ: Common set-expression word for everything or all things; support-only for 万 -> ばん and not the default beginner word for 'everything'.; Risk review: 万事 is a set-expression support word bound to exact ばんじ for all things/everything; it is useful for recognition and 万 -> ばん, but not the default beginner everything word, with 事 visibly labeled as higher-level support.",
+        "reading breakdown checked for 万事|ばんじ: 万 ばん 事 じ; kanji breakdown checked in the generated row: 万 ばん 万 （ばん） ／ ten thousand Stroke order On: バン、 マン Kun: よろず 事 JLPT N4 kanji じ 事 （じ） ／ matter / task Stroke order On: ジ、 ズ Kun: こと、 つか.う、 つか.える",
+        "JLPT, coverage, focus, and covers labels checked for 万事|ばんじ: JLPT N5; Reading coverage support; focus 万; covers 万: ばん",
+        "exact word-reading audio identity checked for 万事|ばんじ: expected word-reading-万事-ばんじ; Audio review checked 万事|ばんじ exact asset fragment word-reading-万事-ばんじ for the exported word reading ばんじ. Exported audio field is [sound:4E07_万-word-reading-万事-ばんじ.wav].",
+        "pitch accent source and rendered label checked for 万事|ばんじ: source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1 source word 万事 source reading ばんじ source accent 1. Pitch accent review checked 万事|ばんじ source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1. Dictionary-backed pitch evidence is bound to the exact word-reading identity.",
+        "managed media provenance checked for 万事|ばんじ: Managed media provenance audit checked 万事|ばんじ; generated export includes exact word audio word-reading-万事-ばんじ, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 万事|ばんじ as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 万事|ばんじ; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 万事|ばんじ: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 万事|ばんじ: 万事 is a set-expression support word bound to exact ばんじ for all things/everything; it is useful for recognition and 万 -> ばん, but not the default beginner everything word, with 事 visibly labeled as higher-level support. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "万事うまくいきます。",
+        "wordReading": "ばんじ",
+        "sentenceReading": "ばんじうまくいきます。",
+        "translation": "Everything goes well.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 万事|ばんじ: natural Japanese, exact word reading ばんじ, live sentence reading ばんじうまくいきます。, translation Everything goes well., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 万事 is a set-expression support word bound to exact ばんじ for all things/everything; it is useful for recognition and 万 -> ばん, but not the default beginner everything word, with 事 visibly labeled as higher-level support."
+      },
+      "limitationDecision": "Verification limitations considered for 万事|ばんじ: 万事 is a set-expression support word bound to exact ばんじ for all things/everything; it is useful for recognition and 万 -> ばん, but not the default beginner everything word, with 事 visibly labeled as higher-level support. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -41424,22 +41736,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-032",
-      "scope": "N5 word Obsidian lane batch 32 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-017",
+      "scope": "N5 word strict Obsidian rereview batch 17 from live generated rows",
+      "cardReviewed": {
+        "word": "下さい",
+        "reading": "ください",
+        "generatedRow": "下さい|ください",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 下さい|ください from out/word-build/exports/jlpt-n5-words.tsv: meaning please give me / please; example sentence 水を下さい。; reading みずをください。; translation Please give me water.. Generated word-card surface inspected for 下さい|ください: word 下さい, reading ください, meaning please give me / please, example 水を下さい。, audio word-reading-下さい-ください, reading breakdown 下 （くだ） ／ down / below, labels JLPT N5; Reading coverage support; focus 下; covers 下: くださる, pitch accent Pitch 1: 3, and notes/support surface Useful polite request form connected to the ください reading; usually written in kana as ください, so this card is for recognizing the kanji spelling 下さい when it appears..",
+        "governed Japanese-source word evidence checked for 下さい|ください: JMdict exact row entrySeq=1184270 verifies 下さい|ください, dictionary meaning please (give me); please (do for me), priority markers news1,nf13; product review kept learner meaning please give me / please and checked example sentence 水を下さい。 with reading みずをください。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 下さい|ください: please give me / please",
+        "example sentence with reading/translation fit checked for 下さい|ください: 水を下さい。 / みずをください。 / Please give me water.",
+        "notes/support surface checked for 下さい|ください: Useful polite request form connected to the ください reading; usually written in kana as ください, so this card is for recognizing the kanji spelling 下さい when it appears.; Risk review: 下さい is bound to exact ください as a polite request/give-me form; the note correctly warns it is usually written in kana, so this is recognition/support for the kanji spelling rather than a recommendation to prefer kanji in beginner writing.",
+        "reading breakdown checked for 下さい|ください: 下 くだ さい; kanji breakdown checked in the generated row: 下 くだ 下 （くだ） ／ down / below Stroke order On: カ、 ゲ Kun: -くだ.す、 お.りる、 お.ろす、 くだ.さる、 くだ.り、 くだ.る、 さ.がる、 さ.げる、 した、 しも、 もと",
+        "JLPT, coverage, focus, and covers labels checked for 下さい|ください: JLPT N5; Reading coverage support; focus 下; covers 下: くださる",
+        "exact word-reading audio identity checked for 下さい|ください: expected word-reading-下さい-ください; Audio review checked 下さい|ください exact asset fragment word-reading-下さい-ください for the exported word reading ください. Exported audio field is [sound:4E0B_下-word-reading-下さい-ください.wav].",
+        "pitch accent source and rendered label checked for 下さい|ください: source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] rendered Pitch 1: 3 source word 下さい source reading ください source accent 3. Pitch accent review checked 下さい|ください source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] rendered Pitch 1: 3. Dictionary-backed pitch evidence is bound to the exact word-reading identity.",
+        "managed media provenance checked for 下さい|ください: Managed media provenance audit checked 下さい|ください; generated export includes exact word audio word-reading-下さい-ください, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 下さい|ください as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 下さい|ください; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 下さい|ください: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 下さい|ください: 下さい is bound to exact ください as a polite request/give-me form; the note correctly warns it is usually written in kana, so this is recognition/support for the kanji spelling rather than a recommendation to prefer kanji in beginner writing. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "水を下さい。",
+        "wordReading": "ください",
+        "sentenceReading": "みずをください。",
+        "translation": "Please give me water.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 下さい|ください: natural Japanese, exact word reading ください, live sentence reading みずをください。, translation Please give me water., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 下さい is bound to exact ください as a polite request/give-me form; the note correctly warns it is usually written in kana, so this is recognition/support for the kanji spelling rather than a recommendation to prefer kanji in beginner writing."
+      },
+      "limitationDecision": "Verification limitations considered for 下さい|ください: 下さい is bound to exact ください as a polite request/give-me form; the note correctly warns it is usually written in kana, so this is recognition/support for the kanji spelling rather than a recommendation to prefer kanji in beginner writing. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -41568,22 +41904,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-032",
-      "scope": "N5 word Obsidian lane batch 32 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-017",
+      "scope": "N5 word strict Obsidian rereview batch 17 from live generated rows",
+      "cardReviewed": {
+        "word": "名字",
+        "reading": "みょうじ",
+        "generatedRow": "名字|みょうじ",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 名字|みょうじ from out/word-build/exports/jlpt-n5-words.tsv: meaning surname / family name; example sentence 名字を先に書いてください。; reading みょうじをさきにかいてください。; translation Please write your family name first.. Generated word-card surface inspected for 名字|みょうじ: word 名字, reading みょうじ, meaning surname / family name, example 名字を先に書いてください。, audio word-reading-名字-みょうじ, reading breakdown 名 （みょう） ／ name; 字 （じ） ／ character / letter, labels JLPT N5; Reading coverage support; focus 名; covers 名: みょう, pitch accent Pitch 1: 1, and notes/support surface Common personal-information word for surname or family name; useful support for 名 -> みょう with 字 visibly labeled as higher-level..",
+        "governed Japanese-source word evidence checked for 名字|みょうじ: JMdict exact row entrySeq=1604730 verifies 名字|みょうじ, dictionary meaning surname; family name; last name, priority markers ichi1,news2,nf26; product review kept learner meaning surname / family name and checked example sentence 名字を先に書いてください。 with reading みょうじをさきにかいてください。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 名字|みょうじ: surname / family name",
+        "example sentence with reading/translation fit checked for 名字|みょうじ: 名字を先に書いてください。 / みょうじをさきにかいてください。 / Please write your family name first.",
+        "notes/support surface checked for 名字|みょうじ: Common personal-information word for surname or family name; useful support for 名 -> みょう with 字 visibly labeled as higher-level.; Risk review: 名字 is bound to exact みょうじ for surname/family name in a personal-information context; 字 remains visibly labeled as higher-level support, and the card does not conflate alternate spelling 苗字.",
+        "reading breakdown checked for 名字|みょうじ: 名 みょう 字 じ; kanji breakdown checked in the generated row: 名 みょう 名 （みょう） ／ name Stroke order On: ミョウ、 メイ Kun: -な 字 JLPT N4 kanji じ 字 （じ） ／ character / letter Stroke order On: ジ Kun: -な、 あざ、 あざな",
+        "JLPT, coverage, focus, and covers labels checked for 名字|みょうじ: JLPT N5; Reading coverage support; focus 名; covers 名: みょう",
+        "exact word-reading audio identity checked for 名字|みょうじ: expected word-reading-名字-みょうじ; Audio review checked 名字|みょうじ exact asset fragment word-reading-名字-みょうじ for the exported word reading みょうじ. Exported audio field is [sound:540D_名-word-reading-名字-みょうじ.wav].",
+        "pitch accent source and rendered label checked for 名字|みょうじ: source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1 source word 名字 source reading みょうじ source accent 1. Pitch accent review checked 名字|みょうじ source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1. Dictionary-backed pitch evidence is bound to the exact word-reading identity.",
+        "managed media provenance checked for 名字|みょうじ: Managed media provenance audit checked 名字|みょうじ; generated export includes exact word audio word-reading-名字-みょうじ, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 名字|みょうじ as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 名字|みょうじ; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 名字|みょうじ: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 名字|みょうじ: 名字 is bound to exact みょうじ for surname/family name in a personal-information context; 字 remains visibly labeled as higher-level support, and the card does not conflate alternate spelling 苗字. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "名字を先に書いてください。",
+        "wordReading": "みょうじ",
+        "sentenceReading": "みょうじをさきにかいてください。",
+        "translation": "Please write your family name first.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 名字|みょうじ: natural Japanese, exact word reading みょうじ, live sentence reading みょうじをさきにかいてください。, translation Please write your family name first., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 名字 is bound to exact みょうじ for surname/family name in a personal-information context; 字 remains visibly labeled as higher-level support, and the card does not conflate alternate spelling 苗字."
+      },
+      "limitationDecision": "Verification limitations considered for 名字|みょうじ: 名字 is bound to exact みょうじ for surname/family name in a personal-information context; 字 remains visibly labeled as higher-level support, and the card does not conflate alternate spelling 苗字. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -41712,22 +42072,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-032",
-      "scope": "N5 word Obsidian lane batch 32 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-017",
+      "scope": "N5 word strict Obsidian rereview batch 17 from live generated rows",
+      "cardReviewed": {
+        "word": "小指",
+        "reading": "こゆび",
+        "generatedRow": "小指|こゆび",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 小指|こゆび from out/word-build/exports/jlpt-n5-words.tsv: meaning little finger / pinky; example sentence 小指が痛いです。; reading こゆびがいたいです。; translation My little finger hurts.. Generated word-card surface inspected for 小指|こゆび: word 小指, reading こゆび, meaning little finger / pinky, example 小指が痛いです。, audio word-reading-小指-こゆび, reading breakdown 小 （こ） ／ small; 指 （ゆび） ／ finger / point, labels JLPT N5; Reading coverage support; focus 小; covers 小: こ, pitch accent Pitch 1: 0, and notes/support surface Common body-part word for little finger or pinky; useful support for 小 -> こ with 指 visibly labeled as higher-level..",
+        "governed Japanese-source word evidence checked for 小指|こゆび: JMdict exact row entrySeq=1348170 verifies 小指|こゆび, dictionary meaning little finger; pinky; fourth (occ. fifth) finger; little toe, priority markers ichi1,news1,nf22; product review kept learner meaning little finger / pinky and checked example sentence 小指が痛いです。 with reading こゆびがいたいです。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 小指|こゆび: little finger / pinky",
+        "example sentence with reading/translation fit checked for 小指|こゆび: 小指が痛いです。 / こゆびがいたいです。 / My little finger hurts.",
+        "notes/support surface checked for 小指|こゆび: Common body-part word for little finger or pinky; useful support for 小 -> こ with 指 visibly labeled as higher-level.; Risk review: 小指 is bound to exact こゆび; the source includes little toe as a possible sense, but the live example anchors little finger/pinky, with 指 visibly labeled as higher-level support and 小 -> こ as the covered reading.",
+        "reading breakdown checked for 小指|こゆび: 小 こ 指 ゆび; kanji breakdown checked in the generated row: 小 こ 小 （こ） ／ small Stroke order On: ショウ Kun: お-、 こ-、 さ-、 ちい.さい 指 JLPT N3 kanji ゆび 指 （ゆび） ／ finger / point Stroke order On: シ Kun: -さ.し、 さ.す、 ゆび",
+        "JLPT, coverage, focus, and covers labels checked for 小指|こゆび: JLPT N5; Reading coverage support; focus 小; covers 小: こ",
+        "exact word-reading audio identity checked for 小指|こゆび: expected word-reading-小指-こゆび; Audio review checked 小指|こゆび exact asset fragment word-reading-小指-こゆび for the exported word reading こゆび. Exported audio field is [sound:5C0F_小-word-reading-小指-こゆび.wav].",
+        "pitch accent source and rendered label checked for 小指|こゆび: source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0 source word 小指 source reading こゆび source accent 0. Pitch accent review checked 小指|こゆび source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0. Dictionary-backed pitch evidence is bound to the exact word-reading identity.",
+        "managed media provenance checked for 小指|こゆび: Managed media provenance audit checked 小指|こゆび; generated export includes exact word audio word-reading-小指-こゆび, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 小指|こゆび as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 小指|こゆび; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 小指|こゆび: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 小指|こゆび: 小指 is bound to exact こゆび; the source includes little toe as a possible sense, but the live example anchors little finger/pinky, with 指 visibly labeled as higher-level support and 小 -> こ as the covered reading. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "小指が痛いです。",
+        "wordReading": "こゆび",
+        "sentenceReading": "こゆびがいたいです。",
+        "translation": "My little finger hurts.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 小指|こゆび: natural Japanese, exact word reading こゆび, live sentence reading こゆびがいたいです。, translation My little finger hurts., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 小指 is bound to exact こゆび; the source includes little toe as a possible sense, but the live example anchors little finger/pinky, with 指 visibly labeled as higher-level support and 小 -> こ as the covered reading."
+      },
+      "limitationDecision": "Verification limitations considered for 小指|こゆび: 小指 is bound to exact こゆび; the source includes little toe as a possible sense, but the live example anchors little finger/pinky, with 指 visibly labeled as higher-level support and 小 -> こ as the covered reading. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -41856,22 +42240,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-033",
-      "scope": "N5 word Obsidian lane batch 33 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-017",
+      "scope": "N5 word strict Obsidian rereview batch 17 from live generated rows",
+      "cardReviewed": {
+        "word": "外科",
+        "reading": "げか",
+        "generatedRow": "外科|げか",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 外科|げか from out/word-build/exports/jlpt-n5-words.tsv: meaning surgery / surgical department; example sentence 父は外科へ行きます。; reading ちちはげかへいきます。; translation My father goes to the surgical department.. Generated word-card surface inspected for 外科|げか: word 外科, reading げか, meaning surgery / surgical department, example 父は外科へ行きます。, audio word-reading-外科-げか, reading breakdown 外 （げ） ／ outside; 科 （か） ／ subject / department, labels JLPT N5; Reading coverage support; focus 外; covers 外: げ, pitch accent Pitch 1: 0, and notes/support surface Common medical-department word; support-only for 外 -> げ with 科 visibly labeled as higher-level..",
+        "governed Japanese-source word evidence checked for 外科|げか: JMdict exact row entrySeq=1203380 verifies 外科|げか, dictionary meaning surgery (branch of medicine); department of surgery, priority markers ichi1,news1,nf07; product review kept learner meaning surgery / surgical department and checked example sentence 父は外科へ行きます。 with reading ちちはげかへいきます。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 外科|げか: surgery / surgical department",
+        "example sentence with reading/translation fit checked for 外科|げか: 父は外科へ行きます。 / ちちはげかへいきます。 / My father goes to the surgical department.",
+        "notes/support surface checked for 外科|げか: Common medical-department word; support-only for 外 -> げ with 科 visibly labeled as higher-level.; Risk review: 外科 is bound to exact げか for surgery/surgical department; it is a medical-department support word rather than a procedure lesson, with 科 visibly labeled as higher-level support and a natural going-to-department example.",
+        "reading breakdown checked for 外科|げか: 外 げ 科 か; kanji breakdown checked in the generated row: 外 げ 外 （げ） ／ outside Stroke order On: ガイ、 ゲ Kun: そと、 と-、 はず.す、 はず.れる、 ほか 科 JLPT N4 kanji か 科 （か） ／ subject / department Stroke order On: カ",
+        "JLPT, coverage, focus, and covers labels checked for 外科|げか: JLPT N5; Reading coverage support; focus 外; covers 外: げ",
+        "exact word-reading audio identity checked for 外科|げか: expected word-reading-外科-げか; Audio review checked 外科|げか exact asset fragment word-reading-外科-げか for the exported word reading げか. Exported audio field is [sound:5916_外-word-reading-外科-げか.wav].",
+        "pitch accent source and rendered label checked for 外科|げか: source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0 source word 外科 source reading げか source accent 0. Pitch accent review checked 外科|げか source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0. Dictionary-backed pitch evidence is bound to the exact word-reading identity.",
+        "managed media provenance checked for 外科|げか: Managed media provenance audit checked 外科|げか; generated export includes exact word audio word-reading-外科-げか, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 外科|げか as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 外科|げか; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 外科|げか: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 外科|げか: 外科 is bound to exact げか for surgery/surgical department; it is a medical-department support word rather than a procedure lesson, with 科 visibly labeled as higher-level support and a natural going-to-department example. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "父は外科へ行きます。",
+        "wordReading": "げか",
+        "sentenceReading": "ちちはげかへいきます。",
+        "translation": "My father goes to the surgical department.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 外科|げか: natural Japanese, exact word reading げか, live sentence reading ちちはげかへいきます。, translation My father goes to the surgical department., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 外科 is bound to exact げか for surgery/surgical department; it is a medical-department support word rather than a procedure lesson, with 科 visibly labeled as higher-level support and a natural going-to-department example."
+      },
+      "limitationDecision": "Verification limitations considered for 外科|げか: 外科 is bound to exact げか for surgery/surgical department; it is a medical-department support word rather than a procedure lesson, with 科 visibly labeled as higher-level support and a natural going-to-department example. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -42001,22 +42409,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-033",
-      "scope": "N5 word Obsidian lane batch 33 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-018",
+      "scope": "N5 word strict Obsidian rereview batch 18 from live generated rows",
+      "cardReviewed": {
+        "word": "生地",
+        "reading": "きじ",
+        "generatedRow": "生地|きじ",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 生地|きじ from out/word-build/exports/jlpt-n5-words.tsv: meaning fabric / cloth material; example sentence この生地はやわらかいです。; reading このきじはやわらかいです。; translation This fabric is soft.. Generated word-card surface inspected for 生地|きじ: word 生地, reading きじ, meaning fabric / cloth material, example この生地はやわらかいです。, audio word-reading-生地-きじ, reading breakdown 生 （き） ／ life / birth; 地 （じ） ／ ground / place, labels JLPT N5; Reading coverage support; focus 生、地; covers 生: き ／ 地: じ, pitch accent Pitch 1: 1, and notes/support surface Common fabric or cloth-material sense; 生地 is ambiguous, so this card teaches fabric/material and supports 生 -> き and 地 -> じ with 地 visibly labeled as higher-level..",
+        "governed Japanese-source word evidence checked for 生地|きじ: JMdict exact row entrySeq=1379330 verifies 生地|きじ, dictionary meaning cloth; fabric; material; texture; dough; batter; inherent quality; one's true character; one's true colours; unglazed pottery; skin with no make-up; uncoated metal, priority markers ichi1,news1,nf12; product review kept learner meaning fabric / cloth material and checked example sentence この生地はやわらかいです。 with reading このきじはやわらかいです。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 生地|きじ: fabric / cloth material",
+        "example sentence with reading/translation fit checked for 生地|きじ: この生地はやわらかいです。 / このきじはやわらかいです。 / This fabric is soft.",
+        "notes/support surface checked for 生地|きじ: Common fabric or cloth-material sense; 生地 is ambiguous, so this card teaches fabric/material and supports 生 -> き and 地 -> じ with 地 visibly labeled as higher-level.; Risk review: 生地 is bound to exact きじ and the fabric/cloth-material sense; the source row is broad and includes dough, inherent quality, skin, and metal senses, but the live example and notes keep this card anchored to fabric with 地 visibly labeled as higher-level support.",
+        "reading breakdown checked for 生地|きじ: 生 き 地 じ; kanji breakdown checked in the generated row: 生 き 生 （き） ／ life / birth Stroke order On: ショウ、 セイ Kun: -う、 い.かす、 い.きる、 い.ける、 う.まれ、 う.まれる、 う.む、 お.う、 き、 な.す、 な.る、 なま、 は.える、 は.やす、 む.す 地 JLPT N4 kanji じ 地 （じ） ／ ground / place Stroke order On: ジ、 チ",
+        "JLPT, coverage, focus, and covers labels checked for 生地|きじ: JLPT N5; Reading coverage support; focus 生、地; covers 生: き ／ 地: じ",
+        "exact word-reading audio identity checked for 生地|きじ: expected word-reading-生地-きじ; Audio review checked 生地|きじ exact asset fragment word-reading-生地-きじ for the exported word reading きじ. Exported audio field is [sound:751F_生-word-reading-生地-きじ.wav].",
+        "pitch accent source and rendered label checked for 生地|きじ: source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1 source word 生地 source reading きじ source accent 1. Pitch accent review checked 生地|きじ source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1. Dictionary-backed pitch evidence is bound to the exact word-reading identity.",
+        "managed media provenance checked for 生地|きじ: Managed media provenance audit checked 生地|きじ; generated export includes exact word audio word-reading-生地-きじ, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 生地|きじ as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 生地|きじ; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 生地|きじ: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 生地|きじ: 生地 is bound to exact きじ and the fabric/cloth-material sense; the source row is broad and includes dough, inherent quality, skin, and metal senses, but the live example and notes keep this card anchored to fabric with 地 visibly labeled as higher-level support. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "この生地はやわらかいです。",
+        "wordReading": "きじ",
+        "sentenceReading": "このきじはやわらかいです。",
+        "translation": "This fabric is soft.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 生地|きじ: natural Japanese, exact word reading きじ, live sentence reading このきじはやわらかいです。, translation This fabric is soft., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 生地 is bound to exact きじ and the fabric/cloth-material sense; the source row is broad and includes dough, inherent quality, skin, and metal senses, but the live example and notes keep this card anchored to fabric with 地 visibly labeled as higher-level support."
+      },
+      "limitationDecision": "Verification limitations considered for 生地|きじ: 生地 is bound to exact きじ and the fabric/cloth-material sense; the source row is broad and includes dough, inherent quality, skin, and metal senses, but the live example and notes keep this card anchored to fabric with 地 visibly labeled as higher-level support. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -42145,22 +42577,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-033",
-      "scope": "N5 word Obsidian lane batch 33 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-018",
+      "scope": "N5 word strict Obsidian rereview batch 18 from live generated rows",
+      "cardReviewed": {
+        "word": "土地",
+        "reading": "とち",
+        "generatedRow": "土地|とち",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 土地|とち from out/word-build/exports/jlpt-n5-words.tsv: meaning land / piece of land; example sentence この土地は大きいです。; reading このとちはおおきいです。; translation This piece of land is large.. Generated word-card surface inspected for 土地|とち: word 土地, reading とち, meaning land / piece of land, example この土地は大きいです。, audio word-reading-土地-とち, reading breakdown 土 （と） ／ soil / earth; 地 （ち） ／ ground / place, labels JLPT N5; Reading coverage support; focus 土; covers 土: と, pitch accent Pitch 1: 0, and notes/support surface Common land or place word; useful support for 土 -> と with 地 visibly labeled as higher-level..",
+        "governed Japanese-source word evidence checked for 土地|とち: JMdict exact row entrySeq=1445470 verifies 土地|とち, dictionary meaning plot of land; lot; soil; locality; region; place, priority markers ichi1,news1,nf01; product review kept learner meaning land / piece of land and checked example sentence この土地は大きいです。 with reading このとちはおおきいです。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 土地|とち: land / piece of land",
+        "example sentence with reading/translation fit checked for 土地|とち: この土地は大きいです。 / このとちはおおきいです。 / This piece of land is large.",
+        "notes/support surface checked for 土地|とち: Common land or place word; useful support for 土 -> と with 地 visibly labeled as higher-level.; Risk review: 土地 is bound to exact とち for land/piece of land; source senses include soil/locality/region, but the learner surface and example anchor a piece-of-land meaning, with 地 visibly labeled as higher-level support and 土 -> と as the covered reading.",
+        "reading breakdown checked for 土地|とち: 土 と 地 ち; kanji breakdown checked in the generated row: 土 と 土 （と） ／ soil / earth Stroke order On: ト、 ド Kun: つち 地 JLPT N4 kanji ち 地 （ち） ／ ground / place Stroke order On: ジ、 チ",
+        "JLPT, coverage, focus, and covers labels checked for 土地|とち: JLPT N5; Reading coverage support; focus 土; covers 土: と",
+        "exact word-reading audio identity checked for 土地|とち: expected word-reading-土地-とち; Audio review checked 土地|とち exact asset fragment word-reading-土地-とち for the exported word reading とち. Exported audio field is [sound:571F_土-word-reading-土地-とち.wav].",
+        "pitch accent source and rendered label checked for 土地|とち: source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0 source word 土地 source reading とち source accent 0. Pitch accent review checked 土地|とち source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0. Dictionary-backed pitch evidence is bound to the exact word-reading identity.",
+        "managed media provenance checked for 土地|とち: Managed media provenance audit checked 土地|とち; generated export includes exact word audio word-reading-土地-とち, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 土地|とち as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 土地|とち; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 土地|とち: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 土地|とち: 土地 is bound to exact とち for land/piece of land; source senses include soil/locality/region, but the learner surface and example anchor a piece-of-land meaning, with 地 visibly labeled as higher-level support and 土 -> と as the covered reading. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "この土地は大きいです。",
+        "wordReading": "とち",
+        "sentenceReading": "このとちはおおきいです。",
+        "translation": "This piece of land is large.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 土地|とち: natural Japanese, exact word reading とち, live sentence reading このとちはおおきいです。, translation This piece of land is large., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 土地 is bound to exact とち for land/piece of land; source senses include soil/locality/region, but the learner surface and example anchor a piece-of-land meaning, with 地 visibly labeled as higher-level support and 土 -> と as the covered reading."
+      },
+      "limitationDecision": "Verification limitations considered for 土地|とち: 土地 is bound to exact とち for land/piece of land; source senses include soil/locality/region, but the learner surface and example anchor a piece-of-land meaning, with 地 visibly labeled as higher-level support and 土 -> と as the covered reading. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -42319,22 +42775,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-033",
-      "scope": "N5 word Obsidian lane batch 33 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-018",
+      "scope": "N5 word strict Obsidian rereview batch 18 from live generated rows",
+      "cardReviewed": {
+        "word": "手本",
+        "reading": "てほん",
+        "generatedRow": "手本|てほん",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 手本|てほん from out/word-build/exports/jlpt-n5-words.tsv: meaning model / example to copy; example sentence 手本を見て書きます。; reading てほんをみてかきます。; translation I look at the model and write.. Generated word-card surface inspected for 手本|てほん: word 手本, reading てほん, meaning model / example to copy, example 手本を見て書きます。, audio word-reading-手本-てほん, reading breakdown 手 （て） ／ hand; 本 （ほん） ／ book / base, labels JLPT N5; Reading coverage support; focus 本; covers 本: ほん, pitch accent Pitch 1: 2, and notes/support surface Common classroom/study word; retained because it is useful for copying a model or example, not merely to cover 本 -> ほん..",
+        "governed Japanese-source word evidence checked for 手本|てほん: JMdict exact row entrySeq=1328390 verifies 手本|てほん, dictionary meaning model; (good) example; exemplar; paragon; model handwriting; model drawing; copybook, priority markers ichi1,news1,nf13; product review kept learner meaning model / example to copy and checked example sentence 手本を見て書きます。 with reading てほんをみてかきます。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 手本|てほん: model / example to copy",
+        "example sentence with reading/translation fit checked for 手本|てほん: 手本を見て書きます。 / てほんをみてかきます。 / I look at the model and write.",
+        "notes/support surface checked for 手本|てほん: Common classroom/study word; retained because it is useful for copying a model or example, not merely to cover 本 -> ほん.; Risk review: 手本 is bound to exact てほん for model/example to copy; source broader paragon/copybook senses are narrowed to a classroom/study use, with 手 visibly labeled as higher-level support and 本 -> ほん retained.",
+        "reading breakdown checked for 手本|てほん: 手 て 本 ほん; kanji breakdown checked in the generated row: 手 JLPT N4 kanji て 手 （て） ／ hand Stroke order On: シュ、 ズ Kun: -て、 た- 本 ほん 本 （ほん） ／ book / base Stroke order On: ホン Kun: もと",
+        "JLPT, coverage, focus, and covers labels checked for 手本|てほん: JLPT N5; Reading coverage support; focus 本; covers 本: ほん",
+        "exact word-reading audio identity checked for 手本|てほん: expected word-reading-手本-てほん; Audio review checked 手本|てほん exact asset fragment word-reading-手本-てほん for the exported word reading てほん. Exported audio field is [sound:672C_本-word-reading-手本-てほん.wav].",
+        "pitch accent source and rendered label checked for 手本|てほん: source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2 source word 手本 source reading てほん source accent 2. Pitch accent review checked 手本|てほん source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2. Dictionary-backed pitch evidence is bound to the exact word-reading identity.",
+        "managed media provenance checked for 手本|てほん: Managed media provenance audit checked 手本|てほん; generated export includes exact word audio word-reading-手本-てほん, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 手本|てほん as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 手本|てほん; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 手本|てほん: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 手本|てほん: 手本 is bound to exact てほん for model/example to copy; source broader paragon/copybook senses are narrowed to a classroom/study use, with 手 visibly labeled as higher-level support and 本 -> ほん retained. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "手本を見て書きます。",
+        "wordReading": "てほん",
+        "sentenceReading": "てほんをみてかきます。",
+        "translation": "I look at the model and write.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 手本|てほん: natural Japanese, exact word reading てほん, live sentence reading てほんをみてかきます。, translation I look at the model and write., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 手本 is bound to exact てほん for model/example to copy; source broader paragon/copybook senses are narrowed to a classroom/study use, with 手 visibly labeled as higher-level support and 本 -> ほん retained."
+      },
+      "limitationDecision": "Verification limitations considered for 手本|てほん: 手本 is bound to exact てほん for model/example to copy; source broader paragon/copybook senses are narrowed to a classroom/study use, with 手 visibly labeled as higher-level support and 本 -> ほん retained. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -42472,22 +42952,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-033",
-      "scope": "N5 word Obsidian lane batch 33 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-018",
+      "scope": "N5 word strict Obsidian rereview batch 18 from live generated rows",
+      "cardReviewed": {
+        "word": "十回",
+        "reading": "じっかい",
+        "generatedRow": "十回|じっかい",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 十回|じっかい from out/word-build/exports/jlpt-n5-words.tsv: meaning ten times; example sentence この漢字を十回書いてください。; reading このかんじをじっかいかいてください。; translation Please write this kanji ten times.. Generated word-card surface inspected for 十回|じっかい: word 十回, reading じっかい, meaning ten times, example この漢字を十回書いてください。, audio word-reading-十回-じっかい, reading breakdown 十 （じっ） ／ ten; 回 （かい） ／ time / occurrence, labels JLPT N5; Reading coverage support; focus 十; covers 十: じっ, pitch accent Pitch 1: 4, and notes/support surface Practical counter expression for ten times; useful support for 十 -> じっ with 回 visibly labeled as higher-level and generated pitch visibly labeled..",
+        "governed Japanese-source word evidence checked for 十回|じっかい: JMdict exact row entrySeq=1579850 verifies 十回|じっかい, dictionary meaning ten times, priority markers none; product review kept learner meaning ten times and checked example sentence この漢字を十回書いてください。 with reading このかんじをじっかいかいてください。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 十回|じっかい: ten times",
+        "example sentence with reading/translation fit checked for 十回|じっかい: この漢字を十回書いてください。 / このかんじをじっかいかいてください。 / Please write this kanji ten times.",
+        "notes/support surface checked for 十回|じっかい: Practical counter expression for ten times; useful support for 十 -> じっ with 回 visibly labeled as higher-level and generated pitch visibly labeled.; Risk review: 十回 is bound to exact じっかい for ten times; 回 remains visibly labeled as higher-level support, the writing-practice example is practical, and generated pitch remains visibly labeled.",
+        "reading breakdown checked for 十回|じっかい: 十 じっ 回 かい; kanji breakdown checked in the generated row: 十 じっ 十 （じっ） ／ ten Stroke order On: ジッ、 ジュウ、 ジュッ Kun: そ、 と、 とお 回 JLPT N4 kanji かい 回 （かい） ／ time / occurrence Stroke order On: エ、 カイ Kun: -まわ.し、 -まわ.す、 -まわ.り、 -まわ.る、 か.える、 もとお.る",
+        "JLPT, coverage, focus, and covers labels checked for 十回|じっかい: JLPT N5; Reading coverage support; focus 十; covers 十: じっ",
+        "exact word-reading audio identity checked for 十回|じっかい: expected word-reading-十回-じっかい; Audio review checked 十回|じっかい exact asset fragment word-reading-十回-じっかい for the exported word reading じっかい. Exported audio field is [sound:5341_十-word-reading-十回-じっかい.wav].",
+        "pitch accent source and rendered label checked for 十回|じっかい: source voicevox-nemo-reading-query pattern 4 [odaka] rendered Pitch 1: 4 query じっかい generated reading じっかい; generated pitch remains visibly labeled on the card. Pitch accent review checked 十回|じっかい source voicevox-nemo-reading-query pattern 4 [odaka] rendered Pitch 1: 4. Generated pitch remains visibly labeled on the card.",
+        "managed media provenance checked for 十回|じっかい: Managed media provenance audit checked 十回|じっかい; generated export includes exact word audio word-reading-十回-じっかい, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 十回|じっかい as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 十回|じっかい; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 十回|じっかい: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 十回|じっかい: 十回 is bound to exact じっかい for ten times; 回 remains visibly labeled as higher-level support, the writing-practice example is practical, and generated pitch remains visibly labeled. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "この漢字を十回書いてください。",
+        "wordReading": "じっかい",
+        "sentenceReading": "このかんじをじっかいかいてください。",
+        "translation": "Please write this kanji ten times.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 十回|じっかい: natural Japanese, exact word reading じっかい, live sentence reading このかんじをじっかいかいてください。, translation Please write this kanji ten times., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 十回 is bound to exact じっかい for ten times; 回 remains visibly labeled as higher-level support, the writing-practice example is practical, and generated pitch remains visibly labeled."
+      },
+      "limitationDecision": "Verification limitations considered for 十回|じっかい: 十回 is bound to exact じっかい for ten times; 回 remains visibly labeled as higher-level support, the writing-practice example is practical, and generated pitch remains visibly labeled. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -42617,22 +43121,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-034",
-      "scope": "N5 word Obsidian lane batch 34 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-018",
+      "scope": "N5 word strict Obsidian rereview batch 18 from live generated rows",
+      "cardReviewed": {
+        "word": "行事",
+        "reading": "ぎょうじ",
+        "generatedRow": "行事|ぎょうじ",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 行事|ぎょうじ from out/word-build/exports/jlpt-n5-words.tsv: meaning event / school event; example sentence 学校の行事で公園へ行きます。; reading がっこうのぎょうじでこうえんへいきます。; translation We go to the park for a school event.. Generated word-card surface inspected for 行事|ぎょうじ: word 行事, reading ぎょうじ, meaning event / school event, example 学校の行事で公園へ行きます。, audio word-reading-行事-ぎょうじ, reading breakdown 行(ぎょう) 事(じ), kanji breakdown 行 （ぎょう） ／ go / line; 事 （じ） ／ matter / task, labels JLPT N5; Reading coverage support; focus 行; covers 行: ぎょう, pitch accent Pitch 1: 1; Pitch 2: 0, and notes/support surface Common school/event word; useful support for 行 -> ぎょう with 事 visibly labeled as higher-level..",
+        "governed Japanese-source word evidence checked for 行事|ぎょうじ: JMdict exact row entrySeq=1281930 verifies 行事|ぎょうじ, dictionary meaning event; function, priority markers ichi1,news1,nf05; product review kept learner meaning event / school event and checked example sentence 学校の行事で公園へ行きます。 with reading がっこうのぎょうじでこうえんへいきます。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 行事|ぎょうじ: event / school event",
+        "example sentence with reading/translation fit checked for 行事|ぎょうじ: 学校の行事で公園へ行きます。 / がっこうのぎょうじでこうえんへいきます。 / We go to the park for a school event.",
+        "notes/support surface checked for 行事|ぎょうじ: Common school/event word; useful support for 行 -> ぎょう with 事 visibly labeled as higher-level.; Risk review: 行事 is bound to exact ぎょうじ for event/school event; the source function sense is not the learner-facing target, 事 remains visibly labeled as higher-level support, and both Kanjium pitch variants 1 and 0 remain preserved.",
+        "reading breakdown checked for 行事|ぎょうじ: 行 ぎょう 事 じ; kanji breakdown checked in the generated row: 行 ぎょう 行 （ぎょう） ／ go / line Stroke order On: アン、 ギョウ、 コウ Kun: -い.き、 -ゆ.き、 い.く、 おこ.なう、 ゆ.く 事 JLPT N4 kanji じ 事 （じ） ／ matter / task Stroke order On: ジ、 ズ Kun: こと、 つか.う、 つか.える",
+        "JLPT, coverage, focus, and covers labels checked for 行事|ぎょうじ: JLPT N5; Reading coverage support; focus 行; covers 行: ぎょう",
+        "exact word-reading audio identity checked for 行事|ぎょうじ: expected word-reading-行事-ぎょうじ; Audio review checked 行事|ぎょうじ exact asset fragment word-reading-行事-ぎょうじ for the exported word reading ぎょうじ. Exported audio field is [sound:884C_行-word-reading-行事-ぎょうじ.wav].",
+        "pitch accent source and rendered label checked for 行事|ぎょうじ: source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] / 0 [heiban] rendered Pitch 1: 1 / Pitch 2: 0 source word 行事 source reading ぎょうじ source accent 1,0. Pitch accent review checked 行事|ぎょうじ source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] / 0 [heiban] rendered Pitch 1: 1 / Pitch 2: 0. Pitch evidence is bound to the exact word-reading identity, with generated labels visible where applicable.",
+        "managed media provenance checked for 行事|ぎょうじ: Managed media provenance audit checked 行事|ぎょうじ; generated export includes exact word audio word-reading-行事-ぎょうじ, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 行事|ぎょうじ as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 行事|ぎょうじ; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 行事|ぎょうじ: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 行事|ぎょうじ: 行事 is bound to exact ぎょうじ for event/school event; the source function sense is not the learner-facing target, 事 remains visibly labeled as higher-level support, and both Kanjium pitch variants 1 and 0 remain preserved. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "学校の行事で公園へ行きます。",
+        "wordReading": "ぎょうじ",
+        "sentenceReading": "がっこうのぎょうじでこうえんへいきます。",
+        "translation": "We go to the park for a school event.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 行事|ぎょうじ: natural Japanese, exact word reading ぎょうじ, live sentence reading がっこうのぎょうじでこうえんへいきます。, translation We go to the park for a school event., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 行事 is bound to exact ぎょうじ for event/school event; the source function sense is not the learner-facing target, 事 remains visibly labeled as higher-level support, and both Kanjium pitch variants 1 and 0 remain preserved."
+      },
+      "limitationDecision": "Verification limitations considered for 行事|ぎょうじ: 行事 is bound to exact ぎょうじ for event/school event; the source function sense is not the learner-facing target, 事 remains visibly labeled as higher-level support, and both Kanjium pitch variants 1 and 0 remain preserved. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -42761,22 +43289,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-034",
-      "scope": "N5 word Obsidian lane batch 34 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-018",
+      "scope": "N5 word strict Obsidian rereview batch 18 from live generated rows",
+      "cardReviewed": {
+        "word": "帽子",
+        "reading": "ぼうし",
+        "generatedRow": "帽子|ぼうし",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 帽子|ぼうし from out/word-build/exports/jlpt-n5-words.tsv: meaning hat / cap; example sentence 赤い帽子を買いました。; reading あかいぼうしをかいました。; translation I bought a red hat.. Generated word-card surface inspected for 帽子|ぼうし: word 帽子, reading ぼうし, meaning hat / cap, example 赤い帽子を買いました。, audio word-reading-帽子-ぼうし, reading breakdown 帽(ぼう) 子(し), kanji breakdown 帽 （ぼう） ／ hat / cap; 子 （し） ／ child, labels JLPT N5; Reading coverage support; focus 子; covers 子: し, pitch accent Pitch 1: 0, and notes/support surface Core clothing word for hat or cap; useful support for 子 -> し with 帽 visibly labeled as higher-level..",
+        "governed Japanese-source word evidence checked for 帽子|ぼうし: JMdict exact row entrySeq=1519170 verifies 帽子|ぼうし, dictionary meaning hat; cap; cap (move), priority markers ichi1,news1,nf09; product review kept learner meaning hat / cap and checked example sentence 赤い帽子を買いました。 with reading あかいぼうしをかいました。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 帽子|ぼうし: hat / cap",
+        "example sentence with reading/translation fit checked for 帽子|ぼうし: 赤い帽子を買いました。 / あかいぼうしをかいました。 / I bought a red hat.",
+        "notes/support surface checked for 帽子|ぼうし: Core clothing word for hat or cap; useful support for 子 -> し with 帽 visibly labeled as higher-level.; Risk review: 帽子 is a core clothing word bound to exact ぼうし for hat/cap; 帽 remains visibly labeled as higher-level support, and the irrelevant source gloss cap (move) is not taught by the learner-facing card.",
+        "reading breakdown checked for 帽子|ぼうし: 帽 ぼう 子 し; kanji breakdown checked in the generated row: 帽 JLPT N2 kanji ぼう 帽 （ぼう） ／ hat / cap Stroke order On: ボウ、 モウ Kun: おお.う、 ずきん 子 し 子 （し） ／ child Stroke order On: シ、 ス、 ツ Kun: -こ、 ね",
+        "JLPT, coverage, focus, and covers labels checked for 帽子|ぼうし: JLPT N5; Reading coverage support; focus 子; covers 子: し",
+        "exact word-reading audio identity checked for 帽子|ぼうし: expected word-reading-帽子-ぼうし; Audio review checked 帽子|ぼうし exact asset fragment word-reading-帽子-ぼうし for the exported word reading ぼうし. Exported audio field is [sound:5B50_子-word-reading-帽子-ぼうし.wav].",
+        "pitch accent source and rendered label checked for 帽子|ぼうし: source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0 source word 帽子 source reading ぼうし source accent 0. Pitch accent review checked 帽子|ぼうし source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0. Pitch evidence is bound to the exact word-reading identity, with generated labels visible where applicable.",
+        "managed media provenance checked for 帽子|ぼうし: Managed media provenance audit checked 帽子|ぼうし; generated export includes exact word audio word-reading-帽子-ぼうし, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 帽子|ぼうし as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 帽子|ぼうし; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 帽子|ぼうし: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 帽子|ぼうし: 帽子 is a core clothing word bound to exact ぼうし for hat/cap; 帽 remains visibly labeled as higher-level support, and the irrelevant source gloss cap (move) is not taught by the learner-facing card. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "赤い帽子を買いました。",
+        "wordReading": "ぼうし",
+        "sentenceReading": "あかいぼうしをかいました。",
+        "translation": "I bought a red hat.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 帽子|ぼうし: natural Japanese, exact word reading ぼうし, live sentence reading あかいぼうしをかいました。, translation I bought a red hat., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 帽子 is a core clothing word bound to exact ぼうし for hat/cap; 帽 remains visibly labeled as higher-level support, and the irrelevant source gloss cap (move) is not taught by the learner-facing card."
+      },
+      "limitationDecision": "Verification limitations considered for 帽子|ぼうし: 帽子 is a core clothing word bound to exact ぼうし for hat/cap; 帽 remains visibly labeled as higher-level support, and the irrelevant source gloss cap (move) is not taught by the learner-facing card. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {
@@ -42934,22 +43486,46 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-20",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-platinum-review",
+      "reviewer": "codex-strict-obsidian-review",
       "mechanicalMigration": false,
-      "batchId": "n5-word-obsidian-rereview-batch-033",
-      "scope": "N5 word Obsidian lane batch 33 generated-order substantive rereview",
+      "batchId": "n5-word-strict-obsidian-rereview-batch-018",
+      "scope": "N5 word strict Obsidian rereview batch 18 from live generated rows",
+      "cardReviewed": {
+        "word": "木陰",
+        "reading": "こかげ",
+        "generatedRow": "木陰|こかげ",
+        "deck": "JLPT N5 word/vocabulary deck",
+        "liveGeneratedOutput": "out/word-build/exports/jlpt-n5-words.tsv"
+      },
       "evidenceChecked": [
-        "live generated N5 word TSV row and exact written+reading identity",
-        "starter, golden, and platinum evidence lane bindings",
-        "governed local JMdict verification row and same-written reading collisions where present",
-        "example sentence, kana reading, English translation, and learner usefulness",
-        "audio filename identity and packaged media presence",
-        "pitch source, rendered pitch, and generated-pitch disclosure where applicable",
-        "JLPT label, coverage role, focus/covers reading, reading breakdown, and kanji breakdown support labels",
-        "notes, verification limitations, internal checks, source evidence, and review evidence"
-      ]
+        "live generated word surface checked for 木陰|こかげ from out/word-build/exports/jlpt-n5-words.tsv: meaning shade of a tree; example sentence 木陰で少し休みます。; reading こかげですこしやすみます。; translation I rest a little in the shade of a tree.. Generated word-card surface inspected for 木陰|こかげ: word 木陰, reading こかげ, meaning shade of a tree, example 木陰で少し休みます。, audio word-reading-木陰-こかげ, reading breakdown 木 （こ） ／ tree / wood; 陰 （かげ） ／ shade / hidden side / behind the scenes, labels JLPT N5; Reading coverage support; focus 木; covers 木: こ, pitch accent Pitch 1: 0, and notes/support surface Common concrete outdoor word; retained because it gives real learner-facing 木 -> こ usage with 陰 visibly labeled as JLPT N1 kanji..",
+        "governed Japanese-source word evidence checked for 木陰|こかげ: JMdict exact row entrySeq=1534570 verifies 木陰|こかげ, dictionary meaning shade of a tree; bower, priority markers news2,nf28,spec2; product review kept learner meaning shade of a tree and checked example sentence 木陰で少し休みます。 with reading こかげですこしやすみます。 for the shipped word-card surface.",
+        "learner-facing meaning checked for 木陰|こかげ: shade of a tree",
+        "example sentence with reading/translation fit checked for 木陰|こかげ: 木陰で少し休みます。 / こかげですこしやすみます。 / I rest a little in the shade of a tree.",
+        "notes/support surface checked for 木陰|こかげ: Common concrete outdoor word; retained because it gives real learner-facing 木 -> こ usage with 陰 visibly labeled as JLPT N1 kanji.; Risk review: 木陰 is bound to exact こかげ for shade of a tree; 陰 remains visibly labeled as JLPT N1 support, the card excludes abstract behind-the-scenes readings, and the outdoor rest example is concrete and learner-useful.",
+        "reading breakdown checked for 木陰|こかげ: 木 こ 陰 かげ; kanji breakdown checked in the generated row: 木 こ 木 （こ） ／ tree / wood Stroke order On: ボク、 モク Kun: き、 こ- 陰 JLPT N1 kanji かげ 陰 （かげ） ／ shade / hidden side / behind the scenes Stroke order On: イン Kun: かげ、 かげ.る",
+        "JLPT, coverage, focus, and covers labels checked for 木陰|こかげ: JLPT N5; Reading coverage support; focus 木; covers 木: こ",
+        "exact word-reading audio identity checked for 木陰|こかげ: expected word-reading-木陰-こかげ; Audio review checked 木陰|こかげ exact asset fragment word-reading-木陰-こかげ for the exported word reading こかげ. Exported audio field is [sound:6728_木-word-reading-木陰-こかげ.wav].",
+        "pitch accent source and rendered label checked for 木陰|こかげ: source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0 source word 木陰 source reading こかげ source accent 0. Pitch accent review checked 木陰|こかげ source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0. Dictionary-backed pitch evidence is bound to the exact word-reading identity.",
+        "managed media provenance checked for 木陰|こかげ: Managed media provenance audit checked 木陰|こかげ; generated export includes exact word audio word-reading-木陰-こかげ, pitch accent, kanji media references, and no silent fallback for release media.",
+        "golden regression checked for 木陰|こかげ as internal regression only and not source truth; source truth remains the governed Japanese-source evidence lane. Separate golden regression gate checked 木陰|こかげ; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+        "word vocabulary deck placement and product fit considered for 木陰|こかげ: common/useful N5 vocabulary or support word, level appropriate, learner useful, and suitable for the word/vocabulary deck rather than kanji-deck-only treatment",
+        "verification limitations considered for 木陰|こかげ: 木陰 is bound to exact こかげ for shade of a tree; 陰 remains visibly labeled as JLPT N1 support, the card excludes abstract behind-the-scenes readings, and the outdoor rest example is concrete and learner-useful. no active core-card limitations after current strict Obsidian rereview"
+      ],
+      "sentenceQualityReview": {
+        "japaneseSentence": "木陰で少し休みます。",
+        "wordReading": "こかげ",
+        "sentenceReading": "こかげですこしやすみます。",
+        "translation": "I rest a little in the shade of a tree.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "Example sentence quality review for 木陰|こかげ: natural Japanese, exact word reading こかげ, live sentence reading こかげですこしやすみます。, translation I rest a little in the shade of a tree., N5-appropriate or support-row-appropriate context, and useful learner exposure. Risk review: 木陰 is bound to exact こかげ for shade of a tree; 陰 remains visibly labeled as JLPT N1 support, the card excludes abstract behind-the-scenes readings, and the outdoor rest example is concrete and learner-useful."
+      },
+      "limitationDecision": "Verification limitations considered for 木陰|こかげ: 木陰 is bound to exact こかげ for shade of a tree; 陰 remains visibly labeled as JLPT N1 support, the card excludes abstract behind-the-scenes readings, and the outdoor rest example is concrete and learner-useful. No unresolved core-card uncertainty remains after checking the live generated row, governed source identity, example reading/translation, audio identity, pitch disclosure, labels, notes, and learner usefulness."
     }
   },
   {

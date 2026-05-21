@@ -26,6 +26,7 @@ const { readJsonFile } = require("../utils/jsonFile");
 const DEFAULT_CREATED_BY = "scripts/generateNlpReviewPackets.js";
 const KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND = "kanji-card-tokenizer-coverage-gap";
 const WORD_SEGMENTATION_CONTEXT_SIGNAL_KIND = "word-card-tokenizer-segmentation-context";
+const WORD_READING_EXCEPTION_SIGNAL_KIND = "word-card-tokenizer-reading-exception";
 const REVIEW_PACKET_LIMITATIONS = Object.freeze([
     "Review packets aggregate assistive NLP signals only and must not replace human Japanese/pedagogy review.",
     "A packet can prioritize evidence for humans, but it does not certify card correctness, source truth, level fit, naturalness, pitch, audio, or release readiness.",
@@ -113,6 +114,7 @@ function toTokenizationSignalRef(signal, workspaceRoot) {
             comparable: false,
             matches: false,
         },
+        tokenizerException: signal.tokenizerException || null,
         sourceArtifactPath: sourceRelativePath(signal.evidence?.artifactPath || "", workspaceRoot),
         limitations: signal.limitations || [],
     };
@@ -160,6 +162,9 @@ function buildReviewChecklist(group) {
     }
     if (group.tokenizationSignalRefs.some((signal) => (signal.signalKinds || []).includes(WORD_SEGMENTATION_CONTEXT_SIGNAL_KIND))) {
         checklist.push("Treat exact-reading word segmentation context as tokenizer segmentation evidence, not card-defect evidence by itself.");
+    }
+    if (group.tokenizationSignalRefs.some((signal) => (signal.signalKinds || []).includes(WORD_READING_EXCEPTION_SIGNAL_KIND))) {
+        checklist.push("For word tokenizer reading exceptions, verify the exception's exact word-reading identity, tokenizer output, evidence refs, and limitation note before treating it as routine context.");
     }
     if (group.suggestionRefs.some((suggestion) => suggestion.task === "assistive-candidate-discovery")) {
         checklist.push("For candidate-discovery suggestions, verify commonness, learner usefulness, source identity, and level fit before any data change.");
@@ -223,6 +228,7 @@ function formatTokenizationSignalDetail(signal = {}) {
         signal.id,
         signal.reviewPriority,
         (signal.signalKinds || []).join(", "),
+        signal.tokenizerException?.exceptionKind ? `exception=${signal.tokenizerException.exceptionKind}` : "",
     ].filter(Boolean).join(": ");
 }
 

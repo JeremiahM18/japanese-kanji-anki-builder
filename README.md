@@ -27,7 +27,7 @@ flowchart TD
 
 ## Assistive NLP Review Engine
 
-The repository now has governed local NLP lanes for assistive review. Word expansion uses active `kuromoji.js` tokenization and pinned `Transformers.js` MiniLM embeddings from [templates/nlp_model_manifest.json](templates/nlp_model_manifest.json) to find review work: tokenizer/card-reading mismatches, unknown-token evidence, example-ranking candidates, sense-fit warnings, reading-gap candidates, human review packets, and draft-proposal scaffolds. Exact-reading word segmentation remains visible as tokenizer context without becoming card-risk attention by itself. Kanji review has its own separate signal lane: it tokenizes generated kanji-card anchors, treats normal tokenizer/primary-reading differences as kanji reading variants, keeps bare-kanji unknown or missing tokenizer readings visible as tokenizer coverage gaps, and creates kanji-scoped review packets.
+The repository now has governed local NLP lanes for assistive review. Word expansion uses active `kuromoji.js` tokenization and pinned `Transformers.js` MiniLM embeddings from [templates/nlp_model_manifest.json](templates/nlp_model_manifest.json) to find review work: tokenizer/card-reading mismatches, unknown-token evidence, example-ranking candidates, sense-fit warnings, reading-gap candidates, human review packets, and draft-proposal scaffolds. Exact-reading word segmentation remains visible as tokenizer context without becoming card-risk attention by itself. Exact reviewed word tokenizer reading mismatches, such as N5 date/counter readings and N4 alternate-reading words, must match [templates/nlp_word_tokenization_mismatch_exceptions.json](templates/nlp_word_tokenization_mismatch_exceptions.json) by level, written form, card reading, tokenizer reading, token surfaces, generated row, and tracked source evidence before they become routine context. Kanji review has its own separate signal lane: it tokenizes generated kanji-card anchors, treats normal tokenizer/primary-reading differences as kanji reading variants, keeps bare-kanji unknown or missing tokenizer readings visible as tokenizer coverage gaps, and creates kanji-scoped review packets.
 
 The boundary is deliberate: NLP output can point reviewers at likely issues and useful candidates, but it cannot write tracked templates, certify cards, approve Gold/Platinum/Obsidian, or claim release readiness. Human promotion into tracked contracts is still required.
 
@@ -36,6 +36,7 @@ flowchart LR
     A["Generated word TSV"] --> B["Word kuromoji tokenization"]
     A --> C["MiniLM word embeddings"]
     B --> D["Word token audit signals"]
+    P["Tracked word mismatch exceptions"] --> D
     C --> E["Word example reranking"]
     C --> F["Word sense-fit warnings"]
     C --> G["Word reading-gap candidates"]
@@ -280,6 +281,7 @@ Tracked contracts define release behavior:
 - Word source lanes currently include active ignored-local JMdict dictionary verification plus JMdict priority/commonness support; `jpdb-frequency` remains blocked pending permission/governed export.
 - Word expansion signal source config and ignored-source integrity pins: [templates/word_expansion_signal_sources.json](templates/word_expansion_signal_sources.json)
 - Assistive NLP runtime/model manifest: [templates/nlp_model_manifest.json](templates/nlp_model_manifest.json)
+- Assistive NLP word tokenizer mismatch exceptions: [templates/nlp_word_tokenization_mismatch_exceptions.json](templates/nlp_word_tokenization_mismatch_exceptions.json)
 
 ## JLPT Kanji Source Evidence At A Glance
 

@@ -55,6 +55,18 @@ const tokenizationSignalRefSchema = z.object({
         matches: z.boolean(),
     }).strict(),
     sourceArtifactPath: z.string().min(1),
+    tokenizerException: z.object({
+        exceptionKind: z.string().min(1),
+        tokenizerReading: z.string().min(1),
+        appliesToSignalKinds: z.array(z.string().min(1)).min(1),
+        reviewNote: z.string().min(1),
+        evidence: z.array(z.object({
+            type: z.string().min(1),
+            source: z.string().min(1),
+            detail: z.string().min(1),
+        }).strict()).min(1),
+        limitations: z.array(z.string().min(1)).min(1),
+    }).strict().nullable().optional(),
     limitations: z.array(z.string().min(1)).default([]),
 }).strict();
 

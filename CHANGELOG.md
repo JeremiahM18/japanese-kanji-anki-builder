@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Changed
 
+- Tightened word-card NLP tokenization mismatch handling after reviewing the remaining 63 live word mismatch targets by class. Added exact level/written/reading/tokenizer-reading/token-surface exceptions for proven date/counter irregular readings, N4 alternate-reading words, and related tokenizer-dictionary limitations; the signals remain visible as `word-card-tokenizer-reading-exception` routine context and still cannot certify cards, approve Platinum/Obsidian, write tracked templates, or claim release readiness.
 - Tightened word-card NLP signal hygiene after reviewing the live attention set: exact-reading multi-token segmentation now remains visible as `word-card-tokenizer-segmentation-context` instead of creating card-risk attention packets or draft notes by itself; word-card reading mismatches, unknown tokens, missing readings, and artifact warnings remain strict.
 - Tightened kanji-card NLP signal hygiene again: bare-kanji tokenizer unknown/missing readings now remain visible as `kanji-card-tokenizer-coverage-gap` context instead of creating card-risk attention packets or draft notes by themselves; word-card unknown/missing token behavior stays strict.
 - Tightened the kanji-card NLP tokenization audit after reviewing all 26 N5 attention signals: normal bare-kanji tokenizer/primary-reading differences now land as routine `kanji-card-tokenizer-reading-variant` context, while word-card reading mismatches remain attention-worthy.

@@ -9,6 +9,11 @@ const {
     parseNlpTokenizationArtifact,
 } = require("../datasets/nlpTokenizationArtifact");
 const {
+    buildDefaultNlpWordTokenizationMismatchExceptionPath,
+    buildNlpWordTokenizationMismatchExceptionMap,
+    loadNlpWordTokenizationMismatchExceptions,
+} = require("../datasets/nlpWordTokenizationMismatchExceptions");
+const {
     buildDefaultNlpTokenizationDir,
     buildNlpTokenizationArtifactReport,
 } = require("./nlpTokenizationArtifactService");
@@ -25,6 +30,7 @@ const UNKNOWN_TOKEN_SIGNAL_KIND = "unknown-token";
 const MISSING_READING_SIGNAL_KIND = "missing-token-reading";
 const READING_MISMATCH_SIGNAL_KIND = "token-reading-card-reading-mismatch";
 const WORD_SEGMENTATION_CONTEXT_SIGNAL_KIND = "word-card-tokenizer-segmentation-context";
+const WORD_READING_EXCEPTION_SIGNAL_KIND = "word-card-tokenizer-reading-exception";
 const KANJI_READING_VARIANT_SIGNAL_KIND = "kanji-card-tokenizer-reading-variant";
 const KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND = "kanji-card-tokenizer-coverage-gap";
 const ARTIFACT_WARNING_SIGNAL_KIND = "artifact-warning";
@@ -72,6 +78,40 @@ function isWordSegmentationContext({ item, signalKinds, joinedTokenReading, norm
         && joinedTokenReading === normalizedCardReading;
 }
 
+function findWordTokenizerReadingException({
+    item,
+    signalKinds,
+    joinedTokenReading,
+    exceptionMap,
+}) {
+    if (!isWordCardTarget(item) || !exceptionMap || !signalKinds.includes(READING_MISMATCH_SIGNAL_KIND)) {
+        return null;
+    }
+    const key = [
+        Number.isInteger(item.target?.level) ? `N${item.target.level}` : "N?",
+        item.target?.written,
+        item.target?.reading,
+    ].join("|");
+    const entry = exceptionMap.get(key);
+    if (!entry || item.target?.level !== entry.level) {
+        return null;
+    }
+    if (joinedTokenReading !== entry.tokenizerReading) {
+        return null;
+    }
+    const tokenSurfaces = (item.tokens || []).map((token) => token.surface);
+    if (tokenSurfaces.join("\u0000") !== entry.tokenSurfaces.join("\u0000")) {
+        return null;
+    }
+    const uncoveredKinds = signalKinds
+        .filter((kind) => kind !== ROUTINE_SIGNAL_KIND)
+        .filter((kind) => !entry.appliesToSignalKinds.includes(kind));
+    if (uncoveredKinds.length > 0) {
+        return null;
+    }
+    return entry;
+}
+
 function isKanjiTokenizerCoverageGap({ item, signalKinds }) {
     return isKanjiCardTarget(item)
         && Boolean(item.target?.reading)
@@ -81,7 +121,7 @@ function isKanjiTokenizerCoverageGap({ item, signalKinds }) {
         );
 }
 
-function signalKindsRequireAttention({ item, signalKinds }) {
+function signalKindsRequireAttention({ item, signalKinds, wordTokenizerException }) {
     const ignoredKinds = new Set([
         ROUTINE_SIGNAL_KIND,
         WORD_SEGMENTATION_CONTEXT_SIGNAL_KIND,
@@ -90,6 +130,13 @@ function signalKindsRequireAttention({ item, signalKinds }) {
 
     if (signalKinds.includes(WORD_SEGMENTATION_CONTEXT_SIGNAL_KIND)) {
         ignoredKinds.add(MULTI_TOKEN_SIGNAL_KIND);
+    }
+
+    if (wordTokenizerException) {
+        ignoredKinds.add(WORD_READING_EXCEPTION_SIGNAL_KIND);
+        for (const kind of wordTokenizerException.appliesToSignalKinds || []) {
+            ignoredKinds.add(kind);
+        }
     }
 
     if (signalKinds.includes(KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND)) {
@@ -104,7 +151,7 @@ function signalKindsRequireAttention({ item, signalKinds }) {
     return signalKinds.some((kind) => !ignoredKinds.has(kind));
 }
 
-function buildSignalKinds({ item, joinedTokenReading, normalizedCardReading }) {
+function buildSignalKinds({ item, joinedTokenReading, normalizedCardReading, exceptionMap }) {
     const kinds = [ROUTINE_SIGNAL_KIND];
     if ((item.tokens || []).length > 1) {
         kinds.push(MULTI_TOKEN_SIGNAL_KIND);
@@ -137,7 +184,19 @@ function buildSignalKinds({ item, joinedTokenReading, normalizedCardReading }) {
     if ((item.warnings || []).length > 0) {
         kinds.push(ARTIFACT_WARNING_SIGNAL_KIND);
     }
-    return kinds;
+    const wordTokenizerException = findWordTokenizerReadingException({
+        item,
+        signalKinds: kinds,
+        joinedTokenReading,
+        exceptionMap,
+    });
+    if (wordTokenizerException) {
+        kinds.push(WORD_READING_EXCEPTION_SIGNAL_KIND);
+    }
+    return {
+        signalKinds: kinds,
+        wordTokenizerException,
+    };
 }
 
 function summarizeToken(token = {}) {
@@ -150,15 +209,33 @@ function summarizeToken(token = {}) {
     };
 }
 
-function buildReviewSignal({ artifactPath, artifact, item }) {
+function summarizeWordTokenizerException(exception) {
+    if (!exception) {
+        return null;
+    }
+    return {
+        exceptionKind: exception.exceptionKind,
+        tokenizerReading: exception.tokenizerReading,
+        appliesToSignalKinds: exception.appliesToSignalKinds,
+        reviewNote: exception.reviewNote,
+        evidence: exception.evidence,
+        limitations: exception.limitations,
+    };
+}
+
+function buildReviewSignal({ artifactPath, artifact, item, exceptionMap = new Map() }) {
     const normalizedCardReading = normalizeJapaneseReading(item.target?.reading || "");
     const joinedTokenReading = buildTokenReadingSummary(item.tokens);
-    const signalKinds = buildSignalKinds({
+    const {
+        signalKinds,
+        wordTokenizerException,
+    } = buildSignalKinds({
         item,
         joinedTokenReading,
         normalizedCardReading,
+        exceptionMap,
     });
-    const requiresAttention = signalKindsRequireAttention({ item, signalKinds });
+    const requiresAttention = signalKindsRequireAttention({ item, signalKinds, wordTokenizerException });
 
     return {
         id: item.id,
@@ -179,6 +256,7 @@ function buildReviewSignal({ artifactPath, artifact, item }) {
         tokens: item.tokens.map(summarizeToken),
         warnings: item.warnings || [],
         limitations: item.limitations || [],
+        tokenizerException: summarizeWordTokenizerException(wordTokenizerException),
         evidence: {
             artifactPath,
             artifactGeneratedAt: artifact.generatedAt,
@@ -220,6 +298,7 @@ function buildEmptyCounts() {
         missingTokenReadingItems: 0,
         readingMismatchItems: 0,
         wordSegmentationContextItems: 0,
+        wordTokenizerReadingExceptionItems: 0,
         kanjiReadingVariantItems: 0,
         kanjiTokenizerCoverageGapItems: 0,
         warningItems: 0,
@@ -232,7 +311,9 @@ function buildNlpTokenizationAuditReport({
     artifactPath = null,
     artifactDir = buildDefaultNlpTokenizationDir(),
     manifestPath = buildDefaultNlpModelManifestPath(),
+    wordTokenizerExceptionPath = buildDefaultNlpWordTokenizationMismatchExceptionPath(),
     loadManifestFn = loadNlpModelManifest,
+    loadWordTokenizerExceptionsFn = loadNlpWordTokenizationMismatchExceptions,
 } = {}) {
     const validationReport = buildNlpTokenizationArtifactReport({
         artifactPath,
@@ -241,6 +322,32 @@ function buildNlpTokenizationAuditReport({
         loadManifestFn,
     });
     const counts = buildEmptyCounts();
+    let wordTokenizerExceptionMap = new Map();
+    try {
+        wordTokenizerExceptionMap = buildNlpWordTokenizationMismatchExceptionMap(
+            loadWordTokenizerExceptionsFn(wordTokenizerExceptionPath)
+        );
+    } catch (error) {
+        return {
+            generatedAt: new Date().toISOString(),
+            passed: false,
+            manifestPath: validationReport.manifestPath || path.resolve(manifestPath),
+            artifactDir: validationReport.artifactDir,
+            artifactPath: validationReport.artifactPath,
+            missingArtifactDir: validationReport.missingArtifactDir,
+            counts,
+            artifacts: [],
+            signals: [],
+            errors: [`${wordTokenizerExceptionPath}: ${error.message}`],
+            validationReport,
+            releaseBoundary: {
+                tokenizationAuditCertifiesCards: false,
+                tokenizationAuditMayWriteTrackedTemplatesDirectly: false,
+                tokenizationAuditClaimsReleaseReadiness: false,
+                promotionRequiresHumanReview: true,
+            },
+        };
+    }
 
     if (!validationReport.passed) {
         return {
@@ -277,6 +384,7 @@ function buildNlpTokenizationAuditReport({
                 artifactPath: artifactSummary.path,
                 artifact,
                 item,
+                exceptionMap: wordTokenizerExceptionMap,
             }));
 
             artifacts.push({
@@ -311,6 +419,9 @@ function buildNlpTokenizationAuditReport({
         }
         if (signal.signalKinds.includes(WORD_SEGMENTATION_CONTEXT_SIGNAL_KIND)) {
             counts.wordSegmentationContextItems += 1;
+        }
+        if (signal.signalKinds.includes(WORD_READING_EXCEPTION_SIGNAL_KIND)) {
+            counts.wordTokenizerReadingExceptionItems += 1;
         }
         if (signal.signalKinds.includes(KANJI_READING_VARIANT_SIGNAL_KIND)) {
             counts.kanjiReadingVariantItems += 1;
@@ -379,6 +490,7 @@ function formatNlpTokenizationAuditReport(report = {}, { signalLimit = 20 } = {}
         `- missing token-reading items: ${report.counts?.missingTokenReadingItems || 0}`,
         `- token/card reading mismatch items: ${report.counts?.readingMismatchItems || 0}`,
         `- word tokenizer segmentation context items: ${report.counts?.wordSegmentationContextItems || 0}`,
+        `- word tokenizer reading exception items: ${report.counts?.wordTokenizerReadingExceptionItems || 0}`,
         `- kanji tokenizer reading variant items: ${report.counts?.kanjiReadingVariantItems || 0}`,
         `- kanji tokenizer coverage-gap items: ${report.counts?.kanjiTokenizerCoverageGapItems || 0}`,
         `- warning items: ${report.counts?.warningItems || 0}`,
@@ -420,6 +532,7 @@ module.exports = {
     READING_MISMATCH_SIGNAL_KIND,
     ROUTINE_SIGNAL_KIND,
     UNKNOWN_TOKEN_SIGNAL_KIND,
+    WORD_READING_EXCEPTION_SIGNAL_KIND,
     WORD_SEGMENTATION_CONTEXT_SIGNAL_KIND,
     buildNlpTokenizationAuditReport,
     buildReviewSignal,

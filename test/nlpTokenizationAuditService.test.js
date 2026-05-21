@@ -13,6 +13,7 @@ const {
     formatNlpTokenizationAuditReport,
     KANJI_READING_VARIANT_SIGNAL_KIND,
     KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND,
+    WORD_READING_EXCEPTION_SIGNAL_KIND,
     WORD_SEGMENTATION_CONTEXT_SIGNAL_KIND,
 } = require("../src/services/nlpTokenizationAuditService");
 
@@ -31,6 +32,24 @@ function buildManifest() {
                 },
             },
         },
+    };
+}
+
+function buildWordExceptionArtifact(entries = []) {
+    return {
+        version: 1,
+        artifactType: "nlp_word_tokenization_mismatch_exceptions",
+        reviewedAt: "2026-05-21",
+        reviewer: "test fixture",
+        reviewStandard: "test-word-tokenization-mismatch-exceptions",
+        authority: {
+            outputAuthority: "assistive_only",
+            promotionPolicy: "human_review_required",
+            writesTrackedTemplates: false,
+            certifiesCards: false,
+            claimsReleaseReadiness: false,
+        },
+        entries,
     };
 }
 
@@ -155,6 +174,7 @@ test("buildNlpTokenizationAuditReport summarizes review signals without certific
     const report = buildNlpTokenizationAuditReport({
         artifactDir: dir,
         loadManifestFn: () => buildManifest(),
+        loadWordTokenizerExceptionsFn: () => buildWordExceptionArtifact([]),
     });
 
     assert.equal(report.passed, true);
@@ -217,6 +237,7 @@ test("buildNlpTokenizationAuditReport keeps word multi-token reading mismatches 
     const report = buildNlpTokenizationAuditReport({
         artifactDir: dir,
         loadManifestFn: () => buildManifest(),
+        loadWordTokenizerExceptionsFn: () => buildWordExceptionArtifact([]),
     });
 
     assert.equal(report.passed, true);
@@ -228,6 +249,146 @@ test("buildNlpTokenizationAuditReport keeps word multi-token reading mismatches 
     assert.equal(report.signals[0].signalKinds.includes("multi-token-surface"), true);
     assert.equal(report.signals[0].signalKinds.includes("token-reading-card-reading-mismatch"), true);
     assert.equal(report.signals[0].signalKinds.includes(WORD_SEGMENTATION_CONTEXT_SIGNAL_KIND), false);
+});
+
+test("buildNlpTokenizationAuditReport keeps exact governed word reading exceptions routine", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-token-audit-"));
+    writeArtifact(dir, "tokens.json", buildArtifact({
+        items: [{
+            id: "n5-word-token-004",
+            target: {
+                kind: "word-card",
+                deckKind: "word",
+                level: 5,
+                written: "三百",
+                reading: "さんびゃく",
+            },
+            inputText: "三百",
+            tokens: [{
+                surface: "三",
+                start: 0,
+                end: 1,
+                lemma: "三",
+                reading: "サン",
+                partOfSpeech: ["名詞"],
+                known: true,
+            }, {
+                surface: "百",
+                start: 1,
+                end: 2,
+                lemma: "百",
+                reading: "ヒャク",
+                partOfSpeech: ["名詞"],
+                known: true,
+            }],
+            limitations: ["Fixture tokenization only."],
+        }],
+    }));
+
+    const report = buildNlpTokenizationAuditReport({
+        artifactDir: dir,
+        loadManifestFn: () => buildManifest(),
+        loadWordTokenizerExceptionsFn: () => buildWordExceptionArtifact([
+            {
+                written: "四百",
+                reading: "よんひゃく",
+                level: 5,
+                tokenizerReading: "よんひゃく",
+                tokenSurfaces: ["四", "百"],
+                exceptionKind: "counter-sound-change-reading",
+                appliesToSignalKinds: [
+                    "multi-token-surface",
+                    "token-reading-card-reading-mismatch",
+                ],
+                evidence: [{
+                    type: "generated-row",
+                    source: "out/word-build/exports/jlpt-n5-words.tsv",
+                    detail: "Fixture generated row.",
+                }, {
+                    type: "tracked-source",
+                    source: "templates/starter_word_study_data.json:四百|よんひゃく",
+                    detail: "Fixture tracked source.",
+                }],
+                reviewNote: "Fixture sibling exception that must not apply to 三百.",
+                limitations: ["Fixture exception only."],
+            },
+            {
+                written: "三百",
+                reading: "さんびゃく",
+                level: 4,
+                tokenizerReading: "さんひゃく",
+                tokenSurfaces: ["三", "百"],
+                exceptionKind: "counter-sound-change-reading",
+                appliesToSignalKinds: [
+                    "multi-token-surface",
+                    "token-reading-card-reading-mismatch",
+                ],
+                evidence: [{
+                    type: "generated-row",
+                    source: "out/word-build/exports/jlpt-n4-words.tsv",
+                    detail: "Fixture wrong-level generated row.",
+                }, {
+                    type: "tracked-source",
+                    source: "templates/starter_word_study_data.json:三百|さんびゃく",
+                    detail: "Fixture wrong-level tracked source.",
+                }],
+                reviewNote: "Fixture wrong-level exception that must not apply to N5.",
+                limitations: ["Fixture exception only."],
+            },
+            {
+                written: "三百",
+                reading: "さんびゃく",
+                level: 5,
+                tokenizerReading: "さんひゃく",
+                tokenSurfaces: ["三", "百"],
+                exceptionKind: "counter-sound-change-reading",
+                appliesToSignalKinds: [
+                    "multi-token-surface",
+                    "token-reading-card-reading-mismatch",
+                ],
+                evidence: [{
+                    type: "generated-row",
+                    source: "out/word-build/exports/jlpt-n5-words.tsv",
+                    detail: "Fixture generated row.",
+                }, {
+                    type: "tracked-source",
+                    source: "templates/starter_word_study_data.json:三百|さんびゃく",
+                    detail: "Fixture tracked source.",
+                }],
+                reviewNote: "Fixture reviewed exception.",
+                limitations: ["Fixture exception only."],
+            },
+        ]),
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.counts.attentionSignals, 0);
+    assert.equal(report.counts.routineSignals, 1);
+    assert.equal(report.counts.readingMismatchItems, 1);
+    assert.equal(report.counts.wordTokenizerReadingExceptionItems, 1);
+    assert.equal(report.signals[0].reviewPriority, "routine");
+    assert.equal(report.signals[0].signalKinds.includes("multi-token-surface"), true);
+    assert.equal(report.signals[0].signalKinds.includes("token-reading-card-reading-mismatch"), true);
+    assert.equal(report.signals[0].signalKinds.includes(WORD_READING_EXCEPTION_SIGNAL_KIND), true);
+    assert.equal(report.signals[0].tokenizerException.exceptionKind, "counter-sound-change-reading");
+});
+
+test("buildNlpTokenizationAuditReport fails closed on invalid word exception proof", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-token-audit-"));
+    writeArtifact(dir, "tokens.json", buildArtifact());
+
+    const report = buildNlpTokenizationAuditReport({
+        artifactDir: dir,
+        loadManifestFn: () => buildManifest(),
+        wordTokenizerExceptionPath: "templates/bad-nlp-word-exceptions.json",
+        loadWordTokenizerExceptionsFn: () => {
+            throw new Error("fixture invalid exception file");
+        },
+    });
+
+    assert.equal(report.passed, false);
+    assert.equal(report.signals.length, 0);
+    assert.match(report.errors.join("\n"), /fixture invalid exception file/);
 });
 
 test("buildNlpTokenizationAuditReport flags unknown tokens and reading mismatches", () => {
@@ -400,6 +561,7 @@ test("formatNlpTokenizationAuditReport renders review signals and release bounda
             missingTokenReadingItems: 0,
             readingMismatchItems: 0,
             wordSegmentationContextItems: 1,
+            wordTokenizerReadingExceptionItems: 0,
             kanjiReadingVariantItems: 0,
             kanjiTokenizerCoverageGapItems: 0,
             warningItems: 0,

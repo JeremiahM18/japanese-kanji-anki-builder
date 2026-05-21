@@ -1,0 +1,2577 @@
+{
+  "version": 1,
+  "artifactType": "nlp_word_tokenization_mismatch_exceptions",
+  "reviewedAt": "2026-05-21",
+  "reviewer": "codex-nlp-signal-review",
+  "reviewStandard": "word-tokenization-mismatch-exceptions-v1",
+  "authority": {
+    "outputAuthority": "assistive_only",
+    "promotionPolicy": "human_review_required",
+    "writesTrackedTemplates": false,
+    "certifiesCards": false,
+    "claimsReleaseReadiness": false
+  },
+  "entries": [
+    {
+      "written": "父母",
+      "reading": "ふぼ",
+      "level": 2,
+      "tokenizerReading": "ちちはは",
+      "tokenSurfaces": [
+        "父母"
+      ],
+      "exceptionKind": "formal-compound-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n2-words.tsv",
+          "detail": "Live generated N2 word row reviewed for 父母|ふぼ; tokenizer output ちちはは differs from card reading ふぼ."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:父母|ふぼ",
+          "detail": "Exact tracked starter word entry binds written 父母, reading ふぼ, meaning parents / father and mother."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:父母|ふぼ",
+          "detail": "Pinned JMdict local extract contains exact row 父母|ふぼ; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Formal compound reading differs from the tokenizer preferred native paraphrase reading. This exception keeps 父母|ふぼ visible as tokenization context without treating the current tokenizer reading ちちはは as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "預ける",
+      "reading": "あずける",
+      "level": 3,
+      "tokenizerReading": "あづける",
+      "tokenSurfaces": [
+        "預ける"
+      ],
+      "exceptionKind": "modern-kana-tokenizer-reading-variant",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n3-words.tsv",
+          "detail": "Live generated N3 word row reviewed for 預ける|あずける; tokenizer output あづける differs from card reading あずける."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:預ける|あずける",
+          "detail": "Exact tracked starter word entry binds written 預ける, reading あずける, meaning to entrust / deposit."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:預ける|あずける",
+          "detail": "Pinned JMdict local extract contains exact row 預ける|あずける; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Modern kana card reading differs from the tokenizer dictionary reading but the exact modern reading is governed. This exception keeps 預ける|あずける visible as tokenization context without treating the current tokenizer reading あづける as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "悪口",
+      "reading": "わるくち",
+      "level": 4,
+      "tokenizerReading": "わるぐち",
+      "tokenSurfaces": [
+        "悪口"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 悪口|わるくち; tokenizer output わるぐち differs from card reading わるくち."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:悪口|わるくち",
+          "detail": "Exact tracked starter word entry binds written 悪口, reading わるくち, meaning bad-mouthing / insult."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:悪口|わるくち",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 悪口|わるくち."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:悪口|わるくち",
+          "detail": "Pinned JMdict local extract contains exact row 悪口|わるくち; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 悪口|わるくち visible as tokenization context without treating the current tokenizer reading わるぐち as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "以て",
+      "reading": "もって",
+      "level": 4,
+      "tokenizerReading": "て",
+      "tokenSurfaces": [
+        "以",
+        "て"
+      ],
+      "exceptionKind": "orthographic-function-word-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "unknown-token",
+        "missing-token-reading",
+        "token-reading-card-reading-mismatch",
+        "artifact-warning"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 以て|もって; tokenizer output て differs from card reading もって."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:以て|もって",
+          "detail": "Exact tracked starter word entry binds written 以て, reading もって, meaning with / by means of; at this point."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:以て|もって",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 以て|もって."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:以て|もって",
+          "detail": "Pinned JMdict local extract contains exact row 以て|もって; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Lexicalized function-word spelling has tokenizer coverage gaps while the exact word-reading identity is governed. This exception keeps 以て|もって visible as tokenization context without treating the current tokenizer reading て as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "映え",
+      "reading": "ばえ",
+      "level": 4,
+      "tokenizerReading": "はえ",
+      "tokenSurfaces": [
+        "映え"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 映え|ばえ; tokenizer output はえ differs from card reading ばえ."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:映え|ばえ",
+          "detail": "Exact tracked starter word entry binds written 映え, reading ばえ, meaning visual appeal / looking good."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:映え|ばえ",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 映え|ばえ."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:映え|ばえ",
+          "detail": "Pinned JMdict local extract contains exact row 映え|ばえ; source=jmdict; frequencyRank=none."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 映え|ばえ visible as tokenization context without treating the current tokenizer reading はえ as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "家",
+      "reading": "うち",
+      "level": 4,
+      "tokenizerReading": "いえ",
+      "tokenSurfaces": [
+        "家"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 家|うち; tokenizer output いえ differs from card reading うち."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:家|うち",
+          "detail": "Exact tracked starter word entry binds written 家, reading うち, meaning home / house."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:家|うち",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 家|うち."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:家|うち",
+          "detail": "Pinned JMdict local extract contains exact row 家|うち; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 家|うち visible as tokenization context without treating the current tokenizer reading いえ as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "開く",
+      "reading": "あく",
+      "level": 4,
+      "tokenizerReading": "ひらく",
+      "tokenSurfaces": [
+        "開く"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 開く|あく; tokenizer output ひらく differs from card reading あく."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:開く|あく",
+          "detail": "Exact tracked starter word entry binds written 開く, reading あく, meaning to open."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:開く|あく",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 開く|あく."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:開く|あく",
+          "detail": "Pinned JMdict local extract contains exact row 開く|あく; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 開く|あく visible as tokenization context without treating the current tokenizer reading ひらく as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "開ける",
+      "reading": "ひらける",
+      "level": 4,
+      "tokenizerReading": "あける",
+      "tokenSurfaces": [
+        "開ける"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 開ける|ひらける; tokenizer output あける differs from card reading ひらける."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:開ける|ひらける",
+          "detail": "Exact tracked starter word entry binds written 開ける, reading ひらける, meaning to open up / to become developed."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:開ける|ひらける",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 開ける|ひらける."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:開ける|ひらける",
+          "detail": "Pinned JMdict local extract contains exact row 開ける|ひらける; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 開ける|ひらける visible as tokenization context without treating the current tokenizer reading あける as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "帰す",
+      "reading": "かえす",
+      "level": 4,
+      "tokenizerReading": "きす",
+      "tokenSurfaces": [
+        "帰す"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 帰す|かえす; tokenizer output きす differs from card reading かえす."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:帰す|かえす",
+          "detail": "Exact tracked starter word entry binds written 帰す, reading かえす, meaning to send back / to let go home."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:帰す|かえす",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 帰す|かえす."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:帰す|かえす",
+          "detail": "Pinned JMdict local extract contains exact row 帰す|かえす; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 帰す|かえす visible as tokenization context without treating the current tokenizer reading きす as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "魚",
+      "reading": "うお",
+      "level": 4,
+      "tokenizerReading": "さかな",
+      "tokenSurfaces": [
+        "魚"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 魚|うお; tokenizer output さかな differs from card reading うお."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:魚|うお",
+          "detail": "Exact tracked starter word entry binds written 魚, reading うお, meaning fish."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:魚|うお",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 魚|うお."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:魚|うお",
+          "detail": "Pinned JMdict local extract contains exact row 魚|うお; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 魚|うお visible as tokenization context without treating the current tokenizer reading さかな as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "京",
+      "reading": "みやこ",
+      "level": 4,
+      "tokenizerReading": "きょう",
+      "tokenSurfaces": [
+        "京"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 京|みやこ; tokenizer output きょう differs from card reading みやこ."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:京|みやこ",
+          "detail": "Exact tracked starter word entry binds written 京, reading みやこ, meaning capital / imperial city."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:京|みやこ",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 京|みやこ."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:京|みやこ",
+          "detail": "Pinned JMdict local extract contains exact row 京|みやこ; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 京|みやこ visible as tokenization context without treating the current tokenizer reading きょう as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "空",
+      "reading": "から",
+      "level": 4,
+      "tokenizerReading": "そら",
+      "tokenSurfaces": [
+        "空"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 空|から; tokenizer output そら differs from card reading から."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:空|から",
+          "detail": "Exact tracked starter word entry binds written 空, reading から, meaning empty."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:空|から",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 空|から."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:空|から",
+          "detail": "Pinned JMdict local extract contains exact row 空|から; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 空|から visible as tokenization context without treating the current tokenizer reading そら as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "空く",
+      "reading": "あく",
+      "level": 4,
+      "tokenizerReading": "すく",
+      "tokenSurfaces": [
+        "空く"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 空く|あく; tokenizer output すく differs from card reading あく."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:空く|あく",
+          "detail": "Exact tracked starter word entry binds written 空く, reading あく, meaning to become empty / to open up."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:空く|あく",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 空く|あく."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:空く|あく",
+          "detail": "Pinned JMdict local extract contains exact row 空く|あく; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 空く|あく visible as tokenization context without treating the current tokenizer reading すく as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "行き止まり",
+      "reading": "いきどまり",
+      "level": 4,
+      "tokenizerReading": "ゆきどまり",
+      "tokenSurfaces": [
+        "行き止まり"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 行き止まり|いきどまり; tokenizer output ゆきどまり differs from card reading いきどまり."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:行き止まり|いきどまり",
+          "detail": "Exact tracked starter word entry binds written 行き止まり, reading いきどまり, meaning dead end."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:行き止まり|いきどまり",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 行き止まり|いきどまり."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:行き止まり|いきどまり",
+          "detail": "Pinned JMdict local extract contains exact row 行き止まり|いきどまり; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 行き止まり|いきどまり visible as tokenization context without treating the current tokenizer reading ゆきどまり as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "昨夜",
+      "reading": "ゆうべ",
+      "level": 4,
+      "tokenizerReading": "さくや",
+      "tokenSurfaces": [
+        "昨夜"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 昨夜|ゆうべ; tokenizer output さくや differs from card reading ゆうべ."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:昨夜|ゆうべ",
+          "detail": "Exact tracked starter word entry binds written 昨夜, reading ゆうべ, meaning last night / yesterday evening."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:昨夜|ゆうべ",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 昨夜|ゆうべ."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:昨夜|ゆうべ",
+          "detail": "Pinned JMdict local extract contains exact row 昨夜|ゆうべ; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 昨夜|ゆうべ visible as tokenization context without treating the current tokenizer reading さくや as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "市場",
+      "reading": "いちば",
+      "level": 4,
+      "tokenizerReading": "しじょう",
+      "tokenSurfaces": [
+        "市場"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 市場|いちば; tokenizer output しじょう differs from card reading いちば."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:市場|いちば",
+          "detail": "Exact tracked starter word entry binds written 市場, reading いちば, meaning market / marketplace."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:市場|いちば",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 市場|いちば."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:市場|いちば",
+          "detail": "Pinned JMdict local extract contains exact row 市場|いちば; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 市場|いちば visible as tokenization context without treating the current tokenizer reading しじょう as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "止まる",
+      "reading": "とどまる",
+      "level": 4,
+      "tokenizerReading": "とまる",
+      "tokenSurfaces": [
+        "止まる"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 止まる|とどまる; tokenizer output とまる differs from card reading とどまる."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:止まる|とどまる",
+          "detail": "Exact tracked starter word entry binds written 止まる, reading とどまる, meaning to remain / to stay."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:止まる|とどまる",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 止まる|とどまる."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:止まる|とどまる",
+          "detail": "Pinned JMdict local extract contains exact row 止まる|とどまる; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 止まる|とどまる visible as tokenization context without treating the current tokenizer reading とまる as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "止める",
+      "reading": "やめる",
+      "level": 4,
+      "tokenizerReading": "とめる",
+      "tokenSurfaces": [
+        "止める"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 止める|やめる; tokenizer output とめる differs from card reading やめる."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:止める|やめる",
+          "detail": "Exact tracked starter word entry binds written 止める, reading やめる, meaning to quit / to stop doing."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:止める|やめる",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 止める|やめる."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:止める|やめる",
+          "detail": "Pinned JMdict local extract contains exact row 止める|やめる; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 止める|やめる visible as tokenization context without treating the current tokenizer reading とめる as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "主人",
+      "reading": "あるじ",
+      "level": 4,
+      "tokenizerReading": "しゅじん",
+      "tokenSurfaces": [
+        "主人"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 主人|あるじ; tokenizer output しゅじん differs from card reading あるじ."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:主人|あるじ",
+          "detail": "Exact tracked starter word entry binds written 主人, reading あるじ, meaning master / owner."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:主人|あるじ",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 主人|あるじ."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:主人|あるじ",
+          "detail": "Pinned JMdict local extract contains exact row 主人|あるじ; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 主人|あるじ visible as tokenization context without treating the current tokenizer reading しゅじん as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "手強い",
+      "reading": "てごわい",
+      "level": 4,
+      "tokenizerReading": "てづよい",
+      "tokenSurfaces": [
+        "手強い"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 手強い|てごわい; tokenizer output てづよい differs from card reading てごわい."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:手強い|てごわい",
+          "detail": "Exact tracked starter word entry binds written 手強い, reading てごわい, meaning formidable / tough."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:手強い|てごわい",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 手強い|てごわい."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:手強い|てごわい",
+          "detail": "Pinned JMdict local extract contains exact row 手強い|てごわい; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 手強い|てごわい visible as tokenization context without treating the current tokenizer reading てづよい as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "注ぐ",
+      "reading": "つぐ",
+      "level": 4,
+      "tokenizerReading": "そそぐ",
+      "tokenSurfaces": [
+        "注ぐ"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 注ぐ|つぐ; tokenizer output そそぐ differs from card reading つぐ."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:注ぐ|つぐ",
+          "detail": "Exact tracked starter word entry binds written 注ぐ, reading つぐ, meaning to pour."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:注ぐ|つぐ",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 注ぐ|つぐ."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:注ぐ|つぐ",
+          "detail": "Pinned JMdict local extract contains exact row 注ぐ|つぐ; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 注ぐ|つぐ visible as tokenization context without treating the current tokenizer reading そそぐ as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "都",
+      "reading": "みやこ",
+      "level": 4,
+      "tokenizerReading": "と",
+      "tokenSurfaces": [
+        "都"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 都|みやこ; tokenizer output と differs from card reading みやこ."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:都|みやこ",
+          "detail": "Exact tracked starter word entry binds written 都, reading みやこ, meaning capital city / seat of government."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:都|みやこ",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 都|みやこ."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:都|みやこ",
+          "detail": "Pinned JMdict local extract contains exact row 都|みやこ; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 都|みやこ visible as tokenization context without treating the current tokenizer reading と as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "白鳥",
+      "reading": "はくちょう",
+      "level": 4,
+      "tokenizerReading": "しらとり",
+      "tokenSurfaces": [
+        "白鳥"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 白鳥|はくちょう; tokenizer output しらとり differs from card reading はくちょう."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:白鳥|はくちょう",
+          "detail": "Exact tracked starter word entry binds written 白鳥, reading はくちょう, meaning swan."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:白鳥|はくちょう",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 白鳥|はくちょう."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:白鳥|はくちょう",
+          "detail": "Pinned JMdict local extract contains exact row 白鳥|はくちょう; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 白鳥|はくちょう visible as tokenization context without treating the current tokenizer reading しらとり as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "文",
+      "reading": "ふみ",
+      "level": 4,
+      "tokenizerReading": "ぶん",
+      "tokenSurfaces": [
+        "文"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 文|ふみ; tokenizer output ぶん differs from card reading ふみ."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:文|ふみ",
+          "detail": "Exact tracked starter word entry binds written 文, reading ふみ, meaning letter / writing."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:文|ふみ",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 文|ふみ."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:文|ふみ",
+          "detail": "Pinned JMdict local extract contains exact row 文|ふみ; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 文|ふみ visible as tokenization context without treating the current tokenizer reading ぶん as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "方",
+      "reading": "かた",
+      "level": 4,
+      "tokenizerReading": "ほう",
+      "tokenSurfaces": [
+        "方"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 方|かた; tokenizer output ほう differs from card reading かた."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:方|かた",
+          "detail": "Exact tracked starter word entry binds written 方, reading かた, meaning person / way."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:方|かた",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 方|かた."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:方|かた",
+          "detail": "Pinned JMdict local extract contains exact row 方|かた; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 方|かた visible as tokenization context without treating the current tokenizer reading ほう as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "民",
+      "reading": "たみ",
+      "level": 4,
+      "tokenizerReading": "みん",
+      "tokenSurfaces": [
+        "民"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 民|たみ; tokenizer output みん differs from card reading たみ."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:民|たみ",
+          "detail": "Exact tracked starter word entry binds written 民, reading たみ, meaning people / citizens / folk."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:民|たみ",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 民|たみ."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:民|たみ",
+          "detail": "Pinned JMdict local extract contains exact row 民|たみ; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 民|たみ visible as tokenization context without treating the current tokenizer reading みん as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "明日",
+      "reading": "あす",
+      "level": 4,
+      "tokenizerReading": "あした",
+      "tokenSurfaces": [
+        "明日"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 明日|あす; tokenizer output あした differs from card reading あす."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:明日|あす",
+          "detail": "Exact tracked starter word entry binds written 明日, reading あす, meaning tomorrow."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:明日|あす",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 明日|あす."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:明日|あす",
+          "detail": "Pinned JMdict local extract contains exact row 明日|あす; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 明日|あす visible as tokenization context without treating the current tokenizer reading あした as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "目蓋",
+      "reading": "まぶた",
+      "level": 4,
+      "tokenizerReading": "めふた",
+      "tokenSurfaces": [
+        "目",
+        "蓋"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 目蓋|まぶた; tokenizer output めふた differs from card reading まぶた."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:目蓋|まぶた",
+          "detail": "Exact tracked starter word entry binds written 目蓋, reading まぶた, meaning eyelid."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:目蓋|まぶた",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 目蓋|まぶた."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:目蓋|まぶた",
+          "detail": "Pinned JMdict local extract contains exact row 目蓋|まぶた; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 目蓋|まぶた visible as tokenization context without treating the current tokenizer reading めふた as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "問",
+      "reading": "もん",
+      "level": 4,
+      "tokenizerReading": "とい",
+      "tokenSurfaces": [
+        "問"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n4-words.tsv",
+          "detail": "Live generated N4 word row reviewed for 問|もん; tokenizer output とい differs from card reading もん."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:問|もん",
+          "detail": "Exact tracked starter word entry binds written 問, reading もん, meaning question counter / question item."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n4_word_review_set.json:問|もん",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 問|もん."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:問|もん",
+          "detail": "Pinned JMdict local extract contains exact row 問|もん; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 問|もん visible as tokenization context without treating the current tokenizer reading とい as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "一人",
+      "reading": "ひとり",
+      "level": 5,
+      "tokenizerReading": "いちにん",
+      "tokenSurfaces": [
+        "一",
+        "人"
+      ],
+      "exceptionKind": "date-counter-irregular-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 一人|ひとり; tokenizer output いちにん differs from card reading ひとり."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:一人|ひとり",
+          "detail": "Exact tracked starter word entry binds written 一人, reading ひとり, meaning one person / alone."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:一人|ひとり",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 一人|ひとり."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:一人|ひとり",
+          "detail": "Pinned JMdict local extract contains exact row 一人|ひとり; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Japanese date, time, zodiac, or people-count irregular reading reviewed against exact word identity. This exception keeps 一人|ひとり visible as tokenization context without treating the current tokenizer reading いちにん as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "一日",
+      "reading": "ついたち",
+      "level": 5,
+      "tokenizerReading": "いちにち",
+      "tokenSurfaces": [
+        "一",
+        "日"
+      ],
+      "exceptionKind": "date-counter-irregular-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 一日|ついたち; tokenizer output いちにち differs from card reading ついたち."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:一日|ついたち",
+          "detail": "Exact tracked starter word entry binds written 一日, reading ついたち, meaning the first day of the month."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:一日|ついたち",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 一日|ついたち."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:一日|ついたち",
+          "detail": "Pinned JMdict local extract contains exact row 一日|ついたち; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Japanese date, time, zodiac, or people-count irregular reading reviewed against exact word identity. This exception keeps 一日|ついたち visible as tokenization context without treating the current tokenizer reading いちにち as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "何ですか",
+      "reading": "なんですか",
+      "level": 5,
+      "tokenizerReading": "なにですか",
+      "tokenSurfaces": [
+        "何",
+        "です",
+        "か"
+      ],
+      "exceptionKind": "fixed-expression-reading-assimilation",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 何ですか|なんですか; tokenizer output なにですか differs from card reading なんですか."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:何ですか|なんですか",
+          "detail": "Exact tracked starter word entry binds written 何ですか, reading なんですか, meaning what is it?."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:何ですか|なんですか",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 何ですか|なんですか."
+        }
+      ],
+      "reviewNote": "Fixed beginner expression with 何 read as なん before ですか reviewed against Platinum evidence. This exception keeps 何ですか|なんですか visible as tokenization context without treating the current tokenizer reading なにですか as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "何時",
+      "reading": "なんじ",
+      "level": 5,
+      "tokenizerReading": "いつ",
+      "tokenSurfaces": [
+        "何時"
+      ],
+      "exceptionKind": "date-counter-irregular-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 何時|なんじ; tokenizer output いつ differs from card reading なんじ."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:何時|なんじ",
+          "detail": "Exact tracked starter word entry binds written 何時, reading なんじ, meaning what time."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:何時|なんじ",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 何時|なんじ."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:何時|なんじ",
+          "detail": "Pinned JMdict local extract contains exact row 何時|なんじ; source=jmdict; frequencyRank=120."
+        }
+      ],
+      "reviewNote": "Japanese date, time, zodiac, or people-count irregular reading reviewed against exact word identity. This exception keeps 何時|なんじ visible as tokenization context without treating the current tokenizer reading いつ as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "間",
+      "reading": "あいだ",
+      "level": 5,
+      "tokenizerReading": "ま",
+      "tokenSurfaces": [
+        "間"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 間|あいだ; tokenizer output ま differs from card reading あいだ."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:間|あいだ",
+          "detail": "Exact tracked starter word entry binds written 間, reading あいだ, meaning between / while."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:間|あいだ",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 間|あいだ."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:間|あいだ",
+          "detail": "Pinned JMdict local extract contains exact row 間|あいだ; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 間|あいだ visible as tokenization context without treating the current tokenizer reading ま as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "九時",
+      "reading": "くじ",
+      "level": 5,
+      "tokenizerReading": "きゅうじ",
+      "tokenSurfaces": [
+        "九",
+        "時"
+      ],
+      "exceptionKind": "date-counter-irregular-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 九時|くじ; tokenizer output きゅうじ differs from card reading くじ."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:九時|くじ",
+          "detail": "Exact tracked starter word entry binds written 九時, reading くじ, meaning nine o'clock."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:九時|くじ",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 九時|くじ."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:九時|くじ",
+          "detail": "Pinned JMdict local extract contains exact row 九時|くじ; source=jmdict; frequencyRank=none."
+        }
+      ],
+      "reviewNote": "Japanese date, time, zodiac, or people-count irregular reading reviewed against exact word identity. This exception keeps 九時|くじ visible as tokenization context without treating the current tokenizer reading きゅうじ as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "九日",
+      "reading": "ここのか",
+      "level": 5,
+      "tokenizerReading": "きゅうにち",
+      "tokenSurfaces": [
+        "九",
+        "日"
+      ],
+      "exceptionKind": "date-counter-irregular-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 九日|ここのか; tokenizer output きゅうにち differs from card reading ここのか."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:九日|ここのか",
+          "detail": "Exact tracked starter word entry binds written 九日, reading ここのか, meaning the ninth day / nine days."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:九日|ここのか",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 九日|ここのか."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:九日|ここのか",
+          "detail": "Pinned JMdict local extract contains exact row 九日|ここのか; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Japanese date, time, zodiac, or people-count irregular reading reviewed against exact word identity. This exception keeps 九日|ここのか visible as tokenization context without treating the current tokenizer reading きゅうにち as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "五日",
+      "reading": "いつか",
+      "level": 5,
+      "tokenizerReading": "ごにち",
+      "tokenSurfaces": [
+        "五",
+        "日"
+      ],
+      "exceptionKind": "date-counter-irregular-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 五日|いつか; tokenizer output ごにち differs from card reading いつか."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:五日|いつか",
+          "detail": "Exact tracked starter word entry binds written 五日, reading いつか, meaning the fifth day / five days."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:五日|いつか",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 五日|いつか."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:五日|いつか",
+          "detail": "Pinned JMdict local extract contains exact row 五日|いつか; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Japanese date, time, zodiac, or people-count irregular reading reviewed against exact word identity. This exception keeps 五日|いつか visible as tokenization context without treating the current tokenizer reading ごにち as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "午年",
+      "reading": "うまどし",
+      "level": 5,
+      "tokenizerReading": "うまねん",
+      "tokenSurfaces": [
+        "午",
+        "年"
+      ],
+      "exceptionKind": "date-counter-irregular-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 午年|うまどし; tokenizer output うまねん differs from card reading うまどし."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:午年|うまどし",
+          "detail": "Exact tracked starter word entry binds written 午年, reading うまどし, meaning Year of the Horse."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:午年|うまどし",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 午年|うまどし."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:午年|うまどし",
+          "detail": "Pinned JMdict local extract contains exact row 午年|うまどし; source=jmdict; frequencyRank=none."
+        }
+      ],
+      "reviewNote": "Japanese date, time, zodiac, or people-count irregular reading reviewed against exact word identity. This exception keeps 午年|うまどし visible as tokenization context without treating the current tokenizer reading うまねん as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "後",
+      "reading": "あと",
+      "level": 5,
+      "tokenizerReading": "のち",
+      "tokenSurfaces": [
+        "後"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 後|あと; tokenizer output のち differs from card reading あと."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:後|あと",
+          "detail": "Exact tracked starter word entry binds written 後, reading あと, meaning after / later."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:後|あと",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 後|あと."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:後|あと",
+          "detail": "Pinned JMdict local extract contains exact row 後|あと; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 後|あと visible as tokenization context without treating the current tokenizer reading のち as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "三日",
+      "reading": "みっか",
+      "level": 5,
+      "tokenizerReading": "さんにち",
+      "tokenSurfaces": [
+        "三",
+        "日"
+      ],
+      "exceptionKind": "date-counter-irregular-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 三日|みっか; tokenizer output さんにち differs from card reading みっか."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:三日|みっか",
+          "detail": "Exact tracked starter word entry binds written 三日, reading みっか, meaning the third day / three days."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:三日|みっか",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 三日|みっか."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:三日|みっか",
+          "detail": "Pinned JMdict local extract contains exact row 三日|みっか; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Japanese date, time, zodiac, or people-count irregular reading reviewed against exact word identity. This exception keeps 三日|みっか visible as tokenization context without treating the current tokenizer reading さんにち as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "三百",
+      "reading": "さんびゃく",
+      "level": 5,
+      "tokenizerReading": "さんひゃく",
+      "tokenSurfaces": [
+        "三",
+        "百"
+      ],
+      "exceptionKind": "counter-sound-change-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 三百|さんびゃく; tokenizer output さんひゃく differs from card reading さんびゃく."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:三百|さんびゃく",
+          "detail": "Exact tracked starter word entry binds written 三百, reading さんびゃく, meaning three hundred."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:三百|さんびゃく",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 三百|さんびゃく."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:三百|さんびゃく",
+          "detail": "Pinned JMdict local extract contains exact row 三百|さんびゃく; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Japanese counter sound-change reading reviewed against exact word identity. This exception keeps 三百|さんびゃく visible as tokenization context without treating the current tokenizer reading さんひゃく as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "四時",
+      "reading": "よじ",
+      "level": 5,
+      "tokenizerReading": "よんじ",
+      "tokenSurfaces": [
+        "四",
+        "時"
+      ],
+      "exceptionKind": "date-counter-irregular-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 四時|よじ; tokenizer output よんじ differs from card reading よじ."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:四時|よじ",
+          "detail": "Exact tracked starter word entry binds written 四時, reading よじ, meaning four o'clock."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:四時|よじ",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 四時|よじ."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:四時|よじ",
+          "detail": "Pinned JMdict local extract contains exact row 四時|よじ; source=jmdict; frequencyRank=120."
+        }
+      ],
+      "reviewNote": "Japanese date, time, zodiac, or people-count irregular reading reviewed against exact word identity. This exception keeps 四時|よじ visible as tokenization context without treating the current tokenizer reading よんじ as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "四日",
+      "reading": "よっか",
+      "level": 5,
+      "tokenizerReading": "よんにち",
+      "tokenSurfaces": [
+        "四",
+        "日"
+      ],
+      "exceptionKind": "date-counter-irregular-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 四日|よっか; tokenizer output よんにち differs from card reading よっか."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:四日|よっか",
+          "detail": "Exact tracked starter word entry binds written 四日, reading よっか, meaning the fourth day / four days."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:四日|よっか",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 四日|よっか."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:四日|よっか",
+          "detail": "Pinned JMdict local extract contains exact row 四日|よっか; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Japanese date, time, zodiac, or people-count irregular reading reviewed against exact word identity. This exception keeps 四日|よっか visible as tokenization context without treating the current tokenizer reading よんにち as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "子年",
+      "reading": "ねどし",
+      "level": 5,
+      "tokenizerReading": "こねん",
+      "tokenSurfaces": [
+        "子",
+        "年"
+      ],
+      "exceptionKind": "date-counter-irregular-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 子年|ねどし; tokenizer output こねん differs from card reading ねどし."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:子年|ねどし",
+          "detail": "Exact tracked starter word entry binds written 子年, reading ねどし, meaning Year of the Rat."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:子年|ねどし",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 子年|ねどし."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:子年|ねどし",
+          "detail": "Pinned JMdict local extract contains exact row 子年|ねどし; source=jmdict; frequencyRank=none."
+        }
+      ],
+      "reviewNote": "Japanese date, time, zodiac, or people-count irregular reading reviewed against exact word identity. This exception keeps 子年|ねどし visible as tokenization context without treating the current tokenizer reading こねん as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "七時",
+      "reading": "しちじ",
+      "level": 5,
+      "tokenizerReading": "ななじ",
+      "tokenSurfaces": [
+        "七",
+        "時"
+      ],
+      "exceptionKind": "date-counter-irregular-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 七時|しちじ; tokenizer output ななじ differs from card reading しちじ."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:七時|しちじ",
+          "detail": "Exact tracked starter word entry binds written 七時, reading しちじ, meaning seven o'clock."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:七時|しちじ",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 七時|しちじ."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:七時|しちじ",
+          "detail": "Pinned JMdict local extract contains exact row 七時|しちじ; source=jmdict; frequencyRank=120."
+        }
+      ],
+      "reviewNote": "Japanese date, time, zodiac, or people-count irregular reading reviewed against exact word identity. This exception keeps 七時|しちじ visible as tokenization context without treating the current tokenizer reading ななじ as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "七日",
+      "reading": "なのか",
+      "level": 5,
+      "tokenizerReading": "ななにち",
+      "tokenSurfaces": [
+        "七",
+        "日"
+      ],
+      "exceptionKind": "date-counter-irregular-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 七日|なのか; tokenizer output ななにち differs from card reading なのか."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:七日|なのか",
+          "detail": "Exact tracked starter word entry binds written 七日, reading なのか, meaning seventh day / seven days."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:七日|なのか",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 七日|なのか."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:七日|なのか",
+          "detail": "Pinned JMdict local extract contains exact row 七日|なのか; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Japanese date, time, zodiac, or people-count irregular reading reviewed against exact word identity. This exception keeps 七日|なのか visible as tokenization context without treating the current tokenizer reading ななにち as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "十回",
+      "reading": "じっかい",
+      "level": 5,
+      "tokenizerReading": "じゅうかい",
+      "tokenSurfaces": [
+        "十",
+        "回"
+      ],
+      "exceptionKind": "counter-sound-change-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 十回|じっかい; tokenizer output じゅうかい differs from card reading じっかい."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:十回|じっかい",
+          "detail": "Exact tracked starter word entry binds written 十回, reading じっかい, meaning ten times."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:十回|じっかい",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 十回|じっかい."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:十回|じっかい",
+          "detail": "Pinned JMdict local extract contains exact row 十回|じっかい; source=jmdict; frequencyRank=none."
+        }
+      ],
+      "reviewNote": "Japanese counter sound-change reading reviewed against exact word identity. This exception keeps 十回|じっかい visible as tokenization context without treating the current tokenizer reading じゅうかい as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "十日",
+      "reading": "とおか",
+      "level": 5,
+      "tokenizerReading": "じゅうにち",
+      "tokenSurfaces": [
+        "十",
+        "日"
+      ],
+      "exceptionKind": "date-counter-irregular-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 十日|とおか; tokenizer output じゅうにち differs from card reading とおか."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:十日|とおか",
+          "detail": "Exact tracked starter word entry binds written 十日, reading とおか, meaning tenth day / ten days."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:十日|とおか",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 十日|とおか."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:十日|とおか",
+          "detail": "Pinned JMdict local extract contains exact row 十日|とおか; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Japanese date, time, zodiac, or people-count irregular reading reviewed against exact word identity. This exception keeps 十日|とおか visible as tokenization context without treating the current tokenizer reading じゅうにち as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "十分",
+      "reading": "じゅっぷん",
+      "level": 5,
+      "tokenizerReading": "じゅうふん",
+      "tokenSurfaces": [
+        "十",
+        "分"
+      ],
+      "exceptionKind": "counter-sound-change-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 十分|じゅっぷん; tokenizer output じゅうふん differs from card reading じゅっぷん."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:十分|じゅっぷん",
+          "detail": "Exact tracked starter word entry binds written 十分, reading じゅっぷん, meaning ten minutes."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:十分|じゅっぷん",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 十分|じゅっぷん."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:十分|じゅっぷん",
+          "detail": "Pinned JMdict local extract contains exact row 十分|じゅっぷん; source=jmdict; frequencyRank=none."
+        }
+      ],
+      "reviewNote": "Japanese counter sound-change reading reviewed against exact word identity. This exception keeps 十分|じゅっぷん visible as tokenization context without treating the current tokenizer reading じゅうふん as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "出口",
+      "reading": "でぐち",
+      "level": 5,
+      "tokenizerReading": "いでぐち",
+      "tokenSurfaces": [
+        "出口"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 出口|でぐち; tokenizer output いでぐち differs from card reading でぐち."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:出口|でぐち",
+          "detail": "Exact tracked starter word entry binds written 出口, reading でぐち, meaning exit."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:出口|でぐち",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 出口|でぐち."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:出口|でぐち",
+          "detail": "Pinned JMdict local extract contains exact row 出口|でぐち; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 出口|でぐち visible as tokenization context without treating the current tokenizer reading いでぐち as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "上下",
+      "reading": "じょうげ",
+      "level": 5,
+      "tokenizerReading": "じょうか",
+      "tokenSurfaces": [
+        "上下"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 上下|じょうげ; tokenizer output じょうか differs from card reading じょうげ."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:上下|じょうげ",
+          "detail": "Exact tracked starter word entry binds written 上下, reading じょうげ, meaning up and down / top and bottom."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:上下|じょうげ",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 上下|じょうげ."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:上下|じょうげ",
+          "detail": "Pinned JMdict local extract contains exact row 上下|じょうげ; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 上下|じょうげ visible as tokenization context without treating the current tokenizer reading じょうか as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "大勢",
+      "reading": "おおぜい",
+      "level": 5,
+      "tokenizerReading": "たいせい",
+      "tokenSurfaces": [
+        "大勢"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 大勢|おおぜい; tokenizer output たいせい differs from card reading おおぜい."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:大勢|おおぜい",
+          "detail": "Exact tracked starter word entry binds written 大勢, reading おおぜい, meaning many people / in great numbers."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:大勢|おおぜい",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 大勢|おおぜい."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:大勢|おおぜい",
+          "detail": "Pinned JMdict local extract contains exact row 大勢|おおぜい; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 大勢|おおぜい visible as tokenization context without treating the current tokenizer reading たいせい as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "土",
+      "reading": "つち",
+      "level": 5,
+      "tokenizerReading": "ど",
+      "tokenSurfaces": [
+        "土"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 土|つち; tokenizer output ど differs from card reading つち."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:土|つち",
+          "detail": "Exact tracked starter word entry binds written 土, reading つち, meaning soil / earth."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:土|つち",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 土|つち."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:土|つち",
+          "detail": "Pinned JMdict local extract contains exact row 土|つち; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 土|つち visible as tokenization context without treating the current tokenizer reading ど as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "二十歳",
+      "reading": "はたち",
+      "level": 5,
+      "tokenizerReading": "にじゅうさい",
+      "tokenSurfaces": [
+        "二",
+        "十",
+        "歳"
+      ],
+      "exceptionKind": "date-counter-irregular-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 二十歳|はたち; tokenizer output にじゅうさい differs from card reading はたち."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:二十歳|はたち",
+          "detail": "Exact tracked starter word entry binds written 二十歳, reading はたち, meaning twenty years old."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:二十歳|はたち",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 二十歳|はたち."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:二十歳|はたち",
+          "detail": "Pinned JMdict local extract contains exact row 二十歳|はたち; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Japanese date, time, zodiac, or people-count irregular reading reviewed against exact word identity. This exception keeps 二十歳|はたち visible as tokenization context without treating the current tokenizer reading にじゅうさい as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "二十日",
+      "reading": "はつか",
+      "level": 5,
+      "tokenizerReading": "にじゅうにち",
+      "tokenSurfaces": [
+        "二",
+        "十",
+        "日"
+      ],
+      "exceptionKind": "date-counter-irregular-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 二十日|はつか; tokenizer output にじゅうにち differs from card reading はつか."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:二十日|はつか",
+          "detail": "Exact tracked starter word entry binds written 二十日, reading はつか, meaning the twentieth day / twenty days."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:二十日|はつか",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 二十日|はつか."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:二十日|はつか",
+          "detail": "Pinned JMdict local extract contains exact row 二十日|はつか; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Japanese date, time, zodiac, or people-count irregular reading reviewed against exact word identity. This exception keeps 二十日|はつか visible as tokenization context without treating the current tokenizer reading にじゅうにち as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "二人",
+      "reading": "ふたり",
+      "level": 5,
+      "tokenizerReading": "ににん",
+      "tokenSurfaces": [
+        "二",
+        "人"
+      ],
+      "exceptionKind": "date-counter-irregular-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 二人|ふたり; tokenizer output ににん differs from card reading ふたり."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:二人|ふたり",
+          "detail": "Exact tracked starter word entry binds written 二人, reading ふたり, meaning two people."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:二人|ふたり",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 二人|ふたり."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:二人|ふたり",
+          "detail": "Pinned JMdict local extract contains exact row 二人|ふたり; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Japanese date, time, zodiac, or people-count irregular reading reviewed against exact word identity. This exception keeps 二人|ふたり visible as tokenization context without treating the current tokenizer reading ににん as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "二日",
+      "reading": "ふつか",
+      "level": 5,
+      "tokenizerReading": "ににち",
+      "tokenSurfaces": [
+        "二",
+        "日"
+      ],
+      "exceptionKind": "date-counter-irregular-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 二日|ふつか; tokenizer output ににち differs from card reading ふつか."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:二日|ふつか",
+          "detail": "Exact tracked starter word entry binds written 二日, reading ふつか, meaning the second day / two days."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:二日|ふつか",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 二日|ふつか."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:二日|ふつか",
+          "detail": "Pinned JMdict local extract contains exact row 二日|ふつか; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Japanese date, time, zodiac, or people-count irregular reading reviewed against exact word identity. This exception keeps 二日|ふつか visible as tokenization context without treating the current tokenizer reading ににち as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "日本",
+      "reading": "にほん",
+      "level": 5,
+      "tokenizerReading": "にっぽん",
+      "tokenSurfaces": [
+        "日本"
+      ],
+      "exceptionKind": "proper-noun-reading-variant",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 日本|にほん; tokenizer output にっぽん differs from card reading にほん."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:日本|にほん",
+          "detail": "Exact tracked starter word entry binds written 日本, reading にほん, meaning Japan."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:日本|にほん",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 日本|にほん."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:日本|にほん",
+          "detail": "Pinned JMdict local extract contains exact row 日本|にほん; source=jmdict; frequencyRank=120."
+        }
+      ],
+      "reviewNote": "Common proper-noun reading variant reviewed against exact word identity. This exception keeps 日本|にほん visible as tokenization context without treating the current tokenizer reading にっぽん as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "日本人",
+      "reading": "にほんじん",
+      "level": 5,
+      "tokenizerReading": "にっぽんじん",
+      "tokenSurfaces": [
+        "日本人"
+      ],
+      "exceptionKind": "proper-noun-reading-variant",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 日本人|にほんじん; tokenizer output にっぽんじん differs from card reading にほんじん."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:日本人|にほんじん",
+          "detail": "Exact tracked starter word entry binds written 日本人, reading にほんじん, meaning Japanese person."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:日本人|にほんじん",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 日本人|にほんじん."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:日本人|にほんじん",
+          "detail": "Pinned JMdict local extract contains exact row 日本人|にほんじん; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Common proper-noun reading variant reviewed against exact word identity. This exception keeps 日本人|にほんじん visible as tokenization context without treating the current tokenizer reading にっぽんじん as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "白髪",
+      "reading": "しらが",
+      "level": 5,
+      "tokenizerReading": "はくはつ",
+      "tokenSurfaces": [
+        "白髪"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 白髪|しらが; tokenizer output はくはつ differs from card reading しらが."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:白髪|しらが",
+          "detail": "Exact tracked starter word entry binds written 白髪, reading しらが, meaning gray hair / white hair."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:白髪|しらが",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 白髪|しらが."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:白髪|しらが",
+          "detail": "Pinned JMdict local extract contains exact row 白髪|しらが; source=jmdict; frequencyRank=100."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 白髪|しらが visible as tokenization context without treating the current tokenizer reading はくはつ as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "八日",
+      "reading": "ようか",
+      "level": 5,
+      "tokenizerReading": "はちにち",
+      "tokenSurfaces": [
+        "八",
+        "日"
+      ],
+      "exceptionKind": "date-counter-irregular-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 八日|ようか; tokenizer output はちにち differs from card reading ようか."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:八日|ようか",
+          "detail": "Exact tracked starter word entry binds written 八日, reading ようか, meaning the eighth day / eight days."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:八日|ようか",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 八日|ようか."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:八日|ようか",
+          "detail": "Pinned JMdict local extract contains exact row 八日|ようか; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Japanese date, time, zodiac, or people-count irregular reading reviewed against exact word identity. This exception keeps 八日|ようか visible as tokenization context without treating the current tokenizer reading はちにち as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "万",
+      "reading": "まん",
+      "level": 5,
+      "tokenizerReading": "ばん",
+      "tokenSurfaces": [
+        "万"
+      ],
+      "exceptionKind": "lexical-alternate-reading",
+      "appliesToSignalKinds": [
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 万|まん; tokenizer output ばん differs from card reading まん."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:万|まん",
+          "detail": "Exact tracked starter word entry binds written 万, reading まん, meaning ten thousand."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:万|まん",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 万|まん."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:万|まん",
+          "detail": "Pinned JMdict local extract contains exact row 万|まん; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Exact word-reading identity is a governed lexical reading that differs from the tokenizer preferred reading for the same written form. This exception keeps 万|まん visible as tokenization context without treating the current tokenizer reading ばん as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    },
+    {
+      "written": "六日",
+      "reading": "むいか",
+      "level": 5,
+      "tokenizerReading": "ろくにち",
+      "tokenSurfaces": [
+        "六",
+        "日"
+      ],
+      "exceptionKind": "date-counter-irregular-reading",
+      "appliesToSignalKinds": [
+        "multi-token-surface",
+        "token-reading-card-reading-mismatch"
+      ],
+      "evidence": [
+        {
+          "type": "generated-row",
+          "source": "out/word-build/exports/jlpt-n5-words.tsv",
+          "detail": "Live generated N5 word row reviewed for 六日|むいか; tokenizer output ろくにち differs from card reading むいか."
+        },
+        {
+          "type": "tracked-source",
+          "source": "templates/starter_word_study_data.json:六日|むいか",
+          "detail": "Exact tracked starter word entry binds written 六日, reading むいか, meaning the sixth day / six days."
+        },
+        {
+          "type": "human-review",
+          "source": "templates/platinum_n5_word_review_set.json:六日|むいか",
+          "detail": "Active current-standard Platinum entry reviewed exact word-reading identity 六日|むいか."
+        },
+        {
+          "type": "source-manifest",
+          "source": "templates/word_source_manifest.json:jmdict:六日|むいか",
+          "detail": "Pinned JMdict local extract contains exact row 六日|むいか; source=jmdict; frequencyRank=110."
+        }
+      ],
+      "reviewNote": "Japanese date, time, zodiac, or people-count irregular reading reviewed against exact word identity. This exception keeps 六日|むいか visible as tokenization context without treating the current tokenizer reading ろくにち as card-defect evidence by itself.",
+      "limitations": [
+        "Applies only to the exact written, reading, level, token surfaces, and tokenizer reading recorded in this entry.",
+        "Does not certify card correctness, JLPT level fit, source independence, example naturalness, audio, pitch, Platinum, Obsidian, or release readiness."
+      ]
+    }
+  ]
+}

@@ -292,6 +292,90 @@ function buildWordSegmentationContextReviewPacketArtifact() {
     };
 }
 
+function buildWordReadingExceptionReviewPacketArtifact() {
+    return {
+        version: 1,
+        artifactType: "nlp_review_packet_batch",
+        generatedAt: "2026-05-20T00:00:00.000Z",
+        generator: {
+            createdBy: "test fixture",
+            inputHashes: [{
+                path: "out/nlp-tokenization/word-n5-kuromoji.json",
+                sha256: "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                byteSize: 128,
+            }],
+        },
+        scope: {
+            deckKind: "word",
+            levels: [5],
+            description: "Fixture word reading exception review packets.",
+        },
+        authority: { ...NLP_REVIEW_PACKET_AUTHORITY },
+        counts: {
+            packets: 1,
+            suggestions: 0,
+            tokenizationSignals: 1,
+            attentionPackets: 0,
+            reviewPackets: 0,
+            routinePackets: 1,
+        },
+        packets: [{
+            id: "nlp-review-word-n5-0001",
+            target: {
+                deckKind: "word",
+                level: 5,
+                written: "三百",
+                reading: "さんびゃく",
+            },
+            priority: "routine",
+            summary: "Review 三百: tokenization reading exception.",
+            reviewChecklist: ["Verify exact word tokenizer reading exception evidence."],
+            suggestionRefs: [],
+            tokenizationSignalRefs: [{
+                id: "n5-word-tokenization-0002",
+                reviewPriority: "routine",
+                signalKinds: [
+                    "routine-tokenization-review",
+                    "multi-token-surface",
+                    "token-reading-card-reading-mismatch",
+                    "word-card-tokenizer-reading-exception",
+                ],
+                surface: "三百",
+                tokenSurfaces: ["三", "百"],
+                normalizedTokenReading: "さんひゃく",
+                normalizedCardReading: "さんびゃく",
+                readingAlignment: {
+                    comparable: true,
+                    matches: false,
+                },
+                sourceArtifactPath: "out/nlp-tokenization/word-n5-kuromoji.json",
+                tokenizerException: {
+                    exceptionKind: "counter-sound-change-reading",
+                    tokenizerReading: "さんひゃく",
+                    appliesToSignalKinds: [
+                        "multi-token-surface",
+                        "token-reading-card-reading-mismatch",
+                    ],
+                    reviewNote: "Exact reviewed counter sound-change exception.",
+                    evidence: [{
+                        type: "generated-row",
+                        source: "out/word-build/exports/jlpt-n5-words.tsv",
+                        detail: "Exact generated row evidence.",
+                    }, {
+                        type: "tracked-source",
+                        source: "templates/starter_word_study_data.json:三百|さんびゃく",
+                        detail: "Exact tracked source evidence.",
+                    }],
+                    limitations: ["Applies only to this exact tokenizer output."],
+                },
+                limitations: ["Fixture signal only."],
+            }],
+            limitations: ["Fixture review packet only."],
+            authority: { ...NLP_REVIEW_PACKET_AUTHORITY },
+        }],
+    };
+}
+
 test("buildNlpDraftProposalArtifact creates governed drafts from suggestions and review packets", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-drafts-"));
     const suggestionPath = writeJson(dir, "suggestions.json", buildSuggestionArtifact());
@@ -362,6 +446,34 @@ test("buildNlpDraftProposalArtifact does not draft routine word segmentation con
         suggestions: [],
     });
     const reviewPacketPath = writeJson(dir, "word-review-packets.json", buildWordSegmentationContextReviewPacketArtifact());
+    const manifestPath = writeJson(dir, "manifest.json", { fixture: true });
+
+    const artifact = buildNlpDraftProposalArtifact({
+        suggestionArtifactPath: suggestionPath,
+        reviewPacketArtifactPath: reviewPacketPath,
+        manifestPath,
+        workspaceRoot: dir,
+        deckKind: "word",
+        level: 5,
+        now: () => new Date("2026-05-20T00:00:00.000Z"),
+        loadManifestFn: () => buildManifest(),
+        buildSuggestionReportFn: () => ({ passed: true, errors: [] }),
+        buildReviewPacketReportFn: () => ({ passed: true, errors: [] }),
+    });
+
+    assert.deepEqual(artifact.generator.modelIds, []);
+    assert.equal(artifact.counts.sourcePackets, 1);
+    assert.equal(artifact.counts.proposals, 0);
+    assert.deepEqual(artifact.proposals, []);
+});
+
+test("buildNlpDraftProposalArtifact does not draft routine word tokenizer reading exceptions", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-drafts-"));
+    const suggestionPath = writeJson(dir, "suggestions.json", {
+        ...buildSuggestionArtifact(),
+        suggestions: [],
+    });
+    const reviewPacketPath = writeJson(dir, "word-review-packets.json", buildWordReadingExceptionReviewPacketArtifact());
     const manifestPath = writeJson(dir, "manifest.json", { fixture: true });
 
     const artifact = buildNlpDraftProposalArtifact({

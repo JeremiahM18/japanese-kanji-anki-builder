@@ -126,6 +126,57 @@ function buildWordSegmentationContextRef() {
     };
 }
 
+function buildWordReadingExceptionRef() {
+    return {
+        target: {
+            kind: "word-card",
+            deckKind: "word",
+            level: 5,
+            written: "三百",
+            reading: "さんびゃく",
+        },
+        ref: {
+            id: "n5-word-tokenization-0002",
+            reviewPriority: "routine",
+            signalKinds: [
+                "routine-tokenization-review",
+                "multi-token-surface",
+                "token-reading-card-reading-mismatch",
+                "word-card-tokenizer-reading-exception",
+            ],
+            surface: "三百",
+            tokenSurfaces: ["三", "百"],
+            normalizedTokenReading: "さんひゃく",
+            normalizedCardReading: "さんびゃく",
+            readingAlignment: {
+                comparable: true,
+                matches: false,
+            },
+            sourceArtifactPath: "out/nlp-tokenization/word-n5-kuromoji.json",
+            tokenizerException: {
+                exceptionKind: "counter-sound-change-reading",
+                tokenizerReading: "さんひゃく",
+                appliesToSignalKinds: [
+                    "multi-token-surface",
+                    "token-reading-card-reading-mismatch",
+                ],
+                reviewNote: "Exact reviewed counter sound-change exception.",
+                evidence: [{
+                    type: "generated-row",
+                    source: "out/word-build/exports/jlpt-n5-words.tsv",
+                    detail: "Exact generated row evidence.",
+                }, {
+                    type: "tracked-source",
+                    source: "templates/starter_word_study_data.json:三百|さんびゃく",
+                    detail: "Exact tracked source evidence.",
+                }],
+                limitations: ["Applies only to this exact tokenizer output."],
+            },
+            limitations: ["Fixture tokenization only."],
+        },
+    };
+}
+
 test("buildNlpReviewPacketArtifactFromSignals aggregates suggestions and tokenization signals", () => {
     const artifact = buildNlpReviewPacketArtifactFromSignals({
         suggestionRefs: [buildSuggestionRef()],
@@ -190,6 +241,31 @@ test("buildNlpReviewPacketArtifactFromSignals keeps word segmentation context ro
     assert.match(artifact.packets[0].reviewChecklist.join("\n"), /word segmentation context/);
 });
 
+test("buildNlpReviewPacketArtifactFromSignals keeps word reading exceptions routine and explicit", () => {
+    const artifact = buildNlpReviewPacketArtifactFromSignals({
+        deckKind: "word",
+        level: 5,
+        suggestionRefs: [],
+        tokenizationSignalRefs: [buildWordReadingExceptionRef()],
+        inputHashes: [{
+            path: "out/nlp-tokenization/word-n5-kuromoji.json",
+            sha256: "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            byteSize: 128,
+        }],
+        now: () => new Date("2026-05-20T00:00:00.000Z"),
+    });
+
+    assert.equal(artifact.counts.packets, 1);
+    assert.equal(artifact.counts.attentionPackets, 0);
+    assert.equal(artifact.counts.routinePackets, 1);
+    assert.equal(artifact.packets[0].priority, "routine");
+    assert.equal(
+        artifact.packets[0].tokenizationSignalRefs[0].tokenizerException.exceptionKind,
+        "counter-sound-change-reading"
+    );
+    assert.match(artifact.packets[0].reviewChecklist.join("\n"), /word tokenizer reading exceptions/);
+});
+
 test("formatNlpReviewPacketMarkdown renders packet boundaries and checklist", () => {
     const artifact = buildNlpReviewPacketArtifactFromSignals({
         suggestionRefs: [buildSuggestionRef()],
@@ -225,6 +301,25 @@ test("formatNlpReviewPacketMarkdown renders tokenization signal kinds", () => {
 
     assert.match(markdown, /Tokenization signal details/);
     assert.match(markdown, /kanji-card-tokenizer-coverage-gap/);
+});
+
+test("formatNlpReviewPacketMarkdown renders tokenizer exception class", () => {
+    const artifact = buildNlpReviewPacketArtifactFromSignals({
+        deckKind: "word",
+        level: 5,
+        suggestionRefs: [],
+        tokenizationSignalRefs: [buildWordReadingExceptionRef()],
+        inputHashes: [{
+            path: "out/nlp-tokenization/word-n5-kuromoji.json",
+            sha256: "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            byteSize: 128,
+        }],
+        now: () => new Date("2026-05-20T00:00:00.000Z"),
+    });
+    const markdown = formatNlpReviewPacketMarkdown(artifact);
+
+    assert.match(markdown, /word-card-tokenizer-reading-exception/);
+    assert.match(markdown, /exception=counter-sound-change-reading/);
 });
 
 test("writeNlpReviewPacketArtifact writes artifacts accepted by the validator", () => {

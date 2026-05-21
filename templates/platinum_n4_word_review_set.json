@@ -20891,7 +20891,46 @@
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 習う|ならう checked generated surface, Japanese-source evidence, example sentence 来月から先生に日本語を習うつもりです。 ／ らいげつからせんせいににほんごをならうつもりです。 ／ I plan to learn Japanese from a teacher starting next month., notes/support surface Core N4 study word that also covers the 習 -> ならう reading., reading breakdown 習 ならう and kanji breakdown 習 なら 習 （なら） ／ learn / practice Stroke order On: シュウ、 ジュ Kun: なら.い、 なら.う, meaning to learn (to learn), labels JLPT N4; JLPT core + reading coverage; focus 習; covers 習: ならう, audio word-reading-習う-ならう, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
-    "fixSummary": "Replaced the progressive-form example with an exact 習う|ならう dictionary-form sentence and matching reading before Platinum certification."
+    "fixSummary": "Replaced the progressive-form example with an exact 習う|ならう dictionary-form sentence and matching reading before Platinum certification.",
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-018",
+      "scope": "N4 word Obsidian lane batch 18 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 習う|ならう from out/word-build/exports/jlpt-n4-words.tsv: word 習う, reading ならう, meaning to learn, example sentence 来月から先生に日本語を習うつもりです。 ／ らいげつからせんせいににほんごをならうつもりです。 ／ I plan to learn Japanese from a teacher starting next month.",
+        "governed Japanese-source word evidence for 習う|ならう: exact local JMdict/EDRDG row entrySeq=1333070, priority ichi1,news2,nf42 in downloads/jmdict-word-verification.tsv; meaning support to take lessons in; to be taught; to learn (from a teacher); to study (under a teacher); to get training in, frequencyRank=110, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for 習う|ならう from templates/starter_word_study_data.json: source starter-word, meaning to learn, example 来月から先生に日本語を習うつもりです。 ／ らいげつからせんせいににほんごをならうつもりです。 ／ I plan to learn Japanese from a teacher starting next month., notes Core N4 study word that also covers the 習 -> ならう reading.",
+        "learner-facing meaning for 習う|ならう: to learn",
+        "example sentence with reading/translation fit checked for 習う|ならう: 来月から先生に日本語を習うつもりです。 ／ らいげつからせんせいににほんごをならうつもりです。 ／ I plan to learn Japanese from a teacher starting next month.",
+        "notes/support surface checked for 習う|ならう: Core N4 study word that also covers the 習 -> ならう reading.",
+        "reading breakdown and kanji breakdown checked for 習う|ならう: reading breakdown <ruby>習<rt>なら</rt></ruby>う; kanji breakdown 習 なら 習 （なら） ／ learn / practice Stroke order On: シュウ、 ジュ Kun: なら.い、 なら.う",
+        "JLPT, coverage, focus, and covered-reading labels checked for 習う|ならう: JLPT N4; JLPT core + reading coverage; focus 習; covers 習: ならう",
+        "exact word-reading audio identity checked for 習う|ならう: word-reading-習う-ならう; generated audio field [sound:7FD2_習-word-reading-習う-ならう.wav]; managed asset 7FD2_習-word-reading-習う-ならう.wav is present in out/word-build/package package summary as audio/7FD2_習-word-reading-習う-ならう.wav",
+        "pitch accent source and rendered pitch label checked for 習う|ならう: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka]; rendered pitch surface contains 2 [nakadaka]",
+        "managed media provenance checked for 習う|ならう; package summary contains exact word audio 7FD2_習-word-reading-習う-ならう.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 習う|ならう",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 習う|ならう; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for 習う|ならう: review packet nlp-review-word-n4-0568 is routine, tokenization signal n4-word-0137 matches the card reading, and no model suggestions were raised; packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for 習う|ならう: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "習う|ならう",
+      "sentenceQualityReview": {
+        "japaneseSentence": "来月から先生に日本語を習うつもりです。",
+        "reading": "らいげつからせんせいににほんごをならうつもりです。",
+        "translation": "I plan to learn Japanese from a teacher starting next month.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 習う|ならう: 来月から先生に日本語を習うつもりです。 with reading らいげつからせんせいににほんごをならうつもりです。 and translation I plan to learn Japanese from a teacher starting next month. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The teacher/Japanese sentence naturally anchors 習う as learning from a teacher, matching the learner-facing meaning and the JMdict study-under-a-teacher sense. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 習う|ならう; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "寒い",
@@ -21014,7 +21053,46 @@
         "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 寒い|さむい checked generated surface, Japanese-source evidence, example sentence 今日は寒いのでコートを着ました。 ／ きょうはさむいのでコートをきました。 ／ It was cold today, so I wore a coat., notes/support surface Common weather/body-feel adjective with a clean 寒 -> さむい anchor., reading breakdown 寒 さむい and kanji breakdown 寒 さむ 寒 （さむ） ／ cold Stroke order On: カン Kun: さむ.い, meaning cold (cold), labels JLPT N4; JLPT core + reading coverage; focus 寒; covers 寒: さむい, audio word-reading-寒い-さむい, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-018",
+      "scope": "N4 word Obsidian lane batch 18 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 寒い|さむい from out/word-build/exports/jlpt-n4-words.tsv: word 寒い, reading さむい, meaning cold, example sentence 今日は寒いのでコートを着ました。 ／ きょうはさむいのでコートをきました。 ／ It was cold today, so I wore a coat.",
+        "governed Japanese-source word evidence for 寒い|さむい: exact local JMdict/EDRDG row entrySeq=1210360, priority ichi1,news2,nf40 in downloads/jmdict-word-verification.tsv; meaning support cold (e.g. weather); uninteresting (esp. joke); lame; dull; weak; corny, frequencyRank=110, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for 寒い|さむい from templates/starter_word_study_data.json: source starter-word, meaning cold, example 今日は寒いのでコートを着ました。 ／ きょうはさむいのでコートをきました。 ／ It was cold today, so I wore a coat., notes Common weather/body-feel adjective with a clean 寒 -> さむい anchor.",
+        "learner-facing meaning for 寒い|さむい: cold",
+        "example sentence with reading/translation fit checked for 寒い|さむい: 今日は寒いのでコートを着ました。 ／ きょうはさむいのでコートをきました。 ／ It was cold today, so I wore a coat.",
+        "notes/support surface checked for 寒い|さむい: Common weather/body-feel adjective with a clean 寒 -> さむい anchor.",
+        "reading breakdown and kanji breakdown checked for 寒い|さむい: reading breakdown <ruby>寒<rt>さむ</rt></ruby>い; kanji breakdown 寒 さむ 寒 （さむ） ／ cold Stroke order On: カン Kun: さむ.い",
+        "JLPT, coverage, focus, and covered-reading labels checked for 寒い|さむい: JLPT N4; JLPT core + reading coverage; focus 寒; covers 寒: さむい",
+        "exact word-reading audio identity checked for 寒い|さむい: word-reading-寒い-さむい; generated audio field [sound:5BD2_寒-word-reading-寒い-さむい.wav]; managed asset 5BD2_寒-word-reading-寒い-さむい.wav is present in out/word-build/package package summary as audio/5BD2_寒-word-reading-寒い-さむい.wav",
+        "pitch accent source and rendered pitch label checked for 寒い|さむい: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka]; rendered pitch surface contains 2 [nakadaka]",
+        "managed media provenance checked for 寒い|さむい; package summary contains exact word audio 5BD2_寒-word-reading-寒い-さむい.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 寒い|さむい",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 寒い|さむい; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for 寒い|さむい: review packet nlp-review-word-n4-0396 is routine, tokenization signal n4-word-0138 matches the card reading, and no model suggestions were raised; packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for 寒い|さむい: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "寒い|さむい",
+      "sentenceQualityReview": {
+        "japaneseSentence": "今日は寒いのでコートを着ました。",
+        "reading": "きょうはさむいのでコートをきました。",
+        "translation": "It was cold today, so I wore a coat.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 寒い|さむい: 今日は寒いのでコートを着ました。 with reading きょうはさむいのでコートをきました。 and translation It was cold today, so I wore a coat. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The coat/weather sentence naturally anchors 寒い as cold weather or body-feel and is a common N4 adjective use. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 寒い|さむい; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "黒い",
@@ -21257,7 +21335,46 @@
         "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 回る|まわる checked generated surface, Japanese-source evidence, example sentence 時計の針が回ります。 ／ とけいのはりがまわります。 ／ The clock hands turn., notes/support surface Common movement verb that covers the N4 回 -> まわる reading., reading breakdown 回 まわる and kanji breakdown 回 まわ 回 （まわ） ／ time / occurrence Stroke order On: エ、 カイ Kun: -まわ.し、 -まわ.す、 -まわ.り、 -まわ.る、 か.える、 もとお.る, meaning to turn / go around (turn / go around), labels JLPT N4; JLPT core + reading coverage; focus 回; covers 回: まわる, audio word-reading-回る-まわる, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-018",
+      "scope": "N4 word Obsidian lane batch 18 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 回る|まわる from out/word-build/exports/jlpt-n4-words.tsv: word 回る, reading まわる, meaning to turn / go around, example sentence 時計の針が回ります。 ／ とけいのはりがまわります。 ／ The clock hands turn.",
+        "governed Japanese-source word evidence for 回る|まわる: exact local JMdict/EDRDG row entrySeq=1604300, priority ichi1,news2,nf46,spec1 in downloads/jmdict-word-verification.tsv; meaning support to turn; to rotate; to revolve; to spin; to go around; to circle; to revolve around; to orbit; to make the rounds (of); to go around (several places); to travel around; to make a tour of, frequencyRank=110, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for 回る|まわる from templates/starter_word_study_data.json: source jlptstudy.net-n4, meaning to turn / go around, example 時計の針が回ります。 ／ とけいのはりがまわります。 ／ The clock hands turn., notes Common movement verb that covers the N4 回 -> まわる reading.",
+        "learner-facing meaning for 回る|まわる: to turn / go around",
+        "example sentence with reading/translation fit checked for 回る|まわる: 時計の針が回ります。 ／ とけいのはりがまわります。 ／ The clock hands turn.",
+        "notes/support surface checked for 回る|まわる: Common movement verb that covers the N4 回 -> まわる reading.",
+        "reading breakdown and kanji breakdown checked for 回る|まわる: reading breakdown <ruby>回<rt>まわ</rt></ruby>る; kanji breakdown 回 まわ 回 （まわ） ／ time / occurrence Stroke order On: エ、 カイ Kun: -まわ.し、 -まわ.す、 -まわ.り、 -まわ.る、 か.える、 もとお.る",
+        "JLPT, coverage, focus, and covered-reading labels checked for 回る|まわる: JLPT N4; JLPT core + reading coverage; focus 回; covers 回: まわる",
+        "exact word-reading audio identity checked for 回る|まわる: word-reading-回る-まわる; generated audio field [sound:56DE_回-word-reading-回る-まわる.wav]; managed asset 56DE_回-word-reading-回る-まわる.wav is present in out/word-build/package package summary as audio/56DE_回-word-reading-回る-まわる.wav",
+        "pitch accent source and rendered pitch label checked for 回る|まわる: kanjium-cc-by-sa-4.0 pattern 0 [heiban]; rendered pitch surface contains 0 [heiban]",
+        "managed media provenance checked for 回る|まわる; package summary contains exact word audio 56DE_回-word-reading-回る-まわる.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 回る|まわる",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 回る|まわる; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for 回る|まわる: review packet nlp-review-word-n4-0381 is routine, tokenization signal n4-word-0140 matches the card reading, and no model suggestions were raised; packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for 回る|まわる: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "回る|まわる",
+      "sentenceQualityReview": {
+        "japaneseSentence": "時計の針が回ります。",
+        "reading": "とけいのはりがまわります。",
+        "translation": "The clock hands turn.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 回る|まわる: 時計の針が回ります。 with reading とけいのはりがまわります。 and translation The clock hands turn. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The clock-hands sentence naturally anchors 回る as turn or rotate with a concrete and level-appropriate physical action. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 回る|まわる; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "近い",
@@ -21500,7 +21617,46 @@
         "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 古い|ふるい checked generated surface, Japanese-source evidence, example sentence その店はとても古いです。 ／ そのみせはとてもふるいです。 ／ That shop is very old., notes/support surface Core N4 study word that also covers the 古 -> ふるい reading., reading breakdown 古 ふるい and kanji breakdown 古 ふる 古 （ふる） ／ old Stroke order On: コ Kun: -ふる.す、 ふる-、 ふる.い, meaning old (old), labels JLPT N4; JLPT core + reading coverage; focus 古; covers 古: ふるい, audio word-reading-古い-ふるい, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-018",
+      "scope": "N4 word Obsidian lane batch 18 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 古い|ふるい from out/word-build/exports/jlpt-n4-words.tsv: word 古い, reading ふるい, meaning old, example sentence その店はとても古いです。 ／ そのみせはとてもふるいです。 ／ That shop is very old.",
+        "governed Japanese-source word evidence for 古い|ふるい: exact local JMdict/EDRDG row entrySeq=1265070, priority ichi1,news1,nf16 in downloads/jmdict-word-verification.tsv; meaning support old; aged; ancient; antiquated; antique; timeworn; long; since long ago; time-honored; of the distant past; long-ago; stale, frequencyRank=100, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for 古い|ふるい from templates/starter_word_study_data.json: source starter-word, meaning old, example その店はとても古いです。 ／ そのみせはとてもふるいです。 ／ That shop is very old., notes Core N4 study word that also covers the 古 -> ふるい reading.",
+        "learner-facing meaning for 古い|ふるい: old",
+        "example sentence with reading/translation fit checked for 古い|ふるい: その店はとても古いです。 ／ そのみせはとてもふるいです。 ／ That shop is very old.",
+        "notes/support surface checked for 古い|ふるい: Core N4 study word that also covers the 古 -> ふるい reading.",
+        "reading breakdown and kanji breakdown checked for 古い|ふるい: reading breakdown <ruby>古<rt>ふる</rt></ruby>い; kanji breakdown 古 ふる 古 （ふる） ／ old Stroke order On: コ Kun: -ふる.す、 ふる-、 ふる.い",
+        "JLPT, coverage, focus, and covered-reading labels checked for 古い|ふるい: JLPT N4; JLPT core + reading coverage; focus 古; covers 古: ふるい",
+        "exact word-reading audio identity checked for 古い|ふるい: word-reading-古い-ふるい; generated audio field [sound:53E4_古-word-reading-古い-ふるい.wav]; managed asset 53E4_古-word-reading-古い-ふるい.wav is present in out/word-build/package package summary as audio/53E4_古-word-reading-古い-ふるい.wav",
+        "pitch accent source and rendered pitch label checked for 古い|ふるい: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka]; rendered pitch surface contains 2 [nakadaka]",
+        "managed media provenance checked for 古い|ふるい; package summary contains exact word audio 53E4_古-word-reading-古い-ふるい.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 古い|ふるい",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 古い|ふるい; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for 古い|ふるい: review packet nlp-review-word-n4-0132 is review, tokenization signal n4-word-0142 matches the card reading, suggestions reviewed without certification authority: n4-word-example-rerank-0045 example-rerank signal reviewed as support only; current generated example remained top-ranked by the artifact; Review top-ranked example candidate for 古い|ふるい: その店はとても古いです。 Packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for 古い|ふるい: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "古い|ふるい",
+      "sentenceQualityReview": {
+        "japaneseSentence": "その店はとても古いです。",
+        "reading": "そのみせはとてもふるいです。",
+        "translation": "That shop is very old.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 古い|ふるい: その店はとても古いです。 with reading そのみせはとてもふるいです。 and translation That shop is very old. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The shop sentence naturally anchors 古い as old; the example-rerank artifact agreed with the current example but was treated only as support context. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 古い|ふるい; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "知る",
@@ -21622,7 +21778,46 @@
         "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 知る|しる checked generated surface, Japanese-source evidence, example sentence その話をニュースで初めて知りました。 ／ そのはなしをニュースではじめてしりました。 ／ I learned that news story for the first time from the news., notes/support surface Core N4 study word that also covers the 知 -> しる reading., reading breakdown 知 しる and kanji breakdown 知 し 知 （し） ／ know Stroke order On: チ Kun: し.らせる、 し.る, meaning know / find out (know / find out), labels JLPT N4; JLPT core + reading coverage; focus 知; covers 知: しる, audio word-reading-知る-しる, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-018",
+      "scope": "N4 word Obsidian lane batch 18 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 知る|しる from out/word-build/exports/jlpt-n4-words.tsv: word 知る, reading しる, meaning know / find out, example sentence その話をニュースで初めて知りました。 ／ そのはなしをニュースではじめてしりました。 ／ I learned that news story for the first time from the news.",
+        "governed Japanese-source word evidence for 知る|しる: exact local JMdict/EDRDG row entrySeq=1420470, priority ichi1,news1,nf02 in downloads/jmdict-word-verification.tsv; meaning support to know; to be aware (of); to be conscious (of); to learn (of); to find out; to discover; to sense; to feel; to notice; to realize; to understand; to comprehend, frequencyRank=100, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for 知る|しる from templates/starter_word_study_data.json: source starter-word, meaning know / find out, example その話をニュースで初めて知りました。 ／ そのはなしをにゅーすではじめてしりました。 ／ I learned that news story for the first time from the news., notes Core N4 study word that also covers the 知 -> しる reading.",
+        "learner-facing meaning for 知る|しる: know / find out",
+        "example sentence with reading/translation fit checked for 知る|しる: その話をニュースで初めて知りました。 ／ そのはなしをニュースではじめてしりました。 ／ I learned that news story for the first time from the news.",
+        "notes/support surface checked for 知る|しる: Core N4 study word that also covers the 知 -> しる reading.",
+        "reading breakdown and kanji breakdown checked for 知る|しる: reading breakdown <ruby>知<rt>し</rt></ruby>る; kanji breakdown 知 し 知 （し） ／ know Stroke order On: チ Kun: し.らせる、 し.る",
+        "JLPT, coverage, focus, and covered-reading labels checked for 知る|しる: JLPT N4; JLPT core + reading coverage; focus 知; covers 知: しる",
+        "exact word-reading audio identity checked for 知る|しる: word-reading-知る-しる; generated audio field [sound:77E5_知-word-reading-知る-しる.wav]; managed asset 77E5_知-word-reading-知る-しる.wav is present in out/word-build/package package summary as audio/77E5_知-word-reading-知る-しる.wav",
+        "pitch accent source and rendered pitch label checked for 知る|しる: kanjium-cc-by-sa-4.0 pattern 0 [heiban]; rendered pitch surface contains 0 [heiban]",
+        "managed media provenance checked for 知る|しる; package summary contains exact word audio 77E5_知-word-reading-知る-しる.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 知る|しる",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 知る|しる; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for 知る|しる: review packet nlp-review-word-n4-0045 is attention, tokenization signal n4-word-0143 matches the card reading, suggestions reviewed without certification authority: n4-word-sense-fit-0014 sense-fit warning reviewed as a false warning after human review of meaning/example/reading/translation; Review possible sense-fit issue for 知る|しる: Meaning/example semantic score 0.770899 or anchor/example score 0.884112 fell below threshold 0.8. Packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for 知る|しる: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "知る|しる",
+      "sentenceQualityReview": {
+        "japaneseSentence": "その話をニュースで初めて知りました。",
+        "reading": "そのはなしをニュースではじめてしりました。",
+        "translation": "I learned that news story for the first time from the news.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 知る|しる: その話をニュースで初めて知りました。 with reading そのはなしをニュースではじめてしりました。 and translation I learned that news story for the first time from the news. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The news sentence naturally anchors 知る as learn, find out, or know; the sense-fit warning was reviewed as a false warning because the sentence, reading, and translation align. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 知る|しる; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "鳥",
@@ -21743,7 +21938,46 @@
         "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 鳥|とり checked generated surface, Japanese-source evidence, example sentence 朝、窓の外で鳥が鳴いていました。 ／ あさ、まどのそとでとりがないていました。 ／ A bird was singing outside the window in the morning., notes/support surface Core N4 study word that also covers the 鳥 -> とり reading., reading breakdown 鳥 とり and kanji breakdown 鳥 とり 鳥 （とり） ／ bird Stroke order On: チョウ Kun: とり, meaning bird (bird), labels JLPT N4; JLPT core + reading coverage; focus 鳥; covers 鳥: とり, audio word-reading-鳥-とり, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-018",
+      "scope": "N4 word Obsidian lane batch 18 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 鳥|とり from out/word-build/exports/jlpt-n4-words.tsv: word 鳥, reading とり, meaning bird, example sentence 朝、窓の外で鳥が鳴いていました。 ／ あさ、まどのそとでとりがないていました。 ／ A bird was singing outside the window in the morning.",
+        "governed Japanese-source word evidence for 鳥|とり: exact local JMdict/EDRDG row entrySeq=1430250, priority ichi1,news1,nf04 in downloads/jmdict-word-verification.tsv; meaning support bird; bird meat (esp. chicken meat); fowl; poultry, frequencyRank=100, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for 鳥|とり from templates/starter_word_study_data.json: source starter-word, meaning bird, example 朝、窓の外で鳥が鳴いていました。 ／ あさ、まどのそとでとりがないていました。 ／ A bird was singing outside the window in the morning., notes Core N4 study word that also covers the 鳥 -> とり reading.",
+        "learner-facing meaning for 鳥|とり: bird",
+        "example sentence with reading/translation fit checked for 鳥|とり: 朝、窓の外で鳥が鳴いていました。 ／ あさ、まどのそとでとりがないていました。 ／ A bird was singing outside the window in the morning.",
+        "notes/support surface checked for 鳥|とり: Core N4 study word that also covers the 鳥 -> とり reading.",
+        "reading breakdown and kanji breakdown checked for 鳥|とり: reading breakdown <ruby>鳥<rt>とり</rt></ruby>; kanji breakdown 鳥 とり 鳥 （とり） ／ bird Stroke order On: チョウ Kun: とり",
+        "JLPT, coverage, focus, and covered-reading labels checked for 鳥|とり: JLPT N4; JLPT core + reading coverage; focus 鳥; covers 鳥: とり",
+        "exact word-reading audio identity checked for 鳥|とり: word-reading-鳥-とり; generated audio field [sound:9CE5_鳥-word-reading-鳥-とり.wav]; managed asset 9CE5_鳥-word-reading-鳥-とり.wav is present in out/word-build/package package summary as audio/9CE5_鳥-word-reading-鳥-とり.wav",
+        "pitch accent source and rendered pitch label checked for 鳥|とり: kanjium-cc-by-sa-4.0 pattern 0 [heiban]; rendered pitch surface contains 0 [heiban]",
+        "managed media provenance checked for 鳥|とり; package summary contains exact word audio 9CE5_鳥-word-reading-鳥-とり.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 鳥|とり",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 鳥|とり; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for 鳥|とり: review packet nlp-review-word-n4-0229 is review, tokenization signal n4-word-0144 matches the card reading, suggestions reviewed without certification authority: n4-word-example-rerank-0046 example-rerank signal reviewed as support only; current generated example remained top-ranked by the artifact; Review top-ranked example candidate for 鳥|とり: 朝、窓の外で鳥が鳴いていました。 Packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for 鳥|とり: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "鳥|とり",
+      "sentenceQualityReview": {
+        "japaneseSentence": "朝、窓の外で鳥が鳴いていました。",
+        "reading": "あさ、まどのそとでとりがないていました。",
+        "translation": "A bird was singing outside the window in the morning.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 鳥|とり: 朝、窓の外で鳥が鳴いていました。 with reading あさ、まどのそとでとりがないていました。 and translation A bird was singing outside the window in the morning. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The morning/window sentence naturally anchors 鳥 as bird; the example-rerank artifact agreed with the current example but was treated only as support context. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 鳥|とり; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "口",
@@ -21865,7 +22099,46 @@
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 口|くち checked generated surface, Japanese-source evidence, example sentence 口を大きく開けます。 ／ くちをおおきくあけます。 ／ I open my mouth wide., notes/support surface Core N4 body word that also covers the 口 -> くち reading., reading breakdown 口 くち and kanji breakdown 口 くち 口 （くち） ／ mouth Stroke order On: ク、 コウ Kun: くち, meaning mouth (mouth), labels JLPT N4; JLPT core + reading coverage; focus 口; covers 口: くち, audio word-reading-口-くち, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
-    "fixSummary": "Added the missing protected notes/support surface before current-standard Platinum certification."
+    "fixSummary": "Added the missing protected notes/support surface before current-standard Platinum certification.",
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-019",
+      "scope": "N4 word Obsidian lane batch 19 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 口|くち from out/word-build/exports/jlpt-n4-words.tsv: word 口, reading くち, meaning mouth, example sentence 口を大きく開けます。 ／ くちをおおきくあけます。 ／ I open my mouth wide.",
+        "governed Japanese-source word evidence for 口|くち: exact local JMdict/EDRDG row entrySeq=1275640, priority ichi1,news1,nf02 in downloads/jmdict-word-verification.tsv; meaning support mouth; opening; hole; gap; orifice; mouth (of a bottle); spout; nozzle; mouthpiece; gate; door; entrance, frequencyRank=100, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for 口|くち from templates/starter_word_study_data.json: source starter-word, meaning mouth, example 口を大きく開けます。 ／ くちをおおきくあけます。 ／ I open my mouth wide., notes Core N4 body word that also covers the 口 -> くち reading.",
+        "learner-facing meaning for 口|くち: mouth",
+        "example sentence with reading/translation fit checked for 口|くち: 口を大きく開けます。 ／ くちをおおきくあけます。 ／ I open my mouth wide.",
+        "notes/support surface checked for 口|くち: Core N4 body word that also covers the 口 -> くち reading.",
+        "reading breakdown and kanji breakdown checked for 口|くち: reading breakdown <ruby>口<rt>くち</rt></ruby>; kanji breakdown 口 くち 口 （くち） ／ mouth Stroke order On: ク、 コウ Kun: くち",
+        "JLPT, coverage, focus, and covered-reading labels checked for 口|くち: JLPT N4; JLPT core + reading coverage; focus 口; covers 口: くち",
+        "exact word-reading audio identity checked for 口|くち: word-reading-口-くち; generated audio field [sound:53E3_口-word-reading-口-くち.wav]; managed asset 53E3_口-word-reading-口-くち.wav is present in out/word-build/package package summary as audio/53E3_口-word-reading-口-くち.wav",
+        "pitch accent source and rendered pitch label checked for 口|くち: kanjium-cc-by-sa-4.0 pattern 0 [heiban]; rendered pitch surface contains 0 [heiban]",
+        "managed media provenance checked for 口|くち; package summary contains exact word audio 53E3_口-word-reading-口-くち.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 口|くち",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 口|くち; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for 口|くち: review packet nlp-review-word-n4-0478 is routine, tokenization signal n4-word-0145 matches the card reading, and no model suggestions were raised; packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for 口|くち: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "口|くち",
+      "sentenceQualityReview": {
+        "japaneseSentence": "口を大きく開けます。",
+        "reading": "くちをおおきくあけます。",
+        "translation": "I open my mouth wide.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 口|くち: 口を大きく開けます。 with reading くちをおおきくあけます。 and translation I open my mouth wide. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The mouth-opening sentence directly anchors 口 as mouth with a clear body-part context and natural N4 grammar. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 口|くち; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "転ぶ",
@@ -21987,7 +22260,46 @@
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 転ぶ|ころぶ checked generated surface, Japanese-source evidence, example sentence 雨の日は階段で転ぶことがあるので気をつけます。 ／ あめのひはかいだんでころぶことがあるのできをつけます。 ／ On rainy days, I am careful because I might fall on the stairs., notes/support surface Common N4 study word that also covers the 転 -> ころぶ reading., reading breakdown 転 ころぶ and kanji breakdown 転 ころ 転 （ころ） ／ turn / fall Stroke order On: テン Kun: うたた、 うつ.る、 くる.めく、 ころ.がす、 ころ.がる、 ころ.げる、 ころ.ぶ、 まろ.ぶ, meaning fall down (fall down), labels JLPT N4; JLPT core + reading coverage; focus 転; covers 転: ころぶ, audio word-reading-転ぶ-ころぶ, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
-    "fixSummary": "Replaced the negative inflected example with an exact 転ぶ|ころぶ dictionary-form sentence and matching reading before Platinum certification."
+    "fixSummary": "Replaced the negative inflected example with an exact 転ぶ|ころぶ dictionary-form sentence and matching reading before Platinum certification.",
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-019",
+      "scope": "N4 word Obsidian lane batch 19 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 転ぶ|ころぶ from out/word-build/exports/jlpt-n4-words.tsv: word 転ぶ, reading ころぶ, meaning fall down, example sentence 雨の日は階段で転ぶことがあるので気をつけます。 ／ あめのひはかいだんでころぶことがあるのできをつけます。 ／ On rainy days, I am careful because I might fall on the stairs.",
+        "governed Japanese-source word evidence for 転ぶ|ころぶ: exact local JMdict/EDRDG row entrySeq=1582130, priority ichi1,news2,nf35 in downloads/jmdict-word-verification.tsv; meaning support to fall down; to fall over; to turn out; to play out; to abandon Christianity (and convert to Buddhism); to apostatize; to roll; to tumble; (for a geisha) to prostitute (herself) in secret, frequencyRank=110, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for 転ぶ|ころぶ from templates/starter_word_study_data.json: source starter-word, meaning fall down, example 雨の日は階段で転ぶことがあるので気をつけます。 ／ あめのひはかいだんでころぶことがあるのできをつけます。 ／ On rainy days, I am careful because I might fall on the stairs., notes Common N4 study word that also covers the 転 -> ころぶ reading.",
+        "learner-facing meaning for 転ぶ|ころぶ: fall down",
+        "example sentence with reading/translation fit checked for 転ぶ|ころぶ: 雨の日は階段で転ぶことがあるので気をつけます。 ／ あめのひはかいだんでころぶことがあるのできをつけます。 ／ On rainy days, I am careful because I might fall on the stairs.",
+        "notes/support surface checked for 転ぶ|ころぶ: Common N4 study word that also covers the 転 -> ころぶ reading.",
+        "reading breakdown and kanji breakdown checked for 転ぶ|ころぶ: reading breakdown <ruby>転<rt>ころ</rt></ruby>ぶ; kanji breakdown 転 ころ 転 （ころ） ／ turn / fall Stroke order On: テン Kun: うたた、 うつ.る、 くる.めく、 ころ.がす、 ころ.がる、 ころ.げる、 ころ.ぶ、 まろ.ぶ",
+        "JLPT, coverage, focus, and covered-reading labels checked for 転ぶ|ころぶ: JLPT N4; JLPT core + reading coverage; focus 転; covers 転: ころぶ",
+        "exact word-reading audio identity checked for 転ぶ|ころぶ: word-reading-転ぶ-ころぶ; generated audio field [sound:8EE2_転-word-reading-転ぶ-ころぶ.wav]; managed asset 8EE2_転-word-reading-転ぶ-ころぶ.wav is present in out/word-build/package package summary as audio/8EE2_転-word-reading-転ぶ-ころぶ.wav",
+        "pitch accent source and rendered pitch label checked for 転ぶ|ころぶ: kanjium-cc-by-sa-4.0 pattern 0 [heiban]; rendered pitch surface contains 0 [heiban]",
+        "managed media provenance checked for 転ぶ|ころぶ; package summary contains exact word audio 8EE2_転-word-reading-転ぶ-ころぶ.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 転ぶ|ころぶ",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 転ぶ|ころぶ; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for 転ぶ|ころぶ: review packet nlp-review-word-n4-0715 is routine, tokenization signal n4-word-0146 matches the card reading, and no model suggestions were raised; packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for 転ぶ|ころぶ: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "転ぶ|ころぶ",
+      "sentenceQualityReview": {
+        "japaneseSentence": "雨の日は階段で転ぶことがあるので気をつけます。",
+        "reading": "あめのひはかいだんでころぶことがあるのできをつけます。",
+        "translation": "On rainy days, I am careful because I might fall on the stairs.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 転ぶ|ころぶ: 雨の日は階段で転ぶことがあるので気をつけます。 with reading あめのひはかいだんでころぶことがあるのできをつけます。 and translation On rainy days, I am careful because I might fall on the stairs. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The rainy-stairs sentence naturally anchors 転ぶ as fall down, with a concrete caution context and no competing sense needed. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 転ぶ|ころぶ; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "森",
@@ -22108,7 +22420,46 @@
         "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 森|もり checked generated surface, Japanese-source evidence, example sentence 森の中は静かです。 ／ もりのなかはしずかです。 ／ It is quiet in the forest., notes/support surface Common nature word that covers the N4 森 -> もり reading., reading breakdown 森 もり and kanji breakdown 森 もり 森 （もり） ／ forest Stroke order On: シン Kun: もり, meaning forest (forest), labels JLPT N4; JLPT core + reading coverage; focus 森; covers 森: もり, audio word-reading-森-もり, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-019",
+      "scope": "N4 word Obsidian lane batch 19 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 森|もり from out/word-build/exports/jlpt-n4-words.tsv: word 森, reading もり, meaning forest, example sentence 森の中は静かです。 ／ もりのなかはしずかです。 ／ It is quiet in the forest.",
+        "governed Japanese-source word evidence for 森|もり: exact local JMdict/EDRDG row entrySeq=1362490, priority ichi1,news1,nf02 in downloads/jmdict-word-verification.tsv; meaning support forest; shrine grove, frequencyRank=100, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for 森|もり from templates/starter_word_study_data.json: source jlptstudy.net-n4, meaning forest, example 森の中は静かです。 ／ もりのなかはしずかです。 ／ It is quiet in the forest., notes Common nature word that covers the N4 森 -> もり reading.",
+        "learner-facing meaning for 森|もり: forest",
+        "example sentence with reading/translation fit checked for 森|もり: 森の中は静かです。 ／ もりのなかはしずかです。 ／ It is quiet in the forest.",
+        "notes/support surface checked for 森|もり: Common nature word that covers the N4 森 -> もり reading.",
+        "reading breakdown and kanji breakdown checked for 森|もり: reading breakdown <ruby>森<rt>もり</rt></ruby>; kanji breakdown 森 もり 森 （もり） ／ forest Stroke order On: シン Kun: もり",
+        "JLPT, coverage, focus, and covered-reading labels checked for 森|もり: JLPT N4; JLPT core + reading coverage; focus 森; covers 森: もり",
+        "exact word-reading audio identity checked for 森|もり: word-reading-森-もり; generated audio field [sound:68EE_森-word-reading-森-もり.wav]; managed asset 68EE_森-word-reading-森-もり.wav is present in out/word-build/package package summary as audio/68EE_森-word-reading-森-もり.wav",
+        "pitch accent source and rendered pitch label checked for 森|もり: kanjium-cc-by-sa-4.0 pattern 0 [heiban]; rendered pitch surface contains 0 [heiban]",
+        "managed media provenance checked for 森|もり; package summary contains exact word audio 68EE_森-word-reading-森-もり.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 森|もり",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 森|もり; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for 森|もり: review packet nlp-review-word-n4-0599 is routine, tokenization signal n4-word-0147 matches the card reading, and no model suggestions were raised; packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for 森|もり: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "森|もり",
+      "sentenceQualityReview": {
+        "japaneseSentence": "森の中は静かです。",
+        "reading": "もりのなかはしずかです。",
+        "translation": "It is quiet in the forest.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 森|もり: 森の中は静かです。 with reading もりのなかはしずかです。 and translation It is quiet in the forest. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The quiet-forest sentence directly anchors 森 as forest and is simple, natural, and level appropriate. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 森|もり; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "目",
@@ -22230,7 +22581,46 @@
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 目|め checked generated surface, Japanese-source evidence, example sentence 目が少し痛いです。 ／ めがすこしいたいです。 ／ My eye hurts a little., notes/support surface Core N4 body word that also covers the 目 -> め reading., reading breakdown 目 め and kanji breakdown 目 め 目 （め） ／ eye Stroke order On: ボク、 モク Kun: -め、 ま-, meaning eye (eye), labels JLPT N4; JLPT core + reading coverage; focus 目; covers 目: め, audio word-reading-目-め, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
-    "fixSummary": "Added the missing protected notes/support surface before current-standard Platinum certification."
+    "fixSummary": "Added the missing protected notes/support surface before current-standard Platinum certification.",
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-019",
+      "scope": "N4 word Obsidian lane batch 19 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 目|め from out/word-build/exports/jlpt-n4-words.tsv: word 目, reading め, meaning eye, example sentence 目が少し痛いです。 ／ めがすこしいたいです。 ／ My eye hurts a little.",
+        "governed Japanese-source word evidence for 目|め: exact local JMdict/EDRDG row entrySeq=1604890, priority ichi1,news1,nf16 in downloads/jmdict-word-verification.tsv; meaning support eye; eyeball; eyesight; sight; vision; look; stare; gaze; glance; notice; attention; observation, frequencyRank=100, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for 目|め from templates/starter_word_study_data.json: source starter-word, meaning eye, example 目が少し痛いです。 ／ めがすこしいたいです。 ／ My eye hurts a little., notes Core N4 body word that also covers the 目 -> め reading.",
+        "learner-facing meaning for 目|め: eye",
+        "example sentence with reading/translation fit checked for 目|め: 目が少し痛いです。 ／ めがすこしいたいです。 ／ My eye hurts a little.",
+        "notes/support surface checked for 目|め: Core N4 body word that also covers the 目 -> め reading.",
+        "reading breakdown and kanji breakdown checked for 目|め: reading breakdown <ruby>目<rt>め</rt></ruby>; kanji breakdown 目 め 目 （め） ／ eye Stroke order On: ボク、 モク Kun: -め、 ま-",
+        "JLPT, coverage, focus, and covered-reading labels checked for 目|め: JLPT N4; JLPT core + reading coverage; focus 目; covers 目: め",
+        "exact word-reading audio identity checked for 目|め: word-reading-目-め; generated audio field [sound:76EE_目-word-reading-目-め.wav]; managed asset 76EE_目-word-reading-目-め.wav is present in out/word-build/package package summary as audio/76EE_目-word-reading-目-め.wav",
+        "pitch accent source and rendered pitch label checked for 目|め: kanjium-cc-by-sa-4.0 pattern 1 [atamadaka]; rendered pitch surface contains 1 [atamadaka]",
+        "managed media provenance checked for 目|め; package summary contains exact word audio 76EE_目-word-reading-目-め.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 目|め",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 目|め; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for 目|め: review packet nlp-review-word-n4-0282 is review, tokenization signal n4-word-0148 matches the card reading, suggestions reviewed without certification authority: n4-word-example-rerank-0047 example-rerank signal reviewed as support only; current generated example remained top-ranked by the artifact; Review top-ranked example candidate for 目|め: 目が少し痛いです。 Packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for 目|め: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "目|め",
+      "sentenceQualityReview": {
+        "japaneseSentence": "目が少し痛いです。",
+        "reading": "めがすこしいたいです。",
+        "translation": "My eye hurts a little.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 目|め: 目が少し痛いです。 with reading めがすこしいたいです。 and translation My eye hurts a little. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The slight-pain sentence directly anchors 目 as eye; the example-rerank signal agreed with the current example but was support-only. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 目|め; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "ご飯",
@@ -22352,7 +22742,46 @@
         "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for ご飯|ごはん checked generated surface, Japanese-source evidence, example sentence ご飯を食べましょう。 ／ ごはんをたべましょう。 ／ Let's eat., notes/support surface Core N4 study word that also covers the 飯 -> はん reading., reading breakdown ご飯 はん and kanji breakdown 飯 はん 飯 （はん） ／ meal / cooked rice Stroke order On: ハン Kun: めし, meaning meal / cooked rice (meal / cooked rice), labels JLPT N4; JLPT core + reading coverage; focus 飯; covers 飯: はん, audio word-reading-ご飯-ごはん, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-019",
+      "scope": "N4 word Obsidian lane batch 19 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for ご飯|ごはん from out/word-build/exports/jlpt-n4-words.tsv: word ご飯, reading ごはん, meaning meal / cooked rice, example sentence ご飯を食べましょう。 ／ ごはんをたべましょう。 ／ Let's eat.",
+        "governed Japanese-source word evidence for ご飯|ごはん: exact local JMdict/EDRDG row entrySeq=1270590, priority ichi1,news2,nf47 in downloads/jmdict-word-verification.tsv; meaning support cooked rice; meal, frequencyRank=110, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for ご飯|ごはん from templates/starter_word_study_data.json: source starter-word, meaning meal / cooked rice, example ご飯を食べましょう。 ／ ごはんをたべましょう。 ／ Let's eat., notes Core N4 study word that also covers the 飯 -> はん reading.",
+        "learner-facing meaning for ご飯|ごはん: meal / cooked rice",
+        "example sentence with reading/translation fit checked for ご飯|ごはん: ご飯を食べましょう。 ／ ごはんをたべましょう。 ／ Let's eat.",
+        "notes/support surface checked for ご飯|ごはん: Core N4 study word that also covers the 飯 -> はん reading.",
+        "reading breakdown and kanji breakdown checked for ご飯|ごはん: reading breakdown ご<ruby>飯<rt>はん</rt></ruby>; kanji breakdown 飯 はん 飯 （はん） ／ meal / cooked rice Stroke order On: ハン Kun: めし",
+        "JLPT, coverage, focus, and covered-reading labels checked for ご飯|ごはん: JLPT N4; JLPT core + reading coverage; focus 飯; covers 飯: はん",
+        "exact word-reading audio identity checked for ご飯|ごはん: word-reading-ご飯-ごはん; generated audio field [sound:98EF_飯-word-reading-ご飯-ごはん.wav]; managed asset 98EF_飯-word-reading-ご飯-ごはん.wav is present in out/word-build/package package summary as audio/98EF_飯-word-reading-ご飯-ごはん.wav",
+        "pitch accent source and rendered pitch label checked for ご飯|ごはん: kanjium-cc-by-sa-4.0 pattern 1 [atamadaka]; rendered pitch surface contains 1 [atamadaka]",
+        "managed media provenance checked for ご飯|ごはん; package summary contains exact word audio 98EF_飯-word-reading-ご飯-ごはん.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for ご飯|ごはん",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for ご飯|ごはん; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for ご飯|ごはん: review packet nlp-review-word-n4-0060 is review, tokenization signal n4-word-0149 matches the card reading, suggestions reviewed without certification authority: n4-word-example-rerank-0048 example-rerank signal reviewed as support only; current generated example remained top-ranked by the artifact; Review top-ranked example candidate for ご飯|ごはん: ご飯を食べましょう。 Packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for ご飯|ごはん: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "ご飯|ごはん",
+      "sentenceQualityReview": {
+        "japaneseSentence": "ご飯を食べましょう。",
+        "reading": "ごはんをたべましょう。",
+        "translation": "Let's eat.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for ご飯|ごはん: ご飯を食べましょう。 with reading ごはんをたべましょう。 and translation Let's eat. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The eating invitation naturally anchors ご飯 as meal or cooked rice in a common phrase; the English translation is idiomatic while still preserving the card sense. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for ご飯|ごはん; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "短い",
@@ -22474,7 +22903,46 @@
         "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 短い|みじかい checked generated surface, Japanese-source evidence, example sentence このスカートは少し短すぎると思います。 ／ このスカートはすこしみじかすぎるとおもいます。 ／ I think this skirt is a little too short., notes/support surface Common length/time adjective with a clean 短 -> みじかい anchor., reading breakdown 短 みじかい and kanji breakdown 短 みじか 短 （みじか） ／ short Stroke order On: タン Kun: みじか.い, meaning short / brief (short / brief), labels JLPT N4; JLPT core + reading coverage; focus 短; covers 短: みじかい, audio word-reading-短い-みじかい, pitch accent source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] rendered Pitch 1: 3, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-019",
+      "scope": "N4 word Obsidian lane batch 19 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 短い|みじかい from out/word-build/exports/jlpt-n4-words.tsv: word 短い, reading みじかい, meaning short / brief, example sentence このスカートは少し短すぎると思います。 ／ このスカートはすこしみじかすぎるとおもいます。 ／ I think this skirt is a little too short.",
+        "governed Japanese-source word evidence for 短い|みじかい: exact local JMdict/EDRDG row entrySeq=1418620, priority ichi1,news2,nf25 in downloads/jmdict-word-verification.tsv; meaning support short; brief, frequencyRank=110, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for 短い|みじかい from templates/starter_word_study_data.json: source starter-word, meaning short / brief, example このスカートは少し短すぎると思います。 ／ このスカートはすこしみじかすぎるとおもいます。 ／ I think this skirt is a little too short., notes Common length/time adjective with a clean 短 -> みじかい anchor.",
+        "learner-facing meaning for 短い|みじかい: short / brief",
+        "example sentence with reading/translation fit checked for 短い|みじかい: このスカートは少し短すぎると思います。 ／ このスカートはすこしみじかすぎるとおもいます。 ／ I think this skirt is a little too short.",
+        "notes/support surface checked for 短い|みじかい: Common length/time adjective with a clean 短 -> みじかい anchor.",
+        "reading breakdown and kanji breakdown checked for 短い|みじかい: reading breakdown <ruby>短<rt>みじか</rt></ruby>い; kanji breakdown 短 みじか 短 （みじか） ／ short Stroke order On: タン Kun: みじか.い",
+        "JLPT, coverage, focus, and covered-reading labels checked for 短い|みじかい: JLPT N4; JLPT core + reading coverage; focus 短; covers 短: みじかい",
+        "exact word-reading audio identity checked for 短い|みじかい: word-reading-短い-みじかい; generated audio field [sound:77ED_短-word-reading-短い-みじかい.wav]; managed asset 77ED_短-word-reading-短い-みじかい.wav is present in out/word-build/package package summary as audio/77ED_短-word-reading-短い-みじかい.wav",
+        "pitch accent source and rendered pitch label checked for 短い|みじかい: kanjium-cc-by-sa-4.0 pattern 3 [nakadaka]; rendered pitch surface contains 3 [nakadaka]",
+        "managed media provenance checked for 短い|みじかい; package summary contains exact word audio 77ED_短-word-reading-短い-みじかい.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 短い|みじかい",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 短い|みじかい; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for 短い|みじかい: review packet nlp-review-word-n4-0678 is routine, tokenization signal n4-word-0150 matches the card reading, and no model suggestions were raised; packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for 短い|みじかい: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "短い|みじかい",
+      "sentenceQualityReview": {
+        "japaneseSentence": "このスカートは少し短すぎると思います。",
+        "reading": "このスカートはすこしみじかすぎるとおもいます。",
+        "translation": "I think this skirt is a little too short.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 短い|みじかい: このスカートは少し短すぎると思います。 with reading このスカートはすこしみじかすぎるとおもいます。 and translation I think this skirt is a little too short. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The skirt sentence naturally anchors 短い as short in physical length; the katakana loanword surface is appropriate for the example reading line. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 短い|みじかい; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "広がる",
@@ -22596,7 +23064,46 @@
         "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 広がる|ひろがる checked generated surface, Japanese-source evidence, example sentence 目の前に青い空が広がっています。 ／ めのまえにあおいそらがひろがっています。 ／ A blue sky stretches out in front of me., notes/support surface Core N4 study word that also covers the 広 -> ひろがる reading., reading breakdown 広 ひろがる and kanji breakdown 広 ひろ 広 （ひろ） ／ wide / spacious Stroke order On: コウ Kun: ひろ.い、 ひろ.がる、 ひろ.げる、 ひろ.まる、 ひろ.める, meaning to spread / to widen (to spread / to widen), labels JLPT N4; JLPT core + reading coverage; focus 広; covers 広: ひろがる, audio word-reading-広がる-ひろがる, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-019",
+      "scope": "N4 word Obsidian lane batch 19 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 広がる|ひろがる from out/word-build/exports/jlpt-n4-words.tsv: word 広がる, reading ひろがる, meaning to spread / to widen, example sentence 目の前に青い空が広がっています。 ／ めのまえにあおいそらがひろがっています。 ／ A blue sky stretches out in front of me.",
+        "governed Japanese-source word evidence for 広がる|ひろがる: exact local JMdict/EDRDG row entrySeq=1602360, priority ichi1,news2,nf33 in downloads/jmdict-word-verification.tsv; meaning support to spread (out); to extend; to stretch; to reach to; to get around; to fill (e.g. a space), frequencyRank=110, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for 広がる|ひろがる from templates/starter_word_study_data.json: source starter-word, meaning to spread / to widen, example 目の前に青い空が広がっています。 ／ めのまえにあおいそらがひろがっています。 ／ A blue sky stretches out in front of me., notes Core N4 study word that also covers the 広 -> ひろがる reading.",
+        "learner-facing meaning for 広がる|ひろがる: to spread / to widen",
+        "example sentence with reading/translation fit checked for 広がる|ひろがる: 目の前に青い空が広がっています。 ／ めのまえにあおいそらがひろがっています。 ／ A blue sky stretches out in front of me.",
+        "notes/support surface checked for 広がる|ひろがる: Core N4 study word that also covers the 広 -> ひろがる reading.",
+        "reading breakdown and kanji breakdown checked for 広がる|ひろがる: reading breakdown <ruby>広<rt>ひろ</rt></ruby>がる; kanji breakdown 広 ひろ 広 （ひろ） ／ wide / spacious Stroke order On: コウ Kun: ひろ.い、 ひろ.がる、 ひろ.げる、 ひろ.まる、 ひろ.める",
+        "JLPT, coverage, focus, and covered-reading labels checked for 広がる|ひろがる: JLPT N4; JLPT core + reading coverage; focus 広; covers 広: ひろがる",
+        "exact word-reading audio identity checked for 広がる|ひろがる: word-reading-広がる-ひろがる; generated audio field [sound:5E83_広-word-reading-広がる-ひろがる.wav]; managed asset 5E83_広-word-reading-広がる-ひろがる.wav is present in out/word-build/package package summary as audio/5E83_広-word-reading-広がる-ひろがる.wav",
+        "pitch accent source and rendered pitch label checked for 広がる|ひろがる: kanjium-cc-by-sa-4.0 pattern 0 [heiban]; rendered pitch surface contains 0 [heiban]",
+        "managed media provenance checked for 広がる|ひろがる; package summary contains exact word audio 5E83_広-word-reading-広がる-ひろがる.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 広がる|ひろがる",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 広がる|ひろがる; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for 広がる|ひろがる: review packet nlp-review-word-n4-0483 is routine, tokenization signal n4-word-0151 matches the card reading, and no model suggestions were raised; packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for 広がる|ひろがる: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "広がる|ひろがる",
+      "sentenceQualityReview": {
+        "japaneseSentence": "目の前に青い空が広がっています。",
+        "reading": "めのまえにあおいそらがひろがっています。",
+        "translation": "A blue sky stretches out in front of me.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 広がる|ひろがる: 目の前に青い空が広がっています。 with reading めのまえにあおいそらがひろがっています。 and translation A blue sky stretches out in front of me. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The blue-sky sentence naturally anchors 広がる as spread out or stretch before the viewer, matching the learner-facing meaning. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 広がる|ひろがる; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "開く",
@@ -22718,7 +23225,46 @@
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 開く|ひらく checked generated surface, Japanese-source evidence, example sentence 朝九時に図書館が開きます。 ／ あさくじにとしょかんがひらきます。 ／ The library opens at nine in the morning., notes/support surface Core N4 study word that also covers the 開 -> ひらく reading., reading breakdown 開 ひらく and kanji breakdown 開 ひら 開 （ひら） ／ open Stroke order On: カイ Kun: -びら.き、 あ.く、 あ.ける、 ひら.き、 ひら.く、 ひら.ける, meaning open (open), labels JLPT N4; JLPT core + reading coverage; focus 開; covers 開: ひらく, audio word-reading-開く-ひらく, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
-    "fixSummary": "Added the missing protected notes/support surface for the ひらく word card before current-standard Platinum certification."
+    "fixSummary": "Added the missing protected notes/support surface for the ひらく word card before current-standard Platinum certification.",
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-019",
+      "scope": "N4 word Obsidian lane batch 19 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 開く|ひらく from out/word-build/exports/jlpt-n4-words.tsv: word 開く, reading ひらく, meaning open, example sentence 朝九時に図書館が開きます。 ／ あさくじにとしょかんがひらきます。 ／ The library opens at nine in the morning.",
+        "governed Japanese-source word evidence for 開く|ひらく: exact local JMdict/EDRDG row entrySeq=1202440, priority ichi1 in downloads/jmdict-word-verification.tsv; meaning support to open; to undo; to unseal; to unpack; to bloom; to unfold; to spread out; to open (for business, e.g. in the morning); to be wide (gap, etc.); to widen; to hold (meeting, party, etc.); to give, frequencyRank=110, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for 開く|ひらく from templates/starter_word_study_data.json: source starter-word, meaning open, example 朝九時に図書館が開きます。 ／ あさくじにとしょかんがひらきます。 ／ The library opens at nine in the morning., notes Core N4 study word that also covers the 開 -> ひらく reading.",
+        "learner-facing meaning for 開く|ひらく: open",
+        "example sentence with reading/translation fit checked for 開く|ひらく: 朝九時に図書館が開きます。 ／ あさくじにとしょかんがひらきます。 ／ The library opens at nine in the morning.",
+        "notes/support surface checked for 開く|ひらく: Core N4 study word that also covers the 開 -> ひらく reading.",
+        "reading breakdown and kanji breakdown checked for 開く|ひらく: reading breakdown <ruby>開<rt>ひら</rt></ruby>く; kanji breakdown 開 ひら 開 （ひら） ／ open Stroke order On: カイ Kun: -びら.き、 あ.く、 あ.ける、 ひら.き、 ひら.く、 ひら.ける",
+        "JLPT, coverage, focus, and covered-reading labels checked for 開く|ひらく: JLPT N4; JLPT core + reading coverage; focus 開; covers 開: ひらく",
+        "exact word-reading audio identity checked for 開く|ひらく: word-reading-開く-ひらく; generated audio field [sound:958B_開-word-reading-開く-ひらく.wav]; managed asset 958B_開-word-reading-開く-ひらく.wav is present in out/word-build/package package summary as audio/958B_開-word-reading-開く-ひらく.wav",
+        "pitch accent source and rendered pitch label checked for 開く|ひらく: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka]; rendered pitch surface contains 2 [nakadaka]",
+        "managed media provenance checked for 開く|ひらく; package summary contains exact word audio 958B_開-word-reading-開く-ひらく.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 開く|ひらく",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 開く|ひらく; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for 開く|ひらく: review packet nlp-review-word-n4-0386 is routine, tokenization signal n4-word-0152 matches the card reading, and no model suggestions were raised; packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for 開く|ひらく: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "開く|ひらく",
+      "sentenceQualityReview": {
+        "japaneseSentence": "朝九時に図書館が開きます。",
+        "reading": "あさくじにとしょかんがひらきます。",
+        "translation": "The library opens at nine in the morning.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 開く|ひらく: 朝九時に図書館が開きます。 with reading あさくじにとしょかんがひらきます。 and translation The library opens at nine in the morning. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The library-opening sentence naturally anchors 開く read ひらく as opening for business, which is supported by the tracked JMdict sense and the explicit generated reading. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 開く|ひらく; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "遠く",
@@ -22841,7 +23387,46 @@
         "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 遠く|とおく checked generated surface, Japanese-source evidence, example sentence 遠くに山が見えます。 ／ とおくにやまがみえます。 ／ I can see mountains far away., notes/support surface Common distance noun/adverb with a clean 遠 anchor and direct learner usefulness., reading breakdown 遠 とおく and kanji breakdown 遠 とお 遠 （とお） ／ far / distant Stroke order On: エン、 オン Kun: とお.い, meaning far away / distant place (far away / distant place), labels JLPT N4; JLPT core + reading coverage; focus 遠; covers 遠: とおく, audio word-reading-遠く-とおく, pitch accent source kanjium-cc-by-sa-4.0 pattern 3 [odaka] / 0 [heiban] rendered Pitch 1: 3 / Pitch 2: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-020",
+      "scope": "N4 word Obsidian lane batch 20 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 遠く|とおく from out/word-build/exports/jlpt-n4-words.tsv: word 遠く, reading とおく, meaning far away / distant place, example sentence 遠くに山が見えます。 ／ とおくにやまがみえます。 ／ I can see mountains far away.",
+        "governed Japanese-source word evidence for 遠く|とおく: exact local JMdict/EDRDG row entrySeq=1177820, priority ichi1 in downloads/jmdict-word-verification.tsv; meaning support far away; distant place; a (great) distance; a long way off; afar; long ago; far back; far (into the future); by far, frequencyRank=110, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for 遠く|とおく from templates/starter_word_study_data.json: source jlptstudy.net-n4, meaning far away / distant place, example 遠くに山が見えます。 ／ とおくにやまがみえます。 ／ I can see mountains far away., notes Common distance noun/adverb with a clean 遠 anchor and direct learner usefulness.",
+        "learner-facing meaning for 遠く|とおく: far away / distant place",
+        "example sentence with reading/translation fit checked for 遠く|とおく: 遠くに山が見えます。 ／ とおくにやまがみえます。 ／ I can see mountains far away.",
+        "notes/support surface checked for 遠く|とおく: Common distance noun/adverb with a clean 遠 anchor and direct learner usefulness.",
+        "reading breakdown and kanji breakdown checked for 遠く|とおく: reading breakdown <ruby>遠<rt>とお</rt></ruby>く; kanji breakdown 遠 とお 遠 （とお） ／ far / distant Stroke order On: エン、 オン Kun: とお.い",
+        "JLPT, coverage, focus, and covered-reading labels checked for 遠く|とおく: JLPT N4; JLPT core + reading coverage; focus 遠; covers 遠: とおく",
+        "exact word-reading audio identity checked for 遠く|とおく: word-reading-遠く-とおく; generated audio field [sound:9060_遠-word-reading-遠く-とおく.wav]; managed asset 9060_遠-word-reading-遠く-とおく.wav is present in out/word-build/package package summary as audio/9060_遠-word-reading-遠く-とおく.wav",
+        "pitch accent source and rendered pitch label checked for 遠く|とおく: kanjium-cc-by-sa-4.0 pattern 3 [odaka] / 0 [heiban]; rendered pitch surface contains 3 [odaka]; 0 [heiban]",
+        "managed media provenance checked for 遠く|とおく; package summary contains exact word audio 9060_遠-word-reading-遠く-とおく.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 遠く|とおく",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 遠く|とおく; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for 遠く|とおく: review packet nlp-review-word-n4-0340 is routine, tokenization signal n4-word-0155 matches the card reading, and no model suggestions were raised; packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for 遠く|とおく: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "遠く|とおく",
+      "sentenceQualityReview": {
+        "japaneseSentence": "遠くに山が見えます。",
+        "reading": "とおくにやまがみえます。",
+        "translation": "I can see mountains far away.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 遠く|とおく: 遠くに山が見えます。 with reading とおくにやまがみえます。 and translation I can see mountains far away. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The mountain-distance sentence naturally anchors 遠く as far away or distant place in a common visible-distance pattern. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 遠く|とおく; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "起こる",
@@ -22963,7 +23548,46 @@
         "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 起こる|おこる checked generated surface, Japanese-source evidence, example sentence 何が起こったのかまだ分かりません。 ／ なにがおこったのかまだわかりません。 ／ I still do not know what happened., notes/support surface Core N4 study word that also covers the 起 -> おこる reading., reading breakdown 起 おこる and kanji breakdown 起 お 起 （お） ／ get up / occur Stroke order On: キ Kun: お.きる、 お.こす、 お.こる、 た.つ, meaning happen / occur (happen / occur), labels JLPT N4; JLPT core + reading coverage; focus 起; covers 起: おこる, audio word-reading-起こる-おこる, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-020",
+      "scope": "N4 word Obsidian lane batch 20 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 起こる|おこる from out/word-build/exports/jlpt-n4-words.tsv: word 起こる, reading おこる, meaning happen / occur, example sentence 何が起こったのかまだ分かりません。 ／ なにがおこったのかまだわかりません。 ／ I still do not know what happened.",
+        "governed Japanese-source word evidence for 起こる|おこる: exact local JMdict/EDRDG row entrySeq=1223680, priority ichi1,news1,nf15 in downloads/jmdict-word-verification.tsv; meaning support to occur; to happen, frequencyRank=100, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for 起こる|おこる from templates/starter_word_study_data.json: source starter-word, meaning happen / occur, example 何が起こったのかまだ分かりません。 ／ なにがおこったのかまだわかりません。 ／ I still do not know what happened., notes Core N4 study word that also covers the 起 -> おこる reading.",
+        "learner-facing meaning for 起こる|おこる: happen / occur",
+        "example sentence with reading/translation fit checked for 起こる|おこる: 何が起こったのかまだ分かりません。 ／ なにがおこったのかまだわかりません。 ／ I still do not know what happened.",
+        "notes/support surface checked for 起こる|おこる: Core N4 study word that also covers the 起 -> おこる reading.",
+        "reading breakdown and kanji breakdown checked for 起こる|おこる: reading breakdown <ruby>起<rt>お</rt></ruby>こる; kanji breakdown 起 お 起 （お） ／ get up / occur Stroke order On: キ Kun: お.きる、 お.こす、 お.こる、 た.つ",
+        "JLPT, coverage, focus, and covered-reading labels checked for 起こる|おこる: JLPT N4; JLPT core + reading coverage; focus 起; covers 起: おこる",
+        "exact word-reading audio identity checked for 起こる|おこる: word-reading-起こる-おこる; generated audio field [sound:8D77_起-word-reading-起こる-おこる.wav]; managed asset 8D77_起-word-reading-起こる-おこる.wav is present in out/word-build/package package summary as audio/8D77_起-word-reading-起こる-おこる.wav",
+        "pitch accent source and rendered pitch label checked for 起こる|おこる: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka]; rendered pitch surface contains 2 [nakadaka]",
+        "managed media provenance checked for 起こる|おこる; package summary contains exact word audio 8D77_起-word-reading-起こる-おこる.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 起こる|おこる",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 起こる|おこる; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for 起こる|おこる: review packet nlp-review-word-n4-0009 is attention, tokenization signal n4-word-0156 matches the card reading, suggestions reviewed without certification authority: n4-word-sense-fit-0015 sense-fit warning reviewed as a false warning after human review of meaning/example/reading/translation; Review possible sense-fit issue for 起こる|おこる: Meaning/example semantic score 0.798802 or anchor/example score 0.912008 fell below threshold 0.8. Packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for 起こる|おこる: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "起こる|おこる",
+      "sentenceQualityReview": {
+        "japaneseSentence": "何が起こったのかまだ分かりません。",
+        "reading": "なにがおこったのかまだわかりません。",
+        "translation": "I still do not know what happened.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 起こる|おこる: 何が起こったのかまだ分かりません。 with reading なにがおこったのかまだわかりません。 and translation I still do not know what happened. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The what-happened sentence directly anchors 起こる as happen or occur; the sense-fit warning was reviewed as a false warning because the generated meaning, reading, and translation align. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 起こる|おこる; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "楽しい",
@@ -23085,7 +23709,46 @@
         "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 楽しい|たのしい checked generated surface, Japanese-source evidence, example sentence 日本語の勉強は楽しいです。 ／ にほんごのべんきょうはたのしいです。 ／ Studying Japanese is fun., notes/support surface Core N4 study word that also covers the 楽 -> たのしい reading., reading breakdown 楽 たのしい and kanji breakdown 楽 たの 楽 （たの） ／ fun / enjoyable / music Stroke order On: ガク、 ゴウ、 ラク Kun: この.む、 たの.しい、 たの.しむ, meaning fun / enjoyable (fun / enjoyable), labels JLPT N4; JLPT core + reading coverage; focus 楽; covers 楽: たのしい, audio word-reading-楽しい-たのしい, pitch accent source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] rendered Pitch 1: 3, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-020",
+      "scope": "N4 word Obsidian lane batch 20 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 楽しい|たのしい from out/word-build/exports/jlpt-n4-words.tsv: word 楽しい, reading たのしい, meaning fun / enjoyable, example sentence 日本語の勉強は楽しいです。 ／ にほんごのべんきょうはたのしいです。 ／ Studying Japanese is fun.",
+        "governed Japanese-source word evidence for 楽しい|たのしい: exact local JMdict/EDRDG row entrySeq=1207240, priority ichi1,news1,nf16 in downloads/jmdict-word-verification.tsv; meaning support enjoyable; fun; pleasant; happy; delightful, frequencyRank=100, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for 楽しい|たのしい from templates/starter_word_study_data.json: source starter-word, meaning fun / enjoyable, example 日本語の勉強は楽しいです。 ／ にほんごのべんきょうはたのしいです。 ／ Studying Japanese is fun., notes Core N4 study word that also covers the 楽 -> たのしい reading.",
+        "learner-facing meaning for 楽しい|たのしい: fun / enjoyable",
+        "example sentence with reading/translation fit checked for 楽しい|たのしい: 日本語の勉強は楽しいです。 ／ にほんごのべんきょうはたのしいです。 ／ Studying Japanese is fun.",
+        "notes/support surface checked for 楽しい|たのしい: Core N4 study word that also covers the 楽 -> たのしい reading.",
+        "reading breakdown and kanji breakdown checked for 楽しい|たのしい: reading breakdown <ruby>楽<rt>たの</rt></ruby>しい; kanji breakdown 楽 たの 楽 （たの） ／ fun / enjoyable / music Stroke order On: ガク、 ゴウ、 ラク Kun: この.む、 たの.しい、 たの.しむ",
+        "JLPT, coverage, focus, and covered-reading labels checked for 楽しい|たのしい: JLPT N4; JLPT core + reading coverage; focus 楽; covers 楽: たのしい",
+        "exact word-reading audio identity checked for 楽しい|たのしい: word-reading-楽しい-たのしい; generated audio field [sound:697D_楽-word-reading-楽しい-たのしい.wav]; managed asset 697D_楽-word-reading-楽しい-たのしい.wav is present in out/word-build/package package summary as audio/697D_楽-word-reading-楽しい-たのしい.wav",
+        "pitch accent source and rendered pitch label checked for 楽しい|たのしい: kanjium-cc-by-sa-4.0 pattern 3 [nakadaka]; rendered pitch surface contains 3 [nakadaka]",
+        "managed media provenance checked for 楽しい|たのしい; package summary contains exact word audio 697D_楽-word-reading-楽しい-たのしい.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 楽しい|たのしい",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 楽しい|たのしい; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for 楽しい|たのしい: review packet nlp-review-word-n4-0102 is review, tokenization signal n4-word-0157 matches the card reading, suggestions reviewed without certification authority: n4-word-example-rerank-0049 example-rerank signal reviewed as support only; current generated example remained top-ranked by the artifact; Review top-ranked example candidate for 楽しい|たのしい: 日本語の勉強は楽しいです。 Packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for 楽しい|たのしい: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "楽しい|たのしい",
+      "sentenceQualityReview": {
+        "japaneseSentence": "日本語の勉強は楽しいです。",
+        "reading": "にほんごのべんきょうはたのしいです。",
+        "translation": "Studying Japanese is fun.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 楽しい|たのしい: 日本語の勉強は楽しいです。 with reading にほんごのべんきょうはたのしいです。 and translation Studying Japanese is fun. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The studying-Japanese sentence naturally anchors 楽しい as fun or enjoyable; the example-rerank artifact agreed with the current example but remained support-only. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 楽しい|たのしい; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "空",
@@ -23207,7 +23870,46 @@
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 空|そら checked generated surface, Japanese-source evidence, example sentence 空がとても青いです。 ／ そらがとてもあおいです。 ／ The sky is very blue., notes/support surface Core N4 sky word that also covers the 空 -> そら reading., reading breakdown 空 そら and kanji breakdown 空 そら 空 （そら） ／ sky Stroke order On: クウ Kun: あ.き、 あ.く、 あ.ける、 から、 す.かす、 す.く、 そら、 むな.しい, meaning sky (sky), labels JLPT N4; JLPT core + reading coverage; focus 空; covers 空: そら, audio word-reading-空-そら, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
-    "fixSummary": "Added the missing protected sky-word notes/support surface before current-standard Platinum certification."
+    "fixSummary": "Added the missing protected sky-word notes/support surface before current-standard Platinum certification.",
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-020",
+      "scope": "N4 word Obsidian lane batch 20 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 空|そら from out/word-build/exports/jlpt-n4-words.tsv: word 空, reading そら, meaning sky, example sentence 空がとても青いです。 ／ そらがとてもあおいです。 ／ The sky is very blue.",
+        "governed Japanese-source word evidence for 空|そら: exact local JMdict/EDRDG row entrySeq=1245290, priority ichi1 in downloads/jmdict-word-verification.tsv; meaning support sky; the air; the heavens; weather; far-off place; distant place; state of mind; feeling; (from) memory; (by) heart; falsehood; lie, frequencyRank=110, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for 空|そら from templates/starter_word_study_data.json: source starter-word, meaning sky, example 空がとても青いです。 ／ そらがとてもあおいです。 ／ The sky is very blue., notes Core N4 sky word that also covers the 空 -> そら reading.",
+        "learner-facing meaning for 空|そら: sky",
+        "example sentence with reading/translation fit checked for 空|そら: 空がとても青いです。 ／ そらがとてもあおいです。 ／ The sky is very blue.",
+        "notes/support surface checked for 空|そら: Core N4 sky word that also covers the 空 -> そら reading.",
+        "reading breakdown and kanji breakdown checked for 空|そら: reading breakdown <ruby>空<rt>そら</rt></ruby>; kanji breakdown 空 そら 空 （そら） ／ sky Stroke order On: クウ Kun: あ.き、 あ.く、 あ.ける、 から、 す.かす、 す.く、 そら、 むな.しい",
+        "JLPT, coverage, focus, and covered-reading labels checked for 空|そら: JLPT N4; JLPT core + reading coverage; focus 空; covers 空: そら",
+        "exact word-reading audio identity checked for 空|そら: word-reading-空-そら; generated audio field [sound:7A7A_空-word-reading-空-そら.wav]; managed asset 7A7A_空-word-reading-空-そら.wav is present in out/word-build/package package summary as audio/7A7A_空-word-reading-空-そら.wav",
+        "pitch accent source and rendered pitch label checked for 空|そら: kanjium-cc-by-sa-4.0 pattern 1 [atamadaka]; rendered pitch surface contains 1 [atamadaka]",
+        "managed media provenance checked for 空|そら; package summary contains exact word audio 7A7A_空-word-reading-空-そら.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 空|そら",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 空|そら; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for 空|そら: review packet nlp-review-word-n4-0121 is review, tokenization signal n4-word-0158 matches the card reading, suggestions reviewed without certification authority: n4-word-example-rerank-0050 example-rerank signal reviewed as support only; current generated example remained top-ranked by the artifact; Review top-ranked example candidate for 空|そら: 空がとても青いです。 Packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for 空|そら: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "空|そら",
+      "sentenceQualityReview": {
+        "japaneseSentence": "空がとても青いです。",
+        "reading": "そらがとてもあおいです。",
+        "translation": "The sky is very blue.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 空|そら: 空がとても青いです。 with reading そらがとてもあおいです。 and translation The sky is very blue. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The blue-sky sentence directly anchors 空 as sky; the example-rerank artifact agreed with the current example but remained support-only. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 空|そら; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "終わり",
@@ -23329,7 +24031,46 @@
         "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 終わり|おわり checked generated surface, Japanese-source evidence, example sentence 映画の終わりが好きです。 ／ えいがのおわりがすきです。 ／ I like the ending of the movie., notes/support surface Common noun that complements 終わる without duplicating the exact word identity., reading breakdown 終わり おわり and kanji breakdown 終 おわり 終 （おわり） ／ finish / end Stroke order On: シュウ Kun: -お.わる、 お.える、 つい、 つい.に, meaning end / finish (end / finish), labels JLPT N4; JLPT core + reading coverage; focus 終; covers 終: おわり, audio word-reading-終わり-おわり, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-020",
+      "scope": "N4 word Obsidian lane batch 20 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 終わり|おわり from out/word-build/exports/jlpt-n4-words.tsv: word 終わり, reading おわり, meaning end / finish, example sentence 映画の終わりが好きです。 ／ えいがのおわりがすきです。 ／ I like the ending of the movie.",
+        "governed Japanese-source word evidence for 終わり|おわり: exact local JMdict/EDRDG row entrySeq=1589590, priority ichi1,news1,nf05 in downloads/jmdict-word-verification.tsv; meaning support end; ending; close; conclusion; end of (one's) life; death, frequencyRank=100, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for 終わり|おわり from templates/starter_word_study_data.json: source jlptstudy.net-n4, meaning end / finish, example 映画の終わりが好きです。 ／ えいがのおわりがすきです。 ／ I like the ending of the movie., notes Common noun that complements 終わる without duplicating the exact word identity.",
+        "learner-facing meaning for 終わり|おわり: end / finish",
+        "example sentence with reading/translation fit checked for 終わり|おわり: 映画の終わりが好きです。 ／ えいがのおわりがすきです。 ／ I like the ending of the movie.",
+        "notes/support surface checked for 終わり|おわり: Common noun that complements 終わる without duplicating the exact word identity.",
+        "reading breakdown and kanji breakdown checked for 終わり|おわり: reading breakdown <ruby>終わり<rt>おわり</rt></ruby>; kanji breakdown 終 おわり 終 （おわり） ／ finish / end Stroke order On: シュウ Kun: -お.わる、 お.える、 つい、 つい.に",
+        "JLPT, coverage, focus, and covered-reading labels checked for 終わり|おわり: JLPT N4; JLPT core + reading coverage; focus 終; covers 終: おわり",
+        "exact word-reading audio identity checked for 終わり|おわり: word-reading-終わり-おわり; generated audio field [sound:7D42_終-word-reading-終わり-おわり.wav]; managed asset 7D42_終-word-reading-終わり-おわり.wav is present in out/word-build/package package summary as audio/7D42_終-word-reading-終わり-おわり.wav",
+        "pitch accent source and rendered pitch label checked for 終わり|おわり: kanjium-cc-by-sa-4.0 pattern 0 [heiban]; rendered pitch surface contains 0 [heiban]",
+        "managed media provenance checked for 終わり|おわり; package summary contains exact word audio 7D42_終-word-reading-終わり-おわり.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 終わり|おわり",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 終わり|おわり; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for 終わり|おわり: review packet nlp-review-word-n4-0565 is routine, tokenization signal n4-word-0160 matches the card reading, and no model suggestions were raised; packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for 終わり|おわり: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "終わり|おわり",
+      "sentenceQualityReview": {
+        "japaneseSentence": "映画の終わりが好きです。",
+        "reading": "えいがのおわりがすきです。",
+        "translation": "I like the ending of the movie.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 終わり|おわり: 映画の終わりが好きです。 with reading えいがのおわりがすきです。 and translation I like the ending of the movie. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The movie-ending sentence naturally anchors 終わり as end or ending; the tracked full-word reading breakdown and coverage label were reviewed as the current governed word-card surface. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 終わり|おわり; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "光る",
@@ -86743,7 +87484,46 @@
         "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for お兄さん|おにいさん checked generated surface, Japanese-source evidence, example sentence 彼のお兄さんは大学生です。, notes/support surface Common N4 polite or familiar older-brother term from the routed N5 source lane; keeps 兄 -> にい visible as an exact social expression., reading breakdown お兄 にいさん, kanji breakdown 兄 にい 兄 （にい） ／ older brother Stroke order On: キョウ、 ケイ Kun: あに, meaning older brother, labels JLPT N4; JLPT core + reading coverage; focus 兄; covers 兄: にい, audio word-reading-お兄さん-おにいさん, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2, Pitch accent contour 2, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-020",
+      "scope": "N4 word Obsidian lane batch 20 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for お兄さん|おにいさん from out/word-build/exports/jlpt-n4-words.tsv: word お兄さん, reading おにいさん, meaning older brother, example sentence 彼のお兄さんは大学生です。 ／ かれのおにいさんはだいがくせいです。 ／ His older brother is a university student.",
+        "governed Japanese-source word evidence for お兄さん|おにいさん: exact local JMdict/EDRDG row entrySeq=1001830, priority ichi1 in downloads/jmdict-word-verification.tsv; meaning support older brother; elder brother; young man; buddy; fella; laddie, frequencyRank=110, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for お兄さん|おにいさん from templates/starter_word_study_data.json: source jlptstudy.net-n5, meaning older brother, example 彼のお兄さんは大学生です。 ／ かれのおにいさんはだいがくせいです。 ／ His older brother is a university student., notes Common N4 polite or familiar older-brother term from the routed N5 source lane; keeps 兄 -> にい visible as an exact social expression.",
+        "learner-facing meaning for お兄さん|おにいさん: older brother",
+        "example sentence with reading/translation fit checked for お兄さん|おにいさん: 彼のお兄さんは大学生です。 ／ かれのおにいさんはだいがくせいです。 ／ His older brother is a university student.",
+        "notes/support surface checked for お兄さん|おにいさん: Common N4 polite or familiar older-brother term from the routed N5 source lane; keeps 兄 -> にい visible as an exact social expression.",
+        "reading breakdown and kanji breakdown checked for お兄さん|おにいさん: reading breakdown お<ruby>兄<rt>にい</rt></ruby>さん; kanji breakdown 兄 にい 兄 （にい） ／ older brother Stroke order On: キョウ、 ケイ Kun: あに",
+        "JLPT, coverage, focus, and covered-reading labels checked for お兄さん|おにいさん: JLPT N4; JLPT core + reading coverage; focus 兄; covers 兄: にい",
+        "exact word-reading audio identity checked for お兄さん|おにいさん: word-reading-お兄さん-おにいさん; generated audio field [sound:5144_兄-word-reading-お兄さん-おにいさん.wav]; managed asset 5144_兄-word-reading-お兄さん-おにいさん.wav is present in out/word-build/package package summary as audio/5144_兄-word-reading-お兄さん-おにいさん.wav",
+        "pitch accent source and rendered pitch label checked for お兄さん|おにいさん: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka]; rendered pitch surface contains 2 [nakadaka]",
+        "managed media provenance checked for お兄さん|おにいさん; package summary contains exact word audio 5144_兄-word-reading-お兄さん-おにいさん.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for お兄さん|おにいさん",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for お兄さん|おにいさん; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for お兄さん|おにいさん: review packet nlp-review-word-n4-0303 is routine, tokenization signal n4-word-0159 matches the card reading, and no model suggestions were raised; packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for お兄さん|おにいさん: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "お兄さん|おにいさん",
+      "sentenceQualityReview": {
+        "japaneseSentence": "彼のお兄さんは大学生です。",
+        "reading": "かれのおにいさんはだいがくせいです。",
+        "translation": "His older brother is a university student.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for お兄さん|おにいさん: 彼のお兄さんは大学生です。 with reading かれのおにいさんはだいがくせいです。 and translation His older brother is a university student. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The university-student family sentence naturally anchors お兄さん as older brother and preserves the polite/familiar social-expression identity. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for お兄さん|おにいさん; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "お姉さん",
@@ -87236,7 +88016,46 @@
         "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for とり肉|とりにく checked generated surface, Japanese-source evidence, example sentence とり肉を焼きました。, notes/support surface Exact mixed-kana source surface from the routed N5 lane; 肉 is the N4 anchor, and this card stays distinct from full-kanji meat words., reading breakdown とり肉 にく, kanji breakdown 肉 にく 肉 （にく） ／ meat Stroke order On: ニク Kun: しし, meaning chicken meat, labels JLPT N4; JLPT core + reading coverage; focus 肉; covers 肉: にく, audio word-reading-とり肉-とりにく, pitch accent source voicevox-nemo-accent-query pattern 4 [odaka] rendered Pitch 1: 4, Pitch accent contour 4, Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-020",
+      "scope": "N4 word Obsidian lane batch 20 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for とり肉|とりにく from out/word-build/exports/jlpt-n4-words.tsv: word とり肉, reading とりにく, meaning chicken meat, example sentence とり肉を焼きました。 ／ とりにくをやきました。 ／ I grilled chicken meat.",
+        "governed Japanese-source word evidence for とり肉|とりにく: exact local JMdict/EDRDG row entrySeq=1253020, priority news1,nf23 in downloads/jmdict-word-verification.tsv; meaning support chicken meat, frequencyRank=100, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for とり肉|とりにく from templates/starter_word_study_data.json: source jlptstudy.net-n5, meaning chicken meat, example とり肉を焼きました。 ／ とりにくをやきました。 ／ I grilled chicken meat., notes Exact mixed-kana source surface from the routed N5 lane; 肉 is the N4 anchor, and this card stays distinct from full-kanji meat words.",
+        "learner-facing meaning for とり肉|とりにく: chicken meat",
+        "example sentence with reading/translation fit checked for とり肉|とりにく: とり肉を焼きました。 ／ とりにくをやきました。 ／ I grilled chicken meat.",
+        "notes/support surface checked for とり肉|とりにく: Exact mixed-kana source surface from the routed N5 lane; 肉 is the N4 anchor, and this card stays distinct from full-kanji meat words.",
+        "reading breakdown and kanji breakdown checked for とり肉|とりにく: reading breakdown とり<ruby>肉<rt>にく</rt></ruby>; kanji breakdown 肉 にく 肉 （にく） ／ meat Stroke order On: ニク Kun: しし",
+        "JLPT, coverage, focus, and covered-reading labels checked for とり肉|とりにく: JLPT N4; JLPT core + reading coverage; focus 肉; covers 肉: にく",
+        "exact word-reading audio identity checked for とり肉|とりにく: word-reading-とり肉-とりにく; generated audio field [sound:8089_肉-word-reading-とり肉-とりにく.wav]; managed asset 8089_肉-word-reading-とり肉-とりにく.wav is present in out/word-build/package package summary as audio/8089_肉-word-reading-とり肉-とりにく.wav",
+        "pitch accent source and rendered pitch label checked for とり肉|とりにく: voicevox-nemo-accent-query pattern 4 [odaka]; rendered pitch surface contains 4 [odaka]",
+        "managed media provenance checked for とり肉|とりにく; package summary contains exact word audio 8089_肉-word-reading-とり肉-とりにく.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for とり肉|とりにく",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for とり肉|とりにく; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for とり肉|とりにく: review packet nlp-review-word-n4-0309 is routine, tokenization signal n4-word-0153 matches the card reading, and no model suggestions were raised; packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for とり肉|とりにく: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "とり肉|とりにく",
+      "sentenceQualityReview": {
+        "japaneseSentence": "とり肉を焼きました。",
+        "reading": "とりにくをやきました。",
+        "translation": "I grilled chicken meat.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for とり肉|とりにく: とり肉を焼きました。 with reading とりにくをやきました。 and translation I grilled chicken meat. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The grilling sentence directly anchors とり肉 as chicken meat and preserves the mixed-kana written identity from the governed source lane. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for とり肉|とりにく; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "両親",
@@ -89922,7 +90741,46 @@
         "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 赤|あか checked generated surface, Japanese-source evidence, example sentence 赤が好きです。, notes/support surface Common N4 color noun from the routed N5 source lane; distinct from 赤い|あかい and keeps 赤 -> あか visible as a standalone word., reading breakdown 赤 あか, kanji breakdown 赤 あか 赤 （あか） ／ red Stroke order On: シャク、 セキ Kun: あか、 あか.い、 あか.らむ、 あか.らめる, meaning red, labels JLPT N4; JLPT core + reading coverage; focus 赤; covers 赤: あか, audio word-reading-赤-あか, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, Pitch accent contour 1, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-020",
+      "scope": "N4 word Obsidian lane batch 20 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 赤|あか from out/word-build/exports/jlpt-n4-words.tsv: word 赤, reading あか, meaning red, example sentence 赤が好きです。 ／ あかがすきです。 ／ I like red.",
+        "governed Japanese-source word evidence for 赤|あか: exact local JMdict/EDRDG row entrySeq=2013900, priority spec1 in downloads/jmdict-word-verification.tsv; meaning support red; crimson; scarlet; red-containing colour (e.g. brown, pink, orange); Red (i.e. communist); red light (traffic); red ink (i.e. in finance or proof-reading); (in) the red; complete; total; perfect; obvious, frequencyRank=120, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for 赤|あか from templates/starter_word_study_data.json: source jlptstudy.net-n5, meaning red, example 赤が好きです。 ／ あかがすきです。 ／ I like red., notes Common N4 color noun from the routed N5 source lane; distinct from 赤い|あかい and keeps 赤 -> あか visible as a standalone word.",
+        "learner-facing meaning for 赤|あか: red",
+        "example sentence with reading/translation fit checked for 赤|あか: 赤が好きです。 ／ あかがすきです。 ／ I like red.",
+        "notes/support surface checked for 赤|あか: Common N4 color noun from the routed N5 source lane; distinct from 赤い|あかい and keeps 赤 -> あか visible as a standalone word.",
+        "reading breakdown and kanji breakdown checked for 赤|あか: reading breakdown <ruby>赤<rt>あか</rt></ruby>; kanji breakdown 赤 あか 赤 （あか） ／ red Stroke order On: シャク、 セキ Kun: あか、 あか.い、 あか.らむ、 あか.らめる",
+        "JLPT, coverage, focus, and covered-reading labels checked for 赤|あか: JLPT N4; JLPT core + reading coverage; focus 赤; covers 赤: あか",
+        "exact word-reading audio identity checked for 赤|あか: word-reading-赤-あか; generated audio field [sound:8D64_赤-word-reading-赤-あか.wav]; managed asset 8D64_赤-word-reading-赤-あか.wav is present in out/word-build/package package summary as audio/8D64_赤-word-reading-赤-あか.wav",
+        "pitch accent source and rendered pitch label checked for 赤|あか: kanjium-cc-by-sa-4.0 pattern 1 [atamadaka]; rendered pitch surface contains 1 [atamadaka]",
+        "managed media provenance checked for 赤|あか; package summary contains exact word audio 8D64_赤-word-reading-赤-あか.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 赤|あか",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 赤|あか; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for 赤|あか: review packet nlp-review-word-n4-0631 is routine, tokenization signal n4-word-0154 matches the card reading, and no model suggestions were raised; packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for 赤|あか: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "赤|あか",
+      "sentenceQualityReview": {
+        "japaneseSentence": "赤が好きです。",
+        "reading": "あかがすきです。",
+        "translation": "I like red.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 赤|あか: 赤が好きです。 with reading あかがすきです。 and translation I like red. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The preference sentence naturally anchors 赤 as the standalone color noun red, distinct from 赤い and useful for color vocabulary. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 赤|あか; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "近く",
@@ -90047,7 +90905,46 @@
         "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 近く|ちかく checked generated surface, Japanese-source evidence, example sentence 駅の近くに店があります。, notes/support surface Common standalone vicinity noun/adverb from the routed N5 source lane; phrase cards such as 海の近く do not govern this exact word identity., reading breakdown 近 ちかく, kanji breakdown 近 ちか 近 （ちか） ／ near / close Stroke order On: キン、 コン Kun: ちか.い, meaning nearby / vicinity, labels JLPT N4; JLPT core + reading coverage; focus 近; covers 近: ちか, audio word-reading-近く-ちかく, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] / 1 [atamadaka] rendered Pitch 1: 2, Pitch accent contour 2, Pitch 2: 1, Pitch accent contour 1, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-018",
+      "scope": "N4 word Obsidian lane batch 18 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 近く|ちかく from out/word-build/exports/jlpt-n4-words.tsv: word 近く, reading ちかく, meaning nearby / vicinity, example sentence 駅の近くに店があります。 ／ えきのちかくにみせがあります。 ／ There is a shop near the station.",
+        "governed Japanese-source word evidence for 近く|ちかく: exact local JMdict/EDRDG row entrySeq=1242160, priority ichi1 in downloads/jmdict-word-verification.tsv; meaning support near; neighbourhood; neighborhood; vicinity; nearly (e.g. \"it took nearly one year\"); close to; shortly; soon, frequencyRank=110, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for 近く|ちかく from templates/starter_word_study_data.json: source jlptstudy.net-n5, meaning nearby / vicinity, example 駅の近くに店があります。 ／ えきのちかくにみせがあります。 ／ There is a shop near the station., notes Common standalone vicinity noun/adverb from the routed N5 source lane; phrase cards such as 海の近く do not govern this exact word identity.",
+        "learner-facing meaning for 近く|ちかく: nearby / vicinity",
+        "example sentence with reading/translation fit checked for 近く|ちかく: 駅の近くに店があります。 ／ えきのちかくにみせがあります。 ／ There is a shop near the station.",
+        "notes/support surface checked for 近く|ちかく: Common standalone vicinity noun/adverb from the routed N5 source lane; phrase cards such as 海の近く do not govern this exact word identity.",
+        "reading breakdown and kanji breakdown checked for 近く|ちかく: reading breakdown <ruby>近<rt>ちか</rt></ruby>く; kanji breakdown 近 ちか 近 （ちか） ／ near / close Stroke order On: キン、 コン Kun: ちか.い",
+        "JLPT, coverage, focus, and covered-reading labels checked for 近く|ちかく: JLPT N4; JLPT core + reading coverage; focus 近; covers 近: ちか",
+        "exact word-reading audio identity checked for 近く|ちかく: word-reading-近く-ちかく; generated audio field [sound:8FD1_近-word-reading-近く-ちかく.wav]; managed asset 8FD1_近-word-reading-近く-ちかく.wav is present in out/word-build/package package summary as audio/8FD1_近-word-reading-近く-ちかく.wav",
+        "pitch accent source and rendered pitch label checked for 近く|ちかく: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] / 1 [atamadaka]; rendered pitch surface contains 2 [nakadaka]; 1 [atamadaka]",
+        "managed media provenance checked for 近く|ちかく; package summary contains exact word audio 8FD1_近-word-reading-近く-ちかく.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 近く|ちかく",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 近く|ちかく; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for 近く|ちかく: review packet nlp-review-word-n4-0438 is routine, tokenization signal n4-word-0141 matches the card reading, and no model suggestions were raised; packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for 近く|ちかく: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "近く|ちかく",
+      "sentenceQualityReview": {
+        "japaneseSentence": "駅の近くに店があります。",
+        "reading": "えきのちかくにみせがあります。",
+        "translation": "There is a shop near the station.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 近く|ちかく: 駅の近くに店があります。 with reading えきのちかくにみせがあります。 and translation There is a shop near the station. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The station/shop sentence naturally anchors 近く as nearby or vicinity in a common location pattern. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 近く|ちかく; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   },
   {
     "word": "門",
@@ -90861,6 +91758,45 @@
         "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 黒|くろ checked generated surface, Japanese-source evidence, example sentence 黒が好きです。, notes/support surface Common N4 color noun from the routed N5 source lane; distinct from 黒い|くろい and keeps 黒 -> くろ visible as a standalone word., reading breakdown 黒 くろ, kanji breakdown 黒 くろ 黒 （くろ） ／ black Stroke order On: コク Kun: くろ、 くろ.い、 くろ.ずむ, meaning black, labels JLPT N4; JLPT core + reading coverage; focus 黒; covers 黒: くろ, audio word-reading-黒-くろ, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, Pitch accent contour 1, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "word-platinum-v3-evidence-lanes",
+      "reviewedAt": "2026-05-21",
+      "reviewedAfterStandard": true,
+      "reviewer": "codex-obsidian-review",
+      "mechanicalMigration": false,
+      "batchId": "n4-word-obsidian-rereview-batch-018",
+      "scope": "N4 word Obsidian lane batch 18 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 黒|くろ from out/word-build/exports/jlpt-n4-words.tsv: word 黒, reading くろ, meaning black, example sentence 黒が好きです。 ／ くろがすきです。 ／ I like black.",
+        "governed Japanese-source word evidence for 黒|くろ: exact local JMdict/EDRDG row entrySeq=1287410, priority ichi1,news1,nf03 in downloads/jmdict-word-verification.tsv; meaning support black; black stone; guilt; guilty person, frequencyRank=100, source=jmdict; used as dictionary verification and commonness/priority support only, not as unchecked generated truth",
+        "starter study data for 黒|くろ from templates/starter_word_study_data.json: source jlptstudy.net-n5, meaning black, example 黒が好きです。 ／ くろがすきです。 ／ I like black., notes Common N4 color noun from the routed N5 source lane; distinct from 黒い|くろい and keeps 黒 -> くろ visible as a standalone word.",
+        "learner-facing meaning for 黒|くろ: black",
+        "example sentence with reading/translation fit checked for 黒|くろ: 黒が好きです。 ／ くろがすきです。 ／ I like black.",
+        "notes/support surface checked for 黒|くろ: Common N4 color noun from the routed N5 source lane; distinct from 黒い|くろい and keeps 黒 -> くろ visible as a standalone word.",
+        "reading breakdown and kanji breakdown checked for 黒|くろ: reading breakdown <ruby>黒<rt>くろ</rt></ruby>; kanji breakdown 黒 くろ 黒 （くろ） ／ black Stroke order On: コク Kun: くろ、 くろ.い、 くろ.ずむ",
+        "JLPT, coverage, focus, and covered-reading labels checked for 黒|くろ: JLPT N4; JLPT core + reading coverage; focus 黒; covers 黒: くろ",
+        "exact word-reading audio identity checked for 黒|くろ: word-reading-黒-くろ; generated audio field [sound:9ED2_黒-word-reading-黒-くろ.wav]; managed asset 9ED2_黒-word-reading-黒-くろ.wav is present in out/word-build/package package summary as audio/9ED2_黒-word-reading-黒-くろ.wav",
+        "pitch accent source and rendered pitch label checked for 黒|くろ: kanjium-cc-by-sa-4.0 pattern 1 [atamadaka]; rendered pitch surface contains 1 [atamadaka]",
+        "managed media provenance checked for 黒|くろ; package summary contains exact word audio 9ED2_黒-word-reading-黒-くろ.wav, generated pitch surface is present, and no silent fallback was accepted for audio or pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 黒|くろ",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 黒|くろ; kanji-deck certification kept separate from this word-card rereview",
+        "NLP support context checked for 黒|くろ: review packet nlp-review-word-n4-0494 is routine, tokenization signal n4-word-0139 matches the card reading, and no model suggestions were raised; packet authority is assistive-only and non-certifying.",
+        "verification limitations considered for 黒|くろ: single JMdict/EDRDG source family remains a source-depth limitation; no independent source-family corroboration is claimed, and no unresolved core-card uncertainty remained after direct current card review"
+      ],
+      "cardReviewed": "黒|くろ",
+      "sentenceQualityReview": {
+        "japaneseSentence": "黒が好きです。",
+        "reading": "くろがすきです。",
+        "translation": "I like black.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 黒|くろ: 黒が好きです。 with reading くろがすきです。 and translation I like black. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The preference sentence naturally anchors 黒 as the standalone color noun black, distinct from 黒い and useful for color vocabulary. This is human rereview proof, not NLP certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 黒|くろ; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, managed media provenance, and assistive-only NLP context were rereviewed directly."
+    }
   }
 ]

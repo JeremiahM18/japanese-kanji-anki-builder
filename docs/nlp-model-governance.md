@@ -17,6 +17,7 @@ The registry lives at [../templates/nlp_model_manifest.json](../templates/nlp_mo
 The governed model-backed artifact surface starts with suggestion validation:
 
 ```bash
+npm run deck:words:expansion-support -- --levels=5,4,3,2,1
 npm run nlp:examples:rerank -- --level=5
 npm run nlp:sense-fit:audit -- --level=5
 npm run nlp:reading-gaps:discover -- --level=5 --include-deferred
@@ -26,6 +27,8 @@ npm run nlp:review-packets:validate
 npm run nlp:drafts:generate -- --level=5
 npm run nlp:drafts:validate
 ```
+
+`deck:words:expansion-support` is the word expansion integration surface. It runs the governed NLP support stack for every selected N level: model/runtime checks, tokenization, embeddings, example reranking, sense-fit warnings, reading-gap candidate discovery, human review packets, draft proposals, artifact validation, and the aggregate NLP governance gate. The level-specific aliases `deck:words:expansion-support:n5` through `deck:words:expansion-support:n1` are the default way to attach NLP evidence to word expansion review without treating NLP as certification.
 
 The example reranker reads generated word rows, the local sentence corpus, and validated word-card embedding artifacts, then emits ranked review suggestions under `out/nlp-suggestions/`. The sense-fit audit reads generated word rows and validated word-card embeddings, compares meaning-focused and example-focused embedding views, and emits warning suggestions for possible meaning/example/translation alignment risks. The reading-gap discovery command reads the governed word reading-gap plan, optionally including explicitly deferred gaps, and emits candidate suggestions without changing any gap disposition. By default the suggestion validator checks JSON artifacts under `out/nlp-suggestions/`. A missing directory is treated as an empty suggestion lane. Non-empty suggestion artifacts must bind to an active model in the manifest, use an allowed assistive lane, include pinned input hashes, carry per-suggestion evidence and limitations, and repeat the human-promotion boundary on each suggestion.
 

@@ -27,7 +27,7 @@ flowchart TD
 
 ## Assistive NLP Review Engine
 
-The repository now has a governed local NLP lane for vocabulary review. It uses active `kuromoji.js` tokenization and pinned `Transformers.js` MiniLM embeddings from [templates/nlp_model_manifest.json](templates/nlp_model_manifest.json) to find review work: tokenization oddities, example-ranking candidates, sense-fit warnings, reading-gap candidates, human review packets, and draft-proposal scaffolds.
+The repository now has a governed local NLP lane for vocabulary expansion and review. It uses active `kuromoji.js` tokenization and pinned `Transformers.js` MiniLM embeddings from [templates/nlp_model_manifest.json](templates/nlp_model_manifest.json) to find review work: tokenization oddities, example-ranking candidates, sense-fit warnings, reading-gap candidates, human review packets, and draft-proposal scaffolds.
 
 The boundary is deliberate: NLP output can point reviewers at likely issues and useful candidates, but it cannot write tracked templates, certify cards, approve Gold/Platinum/Obsidian, or claim release readiness. Human promotion into tracked contracts is still required.
 
@@ -48,7 +48,23 @@ flowchart LR
     J --> K["Gold + Platinum + Obsidian gates"]
 ```
 
-Typical N5 NLP review path:
+Run the expansion-support surface for any word N level:
+
+```bash
+npm run deck:words:expansion-support:n5
+npm run deck:words:expansion-support:n4
+npm run deck:words:expansion-support:n3
+npm run deck:words:expansion-support:n2
+npm run deck:words:expansion-support:n1
+```
+
+The same runner accepts a combined scope:
+
+```bash
+npm run deck:words:expansion-support -- --levels=5,4,3,2,1
+```
+
+That command runs the governed NLP expansion stack for each selected level: model/runtime checks, tokenization, embeddings, example reranking, sense-fit warnings, reading-gap candidate discovery, human review packets, draft proposals, artifact validation, and the NLP governance gate. The component commands remain available when a reviewer needs a narrower investigation:
 
 ```bash
 npm run nlp:models:audit
@@ -527,6 +543,7 @@ npm run deck:words:ready -- --levels=5 --require-no-active-triage
 ```bash
 npm run deck:words:gap-plan:n4 -- --limit=50
 npm run deck:words:gap-plan:n4 -- --only=contract-extensions --quality=strong --limit=15 --suggestions=3
+npm run deck:words:expansion-support:n4
 ```
 
 The gap planner ranks open reading coverage work and suggests candidate support words from:
@@ -535,7 +552,7 @@ The gap planner ranks open reading coverage work and suggests candidate support 
 - sentence corpus rows
 - local kanjiapi word cache evidence
 
-Planner output is advisory. A suggested card still needs canonical contract coverage, explicit reading intent, cross-level labels, media, sentence review, and deck-policy validation before shipping.
+Planner output is advisory. A suggested card still needs canonical contract coverage, explicit reading intent, cross-level labels, media, sentence review, and deck-policy validation before shipping. `deck:words:expansion-support:n4` adds the governed NLP expansion layer for the same level: tokenization, embeddings, example reranking, sense-fit warnings, reading-gap candidate discovery, review packets, draft proposals, validation, and the NLP governance gate.
 
 ### Plan Word Inventory Expansion
 
@@ -543,12 +560,16 @@ Planner output is advisory. A suggested card still needs canonical contract cove
 npm run deck:words:expansion-candidates:n5 -- --source=downloads/n5-vocab.tsv --source-label=jlptstudy.net-n5 --limit=50
 npm run deck:words:expansion-candidates:n5 -- --source=downloads/n5-vocab.tsv --source-label=jlptstudy.net-n5 --kanji-scope=target-level --require-source-level
 npm run deck:words:expansion-candidates:n4 -- --limit=50
+npm run deck:words:expansion-support:n4
 npm run data:normalize:tanos-jlpt-words -- --level=3
 npm run deck:words:expansion-candidates:n3 -- --limit=50
+npm run deck:words:expansion-support:n3
 npm run data:normalize:tanos-jlpt-words -- --level=2
 npm run deck:words:expansion-candidates:n2 -- --limit=50
+npm run deck:words:expansion-support:n2
 npm run data:normalize:tanos-jlpt-words -- --level=1
 npm run deck:words:expansion-candidates:n1 -- --limit=50
+npm run deck:words:expansion-support:n1
 ```
 
 The expansion candidate report is a read-only post-coverage tool. Use it after the current reading-coverage pass to compare an explicit sourced vocabulary list against the governed word contract. It filters for written-reading rows that contain target-level kanji, are not already governed or excluded, and fit the requested kanji scope:
@@ -567,6 +588,8 @@ The report deduplicates exact `written|reading` identities and also flags same-w
 Tracked triage decisions live in [templates/word_inventory_expansion_triage.json](templates/word_inventory_expansion_triage.json). These decisions are read-only planning metadata, not card approvals. `keep_candidate` means "worth source-checking next"; it does not bypass the 8-card word Platinum batch size, generated-surface inspection, Gold regression, Platinum evidence, media review, or readiness gates.
 
 When `--source` is omitted, the report resolves the single active `candidate-discovery` source for the requested level from [templates/word_source_manifest.json](templates/word_source_manifest.json), applies its source label, format, candidate policy, and local integrity pins, then fails instead of trusting a mismatched ignored TSV. N3 resolves the active pinned `tanos-n3-vocab` lane by default, N2 resolves the active pinned `tanos-n2-vocab` lane by default, and N1 resolves the active pinned `tanos-n1-vocab` lane by default.
+
+After any expansion-candidate pass that leaves human-review work, run the matching `deck:words:expansion-support:n*` command. It does not promote candidates, but it generates the NLP evidence packet that should travel with human expansion review for every N level.
 
 ### Check Word Expansion Signals
 
@@ -744,6 +767,12 @@ Repository governance:
 | `npm run deck:words:expansion-candidates:n2 -- --limit=50` | Diff the manifest-pinned Tanos N2 candidate-discovery source into read-only word expansion candidates |
 | `npm run data:normalize:tanos-jlpt-words -- --level=1` | Normalize ignored Tanos N1 Mnemosyne English and hiragana exports into the pinned local source TSV |
 | `npm run deck:words:expansion-candidates:n1 -- --limit=50` | Diff the manifest-pinned Tanos N1 candidate-discovery source into read-only word expansion candidates |
+| `npm run deck:words:expansion-support -- --levels=5,4,3,2,1` | Run governed NLP expansion support for selected word levels and finish with artifact validation plus the NLP governance gate |
+| `npm run deck:words:expansion-support:n5` | Run governed NLP expansion support for N5 word expansion/review |
+| `npm run deck:words:expansion-support:n4` | Run governed NLP expansion support for N4 word expansion/review |
+| `npm run deck:words:expansion-support:n3` | Run governed NLP expansion support for N3 word expansion/review |
+| `npm run deck:words:expansion-support:n2` | Run governed NLP expansion support for N2 word expansion/review |
+| `npm run deck:words:expansion-support:n1` | Run governed NLP expansion support for N1 word expansion/review |
 | `npm run data:normalize:words:jmdict` | Normalize ignored local JMdict XML into the pinned word dictionary/commonness TSV shape |
 | `npm run deck:words:candidate-agreement -- --levels=5,4` | Rebuild the N5/N4 candidate universe from the governed word source manifest with source-purpose, agreement, triage, and placement signals |
 | `npm run deck:words:expansion-signals -- --levels=5,4` | Summarize per-level reading and enhancement expansion exhaustion without claiming release readiness |

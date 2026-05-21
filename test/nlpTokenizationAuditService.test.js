@@ -11,6 +11,7 @@ const {
     buildNlpTokenizationAuditReport,
     buildReviewSignal,
     formatNlpTokenizationAuditReport,
+    KANJI_READING_VARIANT_SIGNAL_KIND,
 } = require("../src/services/nlpTokenizationAuditService");
 
 function buildManifest() {
@@ -206,6 +207,53 @@ test("buildNlpTokenizationAuditReport flags unknown tokens and reading mismatche
     assert.equal(report.signals[0].signalKinds.includes("artifact-warning"), true);
 });
 
+test("buildNlpTokenizationAuditReport treats kanji-card tokenizer readings as routine variants", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-token-audit-"));
+    writeArtifact(dir, "kanji.json", buildArtifact({
+        scope: {
+            targetKind: "kanji-card",
+            levels: [5],
+            source: "generated-kanji-rows",
+        },
+        items: [{
+            id: "n5-kanji-token-001",
+            target: {
+                kind: "kanji-card",
+                deckKind: "kanji",
+                level: 5,
+                written: "万",
+                reading: "まん",
+            },
+            inputText: "万",
+            tokens: [{
+                surface: "万",
+                start: 0,
+                end: 1,
+                lemma: "万",
+                reading: "バン",
+                partOfSpeech: ["名詞"],
+                known: true,
+            }],
+            limitations: ["Fixture tokenization only."],
+        }],
+    }));
+
+    const report = buildNlpTokenizationAuditReport({
+        artifactDir: dir,
+        loadManifestFn: () => buildManifest(),
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.counts.attentionSignals, 0);
+    assert.equal(report.counts.routineSignals, 1);
+    assert.equal(report.counts.readingMismatchItems, 0);
+    assert.equal(report.counts.kanjiReadingVariantItems, 1);
+    assert.equal(report.signals[0].reviewPriority, "routine");
+    assert.equal(report.signals[0].readingAlignment.matches, false);
+    assert.equal(report.signals[0].signalKinds.includes(KANJI_READING_VARIANT_SIGNAL_KIND), true);
+    assert.equal(report.signals[0].signalKinds.includes("token-reading-card-reading-mismatch"), false);
+});
+
 test("buildNlpTokenizationAuditReport fails closed on invalid tokenization artifacts", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-token-audit-"));
     fs.writeFileSync(path.join(dir, "broken.json"), "{ nope");
@@ -235,6 +283,7 @@ test("formatNlpTokenizationAuditReport renders review signals and release bounda
             unknownTokenItems: 0,
             missingTokenReadingItems: 0,
             readingMismatchItems: 0,
+            kanjiReadingVariantItems: 0,
             warningItems: 0,
             signalsByKind: {
                 "routine-tokenization-review": 1,

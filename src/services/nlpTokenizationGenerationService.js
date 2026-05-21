@@ -21,7 +21,7 @@ const TOKENIZATION_LIMITATIONS = Object.freeze([
 const KANJI_TOKENIZATION_LIMITATIONS = Object.freeze([
     ...TOKENIZATION_LIMITATIONS,
     "Kanji-card tokenization checks the bare kanji anchor and tokenizer reading only; it does not validate kanji meanings, JLPT placement, on/kun lists, stroke order, audio, or source provenance.",
-    "Tokenizer readings can prefer dictionary/common readings that differ from the curated learner-facing primary reading; mismatches are review-prioritization signals only.",
+    "Tokenizer readings can prefer dictionary/common readings that differ from the curated learner-facing primary reading; normal kanji-card differences are reading-variant context, while unknown or missing tokenizer readings remain attention signals.",
 ]);
 
 function sha256FileWithSize(filePath) {

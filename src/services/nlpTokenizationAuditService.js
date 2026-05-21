@@ -24,6 +24,7 @@ const MULTI_TOKEN_SIGNAL_KIND = "multi-token-surface";
 const UNKNOWN_TOKEN_SIGNAL_KIND = "unknown-token";
 const MISSING_READING_SIGNAL_KIND = "missing-token-reading";
 const READING_MISMATCH_SIGNAL_KIND = "token-reading-card-reading-mismatch";
+const KANJI_READING_VARIANT_SIGNAL_KIND = "kanji-card-tokenizer-reading-variant";
 const ARTIFACT_WARNING_SIGNAL_KIND = "artifact-warning";
 
 function incrementCount(counts, key) {
@@ -47,6 +48,14 @@ function buildTokenReadingSummary(tokens = []) {
     return tokens.map(normalizeTokenReading).join("");
 }
 
+function isKanjiCardTarget(item = {}) {
+    return item.target?.kind === "kanji-card";
+}
+
+function signalKindRequiresAttention(kind) {
+    return kind !== ROUTINE_SIGNAL_KIND && kind !== KANJI_READING_VARIANT_SIGNAL_KIND;
+}
+
 function buildSignalKinds({ item, joinedTokenReading, normalizedCardReading }) {
     const kinds = [ROUTINE_SIGNAL_KIND];
     if ((item.tokens || []).length > 1) {
@@ -58,7 +67,12 @@ function buildSignalKinds({ item, joinedTokenReading, normalizedCardReading }) {
     if ((item.tokens || []).some((token) => !normalizeTokenReading(token))) {
         kinds.push(MISSING_READING_SIGNAL_KIND);
     }
-    if (normalizedCardReading && joinedTokenReading && joinedTokenReading !== normalizedCardReading) {
+    const hasReadingDifference = normalizedCardReading
+        && joinedTokenReading
+        && joinedTokenReading !== normalizedCardReading;
+    if (hasReadingDifference && isKanjiCardTarget(item)) {
+        kinds.push(KANJI_READING_VARIANT_SIGNAL_KIND);
+    } else if (hasReadingDifference) {
         kinds.push(READING_MISMATCH_SIGNAL_KIND);
     }
     if ((item.warnings || []).length > 0) {
@@ -85,7 +99,7 @@ function buildReviewSignal({ artifactPath, artifact, item }) {
         joinedTokenReading,
         normalizedCardReading,
     });
-    const requiresAttention = signalKinds.some((kind) => kind !== ROUTINE_SIGNAL_KIND);
+    const requiresAttention = signalKinds.some(signalKindRequiresAttention);
 
     return {
         id: item.id,
@@ -146,6 +160,7 @@ function buildEmptyCounts() {
         unknownTokenItems: 0,
         missingTokenReadingItems: 0,
         readingMismatchItems: 0,
+        kanjiReadingVariantItems: 0,
         warningItems: 0,
         signalsByKind: {},
         signalsByLevel: {},
@@ -233,6 +248,9 @@ function buildNlpTokenizationAuditReport({
         if (signal.signalKinds.includes(READING_MISMATCH_SIGNAL_KIND)) {
             counts.readingMismatchItems += 1;
         }
+        if (signal.signalKinds.includes(KANJI_READING_VARIANT_SIGNAL_KIND)) {
+            counts.kanjiReadingVariantItems += 1;
+        }
         if (signal.signalKinds.includes(ARTIFACT_WARNING_SIGNAL_KIND)) {
             counts.warningItems += 1;
         }
@@ -293,6 +311,7 @@ function formatNlpTokenizationAuditReport(report = {}, { signalLimit = 20 } = {}
         `- unknown-token items: ${report.counts?.unknownTokenItems || 0}`,
         `- missing token-reading items: ${report.counts?.missingTokenReadingItems || 0}`,
         `- token/card reading mismatch items: ${report.counts?.readingMismatchItems || 0}`,
+        `- kanji tokenizer reading variant items: ${report.counts?.kanjiReadingVariantItems || 0}`,
         `- warning items: ${report.counts?.warningItems || 0}`,
         `- signals by kind: ${formatCountMap(report.counts?.signalsByKind)}`,
         `- signals by level: ${formatCountMap(report.counts?.signalsByLevel)}`,
@@ -325,6 +344,7 @@ function formatNlpTokenizationAuditReport(report = {}, { signalLimit = 20 } = {}
 
 module.exports = {
     ARTIFACT_WARNING_SIGNAL_KIND,
+    KANJI_READING_VARIANT_SIGNAL_KIND,
     MISSING_READING_SIGNAL_KIND,
     MULTI_TOKEN_SIGNAL_KIND,
     READING_MISMATCH_SIGNAL_KIND,

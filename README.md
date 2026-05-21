@@ -27,7 +27,7 @@ flowchart TD
 
 ## Assistive NLP Review Engine
 
-The repository now has governed local NLP lanes for assistive review. Word expansion uses active `kuromoji.js` tokenization and pinned `Transformers.js` MiniLM embeddings from [templates/nlp_model_manifest.json](templates/nlp_model_manifest.json) to find review work: tokenization oddities, example-ranking candidates, sense-fit warnings, reading-gap candidates, human review packets, and draft-proposal scaffolds. Kanji review has its own separate signal lane: it tokenizes generated kanji-card anchors, audits tokenizer/card reading signals, and creates kanji-scoped review packets and draft notes.
+The repository now has governed local NLP lanes for assistive review. Word expansion uses active `kuromoji.js` tokenization and pinned `Transformers.js` MiniLM embeddings from [templates/nlp_model_manifest.json](templates/nlp_model_manifest.json) to find review work: tokenization oddities, example-ranking candidates, sense-fit warnings, reading-gap candidates, human review packets, and draft-proposal scaffolds. Kanji review has its own separate signal lane: it tokenizes generated kanji-card anchors, treats normal tokenizer/primary-reading differences as kanji reading variants, keeps unknown or missing tokenizer readings as attention signals, and creates kanji-scoped review packets and draft notes.
 
 The boundary is deliberate: NLP output can point reviewers at likely issues and useful candidates, but it cannot write tracked templates, certify cards, approve Gold/Platinum/Obsidian, or claim release readiness. Human promotion into tracked contracts is still required.
 
@@ -77,7 +77,7 @@ npm run deck:kanji:nlp-signals:n5
 npm run deck:kanji:nlp-signals -- --levels=5,4
 ```
 
-That command refreshes generated kanji TSVs, creates kanji-card tokenization artifacts, converts tokenizer/card-reading signals into kanji-scoped review packets and tokenization-only draft notes, validates the artifacts, and runs the NLP governance gate. It does not run word expansion, word reading-gap discovery, word example reranking, or word sense-fit audits.
+That command refreshes generated kanji TSVs, creates kanji-card tokenization artifacts, converts tokenizer/card-reading signals into kanji-scoped review packets and tokenization-only draft notes, validates the artifacts, and runs the NLP governance gate. Normal kanji tokenizer/primary-reading differences are review context, not automatic defects; unknown tokens, missing token readings, artifact warnings, and other hard signals still require attention. It does not run word expansion, word reading-gap discovery, word example reranking, or word sense-fit audits.
 
 ```bash
 npm run nlp:models:audit

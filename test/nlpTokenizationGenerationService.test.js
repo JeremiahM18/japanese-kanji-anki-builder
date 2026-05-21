@@ -179,6 +179,7 @@ test("buildNlpKanjiTokenizationArtifact emits governed kanji-card tokenization",
     assert.equal(artifact.items[0].target.reading, "にち");
     assert.equal(artifact.items[0].target.cardId, "N5:日");
     assert.match(artifact.items[0].limitations.join("\n"), /Kanji-card tokenization checks the bare kanji anchor/);
+    assert.match(artifact.items[0].limitations.join("\n"), /normal kanji-card differences are reading-variant context/);
     assert.equal(artifact.authority.certifiesCards, false);
 });
 

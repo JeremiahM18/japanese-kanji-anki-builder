@@ -5,9 +5,12 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const {
+    buildNlpKanjiTokenizationArtifact,
     buildNlpWordTokenizationArtifact,
+    parseKanjiDeckTsvRows,
     parseWordDeckTsvRows,
     tokenizeText,
+    writeNlpKanjiTokenizationArtifact,
     writeNlpWordTokenizationArtifact,
 } = require("../src/services/nlpTokenizationGenerationService");
 const {
@@ -91,6 +94,16 @@ test("parseWordDeckTsvRows binds generated word rows by written and reading", ()
     assert.throws(() => parseWordDeckTsvRows("Word\tMeaning\n日本語\tJapanese\n"), /missing required Reading column/);
 });
 
+test("parseKanjiDeckTsvRows binds generated kanji rows by kanji-card identity", () => {
+    const rows = parseKanjiDeckTsvRows("Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\n日\t日\tsun / day\tにち\n月\t月\tmoon / month\tつき\n");
+
+    assert.deepEqual(rows.map((row) => [row.kanji, row.primaryReading, row.displayWord, row.rowNumber]), [
+        ["日", "にち", "日", 2],
+        ["月", "つき", "月", 3],
+    ]);
+    assert.throws(() => parseKanjiDeckTsvRows("Kanji\tMeaningJP\n日\tday\n"), /missing required PrimaryReading column/);
+});
+
 test("tokenizeText maps kuromoji tokens into contiguous artifact spans", () => {
     const tokens = tokenizeText({
         tokenizer: buildFakeTokenizer(),
@@ -136,6 +149,39 @@ test("buildNlpWordTokenizationArtifact emits governed word-card tokenization", a
     assert.equal(artifact.generator.inputHashes.length, 2);
 });
 
+test("buildNlpKanjiTokenizationArtifact emits governed kanji-card tokenization", async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-token-generation-"));
+    const kanjiTsvPath = path.join(dir, "jlpt-n5.tsv");
+    const manifestPath = path.join(dir, "nlp_model_manifest.json");
+    fs.writeFileSync(kanjiTsvPath, "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\n日\t日\tday / sun\tにち\n月\t月\tmoon / month\tつき\n");
+    fs.writeFileSync(manifestPath, JSON.stringify(buildManifest(), null, 2));
+
+    const artifact = await buildNlpKanjiTokenizationArtifact({
+        kanjiTsvPath,
+        manifestPath,
+        workspaceRoot: dir,
+        level: 5,
+        limit: 1,
+        now: () => new Date("2026-05-20T00:00:00.000Z"),
+        loadManifestFn: () => ({
+            ...buildManifest(),
+            manifestPath,
+        }),
+        buildTokenizerFn: async () => buildFakeTokenizer(),
+    });
+
+    assert.equal(artifact.runtime.runtimeId, "kuromoji-js");
+    assert.equal(artifact.scope.targetKind, "kanji-card");
+    assert.equal(artifact.scope.source, "generated-kanji-rows");
+    assert.equal(artifact.items.length, 1);
+    assert.equal(artifact.items[0].target.deckKind, "kanji");
+    assert.equal(artifact.items[0].target.written, "日");
+    assert.equal(artifact.items[0].target.reading, "にち");
+    assert.equal(artifact.items[0].target.cardId, "N5:日");
+    assert.match(artifact.items[0].limitations.join("\n"), /Kanji-card tokenization checks the bare kanji anchor/);
+    assert.equal(artifact.authority.certifiesCards, false);
+});
+
 test("writeNlpWordTokenizationArtifact writes artifacts accepted by the validator", async () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-token-generation-"));
     const wordTsvPath = path.join(dir, "jlpt-n5-words.tsv");
@@ -146,6 +192,37 @@ test("writeNlpWordTokenizationArtifact writes artifacts accepted by the validato
 
     const result = await writeNlpWordTokenizationArtifact({
         wordTsvPath,
+        manifestPath,
+        outPath,
+        workspaceRoot: dir,
+        level: 5,
+        now: () => new Date("2026-05-20T00:00:00.000Z"),
+        loadManifestFn: () => ({
+            ...buildManifest(),
+            manifestPath,
+        }),
+        buildTokenizerFn: async () => buildFakeTokenizer(),
+    });
+    const report = buildNlpTokenizationArtifactReport({
+        artifactPath: result.outPath,
+        loadManifestFn: () => buildManifest(),
+    });
+
+    assert.equal(fs.existsSync(outPath), true);
+    assert.equal(report.passed, true);
+    assert.equal(report.counts.items, 1);
+});
+
+test("writeNlpKanjiTokenizationArtifact writes artifacts accepted by the validator", async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-token-generation-"));
+    const kanjiTsvPath = path.join(dir, "jlpt-n5.tsv");
+    const manifestPath = path.join(dir, "nlp_model_manifest.json");
+    const outPath = path.join(dir, "kanji-tokens.json");
+    fs.writeFileSync(kanjiTsvPath, "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\n日\t日\tday / sun\tにち\n");
+    fs.writeFileSync(manifestPath, JSON.stringify(buildManifest(), null, 2));
+
+    const result = await writeNlpKanjiTokenizationArtifact({
+        kanjiTsvPath,
         manifestPath,
         outPath,
         workspaceRoot: dir,

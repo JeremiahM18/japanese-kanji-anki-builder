@@ -18,6 +18,11 @@ const TOKENIZATION_LIMITATIONS = Object.freeze([
     "kuromoji.js tokenization is assistive-only and must be human-reviewed before any learner-facing card change.",
     "Tokenization artifacts are not source evidence and do not certify Gold, Platinum, Obsidian, or release readiness.",
 ]);
+const KANJI_TOKENIZATION_LIMITATIONS = Object.freeze([
+    ...TOKENIZATION_LIMITATIONS,
+    "Kanji-card tokenization checks the bare kanji anchor and tokenizer reading only; it does not validate kanji meanings, JLPT placement, on/kun lists, stroke order, audio, or source provenance.",
+    "Tokenizer readings can prefer dictionary/common readings that differ from the curated learner-facing primary reading; mismatches are review-prioritization signals only.",
+]);
 
 function sha256FileWithSize(filePath) {
     const bytes = fs.readFileSync(filePath);
@@ -62,6 +67,24 @@ function parseWordDeckTsvRows(tsvText) {
             jlptLevel: String(row.JLPTLevel || "").trim(),
         }))
         .filter((row) => row.written && row.reading);
+}
+
+function parseKanjiDeckTsvRows(tsvText) {
+    const { header, rows } = parseTsv(tsvText);
+    for (const fieldName of ["Kanji", "PrimaryReading"]) {
+        if (!header.includes(fieldName)) {
+            throw new Error(`Kanji tokenization TSV is missing required ${fieldName} column.`);
+        }
+    }
+
+    return rows
+        .map((row, index) => ({
+            rowNumber: index + 2,
+            kanji: String(row.Kanji || "").trim(),
+            primaryReading: String(row.PrimaryReading || "").trim(),
+            displayWord: String(row.DisplayWord || "").trim(),
+        }))
+        .filter((row) => row.kanji);
 }
 
 function normalizePartOfSpeech(token = {}) {
@@ -175,6 +198,39 @@ function buildTokenizationItem({ row, index, level, tokenizer }) {
     };
 }
 
+function buildKanjiTokenizationItem({ row, index, level, tokenizer }) {
+    const tokens = tokenizeText({
+        tokenizer,
+        inputText: row.kanji,
+    });
+    const warnings = [];
+    if (tokens.some((token) => token.known === false)) {
+        warnings.push("kuromoji.js marked at least one token as UNKNOWN; human review required before using this signal.");
+    }
+    if (!row.primaryReading) {
+        warnings.push("Generated kanji row has no PrimaryReading; tokenization cannot compare tokenizer reading to the learner-facing kanji-card reading.");
+    }
+    if (row.displayWord && row.displayWord !== row.kanji) {
+        warnings.push("DisplayWord differs from the bare kanji anchor; confirm the kanji-card product still separates kanji identity from word-deck study material.");
+    }
+
+    return {
+        id: `n${level}-kanji-${String(index + 1).padStart(4, "0")}`,
+        target: {
+            kind: "kanji-card",
+            deckKind: "kanji",
+            level,
+            written: row.kanji,
+            ...(row.primaryReading ? { reading: row.primaryReading } : {}),
+            cardId: `N${level}:${row.kanji}`,
+        },
+        inputText: row.kanji,
+        tokens,
+        warnings,
+        limitations: [...KANJI_TOKENIZATION_LIMITATIONS],
+    };
+}
+
 async function buildNlpWordTokenizationArtifact({
     wordTsvPath,
     manifestPath = buildDefaultNlpModelManifestPath(),
@@ -254,6 +310,85 @@ async function buildNlpWordTokenizationArtifact({
     return parseNlpTokenizationArtifact(artifact);
 }
 
+async function buildNlpKanjiTokenizationArtifact({
+    kanjiTsvPath,
+    manifestPath = buildDefaultNlpModelManifestPath(),
+    workspaceRoot = process.cwd(),
+    level = 5,
+    runtimeId = DEFAULT_RUNTIME_ID,
+    limit = null,
+    createdBy = DEFAULT_CREATED_BY,
+    now = () => new Date(),
+    loadManifestFn = loadNlpModelManifest,
+    buildTokenizerFn = buildTokenizer,
+} = {}) {
+    if (!kanjiTsvPath) {
+        throw new Error("kanjiTsvPath is required for NLP kanji tokenization generation.");
+    }
+    if (!Number.isInteger(level) || level < 1 || level > 5) {
+        throw new Error("NLP kanji tokenization level must be an integer from 1 to 5.");
+    }
+
+    const resolvedWorkspaceRoot = path.resolve(workspaceRoot);
+    const resolvedKanjiTsvPath = path.resolve(kanjiTsvPath);
+    const resolvedManifestPath = path.resolve(manifestPath);
+    const manifest = loadManifestFn(resolvedManifestPath);
+    const runtime = assertTokenizationRuntime({ manifest, runtimeId });
+    const rows = parseKanjiDeckTsvRows(fs.readFileSync(resolvedKanjiTsvPath, "utf8"));
+    const scopedRows = Number.isFinite(limit) ? rows.slice(0, limit) : rows;
+    const tokenizer = await buildTokenizerFn({
+        dictionaryPath: path.resolve(resolvedWorkspaceRoot, runtime.dictionary.path),
+        runtime,
+    });
+    const kanjiTsvHash = sha256FileWithSize(resolvedKanjiTsvPath);
+    const manifestHash = sha256FileWithSize(resolvedManifestPath);
+    const artifact = {
+        version: 1,
+        artifactType: "nlp_tokenization_batch",
+        generatedAt: now().toISOString(),
+        generator: {
+            runtimeId,
+            runId: `${runtimeId}-kanji-n${level}-${kanjiTsvHash.sha256.slice(0, 12)}`,
+            manifestPath: path.relative(resolvedWorkspaceRoot, resolvedManifestPath).replace(/\\/g, "/"),
+            createdBy,
+            inputHashes: [kanjiTsvHash, manifestHash].map((entry) => ({
+                path: path.relative(resolvedWorkspaceRoot, entry.path).replace(/\\/g, "/"),
+                sha256: entry.sha256,
+                byteSize: entry.byteSize,
+            })),
+        },
+        runtime: {
+            runtimeId,
+            tokenizerKind: runtimeId === "kuromoji-js" ? "kuromoji-js" : "fixture",
+            packageName: runtime.packageName,
+            packageVersion: runtime.packageVersion,
+            dictionaryId: `${runtimeId}:${runtime.dictionary.sha256.slice(0, 12)}`,
+            dictionaryPath: runtime.dictionary.path,
+            dictionarySha256: runtime.dictionary.sha256,
+            deterministic: {
+                requiresPinnedRuntime: true,
+                requiresPinnedDictionary: true,
+                requiresPinnedInputs: true,
+            },
+        },
+        authority: { ...NLP_TOKENIZATION_AUTHORITY },
+        scope: {
+            targetKind: "kanji-card",
+            levels: [level],
+            source: "generated-kanji-rows",
+            description: `Generated kanji TSV tokenization for JLPT N${level} kanji-card anchor surfaces.`,
+        },
+        items: scopedRows.map((row, index) => buildKanjiTokenizationItem({
+            row,
+            index,
+            level,
+            tokenizer,
+        })),
+    };
+
+    return parseNlpTokenizationArtifact(artifact);
+}
+
 async function writeNlpWordTokenizationArtifact({
     outPath,
     ...options
@@ -262,6 +397,23 @@ async function writeNlpWordTokenizationArtifact({
         throw new Error("outPath is required for NLP word tokenization generation.");
     }
     const artifact = await buildNlpWordTokenizationArtifact(options);
+    const resolvedOutPath = path.resolve(outPath);
+    ensureDir(path.dirname(resolvedOutPath));
+    fs.writeFileSync(resolvedOutPath, `${JSON.stringify(artifact, null, 2)}\n`, "utf8");
+    return {
+        outPath: resolvedOutPath,
+        artifact,
+    };
+}
+
+async function writeNlpKanjiTokenizationArtifact({
+    outPath,
+    ...options
+} = {}) {
+    if (!outPath) {
+        throw new Error("outPath is required for NLP kanji tokenization generation.");
+    }
+    const artifact = await buildNlpKanjiTokenizationArtifact(options);
     const resolvedOutPath = path.resolve(outPath);
     ensureDir(path.dirname(resolvedOutPath));
     fs.writeFileSync(resolvedOutPath, `${JSON.stringify(artifact, null, 2)}\n`, "utf8");
@@ -290,10 +442,13 @@ function formatNlpTokenizationGenerationSummary({ outPath, artifact }) {
 }
 
 module.exports = {
+    buildNlpKanjiTokenizationArtifact,
     buildNlpWordTokenizationArtifact,
     buildTokenizer,
     formatNlpTokenizationGenerationSummary,
+    parseKanjiDeckTsvRows,
     parseWordDeckTsvRows,
     tokenizeText,
+    writeNlpKanjiTokenizationArtifact,
     writeNlpWordTokenizationArtifact,
 };

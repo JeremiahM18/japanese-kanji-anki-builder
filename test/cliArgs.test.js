@@ -291,6 +291,7 @@ test("NLP tokenization validation parseArgs records artifact inputs and unsuppor
 
 test("NLP tokenization generation parseArgs records source and output inputs", () => {
     const options = parseNlpTokenizationGenerateArgs([
+        "--deck=word",
         "--level=5",
         "--limit=8",
         "--word-tsv=out/word-build/exports/jlpt-n5-words.tsv",
@@ -302,6 +303,7 @@ test("NLP tokenization generation parseArgs records source and output inputs", (
         "--oops",
     ]);
 
+    assert.equal(options.deckKind, "word");
     assert.equal(options.level, 5);
     assert.equal(options.limit, 8);
     assert.equal(options.wordTsvPath, "out/word-build/exports/jlpt-n5-words.tsv");
@@ -314,6 +316,19 @@ test("NLP tokenization generation parseArgs records source and output inputs", (
 
     const invalidLevel = parseNlpTokenizationGenerateArgs(["--level=9"]);
     assert.deepEqual(invalidLevel.unknownArgs, ["--level must be an integer from 1 to 5"]);
+
+    const kanjiOptions = parseNlpTokenizationGenerateArgs([
+        "--deck=kanji",
+        "--kanji-tsv=out/build/exports/jlpt-n5.tsv",
+    ]);
+    assert.equal(kanjiOptions.deckKind, "kanji");
+    assert.equal(kanjiOptions.kanjiTsvPath, "out/build/exports/jlpt-n5.tsv");
+
+    const conflictingOptions = parseNlpTokenizationGenerateArgs([
+        "--deck=kanji",
+        "--word-tsv=out/word-build/exports/jlpt-n5-words.tsv",
+    ]);
+    assert.deepEqual(conflictingOptions.unknownArgs, ["--word-tsv is only supported with --deck=word"]);
 });
 
 test("NLP tokenization audit parseArgs records artifact inputs and signal limits", () => {

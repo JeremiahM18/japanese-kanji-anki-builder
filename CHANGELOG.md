@@ -10,6 +10,7 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Changed
 
+- Added the separate `deck:kanji:nlp-signals` lane for kanji-card review: it refreshes generated kanji TSVs, writes governed `kanji-card` tokenization artifacts from bare kanji anchors, converts tokenizer/card-reading signals into kanji-scoped review packets and tokenization-only draft notes, and preserves the no-word-expansion/no-certification boundary.
 - Tightened word reading-gap candidate scoring so sentence-corpus support is credited only when the corpus reading contains the candidate reading. Written-form-only matches now carry an explicit mismatch penalty for untracked candidates, preventing rare alternate readings from borrowing common-sentence evidence in NLP candidate-discovery artifacts.
 - Tightened NLP draft-proposal provenance so scoped empty runs, such as N5 kanji with no kanji NLP suggestions, no longer inherit model IDs from out-of-scope word suggestion artifacts.
 - Reviewed the tracked Markdown documentation set and corrected current-status drift: N4 word readiness now reflects live `ready_with_deferred_variants` status with `579/755` (`76.7%`) reading coverage, N3/N2/N1 word Silver coverage snapshots now match live completion audits, source-acquisition verification is refreshed to the current audit date, NLP governance docs no longer describe active model-backed lanes as future-only, and PR/release docs now include the conditional NLP governance gate where relevant.

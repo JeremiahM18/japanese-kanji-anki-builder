@@ -27,25 +27,29 @@ flowchart TD
 
 ## Assistive NLP Review Engine
 
-The repository now has a governed local NLP lane for vocabulary expansion and review. It uses active `kuromoji.js` tokenization and pinned `Transformers.js` MiniLM embeddings from [templates/nlp_model_manifest.json](templates/nlp_model_manifest.json) to find review work: tokenization oddities, example-ranking candidates, sense-fit warnings, reading-gap candidates, human review packets, and draft-proposal scaffolds.
+The repository now has governed local NLP lanes for assistive review. Word expansion uses active `kuromoji.js` tokenization and pinned `Transformers.js` MiniLM embeddings from [templates/nlp_model_manifest.json](templates/nlp_model_manifest.json) to find review work: tokenization oddities, example-ranking candidates, sense-fit warnings, reading-gap candidates, human review packets, and draft-proposal scaffolds. Kanji review has its own separate signal lane: it tokenizes generated kanji-card anchors, audits tokenizer/card reading signals, and creates kanji-scoped review packets and draft notes.
 
 The boundary is deliberate: NLP output can point reviewers at likely issues and useful candidates, but it cannot write tracked templates, certify cards, approve Gold/Platinum/Obsidian, or claim release readiness. Human promotion into tracked contracts is still required.
 
 ```mermaid
 flowchart LR
-    A["Generated word TSV"] --> B["kuromoji tokenization"]
+    A["Generated word TSV"] --> B["Word kuromoji tokenization"]
     A --> C["MiniLM word embeddings"]
-    B --> D["Token audit signals"]
-    C --> E["Example reranking"]
-    C --> F["Sense-fit warnings"]
-    C --> G["Reading-gap candidates"]
-    D --> H["Human review packets"]
+    B --> D["Word token audit signals"]
+    C --> E["Word example reranking"]
+    C --> F["Word sense-fit warnings"]
+    C --> G["Word reading-gap candidates"]
+    D --> H["Word human review packets"]
     E --> H
     F --> H
     G --> H
+    K["Generated kanji TSV"] --> L["Kanji-card kuromoji tokenization"]
+    L --> M["Kanji token audit signals"]
+    M --> N["Kanji human review packets"]
     H --> I["Draft proposal packets"]
+    N --> I
     I --> J["Human promotion into tracked templates"]
-    J --> K["Gold + Platinum + Obsidian gates"]
+    J --> O["Gold + Platinum + Obsidian gates"]
 ```
 
 Run the expansion-support surface for any word N level:
@@ -66,10 +70,20 @@ npm run deck:words:expansion-support -- --levels=5,4,3,2,1
 
 That command runs the governed NLP expansion stack for each selected level: model/runtime checks, tokenization, embeddings, example reranking, sense-fit warnings, reading-gap candidate discovery, human review packets, draft proposals, artifact validation, and the NLP governance gate. The component commands remain available when a reviewer needs a narrower investigation:
 
+Run the kanji signal lane separately:
+
+```bash
+npm run deck:kanji:nlp-signals:n5
+npm run deck:kanji:nlp-signals -- --levels=5,4
+```
+
+That command refreshes generated kanji TSVs, creates kanji-card tokenization artifacts, converts tokenizer/card-reading signals into kanji-scoped review packets and tokenization-only draft notes, validates the artifacts, and runs the NLP governance gate. It does not run word expansion, word reading-gap discovery, word example reranking, or word sense-fit audits.
+
 ```bash
 npm run nlp:models:audit
 npm run nlp:doctor
 npm run nlp:tokenization:generate -- --level=5
+npm run nlp:tokenization:generate -- --deck=kanji --level=5
 npm run nlp:tokenization:validate
 npm run nlp:tokenization:audit
 npm run nlp:embeddings:evaluate
@@ -773,12 +787,15 @@ Repository governance:
 | `npm run deck:words:expansion-support:n3` | Run governed NLP expansion support for N3 word expansion/review |
 | `npm run deck:words:expansion-support:n2` | Run governed NLP expansion support for N2 word expansion/review |
 | `npm run deck:words:expansion-support:n1` | Run governed NLP expansion support for N1 word expansion/review |
+| `npm run deck:kanji:nlp-signals -- --levels=5,4` | Run governed kanji-card NLP signal support for selected kanji levels without invoking word expansion lanes |
+| `npm run deck:kanji:nlp-signals:n5` | Run governed kanji-card tokenization signals, review packets, draft notes, validation, and NLP governance for N5 kanji |
 | `npm run data:normalize:words:jmdict` | Normalize ignored local JMdict XML into the pinned word dictionary/commonness TSV shape |
 | `npm run deck:words:candidate-agreement -- --levels=5,4` | Rebuild the N5/N4 candidate universe from the governed word source manifest with source-purpose, agreement, triage, and placement signals |
 | `npm run deck:words:expansion-signals -- --levels=5,4` | Summarize per-level reading and enhancement expansion exhaustion without claiming release readiness |
 | `npm run nlp:models:audit` | Validate the assistive-only NLP model registry before model-backed suggestion or draft lanes are trusted |
 | `npm run nlp:doctor` | Preflight NLP runtimes, package-lock integrity, installed package metadata, tokenizer dictionaries, pinned model files or directory bundles, and assistive-only release boundaries |
 | `npm run nlp:tokenization:generate -- --level=5` | Generate governed assistive-only `kuromoji-js` tokenization artifacts from the generated word TSV |
+| `npm run nlp:tokenization:generate -- --deck=kanji --level=5` | Generate governed assistive-only `kuromoji-js` tokenization artifacts from the generated kanji TSV |
 | `npm run nlp:tokenization:validate` | Validate governed morphological tokenization artifacts under `out/nlp-tokenization/`; tokenization remains assistive-only and cannot certify cards |
 | `npm run nlp:tokenization:audit` | Summarize validated tokenization artifacts into assistive review-packet signals without certifying cards or writing tracked templates |
 | `npm run nlp:embeddings:evaluate` | Re-run the tracked Japanese smoke benchmark for the active local embedding model; evaluation remains assistive-only and cannot certify cards |

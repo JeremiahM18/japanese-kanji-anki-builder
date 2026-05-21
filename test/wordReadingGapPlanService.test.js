@@ -280,6 +280,36 @@ test('scoreSuggestedCandidate rewards sentence-backed exact readings over raw ca
   assert.ok(scoredSentence.score > scoredRaw.score);
 });
 
+test('scoreSuggestedCandidate does not borrow sentence support from a different reading', () => {
+  const item = { kanji: '生', reading: 'しょう' };
+  const scored = scoreSuggestedCandidate(
+    { written: '学生', reading: 'がくしょう', meaning: 'Heian-period student', source: 'kanjiapi_cache' },
+    item,
+    {
+      sentenceCorpus: [{
+        written: '学生',
+        reading: 'あのがくせいはにほんじんです。',
+        japanese: 'あの学生は日本人です。',
+        english: 'That student is Japanese.',
+        frequencyRank: 165,
+      }],
+      targetLevel: 5,
+      jlptOnlyJson: { 学: { jlpt: 5 }, 生: { jlpt: 5 } },
+    }
+  );
+  const breakdown = Object.fromEntries(scored.contributions.map((entry) => [entry.key, entry.value]));
+
+  assert.equal(breakdown.sentence_available, undefined);
+  assert.equal(breakdown.sentence_reading_match, undefined);
+  assert.equal(breakdown.frequency_rank, 0);
+  assert.equal(breakdown.written_only_sentence_mismatch, -20);
+  assert.equal(classifySuggestionQuality({
+    action: 'add_governed_support_word',
+    score: scored.score,
+    sentenceCount: scored.sentenceCount,
+  }), 'weak');
+});
+
 test('candidateReadingAlignsWithTarget rejects mixed-script false positives', () => {
   assert.equal(candidateReadingAlignsWithTarget(
     { written: 'オンライン飲み会', reading: 'オンラインのみかい' },

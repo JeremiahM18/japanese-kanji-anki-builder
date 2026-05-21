@@ -248,8 +248,10 @@ function scoreSuggestedCandidate(candidate, item, {
 } = {}) {
   const levelSummary = buildCandidateLevelSummary(candidate, { jlptOnlyJson, targetLevel });
   const trackedEntry = wordStudyEntries[candidate.key];
-  const sentenceMatches = (Array.isArray(sentenceCorpus) ? sentenceCorpus : [])
+  const writtenSentenceMatches = (Array.isArray(sentenceCorpus) ? sentenceCorpus : [])
     .filter((entry) => String(entry?.written || '').trim() === candidate.written);
+  const sentenceMatches = writtenSentenceMatches
+    .filter((entry) => normalizeReadingToken(entry?.reading || '').includes(candidate.normalizedReading));
   const exactReading = normalizeReadingToken(candidate.reading) === normalizeReadingToken(item.reading);
   const readingMatch = readingMatchesExample(item.reading, candidate.reading);
   const constituentCount = levelSummary.constituentKanji.length;
@@ -272,7 +274,10 @@ function scoreSuggestedCandidate(candidate, item, {
   if (sentenceMatches.length > 0) {
     add('sentence_available', 30);
   }
-  if (sentenceMatches.some((entry) => String(entry?.reading || '').includes(candidate.reading))) {
+  if (writtenSentenceMatches.length > 0 && sentenceMatches.length === 0 && !trackedEntry) {
+    add('written_only_sentence_mismatch', -20);
+  }
+  if (sentenceMatches.length > 0) {
     add('sentence_reading_match', 12);
   }
   if (exactReading) {

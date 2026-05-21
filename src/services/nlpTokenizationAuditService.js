@@ -24,6 +24,7 @@ const MULTI_TOKEN_SIGNAL_KIND = "multi-token-surface";
 const UNKNOWN_TOKEN_SIGNAL_KIND = "unknown-token";
 const MISSING_READING_SIGNAL_KIND = "missing-token-reading";
 const READING_MISMATCH_SIGNAL_KIND = "token-reading-card-reading-mismatch";
+const WORD_SEGMENTATION_CONTEXT_SIGNAL_KIND = "word-card-tokenizer-segmentation-context";
 const KANJI_READING_VARIANT_SIGNAL_KIND = "kanji-card-tokenizer-reading-variant";
 const KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND = "kanji-card-tokenizer-coverage-gap";
 const ARTIFACT_WARNING_SIGNAL_KIND = "artifact-warning";
@@ -53,9 +54,22 @@ function isKanjiCardTarget(item = {}) {
     return item.target?.kind === "kanji-card";
 }
 
+function isWordCardTarget(item = {}) {
+    return item.target?.kind === "word-card";
+}
+
 function isKanjiTokenizerCoverageWarning(warning = "") {
     return /UNKNOWN/i.test(warning)
         && /bare kanji anchor|coverage gap|at least one token/i.test(warning);
+}
+
+function isWordSegmentationContext({ item, signalKinds, joinedTokenReading, normalizedCardReading }) {
+    return isWordCardTarget(item)
+        && signalKinds.includes(MULTI_TOKEN_SIGNAL_KIND)
+        && !signalKinds.includes(UNKNOWN_TOKEN_SIGNAL_KIND)
+        && !signalKinds.includes(MISSING_READING_SIGNAL_KIND)
+        && Boolean(normalizedCardReading && joinedTokenReading)
+        && joinedTokenReading === normalizedCardReading;
 }
 
 function isKanjiTokenizerCoverageGap({ item, signalKinds }) {
@@ -70,8 +84,13 @@ function isKanjiTokenizerCoverageGap({ item, signalKinds }) {
 function signalKindsRequireAttention({ item, signalKinds }) {
     const ignoredKinds = new Set([
         ROUTINE_SIGNAL_KIND,
+        WORD_SEGMENTATION_CONTEXT_SIGNAL_KIND,
         KANJI_READING_VARIANT_SIGNAL_KIND,
     ]);
+
+    if (signalKinds.includes(WORD_SEGMENTATION_CONTEXT_SIGNAL_KIND)) {
+        ignoredKinds.add(MULTI_TOKEN_SIGNAL_KIND);
+    }
 
     if (signalKinds.includes(KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND)) {
         ignoredKinds.add(KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND);
@@ -103,6 +122,14 @@ function buildSignalKinds({ item, joinedTokenReading, normalizedCardReading }) {
         kinds.push(KANJI_READING_VARIANT_SIGNAL_KIND);
     } else if (hasReadingDifference) {
         kinds.push(READING_MISMATCH_SIGNAL_KIND);
+    }
+    if (isWordSegmentationContext({
+        item,
+        signalKinds: kinds,
+        joinedTokenReading,
+        normalizedCardReading,
+    })) {
+        kinds.push(WORD_SEGMENTATION_CONTEXT_SIGNAL_KIND);
     }
     if (isKanjiTokenizerCoverageGap({ item, signalKinds: kinds })) {
         kinds.push(KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND);
@@ -192,6 +219,7 @@ function buildEmptyCounts() {
         unknownTokenItems: 0,
         missingTokenReadingItems: 0,
         readingMismatchItems: 0,
+        wordSegmentationContextItems: 0,
         kanjiReadingVariantItems: 0,
         kanjiTokenizerCoverageGapItems: 0,
         warningItems: 0,
@@ -281,6 +309,9 @@ function buildNlpTokenizationAuditReport({
         if (signal.signalKinds.includes(READING_MISMATCH_SIGNAL_KIND)) {
             counts.readingMismatchItems += 1;
         }
+        if (signal.signalKinds.includes(WORD_SEGMENTATION_CONTEXT_SIGNAL_KIND)) {
+            counts.wordSegmentationContextItems += 1;
+        }
         if (signal.signalKinds.includes(KANJI_READING_VARIANT_SIGNAL_KIND)) {
             counts.kanjiReadingVariantItems += 1;
         }
@@ -347,6 +378,7 @@ function formatNlpTokenizationAuditReport(report = {}, { signalLimit = 20 } = {}
         `- unknown-token items: ${report.counts?.unknownTokenItems || 0}`,
         `- missing token-reading items: ${report.counts?.missingTokenReadingItems || 0}`,
         `- token/card reading mismatch items: ${report.counts?.readingMismatchItems || 0}`,
+        `- word tokenizer segmentation context items: ${report.counts?.wordSegmentationContextItems || 0}`,
         `- kanji tokenizer reading variant items: ${report.counts?.kanjiReadingVariantItems || 0}`,
         `- kanji tokenizer coverage-gap items: ${report.counts?.kanjiTokenizerCoverageGapItems || 0}`,
         `- warning items: ${report.counts?.warningItems || 0}`,
@@ -388,6 +420,7 @@ module.exports = {
     READING_MISMATCH_SIGNAL_KIND,
     ROUTINE_SIGNAL_KIND,
     UNKNOWN_TOKEN_SIGNAL_KIND,
+    WORD_SEGMENTATION_CONTEXT_SIGNAL_KIND,
     buildNlpTokenizationAuditReport,
     buildReviewSignal,
     formatNlpTokenizationAuditReport,

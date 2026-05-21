@@ -228,6 +228,70 @@ function buildKanjiCoverageGapReviewPacketArtifact() {
     };
 }
 
+function buildWordSegmentationContextReviewPacketArtifact() {
+    return {
+        version: 1,
+        artifactType: "nlp_review_packet_batch",
+        generatedAt: "2026-05-20T00:00:00.000Z",
+        generator: {
+            createdBy: "test fixture",
+            inputHashes: [{
+                path: "out/nlp-tokenization/word-n5-kuromoji.json",
+                sha256: "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                byteSize: 128,
+            }],
+        },
+        scope: {
+            deckKind: "word",
+            levels: [5],
+            description: "Fixture word review packets.",
+        },
+        authority: { ...NLP_REVIEW_PACKET_AUTHORITY },
+        counts: {
+            packets: 1,
+            suggestions: 0,
+            tokenizationSignals: 1,
+            attentionPackets: 0,
+            reviewPackets: 0,
+            routinePackets: 1,
+        },
+        packets: [{
+            id: "nlp-review-word-n5-0001",
+            target: {
+                deckKind: "word",
+                level: 5,
+                written: "日本語",
+                reading: "にほんご",
+            },
+            priority: "routine",
+            summary: "Review 日本語: tokenization segmentation context.",
+            reviewChecklist: ["Treat exact-reading word segmentation context as tokenizer evidence."],
+            suggestionRefs: [],
+            tokenizationSignalRefs: [{
+                id: "n5-word-tokenization-0001",
+                reviewPriority: "routine",
+                signalKinds: [
+                    "routine-tokenization-review",
+                    "multi-token-surface",
+                    "word-card-tokenizer-segmentation-context",
+                ],
+                surface: "日本語",
+                tokenSurfaces: ["日本", "語"],
+                normalizedTokenReading: "にほんご",
+                normalizedCardReading: "にほんご",
+                readingAlignment: {
+                    comparable: true,
+                    matches: true,
+                },
+                sourceArtifactPath: "out/nlp-tokenization/word-n5-kuromoji.json",
+                limitations: ["Fixture signal only."],
+            }],
+            limitations: ["Fixture review packet only."],
+            authority: { ...NLP_REVIEW_PACKET_AUTHORITY },
+        }],
+    };
+}
+
 test("buildNlpDraftProposalArtifact creates governed drafts from suggestions and review packets", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-drafts-"));
     const suggestionPath = writeJson(dir, "suggestions.json", buildSuggestionArtifact());
@@ -279,6 +343,34 @@ test("buildNlpDraftProposalArtifact does not draft routine kanji tokenizer cover
         workspaceRoot: dir,
         deckKind: "kanji",
         level: 4,
+        now: () => new Date("2026-05-20T00:00:00.000Z"),
+        loadManifestFn: () => buildManifest(),
+        buildSuggestionReportFn: () => ({ passed: true, errors: [] }),
+        buildReviewPacketReportFn: () => ({ passed: true, errors: [] }),
+    });
+
+    assert.deepEqual(artifact.generator.modelIds, []);
+    assert.equal(artifact.counts.sourcePackets, 1);
+    assert.equal(artifact.counts.proposals, 0);
+    assert.deepEqual(artifact.proposals, []);
+});
+
+test("buildNlpDraftProposalArtifact does not draft routine word segmentation context", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-drafts-"));
+    const suggestionPath = writeJson(dir, "suggestions.json", {
+        ...buildSuggestionArtifact(),
+        suggestions: [],
+    });
+    const reviewPacketPath = writeJson(dir, "word-review-packets.json", buildWordSegmentationContextReviewPacketArtifact());
+    const manifestPath = writeJson(dir, "manifest.json", { fixture: true });
+
+    const artifact = buildNlpDraftProposalArtifact({
+        suggestionArtifactPath: suggestionPath,
+        reviewPacketArtifactPath: reviewPacketPath,
+        manifestPath,
+        workspaceRoot: dir,
+        deckKind: "word",
+        level: 5,
         now: () => new Date("2026-05-20T00:00:00.000Z"),
         loadManifestFn: () => buildManifest(),
         buildSuggestionReportFn: () => ({ passed: true, errors: [] }),

@@ -95,6 +95,37 @@ function buildKanjiCoverageGapRef() {
     };
 }
 
+function buildWordSegmentationContextRef() {
+    return {
+        target: {
+            kind: "word-card",
+            deckKind: "word",
+            level: 5,
+            written: "日本語",
+            reading: "にほんご",
+        },
+        ref: {
+            id: "n5-word-tokenization-0001",
+            reviewPriority: "routine",
+            signalKinds: [
+                "routine-tokenization-review",
+                "multi-token-surface",
+                "word-card-tokenizer-segmentation-context",
+            ],
+            surface: "日本語",
+            tokenSurfaces: ["日本", "語"],
+            normalizedTokenReading: "にほんご",
+            normalizedCardReading: "にほんご",
+            readingAlignment: {
+                comparable: true,
+                matches: true,
+            },
+            sourceArtifactPath: "out/nlp-tokenization/word-n5-kuromoji.json",
+            limitations: ["Fixture tokenization only."],
+        },
+    };
+}
+
 test("buildNlpReviewPacketArtifactFromSignals aggregates suggestions and tokenization signals", () => {
     const artifact = buildNlpReviewPacketArtifactFromSignals({
         suggestionRefs: [buildSuggestionRef()],
@@ -136,6 +167,27 @@ test("buildNlpReviewPacketArtifactFromSignals keeps kanji coverage gaps routine 
     assert.equal(artifact.counts.routinePackets, 1);
     assert.equal(artifact.packets[0].priority, "routine");
     assert.match(artifact.packets[0].reviewChecklist.join("\n"), /tokenizer\/dictionary coverage evidence/);
+});
+
+test("buildNlpReviewPacketArtifactFromSignals keeps word segmentation context routine and explicit", () => {
+    const artifact = buildNlpReviewPacketArtifactFromSignals({
+        deckKind: "word",
+        level: 5,
+        suggestionRefs: [],
+        tokenizationSignalRefs: [buildWordSegmentationContextRef()],
+        inputHashes: [{
+            path: "out/nlp-tokenization/word-n5-kuromoji.json",
+            sha256: "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            byteSize: 128,
+        }],
+        now: () => new Date("2026-05-20T00:00:00.000Z"),
+    });
+
+    assert.equal(artifact.counts.packets, 1);
+    assert.equal(artifact.counts.attentionPackets, 0);
+    assert.equal(artifact.counts.routinePackets, 1);
+    assert.equal(artifact.packets[0].priority, "routine");
+    assert.match(artifact.packets[0].reviewChecklist.join("\n"), /word segmentation context/);
 });
 
 test("formatNlpReviewPacketMarkdown renders packet boundaries and checklist", () => {

@@ -13,6 +13,7 @@ const {
     formatNlpTokenizationAuditReport,
     KANJI_READING_VARIANT_SIGNAL_KIND,
     KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND,
+    WORD_SEGMENTATION_CONTEXT_SIGNAL_KIND,
 } = require("../src/services/nlpTokenizationAuditService");
 
 function buildManifest() {
@@ -128,7 +129,7 @@ function writeArtifact(dir, name, artifact) {
     return filePath;
 }
 
-test("buildReviewSignal turns tokenization items into assistive review-packet signals", () => {
+test("buildReviewSignal keeps exact-reading word segmentation as routine context", () => {
     const artifact = buildArtifact();
     const signal = buildReviewSignal({
         artifactPath: "out/nlp-tokenization/fixture.json",
@@ -137,11 +138,12 @@ test("buildReviewSignal turns tokenization items into assistive review-packet si
     });
 
     assert.equal(signal.targetIdentity, "word-card|N5|日本語|にほんご");
-    assert.equal(signal.reviewPriority, "attention");
+    assert.equal(signal.reviewPriority, "routine");
     assert.deepEqual(signal.tokenSurfaces, ["日本", "語"]);
     assert.equal(signal.normalizedTokenReading, "にほんご");
     assert.equal(signal.readingAlignment.matches, true);
     assert.equal(signal.signalKinds.includes("multi-token-surface"), true);
+    assert.equal(signal.signalKinds.includes(WORD_SEGMENTATION_CONTEXT_SIGNAL_KIND), true);
     assert.equal(signal.authority.certifiesCards, false);
     assert.equal(signal.humanReviewRequired, true);
 });
@@ -158,13 +160,74 @@ test("buildNlpTokenizationAuditReport summarizes review signals without certific
     assert.equal(report.passed, true);
     assert.equal(report.counts.artifacts, 1);
     assert.equal(report.counts.signals, 1);
-    assert.equal(report.counts.attentionSignals, 1);
+    assert.equal(report.counts.attentionSignals, 0);
+    assert.equal(report.counts.routineSignals, 1);
     assert.equal(report.counts.multiTokenItems, 1);
+    assert.equal(report.counts.wordSegmentationContextItems, 1);
     assert.equal(report.counts.readingMismatchItems, 0);
     assert.equal(report.counts.signalsByKind["routine-tokenization-review"], 1);
     assert.equal(report.counts.signalsByKind["multi-token-surface"], 1);
+    assert.equal(report.counts.signalsByKind[WORD_SEGMENTATION_CONTEXT_SIGNAL_KIND], 1);
     assert.equal(report.releaseBoundary.tokenizationAuditCertifiesCards, false);
     assert.equal(report.releaseBoundary.tokenizationAuditMayWriteTrackedTemplatesDirectly, false);
+});
+
+test("buildNlpTokenizationAuditReport keeps word multi-token reading mismatches attention-worthy", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-token-audit-"));
+    writeArtifact(dir, "tokens.json", buildArtifact({
+        items: [{
+            id: "n5-word-token-003",
+            target: {
+                kind: "word-card",
+                deckKind: "word",
+                level: 5,
+                written: "何ですか",
+                reading: "なんですか",
+            },
+            inputText: "何ですか",
+            tokens: [{
+                surface: "何",
+                start: 0,
+                end: 1,
+                lemma: "何",
+                reading: "ナニ",
+                partOfSpeech: ["代名詞"],
+                known: true,
+            }, {
+                surface: "です",
+                start: 1,
+                end: 3,
+                lemma: "です",
+                reading: "デス",
+                partOfSpeech: ["助動詞"],
+                known: true,
+            }, {
+                surface: "か",
+                start: 3,
+                end: 4,
+                lemma: "か",
+                reading: "カ",
+                partOfSpeech: ["助詞"],
+                known: true,
+            }],
+            limitations: ["Fixture tokenization only."],
+        }],
+    }));
+
+    const report = buildNlpTokenizationAuditReport({
+        artifactDir: dir,
+        loadManifestFn: () => buildManifest(),
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.counts.attentionSignals, 1);
+    assert.equal(report.counts.multiTokenItems, 1);
+    assert.equal(report.counts.wordSegmentationContextItems, 0);
+    assert.equal(report.counts.readingMismatchItems, 1);
+    assert.equal(report.signals[0].reviewPriority, "attention");
+    assert.equal(report.signals[0].signalKinds.includes("multi-token-surface"), true);
+    assert.equal(report.signals[0].signalKinds.includes("token-reading-card-reading-mismatch"), true);
+    assert.equal(report.signals[0].signalKinds.includes(WORD_SEGMENTATION_CONTEXT_SIGNAL_KIND), false);
 });
 
 test("buildNlpTokenizationAuditReport flags unknown tokens and reading mismatches", () => {
@@ -330,18 +393,20 @@ test("formatNlpTokenizationAuditReport renders review signals and release bounda
         counts: {
             artifacts: 1,
             signals: 1,
-            attentionSignals: 1,
-            routineSignals: 0,
+            attentionSignals: 0,
+            routineSignals: 1,
             multiTokenItems: 1,
             unknownTokenItems: 0,
             missingTokenReadingItems: 0,
             readingMismatchItems: 0,
+            wordSegmentationContextItems: 1,
             kanjiReadingVariantItems: 0,
             kanjiTokenizerCoverageGapItems: 0,
             warningItems: 0,
             signalsByKind: {
                 "routine-tokenization-review": 1,
                 "multi-token-surface": 1,
+                "word-card-tokenizer-segmentation-context": 1,
             },
             signalsByLevel: {
                 N5: 1,
@@ -349,9 +414,13 @@ test("formatNlpTokenizationAuditReport renders review signals and release bounda
         },
         signals: [{
             targetIdentity: "word-card|N5|日本語|にほんご",
-            reviewPriority: "attention",
+            reviewPriority: "routine",
             tokenSurfaces: ["日本", "語"],
-            signalKinds: ["routine-tokenization-review", "multi-token-surface"],
+            signalKinds: [
+                "routine-tokenization-review",
+                "multi-token-surface",
+                "word-card-tokenizer-segmentation-context",
+            ],
         }],
         errors: [],
         releaseBoundary: {

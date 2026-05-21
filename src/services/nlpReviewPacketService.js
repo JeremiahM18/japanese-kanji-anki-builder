@@ -25,6 +25,7 @@ const { readJsonFile } = require("../utils/jsonFile");
 
 const DEFAULT_CREATED_BY = "scripts/generateNlpReviewPackets.js";
 const KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND = "kanji-card-tokenizer-coverage-gap";
+const WORD_SEGMENTATION_CONTEXT_SIGNAL_KIND = "word-card-tokenizer-segmentation-context";
 const REVIEW_PACKET_LIMITATIONS = Object.freeze([
     "Review packets aggregate assistive NLP signals only and must not replace human Japanese/pedagogy review.",
     "A packet can prioritize evidence for humans, but it does not certify card correctness, source truth, level fit, naturalness, pitch, audio, or release readiness.",
@@ -156,6 +157,9 @@ function buildReviewChecklist(group) {
     }
     if (group.tokenizationSignalRefs.some((signal) => (signal.signalKinds || []).includes(KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND))) {
         checklist.push("Treat kanji tokenizer coverage gaps as tokenizer/dictionary coverage evidence, not card-defect evidence by itself.");
+    }
+    if (group.tokenizationSignalRefs.some((signal) => (signal.signalKinds || []).includes(WORD_SEGMENTATION_CONTEXT_SIGNAL_KIND))) {
+        checklist.push("Treat exact-reading word segmentation context as tokenizer segmentation evidence, not card-defect evidence by itself.");
     }
     if (group.suggestionRefs.some((suggestion) => suggestion.task === "assistive-candidate-discovery")) {
         checklist.push("For candidate-discovery suggestions, verify commonness, learner usefulness, source identity, and level fit before any data change.");

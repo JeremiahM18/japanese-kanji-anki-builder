@@ -9715,8 +9715,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 答|こたえ: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "Very useful school/classroom word and a clean N4 答 card."
     ],
@@ -9804,12 +9804,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-009",
-      "scope": "N4 word Obsidian lane batch 9 generated-order substantive rereview"
+      "scope": "n4 word obsidian rereview batch 009 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 答|こたえ from out/word-build/exports/jlpt-n4-words.tsv: word 答, reading こたえ, meaning answer / response, example sentence 答を書きました。 ／ こたえをかきました。 ／ I wrote the answer.",
+        "governed Japanese-source word evidence for 答|こたえ: exact local JMdict row entrySeq=1449530, priority ichi1,news1,nf04 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 答|こたえ: answer / response",
+        "example sentence with reading/translation fit checked for 答|こたえ: 答を書きました。 ／ こたえをかきました。 ／ I wrote the answer.",
+        "notes/support surface checked for 答|こたえ: Very useful school/classroom word and a clean N4 答 card.",
+        "reading breakdown and kanji breakdown checked for 答|こたえ: reading breakdown 答 こたえ; kanji breakdown 答 こたえ 答 （こたえ） ／ answer / response Stroke order On: トウ Kun: こた.え、 こた.える",
+        "JLPT, coverage, focus, and covered-reading labels checked for 答|こたえ: JLPT N4; JLPT core + reading coverage; focus 答; covers 答: こたえ",
+        "exact word-reading audio identity checked for 答|こたえ: word-reading-答-こたえ; generated audio field [sound:7B54_答-word-reading-答-こたえ.wav]",
+        "pitch accent source and rendered pitch label checked for 答|こたえ: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka]; rendered Pitch 1: 2",
+        "managed media provenance checked for 答|こたえ; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 答|こたえ",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 答|こたえ; single-kanji written surface was reviewed as an active word/vocabulary row and kanji-deck certification kept separate",
+        "verification limitations considered for 答|こたえ: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 答|こたえ; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 答|こたえ: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0065; routine-tokenization-review; token surface 答; tokenizer reading コタエ (こたえ) matches card reading こたえ; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "答|こたえ",
+      "sentenceQualityReview": {
+        "japaneseSentence": "答を書きました。",
+        "reading": "こたえをかきました。",
+        "translation": "I wrote the answer.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 答|こたえ: 答を書きました。 with reading こたえをかきました。 and translation I wrote the answer. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The short written-answer sentence is simple and directly supports answer/response without extra sense noise. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 答|こたえ; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -9847,8 +9875,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 顔|かお: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "body/social N4 noun",
       "顔 -> かお"
@@ -9937,12 +9965,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-009",
-      "scope": "N4 word Obsidian lane batch 9 generated-order substantive rereview"
+      "scope": "n4 word obsidian rereview batch 009 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 顔|かお from out/word-build/exports/jlpt-n4-words.tsv: word 顔, reading かお, meaning face, example sentence 彼女はいつも明るい顔であいさつします。 ／ かのじょはいつもあかるいかおであいさつします。 ／ She always greets people with a cheerful face.",
+        "governed Japanese-source word evidence for 顔|かお: exact local JMdict row entrySeq=1217730, priority ichi1,news1,nf01 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 顔|かお: face",
+        "example sentence with reading/translation fit checked for 顔|かお: 彼女はいつも明るい顔であいさつします。 ／ かのじょはいつもあかるいかおであいさつします。 ／ She always greets people with a cheerful face.",
+        "notes/support surface checked for 顔|かお: Common body/social N4 noun with a clean 顔 -> かお anchor from the active reading backlog.",
+        "reading breakdown and kanji breakdown checked for 顔|かお: reading breakdown 顔 かお; kanji breakdown 顔 かお 顔 （かお） ／ face Stroke order On: ガン Kun: かお",
+        "JLPT, coverage, focus, and covered-reading labels checked for 顔|かお: JLPT N4; JLPT core + reading coverage; focus 顔; covers 顔: かお",
+        "exact word-reading audio identity checked for 顔|かお: word-reading-顔-かお; generated audio field [sound:9854_顔-word-reading-顔-かお.wav]",
+        "pitch accent source and rendered pitch label checked for 顔|かお: kanjium-cc-by-sa-4.0 pattern 0 [heiban]; rendered Pitch 1: 0",
+        "managed media provenance checked for 顔|かお; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 顔|かお",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 顔|かお; single-kanji written surface was reviewed as an active word/vocabulary row and kanji-deck certification kept separate",
+        "verification limitations considered for 顔|かお: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 顔|かお; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 顔|かお: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0066; routine-tokenization-review; token surface 顔; tokenizer reading カオ (かお) matches card reading かお; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "顔|かお",
+      "sentenceQualityReview": {
+        "japaneseSentence": "彼女はいつも明るい顔であいさつします。",
+        "reading": "かのじょはいつもあかるいかおであいさつします。",
+        "translation": "She always greets people with a cheerful face.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 顔|かお: 彼女はいつも明るい顔であいさつします。 with reading かのじょはいつもあかるいかおであいさつします。 and translation She always greets people with a cheerful face. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. 明るい顔であいさつします is natural and learner-useful for face/expression. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 顔|かお; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -9979,8 +10035,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 体|からだ: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "Core N4 study word"
     ],
@@ -10068,12 +10124,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-009",
-      "scope": "N4 word Obsidian lane batch 9 generated-order substantive rereview"
+      "scope": "n4 word obsidian rereview batch 009 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 体|からだ from out/word-build/exports/jlpt-n4-words.tsv: word 体, reading からだ, meaning body, example sentence 体を大切にしてください。 ／ からだをたいせつにしてください。 ／ Please take care of your body.",
+        "governed Japanese-source word evidence for 体|からだ: exact local JMdict row entrySeq=1409140, priority ichi1,news1,nf02 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 体|からだ: body",
+        "example sentence with reading/translation fit checked for 体|からだ: 体を大切にしてください。 ／ からだをたいせつにしてください。 ／ Please take care of your body.",
+        "notes/support surface checked for 体|からだ: Core N4 study word that also covers the 体 -> からだ reading.",
+        "reading breakdown and kanji breakdown checked for 体|からだ: reading breakdown 体 からだ; kanji breakdown 体 からだ 体 （からだ） ／ body Stroke order On: タイ、 テイ Kun: かたち、 からだ",
+        "JLPT, coverage, focus, and covered-reading labels checked for 体|からだ: JLPT N4; JLPT core + reading coverage; focus 体; covers 体: からだ",
+        "exact word-reading audio identity checked for 体|からだ: word-reading-体-からだ; generated audio field [sound:4F53_体-word-reading-体-からだ.wav]",
+        "pitch accent source and rendered pitch label checked for 体|からだ: kanjium-cc-by-sa-4.0 pattern 0 [heiban]; rendered Pitch 1: 0",
+        "managed media provenance checked for 体|からだ; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 体|からだ",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 体|からだ; single-kanji written surface was reviewed as an active word/vocabulary row and kanji-deck certification kept separate",
+        "verification limitations considered for 体|からだ: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 体|からだ; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 体|からだ: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0067; routine-tokenization-review; token surface 体; tokenizer reading カラダ (からだ) matches card reading からだ; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "体|からだ",
+      "sentenceQualityReview": {
+        "japaneseSentence": "体を大切にしてください。",
+        "reading": "からだをたいせつにしてください。",
+        "translation": "Please take care of your body.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 体|からだ: 体を大切にしてください。 with reading からだをたいせつにしてください。 and translation Please take care of your body. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. 体を大切にしてください is a common learner-facing health phrase and directly supports body. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 体|からだ; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -10233,8 +10317,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 道|みち: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "Common N4 study word"
     ],
@@ -10322,12 +10406,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-009",
-      "scope": "N4 word Obsidian lane batch 9 generated-order substantive rereview"
+      "scope": "n4 word obsidian rereview batch 009 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 道|みち from out/word-build/exports/jlpt-n4-words.tsv: word 道, reading みち, meaning road / way, example sentence この道をまっすぐ行くと駅があります。 ／ このみちをまっすぐいくとえきがあります。 ／ If you go straight down this road, there is a station.",
+        "governed Japanese-source word evidence for 道|みち: exact local JMdict row entrySeq=1454080, priority ichi1,news1,nf01 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 道|みち: road / way",
+        "example sentence with reading/translation fit checked for 道|みち: この道をまっすぐ行くと駅があります。 ／ このみちをまっすぐいくとえきがあります。 ／ If you go straight down this road, there is a station.",
+        "notes/support surface checked for 道|みち: Common N4 study word that also covers the 道 -> みち reading.",
+        "reading breakdown and kanji breakdown checked for 道|みち: reading breakdown 道 みち; kanji breakdown 道 みち 道 （みち） ／ road / way Stroke order On: トウ、 ドウ Kun: いう、 みち",
+        "JLPT, coverage, focus, and covered-reading labels checked for 道|みち: JLPT N4; JLPT core + reading coverage; focus 道; covers 道: みち",
+        "exact word-reading audio identity checked for 道|みち: word-reading-道-みち; generated audio field [sound:9053_道-word-reading-道-みち.wav]",
+        "pitch accent source and rendered pitch label checked for 道|みち: kanjium-cc-by-sa-4.0 pattern 0 [heiban]; rendered Pitch 1: 0",
+        "managed media provenance checked for 道|みち; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 道|みち",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 道|みち; single-kanji written surface was reviewed as an active word/vocabulary row and kanji-deck certification kept separate",
+        "verification limitations considered for 道|みち: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 道|みち; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 道|みち: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0069; routine-tokenization-review; token surface 道; tokenizer reading ミチ (みち) matches card reading みち; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "道|みち",
+      "sentenceQualityReview": {
+        "japaneseSentence": "この道をまっすぐ行くと駅があります。",
+        "reading": "このみちをまっすぐいくとえきがあります。",
+        "translation": "If you go straight down this road, there is a station.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 道|みち: この道をまっすぐ行くと駅があります。 with reading このみちをまっすぐいくとえきがあります。 and translation If you go straight down this road, there is a station. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. Going straight down a road to a station anchors 道 to road/way in a concrete navigation context. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 道|みち; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -10365,8 +10477,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 村|むら: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "place N4 noun",
       "村 -> むら"
@@ -10455,12 +10567,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-009",
-      "scope": "N4 word Obsidian lane batch 9 generated-order substantive rereview"
+      "scope": "n4 word obsidian rereview batch 009 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 村|むら from out/word-build/exports/jlpt-n4-words.tsv: word 村, reading むら, meaning village, example sentence その村は山の近くにあります。 ／ そのむらはやまのちかくにあります。 ／ That village is near the mountains.",
+        "governed Japanese-source word evidence for 村|むら: exact local JMdict row entrySeq=1406820, priority ichi1,news1,nf03 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 村|むら: village",
+        "example sentence with reading/translation fit checked for 村|むら: その村は山の近くにあります。 ／ そのむらはやまのちかくにあります。 ／ That village is near the mountains.",
+        "notes/support surface checked for 村|むら: Common place N4 noun with a clean 村 -> むら anchor.",
+        "reading breakdown and kanji breakdown checked for 村|むら: reading breakdown 村 むら; kanji breakdown 村 むら 村 （むら） ／ village Stroke order On: ソン Kun: むら",
+        "JLPT, coverage, focus, and covered-reading labels checked for 村|むら: JLPT N4; JLPT core + reading coverage; focus 村; covers 村: むら",
+        "exact word-reading audio identity checked for 村|むら: word-reading-村-むら; generated audio field [sound:6751_村-word-reading-村-むら.wav]",
+        "pitch accent source and rendered pitch label checked for 村|むら: kanjium-cc-by-sa-4.0 pattern 2 [odaka]; rendered Pitch 1: 2",
+        "managed media provenance checked for 村|むら; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 村|むら",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 村|むら; single-kanji written surface was reviewed as an active word/vocabulary row and kanji-deck certification kept separate",
+        "verification limitations considered for 村|むら: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 村|むら; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 村|むら: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0070; routine-tokenization-review; token surface 村; tokenizer reading ムラ (むら) matches card reading むら; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "村|むら",
+      "sentenceQualityReview": {
+        "japaneseSentence": "その村は山の近くにあります。",
+        "reading": "そのむらはやまのちかくにあります。",
+        "translation": "That village is near the mountains.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 村|むら: その村は山の近くにあります。 with reading そのむらはやまのちかくにあります。 and translation That village is near the mountains. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The village-near-the-mountains sentence is ordinary, concrete, and level appropriate. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 村|むら; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -10498,8 +10638,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 作る|つくる: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "Core N4 study word"
     ],
@@ -10587,12 +10727,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-009",
-      "scope": "N4 word Obsidian lane batch 9 generated-order substantive rereview"
+      "scope": "n4 word obsidian rereview batch 009 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 作る|つくる from out/word-build/exports/jlpt-n4-words.tsv: word 作る, reading つくる, meaning to make / create, example sentence 週末に友だちと夕食を作ります。 ／ しゅうまつにともだちとゆうしょくをつくります。 ／ I will make dinner with my friend this weekend.",
+        "governed Japanese-source word evidence for 作る|つくる: exact local JMdict row entrySeq=1597890, priority ichi1,news1,nf04,spec1 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 作る|つくる: to make / create",
+        "example sentence with reading/translation fit checked for 作る|つくる: 週末に友だちと夕食を作ります。 ／ しゅうまつにともだちとゆうしょくをつくります。 ／ I will make dinner with my friend this weekend.",
+        "notes/support surface checked for 作る|つくる: Core N4 study word that also covers the 作 -> つくる reading.",
+        "reading breakdown and kanji breakdown checked for 作る|つくる: reading breakdown 作 つく る; kanji breakdown 作 つく 作 （つく） ／ make / create Stroke order On: サ、 サク Kun: -づく.り、 つく.り、 つく.る",
+        "JLPT, coverage, focus, and covered-reading labels checked for 作る|つくる: JLPT N4; JLPT core + reading coverage; focus 作; covers 作: つくる",
+        "exact word-reading audio identity checked for 作る|つくる: word-reading-作る-つくる; generated audio field [sound:4F5C_作-word-reading-作る-つくる.wav]",
+        "pitch accent source and rendered pitch label checked for 作る|つくる: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka]; rendered Pitch 1: 2",
+        "managed media provenance checked for 作る|つくる; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 作る|つくる",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 作る|つくる",
+        "verification limitations considered for 作る|つくる: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 作る|つくる; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 作る|つくる: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0071; routine-tokenization-review; token surface 作る; tokenizer reading ツクル (つくる) matches card reading つくる; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "作る|つくる",
+      "sentenceQualityReview": {
+        "japaneseSentence": "週末に友だちと夕食を作ります。",
+        "reading": "しゅうまつにともだちとゆうしょくをつくります。",
+        "translation": "I will make dinner with my friend this weekend.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 作る|つくる: 週末に友だちと夕食を作ります。 with reading しゅうまつにともだちとゆうしょくをつくります。 and translation I will make dinner with my friend this weekend. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. Making dinner with a friend checks 作る as make/create in a common daily-life context. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 作る|つくる; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -10630,8 +10798,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 牛|うし: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "Common N4 study word"
     ],
@@ -10719,12 +10887,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-009",
-      "scope": "N4 word Obsidian lane batch 9 generated-order substantive rereview"
+      "scope": "n4 word obsidian rereview batch 009 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 牛|うし from out/word-build/exports/jlpt-n4-words.tsv: word 牛, reading うし, meaning cow / cattle, example sentence 牧場で大きな牛を近くで見ました。 ／ ぼくじょうでおおきなうしをちかくでみました。 ／ I saw a large cow up close at the ranch.",
+        "governed Japanese-source word evidence for 牛|うし: exact local JMdict row entrySeq=1231490, priority ichi1,news1,nf06 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 牛|うし: cow / cattle",
+        "example sentence with reading/translation fit checked for 牛|うし: 牧場で大きな牛を近くで見ました。 ／ ぼくじょうでおおきなうしをちかくでみました。 ／ I saw a large cow up close at the ranch.",
+        "notes/support surface checked for 牛|うし: Common N4 study word that also covers the 牛 -> うし reading.",
+        "reading breakdown and kanji breakdown checked for 牛|うし: reading breakdown 牛 うし; kanji breakdown 牛 うし 牛 （うし） ／ cow / cattle Stroke order On: ギュウ Kun: うし",
+        "JLPT, coverage, focus, and covered-reading labels checked for 牛|うし: JLPT N4; JLPT core + reading coverage; focus 牛; covers 牛: うし",
+        "exact word-reading audio identity checked for 牛|うし: word-reading-牛-うし; generated audio field [sound:725B_牛-word-reading-牛-うし.wav]",
+        "pitch accent source and rendered pitch label checked for 牛|うし: kanjium-cc-by-sa-4.0 pattern 0 [heiban]; rendered Pitch 1: 0",
+        "managed media provenance checked for 牛|うし; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 牛|うし",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 牛|うし; single-kanji written surface was reviewed as an active word/vocabulary row and kanji-deck certification kept separate",
+        "verification limitations considered for 牛|うし: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 牛|うし; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 牛|うし: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0072; routine-tokenization-review; token surface 牛; tokenizer reading ウシ (うし) matches card reading うし; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "牛|うし",
+      "sentenceQualityReview": {
+        "japaneseSentence": "牧場で大きな牛を近くで見ました。",
+        "reading": "ぼくじょうでおおきなうしをちかくでみました。",
+        "translation": "I saw a large cow up close at the ranch.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 牛|うし: 牧場で大きな牛を近くで見ました。 with reading ぼくじょうでおおきなうしをちかくでみました。 and translation I saw a large cow up close at the ranch. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The ranch sentence keeps 牛 as cow/cattle vocabulary rather than kanji-only trivia. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 牛|うし; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -10761,8 +10957,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 魚|さかな: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "Core food/animal noun",
       "word-card reading is さかな"
@@ -10852,26 +11048,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-20",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-010",
-      "scope": "N4 word Obsidian lane batch 10 generated-order substantive rereview",
+      "scope": "N4 word Obsidian lane batch 10 generated-order substantive rereview with clean tokenization audit support context",
       "evidenceChecked": [
-        "live generated word surface for 魚|さかな from out/word-build/exports/jlpt-n4-words.tsv",
-        "governed Japanese-source word evidence for 魚|さかな: exact local JMdict row entrySeq=1578010 in downloads/jmdict-word-verification.tsv",
-        "learner-facing meaning fish",
-        "example sentence 晩ご飯に魚を食べます。 ／ ばんごはんにさかなをたべます。 ／ I eat fish for dinner. checked for naturalness, reading alignment, translation fit, learner usefulness, and N4 fit",
-        "notes/support surface: Core food/animal noun for fish; this word-card reading is さかな and stays separate from the kanji-deck card for 魚.",
-        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
-        "exact word-reading audio identity 9B5A_魚-word-reading-魚-さかな.wav exists in out/word-build/package/media",
-        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 0 [heiban]",
-        "golden regression as internal regression only, not source truth",
-        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
-        "source-family posture considered; independent source-family corroboration is not claimed",
-        "verification limitations considered; no unresolved core-card uncertainty recorded"
-      ]
+        "live generated word surface for 魚|さかな from out/word-build/exports/jlpt-n4-words.tsv: word 魚, reading さかな, meaning fish, example sentence 晩ご飯に魚を食べます。 ／ ばんごはんにさかなをたべます。 ／ I eat fish for dinner.",
+        "governed Japanese-source word evidence for 魚|さかな: exact local JMdict row entrySeq=1578010, priority ichi1,ichi2,news1,nf03 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 魚|さかな: fish",
+        "example sentence with reading/translation fit checked for 魚|さかな: 晩ご飯に魚を食べます。 ／ ばんごはんにさかなをたべます。 ／ I eat fish for dinner.",
+        "notes/support surface checked for 魚|さかな: Core food/animal noun for fish; this word-card reading is さかな and stays separate from the kanji-deck card for 魚.",
+        "reading breakdown and kanji breakdown checked for 魚|さかな: reading breakdown 魚 さかな; kanji breakdown 魚 さかな 魚 （さかな） ／ fish Stroke order On: ギョ Kun: -ざかな、 うお、 さかな",
+        "JLPT, coverage, focus, and covered-reading labels checked for 魚|さかな: JLPT N4; JLPT core + reading coverage; focus 魚; covers 魚: さかな",
+        "exact word-reading audio identity checked for 魚|さかな: word-reading-魚-さかな; generated audio field [sound:9B5A_魚-word-reading-魚-さかな.wav]",
+        "pitch accent source and rendered pitch label checked for 魚|さかな: kanjium-cc-by-sa-4.0 pattern 0 [heiban]; rendered Pitch 1: 0",
+        "managed media provenance checked for 魚|さかな; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 魚|さかな",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 魚|さかな; single-kanji written surface was reviewed as an active word/vocabulary row and kanji-deck certification kept separate",
+        "verification limitations considered for 魚|さかな: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 魚|さかな; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 魚|さかな: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0073; routine-tokenization-review; token surface 魚; tokenizer reading サカナ (さかな) matches card reading さかな; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "魚|さかな",
+      "sentenceQualityReview": {
+        "japaneseSentence": "晩ご飯に魚を食べます。",
+        "reading": "ばんごはんにさかなをたべます。",
+        "translation": "I eat fish for dinner.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 魚|さかな: 晩ご飯に魚を食べます。 with reading ばんごはんにさかなをたべます。 and translation I eat fish for dinner. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The dinner sentence is basic and directly supports fish as food vocabulary. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 魚|さかな; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -10909,8 +11119,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 教える|おしえる: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "Core N4 study word"
     ],
@@ -10998,26 +11208,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-20",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-010",
-      "scope": "N4 word Obsidian lane batch 10 generated-order substantive rereview",
+      "scope": "N4 word Obsidian lane batch 10 generated-order substantive rereview with clean tokenization audit support context",
       "evidenceChecked": [
-        "live generated word surface for 教える|おしえる from out/word-build/exports/jlpt-n4-words.tsv",
-        "governed Japanese-source word evidence for 教える|おしえる: exact local JMdict row entrySeq=1236900 in downloads/jmdict-word-verification.tsv",
-        "learner-facing meaning to teach / tell",
-        "example sentence 駅までの道を親切に教えてくれました。 ／ えきまでのみちをしんせつにおしえてくれました。 ／ They kindly told me the way to the station. checked for naturalness, reading alignment, translation fit, learner usefulness, and N4 fit",
-        "notes/support surface: Core N4 study word that also covers the 教 -> おしえる reading.",
-        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
-        "exact word-reading audio identity 6559_教-word-reading-教える-おしえる.wav exists in out/word-build/package/media",
-        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 0 [heiban]",
-        "golden regression as internal regression only, not source truth",
-        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
-        "source-family posture considered; independent source-family corroboration is not claimed",
-        "verification limitations considered; no unresolved core-card uncertainty recorded"
-      ]
+        "live generated word surface for 教える|おしえる from out/word-build/exports/jlpt-n4-words.tsv: word 教える, reading おしえる, meaning to teach / tell, example sentence 駅までの道を親切に教えてくれました。 ／ えきまでのみちをしんせつにおしえてくれました。 ／ They kindly told me the way to the station.",
+        "governed Japanese-source word evidence for 教える|おしえる: exact local JMdict row entrySeq=1236900, priority ichi1,news2,nf38 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 教える|おしえる: to teach / tell",
+        "example sentence with reading/translation fit checked for 教える|おしえる: 駅までの道を親切に教えてくれました。 ／ えきまでのみちをしんせつにおしえてくれました。 ／ They kindly told me the way to the station.",
+        "notes/support surface checked for 教える|おしえる: Core N4 study word that also covers the 教 -> おしえる reading.",
+        "reading breakdown and kanji breakdown checked for 教える|おしえる: reading breakdown 教 おし える; kanji breakdown 教 おし 教 （おし） ／ teach Stroke order On: キョウ Kun: おし.える、 おそ.わる",
+        "JLPT, coverage, focus, and covered-reading labels checked for 教える|おしえる: JLPT N4; JLPT core + reading coverage; focus 教; covers 教: おしえる",
+        "exact word-reading audio identity checked for 教える|おしえる: word-reading-教える-おしえる; generated audio field [sound:6559_教-word-reading-教える-おしえる.wav]",
+        "pitch accent source and rendered pitch label checked for 教える|おしえる: kanjium-cc-by-sa-4.0 pattern 0 [heiban]; rendered Pitch 1: 0",
+        "managed media provenance checked for 教える|おしえる; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 教える|おしえる",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 教える|おしえる",
+        "verification limitations considered for 教える|おしえる: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 教える|おしえる; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 教える|おしえる: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0074; routine-tokenization-review; token surface 教える; tokenizer reading オシエル (おしえる) matches card reading おしえる; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "教える|おしえる",
+      "sentenceQualityReview": {
+        "japaneseSentence": "駅までの道を親切に教えてくれました。",
+        "reading": "えきまでのみちをしんせつにおしえてくれました。",
+        "translation": "They kindly told me the way to the station.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 教える|おしえる: 駅までの道を親切に教えてくれました。 with reading えきまでのみちをしんせつにおしえてくれました。 and translation They kindly told me the way to the station. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The way-to-the-station sentence naturally uses 教える in the tell/inform sense while preserving the teach/tell gloss. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 教える|おしえる; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -11055,8 +11279,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 試す|ためす: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "Core N4 study word"
     ],
@@ -11144,26 +11368,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-20",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-010",
-      "scope": "N4 word Obsidian lane batch 10 generated-order substantive rereview",
+      "scope": "N4 word Obsidian lane batch 10 generated-order substantive rereview with clean tokenization audit support context",
       "evidenceChecked": [
-        "live generated word surface for 試す|ためす from out/word-build/exports/jlpt-n4-words.tsv",
-        "governed Japanese-source word evidence for 試す|ためす: exact local JMdict row entrySeq=1312260 in downloads/jmdict-word-verification.tsv",
-        "learner-facing meaning to try / test",
-        "example sentence 新しい方法を一度試してみます。 ／ あたらしいほうほうをいちどためしてみます。 ／ I will try the new method once. checked for naturalness, reading alignment, translation fit, learner usefulness, and N4 fit",
-        "notes/support surface: Core N4 study word that also covers the 試 -> ためす reading.",
-        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
-        "exact word-reading audio identity 8A66_試-word-reading-試す-ためす.wav exists in out/word-build/package/media",
-        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka]",
-        "golden regression as internal regression only, not source truth",
-        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
-        "source-family posture considered; independent source-family corroboration is not claimed",
-        "verification limitations considered; no unresolved core-card uncertainty recorded"
-      ]
+        "live generated word surface for 試す|ためす from out/word-build/exports/jlpt-n4-words.tsv: word 試す, reading ためす, meaning to try / test, example sentence 新しい方法を一度試してみます。 ／ あたらしいほうほうをいちどためしてみます。 ／ I will try the new method once.",
+        "governed Japanese-source word evidence for 試す|ためす: exact local JMdict row entrySeq=1312260, priority ichi1,news1,nf18 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 試す|ためす: to try / test",
+        "example sentence with reading/translation fit checked for 試す|ためす: 新しい方法を一度試してみます。 ／ あたらしいほうほうをいちどためしてみます。 ／ I will try the new method once.",
+        "notes/support surface checked for 試す|ためす: Core N4 study word that also covers the 試 -> ためす reading.",
+        "reading breakdown and kanji breakdown checked for 試す|ためす: reading breakdown 試 ため す; kanji breakdown 試 ため 試 （ため） ／ test / try Stroke order On: シ Kun: こころ.みる、 ため.す",
+        "JLPT, coverage, focus, and covered-reading labels checked for 試す|ためす: JLPT N4; JLPT core + reading coverage; focus 試; covers 試: ためす",
+        "exact word-reading audio identity checked for 試す|ためす: word-reading-試す-ためす; generated audio field [sound:8A66_試-word-reading-試す-ためす.wav]",
+        "pitch accent source and rendered pitch label checked for 試す|ためす: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka]; rendered Pitch 1: 2",
+        "managed media provenance checked for 試す|ためす; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 試す|ためす",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 試す|ためす",
+        "verification limitations considered for 試す|ためす: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 試す|ためす; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 試す|ためす: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0075; routine-tokenization-review; token surface 試す; tokenizer reading タメス (ためす) matches card reading ためす; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "試す|ためす",
+      "sentenceQualityReview": {
+        "japaneseSentence": "新しい方法を一度試してみます。",
+        "reading": "あたらしいほうほうをいちどためしてみます。",
+        "translation": "I will try the new method once.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 試す|ためす: 新しい方法を一度試してみます。 with reading あたらしいほうほうをいちどためしてみます。 and translation I will try the new method once. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. Trying a new method once is natural and anchors 試す to try/test. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 試す|ためす; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -11200,8 +11438,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 赤い|あかい: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "Core N4 study word that also covers the 赤 -> あかい reading."
     ],
@@ -11290,26 +11528,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-20",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-010",
-      "scope": "N4 word Obsidian lane batch 10 generated-order substantive rereview",
+      "scope": "N4 word Obsidian lane batch 10 generated-order substantive rereview with clean tokenization audit support context",
       "evidenceChecked": [
-        "live generated word surface for 赤い|あかい from out/word-build/exports/jlpt-n4-words.tsv",
-        "governed Japanese-source word evidence for 赤い|あかい: exact local JMdict row entrySeq=1383240 in downloads/jmdict-word-verification.tsv",
-        "learner-facing meaning red",
-        "example sentence 赤い車が見えます。 ／ あかいくるまがみえます。 ／ I can see a red car. checked for naturalness, reading alignment, translation fit, learner usefulness, and N4 fit",
-        "notes/support surface: Core N4 study word that also covers the 赤 -> あかい reading.",
-        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
-        "exact word-reading audio identity 8D64_赤-word-reading-赤い-あかい.wav exists in out/word-build/package/media",
-        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 0 [heiban]",
-        "golden regression as internal regression only, not source truth",
-        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
-        "source-family posture considered; independent source-family corroboration is not claimed",
-        "verification limitations considered; no unresolved core-card uncertainty recorded"
-      ]
+        "live generated word surface for 赤い|あかい from out/word-build/exports/jlpt-n4-words.tsv: word 赤い, reading あかい, meaning red, example sentence 赤い車が見えます。 ／ あかいくるまがみえます。 ／ I can see a red car.",
+        "governed Japanese-source word evidence for 赤い|あかい: exact local JMdict row entrySeq=1383240, priority ichi1,news1,nf15 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 赤い|あかい: red",
+        "example sentence with reading/translation fit checked for 赤い|あかい: 赤い車が見えます。 ／ あかいくるまがみえます。 ／ I can see a red car.",
+        "notes/support surface checked for 赤い|あかい: Core N4 study word that also covers the 赤 -> あかい reading.",
+        "reading breakdown and kanji breakdown checked for 赤い|あかい: reading breakdown 赤 あか い; kanji breakdown 赤 あか 赤 （あか） ／ red Stroke order On: シャク、 セキ Kun: あか、 あか.い、 あか.らむ、 あか.らめる",
+        "JLPT, coverage, focus, and covered-reading labels checked for 赤い|あかい: JLPT N4; JLPT core + reading coverage; focus 赤; covers 赤: あかい",
+        "exact word-reading audio identity checked for 赤い|あかい: word-reading-赤い-あかい; generated audio field [sound:8D64_赤-word-reading-赤い-あかい.wav]",
+        "pitch accent source and rendered pitch label checked for 赤い|あかい: kanjium-cc-by-sa-4.0 pattern 0 [heiban]; rendered Pitch 1: 0",
+        "managed media provenance checked for 赤い|あかい; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 赤い|あかい",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 赤い|あかい",
+        "verification limitations considered for 赤い|あかい: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 赤い|あかい; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 赤い|あかい: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0076; routine-tokenization-review; token surface 赤い; tokenizer reading アカイ (あかい) matches card reading あかい; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "赤い|あかい",
+      "sentenceQualityReview": {
+        "japaneseSentence": "赤い車が見えます。",
+        "reading": "あかいくるまがみえます。",
+        "translation": "I can see a red car.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 赤い|あかい: 赤い車が見えます。 with reading あかいくるまがみえます。 and translation I can see a red car. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The red-car sentence is simple and directly supports red. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 赤い|あかい; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -11346,8 +11598,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 止まる|とまる: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "Core N4 study word"
     ],
@@ -11435,26 +11687,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-20",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-010",
-      "scope": "N4 word Obsidian lane batch 10 generated-order substantive rereview",
+      "scope": "N4 word Obsidian lane batch 10 generated-order substantive rereview with clean tokenization audit support context",
       "evidenceChecked": [
-        "live generated word surface for 止まる|とまる from out/word-build/exports/jlpt-n4-words.tsv",
-        "governed Japanese-source word evidence for 止まる|とまる: exact local JMdict row entrySeq=1310620 in downloads/jmdict-word-verification.tsv",
-        "learner-facing meaning to stop",
-        "example sentence 雨が急に止まりました。 ／ あめがきゅうにとまりました。 ／ The rain stopped suddenly. checked for naturalness, reading alignment, translation fit, learner usefulness, and N4 fit",
-        "notes/support surface: Core N4 study word that also covers the 止 -> とまる reading.",
-        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
-        "exact word-reading audio identity 6B62_止-word-reading-止まる-とまる.wav exists in out/word-build/package/media",
-        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 0 [heiban]",
-        "golden regression as internal regression only, not source truth",
-        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
-        "source-family posture considered; independent source-family corroboration is not claimed",
-        "verification limitations considered; no unresolved core-card uncertainty recorded"
-      ]
+        "live generated word surface for 止まる|とまる from out/word-build/exports/jlpt-n4-words.tsv: word 止まる, reading とまる, meaning to stop, example sentence 雨が急に止まりました。 ／ あめがきゅうにとまりました。 ／ The rain stopped suddenly.",
+        "governed Japanese-source word evidence for 止まる|とまる: exact local JMdict row entrySeq=1310620, priority ichi1,news1,nf13,spec1 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 止まる|とまる: to stop",
+        "example sentence with reading/translation fit checked for 止まる|とまる: 雨が急に止まりました。 ／ あめがきゅうにとまりました。 ／ The rain stopped suddenly.",
+        "notes/support surface checked for 止まる|とまる: Core N4 study word that also covers the 止 -> とまる reading.",
+        "reading breakdown and kanji breakdown checked for 止まる|とまる: reading breakdown 止 と まる; kanji breakdown 止 と 止 （と） ／ stop Stroke order On: シ Kun: -さ.し、 -さ.す、 -と.める、 -ど.まり、 -ど.め、 -や.む、 と.まる、 とど.まる、 とど.め、 とど.める、 や.める、 よ.す",
+        "JLPT, coverage, focus, and covered-reading labels checked for 止まる|とまる: JLPT N4; JLPT core + reading coverage; focus 止; covers 止: とまる",
+        "exact word-reading audio identity checked for 止まる|とまる: word-reading-止まる-とまる; generated audio field [sound:6B62_止-word-reading-止まる-とまる.wav]",
+        "pitch accent source and rendered pitch label checked for 止まる|とまる: kanjium-cc-by-sa-4.0 pattern 0 [heiban]; rendered Pitch 1: 0",
+        "managed media provenance checked for 止まる|とまる; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 止まる|とまる",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 止まる|とまる",
+        "verification limitations considered for 止まる|とまる: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 止まる|とまる; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 止まる|とまる: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0077; routine-tokenization-review; token surface 止まる; tokenizer reading トマル (とまる) matches card reading とまる; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "止まる|とまる",
+      "sentenceQualityReview": {
+        "japaneseSentence": "雨が急に止まりました。",
+        "reading": "あめがきゅうにとまりました。",
+        "translation": "The rain stopped suddenly.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 止まる|とまる: 雨が急に止まりました。 with reading あめがきゅうにとまりました。 and translation The rain stopped suddenly. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. Rain stopping suddenly checks the intransitive stop sense of 止まる. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 止まる|とまる; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -11492,8 +11758,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 正しい|ただしい: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "Core N4 study word"
     ],
@@ -11581,26 +11847,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-20",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-010",
-      "scope": "N4 word Obsidian lane batch 10 generated-order substantive rereview",
+      "scope": "N4 word Obsidian lane batch 10 generated-order substantive rereview with clean tokenization audit support context",
       "evidenceChecked": [
-        "live generated word surface for 正しい|ただしい from out/word-build/exports/jlpt-n4-words.tsv",
-        "governed Japanese-source word evidence for 正しい|ただしい: exact local JMdict row entrySeq=1376600 in downloads/jmdict-word-verification.tsv",
-        "learner-facing meaning correct / right",
-        "example sentence 正しい答えをノートに書きました。 ／ ただしいこたえをノートにかきました。 ／ I wrote the correct answer in my notebook. checked for naturalness, reading alignment, translation fit, learner usefulness, and N4 fit",
-        "notes/support surface: Core N4 study word that also covers the 正 -> ただしい reading.",
-        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
-        "exact word-reading audio identity 6B63_正-word-reading-正しい-ただしい.wav exists in out/word-build/package/media",
-        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 3 [nakadaka]",
-        "golden regression as internal regression only, not source truth",
-        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
-        "source-family posture considered; independent source-family corroboration is not claimed",
-        "verification limitations considered; no unresolved core-card uncertainty recorded"
-      ]
+        "live generated word surface for 正しい|ただしい from out/word-build/exports/jlpt-n4-words.tsv: word 正しい, reading ただしい, meaning correct / right, example sentence 正しい答えをノートに書きました。 ／ ただしいこたえをノートにかきました。 ／ I wrote the correct answer in my notebook.",
+        "governed Japanese-source word evidence for 正しい|ただしい: exact local JMdict row entrySeq=1376600, priority ichi1,news1,nf24 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 正しい|ただしい: correct / right",
+        "example sentence with reading/translation fit checked for 正しい|ただしい: 正しい答えをノートに書きました。 ／ ただしいこたえをノートにかきました。 ／ I wrote the correct answer in my notebook.",
+        "notes/support surface checked for 正しい|ただしい: Core N4 study word that also covers the 正 -> ただしい reading.",
+        "reading breakdown and kanji breakdown checked for 正しい|ただしい: reading breakdown 正 ただ しい; kanji breakdown 正 ただ 正 （ただ） ／ correct / proper Stroke order On: ショウ、 セイ Kun: ただ.しい、 ただ.す、 まさ、 まさ.に",
+        "JLPT, coverage, focus, and covered-reading labels checked for 正しい|ただしい: JLPT N4; JLPT core + reading coverage; focus 正; covers 正: ただしい",
+        "exact word-reading audio identity checked for 正しい|ただしい: word-reading-正しい-ただしい; generated audio field [sound:6B63_正-word-reading-正しい-ただしい.wav]",
+        "pitch accent source and rendered pitch label checked for 正しい|ただしい: kanjium-cc-by-sa-4.0 pattern 3 [nakadaka]; rendered Pitch 1: 3",
+        "managed media provenance checked for 正しい|ただしい; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 正しい|ただしい",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 正しい|ただしい",
+        "verification limitations considered for 正しい|ただしい: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 正しい|ただしい; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 正しい|ただしい: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0078; routine-tokenization-review; token surface 正しい; tokenizer reading タダシイ (ただしい) matches card reading ただしい; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "正しい|ただしい",
+      "sentenceQualityReview": {
+        "japaneseSentence": "正しい答えをノートに書きました。",
+        "reading": "ただしいこたえをノートにかきました。",
+        "translation": "I wrote the correct answer in my notebook.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 正しい|ただしい: 正しい答えをノートに書きました。 with reading ただしいこたえをノートにかきました。 and translation I wrote the correct answer in my notebook. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. Correct answer in a notebook is a direct classroom context for correct/right. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 正しい|ただしい; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -11638,8 +11918,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 池|いけ: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "place/nature N4 noun",
       "池 -> いけ"
@@ -11728,26 +12008,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-20",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-010",
-      "scope": "N4 word Obsidian lane batch 10 generated-order substantive rereview",
+      "scope": "N4 word Obsidian lane batch 10 generated-order substantive rereview with clean tokenization audit support context",
       "evidenceChecked": [
-        "live generated word surface for 池|いけ from out/word-build/exports/jlpt-n4-words.tsv",
-        "governed Japanese-source word evidence for 池|いけ: exact local JMdict row entrySeq=1421700 in downloads/jmdict-word-verification.tsv",
-        "learner-facing meaning pond",
-        "example sentence 公園の池で魚が泳いでいます。 ／ こうえんのいけでさかながおよいでいます。 ／ Fish are swimming in the park pond. checked for naturalness, reading alignment, translation fit, learner usefulness, and N4 fit",
-        "notes/support surface: Common place/nature N4 noun with a clean 池 -> いけ anchor.",
-        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
-        "exact word-reading audio identity 6C60_池-word-reading-池-いけ.wav exists in out/word-build/package/media",
-        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 2 [odaka]",
-        "golden regression as internal regression only, not source truth",
-        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
-        "source-family posture considered; independent source-family corroboration is not claimed",
-        "verification limitations considered; no unresolved core-card uncertainty recorded"
-      ]
+        "live generated word surface for 池|いけ from out/word-build/exports/jlpt-n4-words.tsv: word 池, reading いけ, meaning pond, example sentence 公園の池で魚が泳いでいます。 ／ こうえんのいけでさかながおよいでいます。 ／ Fish are swimming in the park pond.",
+        "governed Japanese-source word evidence for 池|いけ: exact local JMdict row entrySeq=1421700, priority ichi1,news1,nf05 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 池|いけ: pond",
+        "example sentence with reading/translation fit checked for 池|いけ: 公園の池で魚が泳いでいます。 ／ こうえんのいけでさかながおよいでいます。 ／ Fish are swimming in the park pond.",
+        "notes/support surface checked for 池|いけ: Common place/nature N4 noun with a clean 池 -> いけ anchor.",
+        "reading breakdown and kanji breakdown checked for 池|いけ: reading breakdown 池 いけ; kanji breakdown 池 いけ 池 （いけ） ／ pond Stroke order On: チ Kun: いけ",
+        "JLPT, coverage, focus, and covered-reading labels checked for 池|いけ: JLPT N4; JLPT core + reading coverage; focus 池; covers 池: いけ",
+        "exact word-reading audio identity checked for 池|いけ: word-reading-池-いけ; generated audio field [sound:6C60_池-word-reading-池-いけ.wav]",
+        "pitch accent source and rendered pitch label checked for 池|いけ: kanjium-cc-by-sa-4.0 pattern 2 [odaka]; rendered Pitch 1: 2",
+        "managed media provenance checked for 池|いけ; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 池|いけ",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 池|いけ; single-kanji written surface was reviewed as an active word/vocabulary row and kanji-deck certification kept separate",
+        "verification limitations considered for 池|いけ: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 池|いけ; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 池|いけ: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0079; routine-tokenization-review; token surface 池; tokenizer reading イケ (いけ) matches card reading いけ; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "池|いけ",
+      "sentenceQualityReview": {
+        "japaneseSentence": "公園の池で魚が泳いでいます。",
+        "reading": "こうえんのいけでさかながおよいでいます。",
+        "translation": "Fish are swimming in the park pond.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 池|いけ: 公園の池で魚が泳いでいます。 with reading こうえんのいけでさかながおよいでいます。 and translation Fish are swimming in the park pond. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. Fish in the park pond is natural and directly supports pond. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 池|いけ; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -11786,8 +12080,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 遠い|とおい: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "distance adjective",
       "complements 遠く"
@@ -11876,26 +12170,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-20",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-010",
-      "scope": "N4 word Obsidian lane batch 10 generated-order substantive rereview",
+      "scope": "N4 word Obsidian lane batch 10 generated-order substantive rereview with clean tokenization audit support context",
       "evidenceChecked": [
-        "live generated word surface for 遠い|とおい from out/word-build/exports/jlpt-n4-words.tsv",
-        "governed Japanese-source word evidence for 遠い|とおい: exact local JMdict row entrySeq=1177800 in downloads/jmdict-word-verification.tsv",
-        "learner-facing meaning far / distant",
-        "example sentence 駅まで少し遠いのでバスに乗ります。 ／ えきまですこしとおいのでバスにのります。 ／ It is a little far to the station, so I will take the bus. checked for naturalness, reading alignment, translation fit, learner usefulness, and N4 fit",
-        "notes/support surface: Common distance adjective with a clean 遠 -> とおい anchor; complements 遠く without duplicating the part of speech.",
-        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
-        "exact word-reading audio identity 9060_遠-word-reading-遠い-とおい.wav exists in out/word-build/package/media",
-        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 0 [heiban]",
-        "golden regression as internal regression only, not source truth",
-        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
-        "source-family posture considered; independent source-family corroboration is not claimed",
-        "verification limitations considered; no unresolved core-card uncertainty recorded"
-      ]
+        "live generated word surface for 遠い|とおい from out/word-build/exports/jlpt-n4-words.tsv: word 遠い, reading とおい, meaning far / distant, example sentence 駅まで少し遠いのでバスに乗ります。 ／ えきまですこしとおいのでバスにのります。 ／ It is a little far to the station, so I will take the bus.",
+        "governed Japanese-source word evidence for 遠い|とおい: exact local JMdict row entrySeq=1177800, priority ichi1,news2,nf34 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 遠い|とおい: far / distant",
+        "example sentence with reading/translation fit checked for 遠い|とおい: 駅まで少し遠いのでバスに乗ります。 ／ えきまですこしとおいのでバスにのります。 ／ It is a little far to the station, so I will take the bus.",
+        "notes/support surface checked for 遠い|とおい: Common distance adjective with a clean 遠 -> とおい anchor; complements 遠く without duplicating the part of speech.",
+        "reading breakdown and kanji breakdown checked for 遠い|とおい: reading breakdown 遠 とお い; kanji breakdown 遠 とお 遠 （とお） ／ far / distant Stroke order On: エン、 オン Kun: とお.い",
+        "JLPT, coverage, focus, and covered-reading labels checked for 遠い|とおい: JLPT N4; JLPT core + reading coverage; focus 遠; covers 遠: とおい",
+        "exact word-reading audio identity checked for 遠い|とおい: word-reading-遠い-とおい; generated audio field [sound:9060_遠-word-reading-遠い-とおい.wav]",
+        "pitch accent source and rendered pitch label checked for 遠い|とおい: kanjium-cc-by-sa-4.0 pattern 0 [heiban]; rendered Pitch 1: 0",
+        "managed media provenance checked for 遠い|とおい; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 遠い|とおい",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 遠い|とおい",
+        "verification limitations considered for 遠い|とおい: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 遠い|とおい; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 遠い|とおい: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0080; routine-tokenization-review; token surface 遠い; tokenizer reading トオイ (とおい) matches card reading とおい; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "遠い|とおい",
+      "sentenceQualityReview": {
+        "japaneseSentence": "駅まで少し遠いのでバスに乗ります。",
+        "reading": "えきまですこしとおいのでバスにのります。",
+        "translation": "It is a little far to the station, so I will take the bus.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 遠い|とおい: 駅まで少し遠いのでバスに乗ります。 with reading えきまですこしとおいのでバスにのります。 and translation It is a little far to the station, so I will take the bus. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The station-is-far sentence checks distance and is useful for travel directions. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 遠い|とおい; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -11932,8 +12240,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 晩|ばん: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "Common N4 study word"
     ],
@@ -12022,26 +12330,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-20",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-011",
-      "scope": "N4 word Obsidian lane batch 11 generated-order substantive rereview",
+      "scope": "N4 word Obsidian lane batch 11 generated-order substantive rereview with clean tokenization audit support context",
       "evidenceChecked": [
-        "live generated word surface for 晩|ばん from out/word-build/exports/jlpt-n4-words.tsv",
-        "governed Japanese-source word evidence for 晩|ばん: exact local JMdict row entrySeq=1482110 in downloads/jmdict-word-verification.tsv",
-        "learner-facing meaning evening",
-        "example sentence その晩は家でゆっくり休みました。 ／ そのばんはいえでゆっくりやすみました。 ／ That evening, I rested at home. checked for naturalness, reading alignment, translation fit, learner usefulness, and N4 fit",
-        "notes/support surface: Common N4 study word that also covers the 晩 -> ばん reading.",
-        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
-        "exact word-reading audio identity 6669_晩-word-reading-晩-ばん.wav exists in out/word-build/package/media",
-        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 0 [heiban]",
-        "golden regression as internal regression only, not source truth",
-        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
-        "source-family posture considered; independent source-family corroboration is not claimed",
-        "verification limitations considered; no unresolved core-card uncertainty recorded"
-      ]
+        "live generated word surface for 晩|ばん from out/word-build/exports/jlpt-n4-words.tsv: word 晩, reading ばん, meaning evening, example sentence その晩は家でゆっくり休みました。 ／ そのばんはいえでゆっくりやすみました。 ／ That evening, I rested at home.",
+        "governed Japanese-source word evidence for 晩|ばん: exact local JMdict row entrySeq=1482110, priority ichi1,news1,nf07 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 晩|ばん: evening",
+        "example sentence with reading/translation fit checked for 晩|ばん: その晩は家でゆっくり休みました。 ／ そのばんはいえでゆっくりやすみました。 ／ That evening, I rested at home.",
+        "notes/support surface checked for 晩|ばん: Common N4 study word that also covers the 晩 -> ばん reading.",
+        "reading breakdown and kanji breakdown checked for 晩|ばん: reading breakdown 晩 ばん; kanji breakdown 晩 ばん 晩 （ばん） ／ evening Stroke order On: バン",
+        "JLPT, coverage, focus, and covered-reading labels checked for 晩|ばん: JLPT N4; JLPT core + reading coverage; focus 晩; covers 晩: ばん",
+        "exact word-reading audio identity checked for 晩|ばん: word-reading-晩-ばん; generated audio field [sound:6669_晩-word-reading-晩-ばん.wav]",
+        "pitch accent source and rendered pitch label checked for 晩|ばん: kanjium-cc-by-sa-4.0 pattern 0 [heiban]; rendered Pitch 1: 0",
+        "managed media provenance checked for 晩|ばん; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 晩|ばん",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 晩|ばん; single-kanji written surface was reviewed as an active word/vocabulary row and kanji-deck certification kept separate",
+        "verification limitations considered for 晩|ばん: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 晩|ばん; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 晩|ばん: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0081; routine-tokenization-review; token surface 晩; tokenizer reading バン (ばん) matches card reading ばん; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "晩|ばん",
+      "sentenceQualityReview": {
+        "japaneseSentence": "その晩は家でゆっくり休みました。",
+        "reading": "そのばんはいえでゆっくりやすみました。",
+        "translation": "That evening, I rested at home.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 晩|ばん: その晩は家でゆっくり休みました。 with reading そのばんはいえでゆっくりやすみました。 and translation That evening, I rested at home. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. That evening at home is natural and clearly anchors 晩 as evening. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 晩|ばん; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -12078,8 +12400,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 歩く|あるく: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "Core N4 study word that also covers the 歩 -> あるく reading."
     ],
@@ -12168,26 +12490,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-20",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-011",
-      "scope": "N4 word Obsidian lane batch 11 generated-order substantive rereview",
+      "scope": "N4 word Obsidian lane batch 11 generated-order substantive rereview with clean tokenization audit support context",
       "evidenceChecked": [
-        "live generated word surface for 歩く|あるく from out/word-build/exports/jlpt-n4-words.tsv",
-        "governed Japanese-source word evidence for 歩く|あるく: exact local JMdict row entrySeq=1514320 in downloads/jmdict-word-verification.tsv",
-        "learner-facing meaning walk",
-        "example sentence 駅まで歩きます。 ／ えきまであるきます。 ／ I walk to the station. checked for naturalness, reading alignment, translation fit, learner usefulness, and N4 fit",
-        "notes/support surface: Core N4 study word that also covers the 歩 -> あるく reading.",
-        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
-        "exact word-reading audio identity 6B69_歩-word-reading-歩く-あるく.wav exists in out/word-build/package/media",
-        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka]",
-        "golden regression as internal regression only, not source truth",
-        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
-        "source-family posture considered; independent source-family corroboration is not claimed",
-        "verification limitations considered; no unresolved core-card uncertainty recorded"
-      ]
+        "live generated word surface for 歩く|あるく from out/word-build/exports/jlpt-n4-words.tsv: word 歩く, reading あるく, meaning walk, example sentence 駅まで歩きます。 ／ えきまであるきます。 ／ I walk to the station.",
+        "governed Japanese-source word evidence for 歩く|あるく: exact local JMdict row entrySeq=1514320, priority ichi1 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 歩く|あるく: walk",
+        "example sentence with reading/translation fit checked for 歩く|あるく: 駅まで歩きます。 ／ えきまであるきます。 ／ I walk to the station.",
+        "notes/support surface checked for 歩く|あるく: Core N4 study word that also covers the 歩 -> あるく reading.",
+        "reading breakdown and kanji breakdown checked for 歩く|あるく: reading breakdown 歩 ある く; kanji breakdown 歩 ある 歩 （ある） ／ walk Stroke order On: フ、 ブ、 ホ Kun: あゆ.む、 ある.く",
+        "JLPT, coverage, focus, and covered-reading labels checked for 歩く|あるく: JLPT N4; JLPT core + reading coverage; focus 歩; covers 歩: あるく",
+        "exact word-reading audio identity checked for 歩く|あるく: word-reading-歩く-あるく; generated audio field [sound:6B69_歩-word-reading-歩く-あるく.wav]",
+        "pitch accent source and rendered pitch label checked for 歩く|あるく: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka]; rendered Pitch 1: 2",
+        "managed media provenance checked for 歩く|あるく; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 歩く|あるく",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 歩く|あるく",
+        "verification limitations considered for 歩く|あるく: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 歩く|あるく; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 歩く|あるく: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0082; routine-tokenization-review; token surface 歩く; tokenizer reading アルク (あるく) matches card reading あるく; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "歩く|あるく",
+      "sentenceQualityReview": {
+        "japaneseSentence": "駅まで歩きます。",
+        "reading": "えきまであるきます。",
+        "translation": "I walk to the station.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 歩く|あるく: 駅まで歩きます。 with reading えきまであるきます。 and translation I walk to the station. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. Walking to the station is a basic, useful motion sentence. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 歩く|あるく; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -12226,8 +12562,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 物|もの: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "Common N4 study word"
     ],
@@ -12315,26 +12651,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-20",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-011",
-      "scope": "N4 word Obsidian lane batch 11 generated-order substantive rereview",
+      "scope": "N4 word Obsidian lane batch 11 generated-order substantive rereview with clean tokenization audit support context",
       "evidenceChecked": [
-        "live generated word surface for 物|もの from out/word-build/exports/jlpt-n4-words.tsv",
-        "governed Japanese-source word evidence for 物|もの: exact local JMdict row entrySeq=1502390 in downloads/jmdict-word-verification.tsv",
-        "learner-facing meaning thing / object",
-        "example sentence 大切な物はかばんの中に入れます。 ／ たいせつなものはかばんのなかにいれます。 ／ I put important things in my bag. checked for naturalness, reading alignment, translation fit, learner usefulness, and N4 fit",
-        "notes/support surface: Common N4 study word that also covers the 物 -> もの reading.",
-        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
-        "exact word-reading audio identity 7269_物-word-reading-物-もの.wav exists in out/word-build/package/media",
-        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 2 [odaka] / 0 [heiban]",
-        "golden regression as internal regression only, not source truth",
-        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
-        "source-family posture considered; independent source-family corroboration is not claimed",
-        "verification limitations considered; no unresolved core-card uncertainty recorded"
-      ]
+        "live generated word surface for 物|もの from out/word-build/exports/jlpt-n4-words.tsv: word 物, reading もの, meaning thing / object, example sentence 大切な物はかばんの中に入れます。 ／ たいせつなものはかばんのなかにいれます。 ／ I put important things in my bag.",
+        "governed Japanese-source word evidence for 物|もの: exact local JMdict row entrySeq=1502390, priority ichi1 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 物|もの: thing / object",
+        "example sentence with reading/translation fit checked for 物|もの: 大切な物はかばんの中に入れます。 ／ たいせつなものはかばんのなかにいれます。 ／ I put important things in my bag.",
+        "notes/support surface checked for 物|もの: Common N4 study word that also covers the 物 -> もの reading.",
+        "reading breakdown and kanji breakdown checked for 物|もの: reading breakdown 物 もの; kanji breakdown 物 もの 物 （もの） ／ thing / object Stroke order On: ブツ、 モツ Kun: もの",
+        "JLPT, coverage, focus, and covered-reading labels checked for 物|もの: JLPT N4; JLPT core + reading coverage; focus 物; covers 物: もの",
+        "exact word-reading audio identity checked for 物|もの: word-reading-物-もの; generated audio field [sound:7269_物-word-reading-物-もの.wav]",
+        "pitch accent source and rendered pitch label checked for 物|もの: kanjium-cc-by-sa-4.0 pattern 2 [odaka] / 0 [heiban]; rendered Pitch 1: 2, Pitch 2: 0",
+        "managed media provenance checked for 物|もの; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 物|もの",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 物|もの; single-kanji written surface was reviewed as an active word/vocabulary row and kanji-deck certification kept separate",
+        "verification limitations considered for 物|もの: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 物|もの; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 物|もの: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0083; routine-tokenization-review; token surface 物; tokenizer reading モノ (もの) matches card reading もの; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "物|もの",
+      "sentenceQualityReview": {
+        "japaneseSentence": "大切な物はかばんの中に入れます。",
+        "reading": "たいせつなものはかばんのなかにいれます。",
+        "translation": "I put important things in my bag.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 物|もの: 大切な物はかばんの中に入れます。 with reading たいせつなものはかばんのなかにいれます。 and translation I put important things in my bag. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. Important things in a bag anchors 物 to thing/object in an everyday context. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 物|もの; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -12372,8 +12722,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 海|うみ: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "Core nature/place noun",
       "word-card reading is うみ"
@@ -12463,26 +12813,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-20",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-011",
-      "scope": "N4 word Obsidian lane batch 11 generated-order substantive rereview",
+      "scope": "N4 word Obsidian lane batch 11 generated-order substantive rereview with clean tokenization audit support context",
       "evidenceChecked": [
-        "live generated word surface for 海|うみ from out/word-build/exports/jlpt-n4-words.tsv",
-        "governed Japanese-source word evidence for 海|うみ: exact local JMdict row entrySeq=1201190 in downloads/jmdict-word-verification.tsv",
-        "learner-facing meaning sea / ocean",
-        "example sentence 夏に海へ行きたいです。 ／ なつにうみへいきたいです。 ／ I want to go to the sea in summer. checked for naturalness, reading alignment, translation fit, learner usefulness, and N4 fit",
-        "notes/support surface: Core nature/place noun for sea or ocean; this word-card reading is うみ and stays separate from the kanji-deck card for 海.",
-        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
-        "exact word-reading audio identity 6D77_海-word-reading-海-うみ.wav exists in out/word-build/package/media",
-        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 1 [atamadaka]",
-        "golden regression as internal regression only, not source truth",
-        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
-        "source-family posture considered; independent source-family corroboration is not claimed",
-        "verification limitations considered; no unresolved core-card uncertainty recorded"
-      ]
+        "live generated word surface for 海|うみ from out/word-build/exports/jlpt-n4-words.tsv: word 海, reading うみ, meaning sea / ocean, example sentence 夏に海へ行きたいです。 ／ なつにうみへいきたいです。 ／ I want to go to the sea in summer.",
+        "governed Japanese-source word evidence for 海|うみ: exact local JMdict row entrySeq=1201190, priority ichi1,news1,nf02 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 海|うみ: sea / ocean",
+        "example sentence with reading/translation fit checked for 海|うみ: 夏に海へ行きたいです。 ／ なつにうみへいきたいです。 ／ I want to go to the sea in summer.",
+        "notes/support surface checked for 海|うみ: Core nature/place noun for sea or ocean; this word-card reading is うみ and stays separate from the kanji-deck card for 海.",
+        "reading breakdown and kanji breakdown checked for 海|うみ: reading breakdown 海 うみ; kanji breakdown 海 うみ 海 （うみ） ／ sea / ocean Stroke order On: カイ Kun: うみ",
+        "JLPT, coverage, focus, and covered-reading labels checked for 海|うみ: JLPT N4; JLPT core + reading coverage; focus 海; covers 海: うみ",
+        "exact word-reading audio identity checked for 海|うみ: word-reading-海-うみ; generated audio field [sound:6D77_海-word-reading-海-うみ.wav]",
+        "pitch accent source and rendered pitch label checked for 海|うみ: kanjium-cc-by-sa-4.0 pattern 1 [atamadaka]; rendered Pitch 1: 1",
+        "managed media provenance checked for 海|うみ; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 海|うみ",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 海|うみ; single-kanji written surface was reviewed as an active word/vocabulary row and kanji-deck certification kept separate",
+        "verification limitations considered for 海|うみ: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 海|うみ; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 海|うみ: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0084; routine-tokenization-review; token surface 海; tokenizer reading ウミ (うみ) matches card reading うみ; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "海|うみ",
+      "sentenceQualityReview": {
+        "japaneseSentence": "夏に海へ行きたいです。",
+        "reading": "なつにうみへいきたいです。",
+        "translation": "I want to go to the sea in summer.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 海|うみ: 夏に海へ行きたいです。 with reading なつにうみへいきたいです。 and translation I want to go to the sea in summer. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. Going to the sea in summer is a natural beginner-friendly use of 海. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 海|うみ; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -12520,8 +12884,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 起きる|おきる: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "Core N4 study word that also covers the 起 -> おきる reading."
     ],
@@ -12610,26 +12974,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-20",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-011",
-      "scope": "N4 word Obsidian lane batch 11 generated-order substantive rereview",
+      "scope": "N4 word Obsidian lane batch 11 generated-order substantive rereview with clean tokenization audit support context",
       "evidenceChecked": [
-        "live generated word surface for 起きる|おきる from out/word-build/exports/jlpt-n4-words.tsv",
-        "governed Japanese-source word evidence for 起きる|おきる: exact local JMdict row entrySeq=1223640 in downloads/jmdict-word-verification.tsv",
-        "learner-facing meaning wake up / get up",
-        "example sentence 毎朝六時に起きます。 ／ まいあさろくじにおきます。 ／ I get up at six every morning. checked for naturalness, reading alignment, translation fit, learner usefulness, and N4 fit",
-        "notes/support surface: Core N4 study word that also covers the 起 -> おきる reading.",
-        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
-        "exact word-reading audio identity 8D77_起-word-reading-起きる-おきる.wav exists in out/word-build/package/media",
-        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka]",
-        "golden regression as internal regression only, not source truth",
-        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
-        "source-family posture considered; independent source-family corroboration is not claimed",
-        "verification limitations considered; no unresolved core-card uncertainty recorded"
-      ]
+        "live generated word surface for 起きる|おきる from out/word-build/exports/jlpt-n4-words.tsv: word 起きる, reading おきる, meaning wake up / get up, example sentence 毎朝六時に起きます。 ／ まいあさろくじにおきます。 ／ I get up at six every morning.",
+        "governed Japanese-source word evidence for 起きる|おきる: exact local JMdict row entrySeq=1223640, priority ichi1,news2,nf31 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 起きる|おきる: wake up / get up",
+        "example sentence with reading/translation fit checked for 起きる|おきる: 毎朝六時に起きます。 ／ まいあさろくじにおきます。 ／ I get up at six every morning.",
+        "notes/support surface checked for 起きる|おきる: Core N4 study word that also covers the 起 -> おきる reading.",
+        "reading breakdown and kanji breakdown checked for 起きる|おきる: reading breakdown 起 お きる; kanji breakdown 起 お 起 （お） ／ get up / occur Stroke order On: キ Kun: お.きる、 お.こす、 お.こる、 た.つ",
+        "JLPT, coverage, focus, and covered-reading labels checked for 起きる|おきる: JLPT N4; JLPT core + reading coverage; focus 起; covers 起: おきる",
+        "exact word-reading audio identity checked for 起きる|おきる: word-reading-起きる-おきる; generated audio field [sound:8D77_起-word-reading-起きる-おきる.wav]",
+        "pitch accent source and rendered pitch label checked for 起きる|おきる: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka]; rendered Pitch 1: 2",
+        "managed media provenance checked for 起きる|おきる; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 起きる|おきる",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 起きる|おきる",
+        "verification limitations considered for 起きる|おきる: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 起きる|おきる; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 起きる|おきる: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0085; routine-tokenization-review; token surface 起きる; tokenizer reading オキル (おきる) matches card reading おきる; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "起きる|おきる",
+      "sentenceQualityReview": {
+        "japaneseSentence": "毎朝六時に起きます。",
+        "reading": "まいあさろくじにおきます。",
+        "translation": "I get up at six every morning.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 起きる|おきる: 毎朝六時に起きます。 with reading まいあさろくじにおきます。 and translation I get up at six every morning. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. Getting up at six every morning anchors 起きる to wake/get up. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 起きる|おきる; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -12667,8 +13045,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 味|あじ: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "Core N4 study word"
     ],
@@ -12756,26 +13134,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-20",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-011",
-      "scope": "N4 word Obsidian lane batch 11 generated-order substantive rereview",
+      "scope": "N4 word Obsidian lane batch 11 generated-order substantive rereview with clean tokenization audit support context",
       "evidenceChecked": [
-        "live generated word surface for 味|あじ from out/word-build/exports/jlpt-n4-words.tsv",
-        "governed Japanese-source word evidence for 味|あじ: exact local JMdict row entrySeq=1526960 in downloads/jmdict-word-verification.tsv",
-        "learner-facing meaning taste / flavor",
-        "example sentence このスープの味が好きです。 ／ このスープのあじがすきです。 ／ I like the taste of this soup. checked for naturalness, reading alignment, translation fit, learner usefulness, and N4 fit",
-        "notes/support surface: Core N4 study word that also covers the 味 -> あじ reading.",
-        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
-        "exact word-reading audio identity 5473_味-word-reading-味-あじ.wav exists in out/word-build/package/media",
-        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 0 [heiban]",
-        "golden regression as internal regression only, not source truth",
-        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
-        "source-family posture considered; independent source-family corroboration is not claimed",
-        "verification limitations considered; no unresolved core-card uncertainty recorded"
-      ]
+        "live generated word surface for 味|あじ from out/word-build/exports/jlpt-n4-words.tsv: word 味, reading あじ, meaning taste / flavor, example sentence このスープの味が好きです。 ／ このスープのあじがすきです。 ／ I like the taste of this soup.",
+        "governed Japanese-source word evidence for 味|あじ: exact local JMdict row entrySeq=1526960, priority ichi1,news1,nf03 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 味|あじ: taste / flavor",
+        "example sentence with reading/translation fit checked for 味|あじ: このスープの味が好きです。 ／ このスープのあじがすきです。 ／ I like the taste of this soup.",
+        "notes/support surface checked for 味|あじ: Core N4 study word that also covers the 味 -> あじ reading.",
+        "reading breakdown and kanji breakdown checked for 味|あじ: reading breakdown 味 あじ; kanji breakdown 味 あじ 味 （あじ） ／ taste / flavor Stroke order On: ミ Kun: あじ、 あじ.わう",
+        "JLPT, coverage, focus, and covered-reading labels checked for 味|あじ: JLPT N4; JLPT core + reading coverage; focus 味; covers 味: あじ",
+        "exact word-reading audio identity checked for 味|あじ: word-reading-味-あじ; generated audio field [sound:5473_味-word-reading-味-あじ.wav]",
+        "pitch accent source and rendered pitch label checked for 味|あじ: kanjium-cc-by-sa-4.0 pattern 0 [heiban]; rendered Pitch 1: 0",
+        "managed media provenance checked for 味|あじ; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 味|あじ",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 味|あじ; single-kanji written surface was reviewed as an active word/vocabulary row and kanji-deck certification kept separate",
+        "verification limitations considered for 味|あじ: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 味|あじ; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 味|あじ: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0086; routine-tokenization-review; token surface 味; tokenizer reading アジ (あじ) matches card reading あじ; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "味|あじ",
+      "sentenceQualityReview": {
+        "japaneseSentence": "このスープの味が好きです。",
+        "reading": "このスープのあじがすきです。",
+        "translation": "I like the taste of this soup.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 味|あじ: このスープの味が好きです。 with reading このスープのあじがすきです。 and translation I like the taste of this soup. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. Liking the taste of soup directly supports taste/flavor. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 味|あじ; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -12812,8 +13204,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 色|いろ: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "Core N4 study word"
     ],
@@ -12901,26 +13293,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-20",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-011",
-      "scope": "N4 word Obsidian lane batch 11 generated-order substantive rereview",
+      "scope": "N4 word Obsidian lane batch 11 generated-order substantive rereview with clean tokenization audit support context",
       "evidenceChecked": [
-        "live generated word surface for 色|いろ from out/word-build/exports/jlpt-n4-words.tsv",
-        "governed Japanese-source word evidence for 色|いろ: exact local JMdict row entrySeq=1357600 in downloads/jmdict-word-verification.tsv",
-        "learner-facing meaning color",
-        "example sentence この花の色がとても好きです。 ／ このはなのいろがとてもすきです。 ／ I really like the color of this flower. checked for naturalness, reading alignment, translation fit, learner usefulness, and N4 fit",
-        "notes/support surface: Core N4 study word that also covers the 色 -> いろ reading.",
-        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
-        "exact word-reading audio identity 8272_色-word-reading-色-いろ.wav exists in out/word-build/package/media",
-        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 2 [odaka]",
-        "golden regression as internal regression only, not source truth",
-        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
-        "source-family posture considered; independent source-family corroboration is not claimed",
-        "verification limitations considered; no unresolved core-card uncertainty recorded"
-      ]
+        "live generated word surface for 色|いろ from out/word-build/exports/jlpt-n4-words.tsv: word 色, reading いろ, meaning color, example sentence この花の色がとても好きです。 ／ このはなのいろがとてもすきです。 ／ I really like the color of this flower.",
+        "governed Japanese-source word evidence for 色|いろ: exact local JMdict row entrySeq=1357600, priority ichi1,news1,nf02 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 色|いろ: color",
+        "example sentence with reading/translation fit checked for 色|いろ: この花の色がとても好きです。 ／ このはなのいろがとてもすきです。 ／ I really like the color of this flower.",
+        "notes/support surface checked for 色|いろ: Core N4 study word that also covers the 色 -> いろ reading.",
+        "reading breakdown and kanji breakdown checked for 色|いろ: reading breakdown 色 いろ; kanji breakdown 色 いろ 色 （いろ） ／ color Stroke order On: シキ、 ショク Kun: いろ",
+        "JLPT, coverage, focus, and covered-reading labels checked for 色|いろ: JLPT N4; JLPT core + reading coverage; focus 色; covers 色: いろ",
+        "exact word-reading audio identity checked for 色|いろ: word-reading-色-いろ; generated audio field [sound:8272_色-word-reading-色-いろ.wav]",
+        "pitch accent source and rendered pitch label checked for 色|いろ: kanjium-cc-by-sa-4.0 pattern 2 [odaka]; rendered Pitch 1: 2",
+        "managed media provenance checked for 色|いろ; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 色|いろ",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 色|いろ; single-kanji written surface was reviewed as an active word/vocabulary row and kanji-deck certification kept separate",
+        "verification limitations considered for 色|いろ: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 色|いろ; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 色|いろ: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0087; routine-tokenization-review; token surface 色; tokenizer reading イロ (いろ) matches card reading いろ; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "色|いろ",
+      "sentenceQualityReview": {
+        "japaneseSentence": "この花の色がとても好きです。",
+        "reading": "このはなのいろがとてもすきです。",
+        "translation": "I really like the color of this flower.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 色|いろ: この花の色がとても好きです。 with reading このはなのいろがとてもすきです。 and translation I really like the color of this flower. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The flower-color sentence is concrete and natural. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 色|いろ; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -12957,8 +13363,8 @@
     "reviewedAt": "2026-05-14",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 走る|はしる: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "Core N4 study word"
     ],
@@ -13046,26 +13452,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-20",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-011",
-      "scope": "N4 word Obsidian lane batch 11 generated-order substantive rereview",
+      "scope": "N4 word Obsidian lane batch 11 generated-order substantive rereview with clean tokenization audit support context",
       "evidenceChecked": [
-        "live generated word surface for 走る|はしる from out/word-build/exports/jlpt-n4-words.tsv",
-        "governed Japanese-source word evidence for 走る|はしる: exact local JMdict row entrySeq=1402540 in downloads/jmdict-word-verification.tsv",
-        "learner-facing meaning to run",
-        "example sentence 急いでいるので駅まで走りました。 ／ いそいでいるのでえきまではしりました。 ／ I was in a hurry, so I ran to the station. checked for naturalness, reading alignment, translation fit, learner usefulness, and N4 fit",
-        "notes/support surface: Core N4 study word that also covers the 走 -> はしる reading.",
-        "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
-        "exact word-reading audio identity 8D70_走-word-reading-走る-はしる.wav exists in out/word-build/package/media",
-        "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka]",
-        "golden regression as internal regression only, not source truth",
-        "single-kanji or support-kanji product fit considered where applicable; word/vocabulary deck placement kept separate from kanji-deck certification",
-        "source-family posture considered; independent source-family corroboration is not claimed",
-        "verification limitations considered; no unresolved core-card uncertainty recorded"
-      ]
+        "live generated word surface for 走る|はしる from out/word-build/exports/jlpt-n4-words.tsv: word 走る, reading はしる, meaning to run, example sentence 急いでいるので駅まで走りました。 ／ いそいでいるのでえきまではしりました。 ／ I was in a hurry, so I ran to the station.",
+        "governed Japanese-source word evidence for 走る|はしる: exact local JMdict row entrySeq=1402540, priority ichi1,news1,nf10 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 走る|はしる: to run",
+        "example sentence with reading/translation fit checked for 走る|はしる: 急いでいるので駅まで走りました。 ／ いそいでいるのでえきまではしりました。 ／ I was in a hurry, so I ran to the station.",
+        "notes/support surface checked for 走る|はしる: Core N4 study word that also covers the 走 -> はしる reading.",
+        "reading breakdown and kanji breakdown checked for 走る|はしる: reading breakdown 走 はし る; kanji breakdown 走 はし 走 （はし） ／ run Stroke order On: ソウ Kun: はし.る",
+        "JLPT, coverage, focus, and covered-reading labels checked for 走る|はしる: JLPT N4; JLPT core + reading coverage; focus 走; covers 走: はしる",
+        "exact word-reading audio identity checked for 走る|はしる: word-reading-走る-はしる; generated audio field [sound:8D70_走-word-reading-走る-はしる.wav]",
+        "pitch accent source and rendered pitch label checked for 走る|はしる: kanjium-cc-by-sa-4.0 pattern 2 [nakadaka]; rendered Pitch 1: 2",
+        "managed media provenance checked for 走る|はしる; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 走る|はしる",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 走る|はしる",
+        "verification limitations considered for 走る|はしる: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 走る|はしる; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 走る|はしる: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0088; routine-tokenization-review; token surface 走る; tokenizer reading ハシル (はしる) matches card reading はしる; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "走る|はしる",
+      "sentenceQualityReview": {
+        "japaneseSentence": "急いでいるので駅まで走りました。",
+        "reading": "いそいでいるのでえきまではしりました。",
+        "translation": "I was in a hurry, so I ran to the station.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 走る|はしる: 急いでいるので駅まで走りました。 with reading いそいでいるのでえきまではしりました。 and translation I was in a hurry, so I ran to the station. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. Running to the station while in a hurry cleanly checks to run. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 走る|はしる; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {
@@ -88290,8 +88710,8 @@
     "reviewedAt": "2026-05-19",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-19",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "revalidatedAt": "2026-05-21",
+    "revalidationSummary": "Substantive Obsidian rereview refreshed evidence lanes for 青|あお: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
     "notesIncludes": [
       "standalone word"
     ],
@@ -88379,12 +88799,40 @@
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "word-platinum-v3-evidence-lanes",
-      "reviewedAt": "2026-05-19",
+      "reviewedAt": "2026-05-21",
       "reviewedAfterStandard": true,
-      "reviewer": "codex-obsidian-rereview",
+      "reviewer": "codex-obsidian-review",
       "mechanicalMigration": false,
       "batchId": "n4-word-obsidian-rereview-batch-009",
-      "scope": "N4 word Obsidian lane batch 9 generated-order substantive rereview"
+      "scope": "n4 word obsidian rereview batch 009 generated-order substantive rereview with clean tokenization audit support context",
+      "evidenceChecked": [
+        "live generated word surface for 青|あお from out/word-build/exports/jlpt-n4-words.tsv: word 青, reading あお, meaning blue / green, example sentence 青が好きです。 ／ あおがすきです。 ／ I like blue.",
+        "governed Japanese-source word evidence for 青|あお: exact local JMdict row entrySeq=1381380, priority ichi1,news1,nf03 in downloads/jmdict-word-verification.tsv; used as dictionary verification and commonness/priority support, not as unchecked generated truth",
+        "learner-facing meaning for 青|あお: blue / green",
+        "example sentence with reading/translation fit checked for 青|あお: 青が好きです。 ／ あおがすきです。 ／ I like blue.",
+        "notes/support surface checked for 青|あお: Common N4 color noun from the routed N5 source lane; distinct from 青い|あおい and keeps 青 -> あお visible as a standalone word.",
+        "reading breakdown and kanji breakdown checked for 青|あお: reading breakdown 青 あお; kanji breakdown 青 あお 青 （あお） ／ blue / green Stroke order On: ショウ、 セイ Kun: あお、 あお.い",
+        "JLPT, coverage, focus, and covered-reading labels checked for 青|あお: JLPT N4; JLPT core + reading coverage; focus 青; covers 青: あお",
+        "exact word-reading audio identity checked for 青|あお: word-reading-青-あお; generated audio field [sound:9752_青-word-reading-青-あお.wav]",
+        "pitch accent source and rendered pitch label checked for 青|あお: kanjium-cc-by-sa-4.0 pattern 1 [atamadaka]; rendered Pitch 1: 1, Pitch accent contour 1",
+        "managed media provenance checked for 青|あお; no silent fallback accepted for generated word audio and pitch/media surfaces",
+        "golden regression checked as internal regression only, not source truth for 青|あお",
+        "word vocabulary deck placement, product fit, learner usefulness, commonness, and level fit checked for 青|あお; single-kanji written surface was reviewed as an active word/vocabulary row and kanji-deck certification kept separate",
+        "verification limitations considered for 青|あお: Single JMdict/EDRDG source family is recorded as a source-depth limitation for 青|あお; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly.",
+        "clean NLP tokenization audit support context for 青|あお: artifact out/nlp-tokenization/word-n4-kuromoji.json item n4-word-0068; routine-tokenization-review; token surface 青; tokenizer reading アオ (あお) matches card reading あお; warnings 0; limitations 2; assistive-only boundary retained and tokenization audit does not certify cards, source truth, Platinum, Obsidian, or release readiness"
+      ],
+      "cardReviewed": "青|あお",
+      "sentenceQualityReview": {
+        "japaneseSentence": "青が好きです。",
+        "reading": "あおがすきです。",
+        "translation": "I like blue.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "rationale": "example sentence quality review for 青|あお: 青が好きです。 with reading あおがすきです。 and translation I like blue. was manually checked as natural Japanese, learner useful, level appropriate, and release quality. The example anchors 青 to blue while the broader blue/green gloss remains visible as a Japanese color-range note. This is human rereview proof, not tokenization certification."
+      },
+      "limitationDecision": "Single JMdict/EDRDG source family is recorded as a source-depth limitation for 青|あお; it does not leave unresolved core-card uncertainty because the live row, exact written/reading identity, learner meaning, example, audio identity, pitch label, labels, notes, and support-only tokenization context were rereviewed directly."
     }
   },
   {

@@ -197,6 +197,32 @@ test("buildNlpDraftProposalArtifact creates governed drafts from suggestions and
     assert.match(tokenizationDraft.proposedFields.tokenizationReviewNoteDraft, /multi-token-surface/);
 });
 
+test("buildNlpDraftProposalArtifact does not claim source models for out-of-scope suggestions", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-drafts-"));
+    const suggestionPath = writeJson(dir, "suggestions.json", buildSuggestionArtifact());
+    const reviewPacketPath = writeJson(dir, "review-packets.json", buildReviewPacketArtifact());
+    const manifestPath = writeJson(dir, "manifest.json", { fixture: true });
+
+    const artifact = buildNlpDraftProposalArtifact({
+        suggestionArtifactPath: suggestionPath,
+        reviewPacketArtifactPath: reviewPacketPath,
+        manifestPath,
+        workspaceRoot: dir,
+        deckKind: "kanji",
+        level: 5,
+        now: () => new Date("2026-05-20T00:00:00.000Z"),
+        loadManifestFn: () => buildManifest(),
+        buildSuggestionReportFn: () => ({ passed: true, errors: [] }),
+        buildReviewPacketReportFn: () => ({ passed: true, errors: [] }),
+    });
+
+    assert.deepEqual(artifact.generator.modelIds, []);
+    assert.equal(artifact.counts.proposals, 0);
+    assert.equal(artifact.counts.sourceSuggestions, 0);
+    assert.equal(artifact.counts.sourcePackets, 0);
+    assert.deepEqual(artifact.proposals, []);
+});
+
 test("parseNlpDraftProposalArtifact fails closed for loose model-backed proof", () => {
     const artifact = {
         version: 1,

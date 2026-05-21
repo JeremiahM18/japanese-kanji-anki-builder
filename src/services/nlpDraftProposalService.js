@@ -327,12 +327,12 @@ function loadScopedSuggestions({ artifactPaths, workspaceRoot, deckKind, level }
         const artifact = parseNlpSuggestionArtifact(readJsonFile(artifactPath, {
             label: "NLP suggestion artifact",
         }));
-        if (artifact.generator.modelId) {
-            modelIds.add(artifact.generator.modelId);
-        }
         for (const suggestion of artifact.suggestions || []) {
             if (!targetMatchesScope(suggestion.target, { deckKind, level })) {
                 continue;
+            }
+            if (artifact.generator.modelId) {
+                modelIds.add(artifact.generator.modelId);
             }
             suggestions.push({
                 suggestion,

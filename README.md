@@ -25,6 +25,53 @@ flowchart TD
     F --> G["Gold regression + Platinum gate<br/>Obsidian proof + release gates"]
 ```
 
+## Assistive NLP Review Engine
+
+The repository now has a governed local NLP lane for vocabulary review. It uses active `kuromoji.js` tokenization and pinned `Transformers.js` MiniLM embeddings from [templates/nlp_model_manifest.json](templates/nlp_model_manifest.json) to find review work: tokenization oddities, example-ranking candidates, sense-fit warnings, reading-gap candidates, human review packets, and draft-proposal scaffolds.
+
+The boundary is deliberate: NLP output can point reviewers at likely issues and useful candidates, but it cannot write tracked templates, certify cards, approve Gold/Platinum/Obsidian, or claim release readiness. Human promotion into tracked contracts is still required.
+
+```mermaid
+flowchart LR
+    A["Generated word TSV"] --> B["kuromoji tokenization"]
+    A --> C["MiniLM word embeddings"]
+    B --> D["Token audit signals"]
+    C --> E["Example reranking"]
+    C --> F["Sense-fit warnings"]
+    C --> G["Reading-gap candidates"]
+    D --> H["Human review packets"]
+    E --> H
+    F --> H
+    G --> H
+    H --> I["Draft proposal packets"]
+    I --> J["Human promotion into tracked templates"]
+    J --> K["Gold + Platinum + Obsidian gates"]
+```
+
+Typical N5 NLP review path:
+
+```bash
+npm run nlp:models:audit
+npm run nlp:doctor
+npm run nlp:tokenization:generate -- --level=5
+npm run nlp:tokenization:validate
+npm run nlp:tokenization:audit
+npm run nlp:embeddings:evaluate
+npm run nlp:embeddings:generate -- --level=5
+npm run nlp:embeddings:validate
+npm run nlp:examples:rerank -- --level=5
+npm run nlp:sense-fit:audit -- --level=5
+npm run nlp:reading-gaps:discover -- --level=5 --include-deferred
+npm run nlp:suggestions:validate
+npm run nlp:review-packets:generate -- --level=5
+npm run nlp:review-packets:validate
+npm run nlp:drafts:generate -- --level=5
+npm run nlp:drafts:validate
+npm run nlp:governance-gate
+```
+
+Full operating rules are in [docs/nlp-model-governance.md](docs/nlp-model-governance.md). Generated NLP artifacts stay under ignored output directories such as `out/nlp-tokenization/`, `out/nlp-embeddings/`, `out/nlp-suggestions/`, `out/nlp-review-packets/`, and `out/nlp-drafts/`.
+
 Kanji card field preview:
 
 ```text

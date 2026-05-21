@@ -25,6 +25,7 @@ const UNKNOWN_TOKEN_SIGNAL_KIND = "unknown-token";
 const MISSING_READING_SIGNAL_KIND = "missing-token-reading";
 const READING_MISMATCH_SIGNAL_KIND = "token-reading-card-reading-mismatch";
 const KANJI_READING_VARIANT_SIGNAL_KIND = "kanji-card-tokenizer-reading-variant";
+const KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND = "kanji-card-tokenizer-coverage-gap";
 const ARTIFACT_WARNING_SIGNAL_KIND = "artifact-warning";
 
 function incrementCount(counts, key) {
@@ -52,8 +53,36 @@ function isKanjiCardTarget(item = {}) {
     return item.target?.kind === "kanji-card";
 }
 
-function signalKindRequiresAttention(kind) {
-    return kind !== ROUTINE_SIGNAL_KIND && kind !== KANJI_READING_VARIANT_SIGNAL_KIND;
+function isKanjiTokenizerCoverageWarning(warning = "") {
+    return /UNKNOWN/i.test(warning)
+        && /bare kanji anchor|coverage gap|at least one token/i.test(warning);
+}
+
+function isKanjiTokenizerCoverageGap({ item, signalKinds }) {
+    return isKanjiCardTarget(item)
+        && Boolean(item.target?.reading)
+        && (
+            signalKinds.includes(UNKNOWN_TOKEN_SIGNAL_KIND)
+            || signalKinds.includes(MISSING_READING_SIGNAL_KIND)
+        );
+}
+
+function signalKindsRequireAttention({ item, signalKinds }) {
+    const ignoredKinds = new Set([
+        ROUTINE_SIGNAL_KIND,
+        KANJI_READING_VARIANT_SIGNAL_KIND,
+    ]);
+
+    if (signalKinds.includes(KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND)) {
+        ignoredKinds.add(KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND);
+        ignoredKinds.add(UNKNOWN_TOKEN_SIGNAL_KIND);
+        ignoredKinds.add(MISSING_READING_SIGNAL_KIND);
+        if ((item.warnings || []).every(isKanjiTokenizerCoverageWarning)) {
+            ignoredKinds.add(ARTIFACT_WARNING_SIGNAL_KIND);
+        }
+    }
+
+    return signalKinds.some((kind) => !ignoredKinds.has(kind));
 }
 
 function buildSignalKinds({ item, joinedTokenReading, normalizedCardReading }) {
@@ -74,6 +103,9 @@ function buildSignalKinds({ item, joinedTokenReading, normalizedCardReading }) {
         kinds.push(KANJI_READING_VARIANT_SIGNAL_KIND);
     } else if (hasReadingDifference) {
         kinds.push(READING_MISMATCH_SIGNAL_KIND);
+    }
+    if (isKanjiTokenizerCoverageGap({ item, signalKinds: kinds })) {
+        kinds.push(KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND);
     }
     if ((item.warnings || []).length > 0) {
         kinds.push(ARTIFACT_WARNING_SIGNAL_KIND);
@@ -99,7 +131,7 @@ function buildReviewSignal({ artifactPath, artifact, item }) {
         joinedTokenReading,
         normalizedCardReading,
     });
-    const requiresAttention = signalKinds.some(signalKindRequiresAttention);
+    const requiresAttention = signalKindsRequireAttention({ item, signalKinds });
 
     return {
         id: item.id,
@@ -161,6 +193,7 @@ function buildEmptyCounts() {
         missingTokenReadingItems: 0,
         readingMismatchItems: 0,
         kanjiReadingVariantItems: 0,
+        kanjiTokenizerCoverageGapItems: 0,
         warningItems: 0,
         signalsByKind: {},
         signalsByLevel: {},
@@ -251,6 +284,9 @@ function buildNlpTokenizationAuditReport({
         if (signal.signalKinds.includes(KANJI_READING_VARIANT_SIGNAL_KIND)) {
             counts.kanjiReadingVariantItems += 1;
         }
+        if (signal.signalKinds.includes(KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND)) {
+            counts.kanjiTokenizerCoverageGapItems += 1;
+        }
         if (signal.signalKinds.includes(ARTIFACT_WARNING_SIGNAL_KIND)) {
             counts.warningItems += 1;
         }
@@ -312,6 +348,7 @@ function formatNlpTokenizationAuditReport(report = {}, { signalLimit = 20 } = {}
         `- missing token-reading items: ${report.counts?.missingTokenReadingItems || 0}`,
         `- token/card reading mismatch items: ${report.counts?.readingMismatchItems || 0}`,
         `- kanji tokenizer reading variant items: ${report.counts?.kanjiReadingVariantItems || 0}`,
+        `- kanji tokenizer coverage-gap items: ${report.counts?.kanjiTokenizerCoverageGapItems || 0}`,
         `- warning items: ${report.counts?.warningItems || 0}`,
         `- signals by kind: ${formatCountMap(report.counts?.signalsByKind)}`,
         `- signals by level: ${formatCountMap(report.counts?.signalsByLevel)}`,
@@ -345,6 +382,7 @@ function formatNlpTokenizationAuditReport(report = {}, { signalLimit = 20 } = {}
 module.exports = {
     ARTIFACT_WARNING_SIGNAL_KIND,
     KANJI_READING_VARIANT_SIGNAL_KIND,
+    KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND,
     MISSING_READING_SIGNAL_KIND,
     MULTI_TOKEN_SIGNAL_KIND,
     READING_MISMATCH_SIGNAL_KIND,

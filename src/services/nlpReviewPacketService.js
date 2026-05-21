@@ -24,6 +24,7 @@ const { ensureDir } = require("../utils/fs");
 const { readJsonFile } = require("../utils/jsonFile");
 
 const DEFAULT_CREATED_BY = "scripts/generateNlpReviewPackets.js";
+const KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND = "kanji-card-tokenizer-coverage-gap";
 const REVIEW_PACKET_LIMITATIONS = Object.freeze([
     "Review packets aggregate assistive NLP signals only and must not replace human Japanese/pedagogy review.",
     "A packet can prioritize evidence for humans, but it does not certify card correctness, source truth, level fit, naturalness, pitch, audio, or release readiness.",
@@ -153,6 +154,9 @@ function buildReviewChecklist(group) {
     if (group.tokenizationSignalRefs.some((signal) => signal.reviewPriority === "attention")) {
         checklist.push("Inspect tokenization attention signals, especially token/card reading alignment and unknown-token evidence.");
     }
+    if (group.tokenizationSignalRefs.some((signal) => (signal.signalKinds || []).includes(KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND))) {
+        checklist.push("Treat kanji tokenizer coverage gaps as tokenizer/dictionary coverage evidence, not card-defect evidence by itself.");
+    }
     if (group.suggestionRefs.some((suggestion) => suggestion.task === "assistive-candidate-discovery")) {
         checklist.push("For candidate-discovery suggestions, verify commonness, learner usefulness, source identity, and level fit before any data change.");
     }
@@ -208,6 +212,14 @@ function buildPacketCounts(packets) {
         reviewPackets: packets.filter((packet) => packet.priority === "review").length,
         routinePackets: packets.filter((packet) => packet.priority === "routine").length,
     };
+}
+
+function formatTokenizationSignalDetail(signal = {}) {
+    return [
+        signal.id,
+        signal.reviewPriority,
+        (signal.signalKinds || []).join(", "),
+    ].filter(Boolean).join(": ");
 }
 
 function collectSuggestionRefs({ artifactPaths, workspaceRoot, deckKind, level }) {
@@ -443,6 +455,13 @@ function formatNlpReviewPacketMarkdown(artifact = {}) {
             `Tokenization signals: ${packet.tokenizationSignalRefs.length}`,
             ""
         );
+        if (packet.tokenizationSignalRefs.length > 0) {
+            lines.push(
+                "Tokenization signal details:",
+                ...packet.tokenizationSignalRefs.map((signal) => `- ${formatTokenizationSignalDetail(signal)}`),
+                ""
+            );
+        }
     }
 
     return `${lines.join("\n")}\n`;

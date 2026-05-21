@@ -10,7 +10,8 @@ Checkpoint metrics in older bullets describe the state at that checkpoint. Use t
 
 ### Changed
 
-- Tightened the kanji-card NLP tokenization audit after reviewing all 26 N5 attention signals: normal bare-kanji tokenizer/primary-reading differences now land as routine `kanji-card-tokenizer-reading-variant` context, while unknown tokens, missing readings, artifact warnings, and word-card reading mismatches remain attention-worthy.
+- Tightened kanji-card NLP signal hygiene again: bare-kanji tokenizer unknown/missing readings now remain visible as `kanji-card-tokenizer-coverage-gap` context instead of creating card-risk attention packets or draft notes by themselves; word-card unknown/missing token behavior stays strict.
+- Tightened the kanji-card NLP tokenization audit after reviewing all 26 N5 attention signals: normal bare-kanji tokenizer/primary-reading differences now land as routine `kanji-card-tokenizer-reading-variant` context, while word-card reading mismatches remain attention-worthy.
 - Added the separate `deck:kanji:nlp-signals` lane for kanji-card review: it refreshes generated kanji TSVs, writes governed `kanji-card` tokenization artifacts from bare kanji anchors, converts tokenizer/card-reading signals into kanji-scoped review packets and tokenization-only draft notes, and preserves the no-word-expansion/no-certification boundary.
 - Tightened word reading-gap candidate scoring so sentence-corpus support is credited only when the corpus reading contains the candidate reading. Written-form-only matches now carry an explicit mismatch penalty for untracked candidates, preventing rare alternate readings from borrowing common-sentence evidence in NLP candidate-discovery artifacts.
 - Tightened NLP draft-proposal provenance so scoped empty runs, such as N5 kanji with no kanji NLP suggestions, no longer inherit model IDs from out-of-scope word suggestion artifacts.

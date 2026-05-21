@@ -12,6 +12,7 @@ const {
     buildReviewSignal,
     formatNlpTokenizationAuditReport,
     KANJI_READING_VARIANT_SIGNAL_KIND,
+    KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND,
 } = require("../src/services/nlpTokenizationAuditService");
 
 function buildManifest() {
@@ -254,6 +255,58 @@ test("buildNlpTokenizationAuditReport treats kanji-card tokenizer readings as ro
     assert.equal(report.signals[0].signalKinds.includes("token-reading-card-reading-mismatch"), false);
 });
 
+test("buildNlpTokenizationAuditReport treats bare-kanji unknown tokens as coverage gaps", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-token-audit-"));
+    writeArtifact(dir, "kanji.json", buildArtifact({
+        scope: {
+            targetKind: "kanji-card",
+            levels: [4],
+            source: "generated-kanji-rows",
+        },
+        items: [{
+            id: "n4-kanji-token-001",
+            target: {
+                kind: "kanji-card",
+                deckKind: "kanji",
+                level: 4,
+                written: "曜",
+                reading: "よう",
+            },
+            inputText: "曜",
+            tokens: [{
+                surface: "曜",
+                start: 0,
+                end: 1,
+                lemma: "曜",
+                partOfSpeech: ["名詞", "固有名詞", "組織"],
+                known: false,
+            }],
+            warnings: [
+                "kuromoji.js marked the bare kanji anchor as UNKNOWN; this is tokenizer coverage-gap evidence and not card-defect evidence by itself.",
+            ],
+            limitations: ["Fixture tokenization only."],
+        }],
+    }));
+
+    const report = buildNlpTokenizationAuditReport({
+        artifactDir: dir,
+        loadManifestFn: () => buildManifest(),
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.counts.attentionSignals, 0);
+    assert.equal(report.counts.routineSignals, 1);
+    assert.equal(report.counts.unknownTokenItems, 1);
+    assert.equal(report.counts.missingTokenReadingItems, 1);
+    assert.equal(report.counts.warningItems, 1);
+    assert.equal(report.counts.kanjiTokenizerCoverageGapItems, 1);
+    assert.equal(report.signals[0].reviewPriority, "routine");
+    assert.equal(report.signals[0].signalKinds.includes("unknown-token"), true);
+    assert.equal(report.signals[0].signalKinds.includes("missing-token-reading"), true);
+    assert.equal(report.signals[0].signalKinds.includes("artifact-warning"), true);
+    assert.equal(report.signals[0].signalKinds.includes(KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND), true);
+});
+
 test("buildNlpTokenizationAuditReport fails closed on invalid tokenization artifacts", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-token-audit-"));
     fs.writeFileSync(path.join(dir, "broken.json"), "{ nope");
@@ -284,6 +337,7 @@ test("formatNlpTokenizationAuditReport renders review signals and release bounda
             missingTokenReadingItems: 0,
             readingMismatchItems: 0,
             kanjiReadingVariantItems: 0,
+            kanjiTokenizerCoverageGapItems: 0,
             warningItems: 0,
             signalsByKind: {
                 "routine-tokenization-review": 1,

@@ -21,7 +21,7 @@ const TOKENIZATION_LIMITATIONS = Object.freeze([
 const KANJI_TOKENIZATION_LIMITATIONS = Object.freeze([
     ...TOKENIZATION_LIMITATIONS,
     "Kanji-card tokenization checks the bare kanji anchor and tokenizer reading only; it does not validate kanji meanings, JLPT placement, on/kun lists, stroke order, audio, or source provenance.",
-    "Tokenizer readings can prefer dictionary/common readings that differ from the curated learner-facing primary reading; normal kanji-card differences are reading-variant context, while unknown or missing tokenizer readings remain attention signals.",
+    "Tokenizer readings can prefer dictionary/common readings that differ from the curated learner-facing primary reading; normal kanji-card differences are reading-variant context, while bare-kanji unknown or missing tokenizer readings are tokenizer coverage-gap signals.",
 ]);
 
 function sha256FileWithSize(filePath) {
@@ -205,7 +205,7 @@ function buildKanjiTokenizationItem({ row, index, level, tokenizer }) {
     });
     const warnings = [];
     if (tokens.some((token) => token.known === false)) {
-        warnings.push("kuromoji.js marked at least one token as UNKNOWN; human review required before using this signal.");
+        warnings.push("kuromoji.js marked the bare kanji anchor as UNKNOWN; this is tokenizer coverage-gap evidence and not card-defect evidence by itself.");
     }
     if (!row.primaryReading) {
         warnings.push("Generated kanji row has no PrimaryReading; tokenization cannot compare tokenizer reading to the learner-facing kanji-card reading.");

@@ -162,6 +162,72 @@ function buildReviewPacketArtifact() {
     };
 }
 
+function buildKanjiCoverageGapReviewPacketArtifact() {
+    return {
+        version: 1,
+        artifactType: "nlp_review_packet_batch",
+        generatedAt: "2026-05-20T00:00:00.000Z",
+        generator: {
+            createdBy: "test fixture",
+            inputHashes: [{
+                path: "out/nlp-tokenization/kanji-n4-kuromoji.json",
+                sha256: "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                byteSize: 128,
+            }],
+        },
+        scope: {
+            deckKind: "kanji",
+            levels: [4],
+            description: "Fixture kanji review packets.",
+        },
+        authority: { ...NLP_REVIEW_PACKET_AUTHORITY },
+        counts: {
+            packets: 1,
+            suggestions: 0,
+            tokenizationSignals: 1,
+            attentionPackets: 0,
+            reviewPackets: 0,
+            routinePackets: 1,
+        },
+        packets: [{
+            id: "nlp-review-kanji-n4-0001",
+            target: {
+                deckKind: "kanji",
+                level: 4,
+                written: "曜",
+                reading: "よう",
+            },
+            priority: "routine",
+            summary: "Review 曜: tokenization coverage gap.",
+            reviewChecklist: ["Treat kanji tokenizer coverage gaps as tokenizer evidence."],
+            suggestionRefs: [],
+            tokenizationSignalRefs: [{
+                id: "n4-kanji-tokenization-0001",
+                reviewPriority: "routine",
+                signalKinds: [
+                    "routine-tokenization-review",
+                    "unknown-token",
+                    "missing-token-reading",
+                    "kanji-card-tokenizer-coverage-gap",
+                    "artifact-warning",
+                ],
+                surface: "曜",
+                tokenSurfaces: ["曜"],
+                normalizedTokenReading: null,
+                normalizedCardReading: "よう",
+                readingAlignment: {
+                    comparable: false,
+                    matches: false,
+                },
+                sourceArtifactPath: "out/nlp-tokenization/kanji-n4-kuromoji.json",
+                limitations: ["Fixture signal only."],
+            }],
+            limitations: ["Fixture review packet only."],
+            authority: { ...NLP_REVIEW_PACKET_AUTHORITY },
+        }],
+    };
+}
+
 test("buildNlpDraftProposalArtifact creates governed drafts from suggestions and review packets", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-drafts-"));
     const suggestionPath = writeJson(dir, "suggestions.json", buildSuggestionArtifact());
@@ -195,6 +261,34 @@ test("buildNlpDraftProposalArtifact creates governed drafts from suggestions and
     const tokenizationDraft = artifact.proposals.find((proposal) => proposal.draftKind === "tokenization-review-note");
     assert.equal(tokenizationDraft.sourceRefs.some((sourceRef) => sourceRef.sourceType === "tokenization-signal"), true);
     assert.match(tokenizationDraft.proposedFields.tokenizationReviewNoteDraft, /multi-token-surface/);
+});
+
+test("buildNlpDraftProposalArtifact does not draft routine kanji tokenizer coverage gaps", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-drafts-"));
+    const suggestionPath = writeJson(dir, "suggestions.json", {
+        ...buildSuggestionArtifact(),
+        suggestions: [],
+    });
+    const reviewPacketPath = writeJson(dir, "kanji-review-packets.json", buildKanjiCoverageGapReviewPacketArtifact());
+    const manifestPath = writeJson(dir, "manifest.json", { fixture: true });
+
+    const artifact = buildNlpDraftProposalArtifact({
+        suggestionArtifactPath: suggestionPath,
+        reviewPacketArtifactPath: reviewPacketPath,
+        manifestPath,
+        workspaceRoot: dir,
+        deckKind: "kanji",
+        level: 4,
+        now: () => new Date("2026-05-20T00:00:00.000Z"),
+        loadManifestFn: () => buildManifest(),
+        buildSuggestionReportFn: () => ({ passed: true, errors: [] }),
+        buildReviewPacketReportFn: () => ({ passed: true, errors: [] }),
+    });
+
+    assert.deepEqual(artifact.generator.modelIds, []);
+    assert.equal(artifact.counts.sourcePackets, 1);
+    assert.equal(artifact.counts.proposals, 0);
+    assert.deepEqual(artifact.proposals, []);
 });
 
 test("buildNlpDraftProposalArtifact does not claim source models for out-of-scope suggestions", () => {

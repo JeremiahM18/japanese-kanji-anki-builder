@@ -62,6 +62,39 @@ function buildTokenizationRef() {
     };
 }
 
+function buildKanjiCoverageGapRef() {
+    return {
+        target: {
+            kind: "kanji-card",
+            deckKind: "kanji",
+            level: 4,
+            written: "曜",
+            reading: "よう",
+        },
+        ref: {
+            id: "n4-kanji-tokenization-0001",
+            reviewPriority: "routine",
+            signalKinds: [
+                "routine-tokenization-review",
+                "unknown-token",
+                "missing-token-reading",
+                "kanji-card-tokenizer-coverage-gap",
+                "artifact-warning",
+            ],
+            surface: "曜",
+            tokenSurfaces: ["曜"],
+            normalizedTokenReading: null,
+            normalizedCardReading: "よう",
+            readingAlignment: {
+                comparable: false,
+                matches: false,
+            },
+            sourceArtifactPath: "out/nlp-tokenization/kanji-n4-kuromoji.json",
+            limitations: ["Fixture tokenization only."],
+        },
+    };
+}
+
 test("buildNlpReviewPacketArtifactFromSignals aggregates suggestions and tokenization signals", () => {
     const artifact = buildNlpReviewPacketArtifactFromSignals({
         suggestionRefs: [buildSuggestionRef()],
@@ -84,6 +117,27 @@ test("buildNlpReviewPacketArtifactFromSignals aggregates suggestions and tokeniz
     assert.equal(artifact.authority.certifiesCards, false);
 });
 
+test("buildNlpReviewPacketArtifactFromSignals keeps kanji coverage gaps routine and explicit", () => {
+    const artifact = buildNlpReviewPacketArtifactFromSignals({
+        deckKind: "kanji",
+        level: 4,
+        suggestionRefs: [],
+        tokenizationSignalRefs: [buildKanjiCoverageGapRef()],
+        inputHashes: [{
+            path: "out/nlp-tokenization/kanji-n4-kuromoji.json",
+            sha256: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            byteSize: 128,
+        }],
+        now: () => new Date("2026-05-20T00:00:00.000Z"),
+    });
+
+    assert.equal(artifact.counts.packets, 1);
+    assert.equal(artifact.counts.attentionPackets, 0);
+    assert.equal(artifact.counts.routinePackets, 1);
+    assert.equal(artifact.packets[0].priority, "routine");
+    assert.match(artifact.packets[0].reviewChecklist.join("\n"), /tokenizer\/dictionary coverage evidence/);
+});
+
 test("formatNlpReviewPacketMarkdown renders packet boundaries and checklist", () => {
     const artifact = buildNlpReviewPacketArtifactFromSignals({
         suggestionRefs: [buildSuggestionRef()],
@@ -100,6 +154,25 @@ test("formatNlpReviewPacketMarkdown renders packet boundaries and checklist", ()
     assert.match(markdown, /NLP Human Review Packets/);
     assert.match(markdown, /Review packets certify cards: no/);
     assert.match(markdown, /日本語 \(にほんご\)/);
+});
+
+test("formatNlpReviewPacketMarkdown renders tokenization signal kinds", () => {
+    const artifact = buildNlpReviewPacketArtifactFromSignals({
+        deckKind: "kanji",
+        level: 4,
+        suggestionRefs: [],
+        tokenizationSignalRefs: [buildKanjiCoverageGapRef()],
+        inputHashes: [{
+            path: "out/nlp-tokenization/kanji-n4-kuromoji.json",
+            sha256: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            byteSize: 128,
+        }],
+        now: () => new Date("2026-05-20T00:00:00.000Z"),
+    });
+    const markdown = formatNlpReviewPacketMarkdown(artifact);
+
+    assert.match(markdown, /Tokenization signal details/);
+    assert.match(markdown, /kanji-card-tokenizer-coverage-gap/);
 });
 
 test("writeNlpReviewPacketArtifact writes artifacts accepted by the validator", () => {

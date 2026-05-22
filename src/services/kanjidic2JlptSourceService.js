@@ -52,6 +52,7 @@ function extractKanjidic2JlptRows(xmlText, { contractKanjiSet = null } = {}) {
         ignoreAttributes: false,
         parseAttributeValue: false,
         parseTagValue: false,
+        processEntities: false,
         trimValues: true,
     });
     const parsed = parser.parse(xmlText);

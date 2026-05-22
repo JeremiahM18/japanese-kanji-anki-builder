@@ -77,6 +77,23 @@ test("buildJmdictWordSource produces pinned TSV output", () => {
     assert.match(result.outputIntegrity.sha256, /^[a-f0-9]{64}$/u);
 });
 
+test("extractJmdictWordRows does not expand XML entities", () => {
+    const extracted = extractJmdictWordRows(`<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE JMdict [<!ENTITY probe "明かす">]>
+<JMdict>
+  <entry>
+    <ent_seq>2001</ent_seq>
+    <k_ele><keb>&probe;</keb></k_ele>
+    <r_ele><reb>あかす</reb></r_ele>
+    <sense><gloss>to reveal</gloss></sense>
+  </entry>
+</JMdict>`);
+
+    assert.equal(extracted.sourceEntryCount, 1);
+    assert.deepEqual(extracted.rows.map((row) => row.written), ["&probe;"]);
+    assert.notDeepEqual(extracted.rows.map((row) => row.written), ["明かす"]);
+});
+
 test("priorityRank maps JMdict priority tags to stable buckets", () => {
     assert.equal(priorityRank(["nf03"]), 1003);
     assert.equal(priorityRank(["spec2", "news1"]), 100);

@@ -100,6 +100,21 @@ test("extractKanjidic2JlptRows can scope normalized assignments to the current c
     assert.match(result.skipped.find((row) => row.kanji === "丈").reason, /outside the current JLPT kanji contract/);
 });
 
+test("extractKanjidic2JlptRows does not expand XML entities", () => {
+    const result = extractKanjidic2JlptRows(`<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE kanjidic2 [<!ENTITY probe "日">]>
+<kanjidic2>
+  <character>
+    <literal>&probe;</literal>
+    <misc><jlpt>4</jlpt></misc>
+  </character>
+</kanjidic2>`);
+
+    assert.equal(result.sourceCharacterCount, 1);
+    assert.deepEqual(result.rows.map((row) => row.kanji), ["&probe;"]);
+    assert.notDeepEqual(result.rows.map((row) => row.kanji), ["日"]);
+});
+
 test("buildKanjidic2JlptSource supports gzipped XML and deterministic TSV output", () => {
     const sourceBuffer = zlib.gzipSync(Buffer.from(buildFixtureXml(), "utf8"));
     assert.match(decodeKanjidic2Buffer(sourceBuffer), /<kanjidic2>/);

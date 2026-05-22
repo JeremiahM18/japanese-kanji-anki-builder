@@ -1,7 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { loadAnkiNoteSchema } = require("../src/config/ankiNoteSchema");
+const { clearAnkiNoteSchemaCache, loadAnkiNoteSchema } = require("../src/config/ankiNoteSchema");
 const { createExportService } = require("../src/services/exportService");
 
 test("loadAnkiNoteSchema returns a stable shared note contract", () => {
@@ -58,4 +58,31 @@ test("export TSV header stays aligned with the shared note schema", async () => 
 
     const [header] = tsv.trim().split("\n");
     assert.equal(header, schema.fieldNames.join("\t"));
+});
+
+test("clearAnkiNoteSchemaCache invalidates one schema kind or all cached schemas", () => {
+    clearAnkiNoteSchemaCache();
+
+    const kanjiSchema = loadAnkiNoteSchema("kanji");
+    const wordSchema = loadAnkiNoteSchema("word");
+
+    assert.equal(loadAnkiNoteSchema("kanji"), kanjiSchema);
+    assert.equal(loadAnkiNoteSchema("word"), wordSchema);
+
+    clearAnkiNoteSchemaCache("word");
+
+    assert.equal(loadAnkiNoteSchema("kanji"), kanjiSchema);
+    assert.notEqual(loadAnkiNoteSchema("word"), wordSchema);
+
+    const refreshedKanjiSchema = loadAnkiNoteSchema("kanji");
+    clearAnkiNoteSchemaCache();
+
+    assert.notEqual(loadAnkiNoteSchema("kanji"), refreshedKanjiSchema);
+});
+
+test("clearAnkiNoteSchemaCache validates requested schema kind", () => {
+    assert.throws(
+        () => clearAnkiNoteSchemaCache("unknown"),
+        /Unsupported Anki note schema kind/
+    );
 });

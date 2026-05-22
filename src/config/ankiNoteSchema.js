@@ -57,6 +57,17 @@ function loadAnkiNoteSchema(kind = "kanji") {
     return hydrated;
 }
 
+function clearAnkiNoteSchemaCache(kind = null) {
+    if (kind === null || kind === undefined) {
+        cachedSchemas.clear();
+        return;
+    }
+
+    const resolved = resolveSchemaPath(kind);
+    cachedSchemas.delete(resolved.kind);
+}
+
 module.exports = {
+    clearAnkiNoteSchemaCache,
     loadAnkiNoteSchema,
 };

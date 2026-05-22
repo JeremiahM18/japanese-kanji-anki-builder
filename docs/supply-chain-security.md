@@ -1,0 +1,88 @@
+# Supply Chain Security
+
+This document defines the dependency, CI, script, and release-artifact trust boundaries for the repository.
+
+The project remains a JavaScript program. Supply-chain hardening must not become a TypeScript migration or a broad rewrite of working build lanes.
+
+## Local audit command
+
+Run:
+
+```bash
+npm run supply-chain:audit
+```
+
+The command is deterministic and uses only repository files. It checks:
+
+- `package-lock.json` is lockfile version 3 and matches `package.json` name/version.
+- all locked packages resolve from `https://registry.npmjs.org/`
+- all resolved tarballs carry integrity hashes.
+- direct dependencies are lockfile-backed registry dependencies, not git, file, workspace, URL, or npm-alias specs.
+- dependency lifecycle scripts match the reviewed allowlist.
+- GitHub Actions are pinned to reviewed commit SHAs.
+- workflows keep permissions to `contents: read`.
+- every workflow job audits supply-chain policy before `npm ci`.
+- the release workflow publishes only the governed smoke/gate outputs, release docs, NOTICE, changelog, and checksum manifest.
+
+Run `npm audit --json` separately when an internet-backed advisory check is needed. Advisory data changes over time, so it is not the deterministic repository policy gate.
+
+## Dependency Boundary
+
+`package-lock.json` is the install source of truth. New dependencies should be added intentionally, reviewed as product/runtime or dev-only dependencies, and committed with the lockfile change.
+
+Lifecycle scripts are high-signal supply-chain risk. The current reviewed allowlist is:
+
+| Package | Why allowed |
+| --- | --- |
+| `fsevents@2.3.3` | Optional macOS file-watcher dependency used by dev tooling. |
+| `onnxruntime-node@1.24.3` | Native ONNX runtime used by the assistive Transformers.js embedding lane. |
+| `protobufjs@7.6.0` | Transitive protobuf runtime dependency used by the assistive Transformers.js stack. |
+| `sharp@0.34.5` | Native image runtime pulled by the assistive Transformers.js stack. |
+
+Any new or changed lifecycle-script package must be reviewed before the install step is trusted. The audit gate fails until the allowlist is updated with a specific reason.
+
+The NLP dependency stack is assistive-only. It may generate review context, but it must not certify cards, approve source truth, or bypass Gold, Platinum, Obsidian, release, import, listening, or accessibility gates.
+
+## CI Boundary
+
+GitHub Actions workflows use top-level:
+
+```yaml
+permissions:
+  contents: read
+```
+
+Do not add `contents: write`, `id-token: write`, broad write permissions, or release-publishing permissions without a separate threat-model update.
+
+External actions are pinned to full commit SHAs resolved from their reviewed major-version tags. To update a pin, verify the new tag target with `git ls-remote`, update `.github/workflows/*.yml`, and rerun `npm run supply-chain:audit`.
+
+Current reviewed action pins:
+
+| Action | Reviewed tag | Commit SHA |
+| --- | --- | --- |
+| `actions/checkout` | `v4` | `34e114876b0b11c390a56381ad16ebd13914f8d5` |
+| `actions/setup-node` | `v4` | `49933ea5288caeca8642d1e84afbd3f7d6820020` |
+| `actions/setup-python` | `v5` | `a26af69be951a213d495a4c3e4e4022e16d87065` |
+| `actions/upload-artifact` | `v4` | `ea165f8d65b6e75b540449e92b4886f43607fa02` |
+
+## Script Boundary
+
+`package.json` commands should route behavior through reviewed repository scripts. Do not add direct `curl`, `wget`, `Invoke-WebRequest`, `powershell -Command`, or `cmd /c` fragments to npm scripts. When a command needs network, Docker, Python, or package tooling, put that behavior behind a focused script with argument validation and tests.
+
+## Release Artifact Boundary
+
+The tagged release workflow is an artifact builder, not proof that public product decks are release-ready.
+
+The release bundle may include only:
+
+- deterministic smoke artifacts from `.release-smoke/out`
+- release-gate verification artifacts from `.release-gate/out`
+- `CHANGELOG.md`
+- `NOTICE.md`
+- `docs/compatibility-matrix.md`
+- `docs/branch-protection.md`
+- `docs/release-process.md`
+- `docs/release-qa-checklist.md`
+- `release-artifacts.sha256`
+
+It must not upload ignored local inputs such as `data/`, `downloads/`, `.env`, or `node_modules`. Product deck readiness still requires the product-specific gates, manual Anki import QA, listening QA, accessibility QA, and current review proof described in the release docs.

@@ -1,0 +1,471 @@
+const fs = require("node:fs");
+const path = require("node:path");
+
+const ACTION_ALLOWLIST = Object.freeze({
+    "actions/checkout": {
+        version: "v4",
+        sha: "34e114876b0b11c390a56381ad16ebd13914f8d5",
+    },
+    "actions/setup-node": {
+        version: "v4",
+        sha: "49933ea5288caeca8642d1e84afbd3f7d6820020",
+    },
+    "actions/setup-python": {
+        version: "v5",
+        sha: "a26af69be951a213d495a4c3e4e4022e16d87065",
+    },
+    "actions/upload-artifact": {
+        version: "v4",
+        sha: "ea165f8d65b6e75b540449e92b4886f43607fa02",
+    },
+});
+
+const LIFECYCLE_SCRIPT_ALLOWLIST = Object.freeze({
+    "node_modules/fsevents@2.3.3": "Optional macOS file-watcher dependency used by dev tooling.",
+    "node_modules/onnxruntime-node@1.24.3": "Native ONNX runtime used by the assistive Transformers.js embedding lane.",
+    "node_modules/protobufjs@7.6.0": "Transitive protobuf runtime dependency used by the assistive Transformers.js stack.",
+    "node_modules/sharp@0.34.5": "Native image runtime pulled by the assistive Transformers.js stack.",
+});
+
+const WORKFLOW_FILES = Object.freeze([
+    path.join(".github", "workflows", "ci.yml"),
+    path.join(".github", "workflows", "release.yml"),
+]);
+
+const REQUIRED_RELEASE_BUNDLE_PATHS = Object.freeze([
+    ".release-smoke/out",
+    ".release-gate/out",
+    "CHANGELOG.md",
+    "NOTICE.md",
+    "docs/compatibility-matrix.md",
+    "docs/branch-protection.md",
+    "docs/release-process.md",
+    "docs/release-qa-checklist.md",
+    "release-artifacts.sha256",
+]);
+
+const FORBIDDEN_WORKFLOW_TOKENS = Object.freeze([
+    "contents: write",
+    "id-token: write",
+    "pull-requests: write",
+    "actions: write",
+    "packages: write",
+    "security-events: write",
+    "write-all",
+]);
+
+const FORBIDDEN_SCRIPT_SPEC_RE = /^(?:git\+|git:|github:|file:|link:|workspace:|http:|https:|npm:)/iu;
+const PINNED_SHA_RE = /^[a-f0-9]{40}$/u;
+
+function readText(cwd, relativePath) {
+    return fs.readFileSync(path.join(cwd, relativePath), "utf-8");
+}
+
+function readJson(cwd, relativePath) {
+    return JSON.parse(readText(cwd, relativePath));
+}
+
+function normalizePath(filePath) {
+    return filePath.split(path.sep).join("/");
+}
+
+function dependencyNameFromPackagePath(packagePath) {
+    const normalized = normalizePath(packagePath);
+    const parts = normalized.split("/");
+    if (parts[0] !== "node_modules") {
+        return normalized;
+    }
+    if (parts[1]?.startsWith("@")) {
+        return `${parts[1]}/${parts[2]}`;
+    }
+    return parts[1] || normalized;
+}
+
+function assertCondition(condition, errors, message) {
+    if (!condition) {
+        errors.push(message);
+    }
+}
+
+function collectDependencySpecs(lockPackage) {
+    return [
+        ...Object.entries(lockPackage.dependencies || {}),
+        ...Object.entries(lockPackage.devDependencies || {}),
+        ...Object.entries(lockPackage.optionalDependencies || {}),
+        ...Object.entries(lockPackage.peerDependencies || {}),
+    ];
+}
+
+function auditPackageManifest({ packageJson, lock }) {
+    const errors = [];
+    const warnings = [];
+
+    assertCondition(lock.lockfileVersion === 3, errors, `package-lock.json must stay lockfileVersion 3; found ${lock.lockfileVersion}.`);
+    assertCondition(lock.packages && typeof lock.packages === "object", errors, "package-lock.json is missing packages metadata.");
+    assertCondition(lock.packages?.[""]?.name === packageJson.name, errors, "package-lock.json root package name must match package.json.");
+    assertCondition(lock.packages?.[""]?.version === packageJson.version, errors, "package-lock.json root package version must match package.json.");
+    assertCondition(
+        packageJson.scripts?.["supply-chain:audit"] === "node scripts/auditSupplyChain.js",
+        errors,
+        "package.json must expose npm run supply-chain:audit."
+    );
+
+    const directDependencies = {
+        ...(packageJson.dependencies || {}),
+        ...(packageJson.devDependencies || {}),
+    };
+    for (const [name, spec] of Object.entries(directDependencies)) {
+        assertCondition(
+            !FORBIDDEN_SCRIPT_SPEC_RE.test(String(spec)),
+            errors,
+            `Direct dependency ${name} must come from the npm registry via package-lock.json, not ${spec}.`
+        );
+        assertCondition(
+            !!lock.packages?.[`node_modules/${name}`],
+            errors,
+            `Direct dependency ${name} is missing from package-lock.json.`
+        );
+    }
+
+    const packageEntries = Object.entries(lock.packages || {}).filter(([packagePath]) => packagePath !== "");
+    const registryHosts = new Map();
+    const lifecycleScripts = [];
+
+    for (const [packagePath, metadata] of packageEntries) {
+        const normalizedPath = normalizePath(packagePath);
+        if (metadata.resolved) {
+            let parsedUrl = null;
+            try {
+                parsedUrl = new URL(metadata.resolved);
+            } catch {
+                // Non-URL specs are handled by the protocol check below.
+            }
+
+            if (parsedUrl) {
+                registryHosts.set(parsedUrl.host, (registryHosts.get(parsedUrl.host) || 0) + 1);
+                assertCondition(
+                    parsedUrl.protocol === "https:" && parsedUrl.host === "registry.npmjs.org",
+                    errors,
+                    `${normalizedPath} resolves outside the approved npm registry: ${metadata.resolved}`
+                );
+            } else {
+                assertCondition(
+                    !FORBIDDEN_SCRIPT_SPEC_RE.test(String(metadata.resolved)),
+                    errors,
+                    `${normalizedPath} uses a forbidden resolved dependency source: ${metadata.resolved}`
+                );
+            }
+
+            assertCondition(
+                typeof metadata.integrity === "string" && metadata.integrity.length > 0,
+                errors,
+                `${normalizedPath} has a resolved tarball without an integrity hash.`
+            );
+        }
+
+        for (const [dependencyName, spec] of collectDependencySpecs(metadata)) {
+            assertCondition(
+                !FORBIDDEN_SCRIPT_SPEC_RE.test(String(spec)),
+                errors,
+                `${normalizedPath} dependency ${dependencyName} uses forbidden dependency spec ${spec}.`
+            );
+        }
+
+        if (metadata.hasInstallScript) {
+            const key = `${normalizedPath}@${metadata.version}`;
+            lifecycleScripts.push({
+                key,
+                packagePath: normalizedPath,
+                packageName: dependencyNameFromPackagePath(normalizedPath),
+                version: metadata.version,
+                optional: !!metadata.optional,
+                dev: !!metadata.dev,
+                reason: LIFECYCLE_SCRIPT_ALLOWLIST[key],
+            });
+            assertCondition(
+                !!LIFECYCLE_SCRIPT_ALLOWLIST[key],
+                errors,
+                `${normalizedPath}@${metadata.version} has an install script but is not in the reviewed allowlist.`
+            );
+        }
+    }
+
+    for (const [key, reason] of Object.entries(LIFECYCLE_SCRIPT_ALLOWLIST)) {
+        assertCondition(
+            lifecycleScripts.some((entry) => entry.key === key),
+            errors,
+            `Reviewed lifecycle-script package ${key} disappeared or changed version; reassess the allowlist reason: ${reason}`
+        );
+    }
+
+    const packageScripts = Object.entries(packageJson.scripts || {});
+    const directShellFragments = [
+        "curl ",
+        "wget ",
+        "Invoke-WebRequest",
+        "powershell -Command",
+        "cmd /c",
+    ];
+    for (const [scriptName, command] of packageScripts) {
+        for (const fragment of directShellFragments) {
+            assertCondition(
+                !String(command).toLowerCase().includes(fragment.toLowerCase()),
+                errors,
+                `npm script ${scriptName} uses direct shell/download fragment ${fragment}; route through a reviewed JS script.`
+            );
+        }
+    }
+
+    return {
+        errors,
+        warnings,
+        summary: {
+            packageCount: packageEntries.length,
+            registryHosts: Object.fromEntries(registryHosts),
+            lifecycleScripts,
+        },
+    };
+}
+
+function collectWorkflowUses(workflowText) {
+    const uses = [];
+    const useRe = /^\s*uses:\s*([^\s#]+)/gmu;
+    let match = useRe.exec(workflowText);
+    while (match !== null) {
+        uses.push(match[1]);
+        match = useRe.exec(workflowText);
+    }
+    return uses;
+}
+
+function assertSupplyChainAuditBeforeEveryInstall(workflowText, relativePath, errors) {
+    const auditRe = /run:\s*npm run supply-chain:audit/gu;
+    const installRe = /run:\s*npm ci(?:\s|$)/gu;
+    const auditIndices = [];
+    let auditMatch = auditRe.exec(workflowText);
+    while (auditMatch !== null) {
+        auditIndices.push(auditMatch.index);
+        auditMatch = auditRe.exec(workflowText);
+    }
+
+    let previousInstallIndex = -1;
+    let installMatch = installRe.exec(workflowText);
+    while (installMatch !== null) {
+        const installIndex = installMatch.index;
+        const hasAuditInThisJobBlock = auditIndices.some((auditIndex) => auditIndex > previousInstallIndex && auditIndex < installIndex);
+        assertCondition(
+            hasAuditInThisJobBlock,
+            errors,
+            `${relativePath} must run npm run supply-chain:audit before each npm ci install step.`
+        );
+        previousInstallIndex = installIndex;
+        installMatch = installRe.exec(workflowText);
+    }
+}
+
+function parseActionUse(useValue) {
+    const atIndex = useValue.lastIndexOf("@");
+    if (atIndex === -1) {
+        return { action: useValue, ref: "" };
+    }
+    return {
+        action: useValue.slice(0, atIndex).toLowerCase(),
+        ref: useValue.slice(atIndex + 1),
+    };
+}
+
+function auditWorkflowFile({ relativePath, text }) {
+    const errors = [];
+    const warnings = [];
+    const uses = collectWorkflowUses(text);
+
+    assertCondition(
+        /permissions:\s*\r?\n\s+contents:\s+read/u.test(text),
+        errors,
+        `${relativePath} must keep top-level permissions limited to contents: read.`
+    );
+    for (const forbidden of FORBIDDEN_WORKFLOW_TOKENS) {
+        assertCondition(
+            !text.includes(forbidden),
+            errors,
+            `${relativePath} must not request broad workflow permission ${forbidden}.`
+        );
+    }
+    assertSupplyChainAuditBeforeEveryInstall(text, relativePath, errors);
+
+    for (const useValue of uses) {
+        if (useValue.startsWith("./")) {
+            continue;
+        }
+        const { action, ref } = parseActionUse(useValue);
+        const expected = ACTION_ALLOWLIST[action];
+        assertCondition(!!expected, errors, `${relativePath} uses unreviewed external action ${useValue}.`);
+        if (!expected) {
+            continue;
+        }
+        assertCondition(
+            PINNED_SHA_RE.test(ref),
+            errors,
+            `${relativePath} must pin ${action}@${expected.version} to the reviewed SHA ${expected.sha}; found ${useValue}.`
+        );
+        assertCondition(
+            ref === expected.sha,
+            errors,
+            `${relativePath} has unexpected pin for ${action}@${expected.version}; expected ${expected.sha}, found ${ref}.`
+        );
+    }
+
+    return {
+        errors,
+        warnings,
+        summary: {
+            actionUses: uses,
+        },
+    };
+}
+
+function auditReleaseArtifactBoundary(releaseWorkflowText) {
+    const errors = [];
+    const warnings = [];
+
+    assertCondition(
+        /release_bundle:[\s\S]*needs:\s*\r?\n\s+- release_verify/u.test(releaseWorkflowText),
+        errors,
+        "release_bundle must depend on release_verify before publishing bundle artifacts."
+    );
+    assertCondition(
+        releaseWorkflowText.includes("find .release-smoke/out .release-gate/out -type f -print0"),
+        errors,
+        "release workflow must checksum only the deterministic smoke and release-gate output trees."
+    );
+    assertCondition(
+        releaseWorkflowText.includes("sort -z"),
+        errors,
+        "release workflow must sort checksum inputs deterministically."
+    );
+    assertCondition(
+        releaseWorkflowText.includes("xargs -0 sha256sum > release-artifacts.sha256"),
+        errors,
+        "release workflow must emit release-artifacts.sha256 from null-delimited sha256sum input."
+    );
+
+    for (const releasePath of REQUIRED_RELEASE_BUNDLE_PATHS) {
+        assertCondition(
+            releaseWorkflowText.includes(releasePath),
+            errors,
+            `release workflow upload bundle is missing required path ${releasePath}.`
+        );
+    }
+
+    for (const forbiddenPath of ["data/", "downloads/", "node_modules", ".env"]) {
+        assertCondition(
+            !releaseWorkflowText.includes(forbiddenPath),
+            errors,
+            `release workflow must not upload or checksum local/private path ${forbiddenPath}.`
+        );
+    }
+
+    return {
+        errors,
+        warnings,
+        summary: {
+            requiredReleaseBundlePaths: REQUIRED_RELEASE_BUNDLE_PATHS,
+        },
+    };
+}
+
+function buildSupplyChainAuditReport({ cwd = process.cwd() } = {}) {
+    const packageJson = readJson(cwd, "package.json");
+    const lock = readJson(cwd, "package-lock.json");
+    const packageAudit = auditPackageManifest({ packageJson, lock });
+    const workflowAudits = WORKFLOW_FILES.map((relativePath) => {
+        const text = readText(cwd, relativePath);
+        return {
+            relativePath: normalizePath(relativePath),
+            ...auditWorkflowFile({ relativePath: normalizePath(relativePath), text }),
+        };
+    });
+    const releaseWorkflowText = readText(cwd, path.join(".github", "workflows", "release.yml"));
+    const releaseBoundaryAudit = auditReleaseArtifactBoundary(releaseWorkflowText);
+
+    return {
+        ok: [
+            ...packageAudit.errors,
+            ...workflowAudits.flatMap((audit) => audit.errors),
+            ...releaseBoundaryAudit.errors,
+        ].length === 0,
+        errors: [
+            ...packageAudit.errors,
+            ...workflowAudits.flatMap((audit) => audit.errors),
+            ...releaseBoundaryAudit.errors,
+        ],
+        warnings: [
+            ...packageAudit.warnings,
+            ...workflowAudits.flatMap((audit) => audit.warnings),
+            ...releaseBoundaryAudit.warnings,
+        ],
+        package: packageAudit.summary,
+        workflows: workflowAudits.map((audit) => ({
+            relativePath: audit.relativePath,
+            actionUses: audit.summary.actionUses,
+        })),
+        releaseArtifacts: releaseBoundaryAudit.summary,
+    };
+}
+
+function formatSupplyChainAuditReport(report) {
+    const lines = [
+        "Supply chain audit",
+        `Status: ${report.ok ? "pass" : "fail"}`,
+        `Lockfile packages: ${report.package.packageCount}`,
+        `Registry hosts: ${Object.entries(report.package.registryHosts).map(([host, count]) => `${host}=${count}`).join(", ") || "none"}`,
+        "Lifecycle script packages:",
+    ];
+
+    for (const entry of report.package.lifecycleScripts) {
+        lines.push(`- ${entry.packageName}@${entry.version} (${entry.packagePath}) - ${entry.reason || "unreviewed"}`);
+    }
+
+    lines.push("GitHub Actions pins:");
+    for (const workflow of report.workflows) {
+        lines.push(`- ${workflow.relativePath}: ${workflow.actionUses.length} external action uses`);
+    }
+
+    lines.push("Release artifact boundary:");
+    for (const releasePath of report.releaseArtifacts.requiredReleaseBundlePaths) {
+        lines.push(`- ${releasePath}`);
+    }
+
+    if (report.errors.length > 0) {
+        lines.push("Errors:");
+        for (const error of report.errors) {
+            lines.push(`- ${error}`);
+        }
+    }
+    if (report.warnings.length > 0) {
+        lines.push("Warnings:");
+        for (const warning of report.warnings) {
+            lines.push(`- ${warning}`);
+        }
+    }
+
+    return `${lines.join("\n")}\n`;
+}
+
+if (require.main === module) {
+    const report = buildSupplyChainAuditReport();
+    const text = formatSupplyChainAuditReport(report);
+    if (report.ok) {
+        process.stdout.write(text);
+    } else {
+        process.stderr.write(text);
+        process.exitCode = 1;
+    }
+}
+
+module.exports = {
+    ACTION_ALLOWLIST,
+    LIFECYCLE_SCRIPT_ALLOWLIST,
+    buildSupplyChainAuditReport,
+    formatSupplyChainAuditReport,
+};

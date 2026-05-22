@@ -14,7 +14,7 @@ Kanji cards and word cards are separate learning products. A kanji card teaches 
 
 This repository is a local deck-build tool, not a hosted public service. The Express server has no authentication layer and is intended for local development only. It binds to `127.0.0.1` by default; set `SERVER_HOST=0.0.0.0` only for a deliberate, temporary, trusted-network workflow.
 
-VOICEVOX should also stay local: the governed Docker helper expects host `127.0.0.1:50021` mapped to Nemo container port `50121`. Treat ignored workspace inputs under `data/`, `downloads/`, and `out/` as local, review-required material; do not import untrusted dictionaries, sentence corpora, media, or audio without checking the parser/import path and resulting card surfaces. See [SECURITY.md](SECURITY.md) for the disclosure policy and threat model.
+VOICEVOX should also stay local: the governed Docker helper expects host `127.0.0.1:50021` mapped to Nemo container port `50121`. Treat ignored workspace inputs under `data/`, `downloads/`, and `out/` as local, review-required material; do not import untrusted dictionaries, sentence corpora, media, or audio without checking the parser/import path and resulting card surfaces. See [SECURITY.md](SECURITY.md) for the disclosure policy and threat model, and [docs/supply-chain-security.md](docs/supply-chain-security.md) for dependency, workflow, script, and release-artifact boundaries.
 
 ## Pipeline At A Glance
 
@@ -172,7 +172,7 @@ Ignored local files under `data/` are workspace inputs. They are not product tru
 
 ## Testing Philosophy
 
-- [Repository governance tests](test/repositoryGovernance.test.js) protect source-of-truth boundaries, README/source-lane consistency, CI contract names, CODEOWNERS coverage, and source-evidence routing.
+- [Repository governance tests](test/repositoryGovernance.test.js) protect source-of-truth boundaries, README/source-lane consistency, CI contract names, supply-chain policy, CODEOWNERS coverage, and source-evidence routing.
 - The tracked [examples/n5-mini](examples/n5-mini) fixture locks exact generated TSV rows against the live note schemas so schema or export drift is visible immediately.
 - Gold regression protects generated card output from drift; Platinum gates check current structural evidence; Obsidian proof records substantive current-version rereview.
 
@@ -261,6 +261,7 @@ N3, N2, and N1 word Silver are generated-surface baselines only. There are no `t
 - Release bar: [docs/product-exit-criteria.md](docs/product-exit-criteria.md), [docs/release-process.md](docs/release-process.md), and [docs/release-qa-checklist.md](docs/release-qa-checklist.md).
 - Card-quality decisions: [docs/platinum-review-policy.md](docs/platinum-review-policy.md).
 - Source-evidence work: [docs/source-evidence-batching.md](docs/source-evidence-batching.md) and [docs/source-acquisition-register.md](docs/source-acquisition-register.md).
+- Dependency, CI, script, and artifact trust boundaries: [docs/supply-chain-security.md](docs/supply-chain-security.md).
 - Platform compatibility: [docs/compatibility-matrix.md](docs/compatibility-matrix.md).
 
 ## Source Of Truth
@@ -374,6 +375,7 @@ Run before merging changes that affect decks, contracts, media, or release behav
 npm test
 npm run lint
 npm run typecheck
+npm run supply-chain:audit
 npm run data:audit:jlpt
 npm run data:audit:jlpt:sources -- --governance-strict --limit=25
 npm run data:audit:jlpt:source-levels -- --worklist-only --limit=25
@@ -713,6 +715,7 @@ Repository governance:
 | `npm test` | Run the full test suite |
 | `npm run lint` | Run ESLint |
 | `npm run typecheck` | Run the staged JSDoc typecheck gate |
+| `npm run supply-chain:audit` | Verify lockfile registry/integrity, reviewed install-script packages, pinned GitHub Actions, workflow permissions, and release artifact boundaries |
 | `npm run ci:smoke` | Build deterministic smoke artifacts |
 | `npm run release:gate` | Validate smoke-fixture release artifact contracts |
 | `npm run product:artifacts:n5` | Build and validate the tracked-source N5 word TSV artifact |

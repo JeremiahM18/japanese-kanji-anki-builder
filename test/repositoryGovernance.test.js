@@ -122,6 +122,7 @@ test("CODEOWNERS covers critical repository governance paths", () => {
         "/CONTRIBUTING.md @cover",
         "/SECURITY.md @cover",
         "/package.json @cover",
+        "/package-lock.json @cover",
     ];
 
     for (const entry of requiredEntries) {
@@ -188,6 +189,7 @@ test("pull request template calls out release-gate and code-owner expectations",
     assert.equal(template.includes("`nlp:governance-gate` run when assistive NLP manifests, runtimes, artifact contracts, or governance docs changed"), true);
     assert.equal(template.includes("Source-evidence imports dry-run `data:import:jlpt:source-input -- --source=<source-id>` before any `--write`"), true);
     assert.equal(template.includes("`release:gate` run when packaging, CI, or toolchain behavior changed"), true);
+    assert.equal(template.includes("`supply-chain:audit` run when dependency manifests, npm scripts, workflows, or release artifact boundaries changed"), true);
     assert.equal(template.includes("CODEOWNERS review requested when touching protected paths"), true);
 });
 
@@ -363,9 +365,13 @@ test("JLPT runtime dataset readers use the governed JLPT JSON loader", () => {
 test("tracked text release artifacts pin LF line endings", () => {
     const attributes = readRepoFile(".gitattributes");
     const requiredPatterns = [
+        ".gitattributes text eol=lf",
         "*.json text eol=lf",
         "*.md text eol=lf",
         "*.tsv text eol=lf",
+        "*.yml text eol=lf",
+        "*.yaml text eol=lf",
+        "/.github/CODEOWNERS text eol=lf",
     ];
 
     for (const pattern of requiredPatterns) {

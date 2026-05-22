@@ -63,6 +63,8 @@ test("release process doc aligns tag naming with package version", () => {
     assert.equal(releaseProcess.includes("Update `package.json` version intentionally."), true);
     assert.equal(releaseProcess.includes("Create Git tags as `v<package.json version>`"), true);
     assert.equal(releaseProcess.includes("Keep `## [Unreleased]` release-facing and concise."), true);
+    assert.equal(releaseProcess.includes("npm run supply-chain:audit"), true);
+    assert.equal(releaseProcess.includes("supply-chain-security.md"), true);
     assert.equal(releaseProcess.includes("CHANGELOG.md"), true);
     assert.equal(releaseProcess.includes("release-qa-checklist.md"), true);
     assert.equal(releaseProcess.includes("compatibility-matrix.md"), true);
@@ -75,6 +77,7 @@ test("product hardening docs exist for exit criteria, accessibility, and content
     const contentStyleGuide = readRepoFile(path.join("docs", "content-style-guide.md"));
     const compatibilityMatrix = readRepoFile(path.join("docs", "compatibility-matrix.md"));
     const releaseQaChecklist = readRepoFile(path.join("docs", "release-qa-checklist.md"));
+    const supplyChainSecurity = readRepoFile(path.join("docs", "supply-chain-security.md"));
     const notice = readRepoFile("NOTICE.md");
 
     assert.equal(exitCriteria.includes("Product Exit Criteria"), true);
@@ -82,6 +85,7 @@ test("product hardening docs exist for exit criteria, accessibility, and content
     assert.equal(contentStyleGuide.includes("Content Style Guide"), true);
     assert.equal(compatibilityMatrix.includes("Compatibility Matrix"), true);
     assert.equal(releaseQaChecklist.includes("Release QA Checklist"), true);
+    assert.equal(supplyChainSecurity.includes("Supply Chain Security"), true);
     assert.equal(notice.includes("VOICEVOX Nemo"), true);
 });
 

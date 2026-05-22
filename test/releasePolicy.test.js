@@ -11,12 +11,39 @@ function readRepoFile(relativePath) {
     return fs.readFileSync(path.join(repoRoot, relativePath), "utf-8");
 }
 
+function extractChangelogSection(changelog, heading) {
+    const headingText = `## ${heading}`;
+    const start = changelog.indexOf(headingText);
+    assert.notEqual(start, -1, `Missing changelog section: ${headingText}`);
+    const bodyStart = start + headingText.length;
+    const nextHeading = changelog.slice(bodyStart).search(/\n## /);
+    return nextHeading === -1
+        ? changelog.slice(bodyStart)
+        : changelog.slice(bodyStart, bodyStart + nextHeading);
+}
+
 test("changelog keeps unreleased section and current package version entry", () => {
     const packageJson = JSON.parse(readRepoFile("package.json"));
     const changelog = readRepoFile("CHANGELOG.md");
 
     assert.equal(changelog.includes("## [Unreleased]"), true);
     assert.equal(changelog.includes(`## [${packageJson.version}] - `), true, `Missing changelog entry for package version ${packageJson.version}`);
+});
+
+test("changelog unreleased section stays release-facing", () => {
+    const changelog = readRepoFile("CHANGELOG.md");
+    const unreleased = extractChangelogSection(changelog, "[Unreleased]");
+    const nonEmptyLines = unreleased
+        .split(/\r?\n/u)
+        .map((line) => line.trim())
+        .filter(Boolean);
+
+    assert.ok(nonEmptyLines.length <= 80, `Unreleased section has ${nonEmptyLines.length} non-empty lines; keep release notes concise.`);
+    assert.equal(unreleased.includes("controlled 8-card batch"), false);
+    assert.equal(unreleased.includes("controlled 8-card batches"), false);
+    assert.match(unreleased, /release-facing/);
+    assert.match(unreleased, /git commit messages/);
+    assert.match(unreleased, /tracked review manifests/);
 });
 
 test("release workflow is tag-driven and publishes release artifacts", () => {
@@ -35,6 +62,7 @@ test("release process doc aligns tag naming with package version", () => {
 
     assert.equal(releaseProcess.includes("Update `package.json` version intentionally."), true);
     assert.equal(releaseProcess.includes("Create Git tags as `v<package.json version>`"), true);
+    assert.equal(releaseProcess.includes("Keep `## [Unreleased]` release-facing and concise."), true);
     assert.equal(releaseProcess.includes("CHANGELOG.md"), true);
     assert.equal(releaseProcess.includes("release-qa-checklist.md"), true);
     assert.equal(releaseProcess.includes("compatibility-matrix.md"), true);

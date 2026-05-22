@@ -38,6 +38,7 @@ const {
     parseNumericOption,
     parseStringOption,
 } = require("../src/utils/cliArgs");
+const { removeGeneratedPathSync } = require("../src/utils/fs");
 
 function parseArgs(argv) {
     const options = {
@@ -175,7 +176,11 @@ async function main() {
     const config = loadConfig();
     const outDir = path.resolve(options.outDir || path.join(config.buildOutDir, "additional_unverified"));
     const exportsDir = path.join(outDir, "exports");
-    fs.rmSync(exportsDir, { recursive: true, force: true });
+    removeGeneratedPathSync(exportsDir, {
+        recursive: true,
+        force: true,
+        label: "additional kanji exports directory",
+    });
     ensureDir(exportsDir);
 
     const contractPath = resolveExistingPath(options.contract, "JLPT level contract");

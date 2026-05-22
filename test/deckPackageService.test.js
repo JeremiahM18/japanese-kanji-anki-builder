@@ -339,3 +339,24 @@ test("deck packaging rejects managed media paths that escape the kanji media dir
         /Invalid managed media asset relative path/
     );
 });
+
+test("deck packaging refuses cleanup outside governed generated-output roots", async () => {
+    const outDir = path.join(process.cwd(), "unsafe-package-test");
+    const exportPath = path.join(process.cwd(), "README.md");
+
+    await assert.rejects(
+        () => buildDeckPackage({
+            outDir,
+            exports: [{
+                level: 5,
+                filePath: exportPath,
+                rows: 0,
+            }],
+            kanjiByLevel: { 5: [] },
+            mediaRootDir: path.join(process.cwd(), "data", "media"),
+            deckKind: "kanji",
+        }),
+        /outside governed generated-output roots/
+    );
+    assert.equal(fs.existsSync(path.join(outDir, "package")), false);
+});

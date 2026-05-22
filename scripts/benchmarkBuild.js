@@ -1,4 +1,3 @@
-const fs = require("node:fs");
 const path = require("node:path");
 const { performance } = require("node:perf_hooks");
 
@@ -12,6 +11,7 @@ const {
     parseNumericOption,
     parseStringOption,
 } = require("../src/utils/cliArgs");
+const { removeGeneratedPathSync } = require("../src/utils/fs");
 
 const DEFAULT_BUILD_BUDGET = Object.freeze({
     totalMs: 5000,
@@ -177,7 +177,11 @@ function formatBudgetResult(budgetResult) {
 }
 
 function cleanOutDir(dirPath) {
-    fs.rmSync(dirPath, { recursive: true, force: true });
+    removeGeneratedPathSync(dirPath, {
+        recursive: true,
+        force: true,
+        label: "benchmark output directory",
+    });
 }
 
 async function runBuildBenchmarkPass({ config, levels, limit, concurrency, outDir, doctorReport }) {
@@ -313,6 +317,7 @@ module.exports = {
     DEFAULT_BUILD_BUDGET,
     evaluateBudget,
     formatBudgetResult,
+    cleanOutDir,
     main,
     parseArgs,
     resolveBenchmarkOutDirBase,

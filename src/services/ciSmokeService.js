@@ -10,7 +10,7 @@ const { buildMediaBasePath } = require("./mediaStore");
 const { resolvePythonCommand } = require("./toolchainService");
 const { createWordExportService } = require("./wordExportService");
 const { runBuildPipeline } = require("./buildPipeline");
-const { ensureDir } = require("../utils/fs");
+const { ensureDir, removeGeneratedPathSync } = require("../utils/fs");
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 
 function writeJson(filePath, value) {
@@ -522,7 +522,11 @@ async function runCiSmoke({
         };
     } finally {
         if (!keepTempDir && !rootDir) {
-            fs.rmSync(workspace.rootDir, { recursive: true, force: true });
+            removeGeneratedPathSync(workspace.rootDir, {
+                recursive: true,
+                force: true,
+                label: "CI smoke temporary workspace",
+            });
         }
     }
 }

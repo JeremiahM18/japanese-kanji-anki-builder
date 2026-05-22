@@ -389,6 +389,23 @@ test("child process execution stays explicit and allowlisted", () => {
     assert.deepEqual(shellEnabledFiles, [], "Scripts and services should execute subprocesses without shell expansion.");
 });
 
+test("recursive generated-output cleanup stays behind the shared safety guard", () => {
+    const files = [
+        ...listJavaScriptFiles("scripts"),
+        ...listJavaScriptFiles("src"),
+    ];
+    const rawCleanupFiles = files
+        .filter((relativePath) => relativePath !== "src/utils/fs.js")
+        .filter((relativePath) => /\b(?:fs|fsp)\.rm(?:Sync)?\(/u.test(readRepoFile(relativePath)))
+        .sort();
+
+    assert.deepEqual(
+        rawCleanupFiles,
+        [],
+        "Scripts and services should use removeGeneratedPath/removeGeneratedPathSync for recursive cleanup."
+    );
+});
+
 test("tracked text release artifacts pin LF line endings", () => {
     const attributes = readRepoFile(".gitattributes");
     const requiredPatterns = [

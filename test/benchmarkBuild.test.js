@@ -4,6 +4,7 @@ const path = require("node:path");
 
 const {
     DEFAULT_BUILD_BUDGET,
+    cleanOutDir,
     evaluateBudget,
     parseArgs,
     resolveBenchmarkOutDirBase,
@@ -54,6 +55,10 @@ test("resolveBenchmarkOutDirBase defaults next to build output", () => {
     });
 
     assert.equal(resolved, path.join(process.cwd(), "out", "bench-build"));
+});
+
+test("cleanOutDir refuses non-generated workspace paths", () => {
+    assert.throws(() => cleanOutDir(path.join(process.cwd(), "README.md")), /outside governed generated-output roots/);
 });
 
 test("resolveBudget returns the default build budget", () => {

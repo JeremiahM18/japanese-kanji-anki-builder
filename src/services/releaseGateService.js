@@ -4,6 +4,7 @@ const assert = require("node:assert/strict");
 
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 const { loadAudioSourcePolicy } = require("../datasets/audioSourcePolicy");
+const { removeGeneratedPathSync } = require("../utils/fs");
 const { buildAudioPolicyAuditReport } = require("./audioPolicyAuditService");
 const { buildToolchainStatus, getBlockedTools, getMissingPackagingTools } = require("./toolchainService");
 const { runCiSmoke } = require("./ciSmokeService");
@@ -114,6 +115,7 @@ async function runReleaseGate({
 
     const shouldCleanupTempDir = !rootDir && !keepTempDir;
     const smokeSummary = await runCiSmokeFn({ rootDir, keepTempDir: true });
+    let primaryError = null;
 
     try {
         assert.ok(smokeSummary.config?.mediaRootDir, "Smoke summary must include mediaRootDir for audio policy verification");
@@ -140,9 +142,22 @@ async function runReleaseGate({
             audioPolicyReport,
             audioSourcePolicy,
         });
+    } catch (error) {
+        primaryError = error;
+        throw error;
     } finally {
         if (shouldCleanupTempDir) {
-            fs.rmSync(smokeSummary.rootDir, { recursive: true, force: true });
+            try {
+                removeGeneratedPathSync(smokeSummary.rootDir, {
+                    recursive: true,
+                    force: true,
+                    label: "release-gate temporary workspace",
+                });
+            } catch (cleanupError) {
+                if (!primaryError) {
+                    throw cleanupError;
+                }
+            }
         }
     }
 }

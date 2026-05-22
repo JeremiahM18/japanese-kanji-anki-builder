@@ -3,7 +3,7 @@ const fsp = require("node:fs/promises");
 const path = require("node:path");
 
 const { mapWithConcurrency } = require("../utils/concurrency");
-const { ensureDir } = require("../utils/fs");
+const { assertSafeGeneratedPath, ensureDir, removeGeneratedPath } = require("../utils/fs");
 const { buildAnkiPackage } = require("./ankiPackageService");
 const { selectBestAudioAsset } = require("./audioService");
 const { readManifestIfExists, resolveManagedAssetPath } = require("./mediaStore");
@@ -267,11 +267,12 @@ async function buildDeckPackage({
     referencedMedia = [],
 }) {
     const packagePaths = buildDeckPackagePaths(outDir);
+    assertSafeGeneratedPath(packagePaths.rootDir, { label: "deck package directory" });
     ensureDir(packagePaths.rootDir);
-    await fsp.rm(packagePaths.exportsDir, { recursive: true, force: true });
-    await fsp.rm(packagePaths.mediaDir, { recursive: true, force: true });
-    await fsp.rm(packagePaths.readmePath, { force: true });
-    await fsp.rm(packagePaths.summaryPath, { force: true });
+    await removeGeneratedPath(packagePaths.exportsDir, { recursive: true, force: true, label: "deck package exports directory" });
+    await removeGeneratedPath(packagePaths.mediaDir, { recursive: true, force: true, label: "deck package media directory" });
+    await removeGeneratedPath(packagePaths.readmePath, { force: true, label: "deck package import guide" });
+    await removeGeneratedPath(packagePaths.summaryPath, { force: true, label: "deck package summary" });
     ensureDir(packagePaths.exportsDir);
     ensureDir(packagePaths.mediaDir);
 

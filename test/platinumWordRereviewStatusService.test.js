@@ -425,7 +425,7 @@ test("formatted word rereview report is clear and read-only", () => {
     const summary = buildPlatinumWordRereviewStatusSummary([report]);
     const formatted = formatPlatinumWordRereviewStatusReport(summary);
 
-    assert.match(formatted, /Platinum Word Rereview Status/);
+    assert.match(formatted, /Word Obsidian Proof Status/);
     assert.match(formatted, /Platinum pass \(structural gate\)/);
     assert.match(formatted, /Generated deck rows are the certification denominator/);
     assert.match(formatted, /Platinum entries needing Obsidian/);

@@ -2,16 +2,16 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const { loadConfig } = require("../src/config");
-const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
-const { loadWordPitchAccentData } = require("../src/datasets/wordPitchAccentData");
 const { parseLevelsArgument } = require("../src/services/buildPipeline");
 const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseStringOption } = require("../src/utils/cliArgs");
-const { buildWordRowsForLevel } = require("./reviewPlatinumWordLevel");
+const { buildKanjiRowsForLevel } = require("./reviewPlatinumKanjiLevel");
 const {
-    buildPlatinumWordRereviewStatusReport,
-    buildPlatinumWordRereviewStatusSummary,
-    formatPlatinumWordRereviewStatusReport,
-} = require("../src/services/platinumWordRereviewStatusService");
+    buildPlatinumKanjiRereviewStatusReport,
+} = require("../src/services/platinumKanjiRereviewStatusService");
+const {
+    buildObsidianKanjiCertificationStatusSummary,
+    formatObsidianKanjiCertificationStatusReport,
+} = require("../src/services/obsidianKanjiCertificationStatusService");
 
 function parseArgs(argv) {
     const options = {
@@ -36,39 +36,35 @@ function parseArgs(argv) {
 }
 
 function readReviewSet(level) {
-    const reviewSetPath = path.join(process.cwd(), "templates", `platinum_n${level}_word_review_set.json`);
+    const reviewSetPath = path.join(process.cwd(), "templates", `platinum_n${level}_review_set.json`);
     if (!fs.existsSync(reviewSetPath)) {
-        throw new Error(`Missing platinum word review set at ${reviewSetPath}`);
+        throw new Error(`Missing platinum kanji review set at ${reviewSetPath}`);
     }
 
     return JSON.parse(fs.readFileSync(reviewSetPath, "utf-8"));
 }
 
-async function main({ commandName = "deck:words:platinum:rereview-status" } = {}) {
+async function main() {
     const options = parseArgs(process.argv.slice(2));
-    assertNoUnknownArgs(commandName, options.unknownArgs);
+    assertNoUnknownArgs("deck:kanji:obsidian:certify-status", options.unknownArgs);
 
     const config = loadConfig();
-    const wordPitchAccentData = loadWordPitchAccentData(path.join(process.cwd(), "templates", "word_pitch_accent_data.json"));
-    const kanjiLevelData = loadJlptOnlyJson(config.jlptJsonPath);
     const levelReports = [];
     for (const level of options.levels) {
         const entries = readReviewSet(level);
-        const rows = await buildWordRowsForLevel({ level, config });
-        levelReports.push(buildPlatinumWordRereviewStatusReport({
+        const rows = await buildKanjiRowsForLevel({ level, config });
+        levelReports.push(buildPlatinumKanjiRereviewStatusReport({
             rows,
             entries,
             level,
-            wordPitchAccentData,
-            kanjiLevelData,
         }));
     }
-    const summary = buildPlatinumWordRereviewStatusSummary(levelReports);
+    const summary = buildObsidianKanjiCertificationStatusSummary(levelReports);
 
     if (options.json) {
         process.stdout.write(`${JSON.stringify(summary, null, 2)}\n`);
     } else {
-        process.stdout.write(formatPlatinumWordRereviewStatusReport(summary));
+        process.stdout.write(formatObsidianKanjiCertificationStatusReport(summary));
     }
 
     if (!summary.passed) {

@@ -317,7 +317,7 @@ test("formatted rereview report is clear and read-only", () => {
     const summary = buildPlatinumKanjiRereviewStatusSummary([report]);
     const formatted = formatPlatinumKanjiRereviewStatusReport(summary);
 
-    assert.match(formatted, /Platinum Kanji Rereview Status/);
+    assert.match(formatted, /Kanji Obsidian Proof Status/);
     assert.match(formatted, /Platinum pass \(structural gate\)/);
     assert.match(formatted, /Generated deck rows are the certification denominator/);
     assert.match(formatted, /Platinum entries needing Obsidian/);

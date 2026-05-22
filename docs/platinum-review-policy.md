@@ -277,13 +277,13 @@ Deferred and removed kanji entries must include `kanji`, `reviewedAt`, `reviewer
 ```bash
 npm run deck:platinum:batch -- --level=5 --limit=12
 npm run deck:platinum:batch -- --level=5 --kanji=父,生,男
-npm run deck:platinum:rereview-status -- --levels=5,4
-npm run deck:kanji:platinum:certify-status -- --levels=5,4
+npm run deck:kanji:obsidian:rereview-status -- --levels=5,4
+npm run deck:kanji:obsidian:certify-status -- --levels=5,4
 npm run deck:platinum:governance-gate
 npm run deck:words:platinum:batch -- --level=5 --limit=8
 npm run deck:words:platinum:batch -- --level=5 --words=今日:きょう,八日:ようか
-npm run deck:words:platinum:rereview-status -- --levels=5,4
-npm run deck:words:platinum:certify-status -- --levels=5,4
+npm run deck:words:obsidian:rereview-status -- --levels=5,4
+npm run deck:words:obsidian:certify-status -- --levels=5,4
 npm run deck:words:platinum:source-posture -- --levels=5,4
 npm run deck:words:level-anchor-audit -- --level=5
 npm run deck:platinum:n5
@@ -302,17 +302,19 @@ npm run deck:words:platinum:n4
 
 `deck:platinum:batch` is a read-only kanji pre-review report. It does not create entries or prove release readiness. By default it queues cards missing explicit substantive rereview proof, not merely cards missing structural current-standard entries. Use it before editing a platinum manifest to see generated card fields, hard-rule checks, risk flags, existing platinum status, and the next square-zero rereview queue.
 
-`deck:platinum:rereview-status` is a read-only kanji rereview provenance report. It separates **Platinum** structural pass from **Obsidian** current-version certification proof. It must not infer proof from `revalidatedAt` or lane-valid `current-standard-review` text alone; missing proof is reported with the searchable marker `missing_substantive_current_standard_rereview_proof`. Use it to classify before rereviewing rather than globally blocking structurally valid cards or silently overclaiming human rereview provenance.
+`deck:kanji:obsidian:rereview-status` is a read-only kanji Obsidian proof-status report. It separates **Platinum** structural pass from **Obsidian** current-version certification proof. It must not infer proof from `revalidatedAt` or lane-valid `current-standard-review` text alone; missing proof is reported with the searchable marker `missing_substantive_current_standard_rereview_proof`. Use it to classify before rereviewing rather than globally blocking structurally valid cards or silently overclaiming human rereview provenance.
 
 The generated deck-row count is the certification denominator. Platinum counts are diagnostics only; they must not shrink the square-zero Obsidian queue.
 
-`deck:kanji:platinum:certify-status` is the fail-closed kanji Obsidian certification gate. It reuses the rereview-status classifier, then fails if any intended release row is `blocked_or_failing` or `needs_substantive_rereview`. Every failed card is reported with the card, field, expected value, actual state, evidence lane, and reviewer action. Obsidian proof must include structured rereview provenance plus actual example-sentence review evidence for naturalness, learner usefulness, level fit, support-only usage, reading, and translation. Automation can verify the evidence is present and card-bound; the reviewer still owns the language and pedagogy judgment.
+`deck:kanji:obsidian:certify-status` is the fail-closed kanji Obsidian certification gate. It reuses the rereview-status classifier, then fails if any intended release row is `blocked_or_failing` or `needs_substantive_rereview`. Every failed card is reported with the card, field, expected value, actual state, evidence lane, and reviewer action. Obsidian proof must include structured rereview provenance plus actual example-sentence review evidence for naturalness, learner usefulness, level fit, support-only usage, reading, and translation. Automation can verify the evidence is present and card-bound; the reviewer still owns the language and pedagogy judgment.
 
 `deck:words:platinum:batch` is the matching read-only word pre-review report. It does not create entries or prove release readiness. By default it queues word cards missing explicit substantive rereview proof, not merely cards missing structural current-standard entries. Use it before editing a word platinum manifest to see exact written-reading identity, generated card fields, sentence lines, exact word audio, pitch source/render status, source lookup links, risk flags, existing platinum status, and the next square-zero rereview queue.
 
-`deck:words:platinum:rereview-status` is the read-only word rereview provenance report. It separates **Platinum** structural pass from **Obsidian** current-version certification proof. It must not infer proof from `revalidatedAt`, lane-valid `current-standard-review` text, or loose textual proof markers alone; missing proof is reported with the searchable marker `missing_substantive_current_standard_word_rereview_proof`. Obsidian word proof requires structured `rereviewProvenance`, exact word-reading card identity binding, a full word-card `evidenceChecked` checklist, and actual example-sentence quality review evidence covering natural Japanese, learner usefulness, level fit, release quality, reading, and translation. Generated rows without active current-standard structural word entries are classified as `blocked_or_failing` rather than hidden in the rereview backlog.
+`deck:words:obsidian:rereview-status` is the read-only word Obsidian proof-status report. It separates **Platinum** structural pass from **Obsidian** current-version certification proof. It must not infer proof from `revalidatedAt`, lane-valid `current-standard-review` text, or loose textual proof markers alone; missing proof is reported with the searchable marker `missing_substantive_current_standard_word_rereview_proof`. Obsidian word proof requires structured `rereviewProvenance`, exact word-reading card identity binding, a full word-card `evidenceChecked` checklist, and actual example-sentence quality review evidence covering natural Japanese, learner usefulness, level fit, release quality, reading, and translation. Generated rows without active current-standard structural word entries are classified as `blocked_or_failing` rather than hidden in the rereview backlog.
 
-`deck:words:platinum:certify-status` is the fail-closed word Obsidian certification gate. It reuses the rereview-status classifier, then fails if any intended release row is `blocked_or_failing` or `needs_substantive_rereview`. Every failed word card is reported with the card, field, expected value, actual state, evidence lane, and reviewer action. Automation can verify the proof is present and card-bound; the reviewer still owns the natural-Japanese, sense-fit, and pedagogy judgment.
+`deck:words:obsidian:certify-status` is the fail-closed word Obsidian certification gate. It reuses the rereview-status classifier, then fails if any intended release row is `blocked_or_failing` or `needs_substantive_rereview`. Every failed word card is reported with the card, field, expected value, actual state, evidence lane, and reviewer action. Automation can verify the proof is present and card-bound; the reviewer still owns the natural-Japanese, sense-fit, and pedagogy judgment.
+
+The older `deck:platinum:rereview-status`, `deck:words:platinum:rereview-status`, `deck:kanji:platinum:certify-status`, and `deck:words:platinum:certify-status` names remain compatibility aliases only. Use the Obsidian names in new docs, release checklists, handoff prompts, and governance reports.
 
 `deck:words:platinum:source-posture` is the read-only word source-family posture report. It is scoped to structurally current-standard word entries only. A governed single source can satisfy structural word-field verification, but it does not prove independent source-family corroboration and is marked `word_source_independence_not_proven`. Word source-claim origin independence is marked `word_source_claim_origin_independence_not_evaluated` until a word source-origin manifest exists; do not imply that word placement/source-origin circularity was checked before that data exists. Source-family posture counts are not a rereview selection pool and are not substantive platinum proof.
 

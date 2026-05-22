@@ -428,7 +428,7 @@ function formatSample(cards = [], { limit = 24 } = {}) {
 function formatPlatinumKanjiRereviewStatusReport(summary = {}) {
     const totals = summary.totals || {};
     const lines = [
-        "Japanese Kanji Builder Platinum Kanji Rereview Status",
+        "Japanese Kanji Builder Kanji Obsidian Proof Status",
         "",
         `Current review standard: ${summary.currentReviewStandard || CURRENT_KANJI_PLATINUM_REVIEW_STANDARD}`,
         `Result: ${summary.passed ? "passing" : "failing"}`,

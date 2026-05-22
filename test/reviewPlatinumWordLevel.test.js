@@ -3,8 +3,8 @@ const assert = require("node:assert/strict");
 
 const { buildWordExportOptions, parseArgs, parseWordTsvForPlatinum } = require("../scripts/reviewPlatinumWordLevel");
 const { parseArgs: parseBatchReportArgs } = require("../scripts/platinumWordBatchReport");
-const { parseArgs: parseRereviewStatusArgs } = require("../scripts/reportPlatinumWordRereviewStatus");
-const { parseArgs: parseCertificationStatusArgs } = require("../scripts/reportPlatinumWordCertificationStatus");
+const { parseArgs: parseRereviewStatusArgs } = require("../scripts/reportObsidianWordRereviewStatus");
+const { parseArgs: parseCertificationStatusArgs } = require("../scripts/reportObsidianWordCertificationStatus");
 const { parseArgs: parseSourcePostureArgs } = require("../scripts/reportPlatinumWordSourcePosture");
 const { parseArgs: parsePlatinumGovernanceGateArgs } = require("../scripts/runPlatinumGovernanceGate");
 
@@ -49,7 +49,7 @@ test("platinumWordBatchReport defaults word review batches to eight cards", () =
     assert.equal(options.queue, "substantive-rereview");
 });
 
-test("platinum word rereview status parseArgs accepts scoped read-only status options", () => {
+test("obsidian word proof status parseArgs accepts scoped read-only status options", () => {
     const options = parseRereviewStatusArgs(["--levels=5,4", "--json", "--oops"]);
 
     assert.deepEqual(options, {
@@ -59,7 +59,7 @@ test("platinum word rereview status parseArgs accepts scoped read-only status op
     });
 });
 
-test("platinum word certification status parseArgs accepts scoped fail-closed status options", () => {
+test("obsidian word certification status parseArgs accepts scoped fail-closed status options", () => {
     const options = parseCertificationStatusArgs(["--levels=5,4", "--json", "--oops"]);
 
     assert.deepEqual(options, {

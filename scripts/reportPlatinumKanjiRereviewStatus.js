@@ -42,9 +42,9 @@ function readReviewSet(level) {
     return JSON.parse(fs.readFileSync(reviewSetPath, "utf-8"));
 }
 
-async function main() {
+async function main({ commandName = "deck:platinum:rereview-status" } = {}) {
     const options = parseArgs(process.argv.slice(2));
-    assertNoUnknownArgs("deck:platinum:rereview-status", options.unknownArgs);
+    assertNoUnknownArgs(commandName, options.unknownArgs);
 
     const config = loadConfig();
     const levelReports = [];

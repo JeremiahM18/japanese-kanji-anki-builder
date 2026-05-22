@@ -75,8 +75,8 @@ All five JLPT levels are first-class product surfaces. N5/N4 are the current Obs
 
 | Surface | Current state | Main gates |
 | --- | --- | --- |
-| N5 kanji | `80/80` generated, Gold, Platinum, and Obsidian. | `deck:platinum:n5`, `deck:kanji:platinum:certify-status -- --levels=5`, `deck:ready -- --levels=5` |
-| N4 kanji | `212/212` generated, Gold, Platinum, and Obsidian. | `deck:platinum:n4`, `deck:platinum:rereview-status -- --levels=5,4`, `deck:ready -- --levels=4` |
+| N5 kanji | `80/80` generated, Gold, Platinum, and Obsidian. | `deck:platinum:n5`, `deck:kanji:obsidian:certify-status -- --levels=5`, `deck:ready -- --levels=5` |
+| N4 kanji | `212/212` generated, Gold, Platinum, and Obsidian. | `deck:platinum:n4`, `deck:kanji:obsidian:rereview-status -- --levels=5,4`, `deck:ready -- --levels=4` |
 | N3 kanji | `341/341` generated and Gold; Platinum not started. | `deck:kanji:review-status`, `deck:ready -- --levels=3` |
 | N2 kanji | `349/349` generated and Gold; Platinum not started. | `deck:kanji:review-status`, `deck:ready -- --levels=2` |
 | N1 kanji | `1230/1230` generated and Gold; Platinum not started. | `deck:kanji:review-status`, `deck:ready -- --levels=1` |
@@ -86,16 +86,16 @@ All five JLPT levels are first-class product surfaces. N5/N4 are the current Obs
 
 Kanji Platinum uses `kanji-platinum-v3-evidence-lanes`. Only current-standard `platinum` and `fixed_then_platinum` entries count as active Platinum. Legacy or unversioned history is non-certifying backlog until revalidated under the current standard.
 
-`deck:platinum:rereview-status -- --levels=5,4` currently reports N5/N4 kanji as `292/292` Platinum, `292/292` Obsidian, `0/292` needing Obsidian, and `0/292` blocked/failing.
+`deck:kanji:obsidian:rereview-status -- --levels=5,4` currently reports N5/N4 kanji as `292/292` Platinum, `292/292` Obsidian, `0/292` needing Obsidian, and `0/292` blocked/failing.
 
-`deck:kanji:platinum:certify-status -- --levels=5,4` is the fail-closed kanji Obsidian gate. It currently passes for the full N5/N4 kanji square-zero certification denominator.
+`deck:kanji:obsidian:certify-status -- --levels=5,4` is the fail-closed kanji Obsidian gate. It currently passes for the full N5/N4 kanji square-zero certification denominator.
 
 ### Word Product
 
 | Surface | Current state | Main gates |
 | --- | --- | --- |
-| N5 word | `287` canonical rows plus `20` source-only phrase exclusions. Gold, readiness, tracked-source artifact, Platinum, and strict word Obsidian proof pass at `287/287`. Manual import QA, accessibility, and listening checks are still required before release-ready product claims. | `deck:words:platinum:n5`, `deck:words:platinum:rereview-status -- --levels=5,4`, `deck:words:platinum:certify-status -- --levels=5` |
-| N4 word | `700` canonical rows. The generated card surface builds at `700/700` with word audio, pitch, required back-side fields, examples, reading breakdowns, support labels, Gold, and Platinum complete. Live readiness is `ready_with_deferred_variants`; reading coverage is `76.7%` (`579/755`). Strict Obsidian proof certifies `472/700`, so `228` rows still need substantive rereview before release-ready claims. | `deck:words:ready -- --levels=5,4`, `deck:words:review:n4`, `deck:words:platinum:n4`, `deck:words:platinum:certify-status -- --levels=4` |
+| N5 word | `287` canonical rows plus `20` source-only phrase exclusions. Gold, readiness, tracked-source artifact, Platinum, and strict word Obsidian proof pass at `287/287`. Manual import QA, accessibility, and listening checks are still required before release-ready product claims. | `deck:words:platinum:n5`, `deck:words:obsidian:rereview-status -- --levels=5,4`, `deck:words:obsidian:certify-status -- --levels=5` |
+| N4 word | `700` canonical rows. The generated card surface builds at `700/700` with word audio, pitch, required back-side fields, examples, reading breakdowns, support labels, Gold, and Platinum complete. Live readiness is `ready_with_deferred_variants`; reading coverage is `76.7%` (`579/755`). Strict Obsidian proof certifies `472/700`, so `228` rows still need substantive rereview before release-ready claims. | `deck:words:ready -- --levels=5,4`, `deck:words:review:n4`, `deck:words:platinum:n4`, `deck:words:obsidian:certify-status -- --levels=4` |
 | N3 word | `269` canonical Silver rows build at `269/269`; single-level readiness is incomplete; cumulative reading coverage is `19.1%` (`235/1232`). Gold, Platinum, and Obsidian are not started. | `deck:words:ready -- --levels=3`, `deck:words:completion:n3`, `deck:words:reading-audit:n3` |
 | N2 word | `28` canonical Silver rows build at `28/28`; single-level readiness is incomplete; cumulative reading coverage is `4.6%` (`49/1061`). Gold, Platinum, and Obsidian are not started. | `deck:words:ready -- --levels=2`, `deck:words:completion:n2`, `deck:words:reading-audit:n2` |
 | N1 word | `26` canonical Silver rows build at `26/26`; single-level readiness is incomplete; cumulative reading coverage is `1.2%` (`41/3284`). Gold, Platinum, and Obsidian are not started. | `deck:words:ready -- --levels=1`, `deck:words:completion:n1`, `deck:words:reading-audit:n1` |
@@ -108,8 +108,8 @@ Single-source entries carry `word_source_independence_not_proven`. Source-family
 
 ### Cross-Product Gates
 
-- `deck:words:platinum:rereview-status -- --levels=5,4` uses generated word rows as the denominator. N5 word `287/287` and N4 word `472/700` Obsidian remain separate from `987/987` structural Platinum.
-- `deck:words:platinum:certify-status -- --levels=5,4` is the fail-closed word Obsidian gate. It currently fails because `228` generated N4 word rows still need card-bound strict Obsidian proof.
+- `deck:words:obsidian:rereview-status -- --levels=5,4` uses generated word rows as the denominator. N5 word `287/287` and N4 word `472/700` Obsidian remain separate from `987/987` structural Platinum.
+- `deck:words:obsidian:certify-status -- --levels=5,4` is the fail-closed word Obsidian gate. It currently fails because `228` generated N4 word rows still need card-bound strict Obsidian proof.
 - `deck:platinum:governance-gate` exercises real generated N5/N4 kanji and word rows when ignored local inputs are present. It currently passes with governance warnings for remaining N4 word Obsidian proof, word single-source-family posture, bulk-template or missing card-specific revalidation summaries, marker-only example-quality automation, and zero active verification limitations.
 - JLPT kanji source evidence is governed separately from deck readiness. The source audit currently passes source-use governance with `--governance-strict` while evidence-depth work remains incomplete.
 
@@ -241,7 +241,7 @@ npm run deck:readiness
 npm run deck:ready -- --levels=5
 npm run deck:words:ready -- --levels=5,4
 npm run deck:kanji:review-status
-npm run deck:words:platinum:rereview-status -- --levels=5,4
+npm run deck:words:obsidian:rereview-status -- --levels=5,4
 npm run deck:words:platinum:source-posture -- --levels=5,4
 npm run deck:platinum:governance-gate
 ```

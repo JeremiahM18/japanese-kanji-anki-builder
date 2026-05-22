@@ -31,8 +31,8 @@ For workflow ordering, use [workflows.md](workflows.md). For release gate bounda
 | `npm run deck:package` | Build package artifacts through the Node artifact wrapper |
 | `npm run deck:kanji:surface-audit` | Audit generated kanji deck surface details before review or release claims |
 | `npm run deck:kanji:partition-plan` | Report core/additional kanji partition decisions and duplicate-claim handling |
-| `npm run deck:platinum:rereview-status` | Classify kanji Platinum pass versus Obsidian proof |
-| `npm run deck:kanji:platinum:certify-status -- --levels=5,4` | Fail-closed kanji Obsidian certification status |
+| `npm run deck:kanji:obsidian:rereview-status -- --levels=5,4` | Classify kanji Platinum pass versus Obsidian proof |
+| `npm run deck:kanji:obsidian:certify-status -- --levels=5,4` | Fail-closed kanji Obsidian certification status |
 | `npm run deck:ready` | Build and package kanji TSV artifacts |
 | `npm run deck:apkg` | Build kanji `.apkg` artifacts |
 | `npm run deck:kanji:additional:ready` | Build the separate optional additional-unverified kanji TSV/APKG surface |
@@ -67,8 +67,8 @@ For workflow ordering, use [workflows.md](workflows.md). For release gate bounda
 | `npm run deck:words:review:n4` | Run the N4 word Gold regression benchmark |
 | `npm run deck:words:platinum:n5` | Run the N5 word Platinum gate |
 | `npm run deck:words:platinum:n4` | Run the N4 word Platinum gate |
-| `npm run deck:words:platinum:rereview-status -- --levels=5,4` | Classify word Platinum pass versus Obsidian proof |
-| `npm run deck:words:platinum:certify-status -- --levels=5,4` | Fail-closed word Obsidian certification status |
+| `npm run deck:words:obsidian:rereview-status -- --levels=5,4` | Classify word Platinum pass versus Obsidian proof |
+| `npm run deck:words:obsidian:certify-status -- --levels=5,4` | Fail-closed word Obsidian certification status |
 | `npm run deck:words:platinum:source-posture -- --levels=5,4` | Classify active word Platinum source-family independence posture |
 | `npm run deck:words:level-anchor-audit -- --level=5` | Fail when canonical word rows lack a current-level kanji anchor or later all-easier-kanji placement lacks learner-fit rationale |
 | `npm run deck:words:completion:n5` | Audit N5 word inventory and reading coverage |

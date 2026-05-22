@@ -3,9 +3,9 @@ const assert = require("node:assert/strict");
 
 const {
     MANUAL_WORD_REVIEW_BOUNDARY_NOTE,
-    buildPlatinumWordCertificationStatusSummary,
-    formatPlatinumWordCertificationStatusReport,
-} = require("../src/services/platinumWordCertificationStatusService");
+    buildObsidianWordCertificationStatusSummary,
+    formatObsidianWordCertificationStatusReport,
+} = require("../src/services/obsidianWordCertificationStatusService");
 
 function buildLevelReport(overrides = {}) {
     const cards = overrides.cards || [{
@@ -36,7 +36,7 @@ function buildLevelReport(overrides = {}) {
 }
 
 test("word certification gate passes only when every generated row has Obsidian proof", () => {
-    const summary = buildPlatinumWordCertificationStatusSummary([buildLevelReport()]);
+    const summary = buildObsidianWordCertificationStatusSummary([buildLevelReport()]);
 
     assert.equal(summary.passed, true);
     assert.equal(summary.failureCount, 0);
@@ -45,7 +45,7 @@ test("word certification gate passes only when every generated row has Obsidian 
 });
 
 test("word certification gate fails structural Platinum rows that still need Obsidian proof", () => {
-    const summary = buildPlatinumWordCertificationStatusSummary([buildLevelReport({
+    const summary = buildObsidianWordCertificationStatusSummary([buildLevelReport({
         cards: [{
             identity: "日本|にほん",
             word: "日本",
@@ -80,7 +80,7 @@ test("word certification gate fails structural Platinum rows that still need Obs
 });
 
 test("word certification gate turns structural blockers into loud actionable failure objects", () => {
-    const summary = buildPlatinumWordCertificationStatusSummary([buildLevelReport({
+    const summary = buildObsidianWordCertificationStatusSummary([buildLevelReport({
         cards: [{
             identity: "今日|きょう",
             word: "今日",
@@ -108,7 +108,7 @@ test("word certification gate turns structural blockers into loud actionable fai
 });
 
 test("formatted word certification report includes all failed cards and review boundary", () => {
-    const summary = buildPlatinumWordCertificationStatusSummary([buildLevelReport({
+    const summary = buildObsidianWordCertificationStatusSummary([buildLevelReport({
         cards: [
             {
                 identity: "日本|にほん",
@@ -134,8 +134,9 @@ test("formatted word certification report includes all failed cards and review b
             },
         ],
     })]);
-    const formatted = formatPlatinumWordCertificationStatusReport(summary);
+    const formatted = formatObsidianWordCertificationStatusReport(summary);
 
+    assert.match(formatted, /Japanese Kanji Builder Word Obsidian Certification Status/);
     assert.match(formatted, /Certification target: Obsidian/);
     assert.match(formatted, /Result: failing/);
     assert.match(formatted, /full word-card evidence checklist/);

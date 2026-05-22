@@ -3,9 +3,9 @@ const assert = require("node:assert/strict");
 
 const {
     MANUAL_SENTENCE_REVIEW_BOUNDARY_NOTE,
-    buildPlatinumKanjiCertificationStatusSummary,
-    formatPlatinumKanjiCertificationStatusReport,
-} = require("../src/services/platinumKanjiCertificationStatusService");
+    buildObsidianKanjiCertificationStatusSummary,
+    formatObsidianKanjiCertificationStatusReport,
+} = require("../src/services/obsidianKanjiCertificationStatusService");
 
 function buildLevelReport(overrides = {}) {
     const cards = overrides.cards || [{
@@ -34,7 +34,7 @@ function buildLevelReport(overrides = {}) {
 }
 
 test("kanji certification gate passes only when every generated row has Obsidian proof", () => {
-    const summary = buildPlatinumKanjiCertificationStatusSummary([buildLevelReport()]);
+    const summary = buildObsidianKanjiCertificationStatusSummary([buildLevelReport()]);
 
     assert.equal(summary.passed, true);
     assert.equal(summary.failureCount, 0);
@@ -43,7 +43,7 @@ test("kanji certification gate passes only when every generated row has Obsidian
 });
 
 test("kanji certification gate fails structural Platinum rows that still need Obsidian proof", () => {
-    const summary = buildPlatinumKanjiCertificationStatusSummary([buildLevelReport({
+    const summary = buildObsidianKanjiCertificationStatusSummary([buildLevelReport({
         cards: [{
             kanji: "月",
             structuralPassed: true,
@@ -76,7 +76,7 @@ test("kanji certification gate fails structural Platinum rows that still need Ob
 });
 
 test("kanji certification gate turns structural blockers into loud actionable failure objects", () => {
-    const summary = buildPlatinumKanjiCertificationStatusSummary([buildLevelReport({
+    const summary = buildObsidianKanjiCertificationStatusSummary([buildLevelReport({
         cards: [{
             kanji: "火",
             structuralPassed: false,
@@ -100,7 +100,7 @@ test("kanji certification gate turns structural blockers into loud actionable fa
 });
 
 test("formatted kanji certification report includes all failed cards and sentence-review boundary", () => {
-    const summary = buildPlatinumKanjiCertificationStatusSummary([buildLevelReport({
+    const summary = buildObsidianKanjiCertificationStatusSummary([buildLevelReport({
         cards: [
             {
                 kanji: "月",
@@ -122,8 +122,9 @@ test("formatted kanji certification report includes all failed cards and sentenc
             },
         ],
     })]);
-    const formatted = formatPlatinumKanjiCertificationStatusReport(summary);
+    const formatted = formatObsidianKanjiCertificationStatusReport(summary);
 
+    assert.match(formatted, /Japanese Kanji Builder Kanji Obsidian Certification Status/);
     assert.match(formatted, /Certification target: Obsidian/);
     assert.match(formatted, /Result: failing/);
     assert.match(formatted, /actual example sentence quality review evidence/);

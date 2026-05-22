@@ -9,9 +9,11 @@ const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseStringOption
 const { buildWordRowsForLevel } = require("./reviewPlatinumWordLevel");
 const {
     buildPlatinumWordRereviewStatusReport,
-    buildPlatinumWordRereviewStatusSummary,
-    formatPlatinumWordRereviewStatusReport,
 } = require("../src/services/platinumWordRereviewStatusService");
+const {
+    buildObsidianWordCertificationStatusSummary,
+    formatObsidianWordCertificationStatusReport,
+} = require("../src/services/obsidianWordCertificationStatusService");
 
 function parseArgs(argv) {
     const options = {
@@ -44,9 +46,9 @@ function readReviewSet(level) {
     return JSON.parse(fs.readFileSync(reviewSetPath, "utf-8"));
 }
 
-async function main({ commandName = "deck:words:platinum:rereview-status" } = {}) {
+async function main() {
     const options = parseArgs(process.argv.slice(2));
-    assertNoUnknownArgs(commandName, options.unknownArgs);
+    assertNoUnknownArgs("deck:words:obsidian:certify-status", options.unknownArgs);
 
     const config = loadConfig();
     const wordPitchAccentData = loadWordPitchAccentData(path.join(process.cwd(), "templates", "word_pitch_accent_data.json"));
@@ -63,12 +65,12 @@ async function main({ commandName = "deck:words:platinum:rereview-status" } = {}
             kanjiLevelData,
         }));
     }
-    const summary = buildPlatinumWordRereviewStatusSummary(levelReports);
+    const summary = buildObsidianWordCertificationStatusSummary(levelReports);
 
     if (options.json) {
         process.stdout.write(`${JSON.stringify(summary, null, 2)}\n`);
     } else {
-        process.stdout.write(formatPlatinumWordRereviewStatusReport(summary));
+        process.stdout.write(formatObsidianWordCertificationStatusReport(summary));
     }
 
     if (!summary.passed) {

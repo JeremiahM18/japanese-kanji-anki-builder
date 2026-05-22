@@ -3,7 +3,7 @@ const assert = require("node:assert/strict");
 
 const {
     parseArgs,
-} = require("../scripts/reportPlatinumKanjiCertificationStatus");
+} = require("../scripts/reportObsidianKanjiCertificationStatus");
 
 test("kanji certification status script parses levels, json, and unknown args", () => {
     const options = parseArgs(["--levels=5,4", "--json", "--unexpected"]);

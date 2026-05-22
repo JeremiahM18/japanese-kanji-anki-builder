@@ -19,11 +19,15 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 ### Changed
 
 - Fixed Gold/Platinum review matching so escaped Anki HTML fields are checked against their visible learner-facing text, preserving safer TSV output without invalidating existing review evidence that protects `kanji -> reading` notes and escaped example translations.
-- Advanced the governed word-deck review program while keeping certification fail-closed: N5 word Obsidian is `287/287`, N4 word structural Platinum is `700/700`, N4 word Obsidian is `568/700`, total N5/N4 word Obsidian is `855/987`, `132` N4 rows still need Obsidian proof, and `0` generated N5/N4 word rows are blocked/failing.
+- Advanced the governed word-deck review program while keeping certification fail-closed: N5 word Obsidian is `287/287`, N4 word structural Platinum is `700/700`, N4 word Obsidian is `592/700`, total N5/N4 word Obsidian is `879/987`, `108` N4 rows still need Obsidian proof, and `0` generated N5/N4 word rows are blocked/failing.
 - Kept N5/N4 word generation ready with deferred variants: live word generation reports `987` word notes, N5 reading coverage `239/344` (`69.5%`), N4 reading coverage `579/755` (`76.7%`), and word audio plus pitch fields ready for all `987` generated rows.
 - Expanded and governed the word inventory and reading-coverage work across N5/N4 while preserving separate Silver, Gold, Platinum, and Obsidian semantics; N3/N2/N1 word surfaces remain Silver starter material and do not imply release certification.
 - Clarified the Unreleased source-evidence baseline after live verification: current routed assignment files and pinned worksheet baselines contain Sou Matome `498` reviewed / `417` source-access-gap / `1297` pending rows, Shin Kanzen `406` reviewed / `236` source-access-gap / `1570` pending rows, and ASK Hajimete `208` reviewed / `0` source-access-gap / `0` pending rows.
 - Strengthened source/release governance around JLPT evidence, editorial policy, deterministic exports, CI, benchmark guardrails, and NLP assistive-only boundaries; NLP artifacts remain support context and cannot certify cards.
+
+### Fixed
+
+- Corrected the N4 word card support note for `自業自得|じごうじとく` so the higher-level constituent `得` is consistently identified as a JLPT N2 support kanji before Obsidian proof is counted.
 
 ## [1.0.0] - 2026-03-31
 

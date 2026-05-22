@@ -8,11 +8,16 @@ const { ensureDir } = require("../utils/fs");
 const AUDIO_EXTENSIONS = new Set([".mp3", ".wav", ".m4a", ".ogg", ".webm"]);
 
 function listFilesRecursive(rootDir) {
+    return listFilesRecursiveWithSkipped(rootDir).files;
+}
+
+function listFilesRecursiveWithSkipped(rootDir) {
     if (!rootDir || !fs.existsSync(rootDir)) {
-        return [];
+        return { files: [], skipped: [] };
     }
 
-    const results = [];
+    const files = [];
+    const skipped = [];
     const queue = [rootDir];
 
     while (queue.length > 0) {
@@ -21,18 +26,26 @@ function listFilesRecursive(rootDir) {
 
         for (const entry of entries) {
             const fullPath = path.join(currentDir, entry.name);
+            if (entry.isSymbolicLink()) {
+                skipped.push({ filePath: fullPath, reason: "symbolic-link" });
+                continue;
+            }
+
             if (entry.isDirectory()) {
                 queue.push(fullPath);
                 continue;
             }
 
             if (entry.isFile()) {
-                results.push(fullPath);
+                files.push(fullPath);
             }
         }
     }
 
-    return results.sort((a, b) => a.localeCompare(b));
+    return {
+        files: files.sort((a, b) => a.localeCompare(b)),
+        skipped: skipped.sort((a, b) => a.filePath.localeCompare(b.filePath)),
+    };
 }
 
 function buildCandidateLookup(kanjiList) {
@@ -94,7 +107,8 @@ async function importAudioDirectory({
     ensureDir(audioDestinationDir);
 
     const audioLookup = buildCandidateLookup(kanjiList);
-    const files = listFilesRecursive(inputDir);
+    const scan = listFilesRecursiveWithSkipped(inputDir);
+    const files = scan.files;
 
     const summary = {
         inputDir: path.resolve(inputDir),
@@ -102,9 +116,10 @@ async function importAudioDirectory({
         importedAudio: 0,
         updatedFiles: 0,
         unchangedFiles: 0,
-        skippedFiles: 0,
+        skippedFiles: scan.skipped.length,
+        skippedUnsafeFiles: scan.skipped.length,
         imported: [],
-        skipped: [],
+        skipped: [...scan.skipped],
     };
 
     for (const filePath of files) {
@@ -144,4 +159,5 @@ module.exports = {
     classifyAudioFile,
     importAudioDirectory,
     listFilesRecursive,
+    listFilesRecursiveWithSkipped,
 };

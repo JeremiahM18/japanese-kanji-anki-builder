@@ -6,7 +6,7 @@ const { mapWithConcurrency } = require("../utils/concurrency");
 const { ensureDir } = require("../utils/fs");
 const { buildAnkiPackage } = require("./ankiPackageService");
 const { selectBestAudioAsset } = require("./audioService");
-const { buildMediaBasePath, readManifestIfExists } = require("./mediaStore");
+const { readManifestIfExists, resolveManagedAssetPath } = require("./mediaStore");
 const { isTrueAnimatedStrokeOrderPath } = require("./strokeOrderService");
 
 function buildDeckPackagePaths(rootDir) {
@@ -19,18 +19,6 @@ function buildDeckPackagePaths(rootDir) {
         readmePath: path.join(packageDir, "IMPORT.txt"),
         summaryPath: path.join(packageDir, "package-summary.json"),
     };
-}
-
-function resolveManagedAssetAbsolutePath(mediaRootDir, kanji, relativeAssetPath) {
-    if (!relativeAssetPath) {
-        return "";
-    }
-
-    const normalizedParts = String(relativeAssetPath)
-        .split("/")
-        .filter(Boolean);
-
-    return path.join(buildMediaBasePath(mediaRootDir, kanji), ...normalizedParts);
 }
 
 function createEmptyMediaCounts() {
@@ -155,7 +143,7 @@ async function collectPackageAssets({ kanjiList, mediaRootDir, strokeOrderServic
 
     for (const candidates of assetGroups) {
         for (const candidate of candidates) {
-            const absolutePath = resolveManagedAssetAbsolutePath(mediaRootDir, candidate.kanji, candidate.relativePath);
+            const absolutePath = resolveManagedAssetPath(mediaRootDir, candidate.kanji, candidate.relativePath);
             if (!absolutePath || !fs.existsSync(absolutePath)) {
                 continue;
             }
@@ -222,7 +210,7 @@ async function collectExplicitReferencedAssets({ referencedMedia = [], mediaRoot
             continue;
         }
 
-        const absolutePath = resolveManagedAssetAbsolutePath(mediaRootDir, kanji, relativePath);
+        const absolutePath = resolveManagedAssetPath(mediaRootDir, kanji, relativePath);
         if (!absolutePath || !fs.existsSync(absolutePath)) {
             continue;
         }

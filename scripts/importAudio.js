@@ -1,6 +1,11 @@
 const path = require("node:path");
 const fs = require("node:fs");
-const { invokeCliMain } = require("../src/utils/cliArgs");
+const {
+    assertNoUnknownArgs,
+    collectUnknownArg,
+    invokeCliMain,
+    parseStringOption,
+} = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
 const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
@@ -11,16 +16,21 @@ function parseArgs(argv) {
     const options = {
         inputDir: null,
         levels: [5],
-        json: argv.includes("--json"),
+        json: false,
+        unknownArgs: [],
     };
 
     for (const arg of argv) {
-        if (arg.startsWith("--input-dir=")) {
-            options.inputDir = arg.split("=")[1];
+        if (arg === "--json") {
+            options.json = true;
+        } else if (arg.startsWith("--input-dir=")) {
+            options.inputDir = parseStringOption(arg, "input-dir");
         } else if (arg.startsWith("--levels=")) {
-            options.levels = parseLevelsArgument(arg.split("=")[1]);
+            options.levels = parseLevelsArgument(parseStringOption(arg, "levels"));
         } else if (arg.startsWith("--level=")) {
-            options.levels = parseLevelsArgument(arg.split("=")[1]);
+            options.levels = parseLevelsArgument(parseStringOption(arg, "level"));
+        } else {
+            collectUnknownArg(options, arg);
         }
     }
 
@@ -60,6 +70,7 @@ function formatReport(summary) {
 
 async function main() {
     const options = parseArgs(process.argv.slice(2));
+    assertNoUnknownArgs("media:audio:import", options.unknownArgs);
     if (!options.inputDir) {
         throw new Error("Missing --input-dir=... for the local audio source folder.");
     }

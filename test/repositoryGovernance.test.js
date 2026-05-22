@@ -362,6 +362,33 @@ test("JLPT runtime dataset readers use the governed JLPT JSON loader", () => {
     );
 });
 
+test("child process execution stays explicit and allowlisted", () => {
+    const expectedFiles = [
+        "scripts/manageVoicevoxContainer.js",
+        "scripts/reportJlptKanjiSourceOcrIntake.js",
+        "scripts/runKanjiNlpSignalSupport.js",
+        "scripts/runNodeTests.js",
+        "scripts/runWordNlpExpansionSupport.js",
+        "src/services/ankiPackageService.js",
+        "src/services/ciSmokeService.js",
+        "src/services/productReadinessService.js",
+        "src/services/toolchainService.js",
+    ];
+    const files = [
+        ...listJavaScriptFiles("scripts"),
+        ...listJavaScriptFiles("src"),
+    ];
+    const childProcessFiles = files
+        .filter((relativePath) => readRepoFile(relativePath).includes("node:child_process"))
+        .sort();
+    const shellEnabledFiles = files
+        .filter((relativePath) => /shell\s*:\s*true/u.test(readRepoFile(relativePath)))
+        .sort();
+
+    assert.deepEqual(childProcessFiles, [...expectedFiles].sort(), "New child_process usage needs explicit runtime-execution review.");
+    assert.deepEqual(shellEnabledFiles, [], "Scripts and services should execute subprocesses without shell expansion.");
+});
+
 test("tracked text release artifacts pin LF line endings", () => {
     const attributes = readRepoFile(".gitattributes");
     const requiredPatterns = [

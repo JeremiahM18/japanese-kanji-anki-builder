@@ -410,7 +410,12 @@ function verifyAnkiPackage(summary, { deckKind = "kanji", levels = [] } = {}) {
     const inspectResult = spawnSync(
         python.command,
         [...python.argsPrefix, "-c", inspectScript, apkgPath, String(noteCount), String(expectedFieldCount), String(mediaFileCount), JSON.stringify(expectedDeckNames)],
-        { encoding: "utf8" }
+        {
+            encoding: "utf8",
+            maxBuffer: 20 * 1024 * 1024,
+            shell: false,
+            windowsHide: true,
+        }
     );
     assert.equal(inspectResult.status, 0, inspectResult.stderr || inspectResult.stdout || "Python .apkg inspection failed");
 

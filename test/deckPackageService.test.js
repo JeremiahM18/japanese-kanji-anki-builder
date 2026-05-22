@@ -292,3 +292,50 @@ test("kanji deck packaging copies the exact referenced primary-reading audio", a
     assert.equal(fs.existsSync(path.join(summary.mediaDir, "8ECA_車-kanji-reading-車-くるま.wav")), true);
     assert.equal(fs.existsSync(path.join(summary.mediaDir, "8ECA_車-kanji-reading-車-でんしゃ.wav")), false);
 });
+
+test("deck packaging rejects managed media paths that escape the kanji media directory", async () => {
+    const rootDir = makeTempDir();
+    const mediaRootDir = path.join(rootDir, "media-root");
+    const outDir = path.join(rootDir, "out");
+    const exportPath = path.join(rootDir, "jlpt-n5.tsv");
+    fs.writeFileSync(
+        exportPath,
+        [
+            "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tAudio\tRadical\tNotes\tExampleSentence",
+            "車\t車\tcar\tくるま\t\tシャ\tくるま\t<img src=\"secret.txt\" />\t\t車\t\t",
+        ].join("\n"),
+        "utf-8"
+    );
+
+    const layout = ensureMediaLayout(mediaRootDir, "車");
+    fs.writeFileSync(layout.manifestPath, `${JSON.stringify({
+        kanji: "車",
+        version: 1,
+        updatedAt: new Date().toISOString(),
+        assets: {
+            strokeOrderImage: null,
+            strokeOrderAnimation: {
+                kind: "animation",
+                path: "../secret.txt",
+                mimeType: "image/gif",
+                source: "fixture",
+            },
+            audio: [],
+        },
+    }, null, 2)}\n`, "utf-8");
+
+    await assert.rejects(
+        () => buildDeckPackage({
+            outDir,
+            exports: [{
+                level: 5,
+                filePath: exportPath,
+                rows: 1,
+            }],
+            kanjiByLevel: { 5: ["車"] },
+            mediaRootDir,
+            deckKind: "kanji",
+        }),
+        /Invalid managed media asset relative path/
+    );
+});

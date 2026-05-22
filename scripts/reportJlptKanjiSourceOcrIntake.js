@@ -130,6 +130,7 @@ function checkTool(tool, commandRunner = spawnSync) {
     for (const commandSpec of tool.commands) {
         const result = commandRunner(commandSpec.command, commandSpec.args, {
             encoding: "utf8",
+            shell: false,
             windowsHide: true,
         });
         if (!result.error && (result.status === 0 || result.status === 1)) {
@@ -156,6 +157,7 @@ function checkTool(tool, commandRunner = spawnSync) {
 function listTesseractLanguages({ tesseractCommand = "tesseract", commandRunner = spawnSync } = {}) {
     const result = commandRunner(tesseractCommand, ["--list-langs"], {
         encoding: "utf8",
+        shell: false,
         windowsHide: true,
     });
     if (result.error || result.status !== 0) {

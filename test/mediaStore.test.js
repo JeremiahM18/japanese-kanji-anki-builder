@@ -14,8 +14,10 @@ const {
     ensureMediaLayout,
     ensureMediaRoot,
     isTransientRenameError,
+    mediaManifestSchema,
     readManifestIfExists,
     renameWithRetry,
+    resolveManagedAssetPath,
     updateManifest,
     writeManifest,
 } = require("../src/services/mediaStore");
@@ -87,6 +89,34 @@ test("createEmptyMediaManifest defines placeholders for stroke-order and audio a
     assert.equal(manifest.assets.strokeOrderImage, null);
     assert.equal(manifest.assets.strokeOrderAnimation, null);
     assert.deepEqual(manifest.assets.audio, []);
+});
+
+test("resolveManagedAssetPath resolves only managed relative media paths", () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const resolved = resolveManagedAssetPath(rootDir, "日", "images/65E5_日-stroke-order.png");
+
+        assert.equal(resolved, path.join(buildMediaBasePath(rootDir, "日"), "images", "65E5_日-stroke-order.png"));
+        assert.throws(() => resolveManagedAssetPath(rootDir, "日", "../secret.txt"), /Invalid managed media asset path/);
+        assert.throws(() => resolveManagedAssetPath(rootDir, "日", "images/../secret.txt"), /Invalid managed media asset path/);
+        assert.throws(() => resolveManagedAssetPath(rootDir, "日", "images\\secret.txt"), /Invalid managed media asset path/);
+        assert.throws(() => resolveManagedAssetPath(rootDir, "日", path.resolve(rootDir, "secret.txt")), /Invalid managed media asset path/);
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+test("mediaManifestSchema rejects unsafe managed asset paths", () => {
+    const manifest = createEmptyMediaManifest("日");
+    manifest.assets.strokeOrderImage = {
+        kind: "image",
+        path: "../secret.png",
+        mimeType: "image/png",
+        source: "fixture",
+    };
+
+    assert.throws(() => mediaManifestSchema.parse(manifest), /Invalid managed media asset relative path/);
 });
 
 test("renameWithRetry retries transient rename failures", async () => {

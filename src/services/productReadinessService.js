@@ -106,6 +106,7 @@ function buildSpawnOptions(cwd) {
         encoding: "utf8",
         maxBuffer: 20 * 1024 * 1024,
         shell: false,
+        windowsHide: true,
     };
 }
 

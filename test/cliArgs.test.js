@@ -23,6 +23,8 @@ const { parseArgs: parseNormalizeSentenceCorpusArgs } = require("../scripts/norm
 const { parseArgs: parseProductReadinessArgs } = require("../scripts/productReadiness");
 const { parseArgs: parseWordAudioReviewArgs } = require("../scripts/reportWordAudioReview");
 const { parseArgs: parseMissingManagedAnimationsArgs } = require("../scripts/reportMissingManagedAnimations");
+const { parseArgs: parseImportAudioArgs } = require("../scripts/importAudio");
+const { parseArgs: parseImportFreeStrokeOrderArgs } = require("../scripts/importFreeStrokeOrder");
 const { parseArgs: parseNlpModelGovernanceArgs } = require("../scripts/reportNlpModelGovernance");
 const { parseArgs: parseNlpTokenizationGenerateArgs } = require("../scripts/generateNlpTokenization");
 const { parseArgs: parseNlpTokenizationArgs } = require("../scripts/validateNlpTokenization");
@@ -206,6 +208,22 @@ test("media parseArgs functions use shared option helpers and unknown tracking",
     assert.equal(animations.limit, 13);
     assert.equal(animations.json, true);
     assert.deepEqual(animations.unknownArgs, ["--oops"]);
+});
+
+test("media import parseArgs functions record unsupported flags", () => {
+    const audio = parseImportAudioArgs(["--input-dir=downloads/audio", "--levels=5,4", "--json", "--oops"]);
+    const freeStrokeOrder = parseImportFreeStrokeOrderArgs(["--input-dir=downloads/stroke", "--limit=25", "--json", "--oops"]);
+    const invalidFreeStrokeOrder = parseImportFreeStrokeOrderArgs(["--limit=0"]);
+
+    assert.equal(audio.inputDir, "downloads/audio");
+    assert.deepEqual(audio.levels, [5, 4]);
+    assert.equal(audio.json, true);
+    assert.deepEqual(audio.unknownArgs, ["--oops"]);
+    assert.equal(freeStrokeOrder.inputDir, "downloads/stroke");
+    assert.equal(freeStrokeOrder.limit, 25);
+    assert.equal(freeStrokeOrder.json, true);
+    assert.deepEqual(freeStrokeOrder.unknownArgs, ["--oops"]);
+    assert.deepEqual(invalidFreeStrokeOrder.unknownArgs, ["--limit must be a positive integer"]);
 });
 
 test("corpus and product parseArgs functions record unsupported flags", () => {

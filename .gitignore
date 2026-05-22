@@ -2,6 +2,9 @@ node_modules/
 .venv/
 cache/
 out/
+.ci-smoke/
+.release-gate/
+.release-smoke/
 # Local datasets and acquired/generated media stay out of git.
 data/*
 !data/README.md

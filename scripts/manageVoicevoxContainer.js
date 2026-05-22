@@ -78,6 +78,7 @@ function parseArgs(argv = []) {
 function runDocker(args, { allowFailure = false } = {}) {
     const result = spawnSync("docker", args, {
         encoding: "utf8",
+        shell: false,
         windowsHide: true,
     });
 

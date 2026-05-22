@@ -123,6 +123,8 @@ function main() {
     const args = buildNodeTestArgs(process.versions.node, process.argv.slice(2));
     const result = spawnSync(process.execPath, args, {
         stdio: "inherit",
+        shell: false,
+        windowsHide: true,
     });
 
     if (result.error) {

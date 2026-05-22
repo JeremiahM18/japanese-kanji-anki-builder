@@ -8,9 +8,23 @@ const { ensureDir } = require("../utils/fs");
 /** @typedef {import("../types/contracts").MediaAsset} MediaAsset */
 /** @typedef {import("../types/contracts").MediaManifest} MediaManifest */
 
+function isManagedAssetRelativePath(value) {
+    if (typeof value !== "string" || value.length === 0) {
+        return false;
+    }
+    if (path.isAbsolute(value) || value.includes("\\") || value.includes("\0")) {
+        return false;
+    }
+
+    const parts = value.split("/");
+    return parts.every((part) => part.length > 0 && part !== "." && part !== "..");
+}
+
 const mediaAssetSchema = z.object({
     kind: z.enum(["image", "animation", "audio"]),
-    path: z.string().min(1),
+    path: z.string().min(1).refine(isManagedAssetRelativePath, {
+        message: "Invalid managed media asset relative path",
+    }),
     mimeType: z.string().min(1),
     source: z.string().min(1),
     checksum: z.string().min(1).optional(),
@@ -56,6 +70,35 @@ function buildMediaBasePath(mediaRootDir, kanji) {
 
 function buildManifestPath(mediaRootDir, kanji) {
     return path.join(buildMediaBasePath(mediaRootDir, kanji), "manifest.json");
+}
+
+function normalizeManagedAssetRelativePath(relativePath) {
+    if (!relativePath) {
+        return [];
+    }
+
+    const value = String(relativePath);
+    if (!isManagedAssetRelativePath(value)) {
+        throw new Error(`Invalid managed media asset path: ${value}`);
+    }
+
+    return value.split("/");
+}
+
+function resolveManagedAssetPath(mediaRootDir, kanji, relativePath) {
+    const parts = normalizeManagedAssetRelativePath(relativePath);
+    if (parts.length === 0) {
+        return "";
+    }
+
+    const basePath = path.resolve(buildMediaBasePath(mediaRootDir, kanji));
+    const resolvedPath = path.resolve(basePath, ...parts);
+    const relativeToBase = path.relative(basePath, resolvedPath);
+    if (relativeToBase.startsWith("..") || path.isAbsolute(relativeToBase)) {
+        throw new Error(`Managed media asset path escapes media root: ${relativePath}`);
+    }
+
+    return resolvedPath;
 }
 
 function buildManifestQueueKey(mediaRootDir, kanji) {
@@ -126,8 +169,7 @@ function managedAssetExists(mediaRootDir, kanji, relativePath) {
         return false;
     }
 
-    const normalizedParts = String(relativePath).split("/").filter(Boolean);
-    return fs.existsSync(path.join(buildMediaBasePath(mediaRootDir, kanji), ...normalizedParts));
+    return fs.existsSync(resolveManagedAssetPath(mediaRootDir, kanji, relativePath));
 }
 
 function cloneManifestForUpdate(manifest) {
@@ -271,6 +313,8 @@ module.exports = {
     mediaManifestSchema,
     readManifestIfExists,
     renameWithRetry,
+    resolveManagedAssetPath,
+    isManagedAssetRelativePath,
     runWithManifestLock,
     setCachedManifest,
     updateManifest,

@@ -184,6 +184,8 @@ function runStep(step, { cwd = process.cwd() } = {}) {
         cwd,
         env: process.env,
         stdio: "inherit",
+        shell: false,
+        windowsHide: true,
     });
     if (result.error) {
         throw result.error;

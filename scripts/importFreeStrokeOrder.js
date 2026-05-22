@@ -1,6 +1,12 @@
 const path = require("node:path");
 const fs = require("node:fs");
-const { invokeCliMain } = require("../src/utils/cliArgs");
+const {
+    assertNoUnknownArgs,
+    collectUnknownArg,
+    invokeCliMain,
+    parseNumericOption,
+    parseStringOption,
+} = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
 const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
@@ -10,15 +16,24 @@ function parseArgs(argv) {
     const options = {
         inputDir: null,
         limit: null,
-        json: argv.includes("--json"),
+        json: false,
+        unknownArgs: [],
     };
 
     for (const arg of argv) {
-        if (arg.startsWith("--input-dir=")) {
-            options.inputDir = arg.split("=")[1];
+        if (arg === "--json") {
+            options.json = true;
+        } else if (arg.startsWith("--input-dir=")) {
+            options.inputDir = parseStringOption(arg, "input-dir");
         } else if (arg.startsWith("--limit=")) {
-            options.limit = Number(arg.split("=")[1]);
+            options.limit = parseNumericOption(arg, "limit");
+        } else {
+            collectUnknownArg(options, arg);
         }
+    }
+
+    if (options.limit !== null && (!Number.isInteger(options.limit) || options.limit < 1)) {
+        collectUnknownArg(options, "--limit must be a positive integer");
     }
 
     return options;
@@ -60,6 +75,7 @@ function formatReport(summary) {
 
 async function main() {
     const options = parseArgs(process.argv.slice(2));
+    assertNoUnknownArgs("media:stroke-order:import-free", options.unknownArgs);
     if (!options.inputDir) {
         throw new Error("Missing --input-dir=... for the free stroke-order source folder.");
     }

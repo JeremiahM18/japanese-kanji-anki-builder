@@ -7,6 +7,7 @@ const path = require("node:path");
 const {
     classifyStrokeOrderFile,
     importFreeStrokeOrderDirectory,
+    listFilesRecursiveWithSkipped,
 } = require("../src/services/freeStrokeOrderImportService");
 
 function makeTempDir() {
@@ -62,6 +63,37 @@ test("importFreeStrokeOrderDirectory imports recognized files and skips unsuppor
     }
 });
 
+test("listFilesRecursiveWithSkipped records stroke-order symlinks without following them", () => {
+    const originalExistsSync = fs.existsSync;
+    const originalReaddirSync = fs.readdirSync;
+
+    try {
+        fs.existsSync = () => true;
+        fs.readdirSync = () => [
+            {
+                name: "日-bw.png",
+                isDirectory: () => false,
+                isFile: () => false,
+                isSymbolicLink: () => true,
+            },
+            {
+                name: "日-order.gif",
+                isDirectory: () => false,
+                isFile: () => true,
+                isSymbolicLink: () => false,
+            },
+        ];
+
+        const scan = listFilesRecursiveWithSkipped("input");
+
+        assert.deepEqual(scan.files, [path.join("input", "日-order.gif")]);
+        assert.deepEqual(scan.skipped, [{ filePath: path.join("input", "日-bw.png"), reason: "symbolic-link" }]);
+    } finally {
+        fs.existsSync = originalExistsSync;
+        fs.readdirSync = originalReaddirSync;
+    }
+});
+
 test("importFreeStrokeOrderDirectory reports unchanged files when rerun", async () => {
     const rootDir = makeTempDir();
 
@@ -87,6 +119,46 @@ test("importFreeStrokeOrderDirectory reports unchanged files when rerun", async 
         });
 
         assert.equal(secondRun.unchangedFiles, 1);
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+test("importFreeStrokeOrderDirectory reports symbolic links as unsafe skipped entries", async (t) => {
+    const rootDir = makeTempDir();
+
+    try {
+        const inputDir = path.join(rootDir, "input");
+        const imageDestinationDir = path.join(rootDir, "images");
+        const animationDestinationDir = path.join(rootDir, "animations");
+        const sourcePath = path.join(rootDir, "source.png");
+        const linkPath = path.join(inputDir, "日-bw.png");
+        fs.mkdirSync(inputDir, { recursive: true });
+        fs.writeFileSync(sourcePath, "png", "utf-8");
+        try {
+            fs.symlinkSync(sourcePath, linkPath);
+        } catch (error) {
+            if (["EPERM", "EACCES", "ENOSYS"].includes(error.code)) {
+                t.skip(`filesystem does not allow file symlink creation: ${error.code}`);
+                return;
+            }
+            throw error;
+        }
+
+        const summary = await importFreeStrokeOrderDirectory({
+            inputDir,
+            kanjiList: ["日"],
+            imageDestinationDir,
+            animationDestinationDir,
+        });
+
+        assert.equal(summary.scannedFiles, 0);
+        assert.equal(summary.importedImages, 0);
+        assert.equal(summary.importedAnimations, 0);
+        assert.equal(summary.skippedFiles, 1);
+        assert.equal(summary.skippedUnsafeFiles, 1);
+        assert.deepEqual(summary.skipped.map((entry) => entry.reason), ["symbolic-link"]);
+        assert.equal(fs.existsSync(path.join(imageDestinationDir, "日-bw.png")), false);
     } finally {
         cleanupTempDir(rootDir);
     }

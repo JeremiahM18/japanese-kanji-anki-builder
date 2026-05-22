@@ -9,6 +9,8 @@ function trimVersionText(value) {
 function probeCommand(command, args = ["--version"]) {
     const result = spawnSync(command, args, {
         encoding: "utf8",
+        shell: false,
+        windowsHide: true,
     });
 
     const stdout = trimVersionText(result.stdout);

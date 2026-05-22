@@ -120,6 +120,7 @@ test("CODEOWNERS covers critical repository governance paths", () => {
         "/test/ @cover",
         "/README.md @cover",
         "/CONTRIBUTING.md @cover",
+        "/SECURITY.md @cover",
         "/package.json @cover",
     ];
 

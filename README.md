@@ -10,6 +10,12 @@ npm run doctor
 
 Kanji cards and word cards are separate learning products. A kanji card teaches one target kanji; a word card teaches one exact written form and reading.
 
+## Security Posture
+
+This repository is a local deck-build tool, not a hosted public service. The Express server has no authentication layer and is intended for local development only. It binds to `127.0.0.1` by default; set `SERVER_HOST=0.0.0.0` only for a deliberate, temporary, trusted-network workflow.
+
+VOICEVOX should also stay local: the governed Docker helper expects host `127.0.0.1:50021` mapped to Nemo container port `50121`. Treat ignored workspace inputs under `data/`, `downloads/`, and `out/` as local, review-required material; do not import untrusted dictionaries, sentence corpora, media, or audio without checking the parser/import path and resulting card surfaces. See [SECURITY.md](SECURITY.md) for the disclosure policy and threat model.
+
 ## Pipeline At A Glance
 
 This is the core shape of the project: tracked inputs are normalized, ranked, and validated into separate kanji and word rows, then exported and checked by review and release gates. The important part is the separation: generated rows, review proof, package artifacts, and release claims are not the same thing.

@@ -1,13 +1,15 @@
+const { decodeHtmlEntities } = require("../utils/text");
+
 function normalizeText(value) {
     return String(value ?? "").trim();
 }
 
 function normalizeForCompare(value) {
-    return normalizeText(value)
+    return decodeHtmlEntities(normalizeText(value)
         .replace(/<ruby>(.*?)<rt>.*?<\/rt><\/ruby>/gu, "$1")
         .replace(/<[^>]+>/g, " ")
         .replace(/:\s+/g, ":")
-        .replace(/\s+/g, " ")
+        .replace(/\s+/g, " "))
         .toLowerCase();
 }
 

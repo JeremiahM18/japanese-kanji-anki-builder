@@ -2,7 +2,9 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const {
+    normalizeForEvidence,
     resolvePlatinumCardSourceMatches,
+    validateEvidenceSnippets,
     validateJapaneseSourceEvidence,
 } = require("../src/services/platinumEvidenceService");
 
@@ -37,6 +39,28 @@ test("validateJapaneseSourceEvidence requires governed field-verification source
         requiredUse: "word-field-verification",
     });
     assert.deepEqual(dictionaryFailures, []);
+});
+
+test("normalizeForEvidence compares escaped generated snippets by visible text", () => {
+    assert.equal(
+        normalizeForEvidence("I go to school at one o&#39;clock. <ruby>日<rt>ひ</rt></ruby>"),
+        "i go to school at one o'clock. 日"
+    );
+});
+
+test("validateEvidenceSnippets accepts escaped generated snippets against unescaped evidence", () => {
+    const failures = validateEvidenceSnippets({
+        sourceEvidence: [{
+            type: "current-standard-review",
+            source: "manual review",
+            detail: "Current-standard review checked translation I go to school at one o'clock.",
+        }],
+        type: "current-standard-review",
+        label: "current-standard whole-card revalidation",
+        snippets: ["I go to school at one o&#39;clock."],
+    });
+
+    assert.deepEqual(failures, []);
 });
 
 test("validateJapaneseSourceEvidence supports single-kanji word checks without making kanji references general word dictionaries", () => {

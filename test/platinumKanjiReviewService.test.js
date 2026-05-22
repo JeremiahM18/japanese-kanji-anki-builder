@@ -128,6 +128,26 @@ test("evaluatePlatinumKanjiReviewSet passes active platinum entries with strict 
     assert.equal(report.failedCount, 0);
 });
 
+test("evaluatePlatinumKanjiReviewSet compares escaped generated notes by visible surface text", () => {
+    const reviewEvidence = buildReviewEvidence().map((evidence) => evidence.type === "current-standard-review"
+        ? {
+            ...evidence,
+            detail: `${evidence.detail} Notes/support surface also checked 日 -> ひ.`,
+        }
+        : evidence);
+    const report = evaluatePlatinumKanjiReviewSet({
+        rows: [buildRow({
+            notes: "日 -&gt; ひ",
+        })],
+        entries: [buildEntry({
+            notesIncludes: ["日 -> ひ"],
+            reviewEvidence,
+        })],
+    });
+
+    assert.equal(report.passed, true, report.results[0].failures.join("\n"));
+});
+
 test("evaluatePlatinumKanjiReviewSet tracks explicit non-core verification limitations", () => {
     const limitationLabel = "Stroke-order sequence unverified";
     const reviewEvidence = buildReviewEvidence().map((evidence) => (

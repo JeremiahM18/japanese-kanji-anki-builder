@@ -121,6 +121,32 @@ test("evaluateGoldenReviewSet compares ruby notes by visible surface text", () =
     assert.equal(report.passed, true);
 });
 
+test("evaluateGoldenReviewSet compares HTML-escaped notes by visible surface text", () => {
+    const report = evaluateGoldenReviewSet({
+        cards: [
+            {
+                kanji: "父",
+                primaryReading: "とう",
+                meaningJP: "father",
+                kanjiMeanings: "father",
+                notes: "父 -&gt; とう",
+                exampleSentence: "父の日です。 ／ ちちのひです。 ／ It is Father's Day.",
+            },
+        ],
+        expectations: [
+            {
+                kanji: "父",
+                readingIncludes: ["とう"],
+                meaningIncludes: ["father"],
+                notesIncludes: ["父 -> とう"],
+                exampleIncludes: ["父の日"],
+            },
+        ],
+    });
+
+    assert.equal(report.passed, true);
+});
+
 test("formatGoldenReviewReport renders a readable benchmark summary", () => {
     const text = formatGoldenReviewReport({
         totalCards: 2,
@@ -197,6 +223,37 @@ test("evaluateGoldenWordReviewSet validates word cards and breakdown content", (
 
     assert.equal(report.passed, true);
     assert.equal(report.passedCount, 1);
+});
+
+test("evaluateGoldenWordReviewSet compares HTML-escaped word fields by visible surface text", () => {
+    const report = evaluateGoldenWordReviewSet({
+        rows: [
+            {
+                word: "お父さん",
+                reading: "おとうさん",
+                meaning: "father",
+                jlptLevel: "JLPT N5",
+                coverageRole: "reading coverage",
+                focusKanji: "父",
+                coversReading: "父: とう",
+                kanjiBreakdown: "父 （とう） ／ father",
+                exampleSentence: "お父さんは先生です。",
+                notes: "Polite family term; 父 -&gt; とう.",
+            },
+        ],
+        expectations: [
+            {
+                word: "お父さん",
+                readingIncludes: ["おとうさん"],
+                meaningIncludes: ["father"],
+                coversReadingIncludes: ["父: とう"],
+                notesIncludes: ["父 -> とう"],
+                exampleIncludes: ["お父さん"],
+            },
+        ],
+    });
+
+    assert.equal(report.passed, true);
 });
 
 test("evaluateGoldenWordReviewSet can require every generated word to have a golden expectation", () => {

@@ -1,13 +1,21 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { escapeHtml, sanitizeRubyMarkup } = require("../src/utils/text");
+const { decodeHtmlEntities, escapeHtml, sanitizeRubyMarkup } = require("../src/utils/text");
 
 test("escapeHtml escapes text for HTML-rendered Anki fields", () => {
     assert.equal(
         escapeHtml(`<&>"'`),
         "&lt;&amp;&gt;&quot;&#39;"
     );
+});
+
+test("decodeHtmlEntities decodes one layer of Anki-visible escaped text", () => {
+    assert.equal(
+        decodeHtmlEntities("父 -&gt; とう &amp; &lt;tag&gt; &quot;quoted&quot; &#39;single&#39;"),
+        "父 -> とう & <tag> \"quoted\" 'single'"
+    );
+    assert.equal(decodeHtmlEntities("&amp;gt;"), "&gt;");
 });
 
 test("sanitizeRubyMarkup preserves ruby tags and escapes everything else", () => {

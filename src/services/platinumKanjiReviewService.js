@@ -8,6 +8,7 @@ const {
     getDefaultJlptKanjiSourceEvidence,
     resolveKanjiSourceOriginIdsForEntry,
 } = require("./platinumKanjiSourceOriginService");
+const { decodeHtmlEntities } = require("../utils/text");
 const NON_SHIPPING_STATUSES = Object.freeze(["deferred", "removed"]);
 const REVALIDATION_STATUSES = Object.freeze(["needs_revalidation"]);
 const REVIEW_ONLY_STATUSES = Object.freeze(["needs_review", ...REVALIDATION_STATUSES]);
@@ -104,11 +105,11 @@ function normalizeText(value) {
 }
 
 function normalizeForCompare(value) {
-    return normalizeText(value)
+    return decodeHtmlEntities(normalizeText(value)
         .replace(/<ruby>(.*?)<rt>.*?<\/rt><\/ruby>/gu, "$1")
         .replace(/<[^>]+>/g, " ")
         .replace(/:\s+/g, ":")
-        .replace(/\s+/g, " ")
+        .replace(/\s+/g, " "))
         .toLowerCase();
 }
 

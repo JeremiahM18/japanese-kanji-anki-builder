@@ -2,6 +2,7 @@ const path = require("node:path");
 const {
     loadPlatinumCardSourceManifest,
 } = require("../datasets/platinumCardSourceManifest");
+const { decodeHtmlEntities } = require("../utils/text");
 
 const DEFAULT_PLATINUM_CARD_SOURCE_MANIFEST_PATH = path.resolve(
     __dirname,
@@ -18,10 +19,10 @@ function normalizeText(value) {
 }
 
 function normalizeForEvidence(value) {
-    return normalizeText(value)
+    return decodeHtmlEntities(normalizeText(value)
         .replace(/<ruby>(.*?)<rt>.*?<\/rt><\/ruby>/gu, "$1")
         .replace(/<[^>]+>/g, " ")
-        .replace(/\s+/g, " ")
+        .replace(/\s+/g, " "))
         .toLowerCase();
 }
 

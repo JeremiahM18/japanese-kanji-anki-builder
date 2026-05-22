@@ -24,6 +24,21 @@ function escapeHtml(value) {
         .replace(/'/g, "&#39;");
 }
 
+function decodeHtmlEntities(value) {
+    const entityMap = {
+        amp: "&",
+        lt: "<",
+        gt: ">",
+        quot: "\"",
+        "#39": "'",
+    };
+
+    return String(value ?? "").replace(/&(?:amp|lt|gt|quot|#39);/giu, (entity) => {
+        const key = entity.slice(1, -1).toLowerCase();
+        return entityMap[key] || entity;
+    });
+}
+
 function sanitizeRubyMarkup(value) {
     const source = String(value ?? "");
     const allowedTagRe = /<\/?(?:ruby|rt)>/giu;
@@ -56,6 +71,7 @@ function labelReading(onArr, kunArr) {
 }
 
 module.exports = {
+    decodeHtmlEntities,
     escapeHtml,
     labelKunReading,
     labelOnReading,

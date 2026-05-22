@@ -19,6 +19,7 @@ const {
     buildWordLevelAnchorResult,
     formatWordLevelAnchorFailure,
 } = require("./wordLevelAnchorAuditService");
+const { decodeHtmlEntities } = require("../utils/text");
 
 const ACTIVE_PLATINUM_STATUSES = Object.freeze(["platinum", "fixed_then_platinum"]);
 const NON_SHIPPING_STATUSES = Object.freeze(["deferred", "removed"]);
@@ -122,11 +123,11 @@ function normalizeText(value) {
 }
 
 function normalizeForCompare(value) {
-    return normalizeText(value)
+    return decodeHtmlEntities(normalizeText(value)
         .replace(/<ruby>(.*?)<rt>.*?<\/rt><\/ruby>/gu, "$1")
         .replace(/<[^>]+>/g, " ")
         .replace(/:\s+/g, ":")
-        .replace(/\s+/g, " ")
+        .replace(/\s+/g, " "))
         .toLowerCase();
 }
 

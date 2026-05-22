@@ -206,6 +206,20 @@ test("evaluatePlatinumWordReviewSet gates current-standard revalidation separate
     assert.deepEqual(currentReport.missingCurrentStandardRows, []);
 });
 
+test("evaluatePlatinumWordReviewSet compares escaped generated notes by visible surface text", () => {
+    const report = evaluateWordPlatinum({
+        rows: [buildRow({
+            notes: "Common N5 word; 今 -&gt; いま.",
+        })],
+        entries: [buildEntry({
+            notesIncludes: ["今 -> いま"],
+        })],
+        requireAllRows: true,
+    });
+
+    assert.equal(report.passed, true);
+});
+
 test("evaluatePlatinumWordReviewSet requires current-standard evidence to bind the whole word card surface", () => {
     const report = evaluateWordPlatinum({
         rows: [buildRow()],

@@ -1,13 +1,6 @@
-const SMALL_KANA = new Set(Array.from("ゃゅょぁぃぅぇぉゎャュョァィゥェォヮ"));
+const { escapeHtml } = require("../utils/text");
 
-function escapeHtml(value) {
-    return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;");
-}
+const SMALL_KANA = new Set(Array.from("ゃゅょぁぃぅぇぉゎャュョァィゥェォヮ"));
 
 function splitMoras(reading) {
     const moras = [];

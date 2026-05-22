@@ -32,6 +32,17 @@ test("formatAnkiStrokeOrderField keeps animated GIF references Anki can render",
     );
 });
 
+test("formatAnki media fields escape filenames before HTML rendering", () => {
+    assert.equal(
+        formatAnkiStrokeOrderField('animations/bad" onerror="alert(1).gif'),
+        '<img src="bad&quot; onerror=&quot;alert(1).gif" />'
+    );
+    assert.equal(
+        formatAnkiAudioField("audio/bad<script>.mp3"),
+        "[sound:bad&lt;script&gt;.mp3]"
+    );
+});
+
 test("formatExampleSentence preserves katakana in the reading surface", () => {
     assert.equal(
         formatExampleSentence({
@@ -54,11 +65,31 @@ test("formatExampleSentence leaves existing katakana readings unchanged", () => 
     );
 });
 
+test("formatExampleSentence escapes text before Anki HTML rendering", () => {
+    const result = formatExampleSentence({
+        japanese: "今日は<script>alert(1)</script>",
+        reading: "きょうは<script>alert(1)</script>",
+        english: 'Today <img src=x onerror="alert(1)">',
+    });
+
+    assert.match(result, /&lt;script&gt;alert\(1\)&lt;\/script&gt;/u);
+    assert.match(result, /&lt;img src=x onerror=&quot;alert\(1\)&quot;&gt;/u);
+    assert.doesNotMatch(result, /<script|<img/iu);
+});
+
 test("formatNotesWithRuby renders note example readings as ruby", () => {
     assert.equal(
         formatNotesWithRuby("外 （そと） - outside ／ 外国 （がいこく） - foreign country"),
         "<ruby>外<rt>そと</rt></ruby> - outside ／ <ruby>外国<rt>がいこく</rt></ruby> - foreign country"
     );
+});
+
+test("formatNotesWithRuby escapes non-ruby note text", () => {
+    const result = formatNotesWithRuby("外 （そと） - <script>alert(1)</script> ／ plain <img src=x onerror=alert(1)>");
+
+    assert.match(result, /<ruby>外<rt>そと<\/rt><\/ruby> - &lt;script&gt;alert\(1\)&lt;\/script&gt;/u);
+    assert.match(result, /plain &lt;img src=x onerror=alert\(1\)&gt;/u);
+    assert.doesNotMatch(result, /<script|<img/iu);
 });
 
 test("formatRubyText keeps okurigana outside ruby", () => {
@@ -80,6 +111,13 @@ test("formatRubyText keeps katakana loanword spans outside ruby", () => {
         formatRubyText("バス停", "ばすてい"),
         "バス<ruby>停<rt>てい</rt></ruby>"
     );
+});
+
+test("formatRubyText escapes written and reading text while preserving ruby markup", () => {
+    const result = formatRubyText("悪<script>", "あく<script>");
+
+    assert.equal(result, "<ruby>悪<rt>あく</rt></ruby>&lt;script&gt;");
+    assert.doesNotMatch(result, /<script/iu);
 });
 
 test("formatKanjiMeanings removes duplicate and radical-index gloss noise", () => {
@@ -1351,7 +1389,7 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
     assert.equal(cols[9], "[sound:65E5_日-kanji-reading-日.mp3]");
     assert.equal(cols[10], "日");
     assert.equal(cols[11], "<ruby>日本<rt>にほん</rt></ruby> - Japan ／ <ruby>日<rt>にち</rt></ruby>よう<ruby>日<rt>び</rt></ruby> - Sunday");
-    assert.equal(cols[12], '「日本」を勉強します。 ／ 「にほん」をべんきょうします。 ／ I study the word "日本".');
+    assert.equal(cols[12], "「日本」を勉強します。 ／ 「にほん」をべんきょうします。 ／ I study the word &quot;日本&quot;.");
 });
 
 test("buildTsvForJlptLevel builds the kanji level lookup once per TSV build", async () => {

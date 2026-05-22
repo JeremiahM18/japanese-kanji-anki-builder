@@ -8,7 +8,7 @@ const { buildJlptBuckets } = require("../datasets/jlptBuckets");
 const { buildOfflineFallbackCard } = require("./offlineKanjiFallback");
 const { selectBestAudioAsset } = require("./audioService");
 const { mapWithConcurrency } = require("../utils/concurrency");
-const { labelKunReading, labelOnReading, normalizeText, tsvEscape } = require("../utils/text");
+const { escapeHtml, labelKunReading, labelOnReading, normalizeText, tsvEscape } = require("../utils/text");
 const { hasOnlyTargetKanji, katakanaToHiragana, normalizeJapaneseReading } = require("../utils/japanese");
 
 const ANKI_FIELD_NAMES = loadAnkiNoteSchema().fieldNames;
@@ -65,6 +65,7 @@ function formatExampleSentence(sentence) {
     return [japanese, reading, sentence.english]
         .map((value) => String(value ?? "").trim())
         .filter(Boolean)
+        .map(escapeHtml)
         .join(" ／ ");
 }
 
@@ -102,7 +103,7 @@ function formatAnkiAudioField(audioPath) {
         return "";
     }
 
-    return `[sound:${path.posix.basename(audioPath)}]`;
+    return `[sound:${escapeHtml(path.posix.basename(audioPath))}]`;
 }
 
 function formatAnkiStrokeOrderField(strokeOrderPath) {
@@ -110,7 +111,7 @@ function formatAnkiStrokeOrderField(strokeOrderPath) {
         return "";
     }
 
-    return `<img src="${path.posix.basename(strokeOrderPath)}" />`;
+    return `<img src="${escapeHtml(path.posix.basename(strokeOrderPath))}" />`;
 }
 
 function selectPrimaryReading({ displayWord, bestWord }) {
@@ -351,15 +352,15 @@ function matchLiteralReading(reading, cursor, literal) {
 }
 
 function formatRubyText(written, reading) {
-    const safeWritten = String(written || "").trim();
-    const safeReading = String(reading || "").trim();
-    if (!safeWritten || !safeReading) {
-        return safeWritten;
+    const rawWritten = String(written || "").trim();
+    const rawReading = String(reading || "").trim();
+    if (!rawWritten || !rawReading) {
+        return escapeHtml(rawWritten);
     }
 
-    const tokens = tokenizeKanjiRubySurface(safeWritten);
+    const tokens = tokenizeKanjiRubySurface(rawWritten);
     if (tokens.length <= 1) {
-        return `<ruby>${safeWritten}<rt>${safeReading}</rt></ruby>`;
+        return `<ruby>${escapeHtml(rawWritten)}<rt>${escapeHtml(rawReading)}</rt></ruby>`;
     }
 
     let cursor = 0;
@@ -369,39 +370,39 @@ function formatRubyText(written, reading) {
         const token = tokens[index];
 
         if (!token.isKanji) {
-            const literalLength = matchLiteralReading(safeReading, cursor, token.text);
+            const literalLength = matchLiteralReading(rawReading, cursor, token.text);
             if (literalLength < 0) {
-                return `<ruby>${safeWritten}<rt>${safeReading}</rt></ruby>`;
+                return `<ruby>${escapeHtml(rawWritten)}<rt>${escapeHtml(rawReading)}</rt></ruby>`;
             }
             cursor += literalLength;
-            rendered.push(token.text);
+            rendered.push(escapeHtml(token.text));
             continue;
         }
 
         const nextLiteral = tokens.slice(index + 1).find((candidate) => !candidate.isKanji);
         const nextLiteralText = nextLiteral?.text || "";
-        const exactNextIndex = nextLiteralText ? safeReading.indexOf(nextLiteralText, cursor) : -1;
+        const exactNextIndex = nextLiteralText ? rawReading.indexOf(nextLiteralText, cursor) : -1;
         const hiraganaNext = nextLiteralText ? katakanaToHiragana(nextLiteralText) : "";
         const hiraganaNextIndex = hiraganaNext && hiraganaNext !== nextLiteralText
-            ? safeReading.indexOf(hiraganaNext, cursor)
+            ? rawReading.indexOf(hiraganaNext, cursor)
             : -1;
         const nextIndexCandidates = [exactNextIndex, hiraganaNextIndex]
             .filter((candidate) => candidate >= cursor);
         const nextIndex = nextIndexCandidates.length
             ? Math.min(...nextIndexCandidates)
-            : safeReading.length;
-        const tokenReading = safeReading.slice(cursor, nextIndex);
+            : rawReading.length;
+        const tokenReading = rawReading.slice(cursor, nextIndex);
         if (!tokenReading) {
-            return `<ruby>${safeWritten}<rt>${safeReading}</rt></ruby>`;
+            return `<ruby>${escapeHtml(rawWritten)}<rt>${escapeHtml(rawReading)}</rt></ruby>`;
         }
 
-        rendered.push(`<ruby>${token.text}<rt>${tokenReading}</rt></ruby>`);
+        rendered.push(`<ruby>${escapeHtml(token.text)}<rt>${escapeHtml(tokenReading)}</rt></ruby>`);
         cursor = nextIndex;
     }
 
-    return cursor === safeReading.length
+    return cursor === rawReading.length
         ? rendered.join("")
-        : `<ruby>${safeWritten}<rt>${safeReading}</rt></ruby>`;
+        : `<ruby>${escapeHtml(rawWritten)}<rt>${escapeHtml(rawReading)}</rt></ruby>`;
 }
 
 function formatNotesWithRuby(notes) {
@@ -411,10 +412,10 @@ function formatNotesWithRuby(notes) {
             const trimmed = entry.trim();
             const match = trimmed.match(/^(?<written>.+?)\s*（(?<reading>[^）]+)）\s*-\s*(?<meaning>.+)$/u);
             if (!match?.groups) {
-                return trimmed;
+                return escapeHtml(trimmed);
             }
 
-            return `${formatRubyText(match.groups.written, match.groups.reading)} - ${match.groups.meaning.trim()}`;
+            return `${formatRubyText(match.groups.written, match.groups.reading)} - ${escapeHtml(match.groups.meaning.trim())}`;
         })
         .filter(Boolean)
         .join(" ／ ");
@@ -548,7 +549,7 @@ function formatStudyWordKanjiLabels(displayWord, kanjiLevelLookup = new Map(), {
         .map((kanji) => {
             const level = kanjiLevelLookup.get(kanji);
             const label = Number.isInteger(level) ? `JLPT N${level}` : "outside JLPT";
-            return `<span class="kanji-level-badge">${kanji}: ${label}</span>`;
+            return `<span class="kanji-level-badge">${escapeHtml(kanji)}: ${escapeHtml(label)}</span>`;
         })
         .join(" ");
 }
@@ -655,17 +656,17 @@ function buildInferredRow({ kanji, inferred, kanjiInfo, curatedEntry = null, kra
     const exampleSentence = formatExampleSentence(inferred.sentenceCandidates[0]);
 
     return formatTsvRow([
-        kanji,
-        displayWord,
-        inferred.meaningJP,
-        primaryReading,
-        inferred.kanjiMeanings,
+        escapeHtml(kanji),
+        escapeHtml(displayWord),
+        escapeHtml(inferred.meaningJP),
+        escapeHtml(primaryReading),
+        escapeHtml(inferred.kanjiMeanings),
         studyWordKanji,
-        onReading,
-        kunReading,
+        escapeHtml(onReading),
+        escapeHtml(kunReading),
         formatAnkiStrokeOrderField(mediaFields.strokeOrderPath),
         formatAnkiAudioField(mediaFields.audioPath),
-        radical,
+        escapeHtml(radical),
         formatNotesWithRuby(inferred.notes),
         exampleSentence,
     ]);
@@ -675,19 +676,19 @@ function buildFallbackRow({ fallbackCard, kanjiLevelLookup, currentLevel = null 
     const studyWordKanji = formatStudyWordKanjiLabels(fallbackCard.displayWord, kanjiLevelLookup, { currentLevel });
 
     return formatTsvRow([
-        fallbackCard.kanji,
-        fallbackCard.displayWord,
-        fallbackCard.meaningJP,
-        fallbackCard.primaryReading,
-        fallbackCard.kanjiMeanings || fallbackCard.meaningJP,
+        escapeHtml(fallbackCard.kanji),
+        escapeHtml(fallbackCard.displayWord),
+        escapeHtml(fallbackCard.meaningJP),
+        escapeHtml(fallbackCard.primaryReading),
+        escapeHtml(fallbackCard.kanjiMeanings || fallbackCard.meaningJP),
         studyWordKanji,
-        fallbackCard.onReading,
-        fallbackCard.kunReading,
+        escapeHtml(fallbackCard.onReading),
+        escapeHtml(fallbackCard.kunReading),
         formatAnkiStrokeOrderField(fallbackCard.media.strokeOrderPath),
         formatAnkiAudioField(fallbackCard.media.audioPath),
-        fallbackCard.radical,
+        escapeHtml(fallbackCard.radical),
         formatNotesWithRuby(fallbackCard.notes),
-        fallbackCard.exampleSentence,
+        escapeHtml(fallbackCard.exampleSentence),
     ]);
 }
 

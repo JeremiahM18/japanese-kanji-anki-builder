@@ -76,6 +76,69 @@ test("buildWordTsvForJlptLevel ignores repetition marks in kanji breakdowns", as
     assert.doesNotMatch(tsv, /時々 （ときどき）/u);
 });
 
+test("buildWordTsvForJlptLevel escapes text while preserving known Anki markup", async () => {
+    const wordExportService = createWordExportService({
+        sentenceCorpus: [],
+        curatedStudyData: {},
+        wordStudyData: {
+            "悪意|あくい": {
+                written: "悪意",
+                reading: "あくい",
+                meaning: "malicious <script>alert(1)</script>",
+                jlpt: 5,
+                readingBreakdown: "<ruby>悪<script><rt>あく</rt></ruby><ruby>意<rt>い</rt></ruby>",
+                notes: "<img src=x onerror=alert(1)>",
+                coverage: {
+                    role: "both",
+                    focusKanji: ["悪"],
+                    coversReadings: {
+                        悪: "あく <script>",
+                    },
+                },
+                exampleSentence: {
+                    japanese: "悪意<script>alert(1)</script>",
+                    reading: "あくい<script>alert(1)</script>",
+                    english: "malice <img src=x onerror=alert(1)>",
+                },
+            },
+        },
+    });
+
+    const result = await wordExportService.buildWordTsvForJlptLevel({
+        levelNumber: 5,
+        jlptOnlyJson: {
+            悪: { jlpt: 5 },
+            意: { jlpt: 5 },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {
+                "悪意|あくい": { written: "悪意", reading: "あくい", jlpt: 5 },
+            },
+        },
+        kanjiApiClient: {
+            async getKanji(kanji) {
+                return {
+                    meanings: [`${kanji} <script>alert(1)</script>`],
+                    on_readings: [`${kanji}オン<script>`],
+                    kun_readings: [`${kanji}くん<img>`],
+                };
+            },
+            async getWords() {
+                return [];
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+        concurrency: 1,
+    });
+
+    assert.match(result.tsv, /<ruby>悪&lt;script&gt;<rt>あく<\/rt><\/ruby><ruby>意<rt>い<\/rt><\/ruby>/u);
+    assert.match(result.tsv, /malicious &lt;script&gt;alert\(1\)&lt;\/script&gt;/u);
+    assert.match(result.tsv, /&lt;img src=x onerror=alert\(1\)&gt;/u);
+    assert.doesNotMatch(result.tsv, /<script|<img\b/iu);
+    assert.match(result.tsv, /<div class="kanji-breakdown-item">/u);
+});
+
 test("loadAnkiNoteSchema can load the shared word note contract", () => {
     const schema = loadAnkiNoteSchema("word");
 

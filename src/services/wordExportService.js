@@ -9,14 +9,14 @@ const {
 } = require("./exportService");
 const { buildOfflineFallbackCard } = require("./previewCardService");
 const { mapWithConcurrency } = require("../utils/concurrency");
-const { tsvEscape } = require("../utils/text");
+const { escapeHtml, sanitizeRubyMarkup, tsvEscape } = require("../utils/text");
 const { HAN_CHAR_RE, KATAKANA_ONLY_RE, isKanaOnly, katakanaToHiragana } = require("../utils/japanese");
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 const { compilePolicyRegexList, loadDeckEditorialPolicy } = require("../datasets/deckEditorialPolicy");
 const { buildJlptBuckets } = require("../datasets/jlptBuckets");
 const { buildWordStudyEntryKey } = require("../datasets/wordStudyData");
 const { resolveWordPitchAccent } = require("../datasets/wordPitchAccentData");
-const { buildPitchAccentHtml, escapeHtml } = require("./pitchAccentRenderService");
+const { buildPitchAccentHtml } = require("./pitchAccentRenderService");
 const {
     GENERATED_PITCH_LABEL,
     isGeneratedPitchAccentSource,
@@ -260,7 +260,7 @@ function formatPitchAccent({ candidate, curatedEntry, wordPitchAccentData }) {
 }
 
 function buildWordNotes(curatedEntry) {
-    return String(curatedEntry?.notes || "").trim();
+    return escapeHtml(String(curatedEntry?.notes || "").trim());
 }
 
 async function resolveWordAudioReference({ candidate, focusKanji, audioService, mediaRootDir = "" }) {
@@ -796,10 +796,11 @@ function buildWordReadingBreakdown({
 }) {
     const curatedBreakdown = String(curatedEntry?.readingBreakdown || "").trim();
     if (curatedBreakdown) {
-        if (!curatedBreakdown.includes("<ruby>")) {
+        const sanitizedBreakdown = sanitizeRubyMarkup(curatedBreakdown);
+        if (!sanitizedBreakdown.includes("<ruby>")) {
             throw new Error(`Curated readingBreakdown for ${candidate?.written || "word"} must use ruby furigana markup`);
         }
-        return curatedBreakdown;
+        return sanitizedBreakdown;
     }
 
     const written = String(candidate?.written || "").trim();
@@ -1309,8 +1310,8 @@ function buildBreakdownHtmlItem({ kanji, inference, curatedEntry = null, context
         jlptOnlyJson: contextCandidate?.jlptOnlyJson,
     });
     const readingLines = [
-        breakdown.onReading ? `<div class="kanji-reading-line"><span class="kanji-reading-label">On:</span> ${breakdown.onReading}</div>` : "",
-        breakdown.kunReading ? `<div class="kanji-reading-line"><span class="kanji-reading-label">Kun:</span> ${breakdown.kunReading}</div>` : "",
+        breakdown.onReading ? `<div class="kanji-reading-line"><span class="kanji-reading-label">On:</span> ${escapeHtml(breakdown.onReading)}</div>` : "",
+        breakdown.kunReading ? `<div class="kanji-reading-line"><span class="kanji-reading-label">Kun:</span> ${escapeHtml(breakdown.kunReading)}</div>` : "",
     ].filter(Boolean).join("");
     const strokeOrderMarkup = breakdown.strokeOrderAnimationField
         || breakdown.strokeOrderField
@@ -1321,12 +1322,12 @@ function buildBreakdownHtmlItem({ kanji, inference, curatedEntry = null, context
         '<div class="kanji-breakdown-item">',
         '<div class="kanji-breakdown-head">',
         '<div class="kanji-breakdown-title">',
-        `<span class="kanji-char">${kanji}</span>`,
-        levelLabel ? `<span class="kanji-level-badge">${levelLabel}</span>` : "",
+        `<span class="kanji-char">${escapeHtml(kanji)}</span>`,
+        levelLabel ? `<span class="kanji-level-badge">${escapeHtml(levelLabel)}</span>` : "",
         "</div>",
-        breakdown.primaryReading ? `<span class="kanji-primary">${breakdown.primaryReadingScope === "word" ? `word reading: ${breakdown.primaryReading}` : breakdown.primaryReading}</span>` : "",
+        breakdown.primaryReading ? `<span class="kanji-primary">${escapeHtml(breakdown.primaryReadingScope === "word" ? `word reading: ${breakdown.primaryReading}` : breakdown.primaryReading)}</span>` : "",
         "</div>",
-        breakdown.meaningJP ? `<div class="kanji-meaning">${breakdown.meaningJP}</div>` : "",
+        breakdown.meaningJP ? `<div class="kanji-meaning">${escapeHtml(breakdown.meaningJP)}</div>` : "",
         strokeOrderMarkup ? `<div class="kanji-stroke-order"><div class="kanji-stroke-order-label">Stroke order</div>${strokeOrderMarkup}</div>` : "",
         readingLines,
         "</div>",
@@ -1663,8 +1664,8 @@ function createWordExportService({
             });
 
             rows.push([
-                entry.candidate.written,
-                entry.curatedEntry?.reading || entry.candidate.pron,
+                escapeHtml(entry.candidate.written),
+                escapeHtml(entry.curatedEntry?.reading || entry.candidate.pron),
                 readingBreakdown,
                 wordAudio.audioField,
                 formatPitchAccent({
@@ -1672,11 +1673,11 @@ function createWordExportService({
                     curatedEntry: entry.curatedEntry,
                     wordPitchAccentData,
                 }),
-                entry.curatedEntry?.meaning || entry.candidate.gloss,
-                buildJlptLabel(trustedLevel),
-                summarizeCoverageRole(entry, jlptWordLevelContract),
-                coverageMetadata.focusKanji.join("、"),
-                coverageMetadata.coversReading,
+                escapeHtml(entry.curatedEntry?.meaning || entry.candidate.gloss),
+                escapeHtml(buildJlptLabel(trustedLevel)),
+                escapeHtml(summarizeCoverageRole(entry, jlptWordLevelContract)),
+                escapeHtml(coverageMetadata.focusKanji.join("、")),
+                escapeHtml(coverageMetadata.coversReading),
                 breakdownHtml,
                 exampleSentence,
                 buildWordNotes(entry.curatedEntry),

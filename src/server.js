@@ -13,12 +13,17 @@ const { createInferenceEngine } = require("./inference/inferenceEngine");
 const { createExportService } = require("./services/exportService");
 const { createApp } = require("./app");
 
+function getDisplayHost(host) {
+    return ["0.0.0.0", "::"].includes(host) ? "127.0.0.1" : host;
+}
+
 function logServerStarted({ logger: runtimeLogger, config, sentenceCorpus, curatedStudyData }) {
-    const baseUrl = `http://127.0.0.1:${config.port}`;
+    const baseUrl = `http://${getDisplayHost(config.serverHost)}:${config.port}`;
 
     runtimeLogger.info(
         {
             port: config.port,
+            host: config.serverHost,
             exportConcurrency: config.exportConcurrency,
             fetchTimeoutMs: config.fetchTimeoutMs,
             cacheDir: config.cacheDir,
@@ -48,7 +53,7 @@ function logServerStarted({ logger: runtimeLogger, config, sentenceCorpus, curat
     );
 }
 
-function listenAsync(app, port, host = "0.0.0.0") {
+function listenAsync(app, port, host = "127.0.0.1") {
     return new Promise((resolve, reject) => {
         const server = app.listen(port, host);
 
@@ -229,7 +234,7 @@ async function main({
     exitFn = process.exit.bind(process),
 } = {}) {
     const runtime = await buildRuntime();
-    const server = await listenFn(runtime.app, runtime.config.port);
+    const server = await listenFn(runtime.app, runtime.config.port, runtime.config.serverHost);
 
     let shutdownController = null;
     const cleanupSignalHandlers = installSignalHandlersFn({
@@ -273,6 +278,7 @@ module.exports = {
     buildRuntime,
     closeServerAsync,
     createShutdownController,
+    getDisplayHost,
     installSignalHandlers,
     listenAsync,
     logServerStarted,

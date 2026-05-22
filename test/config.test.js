@@ -55,6 +55,7 @@ test("loadConfig reads .env values and resolves paths from cwd", () => {
         const config = loadConfig({ cwd: rootDir, env: {} });
 
         assert.equal(config.port, 4021);
+        assert.equal(config.serverHost, "127.0.0.1");
         assert.equal(config.kanjiComponentContractPath, path.join(rootDir, "templates", "kanji_component_contract.json"));
         assert.equal(config.strokeOrderImageSourceDir, path.join(rootDir, "data", "custom-images"));
         assert.equal(config.remoteAudioBaseUrl, "https://media.example.com/audio/");
@@ -82,6 +83,15 @@ test("loadConfig prefers process env over .env", () => {
     } finally {
         cleanupTempDir(rootDir);
     }
+});
+
+test("loadConfig reads the explicit server bind host", () => {
+    const config = loadConfig({
+        cwd: process.cwd(),
+        env: { SERVER_HOST: "0.0.0.0" },
+    });
+
+    assert.equal(config.serverHost, "0.0.0.0");
 });
 
 test("loadConfig parses ENABLE_AUDIO as a boolean flag", () => {

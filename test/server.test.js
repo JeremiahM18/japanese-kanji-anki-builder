@@ -93,8 +93,10 @@ test("installSignalHandlers installs and cleans up process listeners", () => {
 });
 
 test("listenAsync resolves once the server starts listening", async () => {
+    let observedHost = null;
     const app = {
-        listen(_port, _host) {
+        listen(_port, host) {
+            observedHost = host;
             const listeners = new Map();
             const server = {
                 once(event, handler) {
@@ -115,4 +117,32 @@ test("listenAsync resolves once the server starts listening", async () => {
 
     const server = await listenAsync(app, 3719);
     assert.equal(typeof server.once, "function");
+    assert.equal(observedHost, "127.0.0.1");
+});
+
+test("listenAsync allows an explicit non-default host", async () => {
+    let observedHost = null;
+    const app = {
+        listen(_port, host) {
+            observedHost = host;
+            const listeners = new Map();
+            const server = {
+                once(event, handler) {
+                    listeners.set(event, handler);
+                },
+                off(event) {
+                    listeners.delete(event);
+                },
+            };
+
+            queueMicrotask(() => {
+                listeners.get("listening")?.();
+            });
+
+            return server;
+        },
+    };
+
+    await listenAsync(app, 3719, "0.0.0.0");
+    assert.equal(observedHost, "0.0.0.0");
 });

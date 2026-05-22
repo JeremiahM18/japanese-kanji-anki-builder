@@ -26,6 +26,7 @@ const booleanLike = z.preprocess((value) => {
 const schema = z.object({
     nodeEnv: z.enum(["development", "production", "test"]).default("development"),
     port: z.coerce.number().int().positive().default(3719),
+    serverHost: z.string().trim().min(1).default("127.0.0.1"),
     cacheDir: z.string().default("cache"),
     jlptJsonPath: z.string().default("data/kanji_jlpt_only.json"),
     kradfilePath: z.string().default("data/KRADFILE"),
@@ -109,6 +110,7 @@ function buildRawConfig(env) {
     return {
         nodeEnv: env.NODE_ENV,
         port: env.PORT,
+        serverHost: env.SERVER_HOST,
         cacheDir: env.CACHE_DIR,
         jlptJsonPath: env.JLPT_JSON_PATH,
         kradfilePath: env.KRADFILE_PATH,

@@ -3,6 +3,7 @@ const { spawnSync } = require("node:child_process");
 
 const DEFAULT_CONTAINER_NAME = "voicevox-nemo";
 const DEFAULT_IMAGE = "voicevox/voicevox_nemo_engine:cpu-ubuntu20.04-latest";
+const DEFAULT_HOST_IP = "127.0.0.1";
 const DEFAULT_HOST_PORT = 50021;
 const DEFAULT_CONTAINER_PORT = 50121;
 
@@ -14,6 +15,7 @@ function parseArgs(argv = []) {
         recreate: false,
         containerName: DEFAULT_CONTAINER_NAME,
         image: DEFAULT_IMAGE,
+        hostIp: DEFAULT_HOST_IP,
         hostPort: DEFAULT_HOST_PORT,
         containerPort: DEFAULT_CONTAINER_PORT,
     };
@@ -38,6 +40,10 @@ function parseArgs(argv = []) {
             parsed.hostPort = Number(args[++i]);
         } else if (arg.startsWith("--host-port=")) {
             parsed.hostPort = Number(arg.slice("--host-port=".length));
+        } else if (arg === "--host-ip") {
+            parsed.hostIp = args[++i];
+        } else if (arg.startsWith("--host-ip=")) {
+            parsed.hostIp = arg.slice("--host-ip=".length);
         } else if (arg === "--container-port") {
             parsed.containerPort = Number(args[++i]);
         } else if (arg.startsWith("--container-port=")) {
@@ -52,6 +58,9 @@ function parseArgs(argv = []) {
     }
     if (!Number.isInteger(parsed.hostPort) || parsed.hostPort <= 0) {
         throw new Error(`Invalid VOICEVOX host port: ${parsed.hostPort}`);
+    }
+    if (!parsed.hostIp || typeof parsed.hostIp !== "string") {
+        throw new Error("Missing VOICEVOX host IP.");
     }
     if (!Number.isInteger(parsed.containerPort) || parsed.containerPort <= 0) {
         throw new Error(`Invalid VOICEVOX container port: ${parsed.containerPort}`);
@@ -96,6 +105,10 @@ function parseDockerInspect(stdout) {
 }
 
 function getPublishedHostPorts(container, containerPort = DEFAULT_CONTAINER_PORT) {
+    return getPublishedHostBindings(container, containerPort).map((binding) => binding.hostPort);
+}
+
+function getPublishedHostBindings(container, containerPort = DEFAULT_CONTAINER_PORT) {
     const target = `${containerPort}/tcp`;
     const bindings = [
         ...(
@@ -111,12 +124,15 @@ function getPublishedHostPorts(container, containerPort = DEFAULT_CONTAINER_PORT
     ];
 
     return bindings
-        .map((binding) => binding?.HostPort)
-        .filter((hostPort) => typeof hostPort === "string" && hostPort.length > 0);
+        .map((binding) => ({
+            hostIp: binding?.HostIp || "",
+            hostPort: binding?.HostPort || "",
+        }))
+        .filter((binding) => binding.hostPort.length > 0);
 }
 
-function hasExpectedPortMapping(container, hostPort = DEFAULT_HOST_PORT, containerPort = DEFAULT_CONTAINER_PORT) {
-    return getPublishedHostPorts(container, containerPort).includes(String(hostPort));
+function hasExpectedPortMapping(container, hostPort = DEFAULT_HOST_PORT, containerPort = DEFAULT_CONTAINER_PORT, hostIp = DEFAULT_HOST_IP) {
+    return getPublishedHostBindings(container, containerPort).some((binding) => binding.hostIp === hostIp && binding.hostPort === String(hostPort));
 }
 
 function getContainerState(container) {
@@ -128,6 +144,7 @@ function getContainerState(container) {
 
 function buildStartPlan(container, {
     recreate = false,
+    hostIp = DEFAULT_HOST_IP,
     hostPort = DEFAULT_HOST_PORT,
     containerPort = DEFAULT_CONTAINER_PORT,
 } = {}) {
@@ -136,18 +153,18 @@ function buildStartPlan(container, {
     }
 
     const state = getContainerState(container);
-    const portReady = hasExpectedPortMapping(container, hostPort, containerPort);
+    const portReady = hasExpectedPortMapping(container, hostPort, containerPort, hostIp);
     if (portReady && state === "running") {
-        return { action: "ready", reason: `container is already running with ${hostPort}:${containerPort}` };
+        return { action: "ready", reason: `container is already running with ${hostIp}:${hostPort}:${containerPort}` };
     }
     if (portReady) {
-        return { action: "start", reason: `container exists with ${hostPort}:${containerPort}` };
+        return { action: "start", reason: `container exists with ${hostIp}:${hostPort}:${containerPort}` };
     }
     if (recreate) {
-        return { action: "recreate", reason: `container exists without published ${hostPort}:${containerPort}` };
+        return { action: "recreate", reason: `container exists without published ${hostIp}:${hostPort}:${containerPort}` };
     }
 
-    return { action: "needs_recreate", reason: `container exists without published ${hostPort}:${containerPort}` };
+    return { action: "needs_recreate", reason: `container exists without published ${hostIp}:${hostPort}:${containerPort}` };
 }
 
 function inspectContainer(containerName) {
@@ -164,26 +181,28 @@ function inspectContainer(containerName) {
     return parseDockerInspect(result.stdout);
 }
 
-function formatContainerStatus(container, hostPort = DEFAULT_HOST_PORT, containerPort = DEFAULT_CONTAINER_PORT) {
+function formatContainerStatus(container, hostPort = DEFAULT_HOST_PORT, containerPort = DEFAULT_CONTAINER_PORT, hostIp = DEFAULT_HOST_IP) {
     if (!container) {
         return `VOICEVOX container ${DEFAULT_CONTAINER_NAME}: missing`;
     }
     const state = getContainerState(container);
-    const hostPorts = getPublishedHostPorts(container, containerPort);
-    const published = hostPorts.length > 0 ? hostPorts.join(", ") : "none";
+    const hostBindings = getPublishedHostBindings(container, containerPort);
+    const published = hostBindings.length > 0
+        ? hostBindings.map((binding) => `${binding.hostIp || "0.0.0.0"}:${binding.hostPort}`).join(", ")
+        : "none";
     return [
         `VOICEVOX container ${container.Name || DEFAULT_CONTAINER_NAME}: ${state}`,
         `Image: ${container.Config?.Image || container.Image || "unknown"}`,
-        `Required mapping: host ${hostPort} -> container ${containerPort}`,
-        `Published ${containerPort}/tcp host ports: ${published}`,
+        `Required mapping: ${hostIp}:${hostPort} -> container ${containerPort}`,
+        `Published ${containerPort}/tcp host bindings: ${published}`,
     ].join("\n");
 }
 
 function runStatus(options) {
     const container = inspectContainer(options.containerName);
-    console.log(formatContainerStatus(container, options.hostPort, options.containerPort));
-    if (container && !hasExpectedPortMapping(container, options.hostPort, options.containerPort)) {
-        console.log(`Missing required ${options.hostPort}:${options.containerPort} port mapping. Run npm run voicevox:start:fresh to recreate it intentionally.`);
+    console.log(formatContainerStatus(container, options.hostPort, options.containerPort, options.hostIp));
+    if (container && !hasExpectedPortMapping(container, options.hostPort, options.containerPort, options.hostIp)) {
+        console.log(`Missing required ${options.hostIp}:${options.hostPort}:${options.containerPort} port mapping. Run npm run voicevox:start:fresh to recreate it intentionally.`);
     }
 }
 
@@ -207,16 +226,20 @@ function runStart(options) {
         runDocker(["rm", "-f", options.containerName]);
     }
 
-    runDocker([
+    runDocker(buildDockerRunArgs(options));
+    console.log(`Started VOICEVOX container ${options.containerName} from ${options.image} on ${options.hostIp}:${options.hostPort} -> container ${options.containerPort}.`);
+}
+
+function buildDockerRunArgs(options) {
+    return [
         "run",
         "--detach",
         "--name",
         options.containerName,
         "-p",
-        `${options.hostPort}:${options.containerPort}`,
+        `${options.hostIp}:${options.hostPort}:${options.containerPort}`,
         options.image,
-    ]);
-    console.log(`Started VOICEVOX container ${options.containerName} from ${options.image} on 127.0.0.1:${options.hostPort} -> container ${options.containerPort}.`);
+    ];
 }
 
 function runStop(options) {
@@ -256,8 +279,10 @@ if (require.main === module) {
 
 module.exports = {
     buildStartPlan,
+    buildDockerRunArgs,
     formatContainerStatus,
     getContainerState,
+    getPublishedHostBindings,
     getPublishedHostPorts,
     hasExpectedPortMapping,
     isMissingContainerInspectResult,

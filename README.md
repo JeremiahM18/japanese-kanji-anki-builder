@@ -454,7 +454,7 @@ npm run deck:readiness
 
 - `doctor` checks datasets, local files, media folders, managed media, tooling, and next steps.
 - `voicevox:status`, `voicevox:start`, and `voicevox:stop` manage the local Docker container named `voicevox-nemo`.
-- `voicevox:start:fresh` intentionally recreates that container with `-p 50021:50121` when an old local container exists without the required port mapping.
+- `voicevox:start:fresh` intentionally recreates that container with `-p 127.0.0.1:50021:50121` when an old local container exists without the required local-only port mapping.
 - `doctor:voicevox` verifies the local VOICEVOX Nemo engine and pinned release speaker.
 - `deck:readiness` reports per-level deck readiness.
 
@@ -669,7 +669,7 @@ The release audio policy requires:
 
 - VOICEVOX Nemo
 - pinned release speaker `女声1`, style id `10005`
-- local engine reachable at `http://127.0.0.1:50021`; the `voicevox-nemo` Docker container must map host `50021` to Nemo container port `50121`
+- local engine reachable at `http://127.0.0.1:50021`; the `voicevox-nemo` Docker container must map host `127.0.0.1:50021` to Nemo container port `50121`
 - explicit source, voice, locale, and category provenance
 - one release audio source
 - no remote-audio release provider
@@ -716,7 +716,7 @@ Repository governance:
 | `npm run doctor:voicevox` | Verify local governed VOICEVOX setup |
 | `npm run voicevox:status` | Inspect the local VOICEVOX Docker container and required host-to-container port mapping |
 | `npm run voicevox:start` | Start the governed local VOICEVOX Docker container when it already has the required port mapping |
-| `npm run voicevox:start:fresh` | Recreate the local VOICEVOX Docker container with host `50021` mapped to container `50121` when the old container shape is wrong |
+| `npm run voicevox:start:fresh` | Recreate the local VOICEVOX Docker container with local host `127.0.0.1:50021` mapped to container `50121` when the old container shape is wrong |
 | `npm run voicevox:stop` | Stop the local VOICEVOX Docker container after governed audio work |
 | `npm run deck:readiness` | Report per-level quality gates |
 | `npm run deck:preview` | Preview kanji cards |
@@ -873,6 +873,7 @@ Media source folders:
 Optional `.env` settings:
 
 - `NODE_ENV`
+- `SERVER_HOST` (defaults to `127.0.0.1`; set `0.0.0.0` only for an intentional LAN-exposed dev server)
 - `WORD_STUDY_DATA_PATH`
 - `VOICEVOX_ENGINE_URL`
 - `VOICEVOX_SPEAKER_ID`

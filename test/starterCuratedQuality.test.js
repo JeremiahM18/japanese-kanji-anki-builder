@@ -273,8 +273,25 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
     assert.deepEqual(curatedStudyData["成"].displayWord, { written: "成功", pron: "せいこう" });
     assert.equal(curatedStudyData["成"].englishMeaning, "succeed / become / complete");
 
+    assert.deepEqual(curatedStudyData["当"].blockedMeanings, ["himself"]);
+
     assert.equal(curatedStudyData["役"].englishMeaning, "role / usefulness");
     assert.deepEqual(curatedStudyData["役"].preferredWords, ["役に立つ", "役目", "役所"]);
+    assert.deepEqual(curatedStudyData["役"].blockedMeanings, ["campaign", "drafted labor", "war"]);
+
+    assert.deepEqual(curatedStudyData["座"].blockedMeanings, ["cushion", "squat"]);
+
+    assert.deepEqual(curatedStudyData["彼"].blockedMeanings, ["the"]);
+
+    assert.deepEqual(curatedStudyData["忙"].blockedMeanings, ["restless"]);
+
+    assert.deepEqual(curatedStudyData["念"].blockedMeanings, ["sense"]);
+
+    assert.deepEqual(curatedStudyData["息"].blockedMeanings, [
+        "coming to an end",
+        "interest (on money)",
+        "nuture",
+    ]);
 
     assert.deepEqual(curatedStudyData["居"].displayWord, { written: "居る", pron: "いる" });
     assert.deepEqual(curatedStudyData["居"].preferredWords, ["居る", "居間", "居場所"]);

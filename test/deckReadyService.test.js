@@ -68,6 +68,44 @@ test("formatDeckReadyReport summarizes packaged media and readiness", () => {
     assert.match(text, /Overall quality gate: failing/);
 });
 
+test("formatDeckReadyReport names the ready kanji APKG and level-specific package staging", () => {
+    const text = formatDeckReadyReport({
+        outDir: "C:/repo/out/build",
+        levels: [5, 4],
+        exports: [{ level: 5, rows: 80 }, { level: 4, rows: 212 }],
+        package: {
+            rootDir: "C:/repo/out/build/package",
+            exportCount: 2,
+            mediaAssetCount: 584,
+            mediaCounts: {
+                strokeOrder: 292,
+                strokeOrderImage: 0,
+                strokeOrderAnimation: 292,
+                audio: 292,
+            },
+            ankiPackage: {
+                filePath: "C:/repo/out/build/package/japanese-kanji-builder-n5-n4.apkg",
+            },
+        },
+        coverage: {
+            strokeOrder: 1,
+            trueAnimation: 1,
+            audio: 1,
+            fullMedia: 1,
+        },
+        exportIssues: {
+            count: 0,
+            warnings: 0,
+            errors: 0,
+        },
+    });
+
+    assert.match(text, /APKG ready: C:\/repo\/out\/build\/package\/japanese-kanji-builder-n5-n4\.apkg/);
+    assert.match(text, /Package staging: rebuilt for --levels=5,4/);
+    assert.match(text, /Next step: import C:\/repo\/out\/build\/package\/japanese-kanji-builder-n5-n4\.apkg into Anki/);
+    assert.match(text, /If you switch levels, rerun `npm run deck:ready -- --levels=5,4` before rerunning `npm run deck:apkg -- --levels=5,4`/);
+});
+
 test("formatDeckReadyReport recommends configuring acquisition when no media was packaged", () => {
     const text = formatDeckReadyReport({
         outDir: "C:/repo/out/build",

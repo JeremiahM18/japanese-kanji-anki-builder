@@ -49,6 +49,8 @@ function formatDeckReadyReport(summary, doctorReport = null) {
     const levelReadiness = doctorReport?.quality?.levelReadiness || null;
     const audioEnabled = true;
     const selectedLevels = Array.isArray(summary.levels) ? summary.levels : [];
+    const levelArgument = selectedLevels.join(",");
+    const apkgPath = packageSummary.ankiPackage?.filePath || null;
     const selectedReadinessRows = levelReadiness?.levels?.filter((entry) => selectedLevels.includes(entry.level)) || [];
     const selectedWeakestLevel = selectedReadinessRows.length > 0
         ? [...selectedReadinessRows].sort((a, b) => a.readinessScore - b.readinessScore || b.level - a.level)[0]
@@ -61,10 +63,11 @@ function formatDeckReadyReport(summary, doctorReport = null) {
     lines.push("");
     lines.push(`Output directory: ${summary.outDir}`);
     lines.push(`Package directory: ${packageSummary.rootDir || "n/a"}`);
-    if (packageSummary.ankiPackage?.filePath) {
-        lines.push(`Anki package: ${packageSummary.ankiPackage.filePath}`);
+    if (apkgPath) {
+        lines.push(`APKG ready: ${apkgPath}`);
     }
     lines.push(`Levels: ${(summary.levels || []).map((level) => `N${level}`).join(", ") || "n/a"}`);
+    lines.push(`Package staging: rebuilt for --levels=${levelArgument || "n/a"}`);
     lines.push(`Exports generated: ${formatCount(packageSummary.exportCount ?? summary.exports?.length)}`);
     lines.push(`Unique packaged media files: ${formatCount(packageSummary.mediaAssetCount)}`);
     lines.push("");
@@ -138,8 +141,8 @@ function formatDeckReadyReport(summary, doctorReport = null) {
         } else {
             lines.push("Next step: this deck is ready, but the project-wide quality gate is still failing. Use `npm run deck:readiness` to track the remaining levels.");
         }
-    } else if (packageSummary.ankiPackage?.filePath) {
-        lines.push("Next step: import the generated `.apkg` file into Anki.");
+    } else if (apkgPath) {
+        lines.push(`Next step: import ${apkgPath} into Anki. If you switch levels, rerun \`npm run deck:ready -- --levels=${levelArgument}\` before rerunning \`npm run deck:apkg -- --levels=${levelArgument}\`.`);
     } else {
         lines.push("Next step: import the TSV from the package exports folder and copy the packaged media into Anki's `collection.media` directory.");
     }

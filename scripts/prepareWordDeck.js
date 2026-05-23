@@ -174,15 +174,18 @@ function formatWordDeckReadyReport(summary, doctorReport) {
             ];
         })
         : [];
+    const levelArgument = summary.levels.join(",");
+    const apkgPath = summary.package.ankiPackage?.filePath || null;
 
     return [
         "Japanese Kanji Builder Word Deck Ready",
         "",
         `Output directory: ${summary.outDir}`,
         `Package directory: ${summary.package.rootDir}`,
-        ...(summary.package.ankiPackage?.filePath ? [`Anki package: ${summary.package.ankiPackage.filePath}`] : []),
+        ...(apkgPath ? [`APKG ready: ${apkgPath}`] : []),
         ...(summary.package.ankiPackage?.skipped ? [`Anki package status: skipped (${summary.package.ankiPackage.skipReason})`] : []),
         `Levels: ${summary.levels.map((level) => `N${level}`).join(", ")}`,
+        `Package staging: rebuilt for --levels=${levelArgument}`,
         `Word mode: ${summary.settings.includeInferred ? "curated + inferred" : "curated only"}`,
         `Exports generated: ${summary.exports.length}`,
         `Word notes generated: ${summary.exports.reduce((total, item) => total + item.rows, 0)}`,
@@ -208,8 +211,8 @@ function formatWordDeckReadyReport(summary, doctorReport) {
         `- SVG animation fallbacks: ${summary.package.mediaCounts.svgStrokeOrderAnimationFallback}`,
         ...(doctorReport.enableAudio ? [`- Audio fields: ${summary.package.mediaCounts.audio}`] : []),
         "",
-        summary.package.ankiPackage?.filePath
-            ? "Next step: import the generated .apkg into Anki and review the new word cards alongside the kanji deck."
+        apkgPath
+            ? `Next step: import ${apkgPath} into Anki and review the word cards. If you switch levels, rerun \`npm run deck:words:ready -- --levels=${levelArgument}\` before rerunning \`npm run deck:words:apkg -- --levels=${levelArgument}\`.`
             : "Next step: import the TSV from the package exports folder, copy the packaged media into Anki's collection.media directory, and review the new word cards alongside the kanji deck.",
         "",
     ].join("\n");

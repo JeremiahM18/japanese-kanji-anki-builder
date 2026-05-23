@@ -16474,7 +16474,7 @@
     }
   },
   "婦": {
-    "englishMeaning": "married couple / woman",
+    "englishMeaning": "wife / woman",
     "displayWord": {
       "written": "夫婦",
       "pron": "ふうふ"
@@ -16491,6 +16491,9 @@
       "婦人"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "married couple"
+    ],
     "blockedSentencePhrases": [],
     "notes": "夫婦 （ふうふ） - married couple ／ 婦人 （ふじん） - woman / lady",
     "alternativeNotes": [],
@@ -16883,6 +16886,11 @@
       "保存"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "believe",
+      "feel",
+      "suppose"
+    ],
     "blockedSentencePhrases": [],
     "notes": "存在 （そんざい） - existence ／ 保存 （ほぞん） - preservation / save",
     "alternativeNotes": [],
@@ -17081,6 +17089,10 @@
       "帰宅"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "my husband",
+      "our house"
+    ],
     "blockedSentencePhrases": [],
     "notes": "自宅 （じたく） - home ／ 帰宅 （きたく） - return home",
     "alternativeNotes": [],
@@ -17888,10 +17900,10 @@
     }
   },
   "宿": {
-    "englishMeaning": "homework / lodging",
+    "englishMeaning": "lodging / stay",
     "displayWord": {
-      "written": "宿題",
-      "pron": "しゅくだい"
+      "written": "宿泊",
+      "pron": "しゅくはく"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -17901,17 +17913,23 @@
     ],
     "jlpt": 3,
     "preferredWords": [
-      "宿題",
-      "宿"
+      "宿泊",
+      "宿",
+      "宿題"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "homework",
+      "be pregnant",
+      "relay station"
+    ],
     "blockedSentencePhrases": [],
-    "notes": "宿題 （しゅくだい） - homework ／ 宿 （やど） - inn / lodging",
+    "notes": "宿泊 （しゅくはく） - lodging / stay ／ 宿 （やど） - inn / lodging ／ 宿題 （しゅくだい） - homework",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "宿題を終えてからテレビを見ました。",
-      "reading": "しゅくだいをおえてからテレビをみました。",
-      "english": "I watched TV after finishing my homework.",
+      "japanese": "出張でホテルに宿泊しました。",
+      "reading": "しゅっちょうでホテルにしゅくはくしました。",
+      "english": "I stayed at a hotel on a business trip.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -18187,6 +18205,9 @@
       "寝る"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "remain unsold"
+    ],
     "blockedSentencePhrases": [],
     "notes": "寝る （ねる） - sleep / go to bed",
     "alternativeNotes": [],
@@ -18455,6 +18476,9 @@
       "対話"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "vis-a-vis"
+    ],
     "blockedSentencePhrases": [],
     "notes": "反対 （はんたい） - opposition ／ 対する （たいする） - face / be against ／ 対話 （たいわ） - dialogue",
     "alternativeNotes": [],
@@ -19491,6 +19515,9 @@
       "岩山"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "cliff"
+    ],
     "blockedSentencePhrases": [],
     "notes": "岩 （いわ） - rock ／ 岩場 （いわば） - rocky place ／ 岩山 （いわやま） - rocky mountain",
     "alternativeNotes": [],
@@ -20709,6 +20736,10 @@
       "美容師"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "army (incl. counter)",
+      "war"
+    ],
     "blockedSentencePhrases": [],
     "notes": "教師 （きょうし） - teacher ／ 医師 （いし） - doctor ／ 美容師 （びようし） - hairstylist",
     "alternativeNotes": [],

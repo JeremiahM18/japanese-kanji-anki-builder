@@ -309,6 +309,64 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
 
     assert.deepEqual(curatedStudyData["敗"].blockedMeanings, ["reversal"]);
 
+    assert.deepEqual(curatedStudyData["数"].blockedMeanings, ["law", "strength"]);
+
+    assert.deepEqual(curatedStudyData["断"].blockedMeanings, [
+        "apologize",
+        "dismiss",
+        "prohibit",
+        "severance",
+        "warn",
+    ]);
+
+    assert.deepEqual(curatedStudyData["易"].blockedMeanings, ["ready to"]);
+
+    assert.deepEqual(curatedStudyData["更"].blockedMeanings, ["night watch", "of course", "renovate"]);
+
+    assert.deepEqual(curatedStudyData["未"].blockedMeanings, [
+        "1-3PM",
+        "eighth sign of Chinese zodiac",
+        "hitherto",
+        "sign of the ram",
+    ]);
+
+    assert.deepEqual(curatedStudyData["末"].blockedMeanings, ["posterity", "powder"]);
+
+    assert.deepEqual(curatedStudyData["束"].blockedMeanings, [
+        "control",
+        "govern",
+        "manage",
+        "ream",
+        "sheaf",
+    ]);
+
+    assert.deepEqual(curatedStudyData["枚"].blockedMeanings, ["sheet of..."]);
+
+    assert.deepEqual(curatedStudyData["果"].blockedMeanings, ["reward"]);
+
+    assert.deepEqual(curatedStudyData["根"].blockedMeanings, ["head (pimple)"]);
+
+    assert.deepEqual(curatedStudyData["格"].blockedMeanings, [
+        "capacity",
+        "case (law, grammar)",
+    ]);
+
+    assert.deepEqual(curatedStudyData["構"].blockedMeanings, ["appearance"]);
+
+    assert.deepEqual(curatedStudyData["横"].blockedMeanings, [
+        "perverse",
+        "unreasonable",
+        "woof",
+    ]);
+
+    assert.deepEqual(curatedStudyData["機"].blockedMeanings, [
+        "efficacy",
+        "loom",
+        "potency",
+    ]);
+
+    assert.deepEqual(curatedStudyData["欲"].blockedMeanings, ["covetousness", "passion"]);
+
     assert.deepEqual(curatedStudyData["当"].blockedMeanings, ["himself"]);
 
     assert.equal(curatedStudyData["役"].englishMeaning, "role / usefulness");

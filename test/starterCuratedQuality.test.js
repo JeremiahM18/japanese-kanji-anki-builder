@@ -518,6 +518,47 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
 
     assert.deepEqual(curatedStudyData["続"].blockedReadings, ["キョウ", "コウ", "ショク", "つぐ.ない"]);
 
+    assert.deepEqual(curatedStudyData["緒"].blockedMeanings, ["end", "thong"]);
+    assert.deepEqual(curatedStudyData["置"].blockedMeanings, ["deposit", "employ", "pawn"]);
+    assert.deepEqual(curatedStudyData["老"].blockedMeanings, ["old man"]);
+    assert.deepEqual(curatedStudyData["育"].blockedMeanings, ["rear"]);
+
+    assert.deepEqual(curatedStudyData["背"].blockedMeanings, ["rebel"]);
+    assert.deepEqual(curatedStudyData["能"].blockedReadings, ["あた.う", "よ.く"]);
+    assert.deepEqual(curatedStudyData["舞"].blockedMeanings, ["circle", "flit", "wheel"]);
+    assert.deepEqual(curatedStudyData["芸"].blockedReadings, ["ウン", "のり"]);
+    assert.deepEqual(curatedStudyData["芸"].blockedMeanings, ["stunt", "trick"]);
+    assert.deepEqual(curatedStudyData["若"].blockedReadings, [
+        "ごと.し",
+        "ニャ",
+        "ニャク",
+        "も.し",
+        "も.しくは",
+        "も.しくわ",
+    ]);
+    assert.deepEqual(curatedStudyData["若"].blockedMeanings, ["if", "low number", "perhaps", "possibly"]);
+
+    assert.equal(curatedStudyData["苦"].displayWord.pron, "くるしい");
+    assert.deepEqual(curatedStudyData["苦"].blockedReadings, ["-ぐる.しい"]);
+    assert.deepEqual(curatedStudyData["苦"].blockedMeanings, ["scowl", "trial", "worry"]);
+    assert.deepEqual(curatedStudyData["草"].blockedMeanings, ["draft", "herbs", "pasture", "write"]);
+    assert.deepEqual(curatedStudyData["荷"].blockedMeanings, ["shoulder (a gun)", "shoulder-pole load"]);
+    assert.deepEqual(curatedStudyData["菓"].blockedMeanings, ["fruit"]);
+    assert.deepEqual(curatedStudyData["落"].blockedMeanings, ["hamlet", "village"]);
+    assert.deepEqual(curatedStudyData["葉"].blockedMeanings, [
+        "blade",
+        "counter for flat things",
+        "fragment",
+        "lobe",
+        "needle",
+        "piece",
+        "plane",
+        "spear",
+    ]);
+    assert.deepEqual(curatedStudyData["術"].blockedMeanings, ["magic", "resources", "trick"]);
+    assert.equal(curatedStudyData["表"].displayWord.pron, "おもて");
+    assert.deepEqual(curatedStudyData["表"].blockedMeanings, ["diagram"]);
+
     assert.deepEqual(curatedStudyData["当"].blockedMeanings, ["himself"]);
 
     assert.equal(curatedStudyData["役"].englishMeaning, "role / usefulness");

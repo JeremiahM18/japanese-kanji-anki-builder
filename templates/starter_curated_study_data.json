@@ -49030,6 +49030,10 @@
       "内緒",
       "緒"
     ],
+    "blockedMeanings": [
+      "end",
+      "thong"
+    ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
     "notes": "一緒 （いっしょ） - together ／ 内緒 （ないしょ） - secret / private ／ 緒 （お） - cord / strap",
@@ -49263,6 +49267,11 @@
       "放置",
       "設置"
     ],
+    "blockedMeanings": [
+      "deposit",
+      "employ",
+      "pawn"
+    ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
     "notes": "置く （おく） - put / place ／ 放置 （ほうち） - leaving something as is ／ 設置 （せっち） - installation / setting up",
@@ -49488,6 +49497,9 @@
       "老人",
       "老後",
       "老いる"
+    ],
+    "blockedMeanings": [
+      "old man"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
@@ -49841,6 +49853,9 @@
       "教育",
       "育つ"
     ],
+    "blockedMeanings": [
+      "rear"
+    ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
     "notes": "育てる （そだてる） - raise / bring up ／ 教育 （きょういく） - education ／ 育つ （そだつ） - grow up",
@@ -49907,6 +49922,9 @@
       "背中",
       "背"
     ],
+    "blockedMeanings": [
+      "rebel"
+    ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
     "notes": "背が高い （せがたかい） - tall ／ 背中 （せなか） - back ／ 背 （せ） - height / stature",
@@ -49972,6 +49990,10 @@
       "可能",
       "能力",
       "才能"
+    ],
+    "blockedReadings": [
+      "あた.う",
+      "よ.く"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
@@ -50305,6 +50327,11 @@
       "舞う",
       "日本舞踊"
     ],
+    "blockedMeanings": [
+      "circle",
+      "flit",
+      "wheel"
+    ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
     "notes": "舞台 （ぶたい） - stage ／ 舞う （まう） - dance / flutter ／ 日本舞踊 （にほんぶよう） - Japanese dance",
@@ -50568,6 +50595,14 @@
       "芸能",
       "芸人"
     ],
+    "blockedReadings": [
+      "ウン",
+      "のり"
+    ],
+    "blockedMeanings": [
+      "stunt",
+      "trick"
+    ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
     "notes": "芸術 （げいじゅつ） - art ／ 芸能 （げいのう） - entertainment / performing arts ／ 芸人 （げいにん） - performer",
@@ -50601,6 +50636,20 @@
       "若者",
       "若々しい"
     ],
+    "blockedReadings": [
+      "ごと.し",
+      "も.し",
+      "も.しくは",
+      "も.しくわ",
+      "ニャ",
+      "ニャク"
+    ],
+    "blockedMeanings": [
+      "if",
+      "low number",
+      "perhaps",
+      "possibly"
+    ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
     "notes": "若い （わかい） - young ／ 若者 （わかもの） - young person ／ 若々しい （わかわかしい） - youthful",
@@ -50617,10 +50666,10 @@
     }
   },
   "苦": {
-    "englishMeaning": "not good at / difficult",
+    "englishMeaning": "painful / difficult",
     "displayWord": {
-      "written": "苦手",
-      "pron": "にがて"
+      "written": "苦しい",
+      "pron": "くるしい"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -50630,18 +50679,26 @@
     ],
     "jlpt": 3,
     "preferredWords": [
-      "苦手",
       "苦しい",
+      "苦手",
       "苦労"
     ],
     "blockedWords": [],
+    "blockedReadings": [
+      "-ぐる.しい"
+    ],
+    "blockedMeanings": [
+      "scowl",
+      "trial",
+      "worry"
+    ],
     "blockedSentencePhrases": [],
-    "notes": "苦手 （にがて） - not good at / weak point ／ 苦しい （くるしい） - painful / difficult ／ 苦労 （くろう） - hardship / trouble",
+    "notes": "苦しい （くるしい） - painful / difficult ／ 苦手 （にがて） - not good at / weak point ／ 苦労 （くろう） - hardship / trouble",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "私は辛い食べ物が少し苦手です。",
-      "reading": "わたしはからいたべものがすこしにがてです。",
-      "english": "I am not very good with spicy food.",
+      "japanese": "長い階段を上るのは少し苦しいです。",
+      "reading": "ながいかいだんをのぼるのはすこしくるしいです。",
+      "english": "Climbing the long stairs is a little hard.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -50731,6 +50788,12 @@
       "薬草"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "draft",
+      "herbs",
+      "pasture",
+      "write"
+    ],
     "blockedSentencePhrases": [],
     "notes": "草 （くさ） - grass ／ 草花 （くさばな） - plants and flowers ／ 薬草 （やくそう） - medicinal herb",
     "alternativeNotes": [],
@@ -50797,6 +50860,10 @@
       "出荷"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "shoulder (a gun)",
+      "shoulder-pole load"
+    ],
     "blockedSentencePhrases": [],
     "notes": "荷物 （にもつ） - baggage / luggage ／ 入荷 （にゅうか） - arrival of goods ／ 出荷 （しゅっか） - shipment",
     "alternativeNotes": [],
@@ -50830,6 +50897,9 @@
       "洋菓子"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "fruit"
+    ],
     "blockedSentencePhrases": [],
     "notes": "和菓子 （わがし） - Japanese sweets ／ 菓子 （かし） - sweets / confectionery ／ 洋菓子 （ようがし） - Western sweets",
     "alternativeNotes": [],
@@ -50960,6 +51030,10 @@
       "落第"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "hamlet",
+      "village"
+    ],
     "blockedSentencePhrases": [],
     "notes": "落ちる （おちる） - fall ／ 落とす （おとす） - drop ／ 落第 （らくだい） - failing a grade or exam",
     "alternativeNotes": [],
@@ -50993,6 +51067,16 @@
       "落ち葉"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "blade",
+      "counter for flat things",
+      "fragment",
+      "lobe",
+      "needle",
+      "piece",
+      "plane",
+      "spear"
+    ],
     "blockedSentencePhrases": [],
     "notes": "葉 （は） - leaf ／ 言葉 （ことば） - word / language ／ 落ち葉 （おちば） - fallen leaves",
     "alternativeNotes": [],
@@ -51265,6 +51349,11 @@
       "芸術"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "magic",
+      "resources",
+      "trick"
+    ],
     "blockedSentencePhrases": [],
     "notes": "技術 （ぎじゅつ） - technology / skill ／ 手術 （しゅじゅつ） - surgery ／ 芸術 （げいじゅつ） - art",
     "alternativeNotes": [],
@@ -51313,10 +51402,10 @@
     }
   },
   "表": {
-    "englishMeaning": "presentation / surface",
+    "englishMeaning": "front / surface / presentation / chart / table",
     "displayWord": {
-      "written": "発表",
-      "pron": "はっぴょう"
+      "written": "表",
+      "pron": "おもて"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -51326,18 +51415,21 @@
     ],
     "jlpt": 3,
     "preferredWords": [
-      "発表",
       "表",
-      "表面"
+      "表面",
+      "発表"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "diagram"
+    ],
     "blockedSentencePhrases": [],
-    "notes": "発表 （はっぴょう） - presentation / announcement ／ 表 （ひょう） - chart / table ／ 表面 （ひょうめん） - surface",
+    "notes": "表 （おもて） - front / surface ／ 表面 （ひょうめん） - surface ／ 発表 （はっぴょう） - presentation / announcement",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "来週クラスで発表する予定です。",
-      "reading": "らいしゅうクラスではっぴょうするよていです。",
-      "english": "I am scheduled to give a presentation in class next week.",
+      "japanese": "紙の表に名前を書いてください。",
+      "reading": "かみのおもてになまえをかいてください。",
+      "english": "Please write your name on the front of the paper.",
       "source": "starter-curated",
       "tags": [
         "example",

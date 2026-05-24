@@ -18,7 +18,7 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 
 ### Changed
 
-- Expanded the governed N3 core kanji current-standard Platinum lane while keeping Obsidian fail-closed: live N3 kanji remains `341/341` generated and Gold, structural Platinum is now `240/341`, Obsidian is `0/341`, `240` Platinum entries still need Obsidian proof, and `101` generated rows remain blocked/failing only because structural Platinum is incomplete.
+- Expanded the governed N3 core kanji current-standard Platinum lane while keeping Obsidian fail-closed: live N3 kanji remains `341/341` generated and Gold, structural Platinum is now `264/341`, Obsidian is `0/341`, `264` Platinum entries still need Obsidian proof, and `77` generated rows remain blocked/failing only because structural Platinum is incomplete.
 - Fixed Gold/Platinum review matching so escaped Anki HTML fields are checked against their visible learner-facing text, preserving safer TSV output without invalidating existing review evidence that protects `kanji -> reading` notes and escaped example translations.
 - Completed the governed N4 word Obsidian proof lane while keeping certification fail-closed: N5 word Obsidian is `287/287`, N4 word structural Platinum is `700/700`, N4 word Obsidian is `700/700`, total N5/N4 word Obsidian is `987/987`, `0` N4 rows still need Obsidian proof, and `0` generated N5/N4 word rows are blocked/failing.
 - Kept N5/N4 word generation ready with deferred variants: live word generation reports `987` word notes, N5 reading coverage `239/344` (`69.5%`), N4 reading coverage `579/755` (`76.7%`), and word audio plus pitch fields ready for all `987` generated rows.

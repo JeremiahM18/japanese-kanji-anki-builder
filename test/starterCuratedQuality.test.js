@@ -469,6 +469,55 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
 
     assert.deepEqual(curatedStudyData["礼"].blockedMeanings, ["remuneration", "salute"]);
 
+    assert.equal(curatedStudyData["神"].englishMeaning, "god / deity");
+    assert.deepEqual(curatedStudyData["神"].blockedMeanings, ["shrine"]);
+
+    assert.deepEqual(curatedStudyData["移"].blockedMeanings, ["drift", "pass into"]);
+
+    assert.deepEqual(curatedStudyData["程"].blockedMeanings, ["formula"]);
+
+    assert.deepEqual(curatedStudyData["種"].blockedReadings, ["-ぐさ"]);
+
+    assert.deepEqual(curatedStudyData["積"].blockedMeanings, ["acreage", "contents"]);
+
+    assert.deepEqual(curatedStudyData["窓"].blockedReadings, ["けむだし", "ス", "てんまど"]);
+
+    assert.deepEqual(curatedStudyData["算"].blockedReadings, ["そろ"]);
+    assert.deepEqual(curatedStudyData["算"].blockedMeanings, ["abacus", "divining", "probability"]);
+
+    assert.deepEqual(curatedStudyData["箱"].blockedMeanings, ["bin", "chest", "railway car"]);
+
+    assert.deepEqual(curatedStudyData["米"].blockedReadings, ["メエトル"]);
+    assert.deepEqual(curatedStudyData["米"].blockedMeanings, ["metre"]);
+
+    assert.deepEqual(curatedStudyData["精"].blockedReadings, ["くわ.しい", "しら.げる"]);
+    assert.deepEqual(curatedStudyData["精"].blockedMeanings, ["fairy", "ghost", "semen"]);
+
+    assert.equal(curatedStudyData["約"].englishMeaning, "promise / approximately");
+    assert.ok(curatedStudyData["約"].notes.includes("約 （やく） - promise / approximately"));
+
+    assert.deepEqual(curatedStudyData["組"].blockedMeanings, ["braid", "grapple", "plait"]);
+
+    assert.deepEqual(curatedStudyData["経"].blockedReadings, ["のり", "はか.る"]);
+    assert.deepEqual(curatedStudyData["経"].blockedMeanings, ["expire", "pass thru"]);
+
+    assert.deepEqual(curatedStudyData["給"].blockedReadings, ["-たま.え", "たま.う", "たも.う"]);
+    assert.deepEqual(curatedStudyData["給"].blockedMeanings, ["allow", "gift"]);
+
+    assert.equal(curatedStudyData["絶"].englishMeaning, "cease / die out");
+    assert.deepEqual(curatedStudyData["絶"].displayWord, { written: "絶える", pron: "たえる" });
+    assert.deepEqual(curatedStudyData["絶"].preferredWords, ["絶える", "絶対", "絶望"]);
+    assert.deepEqual(curatedStudyData["絶"].blockedMeanings, [
+        "abstain",
+        "be beyond",
+        "suppress",
+        "unparalleled",
+        "without match",
+    ]);
+    assert.equal(curatedStudyData["絶"].exampleSentence.japanese, "その古い習慣は少しずつ絶えていきました。");
+
+    assert.deepEqual(curatedStudyData["続"].blockedReadings, ["キョウ", "コウ", "ショク", "つぐ.ない"]);
+
     assert.deepEqual(curatedStudyData["当"].blockedMeanings, ["himself"]);
 
     assert.equal(curatedStudyData["役"].englishMeaning, "role / usefulness");

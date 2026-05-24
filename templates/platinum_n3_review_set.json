@@ -18680,5 +18680,2363 @@
       }
     ],
     "fixSummary": "Blocked low-value connective glosses if so, in that case, sort of thing, and well, and blocked rare kun readings さ, しか, しか.し, and しか.り before certification."
+  },
+  {
+    "kanji": "焼",
+    "status": "platinum",
+    "readingIncludes": [
+      "やく"
+    ],
+    "meaningIncludes": [
+      "to grill",
+      "bake"
+    ],
+    "kanjiMeaningsIncludes": [
+      "burn",
+      "bake",
+      "burning"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "焼く",
+      "焼ける"
+    ],
+    "exampleIncludes": [
+      "朝ごはんにパンを焼きました。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0003411400; Kanjipedia",
+        "detail": "Kanjipedia review for 焼|やく: the page lists 音 ショウ and 訓 やく / やける, with meaning branches for burning, baking, and becoming burned, plus vocabulary such as 焼却, 焼失, 焼酎, 焼き芋, and 焼く. This supports exported PrimaryReading やく, MeaningJP to grill / bake, and KanjiMeanings burn / bake / burning for the individual kanji 焼."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses やく because the N3 learner-facing card is anchored in 焼く and the support example uses 焼きました; ショウ remains visible in the on-reading field.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n3.tsv after npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 焼|やく: single-kanji anchor; Kanji and DisplayWord 焼; StudyWordKanji blank; PrimaryReading やく; MeaningJP to grill / bake; KanjiMeanings burn / bake / burning; OnReading ショウ; KunReading -や.き、 や.く、 や.ける; notes <ruby>焼<rt>や</rt></ruby>く - to grill / bake ／ <ruby>焼<rt>や</rt></ruby>ける - to be burned / baked; example 朝ごはんにパンを焼きました。 / あさごはんにパンをやきました。 / I toasted bread for breakfast.; audio field includes kanji-reading-焼-やく; stroke-order field includes 713C_焼-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 焼: exact audio media fragment kanji-reading-焼-やく; audio/713C_焼-kanji-reading-焼-やく.wav; stroke-order media animations/713C_焼-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 焼|やく: exact kanji-reading audio kanji-reading-焼-やく; audio/713C_焼-kanji-reading-焼-やく.wav; exported PrimaryReading やく."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 焼: stroke-order animation animations/713C_焼-stroke-order.gif shows target 焼; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 焼; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 焼|やく: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 焼|やく with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading やく, MeaningJP to grill / bake, KanjiMeanings burn / bake / burning, example sentence 朝ごはんにパンを焼きました。, reading あさごはんにパンをやきました。, translation I toasted bread for breakfast., notes/support surface <ruby>焼<rt>や</rt></ruby>く - to grill / bake ／ <ruby>焼<rt>や</rt></ruby>ける - to be burned / baked, audio kanji-reading-焼-やく, stroke-order media 713C_焼-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ]
+  },
+  {
+    "kanji": "熱",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "ねつ"
+    ],
+    "meaningIncludes": [
+      "fever",
+      "heat"
+    ],
+    "kanjiMeaningsIncludes": [
+      "heat",
+      "fever",
+      "passion",
+      "temperature"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "熱",
+      "熱心",
+      "情熱"
+    ],
+    "exampleIncludes": [
+      "朝から少し熱があります。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0005476200; Kanjipedia",
+        "detail": "Kanjipedia review for 熱|ねつ: the page lists 音 ネツ and 訓 あつい, with meaning branches for heat, high temperature, body fever, and emotional absorption or passion, plus words such as 熱病, 微熱, 熱心, 熱狂, 熱烈, 熱情, and 情熱. This supports exported PrimaryReading ねつ, MeaningJP fever / heat, and cleaned KanjiMeanings heat / fever / passion / temperature after suppressing the low-value mania gloss."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses ねつ because the card is anchored in the common noun 熱 for fever/heat and the support example uses the same reading; あつい remains visible in the kun-reading field.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n3.tsv after source/card fixes and npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 熱|ねつ: single-kanji anchor; Kanji and DisplayWord 熱; StudyWordKanji blank; PrimaryReading ねつ; MeaningJP fever / heat; KanjiMeanings heat / fever / passion / temperature; OnReading ネツ; KunReading あつ.い; notes <ruby>熱<rt>ねつ</rt></ruby> - fever / heat ／ <ruby>熱心<rt>ねっしん</rt></ruby> - enthusiastic ／ <ruby>情熱<rt>じょうねつ</rt></ruby> - passion; example 朝から少し熱があります。 / あさからすこしねつがあります。 / I have had a slight fever since this morning.; audio field includes kanji-reading-熱-ねつ; stroke-order field includes 71B1_熱-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 熱: exact audio media fragment kanji-reading-熱-ねつ; audio/71B1_熱-kanji-reading-熱-ねつ.wav; stroke-order media animations/71B1_熱-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 熱|ねつ: exact kanji-reading audio kanji-reading-熱-ねつ; audio/71B1_熱-kanji-reading-熱-ねつ.wav; exported PrimaryReading ねつ."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 熱: stroke-order animation animations/71B1_熱-stroke-order.gif shows target 熱; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json, test/starterCuratedQuality.test.js, and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 熱 and starter-curated regression protects blockedMeanings mania; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 熱|ねつ: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 熱|ねつ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ねつ, MeaningJP fever / heat, KanjiMeanings heat / fever / passion / temperature, example sentence 朝から少し熱があります。, reading あさからすこしねつがあります。, translation I have had a slight fever since this morning., notes/support surface <ruby>熱<rt>ねつ</rt></ruby> - fever / heat ／ <ruby>熱心<rt>ねっしん</rt></ruby> - enthusiastic ／ <ruby>情熱<rt>じょうねつ</rt></ruby> - passion, audio kanji-reading-熱-ねつ, stroke-order media 71B1_熱-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ],
+    "fixSummary": "Blocked the low-value mania gloss so the N3 card keeps the useful heat / fever / passion / temperature scope."
+  },
+  {
+    "kanji": "犯",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "はん"
+    ],
+    "meaningIncludes": [
+      "criminal",
+      "offense"
+    ],
+    "kanjiMeaningsIncludes": [
+      "criminal",
+      "offense",
+      "crime"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "犯人",
+      "犯罪",
+      "犯す"
+    ],
+    "exampleIncludes": [
+      "ニュースで犯人が捕まったと言っていました。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0005732700/; Kanjipedia",
+        "detail": "Kanjipedia review for 犯|はん: the page lists 音 ハン with outside ボン and 訓 おかす, with meanings for violating rules, crime or offense, and a person who commits such an offense, plus words such as 犯人, 犯罪, 共犯, 再犯, and 防犯. This supports exported PrimaryReading はん, MeaningJP criminal / offense, and cleaned KanjiMeanings criminal / offense / crime after suppressing low-value ボン and sin from the learner surface."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses はん because the N3 learner-facing value appears in 犯人 and 犯罪, both visible in the card support surface; おかす remains visible as the kun reading and support word 犯す.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n3.tsv after source/card fixes and npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 犯|はん: single-kanji anchor; Kanji and DisplayWord 犯; StudyWordKanji blank; PrimaryReading はん; MeaningJP criminal / offense; KanjiMeanings criminal / offense / crime; OnReading ハン; KunReading おか.す; notes <ruby>犯人<rt>はんにん</rt></ruby> - criminal / culprit ／ <ruby>犯罪<rt>はんざい</rt></ruby> - crime ／ <ruby>犯<rt>おか</rt></ruby>す - commit / violate; example ニュースで犯人が捕まったと言っていました。 / ニュースではんにんがつかまったといっていました。 / The news said the culprit had been caught.; audio field includes kanji-reading-犯-はん; stroke-order field includes 72AF_犯-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 犯: exact audio media fragment kanji-reading-犯-はん; audio/72AF_犯-kanji-reading-犯-はん.wav; stroke-order media animations/72AF_犯-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 犯|はん: exact kanji-reading audio kanji-reading-犯-はん; audio/72AF_犯-kanji-reading-犯-はん.wav; exported PrimaryReading はん."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 犯: stroke-order animation animations/72AF_犯-stroke-order.gif shows target 犯; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json, test/starterCuratedQuality.test.js, and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 犯 and starter-curated regression protects blockedReadings ボン plus blockedMeanings sin; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 犯|はん: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 犯|はん with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading はん, MeaningJP criminal / offense, KanjiMeanings criminal / offense / crime, example sentence ニュースで犯人が捕まったと言っていました。, reading ニュースではんにんがつかまったといっていました。, translation The news said the culprit had been caught., notes/support surface <ruby>犯人<rt>はんにん</rt></ruby> - criminal / culprit ／ <ruby>犯罪<rt>はんざい</rt></ruby> - crime ／ <ruby>犯<rt>おか</rt></ruby>す - commit / violate, audio kanji-reading-犯-はん, stroke-order media 72AF_犯-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ],
+    "fixSummary": "Blocked the low-value ボン reading and sin gloss so the N3 card keeps the useful criminal / offense / crime scope."
+  },
+  {
+    "kanji": "状",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "じょう"
+    ],
+    "meaningIncludes": [
+      "condition",
+      "state"
+    ],
+    "kanjiMeaningsIncludes": [
+      "condition",
+      "state",
+      "appearance",
+      "circumstances",
+      "form"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "状態",
+      "状況",
+      "現状"
+    ],
+    "exampleIncludes": [
+      "機械の状態を確認してください。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0003494600/; Kanjipedia",
+        "detail": "Kanjipedia review for 状|じょう: the page lists 音 ジョウ and outside readings かたち / かきつけ, with meanings for shape or form, condition or state, circumstances or situation, and written notice, plus words such as 状態, 状況, 現状, 形状, and 書状. This supports exported PrimaryReading じょう, MeaningJP condition / state, and cleaned KanjiMeanings condition / state / appearance / circumstances / form after suppressing duplicate conditions and low-value status quo."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses じょう because the N3 learner-facing value appears in 状態, 状況, and 現状, and the support example uses 状態; rare outside kun readings are not useful as the card anchor.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n3.tsv after source/card fixes and npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 状|じょう: single-kanji anchor; Kanji and DisplayWord 状; StudyWordKanji blank; PrimaryReading じょう; MeaningJP condition / state; KanjiMeanings condition / state / appearance / circumstances / form; OnReading ジョウ; KunReading blank; notes <ruby>状態<rt>じょうたい</rt></ruby> - condition / state ／ <ruby>状況<rt>じょうきょう</rt></ruby> - situation ／ <ruby>現状<rt>げんじょう</rt></ruby> - current state; example 機械の状態を確認してください。 / きかいのじょうたいをかくにんしてください。 / Please check the condition of the machine.; audio field includes kanji-reading-状-じょう; stroke-order field includes 72B6_状-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 状: exact audio media fragment kanji-reading-状-じょう; audio/72B6_状-kanji-reading-状-じょう.wav; stroke-order media animations/72B6_状-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 状|じょう: exact kanji-reading audio kanji-reading-状-じょう; audio/72B6_状-kanji-reading-状-じょう.wav; exported PrimaryReading じょう."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 状: stroke-order animation animations/72B6_状-stroke-order.gif shows target 状; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json, test/starterCuratedQuality.test.js, and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 状 and starter-curated regression protects blockedMeanings conditions / status quo; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 状|じょう: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 状|じょう with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading じょう, MeaningJP condition / state, KanjiMeanings condition / state / appearance / circumstances / form, example sentence 機械の状態を確認してください。, reading きかいのじょうたいをかくにんしてください。, translation Please check the condition of the machine., notes/support surface <ruby>状態<rt>じょうたい</rt></ruby> - condition / state ／ <ruby>状況<rt>じょうきょう</rt></ruby> - situation ／ <ruby>現状<rt>げんじょう</rt></ruby> - current state, audio kanji-reading-状-じょう, stroke-order media 72B6_状-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ],
+    "fixSummary": "Blocked duplicate/low-value broader meanings conditions and status quo so the N3 card keeps the useful condition / state / appearance / circumstances / form scope."
+  },
+  {
+    "kanji": "猫",
+    "status": "platinum",
+    "readingIncludes": [
+      "ねこ"
+    ],
+    "meaningIncludes": [
+      "cat"
+    ],
+    "kanjiMeaningsIncludes": [
+      "cat"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "猫",
+      "子猫"
+    ],
+    "exampleIncludes": [
+      "猫がいすの上で寝ています。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0005962100; Kanjipedia",
+        "detail": "Kanjipedia review for 猫|ねこ: the page lists 音 ビョウ and 訓 ねこ, with meaning cat, specifically the feline mammal, plus words such as 猫, 猫背, 猫舌, and 猫に小判. This supports exported PrimaryReading ねこ, MeaningJP cat, and KanjiMeanings cat for the individual kanji 猫."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses ねこ because the individual-kanji card and support example are anchored in the common word 猫; ビョウ remains visible in the on-reading field.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n3.tsv after npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 猫|ねこ: single-kanji anchor; Kanji and DisplayWord 猫; StudyWordKanji blank; PrimaryReading ねこ; MeaningJP cat; KanjiMeanings cat; OnReading ビョウ; KunReading ねこ; notes <ruby>猫<rt>ねこ</rt></ruby> - cat ／ <ruby>子猫<rt>こねこ</rt></ruby> - kitten; example 猫がいすの上で寝ています。 / ねこがいすのうえでねています。 / The cat is sleeping on the chair.; audio field includes kanji-reading-猫-ねこ; stroke-order field includes 732B_猫-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 猫: exact audio media fragment kanji-reading-猫-ねこ; audio/732B_猫-kanji-reading-猫-ねこ.wav; stroke-order media animations/732B_猫-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 猫|ねこ: exact kanji-reading audio kanji-reading-猫-ねこ; audio/732B_猫-kanji-reading-猫-ねこ.wav; exported PrimaryReading ねこ."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 猫: stroke-order animation animations/732B_猫-stroke-order.gif shows target 猫; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 猫; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 猫|ねこ: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 猫|ねこ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ねこ, MeaningJP cat, KanjiMeanings cat, example sentence 猫がいすの上で寝ています。, reading ねこがいすのうえでねています。, translation The cat is sleeping on the chair., notes/support surface <ruby>猫<rt>ねこ</rt></ruby> - cat ／ <ruby>子猫<rt>こねこ</rt></ruby> - kitten, audio kanji-reading-猫-ねこ, stroke-order media 732B_猫-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ]
+  },
+  {
+    "kanji": "玉",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "たま"
+    ],
+    "meaningIncludes": [
+      "ball",
+      "jewel"
+    ],
+    "kanjiMeaningsIncludes": [
+      "ball",
+      "jewel"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "玉",
+      "宝玉"
+    ],
+    "exampleIncludes": [
+      "子どもが公園で赤い玉を転がしていました。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0001584900; Kanjipedia",
+        "detail": "Kanjipedia review for 玉|たま: the page lists 音 ギョク and 訓 たま, with meanings for ball, beautiful jewel, and related honorific or fine-object senses, plus words such as 玉, 宝玉, 玉石, 玉座, and 玉露. This supports exported PrimaryReading たま, MeaningJP ball / jewel, and KanjiMeanings ball / jewel after suppressing the low-value bound reading -だま from the learner surface."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses たま because the individual-kanji card and support example are anchored in the common noun 玉; ギョク remains visible in the on-reading field and support word 宝玉.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n3.tsv after source/card fixes and npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 玉|たま: single-kanji anchor; Kanji and DisplayWord 玉; StudyWordKanji blank; PrimaryReading たま; MeaningJP ball / jewel; KanjiMeanings ball / jewel; OnReading ギョク; KunReading たま; notes <ruby>玉<rt>たま</rt></ruby> - ball / jewel ／ <ruby>宝玉<rt>ほうぎょく</rt></ruby> - jewel / gem; example 子どもが公園で赤い玉を転がしていました。 / こどもがこうえんであかいたまをころがしていました。 / A child was rolling a red ball in the park.; audio field includes kanji-reading-玉-たま; stroke-order field includes 7389_玉-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 玉: exact audio media fragment kanji-reading-玉-たま; audio/7389_玉-kanji-reading-玉-たま.wav; stroke-order media animations/7389_玉-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 玉|たま: exact kanji-reading audio kanji-reading-玉-たま; audio/7389_玉-kanji-reading-玉-たま.wav; exported PrimaryReading たま."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 玉: stroke-order animation animations/7389_玉-stroke-order.gif shows target 玉; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json, test/starterCuratedQuality.test.js, and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 玉 and starter-curated regression protects blockedReadings -だま; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 玉|たま: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 玉|たま with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading たま, MeaningJP ball / jewel, KanjiMeanings ball / jewel, example sentence 子どもが公園で赤い玉を転がしていました。, reading こどもがこうえんであかいたまをころがしていました。, translation A child was rolling a red ball in the park., notes/support surface <ruby>玉<rt>たま</rt></ruby> - ball / jewel ／ <ruby>宝玉<rt>ほうぎょく</rt></ruby> - jewel / gem, audio kanji-reading-玉-たま, stroke-order media 7389_玉-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ],
+    "fixSummary": "Blocked the low-value bound reading -だま so the N3 card keeps the useful たま anchor with ball / jewel scope."
+  },
+  {
+    "kanji": "王",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "おう"
+    ],
+    "meaningIncludes": [
+      "king"
+    ],
+    "kanjiMeaningsIncludes": [
+      "king"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "王様",
+      "国王",
+      "女王"
+    ],
+    "exampleIncludes": [
+      "その物語には優しい王様が出てきます。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0000504100; Kanjipedia",
+        "detail": "Kanjipedia review for 王|おう: the page lists 音 オウ with outside 訓 きみ, with meanings for king, monarch, ruler, and strongest or leading person, plus words such as 王宮, 王朝, 国王, 王座, 王者, and 王子. This supports exported PrimaryReading おう, MeaningJP king, and cleaned KanjiMeanings king after suppressing low-value -ノウ, magnate, and rule from the learner surface."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses おう because the N3 learner-facing value appears in 王様, 国王, and 女王, and the support example uses 王様; rare/assimilated -ノウ is not useful as the card anchor.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n3.tsv after source/card fixes and npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 王|おう: single-kanji anchor; Kanji and DisplayWord 王; StudyWordKanji blank; PrimaryReading おう; MeaningJP king; KanjiMeanings king; OnReading オウ; KunReading blank; notes <ruby>王様<rt>おうさま</rt></ruby> - king ／ <ruby>国王<rt>こくおう</rt></ruby> - king / monarch ／ <ruby>女王<rt>じょおう</rt></ruby> - queen; example その物語には優しい王様が出てきます。 / そのものがたりにはやさしいおうさまがでてきます。 / A kind king appears in that story.; audio field includes kanji-reading-王-おう; stroke-order field includes 738B_王-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 王: exact audio media fragment kanji-reading-王-おう; audio/738B_王-kanji-reading-王-おう.wav; stroke-order media animations/738B_王-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 王|おう: exact kanji-reading audio kanji-reading-王-おう; audio/738B_王-kanji-reading-王-おう.wav; exported PrimaryReading おう."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 王: stroke-order animation animations/738B_王-stroke-order.gif shows target 王; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json, test/starterCuratedQuality.test.js, and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 王 and starter-curated regression protects blockedReadings -ノウ plus blockedMeanings magnate / rule; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 王|おう: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 王|おう with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading おう, MeaningJP king, KanjiMeanings king, example sentence その物語には優しい王様が出てきます。, reading そのものがたりにはやさしいおうさまがでてきます。, translation A kind king appears in that story., notes/support surface <ruby>王様<rt>おうさま</rt></ruby> - king ／ <ruby>国王<rt>こくおう</rt></ruby> - king / monarch ／ <ruby>女王<rt>じょおう</rt></ruby> - queen, audio kanji-reading-王-おう, stroke-order media 738B_王-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ],
+    "fixSummary": "Blocked low-value reading -ノウ and broad glosses magnate / rule so the N3 card stays focused on king."
+  },
+  {
+    "kanji": "現",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "げん"
+    ],
+    "meaningIncludes": [
+      "present",
+      "current"
+    ],
+    "kanjiMeaningsIncludes": [
+      "present",
+      "current",
+      "actual",
+      "existing"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "現在",
+      "現れる",
+      "現実"
+    ],
+    "exampleIncludes": [
+      "現在の住所をここに書いてください。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0002004000; Kanjipedia",
+        "detail": "Kanjipedia review for 現|げん: the page lists 音 ゲン and 訓 あらわれる / あらわす with outside うつつ, with meanings for appear, make visible, actual, present, current, existing, and waking reality, plus words such as 現在, 現存, 出現, 実現, 表現, and 現れる. This supports exported PrimaryReading げん, MeaningJP present / current, and KanjiMeanings present / current / actual / existing after suppressing low-value うつ.つ from the learner surface."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses げん because the N3 learner-facing value appears in common compounds such as 現在 and 現実, and the support example uses 現在; あらわれる remains visible in the kun-reading/support surface.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n3.tsv after source/card fixes and npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 現|げん: single-kanji anchor; Kanji and DisplayWord 現; StudyWordKanji blank; PrimaryReading げん; MeaningJP present / current; KanjiMeanings present / current / actual / existing; OnReading ゲン; KunReading あらわ.す、 あらわ.れる; notes <ruby>現在<rt>げんざい</rt></ruby> - present time ／ <ruby>現<rt>あらわ</rt></ruby>れる - appear ／ <ruby>現実<rt>げんじつ</rt></ruby> - reality; example 現在の住所をここに書いてください。 / げんざいのじゅうしょをここにかいてください。 / Please write your current address here.; audio field includes kanji-reading-現-げん; stroke-order field includes 73FE_現-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 現: exact audio media fragment kanji-reading-現-げん; audio/73FE_現-kanji-reading-現-げん.wav; stroke-order media animations/73FE_現-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 現|げん: exact kanji-reading audio kanji-reading-現-げん; audio/73FE_現-kanji-reading-現-げん.wav; exported PrimaryReading げん."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 現: stroke-order animation animations/73FE_現-stroke-order.gif shows target 現; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json, test/starterCuratedQuality.test.js, and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 現 and starter-curated regression protects blockedReadings うつ.つ; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 現|げん: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 現|げん with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading げん, MeaningJP present / current, KanjiMeanings present / current / actual / existing, example sentence 現在の住所をここに書いてください。, reading げんざいのじゅうしょをここにかいてください。, translation Please write your current address here., notes/support surface <ruby>現在<rt>げんざい</rt></ruby> - present time ／ <ruby>現<rt>あらわ</rt></ruby>れる - appear ／ <ruby>現実<rt>げんじつ</rt></ruby> - reality, audio kanji-reading-現-げん, stroke-order media 73FE_現-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ],
+    "fixSummary": "Blocked the low-value うつ.つ reading so the N3 card keeps the useful げん anchor with present / current / actual / existing scope."
+  },
+  {
+    "kanji": "由",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "ゆう"
+    ],
+    "meaningIncludes": [
+      "reason",
+      "origin"
+    ],
+    "kanjiMeaningsIncludes": [
+      "reason",
+      "origin"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "理由",
+      "自由",
+      "由来"
+    ],
+    "exampleIncludes": [
+      "遅れた理由を説明してください。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0006825700; Kanjipedia",
+        "detail": "Kanjipedia review for 由|ゆう: the page lists 音 ユ / ユウ / ユイ and 訓 よし, with meanings for reason, origin, basis, source, depending on, and from, plus words such as 理由, 自由, 事由, 由来, and 由緒. This supports exported PrimaryReading ゆう, MeaningJP reason / origin, and cleaned KanjiMeanings reason / origin after suppressing duplicate a reason and archaic wherefore."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses ゆう because the N3 learner-facing value appears in 理由 and 自由, and the support example uses 理由; other listed readings remain visible without becoming the audio anchor.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n3.tsv after source/card fixes and npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 由|ゆう: single-kanji anchor; Kanji and DisplayWord 由; StudyWordKanji blank; PrimaryReading ゆう; MeaningJP reason / origin; KanjiMeanings reason / origin; OnReading ユ、 ユイ、 ユウ; KunReading よ.る、 よし; notes <ruby>理由<rt>りゆう</rt></ruby> - reason ／ <ruby>自由<rt>じゆう</rt></ruby> - freedom ／ <ruby>由来<rt>ゆらい</rt></ruby> - origin / source; example 遅れた理由を説明してください。 / おくれたりゆうをせつめいしてください。 / Please explain the reason you were late.; audio field includes kanji-reading-由-ゆう; stroke-order field includes 7531_由-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 由: exact audio media fragment kanji-reading-由-ゆう; audio/7531_由-kanji-reading-由-ゆう.wav; stroke-order media animations/7531_由-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 由|ゆう: exact kanji-reading audio kanji-reading-由-ゆう; audio/7531_由-kanji-reading-由-ゆう.wav; exported PrimaryReading ゆう."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 由: stroke-order animation animations/7531_由-stroke-order.gif shows target 由; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json, test/starterCuratedQuality.test.js, and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 由 and starter-curated regression protects blockedMeanings a reason / wherefore; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 由|ゆう: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 由|ゆう with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ゆう, MeaningJP reason / origin, KanjiMeanings reason / origin, example sentence 遅れた理由を説明してください。, reading おくれたりゆうをせつめいしてください。, translation Please explain the reason you were late., notes/support surface <ruby>理由<rt>りゆう</rt></ruby> - reason ／ <ruby>自由<rt>じゆう</rt></ruby> - freedom ／ <ruby>由来<rt>ゆらい</rt></ruby> - origin / source, audio kanji-reading-由-ゆう, stroke-order media 7531_由-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ],
+    "fixSummary": "Blocked duplicate/archaic broader meanings a reason and wherefore so the N3 card keeps the useful reason / origin scope."
+  },
+  {
+    "kanji": "申",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "もうし"
+    ],
+    "meaningIncludes": [
+      "apply",
+      "say humbly"
+    ],
+    "kanjiMeaningsIncludes": [
+      "apply",
+      "say humbly"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "申し込む",
+      "申請",
+      "申す"
+    ],
+    "exampleIncludes": [
+      "昨日オンラインで講座を申し込みました。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0003582900; Kanjipedia",
+        "detail": "Kanjipedia review for 申|もうし: the page lists 音 シン and 訓 もうす with outside さる / かさねる, with meanings for saying humbly or stating, the monkey zodiac branch, and repeating, plus words such as 申告, 申請, and 申す. This supports exported PrimaryReading もうし through 申し込む, MeaningJP apply / say humbly, and cleaned KanjiMeanings apply / say humbly after suppressing time/zodiac glosses and have the honor to."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses もうし because the N3 learner-facing card is anchored in 申し込む and 申す; シン remains visible in 申請 and the on-reading field.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n3.tsv after source/card fixes and npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 申|もうし: single-kanji anchor; Kanji and DisplayWord 申; StudyWordKanji blank; PrimaryReading もうし; MeaningJP apply / say humbly; KanjiMeanings apply / say humbly; OnReading シン; KunReading さる、 もう.し-、 もう.す; notes <ruby>申<rt>もう</rt></ruby>し<ruby>込<rt>こ</rt></ruby>む - apply / sign up ／ <ruby>申請<rt>しんせい</rt></ruby> - application / request ／ <ruby>申<rt>もう</rt></ruby>す - say (humble); example 昨日オンラインで講座を申し込みました。 / きのうオンラインでこうざをもうしこみました。 / I signed up for the course online yesterday.; audio field includes kanji-reading-申-もうし; stroke-order field includes 7533_申-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 申: exact audio media fragment kanji-reading-申-もうし; audio/7533_申-kanji-reading-申-もうし.wav; stroke-order media animations/7533_申-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 申|もうし: exact kanji-reading audio kanji-reading-申-もうし; audio/7533_申-kanji-reading-申-もうし.wav; exported PrimaryReading もうし."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 申: stroke-order animation animations/7533_申-stroke-order.gif shows target 申; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json, test/starterCuratedQuality.test.js, and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 申 and starter-curated regression protects blockedMeanings 3-5PM / have the honor to / ninth sign of Chinese zodiac / sign of the monkey; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 申|もうし: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 申|もうし with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading もうし, MeaningJP apply / say humbly, KanjiMeanings apply / say humbly, example sentence 昨日オンラインで講座を申し込みました。, reading きのうオンラインでこうざをもうしこみました。, translation I signed up for the course online yesterday., notes/support surface <ruby>申<rt>もう</rt></ruby>し<ruby>込<rt>こ</rt></ruby>む - apply / sign up ／ <ruby>申請<rt>しんせい</rt></ruby> - application / request ／ <ruby>申<rt>もう</rt></ruby>す - say (humble), audio kanji-reading-申-もうし, stroke-order media 7533_申-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ],
+    "fixSummary": "Blocked low-value time/zodiac glosses and have the honor to so the N3 card keeps the useful apply / say humbly scope."
+  },
+  {
+    "kanji": "留",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "りゅう"
+    ],
+    "meaningIncludes": [
+      "study abroad",
+      "stay"
+    ],
+    "kanjiMeaningsIncludes": [
+      "study abroad",
+      "stay",
+      "detain",
+      "fasten",
+      "halt",
+      "stop"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "留学",
+      "留守",
+      "書留"
+    ],
+    "exampleIncludes": [
+      "兄は来年から海外へ留学します。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0007126600; Kanjipedia",
+        "detail": "Kanjipedia review for 留|りゅう: the page lists 音 リュウ / ル and 訓 とめる / とまる with outside とどまる, with meanings for stay, remain, stop, halt, detain, and fasten, plus words such as 留学, 留守, 書留, 留置, 留年, and 保留. This supports exported PrimaryReading りゅう, MeaningJP study abroad / stay, and KanjiMeanings study abroad / stay / detain / fasten / halt / stop after suppressing low-value るうぶる."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses りゅう because the card is anchored in 留学 and the support example uses 留学します; ル remains visible through 留守.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n3.tsv after source/card fixes and npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 留|りゅう: single-kanji anchor; Kanji and DisplayWord 留; StudyWordKanji blank; PrimaryReading りゅう; MeaningJP study abroad / stay; KanjiMeanings study abroad / stay / detain / fasten / halt / stop; OnReading リュウ、 ル; KunReading と.まる、 と.める、 とど.まる、 とど.める; notes <ruby>留学<rt>りゅうがく</rt></ruby> - study abroad ／ <ruby>留守<rt>るす</rt></ruby> - absence / not at home ／ <ruby>書留<rt>かきとめ</rt></ruby> - registered mail; example 兄は来年から海外へ留学します。 / あにはらいねんからかいがいへりゅうがくします。 / My older brother will study abroad starting next year.; audio field includes kanji-reading-留-りゅう; stroke-order field includes 7559_留-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 留: exact audio media fragment kanji-reading-留-りゅう; audio/7559_留-kanji-reading-留-りゅう.wav; stroke-order media animations/7559_留-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 留|りゅう: exact kanji-reading audio kanji-reading-留-りゅう; audio/7559_留-kanji-reading-留-りゅう.wav; exported PrimaryReading りゅう."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 留: stroke-order animation animations/7559_留-stroke-order.gif shows target 留; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json, test/starterCuratedQuality.test.js, and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 留 and starter-curated regression protects blockedReadings るうぶる; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 留|りゅう: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 留|りゅう with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading りゅう, MeaningJP study abroad / stay, KanjiMeanings study abroad / stay / detain / fasten / halt / stop, example sentence 兄は来年から海外へ留学します。, reading あにはらいねんからかいがいへりゅうがくします。, translation My older brother will study abroad starting next year., notes/support surface <ruby>留学<rt>りゅうがく</rt></ruby> - study abroad ／ <ruby>留守<rt>るす</rt></ruby> - absence / not at home ／ <ruby>書留<rt>かきとめ</rt></ruby> - registered mail, audio kanji-reading-留-りゅう, stroke-order media 7559_留-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ],
+    "fixSummary": "Blocked the low-value るうぶる reading so the N3 card keeps the useful 留学/留守/書留 support surface."
+  },
+  {
+    "kanji": "疑",
+    "status": "platinum",
+    "readingIncludes": [
+      "ぎ"
+    ],
+    "meaningIncludes": [
+      "doubt",
+      "suspect"
+    ],
+    "kanjiMeaningsIncludes": [
+      "doubt",
+      "suspect",
+      "be suspicious",
+      "distrust",
+      "question"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "疑問",
+      "疑う",
+      "容疑者"
+    ],
+    "exampleIncludes": [
+      "その説明には少し疑問があります。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0001309600; Kanjipedia",
+        "detail": "Kanjipedia review for 疑|ぎ: the page lists 音 ギ and 訓 うたがう, with meanings for doubt, suspicion, being doubtful or suspicious, distrust, and question, plus words such as 疑問, 疑念, 疑惑, 容疑, 質疑, and 疑う. This supports exported PrimaryReading ぎ, MeaningJP doubt / suspect, and KanjiMeanings doubt / suspect / be suspicious / distrust / question for the individual kanji 疑."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses ぎ because the N3 learner-facing value appears in compounds such as 疑問 and 容疑者, while 疑う remains visible as the kun support word.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n3.tsv after npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 疑|ぎ: single-kanji anchor; Kanji and DisplayWord 疑; StudyWordKanji blank; PrimaryReading ぎ; MeaningJP doubt / suspect; KanjiMeanings doubt / suspect / be suspicious / distrust / question; OnReading ギ; KunReading うたが.う; notes <ruby>疑問<rt>ぎもん</rt></ruby> - question / doubt ／ <ruby>疑う<rt>うたがう</rt></ruby> - doubt / suspect ／ <ruby>容疑者<rt>ようぎしゃ</rt></ruby> - suspect; example その説明には少し疑問があります。 / そのせつめいにはすこしぎもんがあります。 / I have a few doubts about that explanation.; audio field includes kanji-reading-疑-ぎ; stroke-order field includes 7591_疑-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 疑: exact audio media fragment kanji-reading-疑-ぎ; audio/7591_疑-kanji-reading-疑-ぎ.wav; stroke-order media animations/7591_疑-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 疑|ぎ: exact kanji-reading audio kanji-reading-疑-ぎ; audio/7591_疑-kanji-reading-疑-ぎ.wav; exported PrimaryReading ぎ."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 疑: stroke-order animation animations/7591_疑-stroke-order.gif shows target 疑; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 疑; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 疑|ぎ: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 疑|ぎ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ぎ, MeaningJP doubt / suspect, KanjiMeanings doubt / suspect / be suspicious / distrust / question, example sentence その説明には少し疑問があります。, reading そのせつめいにはすこしぎもんがあります。, translation I have a few doubts about that explanation., notes/support surface <ruby>疑問<rt>ぎもん</rt></ruby> - question / doubt ／ <ruby>疑う<rt>うたがう</rt></ruby> - doubt / suspect ／ <ruby>容疑者<rt>ようぎしゃ</rt></ruby> - suspect, audio kanji-reading-疑-ぎ, stroke-order media 7591_疑-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ]
+  },
+  {
+    "kanji": "痛",
+    "status": "platinum",
+    "readingIncludes": [
+      "いたい"
+    ],
+    "meaningIncludes": [
+      "painful",
+      "sore"
+    ],
+    "kanjiMeaningsIncludes": [
+      "pain",
+      "hurt",
+      "bruise",
+      "damage"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "痛い",
+      "頭痛",
+      "苦痛"
+    ],
+    "exampleIncludes": [
+      "昨日からのどが少し痛いです。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0004893600; Kanjipedia",
+        "detail": "Kanjipedia review for 痛|いたい: the page lists 音 ツウ and 訓 いたい / いたむ / いためる, with meanings for body pain, hurt, damage, emotional pain, and intense force, plus words such as 痛い, 痛む, 痛手, 頭痛, 苦痛, 心痛, and 痛烈. This supports exported PrimaryReading いたい, MeaningJP painful / sore, and KanjiMeanings pain / hurt / bruise / damage for the individual kanji 痛."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses いたい because the card is anchored in the common adjective 痛い and the support example uses the same reading; ツウ remains visible through 頭痛 and 苦痛.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n3.tsv after npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 痛|いたい: single-kanji anchor; Kanji and DisplayWord 痛; StudyWordKanji blank; PrimaryReading いたい; MeaningJP painful / sore; KanjiMeanings pain / hurt / bruise / damage; OnReading ツウ; KunReading いた.い、 いた.ましい、 いた.む、 いた.める; notes <ruby>痛い<rt>いたい</rt></ruby> - painful / sore ／ <ruby>頭痛<rt>ずつう</rt></ruby> - headache ／ <ruby>苦痛<rt>くつう</rt></ruby> - pain / distress; example 昨日からのどが少し痛いです。 / きのうからのどがすこしいたいです。 / My throat has hurt a little since yesterday.; audio field includes kanji-reading-痛-いたい; stroke-order field includes 75DB_痛-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 痛: exact audio media fragment kanji-reading-痛-いたい; audio/75DB_痛-kanji-reading-痛-いたい.wav; stroke-order media animations/75DB_痛-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 痛|いたい: exact kanji-reading audio kanji-reading-痛-いたい; audio/75DB_痛-kanji-reading-痛-いたい.wav; exported PrimaryReading いたい."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 痛: stroke-order animation animations/75DB_痛-stroke-order.gif shows target 痛; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 痛; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 痛|いたい: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 痛|いたい with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading いたい, MeaningJP painful / sore, KanjiMeanings pain / hurt / bruise / damage, example sentence 昨日からのどが少し痛いです。, reading きのうからのどがすこしいたいです。, translation My throat has hurt a little since yesterday., notes/support surface <ruby>痛い<rt>いたい</rt></ruby> - painful / sore ／ <ruby>頭痛<rt>ずつう</rt></ruby> - headache ／ <ruby>苦痛<rt>くつう</rt></ruby> - pain / distress, audio kanji-reading-痛-いたい, stroke-order media 75DB_痛-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ]
+  },
+  {
+    "kanji": "登",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "のぼる"
+    ],
+    "meaningIncludes": [
+      "climb"
+    ],
+    "kanjiMeaningsIncludes": [
+      "climb",
+      "appear",
+      "ascend",
+      "climb up"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "登る",
+      "登場",
+      "登校"
+    ],
+    "exampleIncludes": [
+      "休みに山へ登る予定です。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0005205500; Kanjipedia",
+        "detail": "Kanjipedia review for 登|のぼる: the page lists 音 トウ / ト and 訓 のぼる, with meanings for climb, ascend, go up, appear or enter a public place, and register in official documents, plus words such as 登る, 登山, 登場, 登校, 登頂, and 登録. This supports exported PrimaryReading のぼる, MeaningJP climb, and KanjiMeanings climb / appear / ascend / climb up after suppressing unsupported rare readings ショウ / チョウ / ドウ."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses のぼる because the card is anchored in the direct verb 登る and the support example uses 山へ登る; トウ remains visible through 登場 and 登校.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n3.tsv after source/card fixes and npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 登|のぼる: single-kanji anchor; Kanji and DisplayWord 登; StudyWordKanji blank; PrimaryReading のぼる; MeaningJP climb; KanjiMeanings climb / appear / ascend / climb up; OnReading ト、 トウ; KunReading あ.がる、 のぼ.る; notes <ruby>登<rt>のぼ</rt></ruby>る - climb ／ <ruby>登場<rt>とうじょう</rt></ruby> - appearance / entrance ／ <ruby>登校<rt>とうこう</rt></ruby> - going to school; example 休みに山へ登る予定です。 / やすみにやまへのぼるよていです。 / I plan to climb a mountain on my day off.; audio field includes kanji-reading-登-のぼる; stroke-order field includes 767B_登-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 登: exact audio media fragment kanji-reading-登-のぼる; audio/767B_登-kanji-reading-登-のぼる.wav; stroke-order media animations/767B_登-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 登|のぼる: exact kanji-reading audio kanji-reading-登-のぼる; audio/767B_登-kanji-reading-登-のぼる.wav; exported PrimaryReading のぼる."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 登: stroke-order animation animations/767B_登-stroke-order.gif shows target 登; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json, test/starterCuratedQuality.test.js, and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 登 and starter-curated regression protects blockedReadings ショウ / チョウ / ドウ; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 登|のぼる: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 登|のぼる with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading のぼる, MeaningJP climb, KanjiMeanings climb / appear / ascend / climb up, example sentence 休みに山へ登る予定です。, reading やすみにやまへのぼるよていです。, translation I plan to climb a mountain on my day off., notes/support surface <ruby>登<rt>のぼ</rt></ruby>る - climb ／ <ruby>登場<rt>とうじょう</rt></ruby> - appearance / entrance ／ <ruby>登校<rt>とうこう</rt></ruby> - going to school, audio kanji-reading-登-のぼる, stroke-order media 767B_登-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ],
+    "fixSummary": "Blocked unsupported rare readings ショウ, チョウ, and ドウ so the N3 card keeps the useful のぼる / トウ support surface."
+  },
+  {
+    "kanji": "皆",
+    "status": "platinum",
+    "readingIncludes": [
+      "みんな"
+    ],
+    "meaningIncludes": [
+      "everyone"
+    ],
+    "kanjiMeaningsIncludes": [
+      "everyone",
+      "all",
+      "everything"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "皆",
+      "皆さん",
+      "皆無"
+    ],
+    "exampleIncludes": [
+      "今日は皆で早く帰りました。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0000796100; Kanjipedia",
+        "detail": "Kanjipedia review for 皆|みんな: the page lists 音 カイ and 訓 みな, with meanings for everyone, all, everybody, and everything, plus words such as 皆, 皆無, 皆勤, 皆済, and 皆目. This supports exported PrimaryReading みんな, MeaningJP everyone, and KanjiMeanings everyone / all / everything for the individual kanji 皆."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses みんな because the card is anchored in the common learner word 皆 and the support example reads 皆で as みんなで; みな and カイ remain visible in the reading/support surface.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n3.tsv after npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 皆|みんな: single-kanji anchor; Kanji and DisplayWord 皆; StudyWordKanji blank; PrimaryReading みんな; MeaningJP everyone; KanjiMeanings everyone / all / everything; OnReading カイ; KunReading みな、 みんな; notes <ruby>皆<rt>みんな</rt></ruby> - everyone ／ <ruby>皆<rt>みな</rt></ruby>さん - everyone / ladies and gentlemen ／ <ruby>皆無<rt>かいむ</rt></ruby> - none at all; example 今日は皆で早く帰りました。 / きょうはみんなではやくかえりました。 / We all went home early today.; audio field includes kanji-reading-皆-みんな; stroke-order field includes 7686_皆-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 皆: exact audio media fragment kanji-reading-皆-みんな; audio/7686_皆-kanji-reading-皆-みんな.wav; stroke-order media animations/7686_皆-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 皆|みんな: exact kanji-reading audio kanji-reading-皆-みんな; audio/7686_皆-kanji-reading-皆-みんな.wav; exported PrimaryReading みんな."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 皆: stroke-order animation animations/7686_皆-stroke-order.gif shows target 皆; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 皆; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 皆|みんな: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 皆|みんな with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading みんな, MeaningJP everyone, KanjiMeanings everyone / all / everything, example sentence 今日は皆で早く帰りました。, reading きょうはみんなではやくかえりました。, translation We all went home early today., notes/support surface <ruby>皆<rt>みんな</rt></ruby> - everyone ／ <ruby>皆<rt>みな</rt></ruby>さん - everyone / ladies and gentlemen ／ <ruby>皆無<rt>かいむ</rt></ruby> - none at all, audio kanji-reading-皆-みんな, stroke-order media 7686_皆-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ]
+  },
+  {
+    "kanji": "盗",
+    "status": "platinum",
+    "readingIncludes": [
+      "ぬすむ"
+    ],
+    "meaningIncludes": [
+      "steal"
+    ],
+    "kanjiMeaningsIncludes": [
+      "steal",
+      "theft",
+      "pilfer",
+      "rob"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "盗む",
+      "盗難",
+      "強盗"
+    ],
+    "exampleIncludes": [
+      "自転車を盗まれないように気をつけます。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0005192100; Kanjipedia",
+        "detail": "Kanjipedia review for 盗|ぬすむ: the page lists 音 トウ and 訓 ぬすむ, with meanings for steal, theft, taking another person's property, pilfering or robbing, and doing secretly, plus words such as 盗む, 盗難, 強盗, 窃盗, 盗作, and 盗聴. This supports exported PrimaryReading ぬすむ, MeaningJP steal, and KanjiMeanings steal / theft / pilfer / rob for the individual kanji 盗."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses ぬすむ because the card is anchored in the direct verb 盗む and the support example uses 盗まれない; トウ remains visible through 盗難 and 強盗.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n3.tsv after npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 盗|ぬすむ: single-kanji anchor; Kanji and DisplayWord 盗; StudyWordKanji blank; PrimaryReading ぬすむ; MeaningJP steal; KanjiMeanings steal / theft / pilfer / rob; OnReading トウ; KunReading ぬす.み、 ぬす.む; notes <ruby>盗<rt>ぬす</rt></ruby>む - steal ／ <ruby>盗難<rt>とうなん</rt></ruby> - theft ／ <ruby>強盗<rt>ごうとう</rt></ruby> - robber / robbery; example 自転車を盗まれないように気をつけます。 / じてんしゃをぬすまれないようにきをつけます。 / I am careful so my bicycle will not get stolen.; audio field includes kanji-reading-盗-ぬすむ; stroke-order field includes 76D7_盗-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 盗: exact audio media fragment kanji-reading-盗-ぬすむ; audio/76D7_盗-kanji-reading-盗-ぬすむ.wav; stroke-order media animations/76D7_盗-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 盗|ぬすむ: exact kanji-reading audio kanji-reading-盗-ぬすむ; audio/76D7_盗-kanji-reading-盗-ぬすむ.wav; exported PrimaryReading ぬすむ."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 盗: stroke-order animation animations/76D7_盗-stroke-order.gif shows target 盗; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 盗; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 盗|ぬすむ: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 盗|ぬすむ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ぬすむ, MeaningJP steal, KanjiMeanings steal / theft / pilfer / rob, example sentence 自転車を盗まれないように気をつけます。, reading じてんしゃをぬすまれないようにきをつけます。, translation I am careful so my bicycle will not get stolen., notes/support surface <ruby>盗<rt>ぬす</rt></ruby>む - steal ／ <ruby>盗難<rt>とうなん</rt></ruby> - theft ／ <ruby>強盗<rt>ごうとう</rt></ruby> - robber / robbery, audio kanji-reading-盗-ぬすむ, stroke-order media 76D7_盗-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ]
+  },
+  {
+    "kanji": "直",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "なおす"
+    ],
+    "meaningIncludes": [
+      "fix",
+      "correct"
+    ],
+    "kanjiMeaningsIncludes": [
+      "straight",
+      "fix",
+      "frankness",
+      "honesty",
+      "repair",
+      "straightaway"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "直す",
+      "直接",
+      "正直"
+    ],
+    "exampleIncludes": [
+      "間違いをすぐに直してください。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0004845900/; Kanjipedia",
+        "detail": "Kanjipedia review for 直|なおす: the page lists 音 チョク / ジキ with outside チ, 訓 ただちに / なおす / なおる with outside じか / すぐ / あたい / ひた, and meanings for straight, honest or correct, fixing, direct contact, immediately, duty, price, and solely. It also lists words such as 直す, 直接, 正直, 直線, and 直前. This supports exported PrimaryReading なおす, MeaningJP fix / correct, and cleaned KanjiMeanings straight / fix / frankness / honesty / repair / straightaway after suppressing low-value/misclassified ジカ from the on-reading field."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses なおす because the card is anchored in the common verb 直す and the support example directly practices 間違いを直す; チョク and ジキ remain visible through the cleaned on-reading and support surface.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/package/exports/jlpt-n3.tsv after source/card fixes and npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 直|なおす: single-kanji anchor; Kanji and DisplayWord 直; StudyWordKanji blank; PrimaryReading なおす; MeaningJP fix / correct; KanjiMeanings straight / fix / frankness / honesty / repair / straightaway; OnReading ジキ、 チョク; KunReading -なお.す、 す.ぐ、 ただ.ちに、 なお.き、 なお.る; notes <ruby>直<rt>なお</rt></ruby>す - fix / correct ／ <ruby>直接<rt>ちょくせつ</rt></ruby> - directly ／ <ruby>正直<rt>しょうじき</rt></ruby> - honest; example 間違いをすぐに直してください。 / まちがいをすぐになおしてください。 / Please correct the mistake right away.; audio field includes kanji-reading-直-なおす; stroke-order field includes 76F4_直-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 直: exact audio media fragment kanji-reading-直-なおす; audio/76F4_直-kanji-reading-直-なおす.wav; stroke-order media animations/76F4_直-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 直|なおす: exact kanji-reading audio kanji-reading-直-なおす; audio/76F4_直-kanji-reading-直-なおす.wav; exported PrimaryReading なおす."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 直: stroke-order animation animations/76F4_直-stroke-order.gif shows target 直; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json, test/starterCuratedQuality.test.js, and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 直 and starter-curated regression protects blockedReadings ジカ; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 直|なおす: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 直|なおす with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading なおす, MeaningJP fix / correct, KanjiMeanings straight / fix / frankness / honesty / repair / straightaway, example sentence 間違いをすぐに直してください。, reading まちがいをすぐになおしてください。, translation Please correct the mistake right away., notes/support surface <ruby>直<rt>なお</rt></ruby>す - fix / correct ／ <ruby>直接<rt>ちょくせつ</rt></ruby> - directly ／ <ruby>正直<rt>しょうじき</rt></ruby> - honest, audio kanji-reading-直-なおす, stroke-order media 76F4_直-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ],
+    "fixSummary": "Blocked low-value/misclassified ジカ from the on-reading field so the N3 card keeps the useful なおす / チョク / ジキ surface."
+  },
+  {
+    "kanji": "相",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "そう"
+    ],
+    "meaningIncludes": [
+      "consultation",
+      "mutual"
+    ],
+    "kanjiMeaningsIncludes": [
+      "consultation",
+      "mutual",
+      "aspect",
+      "each other",
+      "phase",
+      "together"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "相談",
+      "相手",
+      "首相"
+    ],
+    "exampleIncludes": [
+      "困ったら先生に相談してください。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0004217500; Kanjipedia",
+        "detail": "Kanjipedia review for 相|そう: the page lists 音 ソウ / ショウ and 訓 あい with outside さが / たすける, with meanings for looking closely, outward appearance or state, assisting, mutual/together use, succession, and 相模 abbreviation, plus words such as 相談, 相手, 首相, 相互, 真相, and 様相. This supports exported PrimaryReading そう, MeaningJP consultation / mutual, and cleaned KanjiMeanings consultation / mutual / aspect / each other / phase / together after suppressing low-value councillor, inter-, minister of state, and physiognomy."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses そう because the card is anchored in 相談 and the support example practices 相談してください; あい remains visible through 相手 and ショウ remains visible in the on-reading field.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/package/exports/jlpt-n3.tsv after source/card fixes and npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 相|そう: single-kanji anchor; Kanji and DisplayWord 相; StudyWordKanji blank; PrimaryReading そう; MeaningJP consultation / mutual; KanjiMeanings consultation / mutual / aspect / each other / phase / together; OnReading ショウ、 ソウ; KunReading あい-; notes <ruby>相談<rt>そうだん</rt></ruby> - consultation / discussion ／ <ruby>相手<rt>あいて</rt></ruby> - partner / other person ／ <ruby>首相<rt>しゅしょう</rt></ruby> - prime minister; example 困ったら先生に相談してください。 / こまったらせんせいにそうだんしてください。 / If you have trouble, please consult your teacher.; audio field includes kanji-reading-相-そう; stroke-order field includes 76F8_相-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 相: exact audio media fragment kanji-reading-相-そう; audio/76F8_相-kanji-reading-相-そう.wav; stroke-order media animations/76F8_相-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 相|そう: exact kanji-reading audio kanji-reading-相-そう; audio/76F8_相-kanji-reading-相-そう.wav; exported PrimaryReading そう."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 相: stroke-order animation animations/76F8_相-stroke-order.gif shows target 相; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json, test/starterCuratedQuality.test.js, and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 相 and starter-curated regression protects blockedMeanings councillor / inter- / minister of state / physiognomy; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 相|そう: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 相|そう with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading そう, MeaningJP consultation / mutual, KanjiMeanings consultation / mutual / aspect / each other / phase / together, example sentence 困ったら先生に相談してください。, reading こまったらせんせいにそうだんしてください。, translation If you have trouble, please consult your teacher., notes/support surface <ruby>相談<rt>そうだん</rt></ruby> - consultation / discussion ／ <ruby>相手<rt>あいて</rt></ruby> - partner / other person ／ <ruby>首相<rt>しゅしょう</rt></ruby> - prime minister, audio kanji-reading-相-そう, stroke-order media 76F8_相-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ],
+    "fixSummary": "Blocked low-value broader meanings councillor, inter-, minister of state, and physiognomy so the N3 card keeps the useful consultation/mutual/aspect surface."
+  },
+  {
+    "kanji": "省",
+    "status": "platinum",
+    "readingIncludes": [
+      "はぶく"
+    ],
+    "meaningIncludes": [
+      "omit",
+      "save"
+    ],
+    "kanjiMeaningsIncludes": [
+      "omit",
+      "save",
+      "reflect",
+      "ministry",
+      "conserve",
+      "government ministry"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "省く",
+      "反省",
+      "省エネ"
+    ],
+    "exampleIncludes": [
+      "時間を省くために手順を短くしました。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0003878800; Kanjipedia",
+        "detail": "Kanjipedia review for 省|はぶく: the page lists 音 セイ / ショウ and 訓 かえりみる / はぶく, with meanings for reflecting, visiting, omitting or reducing, government office or ministry, and a Chinese administrative division, plus words such as 省く, 省略, 省力, 省察, and 反省. This supports exported PrimaryReading はぶく, MeaningJP omit / save, and KanjiMeanings omit / save / reflect / ministry / conserve / government ministry for the individual kanji 省."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses はぶく because the card is anchored in 省く and the support example practices 時間を省く; セイ and ショウ remain visible through 反省 and 省エネ.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/package/exports/jlpt-n3.tsv after npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 省|はぶく: single-kanji anchor; Kanji and DisplayWord 省; StudyWordKanji blank; PrimaryReading はぶく; MeaningJP omit / save; KanjiMeanings omit / save / reflect / ministry / conserve / government ministry; OnReading ショウ、 セイ; KunReading かえり.みる、 はぶ.く; notes <ruby>省<rt>はぶ</rt></ruby>く - omit / save ／ <ruby>反省<rt>はんせい</rt></ruby> - reflection / reconsideration ／ <ruby>省<rt>しょう</rt></ruby>エネ - energy saving; example 時間を省くために手順を短くしました。 / じかんをはぶくためにてじゅんをみじかくしました。 / I shortened the steps to save time.; audio field includes kanji-reading-省-はぶく; stroke-order field includes 7701_省-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 省: exact audio media fragment kanji-reading-省-はぶく; audio/7701_省-kanji-reading-省-はぶく.wav; stroke-order media animations/7701_省-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 省|はぶく: exact kanji-reading audio kanji-reading-省-はぶく; audio/7701_省-kanji-reading-省-はぶく.wav; exported PrimaryReading はぶく."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 省: stroke-order animation animations/7701_省-stroke-order.gif shows target 省; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 省; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 省|はぶく: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 省|はぶく with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading はぶく, MeaningJP omit / save, KanjiMeanings omit / save / reflect / ministry / conserve / government ministry, example sentence 時間を省くために手順を短くしました。, reading じかんをはぶくためにてじゅんをみじかくしました。, translation I shortened the steps to save time., notes/support surface <ruby>省<rt>はぶ</rt></ruby>く - omit / save ／ <ruby>反省<rt>はんせい</rt></ruby> - reflection / reconsideration ／ <ruby>省<rt>しょう</rt></ruby>エネ - energy saving, audio kanji-reading-省-はぶく, stroke-order media 7701_省-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ]
+  },
+  {
+    "kanji": "眠",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "ねむい"
+    ],
+    "meaningIncludes": [
+      "sleepy"
+    ],
+    "kanjiMeaningsIncludes": [
+      "sleepy",
+      "sleep"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "眠い",
+      "眠る",
+      "睡眠"
+    ],
+    "exampleIncludes": [
+      "昨日遅く寝たのでとても眠いです。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0006633100/; Kanjipedia",
+        "detail": "Kanjipedia review for 眠|ねむい: the page lists 音 ミン with outside ベン and 訓 ねむる / ねむい, with meanings for sleep, sleepy, and sleep state, plus words such as 眠い, 眠る, 安眠, 睡眠, and 不眠. This supports exported PrimaryReading ねむい, MeaningJP sleepy, and cleaned KanjiMeanings sleepy / sleep after suppressing low-value euphemistic die."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses ねむい because the card is anchored in the common adjective 眠い and the support example directly practices とても眠い; ミン remains visible through 睡眠.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/package/exports/jlpt-n3.tsv after source/card fixes and npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 眠|ねむい: single-kanji anchor; Kanji and DisplayWord 眠; StudyWordKanji blank; PrimaryReading ねむい; MeaningJP sleepy; KanjiMeanings sleepy / sleep; OnReading ミン; KunReading ねむ.い、 ねむ.る; notes <ruby>眠<rt>ねむ</rt></ruby>い - sleepy ／ <ruby>眠<rt>ねむ</rt></ruby>る - sleep ／ <ruby>睡眠<rt>すいみん</rt></ruby> - sleep; example 昨日遅く寝たのでとても眠いです。 / きのうおそくねたのでとてもねむいです。 / I am very sleepy because I went to bed late yesterday.; audio field includes kanji-reading-眠-ねむい; stroke-order field includes 7720_眠-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 眠: exact audio media fragment kanji-reading-眠-ねむい; audio/7720_眠-kanji-reading-眠-ねむい.wav; stroke-order media animations/7720_眠-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 眠|ねむい: exact kanji-reading audio kanji-reading-眠-ねむい; audio/7720_眠-kanji-reading-眠-ねむい.wav; exported PrimaryReading ねむい."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 眠: stroke-order animation animations/7720_眠-stroke-order.gif shows target 眠; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json, test/starterCuratedQuality.test.js, and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 眠 and starter-curated regression protects blockedMeanings die; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 眠|ねむい: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 眠|ねむい with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ねむい, MeaningJP sleepy, KanjiMeanings sleepy / sleep, example sentence 昨日遅く寝たのでとても眠いです。, reading きのうおそくねたのでとてもねむいです。, translation I am very sleepy because I went to bed late yesterday., notes/support surface <ruby>眠<rt>ねむ</rt></ruby>い - sleepy ／ <ruby>眠<rt>ねむ</rt></ruby>る - sleep ／ <ruby>睡眠<rt>すいみん</rt></ruby> - sleep, audio kanji-reading-眠-ねむい, stroke-order media 7720_眠-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ],
+    "fixSummary": "Blocked low-value euphemistic meaning die so the N3 card keeps the useful sleepy / sleep surface."
+  },
+  {
+    "kanji": "破",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "やぶる"
+    ],
+    "meaningIncludes": [
+      "tear",
+      "break"
+    ],
+    "kanjiMeaningsIncludes": [
+      "break",
+      "tear",
+      "defeat",
+      "destroy",
+      "rip"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "破る",
+      "破産",
+      "突破"
+    ],
+    "exampleIncludes": [
+      "約束を破らないでください。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0005531100; Kanjipedia",
+        "detail": "Kanjipedia review for 破|やぶる: the page lists 音 ハ and 訓 やぶる / やぶれる with outside われる, with meanings for tearing, breaking, destroying, breaking rules, defeating, accomplishing through completion, and the jo-ha-kyu section label, plus words such as 破る, 破壊, 破格, 撃破, 破産, and 突破. This supports exported PrimaryReading やぶる, MeaningJP tear / break, and cleaned KanjiMeanings break / tear / defeat / destroy / rip after suppressing low-value frustrate and archaic rend."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses やぶる because the card is anchored in the common verb 破る and the support example practices 約束を破る; ハ remains visible through 破産 and 突破.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/package/exports/jlpt-n3.tsv after source/card fixes and npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 破|やぶる: single-kanji anchor; Kanji and DisplayWord 破; StudyWordKanji blank; PrimaryReading やぶる; MeaningJP tear / break; KanjiMeanings break / tear / defeat / destroy / rip; OnReading ハ; KunReading やぶ.る、 やぶ.れる、 わ.れる; notes <ruby>破<rt>やぶ</rt></ruby>る - tear / break ／ <ruby>破産<rt>はさん</rt></ruby> - bankruptcy ／ <ruby>突破<rt>とっぱ</rt></ruby> - breakthrough; example 約束を破らないでください。 / やくそくをやぶらないでください。 / Please do not break the promise.; audio field includes kanji-reading-破-やぶる; stroke-order field includes 7834_破-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 破: exact audio media fragment kanji-reading-破-やぶる; audio/7834_破-kanji-reading-破-やぶる.wav; stroke-order media animations/7834_破-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 破|やぶる: exact kanji-reading audio kanji-reading-破-やぶる; audio/7834_破-kanji-reading-破-やぶる.wav; exported PrimaryReading やぶる."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 破: stroke-order animation animations/7834_破-stroke-order.gif shows target 破; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json, test/starterCuratedQuality.test.js, and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 破 and starter-curated regression protects blockedMeanings frustrate / rend; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 破|やぶる: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 破|やぶる with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading やぶる, MeaningJP tear / break, KanjiMeanings break / tear / defeat / destroy / rip, example sentence 約束を破らないでください。, reading やくそくをやぶらないでください。, translation Please do not break the promise., notes/support surface <ruby>破<rt>やぶ</rt></ruby>る - tear / break ／ <ruby>破産<rt>はさん</rt></ruby> - bankruptcy ／ <ruby>突破<rt>とっぱ</rt></ruby> - breakthrough, audio kanji-reading-破-やぶる, stroke-order media 7834_破-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ],
+    "fixSummary": "Blocked low-value broader meanings frustrate and rend so the N3 card keeps the useful break / tear / defeat / destroy surface."
+  },
+  {
+    "kanji": "確",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "かく"
+    ],
+    "meaningIncludes": [
+      "confirmation",
+      "certain"
+    ],
+    "kanjiMeaningsIncludes": [
+      "confirmation",
+      "certain",
+      "clear",
+      "confirm",
+      "evident",
+      "firm",
+      "hard",
+      "solid"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "確認",
+      "確か",
+      "正確"
+    ],
+    "exampleIncludes": [
+      "出かける前に時間を確認しました。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0000911200; Kanjipedia",
+        "detail": "Kanjipedia review for 確|かく: the page lists 音 カク and 訓 たしか / たしかめる with outside しかと / しっかり / かたい, with meanings for certainty, no mistake, confirmation, hard, and firm, plus words such as 確認, 確実, 確率, 正確, 的確, and 明確. This supports exported PrimaryReading かく, MeaningJP confirmation / certain, and cleaned KanjiMeanings confirmation / certain / clear / confirm / evident / firm / hard / solid after suppressing unsupported コウ and low-value assurance / tight."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses かく because the card is anchored in common compounds such as 確認 and 正確, and the support example practices 確認しました; たしか remains visible through the support surface and kun-reading field.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/package/exports/jlpt-n3.tsv after source/card fixes and npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 確|かく: single-kanji anchor; Kanji and DisplayWord 確; StudyWordKanji blank; PrimaryReading かく; MeaningJP confirmation / certain; KanjiMeanings confirmation / certain / clear / confirm / evident / firm / hard / solid; OnReading カク; KunReading たし.か、 たし.かめる; notes <ruby>確認<rt>かくにん</rt></ruby> - confirmation / check ／ <ruby>確<rt>たし</rt></ruby>か - certain / if I remember correctly ／ <ruby>正確<rt>せいかく</rt></ruby> - accurate; example 出かける前に時間を確認しました。 / でかけるまえにじかんをかくにんしました。 / I checked the time before going out.; audio field includes kanji-reading-確-かく; stroke-order field includes 78BA_確-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 確: exact audio media fragment kanji-reading-確-かく; audio/78BA_確-kanji-reading-確-かく.wav; stroke-order media animations/78BA_確-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 確|かく: exact kanji-reading audio kanji-reading-確-かく; audio/78BA_確-kanji-reading-確-かく.wav; exported PrimaryReading かく."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 確: stroke-order animation animations/78BA_確-stroke-order.gif shows target 確; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json, test/starterCuratedQuality.test.js, and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 確 and starter-curated regression protects blockedReadings コウ and blockedMeanings assurance / tight; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 確|かく: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 確|かく with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading かく, MeaningJP confirmation / certain, KanjiMeanings confirmation / certain / clear / confirm / evident / firm / hard / solid, example sentence 出かける前に時間を確認しました。, reading でかけるまえにじかんをかくにんしました。, translation I checked the time before going out., notes/support surface <ruby>確認<rt>かくにん</rt></ruby> - confirmation / check ／ <ruby>確<rt>たし</rt></ruby>か - certain / if I remember correctly ／ <ruby>正確<rt>せいかく</rt></ruby> - accurate, audio kanji-reading-確-かく, stroke-order media 78BA_確-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ],
+    "fixSummary": "Blocked unsupported コウ and low-value broader meanings assurance and tight so the N3 card keeps the useful confirmation/certain/firm surface."
+  },
+  {
+    "kanji": "示",
+    "status": "platinum",
+    "readingIncludes": [
+      "しめす"
+    ],
+    "meaningIncludes": [
+      "show",
+      "indicate"
+    ],
+    "kanjiMeaningsIncludes": [
+      "show",
+      "indicate",
+      "display",
+      "express",
+      "point out"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "示す",
+      "指示",
+      "表示"
+    ],
+    "exampleIncludes": [
+      "地図で行き方を示してください。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0002841600/; Kanjipedia",
+        "detail": "Kanjipedia review for 示|しめす: the page lists 音 ジ / シ and 訓 しめす, with meanings for showing, indicating, pointing out, and teaching, plus words such as 示す, 指示, 表示, 掲示, 図示, 提示, 展示, and 明示. This supports exported PrimaryReading しめす, MeaningJP show / indicate, and KanjiMeanings show / indicate / display / express / point out for the individual kanji 示."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses しめす because the card is anchored in the direct verb 示す and the support example practices 行き方を示す; シ and ジ remain visible through 指示 and 表示.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/package/exports/jlpt-n3.tsv after npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 示|しめす: single-kanji anchor; Kanji and DisplayWord 示; StudyWordKanji blank; PrimaryReading しめす; MeaningJP show / indicate; KanjiMeanings show / indicate / display / express / point out; OnReading シ、 ジ; KunReading しめ.す; notes <ruby>示<rt>しめ</rt></ruby>す - show / indicate ／ <ruby>指示<rt>しじ</rt></ruby> - instruction ／ <ruby>表示<rt>ひょうじ</rt></ruby> - display / indication; example 地図で行き方を示してください。 / ちずでいきかたをしめしてください。 / Please show me the way on the map.; audio field includes kanji-reading-示-しめす; stroke-order field includes 793A_示-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 示: exact audio media fragment kanji-reading-示-しめす; audio/793A_示-kanji-reading-示-しめす.wav; stroke-order media animations/793A_示-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 示|しめす: exact kanji-reading audio kanji-reading-示-しめす; audio/793A_示-kanji-reading-示-しめす.wav; exported PrimaryReading しめす."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 示: stroke-order animation animations/793A_示-stroke-order.gif shows target 示; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 示; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 示|しめす: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 示|しめす with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading しめす, MeaningJP show / indicate, KanjiMeanings show / indicate / display / express / point out, example sentence 地図で行き方を示してください。, reading ちずでいきかたをしめしてください。, translation Please show me the way on the map., notes/support surface <ruby>示<rt>しめ</rt></ruby>す - show / indicate ／ <ruby>指示<rt>しじ</rt></ruby> - instruction ／ <ruby>表示<rt>ひょうじ</rt></ruby> - display / indication, audio kanji-reading-示-しめす, stroke-order media 793A_示-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ]
+  },
+  {
+    "kanji": "礼",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "おれい"
+    ],
+    "meaningIncludes": [
+      "thanks",
+      "gratitude"
+    ],
+    "kanjiMeaningsIncludes": [
+      "thanks",
+      "courtesy",
+      "bow",
+      "ceremony"
+    ],
+    "levelIncludes": [
+      "N3"
+    ],
+    "notesIncludes": [
+      "お礼",
+      "失礼",
+      "礼儀"
+    ],
+    "exampleIncludes": [
+      "手伝ってくれた友だちにお礼を言いました。"
+    ],
+    "reviewedAt": "2026-05-24",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0007239800; Kanjipedia",
+        "detail": "Kanjipedia review for 礼|おれい: the page lists 音 レイ / ライ and outside 訓 のり / うやまう, with meanings for social manners or ceremony, paying respect, and gratitude, plus words such as お礼, 失礼, 礼儀, 礼状, 謝礼, and 拝礼. This supports exported PrimaryReading おれい, MeaningJP thanks / gratitude, and cleaned KanjiMeanings thanks / courtesy / bow / ceremony after suppressing low-value remuneration and salute."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses おれい because the card is anchored in the common learner expression お礼 and the support example practices お礼を言いました; レイ and ライ remain visible in the on-reading/support surface.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-05-24",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/package/exports/jlpt-n3.tsv after source/card fixes and npm run deck:ready -- --levels=3",
+        "detail": "Generated card surface inspected for 礼|おれい: single-kanji anchor; Kanji and DisplayWord 礼; StudyWordKanji blank; PrimaryReading おれい; MeaningJP thanks / gratitude; KanjiMeanings thanks / courtesy / bow / ceremony; OnReading ライ、 レイ; KunReading blank; notes お<ruby>礼<rt>れい</rt></ruby> - thanks / gratitude ／ <ruby>失礼<rt>しつれい</rt></ruby> - rudeness / excuse me ／ <ruby>礼儀<rt>れいぎ</rt></ruby> - manners / courtesy; example 手伝ってくれた友だちにお礼を言いました。 / てつだってくれたともだちにおれいをいいました。 / I thanked the friend who helped me.; audio field includes kanji-reading-礼-おれい; stroke-order field includes 793C_礼-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 礼: exact audio media fragment kanji-reading-礼-おれい; audio/793C_礼-kanji-reading-礼-おれい.wav; stroke-order media animations/793C_礼-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and out/build/package/package-summary.json",
+        "detail": "Audio artifact reviewed for 礼|おれい: exact kanji-reading audio kanji-reading-礼-おれい; audio/793C_礼-kanji-reading-礼-おれい.wav; exported PrimaryReading おれい."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Visual stroke-order review recorded for 礼: stroke-order animation animations/793C_礼-stroke-order.gif shows target 礼; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_review_set.json, test/starterCuratedQuality.test.js, and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 礼 and starter-curated regression protects blockedMeanings remuneration / salute; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 礼|おれい: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N3 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 礼|おれい with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading おれい, MeaningJP thanks / gratitude, KanjiMeanings thanks / courtesy / bow / ceremony, example sentence 手伝ってくれた友だちにお礼を言いました。, reading てつだってくれたともだちにおれいをいいました。, translation I thanked the friend who helped me., notes/support surface お<ruby>礼<rt>れい</rt></ruby> - thanks / gratitude ／ <ruby>失礼<rt>しつれい</rt></ruby> - rudeness / excuse me ／ <ruby>礼儀<rt>れいぎ</rt></ruby> - manners / courtesy, audio kanji-reading-礼-おれい, stroke-order media 793C_礼-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ],
+    "fixSummary": "Blocked low-value broader meanings remuneration and salute so the N3 card keeps the useful thanks / courtesy / bow / ceremony surface."
   }
 ]

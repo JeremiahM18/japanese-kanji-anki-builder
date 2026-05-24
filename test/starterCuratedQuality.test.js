@@ -424,6 +424,51 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
         "well",
     ]);
 
+    assert.deepEqual(curatedStudyData["熱"].blockedMeanings, ["mania"]);
+
+    assert.deepEqual(curatedStudyData["犯"].blockedReadings, ["ボン"]);
+    assert.deepEqual(curatedStudyData["犯"].blockedMeanings, ["sin"]);
+
+    assert.deepEqual(curatedStudyData["状"].blockedMeanings, ["conditions", "status quo"]);
+
+    assert.deepEqual(curatedStudyData["玉"].blockedReadings, ["-だま"]);
+
+    assert.deepEqual(curatedStudyData["王"].blockedReadings, ["-ノウ"]);
+    assert.deepEqual(curatedStudyData["王"].blockedMeanings, ["magnate", "rule"]);
+
+    assert.deepEqual(curatedStudyData["現"].blockedReadings, ["うつ.つ"]);
+
+    assert.deepEqual(curatedStudyData["由"].blockedMeanings, ["a reason", "wherefore"]);
+
+    assert.deepEqual(curatedStudyData["申"].blockedMeanings, [
+        "3-5PM",
+        "have the honor to",
+        "ninth sign of Chinese zodiac",
+        "sign of the monkey",
+    ]);
+
+    assert.deepEqual(curatedStudyData["留"].blockedReadings, ["るうぶる"]);
+
+    assert.deepEqual(curatedStudyData["登"].blockedReadings, ["ショウ", "チョウ", "ドウ"]);
+
+    assert.deepEqual(curatedStudyData["直"].blockedReadings, ["ジカ"]);
+
+    assert.deepEqual(curatedStudyData["相"].blockedMeanings, [
+        "councillor",
+        "inter-",
+        "minister of state",
+        "physiognomy",
+    ]);
+
+    assert.deepEqual(curatedStudyData["眠"].blockedMeanings, ["die"]);
+
+    assert.deepEqual(curatedStudyData["破"].blockedMeanings, ["frustrate", "rend"]);
+
+    assert.deepEqual(curatedStudyData["確"].blockedReadings, ["コウ"]);
+    assert.deepEqual(curatedStudyData["確"].blockedMeanings, ["assurance", "tight"]);
+
+    assert.deepEqual(curatedStudyData["礼"].blockedMeanings, ["remuneration", "salute"]);
+
     assert.deepEqual(curatedStudyData["当"].blockedMeanings, ["himself"]);
 
     assert.equal(curatedStudyData["役"].englishMeaning, "role / usefulness");

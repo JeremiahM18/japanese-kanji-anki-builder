@@ -36743,6 +36743,10 @@
       "年齢"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "occasion",
+      "opportunity"
+    ],
     "blockedSentencePhrases": [],
     "notes": "二十歳 （はたち） - twenty years old ／ 歳 （さい） - years old ／ 年齢 （ねんれい） - age",
     "alternativeNotes": [],
@@ -37028,6 +37032,14 @@
       "必殺"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "butcher",
+      "diminish",
+      "murder",
+      "slice off",
+      "split",
+      "spoil"
+    ],
     "blockedSentencePhrases": [],
     "notes": "相殺 （そうさい） - offset / cancel out ／ 殺す （ころす） - kill ／ 殺到 （さっとう） - rush in / flood in",
     "alternativeNotes": [],
@@ -37675,6 +37687,10 @@
       "汚す"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "defile",
+      "disgrace"
+    ],
     "blockedSentencePhrases": [],
     "notes": "汚れる （よごれる） - to get dirty ／ 汚す （よごす） - to make dirty",
     "alternativeNotes": [],
@@ -38130,6 +38146,13 @@
       "政治"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "conserve",
+      "govt",
+      "quell",
+      "reign",
+      "subdue"
+    ],
     "blockedSentencePhrases": [],
     "notes": "治る （なおる） - get better / heal ／ 治療 （ちりょう） - medical treatment ／ 政治 （せいじ） - politics",
     "alternativeNotes": [],
@@ -38358,6 +38381,9 @@
       "文法"
     ],
     "blockedWords": [],
+    "blockedReadings": [
+      "フラン"
+    ],
     "blockedSentencePhrases": [],
     "notes": "方法 （ほうほう） - method ／ 法律 （ほうりつ） - law ／ 文法 （ぶんぽう） - grammar",
     "alternativeNotes": [],
@@ -38879,6 +38905,10 @@
       "活発"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "being helped",
+      "resuscitation"
+    ],
     "blockedSentencePhrases": [],
     "notes": "生活 （せいかつ） - daily life ／ 活用 （かつよう） - practical use ／ 活発 （かっぱつ） - lively / active",
     "alternativeNotes": [],
@@ -39327,6 +39357,9 @@
       "涙声"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "sympathy"
+    ],
     "blockedSentencePhrases": [],
     "notes": "涙 （なみだ） - tear ／ 涙声 （なみだごえ） - tearful voice",
     "alternativeNotes": [],
@@ -39515,11 +39548,11 @@
     "preferredWords": [
       "深い",
       "深刻",
-      "夜更かし"
+      "深夜"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "深い （ふかい） - deep ／ 深刻 （しんこく） - serious / grave ／ 夜更かし （よふかし） - staying up late",
+    "notes": "深い （ふかい） - deep ／ 深刻 （しんこく） - serious / grave ／ 深夜 （しんや） - late night",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "この川は思ったより深いです。",
@@ -39708,6 +39741,17 @@
       "済む",
       "経済",
       "返済"
+    ],
+    "blockedMeanings": [
+      "excusable",
+      "need not",
+      "relieve (burden)"
+    ],
+    "blockedReadings": [
+      "すく.う",
+      "な.す",
+      "わた.る",
+      "わたし"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
@@ -39907,11 +39951,18 @@
     "preferredWords": [
       "渡る",
       "渡す",
-      "横断歩道"
+      "渡航"
+    ],
+    "blockedMeanings": [
+      "diameter",
+      "ford",
+      "import",
+      "migrate",
+      "transit"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "渡る （わたる） - cross ／ 渡す （わたす） - hand over ／ 横断歩道 （おうだんほどう） - crosswalk",
+    "notes": "渡る （わたる） - cross ／ 渡す （わたす） - hand over ／ 渡航 （とこう） - voyage / crossing",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "信号が青になってから道を渡ります。",
@@ -40005,6 +40056,9 @@
       "温度",
       "温かい"
     ],
+    "blockedReadings": [
+      "ぬく"
+    ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
     "notes": "温度 （おんど） - temperature ／ 温かい （あたたかい） - warm",
@@ -40077,7 +40131,7 @@
     "exampleSentence": {
       "japanese": "港に大きな船が止まっていました。",
       "reading": "みなとにおおきなふねがとまっていました。",
-      "english": "A large ship was stopped in the harbor.",
+      "english": "A large ship was docked in the harbor.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -40781,6 +40835,10 @@
       "演奏",
       "講演",
       "演技"
+    ],
+    "blockedMeanings": [
+      "play",
+      "render"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
@@ -41813,6 +41871,18 @@
       "全然",
       "自然",
       "当然"
+    ],
+    "blockedReadings": [
+      "さ",
+      "しか",
+      "しか.し",
+      "しか.り"
+    ],
+    "blockedMeanings": [
+      "if so",
+      "in that case",
+      "sort of thing",
+      "well"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],

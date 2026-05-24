@@ -367,6 +367,63 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
 
     assert.deepEqual(curatedStudyData["欲"].blockedMeanings, ["covetousness", "passion"]);
 
+    assert.deepEqual(curatedStudyData["歳"].blockedMeanings, ["occasion", "opportunity"]);
+
+    assert.deepEqual(curatedStudyData["殺"].blockedMeanings, [
+        "butcher",
+        "diminish",
+        "murder",
+        "slice off",
+        "split",
+        "spoil",
+    ]);
+
+    assert.deepEqual(curatedStudyData["汚"].blockedMeanings, ["defile", "disgrace"]);
+
+    assert.deepEqual(curatedStudyData["治"].blockedMeanings, [
+        "conserve",
+        "govt",
+        "quell",
+        "reign",
+        "subdue",
+    ]);
+
+    assert.deepEqual(curatedStudyData["法"].blockedReadings, ["フラン"]);
+
+    assert.deepEqual(curatedStudyData["活"].blockedMeanings, ["being helped", "resuscitation"]);
+
+    assert.deepEqual(curatedStudyData["涙"].blockedMeanings, ["sympathy"]);
+
+    assert.equal(curatedStudyData["深"].notes, "深い （ふかい） - deep ／ 深刻 （しんこく） - serious / grave ／ 深夜 （しんや） - late night");
+    assert.deepEqual(curatedStudyData["深"].preferredWords, ["深い", "深刻", "深夜"]);
+
+    assert.deepEqual(curatedStudyData["済"].blockedMeanings, ["excusable", "need not", "relieve (burden)"]);
+    assert.deepEqual(curatedStudyData["済"].blockedReadings, ["すく.う", "な.す", "わた.る", "わたし"]);
+
+    assert.deepEqual(curatedStudyData["渡"].preferredWords, ["渡る", "渡す", "渡航"]);
+    assert.deepEqual(curatedStudyData["渡"].blockedMeanings, [
+        "diameter",
+        "ford",
+        "import",
+        "migrate",
+        "transit",
+    ]);
+    assert.equal(curatedStudyData["渡"].notes, "渡る （わたる） - cross ／ 渡す （わたす） - hand over ／ 渡航 （とこう） - voyage / crossing");
+
+    assert.deepEqual(curatedStudyData["温"].blockedReadings, ["ぬく"]);
+
+    assert.equal(curatedStudyData["港"].exampleSentence.english, "A large ship was docked in the harbor.");
+
+    assert.deepEqual(curatedStudyData["演"].blockedMeanings, ["play", "render"]);
+
+    assert.deepEqual(curatedStudyData["然"].blockedReadings, ["さ", "しか", "しか.し", "しか.り"]);
+    assert.deepEqual(curatedStudyData["然"].blockedMeanings, [
+        "if so",
+        "in that case",
+        "sort of thing",
+        "well",
+    ]);
+
     assert.deepEqual(curatedStudyData["当"].blockedMeanings, ["himself"]);
 
     assert.equal(curatedStudyData["役"].englishMeaning, "role / usefulness");

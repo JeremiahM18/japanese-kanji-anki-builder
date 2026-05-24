@@ -272,6 +272,42 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
 
     assert.deepEqual(curatedStudyData["成"].displayWord, { written: "成功", pron: "せいこう" });
     assert.equal(curatedStudyData["成"].englishMeaning, "succeed / become / complete");
+    assert.deepEqual(curatedStudyData["成"].blockedMeanings, ["elapse", "get"]);
+
+    assert.deepEqual(curatedStudyData["才"].blockedMeanings, ["cubic shaku"]);
+
+    assert.deepEqual(curatedStudyData["打"].blockedMeanings, ["dozen"]);
+
+    assert.deepEqual(curatedStudyData["払"].blockedMeanings, ["banish", "dispose of", "prune"]);
+
+    assert.deepEqual(curatedStudyData["投"].blockedMeanings, ["join", "launch into", "sell at a loss"]);
+
+    assert.deepEqual(curatedStudyData["折"].blockedMeanings, ["submit", "yield"]);
+
+    assert.deepEqual(curatedStudyData["抱"].blockedMeanings, ["have"]);
+
+    assert.deepEqual(curatedStudyData["押"].blockedMeanings, [
+        "attach",
+        "check",
+        "do in spite of",
+        "weight",
+    ]);
+
+    assert.deepEqual(curatedStudyData["拾"].blockedMeanings, ["go on foot"]);
+
+    assert.deepEqual(curatedStudyData["指"].blockedMeanings, [
+        "measure (ruler)",
+        "play (chess)",
+        "put into",
+    ]);
+
+    assert.deepEqual(curatedStudyData["捨"].blockedMeanings, ["resign", "sacrifice"]);
+
+    assert.deepEqual(curatedStudyData["掛"].blockedMeanings, ["arrive at", "depend", "pour", "tax"]);
+
+    assert.deepEqual(curatedStudyData["換"].blockedMeanings, ["period"]);
+
+    assert.deepEqual(curatedStudyData["敗"].blockedMeanings, ["reversal"]);
 
     assert.deepEqual(curatedStudyData["当"].blockedMeanings, ["himself"]);
 

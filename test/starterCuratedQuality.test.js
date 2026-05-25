@@ -559,6 +559,12 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
     assert.equal(curatedStudyData["表"].displayWord.pron, "おもて");
     assert.deepEqual(curatedStudyData["表"].blockedMeanings, ["diagram"]);
 
+    assert.deepEqual(curatedStudyData["裏"].blockedMeanings, ["palm", "sole"]);
+    assert.deepEqual(curatedStudyData["覚"].blockedMeanings, ["sober up"]);
+    assert.deepEqual(curatedStudyData["解"].blockedMeanings, ["key", "minute", "notes"]);
+    assert.deepEqual(curatedStudyData["記"].blockedMeanings, ["scribe"]);
+    assert.deepEqual(curatedStudyData["訪"].blockedMeanings, ["offer sympathy"]);
+
     assert.deepEqual(curatedStudyData["当"].blockedMeanings, ["himself"]);
 
     assert.equal(curatedStudyData["役"].englishMeaning, "role / usefulness");
@@ -572,6 +578,27 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
     assert.deepEqual(curatedStudyData["忙"].blockedMeanings, ["restless"]);
 
     assert.deepEqual(curatedStudyData["念"].blockedMeanings, ["sense"]);
+
+    assert.deepEqual(curatedStudyData["認"].blockedMeanings, ["appreciate", "believe", "witness"]);
+    assert.deepEqual(curatedStudyData["誕"].blockedMeanings, [
+        "be arbitrary",
+        "declension",
+        "lie",
+        "nativity",
+    ]);
+    assert.deepEqual(curatedStudyData["課"].blockedMeanings, ["counter for chapters (of a book)"]);
+    assert.deepEqual(curatedStudyData["調"].blockedMeanings, [
+        "exorcise",
+        "mediate",
+        "meter",
+        "prepare",
+        "writing style",
+    ]);
+
+    assert.deepEqual(curatedStudyData["識"].blockedMeanings, ["discriminating", "write"]);
+    assert.deepEqual(curatedStudyData["警"].blockedMeanings, ["commandment"]);
+    assert.deepEqual(curatedStudyData["負"].blockedMeanings, ["-"]);
+    assert.equal(curatedStudyData["財"].englishMeaning, "property / wealth");
 
     assert.deepEqual(curatedStudyData["息"].blockedMeanings, [
         "coming to an end",

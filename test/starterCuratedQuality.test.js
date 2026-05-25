@@ -612,6 +612,47 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
     assert.deepEqual(curatedStudyData["迷"].blockedMeanings, ["illusion"]);
     assert.deepEqual(curatedStudyData["追"].blockedMeanings, ["meanwhile"]);
     assert.equal(curatedStudyData["退"].englishMeaning, "withdraw / retreat");
+    assert.equal(curatedStudyData["配"].englishMeaning, "distribute / deliver");
+    assert.deepEqual(curatedStudyData["配"].displayWord, { written: "配る", pron: "くばる" });
+    assert.deepEqual(curatedStudyData["配"].blockedMeanings, ["exile", "rationing", "spouse"]);
+    assert.deepEqual(curatedStudyData["酒"].displayWord, { written: "酒", pron: "さけ" });
+    assert.deepEqual(curatedStudyData["険"].blockedMeanings, [
+        "impregnable position",
+        "inaccessible place",
+        "sharp eyes",
+        "steep place",
+    ]);
+    assert.deepEqual(curatedStudyData["陽"].blockedMeanings, [
+        "daytime",
+        "heaven",
+        "male",
+        "positive",
+        "yang principle",
+    ]);
+    assert.equal(curatedStudyData["際"].englishMeaning, "occasion / time");
+    assert.deepEqual(curatedStudyData["際"].displayWord, { written: "際", pron: "さい" });
+    assert.deepEqual(curatedStudyData["際"].blockedMeanings, [
+        "adventurous",
+        "dangerous",
+        "indecent",
+    ]);
+    assert.equal(curatedStudyData["雑"].englishMeaning, "rough / miscellaneous");
+    assert.deepEqual(curatedStudyData["雑"].displayWord, { written: "雑", pron: "ざつ" });
+    assert.deepEqual(curatedStudyData["雑"].blockedMeanings, ["magazine"]);
+    assert.equal(curatedStudyData["非"].englishMeaning, "non- / fault");
+    assert.deepEqual(curatedStudyData["非"].displayWord, { written: "非", pron: "ひ" });
+    assert.deepEqual(curatedStudyData["非"].blockedMeanings, ["very"]);
+    assert.equal(curatedStudyData["面"].englishMeaning, "face / surface");
+    assert.deepEqual(curatedStudyData["面"].displayWord, { written: "画面", pron: "がめん" });
+    assert.deepEqual(curatedStudyData["面"].blockedMeanings, ["interesting"]);
+    assert.deepEqual(curatedStudyData["頂"].blockedMeanings, ["place on the head"]);
+    assert.equal(curatedStudyData["額"].englishMeaning, "amount / frame / forehead");
+    assert.ok(curatedStudyData["額"].notes.includes("額 （がく） - amount / frame / forehead"));
+    assert.deepEqual(curatedStudyData["額"].blockedMeanings, ["volume"]);
+    assert.deepEqual(curatedStudyData["類"].blockedMeanings, ["genus"]);
+    assert.deepEqual(curatedStudyData["飛"].blockedMeanings, ["skip (pages)"]);
+    assert.deepEqual(curatedStudyData["駐"].blockedMeanings, ["resident", "stop-over"]);
+    assert.deepEqual(curatedStudyData["鳴"].blockedMeanings, ["bark", "chirp", "echo", "honk"]);
 
     assert.deepEqual(curatedStudyData["息"].blockedMeanings, [
         "coming to an end",

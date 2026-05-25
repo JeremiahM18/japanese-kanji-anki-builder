@@ -599,6 +599,19 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
     assert.deepEqual(curatedStudyData["警"].blockedMeanings, ["commandment"]);
     assert.deepEqual(curatedStudyData["負"].blockedMeanings, ["-"]);
     assert.equal(curatedStudyData["財"].englishMeaning, "property / wealth");
+    assert.deepEqual(curatedStudyData["資"].blockedMeanings, [
+        "be conducive to",
+        "contribute to",
+        "data",
+    ]);
+    assert.deepEqual(curatedStudyData["賛"].blockedMeanings, ["title or inscription on picture"]);
+    assert.deepEqual(curatedStudyData["越"].blockedMeanings, ["Vietnam"]);
+    assert.deepEqual(curatedStudyData["輪"].blockedMeanings, ["counter for wheels and flowers"]);
+    assert.deepEqual(curatedStudyData["込"].blockedMeanings, ["(kokuji)", "in bulk", "mixture"]);
+    assert.deepEqual(curatedStudyData["返"].blockedMeanings, ["fade"]);
+    assert.deepEqual(curatedStudyData["迷"].blockedMeanings, ["illusion"]);
+    assert.deepEqual(curatedStudyData["追"].blockedMeanings, ["meanwhile"]);
+    assert.equal(curatedStudyData["退"].englishMeaning, "withdraw / retreat");
 
     assert.deepEqual(curatedStudyData["息"].blockedMeanings, [
         "coming to an end",
@@ -980,4 +993,8 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["輔"].exampleSentence.japanese, "新任の責任者を輔佐する役目を任された。");
     assert.deepEqual(curatedStudyData["緯"].preferredWords, ["北緯", "南緯", "経緯"]);
     assert.equal(curatedStudyData["逝"].notes, "急逝 （きゅうせい） - sudden death ／ 逝去 （せいきょ） - passing away ／ 逝く （ゆく） - pass away");
+    assert.deepEqual(curatedStudyData["連"].blockedMeanings, ["clique", "gang", "party"]);
+    assert.deepEqual(curatedStudyData["遅"].blockedMeanings, ["back"]);
+    assert.deepEqual(curatedStudyData["達"].breakdownDisplayWord, { written: "達", pron: "たつ" });
+    assert.deepEqual(curatedStudyData["適"].blockedMeanings, ["occasional", "rare"]);
 });

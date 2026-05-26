@@ -9,6 +9,7 @@ const {
     resolveKanjiSourceOriginIdsForEntry,
 } = require("./platinumKanjiSourceOriginService");
 const { decodeHtmlEntities } = require("../utils/text");
+const { normalizeJapaneseReading } = require("../utils/japanese");
 const NON_SHIPPING_STATUSES = Object.freeze(["deferred", "removed"]);
 const REVALIDATION_STATUSES = Object.freeze(["needs_revalidation"]);
 const REVIEW_ONLY_STATUSES = Object.freeze(["needs_review", ...REVALIDATION_STATUSES]);
@@ -122,6 +123,21 @@ function normalizeStringArray(value) {
     return (Array.isArray(value) ? value : [])
         .map((entry) => normalizeText(entry))
         .filter(Boolean);
+}
+
+function splitGeneratedKanjiReadings(value) {
+    return String(value ?? "")
+        .replace(/\b(?:On|Kun):/giu, " ")
+        .split(/[、,\/／;；\s]+/u)
+        .map((reading) => normalizeJapaneseReading(reading))
+        .filter(Boolean);
+}
+
+function buildGeneratedKanjiReadingSet(row = {}) {
+    return new Set([
+        ...splitGeneratedKanjiReadings(row.onReading),
+        ...splitGeneratedKanjiReadings(row.kunReading),
+    ]);
 }
 
 function normalizeKanjiVerificationLimitations(value) {
@@ -504,6 +520,11 @@ function validateGeneratedKanjiRow(row = {}) {
     }
     if (!primaryReading) {
         failures.push("PrimaryReading is empty");
+    } else {
+        const sourceReadings = buildGeneratedKanjiReadingSet(row);
+        if (sourceReadings.size > 0 && !sourceReadings.has(normalizeJapaneseReading(primaryReading))) {
+            failures.push(`PrimaryReading is not an exact source/inventory on/kun reading: ${primaryReading} not in OnReading/KunReading`);
+        }
     }
     if (!normalizeText(row.meaningJP)) {
         failures.push("MeaningJP is empty");

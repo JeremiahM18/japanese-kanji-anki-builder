@@ -17290,32 +17290,34 @@
     "kanji": "好",
     "status": "fixed_then_platinum",
     "readingIncludes": [
-      "すき"
+      "このむ"
     ],
     "meaningIncludes": [
-      "like"
+      "like",
+      "prefer"
     ],
     "kanjiMeaningsIncludes": [
       "like",
-      "pleasing"
+      "prefer"
     ],
     "levelIncludes": [
       "N4"
     ],
     "notesIncludes": [
+      "好む",
       "好き",
       "好み"
     ],
     "exampleIncludes": [
-      "私は静かなカフェが好きです。"
+      "彼女は静かな場所を好みます。"
     ],
-    "reviewedAt": "2026-05-13",
+    "reviewedAt": "2026-05-26",
     "reviewer": "codex-platinum-review",
     "sourceEvidence": [
       {
         "type": "japanese-source",
         "source": "https://www.kanjipedia.jp/kanji/0002163400; Bunka Joyo Kanji reading index",
-        "detail": "Japanese-source re-review for 好|すき: Kanjipedia lists 音 コウ and 訓 このむ・すく and supports liking/preference plus good/pleasing meanings. The generated card fields PrimaryReading すき, MeaningJP like, broader meanings like/pleasing, and support words 好き and 好み are source-supported after duplicate synonym padding was removed; this verifies field accuracy, not JLPT placement. This field-verification source is independent of the JLPT source-claim origin lanes used for placement governance and does not certify JLPT placement."
+        "detail": "Japanese-source corrective review for 好|このむ: Kanjipedia lists 音 コウ and 訓 このむ / すく / よい, with meanings including like and prefer; governed inventory lists コウ, いい, このむ, すく, and よい. This supports exact source-backed PrimaryReading このむ, MeaningJP prefer / like, and KanjiMeanings like / prefer for the individual kanji 好. 好き remains support vocabulary, not the primary kanji reading."
       }
     ],
     "qualityGates": {
@@ -17336,31 +17338,31 @@
       "strokeOrderTargetVerified": true,
       "noSilentFallback": true
     },
-    "primaryReadingRationale": "Uses すき because 好き is the most common learner-facing N4 surface for like; このむ and コウ remain visible as secondary reading/support surfaces.",
+    "primaryReadingRationale": "Uses このむ because it is an exact governed kun-reading for the individual kanji 好 and directly expresses the like/prefer meaning; 好き remains common support vocabulary but not the primary kanji reading.",
     "reviewStandard": "kanji-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-13",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
-    "fixSummary": "Removed duplicate broader gloss padding be fond of, fond, and like something so the card keeps a crisp like / pleasing meaning surface.",
+    "revalidatedAt": "2026-05-26",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard after exact primary-reading correction.",
+    "fixSummary": "Corrected PrimaryReading from the support word-form すき to the exact source-backed kanji reading このむ; refreshed meaning, example, notes, evidence, and media expectations.",
     "internalChecks": [
       {
         "type": "generated-surface",
-        "source": "npm run deck:platinum:batch -- --level=4 --kanji=夕,多,夜,太,好,妹,姉,始,字,安 --json",
-        "detail": "Generated card surface re-reviewed for 好|すき: single-kanji anchor; Kanji and DisplayWord 好; PrimaryReading すき; MeaningJP like; KanjiMeanings like / pleasing; notes include 好き, 好み; example 私は静かなカフェが好きです。; reading わたしはしずかなカフェがすきです。; translation I like quiet cafes.; audio field includes kanji-reading-好-すき; stroke-order field includes 597D_好-stroke-order.gif."
+        "source": "out/build/package/exports/jlpt-n4.tsv after npm run deck:kanji:nlp-signals -- --levels=3,4,5",
+        "detail": "Generated single-kanji card surface inspected for 好|このむ: single-kanji anchor; Kanji 好; DisplayWord 好; StudyWordKanji blank; PrimaryReading このむ; MeaningJP prefer / like; KanjiMeanings like / prefer / pleasing; OnReading コウ; KunReading い.い、 この.む、 す.く、 よ.い; notes <ruby>好<rt>この</rt></ruby>む - prefer / like ／ <ruby>好<rt>す</rt></ruby>き - like ／ <ruby>好<rt>この</rt></ruby>み - preference / taste; example 彼女は静かな場所を好みます。 ／ かのじょはしずかなばしょをこのみます。 ／ She prefers quiet places.; audio field includes kanji-reading-好-このむ; stroke-order field includes 597D_好-stroke-order.gif."
       },
       {
         "type": "media-audit",
-        "source": "data/media/kanji/59/597D_好/manifest.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
-        "detail": "Managed media provenance inspected for 好: exact audio source voicevox-nemo with locale ja-JP; stroke-order animation source remote-stroke-order-animation; static stroke-order image source local-filesystem; no silent fallback accepted. Managed media provenance also checked 好 exact audio media fragment kanji-reading-好-すき."
+        "source": "out/build/reports/media-sync.json; out/build/package/package-summary.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 好: exact audio media fragment kanji-reading-好-このむ; asset audio/597D_好-kanji-reading-好-このむ.wav; checksum a7c8d573478ba5211db45aa1a275c7d29c1f32748d81a1ca97fefa08a062329a; source voicevox-nemo; category kanji-reading; text 好; reading このむ; voice 女声1 / ノーマル; locale ja-JP; stroke-order media animations/597D_好-stroke-order.gif; stroke-order checksum 623f8951679d6c0b982348cc320eb0b7a01fa69c419271973bd2b6bb8395a6c0; no silent fallback accepted."
       },
       {
         "type": "audio-review",
-        "source": "exported Audio field and managed media manifest",
-        "detail": "Audio artifact re-reviewed for 好|すき: exact kanji-reading audio kanji-reading-好-すき; source voicevox-nemo; category kanji-reading; target 好; exported PrimaryReading すき."
+        "source": "npm run media:review:audio focused corrective review; exported Audio field; managed media manifest",
+        "detail": "Audio artifact reviewed for 好|このむ: exact kanji-reading audio kanji-reading-好-このむ; expected reading このむ; managed reading このむ; asset audio/597D_好-kanji-reading-好-このむ.wav; voice 女声1 / ノーマル; source voicevox-nemo; checksum a7c8d573478ba5211db45aa1a275c7d29c1f32748d81a1ca97fefa08a062329a."
       },
       {
         "type": "stroke-order-review",
         "source": "exported StrokeOrder field and managed media manifest",
-        "detail": "Visual stroke-order review recorded for 好: stroke-order animation 597D_好-stroke-order.gif shows target 好; source provenance remote-stroke-order-animation."
+        "detail": "Visual stroke-order review recorded for 好: stroke-order animation animations/597D_好-stroke-order.gif shows target 好; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
       },
       {
         "type": "golden-regression",
@@ -17371,41 +17373,53 @@
     "reviewEvidence": [
       {
         "type": "manual-review",
-        "source": "platinum product review",
-        "detail": "Final product judgment for 好|すき: individual-kanji card for an N4 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+        "source": "corrective primary-reading product review",
+        "detail": "Final product judgment for 好|このむ: individual-kanji card for a learner, exact source-backed primary reading reviewed against governed Japanese source evidence, support-only vocabulary usage checked, natural example sentence reviewed, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
       },
       {
         "type": "current-standard-review",
-        "source": "core N4 current-standard whole-card review",
-        "detail": "Current-standard review revalidated 好|すき generated surface, Japanese-source evidence, PrimaryReading すき, MeaningJP like, KanjiMeanings like / pleasing, example sentence 私は静かなカフェが好きです。, reading わたしはしずかなカフェがすきです。, translation I like quiet cafes., notes/support surface 好き, 好み, audio kanji-reading-好-すき, stroke-order media 597D_好-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence."
+        "source": "core kanji current-standard structural Platinum review after primary-reading correction",
+        "detail": "Current-standard review revalidated 好|このむ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading このむ, MeaningJP prefer / like, KanjiMeanings like / prefer / pleasing, example sentence 彼女は静かな場所を好みます。, reading かのじょはしずかなばしょをこのみます。, translation She prefers quiet places., notes/support surface 好む / 好き / 好み, audio kanji-reading-好-このむ, stroke-order media, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; Obsidian proof is recorded separately only when rereviewProvenance is present."
       }
     ],
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "kanji-platinum-v3-evidence-lanes",
-      "batchId": "n4-kanji-platinum-rereview-batch-006",
-      "reviewedAt": "2026-05-15",
-      "reviewer": "codex-platinum-review",
+      "batchId": "primary-reading-corrective-rereview-2026-05-26",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
       "reviewedAfterStandard": true,
       "mechanicalMigration": false,
-      "result": "approved_for_current_standard_platinum",
-      "scope": "full kanji card rereview from square zero",
-      "cardReviewed": "好|すき",
+      "result": "approved_after_exact_primary_reading_correction",
+      "scope": "full kanji card rereview from the rebuilt live card after exact source-backed primary-reading repair",
+      "cardReviewed": "好|このむ",
       "evidenceChecked": [
-        "generated surface: Kanji and DisplayWord are 好, StudyWordKanji is blank, PrimaryReading is すき",
-        "governed Japanese source: https://www.kanjipedia.jp/kanji/0002163400 and https://www.kanjipedia.jp/kotoba/0002168000 support コウ, このむ/すく, liking/preference and good/pleasing meanings, plus 好く/好き-family learner support used for 好|すき",
-        "source-origin independence: platinum field source is Kanjipedia/Bunka reading governance, separate from placement/source-origin families kanjidic2_legacy and shin_kanzen_master_kanji",
-        "primary field review: MeaningJP like; KanjiMeanings like / pleasing",
-        "meaning-scope decision: like is the learner-facing core through 好き; pleasing is retained as a broader source-backed sense; close relationship/friendship senses stay out of the primary field",
-        "notes/support review: 好き, 好み stay support-only for the single-kanji card anchor and explain why the learner-facing surface uses すき rather than bare dictionary すく",
-        "example review: 私は静かなカフェが好きです。 / わたしはしずかなカフェがすきです。 / I like quiet cafes.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
-        "audio identity: audio/597D_好-kanji-reading-好-すき.wav; source voicevox-nemo; locale ja-JP; file exists true",
-        "stroke-order identity: animations/597D_好-stroke-order.gif; source remote-stroke-order-animation; file exists true; sequence correctness remains visual-review based",
-        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment",
-        "quality gates checked true; no golden review counted as source truth",
-        "verification limitations actively considered; no active non-core limitations recorded"
+        "substantive post-v3 human rereview performed after correction; not mechanically migrated; live generated card inspected from out/build/package/exports/jlpt-n4.tsv: Kanji 好; DisplayWord 好; PrimaryReading このむ; MeaningJP prefer / like; KanjiMeanings like / prefer / pleasing; OnReading コウ; KunReading い.い、 この.む、 す.く、 よ.い; Notes <ruby>好<rt>この</rt></ruby>む - prefer / like ／ <ruby>好<rt>す</rt></ruby>き - like ／ <ruby>好<rt>この</rt></ruby>み - preference / taste; Example 彼女は静かな場所を好みます。 ／ かのじょはしずかなばしょをこのみます。 ／ She prefers quiet places.; Audio [sound:597D_好-kanji-reading-好-このむ.wav]; StrokeOrder <img src=\"597D_好-stroke-order.gif\" />.",
+        "starter source data checked in templates/starter_curated_study_data.json: display word 好む|このむ; support words 好き and 好み remain support-only; this support surface may teach useful vocabulary, but PrimaryReading is bound to the exact source on/kun reading このむ.",
+        "golden and Platinum expectations checked separately: golden reading このむ; Platinum reading このむ, meaning like / prefer, broader meanings like / prefer, notes 好む / 好き / 好み, example 彼女は静かな場所を好みます。.",
+        "governed Japanese source evidence rechecked: https://www.kanjipedia.jp/kanji/0002163400; Bunka Joyo Kanji reading index Japanese-source corrective review for 好|このむ: Kanjipedia lists 音 コウ and 訓 このむ / すく / よい, with meanings including like and prefer; governed inventory lists コウ, いい, このむ, すく, and よい. This supports exact source-backed PrimaryReading このむ, MeaningJP prefer / like, and KanjiMeanings like / prefer for the individual kanji 好. 好き remains support vocabulary, not the primary kanji reading.",
+        "primary reading decision: Uses このむ because it is an exact governed kun-reading for the individual kanji 好 and directly expresses the like/prefer meaning; 好き remains common support vocabulary but not the primary kanji reading.",
+        "pedagogy/product review: N4 single-kanji card remains learner-useful; support vocabulary is acceptable only as support; DisplayWord remains the bare kanji 好; StudyWordKanji remains blank; notes are useful and not promoted as primary-reading authority.",
+        "actual example sentence quality review: 彼女は静かな場所を好みます。 / かのじょはしずかなばしょをこのみます。 / She prefers quiet places.; checked from the live generated card as natural Japanese, learner useful, level appropriate, support only for the target kanji, reading correct, and translation correct by human reviewer judgment.",
+        "audio identity: generated Audio field [sound:597D_好-kanji-reading-好-このむ.wav]; managed audio asset audio/597D_好-kanji-reading-好-このむ.wav; source voicevox-nemo; category kanji-reading; text 好; reading このむ; voice 女声1 / ノーマル; locale ja-JP; checksum a7c8d573478ba5211db45aa1a275c7d29c1f32748d81a1ca97fefa08a062329a; manifest data/media/kanji/59/597D_好/manifest.json; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"597D_好-stroke-order.gif\" />; managed stroke-order asset animations/597D_好-stroke-order.gif; source remote-stroke-order-animation; checksum 623f8951679d6c0b982348cc320eb0b7a01fa69c419271973bd2b6bb8395a6c0; manifest data/media/kanji/59/597D_好/manifest.json; source file exists true; media target identity matched 好.",
+        "kanji NLP signal packet checked from nlp-review-kanji-n4-0064: priority routine; target 好|このむ; suggestions 0; signal kinds routine-tokenization-review / kanji-card-tokenizer-reading-variant; tokenizer reading よしみ; live card reading このむ; reading comparable true; matches false; source artifact out/nlp-tokenization/kanji-n4-kuromoji.json; authority assistive_only, human_review_required, writesTrackedTemplates false, certifiesCards false, claimsReleaseReadiness false. Reviewer treated this as support context only; tokenizer variants or coverage gaps did not override source-backed on/kun readings.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
       ],
-      "limitationDecision": "no active non-core verification limitations recorded after this batch review"
+      "sentenceQualityReview": {
+        "example": "彼女は静かな場所を好みます。",
+        "reading": "かのじょはしずかなばしょをこのみます。",
+        "translation": "She prefers quiet places.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "readingCorrect": true,
+        "translationCorrect": true,
+        "reviewerJudgment": "example sentence quality review for 好|このむ: natural Japanese, learner useful, level appropriate, support-only usage, reading correct, and translation correct after live-card rereview."
+      },
+      "limitationDecision": "no active non-core verification limitations recorded after corrective rereview"
     }
   },
   {

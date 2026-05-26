@@ -19,6 +19,7 @@ const {
     isGeneratedPitchAccentSource,
 } = require("../src/services/wordPitchAccentVerificationService");
 const { buildWordStudyEntryKey } = require("../src/datasets/wordStudyData");
+const { normalizeJapaneseReading } = require("../src/utils/japanese");
 
 const ROOT_DIR = path.resolve(__dirname, "..");
 const TEMPLATES_DIR = path.join(ROOT_DIR, "templates");
@@ -29,6 +30,20 @@ function loadJson(relativePath) {
 
 function normalizeList(values = []) {
     return (Array.isArray(values) ? values : []).filter(Boolean);
+}
+
+function splitKanjiInventoryReadings(value = "") {
+    return String(value || "")
+        .split(/[、,\/／;；\s]+/u)
+        .map((reading) => normalizeJapaneseReading(reading))
+        .filter(Boolean);
+}
+
+function buildKanjiInventoryReadingSet(entry = {}) {
+    return new Set([
+        ...splitKanjiInventoryReadings(normalizeList(entry.on_readings).join(" ")),
+        ...splitKanjiInventoryReadings(normalizeList(entry.kun_readings).join(" ")),
+    ]);
 }
 
 function activeEntries(entries = [], activeStatuses = []) {
@@ -110,6 +125,27 @@ test("tracked populated kanji platinum manifests bind evidence to protected fiel
         });
 
         assert.equal(report.passed, true, `${fileName}\n${formatPlatinumKanjiReviewReport(report)}`);
+    }
+});
+
+test("tracked active N3 through N5 kanji platinum primary readings are exact source on/kun readings", () => {
+    const inventory = loadJson(path.join("data", "kanji_jlpt_only.json"));
+
+    for (const level of [3, 4, 5]) {
+        const fileName = `platinum_n${level}_review_set.json`;
+        const entries = loadJson(path.join("templates", fileName));
+        const manifestActiveEntries = activeEntries(entries, ACTIVE_KANJI_PLATINUM_STATUSES);
+
+        for (const entry of manifestActiveEntries) {
+            const reading = normalizeJapaneseReading(normalizeList(entry.readingIncludes)[0] || "");
+            const sourceReadings = buildKanjiInventoryReadingSet(inventory[entry.kanji]);
+
+            assert.ok(sourceReadings.size > 0, `${fileName} missing source readings for ${entry.kanji}`);
+            assert.ok(
+                sourceReadings.has(reading),
+                `${fileName} ${entry.kanji}|${normalizeList(entry.readingIncludes)[0] || ""} must be an exact source on/kun reading`
+            );
+        }
     }
 });
 

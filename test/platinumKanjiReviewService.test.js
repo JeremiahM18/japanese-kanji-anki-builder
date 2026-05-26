@@ -330,6 +330,31 @@ test("evaluatePlatinumKanjiReviewSet rejects non-exact primary-reading audio", (
     assert.match(report.results[0].failures.join("\n"), /Audio field is not kanji-reading audio/);
 });
 
+test("evaluatePlatinumKanjiReviewSet rejects support word-form primary readings that are not source on/kun readings", () => {
+    const report = evaluatePlatinumKanjiReviewSet({
+        rows: [
+            buildRow({
+                primaryReading: "おなか",
+                onReading: "On: フク",
+                kunReading: "Kun: はら",
+                audio: "[sound:8179_腹-kanji-reading-腹-おなか.wav]",
+            }),
+        ],
+        entries: [
+            buildEntry({
+                readingIncludes: ["おなか"],
+                primaryReadingRationale: "Fixture intentionally uses a support word form so the exact source on/kun gate can reject it.",
+            }),
+        ],
+    });
+
+    assert.equal(report.passed, false);
+    assert.match(
+        report.results[0].failures.join("\n"),
+        /PrimaryReading is not an exact source\/inventory on\/kun reading: おなか not in OnReading\/KunReading/
+    );
+});
+
 test("evaluatePlatinumKanjiReviewSet rejects active entries with missing quality gates", () => {
     const report = evaluatePlatinumKanjiReviewSet({
         rows: [buildRow()],

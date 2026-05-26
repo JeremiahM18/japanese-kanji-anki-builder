@@ -375,35 +375,36 @@
   },
   {
     "kanji": "久",
-    "status": "platinum",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
-      "ひさしぶり"
+      "ひさしい"
     ],
     "meaningIncludes": [
-      "after a long time"
+      "long time",
+      "long-standing"
     ],
     "kanjiMeaningsIncludes": [
-      "after a long time",
-      "long time"
+      "long time",
+      "long-standing"
     ],
     "levelIncludes": [
       "N3"
     ],
     "notesIncludes": [
-      "久しぶり",
       "久しい",
+      "久しぶり",
       "永久"
     ],
     "exampleIncludes": [
-      "彼とは久しぶりに会いました。"
+      "彼とは久しい付き合いです。"
     ],
-    "reviewedAt": "2026-05-23",
+    "reviewedAt": "2026-05-26",
     "reviewer": "codex-platinum-review",
     "sourceEvidence": [
       {
         "type": "japanese-source",
-        "source": "https://www.kanjipedia.jp/kanji/0001364400; https://www.kanjipedia.jp/kotoba/0001365200; https://www.kanjipedia.jp/kotoba/0001365300; Bunka Joyo Kanji reading index",
-        "detail": "Japanese-source review for 久|ひさしぶり: Kanjipedia lists 音 キュウ・ク, 訓 ひさしい, and meanings for long time/ひさしい, with 永久 as a support compound; its 久方振り page glosses the expression as ひさしぶり, and its 久しい page includes the 久/ひさしい long-time sense. Bunka Joyo reading governance supports キュウ, ク, and ひさしい. This supports the exported PrimaryReading ひさしぶり, MeaningJP after a long time, and KanjiMeanings review snippets after a long time / long time for the individual kanji 久."
+        "source": "https://www.kanjipedia.jp/kanji/0001364400; Bunka Joyo Kanji reading index",
+        "detail": "Japanese-source corrective review for 久|ひさしい: Kanjipedia lists 音 キュウ・ク, 訓 ひさしい, and meanings centered on long time / long-standing; governed inventory lists キュウ, ク, and ひさ.しい. This supports the exact source-backed PrimaryReading ひさしい, MeaningJP long-standing / for a long time, and KanjiMeanings long time / long-standing for the individual kanji 久. 久しぶり remains support vocabulary, not the primary kanji reading."
       }
     ],
     "qualityGates": {
@@ -424,25 +425,25 @@
       "strokeOrderTargetVerified": true,
       "noSilentFallback": true
     },
-    "primaryReadingRationale": "Uses ひさしぶり because the current N3 learner-facing card is anchored in the common expression 久しぶり and the example directly practices it; ひさしい and キュウ remain visible in support notes and reading fields.",
+    "primaryReadingRationale": "Uses ひさしい because it is the exact governed kun-reading for the individual kanji 久; 久しぶり remains useful support vocabulary but is a word-form reading, not the primary kanji reading.",
     "reviewStandard": "kanji-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-23",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "revalidatedAt": "2026-05-26",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard after exact primary-reading correction.",
     "internalChecks": [
       {
         "type": "generated-surface",
-        "source": "npm run deck:platinum:batch -- --level=3 --limit=8 --queue=missing-current-standard --json",
-        "detail": "Generated card surface inspected for 久|ひさしぶり: single-kanji anchor; Kanji and DisplayWord 久; StudyWordKanji blank; PrimaryReading ひさしぶり; meaning after a long time; KanjiMeanings after a long time / long time / old story; notes 久しぶり - after a long time / 久しい - long-standing / 永久 - permanent; example 彼とは久しぶりに会いました。 / かれとはひさしぶりにあいました。 / I met him for the first time in a long while.; audio field includes kanji-reading-久-ひさしぶり; stroke-order field includes 4E45_久-stroke-order.gif."
+        "source": "out/build/package/exports/jlpt-n3.tsv after npm run deck:kanji:nlp-signals -- --levels=3,4,5",
+        "detail": "Generated single-kanji card surface inspected for 久|ひさしい: single-kanji anchor; Kanji 久; DisplayWord 久; StudyWordKanji blank; PrimaryReading ひさしい; MeaningJP long-standing / for a long time; KanjiMeanings long time / long-standing / old story; OnReading キュウ、 ク; KunReading ひさ.しい; notes <ruby>久<rt>ひさ</rt></ruby>しい - long-standing / for a long time ／ <ruby>久<rt>ひさ</rt></ruby>しぶり - after a long time ／ <ruby>永久<rt>えいきゅう</rt></ruby> - permanent; example 彼とは久しい付き合いです。 ／ かれとはひさしいつきあいです。 ／ I have known him for a long time.; audio field includes kanji-reading-久-ひさしい; stroke-order field includes 4E45_久-stroke-order.gif."
       },
       {
         "type": "media-audit",
-        "source": "out/build/reports/media-sync.json; out/build/package/package-summary.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
-        "detail": "Managed media provenance inspected for 久: exact audio media fragment kanji-reading-久-ひさしぶり; audio/4E45_久-kanji-reading-久-ひさしぶり.wav; stroke-order media animations/4E45_久-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; no silent fallback accepted."
+        "source": "out/build/reports/media-sync.json; out/build/package/package-summary.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 久: exact audio media fragment kanji-reading-久-ひさしい; asset audio/4E45_久-kanji-reading-久-ひさしい.wav; checksum fade851378a197f180f477a6ab46f20163d1bd56eafcc0a4783600f0a9de6970; source voicevox-nemo; category kanji-reading; text 久; reading ひさしい; voice 女声1 / ノーマル; locale ja-JP; stroke-order media animations/4E45_久-stroke-order.gif; stroke-order checksum 9464a73462f87ce2365bfaa94d7e35aed5e80d224c13d283393c5c4204692655; no silent fallback accepted."
       },
       {
         "type": "audio-review",
-        "source": "exported Audio field and out/build/package/package-summary.json",
-        "detail": "Audio artifact reviewed for 久|ひさしぶり: exact kanji-reading audio kanji-reading-久-ひさしぶり; audio/4E45_久-kanji-reading-久-ひさしぶり.wav; exported PrimaryReading ひさしぶり."
+        "source": "npm run media:review:audio focused corrective review; exported Audio field; managed media manifest",
+        "detail": "Audio artifact reviewed for 久|ひさしい: exact kanji-reading audio kanji-reading-久-ひさしい; expected reading ひさしい; managed reading ひさしい; asset audio/4E45_久-kanji-reading-久-ひさしい.wav; voice 女声1 / ノーマル; source voicevox-nemo; checksum fade851378a197f180f477a6ab46f20163d1bd56eafcc0a4783600f0a9de6970."
       },
       {
         "type": "stroke-order-review",
@@ -458,42 +459,54 @@
     "reviewEvidence": [
       {
         "type": "manual-review",
-        "source": "platinum product review",
-        "detail": "Final product judgment for 久|ひさしぶり: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+        "source": "corrective primary-reading product review",
+        "detail": "Final product judgment for 久|ひさしい: individual-kanji card for a learner, exact source-backed primary reading reviewed against governed Japanese source evidence, support-only vocabulary usage checked, natural example sentence reviewed, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
       },
       {
         "type": "current-standard-review",
-        "source": "core N3 current-standard structural Platinum review",
-        "detail": "Current-standard review revalidated 久|ひさしぶり with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ひさしぶり, MeaningJP after a long time, KanjiMeanings after a long time / long time, example sentence 彼とは久しぶりに会いました。, reading かれとはひさしぶりにあいました。, translation I met him for the first time in a long while., notes/support surface 久しぶり / 久しい / 永久, audio kanji-reading-久-ひさしぶり, stroke-order media 4E45_久-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+        "source": "core kanji current-standard structural Platinum review after primary-reading correction",
+        "detail": "Current-standard review revalidated 久|ひさしい with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ひさしい, MeaningJP long-standing / for a long time, KanjiMeanings long time / long-standing / old story, example sentence 彼とは久しい付き合いです。, reading かれとはひさしいつきあいです。, translation I have known him for a long time., notes/support surface 久しい / 久しぶり / 永久, audio kanji-reading-久-ひさしい, stroke-order media, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; Obsidian proof is recorded separately only when rereviewProvenance is present."
       }
     ],
+    "fixSummary": "Corrected PrimaryReading from the support word-form ひさしぶり to the exact source-backed kanji reading ひさしい; refreshed meaning, example, notes, evidence, and media expectations.",
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "kanji-platinum-v3-evidence-lanes",
-      "batchId": "n3-kanji-obsidian-rereview-batch-001",
+      "batchId": "primary-reading-corrective-rereview-2026-05-26",
       "reviewedAt": "2026-05-26",
       "reviewer": "codex-obsidian-review",
       "reviewedAfterStandard": true,
       "mechanicalMigration": false,
-      "result": "approved_for_current_standard_platinum",
-      "scope": "full kanji card rereview from square zero",
-      "cardReviewed": "久|ひさしぶり",
+      "result": "approved_after_exact_primary_reading_correction",
+      "scope": "full kanji card rereview from the rebuilt live card after exact source-backed primary-reading repair",
+      "cardReviewed": "久|ひさしい",
       "evidenceChecked": [
-        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 久; DisplayWord 久; StudyWordKanji (blank); PrimaryReading ひさしぶり; MeaningJP after a long time; KanjiMeanings after a long time / long time / old story; OnReading キュウ、 ク; KunReading ひさ.しい; Notes <ruby>久<rt>ひさ</rt></ruby>しぶり - after a long time ／ <ruby>久<rt>ひさ</rt></ruby>しい - long-standing ／ <ruby>永久<rt>えいきゅう</rt></ruby> - permanent; Example 彼とは久しぶりに会いました。 ／ かれとはひさしぶりにあいました。 ／ I met him for the first time in a long while.; Audio [sound:4E45_久-kanji-reading-久-ひさしぶり.wav]; StrokeOrder <img src=\"4E45_久-stroke-order.gif\" />.",
-        "starter source data checked in templates/starter_curated_study_data.json: display word 久しぶり|ひさしぶり; englishMeaning after a long time; preferred words 久しぶり / 久しい / 永久; blocked words (none); blocked sentence phrases (none); starter example 彼とは久しぶりに会いました。 / かれとはひさしぶりにあいました。 / I met him for the first time in a long while..",
-        "golden and Platinum expectations checked separately: golden reading ひさしぶり and meaning after a long time; Platinum reading ひさしぶり, meaning after a long time, broader after a long time / long time, notes 久しぶり / 久しい / 永久, example 彼とは久しぶりに会いました。.",
-        "governed Japanese source evidence rechecked for 久|ひさしぶり: https://www.kanjipedia.jp/kanji/0001364400; https://www.kanjipedia.jp/kotoba/0001365200; https://www.kanjipedia.jp/kotoba/0001365300; Bunka Joyo Kanji reading index; Japanese-source review for 久|ひさしぶり: Kanjipedia lists 音 キュウ・ク, 訓 ひさしい, and meanings for long time/ひさしい, with 永久 as a support compound; its 久方振り page glosses the expression as ひさしぶり, and its 久しい page includes the 久/ひさしい long-time sense. Bunka Joyo reading governance supports キュウ, ク, and ひさしい. This supports the exported PrimaryReading ひさしぶり, MeaningJP after a long time, and KanjiMeanings review snippets after a long time / long time for the individual kanji 久.",
-        "primary reading and meaning decision: Uses ひさしぶり because the current N3 learner-facing card is anchored in the common expression 久しぶり and the example directly practices it; ひさしい and キュウ remain visible in support notes and reading fields. Reviewer judgment confirms PrimaryReading ひさしぶり, MeaningJP after a long time, and the tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support words to the card anchor.",
-        "notes/support review: <ruby>久<rt>ひさ</rt></ruby>しぶり - after a long time ／ <ruby>久<rt>ひさ</rt></ruby>しい - long-standing ／ <ruby>永久<rt>えいきゅう</rt></ruby> - permanent stays support-only for the single-kanji anchor 久; support words clarify common usage while DisplayWord remains 久 and StudyWordKanji remains blank.",
-        "actual example sentence quality review: 彼とは久しぶりに会いました。 / かれとはひさしぶりにあいました。 / I met him for the first time in a long while.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
-        "audio identity: generated Audio field [sound:4E45_久-kanji-reading-久-ひさしぶり.wav]; package asset audio/4E45_久-kanji-reading-久-ひさしぶり.wav; manifest data/media/kanji/4E/4E45_久/manifest.json; managed source voicevox-nemo; category kanji-reading; text 久; reading ひさしぶり; voice 女声1 / ノーマル; locale ja-JP; checksum c745511adf88056a4afbcdf90748899056fd707e9b5b3d408e5c74484f01d381; source file exists true.",
-        "stroke-order identity: generated StrokeOrder field <img src=\"4E45_久-stroke-order.gif\" />; package asset animations/4E45_久-stroke-order.gif; manifest data/media/kanji/4E/4E45_久/manifest.json; managed source remote-stroke-order-animation; checksum 9464a73462f87ce2365bfaa94d7e35aed5e80d224c13d283393c5c4204692655; source file exists true; media target identity matched 久.",
+        "substantive post-v3 human rereview performed after correction; not mechanically migrated; live generated card inspected from out/build/package/exports/jlpt-n3.tsv: Kanji 久; DisplayWord 久; PrimaryReading ひさしい; MeaningJP long-standing / for a long time; KanjiMeanings long time / long-standing / old story; OnReading キュウ、 ク; KunReading ひさ.しい; Notes <ruby>久<rt>ひさ</rt></ruby>しい - long-standing / for a long time ／ <ruby>久<rt>ひさ</rt></ruby>しぶり - after a long time ／ <ruby>永久<rt>えいきゅう</rt></ruby> - permanent; Example 彼とは久しい付き合いです。 ／ かれとはひさしいつきあいです。 ／ I have known him for a long time.; Audio [sound:4E45_久-kanji-reading-久-ひさしい.wav]; StrokeOrder <img src=\"4E45_久-stroke-order.gif\" />.",
+        "starter source data checked in templates/starter_curated_study_data.json: display word 久しい|ひさしい; support words 久しぶり and 永久 remain support-only; this support surface may teach useful vocabulary, but PrimaryReading is bound to the exact source on/kun reading ひさしい.",
+        "golden and Platinum expectations checked separately: golden reading ひさしい; Platinum reading ひさしい, meaning long time / long-standing, broader meanings long time / long-standing, notes 久しい / 久しぶり / 永久, example 彼とは久しい付き合いです。.",
+        "governed Japanese source evidence rechecked: https://www.kanjipedia.jp/kanji/0001364400; Bunka Joyo Kanji reading index Japanese-source corrective review for 久|ひさしい: Kanjipedia lists 音 キュウ・ク, 訓 ひさしい, and meanings centered on long time / long-standing; governed inventory lists キュウ, ク, and ひさ.しい. This supports the exact source-backed PrimaryReading ひさしい, MeaningJP long-standing / for a long time, and KanjiMeanings long time / long-standing for the individual kanji 久. 久しぶり remains support vocabulary, not the primary kanji reading.",
+        "primary reading decision: Uses ひさしい because it is the exact governed kun-reading for the individual kanji 久; 久しぶり remains useful support vocabulary but is a word-form reading, not the primary kanji reading.",
+        "pedagogy/product review: N3 single-kanji card remains learner-useful; support vocabulary is acceptable only as support; DisplayWord remains the bare kanji 久; StudyWordKanji remains blank; notes are useful and not promoted as primary-reading authority.",
+        "actual example sentence quality review: 彼とは久しい付き合いです。 / かれとはひさしいつきあいです。 / I have known him for a long time.; checked from the live generated card as natural Japanese, learner useful, level appropriate, support only for the target kanji, reading correct, and translation correct by human reviewer judgment.",
+        "audio identity: generated Audio field [sound:4E45_久-kanji-reading-久-ひさしい.wav]; managed audio asset audio/4E45_久-kanji-reading-久-ひさしい.wav; source voicevox-nemo; category kanji-reading; text 久; reading ひさしい; voice 女声1 / ノーマル; locale ja-JP; checksum fade851378a197f180f477a6ab46f20163d1bd56eafcc0a4783600f0a9de6970; manifest data/media/kanji/4E/4E45_久/manifest.json; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"4E45_久-stroke-order.gif\" />; managed stroke-order asset animations/4E45_久-stroke-order.gif; source remote-stroke-order-animation; checksum 9464a73462f87ce2365bfaa94d7e35aed5e80d224c13d283393c5c4204692655; manifest data/media/kanji/4E/4E45_久/manifest.json; source file exists true; media target identity matched 久.",
+        "kanji NLP signal packet checked from nlp-review-kanji-n3-0055: priority routine; target 久|ひさしい; suggestions 0; signal kinds routine-tokenization-review / kanji-card-tokenizer-reading-variant; tokenizer reading ひさ; live card reading ひさしい; reading comparable true; matches false; source artifact out/nlp-tokenization/kanji-n3-kuromoji.json; authority assistive_only, human_review_required, writesTrackedTemplates false, certifiesCards false, claimsReleaseReadiness false. Reviewer treated this as support context only; tokenizer variants or coverage gaps did not override source-backed on/kun readings.",
         "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
-        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, and no NLP signal counted as certification proof.",
-        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card.",
-        "global all-certified N3 NLP recheck 2026-05-26: reran npm run deck:ready -- --levels=3 and npm run deck:kanji:nlp-signals -- --levels=3, then rereviewed this already-certified N3 card against refreshed out/nlp-review-packets/kanji-n3-review-packets.json before keeping 久|ひさしぶり; packet priority routine; tokenization signal kinds routine-tokenization-review / kanji-card-tokenizer-reading-variant; tokenizer reading ひさ vs live card reading ひさしぶり; reading alignment comparable true, matches false. Reviewer rechecked this as a normal bare-kanji tokenizer reading variant for a multi-reading kanji; no card/source issue found. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof."
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
       ],
-      "limitationDecision": "no active non-core verification limitations recorded after this batch review"
+      "sentenceQualityReview": {
+        "example": "彼とは久しい付き合いです。",
+        "reading": "かれとはひさしいつきあいです。",
+        "translation": "I have known him for a long time.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "readingCorrect": true,
+        "translationCorrect": true,
+        "reviewerJudgment": "example sentence quality review for 久|ひさしい: natural Japanese, learner useful, level appropriate, support-only usage, reading correct, and translation correct after live-card rereview."
+      },
+      "limitationDecision": "no active non-core verification limitations recorded after corrective rereview"
     }
   },
   {
@@ -871,36 +884,37 @@
   },
   {
     "kanji": "亡",
-    "status": "platinum",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
-      "なくなる"
+      "ぼう"
     ],
     "meaningIncludes": [
-      "pass away"
+      "death",
+      "perish"
     ],
     "kanjiMeaningsIncludes": [
-      "pass away",
-      "lose someone",
-      "deceased",
+      "death",
       "perish"
     ],
     "levelIncludes": [
       "N3"
     ],
     "notesIncludes": [
+      "亡",
+      "死亡",
       "亡くなる",
-      "亡くす"
+      "滅亡"
     ],
     "exampleIncludes": [
-      "祖父は去年亡くなりました。"
+      "その事故で三人が死亡しました。"
     ],
-    "reviewedAt": "2026-05-23",
+    "reviewedAt": "2026-05-26",
     "reviewer": "codex-platinum-review",
     "sourceEvidence": [
       {
         "type": "japanese-source",
         "source": "https://www.kanjipedia.jp/kanji/0006414400/; Bunka Joyo Kanji reading index",
-        "detail": "Japanese-source review for 亡|なくなる: Kanjipedia lists 音 ボウ・モウ, 訓 ない with outside-table ほろびる・うしなう・にげる, and meanings for ほろびる, うしなう, ない, なくなる, 死ぬ, and にげる, with compounds such as 死亡 and 滅亡. Bunka Joyo reading governance supports ボウ, モウ, and ない. This supports the exported PrimaryReading なくなる, MeaningJP pass away, and KanjiMeanings review snippets pass away / lose someone / deceased / perish for the individual kanji 亡."
+        "detail": "Japanese-source corrective review for 亡|ぼう: Kanjipedia lists 音 ボウ・モウ, 訓 ない, and meanings including death, perish, vanish, and lose, with compounds such as 死亡 and 滅亡; governed inventory lists ボウ, モウ, ない, ほろびる, ほろぶ, and ほろぼす. This supports exact source-backed PrimaryReading ぼう, MeaningJP death / perish, and KanjiMeanings death / perish for the individual kanji 亡. 亡くなる remains support vocabulary, not the primary kanji reading."
       }
     ],
     "qualityGates": {
@@ -921,25 +935,25 @@
       "strokeOrderTargetVerified": true,
       "noSilentFallback": true
     },
-    "primaryReadingRationale": "Uses なくなる because the N3 learner-facing support word 亡くなる is the natural polite/euphemistic pass-away reading practiced by the example; ボウ/モウ and ほろびる remain visible in the reading fields and support meanings.",
+    "primaryReadingRationale": "Uses ぼう because it is an exact governed on-reading for the individual kanji 亡 and is visible in common N3-useful compounds such as 死亡 and 滅亡; 亡くなる remains natural support vocabulary but not the primary kanji reading.",
     "reviewStandard": "kanji-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-23",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "revalidatedAt": "2026-05-26",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard after exact primary-reading correction.",
     "internalChecks": [
       {
         "type": "generated-surface",
-        "source": "npm run deck:platinum:batch -- --level=3 --limit=8 --queue=missing-current-standard --json",
-        "detail": "Generated card surface inspected for 亡|なくなる: single-kanji anchor; Kanji and DisplayWord 亡; StudyWordKanji blank; PrimaryReading なくなる; meaning pass away; KanjiMeanings pass away / lose someone / deceased / dying / perish / the late; notes 亡くなる - pass away / 亡くす - lose someone; example 祖父は去年亡くなりました。 / そふはきょねんなくなりました。 / My grandfather passed away last year.; audio field includes kanji-reading-亡-なくなる; stroke-order field includes 4EA1_亡-stroke-order.gif."
+        "source": "out/build/package/exports/jlpt-n3.tsv after npm run deck:kanji:nlp-signals -- --levels=3,4,5",
+        "detail": "Generated single-kanji card surface inspected for 亡|ぼう: single-kanji anchor; Kanji 亡; DisplayWord 亡; StudyWordKanji blank; PrimaryReading ぼう; MeaningJP death / perish; KanjiMeanings death / perish / deceased / dying / the late; OnReading ボウ、 モウ; KunReading な.い、 な.き-、 ほろ.びる、 ほろ.ぶ、 ほろ.ぼす; notes <ruby>亡<rt>ぼう</rt></ruby> - death / perish ／ <ruby>死亡<rt>しぼう</rt></ruby> - death ／ <ruby>亡<rt>な</rt></ruby>くなる - pass away ／ <ruby>滅亡<rt>めつぼう</rt></ruby> - ruin / collapse; example その事故で三人が死亡しました。 ／ そのじこでさんにんがしぼうしました。 ／ Three people died in that accident.; audio field includes kanji-reading-亡-ぼう; stroke-order field includes 4EA1_亡-stroke-order.gif."
       },
       {
         "type": "media-audit",
-        "source": "out/build/reports/media-sync.json; out/build/package/package-summary.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
-        "detail": "Managed media provenance inspected for 亡: exact audio media fragment kanji-reading-亡-なくなる; audio/4EA1_亡-kanji-reading-亡-なくなる.wav; stroke-order media animations/4EA1_亡-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; no silent fallback accepted."
+        "source": "out/build/reports/media-sync.json; out/build/package/package-summary.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 亡: exact audio media fragment kanji-reading-亡-ぼう; asset audio/4EA1_亡-kanji-reading-亡-ぼう.wav; checksum a1039ac91dd5d83feb2d451b65da55a6dba03436a98250b4aa4629a8398fd22f; source voicevox-nemo; category kanji-reading; text 亡; reading ぼう; voice 女声1 / ノーマル; locale ja-JP; stroke-order media animations/4EA1_亡-stroke-order.gif; stroke-order checksum dc0b92b4f30940738a153a58d538aae7d3e7061fa4919ffbbf425a2d77b8fb34; no silent fallback accepted."
       },
       {
         "type": "audio-review",
-        "source": "exported Audio field and out/build/package/package-summary.json",
-        "detail": "Audio artifact reviewed for 亡|なくなる: exact kanji-reading audio kanji-reading-亡-なくなる; audio/4EA1_亡-kanji-reading-亡-なくなる.wav; exported PrimaryReading なくなる."
+        "source": "npm run media:review:audio focused corrective review; exported Audio field; managed media manifest",
+        "detail": "Audio artifact reviewed for 亡|ぼう: exact kanji-reading audio kanji-reading-亡-ぼう; expected reading ぼう; managed reading ぼう; asset audio/4EA1_亡-kanji-reading-亡-ぼう.wav; voice 女声1 / ノーマル; source voicevox-nemo; checksum a1039ac91dd5d83feb2d451b65da55a6dba03436a98250b4aa4629a8398fd22f."
       },
       {
         "type": "stroke-order-review",
@@ -955,42 +969,54 @@
     "reviewEvidence": [
       {
         "type": "manual-review",
-        "source": "platinum product review",
-        "detail": "Final product judgment for 亡|なくなる: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+        "source": "corrective primary-reading product review",
+        "detail": "Final product judgment for 亡|ぼう: individual-kanji card for a learner, exact source-backed primary reading reviewed against governed Japanese source evidence, support-only vocabulary usage checked, natural example sentence reviewed, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
       },
       {
         "type": "current-standard-review",
-        "source": "core N3 current-standard structural Platinum review",
-        "detail": "Current-standard review revalidated 亡|なくなる with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading なくなる, MeaningJP pass away, KanjiMeanings pass away / lose someone / deceased / perish, example sentence 祖父は去年亡くなりました。, reading そふはきょねんなくなりました。, translation My grandfather passed away last year., notes/support surface 亡くなる / 亡くす, audio kanji-reading-亡-なくなる, stroke-order media 4EA1_亡-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+        "source": "core kanji current-standard structural Platinum review after primary-reading correction",
+        "detail": "Current-standard review revalidated 亡|ぼう with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ぼう, MeaningJP death / perish, KanjiMeanings death / perish / deceased / dying / the late, example sentence その事故で三人が死亡しました。, reading そのじこでさんにんがしぼうしました。, translation Three people died in that accident., notes/support surface 亡 / 死亡 / 亡くなる / 滅亡, audio kanji-reading-亡-ぼう, stroke-order media, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; Obsidian proof is recorded separately only when rereviewProvenance is present."
       }
     ],
+    "fixSummary": "Corrected PrimaryReading from the support word-form なくなる to the exact source-backed kanji reading ぼう; refreshed meaning, example, notes, evidence, and media expectations.",
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "kanji-platinum-v3-evidence-lanes",
-      "batchId": "n3-kanji-obsidian-rereview-batch-001",
+      "batchId": "primary-reading-corrective-rereview-2026-05-26",
       "reviewedAt": "2026-05-26",
       "reviewer": "codex-obsidian-review",
       "reviewedAfterStandard": true,
       "mechanicalMigration": false,
-      "result": "approved_for_current_standard_platinum",
-      "scope": "full kanji card rereview from square zero",
-      "cardReviewed": "亡|なくなる",
+      "result": "approved_after_exact_primary_reading_correction",
+      "scope": "full kanji card rereview from the rebuilt live card after exact source-backed primary-reading repair",
+      "cardReviewed": "亡|ぼう",
       "evidenceChecked": [
-        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 亡; DisplayWord 亡; StudyWordKanji (blank); PrimaryReading なくなる; MeaningJP pass away; KanjiMeanings pass away / lose someone / deceased / dying / perish / the late; OnReading ボウ、 モウ; KunReading な.い、 な.き-、 ほろ.びる、 ほろ.ぶ、 ほろ.ぼす; Notes <ruby>亡<rt>な</rt></ruby>くなる - pass away ／ <ruby>亡<rt>な</rt></ruby>くす - lose someone; Example 祖父は去年亡くなりました。 ／ そふはきょねんなくなりました。 ／ My grandfather passed away last year.; Audio [sound:4EA1_亡-kanji-reading-亡-なくなる.wav]; StrokeOrder <img src=\"4EA1_亡-stroke-order.gif\" />.",
-        "starter source data checked in templates/starter_curated_study_data.json: display word 亡くなる|なくなる; englishMeaning pass away / lose someone; preferred words 亡くなる / 亡くす; blocked words (none); blocked sentence phrases (none); starter example 祖父は去年亡くなりました。 / そふはきょねんなくなりました。 / My grandfather passed away last year..",
-        "golden and Platinum expectations checked separately: golden reading なくなる and meaning pass away; Platinum reading なくなる, meaning pass away, broader pass away / lose someone / deceased / perish, notes 亡くなる / 亡くす, example 祖父は去年亡くなりました。.",
-        "governed Japanese source evidence rechecked for 亡|なくなる: https://www.kanjipedia.jp/kanji/0006414400/; Bunka Joyo Kanji reading index; Japanese-source review for 亡|なくなる: Kanjipedia lists 音 ボウ・モウ, 訓 ない with outside-table ほろびる・うしなう・にげる, and meanings for ほろびる, うしなう, ない, なくなる, 死ぬ, and にげる, with compounds such as 死亡 and 滅亡. Bunka Joyo reading governance supports ボウ, モウ, and ない. This supports the exported PrimaryReading なくなる, MeaningJP pass away, and KanjiMeanings review snippets pass away / lose someone / deceased / perish for the individual kanji 亡.",
-        "primary reading and meaning decision: Uses なくなる because the N3 learner-facing support word 亡くなる is the natural polite/euphemistic pass-away reading practiced by the example; ボウ/モウ and ほろびる remain visible in the reading fields and support meanings. Reviewer judgment confirms PrimaryReading なくなる, MeaningJP pass away, and the tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support words to the card anchor.",
-        "notes/support review: <ruby>亡<rt>な</rt></ruby>くなる - pass away ／ <ruby>亡<rt>な</rt></ruby>くす - lose someone stays support-only for the single-kanji anchor 亡; support words clarify common usage while DisplayWord remains 亡 and StudyWordKanji remains blank.",
-        "actual example sentence quality review: 祖父は去年亡くなりました。 / そふはきょねんなくなりました。 / My grandfather passed away last year.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
-        "audio identity: generated Audio field [sound:4EA1_亡-kanji-reading-亡-なくなる.wav]; package asset audio/4EA1_亡-kanji-reading-亡-なくなる.wav; manifest data/media/kanji/4E/4EA1_亡/manifest.json; managed source voicevox-nemo; category kanji-reading; text 亡; reading なくなる; voice 女声1 / ノーマル; locale ja-JP; checksum 62c0779d0d6df55137bec9133cd4aa411375b5314d5160430eebba726a9ae984; source file exists true.",
-        "stroke-order identity: generated StrokeOrder field <img src=\"4EA1_亡-stroke-order.gif\" />; package asset animations/4EA1_亡-stroke-order.gif; manifest data/media/kanji/4E/4EA1_亡/manifest.json; managed source remote-stroke-order-animation; checksum dc0b92b4f30940738a153a58d538aae7d3e7061fa4919ffbbf425a2d77b8fb34; source file exists true; media target identity matched 亡.",
+        "substantive post-v3 human rereview performed after correction; not mechanically migrated; live generated card inspected from out/build/package/exports/jlpt-n3.tsv: Kanji 亡; DisplayWord 亡; PrimaryReading ぼう; MeaningJP death / perish; KanjiMeanings death / perish / deceased / dying / the late; OnReading ボウ、 モウ; KunReading な.い、 な.き-、 ほろ.びる、 ほろ.ぶ、 ほろ.ぼす; Notes <ruby>亡<rt>ぼう</rt></ruby> - death / perish ／ <ruby>死亡<rt>しぼう</rt></ruby> - death ／ <ruby>亡<rt>な</rt></ruby>くなる - pass away ／ <ruby>滅亡<rt>めつぼう</rt></ruby> - ruin / collapse; Example その事故で三人が死亡しました。 ／ そのじこでさんにんがしぼうしました。 ／ Three people died in that accident.; Audio [sound:4EA1_亡-kanji-reading-亡-ぼう.wav]; StrokeOrder <img src=\"4EA1_亡-stroke-order.gif\" />.",
+        "starter source data checked in templates/starter_curated_study_data.json: display word 死亡|しぼう; breakdown 亡|ぼう; support words 亡くなる and 滅亡 remain support-only; this support surface may teach useful vocabulary, but PrimaryReading is bound to the exact source on/kun reading ぼう.",
+        "golden and Platinum expectations checked separately: golden reading ぼう; Platinum reading ぼう, meaning death / perish, broader meanings death / perish, notes 亡 / 死亡 / 亡くなる / 滅亡, example その事故で三人が死亡しました。.",
+        "governed Japanese source evidence rechecked: https://www.kanjipedia.jp/kanji/0006414400/; Bunka Joyo Kanji reading index Japanese-source corrective review for 亡|ぼう: Kanjipedia lists 音 ボウ・モウ, 訓 ない, and meanings including death, perish, vanish, and lose, with compounds such as 死亡 and 滅亡; governed inventory lists ボウ, モウ, ない, ほろびる, ほろぶ, and ほろぼす. This supports exact source-backed PrimaryReading ぼう, MeaningJP death / perish, and KanjiMeanings death / perish for the individual kanji 亡. 亡くなる remains support vocabulary, not the primary kanji reading.",
+        "primary reading decision: Uses ぼう because it is an exact governed on-reading for the individual kanji 亡 and is visible in common N3-useful compounds such as 死亡 and 滅亡; 亡くなる remains natural support vocabulary but not the primary kanji reading.",
+        "pedagogy/product review: N3 single-kanji card remains learner-useful; support vocabulary is acceptable only as support; DisplayWord remains the bare kanji 亡; StudyWordKanji remains blank; notes are useful and not promoted as primary-reading authority.",
+        "actual example sentence quality review: その事故で三人が死亡しました。 / そのじこでさんにんがしぼうしました。 / Three people died in that accident.; checked from the live generated card as natural Japanese, learner useful, level appropriate, support only for the target kanji, reading correct, and translation correct by human reviewer judgment.",
+        "audio identity: generated Audio field [sound:4EA1_亡-kanji-reading-亡-ぼう.wav]; managed audio asset audio/4EA1_亡-kanji-reading-亡-ぼう.wav; source voicevox-nemo; category kanji-reading; text 亡; reading ぼう; voice 女声1 / ノーマル; locale ja-JP; checksum a1039ac91dd5d83feb2d451b65da55a6dba03436a98250b4aa4629a8398fd22f; manifest data/media/kanji/4E/4EA1_亡/manifest.json; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"4EA1_亡-stroke-order.gif\" />; managed stroke-order asset animations/4EA1_亡-stroke-order.gif; source remote-stroke-order-animation; checksum dc0b92b4f30940738a153a58d538aae7d3e7061fa4919ffbbf425a2d77b8fb34; manifest data/media/kanji/4E/4EA1_亡/manifest.json; source file exists true; media target identity matched 亡.",
+        "kanji NLP signal packet checked from nlp-review-kanji-n3-0289: priority routine; target 亡|ぼう; suggestions 0; signal kinds routine-tokenization-review / unknown-token / missing-token-reading / kanji-card-tokenizer-coverage-gap / artifact-warning; tokenizer reading missing; live card reading ぼう; reading comparable false; matches false; source artifact out/nlp-tokenization/kanji-n3-kuromoji.json; authority assistive_only, human_review_required, writesTrackedTemplates false, certifiesCards false, claimsReleaseReadiness false. Reviewer treated this as support context only; tokenizer variants or coverage gaps did not override source-backed on/kun readings.",
         "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
-        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, and no NLP signal counted as certification proof.",
-        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card.",
-        "global all-certified N3 NLP recheck 2026-05-26: reran npm run deck:ready -- --levels=3 and npm run deck:kanji:nlp-signals -- --levels=3, then rereviewed this already-certified N3 card against refreshed out/nlp-review-packets/kanji-n3-review-packets.json before keeping 亡|なくなる; packet priority routine; tokenization signal kinds routine-tokenization-review / unknown-token / missing-token-reading / kanji-card-tokenizer-coverage-gap / artifact-warning; tokenizer reading missing tokenizer reading vs live card reading なくなる; reading alignment comparable false, matches false. Reviewer rechecked this as a tokenizer coverage-gap signal only, not a card/source defect, because the live card reading, example reading, source evidence, and managed audio remain coherent. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof."
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
       ],
-      "limitationDecision": "no active non-core verification limitations recorded after this batch review"
+      "sentenceQualityReview": {
+        "example": "その事故で三人が死亡しました。",
+        "reading": "そのじこでさんにんがしぼうしました。",
+        "translation": "Three people died in that accident.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "readingCorrect": true,
+        "translationCorrect": true,
+        "reviewerJudgment": "example sentence quality review for 亡|ぼう: natural Japanese, learner useful, level appropriate, support-only usage, reading correct, and translation correct after live-card rereview."
+      },
+      "limitationDecision": "no active non-core verification limitations recorded after corrective rereview"
     }
   },
   {
@@ -2617,36 +2643,37 @@
   },
   {
     "kanji": "信",
-    "status": "platinum",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
-      "しんじる"
+      "しん"
     ],
     "meaningIncludes": [
-      "believe"
+      "trust",
+      "belief"
     ],
     "kanjiMeaningsIncludes": [
-      "believe",
       "trust",
-      "faith",
-      "truth"
+      "belief"
     ],
     "levelIncludes": [
       "N3"
     ],
     "notesIncludes": [
+      "信",
+      "自信",
       "信じる",
-      "自信"
+      "信用"
     ],
     "exampleIncludes": [
-      "彼の言葉を信じています。"
+      "彼には強い自信があります。"
     ],
-    "reviewedAt": "2026-05-23",
+    "reviewedAt": "2026-05-26",
     "reviewer": "codex-platinum-review",
     "sourceEvidence": [
       {
         "type": "japanese-source",
         "source": "https://www.kanjipedia.jp/kanji/0003599100/; Bunka Joyo Kanji reading index",
-        "detail": "Japanese-source review for 信|しんじる: Kanjipedia lists 音 シン, meanings for truth, believing, sign/message, entrusting, and letter, and words including 信じる, 信仰, 信念, 信用, 信頼, 自信, 送信, and 通信. Bunka Joyo reading governance supports シン, while the learner-facing primary reading uses the common verb surface 信じる. This supports the exported PrimaryReading しんじる, MeaningJP believe, and KanjiMeanings review snippets believe / trust / faith / truth for the individual kanji 信."
+        "detail": "Japanese-source corrective review for 信|しん: Kanjipedia lists 音 シン and meanings including trust, believe, sincere, sign, and message; governed inventory lists シン. This supports exact source-backed PrimaryReading しん, MeaningJP trust / belief, and KanjiMeanings trust / belief for the individual kanji 信. 信じる remains support vocabulary, not the primary kanji reading."
       }
     ],
     "qualityGates": {
@@ -2667,25 +2694,25 @@
       "strokeOrderTargetVerified": true,
       "noSilentFallback": true
     },
-    "primaryReadingRationale": "Uses しんじる because the generated card and example practice the learner-useful verb 信じる directly; シン remains visible in the on-reading field and support word 自信.",
+    "primaryReadingRationale": "Uses しん because it is the exact governed on-reading for the individual kanji 信 and appears in common N3-useful compounds such as 自信 and 信用; 信じる remains support vocabulary but is not the primary kanji reading.",
     "reviewStandard": "kanji-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-23",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "revalidatedAt": "2026-05-26",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard after exact primary-reading correction.",
     "internalChecks": [
       {
         "type": "generated-surface",
-        "source": "npm run deck:platinum:batch -- --level=3 --limit=8 --queue=missing-current-standard --json",
-        "detail": "Generated card surface inspected for 信|しんじる: single-kanji anchor; Kanji and DisplayWord 信; StudyWordKanji blank; PrimaryReading しんじる; meaning believe; KanjiMeanings believe / trust / faith / fidelity / truth; notes 信じる - believe / 自信 - confidence; example 彼の言葉を信じています。 / かれのことばをしんじています。 / I believe his words.; audio field includes kanji-reading-信-しんじる; stroke-order field includes 4FE1_信-stroke-order.gif."
+        "source": "out/build/package/exports/jlpt-n3.tsv after npm run deck:kanji:nlp-signals -- --levels=3,4,5",
+        "detail": "Generated single-kanji card surface inspected for 信|しん: single-kanji anchor; Kanji 信; DisplayWord 信; StudyWordKanji blank; PrimaryReading しん; MeaningJP trust / belief; KanjiMeanings trust / belief / faith / fidelity / truth; OnReading シン; KunReading blank; notes <ruby>信<rt>しん</rt></ruby> - trust / belief ／ <ruby>自信<rt>じしん</rt></ruby> - confidence ／ <ruby>信<rt>しん</rt></ruby>じる - believe ／ <ruby>信用<rt>しんよう</rt></ruby> - trust; example 彼には強い自信があります。 ／ かれにはつよいじしんがあります。 ／ He has strong confidence.; audio field includes kanji-reading-信-しん; stroke-order field includes 4FE1_信-stroke-order.gif."
       },
       {
         "type": "media-audit",
-        "source": "out/build/reports/media-sync.json; out/build/package/package-summary.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
-        "detail": "Managed media provenance inspected for 信: exact audio media fragment kanji-reading-信-しんじる; audio/4FE1_信-kanji-reading-信-しんじる.wav; stroke-order media animations/4FE1_信-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; no silent fallback accepted."
+        "source": "out/build/reports/media-sync.json; out/build/package/package-summary.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 信: exact audio media fragment kanji-reading-信-しん; asset audio/4FE1_信-kanji-reading-信-しん.wav; checksum 284ff16a23a20fb27a45585fe8ca98ae0c101b4fc67c3ee4133c9a8c966afd58; source voicevox-nemo; category kanji-reading; text 信; reading しん; voice 女声1 / ノーマル; locale ja-JP; stroke-order media animations/4FE1_信-stroke-order.gif; stroke-order checksum d7aedc08a32a36dd281497799e753c5f12aa971e70ab5ba60b10ea50c2bc4b7f; no silent fallback accepted."
       },
       {
         "type": "audio-review",
-        "source": "exported Audio field and out/build/package/package-summary.json",
-        "detail": "Audio artifact reviewed for 信|しんじる: exact kanji-reading audio kanji-reading-信-しんじる; audio/4FE1_信-kanji-reading-信-しんじる.wav; exported PrimaryReading しんじる."
+        "source": "npm run media:review:audio focused corrective review; exported Audio field; managed media manifest",
+        "detail": "Audio artifact reviewed for 信|しん: exact kanji-reading audio kanji-reading-信-しん; expected reading しん; managed reading しん; asset audio/4FE1_信-kanji-reading-信-しん.wav; voice 女声1 / ノーマル; source voicevox-nemo; checksum 284ff16a23a20fb27a45585fe8ca98ae0c101b4fc67c3ee4133c9a8c966afd58."
       },
       {
         "type": "stroke-order-review",
@@ -2701,42 +2728,54 @@
     "reviewEvidence": [
       {
         "type": "manual-review",
-        "source": "platinum product review",
-        "detail": "Final product judgment for 信|しんじる: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+        "source": "corrective primary-reading product review",
+        "detail": "Final product judgment for 信|しん: individual-kanji card for a learner, exact source-backed primary reading reviewed against governed Japanese source evidence, support-only vocabulary usage checked, natural example sentence reviewed, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
       },
       {
         "type": "current-standard-review",
-        "source": "core N3 current-standard structural Platinum review",
-        "detail": "Current-standard review revalidated 信|しんじる with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading しんじる, MeaningJP believe, KanjiMeanings believe / trust / faith / truth, example sentence 彼の言葉を信じています。, reading かれのことばをしんじています。, translation I believe his words., notes/support surface 信じる / 自信, audio kanji-reading-信-しんじる, stroke-order media 4FE1_信-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+        "source": "core kanji current-standard structural Platinum review after primary-reading correction",
+        "detail": "Current-standard review revalidated 信|しん with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading しん, MeaningJP trust / belief, KanjiMeanings trust / belief / faith / fidelity / truth, example sentence 彼には強い自信があります。, reading かれにはつよいじしんがあります。, translation He has strong confidence., notes/support surface 信 / 自信 / 信じる / 信用, audio kanji-reading-信-しん, stroke-order media, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; Obsidian proof is recorded separately only when rereviewProvenance is present."
       }
     ],
+    "fixSummary": "Corrected PrimaryReading from the support word-form しんじる to the exact source-backed kanji reading しん; refreshed meaning, example, notes, evidence, and media expectations.",
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "kanji-platinum-v3-evidence-lanes",
-      "batchId": "n3-kanji-obsidian-rereview-batch-003",
+      "batchId": "primary-reading-corrective-rereview-2026-05-26",
       "reviewedAt": "2026-05-26",
       "reviewer": "codex-obsidian-review",
       "reviewedAfterStandard": true,
       "mechanicalMigration": false,
-      "result": "approved_for_current_standard_platinum",
-      "scope": "full kanji card rereview from square zero",
-      "cardReviewed": "信|しんじる",
+      "result": "approved_after_exact_primary_reading_correction",
+      "scope": "full kanji card rereview from the rebuilt live card after exact source-backed primary-reading repair",
+      "cardReviewed": "信|しん",
       "evidenceChecked": [
-        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 信; DisplayWord 信; StudyWordKanji (blank); PrimaryReading しんじる; MeaningJP believe; KanjiMeanings believe / trust / faith / fidelity / truth; OnReading シン; KunReading ; Notes <ruby>信<rt>しん</rt></ruby>じる - believe ／ <ruby>自信<rt>じしん</rt></ruby> - confidence; Example 彼の言葉を信じています。 ／ かれのことばをしんじています。 ／ I believe his words.; Audio [sound:4FE1_信-kanji-reading-信-しんじる.wav]; StrokeOrder <img src=\"4FE1_信-stroke-order.gif\" />.",
-        "starter source data checked in templates/starter_curated_study_data.json: display word 信じる|しんじる; englishMeaning believe / trust; preferred words 信じる / 自信; blocked words (none); blocked sentence phrases (none); starter example 彼の言葉を信じています。 / かれのことばをしんじています。 / I believe his words..",
-        "golden and Platinum expectations checked separately: golden reading しんじる and meaning believe; Platinum reading しんじる, meaning believe, broader believe / trust / faith / truth, notes 信じる / 自信, example 彼の言葉を信じています。.",
-        "governed Japanese source evidence rechecked for 信|しんじる: https://www.kanjipedia.jp/kanji/0003599100/; Bunka Joyo Kanji reading index; Japanese-source review for 信|しんじる: Kanjipedia lists 音 シン, meanings for truth, believing, sign/message, entrusting, and letter, and words including 信じる, 信仰, 信念, 信用, 信頼, 自信, 送信, and 通信. Bunka Joyo reading governance supports シン, while the learner-facing primary reading uses the common verb surface 信じる. This supports the exported PrimaryReading しんじる, MeaningJP believe, and KanjiMeanings review snippets believe / trust / faith / truth for the individual kanji 信.",
-        "primary reading and meaning decision: Uses しんじる because the generated card and example practice the learner-useful verb 信じる directly; シン remains visible in the on-reading field and support word 自信. Reviewer judgment confirms PrimaryReading しんじる, MeaningJP believe, and the tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support words to the card anchor.",
-        "notes/support review: <ruby>信<rt>しん</rt></ruby>じる - believe ／ <ruby>自信<rt>じしん</rt></ruby> - confidence stays support-only for the single-kanji anchor 信; support words clarify common usage while DisplayWord remains 信 and StudyWordKanji remains blank.",
-        "actual example sentence quality review: 彼の言葉を信じています。 / かれのことばをしんじています。 / I believe his words.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
-        "audio identity: generated Audio field [sound:4FE1_信-kanji-reading-信-しんじる.wav]; package asset audio/4FE1_信-kanji-reading-信-しんじる.wav; manifest data/media/kanji/4F/4FE1_信/manifest.json; managed source voicevox-nemo; category kanji-reading; text 信; reading しんじる; voice 女声1 / ノーマル; locale ja-JP; checksum 6cc6e5a65dc5237e1e8258c8828b588d238310f0277cd2e906298569c282a9a4; source file exists true.",
-        "stroke-order identity: generated StrokeOrder field <img src=\"4FE1_信-stroke-order.gif\" />; package asset animations/4FE1_信-stroke-order.gif; manifest data/media/kanji/4F/4FE1_信/manifest.json; managed source remote-stroke-order-animation; checksum d7aedc08a32a36dd281497799e753c5f12aa971e70ab5ba60b10ea50c2bc4b7f; source file exists true; media target identity matched 信.",
+        "substantive post-v3 human rereview performed after correction; not mechanically migrated; live generated card inspected from out/build/package/exports/jlpt-n3.tsv: Kanji 信; DisplayWord 信; PrimaryReading しん; MeaningJP trust / belief; KanjiMeanings trust / belief / faith / fidelity / truth; OnReading シン; KunReading blank; Notes <ruby>信<rt>しん</rt></ruby> - trust / belief ／ <ruby>自信<rt>じしん</rt></ruby> - confidence ／ <ruby>信<rt>しん</rt></ruby>じる - believe ／ <ruby>信用<rt>しんよう</rt></ruby> - trust; Example 彼には強い自信があります。 ／ かれにはつよいじしんがあります。 ／ He has strong confidence.; Audio [sound:4FE1_信-kanji-reading-信-しん.wav]; StrokeOrder <img src=\"4FE1_信-stroke-order.gif\" />.",
+        "starter source data checked in templates/starter_curated_study_data.json: display word 自信|じしん; breakdown 信|しん; support words 信じる and 信用 remain support-only; this support surface may teach useful vocabulary, but PrimaryReading is bound to the exact source on/kun reading しん.",
+        "golden and Platinum expectations checked separately: golden reading しん; Platinum reading しん, meaning trust / belief, broader meanings trust / belief, notes 信 / 自信 / 信じる / 信用, example 彼には強い自信があります。.",
+        "governed Japanese source evidence rechecked: https://www.kanjipedia.jp/kanji/0003599100/; Bunka Joyo Kanji reading index Japanese-source corrective review for 信|しん: Kanjipedia lists 音 シン and meanings including trust, believe, sincere, sign, and message; governed inventory lists シン. This supports exact source-backed PrimaryReading しん, MeaningJP trust / belief, and KanjiMeanings trust / belief for the individual kanji 信. 信じる remains support vocabulary, not the primary kanji reading.",
+        "primary reading decision: Uses しん because it is the exact governed on-reading for the individual kanji 信 and appears in common N3-useful compounds such as 自信 and 信用; 信じる remains support vocabulary but is not the primary kanji reading.",
+        "pedagogy/product review: N3 single-kanji card remains learner-useful; support vocabulary is acceptable only as support; DisplayWord remains the bare kanji 信; StudyWordKanji remains blank; notes are useful and not promoted as primary-reading authority.",
+        "actual example sentence quality review: 彼には強い自信があります。 / かれにはつよいじしんがあります。 / He has strong confidence.; checked from the live generated card as natural Japanese, learner useful, level appropriate, support only for the target kanji, reading correct, and translation correct by human reviewer judgment.",
+        "audio identity: generated Audio field [sound:4FE1_信-kanji-reading-信-しん.wav]; managed audio asset audio/4FE1_信-kanji-reading-信-しん.wav; source voicevox-nemo; category kanji-reading; text 信; reading しん; voice 女声1 / ノーマル; locale ja-JP; checksum 284ff16a23a20fb27a45585fe8ca98ae0c101b4fc67c3ee4133c9a8c966afd58; manifest data/media/kanji/4F/4FE1_信/manifest.json; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"4FE1_信-stroke-order.gif\" />; managed stroke-order asset animations/4FE1_信-stroke-order.gif; source remote-stroke-order-animation; checksum d7aedc08a32a36dd281497799e753c5f12aa971e70ab5ba60b10ea50c2bc4b7f; manifest data/media/kanji/4F/4FE1_信/manifest.json; source file exists true; media target identity matched 信.",
+        "kanji NLP signal packet checked from nlp-review-kanji-n3-0161: priority routine; target 信|しん; suggestions 0; signal kinds routine-tokenization-review; tokenizer reading しん; live card reading しん; reading comparable true; matches true; source artifact out/nlp-tokenization/kanji-n3-kuromoji.json; authority assistive_only, human_review_required, writesTrackedTemplates false, certifiesCards false, claimsReleaseReadiness false. Reviewer treated this as support context only; tokenizer variants or coverage gaps did not override source-backed on/kun readings.",
         "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
-        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, and no NLP signal counted as certification proof.",
-        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card.",
-        "global all-certified N3 NLP recheck 2026-05-26: reran npm run deck:ready -- --levels=3 and npm run deck:kanji:nlp-signals -- --levels=3, then rereviewed this already-certified N3 card against refreshed out/nlp-review-packets/kanji-n3-review-packets.json before keeping 信|しんじる; packet priority routine; tokenization signal kinds routine-tokenization-review / kanji-card-tokenizer-reading-variant; tokenizer reading しん vs live card reading しんじる; reading alignment comparable true, matches false. Reviewer rechecked this as a normal bare-kanji tokenizer reading variant for a multi-reading kanji; no card/source issue found. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof."
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
       ],
-      "limitationDecision": "no active non-core verification limitations recorded after this batch review"
+      "sentenceQualityReview": {
+        "example": "彼には強い自信があります。",
+        "reading": "かれにはつよいじしんがあります。",
+        "translation": "He has strong confidence.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "readingCorrect": true,
+        "translationCorrect": true,
+        "reviewerJudgment": "example sentence quality review for 信|しん: natural Japanese, learner useful, level appropriate, support-only usage, reading correct, and translation correct after live-card rereview."
+      },
+      "limitationDecision": "no active non-core verification limitations recorded after corrective rereview"
     }
   },
   {
@@ -10878,40 +10917,37 @@
   },
   {
     "kanji": "察",
-    "status": "platinum",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
-      "さっする"
+      "さつ"
     ],
     "meaningIncludes": [
-      "guess",
-      "sense"
+      "observe",
+      "infer"
     ],
     "kanjiMeaningsIncludes": [
-      "guess",
-      "sense",
-      "judge",
-      "presume",
-      "surmise",
-      "understand"
+      "observe",
+      "infer"
     ],
     "levelIncludes": [
       "N3"
     ],
     "notesIncludes": [
-      "察する",
+      "察",
       "観察",
+      "察する",
       "警察"
     ],
     "exampleIncludes": [
-      "彼の顔を見て気持ちを察しました。"
+      "子どもたちは虫を観察しました。"
     ],
-    "reviewedAt": "2026-05-23",
+    "reviewedAt": "2026-05-26",
     "reviewer": "codex-platinum-review",
     "sourceEvidence": [
       {
         "type": "japanese-source",
-        "source": "https://www.kanjipedia.jp/kanji/0002599400; Kanjipedia",
-        "detail": "Japanese-source review for 察|さっする: Kanjipedia lists 音 サツ and outside 訓 あきらか / みる / しる, with meanings for making clear, looking carefully, investigating/knowing, inferring, and sympathizing, plus support words such as 察する, 察知, 観察, 警察, 検察, 考察, 診察, 推察, and 洞察. This supports the exported PrimaryReading さっする, MeaningJP guess / sense, and KanjiMeanings guess / sense / judge / presume / surmise / understand for the individual kanji 察."
+        "source": "https://www.kanjipedia.jp/kanji/0002599400; Bunka Joyo Kanji reading index",
+        "detail": "Japanese-source corrective review for 察|さつ: Kanjipedia lists 音 サツ and meanings including observe, infer, and investigate, with compounds such as 観察 and 警察; governed inventory lists サツ. This supports exact source-backed PrimaryReading さつ, MeaningJP observe / infer, and KanjiMeanings observe / infer for the individual kanji 察. 察する remains support vocabulary with sound change, not the primary kanji reading."
       }
     ],
     "qualityGates": {
@@ -10932,25 +10968,25 @@
       "strokeOrderTargetVerified": true,
       "noSilentFallback": true
     },
-    "primaryReadingRationale": "Uses さっする because the learner-facing support surface and example practice 察する directly; サツ remains visible in the on-reading field and support compounds.",
+    "primaryReadingRationale": "Uses さつ because it is the exact governed on-reading for the individual kanji 察 and appears in common N3-useful compounds such as 観察 and 警察; 察する remains support vocabulary but not the primary kanji reading.",
     "reviewStandard": "kanji-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-23",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "revalidatedAt": "2026-05-26",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard after exact primary-reading correction.",
     "internalChecks": [
       {
         "type": "generated-surface",
-        "source": "npm run deck:platinum:batch -- --level=3 --limit=8 --queue=missing-current-standard --json; buildKanjiRowsForLevel live row inspection",
-        "detail": "Generated single-kanji card surface inspected for 察|さっする: Kanji and DisplayWord 察; StudyWordKanji blank; PrimaryReading さっする; meaning guess / sense; KanjiMeanings guess / sense / judge / presume / surmise / understand; notes 察する - guess / sense ／ 観察 - observation ／ 警察 - police; example 彼の顔を見て気持ちを察しました。 / かれのかおをみてきもちをさっしました。 / I guessed how he felt by looking at his face.; audio field includes kanji-reading-察-さっする; stroke-order field includes 5BDF_察-stroke-order.gif."
+        "source": "out/build/package/exports/jlpt-n3.tsv after npm run deck:kanji:nlp-signals -- --levels=3,4,5",
+        "detail": "Generated single-kanji card surface inspected for 察|さつ: single-kanji anchor; Kanji 察; DisplayWord 察; StudyWordKanji blank; PrimaryReading さつ; MeaningJP observe / infer; KanjiMeanings observe / infer / guess / judge / presume / surmise / understand; OnReading サツ; KunReading blank; notes <ruby>察<rt>さつ</rt></ruby> - observe / infer ／ <ruby>観察<rt>かんさつ</rt></ruby> - observation ／ <ruby>察<rt>さっ</rt></ruby>する - infer / sense ／ <ruby>警察<rt>けいさつ</rt></ruby> - police; example 子どもたちは虫を観察しました。 ／ こどもたちはむしをかんさつしました。 ／ The children observed insects.; audio field includes kanji-reading-察-さつ; stroke-order field includes 5BDF_察-stroke-order.gif."
       },
       {
         "type": "media-audit",
-        "source": "out/build/reports/media-sync.json; out/build/package/package-summary.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
-        "detail": "Managed media provenance inspected for 察: exact audio media fragment kanji-reading-察-さっする; audio/5BDF_察-kanji-reading-察-さっする.wav; stroke-order media animations/5BDF_察-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; no silent fallback accepted."
+        "source": "out/build/reports/media-sync.json; out/build/package/package-summary.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 察: exact audio media fragment kanji-reading-察-さつ; asset audio/5BDF_察-kanji-reading-察-さつ.wav; checksum a5127d52f80804d8c8ee805e45aaae876fc1bef15869eb8b98f8cf498c5ef06c; source voicevox-nemo; category kanji-reading; text 察; reading さつ; voice 女声1 / ノーマル; locale ja-JP; stroke-order media animations/5BDF_察-stroke-order.gif; stroke-order checksum 5373389a4f24419ee4207f0d3cc19b53b2ef8435c821b130cb78df3b55fc12a1; no silent fallback accepted."
       },
       {
         "type": "audio-review",
-        "source": "exported Audio field and out/build/package/package-summary.json",
-        "detail": "Audio artifact reviewed for 察|さっする: exact kanji-reading audio kanji-reading-察-さっする; audio/5BDF_察-kanji-reading-察-さっする.wav; exported PrimaryReading さっする."
+        "source": "npm run media:review:audio focused corrective review; exported Audio field; managed media manifest",
+        "detail": "Audio artifact reviewed for 察|さつ: exact kanji-reading audio kanji-reading-察-さつ; expected reading さつ; managed reading さつ; asset audio/5BDF_察-kanji-reading-察-さつ.wav; voice 女声1 / ノーマル; source voicevox-nemo; checksum a5127d52f80804d8c8ee805e45aaae876fc1bef15869eb8b98f8cf498c5ef06c."
       },
       {
         "type": "stroke-order-review",
@@ -10966,42 +11002,54 @@
     "reviewEvidence": [
       {
         "type": "manual-review",
-        "source": "platinum product review",
-        "detail": "Final product judgment for 察|さっする: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+        "source": "corrective primary-reading product review",
+        "detail": "Final product judgment for 察|さつ: individual-kanji card for a learner, exact source-backed primary reading reviewed against governed Japanese source evidence, support-only vocabulary usage checked, natural example sentence reviewed, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
       },
       {
         "type": "current-standard-review",
-        "source": "core N3 current-standard structural Platinum review",
-        "detail": "Current-standard review revalidated 察|さっする with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading さっする, MeaningJP guess / sense, KanjiMeanings guess / sense / judge / presume / surmise / understand, example sentence 彼の顔を見て気持ちを察しました。, reading かれのかおをみてきもちをさっしました。, translation I guessed how he felt by looking at his face., notes/support surface 察する / 観察 / 警察, audio kanji-reading-察-さっする, stroke-order media 5BDF_察-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+        "source": "core kanji current-standard structural Platinum review after primary-reading correction",
+        "detail": "Current-standard review revalidated 察|さつ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading さつ, MeaningJP observe / infer, KanjiMeanings observe / infer / guess / judge / presume / surmise / understand, example sentence 子どもたちは虫を観察しました。, reading こどもたちはむしをかんさつしました。, translation The children observed insects., notes/support surface 察 / 観察 / 察する / 警察, audio kanji-reading-察-さつ, stroke-order media, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; Obsidian proof is recorded separately only when rereviewProvenance is present."
       }
     ],
+    "fixSummary": "Corrected PrimaryReading from the support word-form さっする to the exact source-backed kanji reading さつ; refreshed meaning, example, notes, evidence, and media expectations.",
     "rereviewProvenance": {
       "type": "substantive current standard rereview",
       "reviewStandard": "kanji-platinum-v3-evidence-lanes",
-      "batchId": "n3-kanji-obsidian-rereview-batch-011",
+      "batchId": "primary-reading-corrective-rereview-2026-05-26",
       "reviewedAt": "2026-05-26",
       "reviewer": "codex-obsidian-review",
       "reviewedAfterStandard": true,
       "mechanicalMigration": false,
-      "result": "approved_for_current_standard_platinum",
-      "scope": "full kanji card rereview from square zero",
-      "cardReviewed": "察|さっする",
+      "result": "approved_after_exact_primary_reading_correction",
+      "scope": "full kanji card rereview from the rebuilt live card after exact source-backed primary-reading repair",
+      "cardReviewed": "察|さつ",
       "evidenceChecked": [
-        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 察; DisplayWord 察; StudyWordKanji (blank); PrimaryReading さっする; MeaningJP guess / sense; KanjiMeanings guess / sense / judge / presume / surmise / understand; OnReading サツ; KunReading (none); Notes <ruby>察<rt>さっ</rt></ruby>する - guess / sense ／ <ruby>観察<rt>かんさつ</rt></ruby> - observation ／ <ruby>警察<rt>けいさつ</rt></ruby> - police; Example 彼の顔を見て気持ちを察しました。 ／ かれのかおをみてきもちをさっしました。 ／ I guessed how he felt by looking at his face.; Audio [sound:5BDF_察-kanji-reading-察-さっする.wav]; StrokeOrder <img src=\"5BDF_察-stroke-order.gif\" />.",
-        "starter source data checked in templates/starter_curated_study_data.json: display word 察する|さっする; breakdown display (none); englishMeaning guess / sense; preferred words 察する / 観察 / 警察; blocked meanings (none); blocked words (none); blocked sentence phrases (none); starter example 彼の顔を見て気持ちを察しました。 / かれのかおをみてきもちをさっしました。 / I guessed how he felt by looking at his face..",
-        "golden and Platinum expectations checked separately: golden reading さっする and meaning guess; Platinum status platinum; reading さっする, meaning guess / sense, broader guess / sense / judge / presume / surmise / understand, notes 察する / 観察 / 警察, example 彼の顔を見て気持ちを察しました。.",
-        "governed Japanese source evidence rechecked for 察|さっする: https://www.kanjipedia.jp/kanji/0002599400; Kanjipedia; Japanese-source review for 察|さっする: Kanjipedia lists 音 サツ and outside 訓 あきらか / みる / しる, with meanings for making clear, looking carefully, investigating/knowing, inferring, and sympathizing, plus support words such as 察する, 察知, 観察, 警察, 検察, 考察, 診察, 推察, and 洞察. This supports the exported PrimaryReading さっする, MeaningJP guess / sense, and KanjiMeanings guess / sense / judge / presume / surmise / understand for the individual kanji 察.",
-        "primary reading, on/kun, and meaning decision: Uses さっする because the support surface practices the verb 察する directly and the example uses its natural inflected form 察しました; サツ remains visible through 観察 and 警察 support compounds. Live OnReading サツ and KunReading (none) were checked against the tracked kanji inventory/source-evidence posture and did not create an unresolved learner-facing defect.",
-        "notes/support review: 察する, 観察, and 警察 stay support-only for 察; the card focuses on guess/sense while showing common サツ compounds.",
-        "actual example sentence quality review: 彼の顔を見て気持ちを察しました。 / かれのかおをみてきもちをさっしました。 / I guessed how he felt by looking at his face.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct for the inflected 察しました form, and translation-correct.",
-        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0112; priority routine; signal n3-kanji-0088; kinds routine-tokenization-review, kanji-card-tokenizer-reading-variant; tokenizer reading さっ; live card reading さっする; comparable true; matches false; reviewer decision: expected bare-kanji tokenizer reading variant/coverage behavior for this kanji-card lane; source evidence, support surface, example, and exact audio were checked, and no NLP-indicated card/source defect remains. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
-        "audio identity: generated Audio field [sound:5BDF_察-kanji-reading-察-さっする.wav]; package asset audio/5BDF_察-kanji-reading-察-さっする.wav; manifest data/media/kanji/5B/5BDF_察/manifest.json; managed source voicevox-nemo; category kanji-reading; text 察; reading さっする; voice 女声1 / ノーマル; locale ja-JP; checksum 186a625557dcbe4c22735422b45e3d256a3a9843c232d5e813d45fb8ece51637; source file exists true.",
-        "stroke-order identity: generated StrokeOrder field <img src=\"5BDF_察-stroke-order.gif\" />; package asset animations/5BDF_察-stroke-order.gif; manifest data/media/kanji/5B/5BDF_察/manifest.json; managed source remote-stroke-order-animation; checksum 5373389a4f24419ee4207f0d3cc19b53b2ef8435c821b130cb78df3b55fc12a1; source file exists true; media target identity matched 察.",
+        "substantive post-v3 human rereview performed after correction; not mechanically migrated; live generated card inspected from out/build/package/exports/jlpt-n3.tsv: Kanji 察; DisplayWord 察; PrimaryReading さつ; MeaningJP observe / infer; KanjiMeanings observe / infer / guess / judge / presume / surmise / understand; OnReading サツ; KunReading blank; Notes <ruby>察<rt>さつ</rt></ruby> - observe / infer ／ <ruby>観察<rt>かんさつ</rt></ruby> - observation ／ <ruby>察<rt>さっ</rt></ruby>する - infer / sense ／ <ruby>警察<rt>けいさつ</rt></ruby> - police; Example 子どもたちは虫を観察しました。 ／ こどもたちはむしをかんさつしました。 ／ The children observed insects.; Audio [sound:5BDF_察-kanji-reading-察-さつ.wav]; StrokeOrder <img src=\"5BDF_察-stroke-order.gif\" />.",
+        "starter source data checked in templates/starter_curated_study_data.json: display word 観察|かんさつ; breakdown 察|さつ; support words 察する and 警察 remain support-only; this support surface may teach useful vocabulary, but PrimaryReading is bound to the exact source on/kun reading さつ.",
+        "golden and Platinum expectations checked separately: golden reading さつ; Platinum reading さつ, meaning observe / infer, broader meanings observe / infer, notes 察 / 観察 / 察する / 警察, example 子どもたちは虫を観察しました。.",
+        "governed Japanese source evidence rechecked: https://www.kanjipedia.jp/kanji/0002599400; Bunka Joyo Kanji reading index Japanese-source corrective review for 察|さつ: Kanjipedia lists 音 サツ and meanings including observe, infer, and investigate, with compounds such as 観察 and 警察; governed inventory lists サツ. This supports exact source-backed PrimaryReading さつ, MeaningJP observe / infer, and KanjiMeanings observe / infer for the individual kanji 察. 察する remains support vocabulary with sound change, not the primary kanji reading.",
+        "primary reading decision: Uses さつ because it is the exact governed on-reading for the individual kanji 察 and appears in common N3-useful compounds such as 観察 and 警察; 察する remains support vocabulary but not the primary kanji reading.",
+        "pedagogy/product review: N3 single-kanji card remains learner-useful; support vocabulary is acceptable only as support; DisplayWord remains the bare kanji 察; StudyWordKanji remains blank; notes are useful and not promoted as primary-reading authority.",
+        "actual example sentence quality review: 子どもたちは虫を観察しました。 / こどもたちはむしをかんさつしました。 / The children observed insects.; checked from the live generated card as natural Japanese, learner useful, level appropriate, support only for the target kanji, reading correct, and translation correct by human reviewer judgment.",
+        "audio identity: generated Audio field [sound:5BDF_察-kanji-reading-察-さつ.wav]; managed audio asset audio/5BDF_察-kanji-reading-察-さつ.wav; source voicevox-nemo; category kanji-reading; text 察; reading さつ; voice 女声1 / ノーマル; locale ja-JP; checksum a5127d52f80804d8c8ee805e45aaae876fc1bef15869eb8b98f8cf498c5ef06c; manifest data/media/kanji/5B/5BDF_察/manifest.json; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"5BDF_察-stroke-order.gif\" />; managed stroke-order asset animations/5BDF_察-stroke-order.gif; source remote-stroke-order-animation; checksum 5373389a4f24419ee4207f0d3cc19b53b2ef8435c821b130cb78df3b55fc12a1; manifest data/media/kanji/5B/5BDF_察/manifest.json; source file exists true; media target identity matched 察.",
+        "kanji NLP signal packet checked from nlp-review-kanji-n3-0112: priority routine; target 察|さつ; suggestions 0; signal kinds routine-tokenization-review / kanji-card-tokenizer-reading-variant; tokenizer reading さっ; live card reading さつ; reading comparable true; matches false; source artifact out/nlp-tokenization/kanji-n3-kuromoji.json; authority assistive_only, human_review_required, writesTrackedTemplates false, certifiesCards false, claimsReleaseReadiness false. Reviewer treated this as support context only; tokenizer variants or coverage gaps did not override source-backed on/kun readings.",
         "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
-        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, and no NLP signal counted as certification proof.",
         "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
       ],
-      "limitationDecision": "no active non-core verification limitations recorded after this batch review"
+      "sentenceQualityReview": {
+        "example": "子どもたちは虫を観察しました。",
+        "reading": "こどもたちはむしをかんさつしました。",
+        "translation": "The children observed insects.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "readingCorrect": true,
+        "translationCorrect": true,
+        "reviewerJudgment": "example sentence quality review for 察|さつ: natural Japanese, learner useful, level appropriate, support-only usage, reading correct, and translation correct after live-card rereview."
+      },
+      "limitationDecision": "no active non-core verification limitations recorded after corrective rereview"
     }
   },
   {
@@ -12020,42 +12068,38 @@
   },
   {
     "kanji": "常",
-    "status": "platinum",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
-      "つねに"
+      "じょう"
     ],
     "meaningIncludes": [
-      "always"
+      "usual",
+      "normal"
     ],
     "kanjiMeaningsIncludes": [
       "usual",
-      "always",
-      "constant",
-      "common",
-      "continually",
-      "long-lasting",
-      "normal",
-      "ordinary",
-      "regular"
+      "normal"
     ],
     "levelIncludes": [
       "N3"
     ],
     "notesIncludes": [
-      "常に",
+      "常",
       "日常",
-      "非常"
+      "通常",
+      "非常",
+      "常に"
     ],
     "exampleIncludes": [
-      "彼は常に落ち着いています。"
+      "日常の生活を大切にしています。"
     ],
-    "reviewedAt": "2026-05-23",
+    "reviewedAt": "2026-05-26",
     "reviewer": "codex-platinum-review",
     "sourceEvidence": [
       {
         "type": "japanese-source",
-        "source": "https://www.kanjipedia.jp/kanji/0003505300; Kanjipedia",
-        "detail": "Kanjipedia review for 常|つねに: Kanjipedia lists 常 with 音 ジョウ and 訓 つね / とこ, and meanings around always, usual, constant, common, continually, long-lasting, normal, ordinary, and regular; it also shows support vocabulary such as 常時, 平常, 日常, and 非常. This supports the exported learner-facing PrimaryReading つねに, MeaningJP always, and KanjiMeanings usual / always / constant / common / continually / long-lasting / normal / ordinary / regular for the individual kanji 常."
+        "source": "https://www.kanjipedia.jp/kanji/0003505300; Bunka Joyo Kanji reading index",
+        "detail": "Japanese-source corrective review for 常|じょう: Kanjipedia lists 音 ジョウ, 訓 つね and とこ, with meanings including usual, normal, always, and ordinary, with compounds such as 日常, 通常, and 非常; governed inventory lists ジョウ, つね, and とこ. This supports exact source-backed PrimaryReading じょう, MeaningJP usual / normal, and KanjiMeanings usual / normal for the individual kanji 常. 常に remains support vocabulary, not the primary kanji reading."
       }
     ],
     "qualityGates": {
@@ -12076,25 +12120,25 @@
       "strokeOrderTargetVerified": true,
       "noSilentFallback": true
     },
-    "primaryReadingRationale": "Uses つねに because the learner-facing support surface and example practice the high-frequency adverb 常に; ジョウ remains visible in compounds such as 日常 and 非常.",
+    "primaryReadingRationale": "Uses じょう because it is an exact governed on-reading for the individual kanji 常 and appears in common N3-useful compounds such as 日常 and 通常; 常に remains support vocabulary but not the primary kanji reading.",
     "reviewStandard": "kanji-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-23",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "revalidatedAt": "2026-05-26",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard after exact primary-reading correction.",
     "internalChecks": [
       {
         "type": "generated-surface",
-        "source": "npm run deck:platinum:batch -- --level=3 --limit=8 --queue=missing-current-standard --json; buildKanjiRowsForLevel live row inspection",
-        "detail": "Generated single-kanji card surface inspected for 常|つねに: Kanji and DisplayWord 常; StudyWordKanji blank; PrimaryReading つねに; meaning always; KanjiMeanings usual / always / constant / common / continually / long-lasting / normal / ordinary / regular; notes 常に - always ／ 日常 - everyday life ／ 非常 - emergency / extraordinary; example 彼は常に落ち着いています。 / かれはつねにおちついています。 / He is always calm.; audio field includes kanji-reading-常-つねに; stroke-order field includes 5E38_常-stroke-order.gif."
+        "source": "out/build/package/exports/jlpt-n3.tsv after npm run deck:kanji:nlp-signals -- --levels=3,4,5",
+        "detail": "Generated single-kanji card surface inspected for 常|じょう: single-kanji anchor; Kanji 常; DisplayWord 常; StudyWordKanji blank; PrimaryReading じょう; MeaningJP usual / normal; KanjiMeanings usual / normal / always / common / continually / long-lasting / ordinary / regular; OnReading ジョウ; KunReading つね、 とこ-; notes <ruby>常<rt>じょう</rt></ruby> - usual / normal ／ <ruby>日常<rt>にちじょう</rt></ruby> - everyday life ／ <ruby>通常<rt>つうじょう</rt></ruby> - usually / normal ／ <ruby>非常<rt>ひじょう</rt></ruby> - emergency / extraordinary ／ <ruby>常<rt>つね</rt></ruby>に - always; example 日常の生活を大切にしています。 ／ にちじょうのせいかつをたいせつにしています。 ／ I value everyday life.; audio field includes kanji-reading-常-じょう; stroke-order field includes 5E38_常-stroke-order.gif."
       },
       {
         "type": "media-audit",
-        "source": "out/build/reports/media-sync.json; out/build/package/package-summary.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
-        "detail": "Managed media provenance inspected for 常: exact audio media fragment kanji-reading-常-つねに; audio/5E38_常-kanji-reading-常-つねに.wav; stroke-order media animations/5E38_常-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; no silent fallback accepted."
+        "source": "out/build/reports/media-sync.json; out/build/package/package-summary.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 常: exact audio media fragment kanji-reading-常-じょう; asset audio/5E38_常-kanji-reading-常-じょう.wav; checksum e6389a8f74f7c34ffe18fc7027c80b35a3e8434fc1b686fcb8a5cc1108cd9120; source voicevox-nemo; category kanji-reading; text 常; reading じょう; voice 女声1 / ノーマル; locale ja-JP; stroke-order media animations/5E38_常-stroke-order.gif; stroke-order checksum 1367442ce9ae317f0cc266cb635deadd4d69dafe5bc72410bc39281a31d085b4; no silent fallback accepted."
       },
       {
         "type": "audio-review",
-        "source": "exported Audio field and out/build/package/package-summary.json",
-        "detail": "Audio artifact reviewed for 常|つねに: exact kanji-reading audio kanji-reading-常-つねに; audio/5E38_常-kanji-reading-常-つねに.wav; exported PrimaryReading つねに."
+        "source": "npm run media:review:audio focused corrective review; exported Audio field; managed media manifest",
+        "detail": "Audio artifact reviewed for 常|じょう: exact kanji-reading audio kanji-reading-常-じょう; expected reading じょう; managed reading じょう; asset audio/5E38_常-kanji-reading-常-じょう.wav; voice 女声1 / ノーマル; source voicevox-nemo; checksum e6389a8f74f7c34ffe18fc7027c80b35a3e8434fc1b686fcb8a5cc1108cd9120."
       },
       {
         "type": "stroke-order-review",
@@ -12110,15 +12154,16 @@
     "reviewEvidence": [
       {
         "type": "manual-review",
-        "source": "platinum product review",
-        "detail": "Final product judgment for 常|つねに: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+        "source": "corrective primary-reading product review",
+        "detail": "Final product judgment for 常|じょう: individual-kanji card for a learner, exact source-backed primary reading reviewed against governed Japanese source evidence, support-only vocabulary usage checked, natural example sentence reviewed, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
       },
       {
         "type": "current-standard-review",
-        "source": "core N3 current-standard structural Platinum review",
-        "detail": "Current-standard review revalidated 常|つねに with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading つねに, MeaningJP always, KanjiMeanings usual / always / constant / common / continually / long-lasting / normal / ordinary / regular, example sentence 彼は常に落ち着いています。, reading かれはつねにおちついています。, translation He is always calm., notes/support surface 常に / 日常 / 非常, audio kanji-reading-常-つねに, stroke-order media 5E38_常-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+        "source": "core kanji current-standard structural Platinum review after primary-reading correction",
+        "detail": "Current-standard review revalidated 常|じょう with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading じょう, MeaningJP usual / normal, KanjiMeanings usual / normal / always / common / continually / long-lasting / ordinary / regular, example sentence 日常の生活を大切にしています。, reading にちじょうのせいかつをたいせつにしています。, translation I value everyday life., notes/support surface 常 / 日常 / 通常 / 非常 / 常に, audio kanji-reading-常-じょう, stroke-order media, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; Obsidian proof is recorded separately only when rereviewProvenance is present."
       }
-    ]
+    ],
+    "fixSummary": "Corrected PrimaryReading from the support word-form つねに to the exact source-backed kanji reading じょう; refreshed meaning, example, notes, evidence, and media expectations."
   },
   {
     "kanji": "幸",
@@ -14370,37 +14415,38 @@
   },
   {
     "kanji": "感",
-    "status": "platinum",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
-      "かんじる"
+      "かん"
     ],
     "meaningIncludes": [
-      "feel"
+      "feeling",
+      "sense"
     ],
     "kanjiMeaningsIncludes": [
       "feeling",
-      "sense",
-      "emotion",
-      "sensation"
+      "sense"
     ],
     "levelIncludes": [
       "N3"
     ],
     "notesIncludes": [
-      "感じる",
+      "感",
+      "感覚",
       "感謝",
+      "感じる",
       "安心感"
     ],
     "exampleIncludes": [
-      "春になると空気の変化を感じます。"
+      "その言葉に安心感を覚えました。"
     ],
-    "reviewedAt": "2026-05-24",
+    "reviewedAt": "2026-05-26",
     "reviewer": "codex-platinum-review",
     "sourceEvidence": [
       {
         "type": "japanese-source",
-        "source": "https://www.kanjipedia.jp/kanji/0001095900; Kanjipedia",
-        "detail": "Kanjipedia review for 感|かんじる: Kanjipedia lists 音 カン and meanings centered on かんじる, the heart being moved, perceiving/sensing, and infection/being affected, with support vocabulary such as 感じる, 感謝, 感覚, 快感, and 安心感. This supports the exported PrimaryReading かんじる, MeaningJP feel, and KanjiMeanings feeling / sense / emotion / sensation for the individual kanji 感."
+        "source": "https://www.kanjipedia.jp/kanji/0001095900; Bunka Joyo Kanji reading index",
+        "detail": "Japanese-source corrective review for 感|かん: Kanjipedia lists 音 カン and meanings centered on feeling, sensing, being moved, and being affected, with vocabulary such as 感覚, 感謝, 感じる, and 安心感; governed inventory lists カン. This supports exact source-backed PrimaryReading かん, MeaningJP feeling / sense, and KanjiMeanings feeling / sense for the individual kanji 感. 感じる remains support vocabulary, not the primary kanji reading."
       }
     ],
     "qualityGates": {
@@ -14421,25 +14467,25 @@
       "strokeOrderTargetVerified": true,
       "noSilentFallback": true
     },
-    "primaryReadingRationale": "Uses かんじる because the generated card and first support word directly practice 感じる as the most useful learner-facing form; カン remains visible through compounds such as 感謝 and 安心感.",
+    "primaryReadingRationale": "Uses かん because it is the exact governed on-reading for the individual kanji 感 and appears in common N3-useful compounds such as 感覚 and 安心感; 感じる remains support vocabulary but not the primary kanji reading.",
     "reviewStandard": "kanji-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-24",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "revalidatedAt": "2026-05-26",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard after exact primary-reading correction.",
     "internalChecks": [
       {
         "type": "generated-surface",
-        "source": "npm run deck:platinum:batch -- --level=3 --limit=8 --queue=missing-current-standard --json; buildKanjiRowsForLevel live row inspection",
-        "detail": "Generated single-kanji card surface inspected for 感|かんじる: Kanji and DisplayWord 感; StudyWordKanji blank; PrimaryReading かんじる; meaning feel; KanjiMeanings feeling / sense / emotion / sensation; notes 感じる - feel ／ 感謝 - gratitude ／ 安心感 - sense of security; example 春になると空気の変化を感じます。 / はるになるとくうきのへんかをかんじます。 / When spring comes, I can feel the change in the air.; audio field includes kanji-reading-感-かんじる; stroke-order field includes 611F_感-stroke-order.gif."
+        "source": "out/build/package/exports/jlpt-n3.tsv after npm run deck:kanji:nlp-signals -- --levels=3,4,5",
+        "detail": "Generated single-kanji card surface inspected for 感|かん: single-kanji anchor; Kanji 感; DisplayWord 感; StudyWordKanji blank; PrimaryReading かん; MeaningJP feeling / sense; KanjiMeanings feeling / sense / emotion / sensation; OnReading カン; KunReading blank; notes <ruby>感<rt>かん</rt></ruby> - feeling / sense ／ <ruby>感覚<rt>かんかく</rt></ruby> - sense ／ <ruby>感謝<rt>かんしゃ</rt></ruby> - gratitude ／ <ruby>感<rt>かん</rt></ruby>じる - feel ／ <ruby>安心感<rt>あんしんかん</rt></ruby> - sense of security; example その言葉に安心感を覚えました。 ／ そのことばにあんしんかんをおぼえました。 ／ Those words gave me a sense of relief.; audio field includes kanji-reading-感-かん; stroke-order field includes 611F_感-stroke-order.gif."
       },
       {
         "type": "media-audit",
-        "source": "out/build/reports/media-sync.json; out/build/package/package-summary.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json",
-        "detail": "Managed media provenance inspected for 感: exact audio media fragment kanji-reading-感-かんじる; audio/611F_感-kanji-reading-感-かんじる.wav; stroke-order media animations/611F_感-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; no silent fallback accepted."
+        "source": "out/build/reports/media-sync.json; out/build/package/package-summary.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 感: exact audio media fragment kanji-reading-感-かん; asset audio/611F_感-kanji-reading-感-かん.wav; checksum a7f1c7b50037b57188e6732a2d32246505ab75f5e4980d34a762a7b730300155; source voicevox-nemo; category kanji-reading; text 感; reading かん; voice 女声1 / ノーマル; locale ja-JP; stroke-order media animations/611F_感-stroke-order.gif; stroke-order checksum 93119768b9d3328d1a251eeb4192616e3ff95153ed514c0ee1720764b47cedc8; no silent fallback accepted."
       },
       {
         "type": "audio-review",
-        "source": "exported Audio field and out/build/package/package-summary.json",
-        "detail": "Audio artifact reviewed for 感|かんじる: exact kanji-reading audio kanji-reading-感-かんじる; audio/611F_感-kanji-reading-感-かんじる.wav; exported PrimaryReading かんじる."
+        "source": "npm run media:review:audio focused corrective review; exported Audio field; managed media manifest",
+        "detail": "Audio artifact reviewed for 感|かん: exact kanji-reading audio kanji-reading-感-かん; expected reading かん; managed reading かん; asset audio/611F_感-kanji-reading-感-かん.wav; voice 女声1 / ノーマル; source voicevox-nemo; checksum a7f1c7b50037b57188e6732a2d32246505ab75f5e4980d34a762a7b730300155."
       },
       {
         "type": "stroke-order-review",
@@ -14455,15 +14501,16 @@
     "reviewEvidence": [
       {
         "type": "manual-review",
-        "source": "platinum product review",
-        "detail": "Final product judgment for 感|かんじる: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+        "source": "corrective primary-reading product review",
+        "detail": "Final product judgment for 感|かん: individual-kanji card for a learner, exact source-backed primary reading reviewed against governed Japanese source evidence, support-only vocabulary usage checked, natural example sentence reviewed, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
       },
       {
         "type": "current-standard-review",
-        "source": "core N3 current-standard structural Platinum review",
-        "detail": "Current-standard review revalidated 感|かんじる with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading かんじる, MeaningJP feel, KanjiMeanings feeling / sense / emotion / sensation, example sentence 春になると空気の変化を感じます。, reading はるになるとくうきのへんかをかんじます。, translation When spring comes, I can feel the change in the air., notes/support surface 感じる / 感謝 / 安心感, audio kanji-reading-感-かんじる, stroke-order media 611F_感-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+        "source": "core kanji current-standard structural Platinum review after primary-reading correction",
+        "detail": "Current-standard review revalidated 感|かん with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading かん, MeaningJP feeling / sense, KanjiMeanings feeling / sense / emotion / sensation, example sentence その言葉に安心感を覚えました。, reading そのことばにあんしんかんをおぼえました。, translation Those words gave me a sense of relief., notes/support surface 感 / 感覚 / 感謝 / 感じる / 安心感, audio kanji-reading-感-かん, stroke-order media, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; Obsidian proof is recorded separately only when rereviewProvenance is present."
       }
-    ]
+    ],
+    "fixSummary": "Corrected PrimaryReading from the support word-form かんじる to the exact source-backed kanji reading かん; refreshed meaning, example, notes, evidence, and media expectations."
   },
   {
     "kanji": "慣",
@@ -23633,36 +23680,35 @@
     "kanji": "礼",
     "status": "fixed_then_platinum",
     "readingIncludes": [
-      "おれい"
+      "れい"
     ],
     "meaningIncludes": [
       "thanks",
-      "gratitude"
+      "courtesy"
     ],
     "kanjiMeaningsIncludes": [
       "thanks",
-      "courtesy",
-      "bow",
-      "ceremony"
+      "courtesy"
     ],
     "levelIncludes": [
       "N3"
     ],
     "notesIncludes": [
+      "礼",
       "お礼",
       "失礼",
       "礼儀"
     ],
     "exampleIncludes": [
-      "手伝ってくれた友だちにお礼を言いました。"
+      "先生に礼を言いました。"
     ],
-    "reviewedAt": "2026-05-24",
+    "reviewedAt": "2026-05-26",
     "reviewer": "codex-platinum-review",
     "sourceEvidence": [
       {
         "type": "japanese-source",
-        "source": "https://www.kanjipedia.jp/kanji/0007239800; Kanjipedia",
-        "detail": "Kanjipedia review for 礼|おれい: the page lists 音 レイ / ライ and outside 訓 のり / うやまう, with meanings for social manners or ceremony, paying respect, and gratitude, plus words such as お礼, 失礼, 礼儀, 礼状, 謝礼, and 拝礼. This supports exported PrimaryReading おれい, MeaningJP thanks / gratitude, and cleaned KanjiMeanings thanks / courtesy / bow / ceremony after suppressing low-value remuneration and salute."
+        "source": "https://www.kanjipedia.jp/kanji/0007239800; Bunka Joyo Kanji reading index",
+        "detail": "Japanese-source corrective review for 礼|れい: Kanjipedia lists 音 レイ / ライ and meanings including courtesy, ceremony, respect, thanks, and gratitude, with words such as お礼, 失礼, 礼儀, 礼状, 謝礼, and 拝礼; governed inventory lists ライ and レイ. This supports exact source-backed PrimaryReading れい, MeaningJP thanks / courtesy, and KanjiMeanings thanks / courtesy for the individual kanji 礼. お礼 remains support vocabulary, not the primary kanji reading."
       }
     ],
     "qualityGates": {
@@ -23683,25 +23729,25 @@
       "strokeOrderTargetVerified": true,
       "noSilentFallback": true
     },
-    "primaryReadingRationale": "Uses おれい because the card is anchored in the common learner expression お礼 and the support example practices お礼を言いました; レイ and ライ remain visible in the on-reading/support surface.",
+    "primaryReadingRationale": "Uses れい because it is an exact governed on-reading for the individual kanji 礼 and directly supports thanks/courtesy vocabulary; お礼 remains useful support vocabulary with an honorific prefix but not the primary kanji reading.",
     "reviewStandard": "kanji-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-24",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "revalidatedAt": "2026-05-26",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard after exact primary-reading correction.",
     "internalChecks": [
       {
         "type": "generated-surface",
-        "source": "out/build/package/exports/jlpt-n3.tsv after source/card fixes and npm run deck:ready -- --levels=3",
-        "detail": "Generated card surface inspected for 礼|おれい: single-kanji anchor; Kanji and DisplayWord 礼; StudyWordKanji blank; PrimaryReading おれい; MeaningJP thanks / gratitude; KanjiMeanings thanks / courtesy / bow / ceremony; OnReading ライ、 レイ; KunReading blank; notes お<ruby>礼<rt>れい</rt></ruby> - thanks / gratitude ／ <ruby>失礼<rt>しつれい</rt></ruby> - rudeness / excuse me ／ <ruby>礼儀<rt>れいぎ</rt></ruby> - manners / courtesy; example 手伝ってくれた友だちにお礼を言いました。 / てつだってくれたともだちにおれいをいいました。 / I thanked the friend who helped me.; audio field includes kanji-reading-礼-おれい; stroke-order field includes 793C_礼-stroke-order.gif."
+        "source": "out/build/package/exports/jlpt-n3.tsv after npm run deck:kanji:nlp-signals -- --levels=3,4,5",
+        "detail": "Generated single-kanji card surface inspected for 礼|れい: single-kanji anchor; Kanji 礼; DisplayWord 礼; StudyWordKanji blank; PrimaryReading れい; MeaningJP thanks / courtesy; KanjiMeanings thanks / courtesy / bow / ceremony; OnReading ライ、 レイ; KunReading blank; notes <ruby>礼<rt>れい</rt></ruby> - thanks / courtesy ／ お<ruby>礼<rt>れい</rt></ruby> - thanks / gratitude ／ <ruby>失礼<rt>しつれい</rt></ruby> - rudeness / excuse me ／ <ruby>礼儀<rt>れいぎ</rt></ruby> - manners / courtesy; example 先生に礼を言いました。 ／ せんせいにれいをいいました。 ／ I thanked the teacher.; audio field includes kanji-reading-礼-れい; stroke-order field includes 793C_礼-stroke-order.gif."
       },
       {
         "type": "media-audit",
-        "source": "out/build/package/package-summary.json; out/build/reports/media-sync.json; managed media manifest",
-        "detail": "Managed media provenance inspected for 礼: exact audio media fragment kanji-reading-礼-おれい; audio/793C_礼-kanji-reading-礼-おれい.wav; stroke-order media animations/793C_礼-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+        "source": "out/build/reports/media-sync.json; out/build/package/package-summary.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 礼: exact audio media fragment kanji-reading-礼-れい; asset audio/793C_礼-kanji-reading-礼-れい.wav; checksum 51dca2e001c418a526f644ebb30dee0c90ee92de8257368b2fc5e63a6d6be442; source voicevox-nemo; category kanji-reading; text 礼; reading れい; voice 女声1 / ノーマル; locale ja-JP; stroke-order media animations/793C_礼-stroke-order.gif; stroke-order checksum 1d7f1471fc1fab51df4a3027dfcd04eb6a034539856b4570db64935fd917faa0; no silent fallback accepted."
       },
       {
         "type": "audio-review",
-        "source": "exported Audio field and out/build/package/package-summary.json",
-        "detail": "Audio artifact reviewed for 礼|おれい: exact kanji-reading audio kanji-reading-礼-おれい; audio/793C_礼-kanji-reading-礼-おれい.wav; exported PrimaryReading おれい."
+        "source": "npm run media:review:audio focused corrective review; exported Audio field; managed media manifest",
+        "detail": "Audio artifact reviewed for 礼|れい: exact kanji-reading audio kanji-reading-礼-れい; expected reading れい; managed reading れい; asset audio/793C_礼-kanji-reading-礼-れい.wav; voice 女声1 / ノーマル; source voicevox-nemo; checksum 51dca2e001c418a526f644ebb30dee0c90ee92de8257368b2fc5e63a6d6be442."
       },
       {
         "type": "stroke-order-review",
@@ -23710,23 +23756,23 @@
       },
       {
         "type": "golden-regression",
-        "source": "templates/golden_n3_review_set.json, test/starterCuratedQuality.test.js, and npm run deck:review:n3",
-        "detail": "Separate golden regression gate checked 礼 and starter-curated regression protects blockedMeanings remuneration / salute; this regression gate protects generated field expectations but is not source truth and not source evidence."
+        "source": "templates/golden_n3_review_set.json and npm run deck:review:n3",
+        "detail": "Separate golden regression gate checked 礼; this regression gate protects generated field expectations but is not source truth and not source evidence."
       }
     ],
     "reviewEvidence": [
       {
         "type": "manual-review",
-        "source": "platinum product review",
-        "detail": "Final product judgment for 礼|おれい: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+        "source": "corrective primary-reading product review",
+        "detail": "Final product judgment for 礼|れい: individual-kanji card for a learner, exact source-backed primary reading reviewed against governed Japanese source evidence, support-only vocabulary usage checked, natural example sentence reviewed, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
       },
       {
         "type": "current-standard-review",
-        "source": "core N3 current-standard structural Platinum review",
-        "detail": "Current-standard review revalidated 礼|おれい with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading おれい, MeaningJP thanks / gratitude, KanjiMeanings thanks / courtesy / bow / ceremony, example sentence 手伝ってくれた友だちにお礼を言いました。, reading てつだってくれたともだちにおれいをいいました。, translation I thanked the friend who helped me., notes/support surface お<ruby>礼<rt>れい</rt></ruby> - thanks / gratitude ／ <ruby>失礼<rt>しつれい</rt></ruby> - rudeness / excuse me ／ <ruby>礼儀<rt>れいぎ</rt></ruby> - manners / courtesy, audio kanji-reading-礼-おれい, stroke-order media 793C_礼-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+        "source": "core kanji current-standard structural Platinum review after primary-reading correction",
+        "detail": "Current-standard review revalidated 礼|れい with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading れい, MeaningJP thanks / courtesy, KanjiMeanings thanks / courtesy / bow / ceremony, example sentence 先生に礼を言いました。, reading せんせいにれいをいいました。, translation I thanked the teacher., notes/support surface 礼 / お礼 / 失礼 / 礼儀, audio kanji-reading-礼-れい, stroke-order media, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; Obsidian proof is recorded separately only when rereviewProvenance is present."
       }
     ],
-    "fixSummary": "Blocked low-value broader meanings remuneration and salute so the N3 card keeps the useful thanks / courtesy / bow / ceremony surface."
+    "fixSummary": "Corrected PrimaryReading from the support word-form おれい to the exact source-backed kanji reading れい; refreshed meaning, example, notes, evidence, and media expectations while keeping low-value broader meanings blocked."
   },
   {
     "kanji": "祖",
@@ -27073,15 +27119,15 @@
   },
   {
     "kanji": "腹",
-    "status": "platinum",
+    "status": "fixed_then_platinum",
     "readingIncludes": [
-      "おなか"
+      "はら"
     ],
     "meaningIncludes": [
-      "stomach"
+      "belly",
+      "abdomen"
     ],
     "kanjiMeaningsIncludes": [
-      "stomach",
       "belly",
       "abdomen"
     ],
@@ -27089,25 +27135,21 @@
       "N3"
     ],
     "notesIncludes": [
+      "腹",
       "お腹",
       "腹痛",
       "腹が立つ"
     ],
     "exampleIncludes": [
-      "朝ご飯を食べてお腹がいっぱいです。"
+      "腹が痛いので薬を飲みました。"
     ],
-    "reviewedAt": "2026-05-24",
+    "reviewedAt": "2026-05-26",
     "reviewer": "codex-platinum-review",
     "sourceEvidence": [
       {
         "type": "japanese-source",
-        "source": "https://www.kanjipedia.jp/kanji/0006116000",
-        "detail": "Kanjipedia review for 腹: the page lists 音 フク and 訓 はら, meaning はら / おなか with compounds such as 腹筋, 空腹, 腹痛, 腹心, 船腹, 満腹, and 立腹. This supports the target kanji's stomach/belly/abdomen meaning field and the support surface 腹痛 / 腹が立つ."
-      },
-      {
-        "type": "japanese-source",
-        "source": "https://dictionary.goo.ne.jp/word/%E5%BE%A1%E4%B8%AD_%28%E3%81%8A%E3%81%AA%E3%81%8B%29/",
-        "detail": "Goo dictionary review for おなか: the entry states that おなか may be written お腹 and is a polite word for 腹. This supports exported PrimaryReading おなか, the notes お腹, and the example sentence using お腹がいっぱい."
+        "source": "https://www.kanjipedia.jp/kanji/0006116000; Bunka Joyo Kanji reading index",
+        "detail": "Japanese-source corrective review for 腹|はら: Kanjipedia lists 音 フク and 訓 はら, with meanings including belly, abdomen, stomach, inside, and mind, with compounds such as 腹痛, 空腹, 満腹, and 立腹; governed inventory lists フク and はら. This supports exact source-backed PrimaryReading はら, MeaningJP belly / abdomen, and KanjiMeanings belly / abdomen for the individual kanji 腹. お腹 remains support vocabulary, not the primary kanji reading."
       }
     ],
     "qualityGates": {
@@ -27128,25 +27170,25 @@
       "strokeOrderTargetVerified": true,
       "noSilentFallback": true
     },
-    "primaryReadingRationale": "Uses おなか because the card surface and example directly practice the common polite spelling お腹; フク and はら remain visible through 腹痛 and 腹が立つ support words.",
+    "primaryReadingRationale": "Uses はら because it is the exact governed kun-reading for the individual kanji 腹; お腹 remains common polite support vocabulary but not the primary kanji reading.",
     "reviewStandard": "kanji-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-24",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "revalidatedAt": "2026-05-26",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard after exact primary-reading correction.",
     "internalChecks": [
       {
         "type": "generated-surface",
-        "source": "out/build/package/exports/jlpt-n3.tsv after npm run deck:ready -- --levels=3",
-        "detail": "Generated card surface inspected for 腹|おなか: single-kanji anchor; Kanji and DisplayWord 腹; StudyWordKanji blank; PrimaryReading おなか; MeaningJP stomach; KanjiMeanings stomach / belly / abdomen; OnReading フク; KunReading はら; notes お<ruby>腹<rt>なか</rt></ruby> - stomach ／ <ruby>腹痛<rt>ふくつう</rt></ruby> - stomachache ／ <ruby>腹<rt>はら</rt></ruby>が<ruby>立<rt>た</rt></ruby>つ - get angry; example 朝ご飯を食べてお腹がいっぱいです。 / あさごはんをたべておなかがいっぱいです。 / I am full after eating breakfast.; audio field includes kanji-reading-腹-おなか; stroke-order field includes 8179_腹-stroke-order.gif."
+        "source": "out/build/package/exports/jlpt-n3.tsv after npm run deck:kanji:nlp-signals -- --levels=3,4,5",
+        "detail": "Generated single-kanji card surface inspected for 腹|はら: single-kanji anchor; Kanji 腹; DisplayWord 腹; StudyWordKanji blank; PrimaryReading はら; MeaningJP belly / abdomen; KanjiMeanings belly / abdomen / stomach; OnReading フク; KunReading はら; notes <ruby>腹<rt>はら</rt></ruby> - belly / abdomen ／ お<ruby>腹<rt>なか</rt></ruby> - stomach / belly ／ <ruby>腹痛<rt>ふくつう</rt></ruby> - stomachache ／ <ruby>腹<rt>はら</rt></ruby>が<ruby>立<rt>た</rt></ruby>つ - get angry; example 腹が痛いので薬を飲みました。 ／ はらがいたいのでくすりをのみました。 ／ I took medicine because my stomach hurt.; audio field includes kanji-reading-腹-はら; stroke-order field includes 8179_腹-stroke-order.gif."
       },
       {
         "type": "media-audit",
-        "source": "out/build/package/package-summary.json and managed media manifest",
-        "detail": "Managed media provenance inspected for 腹: exact audio media fragment kanji-reading-腹-おなか; audio/8179_腹-kanji-reading-腹-おなか.wav; stroke-order media animations/8179_腹-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; audio source voicevox-nemo; stroke-order source remote-stroke-order-animation; no silent fallback accepted."
+        "source": "out/build/reports/media-sync.json; out/build/package/package-summary.json; templates/audio_source_policy.json; templates/stroke_order_source_policy.json; managed media manifest",
+        "detail": "Managed media provenance inspected for 腹: exact audio media fragment kanji-reading-腹-はら; asset audio/8179_腹-kanji-reading-腹-はら.wav; checksum e21820528a09eff50c5ea36aec850c50af395e6b4d6a50e6042ce0388048c788; source voicevox-nemo; category kanji-reading; text 腹; reading はら; voice 女声1 / ノーマル; locale ja-JP; stroke-order media animations/8179_腹-stroke-order.gif; stroke-order checksum 4132aa3b7e410b6a1984a3df208b6d03cf9183d3805182ada42f30cce29c843b; no silent fallback accepted."
       },
       {
         "type": "audio-review",
-        "source": "exported Audio field, out/build/package/package-summary.json, and managed media manifest",
-        "detail": "Audio artifact reviewed for 腹|おなか: exact kanji-reading audio kanji-reading-腹-おなか; audio/8179_腹-kanji-reading-腹-おなか.wav; exported PrimaryReading おなか."
+        "source": "npm run media:review:audio focused corrective review; exported Audio field; managed media manifest",
+        "detail": "Audio artifact reviewed for 腹|はら: exact kanji-reading audio kanji-reading-腹-はら; expected reading はら; managed reading はら; asset audio/8179_腹-kanji-reading-腹-はら.wav; voice 女声1 / ノーマル; source voicevox-nemo; checksum e21820528a09eff50c5ea36aec850c50af395e6b4d6a50e6042ce0388048c788."
       },
       {
         "type": "stroke-order-review",
@@ -27162,15 +27204,16 @@
     "reviewEvidence": [
       {
         "type": "manual-review",
-        "source": "platinum product review",
-        "detail": "Final product judgment for 腹|おなか: individual-kanji card for an N3 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+        "source": "corrective primary-reading product review",
+        "detail": "Final product judgment for 腹|はら: individual-kanji card for a learner, exact source-backed primary reading reviewed against governed Japanese source evidence, support-only vocabulary usage checked, natural example sentence reviewed, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
       },
       {
         "type": "current-standard-review",
-        "source": "core N3 current-standard structural Platinum review",
-        "detail": "Current-standard review revalidated 腹|おなか with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading おなか, MeaningJP stomach, KanjiMeanings stomach / belly / abdomen, example sentence 朝ご飯を食べてお腹がいっぱいです。, reading あさごはんをたべておなかがいっぱいです。, translation I am full after eating breakfast., notes/support surface お腹 / 腹痛 / 腹が立つ, audio kanji-reading-腹-おなか, stroke-order media 8179_腹-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+        "source": "core kanji current-standard structural Platinum review after primary-reading correction",
+        "detail": "Current-standard review revalidated 腹|はら with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading はら, MeaningJP belly / abdomen, KanjiMeanings belly / abdomen / stomach, example sentence 腹が痛いので薬を飲みました。, reading はらがいたいのでくすりをのみました。, translation I took medicine because my stomach hurt., notes/support surface 腹 / お腹 / 腹痛 / 腹が立つ, audio kanji-reading-腹-はら, stroke-order media, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; Obsidian proof is recorded separately only when rereviewProvenance is present."
       }
-    ]
+    ],
+    "fixSummary": "Corrected PrimaryReading from the support word-form おなか to the exact source-backed kanji reading はら; refreshed meaning, example, notes, evidence, and media expectations."
   },
   {
     "kanji": "舞",

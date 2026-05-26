@@ -780,10 +780,10 @@
     }
   },
   "久": {
-    "englishMeaning": "after a long time",
+    "englishMeaning": "long time / long-standing",
     "displayWord": {
-      "written": "久しぶり",
-      "pron": "ひさしぶり"
+      "written": "久しい",
+      "pron": "ひさしい"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -793,18 +793,18 @@
     ],
     "jlpt": 3,
     "preferredWords": [
-      "久しぶり",
       "久しい",
+      "久しぶり",
       "永久"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "久しぶり （ひさしぶり） - after a long time ／ 久しい （ひさしい） - long-standing ／ 永久 （えいきゅう） - permanent",
+    "notes": "久しい （ひさしい） - long-standing / for a long time ／ 久しぶり （ひさしぶり） - after a long time ／ 永久 （えいきゅう） - permanent",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "彼とは久しぶりに会いました。",
-      "reading": "かれとはひさしぶりにあいました。",
-      "english": "I met him for the first time in a long while.",
+      "japanese": "彼とは久しい付き合いです。",
+      "reading": "かれとはひさしいつきあいです。",
+      "english": "I have known him for a long time.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -1499,10 +1499,10 @@
     }
   },
   "亡": {
-    "englishMeaning": "pass away / lose someone",
+    "englishMeaning": "death / perish",
     "displayWord": {
-      "written": "亡くなる",
-      "pron": "なくなる"
+      "written": "死亡",
+      "pron": "しぼう"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -1512,23 +1512,29 @@
     ],
     "jlpt": 3,
     "preferredWords": [
+      "死亡",
       "亡くなる",
-      "亡くす"
+      "滅亡"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "亡くなる （なくなる） - pass away ／ 亡くす （なくす） - lose someone",
+    "notes": "亡 （ぼう） - death / perish ／ 死亡 （しぼう） - death ／ 亡くなる （なくなる） - pass away ／ 滅亡 （めつぼう） - ruin / collapse",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "祖父は去年亡くなりました。",
-      "reading": "そふはきょねんなくなりました。",
-      "english": "My grandfather passed away last year.",
+      "japanese": "その事故で三人が死亡しました。",
+      "reading": "そのじこでさんにんがしぼうしました。",
+      "english": "Three people died in that accident.",
       "source": "starter-curated",
       "tags": [
         "example",
         "starter"
       ]
-    }
+    },
+    "breakdownDisplayWord": {
+      "written": "亡",
+      "pron": "ぼう"
+    },
+    "breakdownEnglishMeaning": "death / perish"
   },
   "交": {
     "englishMeaning": "exchange / intersect",
@@ -4029,10 +4035,10 @@
     }
   },
   "信": {
-    "englishMeaning": "believe / trust",
+    "englishMeaning": "trust / belief",
     "displayWord": {
-      "written": "信じる",
-      "pron": "しんじる"
+      "written": "自信",
+      "pron": "じしん"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -4042,23 +4048,29 @@
     ],
     "jlpt": 3,
     "preferredWords": [
+      "自信",
       "信じる",
-      "自信"
+      "信用"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "信じる （しんじる） - believe ／ 自信 （じしん） - confidence",
+    "notes": "信 （しん） - trust / belief ／ 自信 （じしん） - confidence ／ 信じる （しんじる） - believe ／ 信用 （しんよう） - trust",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "彼の言葉を信じています。",
-      "reading": "かれのことばをしんじています。",
-      "english": "I believe his words.",
+      "japanese": "彼には強い自信があります。",
+      "reading": "かれにはつよいじしんがあります。",
+      "english": "He has strong confidence.",
       "source": "starter-curated",
       "tags": [
         "example",
         "starter"
       ]
-    }
+    },
+    "breakdownDisplayWord": {
+      "written": "信",
+      "pron": "しん"
+    },
+    "breakdownEnglishMeaning": "trust / belief"
   },
   "修": {
     "englishMeaning": "repair / study / revise",
@@ -15712,10 +15724,10 @@
     }
   },
   "好": {
-    "englishMeaning": "like / be fond of",
+    "englishMeaning": "like / prefer",
     "displayWord": {
-      "written": "好き",
-      "pron": "すき"
+      "written": "好む",
+      "pron": "このむ"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -15725,6 +15737,7 @@
     ],
     "jlpt": 4,
     "preferredWords": [
+      "好む",
       "好き",
       "好み"
     ],
@@ -15735,12 +15748,12 @@
       "like something"
     ],
     "blockedSentencePhrases": [],
-    "notes": "好き （すき） - like ／ 好み （このみ） - preference / taste",
+    "notes": "好む （このむ） - prefer / like ／ 好き （すき） - like ／ 好み （このみ） - preference / taste",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "私は静かなカフェが好きです。",
-      "reading": "わたしはしずかなカフェがすきです。",
-      "english": "I like quiet cafes.",
+      "japanese": "彼女は静かな場所を好みます。",
+      "reading": "かのじょはしずかなばしょをこのみます。",
+      "english": "She prefers quiet places.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -18230,10 +18243,10 @@
     }
   },
   "察": {
-    "englishMeaning": "guess / sense",
+    "englishMeaning": "observe / infer",
     "displayWord": {
-      "written": "察する",
-      "pron": "さっする"
+      "written": "観察",
+      "pron": "かんさつ"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -18243,24 +18256,29 @@
     ],
     "jlpt": 3,
     "preferredWords": [
-      "察する",
       "観察",
+      "察する",
       "警察"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "察する （さっする） - guess / sense ／ 観察 （かんさつ） - observation ／ 警察 （けいさつ） - police",
+    "notes": "察 （さつ） - observe / infer ／ 観察 （かんさつ） - observation ／ 察する （さっする） - infer / sense ／ 警察 （けいさつ） - police",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "彼の顔を見て気持ちを察しました。",
-      "reading": "かれのかおをみてきもちをさっしました。",
-      "english": "I guessed how he felt by looking at his face.",
+      "japanese": "子どもたちは虫を観察しました。",
+      "reading": "こどもたちはむしをかんさつしました。",
+      "english": "The children observed insects.",
       "source": "starter-curated",
       "tags": [
         "example",
         "starter"
       ]
-    }
+    },
+    "breakdownDisplayWord": {
+      "written": "察",
+      "pron": "さつ"
+    },
+    "breakdownEnglishMeaning": "observe / infer"
   },
   "寡": {
     "englishMeaning": "few / little",
@@ -20904,10 +20922,10 @@
     }
   },
   "常": {
-    "englishMeaning": "usual / always / constant",
+    "englishMeaning": "usual / normal",
     "displayWord": {
-      "written": "常に",
-      "pron": "つねに"
+      "written": "日常",
+      "pron": "にちじょう"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -20917,24 +20935,30 @@
     ],
     "jlpt": 3,
     "preferredWords": [
-      "常に",
       "日常",
-      "非常"
+      "通常",
+      "非常",
+      "常に"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "常に （つねに） - always ／ 日常 （にちじょう） - everyday life ／ 非常 （ひじょう） - emergency / extraordinary",
+    "notes": "常 （じょう） - usual / normal ／ 日常 （にちじょう） - everyday life ／ 通常 （つうじょう） - usually / normal ／ 非常 （ひじょう） - emergency / extraordinary ／ 常に （つねに） - always",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "彼は常に落ち着いています。",
-      "reading": "かれはつねにおちついています。",
-      "english": "He is always calm.",
+      "japanese": "日常の生活を大切にしています。",
+      "reading": "にちじょうのせいかつをたいせつにしています。",
+      "english": "I value everyday life.",
       "source": "starter-curated",
       "tags": [
         "example",
         "starter"
       ]
-    }
+    },
+    "breakdownDisplayWord": {
+      "written": "常",
+      "pron": "じょう"
+    },
+    "breakdownEnglishMeaning": "usual / normal"
   },
   "帽": {
     "englishMeaning": "hat / cap",
@@ -25396,8 +25420,8 @@
   "感": {
     "englishMeaning": "feeling / sense",
     "displayWord": {
-      "written": "感じる",
-      "pron": "かんじる"
+      "written": "感覚",
+      "pron": "かんかく"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -25407,24 +25431,30 @@
     ],
     "jlpt": 3,
     "preferredWords": [
-      "感じる",
+      "感覚",
       "感謝",
+      "感じる",
       "安心感"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "感じる （かんじる） - feel ／ 感謝 （かんしゃ） - gratitude ／ 安心感 （あんしんかん） - sense of security",
+    "notes": "感 （かん） - feeling / sense ／ 感覚 （かんかく） - sense ／ 感謝 （かんしゃ） - gratitude ／ 感じる （かんじる） - feel ／ 安心感 （あんしんかん） - sense of security",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "春になると空気の変化を感じます。",
-      "reading": "はるになるとくうきのへんかをかんじます。",
-      "english": "When spring comes, I can feel the change in the air.",
+      "japanese": "その言葉に安心感を覚えました。",
+      "reading": "そのことばにあんしんかんをおぼえました。",
+      "english": "Those words gave me a sense of relief.",
       "source": "starter-curated",
       "tags": [
         "example",
         "starter"
       ]
-    }
+    },
+    "breakdownDisplayWord": {
+      "written": "感",
+      "pron": "かん"
+    },
+    "breakdownEnglishMeaning": "feeling / sense"
   },
   "慨": {
     "englishMeaning": "deep feeling / lament",
@@ -46968,8 +46998,8 @@
   "礼": {
     "englishMeaning": "thanks / courtesy",
     "displayWord": {
-      "written": "お礼",
-      "pron": "おれい"
+      "written": "礼",
+      "pron": "れい"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -46979,6 +47009,7 @@
     ],
     "jlpt": 3,
     "preferredWords": [
+      "礼",
       "お礼",
       "失礼",
       "礼儀"
@@ -46989,12 +47020,12 @@
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "お礼 （おれい） - thanks / gratitude ／ 失礼 （しつれい） - rudeness / excuse me ／ 礼儀 （れいぎ） - manners / courtesy",
+    "notes": "礼 （れい） - thanks / courtesy ／ お礼 （おれい） - thanks / gratitude ／ 失礼 （しつれい） - rudeness / excuse me ／ 礼儀 （れいぎ） - manners / courtesy",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "手伝ってくれた友だちにお礼を言いました。",
-      "reading": "てつだってくれたともだちにおれいをいいました。",
-      "english": "I thanked the friend who helped me.",
+      "japanese": "先生に礼を言いました。",
+      "reading": "せんせいにれいをいいました。",
+      "english": "I thanked the teacher.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -50150,10 +50181,10 @@
     }
   },
   "腹": {
-    "englishMeaning": "stomach / belly",
+    "englishMeaning": "belly / abdomen",
     "displayWord": {
-      "written": "お腹",
-      "pron": "おなか"
+      "written": "腹",
+      "pron": "はら"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -50163,18 +50194,19 @@
     ],
     "jlpt": 3,
     "preferredWords": [
+      "腹",
       "お腹",
       "腹痛",
       "腹が立つ"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "お腹 （おなか） - stomach ／ 腹痛 （ふくつう） - stomachache ／ 腹が立つ （はらがたつ） - get angry",
+    "notes": "腹 （はら） - belly / abdomen ／ お腹 （おなか） - stomach / belly ／ 腹痛 （ふくつう） - stomachache ／ 腹が立つ （はらがたつ） - get angry",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "朝ご飯を食べてお腹がいっぱいです。",
-      "reading": "あさごはんをたべておなかがいっぱいです。",
-      "english": "I am full after eating breakfast.",
+      "japanese": "腹が痛いので薬を飲みました。",
+      "reading": "はらがいたいのでくすりをのみました。",
+      "english": "I took medicine because my stomach hurt.",
       "source": "starter-curated",
       "tags": [
         "example",

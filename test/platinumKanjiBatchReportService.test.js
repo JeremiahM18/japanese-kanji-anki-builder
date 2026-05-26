@@ -154,6 +154,8 @@ test("buildPlatinumKanjiBatchReport summarizes surfaces checks and risks without
             primaryReading: "つき",
             meaningJP: "month / moon / lunar",
             kanjiMeanings: "month / moon",
+            onReading: "On: ゲツ、 ガツ",
+            kunReading: "Kun: つき",
             notes: "つき - moon",
             exampleSentence: "夜はきれいです。 ／ よるはきれいです。 ／ The night is beautiful.",
             audio: "[sound:6708_月-kanji-reading-月-つき.wav]",

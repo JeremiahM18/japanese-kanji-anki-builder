@@ -3,8 +3,8 @@ const path = require("node:path");
 
 const ACTION_ALLOWLIST = Object.freeze({
     "actions/checkout": {
-        version: "v4",
-        sha: "34e114876b0b11c390a56381ad16ebd13914f8d5",
+        version: "v4.2.2",
+        sha: "11bd71901bbe5b1630ceea73d27597364c9af683",
     },
     "actions/setup-node": {
         version: "v4",

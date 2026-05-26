@@ -1,4 +1,5 @@
 const fs = require("node:fs");
+const path = require("node:path");
 const { z } = require("zod");
 
 const { normalizeJapaneseReading } = require("../utils/japanese");
@@ -6,6 +7,8 @@ const { normalizeJapaneseReading } = require("../utils/japanese");
 const FIELD_SOURCE_CONTRACT_TYPE = "kanji-card-field-source";
 const FIELD_SOURCE_STANDARD = "kanji-card-field-source-v1";
 const FIELD_SOURCE_ALLOWED_USE = "kanji-field-verification";
+const DEFAULT_KANJI_CARD_FIELD_SOURCE_CONTRACT_PATH = path.join("templates", "kanji_card_field_source_contract.json");
+const DEFAULT_KANJI_CARD_FIELD_SOURCE_CONTRACT_DIR = path.join("templates", "kanji_card_field_source_contracts");
 const REQUIRED_DISALLOWED_USES = Object.freeze([
     "word-field-verification",
     "placement-claim-origin",
@@ -16,7 +19,7 @@ const REQUIRED_DISALLOWED_USES = Object.freeze([
     "audio-provenance",
     "review-certification",
 ]);
-const BLOCKED_SOURCE_TEXT_RE = /data\/|kanji_jlpt_only|starter_curated|golden_|generated|local cache|kanjidic2_reading_reference/iu;
+const BLOCKED_SOURCE_TEXT_RE = /data\/|kanji_jlpt_only|starter_curated|golden_|local cache|kanjidic2_reading_reference|generated\s+(?:surface|surfaces|artifact|artifacts|export|exports|tsv|row|rows|cache|fixture|fixtures|gold|output|outputs|file|files|deck|decks|note|notes)/iu;
 
 const sourceUseSchema = z.object({
     allowedUse: z.array(z.string().min(1)).default([]),
@@ -117,6 +120,57 @@ function parseKanjiCardFieldSourceContract(value) {
 
 function loadKanjiCardFieldSourceContract(filePath) {
     return parseKanjiCardFieldSourceContract(JSON.parse(fs.readFileSync(filePath, "utf8")));
+}
+
+function normalizeKanjiCardFieldSourceContractLevel(level = 5) {
+    const normalized = Number(level);
+    if (!Number.isInteger(normalized) || normalized < 1 || normalized > 5) {
+        throw new Error(`Unsupported kanji card field source contract level: ${level}`);
+    }
+    return normalized;
+}
+
+function defaultKanjiCardFieldSourceContractPathForLevel(level = 5) {
+    const normalized = normalizeKanjiCardFieldSourceContractLevel(level);
+    if (normalized === 5) {
+        return DEFAULT_KANJI_CARD_FIELD_SOURCE_CONTRACT_PATH;
+    }
+    return path.join(DEFAULT_KANJI_CARD_FIELD_SOURCE_CONTRACT_DIR, `n${normalized}.json`);
+}
+
+function resolveKanjiCardFieldSourceContractPathForLevel({
+    level = 5,
+    cwd = process.cwd(),
+    legacyPath = null,
+    contractsDir = null,
+} = {}) {
+    const normalized = normalizeKanjiCardFieldSourceContractLevel(level);
+    if (normalized === 5) {
+        return path.resolve(cwd, legacyPath || DEFAULT_KANJI_CARD_FIELD_SOURCE_CONTRACT_PATH);
+    }
+    return path.resolve(cwd, contractsDir || DEFAULT_KANJI_CARD_FIELD_SOURCE_CONTRACT_DIR, `n${normalized}.json`);
+}
+
+function loadKanjiCardFieldSourceContractForLevel({
+    level = 5,
+    cwd = process.cwd(),
+    legacyPath = null,
+    contractsDir = null,
+    required = true,
+} = {}) {
+    const filePath = resolveKanjiCardFieldSourceContractPathForLevel({
+        level,
+        cwd,
+        legacyPath,
+        contractsDir,
+    });
+    if (!fs.existsSync(filePath)) {
+        if (!required) {
+            return null;
+        }
+        throw new Error(`Missing governed N${level} kanji card field source contract at ${filePath}`);
+    }
+    return loadKanjiCardFieldSourceContract(filePath);
 }
 
 function auditKanjiCardFieldSourceContract({
@@ -247,11 +301,16 @@ function auditKanjiCardFieldSourceContract({
 }
 
 module.exports = {
+    DEFAULT_KANJI_CARD_FIELD_SOURCE_CONTRACT_DIR,
+    DEFAULT_KANJI_CARD_FIELD_SOURCE_CONTRACT_PATH,
     FIELD_SOURCE_ALLOWED_USE,
     FIELD_SOURCE_CONTRACT_TYPE,
     FIELD_SOURCE_STANDARD,
     auditKanjiCardFieldSourceContract,
+    defaultKanjiCardFieldSourceContractPathForLevel,
     kanjiCardFieldSourceContractSchema,
     loadKanjiCardFieldSourceContract,
+    loadKanjiCardFieldSourceContractForLevel,
     parseKanjiCardFieldSourceContract,
+    resolveKanjiCardFieldSourceContractPathForLevel,
 };

@@ -3,6 +3,7 @@ const path = require("node:path");
 
 const {
     auditKanjiCardFieldSourceContract,
+    defaultKanjiCardFieldSourceContractPathForLevel,
     loadKanjiCardFieldSourceContract,
 } = require("../src/datasets/kanjiCardFieldSourceContract");
 const { loadKanjiReadingReferenceContract } = require("../src/datasets/kanjiReadingReferenceContract");
@@ -22,7 +23,7 @@ const {
     collectUnknownArg,
 } = require("../src/utils/cliArgs");
 
-const DEFAULT_OUT = "templates/kanji_card_field_source_contract.json";
+const DEFAULT_OUT = defaultKanjiCardFieldSourceContractPathForLevel(DEFAULT_LEVEL);
 const DEFAULT_JLPT_CONTRACT = "templates/jlpt_level_contract.json";
 const DEFAULT_SOURCE_MANIFEST = "templates/platinum_card_source_manifest.json";
 const DEFAULT_SOURCE_EVIDENCE = "templates/jlpt_kanji_source_evidence.json";
@@ -35,7 +36,7 @@ function defaultReviewSet(level = DEFAULT_LEVEL) {
 function parseArgs(argv) {
     const options = {
         level: DEFAULT_LEVEL,
-        out: DEFAULT_OUT,
+        out: null,
         reviewSet: defaultReviewSet(DEFAULT_LEVEL),
         jlptContract: DEFAULT_JLPT_CONTRACT,
         sourceManifest: DEFAULT_SOURCE_MANIFEST,
@@ -71,7 +72,10 @@ function parseArgs(argv) {
         }
     }
 
-    return options;
+    return {
+        ...options,
+        out: options.out || defaultKanjiCardFieldSourceContractPathForLevel(options.level),
+    };
 }
 
 function formatBuildReport({ options, outPath, audit } = {}) {
@@ -97,12 +101,9 @@ function formatBuildReport({ options, outPath, audit } = {}) {
 
 function run(options = {}) {
     const level = Number(options.level || DEFAULT_LEVEL);
-    if (level !== 5) {
-        throw new Error("Kanji card field source contract generation currently supports N5 only.");
-    }
 
     const cwd = process.cwd();
-    const outPath = path.resolve(cwd, options.out || DEFAULT_OUT);
+    const outPath = path.resolve(cwd, options.out || defaultKanjiCardFieldSourceContractPathForLevel(level));
     const jlptContractPath = path.resolve(cwd, options.jlptContract || DEFAULT_JLPT_CONTRACT);
     const sourceManifestPath = path.resolve(cwd, options.sourceManifest || DEFAULT_SOURCE_MANIFEST);
     const sourceEvidencePath = path.resolve(cwd, options.sourceEvidence || DEFAULT_SOURCE_EVIDENCE);

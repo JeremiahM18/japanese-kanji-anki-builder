@@ -5,7 +5,8 @@ const path = require("node:path");
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 const {
     auditKanjiCardFieldSourceContract,
-    loadKanjiCardFieldSourceContract,
+    loadKanjiCardFieldSourceContractForLevel,
+    resolveKanjiCardFieldSourceContractPathForLevel,
 } = require("../datasets/kanjiCardFieldSourceContract");
 const {
     auditKanjiReadingReferenceContract,
@@ -121,6 +122,7 @@ function buildTrackedKanjiCertificationRequirements({
     componentsTracked = false,
     readingsTracked = false,
     richSourceProvenanceTracked = false,
+    richSourceProvenanceSource = "templates/kanji_card_field_source_contract.json",
 } = {}) {
     return [
         {
@@ -164,7 +166,7 @@ function buildTrackedKanjiCertificationRequirements({
             label: "rich kanji source provenance",
             trackedToday: richSourceProvenanceTracked,
             source: richSourceProvenanceTracked
-                ? "templates/kanji_card_field_source_contract.json"
+                ? richSourceProvenanceSource
                 : "no tracked release contract yet",
         },
     ];
@@ -215,6 +217,14 @@ function buildJlptOnlyJsonFromContract(jlptLevelContract = {}) {
     );
 }
 
+function formatRepoRelativePath(filePath, cwd = process.cwd()) {
+    const relativePath = path.relative(cwd, filePath);
+    if (relativePath && !relativePath.startsWith("..") && !path.isAbsolute(relativePath)) {
+        return relativePath.replace(/\\/gu, "/");
+    }
+    return filePath;
+}
+
 function createNetworkDisabledKanjiApiClient() {
     return {
         async getKanji(kanji) {
@@ -239,6 +249,7 @@ function buildDefaultTrackedSourcePaths({ cwd = process.cwd() } = {}) {
         kanjiComponentContractPath: path.join(templateDir, "kanji_component_contract.json"),
         kanjiReadingReferenceContractPath: path.join(templateDir, "kanji_reading_reference_contract.json"),
         kanjiCardFieldSourceContractPath: path.join(templateDir, "kanji_card_field_source_contract.json"),
+        kanjiCardFieldSourceContractDir: path.join(templateDir, "kanji_card_field_source_contracts"),
         platinumCardSourceManifestPath: path.join(templateDir, "platinum_card_source_manifest.json"),
     };
 }
@@ -319,6 +330,61 @@ function auditKanjiCardFieldSourceContractForLevel({
         readingReferenceContract,
         level,
     });
+}
+
+function loadKanjiCardFieldSourceContractWithAuditForLevel({
+    level = 5,
+    cwd = process.cwd(),
+    paths = buildDefaultTrackedSourcePaths({ cwd }),
+    jlptLevelContract = {},
+    platinumCardSourceManifest = {},
+    readingReferenceContract = null,
+} = {}) {
+    const contractPath = resolveKanjiCardFieldSourceContractPathForLevel({
+        level,
+        cwd,
+        legacyPath: paths.kanjiCardFieldSourceContractPath,
+        contractsDir: paths.kanjiCardFieldSourceContractDir,
+    });
+    const expected = listKanjiForLevel(jlptLevelContract, level).length;
+    const fieldSourceContract = loadKanjiCardFieldSourceContractForLevel({
+        level,
+        cwd,
+        legacyPath: paths.kanjiCardFieldSourceContractPath,
+        contractsDir: paths.kanjiCardFieldSourceContractDir,
+        required: false,
+    });
+
+    if (!fieldSourceContract) {
+        return {
+            contractPath,
+            fieldSourceContract: null,
+            fieldSourceAudit: {
+                passed: false,
+                failures: [
+                    `Missing governed N${level} kanji card field source contract at ${contractPath}.`,
+                ],
+                counts: {
+                    expectedKanji: expected,
+                    entries: 0,
+                    missing: expected,
+                    extra: 0,
+                },
+            },
+        };
+    }
+
+    return {
+        contractPath,
+        fieldSourceContract,
+        fieldSourceAudit: auditKanjiCardFieldSourceContractForLevel({
+            fieldSourceContract,
+            jlptLevelContract,
+            platinumCardSourceManifest,
+            readingReferenceContract,
+            level,
+        }),
+    };
 }
 
 function listKanjiForLevel(jlptLevelContract = {}, level = 5) {
@@ -508,6 +574,7 @@ function evaluateTrackedSourceKanjiPreflight({
     readingReferenceAudit = null,
     fieldSourceContract = null,
     fieldSourceAudit = null,
+    fieldSourceContractPath = "templates/kanji_card_field_source_contract.json",
     level = 5,
 } = {}) {
     const expectedKanji = jlptLevelContract.inventoryCounts?.[String(level)] || 0;
@@ -542,6 +609,7 @@ function evaluateTrackedSourceKanjiPreflight({
         componentsTracked: componentCoverage.expected > 0 && componentCoverage.missing === 0,
         readingsTracked,
         richSourceProvenanceTracked,
+        richSourceProvenanceSource: fieldSourceContractPath,
     });
     const missingRequirements = requirements
         .filter((requirement) => !requirement.trackedToday);
@@ -596,19 +664,23 @@ function buildTrackedSourceKanjiPreflight({
     });
     const componentContract = loadKanjiComponentContract(paths.kanjiComponentContractPath);
     const readingReferenceContract = loadKanjiReadingReferenceContract(paths.kanjiReadingReferenceContractPath);
-    const fieldSourceContract = loadKanjiCardFieldSourceContract(paths.kanjiCardFieldSourceContractPath);
     const platinumCardSourceManifest = loadPlatinumCardSourceManifest(paths.platinumCardSourceManifestPath);
     const readingReferenceAudit = auditKanjiReadingReferenceContract({
         readingReferenceContract,
         jlptLevelContract,
         platinumCardSourceManifest,
     });
-    const fieldSourceAudit = auditKanjiCardFieldSourceContractForLevel({
+    const {
+        contractPath: fieldSourceContractPath,
         fieldSourceContract,
+        fieldSourceAudit,
+    } = loadKanjiCardFieldSourceContractWithAuditForLevel({
+        level: targetLevel,
+        cwd,
+        paths,
         jlptLevelContract,
         platinumCardSourceManifest,
         readingReferenceContract,
-        level: targetLevel,
     });
     const evaluation = evaluateTrackedSourceKanjiPreflight({
         jlptLevelContract,
@@ -618,6 +690,7 @@ function buildTrackedSourceKanjiPreflight({
         readingReferenceAudit,
         fieldSourceContract,
         fieldSourceAudit,
+        fieldSourceContractPath: formatRepoRelativePath(fieldSourceContractPath, cwd),
         level: targetLevel,
     });
 
@@ -633,7 +706,7 @@ function buildTrackedSourceKanjiPreflight({
             starterCuratedStudyDataPath: paths.starterCuratedStudyDataPath,
             kanjiComponentContractPath: paths.kanjiComponentContractPath,
             kanjiReadingReferenceContractPath: paths.kanjiReadingReferenceContractPath,
-            kanjiCardFieldSourceContractPath: paths.kanjiCardFieldSourceContractPath,
+            kanjiCardFieldSourceContractPath: fieldSourceContractPath,
             platinumCardSourceManifestPath: paths.platinumCardSourceManifestPath,
         },
         kanji: evaluation,
@@ -697,7 +770,12 @@ async function buildTrackedSourceKanjiArtifact({
     const jlptLevelContract = loadJlptLevelContract(paths.jlptLevelContractPath);
     const componentContract = loadKanjiComponentContract(paths.kanjiComponentContractPath);
     const readingReferenceContract = loadKanjiReadingReferenceContract(paths.kanjiReadingReferenceContractPath);
-    const fieldSourceContract = loadKanjiCardFieldSourceContract(paths.kanjiCardFieldSourceContractPath);
+    const fieldSourceContract = loadKanjiCardFieldSourceContractForLevel({
+        level: targetLevel,
+        cwd,
+        legacyPath: paths.kanjiCardFieldSourceContractPath,
+        contractsDir: paths.kanjiCardFieldSourceContractDir,
+    });
     const expectedHeader = loadAnkiNoteSchema("kanji").fieldNames;
     const buildOptions = {
         level: targetLevel,

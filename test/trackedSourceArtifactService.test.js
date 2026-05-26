@@ -12,6 +12,7 @@ const {
     buildJlptOnlyJsonFromContract,
     buildTrackedSourceKanjiPreflight,
     buildTrackedSourceWordArtifact,
+    countCardFieldSourceEntriesForLevel,
     countReadingReferenceEntriesForLevel,
     evaluateTrackedSourceKanjiPreflight,
     evaluateWordArtifact,
@@ -107,19 +108,66 @@ test("evaluateTrackedSourceKanjiPreflight blocks certification without rich trac
     assert.equal(report.counts.readingReferenceKanji, 2);
 });
 
-test("buildTrackedSourceKanjiPreflight reports N5 kanji source blockers without local data", () => {
+test("evaluateTrackedSourceKanjiPreflight certifies when all tracked kanji source lanes pass", () => {
+    const jlptLevelContract = {
+        inventoryCounts: { "5": 1 },
+        kanjiLevels: {
+            公: 5,
+        },
+    };
+    const report = evaluateTrackedSourceKanjiPreflight({
+        jlptLevelContract,
+        curatedStudyData: {
+            公: { englishMeaning: "public" },
+        },
+        componentContract: {
+            components: {
+                公: ["八", "ム"],
+            },
+        },
+        readingReferenceContract: {
+            entries: {
+                公: { onReadings: ["コウ"], kunReadings: [] },
+            },
+        },
+        readingReferenceAudit: {
+            passed: true,
+            failures: [],
+        },
+        fieldSourceContract: {
+            entries: {
+                公: { fieldValues: { primaryReading: "こう" } },
+            },
+        },
+        fieldSourceAudit: {
+            passed: true,
+            failures: [],
+        },
+        level: 5,
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.certifiable, true);
+    assert.deepEqual(report.blockers, []);
+    assert.equal(report.counts.cardFieldSourceKanji, 1);
+    assert.equal(report.counts.missingTrackedRequirements, 0);
+});
+
+test("buildTrackedSourceKanjiPreflight certifies N5 source availability without local data", () => {
     const report = buildTrackedSourceKanjiPreflight();
 
     assert.equal(report.passed, true);
-    assert.equal(report.certifiable, false);
+    assert.equal(report.certifiable, true);
     assert.equal(report.scope, N5_TRACKED_SOURCE_KANJI_PREFLIGHT_SCOPE);
     assert.equal(report.kanji.counts.expectedKanji, 80);
     assert.equal(report.kanji.counts.contractKanji, 80);
     assert.equal(report.kanji.blockers.some((blocker) => blocker.id === "on-readings"), false);
     assert.equal(report.kanji.blockers.some((blocker) => blocker.id === "kun-readings"), false);
     assert.equal(report.kanji.blockers.some((blocker) => blocker.id === "components"), false);
+    assert.equal(report.kanji.blockers.some((blocker) => blocker.id === "rich-source-provenance"), false);
     assert.equal(report.kanji.counts.componentContractKanji, 80);
     assert.equal(report.kanji.counts.readingReferenceKanji, 80);
+    assert.equal(report.kanji.counts.cardFieldSourceKanji, 80);
 });
 
 test("countReadingReferenceEntriesForLevel scopes tracked reading coverage to the selected level", () => {
@@ -142,6 +190,27 @@ test("countReadingReferenceEntriesForLevel scopes tracked reading coverage to th
         missing: 1,
         withOnReading: 1,
         withKunReading: 1,
+    });
+});
+
+test("countCardFieldSourceEntriesForLevel scopes tracked field-source coverage to the selected level", () => {
+    const coverage = countCardFieldSourceEntriesForLevel({
+        kanjiLevels: {
+            日: 5,
+            本: 5,
+            海: 4,
+        },
+    }, {
+        entries: {
+            日: { fieldValues: { primaryReading: "にち" } },
+            海: { fieldValues: { primaryReading: "うみ" } },
+        },
+    }, 5);
+
+    assert.deepEqual(coverage, {
+        expected: 2,
+        covered: 1,
+        missing: 1,
     });
 });
 
@@ -193,10 +262,10 @@ test("formatTrackedSourceArtifactReport states source boundary and exclusions", 
     assert.match(text, /tracked-source kanji TSV artifacts/);
 });
 
-test("formatTrackedSourceKanjiPreflightReport states blocked certification scope", () => {
+test("formatTrackedSourceKanjiPreflightReport states certification scope", () => {
     const text = formatTrackedSourceKanjiPreflightReport({
         passed: true,
-        certifiable: false,
+        certifiable: true,
         scope: N5_TRACKED_SOURCE_KANJI_PREFLIGHT_SCOPE,
         kanji: {
             counts: {
@@ -205,6 +274,7 @@ test("formatTrackedSourceKanjiPreflightReport states blocked certification scope
                 curatedMeanings: 80,
                 componentContractKanji: 80,
                 readingReferenceKanji: 80,
+                cardFieldSourceKanji: 80,
             },
             requirements: [
                 {
@@ -213,19 +283,15 @@ test("formatTrackedSourceKanjiPreflightReport states blocked certification scope
                     source: "templates/kanji_component_contract.json",
                 },
             ],
-            blockers: [
-                {
-                    label: "explicit on-yomi readings",
-                    currentSource: "currently derived from local kanji input or API fallback",
-                },
-            ],
+            blockers: [],
         },
     });
 
     assert.match(text, /Tracked-Source Kanji Preflight/);
-    assert.match(text, /Tracked-source kanji TSV certifiable: no/);
+    assert.match(text, /Tracked-source kanji TSV certifiable: yes/);
     assert.match(text, /component\/radical source data/);
     assert.match(text, /component contract entries: 80/);
     assert.match(text, /reading reference entries: 80/);
+    assert.match(text, /card field source entries: 80/);
     assert.match(text, /ignored local data\/ kanji, KRAD, cache, and media inputs are not read/);
 });

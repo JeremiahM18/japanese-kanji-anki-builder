@@ -37,6 +37,7 @@
     "data:audit:jlpt:official-occurrences": "node scripts/reportJlptOfficialOccurrences.js",
     "data:normalize:kanjidic2-jlpt": "node scripts/normalizeKanjidic2JlptSource.js",
     "data:build:kanji-reading-reference": "node scripts/buildKanjidic2ReadingReferenceContract.js",
+    "data:build:kanji-field-source-contract": "node scripts/buildKanjiCardFieldSourceContract.js",
     "data:normalize:tanos-jlpt-kanji": "node scripts/normalizeTanosJlptKanjiSource.js",
     "data:normalize:tanos-jlpt-words": "node scripts/normalizeTanosJlptWordSource.js",
     "data:import:jlpt:source-input": "node scripts/importJlptKanjiSourceInput.js",

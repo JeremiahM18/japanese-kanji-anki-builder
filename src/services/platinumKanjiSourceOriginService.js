@@ -26,6 +26,10 @@ function getDefaultJlptKanjiSourceEvidence() {
     return cachedJlptKanjiSourceEvidence;
 }
 
+function loadKanjiSourceOriginEvidence(filePath = DEFAULT_JLPT_KANJI_SOURCE_EVIDENCE_PATH) {
+    return loadJlptKanjiSourceEvidence(filePath);
+}
+
 function normalizeAssignmentLevelRange(value) {
     if (!Array.isArray(value)) {
         return [];
@@ -107,6 +111,7 @@ module.exports = {
     DEFAULT_JLPT_KANJI_SOURCE_EVIDENCE_PATH,
     assignmentIncludesLevel,
     getDefaultJlptKanjiSourceEvidence,
+    loadKanjiSourceOriginEvidence,
     parseEntryTargetLevel,
     resolveKanjiSourceOriginIds,
     resolveKanjiSourceOriginIdsForEntry,

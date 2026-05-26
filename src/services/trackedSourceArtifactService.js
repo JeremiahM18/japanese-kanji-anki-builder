@@ -4,6 +4,10 @@ const path = require("node:path");
 
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 const {
+    auditKanjiCardFieldSourceContract,
+    loadKanjiCardFieldSourceContract,
+} = require("../datasets/kanjiCardFieldSourceContract");
+const {
     auditKanjiReadingReferenceContract,
     loadKanjiReadingReferenceContract,
 } = require("../datasets/kanjiReadingReferenceContract");
@@ -46,7 +50,7 @@ const N5_TRACKED_SOURCE_KANJI_PREFLIGHT_SCOPE = Object.freeze({
     validates: [
         "tracked source availability for N5 kanji TSV certification",
         "JLPT kanji inventory count from tracked contract",
-        "absence of silent certification when rich kanji source data is still local-only",
+        "absence of silent certification when governed card-field source data is incomplete",
     ],
     doesNotValidate: [
         "fresh tracked-source kanji TSV generation",
@@ -56,10 +60,14 @@ const N5_TRACKED_SOURCE_KANJI_PREFLIGHT_SCOPE = Object.freeze({
         "mobile or screen-reader QA",
     ],
     sourceBoundary: "Inspects tracked templates only; ignored local data/ kanji, KRAD, cache, and media inputs are not read.",
-    followUp: "Track rich kanji source provenance before requiring tracked-source kanji TSV certification in product readiness.",
+    followUp: "Pair this preflight with fresh tracked-source kanji TSV generation, .apkg packaging, managed media QA, and manual import review before public release.",
 });
 
-function buildTrackedKanjiCertificationRequirements({ componentsTracked = false, readingsTracked = false } = {}) {
+function buildTrackedKanjiCertificationRequirements({
+    componentsTracked = false,
+    readingsTracked = false,
+    richSourceProvenanceTracked = false,
+} = {}) {
     return [
         {
             id: "jlpt-level",
@@ -100,8 +108,10 @@ function buildTrackedKanjiCertificationRequirements({ componentsTracked = false,
         {
             id: "rich-source-provenance",
             label: "rich kanji source provenance",
-            trackedToday: false,
-            source: "no tracked release contract yet",
+            trackedToday: richSourceProvenanceTracked,
+            source: richSourceProvenanceTracked
+                ? "templates/kanji_card_field_source_contract.json"
+                : "no tracked release contract yet",
         },
     ];
 }
@@ -151,6 +161,7 @@ function buildDefaultTrackedSourcePaths({ cwd = process.cwd() } = {}) {
         wordPitchAccentDataPath: path.join(templateDir, "word_pitch_accent_data.json"),
         kanjiComponentContractPath: path.join(templateDir, "kanji_component_contract.json"),
         kanjiReadingReferenceContractPath: path.join(templateDir, "kanji_reading_reference_contract.json"),
+        kanjiCardFieldSourceContractPath: path.join(templateDir, "kanji_card_field_source_contract.json"),
         platinumCardSourceManifestPath: path.join(templateDir, "platinum_card_source_manifest.json"),
     };
 }
@@ -183,6 +194,20 @@ function countReadingReferenceEntriesForLevel(jlptLevelContract = {}, readingRef
         missing: targetKanji.length - covered.length,
         withOnReading: withOnReading.length,
         withKunReading: withKunReading.length,
+    };
+}
+
+function countCardFieldSourceEntriesForLevel(jlptLevelContract = {}, fieldSourceContract = null, level = 5) {
+    const targetKanji = Object.entries(jlptLevelContract.kanjiLevels || {})
+        .filter(([, entryLevel]) => Number(entryLevel) === Number(level))
+        .map(([kanji]) => kanji);
+    const entries = fieldSourceContract?.entries || {};
+    const covered = targetKanji.filter((kanji) => entries[kanji]);
+
+    return {
+        expected: targetKanji.length,
+        covered: covered.length,
+        missing: targetKanji.length - covered.length,
     };
 }
 
@@ -240,6 +265,8 @@ function evaluateTrackedSourceKanjiPreflight({
     componentContract = null,
     readingReferenceContract = null,
     readingReferenceAudit = null,
+    fieldSourceContract = null,
+    fieldSourceAudit = null,
     level = 5,
 } = {}) {
     const expectedKanji = jlptLevelContract.inventoryCounts?.[String(level)] || 0;
@@ -253,15 +280,27 @@ function evaluateTrackedSourceKanjiPreflight({
         readingReferenceContract,
         level
     );
+    const fieldSourceCoverage = countCardFieldSourceEntriesForLevel(
+        jlptLevelContract,
+        fieldSourceContract,
+        level
+    );
     const readingsTracked = Boolean(
         readingReferenceContract
         && readingReferenceAudit?.passed
         && readingReferenceCoverage.expected > 0
         && readingReferenceCoverage.missing === 0
     );
+    const richSourceProvenanceTracked = Boolean(
+        fieldSourceContract
+        && fieldSourceAudit?.passed
+        && fieldSourceCoverage.expected > 0
+        && fieldSourceCoverage.missing === 0
+    );
     const requirements = buildTrackedKanjiCertificationRequirements({
         componentsTracked: componentCoverage.expected > 0 && componentCoverage.missing === 0,
         readingsTracked,
+        richSourceProvenanceTracked,
     });
     const missingRequirements = requirements
         .filter((requirement) => !requirement.trackedToday);
@@ -272,6 +311,9 @@ function evaluateTrackedSourceKanjiPreflight({
     }
     if (readingReferenceAudit && !readingReferenceAudit.passed) {
         failures.push(...readingReferenceAudit.failures.map((failure) => `kanji reading reference: ${failure}`));
+    }
+    if (fieldSourceAudit && !fieldSourceAudit.passed) {
+        failures.push(...fieldSourceAudit.failures.map((failure) => `kanji card field source: ${failure}`));
     }
 
     return {
@@ -293,6 +335,8 @@ function evaluateTrackedSourceKanjiPreflight({
             readingReferenceMissing: readingReferenceCoverage.missing,
             readingReferenceWithOnReading: readingReferenceCoverage.withOnReading,
             readingReferenceWithKunReading: readingReferenceCoverage.withKunReading,
+            cardFieldSourceKanji: fieldSourceCoverage.covered,
+            cardFieldSourceMissing: fieldSourceCoverage.missing,
             missingTrackedRequirements: missingRequirements.length,
         },
     };
@@ -313,11 +357,19 @@ function buildTrackedSourceKanjiPreflight({
     });
     const componentContract = loadKanjiComponentContract(paths.kanjiComponentContractPath);
     const readingReferenceContract = loadKanjiReadingReferenceContract(paths.kanjiReadingReferenceContractPath);
+    const fieldSourceContract = loadKanjiCardFieldSourceContract(paths.kanjiCardFieldSourceContractPath);
     const platinumCardSourceManifest = loadPlatinumCardSourceManifest(paths.platinumCardSourceManifestPath);
     const readingReferenceAudit = auditKanjiReadingReferenceContract({
         readingReferenceContract,
         jlptLevelContract,
         platinumCardSourceManifest,
+    });
+    const fieldSourceAudit = auditKanjiCardFieldSourceContract({
+        fieldSourceContract,
+        jlptLevelContract,
+        platinumCardSourceManifest,
+        readingReferenceContract,
+        level,
     });
     const evaluation = evaluateTrackedSourceKanjiPreflight({
         jlptLevelContract,
@@ -325,6 +377,8 @@ function buildTrackedSourceKanjiPreflight({
         componentContract,
         readingReferenceContract,
         readingReferenceAudit,
+        fieldSourceContract,
+        fieldSourceAudit,
         level,
     });
 
@@ -338,6 +392,7 @@ function buildTrackedSourceKanjiPreflight({
             starterCuratedStudyDataPath: paths.starterCuratedStudyDataPath,
             kanjiComponentContractPath: paths.kanjiComponentContractPath,
             kanjiReadingReferenceContractPath: paths.kanjiReadingReferenceContractPath,
+            kanjiCardFieldSourceContractPath: paths.kanjiCardFieldSourceContractPath,
             platinumCardSourceManifestPath: paths.platinumCardSourceManifestPath,
         },
         kanji: evaluation,
@@ -445,6 +500,7 @@ function formatTrackedSourceKanjiPreflightReport(report = {}) {
         `- starter curated meanings: ${report.kanji?.counts?.curatedMeanings || 0}`,
         `- component contract entries: ${report.kanji?.counts?.componentContractKanji || 0}`,
         `- reading reference entries: ${report.kanji?.counts?.readingReferenceKanji || 0}`,
+        `- card field source entries: ${report.kanji?.counts?.cardFieldSourceKanji || 0}`,
         "",
         "Certification requirements:",
         ...(report.kanji?.requirements || []).map((requirement) => `- ${requirement.trackedToday ? "tracked" : "blocked"}: ${requirement.label} (${requirement.source})`),
@@ -512,6 +568,7 @@ module.exports = {
     buildJlptOnlyJsonFromContract,
     buildTrackedSourceKanjiPreflight,
     buildTrackedSourceWordArtifact,
+    countCardFieldSourceEntriesForLevel,
     countReadingReferenceEntriesForLevel,
     evaluateTrackedSourceKanjiPreflight,
     evaluateWordArtifact,

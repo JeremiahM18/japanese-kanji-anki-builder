@@ -1,0 +1,4645 @@
+{
+  "version": 1,
+  "contractType": "kanji-card-field-source",
+  "standard": "kanji-card-field-source-v1",
+  "checkedAt": "2026-05-26",
+  "scope": {
+    "level": 5,
+    "levelLabel": "N5",
+    "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+    "sourceReviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "sourceBoundary": "Tracked kanji card-field provenance extracted from current-standard Platinum japanese-source evidence only."
+  },
+  "sourceUse": {
+    "allowedUse": [
+      "kanji-field-verification"
+    ],
+    "disallowedUse": [
+      "word-field-verification",
+      "kanji-reading-reference-only",
+      "placement-claim-origin",
+      "level-truth",
+      "generated-surface",
+      "golden-regression",
+      "media-provenance",
+      "audio-provenance",
+      "review-certification"
+    ]
+  },
+  "sourceFiles": {
+    "jlptLevelContractPath": "templates/jlpt_level_contract.json",
+    "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+    "platinumCardSourceManifestPath": "templates/platinum_card_source_manifest.json",
+    "sourceOriginEvidencePath": "templates/jlpt_kanji_source_evidence.json"
+  },
+  "provenancePolicy": {
+    "evidenceType": "japanese-source",
+    "requiredSourceUse": "kanji-field-verification",
+    "restrictedSourceHandling": "manual field-bound citations only; no copied source entries or bulk source data",
+    "requiresCurrentPlatinumStandard": true,
+    "requiresIndependentFromPlacementOrigins": true,
+    "doesNotCertify": [
+      "JLPT placement truth",
+      "generated TSV correctness",
+      "golden regression",
+      "audio provenance",
+      "stroke-order provenance",
+      "Obsidian rereview proof",
+      "release readiness"
+    ]
+  },
+  "coverage": {
+    "expectedKanjiCount": 80,
+    "entryCount": 80,
+    "missingEntryCount": 0,
+    "missingKanji": []
+  },
+  "entries": {
+    "一": {
+      "kanji": "一",
+      "level": 5,
+      "cardKey": "一|いち",
+      "fieldValues": {
+        "primaryReading": "いち",
+        "primaryMeaning": "one",
+        "kanjiMeanings": [
+          "one"
+        ],
+        "supportNotes": [
+          "一時",
+          "一つ",
+          "一人"
+        ],
+        "exampleSentences": [
+          "一時に学校へ行きます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "ask_hajimete_jlpt_kanji",
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0000209400; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 一|いち: Kanjipedia lists 音 イチ・イツ, 訓 ひと・ひとつ, and meaning ひとつ/one; tracked curation keeps いち as the N5 number/cardinal primary reading while support notes show ひとつ and ひとり. Platinum supports PrimaryReading いち, MeaningJP one, and KanjiMeanings one.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "fixed_then_platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "七": {
+      "kanji": "七",
+      "level": 5,
+      "cardKey": "七|なな",
+      "fieldValues": {
+        "primaryReading": "なな",
+        "primaryMeaning": "seven",
+        "kanjiMeanings": [
+          "seven"
+        ],
+        "supportNotes": [
+          "七",
+          "七つ",
+          "七時"
+        ],
+        "exampleSentences": [
+          "七から十まで言います。"
+        ]
+      },
+      "sourceOriginIds": [
+        "ask_hajimete_jlpt_kanji",
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0002916700; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 七|なな: Kanjipedia lists 音 シチ, 訓 なな・ななつ・なの, and meaning ななつ/seven; tracked curation keeps なな as the beginner-safe N5 primary reading while 七時/しちじ stays support only. Platinum supports PrimaryReading なな, MeaningJP seven, and KanjiMeanings seven.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "fixed_then_platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "万": {
+      "kanji": "万",
+      "level": 5,
+      "cardKey": "万|まん",
+      "fieldValues": {
+        "primaryReading": "まん",
+        "primaryMeaning": "ten thousand",
+        "kanjiMeanings": [
+          "ten thousand",
+          "10,000"
+        ],
+        "supportNotes": [
+          "万",
+          "一万"
+        ],
+        "exampleSentences": [
+          "この時計は一万円です。"
+        ]
+      },
+      "sourceOriginIds": [
+        "ask_hajimete_jlpt_kanji",
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0006573600; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 万|まん: Kanjipedia lists 音 マン・バン, 訓 よろず, and meaning まん/ten thousand; tracked curation keeps まん for number and price contexts. Platinum supports PrimaryReading まん, MeaningJP ten thousand, and KanjiMeanings ten thousand / 10,000.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "三": {
+      "kanji": "三",
+      "level": 5,
+      "cardKey": "三|さん",
+      "fieldValues": {
+        "primaryReading": "さん",
+        "primaryMeaning": "three",
+        "kanjiMeanings": [
+          "three"
+        ],
+        "supportNotes": [
+          "三人",
+          "三時",
+          "三つ"
+        ],
+        "exampleSentences": [
+          "三時に会いましょう。"
+        ]
+      },
+      "sourceOriginIds": [
+        "ask_hajimete_jlpt_kanji",
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0002622000; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 三|さん: Kanjipedia lists 音 サン, 訓 み・みつ・みっつ, and meaning three; tracked curation keeps さん for number, time, and counting contexts. Platinum supports PrimaryReading さん, MeaningJP three, and KanjiMeanings three.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "上": {
+      "kanji": "上",
+      "level": 5,
+      "cardKey": "上|うえ",
+      "fieldValues": {
+        "primaryReading": "うえ",
+        "primaryMeaning": "above",
+        "kanjiMeanings": [
+          "up",
+          "above"
+        ],
+        "supportNotes": [
+          "上",
+          "上がる",
+          "上げる",
+          "上手",
+          "上着",
+          "上る"
+        ],
+        "exampleSentences": [
+          "机の上に本があります。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0003478400; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 上|うえ: Kanjipedia lists 訓 うえ and meaning high/up/above; tracked curation keeps うえ for the concrete standalone above reading. Platinum supports PrimaryReading うえ, MeaningJP above, and KanjiMeanings up / above.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "下": {
+      "kanji": "下",
+      "level": 5,
+      "cardKey": "下|した",
+      "fieldValues": {
+        "primaryReading": "した",
+        "primaryMeaning": "below",
+        "kanjiMeanings": [
+          "down",
+          "below",
+          "descend",
+          "give",
+          "inferior",
+          "low"
+        ],
+        "supportNotes": [
+          "下",
+          "下がる",
+          "下げる",
+          "下さい",
+          "下りる",
+          "下ろす",
+          "下る"
+        ],
+        "exampleSentences": [
+          "いすの下に猫がいます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0000609800; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 下|した: Kanjipedia lists 訓 した・しも・もと・さげる・さがる・くだる・くだす・くださる・おろす・おりる and meaning below/down; tracked curation keeps した for the concrete below reading. Platinum supports PrimaryReading した, MeaningJP below, and KanjiMeanings down / below / descend / give / inferior / low.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "中": {
+      "kanji": "中",
+      "level": 5,
+      "cardKey": "中|なか",
+      "fieldValues": {
+        "primaryReading": "なか",
+        "primaryMeaning": "inside",
+        "kanjiMeanings": [
+          "inside",
+          "middle",
+          "center",
+          "in"
+        ],
+        "supportNotes": [
+          "中",
+          "中を見る"
+        ],
+        "exampleSentences": [
+          "かばんの中を見ます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0004721700; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 中|なか: Kanjipedia lists 音 チュウ・ジュウ, 訓 なか, and meanings middle/inside/center; tracked curation keeps なか for the concrete inside reading. Platinum supports PrimaryReading なか, MeaningJP inside, and KanjiMeanings inside / middle / center / in.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "九": {
+      "kanji": "九",
+      "level": 5,
+      "cardKey": "九|きゅう",
+      "fieldValues": {
+        "primaryReading": "きゅう",
+        "primaryMeaning": "nine",
+        "kanjiMeanings": [
+          "nine"
+        ],
+        "supportNotes": [
+          "九人",
+          "九時",
+          "九つ"
+        ],
+        "exampleSentences": [
+          "九人います。"
+        ]
+      },
+      "sourceOriginIds": [
+        "ask_hajimete_jlpt_kanji",
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0001360800; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 九|きゅう: Kanjipedia lists 音 キュウ・ク, 訓 ここの・ここのつ, and meaning ここのつ/nine; tracked curation keeps きゅう as the beginner-safe N5 number primary reading while 九時/くじ and 九つ/ここのつ stay support only. Platinum supports PrimaryReading きゅう, MeaningJP nine, and KanjiMeanings nine.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "fixed_then_platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "二": {
+      "kanji": "二",
+      "level": 5,
+      "cardKey": "二|に",
+      "fieldValues": {
+        "primaryReading": "に",
+        "primaryMeaning": "two",
+        "kanjiMeanings": [
+          "two"
+        ],
+        "supportNotes": [
+          "二時",
+          "二つ",
+          "二人"
+        ],
+        "exampleSentences": [
+          "二時に会います。"
+        ]
+      },
+      "sourceOriginIds": [
+        "ask_hajimete_jlpt_kanji",
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0005418000/; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 二|に: Kanjipedia lists 音 ニ, 訓 ふた・ふたつ, and meaning two; tracked curation keeps に for the common N5 number/time reading and keeps ふたつ/ふたり as support. Platinum supports PrimaryReading に, MeaningJP two, and KanjiMeanings two.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "fixed_then_platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "五": {
+      "kanji": "五",
+      "level": 5,
+      "cardKey": "五|ご",
+      "fieldValues": {
+        "primaryReading": "ご",
+        "primaryMeaning": "five",
+        "kanjiMeanings": [
+          "five"
+        ],
+        "supportNotes": [
+          "五分",
+          "五つ"
+        ],
+        "exampleSentences": [
+          "駅まで五分かかります。"
+        ]
+      },
+      "sourceOriginIds": [
+        "ask_hajimete_jlpt_kanji",
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0002081300/; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 五|ご: Kanjipedia lists 音 ゴ, 訓 いつ・いつつ, and meaning いつつ/five; tracked curation keeps ご as the N5 number and time/count primary reading. Platinum supports PrimaryReading ご, MeaningJP five, and KanjiMeanings five.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "人": {
+      "kanji": "人",
+      "level": 5,
+      "cardKey": "人|ひと",
+      "fieldValues": {
+        "primaryReading": "ひと",
+        "primaryMeaning": "person",
+        "kanjiMeanings": [
+          "person",
+          "people"
+        ],
+        "supportNotes": [
+          "人",
+          "一人",
+          "二人",
+          "三人",
+          "外国人"
+        ],
+        "exampleSentences": [
+          "人が多いです。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0003678400/; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 人|ひと: Kanjipedia lists 音 ジン・ニン, 訓 ひと, and meaning person/people; tracked curation keeps ひと as the concrete standalone person reading. Platinum supports PrimaryReading ひと, MeaningJP person, and KanjiMeanings person / people.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "今": {
+      "kanji": "今",
+      "level": 5,
+      "cardKey": "今|いま",
+      "fieldValues": {
+        "primaryReading": "いま",
+        "primaryMeaning": "now",
+        "kanjiMeanings": [
+          "now"
+        ],
+        "supportNotes": [
+          "今",
+          "今日"
+        ],
+        "exampleSentences": [
+          "今、家に帰ります。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0002417400/; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 今|いま: Kanjipedia lists 音 コン・キン, 訓 いま, and meaning いま/now; tracked curation keeps いま as the standalone current-time reading. Platinum supports PrimaryReading いま, MeaningJP now, and KanjiMeanings now.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "休": {
+      "kanji": "休",
+      "level": 5,
+      "cardKey": "休|やすむ",
+      "fieldValues": {
+        "primaryReading": "やすむ",
+        "primaryMeaning": "rest",
+        "kanjiMeanings": [
+          "rest",
+          "take a day off",
+          "day off"
+        ],
+        "supportNotes": [
+          "休む",
+          "休み",
+          "休み時間",
+          "休日"
+        ],
+        "exampleSentences": [
+          "日曜日は休みます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0001375100; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 休|やすむ: Kanjipedia lists 音 キュウ, 訓 やすむ・やすまる・やすめる, and meaning rest; tracked curation now keeps やすむ for the kanji reading and keeps 休み/やすみ as support. Platinum supports PrimaryReading やすむ, MeaningJP rest, and KanjiMeanings rest / take a day off / day off.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "fixed_then_platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "何": {
+      "kanji": "何",
+      "level": 5,
+      "cardKey": "何|なに",
+      "fieldValues": {
+        "primaryReading": "なに",
+        "primaryMeaning": "what",
+        "kanjiMeanings": [
+          "what"
+        ],
+        "supportNotes": [
+          "何",
+          "何ですか"
+        ],
+        "exampleSentences": [
+          "何をしますか。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0000641500; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 何|なに: Kanjipedia lists 音 カ, 訓 なに・なん, and meaning what; tracked curation keeps なに as the base standalone reading and keeps なん as a support variant. Platinum supports PrimaryReading なに, MeaningJP what, and KanjiMeanings what.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "fixed_then_platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "先": {
+      "kanji": "先",
+      "level": 5,
+      "cardKey": "先|さき",
+      "fieldValues": {
+        "primaryReading": "さき",
+        "primaryMeaning": "ahead",
+        "kanjiMeanings": [
+          "ahead",
+          "previous",
+          "before",
+          "future"
+        ],
+        "supportNotes": [
+          "先",
+          "先生"
+        ],
+        "exampleSentences": [
+          "先に行きます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0004040100/; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 先|さき: Kanjipedia lists 音 セン, 訓 さき, and meaning ahead/before; tracked curation keeps さき for the concrete ahead reading. Platinum supports PrimaryReading さき, MeaningJP ahead, and KanjiMeanings ahead / previous / before / future.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "入": {
+      "kanji": "入",
+      "level": 5,
+      "cardKey": "入|はいる",
+      "fieldValues": {
+        "primaryReading": "はいる",
+        "primaryMeaning": "enter",
+        "kanjiMeanings": [
+          "enter",
+          "put in",
+          "insert"
+        ],
+        "supportNotes": [
+          "入る",
+          "入れる",
+          "入口"
+        ],
+        "exampleSentences": [
+          "教室に入ります。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0005444700/; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 入|はいる: Kanjipedia lists 音 ニュウ, 訓 いる・いれる・はいる, and meaning enter/put in; tracked curation keeps はいる as the learner-facing enter reading. Platinum supports PrimaryReading はいる, MeaningJP enter, and KanjiMeanings enter / put in / insert.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "八": {
+      "kanji": "八",
+      "level": 5,
+      "cardKey": "八|はち",
+      "fieldValues": {
+        "primaryReading": "はち",
+        "primaryMeaning": "eight",
+        "kanjiMeanings": [
+          "eight"
+        ],
+        "supportNotes": [
+          "八時",
+          "八つ"
+        ],
+        "exampleSentences": [
+          "学校は八時に始まります。"
+        ]
+      },
+      "sourceOriginIds": [
+        "ask_hajimete_jlpt_kanji",
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0005677700/; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 八|はち: Kanjipedia lists 音 ハチ, 訓 や・やつ・やっつ・よう, and meaning eight; tracked curation keeps はち for number and time contexts. Platinum supports PrimaryReading はち, MeaningJP eight, and KanjiMeanings eight.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "六": {
+      "kanji": "六",
+      "level": 5,
+      "cardKey": "六|ろく",
+      "fieldValues": {
+        "primaryReading": "ろく",
+        "primaryMeaning": "six",
+        "kanjiMeanings": [
+          "six"
+        ],
+        "supportNotes": [
+          "六時",
+          "六つ"
+        ],
+        "exampleSentences": [
+          "朝六時に起きます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "ask_hajimete_jlpt_kanji",
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0007380200; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 六|ろく: Kanjipedia lists 音 ロク, 訓 む・むつ・むっつ・むい, and meaning six; tracked curation keeps ろく for number and time contexts. Platinum supports PrimaryReading ろく, MeaningJP six, and KanjiMeanings six.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "円": {
+      "kanji": "円",
+      "level": 5,
+      "cardKey": "円|えん",
+      "fieldValues": {
+        "primaryReading": "えん",
+        "primaryMeaning": "yen",
+        "kanjiMeanings": [
+          "yen",
+          "circle",
+          "round"
+        ],
+        "supportNotes": [
+          "円",
+          "百円"
+        ],
+        "exampleSentences": [
+          "このペンは百円です。"
+        ]
+      },
+      "sourceOriginIds": [
+        "ask_hajimete_jlpt_kanji",
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0000436000; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 円|えん: Kanjipedia lists 音 エン, 訓 まるい, and meanings circle/round and Japanese currency unit yen; tracked curation keeps えん for yen/circle. Platinum supports PrimaryReading えん, MeaningJP yen, and KanjiMeanings yen / circle / round.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "出": {
+      "kanji": "出",
+      "level": 5,
+      "cardKey": "出|でる",
+      "fieldValues": {
+        "primaryReading": "でる",
+        "primaryMeaning": "go out",
+        "kanjiMeanings": [
+          "exit",
+          "go out",
+          "come out",
+          "leave",
+          "put out"
+        ],
+        "supportNotes": [
+          "出る",
+          "出す",
+          "出口"
+        ],
+        "exampleSentences": [
+          "七時に家を出ます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0003214000/; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 出|でる: Kanjipedia lists 音 シュツ・スイ, 訓 でる・だす, and meaning go out/put out/appear; tracked curation keeps でる for the concrete go out reading. Platinum supports PrimaryReading でる, MeaningJP go out, and KanjiMeanings exit / go out / come out / leave / put out.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "分": {
+      "kanji": "分",
+      "level": 5,
+      "cardKey": "分|ふん",
+      "fieldValues": {
+        "primaryReading": "ふん",
+        "primaryMeaning": "minute",
+        "kanjiMeanings": [
+          "minute",
+          "divide",
+          "part",
+          "understand"
+        ],
+        "supportNotes": [
+          "分",
+          "五分",
+          "part",
+          "分かる"
+        ],
+        "exampleSentences": [
+          "あと五分あります。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0006175200; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 分|ふん: Kanjipedia lists 音 ブン・フン・ブ, 訓 わける・わかれる・わかる・わかつ, and includes unit meanings; tracked curation keeps ふん/minute as the N5 learner-facing time reading while ぶん and わかる stay support-only. Platinum supports PrimaryReading ふん, MeaningJP minute, and KanjiMeanings minute / divide / part / understand.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "fixed_then_platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "前": {
+      "kanji": "前",
+      "level": 5,
+      "cardKey": "前|まえ",
+      "fieldValues": {
+        "primaryReading": "まえ",
+        "primaryMeaning": "front",
+        "kanjiMeanings": [
+          "front",
+          "before",
+          "in front"
+        ],
+        "supportNotes": [
+          "前",
+          "駅の前"
+        ],
+        "exampleSentences": [
+          "駅の前で待ちます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0004135400/; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 前|まえ: Kanjipedia lists 音 ゼン, 訓 まえ, and meanings spatial front and temporal before; tracked curation keeps まえ for the concrete front/before reading. Platinum supports PrimaryReading まえ, MeaningJP front, and KanjiMeanings front / before / in front.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "北": {
+      "kanji": "北",
+      "level": 5,
+      "cardKey": "北|きた",
+      "fieldValues": {
+        "primaryReading": "きた",
+        "primaryMeaning": "north",
+        "kanjiMeanings": [
+          "north"
+        ],
+        "supportNotes": [
+          "北",
+          "北口"
+        ],
+        "exampleSentences": [
+          "北へ行きます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0006467400; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 北|きた: Kanjipedia lists 音 ホク, 訓 きた, and meaning きた/north; tracked curation keeps きた as the concrete standalone direction reading. Platinum supports PrimaryReading きた, MeaningJP north, and KanjiMeanings north.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "十": {
+      "kanji": "十",
+      "level": 5,
+      "cardKey": "十|じゅう",
+      "fieldValues": {
+        "primaryReading": "じゅう",
+        "primaryMeaning": "ten",
+        "kanjiMeanings": [
+          "ten"
+        ],
+        "supportNotes": [
+          "十時",
+          "十分"
+        ],
+        "exampleSentences": [
+          "十時に寝ます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "ask_hajimete_jlpt_kanji",
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0003160000; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 十|じゅう: Kanjipedia lists 音 ジュウ・ジッ, 訓 とお・と, and meaning ten; tracked curation keeps じゅう for number and time contexts, with じゅっぷん kept as support. Platinum supports PrimaryReading じゅう, MeaningJP ten, and KanjiMeanings ten.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "千": {
+      "kanji": "千",
+      "level": 5,
+      "cardKey": "千|せん",
+      "fieldValues": {
+        "primaryReading": "せん",
+        "primaryMeaning": "thousand",
+        "kanjiMeanings": [
+          "thousand"
+        ],
+        "supportNotes": [
+          "千円",
+          "千"
+        ],
+        "exampleSentences": [
+          "千円を持っています。"
+        ]
+      },
+      "sourceOriginIds": [
+        "ask_hajimete_jlpt_kanji",
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0004026200; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 千|せん: Kanjipedia lists 音 セン, 訓 ち, and meaning thousand; tracked curation keeps せん for number and money contexts. Platinum supports PrimaryReading せん, MeaningJP thousand, and KanjiMeanings thousand.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "午": {
+      "kanji": "午",
+      "level": 5,
+      "cardKey": "午|ご",
+      "fieldValues": {
+        "primaryReading": "ご",
+        "primaryMeaning": "noon",
+        "kanjiMeanings": [
+          "noon",
+          "11AM-1PM"
+        ],
+        "supportNotes": [
+          "午前",
+          "午後"
+        ],
+        "exampleSentences": [
+          "午前九時です。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0002089200; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 午|ご: Kanjipedia lists 音 ゴ, outside 訓 うま・ひる, and meanings noon/noonday and the seventh zodiac sign; tracked curation keeps ご for core N5 time words 午前 and 午後 while blocking zodiac-horse noise. Platinum supports PrimaryReading ご, MeaningJP noon, and KanjiMeanings noon / 11AM-1PM.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "半": {
+      "kanji": "半",
+      "level": 5,
+      "cardKey": "半|はん",
+      "fieldValues": {
+        "primaryReading": "はん",
+        "primaryMeaning": "half",
+        "kanjiMeanings": [
+          "half",
+          "middle"
+        ],
+        "supportNotes": [
+          "一時半",
+          "半分"
+        ],
+        "exampleSentences": [
+          "一時半に昼ご飯を食べます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0005726200; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 半|はん: Kanjipedia lists 音 ハン, 訓 なかば, and meanings half/middle; tracked curation keeps はん for time and fraction contexts while blocking low-value odd-number/part-prefix noise. Platinum supports PrimaryReading はん, MeaningJP half, and KanjiMeanings half / middle.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "南": {
+      "kanji": "南",
+      "level": 5,
+      "cardKey": "南|みなみ",
+      "fieldValues": {
+        "primaryReading": "みなみ",
+        "primaryMeaning": "south",
+        "kanjiMeanings": [
+          "south"
+        ],
+        "supportNotes": [
+          "南",
+          "南口"
+        ],
+        "exampleSentences": [
+          "南へ行きます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0005406400; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 南|みなみ: Kanjipedia lists 音 ナン・ナ, 訓 みなみ, and meaning south; tracked curation keeps みなみ as the concrete direction reading. Platinum supports PrimaryReading みなみ, MeaningJP south, and KanjiMeanings south.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "友": {
+      "kanji": "友",
+      "level": 5,
+      "cardKey": "友|とも",
+      "fieldValues": {
+        "primaryReading": "とも",
+        "primaryMeaning": "friend",
+        "kanjiMeanings": [
+          "friend"
+        ],
+        "supportNotes": [
+          "友だち",
+          "友だちと話す"
+        ],
+        "exampleSentences": [
+          "友だちと映画を見ます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0006843100; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 友|とも: Kanjipedia lists 音 ユウ, 訓 とも, and meaning friend/companion; tracked curation keeps とも as the learner-facing reading in 友だち while the card anchor remains the individual kanji 友. Platinum supports PrimaryReading とも, MeaningJP friend, and KanjiMeanings friend.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "右": {
+      "kanji": "右",
+      "level": 5,
+      "cardKey": "右|みぎ",
+      "fieldValues": {
+        "primaryReading": "みぎ",
+        "primaryMeaning": "right",
+        "kanjiMeanings": [
+          "right"
+        ],
+        "supportNotes": [
+          "右",
+          "右手"
+        ],
+        "exampleSentences": [
+          "右を見ます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0000308000; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 右|みぎ: Kanjipedia lists 音 ウ・ユウ, 訓 みぎ, and meaning right/right side; tracked curation keeps みぎ as the concrete direction reading. Platinum supports PrimaryReading みぎ, MeaningJP right, and KanjiMeanings right.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "名": {
+      "kanji": "名",
+      "level": 5,
+      "cardKey": "名|な",
+      "fieldValues": {
+        "primaryReading": "な",
+        "primaryMeaning": "name",
+        "kanjiMeanings": [
+          "name",
+          "distinguished",
+          "noted",
+          "reputation"
+        ],
+        "supportNotes": [
+          "名前",
+          "お名前"
+        ],
+        "exampleSentences": [
+          "お名前は何ですか。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0006666900; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 名|な: Kanjipedia lists 音 メイ・ミョウ, 訓 な, and meanings name, naming, distinguished/noted, and reputation/counting people; tracked curation keeps な for the core 名前 name context. Platinum supports PrimaryReading な, MeaningJP name, and KanjiMeanings name / distinguished / noted / reputation.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "四": {
+      "kanji": "四",
+      "level": 5,
+      "cardKey": "四|よん",
+      "fieldValues": {
+        "primaryReading": "よん",
+        "primaryMeaning": "four",
+        "kanjiMeanings": [
+          "four"
+        ],
+        "supportNotes": [
+          "四十",
+          "四つ",
+          "四人",
+          "四時"
+        ],
+        "exampleSentences": [
+          "四十円です。"
+        ]
+      },
+      "sourceOriginIds": [
+        "ask_hajimete_jlpt_kanji",
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0002715400; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 四|よん: Kanjipedia lists 音 シ, 訓 よ・よつ・よっつ・よん, and meaning よつ/four; tracked curation keeps よん as the beginner-safe N5 primary reading while よっつ, よにん, and よじ stay support only. Platinum supports PrimaryReading よん, MeaningJP four, and KanjiMeanings four.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "fixed_then_platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "国": {
+      "kanji": "国",
+      "level": 5,
+      "cardKey": "国|くに",
+      "fieldValues": {
+        "primaryReading": "くに",
+        "primaryMeaning": "country",
+        "kanjiMeanings": [
+          "country"
+        ],
+        "supportNotes": [
+          "国",
+          "外国"
+        ],
+        "exampleSentences": [
+          "その国は海がきれいです。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0002372600; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 国|くに: Kanjipedia lists 音 コク, 訓 くに, and meaning country; tracked curation keeps くに for the concrete standalone country reading. Platinum supports PrimaryReading くに, MeaningJP country, and KanjiMeanings country.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "土": {
+      "kanji": "土",
+      "level": 5,
+      "cardKey": "土|つち",
+      "fieldValues": {
+        "primaryReading": "つち",
+        "primaryMeaning": "soil",
+        "kanjiMeanings": [
+          "soil",
+          "earth",
+          "ground"
+        ],
+        "supportNotes": [
+          "土",
+          "土曜日"
+        ],
+        "exampleSentences": [
+          "ここに土があります。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0005127900; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 土|つち: Kanjipedia lists 音 ド・ト, 訓 つち, and meaning つち/soil/ground; tracked curation keeps つち and blocks low-value country-abbreviation noise. Platinum supports PrimaryReading つち, MeaningJP soil, and KanjiMeanings soil / earth / ground.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "fixed_then_platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "外": {
+      "kanji": "外",
+      "level": 5,
+      "cardKey": "外|そと",
+      "fieldValues": {
+        "primaryReading": "そと",
+        "primaryMeaning": "outside",
+        "kanjiMeanings": [
+          "outside"
+        ],
+        "supportNotes": [
+          "外",
+          "外国"
+        ],
+        "exampleSentences": [
+          "今日は外で遊びます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0000841200; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 外|そと: Kanjipedia lists 音 ガイ・ゲ, 訓 そと・ほか・はずす・はずれる, and meaning そと/outside; tracked curation keeps そと as the concrete standalone reading. Platinum supports PrimaryReading そと, MeaningJP outside, and KanjiMeanings outside.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "大": {
+      "kanji": "大",
+      "level": 5,
+      "cardKey": "大|おおきい",
+      "fieldValues": {
+        "primaryReading": "おおきい",
+        "primaryMeaning": "big",
+        "kanjiMeanings": [
+          "big",
+          "large"
+        ],
+        "supportNotes": [
+          "大きい",
+          "大学"
+        ],
+        "exampleSentences": [
+          "このかばんは大きいです。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0004474400; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 大|おおきい: Kanjipedia lists 音 ダイ・タイ, 訓 おおきい and related おお forms, with meanings big/large; tracked curation keeps おおきい for the core adjective reading. Platinum supports PrimaryReading おおきい, MeaningJP big, and KanjiMeanings big / large.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "天": {
+      "kanji": "天",
+      "level": 5,
+      "cardKey": "天|てん",
+      "fieldValues": {
+        "primaryReading": "てん",
+        "primaryMeaning": "sky",
+        "kanjiMeanings": [
+          "weather",
+          "sky",
+          "heavens",
+          "imperial"
+        ],
+        "supportNotes": [
+          "天気",
+          "天"
+        ],
+        "exampleSentences": [
+          "今日は天気がいいです。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0005033300; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 天|てん: Kanjipedia lists 音 テン, 訓 あめ・あま, and meanings sky/heavens, nature/weather, and imperial/heavenly contexts; tracked curation keeps てん for 天気 and 天. Platinum supports PrimaryReading てん, MeaningJP sky, and KanjiMeanings weather / sky / heavens / imperial.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "女": {
+      "kanji": "女",
+      "level": 5,
+      "cardKey": "女|おんな",
+      "fieldValues": {
+        "primaryReading": "おんな",
+        "primaryMeaning": "woman",
+        "kanjiMeanings": [
+          "woman",
+          "female"
+        ],
+        "supportNotes": [
+          "女",
+          "女の子"
+        ],
+        "exampleSentences": [
+          "あの女の子は元気です。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0003308600; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 女|おんな: Kanjipedia lists 音 ジョ・ニョ・ニョウ, 訓 おんな・め, and meanings woman/female; tracked curation keeps おんな for the concrete woman/girl context. Platinum supports PrimaryReading おんな, MeaningJP woman, and KanjiMeanings woman / female.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "子": {
+      "kanji": "子",
+      "level": 5,
+      "cardKey": "子|こ",
+      "fieldValues": {
+        "primaryReading": "こ",
+        "primaryMeaning": "child",
+        "kanjiMeanings": [
+          "child",
+          "11PM-1AM",
+          "first sign of Chinese zodiac",
+          "sign of the rat"
+        ],
+        "supportNotes": [
+          "子ども",
+          "女の子"
+        ],
+        "exampleSentences": [
+          "子どもがいます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0002696200; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 子|こ: Kanjipedia lists 音 シ・ス, 訓 こ, and meanings child plus zodiac/time senses such as 11PM-1AM, first sign of Chinese zodiac, and sign of the rat; tracked curation keeps こ for child. Platinum supports PrimaryReading こ, MeaningJP child, and KanjiMeanings child / 11PM-1AM / first sign of Chinese zodiac / sign of the rat.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "学": {
+      "kanji": "学",
+      "level": 5,
+      "cardKey": "学|がく",
+      "fieldValues": {
+        "primaryReading": "がく",
+        "primaryMeaning": "study",
+        "kanjiMeanings": [
+          "study",
+          "learning",
+          "science"
+        ],
+        "supportNotes": [
+          "学生",
+          "大学",
+          "学ぶ"
+        ],
+        "exampleSentences": [
+          "私は学生です。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0000923700; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 学|がく: Kanjipedia lists 音 ガク, 訓 まなぶ, and meanings learn/study, systematic knowledge, and school; tracked curation keeps がく as the N5 school/learning compound reading while 学ぶ/まなぶ stays support only. Platinum supports PrimaryReading がく, MeaningJP study / learning, and KanjiMeanings study / learning / science.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "fixed_then_platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "小": {
+      "kanji": "小",
+      "level": 5,
+      "cardKey": "小|ちいさい",
+      "fieldValues": {
+        "primaryReading": "ちいさい",
+        "primaryMeaning": "small",
+        "kanjiMeanings": [
+          "small",
+          "little"
+        ],
+        "supportNotes": [
+          "小さい",
+          "小学校"
+        ],
+        "exampleSentences": [
+          "この犬は小さいです。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0003331300; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 小|ちいさい: Kanjipedia lists 音 ショウ, 訓 ちいさい and related small-prefix readings, with meanings small/little; tracked curation keeps ちいさい for the core adjective reading. Platinum supports PrimaryReading ちいさい, MeaningJP small, and KanjiMeanings small / little.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "山": {
+      "kanji": "山",
+      "level": 5,
+      "cardKey": "山|やま",
+      "fieldValues": {
+        "primaryReading": "やま",
+        "primaryMeaning": "mountain",
+        "kanjiMeanings": [
+          "mountain"
+        ],
+        "supportNotes": [
+          "山",
+          "山へ登る"
+        ],
+        "exampleSentences": [
+          "山へ行きます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0002633600; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 山|やま: Kanjipedia lists 音 サン, 訓 やま, and meaning mountain; tracked curation keeps やま for the concrete standalone mountain reading. Platinum supports PrimaryReading やま, MeaningJP mountain, and KanjiMeanings mountain.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "川": {
+      "kanji": "川",
+      "level": 5,
+      "cardKey": "川|かわ",
+      "fieldValues": {
+        "primaryReading": "かわ",
+        "primaryMeaning": "river",
+        "kanjiMeanings": [
+          "river",
+          "stream"
+        ],
+        "supportNotes": [
+          "川",
+          "川で魚を見る"
+        ],
+        "exampleSentences": [
+          "川に魚がいます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0004033800/; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 川|かわ: Kanjipedia lists 音 セン, 訓 かわ, and meaning river/stream; tracked curation keeps かわ for the concrete standalone river reading. Platinum supports PrimaryReading かわ, MeaningJP river, and KanjiMeanings river / stream.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "左": {
+      "kanji": "左",
+      "level": 5,
+      "cardKey": "左|ひだり",
+      "fieldValues": {
+        "primaryReading": "ひだり",
+        "primaryMeaning": "left",
+        "kanjiMeanings": [
+          "left"
+        ],
+        "supportNotes": [
+          "左",
+          "左手"
+        ],
+        "exampleSentences": [
+          "左を見ます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0002452500; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 左|ひだり: Kanjipedia lists 音 サ, 訓 ひだり, and meaning left; tracked curation keeps ひだり for the concrete direction reading. Platinum supports PrimaryReading ひだり, MeaningJP left, and KanjiMeanings left.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "年": {
+      "kanji": "年",
+      "level": 5,
+      "cardKey": "年|とし",
+      "fieldValues": {
+        "primaryReading": "とし",
+        "primaryMeaning": "year",
+        "kanjiMeanings": [
+          "year",
+          "counter for years"
+        ],
+        "supportNotes": [
+          "年",
+          "今年",
+          "来年"
+        ],
+        "exampleSentences": [
+          "今年はいい年です。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0005481100; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 年|とし: Kanjipedia lists 音 ネン, 訓 とし, and meanings year, age, harvest, and counter for years; tracked curation keeps とし as the individual-kanji learner reading and keeps ネン words support-only. Platinum supports PrimaryReading とし, MeaningJP year, and KanjiMeanings year / counter for years.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "fixed_then_platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "後": {
+      "kanji": "後",
+      "level": 5,
+      "cardKey": "後|あと",
+      "fieldValues": {
+        "primaryReading": "あと",
+        "primaryMeaning": "after",
+        "kanjiMeanings": [
+          "after",
+          "later",
+          "back",
+          "behind"
+        ],
+        "supportNotes": [
+          "後で",
+          "午後"
+        ],
+        "exampleSentences": [
+          "後で電話します。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0002095500; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 後|あと: Kanjipedia lists 音 ゴ・コウ, 訓 のち・うしろ・あと・おくれる, and meanings after/later/back/behind; tracked curation now keeps あと for the learner-facing after/later reading while ご remains support-only in 午後. Platinum supports PrimaryReading あと, MeaningJP after, and KanjiMeanings after / later / back / behind.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "fixed_then_platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "日": {
+      "kanji": "日",
+      "level": 5,
+      "cardKey": "日|ひ",
+      "fieldValues": {
+        "primaryReading": "ひ",
+        "primaryMeaning": "day",
+        "kanjiMeanings": [
+          "day",
+          "sun",
+          "Japan",
+          "counter for days"
+        ],
+        "supportNotes": [
+          "日",
+          "日本",
+          "日曜日"
+        ],
+        "exampleSentences": [
+          "今日はいい日です。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0005435400; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 日|ひ: Kanjipedia lists 音 ニチ・ジツ, 訓 ひ・か, and meanings day, sun, Japan abbreviation, and counter for days; tracked curation keeps ひ for the individual day/sun reading while 日本 and 日曜日 stay support-only. Platinum supports PrimaryReading ひ, MeaningJP day, and KanjiMeanings day / sun / Japan / counter for days.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "fixed_then_platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "時": {
+      "kanji": "時",
+      "level": 5,
+      "cardKey": "時|じ",
+      "fieldValues": {
+        "primaryReading": "じ",
+        "primaryMeaning": "time",
+        "kanjiMeanings": [
+          "time",
+          "o'clock",
+          "hour"
+        ],
+        "supportNotes": [
+          "時間",
+          "三時",
+          "時々"
+        ],
+        "exampleSentences": [
+          "時間がありますか。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0002876900; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 時|じ: Kanjipedia lists 音 ジ, 訓 とき, and meanings time, time unit, and sixty-minute hour; tracked curation keeps じ for core N5 time and o'clock contexts while とき stays support-only. Platinum supports PrimaryReading じ, MeaningJP time, and KanjiMeanings time / o'clock / hour.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "書": {
+      "kanji": "書",
+      "level": 5,
+      "cardKey": "書|かく",
+      "fieldValues": {
+        "primaryReading": "かく",
+        "primaryMeaning": "write",
+        "kanjiMeanings": [
+          "write"
+        ],
+        "supportNotes": [
+          "書く",
+          "辞書"
+        ],
+        "exampleSentences": [
+          "ノートに名前を書きます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0003288700; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 書|かく: Kanjipedia lists 音 ショ, 訓 かく, and meaning write / write down; tracked curation keeps かく for the core verb 書く. Platinum supports PrimaryReading かく, MeaningJP write, and KanjiMeanings write.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "月": {
+      "kanji": "月",
+      "level": 5,
+      "cardKey": "月|つき",
+      "fieldValues": {
+        "primaryReading": "つき",
+        "primaryMeaning": "moon",
+        "kanjiMeanings": [
+          "month",
+          "moon"
+        ],
+        "supportNotes": [
+          "月",
+          "今月"
+        ],
+        "exampleSentences": [
+          "月がきれいです。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0001884000; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 月|つき: Kanjipedia lists 音 ゲツ・ガツ, 訓 つき, and meanings moon and month; tracked curation keeps つき/moon as the primary reading/meaning while month readings stay support-only. Platinum supports PrimaryReading つき, MeaningJP moon, and KanjiMeanings month / moon.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "fixed_then_platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "木": {
+      "kanji": "木",
+      "level": 5,
+      "cardKey": "木|き",
+      "fieldValues": {
+        "primaryReading": "き",
+        "primaryMeaning": "tree",
+        "kanjiMeanings": [
+          "tree",
+          "wood"
+        ],
+        "supportNotes": [
+          "木",
+          "木曜日"
+        ],
+        "exampleSentences": [
+          "木の下で休みます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0006470400; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 木|き: Kanjipedia lists 音 ボク・モク, 訓 き・こ, and meanings tree and wood; tracked curation keeps き for the concrete tree reading. Platinum supports PrimaryReading き, MeaningJP tree, and KanjiMeanings tree / wood.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "本": {
+      "kanji": "本",
+      "level": 5,
+      "cardKey": "本|ほん",
+      "fieldValues": {
+        "primaryReading": "ほん",
+        "primaryMeaning": "book",
+        "kanjiMeanings": [
+          "book",
+          "main",
+          "counter for long cylindrical things",
+          "origin",
+          "present",
+          "real",
+          "true"
+        ],
+        "supportNotes": [
+          "本",
+          "日本"
+        ],
+        "exampleSentences": [
+          "本を読みます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0006505700; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 本|ほん: Kanjipedia lists 音 ホン, 訓 もと, and meanings origin, main, present/current, real/true, book/document, and counter for long cylindrical things; tracked curation keeps ほん/book for the core N5 card. Platinum supports PrimaryReading ほん, MeaningJP book, and KanjiMeanings book / main / counter for long cylindrical things / origin / present / real / true.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "来": {
+      "kanji": "来",
+      "level": 5,
+      "cardKey": "来|くる",
+      "fieldValues": {
+        "primaryReading": "くる",
+        "primaryMeaning": "come",
+        "kanjiMeanings": [
+          "come",
+          "become",
+          "cause",
+          "due",
+          "next"
+        ],
+        "supportNotes": [
+          "来る",
+          "来週"
+        ],
+        "exampleSentences": [
+          "明日、友だちが来ます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0007020500; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 来|くる: Kanjipedia lists 音 ライ, 訓 くる・きたる・きたす, and meanings come, next/future, and since; tracked curation keeps くる for the individual-kanji come anchor while らい is context-specific support for 来週, 来月, and 来年. Platinum supports PrimaryReading くる, MeaningJP come, and KanjiMeanings come / become / cause / due / next.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "fixed_then_platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "東": {
+      "kanji": "東",
+      "level": 5,
+      "cardKey": "東|ひがし",
+      "fieldValues": {
+        "primaryReading": "ひがし",
+        "primaryMeaning": "east",
+        "kanjiMeanings": [
+          "east"
+        ],
+        "supportNotes": [
+          "東",
+          "東京"
+        ],
+        "exampleSentences": [
+          "東へ行きます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0005164200; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 東|ひがし: Kanjipedia lists 音 トウ, 訓 ひがし, and meaning east; tracked curation keeps ひがし for the concrete direction reading. Platinum supports PrimaryReading ひがし, MeaningJP east, and KanjiMeanings east.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "校": {
+      "kanji": "校",
+      "level": 5,
+      "cardKey": "校|こう",
+      "fieldValues": {
+        "primaryReading": "こう",
+        "primaryMeaning": "school",
+        "kanjiMeanings": [
+          "school",
+          "correction",
+          "exam",
+          "printing",
+          "proof"
+        ],
+        "supportNotes": [
+          "学校",
+          "校庭"
+        ],
+        "exampleSentences": [
+          "学校へ行きます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0002236900; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 校|こう: Kanjipedia lists 音 コウ with outside キョウ, and meanings school, correction/checking, exam/proof, and related printing/proof contexts; tracked curation keeps こう for the school reading. Platinum supports PrimaryReading こう, MeaningJP school, and KanjiMeanings school / correction / exam / printing / proof.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "母": {
+      "kanji": "母",
+      "level": 5,
+      "cardKey": "母|はは",
+      "fieldValues": {
+        "primaryReading": "はは",
+        "primaryMeaning": "mother",
+        "kanjiMeanings": [
+          "mother"
+        ],
+        "supportNotes": [
+          "母",
+          "お母さん"
+        ],
+        "exampleSentences": [
+          "母は元気です。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0006317900; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 母|はは: Kanjipedia lists 音 ボ, 訓 はは, and meaning mother; tracked curation keeps はは for the direct family-word reading. Platinum supports PrimaryReading はは, MeaningJP mother, and KanjiMeanings mother.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "毎": {
+      "kanji": "毎",
+      "level": 5,
+      "cardKey": "毎|まい",
+      "fieldValues": {
+        "primaryReading": "まい",
+        "primaryMeaning": "every",
+        "kanjiMeanings": [
+          "every"
+        ],
+        "supportNotes": [
+          "毎日",
+          "毎週"
+        ],
+        "exampleSentences": [
+          "毎日、水を飲みます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0006531100; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 毎|まい: Kanjipedia lists 音 マイ and meanings every, always, and each time; tracked curation keeps まい for core every-day/every-week contexts. Platinum supports PrimaryReading まい, MeaningJP every, and KanjiMeanings every.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "気": {
+      "kanji": "気",
+      "level": 5,
+      "cardKey": "気|き",
+      "fieldValues": {
+        "primaryReading": "き",
+        "primaryMeaning": "spirit",
+        "kanjiMeanings": [
+          "spirit",
+          "energy",
+          "air",
+          "atmosphere",
+          "mind",
+          "mood"
+        ],
+        "supportNotes": [
+          "気",
+          "元気"
+        ],
+        "exampleSentences": [
+          "今日は元気です。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0001184900; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 気|き: Kanjipedia lists 音 キ・ケ and meanings air, natural phenomena, breath, state/feeling, scent, and mind/character; tracked curation keeps き as the common N5 reading in core words such as 元気 and 天気. Platinum supports PrimaryReading き, MeaningJP spirit / feeling, and KanjiMeanings spirit / energy / air / atmosphere / mind / mood.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "水": {
+      "kanji": "水",
+      "level": 5,
+      "cardKey": "水|みず",
+      "fieldValues": {
+        "primaryReading": "みず",
+        "primaryMeaning": "water",
+        "kanjiMeanings": [
+          "water"
+        ],
+        "supportNotes": [
+          "水",
+          "水曜日"
+        ],
+        "exampleSentences": [
+          "水を飲みます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0003723800/; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 水|みず: Kanjipedia lists 音 スイ, 訓 みず, and meaning water; tracked curation keeps みず for the concrete water reading. Platinum supports PrimaryReading みず, MeaningJP water, and KanjiMeanings water.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "火": {
+      "kanji": "火",
+      "level": 5,
+      "cardKey": "火|ひ",
+      "fieldValues": {
+        "primaryReading": "ひ",
+        "primaryMeaning": "fire",
+        "kanjiMeanings": [
+          "fire"
+        ],
+        "supportNotes": [
+          "火",
+          "火曜日"
+        ],
+        "exampleSentences": [
+          "火は赤いです。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0000622700; Bunka Joyo Kanji reading index",
+          "detail": "Japanese source re-review for 火|ひ: Kanjipedia lists 音 カ, 訓 ひ・ほ, and meaning ひ/fire; tracked curation keeps ひ as the concrete standalone reading. Platinum supports PrimaryReading ひ, MeaningJP fire, and KanjiMeanings fire.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-14",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "父": {
+      "kanji": "父",
+      "level": 5,
+      "cardKey": "父|ちち",
+      "fieldValues": {
+        "primaryReading": "ちち",
+        "primaryMeaning": "father",
+        "kanjiMeanings": [
+          "father"
+        ],
+        "supportNotes": [
+          "父",
+          "お父さん"
+        ],
+        "exampleSentences": [
+          "父は元気です。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0006017800; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 父|ちち: Kanjipedia lists 音 フ and 訓 ちち and meaning ちち/father; tracked curation keeps ちち as the concrete direct family-word reading for the individual kanji 父. Platinum supports PrimaryReading ちち, MeaningJP father, and KanjiMeanings father.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "生": {
+      "kanji": "生",
+      "level": 5,
+      "cardKey": "生|いきる",
+      "fieldValues": {
+        "primaryReading": "いきる",
+        "primaryMeaning": "live",
+        "kanjiMeanings": [
+          "live",
+          "life",
+          "birth",
+          "raw"
+        ],
+        "supportNotes": [
+          "生きる",
+          "学生",
+          "生まれる"
+        ],
+        "exampleSentences": [
+          "この魚は川で生きています。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0003833400; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 生|いきる: Kanjipedia lists 音 セイ・ショウ and 訓 いきる・いかす・いける・うまれる・うむ・おう・はえる・はやす・き・なま and meaning いきる/live, life, birth, and raw; tracked curation keeps いきる as the base verb reading for the individual kanji 生 while compound readings stay support-only. Platinum supports PrimaryReading いきる, MeaningJP live, and KanjiMeanings live / life / birth / raw.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "fixed_then_platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "男": {
+      "kanji": "男",
+      "level": 5,
+      "cardKey": "男|おとこ",
+      "fieldValues": {
+        "primaryReading": "おとこ",
+        "primaryMeaning": "man",
+        "kanjiMeanings": [
+          "man",
+          "male"
+        ],
+        "supportNotes": [
+          "男",
+          "男の人"
+        ],
+        "exampleSentences": [
+          "あの男の人は先生です。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0004638500; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 男|おとこ: Kanjipedia lists 音 ダン・ナン and 訓 おとこ and meaning おとこ/man/male; tracked curation keeps おとこ as the concrete standalone reading for the individual kanji 男. Platinum supports PrimaryReading おとこ, MeaningJP man / male, and KanjiMeanings man / male.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "白": {
+      "kanji": "白",
+      "level": 5,
+      "cardKey": "白|しろい",
+      "fieldValues": {
+        "primaryReading": "しろい",
+        "primaryMeaning": "white",
+        "kanjiMeanings": [
+          "white"
+        ],
+        "supportNotes": [
+          "白い",
+          "白"
+        ],
+        "exampleSentences": [
+          "白い猫がいます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0005607600; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 白|しろい: Kanjipedia lists 音 ハク・ビャク and 訓 しろ・しら・しろい and meaning しろ/しろい/white; tracked curation keeps しろい as the common adjective reading for the individual kanji 白 in beginner color contexts. Platinum supports PrimaryReading しろい, MeaningJP white, and KanjiMeanings white.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "百": {
+      "kanji": "百",
+      "level": 5,
+      "cardKey": "百|ひゃく",
+      "fieldValues": {
+        "primaryReading": "ひゃく",
+        "primaryMeaning": "hundred",
+        "kanjiMeanings": [
+          "hundred"
+        ],
+        "supportNotes": [
+          "百円",
+          "百"
+        ],
+        "exampleSentences": [
+          "このノートは百円です。"
+        ]
+      },
+      "sourceOriginIds": [
+        "ask_hajimete_jlpt_kanji",
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0005920000/; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 百|ひゃく: Kanjipedia lists 音 ヒャク with outside 訓 もも and meaning ひゃく/hundred; tracked curation keeps ひゃく as the core N5 number reading for 百. Platinum supports PrimaryReading ひゃく, MeaningJP hundred, and KanjiMeanings hundred.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "聞": {
+      "kanji": "聞",
+      "level": 5,
+      "cardKey": "聞|きく",
+      "fieldValues": {
+        "primaryReading": "きく",
+        "primaryMeaning": "hear",
+        "kanjiMeanings": [
+          "hear",
+          "listen",
+          "ask"
+        ],
+        "supportNotes": [
+          "聞く",
+          "聞こえる",
+          "新聞"
+        ],
+        "exampleSentences": [
+          "先生の話をよく聞きます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0006190200; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 聞|きく: Kanjipedia lists 音 ブン・モン and 訓 きく・きこえる and meaning きく/hear/listen; tracked curation keeps きく as the base verb reading for the individual kanji 聞. Platinum supports PrimaryReading きく, MeaningJP hear / listen, and KanjiMeanings hear / listen / ask.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "行": {
+      "kanji": "行",
+      "level": 5,
+      "cardKey": "行|いく",
+      "fieldValues": {
+        "primaryReading": "いく",
+        "primaryMeaning": "go",
+        "kanjiMeanings": [
+          "go",
+          "carry out",
+          "line"
+        ],
+        "supportNotes": [
+          "行く",
+          "行きます",
+          "銀行"
+        ],
+        "exampleSentences": [
+          "毎日、学校へ行きます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0002172500; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 行|いく: Kanjipedia lists 音 コウ・ギョウ・アン and 訓 いく・ゆく・おこなう and meaning いく/go, おこなう/carry out, and line/row senses; tracked curation keeps いく as the base go reading for the individual kanji 行 while compound readings stay support-only. Platinum supports PrimaryReading いく, MeaningJP go, and KanjiMeanings go / carry out / line.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "fixed_then_platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "西": {
+      "kanji": "西",
+      "level": 5,
+      "cardKey": "西|にし",
+      "fieldValues": {
+        "primaryReading": "にし",
+        "primaryMeaning": "west",
+        "kanjiMeanings": [
+          "west"
+        ],
+        "supportNotes": [
+          "西",
+          "西口"
+        ],
+        "exampleSentences": [
+          "西へ行きます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0003852100; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 西|にし: Kanjipedia lists 音 セイ・サイ and 訓 にし and meaning にし/west; tracked curation keeps にし as the concrete direction reading for the individual kanji 西. Platinum supports PrimaryReading にし, MeaningJP west, and KanjiMeanings west.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "fixed_then_platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "見": {
+      "kanji": "見",
+      "level": 5,
+      "cardKey": "見|みる",
+      "fieldValues": {
+        "primaryReading": "みる",
+        "primaryMeaning": "see",
+        "kanjiMeanings": [
+          "see",
+          "watch",
+          "look at",
+          "visible"
+        ],
+        "supportNotes": [
+          "見る",
+          "見える",
+          "見せる"
+        ],
+        "exampleSentences": [
+          "山を見ます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0001896200; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 見|みる: Kanjipedia lists 音 ケン and 訓 みる・みえる・みせる and meaning みる/see/look, visible, and viewpoint senses; tracked curation keeps みる as the base verb reading for the individual kanji 見. Platinum supports PrimaryReading みる, MeaningJP see / watch, and KanjiMeanings see / watch / look at / visible.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "fixed_then_platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "話": {
+      "kanji": "話",
+      "level": 5,
+      "cardKey": "話|はなす",
+      "fieldValues": {
+        "primaryReading": "はなす",
+        "primaryMeaning": "speak",
+        "kanjiMeanings": [
+          "speak",
+          "talk",
+          "tale"
+        ],
+        "supportNotes": [
+          "話す",
+          "会話"
+        ],
+        "exampleSentences": [
+          "先生と日本語で話します。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0007407700; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 話|はなす: Kanjipedia lists 音 ワ and 訓 はなす・はなし and meaning はなす/speak/talk and はなし/story/tale; tracked curation keeps はなす as the base verb reading for the individual kanji 話. Platinum supports PrimaryReading はなす, MeaningJP speak / talk, and KanjiMeanings speak / talk / tale.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "語": {
+      "kanji": "語",
+      "level": 5,
+      "cardKey": "語|ご",
+      "fieldValues": {
+        "primaryReading": "ご",
+        "primaryMeaning": "language",
+        "kanjiMeanings": [
+          "language",
+          "word",
+          "speech"
+        ],
+        "supportNotes": [
+          "語",
+          "日本語"
+        ],
+        "exampleSentences": [
+          "日本語を毎日勉強します。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0002110200; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 語|ご: Kanjipedia lists 音 ゴ and 訓 かたる・かたらう and meaning ご/language/word and かたる/tell/speak; tracked curation keeps ご as the common language/word reading for 語 in core N5 vocabulary. Platinum supports PrimaryReading ご, MeaningJP language / word, and KanjiMeanings language / word / speech.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "読": {
+      "kanji": "読",
+      "level": 5,
+      "cardKey": "読|よむ",
+      "fieldValues": {
+        "primaryReading": "よむ",
+        "primaryMeaning": "read",
+        "kanjiMeanings": [
+          "read"
+        ],
+        "supportNotes": [
+          "読む",
+          "読書"
+        ],
+        "exampleSentences": [
+          "本を読みます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0005324000; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 読|よむ: Kanjipedia lists 音 ドク・トク・トウ and 訓 よむ and meaning よむ/read; tracked curation keeps よむ as the base verb reading for the individual kanji 読. Platinum supports PrimaryReading よむ, MeaningJP read, and KanjiMeanings read.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "車": {
+      "kanji": "車",
+      "level": 5,
+      "cardKey": "車|くるま",
+      "fieldValues": {
+        "primaryReading": "くるま",
+        "primaryMeaning": "car",
+        "kanjiMeanings": [
+          "car",
+          "vehicle"
+        ],
+        "supportNotes": [
+          "車",
+          "電車"
+        ],
+        "exampleSentences": [
+          "この車は新しいです。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0002968300; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 車|くるま: Kanjipedia lists 音 シャ and 訓 くるま with meaning くるま/car/vehicle. Tracked curation keeps くるま as the learner-facing individual-kanji reading; 電車/でんしゃ remains support-only.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "fixed_then_platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "金": {
+      "kanji": "金",
+      "level": 5,
+      "cardKey": "金|かね",
+      "fieldValues": {
+        "primaryReading": "かね",
+        "primaryMeaning": "money",
+        "kanjiMeanings": [
+          "money",
+          "gold"
+        ],
+        "supportNotes": [
+          "お金",
+          "金曜日"
+        ],
+        "exampleSentences": [
+          "お金が少しあります。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0001604700; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 金|かね: Kanjipedia lists 音 キン・コン and 訓 かね・かな with meanings including gold/metal and money. Tracked curation keeps かね as the learner-facing everyday reading; 金曜日/きんようび remains support-only.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "fixed_then_platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "長": {
+      "kanji": "長",
+      "level": 5,
+      "cardKey": "長|ながい",
+      "fieldValues": {
+        "primaryReading": "ながい",
+        "primaryMeaning": "long",
+        "kanjiMeanings": [
+          "long",
+          "leader",
+          "senior",
+          "superior"
+        ],
+        "supportNotes": [
+          "長い",
+          "長い時間"
+        ],
+        "exampleSentences": [
+          "このえんぴつは長いです。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0004783800; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 長|ながい: Kanjipedia lists 音 チョウ and 訓 ながい with meanings including long, leader, senior, and superior/head. Tracked curation keeps ながい as the learner-facing adjective reading; チョウ compounds remain support-only.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "間": {
+      "kanji": "間",
+      "level": 5,
+      "cardKey": "間|かん",
+      "fieldValues": {
+        "primaryReading": "かん",
+        "primaryMeaning": "time",
+        "kanjiMeanings": [
+          "time",
+          "interval",
+          "space"
+        ],
+        "supportNotes": [
+          "時間",
+          "間"
+        ],
+        "exampleSentences": [
+          "少し時間があります。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "nihongo_sou_matome_kanji",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0001083500; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 間|かん: Kanjipedia lists 音 カン・ケン and 訓 あいだ・ま with meanings including interval/space/time. Tracked curation keeps かん as the learner-facing reading for the N5 time/interval surface; あいだ remains visible as support.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "雨": {
+      "kanji": "雨",
+      "level": 5,
+      "cardKey": "雨|あめ",
+      "fieldValues": {
+        "primaryReading": "あめ",
+        "primaryMeaning": "rain",
+        "kanjiMeanings": [
+          "rain"
+        ],
+        "supportNotes": [
+          "雨",
+          "雨の日"
+        ],
+        "exampleSentences": [
+          "今日は雨です。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0000315200; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 雨|あめ: Kanjipedia lists 音 ウ and 訓 あめ・あま with meaning rain. Tracked curation keeps あめ as the learner-facing noun reading for the individual kanji 雨.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "電": {
+      "kanji": "電",
+      "level": 5,
+      "cardKey": "電|でん",
+      "fieldValues": {
+        "primaryReading": "でん",
+        "primaryMeaning": "electricity",
+        "kanjiMeanings": [
+          "electricity"
+        ],
+        "supportNotes": [
+          "電車",
+          "電話"
+        ],
+        "exampleSentences": [
+          "電車で学校へ行きます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0005093700; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 電|でん: Kanjipedia lists 音 デン with meanings including electricity, electric communication, and electric train. Tracked curation keeps でん as the learner-facing on reading for the individual kanji 電.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "食": {
+      "kanji": "食",
+      "level": 5,
+      "cardKey": "食|たべる",
+      "fieldValues": {
+        "primaryReading": "たべる",
+        "primaryMeaning": "eat",
+        "kanjiMeanings": [
+          "eat",
+          "food"
+        ],
+        "supportNotes": [
+          "食べる",
+          "食事"
+        ],
+        "exampleSentences": [
+          "朝ご飯を食べます。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0003539700; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 食|たべる: Kanjipedia lists 音 ショク・ジキ and 訓 くう・くらう・たべる with meanings including eat and food. Tracked curation keeps たべる as the learner-facing base verb reading.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    },
+    "高": {
+      "kanji": "高",
+      "level": 5,
+      "cardKey": "高|たかい",
+      "fieldValues": {
+        "primaryReading": "たかい",
+        "primaryMeaning": "high",
+        "kanjiMeanings": [
+          "high",
+          "expensive",
+          "tall"
+        ],
+        "supportNotes": [
+          "高い",
+          "高校"
+        ],
+        "exampleSentences": [
+          "この山は高いです。"
+        ]
+      },
+      "sourceOriginIds": [
+        "kanjidic2_legacy",
+        "tanos_legacy_direct"
+      ],
+      "fieldEvidence": [
+        {
+          "type": "japanese-source",
+          "evidenceUse": "kanji-field-verification",
+          "citationMode": "manual-field-bound-citation",
+          "source": "https://www.kanjipedia.jp/kanji/0002250300; https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/joyokanjihyo_sakuin/index.html",
+          "detail": "Japanese source re-review for 高|たかい: Kanjipedia lists 音 コウ and 訓 たかい・たか・たかまる・たかめる with meanings including high/tall; tracked curation also keeps the common learner meaning expensive for 高い. Tracked curation keeps たかい as the learner-facing adjective reading; 高校/こうこう remains support-only.",
+          "sourceIds": [
+            "bunka_joyo_kanji",
+            "kanjipedia"
+          ],
+          "fieldVerifierSourceIds": [
+            "kanjipedia"
+          ],
+          "supportingSourceIds": [
+            "bunka_joyo_kanji"
+          ],
+          "validationFailures": []
+        }
+      ],
+      "reviewBinding": {
+        "sourceReviewSetPath": "templates/platinum_n5_review_set.json",
+        "status": "platinum",
+        "reviewedAt": "2026-05-03",
+        "reviewer": "codex-platinum-review",
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "revalidatedAt": "2026-05-13",
+        "rereviewReviewedAt": "2026-05-14",
+        "rereviewReviewer": "codex-platinum-review",
+        "rereviewResult": "approved_for_current_standard_platinum",
+        "mechanicalMigration": false
+      }
+    }
+  }
+}

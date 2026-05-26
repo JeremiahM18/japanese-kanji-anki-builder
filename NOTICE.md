@@ -36,6 +36,8 @@ Current kanji-card readings, meanings, and kanji word-candidate data are fetched
 
 The tracked kanji reading-reference contract in `templates/kanji_reading_reference_contract.json` is derived directly from EDRDG KANJIDIC2 `ja_on` and `ja_kun` readings. It is governed as reading-reference evidence only and carries the same CC BY-SA 4.0 attribution obligation.
 
+The tracked N5 kanji card-field source contract in `templates/kanji_card_field_source_contract.json` contains manual field-bound citation notes from governed Platinum review evidence. Kanjipedia is used as restricted manual `kanji-field-verification` evidence; Bunka Joyo Kanji material is supporting reading/index governance only. These citations must not be expanded into copied dictionary entries, bulk source data, or JLPT placement truth.
+
 KANJIDIC2 and JMdict are property of the Electronic Dictionary Research and Development Group and are made available under Creative Commons Attribution-ShareAlike 4.0. Public kanji deck releases that include kanjiapi-derived readings, meanings, or word data must include attribution equivalent to:
 
 `Kanji readings, meanings, and word data derived from kanjiapi.dev using EDRDG KANJIDIC2 and JMdict data, licensed under CC BY-SA 4.0`

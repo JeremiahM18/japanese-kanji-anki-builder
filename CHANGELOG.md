@@ -11,6 +11,7 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 ### Added
 
 - Added a governed KANJIDIC2/EDRDG kanji on/kun reading-reference contract covering the tracked JLPT kanji inventory, with source-use limits, raw source identity, attribution, loader/audit tests, and tracked-source kanji preflight integration.
+- Added a governed N5 kanji card-field source contract derived from current-standard Platinum Japanese-source evidence, with manual field-bound citation limits, source-origin independence context, loader/audit tests, and tracked-source kanji preflight certification for N5 source availability.
 
 ### Security
 

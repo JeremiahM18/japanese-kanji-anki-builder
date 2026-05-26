@@ -52,11 +52,11 @@ npm run release:gate
 
 It does not certify tracked-source kanji TSVs, `.apkg` files, managed media packages, or manual QA.
 
-`product:artifacts:kanji:n5:preflight` inspects tracked templates and reports whether N5 kanji TSV certification is possible without ignored local `data/` inputs. It currently reports `certifiable: no` because rich kanji source provenance is not yet a tracked release contract. Explicit on-yomi and kun-yomi now have a governed KANJIDIC2 reading-reference contract, but that lane does not verify full card fields or certify generated rows by itself.
+`product:artifacts:kanji:n5:preflight` inspects tracked templates and reports whether N5 kanji source availability is sufficient for tracked-source kanji TSV certification without ignored local `data/` inputs. It currently reports `certifiable: yes` for source availability because JLPT level, starter meanings, component/radical data, KANJIDIC2 on/kun reading reference, and N5 card-field source provenance are all tracked and audited. This preflight still does not generate a fresh kanji TSV, package `.apkg` files, certify Obsidian proof, perform managed-media QA, or replace manual Anki import review.
 
-Use `-- --require-certifiable` only when the remaining contracts exist and the command is expected to fail closed.
+Use `-- --require-certifiable` when the tracked source contracts are expected to be complete and the command should fail closed on any missing governed source lane.
 
-Tracked CI tests must not read ignored root `data/*` inputs. Use tracked contracts, tracked fixtures, or explicit temp fixtures in CI. Exact kanji primary-reading checks against generated `OnReading`/`KunReading` remain in local generated-row Platinum gates; the tracked KANJIDIC2 contract is reading-reference evidence only.
+Tracked CI tests must not read ignored root `data/*` inputs. Use tracked contracts, tracked fixtures, or explicit temp fixtures in CI. Exact kanji primary-reading checks against generated `OnReading`/`KunReading` remain in local generated-row Platinum gates; the tracked KANJIDIC2 contract is reading-reference evidence only, and the tracked N5 card-field source contract is source-provenance evidence only.
 
 `product:readiness:n5` runs the current automated N5 product checkpoint: JLPT audits, governed audio provenance, tracked-source N5 word TSV generation, N5 word-level placement audit, and N5 kanji and word Gold regression checks.
 
@@ -119,6 +119,10 @@ The merge rejects unknown columns, duplicate or missing kanji, batch kanji outsi
 ## Normalization and source templates
 
 `data:normalize:kanjidic2-jlpt` converts an ignored local KANJIDIC2 XML or `.xml.gz` file into the normalized TSV shape required by [../templates/jlpt_kanji_source_inputs.json](../templates/jlpt_kanji_source_inputs.json).
+
+`data:build:kanji-reading-reference` creates the tracked KANJIDIC2 reading-reference contract from ignored local `downloads/kanjidic2.xml.gz`. The output records the raw source SHA-256, KANJIDIC2 database version, included reading types, source-use boundary, and coverage counts. It is reading-reference evidence only; it does not move kanji, verify full card fields, certify cards, or change readiness.
+
+`data:build:kanji-field-source-contract` creates the tracked N5 kanji card-field source contract from current-standard Platinum `japanese-source` evidence. The output records the exact card-field values, field-bound source evidence, source IDs, source-origin independence context, rereview binding, and coverage counts. It is `kanji-field-verification` evidence only; it does not move JLPT placement, bulk-copy restricted source data, generate TSVs, certify Obsidian proof, or change release readiness.
 
 `data:normalize:tanos-jlpt-kanji` converts ignored local Tanos source text files into the normalized TSV shape required by [../templates/jlpt_kanji_source_inputs.json](../templates/jlpt_kanji_source_inputs.json). The default lane normalizes only N1/N4/N5 direct legacy base files for `tanos_legacy_direct`; `-- --lane=estimated-split` normalizes only extracted N2/N3 PDF text for `tanos_estimated_split`.
 

@@ -72,6 +72,19 @@ const SOURCE_COUNT_GUARD_LANES = Object.freeze([
     },
 ]);
 
+const TRACKED_TEST_IGNORED_DATA_READ_ALLOWLIST = Object.freeze(new Set([
+    "test/repositoryGovernance.test.js",
+]));
+
+const TRACKED_TEST_IGNORED_DATA_READ_PATTERNS = Object.freeze([
+    { label: "path.join root data", pattern: /path\.join\(\s*["']data["']/u },
+    { label: "path.resolve root data", pattern: /path\.resolve\(\s*["']data["']/u },
+    { label: "path.join repoRoot data", pattern: /path\.join\(\s*(?:repoRoot|ROOT_DIR)\s*,\s*["']data["']/u },
+    { label: "path.resolve repoRoot data", pattern: /path\.resolve\(\s*(?:repoRoot|ROOT_DIR)\s*,\s*["']data["']/u },
+    { label: "fs.readFileSync data path", pattern: /fs\.readFileSync\(\s*["']data[\\/]/u },
+    { label: "readRepoFile data path", pattern: /readRepoFile\(\s*["']data[\\/]/u },
+]);
+
 function normalizeWhitespace(value) {
     return String(value).replace(/\s+/gu, " ");
 }
@@ -166,6 +179,34 @@ test("CI workflow uses tracked-input governance checks and documents local-data 
     assert.match(workflow, /deck:platinum:governance-gate is intentionally local-data release QA/);
     assert.match(readme, /Clean CI does not run `deck:platinum:governance-gate`/);
     assert.match(readme, /data:audit:jlpt -- --strict --tracked-only/);
+});
+
+test("tracked CI tests do not read ignored local data inputs", () => {
+    const testFiles = listJavaScriptFiles("test")
+        .filter((relativePath) => relativePath.endsWith(".test.js"))
+        .sort();
+    const violations = [];
+
+    for (const relativePath of testFiles) {
+        if (TRACKED_TEST_IGNORED_DATA_READ_ALLOWLIST.has(relativePath)) {
+            continue;
+        }
+
+        const contents = readRepoFile(relativePath);
+        const matches = TRACKED_TEST_IGNORED_DATA_READ_PATTERNS
+            .filter(({ pattern }) => pattern.test(contents))
+            .map(({ label }) => label);
+
+        if (matches.length > 0) {
+            violations.push(`${relativePath}: ${matches.join(", ")}`);
+        }
+    }
+
+    assert.deepEqual(
+        violations,
+        [],
+        "Tracked CI tests must not read ignored root data/* inputs. Use tracked fixtures/contracts, temp fixtures, or explicit local-data release gates instead."
+    );
 });
 
 test("README scopes benchmark budget commands as manual local guardrails unless CI wires them", () => {

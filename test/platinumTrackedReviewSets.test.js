@@ -19,10 +19,21 @@ const {
     isGeneratedPitchAccentSource,
 } = require("../src/services/wordPitchAccentVerificationService");
 const { buildWordStudyEntryKey } = require("../src/datasets/wordStudyData");
-const { normalizeJapaneseReading } = require("../src/utils/japanese");
 
 const ROOT_DIR = path.resolve(__dirname, "..");
 const TEMPLATES_DIR = path.join(ROOT_DIR, "templates");
+
+const KNOWN_KANJI_PRIMARY_READING_REGRESSION_GUARDS = Object.freeze([
+    { level: 3, kanji: "久", rejectedReading: "ひさしぶり", expectedReading: "ひさしい" },
+    { level: 3, kanji: "亡", rejectedReading: "なくなる", expectedReading: "ぼう" },
+    { level: 3, kanji: "信", rejectedReading: "しんじる", expectedReading: "しん" },
+    { level: 3, kanji: "察", rejectedReading: "さっする", expectedReading: "さつ" },
+    { level: 3, kanji: "常", rejectedReading: "つねに", expectedReading: "じょう" },
+    { level: 3, kanji: "感", rejectedReading: "かんじる", expectedReading: "かん" },
+    { level: 3, kanji: "礼", rejectedReading: "おれい", expectedReading: "れい" },
+    { level: 3, kanji: "腹", rejectedReading: "おなか", expectedReading: "はら" },
+    { level: 4, kanji: "好", rejectedReading: "すき", expectedReading: "このむ" },
+]);
 
 function loadJson(relativePath) {
     return JSON.parse(fs.readFileSync(path.join(ROOT_DIR, relativePath), "utf8"));
@@ -30,20 +41,6 @@ function loadJson(relativePath) {
 
 function normalizeList(values = []) {
     return (Array.isArray(values) ? values : []).filter(Boolean);
-}
-
-function splitKanjiInventoryReadings(value = "") {
-    return String(value || "")
-        .split(/[、,\/／;；\s]+/u)
-        .map((reading) => normalizeJapaneseReading(reading))
-        .filter(Boolean);
-}
-
-function buildKanjiInventoryReadingSet(entry = {}) {
-    return new Set([
-        ...splitKanjiInventoryReadings(normalizeList(entry.on_readings).join(" ")),
-        ...splitKanjiInventoryReadings(normalizeList(entry.kun_readings).join(" ")),
-    ]);
 }
 
 function activeEntries(entries = [], activeStatuses = []) {
@@ -128,24 +125,25 @@ test("tracked populated kanji platinum manifests bind evidence to protected fiel
     }
 });
 
-test("tracked active N3 through N5 kanji platinum primary readings are exact source on/kun readings", () => {
-    const inventory = loadJson(path.join("data", "kanji_jlpt_only.json"));
-
-    for (const level of [3, 4, 5]) {
-        const fileName = `platinum_n${level}_review_set.json`;
+test("tracked kanji platinum manifests do not regress known support-word primary readings", () => {
+    for (const guard of KNOWN_KANJI_PRIMARY_READING_REGRESSION_GUARDS) {
+        const fileName = `platinum_n${guard.level}_review_set.json`;
         const entries = loadJson(path.join("templates", fileName));
-        const manifestActiveEntries = activeEntries(entries, ACTIVE_KANJI_PLATINUM_STATUSES);
+        const entry = activeEntries(entries, ACTIVE_KANJI_PLATINUM_STATUSES)
+            .find((candidate) => candidate.kanji === guard.kanji);
+        const primaryReading = normalizeList(entry?.readingIncludes)[0] || "";
 
-        for (const entry of manifestActiveEntries) {
-            const reading = normalizeJapaneseReading(normalizeList(entry.readingIncludes)[0] || "");
-            const sourceReadings = buildKanjiInventoryReadingSet(inventory[entry.kanji]);
-
-            assert.ok(sourceReadings.size > 0, `${fileName} missing source readings for ${entry.kanji}`);
-            assert.ok(
-                sourceReadings.has(reading),
-                `${fileName} ${entry.kanji}|${normalizeList(entry.readingIncludes)[0] || ""} must be an exact source on/kun reading`
-            );
-        }
+        assert.ok(entry, `${fileName} missing active tracked regression guard for ${guard.kanji}`);
+        assert.notEqual(
+            primaryReading,
+            guard.rejectedReading,
+            `${fileName} ${guard.kanji} must not regress to support-word primary reading ${guard.rejectedReading}`
+        );
+        assert.equal(
+            primaryReading,
+            guard.expectedReading,
+            `${fileName} ${guard.kanji} must keep its tracked corrected primary reading; update this guard only with governed reading evidence`
+        );
     }
 });
 

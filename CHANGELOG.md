@@ -28,6 +28,7 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 
 ### Fixed
 
+- Reworked the tracked kanji Platinum regression test so clean CI no longer reads ignored `data/kanji_jlpt_only.json`, and added a source-boundary guard that rejects tracked tests reading ignored root `data/*` inputs.
 - Corrected the N4 word card support note for `自業自得|じごうじとく` so the higher-level constituent `得` is consistently identified as a JLPT N2 support kanji before Obsidian proof is counted.
 
 ## [1.0.0] - 2026-03-31

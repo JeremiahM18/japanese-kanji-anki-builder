@@ -56,6 +56,8 @@ It does not certify tracked-source kanji TSVs, `.apkg` files, managed media pack
 
 Use `-- --require-certifiable` only when the remaining contracts exist and the command is expected to fail closed.
 
+Tracked CI tests must not read ignored root `data/*` inputs. Use tracked contracts, tracked fixtures, or explicit temp fixtures in CI. Exact kanji primary-reading checks against generated `OnReading`/`KunReading` remain in local generated-row Platinum gates until a governed tracked kanji reading inventory lane exists.
+
 `product:readiness:n5` runs the current automated N5 product checkpoint: JLPT audits, governed audio provenance, tracked-source N5 word TSV generation, N5 word-level placement audit, and N5 kanji and word Gold regression checks.
 
 It does not run or gate on the JLPT kanji source-evidence audit yet. That audit is read-only transparency until taxonomy confidence is governed and passing. It also does not validate tracked-source kanji TSVs, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA.
@@ -135,3 +137,5 @@ Shin Kanzen Master, Nihongo Sou Matome, TRY!, and ASK Hajimete JLPT Kanji remain
 Clean CI runs `data:audit:jlpt -- --strict --tracked-only`, `data:audit:jlpt:sources -- --governance-strict --limit=25`, `data:audit:jlpt:words`, and `deck:words:platinum:source-posture -- --levels=5,4` from tracked inputs.
 
 Full `data:audit:jlpt` and `deck:platinum:governance-gate` remain local-data gates because they validate ignored runtime/generated-row inputs under `data/`. Their absence from clean CI is a release-scope limitation, not proof that real generated rows were validated.
+
+The CI source-boundary guard rejects tracked tests that read ignored root `data/*` paths. Local-data gates can still validate live generated rows in a prepared workstation, but they must stay explicit release QA rather than becoming hidden CI truth.

@@ -278,6 +278,8 @@ Clean CI runs `data:audit:jlpt -- --strict --tracked-only`, `data:audit:jlpt:sou
 
 Clean CI does not run `deck:platinum:governance-gate` because that command exercises ignored local `data/*` real generated-row inputs. Run it in a local-data workspace before release claims that depend on current generated N5/N4 rows.
 
+Tracked CI tests must not read ignored root `data/*` inputs. Use tracked contracts, tracked fixtures, or explicit temp fixtures in CI; exact kanji primary-reading checks against generated `OnReading`/`KunReading` remain in the local generated-row Platinum gates until a governed tracked kanji reading inventory exists.
+
 Benchmark budget commands are manual/local performance guardrails, not GitHub Actions CI gates. `data:benchmark:jlpt:sources:gate` and `bench:build:gate` are manual/local performance guardrails for source-evidence and build-performance changes. `bench:build:gate` requires a ready local workspace and writes benchmark output under the configured benchmark output directory.
 
 Release process:
@@ -368,6 +370,8 @@ Expected ignored workspace data:
 - `data/word_study_data.json`
 
 `data/kanji_jlpt_only.json` is ignored runtime input, not source truth. Deck-facing loaders guard it against the tracked JLPT level contract; audit and sync commands intentionally read it unguarded so they can report or repair drift.
+
+Tracked tests must not make `data/kanji_jlpt_only.json` or any other ignored root `data/*` file a CI source of truth. Local generated-row Platinum gates may use these ignored inputs to validate the live workstation build, but tracked CI truth must come from governed contracts or fixtures.
 
 Managed media:
 

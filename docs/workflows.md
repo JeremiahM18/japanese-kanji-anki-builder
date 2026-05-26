@@ -72,6 +72,110 @@ Tier names: Silver means generated surface, Gold means regression protection, Pl
 
 The `npm run deck:platinum:n5` and `npm run deck:words:platinum:n5` commands are full-level Platinum gates. They fail unless every generated N5 card has an active current-standard structural entry.
 
+## Run Obsidian batches
+
+Use this sequence for every Obsidian batch. Do not wait until the level is complete before running the status and batch commands; they are the work queue.
+
+### Kanji Obsidian batch
+
+1. Confirm the workspace and current level posture:
+
+```bash
+git status --short --untracked-files=all
+npm run deck:kanji:review-status
+npm run deck:kanji:obsidian:rereview-status -- --levels=<level>
+```
+
+2. Generate the next human-review worklist:
+
+```bash
+npm run deck:platinum:batch -- --level=<level> --limit=12
+```
+
+The default queue is `substantive-rereview`. It includes structurally valid Platinum entries until explicit non-mechanical Obsidian proof exists. Use `--queue=missing-current-standard` only when the task is structural Platinum coverage rather than Obsidian proof.
+
+3. Generate or refresh the kanji TSV with the normal kanji build, then run the governed kanji NLP support lane before or during review:
+
+```bash
+npm run deck:ready -- --levels=<level>
+npm run deck:kanji:nlp-signals -- --levels=<level>
+```
+
+That audits the NLP manifest/runtime, refreshes generated kanji TSVs, tokenizes bare kanji-card anchors, creates kanji-scoped review packets and draft notes, validates artifacts, and runs `nlp:governance-gate`.
+
+It does not run word expansion, word reading-gap discovery, word example reranking, word sense-fit audits, or word-card embeddings.
+
+Kanji tokenizer differences are usually treated as reading variants or tokenizer coverage gaps, not automatic defects, because one bare kanji can legitimately have multiple readings. NLP is review amplification only. It cannot certify Obsidian proof, approve source truth, or replace the reviewer.
+
+4. Human-review each queued card against the live generated card, the batch rubric, tracked evidence, and any NLP signals. Check primary reading, meanings, example sentence, reading/translation, audio identity, stroke-order media, notes/support surface, source evidence, limitations, and learner usefulness. If a signal reveals a real card/source issue, fix tracked data, regenerate, rerun the affected gates, and rerun NLP if its support artifact changed.
+
+5. Record Obsidian proof only after the review happened. The manifest entry must carry structured `rereviewProvenance` and actual card-bound example-sentence quality evidence. Do not record proof from `revalidatedAt`, lane-valid text, NLP output, or a clean batch report alone.
+
+6. Verify the batch:
+
+```bash
+npm run deck:platinum:n<level>
+npm run deck:kanji:obsidian:rereview-status -- --levels=<level>
+npm run deck:platinum:batch -- --level=<level> --limit=12
+```
+
+Replace `n<level>` with the actual npm alias, such as `deck:platinum:n3` for N3.
+
+7. Run the fail-closed certification gate only when the selected scope is expected to be fully Obsidian:
+
+```bash
+npm run deck:kanji:obsidian:certify-status -- --levels=<level>
+```
+
+If this fails during an in-progress level, treat the failure as the remaining queue, not as permission to weaken the gate.
+
+### Word Obsidian batch
+
+1. Confirm the workspace and current level posture:
+
+```bash
+git status --short --untracked-files=all
+npm run deck:words:obsidian:rereview-status -- --levels=<level>
+```
+
+2. Generate the next human-review worklist:
+
+```bash
+npm run deck:words:platinum:batch -- --level=<level> --limit=8
+```
+
+Use `--queue=missing-current-standard` only when the task is structural Platinum coverage rather than Obsidian proof.
+
+3. Run the governed word NLP support lane before or during review:
+
+```bash
+npm run deck:words:expansion-support -- --levels=<level>
+```
+
+Word NLP is broader than kanji NLP: it can run tokenization, embeddings, example reranking, sense-fit warnings, reading-gap discovery, review packets, draft proposals, artifact validation, and `nlp:governance-gate`. It still cannot certify Obsidian proof or write tracked templates.
+
+4. Human-review each queued word card against the live generated row, exact written-reading identity, source evidence, word audio, pitch evidence/rendering, reading breakdown, support labels, example naturalness, learner usefulness, level fit, release quality, reading, translation, and any NLP signals. Fix tracked source/card data first when NLP or the rubric exposes a real issue.
+
+5. Record Obsidian proof only after the review happened. Word proof must bind exact written+reading identity, structured `rereviewProvenance`, the full word-card `evidenceChecked` checklist, and actual example-sentence quality evidence.
+
+6. Verify the batch. Use the npm Platinum alias when it exists; for a future word level without an alias, use `node scripts/reviewPlatinumWordLevel.js --level=<level> --require-all` after that level's Platinum manifest exists.
+
+```bash
+npm run deck:words:platinum:n<level>
+npm run deck:words:obsidian:rereview-status -- --levels=<level>
+npm run deck:words:platinum:batch -- --level=<level> --limit=8
+```
+
+Replace `n<level>` with the actual npm alias when one exists, such as `deck:words:platinum:n4`.
+
+7. Run the fail-closed certification gate only when the selected scope is expected to be fully Obsidian:
+
+```bash
+npm run deck:words:obsidian:certify-status -- --levels=<level>
+```
+
+For both kanji and words, commit batches with the manifest changes and the exact verification commands. Do not mix source-contract generation, Obsidian proof, APKG/media QA, and unrelated cleanup in one commit.
+
 ## Build kanji decks
 
 ```bash

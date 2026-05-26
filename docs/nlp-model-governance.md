@@ -2,7 +2,40 @@
 
 This document defines the governed deep NLP boundary for Japanese Kanji Builder.
 
-The current deck pipeline remains contract-driven. NLP models may assist candidate discovery, example reranking, sense-fit audits, duplicate clustering, level-fit audits, review prioritization, and draft-proposal scaffolding. NLP model output is not Gold, Platinum, Obsidian, release readiness, or source truth.
+The current deck pipeline remains contract-driven. NLP is not a new certification path. It is a governed review-amplification layer between generated card output and human promotion. NLP models may assist candidate discovery, example reranking, sense-fit audits, duplicate clustering, level-fit audits, review prioritization, and draft-proposal scaffolding. NLP model output is not Gold, Platinum, Obsidian, release readiness, or source truth.
+
+## Obsidian workflow with NLP present
+
+A clean NLP packet is not Obsidian. A passing NLP gate is not Obsidian. A draft proposal is not Obsidian.
+
+Obsidian means a human reviewer used the live generated card plus tracked evidence, considered any NLP signals as support context, fixed any real issue, and recorded structured non-mechanical rereview proof. For words, that proof must bind exact written+reading identity and include the full word-card checklist. For kanji, that proof must bind the card identity and include actual example-sentence quality review evidence.
+
+### Word decks
+
+1. Generate live word rows with the normal word deck build for the target levels.
+2. Run `npm run deck:words:expansion-support -- --levels=<levels>`.
+3. Use the generated review packets to inspect exact word-reading targets, tokenizer issues, example alternatives, sense-fit risks, reading-gap candidates, and draft notes.
+4. Inspect the actual generated row and tracked evidence. If an NLP signal exposes a real issue, fix tracked source/card data first.
+5. Regenerate, rerun relevant gates, and rerun NLP if the affected support artifact changed.
+6. Add Obsidian proof only after the live word card has actually been rereviewed.
+7. Check certification with `npm run deck:words:obsidian:rereview-status -- --levels=<levels>` and `npm run deck:words:obsidian:certify-status -- --levels=<levels>`.
+
+`deck:words:expansion-support` is broad and model-backed. It runs model/runtime checks, tokenization, embeddings, example reranking, sense-fit warnings, reading-gap candidate discovery, review packets, draft proposals, artifact validation, and `nlp:governance-gate`.
+
+### Kanji decks
+
+1. Generate or refresh the kanji TSV with the normal kanji build for the target levels.
+2. Run `npm run deck:kanji:nlp-signals -- --levels=<levels>`.
+3. Use the generated kanji packets to inspect tokenizer/readability coverage, reading-variant context, coverage gaps, and draft notes.
+4. Inspect the live kanji card: primary reading, meanings, example sentence, reading/translation, audio identity, stroke-order media, notes/support surface, source evidence, limitations, and learner usefulness.
+5. If a signal exposes a real card/source issue, fix tracked data first.
+6. Regenerate, rerun relevant gates, and rerun NLP if the affected support artifact changed.
+7. Add Obsidian proof only after the live kanji card has actually been rereviewed.
+8. Check certification with `npm run deck:kanji:obsidian:rereview-status -- --levels=<levels>` and `npm run deck:kanji:obsidian:certify-status -- --levels=<levels>`.
+
+`deck:kanji:nlp-signals` is intentionally narrower than the word lane. It audits the NLP manifest/runtime, refreshes generated kanji TSVs, tokenizes bare kanji-card anchors, creates kanji-scoped review packets and draft notes, validates artifacts, and runs `nlp:governance-gate`. It does not run word expansion, word reading-gap discovery, word example reranking, word sense-fit audits, or word-card embeddings.
+
+The difference is deliberate: word cards have written+reading identity, meaning, example, and notes context, so embeddings, reranking, sense-fit, and reading-gap candidate discovery are useful review-amplification tools. Bare-kanji embeddings or sense-fit scoring would be much less reliable, so kanji NLP stays focused on tokenizer coverage and review packet scaffolding. Kanji tokenizer differences are usually reading variants or tokenizer coverage gaps, not automatic defects, because one bare kanji can legitimately have multiple readings.
 
 ## Current state
 

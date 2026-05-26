@@ -99,13 +99,13 @@ For workflow ordering, use [workflows.md](workflows.md). For release gate bounda
 | `npm run deck:words:expansion-candidates:n2 -- --limit=50` | Diff the manifest-pinned Tanos N2 candidate-discovery source into read-only word expansion candidates |
 | `npm run data:normalize:tanos-jlpt-words -- --level=1` | Normalize ignored Tanos N1 Mnemosyne English and hiragana exports into the pinned local source TSV |
 | `npm run deck:words:expansion-candidates:n1 -- --limit=50` | Diff the manifest-pinned Tanos N1 candidate-discovery source into read-only word expansion candidates |
-| `npm run deck:words:expansion-support -- --levels=5,4,3,2,1` | Run governed NLP expansion support for selected word levels and finish with artifact validation plus the NLP governance gate |
+| `npm run deck:words:expansion-support -- --levels=5,4,3,2,1` | Run broad model-backed word NLP review amplification for selected word levels and finish with artifact validation plus the NLP governance gate; this cannot certify cards or write tracked templates |
 | `npm run deck:words:expansion-support:n5` | Run governed NLP expansion support for N5 word expansion/review |
 | `npm run deck:words:expansion-support:n4` | Run governed NLP expansion support for N4 word expansion/review |
 | `npm run deck:words:expansion-support:n3` | Run governed NLP expansion support for N3 word expansion/review |
 | `npm run deck:words:expansion-support:n2` | Run governed NLP expansion support for N2 word expansion/review |
 | `npm run deck:words:expansion-support:n1` | Run governed NLP expansion support for N1 word expansion/review |
-| `npm run deck:kanji:nlp-signals -- --levels=5,4` | Run governed kanji-card NLP signal support for selected kanji levels without invoking word expansion lanes |
+| `npm run deck:kanji:nlp-signals -- --levels=5,4,3,2,1` | Run narrow kanji-card NLP signal support for selected kanji levels without invoking word expansion, embeddings, example reranking, reading-gap discovery, or sense-fit lanes; this cannot certify cards or write tracked templates |
 | `npm run deck:kanji:nlp-signals:n5` | Run governed kanji-card tokenization signals, review packets, draft notes, validation, and NLP governance for N5 kanji |
 | `npm run deck:kanji:nlp-signals:n4` | Run governed kanji-card NLP signal support for N4 kanji |
 | `npm run deck:kanji:nlp-signals:n3` | Run governed kanji-card NLP signal support for N3 kanji |

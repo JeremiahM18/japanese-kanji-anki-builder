@@ -166,8 +166,10 @@ function formatKanjiNlpSignalSupportPlan(plan, { dryRun = false } = {}) {
         "",
         `Mode: ${dryRun ? "dry-run" : "execute"}`,
         `Levels: ${plan.levels.map((level) => `N${level}`).join(", ")}`,
-        "Product boundary: kanji deck only; no word expansion, word reading-gap discovery, word example reranking, or word sense-fit certification.",
-        "Authority: assistive-only; human promotion required; no tracked template writes; no card certification; no release-readiness claim.",
+        "Role: governed review-amplification between generated kanji output and human promotion; not a certification path.",
+        "Product boundary: kanji deck only; no word expansion, no word reading-gap discovery, no word example reranking, no word sense-fit audits, no word-card embeddings.",
+        "Authority: assistive-only; human promotion required; no tracked template writes; no card certification; no source-truth approval; no release-readiness claim.",
+        "Obsidian remains gated by deck:kanji:obsidian:rereview-status and deck:kanji:obsidian:certify-status after human rereview of the live card.",
         "",
         "Steps:",
     ];

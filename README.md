@@ -295,14 +295,20 @@ Repository governance:
 
 ## Assistive NLP Review Engine
 
-The repository has governed local NLP lanes for assistive review:
+NLP is not a new certification path. It is a governed review-amplification layer between generated card output and human promotion. It helps find likely issues, candidate improvements, and review priorities before or during Obsidian rereview. It cannot certify cards, write tracked templates, approve source truth, approve Gold/Platinum/Obsidian, or claim release readiness.
+
+The repository has two deliberately different governed NLP lanes:
 
 - word tokenization and tokenizer/card-reading mismatch context
 - word embeddings, example reranking, sense-fit warnings, and reading-gap candidates
 - word human review packets and draft-proposal scaffolds
 - kanji-card tokenization signals and kanji-scoped review packets
 
-The boundary is deliberate. NLP output can point reviewers at likely issues and useful candidates, but it cannot write tracked templates, certify cards, approve Gold/Platinum/Obsidian, or claim release readiness. Human promotion into tracked contracts is still required.
+Word decks use the broad model-backed lane. First generate live word rows with the normal word build, then run `deck:words:expansion-support -- --levels=<levels>`. That support command runs model/runtime checks, tokenization, embeddings, example reranking, sense-fit warnings, reading-gap candidate discovery, review packets, draft proposals, artifact validation, and `nlp:governance-gate`. Review packets point the human reviewer at exact word-reading targets, tokenizer issues, example alternatives, sense-fit risks, and candidate words. The reviewer still inspects the actual generated row and tracked evidence. If NLP exposes a real issue, fix tracked source/card data first, regenerate, rerun relevant gates, and rerun NLP if the affected support artifact changed. Certification remains only through `deck:words:obsidian:rereview-status` and `deck:words:obsidian:certify-status`.
+
+Kanji decks use the narrower kanji-card signal lane. First generate or refresh the kanji TSV with the normal kanji build, then run `deck:kanji:nlp-signals -- --levels=<levels>`. That support command audits the NLP manifest/runtime, refreshes generated kanji TSVs, tokenizes bare kanji-card anchors, creates kanji-scoped review packets and draft notes, validates artifacts, and runs `nlp:governance-gate`. It does not run word expansion, word reading-gap discovery, word example reranking, word sense-fit audits, or word-card embeddings. Kanji tokenizer differences are usually reading variants or tokenizer coverage gaps, not automatic defects, because one bare kanji can legitimately have multiple readings. Certification remains only through `deck:kanji:obsidian:rereview-status` and `deck:kanji:obsidian:certify-status`.
+
+A clean NLP packet is not Obsidian. A passing NLP gate is not Obsidian. A draft proposal is not Obsidian. Obsidian means a human reviewer used the live generated card plus tracked evidence, considered any NLP signals as support context, fixed any real issue, and recorded structured non-mechanical rereview proof. Word proof must bind exact written+reading identity and include the full word-card checklist. Kanji proof must bind the card identity and include actual example-sentence quality review evidence.
 
 ```mermaid
 flowchart LR
@@ -330,7 +336,7 @@ Primary NLP commands:
 
 ```bash
 npm run deck:words:expansion-support -- --levels=5,4,3,2,1
-npm run deck:kanji:nlp-signals -- --levels=5,4
+npm run deck:kanji:nlp-signals -- --levels=5,4,3,2,1
 npm run nlp:governance-gate
 ```
 

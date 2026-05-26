@@ -67,8 +67,12 @@ test("formatKanjiNlpSignalSupportPlan keeps product and certification boundaries
 
     assert.match(text, /Mode: dry-run/);
     assert.match(text, /Levels: N5/);
+    assert.match(text, /review-amplification/);
+    assert.match(text, /not a certification path/);
     assert.match(text, /Product boundary: kanji deck only/);
     assert.match(text, /no word expansion/);
+    assert.match(text, /no word-card embeddings/);
     assert.match(text, /no card certification/);
+    assert.match(text, /deck:kanji:obsidian:rereview-status/);
     assert.match(text, /N5 kanji-card tokenization artifact/);
 });

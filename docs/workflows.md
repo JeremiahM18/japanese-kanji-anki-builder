@@ -138,6 +138,21 @@ Planner output is advisory. A suggested card still needs canonical contract cove
 
 `deck:words:expansion-support:n4` adds the governed NLP expansion layer for the same level: tokenization, embeddings, example reranking, sense-fit warnings, reading-gap candidate discovery, review packets, draft proposals, validation, and the NLP governance gate.
 
+This is review amplification, not certification. If a word NLP packet exposes a real card/source issue, fix tracked source or card data first, regenerate the live word row, rerun the relevant gates, and rerun NLP when the affected support artifact changed. Word Obsidian proof is added only after the human reviewer rereviews the corrected live generated row and tracked evidence. Certification remains under `deck:words:obsidian:rereview-status` and `deck:words:obsidian:certify-status`.
+
+## Check kanji NLP support before Obsidian rereview
+
+```bash
+npm run deck:ready -- --levels=3
+npm run deck:kanji:nlp-signals -- --levels=3
+```
+
+The kanji NLP command refreshes generated kanji TSVs, audits NLP manifest/runtime readiness, tokenizes bare kanji-card anchors, creates kanji-scoped review packets and draft notes, validates artifacts, and runs the NLP governance gate.
+
+It deliberately does not run word expansion, word reading-gap discovery, word example reranking, word sense-fit audits, or word-card embeddings. Kanji tokenizer differences are usually reading variants or tokenizer coverage gaps, not automatic defects, because one bare kanji can legitimately have multiple readings.
+
+The reviewer still inspects the live kanji card: primary reading, meanings, example sentence, reading/translation, audio identity, stroke-order media, notes/support surface, source evidence, limitations, and learner usefulness. If a kanji NLP signal reveals a real card/source issue, fix tracked data first, regenerate, rerun gates, and rerun NLP when the affected support artifact changed. Kanji Obsidian proof is added only after the human reviewer rereviews the corrected live card. Certification remains under `deck:kanji:obsidian:rereview-status` and `deck:kanji:obsidian:certify-status`.
+
 ## Plan word inventory expansion
 
 ```bash

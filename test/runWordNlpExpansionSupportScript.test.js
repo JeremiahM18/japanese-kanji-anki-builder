@@ -115,7 +115,12 @@ test("formatWordNlpExpansionSupportPlan keeps the certification boundary visible
 
     assert.match(text, /Mode: dry-run/);
     assert.match(text, /Levels: N4/);
+    assert.match(text, /review-amplification/);
+    assert.match(text, /not a certification path/);
+    assert.match(text, /broad model-backed support/);
     assert.match(text, /assistive-only; human promotion required/);
+    assert.match(text, /no source-truth approval/);
+    assert.match(text, /deck:words:obsidian:rereview-status/);
     assert.match(text, /N4 reading-gap candidate suggestions/);
     assert.match(text, /NLP governance gate/);
 });

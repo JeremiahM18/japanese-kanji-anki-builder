@@ -263,7 +263,10 @@ function formatWordNlpExpansionSupportPlan(plan, { dryRun = false } = {}) {
         "",
         `Mode: ${dryRun ? "dry-run" : "execute"}`,
         `Levels: ${plan.levels.map((level) => `N${level}`).join(", ")}`,
-        "Authority: assistive-only; human promotion required; no tracked template writes; no card certification.",
+        "Role: governed review-amplification between generated word output and human promotion; not a certification path.",
+        "Product boundary: word deck only; broad model-backed support for tokenization, embeddings, example reranking, sense-fit warnings, reading-gap candidates, review packets, and draft proposals.",
+        "Authority: assistive-only; human promotion required; no tracked template writes; no card certification; no source-truth approval; no release-readiness claim.",
+        "Obsidian remains gated by deck:words:obsidian:rereview-status and deck:words:obsidian:certify-status after human rereview of the live word card.",
         "",
         "Steps:",
     ];

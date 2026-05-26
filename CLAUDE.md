@@ -123,7 +123,7 @@ Keep the review layers separate.
 - A level can be Gold-reviewed and still not be release-ready.
 - Do not use Gold coverage as a substitute for Platinum.
 - Do not use Platinum coverage as a substitute for Gold regression or Obsidian proof.
-- For Obsidian batch work, follow [docs/workflows.md](docs/workflows.md): run status and batch commands as the work queue, run the governed NLP support lane, perform the human review, then run the fail-closed certification command only when the selected scope should be complete.
+- For Obsidian batch work, follow [docs/obsidian-batch-workflow.md](docs/obsidian-batch-workflow.md): run status and batch commands as the work queue, refresh the generated surface, run the governed NLP support lane, perform the human review, run structural/reading verification, then run the fail-closed certification command only when the selected scope should be complete.
 
 ## N5/N4 Word Freeze
 

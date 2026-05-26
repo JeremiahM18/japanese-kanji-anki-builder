@@ -232,7 +232,7 @@ Review layers:
 - Obsidian certification requires explicit non-mechanical current-version rereview proof.
 - Platinum manifests are in progress. Only active `platinum` and `fixed_then_platinum` entries can count as reviewed release coverage.
 - Kanji Platinum entries before `kanji-platinum-v3-evidence-lanes`, and word Platinum entries before `word-platinum-v3-evidence-lanes`, are legacy history until revalidated.
-- Use the [Obsidian batch workflow](docs/workflows.md#run-obsidian-batches) for review batches. Run status, batch, and NLP support during the work; run the fail-closed certification gate when the selected scope is expected to be fully Obsidian.
+- Use the [Obsidian batch workflow](docs/obsidian-batch-workflow.md) for review batches. Run status, batch, generated-surface refresh, NLP support, human review, structural/reading verification, and progress checks during the work; run the fail-closed certification gate only when the selected scope is expected to be fully Obsidian.
 
 ## Core Workflows
 

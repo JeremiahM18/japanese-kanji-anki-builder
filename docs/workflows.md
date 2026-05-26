@@ -2,7 +2,7 @@
 
 This document collects the common local workflows for setup, preview, build, media, word expansion, and output review.
 
-The commands here are operational tools. They do not replace Gold regression, Platinum gates, Obsidian proof, release QA, or manual Anki import review.
+The commands here are operational tools. They do not replace Gold regression, Platinum gates, Obsidian proof, release QA, or manual Anki import review. For the exact Obsidian pass checklist, use [obsidian-batch-workflow.md](obsidian-batch-workflow.md).
 
 ## Setup
 
@@ -74,7 +74,7 @@ The `npm run deck:platinum:n5` and `npm run deck:words:platinum:n5` commands are
 
 ## Run Obsidian batches
 
-Use this sequence for every Obsidian batch. Do not wait until the level is complete before running the status and batch commands; they are the work queue.
+Use [obsidian-batch-workflow.md](obsidian-batch-workflow.md) as the source of truth for every Obsidian pass. Do not wait until the level is complete before running the status and batch commands; they are the work queue.
 
 ### Kanji Obsidian batch
 

@@ -43,6 +43,8 @@ npm run deck:review:accessibility -- --deck-kind=word
 npm run product:artifacts:n5
 npm run product:artifacts:kanji:n5:preflight
 npm run product:artifacts:kanji:n5
+npm run product:artifacts:kanji:n4:preflight
+npm run product:artifacts:kanji:n4
 npm run product:artifacts:kanji:all
 npm run product:artifacts:kanji:release-qa
 npm run product:readiness:n5
@@ -55,9 +57,9 @@ npm run release:gate
 
 It does not certify tracked-source kanji TSVs, `.apkg` files, managed media packages, or manual QA.
 
-`product:artifacts:kanji:n5:preflight` inspects tracked templates and reports whether N5 kanji source availability is sufficient for tracked-source kanji TSV certification without ignored local `data/` inputs. It currently reports `certifiable: yes` for source availability because JLPT level, starter meanings, component/radical data, KANJIDIC2 on/kun reading reference, and N5 card-field source provenance are all tracked and audited. The same governed card-field lane now covers N4 through `templates/kanji_card_field_source_contracts/n4.json`. `product:artifacts:kanji:preflight` runs the check across N5 through N1 and fails closed where governed card-field source contracts are missing.
+`product:artifacts:kanji:n5:preflight` and `product:artifacts:kanji:n4:preflight` inspect tracked templates and report whether N5 or N4 kanji source availability is sufficient for tracked-source kanji TSV certification without ignored local `data/` inputs. N5 and N4 currently report `certifiable: yes` because JLPT level, starter meanings, component/radical data, KANJIDIC2 on/kun reading reference, and level-specific card-field source provenance are tracked and audited. `product:artifacts:kanji:preflight` runs the check across N5 through N1 and fails closed where governed card-field source contracts are missing.
 
-`product:artifacts:kanji:n5` builds a fresh source-derived N5 kanji TSV from tracked contracts only: JLPT level, KANJIDIC2 reading-reference, N5 card-field source provenance, and component/radical data. It validates the kanji note schema header, row count, required learner-facing fields, primary-reading reference membership, and deterministic repeated output. It does not read ignored local `data/`, does not use network inference, and does not package `.apkg` files or certify media/manual QA.
+`product:artifacts:kanji:n5` and `product:artifacts:kanji:n4` build fresh source-derived kanji TSVs from tracked contracts only: JLPT level, KANJIDIC2 reading-reference, level-specific card-field source provenance, and component/radical data. They validate the kanji note schema header, row count, required learner-facing fields, primary-reading reference membership, and deterministic repeated output. They do not read ignored local `data/`, use network inference, package `.apkg` files, or certify media/manual QA.
 
 `product:artifacts:kanji:all` runs the same tracked-source kanji TSV gate across N5 through N1. Today N5 and N4 pass and write TSV artifacts; N3, N2, and N1 fail closed on missing governed card-field source contracts. That failure is expected until each level has a source-derived field contract in the existing governance lane.
 

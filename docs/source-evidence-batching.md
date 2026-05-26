@@ -177,13 +177,21 @@ Commit the tracked pin, tracked evidence manifest, docs, and tests together only
 Source-evidence milestones are not product release approval. Before any release claim, run the applicable product gates:
 
 ```bash
+npm run supply-chain:audit
 npm run deck:ready
 npm run deck:words:ready
 npm run deck:review:n5
 npm run deck:words:review:n5
 npm run deck:platinum:n5
 npm run deck:words:platinum:n5
+npm run deck:kanji:obsidian:certify-status -- --levels=<levels>
+npm run deck:words:obsidian:certify-status -- --levels=<levels>
+npm run product:artifacts:n5
+npm run product:artifacts:kanji:n5
+npm run product:artifacts:kanji:n4
+npm run product:artifacts:kanji:preflight
+npm run product:artifacts:kanji:release-qa
 npm run release:gate
 ```
 
-Use the level-specific N4, N3, N2, or N1 commands when that level is the release surface. Kanji deck readiness and word deck readiness remain separate products and must be reported separately.
+Use the level-specific N4, N3, N2, or N1 commands when that level is the release surface. Use `product:artifacts:kanji:all` before cross-level kanji claims; it must fail closed for levels without governed field-source contracts. Kanji deck readiness, word deck readiness, tracked-source TSV certification, APKG/media QA, and Obsidian proof remain separate products and must be reported separately.

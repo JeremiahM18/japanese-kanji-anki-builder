@@ -51,7 +51,7 @@ The governed model-backed artifact surface starts with suggestion validation:
 
 ```bash
 npm run deck:words:expansion-support -- --levels=5,4,3,2,1
-npm run deck:kanji:nlp-signals -- --levels=5,4
+npm run deck:kanji:nlp-signals -- --levels=5,4,3,2,1
 npm run nlp:examples:rerank -- --level=5
 npm run nlp:sense-fit:audit -- --level=5
 npm run nlp:reading-gaps:discover -- --level=5 --include-deferred

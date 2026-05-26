@@ -32,10 +32,25 @@ Run the standard checks before opening a pull request:
 npm run lint
 npm run typecheck
 npm test
+npm run supply-chain:audit
 npm run ci:smoke
 npm run release:gate
 npm run deck:package -- --levels=5 --limit=1 --skip-media-sync
 ```
+
+Run product gates when the change affects shipped deck content, source contracts, generated artifact boundaries, or release-readiness language:
+
+```bash
+npm run product:artifacts:n5
+npm run product:artifacts:kanji:n5:preflight
+npm run product:artifacts:kanji:n5
+npm run product:artifacts:kanji:n4:preflight
+npm run product:artifacts:kanji:n4
+npm run product:artifacts:kanji:preflight
+npm run product:artifacts:kanji:release-qa
+```
+
+Use `product:artifacts:kanji:all` before cross-level kanji claims. It is expected to fail closed while N3/N2/N1 lack governed card-field source contracts.
 
 If your change affects assistive NLP manifests, runtimes, model artifacts, generated NLP artifact contracts, or NLP governance docs, also run:
 

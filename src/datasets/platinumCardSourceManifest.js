@@ -7,6 +7,7 @@ const sourceTypeSchema = z.enum([
     "generated_artifact",
     "kanji_assignment_origin",
     "kanji_reference",
+    "kanji_reading_reference",
     "learner_reference",
     "lexical_dictionary",
     "official_kanji_reference",

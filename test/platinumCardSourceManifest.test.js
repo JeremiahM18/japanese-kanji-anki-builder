@@ -97,6 +97,8 @@ test("tracked platinum card source manifest loads with field and non-field sourc
     assert.equal(manifest.sources.jlptstudy_net.disallowedUse.includes("word-field-verification"), true);
     assert.equal(manifest.sources.source_governance_manifest.disallowedUse.includes("kanji-field-verification"), true);
     assert.equal(manifest.sources.kanjidic2_legacy.allowedUse.includes("placement-claim-origin"), true);
+    assert.equal(manifest.sources.kanjidic2_reading_reference.allowedUse.includes("kanji-reading-reference"), true);
+    assert.equal(manifest.sources.kanjidic2_reading_reference.disallowedUse.includes("kanji-field-verification"), true);
 });
 
 test("kanji platinum japanese-source lanes do not cite generated local artifacts as source names", () => {

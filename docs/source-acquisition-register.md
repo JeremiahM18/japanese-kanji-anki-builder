@@ -30,6 +30,7 @@ Last verified: 2026-05-20 from live repo audits and source-use review.
 | Lane | 2026-05-11 decision | Allowed use | Still blocked from |
 | --- | --- | --- | --- |
 | `joyo_grade` | Approved for covered MEXT/Bunka official background metadata with attribution. | Background-only sanity metadata. | JLPT assignment votes or deck movement. |
+| `kanjidic2_reading_reference` | Approved under EDRDG KANJIDIC2 CC BY-SA 4.0 with attribution. | Bulk-derived tracked on/kun reading-reference contract. | Full kanji-card field verification, JLPT placement truth, copied raw XML, or release certification. |
 | `jpdb` | Restricted. Terms forbid automated access/scraping and require contact before unintended use. | Sparse manual frequency sanity only, with citation. | Automated extraction, raw data storage, assignment votes. |
 | `kanshudo` | Restricted. Terms reserve data and require express permission for non-study use; licensing is offered. | None for product evidence until permission/license. | Assignment import, copying, scraping, distribution, consensus voting. |
 | `wanikani` | Restricted. API exists, but terms reserve content rights and require compliance with API terms/rate limits; high-throughput/resale use may require subscription access. | None for product evidence until API/export and permission path is approved. | Assignment import, copying, resale/exploitation, consensus voting. |

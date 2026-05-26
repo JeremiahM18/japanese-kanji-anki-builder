@@ -52,11 +52,11 @@ npm run release:gate
 
 It does not certify tracked-source kanji TSVs, `.apkg` files, managed media packages, or manual QA.
 
-`product:artifacts:kanji:n5:preflight` inspects tracked templates and reports whether N5 kanji TSV certification is possible without ignored local `data/` inputs. It currently reports `certifiable: no` because explicit on-yomi, kun-yomi, and rich-source provenance are not yet tracked as product contracts.
+`product:artifacts:kanji:n5:preflight` inspects tracked templates and reports whether N5 kanji TSV certification is possible without ignored local `data/` inputs. It currently reports `certifiable: no` because rich kanji source provenance is not yet a tracked release contract. Explicit on-yomi and kun-yomi now have a governed KANJIDIC2 reading-reference contract, but that lane does not verify full card fields or certify generated rows by itself.
 
 Use `-- --require-certifiable` only when the remaining contracts exist and the command is expected to fail closed.
 
-Tracked CI tests must not read ignored root `data/*` inputs. Use tracked contracts, tracked fixtures, or explicit temp fixtures in CI. Exact kanji primary-reading checks against generated `OnReading`/`KunReading` remain in local generated-row Platinum gates until a governed tracked kanji reading inventory lane exists.
+Tracked CI tests must not read ignored root `data/*` inputs. Use tracked contracts, tracked fixtures, or explicit temp fixtures in CI. Exact kanji primary-reading checks against generated `OnReading`/`KunReading` remain in local generated-row Platinum gates; the tracked KANJIDIC2 contract is reading-reference evidence only.
 
 `product:readiness:n5` runs the current automated N5 product checkpoint: JLPT audits, governed audio provenance, tracked-source N5 word TSV generation, N5 word-level placement audit, and N5 kanji and word Gold regression checks.
 

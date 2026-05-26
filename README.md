@@ -148,6 +148,7 @@ Tracked contracts define release behavior:
 | JLPT kanji source evidence | [templates/jlpt_kanji_source_evidence.json](templates/jlpt_kanji_source_evidence.json), [templates/jlpt_kanji_source_evidence/assignments](templates/jlpt_kanji_source_evidence/assignments) |
 | JLPT kanji source acquisition | [docs/source-acquisition-register.md](docs/source-acquisition-register.md) |
 | JLPT kanji source-input preflight | [templates/jlpt_kanji_source_inputs.json](templates/jlpt_kanji_source_inputs.json) |
+| Kanji reading reference | [templates/kanji_reading_reference_contract.json](templates/kanji_reading_reference_contract.json) |
 | JLPT word taxonomy | [templates/jlpt_word_level_contract.json](templates/jlpt_word_level_contract.json) |
 | Audio source policy | [templates/audio_source_policy.json](templates/audio_source_policy.json) |
 | Kanji note schema | [src/config/ankiNoteSchema.json](src/config/ankiNoteSchema.json) |
@@ -278,7 +279,7 @@ Clean CI runs `data:audit:jlpt -- --strict --tracked-only`, `data:audit:jlpt:sou
 
 Clean CI does not run `deck:platinum:governance-gate` because that command exercises ignored local `data/*` real generated-row inputs. Run it in a local-data workspace before release claims that depend on current generated N5/N4 rows.
 
-Tracked CI tests must not read ignored root `data/*` inputs. Use tracked contracts, tracked fixtures, or explicit temp fixtures in CI; exact kanji primary-reading checks against generated `OnReading`/`KunReading` remain in the local generated-row Platinum gates until a governed tracked kanji reading inventory exists.
+Tracked CI tests must not read ignored root `data/*` inputs. Use tracked contracts, tracked fixtures, or explicit temp fixtures in CI. The tracked KANJIDIC2 reading contract is a `kanji-reading-reference` lane only; exact kanji primary-reading checks against generated `OnReading`/`KunReading` remain in the local generated-row Platinum gates.
 
 Benchmark budget commands are manual/local performance guardrails, not GitHub Actions CI gates. `data:benchmark:jlpt:sources:gate` and `bench:build:gate` are manual/local performance guardrails for source-evidence and build-performance changes. `bench:build:gate` requires a ready local workspace and writes benchmark output under the configured benchmark output directory.
 

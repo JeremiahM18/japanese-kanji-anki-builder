@@ -150,6 +150,7 @@ For workflow ordering, use [workflows.md](workflows.md). For release gate bounda
 | `npm run data:packet:jlpt:source-access -- --source=<source-id> --surface-type=<surface-type> --title="<surface title>" --citation="<source citation>" --evidence-ref="<source reference>" --notes="<exact assignment proof>"` | Write an ignored source-access packet required before `100+` all-level source-review generation or merge of `100+` importable reviewed rows |
 | `npm run data:merge:jlpt:source-batch -- --source=<source-id> --batch=<ignored-batch.tsv>` | Dry-run merge a reusable local source-decision batch into its full ignored source worksheet without importing evidence or changing decks; pass `--source-access-packet=<ignored-packet.json>` for `100+` importable reviewed rows |
 | `npm run data:normalize:kanjidic2-jlpt` | Normalize ignored local KANJIDIC2 XML into the pinned source-input TSV shape |
+| `npm run data:build:kanji-reading-reference` | Build the tracked KANJIDIC2 on/kun reading-reference contract without moving JLPT levels or certifying card fields |
 | `npm run data:normalize:tanos-jlpt-kanji` | Normalize ignored local Tanos N1/N4/N5 base text files into the pinned source-input TSV shape |
 | `npm run data:normalize:tanos-jlpt-kanji -- --lane=estimated-split` | Normalize ignored local Tanos N2/N3 estimated PDF text into the pinned source-input TSV shape |
 | `npm run data:import:jlpt:source-input -- --source=tanos_legacy_direct` | Dry-run import of the passing Tanos direct legacy source input into the JLPT kanji source-evidence manifest |

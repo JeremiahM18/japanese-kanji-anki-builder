@@ -12,6 +12,7 @@ const {
     buildJlptOnlyJsonFromContract,
     buildTrackedSourceKanjiPreflight,
     buildTrackedSourceWordArtifact,
+    countReadingReferenceEntriesForLevel,
     evaluateTrackedSourceKanjiPreflight,
     evaluateWordArtifact,
     formatTrackedSourceArtifactReport,
@@ -61,14 +62,15 @@ test("evaluateWordArtifact enforces schema, governance, and deterministic output
 });
 
 test("evaluateTrackedSourceKanjiPreflight blocks certification without rich tracked kanji data", () => {
-    const report = evaluateTrackedSourceKanjiPreflight({
-        jlptLevelContract: {
-            inventoryCounts: { "5": 2 },
-            kanjiLevels: {
-                公: 5,
-                園: 5,
-            },
+    const jlptLevelContract = {
+        inventoryCounts: { "5": 2 },
+        kanjiLevels: {
+            公: 5,
+            園: 5,
         },
+    };
+    const report = evaluateTrackedSourceKanjiPreflight({
+        jlptLevelContract,
         curatedStudyData: {
             公: { englishMeaning: "public" },
             園: { englishMeaning: "garden" },
@@ -78,6 +80,16 @@ test("evaluateTrackedSourceKanjiPreflight blocks certification without rich trac
                 公: ["八", "ム"],
                 園: ["囗", "袁"],
             },
+        },
+        readingReferenceContract: {
+            entries: {
+                公: { onReadings: ["コウ"], kunReadings: [] },
+                園: { onReadings: ["エン"], kunReadings: ["その"] },
+            },
+        },
+        readingReferenceAudit: {
+            passed: true,
+            failures: [],
         },
         level: 5,
     });
@@ -89,9 +101,10 @@ test("evaluateTrackedSourceKanjiPreflight blocks certification without rich trac
     assert.equal(report.counts.curatedMeanings, 2);
     assert.deepEqual(
         report.blockers.map((blocker) => blocker.id),
-        ["on-readings", "kun-readings", "rich-source-provenance"]
+        ["rich-source-provenance"]
     );
     assert.equal(report.counts.componentContractKanji, 2);
+    assert.equal(report.counts.readingReferenceKanji, 2);
 });
 
 test("buildTrackedSourceKanjiPreflight reports N5 kanji source blockers without local data", () => {
@@ -102,10 +115,34 @@ test("buildTrackedSourceKanjiPreflight reports N5 kanji source blockers without 
     assert.equal(report.scope, N5_TRACKED_SOURCE_KANJI_PREFLIGHT_SCOPE);
     assert.equal(report.kanji.counts.expectedKanji, 80);
     assert.equal(report.kanji.counts.contractKanji, 80);
-    assert.equal(report.kanji.blockers.some((blocker) => blocker.id === "on-readings"), true);
-    assert.equal(report.kanji.blockers.some((blocker) => blocker.id === "kun-readings"), true);
+    assert.equal(report.kanji.blockers.some((blocker) => blocker.id === "on-readings"), false);
+    assert.equal(report.kanji.blockers.some((blocker) => blocker.id === "kun-readings"), false);
     assert.equal(report.kanji.blockers.some((blocker) => blocker.id === "components"), false);
     assert.equal(report.kanji.counts.componentContractKanji, 80);
+    assert.equal(report.kanji.counts.readingReferenceKanji, 80);
+});
+
+test("countReadingReferenceEntriesForLevel scopes tracked reading coverage to the selected level", () => {
+    const coverage = countReadingReferenceEntriesForLevel({
+        kanjiLevels: {
+            日: 5,
+            本: 5,
+            海: 4,
+        },
+    }, {
+        entries: {
+            日: { onReadings: ["ニチ"], kunReadings: ["ひ"] },
+            海: { onReadings: ["カイ"], kunReadings: ["うみ"] },
+        },
+    }, 5);
+
+    assert.deepEqual(coverage, {
+        expected: 2,
+        covered: 1,
+        missing: 1,
+        withOnReading: 1,
+        withKunReading: 1,
+    });
 });
 
 test("buildTrackedSourceWordArtifact builds N5 word TSV without local workspace data", async () => {
@@ -167,6 +204,7 @@ test("formatTrackedSourceKanjiPreflightReport states blocked certification scope
                 contractKanji: 80,
                 curatedMeanings: 80,
                 componentContractKanji: 80,
+                readingReferenceKanji: 80,
             },
             requirements: [
                 {
@@ -188,5 +226,6 @@ test("formatTrackedSourceKanjiPreflightReport states blocked certification scope
     assert.match(text, /Tracked-source kanji TSV certifiable: no/);
     assert.match(text, /component\/radical source data/);
     assert.match(text, /component contract entries: 80/);
+    assert.match(text, /reading reference entries: 80/);
     assert.match(text, /ignored local data\/ kanji, KRAD, cache, and media inputs are not read/);
 });

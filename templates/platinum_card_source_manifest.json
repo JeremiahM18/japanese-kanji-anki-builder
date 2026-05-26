@@ -7,6 +7,11 @@
       "allowedUse": ["kanji-field-verification", "single-kanji-word-field-verification"],
       "disallowedUse": ["word-field-verification", "placement-claim-origin", "level-truth"]
     },
+    "kanji_reading_reference": {
+      "description": "Attribution-compatible structured kanji dictionary/reference data that may support on/kun reading reference only.",
+      "allowedUse": ["kanji-reading-reference"],
+      "disallowedUse": ["kanji-field-verification", "word-field-verification", "placement-claim-origin", "level-truth"]
+    },
     "official_kanji_reference": {
       "description": "Official Japanese kanji reference metadata. Useful as supporting reading/reference evidence, but not a full card-field verifier by itself.",
       "allowedUse": ["kanji-reading-reference"],
@@ -406,6 +411,22 @@
       "checkedAt": "2026-05-12",
       "allowedUse": ["placement-claim-origin"],
       "disallowedUse": ["kanji-field-verification", "word-field-verification", "level-truth"]
+    },
+    "kanjidic2_reading_reference": {
+      "name": "KANJIDIC2 kanji reading reference",
+      "status": "active",
+      "sourceType": "kanji_reading_reference",
+      "matchers": ["kanjidic2_reading_reference", "KANJIDIC2 reading reference", "templates/kanji_reading_reference_contract.json"],
+      "sourceFamily": "kanjidic2",
+      "independenceGroup": "edrdg_kanjidic2",
+      "licenseUse": {
+        "status": "approved",
+        "license": "CC BY-SA 4.0",
+        "notes": "Tracked KANJIDIC2 ja_on/ja_kun reading-reference contract with EDRDG attribution. Reading-reference use only; not full kanji-card field verification, JLPT placement truth, or release certification."
+      },
+      "checkedAt": "2026-05-26",
+      "allowedUse": ["kanji-reading-reference"],
+      "disallowedUse": ["kanji-field-verification", "word-field-verification", "placement-claim-origin", "level-truth"]
     },
     "tanos_legacy_direct": {
       "name": "Tanos JLPT direct legacy resources",

@@ -34,6 +34,8 @@ kanji.gif and AnimCJK animation mirrors are allowed release sources only while s
 
 Current kanji-card readings, meanings, and kanji word-candidate data are fetched from `kanjiapi.dev` unless a local fallback or curated override supplies the field. The upstream API project builds these endpoints from EDRDG KANJIDIC2 and JMdict dictionary files.
 
+The tracked kanji reading-reference contract in `templates/kanji_reading_reference_contract.json` is derived directly from EDRDG KANJIDIC2 `ja_on` and `ja_kun` readings. It is governed as reading-reference evidence only and carries the same CC BY-SA 4.0 attribution obligation.
+
 KANJIDIC2 and JMdict are property of the Electronic Dictionary Research and Development Group and are made available under Creative Commons Attribution-ShareAlike 4.0. Public kanji deck releases that include kanjiapi-derived readings, meanings, or word data must include attribution equivalent to:
 
 `Kanji readings, meanings, and word data derived from kanjiapi.dev using EDRDG KANJIDIC2 and JMdict data, licensed under CC BY-SA 4.0`

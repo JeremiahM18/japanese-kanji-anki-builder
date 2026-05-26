@@ -19,6 +19,7 @@ const {
     isGeneratedPitchAccentSource,
 } = require("../src/services/wordPitchAccentVerificationService");
 const { buildWordStudyEntryKey } = require("../src/datasets/wordStudyData");
+const { normalizeJapaneseReading } = require("../src/utils/japanese");
 
 const ROOT_DIR = path.resolve(__dirname, "..");
 const TEMPLATES_DIR = path.join(ROOT_DIR, "templates");
@@ -45,6 +46,13 @@ function normalizeList(values = []) {
 
 function activeEntries(entries = [], activeStatuses = []) {
     return entries.filter((entry) => activeStatuses.includes(entry.status));
+}
+
+function buildKanjiReadingReferenceSet(entry = {}) {
+    return new Set([
+        ...normalizeList(entry.normalizedOnReadings),
+        ...normalizeList(entry.normalizedKunReadings),
+    ]);
 }
 
 function buildSyntheticKanjiRows(entries = [], levelLabel = "") {
@@ -144,6 +152,27 @@ test("tracked kanji platinum manifests do not regress known support-word primary
             guard.expectedReading,
             `${fileName} ${guard.kanji} must keep its tracked corrected primary reading; update this guard only with governed reading evidence`
         );
+    }
+});
+
+test("tracked active N3 through N5 kanji platinum primary readings are exact governed on/kun readings", () => {
+    const readingReference = loadJson(path.join("templates", "kanji_reading_reference_contract.json"));
+
+    for (const level of [3, 4, 5]) {
+        const fileName = `platinum_n${level}_review_set.json`;
+        const entries = loadJson(path.join("templates", fileName));
+        const manifestActiveEntries = activeEntries(entries, ACTIVE_KANJI_PLATINUM_STATUSES);
+
+        for (const entry of manifestActiveEntries) {
+            const primaryReading = normalizeJapaneseReading(normalizeList(entry.readingIncludes)[0] || "");
+            const sourceReadings = buildKanjiReadingReferenceSet(readingReference.entries?.[entry.kanji]);
+
+            assert.ok(sourceReadings.size > 0, `${fileName} missing governed KANJIDIC2 reading reference for ${entry.kanji}`);
+            assert.ok(
+                sourceReadings.has(primaryReading),
+                `${fileName} ${entry.kanji}|${normalizeList(entry.readingIncludes)[0] || ""} must be an exact governed KANJIDIC2 on/kun reading`
+            );
+        }
     }
 });
 

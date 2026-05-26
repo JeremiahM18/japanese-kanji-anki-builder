@@ -13,12 +13,14 @@ test("buildProductReadinessPlan defines the N5 automated product checkpoint", ()
     const plan = buildProductReadinessPlan({ level: 5 });
 
     assert.equal(plan.scope.type, "n5-product-readiness-checkpoint");
-    assert.equal(plan.scope.doesNotValidate.includes("tracked-source kanji TSV or .apkg product artifacts"), true);
+    assert.equal(plan.scope.doesNotValidate.includes("all-level tracked-source kanji TSV certification"), true);
+    assert.equal(plan.scope.doesNotValidate.includes(".apkg product artifacts"), true);
     assert.deepEqual(plan.commands.map((command) => command.id), [
         "kanji-contract-audit",
         "word-contract-audit",
         "audio-provenance-audit",
         "n5-tracked-source-word-artifact",
+        "n5-tracked-source-kanji-artifact",
         "n5-word-level-placement-audit",
         "n5-kanji-golden-review",
         "n5-word-golden-review",
@@ -46,6 +48,7 @@ test("runProductReadinessGate passes when all checkpoint commands pass", async (
     assert.equal(calls.some((call) => call.includes("auditJlptKanjiSourceEvidence.js")), false);
     assert.equal(calls.some((call) => call.includes("auditWordLevelAnchors.js")), true);
     assert.equal(calls.some((call) => call.includes("trackedSourceArtifacts.js")), true);
+    assert.equal(calls.some((call) => call.includes("--surface=kanji")), true);
 });
 
 test("buildSpawnOptions avoids shell-specific subprocess failures and supports large audit output", () => {
@@ -104,8 +107,9 @@ test("formatProductReadinessReport states scope and exclusions", () => {
     assert.match(text, /Overall result: passing/);
     assert.match(text, /Does not validate:/);
     assert.match(text, /platinum release-quality review/);
-    assert.match(text, /tracked-source kanji TSV or \.apkg product artifacts/);
+    assert.match(text, /all-level tracked-source kanji TSV certification/);
+    assert.match(text, /\.apkg product artifacts/);
     assert.match(text, /manual Anki import review/);
     assert.match(text, /mobile, screen-reader, or listening QA/);
-    assert.match(text, /Add tracked-source kanji TSV and \.apkg artifact gates/);
+    assert.match(text, /Run the all-level tracked-source kanji gate/);
 });

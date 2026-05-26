@@ -9,18 +9,20 @@ const N5_PRODUCT_READINESS_SCOPE = Object.freeze({
         "JLPT word contract and starter alignment",
         "managed audio provenance policy",
         "tracked-source N5 word TSV artifact generation",
+        "tracked-source N5 kanji TSV artifact generation",
         "N5 word-level placement policy",
         "N5 kanji golden review benchmark",
         "N5 word golden review benchmark",
     ],
     doesNotValidate: [
         "platinum release-quality review",
-        "tracked-source kanji TSV or .apkg product artifacts",
+        "all-level tracked-source kanji TSV certification",
+        ".apkg product artifacts",
         "manual Anki import review",
         "mobile, screen-reader, or listening QA",
     ],
     sourceBoundary: "Uses existing review and audit commands. Some checks still read required workspace inputs such as local JLPT data and managed media.",
-    followUp: "Add tracked-source kanji TSV and .apkg artifact gates before calling an N5 public release fully certified.",
+    followUp: "Run the all-level tracked-source kanji gate, APKG/media/manual QA gate, and human release QA before calling an N5 public release fully certified.",
 });
 
 const N5_PRODUCT_READINESS_COMMANDS = Object.freeze([
@@ -51,6 +53,13 @@ const N5_PRODUCT_READINESS_COMMANDS = Object.freeze([
         displayCommand: "npm run product:artifacts:n5",
         command: process.execPath,
         args: [path.join("scripts", "trackedSourceArtifacts.js"), "--level=5"],
+    }),
+    Object.freeze({
+        id: "n5-tracked-source-kanji-artifact",
+        label: "N5 tracked-source kanji TSV artifact",
+        displayCommand: "npm run product:artifacts:kanji:n5",
+        command: process.execPath,
+        args: [path.join("scripts", "trackedSourceArtifacts.js"), "--level=5", "--surface=kanji"],
     }),
     Object.freeze({
         id: "n5-word-level-placement-audit",

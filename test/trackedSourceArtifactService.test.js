@@ -9,15 +9,25 @@ const { loadJlptWordLevelContract } = require("../src/datasets/jlptWordLevelCont
 const {
     N5_TRACKED_SOURCE_ARTIFACT_SCOPE,
     N5_TRACKED_SOURCE_KANJI_PREFLIGHT_SCOPE,
+    N5_TRACKED_SOURCE_KANJI_TSV_SCOPE,
+    TRACKED_SOURCE_KANJI_RELEASE_QA_SCOPE,
     buildJlptOnlyJsonFromContract,
+    buildTrackedSourceKanjiArtifact,
+    buildTrackedSourceKanjiArtifacts,
     buildTrackedSourceKanjiPreflight,
+    buildTrackedSourceKanjiReleaseQaGate,
     buildTrackedSourceWordArtifact,
     countCardFieldSourceEntriesForLevel,
     countReadingReferenceEntriesForLevel,
+    evaluateKanjiTsvArtifact,
     evaluateTrackedSourceKanjiPreflight,
     evaluateWordArtifact,
+    formatKanjiSourceDerivedTsv,
     formatTrackedSourceArtifactReport,
+    formatTrackedSourceKanjiArtifactReport,
+    formatTrackedSourceKanjiArtifactsReport,
     formatTrackedSourceKanjiPreflightReport,
+    formatTrackedSourceKanjiReleaseQaReport,
 } = require("../src/services/trackedSourceArtifactService");
 
 test("buildJlptOnlyJsonFromContract creates deterministic in-memory JLPT input", () => {
@@ -170,6 +180,135 @@ test("buildTrackedSourceKanjiPreflight certifies N5 source availability without 
     assert.equal(report.kanji.counts.cardFieldSourceKanji, 80);
 });
 
+test("buildTrackedSourceKanjiPreflight is all-level aware and blocks levels without field-source contracts", () => {
+    const report = buildTrackedSourceKanjiPreflight({ level: 4 });
+
+    assert.equal(report.passed, false);
+    assert.equal(report.certifiable, false);
+    assert.equal(report.scope.type, "n4-tracked-source-kanji-preflight");
+    assert.equal(report.kanji.counts.expectedKanji, 212);
+    assert.equal(report.kanji.counts.readingReferenceKanji, 212);
+    assert.equal(report.kanji.counts.cardFieldSourceKanji, 0);
+    assert.equal(report.kanji.blockers.some((blocker) => blocker.id === "rich-source-provenance"), true);
+    assert.equal(
+        report.kanji.failures.some((failure) => failure.includes("scoped to N5, not N4")),
+        true
+    );
+});
+
+test("formatKanjiSourceDerivedTsv builds schema-aligned rows from tracked source contracts", () => {
+    const header = loadAnkiNoteSchema("kanji").fieldNames;
+    const tsv = formatKanjiSourceDerivedTsv({
+        level: 5,
+        expectedHeader: header,
+        jlptLevelContract: {
+            inventoryCounts: { "5": 1 },
+            kanjiLevels: { 日: 5 },
+        },
+        componentContract: {
+            components: { 日: ["日"] },
+        },
+        readingReferenceContract: {
+            entries: {
+                日: {
+                    onReadings: ["ニチ"],
+                    kunReadings: ["ひ"],
+                    normalizedOnReadings: ["にち"],
+                    normalizedKunReadings: ["ひ"],
+                },
+            },
+        },
+        fieldSourceContract: {
+            entries: {
+                日: {
+                    fieldValues: {
+                        primaryReading: "ひ",
+                        primaryMeaning: "day",
+                        kanjiMeanings: ["day", "sun"],
+                        supportNotes: ["日"],
+                        exampleSentences: ["今日はいい日です。"],
+                    },
+                },
+            },
+        },
+    });
+
+    const report = evaluateKanjiTsvArtifact({
+        tsv,
+        repeatTsv: tsv,
+        expectedHeader: header,
+        expectedRows: 1,
+        preflight: { certifiable: true },
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.rowCount, 1);
+    assert.match(tsv, /^Kanji\tDisplayWord\tMeaningJP\tPrimaryReading/u);
+    assert.match(tsv, /\n日\t日\tday\tひ\tday \/ sun\t\tニチ\tひ\t\t\t日\t日\t今日はいい日です。/u);
+});
+
+test("buildTrackedSourceKanjiArtifact builds N5 source-derived kanji TSV without local workspace data", async () => {
+    const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "kanji-tracked-source-kanji-"));
+
+    try {
+        const report = await buildTrackedSourceKanjiArtifact({
+            level: 5,
+            outDir: tempRoot,
+        });
+
+        assert.equal(report.passed, true);
+        assert.equal(report.certifiable, true);
+        assert.equal(report.scope, N5_TRACKED_SOURCE_KANJI_TSV_SCOPE);
+        assert.equal(report.kanji.rowCount, 80);
+        assert.equal(report.kanji.deterministic, true);
+        assert.equal(report.preflight.certifiable, true);
+        assert.equal(fs.existsSync(path.join(tempRoot, "exports", "jlpt-n5-kanji.tsv")), true);
+        assert.equal(fs.existsSync(path.join(tempRoot, "reports", "tracked-source-kanji-artifact-summary.json")), true);
+    } finally {
+        fs.rmSync(tempRoot, { recursive: true, force: true });
+    }
+});
+
+test("buildTrackedSourceKanjiArtifact fails closed for levels missing field-source contracts", async () => {
+    const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "kanji-tracked-source-kanji-n4-"));
+
+    try {
+        const report = await buildTrackedSourceKanjiArtifact({
+            level: 4,
+            outDir: tempRoot,
+        });
+
+        assert.equal(report.passed, false);
+        assert.equal(report.certifiable, false);
+        assert.equal(report.scope.type, "n4-tracked-source-kanji-tsv");
+        assert.equal(report.kanji.rowCount, 0);
+        assert.equal(report.artifacts.kanjiTsvPath, null);
+        assert.equal(fs.existsSync(path.join(tempRoot, "exports", "jlpt-n4-kanji.tsv")), false);
+        assert.equal(fs.existsSync(path.join(tempRoot, "reports", "tracked-source-kanji-artifact-summary.json")), true);
+    } finally {
+        fs.rmSync(tempRoot, { recursive: true, force: true });
+    }
+});
+
+test("buildTrackedSourceKanjiArtifacts reports all selected levels instead of only N5", async () => {
+    const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "kanji-tracked-source-kanji-all-"));
+
+    try {
+        const report = await buildTrackedSourceKanjiArtifacts({
+            levels: [5, 4],
+            outDir: tempRoot,
+        });
+
+        assert.equal(report.passed, false);
+        assert.equal(report.certifiable, false);
+        assert.deepEqual(report.levels.map((levelReport) => levelReport.scope.level), [5, 4]);
+        assert.equal(report.levels[0].passed, true);
+        assert.equal(report.levels[1].passed, false);
+    } finally {
+        fs.rmSync(tempRoot, { recursive: true, force: true });
+    }
+});
+
 test("countReadingReferenceEntriesForLevel scopes tracked reading coverage to the selected level", () => {
     const coverage = countReadingReferenceEntriesForLevel({
         kanjiLevels: {
@@ -238,6 +377,31 @@ test("buildTrackedSourceWordArtifact builds N5 word TSV without local workspace 
     }
 });
 
+test("buildTrackedSourceKanjiReleaseQaGate keeps APKG/media/manual QA fail-closed", () => {
+    const report = buildTrackedSourceKanjiReleaseQaGate({
+        levels: [5],
+        artifactSummaries: [
+            {
+                passed: true,
+                scope: { level: 5 },
+                artifacts: {
+                    kanjiTsvPath: "out/product-readiness/n5-tracked-source-kanji/exports/jlpt-n5-kanji.tsv",
+                },
+                reports: {
+                    summaryPath: "out/product-readiness/n5-tracked-source-kanji/reports/tracked-source-kanji-artifact-summary.json",
+                },
+            },
+        ],
+    });
+
+    assert.equal(report.passed, false);
+    assert.equal(report.certifiable, false);
+    assert.equal(report.scope, TRACKED_SOURCE_KANJI_RELEASE_QA_SCOPE);
+    assert.equal(report.levels[0].requirements.find((requirement) => requirement.id === "tracked-source-kanji-tsv").passed, true);
+    assert.equal(report.levels[0].requirements.find((requirement) => requirement.id === "apkg-package").status, "manual-required");
+    assert.equal(report.levels[0].requirements.find((requirement) => requirement.id === "managed-media-provenance").status, "manual-required");
+});
+
 test("formatTrackedSourceArtifactReport states source boundary and exclusions", () => {
     const text = formatTrackedSourceArtifactReport({
         passed: true,
@@ -260,6 +424,98 @@ test("formatTrackedSourceArtifactReport states source boundary and exclusions", 
     assert.match(text, /Tracked-Source Artifact Checkpoint/);
     assert.match(text, /ignored local data\/ word, sentence, JLPT, cache, and media inputs are not read/);
     assert.match(text, /tracked-source kanji TSV artifacts/);
+});
+
+test("formatTrackedSourceKanjiArtifactReport states generated TSV boundaries", () => {
+    const text = formatTrackedSourceKanjiArtifactReport({
+        passed: true,
+        certifiable: true,
+        scope: N5_TRACKED_SOURCE_KANJI_TSV_SCOPE,
+        artifacts: {
+            kanjiTsvPath: "out/product-readiness/n5-tracked-source-kanji/exports/jlpt-n5-kanji.tsv",
+        },
+        kanji: {
+            rowCount: 80,
+            deterministic: true,
+            sha256: "abc",
+            failures: [],
+        },
+        preflight: {
+            passed: true,
+            certifiable: true,
+            kanji: {
+                counts: {
+                    cardFieldSourceKanji: 80,
+                    readingReferenceKanji: 80,
+                },
+                blockers: [],
+            },
+        },
+    });
+
+    assert.match(text, /Tracked-Source Kanji TSV Artifact Gate/);
+    assert.match(text, /rows: 80/);
+    assert.match(text, /ignored local data\/ kanji, KRAD, cache, and media inputs are not read/);
+    assert.match(text, /fresh \.apkg product artifacts/);
+});
+
+test("formatTrackedSourceKanjiArtifactsReport summarizes five-level blockers", () => {
+    const text = formatTrackedSourceKanjiArtifactsReport({
+        passed: false,
+        certifiable: false,
+        scope: {
+            type: "tracked-source-kanji-tsv-multi-level",
+            sourceBoundary: "tracked contracts only",
+        },
+        levels: [
+            {
+                passed: true,
+                scope: { level: 5 },
+                kanji: { rowCount: 80 },
+                artifacts: { kanjiTsvPath: "out/n5.tsv" },
+            },
+            {
+                passed: false,
+                scope: { level: 4 },
+                kanji: { rowCount: 0, failures: ["tracked-source kanji preflight is not certifiable"] },
+                artifacts: { kanjiTsvPath: null },
+                preflight: {
+                    kanji: {
+                        blockers: [{ id: "rich-source-provenance" }],
+                    },
+                },
+            },
+        ],
+    });
+
+    assert.match(text, /N5: passing/);
+    assert.match(text, /N4: blocked/);
+    assert.match(text, /rich-source-provenance/);
+});
+
+test("formatTrackedSourceKanjiReleaseQaReport states manual QA blockers", () => {
+    const text = formatTrackedSourceKanjiReleaseQaReport({
+        passed: false,
+        certifiable: false,
+        scope: TRACKED_SOURCE_KANJI_RELEASE_QA_SCOPE,
+        levels: [
+            {
+                level: 5,
+                passed: false,
+                requirements: [
+                    {
+                        status: "manual-required",
+                        label: "N5 governed APKG package approval",
+                        blocker: "No governed tracked-source kanji APKG package approval is recorded.",
+                    },
+                ],
+            },
+        ],
+    });
+
+    assert.match(text, /APKG\/Media\/Manual QA Gate/);
+    assert.match(text, /manual-required: N5 governed APKG package approval/);
+    assert.match(text, /cannot be inferred from green unit tests|automatic APKG import success/);
 });
 
 test("formatTrackedSourceKanjiPreflightReport states certification scope", () => {

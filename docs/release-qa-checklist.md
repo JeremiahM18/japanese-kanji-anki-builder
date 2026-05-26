@@ -12,6 +12,9 @@ Run this checklist after automated gates pass and before marking a deck mileston
 - `npm run deck:kanji:review-status`
 - `npm run product:artifacts:n5` when N5 word ships
 - `npm run product:artifacts:kanji:n5:preflight` when N5 kanji ships
+- `npm run product:artifacts:kanji:n5` when N5 kanji ships
+- `npm run product:artifacts:kanji:all` before cross-level kanji release claims
+- `npm run product:artifacts:kanji:release-qa` before any kanji release-ready claim
 - `npm run product:readiness:n5` when N5 ships
 - `npm run nlp:governance-gate` when assistive NLP manifests, runtimes, artifact contracts, or governance docs changed
 - `npm run ci:smoke`
@@ -46,8 +49,11 @@ Run this checklist after automated gates pass and before marking a deck mileston
 - Run `npm run deck:words:platinum:source-posture -- --levels=<levels>` before claiming independent word-source corroboration. Single-source-family entries are structurally governed but are reported as `word_source_independence_not_proven`; word source-claim origin independence is reported as `word_source_claim_origin_independence_not_evaluated` until a word source-origin manifest exists.
 - Run `npm run deck:platinum:governance-gate` in a local-data workspace before release claims that depend on current real generated N5/N4 rows. In clean CI without ignored `data/*` inputs, use its absence as a scope limitation rather than as proof that level platinum was validated.
 - Run `npm run product:artifacts:n5` for an N5 word release. It proves the N5 word TSV can be regenerated from tracked templates only, but it does not validate kanji TSVs, `.apkg` files, or media packages.
-- Run `npm run product:artifacts:kanji:n5:preflight` for an N5 kanji release. It reports whether tracked source contracts are sufficient for N5 kanji TSV source availability without ignored local `data/` inputs. Component/radical source data is tracked in `templates/kanji_component_contract.json`, on/kun reading reference data is tracked in `templates/kanji_reading_reference_contract.json`, and N5 card-field source provenance is tracked in `templates/kanji_card_field_source_contract.json`. This preflight still does not generate the fresh kanji TSV, package `.apkg`, or replace manual QA.
-- Run `npm run product:readiness:n5` for an N5 release. It combines the current automated N5 audits and Gold regression checks, but it does not replace fresh artifact generation or manual QA.
+- Run `npm run product:artifacts:kanji:n5:preflight` for an N5 kanji release. It reports whether tracked source contracts are sufficient for N5 kanji TSV source availability without ignored local `data/` inputs. Component/radical source data is tracked in `templates/kanji_component_contract.json`, on/kun reading reference data is tracked in `templates/kanji_reading_reference_contract.json`, and N5 card-field source provenance is tracked in `templates/kanji_card_field_source_contract.json`.
+- Run `npm run product:artifacts:kanji:n5` for an N5 kanji release. It builds the fresh source-derived N5 kanji TSV from tracked contracts only and validates schema, row count, source-derived required fields, primary-reading reference membership, and deterministic repeated output. It still does not package `.apkg`, review media/listening quality, or replace manual QA.
+- Run `npm run product:artifacts:kanji:all` before any cross-level kanji claim. Current expected posture is N5 passing and N4/N3/N2/N1 blocked on missing governed card-field source contracts, not silently skipped.
+- Run `npm run product:artifacts:kanji:release-qa` before any kanji release-ready claim. It must stay blocked until APKG approval, managed stroke-order/audio QA, manual Anki import review, mobile QA, screen-reader QA, and listening QA are recorded.
+- Run `npm run product:readiness:n5` for an N5 release. It combines the current automated N5 audits, tracked-source N5 word and kanji TSV gates, and Gold regression checks, but it does not replace the all-level kanji gate, APKG approval, or manual QA.
 - Run the deck readiness command for each shipped kanji or word surface.
 - Confirm tracked-source coverage, provenance, and known limitations match the intended release.
 

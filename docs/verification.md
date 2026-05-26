@@ -42,6 +42,9 @@ npm run deck:review:accessibility -- --deck-kind=kanji
 npm run deck:review:accessibility -- --deck-kind=word
 npm run product:artifacts:n5
 npm run product:artifacts:kanji:n5:preflight
+npm run product:artifacts:kanji:n5
+npm run product:artifacts:kanji:all
+npm run product:artifacts:kanji:release-qa
 npm run product:readiness:n5
 npm run release:gate
 ```
@@ -52,15 +55,21 @@ npm run release:gate
 
 It does not certify tracked-source kanji TSVs, `.apkg` files, managed media packages, or manual QA.
 
-`product:artifacts:kanji:n5:preflight` inspects tracked templates and reports whether N5 kanji source availability is sufficient for tracked-source kanji TSV certification without ignored local `data/` inputs. It currently reports `certifiable: yes` for source availability because JLPT level, starter meanings, component/radical data, KANJIDIC2 on/kun reading reference, and N5 card-field source provenance are all tracked and audited. This preflight still does not generate a fresh kanji TSV, package `.apkg` files, certify Obsidian proof, perform managed-media QA, or replace manual Anki import review.
+`product:artifacts:kanji:n5:preflight` inspects tracked templates and reports whether N5 kanji source availability is sufficient for tracked-source kanji TSV certification without ignored local `data/` inputs. It currently reports `certifiable: yes` for source availability because JLPT level, starter meanings, component/radical data, KANJIDIC2 on/kun reading reference, and N5 card-field source provenance are all tracked and audited. `product:artifacts:kanji:preflight` runs the same check across N5 through N1 and fails closed where governed card-field source contracts are missing.
+
+`product:artifacts:kanji:n5` builds a fresh source-derived N5 kanji TSV from tracked contracts only: JLPT level, KANJIDIC2 reading-reference, N5 card-field source provenance, and component/radical data. It validates the kanji note schema header, row count, required learner-facing fields, primary-reading reference membership, and deterministic repeated output. It does not read ignored local `data/`, does not use network inference, and does not package `.apkg` files or certify media/manual QA.
+
+`product:artifacts:kanji:all` runs the same tracked-source kanji TSV gate across N5 through N1. Today N5 passes and writes the TSV artifact; N4, N3, N2, and N1 fail closed on missing governed card-field source contracts. That failure is expected until each level has a source-derived field contract in the existing governance lane.
+
+`product:artifacts:kanji:release-qa` checks whether each selected kanji level has a passing tracked-source TSV artifact and then blocks release until APKG approval, managed stroke-order/audio media QA, manual Anki import review, mobile QA, screen-reader QA, and listening QA are recorded. It intentionally cannot convert a green TSV gate into release readiness.
 
 Use `-- --require-certifiable` when the tracked source contracts are expected to be complete and the command should fail closed on any missing governed source lane.
 
 Tracked CI tests must not read ignored root `data/*` inputs. Use tracked contracts, tracked fixtures, or explicit temp fixtures in CI. Exact kanji primary-reading checks against generated `OnReading`/`KunReading` remain in local generated-row Platinum gates; the tracked KANJIDIC2 contract is reading-reference evidence only, and the tracked N5 card-field source contract is source-provenance evidence only.
 
-`product:readiness:n5` runs the current automated N5 product checkpoint: JLPT audits, governed audio provenance, tracked-source N5 word TSV generation, N5 word-level placement audit, and N5 kanji and word Gold regression checks.
+`product:readiness:n5` runs the current automated N5 product checkpoint: JLPT audits, governed audio provenance, tracked-source N5 word TSV generation, tracked-source N5 kanji TSV generation, N5 word-level placement audit, and N5 kanji and word Gold regression checks.
 
-It does not run or gate on the JLPT kanji source-evidence audit yet. That audit is read-only transparency until taxonomy confidence is governed and passing. It also does not validate tracked-source kanji TSVs, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA.
+It does not run or gate on the JLPT kanji source-evidence audit yet. That audit is read-only transparency until taxonomy confidence is governed and passing. It also does not replace the all-level tracked-source kanji gate, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA.
 
 ## JLPT source-evidence gates
 

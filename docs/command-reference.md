@@ -16,6 +16,10 @@ For workflow ordering, use [workflows.md](workflows.md). For release gate bounda
 | `npm run release:gate` | Validate smoke-fixture release artifact contracts |
 | `npm run product:artifacts:n5` | Build and validate the tracked-source N5 word TSV artifact |
 | `npm run product:artifacts:kanji:n5:preflight` | Report whether tracked-source N5 kanji TSV certification is possible |
+| `npm run product:artifacts:kanji:preflight` | Run the tracked-source kanji preflight across N5 through N1 |
+| `npm run product:artifacts:kanji:n5` | Build and validate the source-derived tracked-source N5 kanji TSV artifact |
+| `npm run product:artifacts:kanji:all` | Run the tracked-source kanji TSV artifact gate across N5 through N1, failing closed where source contracts are incomplete |
+| `npm run product:artifacts:kanji:release-qa` | Gate tracked-source kanji TSV, APKG, managed-media, and manual QA readiness across N5 through N1 |
 | `npm run product:readiness:n5` | Run the automated N5 product readiness checkpoint |
 | `npm run dev` | Start the local development server with `nodemon` |
 | `npm start` | Start the local Express server; equivalent to `npm run start` |

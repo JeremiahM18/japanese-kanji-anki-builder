@@ -146,17 +146,18 @@ npm run deck:words:platinum:batch -- --level=<level> --limit=8
 
 Use `--queue=missing-current-standard` only when the task is structural Platinum coverage rather than Obsidian proof.
 
-3. Run the governed word NLP support lane before or during review:
+3. Generate or refresh the word deck surface, then run the governed word NLP support lane before or during review:
 
 ```bash
+npm run deck:words:ready -- --levels=<level>
 npm run deck:words:expansion-support -- --levels=<level>
 ```
 
-Word NLP is broader than kanji NLP: it can run tokenization, embeddings, example reranking, sense-fit warnings, reading-gap discovery, review packets, draft proposals, artifact validation, and `nlp:governance-gate`. It still cannot certify Obsidian proof or write tracked templates.
+Word NLP is broader than kanji NLP: it runs model/runtime checks, tokenization, embeddings, example reranking, sense-fit warnings, reading-gap candidate discovery, review packets, draft proposals, artifact validation, and `nlp:governance-gate`. Review packets point the human reviewer at exact word-reading targets, tokenizer issues, example alternatives, sense-fit risks, and candidate words. It still cannot certify Obsidian proof or write tracked templates.
 
-4. Human-review each queued word card against the live generated row, exact written-reading identity, source evidence, word audio, pitch evidence/rendering, reading breakdown, support labels, example naturalness, learner usefulness, level fit, release quality, reading, translation, and any NLP signals. Fix tracked source/card data first when NLP or the rubric exposes a real issue.
+4. Human-review each queued word card against the live generated row, exact written-reading identity, source evidence, word audio, pitch evidence/rendering, reading breakdown, support labels, example naturalness, learner usefulness, level fit, release quality, reading, translation, and any NLP signals. Fix tracked source/card data first when NLP or the rubric exposes a real issue, then regenerate, rerun relevant gates, and rerun NLP if the affected support artifact changed.
 
-5. Record Obsidian proof only after the review happened. Word proof must bind exact written+reading identity, structured `rereviewProvenance`, the full word-card `evidenceChecked` checklist, and actual example-sentence quality evidence.
+5. Record Obsidian proof only after the live generated word row is actually rereviewed. Word proof must bind exact written+reading identity, structured `rereviewProvenance`, the full word-card `evidenceChecked` checklist, and actual example-sentence quality evidence.
 
 6. Verify the batch. Use the npm Platinum alias when it exists; for a future word level without an alias, use `node scripts/reviewPlatinumWordLevel.js --level=<level> --require-all` after that level's Platinum manifest exists.
 

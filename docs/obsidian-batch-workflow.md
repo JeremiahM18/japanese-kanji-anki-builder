@@ -159,7 +159,9 @@ This refreshes the live generated word rows used by the reviewer. It is not Obsi
 npm run deck:words:expansion-support -- --levels=<level>
 ```
 
-Word NLP can run tokenization, embeddings, example reranking, sense-fit warnings, reading-gap candidate discovery, review packets, draft proposals, artifact validation, and `nlp:governance-gate`. It cannot certify Obsidian proof, approve source truth, or write tracked templates.
+Word NLP is broad and model-backed. This command runs model/runtime checks, tokenization, embeddings, example reranking, sense-fit warnings, reading-gap candidate discovery, review packets, draft proposals, artifact validation, and `nlp:governance-gate`.
+
+Review packets point the human reviewer at exact word-reading targets, tokenizer issues, example alternatives, sense-fit risks, and candidate words. NLP cannot certify Obsidian proof, approve source truth, or write tracked templates.
 
 5. Review each queued word card manually.
 
@@ -169,7 +171,7 @@ If NLP or the batch rubric exposes a real issue, fix tracked source/card data fi
 
 6. Record Obsidian proof only after the review happened.
 
-Word proof must bind exact written+reading identity, structured `rereviewProvenance`, the full word-card `evidenceChecked` checklist, and actual example-sentence quality evidence.
+Only after the live generated word row is actually rereviewed should Obsidian proof be added. Word proof must bind exact written+reading identity, structured `rereviewProvenance`, the full word-card `evidenceChecked` checklist, and actual example-sentence quality evidence.
 
 7. Verify the batch.
 

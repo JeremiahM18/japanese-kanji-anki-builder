@@ -518,10 +518,29 @@ def create_collection_db(db_path: Path, levels, package_exports_dir: Path, deck_
 
 
 def write_deterministic_archive_file(archive, file_path: Path, arcname: str, compression=zipfile.ZIP_DEFLATED, expected_integrity=None):
-    validate_archive_source_file(file_path, expected_integrity)
+    expected_size = validate_archive_source_file(file_path, expected_integrity)
     info = zipfile.ZipInfo(arcname, date_time=DETERMINISTIC_ZIP_TIMESTAMP)
     info.compress_type = compression
     info.external_attr = 0o644 << 16
+
+    if compression == zipfile.ZIP_STORED:
+        payload = file_path.read_bytes()
+        if len(payload) != expected_size:
+            raise RuntimeError(
+                f"APKG media byte-size changed while archiving {file_path.name}: "
+                f"expected {expected_size}, actual {len(payload)}"
+            )
+        if expected_integrity and expected_integrity.get("sha256"):
+            actual_sha256 = hashlib.sha256(payload).hexdigest()
+            expected_sha256 = expected_integrity["sha256"]
+            if actual_sha256 != expected_sha256:
+                raise RuntimeError(
+                    f"APKG media checksum mismatch for {file_path.name}: "
+                    f"expected {expected_sha256}, actual {actual_sha256}"
+                )
+        archive.writestr(info, payload)
+        return
+
     digest = hashlib.sha256() if expected_integrity and expected_integrity.get("sha256") else None
 
     with file_path.open("rb") as source, archive.open(info, "w") as target:

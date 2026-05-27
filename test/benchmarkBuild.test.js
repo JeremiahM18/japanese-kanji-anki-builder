@@ -7,6 +7,7 @@ const {
     DEFAULT_BUILD_BUDGET,
     cleanOutDir,
     evaluateBudget,
+    formatRunMemory,
     parseArgs,
     resolveBenchmarkOutDirBase,
     resolveBudget,
@@ -86,6 +87,10 @@ test("resolveBudget returns the cold APKG build budget", () => {
     });
 
     assert.deepEqual(budget, COLD_APKG_BUILD_BUDGET);
+    assert.equal(budget.totalMs, null);
+    assert.equal(budget.exportMs, null);
+    assert.equal(budget.mediaSyncMs, null);
+    assert.equal(budget.packagingMs, 2500);
 });
 
 test("resolveBudget allows custom overrides on top of the default budget", () => {
@@ -134,4 +139,34 @@ test("evaluateBudget reports pass and fail cases clearly", () => {
         "mediaSyncMs",
         "packagingMs",
     ]);
+});
+
+test("formatRunMemory reports measured build and package memory deltas", () => {
+    const text = formatRunMemory({
+        memory: {
+            after: {
+                rss: 1048576,
+                heapUsed: 524288,
+                heapTotal: 2097152,
+            },
+            delta: {
+                rss: 1048576,
+                heapUsed: 524288,
+                heapTotal: 1048576,
+            },
+        },
+        package: {
+            memory: {
+                delta: {
+                    rss: 262144,
+                    heapUsed: 131072,
+                    heapTotal: 262144,
+                },
+            },
+        },
+    });
+
+    assert.match(text, /run after rss 1\.00 MiB; heapUsed 0\.50 MiB; heapTotal 2\.00 MiB/);
+    assert.match(text, /run delta rss \+1\.00 MiB; heapUsed \+0\.50 MiB; heapTotal \+1\.00 MiB/);
+    assert.match(text, /package delta rss \+0\.25 MiB; heapUsed \+0\.13 MiB; heapTotal \+0\.25 MiB/);
 });

@@ -12,6 +12,13 @@ const {
     parseStringOption,
 } = require("../src/utils/cliArgs");
 const { removeGeneratedPathSync } = require("../src/utils/fs");
+const {
+    buildMemorySample,
+    formatMemoryDelta,
+    formatMemorySnapshot,
+    snapshotMemoryUsage,
+    summarizeMemorySamples,
+} = require("../src/utils/memoryUsage");
 
 const DEFAULT_BUILD_BUDGET = Object.freeze({
     totalMs: 5000,
@@ -21,11 +28,11 @@ const DEFAULT_BUILD_BUDGET = Object.freeze({
 });
 
 const COLD_APKG_BUILD_BUDGET = Object.freeze({
-    // Cold APKG includes Python startup, source-backed media SHA-256 verification,
-    // deterministic archive writing, and cache fill. The hot-cache gate remains stricter.
-    totalMs: 7000,
-    exportMs: 2500,
-    mediaSyncMs: 1500,
+    // Cold APKG isolates the native package phase while clearing the APKG cache.
+    // The hot build gate remains responsible for total/export/media-sync budgets.
+    totalMs: null,
+    exportMs: null,
+    mediaSyncMs: null,
     packagingMs: 2500,
 });
 
@@ -213,6 +220,7 @@ async function runBuildBenchmarkPass({ config, levels, limit, concurrency, outDi
     }
     cleanOutDir(outDir);
 
+    const memoryBefore = snapshotMemoryUsage();
     const startedAt = performance.now();
     const summary = await runBuildPipeline({
         config,
@@ -223,6 +231,8 @@ async function runBuildBenchmarkPass({ config, levels, limit, concurrency, outDi
         skipMediaSync: false,
     });
     const durationMs = performance.now() - startedAt;
+    const memoryAfter = snapshotMemoryUsage();
+    const memorySample = buildMemorySample(memoryBefore, memoryAfter);
 
     return {
         outDir,
@@ -241,15 +251,29 @@ async function runBuildBenchmarkPass({ config, levels, limit, concurrency, outDi
             pythonTimingsMs: summary.package.ankiPackage?.pythonTimingsMs || null,
             pythonRuntime: summary.package.ankiPackage?.pythonRuntime || null,
             integrityChecks: summary.package.ankiPackage?.integrityChecks || null,
+            memory: summary.memory?.package || null,
         },
         timingsMs: summary.timingsMs,
+        memory: summarizeMemorySamples([memorySample]),
         coverage: summary.coverage,
     };
+}
+
+function formatRunMemory(run = {}) {
+    if (!run.memory) {
+        return "memory unavailable";
+    }
+
+    const packageMemory = run.package?.memory
+        ? `; package delta ${formatMemoryDelta(run.package.memory.delta)}`
+        : "";
+    return `run after ${formatMemorySnapshot(run.memory.after)}; run delta ${formatMemoryDelta(run.memory.delta)}${packageMemory}`;
 }
 
 function formatRun(name, run) {
     return [
         `${name} run`,
+        `Memory: ${formatRunMemory(run)}`,
         JSON.stringify(run, null, 2),
     ].join("\n");
 }
@@ -352,6 +376,7 @@ module.exports = {
     DEFAULT_BUILD_BUDGET,
     evaluateBudget,
     formatBudgetResult,
+    formatRunMemory,
     cleanApkgCacheDir,
     cleanOutDir,
     main,

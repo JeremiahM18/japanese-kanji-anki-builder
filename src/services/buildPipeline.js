@@ -16,6 +16,7 @@ const { assertKanjiDeckContract, buildKanjiDeckContractReport } = require("./kan
 const { ensureMediaRoot } = require("./mediaStore");
 const { createMediaServices } = require("./mediaServiceFactory");
 const { selectKanjiForSync, syncMediaForKanjiList } = require("./mediaSync");
+const { buildMemorySample, snapshotMemoryUsage } = require("../utils/memoryUsage");
 
 /** @typedef {import("../types/contracts").BuildSummary} BuildSummary */
 /** @typedef {import("../types/contracts").DatasetNormalizationSummary} DatasetNormalizationSummary */
@@ -384,6 +385,7 @@ async function runBuildPipeline({
     capturePhaseTiming(timingsMs, "export", exportStartedAt);
 
     const packagingStartedAt = Date.now();
+    const packagingMemoryBefore = snapshotMemoryUsage();
     const deckPackage = await buildDeckPackageFn({
         outDir: buildPaths.root,
         exports,
@@ -392,6 +394,8 @@ async function runBuildPipeline({
         strokeOrderService,
         audioService,
     });
+    const packagingMemoryAfter = snapshotMemoryUsage();
+    const packagingMemory = buildMemorySample(packagingMemoryBefore, packagingMemoryAfter);
     capturePhaseTiming(timingsMs, "packaging", packagingStartedAt);
 
     const mediaCoverageStartedAt = Date.now();
@@ -479,6 +483,10 @@ async function runBuildPipeline({
             skipped: mediaSync.skipped,
             totalKanji: mediaSync.summary.totalKanji,
             errors: mediaSync.summary.errors.length,
+        },
+        memory: {
+            unit: "bytes",
+            package: packagingMemory,
         },
         exportIssues: exportIssueSummary,
         timingsMs: {

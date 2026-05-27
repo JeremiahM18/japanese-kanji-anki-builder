@@ -19,6 +19,7 @@ npm test
 npm run lint
 npm run typecheck
 npm run supply-chain:audit
+npm run perf:memory:matrix
 npm run data:audit:jlpt
 npm run data:audit:jlpt:sources -- --governance-strict --limit=25
 npm run data:audit:jlpt:source-levels -- --worklist-only --limit=25
@@ -103,6 +104,30 @@ Occurrence-only, derived, background, frequency, blocked, and non-Japanese lanes
 
 Memory deltas are process snapshots, not allocation-profiler output. Use repeated runs for trends. `data:benchmark:jlpt:sources:gate` is a manual budget guardrail, not CI.
 
+## Performance and memory matrix
+
+`perf:memory:matrix` validates [../templates/performance_memory_audit_matrix.json](../templates/performance_memory_audit_matrix.json), the tracked contract for performance, memory, package, and smoke lanes. It checks that package scripts exist, manual/local timing budget gates are not wired into GitHub Actions, CI-backed package lanes are wired where declared, and present memory-sampling lanes name a real implementation file.
+
+The matrix is CI-safe metadata validation. It does not run timing benchmarks, read ignored local data, build product decks, certify Obsidian proof, or claim release readiness.
+
+Current manual/local timing budget gates:
+
+```bash
+npm run data:benchmark:jlpt:sources:gate -- --source=<source-id> --repeat=2 --limit=10
+npm run bench:obsidian-proof-etl:gate
+npm run bench:build:gate
+npm run bench:build:cold-apkg:gate
+```
+
+Current memory-sampled benchmark lanes report process snapshots for trend analysis only:
+
+- `data:benchmark:jlpt:sources:gate` samples source-governance stages and the whole source-evidence cost report.
+- `bench:obsidian-proof-etl:gate` samples ledger validation, compatibility-view generation, SQLite mirror generation, and the whole ETL run.
+- `bench:build:gate` samples the whole measured build and the package stage.
+- `bench:build:cold-apkg:gate` samples the same build/package surfaces while clearing the generated APKG cache before the measured run, and its budget gate is scoped to the package phase so export/media-sync jitter does not mask the cold native APKG path.
+
+Process memory snapshots are not allocation-profiler output and can be noisy under garbage collection. Use repeated local runs for trend evidence before changing budgets.
+
 ## Source packet and import gates
 
 `data:packet:jlpt:source-review` emits a compact read-only JSON packet for AI or human source-review planning. It filters the all-level governed source worklist for the selected lane's supported levels, skips rows already resolved in that lane's local worksheet, and includes compact source-input status and blocker reason.
@@ -149,7 +174,7 @@ Shin Kanzen Master, Nihongo Sou Matome, TRY!, and ASK Hajimete JLPT Kanji remain
 
 `release:gate` validates deterministic smoke-fixture artifacts and packaging contracts. It does not certify public product deck readiness. Add level-specific readiness, Gold regression, accessibility, provenance, and manual QA commands for the surface being changed.
 
-Clean CI runs `data:obsidian:proof:validate`, `data:obsidian:proof:reconcile -- --levels=5,4,3`, `data:obsidian:proof:provider-parity -- --levels=5,4,3 --row-source=tracked-review-set`, `data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=5,4,3 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set`, `data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=5,4,3 --row-source=tracked-review-set`, `data:obsidian:proof:provider-parity -- --consumer=kanji-field-source-contract --levels=5,4,3 --row-source=tracked-review-set`, `data:obsidian:proof:provider-parity -- --consumer=platinum-governance-gate --levels=5,4,3 --row-source=tracked-review-set`, `data:audit:jlpt -- --strict --tracked-only`, `data:audit:jlpt:sources -- --governance-strict --limit=25`, `data:audit:jlpt:words`, and `deck:words:platinum:source-posture -- --levels=5,4` from tracked inputs.
+Clean CI runs `data:obsidian:proof:validate`, `data:obsidian:proof:reconcile -- --levels=5,4,3`, `data:obsidian:proof:provider-parity -- --levels=5,4,3 --row-source=tracked-review-set`, `data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=5,4,3 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set`, `data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=5,4,3 --row-source=tracked-review-set`, `data:obsidian:proof:provider-parity -- --consumer=kanji-field-source-contract --levels=5,4,3 --row-source=tracked-review-set`, `data:obsidian:proof:provider-parity -- --consumer=platinum-governance-gate --levels=5,4,3 --row-source=tracked-review-set`, `perf:memory:matrix`, `data:audit:jlpt -- --strict --tracked-only`, `data:audit:jlpt:sources -- --governance-strict --limit=25`, `data:audit:jlpt:words`, and `deck:words:platinum:source-posture -- --levels=5,4` from tracked inputs.
 
 Full `data:audit:jlpt`, `deck:platinum:governance-gate`, and generated-row Obsidian proof-provider parity remain local-data gates because they validate ignored runtime/generated-row inputs under `data/`. Their absence from clean CI is a release-scope limitation, not proof that real generated rows were validated.
 

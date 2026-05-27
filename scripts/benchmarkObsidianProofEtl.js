@@ -21,19 +21,19 @@ const {
     getDefaultGeneratedPathRoots,
     removeGeneratedPathSync,
 } = require("../src/utils/fs");
+const {
+    diffMemoryUsage,
+    formatMemoryDelta,
+    formatMemorySnapshot,
+    snapshotMemoryUsage,
+    summarizeMemorySamples,
+} = require("../src/utils/memoryUsage");
 
 const DEFAULT_OBSIDIAN_PROOF_ETL_BENCHMARK_DIR = path.join(
     "out",
     "obsidian-proof",
     "benchmark"
 );
-const MEMORY_FIELDS = Object.freeze([
-    "rss",
-    "heapTotal",
-    "heapUsed",
-    "external",
-    "arrayBuffers",
-]);
 const DEFAULT_OBSIDIAN_PROOF_ETL_BUDGET = Object.freeze({
     totalMs: 15000,
     validationMs: 1500,
@@ -101,55 +101,6 @@ function normalizeRepeat(value) {
         throw new Error(`Invalid --repeat value: ${value}. Use an integer from 1 to 20.`);
     }
     return repeat;
-}
-
-function snapshotMemoryUsage() {
-    const usage = process.memoryUsage();
-    return Object.fromEntries(
-        MEMORY_FIELDS.map((field) => [field, Number(usage[field] || 0)])
-    );
-}
-
-function diffMemoryUsage(after = {}, before = {}) {
-    return Object.fromEntries(
-        MEMORY_FIELDS.map((field) => [field, Number(after[field] || 0) - Number(before[field] || 0)])
-    );
-}
-
-function maxMemoryUsage(snapshots = []) {
-    return Object.fromEntries(
-        MEMORY_FIELDS.map((field) => [
-            field,
-            Math.max(0, ...snapshots.map((snapshot) => Number(snapshot?.[field] || 0))),
-        ])
-    );
-}
-
-function maxMemoryDelta(samples = []) {
-    return Object.fromEntries(
-        MEMORY_FIELDS.map((field) => [
-            field,
-            Math.max(0, ...samples.map((sample) => Number(sample?.delta?.[field] || 0))),
-        ])
-    );
-}
-
-function summarizeMemorySamples(samples = []) {
-    if (samples.length === 0) {
-        return null;
-    }
-
-    const first = samples[0].before;
-    const last = samples[samples.length - 1].after;
-    return {
-        unit: "bytes",
-        samples: samples.length,
-        before: first,
-        after: last,
-        delta: diffMemoryUsage(last, first),
-        max: maxMemoryUsage(samples.flatMap((sample) => [sample.before, sample.after])),
-        maxDelta: maxMemoryDelta(samples),
-    };
 }
 
 function measureOperation(label, repeat, operation) {
@@ -431,32 +382,6 @@ function buildObsidianProofEtlBenchmarkReport(options = {}) {
     report.passed = report.failures.length === 0;
 
     return report;
-}
-
-function formatBytesAsMiB(value) {
-    return `${(Number(value || 0) / 1048576).toFixed(2)} MiB`;
-}
-
-function formatSignedBytesAsMiB(value) {
-    const numeric = Number(value || 0);
-    const sign = numeric > 0 ? "+" : "";
-    return `${sign}${formatBytesAsMiB(numeric)}`;
-}
-
-function formatMemorySnapshot(snapshot = {}) {
-    return [
-        `rss ${formatBytesAsMiB(snapshot.rss)}`,
-        `heapUsed ${formatBytesAsMiB(snapshot.heapUsed)}`,
-        `heapTotal ${formatBytesAsMiB(snapshot.heapTotal)}`,
-    ].join("; ");
-}
-
-function formatMemoryDelta(delta = {}) {
-    return [
-        `rss ${formatSignedBytesAsMiB(delta.rss)}`,
-        `heapUsed ${formatSignedBytesAsMiB(delta.heapUsed)}`,
-        `heapTotal ${formatSignedBytesAsMiB(delta.heapTotal)}`,
-    ].join("; ");
 }
 
 function formatOperationTiming(entry = {}) {

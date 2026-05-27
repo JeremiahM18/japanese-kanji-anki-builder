@@ -1,0 +1,369 @@
+{
+  "version": 1,
+  "authority": {
+    "sourceOfTruth": "tracked-performance-memory-audit-matrix",
+    "generatedArtifact": false,
+    "boundary": [
+      "This matrix governs which build, package, ETL, and smoke surfaces have timing budgets, memory sampling, or package-contract coverage.",
+      "It is not a release-readiness claim, source-evidence claim, Obsidian certification claim, APKG manual-QA claim, or operating-system benchmark guarantee.",
+      "Timing budget gates remain manual/local unless a row explicitly says ci-required, smoke-ci, or release-ci."
+    ]
+  },
+  "lanes": [
+    {
+      "id": "build-hot-cache",
+      "productArea": "kanji-build-and-package",
+      "benchmarkClass": "timing-budget",
+      "command": "npm run bench:build:gate",
+      "packageScript": "bench:build:gate",
+      "ciPolicy": "manual-local",
+      "workflowCommand": null,
+      "inputBoundary": [
+        "ready local workspace",
+        "tracked contracts",
+        "ignored local data/media inputs"
+      ],
+      "outputBoundary": [
+        "generated benchmark output under out/bench-build",
+        "generated APKG cache under out/.apkg-cache"
+      ],
+      "cacheMode": "hot APKG cache allowed",
+      "timingBudget": {
+        "status": "present",
+        "profile": "default",
+        "metrics": [
+          "totalMs",
+          "exportMs",
+          "mediaSyncMs",
+          "packagingMs"
+        ],
+        "gateCommand": "npm run bench:build:gate"
+      },
+      "memorySampling": {
+        "status": "present",
+        "source": "scripts/benchmarkBuild.js",
+        "scope": [
+          "whole measured build run",
+          "package stage from build summary"
+        ],
+        "metrics": [
+          "rss",
+          "heapTotal",
+          "heapUsed",
+          "external",
+          "arrayBuffers"
+        ],
+        "notes": "Process snapshots are trend diagnostics, not allocation-profiler output."
+      },
+      "releaseBoundary": "Manual performance guardrail only; run release/product gates separately before readiness claims.",
+      "nextReviewTrigger": [
+        "build pipeline timing changes",
+        "media sync architecture changes",
+        "package assembly changes",
+        "APKG cache behavior changes"
+      ]
+    },
+    {
+      "id": "build-cold-native-apkg",
+      "productArea": "kanji-build-and-package",
+      "benchmarkClass": "timing-budget",
+      "command": "npm run bench:build:cold-apkg:gate",
+      "packageScript": "bench:build:cold-apkg:gate",
+      "ciPolicy": "manual-local",
+      "workflowCommand": null,
+      "inputBoundary": [
+        "ready local workspace",
+        "tracked contracts",
+        "ignored local data/media inputs",
+        "local Python APKG toolchain"
+      ],
+      "outputBoundary": [
+        "generated benchmark output under out/bench-build",
+        "generated APKG cache cleared before measured run"
+      ],
+      "cacheMode": "cold APKG cache; clears out/.apkg-cache before the measured build",
+      "timingBudget": {
+        "status": "present",
+        "profile": "cold-apkg",
+        "metrics": [
+          "packagingMs"
+        ],
+        "gateCommand": "npm run bench:build:cold-apkg:gate"
+      },
+      "memorySampling": {
+        "status": "present",
+        "source": "scripts/benchmarkBuild.js",
+        "scope": [
+          "whole measured build run",
+          "package stage from build summary",
+          "native APKG subprocess timing payload"
+        ],
+        "metrics": [
+          "rss",
+          "heapTotal",
+          "heapUsed",
+          "external",
+          "arrayBuffers"
+        ],
+        "notes": "Node process snapshots bracket the build and package stage; Python reports runtime/timing separately."
+      },
+      "releaseBoundary": "Manual cold native APKG package-performance guardrail only; hot build budgets still own total/export/media-sync timing, and APKG manual import QA remains separate.",
+      "nextReviewTrigger": [
+        "Python APKG builder changes",
+        "media integrity verification changes",
+        "package cache-key changes",
+        "source-backed media changes"
+      ]
+    },
+    {
+      "id": "obsidian-proof-etl",
+      "productArea": "obsidian-proof-ledger",
+      "benchmarkClass": "timing-budget",
+      "command": "npm run bench:obsidian-proof-etl:gate",
+      "packageScript": "bench:obsidian-proof-etl:gate",
+      "ciPolicy": "manual-local",
+      "workflowCommand": null,
+      "inputBoundary": [
+        "tracked JSONL Obsidian proof ledger",
+        "tracked review-set compatibility targets"
+      ],
+      "outputBoundary": [
+        "generated compatibility views under out/obsidian-proof",
+        "generated SQLite mirror under out/obsidian-proof"
+      ],
+      "cacheMode": "no canonical cache; generated artifacts may be rebuilt",
+      "timingBudget": {
+        "status": "present",
+        "profile": "default",
+        "metrics": [
+          "totalMs",
+          "validationMs",
+          "compatibilityViewMs",
+          "sqliteMirrorMs"
+        ],
+        "gateCommand": "npm run bench:obsidian-proof-etl:gate"
+      },
+      "memorySampling": {
+        "status": "present",
+        "source": "scripts/benchmarkObsidianProofEtl.js",
+        "scope": [
+          "ledger validation",
+          "compatibility view generation",
+          "SQLite mirror generation",
+          "whole ETL run"
+        ],
+        "metrics": [
+          "rss",
+          "heapTotal",
+          "heapUsed",
+          "external",
+          "arrayBuffers"
+        ],
+        "notes": "Generated views and SQLite are query mirrors; JSONL remains canonical truth."
+      },
+      "releaseBoundary": "Obsidian proof ETL benchmark only; does not certify card quality, NLP, source evidence, or release readiness.",
+      "nextReviewTrigger": [
+        "proof ledger schema changes",
+        "compatibility view changes",
+        "SQLite mirror changes",
+        "provider abstraction changes"
+      ]
+    },
+    {
+      "id": "jlpt-source-evidence-cost",
+      "productArea": "jlpt-kanji-source-governance",
+      "benchmarkClass": "timing-budget",
+      "command": "npm run data:benchmark:jlpt:sources:gate",
+      "packageScript": "data:benchmark:jlpt:sources:gate",
+      "ciPolicy": "manual-local",
+      "workflowCommand": null,
+      "inputBoundary": [
+        "tracked source-evidence manifest",
+        "tracked source-input pins",
+        "optional ignored local source worksheets for selected source lanes"
+      ],
+      "outputBoundary": [
+        "read-only report by default"
+      ],
+      "cacheMode": "no benchmark cache",
+      "timingBudget": {
+        "status": "present",
+        "profile": "default",
+        "metrics": [
+          "totalMs",
+          "sourceInputPreflightMs",
+          "sourceInputImportDryRunMs",
+          "fullEvidenceSerializationMs",
+          "sourceEvidenceAuditMs"
+        ],
+        "gateCommand": "npm run data:benchmark:jlpt:sources:gate"
+      },
+      "memorySampling": {
+        "status": "present",
+        "source": "scripts/reportJlptKanjiSourceEvidenceCost.js",
+        "scope": [
+          "source-input preflight",
+          "source-input import dry-run",
+          "evidence serialization",
+          "source-evidence audit",
+          "whole source-evidence cost report"
+        ],
+        "metrics": [
+          "rss",
+          "heapTotal",
+          "heapUsed",
+          "external",
+          "arrayBuffers"
+        ],
+        "notes": "Cost report is read-only unless separate source-import commands are run with explicit write flags."
+      },
+      "releaseBoundary": "Source-governance performance diagnostic only; does not move JLPT placement or certify card fields.",
+      "nextReviewTrigger": [
+        "source-evidence manifest shape changes",
+        "source-input preflight changes",
+        "source import dry-run changes",
+        "source audit performance changes"
+      ]
+    },
+    {
+      "id": "export-service-fixture",
+      "productArea": "export-service",
+      "benchmarkClass": "diagnostic",
+      "command": "npm run bench:export",
+      "packageScript": "bench:export",
+      "ciPolicy": "manual-local",
+      "workflowCommand": null,
+      "inputBoundary": [
+        "offline fixture client by default",
+        "tracked export code"
+      ],
+      "outputBoundary": [
+        "read-only benchmark report"
+      ],
+      "cacheMode": "offline fixture mode by default",
+      "timingBudget": {
+        "status": "planned",
+        "profile": null,
+        "metrics": [
+          "durationMs"
+        ],
+        "gateCommand": null
+      },
+      "memorySampling": {
+        "status": "planned",
+        "source": null,
+        "scope": [
+          "offline export fixture run"
+        ],
+        "metrics": [
+          "rss",
+          "heapTotal",
+          "heapUsed",
+          "external",
+          "arrayBuffers"
+        ],
+        "notes": "The export fixture currently measures timing only; add memory sampling before promoting a budget gate."
+      },
+      "releaseBoundary": "Diagnostic only; generated deck gates still own product validity.",
+      "nextReviewTrigger": [
+        "export inference architecture changes",
+        "export row formatting changes",
+        "API client batching changes"
+      ]
+    },
+    {
+      "id": "ci-smoke-package-contract",
+      "productArea": "smoke-fixture-package",
+      "benchmarkClass": "package-contract",
+      "command": "npm run ci:smoke -- --root-dir=.ci-smoke --keep-temp-dir",
+      "packageScript": "ci:smoke",
+      "ciPolicy": "smoke-ci",
+      "workflowCommand": "npm run ci:smoke -- --root-dir=.ci-smoke --keep-temp-dir",
+      "inputBoundary": [
+        "deterministic tracked smoke fixture",
+        "generated temporary workspace"
+      ],
+      "outputBoundary": [
+        "generated smoke workspace under .ci-smoke",
+        "smoke TSV/package artifacts only"
+      ],
+      "cacheMode": "small fixture package path; may use generated APKG cache",
+      "timingBudget": {
+        "status": "not-applicable",
+        "profile": null,
+        "metrics": [],
+        "gateCommand": null
+      },
+      "memorySampling": {
+        "status": "planned",
+        "source": null,
+        "scope": [
+          "smoke kanji build",
+          "smoke word build",
+          "package contract verification"
+        ],
+        "metrics": [
+          "rss",
+          "heapTotal",
+          "heapUsed",
+          "external",
+          "arrayBuffers"
+        ],
+        "notes": "CI smoke validates package contracts across operating systems; it intentionally does not enforce timing budgets."
+      },
+      "releaseBoundary": "Smoke fixture validation only; not public product deck readiness.",
+      "nextReviewTrigger": [
+        "smoke fixture changes",
+        "package contract changes",
+        "cross-platform package behavior changes"
+      ]
+    },
+    {
+      "id": "release-gate-package-contract",
+      "productArea": "release-smoke-package",
+      "benchmarkClass": "package-contract",
+      "command": "npm run release:gate -- --root-dir=.release-gate --keep-temp-dir --require-apkg-tools",
+      "packageScript": "release:gate",
+      "ciPolicy": "release-ci",
+      "workflowCommand": "npm run release:gate -- --root-dir=.release-gate --keep-temp-dir --require-apkg-tools",
+      "inputBoundary": [
+        "deterministic tracked smoke fixture",
+        "local/CI APKG packaging toolchain"
+      ],
+      "outputBoundary": [
+        "generated release-gate workspace under .release-gate",
+        "smoke fixture release artifacts only"
+      ],
+      "cacheMode": "small fixture package path; may use generated APKG cache",
+      "timingBudget": {
+        "status": "not-applicable",
+        "profile": null,
+        "metrics": [],
+        "gateCommand": null
+      },
+      "memorySampling": {
+        "status": "planned",
+        "source": null,
+        "scope": [
+          "release smoke kanji build",
+          "release smoke word build",
+          "APKG toolchain verification"
+        ],
+        "metrics": [
+          "rss",
+          "heapTotal",
+          "heapUsed",
+          "external",
+          "arrayBuffers"
+        ],
+        "notes": "Release gate validates smoke-fixture packaging contracts and APKG tool availability; it is not a performance budget gate."
+      },
+      "releaseBoundary": "Release smoke only; level-specific readiness, media QA, and manual APKG review remain separate.",
+      "nextReviewTrigger": [
+        "release artifact boundary changes",
+        "toolchain detection changes",
+        "APKG verification changes"
+      ]
+    }
+  ]
+}

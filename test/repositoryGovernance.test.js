@@ -178,6 +178,7 @@ test("CI workflow uses tracked-input governance checks and documents local-data 
     assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=5,4,3 --row-source=tracked-review-set"), true);
     assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=kanji-field-source-contract --levels=5,4,3 --row-source=tracked-review-set"), true);
     assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=platinum-governance-gate --levels=5,4,3 --row-source=tracked-review-set"), true);
+    assert.equal(workflow.includes("npm run perf:memory:matrix"), true);
     assert.equal(workflow.includes("npm run data:audit:jlpt -- --strict --tracked-only"), true);
     assert.equal(workflow.includes("npm run data:audit:jlpt:words"), true);
     assert.equal(workflow.includes("npm run deck:words:platinum:source-posture -- --levels=5,4"), true);
@@ -226,14 +227,17 @@ test("README scopes benchmark budget commands as manual local guardrails unless 
     const readme = readRepoFile("README.md");
 
     assert.equal(workflow.includes("bench:build:gate"), false);
+    assert.equal(workflow.includes("bench:build:cold-apkg:gate"), false);
     assert.equal(workflow.includes("bench:obsidian-proof-etl:gate"), false);
     assert.equal(workflow.includes("data:benchmark:jlpt:sources:gate"), false);
     assert.equal(releaseWorkflow.includes("bench:build:gate"), false);
+    assert.equal(releaseWorkflow.includes("bench:build:cold-apkg:gate"), false);
     assert.equal(releaseWorkflow.includes("bench:obsidian-proof-etl:gate"), false);
     assert.equal(releaseWorkflow.includes("data:benchmark:jlpt:sources:gate"), false);
     assert.match(readme, /Benchmark budget commands are manual\/local performance guardrails, not GitHub Actions CI gates/);
-    assert.match(readme, /`data:benchmark:jlpt:sources:gate`, `bench:obsidian-proof-etl:gate`, and `bench:build:gate` are manual\/local performance guardrails/);
-    assert.match(readme, /`bench:build:gate` requires a ready local workspace and writes benchmark output/);
+    assert.match(readme, /`data:benchmark:jlpt:sources:gate`, `bench:obsidian-proof-etl:gate`, `bench:build:gate`, and `bench:build:cold-apkg:gate` are manual\/local performance guardrails/);
+    assert.match(readme, /`bench:build:gate` and `bench:build:cold-apkg:gate` require a ready local workspace and write benchmark output/);
+    assert.match(readme, /`perf:memory:matrix` is a CI-safe metadata audit, not a timing budget gate/);
 });
 
 test("pull request template calls out release-gate and code-owner expectations", () => {

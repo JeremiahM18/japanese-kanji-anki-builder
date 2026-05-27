@@ -14,6 +14,8 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run bench:obsidian-proof-etl` | Measure tracked Obsidian proof ledger validation, compatibility-view generation, and SQLite mirror generation |
 | `npm run bench:obsidian-proof-etl:gate` | Manual local Obsidian proof ETL performance guardrail; not a CI gate unless explicitly wired |
 | `npm run bench:build:gate` | Manual local-data build performance guardrail; requires a ready workspace and writes benchmark output |
+| `npm run bench:build:cold-apkg:gate` | Manual local-data cold native APKG package-performance guardrail; clears the generated APKG cache and gates the package phase |
+| `npm run perf:memory:matrix` | Validate the tracked performance and memory audit matrix without running timing budgets |
 | `npm run ci:smoke` | Build deterministic smoke artifacts |
 | `npm run release:gate` | Validate smoke-fixture release artifact contracts |
 | `npm run product:artifacts:n5` | Build and validate the tracked-source N5 word TSV artifact |
@@ -158,6 +160,8 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run data:audit:jlpt:official-occurrences` | Report or extract official JLPT positive occurrence evidence without storing question text or assigning levels |
 | `npm run data:benchmark:jlpt:sources:gate -- --source=<source-id>` | Manual source-evidence performance guardrail; fail locally when benchmark timing exceeds configured default budgets |
 | `npm run bench:build:gate` | Manual local-data build performance guardrail; requires a ready workspace and writes benchmark output |
+| `npm run bench:build:cold-apkg:gate` | Manual local-data cold native APKG package-performance guardrail; clears the generated APKG cache and gates the package phase |
+| `npm run perf:memory:matrix` | Validate which performance, memory, package, and smoke lanes are budgeted, sampled, CI-backed, or manual/local |
 | `npm run data:packet:jlpt:source-review -- --source=<source-id> --limit=25` | Emit compact read-only JSON planning rows for the next governed source-review packet |
 | `npm run data:pin:jlpt:source-input -- --source=<source-id>` | Pin a reviewed ignored source input with a milestone reason before governed source import |
 | `npm run data:audit:jlpt:source-inputs -- --source=tanos_legacy_direct` | Preflight the pinned local Tanos direct legacy normalized source file before source-evidence import |

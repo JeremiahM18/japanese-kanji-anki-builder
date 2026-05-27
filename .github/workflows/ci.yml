@@ -54,6 +54,9 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Verify performance and memory audit matrix
+        run: npm run perf:memory:matrix
+
       - name: Validate Obsidian proof ledger
         run: npm run data:obsidian:proof:validate
 

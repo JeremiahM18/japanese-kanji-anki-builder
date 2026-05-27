@@ -215,11 +215,13 @@ test("README scopes benchmark budget commands as manual local guardrails unless 
     const readme = readRepoFile("README.md");
 
     assert.equal(workflow.includes("bench:build:gate"), false);
+    assert.equal(workflow.includes("bench:obsidian-proof-etl:gate"), false);
     assert.equal(workflow.includes("data:benchmark:jlpt:sources:gate"), false);
     assert.equal(releaseWorkflow.includes("bench:build:gate"), false);
+    assert.equal(releaseWorkflow.includes("bench:obsidian-proof-etl:gate"), false);
     assert.equal(releaseWorkflow.includes("data:benchmark:jlpt:sources:gate"), false);
     assert.match(readme, /Benchmark budget commands are manual\/local performance guardrails, not GitHub Actions CI gates/);
-    assert.match(readme, /`data:benchmark:jlpt:sources:gate` and `bench:build:gate` are manual\/local performance guardrails/);
+    assert.match(readme, /`data:benchmark:jlpt:sources:gate`, `bench:obsidian-proof-etl:gate`, and `bench:build:gate` are manual\/local performance guardrails/);
     assert.match(readme, /`bench:build:gate` requires a ready local workspace and writes benchmark output/);
 });
 

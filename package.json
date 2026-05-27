@@ -15,6 +15,8 @@
     "typecheck": "tsc --noEmit -p jsconfig.json",
     "supply-chain:audit": "node scripts/auditSupplyChain.js",
     "bench:export": "node scripts/benchmarkExport.js",
+    "bench:obsidian-proof-etl": "node scripts/benchmarkObsidianProofEtl.js",
+    "bench:obsidian-proof-etl:gate": "node scripts/benchmarkObsidianProofEtl.js --budget=default",
     "data:benchmark:jlpt:sources": "node scripts/reportJlptKanjiSourceEvidenceCost.js",
     "data:benchmark:jlpt:sources:gate": "node scripts/reportJlptKanjiSourceEvidenceCost.js --budget=default",
     "corpus:normalize": "node scripts/normalizeSentenceCorpus.js",

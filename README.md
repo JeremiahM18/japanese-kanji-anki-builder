@@ -283,7 +283,7 @@ Clean CI does not run `deck:platinum:governance-gate` because that command exerc
 
 Tracked CI tests must not read ignored root `data/*` inputs. Use tracked contracts, tracked fixtures, or explicit temp fixtures in CI. The tracked KANJIDIC2 reading contract is a `kanji-reading-reference` lane only; exact kanji primary-reading checks against generated `OnReading`/`KunReading` remain in the local generated-row Platinum gates. The tracked N5/N4 kanji card-field source contracts are a `kanji-field-verification` lane extracted from current-standard Platinum `japanese-source` evidence; they are not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness by themselves.
 
-Benchmark budget commands are manual/local performance guardrails, not GitHub Actions CI gates. `data:benchmark:jlpt:sources:gate` and `bench:build:gate` are manual/local performance guardrails for source-evidence and build-performance changes. `bench:build:gate` requires a ready local workspace and writes benchmark output under the configured benchmark output directory.
+Benchmark budget commands are manual/local performance guardrails, not GitHub Actions CI gates. `data:benchmark:jlpt:sources:gate`, `bench:obsidian-proof-etl:gate`, and `bench:build:gate` are manual/local performance guardrails for source-evidence, Obsidian proof ETL, and build-performance changes. `bench:build:gate` requires a ready local workspace and writes benchmark output under the configured benchmark output directory.
 
 Release process:
 

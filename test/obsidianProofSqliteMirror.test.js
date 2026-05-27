@@ -11,6 +11,7 @@ const {
 const {
     buildObsidianProofSqliteMirror,
     buildObsidianProofSqliteMirrorReport,
+    queryObsidianProofSqliteMirror,
 } = require("../src/services/obsidianProofSqliteMirrorService");
 const { resolvePythonCommand } = require("../src/services/toolchainService");
 
@@ -155,4 +156,88 @@ test("buildObsidianProofSqliteMirrorReport rejects unsafe database filenames", (
 
     assert.equal(report.passed, false);
     assert.match(report.failures[0], /plain filename/);
+});
+
+test("queryObsidianProofSqliteMirror rebuilds then queries the read-only local mirror", {
+    skip: python ? false : "Python is unavailable",
+}, () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-sqlite-query-"));
+    writeLedger(rootDir, [
+        buildProofEvent(),
+        buildProofEvent({
+            proofId: "kanji-n3-obsidian-fixture-02",
+            target: {
+                deckKind: "kanji",
+                level: 3,
+                written: "幸",
+                reading: "こう",
+                cardReviewed: "幸|こう",
+            },
+            batch: {
+                id: "n3-kanji-obsidian-fixture-batch",
+                sequence: 100,
+            },
+            proof: {
+                ...buildProofEvent().proof,
+                cardReviewed: "幸|こう",
+                reviewedAt: "2026-05-27",
+                evidenceChecked: [
+                    "live generated kanji card surface checked for 幸|こう",
+                    "governed japanese-source evidence checked for 幸|こう",
+                    "primary reading, on/kun compatibility, learner meaning, and broader meanings checked",
+                    "example sentence quality review checked for natural Japanese, learner usefulness, level appropriateness, support-only usage, reading, and translation",
+                    "notes and support vocabulary checked for learner usefulness",
+                    "exact primary-reading audio identity checked for 幸|こう",
+                    "stroke-order media identity checked for 幸",
+                    "source evidence, JLPT placement evidence, internal checks, NLP assistive signals, and review proof kept in separate evidence lanes",
+                ],
+            },
+        }),
+    ]);
+
+    const report = queryObsidianProofSqliteMirror({
+        cwd: rootDir,
+        ledgerDir: "templates/obsidian_proof_ledger",
+        outputDir: "out/obsidian-proof/sqlite",
+        deckKind: "kanji",
+        level: 3,
+        target: "常|じょう",
+        limit: 5,
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.mirror.proofEvents, 2);
+    assert.equal(report.query.matchedProofEvents, 1);
+    assert.equal(report.query.rows.length, 1);
+    assert.equal(report.query.rows[0].proofId, "kanji-n3-obsidian-fixture-01");
+    assert.equal(report.query.rows[0].cardReviewed, "常|じょう");
+    assert.deepEqual(report.filters, {
+        deckKind: "kanji",
+        level: 3,
+        batchId: null,
+        target: "常|じょう",
+        limit: 5,
+    });
+    assert.equal(report.query.batchCounts[0].proofEvents, 2);
+});
+
+test("queryObsidianProofSqliteMirror reports empty result sets without failing", {
+    skip: python ? false : "Python is unavailable",
+}, () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-sqlite-query-"));
+    writeLedger(rootDir, [buildProofEvent()]);
+
+    const report = queryObsidianProofSqliteMirror({
+        cwd: rootDir,
+        ledgerDir: "templates/obsidian_proof_ledger",
+        outputDir: "out/obsidian-proof/sqlite",
+        deckKind: "kanji",
+        level: 3,
+        target: "幸|こう",
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.query.matchedProofEvents, 0);
+    assert.deepEqual(report.query.rows, []);
+    assert.equal(report.query.batchCounts[0].proofEvents, 1);
 });

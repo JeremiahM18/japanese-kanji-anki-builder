@@ -50,6 +50,7 @@
     "data:obsidian:proof:reconcile": "node scripts/reconcileObsidianProofLedger.js",
     "data:obsidian:proof:views": "node scripts/buildObsidianProofCompatibilityViews.js",
     "data:obsidian:proof:sqlite": "node scripts/buildObsidianProofSqlite.js",
+    "data:obsidian:proof:sqlite:query": "node scripts/queryObsidianProofSqlite.js",
     "data:audit:stroke-order": "node scripts/auditStrokeOrderPolicy.js",
     "media:review:audio": "node scripts/reportAudioReview.js",
     "media:review:word-audio": "node scripts/reportWordAudioReview.js",

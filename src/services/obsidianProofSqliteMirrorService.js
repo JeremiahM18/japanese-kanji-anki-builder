@@ -87,19 +87,20 @@ function getPythonWriterPath() {
     return path.resolve(__dirname, "..", "..", "scripts", "buildObsidianProofSqlite.py");
 }
 
-function runPythonSqliteWriter({
+function getPythonQueryPath() {
+    return path.resolve(__dirname, "..", "..", "scripts", "queryObsidianProofSqlite.py");
+}
+
+function runPythonScript({
     python,
-    inputJsonPath,
-    outputDbPath,
+    scriptPath,
+    args,
+    label,
 }) {
-    const writerPath = getPythonWriterPath();
     const result = spawnSync(python.command, [
         ...python.argsPrefix,
-        writerPath,
-        "--input-json",
-        inputJsonPath,
-        "--output-db",
-        outputDbPath,
+        scriptPath,
+        ...args,
     ], {
         encoding: "utf8",
         env: {
@@ -111,11 +112,11 @@ function runPythonSqliteWriter({
     });
 
     if (result.error) {
-        throw new Error(`Failed to run Python SQLite writer (${python.command}): ${result.error.message}`);
+        throw new Error(`Failed to run ${label} (${python.command}): ${result.error.message}`);
     }
     if (result.status !== 0) {
         throw new Error([
-            `Python SQLite writer failed with exit code ${result.status}.`,
+            `${label} failed with exit code ${result.status}.`,
             result.stderr.trim(),
             result.stdout.trim(),
         ].filter(Boolean).join(" "));
@@ -124,8 +125,62 @@ function runPythonSqliteWriter({
     try {
         return JSON.parse(result.stdout.trim());
     } catch (error) {
-        throw new Error(`Python SQLite writer returned non-JSON output: ${error.message}; output=${result.stdout.trim()}`);
+        throw new Error(`${label} returned non-JSON output: ${error.message}; output=${result.stdout.trim()}`);
     }
+}
+
+function runPythonSqliteWriter({
+    python,
+    inputJsonPath,
+    outputDbPath,
+}) {
+    return runPythonScript({
+        python,
+        scriptPath: getPythonWriterPath(),
+        label: "Python SQLite writer",
+        args: [
+            "--input-json",
+            inputJsonPath,
+            "--output-db",
+            outputDbPath,
+        ],
+    });
+}
+
+function runPythonSqliteQuery({
+    python,
+    outputDbPath,
+    deckKind,
+    level,
+    batchId,
+    target,
+    limit,
+}) {
+    const args = [
+        "--db",
+        outputDbPath,
+        "--limit",
+        String(limit || 20),
+    ];
+    if (deckKind) {
+        args.push("--deck-kind", deckKind);
+    }
+    if (level) {
+        args.push("--level", String(level));
+    }
+    if (batchId) {
+        args.push("--batch", batchId);
+    }
+    if (target) {
+        args.push("--target", target);
+    }
+
+    return runPythonScript({
+        python,
+        scriptPath: getPythonQueryPath(),
+        label: "Python SQLite query",
+        args,
+    });
 }
 
 function resolvePythonRunner(pythonCommand) {
@@ -215,6 +270,61 @@ function buildObsidianProofSqliteMirrorReport(options = {}) {
     }
 }
 
+function queryObsidianProofSqliteMirror({
+    deckKind,
+    level,
+    batchId,
+    target,
+    limit = 20,
+    ...mirrorOptions
+} = {}) {
+    const mirror = buildObsidianProofSqliteMirror(mirrorOptions);
+    const resolvedCwd = path.resolve(mirrorOptions.cwd || process.cwd());
+    const python = resolvePythonRunner(mirrorOptions.pythonCommand || process.env.PYTHON);
+    const outputDbPath = path.resolve(resolvedCwd, mirror.outputDbPath);
+    const query = runPythonSqliteQuery({
+        python,
+        outputDbPath,
+        deckKind,
+        level,
+        batchId,
+        target,
+        limit,
+    });
+
+    return {
+        passed: true,
+        mirror,
+        query,
+        filters: {
+            deckKind: deckKind || null,
+            level: level || null,
+            batchId: batchId || null,
+            target: target || null,
+            limit,
+        },
+        failures: [],
+    };
+}
+
+function queryObsidianProofSqliteMirrorReport(options = {}) {
+    try {
+        return queryObsidianProofSqliteMirror(options);
+    } catch (error) {
+        return {
+            passed: false,
+            mirror: null,
+            query: {
+                matchedProofEvents: 0,
+                rows: [],
+                batchCounts: [],
+            },
+            filters: {},
+            failures: [error.message],
+        };
+    }
+}
+
 function formatObsidianProofSqliteMirrorReport(report = {}) {
     const lines = [
         "Japanese Kanji Builder Obsidian Proof SQLite Mirror",
@@ -253,6 +363,58 @@ function formatObsidianProofSqliteMirrorReport(report = {}) {
     return `${lines.join("\n")}\n`;
 }
 
+function formatObsidianProofSqliteQueryReport(report = {}) {
+    const query = report.query || {};
+    const filters = report.filters || {};
+    const lines = [
+        "Japanese Kanji Builder Obsidian Proof SQLite Query",
+        "",
+        `Result: ${report.passed ? "passing" : "failing"}`,
+        `Mirror database: ${report.mirror?.outputDbPath || "(not built)"}`,
+        `Matched proof events: ${query.matchedProofEvents || 0}`,
+        `Filters: deckKind=${filters.deckKind || "any"}; level=${filters.level || "any"}; batch=${filters.batchId || "any"}; target=${filters.target || "any"}; limit=${filters.limit || 20}`,
+    ];
+
+    const rows = Array.isArray(query.rows) ? query.rows : [];
+    if (rows.length > 0) {
+        lines.push("", "Proof rows:");
+        for (const row of rows) {
+            lines.push([
+                `- ${row.proofId}`,
+                `${row.deckKind}:N${row.level}`,
+                row.cardReviewed,
+                `batch=${row.batchId}`,
+                `reviewedAt=${row.reviewedAt}`,
+                `reviewer=${row.reviewer}`,
+            ].join("; "));
+        }
+    }
+
+    const batchCounts = Array.isArray(query.batchCounts) ? query.batchCounts : [];
+    if (batchCounts.length > 0) {
+        lines.push("", "Batch counts:");
+        for (const batch of batchCounts) {
+            lines.push(`- ${batch.deckKind}:N${batch.level} ${batch.batchId}: ${batch.proofEvents}`);
+        }
+    }
+
+    lines.push(
+        "",
+        "Authority boundary:",
+        "- Query results come from the generated SQLite mirror.",
+        "- JSONL ledger files remain canonical Obsidian proof."
+    );
+
+    if (!report.passed) {
+        lines.push("", "Failures:");
+        for (const failure of report.failures || []) {
+            lines.push(`- ${failure}`);
+        }
+    }
+
+    return `${lines.join("\n")}\n`;
+}
+
 module.exports = {
     DEFAULT_OBSIDIAN_PROOF_SQLITE_DB_FILE,
     DEFAULT_OBSIDIAN_PROOF_SQLITE_DIR,
@@ -260,6 +422,9 @@ module.exports = {
     buildObsidianProofSqliteMirror,
     buildObsidianProofSqliteMirrorReport,
     buildSqlitePayload,
+    formatObsidianProofSqliteQueryReport,
     formatObsidianProofSqliteMirrorReport,
+    queryObsidianProofSqliteMirror,
+    queryObsidianProofSqliteMirrorReport,
     resolveSqliteOutput,
 };

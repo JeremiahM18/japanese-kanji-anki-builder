@@ -242,7 +242,7 @@ No-go conditions:
 - Provider parity is not exact: inline source and ledger-derived proof must produce identical rereview-status counts, card classifications, and queue samples before switching that consumer.
 - The compatibility view omits an inline proof that should have a ledger event.
 - The SQLite mirror cannot rebuild from JSONL without reading generated TSV/APKG output.
-- Any consumer switch changes `deck:kanji:obsidian:rereview-status -- --levels=3` counts without a matching proof-ledger change.
+- Any consumer switch changes `deck:kanji:obsidian:rereview-status -- --levels=3` or `deck:kanji:obsidian:certify-status -- --levels=3` counts without a matching proof-ledger change.
 - `deck:kanji:obsidian:certify-status -- --levels=3` fails for anything other than the known remaining Obsidian backlog.
 
 Switch consumers in small stages:
@@ -255,8 +255,8 @@ Switch consumers in small stages:
 
 Current transition state:
 
-- `deck:kanji:obsidian:rereview-status` is the first switched consumer. It uses the scoped proof-provider path so N3 kanji proof comes from canonical JSONL when a scoped ledger exists, while levels without migrated ledgers remain on legacy inline proof until their own parity gates are added.
-- `deck:kanji:obsidian:certify-status`, `deck:platinum:batch`, and `data:build:kanji-field-source-contract` are still legacy inline consumers until they receive their own dual-read parity switch.
+- `deck:kanji:obsidian:rereview-status` and `deck:kanji:obsidian:certify-status` are switched consumers. They use the scoped proof-provider path so N3 kanji proof comes from canonical JSONL when a scoped ledger exists, while levels without migrated ledgers remain on legacy inline proof until their own parity gates are added.
+- `deck:platinum:batch`, `deck:platinum:n<level>`, `deck:platinum:governance-gate`, and `data:build:kanji-field-source-contract` are still legacy inline consumers until they receive their own dual-read parity switch.
 
 Do not switch word Obsidian consumers from this N3 kanji ledger work. Word proof has separate identity binding, evidence checklist, and sentence-quality requirements.
 

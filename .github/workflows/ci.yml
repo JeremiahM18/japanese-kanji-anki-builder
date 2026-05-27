@@ -58,22 +58,22 @@ jobs:
         run: npm run data:obsidian:proof:validate
 
       - name: Reconcile Obsidian proof ledger parity
-        run: npm run data:obsidian:proof:reconcile -- --levels=3
+        run: npm run data:obsidian:proof:reconcile -- --levels=5,4,3
 
       - name: Verify Obsidian proof provider parity
-        run: npm run data:obsidian:proof:provider-parity -- --levels=3 --row-source=tracked-review-set
+        run: npm run data:obsidian:proof:provider-parity -- --levels=5,4,3 --row-source=tracked-review-set
 
       - name: Verify Obsidian proof provider parity for batch selector
-        run: npm run data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=3 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set
+        run: npm run data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=5,4,3 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set
 
       - name: Verify Obsidian proof provider parity for platinum level gate
-        run: npm run data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=3 --row-source=tracked-review-set
+        run: npm run data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=5,4,3 --row-source=tracked-review-set
 
       - name: Verify Obsidian proof provider parity for kanji field-source contract
-        run: npm run data:obsidian:proof:provider-parity -- --consumer=kanji-field-source-contract --levels=3 --row-source=tracked-review-set
+        run: npm run data:obsidian:proof:provider-parity -- --consumer=kanji-field-source-contract --levels=5,4,3 --row-source=tracked-review-set
 
       - name: Verify Obsidian proof provider parity for platinum governance gate
-        run: npm run data:obsidian:proof:provider-parity -- --consumer=platinum-governance-gate --levels=3 --row-source=tracked-review-set
+        run: npm run data:obsidian:proof:provider-parity -- --consumer=platinum-governance-gate --levels=5,4,3 --row-source=tracked-review-set
 
       - name: Run tracked JLPT kanji source governance audit
         run: npm run data:audit:jlpt:sources -- --governance-strict --limit=25

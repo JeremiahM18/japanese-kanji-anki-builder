@@ -216,6 +216,48 @@ function sampleValues(values = [], limit = 24) {
         .slice(0, limit);
 }
 
+function countInlineProofs(entries = []) {
+    return (Array.isArray(entries) ? entries : [])
+        .filter((entry) => entry.rereviewProvenance && typeof entry.rereviewProvenance === "object")
+        .length;
+}
+
+function buildProviderParityOutcome({
+    inlineProofCount = 0,
+    ledgerProvider = {},
+    inlineProjection = {},
+    ledgerProjection = {},
+    buildDualReadMismatch,
+} = {}) {
+    const canonicalLedgerMode = inlineProofCount === 0
+        && Number(ledgerProvider.summary?.ledgerProofEvents || 0) > 0;
+
+    if (canonicalLedgerMode) {
+        const ledgerProofEvents = Number(ledgerProvider.summary?.ledgerProofEvents || 0);
+        const ledgerProofsApplied = Number(ledgerProvider.summary?.ledgerProofsApplied || 0);
+        const inlineProofsOmitted = Number(ledgerProvider.summary?.inlineProofsOmitted || 0);
+        const passed = ledgerProofEvents === ledgerProofsApplied && inlineProofsOmitted === 0;
+        return {
+            comparisonMode: "canonical-ledger-integrity",
+            passed,
+            mismatch: passed ? null : {
+                ledgerProviderIntegrity: {
+                    ledgerProofEvents,
+                    ledgerProofsApplied,
+                    inlineProofsOmitted,
+                },
+            },
+        };
+    }
+
+    const passed = stableJson(inlineProjection) === stableJson(ledgerProjection);
+    return {
+        comparisonMode: "dual-read-parity",
+        passed,
+        mismatch: passed ? null : buildDualReadMismatch(),
+    };
+}
+
 function projectKanjiBatchReport(report = {}) {
     const cards = Array.isArray(report.cards) ? report.cards : [];
     return {
@@ -370,17 +412,14 @@ function buildPlatinumGovernanceGateProviderParityForLevel({
     });
     const inlineProjection = projectPlatinumGovernanceGateReport(inlineReport);
     const ledgerProjection = projectPlatinumGovernanceGateReport(ledgerReport);
-    const passed = stableJson(inlineProjection) === stableJson(ledgerProjection);
-
-    return {
-        level,
-        consumer: SUPPORTED_CONSUMERS.PLATINUM_GOVERNANCE_GATE,
-        passed,
-        inlineProvider: inlineProvider.summary,
-        ledgerProvider: ledgerProvider.summary,
+    const inlineProofCount = countInlineProofs(rawEntries);
+    const parity = buildProviderParityOutcome({
+        inlineProofCount,
+        inlineProvider,
+        ledgerProvider,
         inlineProjection,
         ledgerProjection,
-        mismatch: passed ? null : {
+        buildDualReadMismatch: () => ({
             inlineGate: {
                 passed: inlineProjection.passed,
                 issues: inlineProjection.issues,
@@ -393,7 +432,20 @@ function buildPlatinumGovernanceGateProviderParityForLevel({
             },
             inlineCounts: inlineProjection.kanjiRereviewReports[0]?.counts || {},
             ledgerCounts: ledgerProjection.kanjiRereviewReports[0]?.counts || {},
-        },
+        }),
+    });
+
+    return {
+        level,
+        consumer: SUPPORTED_CONSUMERS.PLATINUM_GOVERNANCE_GATE,
+        comparisonMode: parity.comparisonMode,
+        passed: parity.passed,
+        inlineProofCount,
+        inlineProvider: inlineProvider.summary,
+        ledgerProvider: ledgerProvider.summary,
+        inlineProjection,
+        ledgerProjection,
+        mismatch: parity.mismatch,
     };
 }
 
@@ -443,17 +495,14 @@ function buildKanjiPlatinumLevelProviderParityForLevel({
     });
     const inlineProjection = projectKanjiPlatinumLevelReport(inlineReport);
     const ledgerProjection = projectKanjiPlatinumLevelReport(ledgerReport);
-    const passed = stableJson(inlineProjection) === stableJson(ledgerProjection);
-
-    return {
-        level,
-        consumer: SUPPORTED_CONSUMERS.KANJI_PLATINUM_LEVEL,
-        passed,
-        inlineProvider: inlineProvider.summary,
-        ledgerProvider: ledgerProvider.summary,
+    const inlineProofCount = countInlineProofs(rawEntries);
+    const parity = buildProviderParityOutcome({
+        inlineProofCount,
+        inlineProvider,
+        ledgerProvider,
         inlineProjection,
         ledgerProjection,
-        mismatch: passed ? null : {
+        buildDualReadMismatch: () => ({
             inlineGate: {
                 passed: inlineProjection.passed,
                 passedCount: inlineProjection.passedCount,
@@ -468,7 +517,20 @@ function buildKanjiPlatinumLevelProviderParityForLevel({
             },
             inlineFailedKanji: sampleValues(inlineProjection.results.filter((result) => !result.passed).map((result) => result.kanji)),
             ledgerFailedKanji: sampleValues(ledgerProjection.results.filter((result) => !result.passed).map((result) => result.kanji)),
-        },
+        }),
+    });
+
+    return {
+        level,
+        consumer: SUPPORTED_CONSUMERS.KANJI_PLATINUM_LEVEL,
+        comparisonMode: parity.comparisonMode,
+        passed: parity.passed,
+        inlineProofCount,
+        inlineProvider: inlineProvider.summary,
+        ledgerProvider: ledgerProvider.summary,
+        inlineProjection,
+        ledgerProjection,
+        mismatch: parity.mismatch,
     };
 }
 
@@ -579,17 +641,14 @@ function buildKanjiFieldSourceContractProviderParityForLevel({
     });
     const inlineProjection = projectKanjiFieldSourceContract(inlineContract);
     const ledgerProjection = projectKanjiFieldSourceContract(ledgerContract);
-    const passed = stableJson(inlineProjection) === stableJson(ledgerProjection);
-
-    return {
-        level,
-        consumer: SUPPORTED_CONSUMERS.KANJI_FIELD_SOURCE_CONTRACT,
-        passed,
-        inlineProvider: inlineProvider.summary,
-        ledgerProvider: ledgerProvider.summary,
+    const inlineProofCount = countInlineProofs(rawEntries);
+    const parity = buildProviderParityOutcome({
+        inlineProofCount,
+        inlineProvider,
+        ledgerProvider,
         inlineProjection,
         ledgerProjection,
-        mismatch: passed ? null : {
+        buildDualReadMismatch: () => ({
             inlineCoverage: inlineProjection.coverage,
             ledgerCoverage: ledgerProjection.coverage,
             inlineRereviewBindings: Object.fromEntries(Object.entries(inlineProjection.entries || {}).map(([kanji, entry]) => [
@@ -600,7 +659,20 @@ function buildKanjiFieldSourceContractProviderParityForLevel({
                 kanji,
                 entry.reviewBinding,
             ])),
-        },
+        }),
+    });
+
+    return {
+        level,
+        consumer: SUPPORTED_CONSUMERS.KANJI_FIELD_SOURCE_CONTRACT,
+        comparisonMode: parity.comparisonMode,
+        passed: parity.passed,
+        inlineProofCount,
+        inlineProvider: inlineProvider.summary,
+        ledgerProvider: ledgerProvider.summary,
+        inlineProjection,
+        ledgerProjection,
+        mismatch: parity.mismatch,
     };
 }
 
@@ -655,24 +727,34 @@ function buildKanjiBatchReportProviderParityForLevel({
     });
     const inlineProjection = projectKanjiBatchReport(inlineReport);
     const ledgerProjection = projectKanjiBatchReport(ledgerReport);
-    const passed = stableJson(inlineProjection) === stableJson(ledgerProjection);
-
-    return {
-        level,
-        consumer: SUPPORTED_CONSUMERS.KANJI_BATCH_REPORT,
-        passed,
-        inlineProvider: inlineProvider.summary,
-        ledgerProvider: ledgerProvider.summary,
+    const inlineProofCount = countInlineProofs(rawEntries);
+    const parity = buildProviderParityOutcome({
+        inlineProofCount,
+        inlineProvider,
+        ledgerProvider,
         inlineProjection,
         ledgerProjection,
-        mismatch: passed ? null : {
+        buildDualReadMismatch: () => ({
             inlineSummary: inlineProjection.summary,
             ledgerSummary: ledgerProjection.summary,
             inlineQueueSamples: inlineProjection.queueSamples,
             ledgerQueueSamples: ledgerProjection.queueSamples,
             inlineSelectedKanji: inlineProjection.cards.map((card) => card.kanji),
             ledgerSelectedKanji: ledgerProjection.cards.map((card) => card.kanji),
-        },
+        }),
+    });
+
+    return {
+        level,
+        consumer: SUPPORTED_CONSUMERS.KANJI_BATCH_REPORT,
+        comparisonMode: parity.comparisonMode,
+        passed: parity.passed,
+        inlineProofCount,
+        inlineProvider: inlineProvider.summary,
+        ledgerProvider: ledgerProvider.summary,
+        inlineProjection,
+        ledgerProjection,
+        mismatch: parity.mismatch,
     };
 }
 
@@ -717,22 +799,32 @@ function buildKanjiRereviewStatusProviderParityForLevel({
     });
     const inlineProjection = projectKanjiRereviewStatusReport(inlineReport);
     const ledgerProjection = projectKanjiRereviewStatusReport(ledgerReport);
-    const passed = stableJson(inlineProjection) === stableJson(ledgerProjection);
-
-    return {
-        level,
-        consumer: SUPPORTED_CONSUMERS.KANJI_REREVIEW_STATUS,
-        passed,
-        inlineProvider: inlineProvider.summary,
-        ledgerProvider: ledgerProvider.summary,
+    const inlineProofCount = countInlineProofs(rawEntries);
+    const parity = buildProviderParityOutcome({
+        inlineProofCount,
+        inlineProvider,
+        ledgerProvider,
         inlineProjection,
         ledgerProjection,
-        mismatch: passed ? null : {
+        buildDualReadMismatch: () => ({
             inlineCounts: inlineProjection.counts,
             ledgerCounts: ledgerProjection.counts,
             inlineQueueSamples: inlineProjection.queueSamples,
             ledgerQueueSamples: ledgerProjection.queueSamples,
-        },
+        }),
+    });
+
+    return {
+        level,
+        consumer: SUPPORTED_CONSUMERS.KANJI_REREVIEW_STATUS,
+        comparisonMode: parity.comparisonMode,
+        passed: parity.passed,
+        inlineProofCount,
+        inlineProvider: inlineProvider.summary,
+        ledgerProvider: ledgerProvider.summary,
+        inlineProjection,
+        ledgerProjection,
+        mismatch: parity.mismatch,
     };
 }
 
@@ -841,7 +933,8 @@ function formatObsidianProofProviderParityReport(report = {}) {
         `Result: ${report.passed ? "passing" : "failing"}`,
         "",
         "Parity contract:",
-        "- Inline rereviewProvenance and canonical JSONL-derived rereviewProvenance must produce identical consumer counts.",
+        "- During dual-read transition, inline rereviewProvenance and canonical JSONL-derived rereviewProvenance must produce identical consumer counts.",
+        "- After inline proof is removed, canonical ledger integrity must prove every scoped ledger event binds to a tracked review-set entry and applies cleanly.",
         "- Queue samples, selected cards, classifications, and card-level Obsidian statuses must match before a consumer is switched.",
         "- Structural Platinum gate projections must match before deck:platinum:n<level> reads the proof provider by default.",
         "- Kanji card-field source contract projections must match before data:build:kanji-field-source-contract reads the proof provider by default.",
@@ -855,7 +948,9 @@ function formatObsidianProofProviderParityReport(report = {}) {
             "",
             `kanji:N${scope.level}`,
             `- Result: ${scope.passed ? "passing" : "failing"}`,
+            `- Comparison mode: ${scope.comparisonMode || "dual-read-parity"}`,
             `- Source entries: ${scope.inlineProvider?.sourceEntries || 0}`,
+            `- Inline proofs in source: ${scope.inlineProofCount || 0}`,
             `- Ledger proof events: ${scope.ledgerProvider?.ledgerProofEvents || 0}`,
             `- Ledger proofs applied: ${scope.ledgerProvider?.ledgerProofsApplied || 0}`,
             `- Inline proofs omitted by ledger provider: ${scope.ledgerProvider?.inlineProofsOmitted || 0}`

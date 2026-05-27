@@ -92,7 +92,7 @@ Kanji Platinum uses `kanji-platinum-v3-evidence-lanes`. Only current-standard `p
 
 `deck:kanji:obsidian:rereview-status -- --levels=3` currently reports N3 kanji as `341/341` Platinum, `120/341` Obsidian, `221` Platinum entries needing Obsidian, and `0` blocked/failing rows. `deck:kanji:obsidian:certify-status -- --levels=3` intentionally fails until the substantive-proof gap is closed.
 
-For N3 kanji, switched kanji proof consumers read scoped canonical JSONL Obsidian proof when the N3 proof ledger is present. Levels without migrated proof ledgers still fall back to legacy inline proof through the same provider path until their own proof ledgers are migrated and parity-gated.
+For migrated kanji proof levels (N5/N4/N3), switched kanji proof consumers read scoped canonical JSONL Obsidian proof from `templates/obsidian_proof_ledger/*.jsonl`; tracked review-set JSON no longer carries inline Obsidian proof objects for those levels. Kanji levels without scoped proof ledgers still fall back through the provider path until their own proof ledgers are deliberately migrated and gated.
 
 ### Word Product
 
@@ -279,7 +279,7 @@ npm run supply-chain:audit
 npm run release:gate
 ```
 
-Clean CI runs `data:obsidian:proof:validate`, `data:obsidian:proof:reconcile -- --levels=3`, `data:obsidian:proof:provider-parity -- --levels=3 --row-source=tracked-review-set`, `data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=3 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set`, `data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=3 --row-source=tracked-review-set`, `data:obsidian:proof:provider-parity -- --consumer=kanji-field-source-contract --levels=3 --row-source=tracked-review-set`, `data:obsidian:proof:provider-parity -- --consumer=platinum-governance-gate --levels=3 --row-source=tracked-review-set`, `data:audit:jlpt -- --strict --tracked-only`, `data:audit:jlpt:sources -- --governance-strict --limit=25`, `data:audit:jlpt:words`, and `deck:words:platinum:source-posture -- --levels=5,4` from tracked inputs.
+Clean CI runs `data:obsidian:proof:validate`, `data:obsidian:proof:reconcile -- --levels=5,4,3`, `data:obsidian:proof:provider-parity -- --levels=5,4,3 --row-source=tracked-review-set`, `data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=5,4,3 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set`, `data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=5,4,3 --row-source=tracked-review-set`, `data:obsidian:proof:provider-parity -- --consumer=kanji-field-source-contract --levels=5,4,3 --row-source=tracked-review-set`, `data:obsidian:proof:provider-parity -- --consumer=platinum-governance-gate --levels=5,4,3 --row-source=tracked-review-set`, `data:audit:jlpt -- --strict --tracked-only`, `data:audit:jlpt:sources -- --governance-strict --limit=25`, `data:audit:jlpt:words`, and `deck:words:platinum:source-posture -- --levels=5,4` from tracked inputs.
 
 Clean CI does not run `deck:platinum:governance-gate` or generated-row Obsidian proof-provider parity because those commands exercise ignored local `data/*` real generated-row inputs. Run them in a local-data workspace before release claims that depend on current generated kanji rows.
 

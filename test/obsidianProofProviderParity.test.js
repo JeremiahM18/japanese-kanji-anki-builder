@@ -341,6 +341,29 @@ test("kanji rereview-status provider parity passes when inline and ledger projec
     assert.equal(scope.ledgerProjection.counts.substantive_current_standard_review_proven, 1);
 });
 
+test("kanji rereview-status provider parity passes canonical ledger integrity after inline proof removal", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
+    writeLedger(rootDir, [buildProofEvent()]);
+    const { rereviewProvenance, ...entryWithoutInlineProof } = buildEntry();
+
+    const scope = buildKanjiRereviewStatusProviderParityForLevel({
+        rows: [buildRow()],
+        rawEntries: [entryWithoutInlineProof],
+        cwd: rootDir,
+        level: 3,
+        sourceReviewSetPath: "templates/platinum_n3_review_set.json",
+        kanjiSourceEvidence: { assignments: {}, sources: {} },
+    });
+
+    assert.equal(rereviewProvenance.cardReviewed, "常|じょう");
+    assert.equal(scope.passed, true);
+    assert.equal(scope.comparisonMode, "canonical-ledger-integrity");
+    assert.equal(scope.inlineProofCount, 0);
+    assert.equal(scope.inlineProjection.counts.needs_substantive_rereview, 1);
+    assert.equal(scope.ledgerProjection.counts.substantive_current_standard_review_proven, 1);
+    assert.equal(scope.ledgerProvider.ledgerProofsApplied, 1);
+});
+
 test("kanji platinum-level provider parity passes when structural projections match", () => {
     const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
     writeLedger(rootDir, [buildProofEvent()]);

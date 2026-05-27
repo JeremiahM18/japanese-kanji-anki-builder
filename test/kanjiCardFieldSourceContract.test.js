@@ -1,6 +1,5 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
-const fs = require("node:fs");
 
 const {
     auditKanjiCardFieldSourceContract,
@@ -12,6 +11,10 @@ const { loadJlptKanjiSourceEvidence } = require("../src/datasets/jlptKanjiSource
 const { loadJlptLevelContract } = require("../src/datasets/jlptLevelContract");
 const { loadPlatinumCardSourceManifest } = require("../src/datasets/platinumCardSourceManifest");
 const { buildKanjiCardFieldSourceContract } = require("../src/services/kanjiCardFieldSourceContractService");
+const {
+    OBSIDIAN_PROOF_PROVIDER_MODES,
+    loadReviewSetWithObsidianProof,
+} = require("../src/services/obsidianProofProviderService");
 const { resolveKanjiSourceOriginIdsForEntry } = require("../src/services/platinumKanjiSourceOriginService");
 const { parseArgs } = require("../scripts/buildKanjiCardFieldSourceContract");
 
@@ -69,7 +72,12 @@ test("tracked kanji card field source contracts pass governed coverage audit", (
 test("builder reproduces tracked kanji card field source contracts deterministically", () => {
     for (const level of [5, 4]) {
         const tracked = loadKanjiCardFieldSourceContract(defaultKanjiCardFieldSourceContractPathForLevel(level));
-        const platinumEntries = JSON.parse(fs.readFileSync(reviewSetPathForLevel(level), "utf8"));
+        const platinumEntries = loadReviewSetWithObsidianProof({
+            deckKind: "kanji",
+            level,
+            sourceReviewSetPath: reviewSetPathForLevel(level),
+            proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
+        }).entries;
         const sourceOriginEvidence = loadJlptKanjiSourceEvidence("templates/jlpt_kanji_source_evidence.json");
         const generated = buildKanjiCardFieldSourceContract({
             jlptLevelContract: loadJlptLevelContract("templates/jlpt_level_contract.json"),

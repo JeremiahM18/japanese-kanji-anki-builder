@@ -70,12 +70,16 @@ function loadInlineProofsForReviewSet({
 
     const entries = readJsonArray(reviewSetPath);
     const inlineProofs = [];
+    const sourceTargetKeys = new Set();
     const duplicateTargets = new Map();
     const seenTargets = new Map();
     let normalizedSentenceQualityReviews = 0;
     let sanitizedSentenceQualityReviews = 0;
 
     for (const entry of entries) {
+        for (const targetKey of buildEntryTargetKeys(entry, { deckKind, level })) {
+            sourceTargetKeys.add(targetKey);
+        }
         if (!isPlainRecord(entry.rereviewProvenance)) {
             continue;
         }
@@ -114,6 +118,7 @@ function loadInlineProofsForReviewSet({
         sourceReviewSetPath,
         sourceEntries: entries.length,
         inlineProofs,
+        sourceTargetKeys: [...sourceTargetKeys].sort(),
         duplicateInlineTargets: [...duplicateTargets.keys()].sort(),
         normalizedSentenceQualityReviews,
         sanitizedSentenceQualityReviews,
@@ -134,6 +139,7 @@ function summarizeScope({
     deckKind,
     level,
     inlineProofs,
+    sourceTargetKeys = [],
     ledgerProofs,
     duplicateInlineTargets,
     normalizedSentenceQualityReviews = 0,
@@ -141,10 +147,14 @@ function summarizeScope({
 }) {
     const inlineByTarget = new Map(inlineProofs.map((proof) => [proof.targetKey, proof]));
     const ledgerByTarget = new Map(ledgerProofs.map((proof) => [proof.targetKey, proof]));
+    const sourceTargets = new Set(sourceTargetKeys);
     const inlineTargets = [...inlineByTarget.keys()].sort();
     const ledgerTargets = [...ledgerByTarget.keys()].sort();
     const inlineOnlyTargets = inlineTargets.filter((targetKey) => !ledgerByTarget.has(targetKey));
-    const ledgerOnlyTargets = ledgerTargets.filter((targetKey) => !inlineByTarget.has(targetKey));
+    const ledgerOnlyTargets = ledgerTargets.filter((targetKey) => !sourceTargets.has(targetKey));
+    const canonicalLedgerTargets = ledgerTargets.filter((targetKey) => (
+        sourceTargets.has(targetKey) && !inlineByTarget.has(targetKey)
+    ));
     const matchedTargets = inlineTargets.filter((targetKey) => ledgerByTarget.has(targetKey));
     const proofMismatches = matchedTargets
         .filter((targetKey) => stableJson(inlineByTarget.get(targetKey).provenance)
@@ -160,6 +170,7 @@ function summarizeScope({
         inlineProofs: inlineProofs.length,
         ledgerProofs: ledgerProofs.length,
         matchedProofs: matchedTargets.length,
+        canonicalLedgerProofs: canonicalLedgerTargets.length,
         inlineOnlyProofs: inlineOnlyTargets.length,
         ledgerOnlyProofs: ledgerOnlyTargets.length,
         proofMismatches: proofMismatches.length,
@@ -168,6 +179,7 @@ function summarizeScope({
         duplicateInlineTargets,
         inlineOnlyTargets,
         ledgerOnlyTargets,
+        canonicalLedgerTargets,
         mismatchedTargets: proofMismatches,
         passed: inlineOnlyTargets.length === 0
             && ledgerOnlyTargets.length === 0
@@ -202,6 +214,7 @@ function buildObsidianProofReconciliation({
                     deckKind,
                     level,
                     inlineProofs: reviewSet.inlineProofs,
+                    sourceTargetKeys: reviewSet.sourceTargetKeys,
                     ledgerProofs: sourceScopedLedgerProofs,
                     duplicateInlineTargets: reviewSet.duplicateInlineTargets,
                     normalizedSentenceQualityReviews: reviewSet.normalizedSentenceQualityReviews,
@@ -218,6 +231,7 @@ function buildObsidianProofReconciliation({
         inlineProofs: acc.inlineProofs + report.inlineProofs,
         ledgerProofs: acc.ledgerProofs + report.ledgerProofs,
         matchedProofs: acc.matchedProofs + report.matchedProofs,
+        canonicalLedgerProofs: acc.canonicalLedgerProofs + report.canonicalLedgerProofs,
         inlineOnlyProofs: acc.inlineOnlyProofs + report.inlineOnlyProofs,
         ledgerOnlyProofs: acc.ledgerOnlyProofs + report.ledgerOnlyProofs,
         proofMismatches: acc.proofMismatches + report.proofMismatches,
@@ -231,6 +245,7 @@ function buildObsidianProofReconciliation({
         inlineProofs: 0,
         ledgerProofs: 0,
         matchedProofs: 0,
+        canonicalLedgerProofs: 0,
         inlineOnlyProofs: 0,
         ledgerOnlyProofs: 0,
         proofMismatches: 0,
@@ -261,6 +276,7 @@ function buildObsidianProofReconciliationReport(options = {}) {
                 inlineProofs: 0,
                 ledgerProofs: 0,
                 matchedProofs: 0,
+                canonicalLedgerProofs: 0,
                 inlineOnlyProofs: 0,
                 ledgerOnlyProofs: 0,
                 proofMismatches: 0,
@@ -292,7 +308,8 @@ function formatObsidianProofReconciliationReport(report = {}) {
         `Source review entries: ${totals.sourceEntries || 0}`,
         `Inline rereviewProvenance proofs: ${totals.inlineProofs || 0}`,
         `Ledger proof events: ${totals.ledgerProofs || 0}`,
-        `Matched proofs: ${totals.matchedProofs || 0}`,
+        `Inline/ledger matched proofs: ${totals.matchedProofs || 0}`,
+        `Canonical ledger proofs bound to source entries: ${totals.canonicalLedgerProofs || 0}`,
         `Inline-only proofs: ${totals.inlineOnlyProofs || 0}`,
         `Ledger-only proofs: ${totals.ledgerOnlyProofs || 0}`,
         `Proof mismatches: ${totals.proofMismatches || 0}`,
@@ -301,7 +318,8 @@ function formatObsidianProofReconciliationReport(report = {}) {
         `Duplicate inline targets: ${totals.duplicateInlineTargets || 0}`,
         "",
         "Authority boundary:",
-        "- Reconciliation compares legacy inline proof against canonical JSONL ledger proof.",
+        "- Reconciliation binds canonical JSONL ledger proof to tracked review-set entries.",
+        "- During transition it also compares any remaining legacy inline proof against canonical ledger proof.",
         "- It does not certify cards, repair proof, change generated exports, or claim release readiness.",
     ];
 
@@ -313,7 +331,8 @@ function formatObsidianProofReconciliationReport(report = {}) {
             `- Source entries: ${scope.sourceEntries}`,
             `- Inline proofs: ${scope.inlineProofs}`,
             `- Ledger proofs: ${scope.ledgerProofs}`,
-            `- Matched: ${scope.matchedProofs}`,
+            `- Inline/ledger matched: ${scope.matchedProofs}`,
+            `- Canonical ledger bound to source entries: ${scope.canonicalLedgerProofs}`,
             `- Inline-only: ${scope.inlineOnlyProofs}; sample: ${formatTargetSample(scope.inlineOnlyTargets)}`,
             `- Ledger-only: ${scope.ledgerOnlyProofs}; sample: ${formatTargetSample(scope.ledgerOnlyTargets)}`,
             `- Mismatches: ${scope.proofMismatches}; sample: ${formatTargetSample(scope.mismatchedTargets.map((item) => item.targetKey))}`,

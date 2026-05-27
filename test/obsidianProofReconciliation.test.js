@@ -122,6 +122,7 @@ test("buildObsidianProofReconciliationReport passes when inline proof matches le
     assert.equal(report.totals.inlineProofs, 1);
     assert.equal(report.totals.ledgerProofs, 1);
     assert.equal(report.totals.matchedProofs, 1);
+    assert.equal(report.totals.canonicalLedgerProofs, 0);
     assert.equal(report.totals.inlineOnlyProofs, 0);
 });
 
@@ -161,8 +162,32 @@ test("buildObsidianProofReconciliationReport normalizes legacy inline sentence e
 
     assert.equal(report.passed, true);
     assert.equal(report.totals.matchedProofs, 1);
+    assert.equal(report.totals.canonicalLedgerProofs, 0);
     assert.equal(report.totals.proofMismatches, 0);
     assert.equal(report.totals.normalizedSentenceQualityReviews, 1);
+});
+
+test("buildObsidianProofReconciliationReport passes when canonical ledger proof replaces inline source proof", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-reconcile-"));
+    writeJson(path.join(rootDir, "templates", "platinum_n3_review_set.json"), [{
+        kanji: "常",
+        readingIncludes: ["じょう"],
+    }]);
+    writeLedger(rootDir, [buildProofEvent()]);
+
+    const report = buildObsidianProofReconciliationReport({
+        cwd: rootDir,
+        ledgerDir: "templates/obsidian_proof_ledger",
+        deckKinds: ["kanji"],
+        levels: [3],
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.totals.inlineProofs, 0);
+    assert.equal(report.totals.ledgerProofs, 1);
+    assert.equal(report.totals.matchedProofs, 0);
+    assert.equal(report.totals.canonicalLedgerProofs, 1);
+    assert.equal(report.totals.ledgerOnlyProofs, 0);
 });
 
 test("buildObsidianProofReconciliationReport reports inline-only, ledger-only, and mismatched proof targets", () => {

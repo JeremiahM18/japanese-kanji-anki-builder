@@ -35,12 +35,12 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run voicevox:stop` | Stop the local VOICEVOX Docker container after governed audio work |
 | `npm run deck:readiness` | Report per-level quality gates |
 | `npm run deck:preview` | Preview kanji cards |
-| `npm run deck:platinum:batch -- --level=5 --limit=12` | Build a read-only kanji review packet for the selected queue; N3 uses the scoped canonical JSONL proof provider with legacy inline fallback for levels without migrated ledgers |
+| `npm run deck:platinum:batch -- --level=5 --limit=12` | Build a read-only kanji review packet for the selected queue; migrated kanji levels use scoped canonical JSONL proof through the provider path |
 | `npm run deck:package` | Build package artifacts through the Node artifact wrapper |
 | `npm run deck:kanji:surface-audit` | Audit generated kanji deck surface details before review or release claims |
 | `npm run deck:kanji:partition-plan` | Report core/additional kanji partition decisions and duplicate-claim handling |
-| `npm run deck:kanji:obsidian:rereview-status -- --levels=5,4` | Classify kanji Platinum pass versus Obsidian proof; N3 uses the scoped canonical JSONL proof provider after provider-parity passes, levels without migrated ledgers still read legacy inline proof |
-| `npm run deck:kanji:obsidian:certify-status -- --levels=5,4` | Fail-closed kanji Obsidian certification status; N3 uses the same scoped canonical JSONL proof provider with legacy inline fallback for levels without migrated ledgers |
+| `npm run deck:kanji:obsidian:rereview-status -- --levels=5,4,3` | Classify kanji Platinum pass versus Obsidian proof; migrated N5/N4/N3 kanji proof reads canonical JSONL through the scoped proof provider |
+| `npm run deck:kanji:obsidian:certify-status -- --levels=5,4,3` | Fail-closed kanji Obsidian certification status; migrated kanji levels use scoped canonical JSONL proof through the provider path |
 | `npm run deck:ready` | Build and package kanji TSV artifacts |
 | `npm run deck:apkg` | Build kanji `.apkg` artifacts |
 | `npm run deck:kanji:additional:ready` | Build the separate optional additional-unverified kanji TSV/APKG surface |
@@ -64,11 +64,11 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run deck:review:accessibility` | Report automated accessibility checklist status for kanji or word decks |
 | `npm run deck:platinum:rereview-status -- --levels=5,4,3` | Compatibility kanji rereview-status alias; proof-provider input now defaults to ledger-if-available, but new workflows should use `deck:kanji:obsidian:rereview-status` |
 | `npm run deck:platinum:governance-gate` | Run the local-data Platinum governance gate against real generated N5/N4 rows before release claims that depend on those rows; kanji Obsidian proof input defaults to ledger-if-available while word proof remains on its separate word lane |
-| `npm run deck:platinum:n5` | Run the N5 kanji Platinum gate; proof-provider input defaults to ledger-if-available while levels without scoped ledgers remain on legacy inline proof |
-| `npm run deck:platinum:n4` | Run the N4 kanji Platinum gate; proof-provider input defaults to ledger-if-available while levels without scoped ledgers remain on legacy inline proof |
-| `npm run deck:platinum:n3` | Run the N3 kanji Platinum gate; N3 rereview proof is read through the scoped proof provider after platinum-level parity passes |
-| `npm run deck:platinum:n2` | Run the N2 kanji Platinum gate; proof-provider input defaults to ledger-if-available while levels without scoped ledgers remain on legacy inline proof |
-| `npm run deck:platinum:n1` | Run the N1 kanji Platinum gate; proof-provider input defaults to ledger-if-available while levels without scoped ledgers remain on legacy inline proof |
+| `npm run deck:platinum:n5` | Run the N5 kanji Platinum gate; migrated proof-provider input defaults to canonical JSONL |
+| `npm run deck:platinum:n4` | Run the N4 kanji Platinum gate; migrated proof-provider input defaults to canonical JSONL |
+| `npm run deck:platinum:n3` | Run the N3 kanji Platinum gate; migrated proof-provider input defaults to canonical JSONL |
+| `npm run deck:platinum:n2` | Run the N2 kanji Platinum gate; proof-provider input defaults to ledger-if-available and has no canonical proof unless a scoped ledger exists |
+| `npm run deck:platinum:n1` | Run the N1 kanji Platinum gate; proof-provider input defaults to ledger-if-available and has no canonical proof unless a scoped ledger exists |
 | `npm run deck:words:ready` | Build and package word TSV artifacts |
 | `npm run deck:words:apkg` | Build word `.apkg` artifacts |
 | `npm run deck:words:platinum:batch -- --level=5 --limit=8` | Build a read-only word review packet for the selected queue |
@@ -144,12 +144,13 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run data:audit:jlpt` | Audit local-data kanji taxonomy, starter alignment, and Gold review placement; use `-- --strict --tracked-only` for clean CI tracked-input alignment |
 | `npm run data:verify:jlpt` | Verify tracked JLPT inventory contract shape and consistency |
 | `npm run data:obsidian:proof:validate` | Validate canonical tracked JSONL Obsidian proof ledger files |
-| `npm run data:obsidian:proof:reconcile -- --levels=3` | Compare canonical JSONL proof to legacy inline `rereviewProvenance` for exact parity |
-| `npm run data:obsidian:proof:migrate-inline -- --levels=3` | Dry-run migration from tracked inline `rereviewProvenance` into JSONL ledger events |
+| `npm run data:obsidian:proof:reconcile -- --levels=5,4,3` | Bind canonical JSONL proof to tracked review-set entries; if legacy inline proof exists during a transition, compare it to the ledger |
+| `npm run data:obsidian:proof:migrate-inline -- --levels=3` | Dry-run migration from tracked inline `rereviewProvenance` into JSONL ledger events for a not-yet-canonicalized kanji level |
+| `npm run data:obsidian:proof:remove-inline -- --levels=5,4,3` | Dry-run removal of legacy inline proof after scoped canonical JSONL ledger events are present and bound |
 | `npm run data:obsidian:proof:views` | Generate compatibility review-set JSON from canonical ledger events |
 | `npm run data:obsidian:proof:sqlite` | Generate the local SQLite query mirror from canonical ledger events |
 | `npm run data:obsidian:proof:sqlite:query` | Query the generated local SQLite mirror after rebuilding it from JSONL |
-| `npm run data:obsidian:proof:provider-parity -- --levels=3 --row-source=tracked-review-set` | CI-safe dual-read test that inline `rereviewProvenance` and canonical ledger-derived proof produce identical output for switched kanji consumers using tracked review-set row proxies; add `--consumer=kanji-platinum-level`, `--consumer=kanji-batch-report`, `--consumer=kanji-field-source-contract`, or `--consumer=platinum-governance-gate` for consumer-specific projections, and use `--row-source=generated` locally to compare against live generated rows |
+| `npm run data:obsidian:proof:provider-parity -- --levels=5,4,3 --row-source=tracked-review-set` | CI-safe provider integrity test for switched kanji consumers using tracked review-set row proxies; it performs dual-read parity while inline proof exists and canonical-ledger integrity after inline proof removal. Add `--consumer=kanji-platinum-level`, `--consumer=kanji-batch-report`, `--consumer=kanji-field-source-contract`, or `--consumer=platinum-governance-gate` for consumer-specific projections, and use `--row-source=generated` locally to compare against live generated rows |
 | `npm run data:audit:jlpt:sources -- --governance-strict` | Audit JLPT kanji source evidence and fail only on source-governance regressions while evidence depth remains incomplete |
 | `npm run data:audit:jlpt:source-levels -- --worklist-only --limit=10` | Report the focused all-level governed review packet with current level, candidate levels, consensus, vote weights, and resolved source-input worksheet progress without changing decks or readiness |
 | `npm run data:audit:jlpt:source-access` | Rank source lanes by governed usefulness and current source-access state before spending another manual review batch |

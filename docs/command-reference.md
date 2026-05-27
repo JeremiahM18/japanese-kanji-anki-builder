@@ -39,7 +39,7 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run deck:package` | Build package artifacts through the Node artifact wrapper |
 | `npm run deck:kanji:surface-audit` | Audit generated kanji deck surface details before review or release claims |
 | `npm run deck:kanji:partition-plan` | Report core/additional kanji partition decisions and duplicate-claim handling |
-| `npm run deck:kanji:obsidian:rereview-status -- --levels=5,4` | Classify kanji Platinum pass versus Obsidian proof |
+| `npm run deck:kanji:obsidian:rereview-status -- --levels=5,4` | Classify kanji Platinum pass versus Obsidian proof; N3 uses the scoped canonical JSONL proof provider after provider-parity passes, levels without migrated ledgers still read legacy inline proof |
 | `npm run deck:kanji:obsidian:certify-status -- --levels=5,4` | Fail-closed kanji Obsidian certification status |
 | `npm run deck:ready` | Build and package kanji TSV artifacts |
 | `npm run deck:apkg` | Build kanji `.apkg` artifacts |

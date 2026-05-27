@@ -253,6 +253,11 @@ Switch consumers in small stages:
 4. Switch one consumer at a time. Commit each consumer switch with its focused tests and the parity gates above.
 5. Only after all consumers are ledger-fed, remove inline proof from tracked review-set source or make it generated-only. That removal must be its own commit and must keep the generated compatibility view available for older tooling until all callers are migrated.
 
+Current transition state:
+
+- `deck:kanji:obsidian:rereview-status` is the first switched consumer. It uses the scoped proof-provider path so N3 kanji proof comes from canonical JSONL when a scoped ledger exists, while levels without migrated ledgers remain on legacy inline proof until their own parity gates are added.
+- `deck:kanji:obsidian:certify-status`, `deck:platinum:batch`, and `data:build:kanji-field-source-contract` are still legacy inline consumers until they receive their own dual-read parity switch.
+
 Do not switch word Obsidian consumers from this N3 kanji ledger work. Word proof has separate identity binding, evidence checklist, and sentence-quality requirements.
 
 ## What Not To Claim

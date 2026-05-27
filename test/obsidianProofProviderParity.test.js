@@ -30,6 +30,7 @@ const {
     buildPlatinumGovernanceGateProviderParityForLevel,
     buildTrackedReviewSetRows,
     buildTrackedWordReviewSetRows,
+    buildWordBatchReportProviderParityForLevel,
     buildWordCertificationStatusProviderParityForLevel,
     buildWordRereviewStatusProviderParityForLevel,
     formatObsidianProofProviderParityReport,
@@ -462,6 +463,27 @@ test("provider parity script parses word rereview-status consumer and deck kind"
     assert.equal(options.rowSource, ROW_SOURCES.TRACKED_REVIEW_SET);
 });
 
+test("provider parity script parses word batch-report consumer and word targets", () => {
+    const options = parseArgs([
+        "--levels=5",
+        "--consumer=word-batch-report",
+        "--deck-kind=word",
+        "--words=本:ほん,今日|きょう",
+        "--limit=2",
+        "--row-source=tracked-review-set",
+    ]);
+
+    assert.equal(options.consumer, "word-batch-report");
+    assert.equal(options.deckKind, "word");
+    assert.deepEqual(options.levels, [5]);
+    assert.deepEqual(options.words, [
+        { word: "本", reading: "ほん" },
+        { word: "今日", reading: "きょう" },
+    ]);
+    assert.equal(options.limit, 2);
+    assert.equal(options.rowSource, ROW_SOURCES.TRACKED_REVIEW_SET);
+});
+
 test("provider parity script parses word certify-status consumer and deck kind", () => {
     const options = parseArgs([
         "--levels=5,4",
@@ -577,6 +599,89 @@ test("word rereview-status provider parity passes when inline and ledger project
     assert.equal(scope.passed, true);
     assert.equal(scope.inlineProjection.counts.substantive_current_standard_review_proven, 1);
     assert.equal(scope.ledgerProjection.counts.substantive_current_standard_review_proven, 1);
+});
+
+test("word batch-report provider parity passes when inline and ledger projections match", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
+    writeLedger(rootDir, [buildWordProofEvent()]);
+
+    const scope = buildWordBatchReportProviderParityForLevel({
+        rows: [buildWordRow()],
+        rawEntries: [buildWordEntry()],
+        cwd: rootDir,
+        level: 5,
+        sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
+        wordPitchAccentData: {
+            sources: {
+                "kanjium-cc-by-sa-4.0": {
+                    name: "Kanjium pitch accent database",
+                    license: "CC BY-SA 4.0",
+                },
+            },
+            entries: {
+                "本|ほん": {
+                    pattern: "1 [atamadaka]",
+                    sourceId: "kanjium-cc-by-sa-4.0",
+                    sourceWord: "本",
+                    sourceReading: "ほん",
+                    sourceAccent: "1",
+                },
+            },
+        },
+        limit: 1,
+    });
+
+    assert.equal(scope.passed, true);
+    assert.equal(scope.inlineProjection.summary.substantiveRereviewProven, 1);
+    assert.equal(scope.ledgerProjection.summary.substantiveRereviewProven, 1);
+    assert.deepEqual(scope.inlineProjection.cards.map((card) => card.identity), []);
+    assert.deepEqual(scope.ledgerProjection.cards.map((card) => card.identity), []);
+});
+
+test("word batch-report provider parity fails when ledger changes queue selection", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
+    writeLedger(rootDir, []);
+
+    const scope = buildWordBatchReportProviderParityForLevel({
+        rows: [buildWordRow()],
+        rawEntries: [buildWordEntry()],
+        cwd: rootDir,
+        level: 5,
+        sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
+        wordPitchAccentData: {
+            sources: {
+                "kanjium-cc-by-sa-4.0": {
+                    name: "Kanjium pitch accent database",
+                    license: "CC BY-SA 4.0",
+                },
+            },
+            entries: {
+                "本|ほん": {
+                    pattern: "1 [atamadaka]",
+                    sourceId: "kanjium-cc-by-sa-4.0",
+                    sourceWord: "本",
+                    sourceReading: "ほん",
+                    sourceAccent: "1",
+                },
+            },
+        },
+        limit: 1,
+    });
+    const formatted = formatObsidianProofProviderParityReport({
+        passed: false,
+        consumer: "word-batch-report",
+        deckKind: "word",
+        levels: [5],
+        scopes: [scope],
+    });
+
+    assert.equal(scope.passed, false);
+    assert.equal(scope.inlineProjection.summary.selectedCards, 0);
+    assert.equal(scope.ledgerProjection.summary.selectedCards, 1);
+    assert.deepEqual(scope.mismatch.inlineSelectedWords, []);
+    assert.deepEqual(scope.mismatch.ledgerSelectedWords, ["本|ほん"]);
+    assert.match(formatted, /Inline selected words/);
+    assert.match(formatted, /Ledger selected words/);
 });
 
 test("word certify-status provider parity passes when inline and ledger projections match", () => {

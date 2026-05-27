@@ -15,6 +15,11 @@ const {
     normalizeQueueMode,
 } = require("../src/services/platinumKanjiBatchReportService");
 const {
+    WORD_BATCH_QUEUE_MODES,
+    buildPlatinumWordBatchReport,
+    normalizeQueueMode: normalizeWordBatchQueueMode,
+} = require("../src/services/platinumWordBatchReportService");
+const {
     buildPlatinumKanjiRereviewStatusReport,
 } = require("../src/services/platinumKanjiRereviewStatusService");
 const {
@@ -61,6 +66,9 @@ const {
     buildWordRowsForLevel,
 } = require("./reviewPlatinumWordLevel");
 const {
+    parseWordIdentities,
+} = require("./platinumWordBatchReport");
+const {
     buildPlatinumWordRereviewStatusReport,
 } = require("../src/services/platinumWordRereviewStatusService");
 const {
@@ -73,6 +81,7 @@ const SUPPORTED_CONSUMERS = Object.freeze({
     KANJI_PLATINUM_LEVEL: "kanji-platinum-level",
     KANJI_REREVIEW_STATUS: "kanji-rereview-status",
     PLATINUM_GOVERNANCE_GATE: "platinum-governance-gate",
+    WORD_BATCH_REPORT: "word-batch-report",
     WORD_CERTIFY_STATUS: "word-certify-status",
     WORD_REREVIEW_STATUS: "word-rereview-status",
 });
@@ -112,6 +121,7 @@ function parseArgs(argv) {
         allowEmpty: false,
         rowSource: ROW_SOURCES.TRACKED_REVIEW_SET,
         unknownArgs: [],
+        words: [],
     };
 
     for (const arg of argv) {
@@ -139,6 +149,8 @@ function parseArgs(argv) {
             options.queue = normalizeQueueMode(parseStringOption(arg, "queue"));
         } else if (arg.startsWith("--row-source=")) {
             options.rowSource = normalizeRowSource(parseStringOption(arg, "row-source"));
+        } else if (arg.startsWith("--words=")) {
+            options.words = parseWordIdentities(arg, "words");
         } else {
             collectUnknownArg(options, arg);
         }
@@ -149,6 +161,7 @@ function parseArgs(argv) {
 
 function assertConsumerDeckKind({ consumer, deckKind }) {
     const wordConsumers = new Set([
+        SUPPORTED_CONSUMERS.WORD_BATCH_REPORT,
         SUPPORTED_CONSUMERS.WORD_CERTIFY_STATUS,
         SUPPORTED_CONSUMERS.WORD_REREVIEW_STATUS,
     ]);
@@ -448,6 +461,32 @@ function projectWordRereviewStatusReport(report = {}) {
             needsSubstantiveRereview: card.needsSubstantiveRereview,
             blockedOrFailing: card.blockedOrFailing,
             reasons: card.reasons,
+        })),
+    };
+}
+
+function projectWordBatchReport(report = {}) {
+    const cards = Array.isArray(report.cards) ? report.cards : [];
+    return {
+        level: report.level,
+        scope: report.scope,
+        queue: report.queue,
+        scopedToRequestedWords: report.scopedToRequestedWords,
+        summary: report.summary,
+        requestedMissing: report.requestedMissing,
+        queueSamples: {
+            nextMissingWords: sampleValues(report.nextMissingWords),
+            nextSubstantiveRereviewWords: sampleValues(report.nextSubstantiveRereviewWords),
+        },
+        cards: cards.map((card) => ({
+            identity: card.identity,
+            word: card.word,
+            reading: card.reading,
+            reviewStatus: card.reviewStatus,
+            existingStatuses: card.existingStatuses,
+            hardChecksPassed: card.hardChecksPassed,
+            riskFlags: card.riskFlags,
+            suggestedReviewStep: card.suggestedReviewStep,
         })),
     };
 }
@@ -1040,6 +1079,87 @@ function buildWordRereviewStatusProviderParityForLevel({
     };
 }
 
+function buildWordBatchReportProviderParityForLevel({
+    rows = [],
+    rawEntries = [],
+    cwd = process.cwd(),
+    ledgerDir,
+    level = 5,
+    sourceReviewSetPath,
+    wordPitchAccentData = {},
+    words = [],
+    limit = 8,
+    queue = WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
+} = {}) {
+    const queueMode = normalizeWordBatchQueueMode(queue);
+    const inlineProvider = applyObsidianProofProvider({
+        entries: rawEntries,
+        cwd,
+        ledgerDir,
+        deckKind: "word",
+        level,
+        sourceReviewSetPath,
+        proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.INLINE,
+    });
+    const ledgerProvider = applyObsidianProofProvider({
+        entries: rawEntries,
+        cwd,
+        ledgerDir,
+        deckKind: "word",
+        level,
+        sourceReviewSetPath,
+        proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER,
+    });
+    const reportOptions = {
+        rows,
+        wordPitchAccentData,
+        level,
+        words,
+        limit,
+        queue: queueMode,
+    };
+    const inlineReport = buildPlatinumWordBatchReport({
+        ...reportOptions,
+        entries: inlineProvider.entries,
+    });
+    const ledgerReport = buildPlatinumWordBatchReport({
+        ...reportOptions,
+        entries: ledgerProvider.entries,
+    });
+    const inlineProjection = projectWordBatchReport(inlineReport);
+    const ledgerProjection = projectWordBatchReport(ledgerReport);
+    const inlineProofCount = countInlineProofs(rawEntries);
+    const parity = buildProviderParityOutcome({
+        inlineProofCount,
+        inlineProvider,
+        ledgerProvider,
+        inlineProjection,
+        ledgerProjection,
+        buildDualReadMismatch: () => ({
+            inlineSummary: inlineProjection.summary,
+            ledgerSummary: ledgerProjection.summary,
+            inlineQueueSamples: inlineProjection.queueSamples,
+            ledgerQueueSamples: ledgerProjection.queueSamples,
+            inlineSelectedWords: inlineProjection.cards.map((card) => card.identity),
+            ledgerSelectedWords: ledgerProjection.cards.map((card) => card.identity),
+        }),
+    });
+
+    return {
+        level,
+        deckKind: "word",
+        consumer: SUPPORTED_CONSUMERS.WORD_BATCH_REPORT,
+        comparisonMode: parity.comparisonMode,
+        passed: parity.passed,
+        inlineProofCount,
+        inlineProvider: inlineProvider.summary,
+        ledgerProvider: ledgerProvider.summary,
+        inlineProjection,
+        ledgerProjection,
+        mismatch: parity.mismatch,
+    };
+}
+
 function buildWordCertificationStatusProviderParityForLevel({
     rows = [],
     rawEntries = [],
@@ -1132,6 +1252,7 @@ async function buildObsidianProofProviderParityReport({
     consumer = SUPPORTED_CONSUMERS.KANJI_REREVIEW_STATUS,
     deckKind = "kanji",
     kanji = [],
+    words = [],
     limit = 12,
     queue = KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
     requireCurrentReviewStandard = true,
@@ -1151,6 +1272,7 @@ async function buildObsidianProofProviderParityReport({
         ? loadKanjiFieldSourceContractInputs({ cwd })
         : {};
     const wordPitchAccentData = [
+        SUPPORTED_CONSUMERS.WORD_BATCH_REPORT,
         SUPPORTED_CONSUMERS.WORD_CERTIFY_STATUS,
         SUPPORTED_CONSUMERS.WORD_REREVIEW_STATUS,
     ].includes(consumer)
@@ -1171,7 +1293,19 @@ async function buildObsidianProofProviderParityReport({
             rawEntries: rawReviewSet.entries,
             config,
         });
-        if (consumer === SUPPORTED_CONSUMERS.WORD_CERTIFY_STATUS) {
+        if (consumer === SUPPORTED_CONSUMERS.WORD_BATCH_REPORT) {
+            scopes.push(buildWordBatchReportProviderParityForLevel({
+                rows,
+                rawEntries: rawReviewSet.entries,
+                cwd,
+                level,
+                sourceReviewSetPath: rawReviewSet.summary.sourceReviewSetPath,
+                wordPitchAccentData,
+                words,
+                limit,
+                queue,
+            }));
+        } else if (consumer === SUPPORTED_CONSUMERS.WORD_CERTIFY_STATUS) {
             scopes.push(buildWordCertificationStatusProviderParityForLevel({
                 rows,
                 rawEntries: rawReviewSet.entries,
@@ -1265,6 +1399,7 @@ function formatObsidianProofProviderParityReport(report = {}) {
         "- During dual-read transition, inline rereviewProvenance and canonical JSONL-derived rereviewProvenance must produce identical consumer counts.",
         "- After inline proof is removed, canonical ledger integrity must prove every scoped ledger event binds to a tracked review-set entry and applies cleanly.",
         "- Queue samples, selected cards, classifications, and card-level Obsidian statuses must match before a consumer is switched.",
+        "- Word batch report queue samples, selected word identities, summaries, review statuses, and risk flags must match before deck:words:platinum:batch reads the proof provider by default.",
         "- Word certification status totals, zero-failure gate posture, and failure objects must match before deck:words:obsidian:certify-status reads the proof provider by default.",
         "- Structural Platinum gate projections must match before deck:platinum:n<level> reads the proof provider by default.",
         "- Kanji card-field source contract projections must match before data:build:kanji-field-source-contract reads the proof provider by default.",
@@ -1295,6 +1430,8 @@ function formatObsidianProofProviderParityReport(report = {}) {
                 `- Ledger queue samples: ${JSON.stringify(scope.mismatch.ledgerQueueSamples)}`,
                 `- Inline selected kanji: ${JSON.stringify(scope.mismatch.inlineSelectedKanji || [])}`,
                 `- Ledger selected kanji: ${JSON.stringify(scope.mismatch.ledgerSelectedKanji || [])}`,
+                `- Inline selected words: ${JSON.stringify(scope.mismatch.inlineSelectedWords || [])}`,
+                `- Ledger selected words: ${JSON.stringify(scope.mismatch.ledgerSelectedWords || [])}`,
                 `- Inline failed kanji: ${JSON.stringify(scope.mismatch.inlineFailedKanji || [])}`,
                 `- Ledger failed kanji: ${JSON.stringify(scope.mismatch.ledgerFailedKanji || [])}`,
                 `- Inline coverage: ${JSON.stringify(scope.mismatch.inlineCoverage || {})}`,
@@ -1316,6 +1453,7 @@ async function main() {
         consumer: options.consumer,
         deckKind: options.deckKind,
         kanji: options.kanji,
+        words: options.words,
         limit: options.limit,
         queue: options.queue,
         requireCurrentReviewStandard: options.requireCurrentReviewStandard,
@@ -1353,6 +1491,7 @@ module.exports = {
     buildPlatinumGovernanceGateProviderParityForLevel,
     buildTrackedReviewSetRows,
     buildTrackedWordReviewSetRows,
+    buildWordBatchReportProviderParityForLevel,
     buildWordCertificationStatusProviderParityForLevel,
     buildWordRereviewStatusProviderParityForLevel,
     formatObsidianProofProviderParityReport,
@@ -1363,6 +1502,7 @@ module.exports = {
     projectKanjiBatchReport,
     projectKanjiPlatinumLevelReport,
     projectKanjiRereviewStatusReport,
+    projectWordBatchReport,
     projectWordCertificationStatusReport,
     projectWordRereviewStatusReport,
     projectPlatinumGovernanceGateReport,

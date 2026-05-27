@@ -33,6 +33,7 @@ test("platinumWordBatchReport parseArgs accepts scoped read-only batch options",
         json: true,
         level: 5,
         limit: 2,
+        proofProvider: undefined,
         queue: "missing-current-standard",
         unknownArgs: ["--oops"],
         words: [
@@ -47,6 +48,13 @@ test("platinumWordBatchReport defaults word review batches to eight cards", () =
 
     assert.equal(options.limit, 8);
     assert.equal(options.queue, "substantive-rereview");
+    assert.equal(options.proofProvider, undefined);
+});
+
+test("platinumWordBatchReport parseArgs accepts explicit proof provider audits", () => {
+    const options = parseBatchReportArgs(["--level=N5", "--proof-provider=ledger"]);
+
+    assert.equal(options.proofProvider, "ledger");
 });
 
 test("obsidian word proof status parseArgs accepts scoped read-only status options", () => {

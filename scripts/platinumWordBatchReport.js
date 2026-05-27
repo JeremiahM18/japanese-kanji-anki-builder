@@ -1,4 +1,3 @@
-const fs = require("node:fs");
 const path = require("node:path");
 const { invokeCliMain, parseCsvOption, parseNumericOption, parseStringOption, collectUnknownArg, assertNoUnknownArgs } = require("../src/utils/cliArgs");
 const { loadConfig } = require("../src/config");
@@ -10,6 +9,11 @@ const {
     formatPlatinumWordBatchReport,
     normalizeQueueMode,
 } = require("../src/services/platinumWordBatchReportService");
+const {
+    OBSIDIAN_PROOF_PROVIDER_MODES,
+    loadReviewSetWithObsidianProof,
+    normalizeObsidianProofProviderMode,
+} = require("../src/services/obsidianProofProviderService");
 
 function parseLevel(value) {
     const normalized = String(value ?? "").trim().toUpperCase().replace(/^N/, "");
@@ -38,6 +42,7 @@ function parseArgs(argv) {
         json: false,
         level: null,
         limit: 8,
+        proofProvider: undefined,
         queue: WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
         unknownArgs: [],
         words: [],
@@ -50,6 +55,8 @@ function parseArgs(argv) {
             options.level = parseLevel(parseStringOption(arg, "level"));
         } else if (arg.startsWith("--limit=")) {
             options.limit = parseNumericOption(arg, "limit");
+        } else if (arg.startsWith("--proof-provider=")) {
+            options.proofProvider = normalizeObsidianProofProviderMode(parseStringOption(arg, "proof-provider"));
         } else if (arg.startsWith("--queue=")) {
             options.queue = normalizeQueueMode(parseStringOption(arg, "queue"));
         } else if (arg.startsWith("--words=")) {
@@ -62,21 +69,32 @@ function parseArgs(argv) {
     return options;
 }
 
-async function main() {
+function readReviewSet(level, {
+    cwd = process.cwd(),
+    proofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
+} = {}) {
+    return loadReviewSetWithObsidianProof({
+        cwd,
+        deckKind: "word",
+        level,
+        proofProvider,
+    }).entries;
+}
+
+async function main({
+    commandName = "deck:words:platinum:batch",
+    defaultProofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
+} = {}) {
     const options = parseArgs(process.argv.slice(2));
-    assertNoUnknownArgs("platinumWordBatchReport", options.unknownArgs);
+    assertNoUnknownArgs(commandName, options.unknownArgs);
+    const proofProvider = options.proofProvider || defaultProofProvider;
 
     if (!Number.isInteger(options.level) || options.level < 1 || options.level > 5) {
         throw new Error("Platinum word batch report level must be 1-5.");
     }
 
     const config = loadConfig();
-    const reviewSetPath = path.join(process.cwd(), "templates", `platinum_n${options.level}_word_review_set.json`);
-    if (!fs.existsSync(reviewSetPath)) {
-        throw new Error("Missing platinum word review set at " + reviewSetPath);
-    }
-
-    const entries = JSON.parse(fs.readFileSync(reviewSetPath, "utf-8"));
+    const entries = readReviewSet(options.level, { proofProvider });
     const rows = await buildWordRowsForLevel({ level: options.level, config });
     const wordPitchAccentData = loadWordPitchAccentData(path.join(process.cwd(), "templates", "word_pitch_accent_data.json"));
     const report = buildPlatinumWordBatchReport({
@@ -107,6 +125,7 @@ if (require.main === module) {
 module.exports = {
     main,
     parseArgs,
+    readReviewSet,
     parseWordIdentities,
     parseWordIdentity,
 };

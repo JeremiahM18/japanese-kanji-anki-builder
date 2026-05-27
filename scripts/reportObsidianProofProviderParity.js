@@ -16,6 +16,9 @@ const {
     buildPlatinumKanjiRereviewStatusReport,
 } = require("../src/services/platinumKanjiRereviewStatusService");
 const {
+    evaluatePlatinumKanjiReviewSet,
+} = require("../src/services/platinumKanjiReviewService");
+const {
     OBSIDIAN_PROOF_PROVIDER_MODES,
     applyObsidianProofProvider,
     loadReviewSetWithObsidianProof,
@@ -34,6 +37,7 @@ const {
 
 const SUPPORTED_CONSUMERS = Object.freeze({
     KANJI_BATCH_REPORT: "kanji-batch-report",
+    KANJI_PLATINUM_LEVEL: "kanji-platinum-level",
     KANJI_REREVIEW_STATUS: "kanji-rereview-status",
 });
 
@@ -66,6 +70,9 @@ function parseArgs(argv) {
         levels: [3],
         limit: 12,
         queue: KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
+        requireAllRows: true,
+        requireCurrentReviewStandard: true,
+        allowEmpty: false,
         rowSource: ROW_SOURCES.TRACKED_REVIEW_SET,
         unknownArgs: [],
     };
@@ -73,6 +80,12 @@ function parseArgs(argv) {
     for (const arg of argv) {
         if (arg === "--json") {
             options.json = true;
+        } else if (arg === "--allow-empty") {
+            options.allowEmpty = true;
+        } else if (arg === "--allow-legacy-standard") {
+            options.requireCurrentReviewStandard = false;
+        } else if (arg === "--require-all") {
+            options.requireAllRows = true;
         } else if (arg.startsWith("--consumer=")) {
             options.consumer = parseStringOption(arg, "consumer");
         } else if (arg.startsWith("--kanji=")) {
@@ -206,6 +219,39 @@ function projectKanjiBatchReport(report = {}) {
     };
 }
 
+function projectKanjiPlatinumLevelReport(report = {}) {
+    const results = Array.isArray(report.results) ? report.results : [];
+    return {
+        totalEntries: report.totalEntries,
+        activePlatinumCount: report.activePlatinumCount,
+        activePlatinumStatusCount: report.activePlatinumStatusCount,
+        currentReviewStandard: report.currentReviewStandard,
+        currentStandardPlatinumCount: report.currentStandardPlatinumCount,
+        legacyOrUnversionedPlatinumCount: report.legacyOrUnversionedPlatinumCount,
+        revalidationBacklogCount: report.revalidationBacklogCount,
+        nonShippingCount: report.nonShippingCount,
+        needsRevalidationCount: report.needsRevalidationCount,
+        needsReviewCount: report.needsReviewCount,
+        verificationLimitationCount: report.verificationLimitationCount,
+        verificationLimitationKanjiCount: report.verificationLimitationKanjiCount,
+        verificationLimitationFieldCounts: report.verificationLimitationFieldCounts,
+        passedCount: report.passedCount,
+        failedCount: report.failedCount,
+        passed: report.passed,
+        coverageFailures: report.coverageFailures,
+        duplicateActiveEntries: report.duplicateActiveEntries,
+        missingPlatinumRows: report.missingPlatinumRows,
+        missingCurrentStandardRows: report.missingCurrentStandardRows,
+        results: results.map((result) => ({
+            kanji: result.kanji,
+            status: result.status,
+            passed: result.passed,
+            failures: result.failures,
+            verificationLimitations: result.verificationLimitations,
+        })),
+    };
+}
+
 function projectKanjiRereviewStatusReport(report = {}) {
     const cards = Array.isArray(report.cards) ? report.cards : [];
     return {
@@ -230,6 +276,81 @@ function projectKanjiRereviewStatusReport(report = {}) {
             blockedOrFailing: card.blockedOrFailing,
             reasons: card.reasons,
         })),
+    };
+}
+
+function buildKanjiPlatinumLevelProviderParityForLevel({
+    rows = [],
+    rawEntries = [],
+    cwd = process.cwd(),
+    ledgerDir,
+    level = 3,
+    sourceReviewSetPath,
+    requireCurrentReviewStandard = true,
+    requireAllRows = true,
+    allowEmpty = false,
+} = {}) {
+    const inlineProvider = applyObsidianProofProvider({
+        entries: rawEntries,
+        cwd,
+        ledgerDir,
+        deckKind: "kanji",
+        level,
+        sourceReviewSetPath,
+        proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.INLINE,
+    });
+    const ledgerProvider = applyObsidianProofProvider({
+        entries: rawEntries,
+        cwd,
+        ledgerDir,
+        deckKind: "kanji",
+        level,
+        sourceReviewSetPath,
+        proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER,
+    });
+    const reportOptions = {
+        rows,
+        level,
+        requireCurrentReviewStandard,
+        requireAllRows,
+        allowEmpty,
+    };
+    const inlineReport = evaluatePlatinumKanjiReviewSet({
+        ...reportOptions,
+        entries: inlineProvider.entries,
+    });
+    const ledgerReport = evaluatePlatinumKanjiReviewSet({
+        ...reportOptions,
+        entries: ledgerProvider.entries,
+    });
+    const inlineProjection = projectKanjiPlatinumLevelReport(inlineReport);
+    const ledgerProjection = projectKanjiPlatinumLevelReport(ledgerReport);
+    const passed = stableJson(inlineProjection) === stableJson(ledgerProjection);
+
+    return {
+        level,
+        consumer: SUPPORTED_CONSUMERS.KANJI_PLATINUM_LEVEL,
+        passed,
+        inlineProvider: inlineProvider.summary,
+        ledgerProvider: ledgerProvider.summary,
+        inlineProjection,
+        ledgerProjection,
+        mismatch: passed ? null : {
+            inlineGate: {
+                passed: inlineProjection.passed,
+                passedCount: inlineProjection.passedCount,
+                failedCount: inlineProjection.failedCount,
+                coverageFailures: inlineProjection.coverageFailures,
+            },
+            ledgerGate: {
+                passed: ledgerProjection.passed,
+                passedCount: ledgerProjection.passedCount,
+                failedCount: ledgerProjection.failedCount,
+                coverageFailures: ledgerProjection.coverageFailures,
+            },
+            inlineFailedKanji: sampleValues(inlineProjection.results.filter((result) => !result.passed).map((result) => result.kanji)),
+            ledgerFailedKanji: sampleValues(ledgerProjection.results.filter((result) => !result.passed).map((result) => result.kanji)),
+        },
     };
 }
 
@@ -372,6 +493,9 @@ async function buildObsidianProofProviderParityReport({
     kanji = [],
     limit = 12,
     queue = KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
+    requireCurrentReviewStandard = true,
+    requireAllRows = true,
+    allowEmpty = false,
     rowSource = ROW_SOURCES.TRACKED_REVIEW_SET,
     config = loadConfig(),
 } = {}) {
@@ -407,6 +531,17 @@ async function buildObsidianProofProviderParityReport({
                 limit,
                 queue,
             }));
+        } else if (consumer === SUPPORTED_CONSUMERS.KANJI_PLATINUM_LEVEL) {
+            scopes.push(buildKanjiPlatinumLevelProviderParityForLevel({
+                rows,
+                rawEntries: rawReviewSet.entries,
+                cwd,
+                level,
+                sourceReviewSetPath: rawReviewSet.summary.sourceReviewSetPath,
+                requireCurrentReviewStandard,
+                requireAllRows,
+                allowEmpty,
+            }));
         } else {
             scopes.push(buildKanjiRereviewStatusProviderParityForLevel({
                 rows,
@@ -439,6 +574,7 @@ function formatObsidianProofProviderParityReport(report = {}) {
         "Parity contract:",
         "- Inline rereviewProvenance and canonical JSONL-derived rereviewProvenance must produce identical consumer counts.",
         "- Queue samples, selected cards, classifications, and card-level Obsidian statuses must match before a consumer is switched.",
+        "- Structural Platinum gate projections must match before deck:platinum:n<level> reads the proof provider by default.",
         "- tracked-review-set row source is CI-safe proof-provider parity; generated row source is local live-row parity and may require ignored data/* inputs.",
         "- This command does not certify cards, repair proof, read generated TSV/APKG output, or claim release readiness.",
     ];
@@ -457,10 +593,14 @@ function formatObsidianProofProviderParityReport(report = {}) {
             lines.push(
                 `- Inline counts: ${JSON.stringify(scope.mismatch.inlineCounts || scope.mismatch.inlineSummary)}`,
                 `- Ledger counts: ${JSON.stringify(scope.mismatch.ledgerCounts || scope.mismatch.ledgerSummary)}`,
+                `- Inline gate: ${JSON.stringify(scope.mismatch.inlineGate || {})}`,
+                `- Ledger gate: ${JSON.stringify(scope.mismatch.ledgerGate || {})}`,
                 `- Inline queue samples: ${JSON.stringify(scope.mismatch.inlineQueueSamples)}`,
                 `- Ledger queue samples: ${JSON.stringify(scope.mismatch.ledgerQueueSamples)}`,
                 `- Inline selected kanji: ${JSON.stringify(scope.mismatch.inlineSelectedKanji || [])}`,
-                `- Ledger selected kanji: ${JSON.stringify(scope.mismatch.ledgerSelectedKanji || [])}`
+                `- Ledger selected kanji: ${JSON.stringify(scope.mismatch.ledgerSelectedKanji || [])}`,
+                `- Inline failed kanji: ${JSON.stringify(scope.mismatch.inlineFailedKanji || [])}`,
+                `- Ledger failed kanji: ${JSON.stringify(scope.mismatch.ledgerFailedKanji || [])}`
             );
         }
     }
@@ -477,6 +617,9 @@ async function main() {
         kanji: options.kanji,
         limit: options.limit,
         queue: options.queue,
+        requireCurrentReviewStandard: options.requireCurrentReviewStandard,
+        requireAllRows: options.requireAllRows,
+        allowEmpty: options.allowEmpty,
         rowSource: options.rowSource,
     });
 
@@ -502,6 +645,7 @@ module.exports = {
     ROW_SOURCES,
     SUPPORTED_CONSUMERS,
     buildKanjiBatchReportProviderParityForLevel,
+    buildKanjiPlatinumLevelProviderParityForLevel,
     buildKanjiRereviewStatusProviderParityForLevel,
     buildObsidianProofProviderParityReport,
     buildTrackedReviewSetRows,
@@ -510,5 +654,6 @@ module.exports = {
     normalizeRowSource,
     parseArgs,
     projectKanjiBatchReport,
+    projectKanjiPlatinumLevelReport,
     projectKanjiRereviewStatusReport,
 };

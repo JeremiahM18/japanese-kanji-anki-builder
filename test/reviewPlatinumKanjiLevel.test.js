@@ -15,15 +15,25 @@ test("parseArgs accepts platinum kanji review options", () => {
         allowEmpty: true,
         json: true,
         level: 5,
+        proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
         requireCurrentReviewStandard: true,
         requireAllRows: true,
+        unknownArgs: [],
     });
 });
 
 test("parseArgs allows explicit legacy platinum inspection", () => {
-    const options = parseArgs(["--level=5", "--allow-legacy-standard"]);
+    const options = parseArgs(["--level=5", "--allow-legacy-standard", "--proof-provider=inline", "--oops"]);
 
     assert.equal(options.requireCurrentReviewStandard, false);
+    assert.equal(options.proofProvider, OBSIDIAN_PROOF_PROVIDER_MODES.INLINE);
+    assert.deepEqual(options.unknownArgs, ["--oops"]);
+});
+
+test("parseArgs defaults platinum kanji review to ledger fallback proof provider", () => {
+    const options = parseArgs(["--level=3"]);
+
+    assert.equal(options.proofProvider, OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE);
 });
 
 test("parseArgs accepts additional platinum kanji review options", () => {

@@ -16,6 +16,7 @@ const {
 } = require("../src/services/platinumKanjiReviewService");
 const {
     buildKanjiBatchReportProviderParityForLevel,
+    buildKanjiPlatinumLevelProviderParityForLevel,
     buildKanjiRereviewStatusProviderParityForLevel,
     buildObsidianProofProviderParityReport,
     buildTrackedReviewSetRows,
@@ -215,6 +216,20 @@ test("provider parity script parses levels, consumer, json, and unknown args", (
     assert.deepEqual(options.unknownArgs, ["--unexpected"]);
 });
 
+test("provider parity script parses platinum-level consumer options", () => {
+    const options = parseArgs([
+        "--levels=3",
+        "--consumer=kanji-platinum-level",
+        "--allow-legacy-standard",
+        "--allow-empty",
+    ]);
+
+    assert.equal(options.consumer, "kanji-platinum-level");
+    assert.equal(options.requireCurrentReviewStandard, false);
+    assert.equal(options.allowEmpty, true);
+    assert.equal(options.requireAllRows, true);
+});
+
 test("provider parity defaults to CI-safe tracked review-set rows", () => {
     const options = parseArgs([]);
 
@@ -278,6 +293,43 @@ test("kanji rereview-status provider parity passes when inline and ledger projec
     assert.equal(scope.passed, true);
     assert.equal(scope.inlineProjection.counts.substantive_current_standard_review_proven, 1);
     assert.equal(scope.ledgerProjection.counts.substantive_current_standard_review_proven, 1);
+});
+
+test("kanji platinum-level provider parity passes when structural projections match", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
+    writeLedger(rootDir, [buildProofEvent()]);
+
+    const scope = buildKanjiPlatinumLevelProviderParityForLevel({
+        rows: [buildRow()],
+        rawEntries: [buildEntry()],
+        cwd: rootDir,
+        level: 3,
+        sourceReviewSetPath: "templates/platinum_n3_review_set.json",
+    });
+
+    assert.equal(scope.passed, true);
+    assert.equal(scope.inlineProjection.passed, true);
+    assert.equal(scope.ledgerProjection.passed, true);
+    assert.equal(scope.inlineProjection.currentStandardPlatinumCount, 1);
+    assert.equal(scope.ledgerProjection.currentStandardPlatinumCount, 1);
+});
+
+test("kanji platinum-level provider parity keeps structural gate stable when ledger proof is absent", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
+    writeLedger(rootDir, []);
+
+    const scope = buildKanjiPlatinumLevelProviderParityForLevel({
+        rows: [buildRow()],
+        rawEntries: [buildEntry()],
+        cwd: rootDir,
+        level: 3,
+        sourceReviewSetPath: "templates/platinum_n3_review_set.json",
+    });
+
+    assert.equal(scope.passed, true);
+    assert.equal(scope.inlineProjection.passed, true);
+    assert.equal(scope.ledgerProjection.passed, true);
+    assert.equal(scope.ledgerProvider.inlineProofsOmitted, 1);
 });
 
 test("kanji rereview-status provider parity fails when ledger misses inline proof", () => {

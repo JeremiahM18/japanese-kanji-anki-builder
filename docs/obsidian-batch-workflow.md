@@ -231,8 +231,10 @@ npm run data:obsidian:proof:validate
 npm run data:obsidian:proof:reconcile -- --levels=3
 npm run data:obsidian:proof:provider-parity -- --levels=3 --row-source=tracked-review-set
 npm run data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=3 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set
+npm run data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=3 --row-source=tracked-review-set
 npm run data:obsidian:proof:provider-parity -- --levels=3 --row-source=generated
 npm run data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=3 --queue=substantive-rereview --limit=8 --row-source=generated
+npm run data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=3 --row-source=generated
 npm run data:obsidian:proof:views
 npm run data:obsidian:proof:sqlite
 npm run data:obsidian:proof:sqlite:query -- --deck-kind=kanji --level=3 --limit=5
@@ -260,8 +262,8 @@ Switch consumers in small stages:
 
 Current transition state:
 
-- `deck:kanji:obsidian:rereview-status`, `deck:kanji:obsidian:certify-status`, and `deck:platinum:batch` are switched consumers. They use the scoped proof-provider path so N3 kanji proof comes from canonical JSONL when a scoped ledger exists, while levels without migrated ledgers remain on legacy inline proof until their own parity gates are added.
-- `deck:platinum:n<level>`, `deck:platinum:governance-gate`, and `data:build:kanji-field-source-contract` are still legacy inline consumers until they receive their own dual-read parity switch.
+- `deck:kanji:obsidian:rereview-status`, `deck:kanji:obsidian:certify-status`, `deck:platinum:batch`, and `deck:platinum:n<level>` are switched consumers. They use the scoped proof-provider path so N3 kanji proof comes from canonical JSONL when a scoped ledger exists, while levels without migrated ledgers remain on legacy inline proof until their own parity gates are added.
+- `deck:platinum:governance-gate` and `data:build:kanji-field-source-contract` are still legacy inline consumers until they receive their own dual-read parity switch.
 
 Do not switch word Obsidian consumers from this N3 kanji ledger work. Word proof has separate identity binding, evidence checklist, and sentence-quality requirements.
 

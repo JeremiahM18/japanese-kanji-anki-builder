@@ -50,6 +50,7 @@
     "data:audit:audio": "node scripts/auditAudioPolicy.js",
     "data:obsidian:proof:validate": "node scripts/validateObsidianProofLedger.js",
     "data:obsidian:proof:reconcile": "node scripts/reconcileObsidianProofLedger.js",
+    "data:obsidian:proof:migrate-inline": "node scripts/migrateInlineObsidianProofLedger.js",
     "data:obsidian:proof:views": "node scripts/buildObsidianProofCompatibilityViews.js",
     "data:obsidian:proof:sqlite": "node scripts/buildObsidianProofSqlite.js",
     "data:obsidian:proof:sqlite:query": "node scripts/queryObsidianProofSqlite.js",

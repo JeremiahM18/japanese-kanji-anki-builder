@@ -3,6 +3,7 @@ const assert = require("node:assert/strict");
 const path = require("node:path");
 
 const {
+    COLD_APKG_BUILD_BUDGET,
     DEFAULT_BUILD_BUDGET,
     cleanOutDir,
     evaluateBudget,
@@ -19,6 +20,7 @@ test("benchmarkBuild parseArgs supports warmup json and build options", () => {
         "--out-dir-base=out/custom-bench",
         "--json",
         "--no-warmup",
+        "--cold-apkg-cache",
         "--budget=default",
         "--budget-total-ms=4200",
         "--budget-export-ms=2100",
@@ -32,6 +34,7 @@ test("benchmarkBuild parseArgs supports warmup json and build options", () => {
         concurrency: 6,
         outDirBase: "out/custom-bench",
         warmup: false,
+        coldApkgCache: true,
         json: true,
         budget: "default",
         budgetTotalMs: 4200,
@@ -71,6 +74,18 @@ test("resolveBudget returns the default build budget", () => {
     });
 
     assert.deepEqual(budget, DEFAULT_BUILD_BUDGET);
+});
+
+test("resolveBudget returns the cold APKG build budget", () => {
+    const budget = resolveBudget({
+        budget: "cold-apkg",
+        budgetTotalMs: null,
+        budgetExportMs: null,
+        budgetMediaSyncMs: null,
+        budgetPackagingMs: null,
+    });
+
+    assert.deepEqual(budget, COLD_APKG_BUILD_BUDGET);
 });
 
 test("resolveBudget allows custom overrides on top of the default budget", () => {

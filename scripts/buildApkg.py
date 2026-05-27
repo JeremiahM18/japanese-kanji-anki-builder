@@ -3,6 +3,7 @@ import hashlib
 import json
 import shutil
 import sqlite3
+import sys
 import time
 import zipfile
 from pathlib import Path
@@ -10,6 +11,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DETERMINISTIC_ZIP_TIMESTAMP = (2024, 1, 1, 0, 0, 0)
 DETERMINISTIC_MOD_EPOCH = 1_704_067_200
+STREAM_CHUNK_SIZE = 1024 * 1024
 NOTE_SCHEMA_PATHS = {
     "kanji": REPO_ROOT / "src" / "config" / "ankiNoteSchema.json",
     "kanji-additional": REPO_ROOT / "src" / "config" / "ankiNoteSchema.json",
@@ -343,6 +345,22 @@ def resolve_archive_media_path(package_media_path: Path, media_integrity):
     return package_media_path
 
 
+def validate_archive_source_file(file_path: Path, expected_integrity=None):
+    if not file_path.exists() or not file_path.is_file():
+        raise RuntimeError(f"APKG archive source file is missing: {file_path}")
+
+    stat = file_path.stat()
+    if expected_integrity:
+        expected_size = expected_integrity.get("byteSize")
+        if isinstance(expected_size, int) and expected_size >= 0 and stat.st_size != expected_size:
+            raise RuntimeError(
+                f"APKG media byte-size mismatch for {file_path.name}: "
+                f"expected {expected_size}, actual {stat.st_size}"
+            )
+
+    return stat.st_size
+
+
 def list_package_media_files(media_dir: Path, media_integrity):
     if media_integrity:
         return [media_dir / file_name for file_name in sorted(media_integrity.keys())]
@@ -499,11 +517,30 @@ def create_collection_db(db_path: Path, levels, package_exports_dir: Path, deck_
     return len(note_rows), len(deck_ids_by_level)
 
 
-def write_deterministic_archive_file(archive, file_path: Path, arcname: str, compression=zipfile.ZIP_DEFLATED):
+def write_deterministic_archive_file(archive, file_path: Path, arcname: str, compression=zipfile.ZIP_DEFLATED, expected_integrity=None):
+    validate_archive_source_file(file_path, expected_integrity)
     info = zipfile.ZipInfo(arcname, date_time=DETERMINISTIC_ZIP_TIMESTAMP)
     info.compress_type = compression
     info.external_attr = 0o644 << 16
-    archive.writestr(info, file_path.read_bytes())
+    digest = hashlib.sha256() if expected_integrity and expected_integrity.get("sha256") else None
+
+    with file_path.open("rb") as source, archive.open(info, "w") as target:
+        while True:
+            chunk = source.read(STREAM_CHUNK_SIZE)
+            if not chunk:
+                break
+            if digest:
+                digest.update(chunk)
+            target.write(chunk)
+
+    if digest:
+        actual_sha256 = digest.hexdigest()
+        expected_sha256 = expected_integrity["sha256"]
+        if actual_sha256 != expected_sha256:
+            raise RuntimeError(
+                f"APKG media checksum mismatch for {file_path.name}: "
+                f"expected {expected_sha256}, actual {actual_sha256}"
+            )
 
 
 def build_apkg(out_dir: Path, levels, deck_kind: str):
@@ -562,23 +599,37 @@ def build_apkg(out_dir: Path, levels, deck_kind: str):
         media_index_path.write_text(json.dumps(media_map, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         capture_timing(timings_ms, "writeMediaIndex", media_index_started_at)
 
-        remove_started_at = time.perf_counter()
-        if apkg_path.exists():
-            apkg_path.unlink()
-        capture_timing(timings_ms, "removeExistingApkg", remove_started_at)
+        existing_apkg_started_at = time.perf_counter()
+        existing_apkg_replaced = apkg_path.exists()
+        capture_timing(timings_ms, "checkExistingApkg", existing_apkg_started_at)
 
         archive_started_at = time.perf_counter()
-        with zipfile.ZipFile(apkg_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        staged_apkg_path = stage_dir / "package.apkg"
+        with zipfile.ZipFile(staged_apkg_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+            collection_archive_started_at = time.perf_counter()
             write_deterministic_archive_file(archive, collection_path, "collection.anki2")
+            capture_timing(timings_ms, "archive.writeCollection", collection_archive_started_at)
+
+            media_index_archive_started_at = time.perf_counter()
             write_deterministic_archive_file(archive, media_index_path, "media")
+            capture_timing(timings_ms, "archive.writeMediaIndex", media_index_archive_started_at)
+
+            media_archive_started_at = time.perf_counter()
             for index, file_path in enumerate(media_files):
+                archive_source_path = resolve_archive_media_path(file_path, media_integrity)
                 write_deterministic_archive_file(
                     archive,
-                    resolve_archive_media_path(file_path, media_integrity),
+                    archive_source_path,
                     str(index),
                     compression=zipfile.ZIP_STORED,
+                    expected_integrity=media_integrity.get(file_path.name),
                 )
+            capture_timing(timings_ms, "archive.writeMediaFiles", media_archive_started_at)
         capture_timing(timings_ms, "writeArchive", archive_started_at)
+
+        replace_started_at = time.perf_counter()
+        staged_apkg_path.replace(apkg_path)
+        capture_timing(timings_ms, "replaceApkg", replace_started_at)
 
         timings_ms["totalBeforeCleanup"] = round((time.perf_counter() - total_started_at) * 1000, 2)
         result = {
@@ -588,6 +639,17 @@ def build_apkg(out_dir: Path, levels, deck_kind: str):
             "noteCount": note_count,
             "deckCount": deck_count,
             "mediaFileCount": len(media_files),
+            "runtime": {
+                "pythonVersion": sys.version.split()[0],
+                "sqliteVersion": sqlite3.sqlite_version,
+                "zip64": True,
+                "streamChunkSize": STREAM_CHUNK_SIZE,
+            },
+            "integrityChecks": {
+                "mediaFilesChecked": sum(1 for file_path in media_files if media_integrity.get(file_path.name, {}).get("sha256")),
+                "sourceBackedMediaFiles": sum(1 for file_path in media_files if media_integrity.get(file_path.name, {}).get("sourcePath")),
+                "existingApkgReplaced": existing_apkg_replaced,
+            },
             "timingsMs": timings_ms,
         }
         return result

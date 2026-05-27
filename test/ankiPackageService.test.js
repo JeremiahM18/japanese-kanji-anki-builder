@@ -72,6 +72,8 @@ test("buildAnkiPackage reuses a sha-verified content-addressed APKG cache", {
         });
         assert.equal(first.skipped, false);
         assert.equal(first.cacheHit, undefined);
+        assert.match(first.pythonRuntime.pythonVersion, /^\d+\.\d+\.\d+/u);
+        assert.equal(first.integrityChecks.mediaFilesChecked, 1);
         const firstSha256 = sha256File(first.filePath);
 
         const second = await buildAnkiPackage({
@@ -88,6 +90,7 @@ test("buildAnkiPackage reuses a sha-verified content-addressed APKG cache", {
         assert.equal(second.skipped, false);
         assert.equal(second.cacheHit, true);
         assert.equal(second.pythonTimingsMs, null);
+        assert.equal(second.pythonRuntime, null);
         assert.equal("describePythonTool" in second.timingsMs, false);
         assert.equal("runPythonApkgBuilder" in second.timingsMs, false);
         assert.equal(sha256File(second.filePath), firstSha256);

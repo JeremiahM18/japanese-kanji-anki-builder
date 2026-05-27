@@ -189,7 +189,9 @@ npm run deck:kanji:additional:ready
 
 The generated package also includes `media-integrity.json`, a local sidecar used to bind packaged media filenames to managed-media SHA-256 identities during deterministic APKG creation. It is not source evidence, Obsidian proof, or release QA.
 
-Native `.apkg` creation may reuse a SHA-verified, content-addressed generated cache under `out/.apkg-cache` when exports, note schema, media integrity, and the APKG builder script are unchanged. Cache entries include a generated metadata manifest binding the cache key, artifact byte size, and APKG SHA-256. A cache miss rebuilds the package normally; a corrupt cache entry is ignored and rebuilt.
+Native `.apkg` creation may reuse a SHA-verified, content-addressed generated cache under `out/.apkg-cache` when exports, note schema, media integrity, and the APKG builder script are unchanged. Cache entries include a generated metadata manifest binding the cache key, artifact byte size, and APKG SHA-256. A cache miss rebuilds the package normally; a corrupt cache entry is ignored and rebuilt. The cold native APKG path is independently measurable with `npm run bench:build:cold-apkg:gate`, which clears the generated APKG cache before the measured build and verifies the Python archive path rather than the hot-cache path.
+
+The Python APKG writer is a governed native runtime boundary. It streams files into the archive, replaces the final `.apkg` only after a staged archive is complete, and checks media-integrity SHA-256/byte-size metadata against source-backed media while writing the archive. Python runtime metadata in the package summary is diagnostic only; it is not deck source truth, Obsidian proof, or release readiness.
 
 Exported card media completeness is the release-critical signal for kanji deck media readiness. Use `--allow-export-fallbacks` only for an explicitly degraded local artifact.
 

@@ -20,6 +20,15 @@ const DEFAULT_BUILD_BUDGET = Object.freeze({
     packagingMs: 600,
 });
 
+const COLD_APKG_BUILD_BUDGET = Object.freeze({
+    // Cold APKG includes Python startup, source-backed media SHA-256 verification,
+    // deterministic archive writing, and cache fill. The hot-cache gate remains stricter.
+    totalMs: 7000,
+    exportMs: 2500,
+    mediaSyncMs: 1500,
+    packagingMs: 2500,
+});
+
 function parseArgs(argv) {
     const options = {
         levels: null,
@@ -27,6 +36,7 @@ function parseArgs(argv) {
         concurrency: null,
         outDirBase: null,
         warmup: true,
+        coldApkgCache: false,
         json: false,
         budget: null,
         budgetTotalMs: null,
@@ -41,6 +51,8 @@ function parseArgs(argv) {
             options.json = true;
         } else if (arg === "--no-warmup") {
             options.warmup = false;
+        } else if (arg === "--cold-apkg-cache") {
+            options.coldApkgCache = true;
         } else if (arg.startsWith("--levels=")) {
             options.levels = parseLevelsArgument(parseStringOption(arg, "levels"));
         } else if (arg.startsWith("--limit=")) {
@@ -90,13 +102,16 @@ function resolveBudget(options) {
         return null;
     }
 
-    if (options.budget && options.budget !== "default") {
-        throw new Error(`Unsupported build benchmark budget '${options.budget}'. Use --budget=default or explicit --budget-*-ms flags.`);
+    if (options.budget && !["default", "cold-apkg"].includes(options.budget)) {
+        throw new Error(`Unsupported build benchmark budget '${options.budget}'. Use --budget=default, --budget=cold-apkg, or explicit --budget-*-ms flags.`);
     }
 
-    const baseBudget = options.budget === "default"
-        ? { ...DEFAULT_BUILD_BUDGET }
-        : { totalMs: null, exportMs: null, mediaSyncMs: null, packagingMs: null };
+    let baseBudget = { totalMs: null, exportMs: null, mediaSyncMs: null, packagingMs: null };
+    if (options.budget === "default") {
+        baseBudget = { ...DEFAULT_BUILD_BUDGET };
+    } else if (options.budget === "cold-apkg") {
+        baseBudget = { ...COLD_APKG_BUILD_BUDGET };
+    }
 
     return {
         totalMs: Number.isFinite(customBudget.totalMs) ? customBudget.totalMs : baseBudget.totalMs,
@@ -184,7 +199,18 @@ function cleanOutDir(dirPath) {
     });
 }
 
-async function runBuildBenchmarkPass({ config, levels, limit, concurrency, outDir, doctorReport }) {
+function cleanApkgCacheDir() {
+    removeGeneratedPathSync(path.join(process.cwd(), "out", ".apkg-cache"), {
+        recursive: true,
+        force: true,
+        label: "APKG benchmark cache directory",
+    });
+}
+
+async function runBuildBenchmarkPass({ config, levels, limit, concurrency, outDir, doctorReport, coldApkgCache = false }) {
+    if (coldApkgCache) {
+        cleanApkgCacheDir();
+    }
     cleanOutDir(outDir);
 
     const startedAt = performance.now();
@@ -213,6 +239,8 @@ async function runBuildBenchmarkPass({ config, levels, limit, concurrency, outDi
             timingsMs: summary.package.timingsMs || null,
             ankiPackageTimingsMs: summary.package.ankiPackage?.timingsMs || null,
             pythonTimingsMs: summary.package.ankiPackage?.pythonTimingsMs || null,
+            pythonRuntime: summary.package.ankiPackage?.pythonRuntime || null,
+            integrityChecks: summary.package.ankiPackage?.integrityChecks || null,
         },
         timingsMs: summary.timingsMs,
         coverage: summary.coverage,
@@ -251,6 +279,7 @@ async function main() {
         concurrency,
         outDirBase,
         warmup: options.warmup,
+        coldApkgCache: options.coldApkgCache,
         doctorDurationMs,
         buildOutDir: config.buildOutDir,
         budget,
@@ -271,6 +300,7 @@ async function main() {
             concurrency,
             outDir: path.join(outDirBase, "warmup"),
             doctorReport,
+            coldApkgCache: options.coldApkgCache,
         });
     }
 
@@ -281,6 +311,7 @@ async function main() {
         concurrency,
         outDir: path.join(outDirBase, "measured"),
         doctorReport,
+        coldApkgCache: options.coldApkgCache,
     });
     result.budget = evaluateBudget(result.measured, budget);
 
@@ -317,9 +348,11 @@ if (require.main === module) {
 }
 
 module.exports = {
+    COLD_APKG_BUILD_BUDGET,
     DEFAULT_BUILD_BUDGET,
     evaluateBudget,
     formatBudgetResult,
+    cleanApkgCacheDir,
     cleanOutDir,
     main,
     parseArgs,

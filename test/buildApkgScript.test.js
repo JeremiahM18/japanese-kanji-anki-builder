@@ -17,8 +17,22 @@ function sha256(filePath) {
     return crypto.createHash("sha256").update(fs.readFileSync(filePath)).digest("hex");
 }
 
+function sha256Buffer(value) {
+    return crypto.createHash("sha256").update(value).digest("hex");
+}
+
+function toPortableRelativePath(filePath) {
+    return path.relative(process.cwd(), filePath).split(path.sep).join("/");
+}
+
 function runBuildApkg(python, outDir, { deckKind = "kanji" } = {}) {
-    const result = spawnSync(
+    const result = runBuildApkgRaw(python, outDir, { deckKind });
+    assert.equal(result.status, 0, result.stderr || result.stdout || "buildApkg.py failed");
+    return JSON.parse(result.stdout);
+}
+
+function runBuildApkgRaw(python, outDir, { deckKind = "kanji" } = {}) {
+    return spawnSync(
         python.command,
         [
             ...python.argsPrefix,
@@ -34,8 +48,6 @@ function runBuildApkg(python, outDir, { deckKind = "kanji" } = {}) {
             encoding: "utf8",
         }
     );
-    assert.equal(result.status, 0, result.stderr || result.stdout || "buildApkg.py failed");
-    return JSON.parse(result.stdout);
 }
 
 function parseTsv(text) {
@@ -117,10 +129,57 @@ test("buildApkg.py produces byte-stable APKG output for unchanged package inputs
         assert.equal(first.noteCount, 1);
         assert.equal(first.mediaFileCount, 1);
         assert.equal(first.timingsMs.writeArchive >= 0, true);
+        assert.equal(first.timingsMs["archive.writeMediaFiles"] >= 0, true);
         assert.equal(first.timingsMs.createCollectionDb >= 0, true);
+        assert.match(first.runtime.pythonVersion, /^\d+\.\d+\.\d+/u);
+        assert.equal(first.runtime.zip64, true);
         assert.equal(inspected.compression["collection.anki2"], 8);
         assert.equal(inspected.compression.media, 8);
         assert.equal(inspected.compression["0"], 0);
+    } finally {
+        fs.rmSync(tempRoot, { recursive: true, force: true });
+    }
+});
+
+test("buildApkg.py fails closed when source-backed media does not match media-integrity", {
+    skip: python ? false : "Python is unavailable",
+}, () => {
+    const tempRoot = fs.mkdtempSync(path.join(process.cwd(), "out", "kanji-apkg-integrity-"));
+
+    try {
+        const outDir = path.join(tempRoot, "build");
+        const packageRoot = path.join(outDir, "package");
+        const sourceRoot = path.join(tempRoot, "source-media");
+        const fixtureTsv = fs.readFileSync(
+            path.join(process.cwd(), "examples", "n5-mini", "sample-kanji-output.tsv"),
+            "utf8"
+        );
+        const expectedMedia = Buffer.from("expected media\n", "utf8");
+        const tamperedMedia = Buffer.from("tampered media\n", "utf8");
+
+        writeFile(path.join(packageRoot, "exports", "jlpt-n5.tsv"), fixtureTsv);
+        writeFile(path.join(sourceRoot, "sample.txt"), tamperedMedia.toString("utf8"));
+        writeFile(path.join(packageRoot, "media-integrity.json"), `${JSON.stringify({
+            version: 1,
+            generatedArtifact: true,
+            checksumAlgorithm: "sha256",
+            sourceRoot: toPortableRelativePath(sourceRoot),
+            files: [{
+                fileName: "sample.txt",
+                sha256: sha256Buffer(expectedMedia),
+                byteSize: tamperedMedia.length,
+                kind: "audio",
+                kanji: "日",
+                relativePath: "audio/sample.txt",
+                sourceRelativePath: "sample.txt",
+            }],
+        }, null, 2)}\n`);
+
+        const result = runBuildApkgRaw(python, outDir);
+
+        assert.notEqual(result.status, 0);
+        assert.match(result.stderr || result.stdout, /APKG media checksum mismatch/u);
+        assert.equal(fs.existsSync(path.join(packageRoot, "japanese-kanji-builder-n5.apkg")), false);
     } finally {
         fs.rmSync(tempRoot, { recursive: true, force: true });
     }

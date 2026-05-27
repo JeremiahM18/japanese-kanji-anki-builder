@@ -173,6 +173,8 @@
  * @property {number} mediaFileCount
  * @property {Record<string, number>=} timingsMs
  * @property {Record<string, number>|null=} pythonTimingsMs
+ * @property {{pythonVersion?: string, sqliteVersion?: string, zip64?: boolean, streamChunkSize?: number}|null=} pythonRuntime
+ * @property {{mediaFilesChecked?: number, sourceBackedMediaFiles?: number, existingApkgReplaced?: boolean}|null=} integrityChecks
  * @property {boolean=} cacheHit
  */
 

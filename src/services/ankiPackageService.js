@@ -298,6 +298,7 @@ async function buildAnkiPackage({
             mediaFileCount,
             timingsMs,
             pythonTimingsMs: null,
+            pythonRuntime: null,
             cacheHit: true,
         };
     }
@@ -322,6 +323,7 @@ async function buildAnkiPackage({
             deckCount: 0,
             mediaFileCount,
             timingsMs,
+            pythonRuntime: null,
         };
     }
 
@@ -348,6 +350,10 @@ async function buildAnkiPackage({
             mediaFileCount: Number(result.mediaFileCount) || mediaFileCount,
             timingsMs,
             pythonTimingsMs: result.timingsMs || null,
+            pythonRuntime: result.runtime || {
+                pythonVersion: python.version,
+            },
+            integrityChecks: result.integrityChecks || null,
         };
     } catch (error) {
         timingsMs.total = Number((performance.now() - totalStartedAt).toFixed(2));
@@ -359,6 +365,7 @@ async function buildAnkiPackage({
             deckCount: 0,
             mediaFileCount,
             timingsMs,
+            pythonRuntime: null,
         };
     }
 }

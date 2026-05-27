@@ -148,7 +148,7 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run data:obsidian:proof:views` | Generate compatibility review-set JSON from canonical ledger events |
 | `npm run data:obsidian:proof:sqlite` | Generate the local SQLite query mirror from canonical ledger events |
 | `npm run data:obsidian:proof:sqlite:query` | Query the generated local SQLite mirror after rebuilding it from JSONL |
-| `npm run data:obsidian:proof:provider-parity -- --levels=3` | Dual-read test that inline `rereviewProvenance` and canonical ledger-derived proof produce identical output for switched kanji consumers such as rereview-status and batch selection |
+| `npm run data:obsidian:proof:provider-parity -- --levels=3 --row-source=tracked-review-set` | CI-safe dual-read test that inline `rereviewProvenance` and canonical ledger-derived proof produce identical output for switched kanji consumers using tracked review-set row proxies; use `--row-source=generated` locally to compare against live generated rows |
 | `npm run data:audit:jlpt:sources -- --governance-strict` | Audit JLPT kanji source evidence and fail only on source-governance regressions while evidence depth remains incomplete |
 | `npm run data:audit:jlpt:source-levels -- --worklist-only --limit=10` | Report the focused all-level governed review packet with current level, candidate levels, consensus, vote weights, and resolved source-input worksheet progress without changing decks or readiness |
 | `npm run data:audit:jlpt:source-access` | Rank source lanes by governed usefulness and current source-access state before spending another manual review batch |

@@ -229,13 +229,17 @@ Required parity gates before any consumer switch:
 git status --short --untracked-files=all
 npm run data:obsidian:proof:validate
 npm run data:obsidian:proof:reconcile -- --levels=3
-npm run data:obsidian:proof:provider-parity -- --levels=3
-npm run data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=3 --queue=substantive-rereview --limit=8
+npm run data:obsidian:proof:provider-parity -- --levels=3 --row-source=tracked-review-set
+npm run data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=3 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set
+npm run data:obsidian:proof:provider-parity -- --levels=3 --row-source=generated
+npm run data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=3 --queue=substantive-rereview --limit=8 --row-source=generated
 npm run data:obsidian:proof:views
 npm run data:obsidian:proof:sqlite
 npm run data:obsidian:proof:sqlite:query -- --deck-kind=kanji --level=3 --limit=5
 node --test test/obsidianProofLedger.test.js test/obsidianProofReconciliation.test.js test/obsidianProofCompatibilityView.test.js test/obsidianProofSqliteMirror.test.js test/obsidianProofProviderService.test.js test/obsidianProofProviderParity.test.js
 ```
+
+`--row-source=tracked-review-set` is the clean-CI path: it uses tracked review-set card-identity proxies so proof-provider parity never depends on ignored local `data/*` inputs. `--row-source=generated` is the local live-row path for release workstations that have the real generated-row inputs; it verifies the same provider switch against the actual deck row surface.
 
 No-go conditions:
 

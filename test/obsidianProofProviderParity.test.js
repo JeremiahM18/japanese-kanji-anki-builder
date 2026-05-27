@@ -17,9 +17,18 @@ const {
 const {
     buildKanjiBatchReportProviderParityForLevel,
     buildKanjiRereviewStatusProviderParityForLevel,
+    buildObsidianProofProviderParityReport,
+    buildTrackedReviewSetRows,
     formatObsidianProofProviderParityReport,
     parseArgs,
+    ROW_SOURCES,
 } = require("../scripts/reportObsidianProofProviderParity");
+
+function writeReviewSet(rootDir, entries) {
+    const reviewSetPath = path.join(rootDir, "templates", "platinum_n3_review_set.json");
+    fs.mkdirSync(path.dirname(reviewSetPath), { recursive: true });
+    fs.writeFileSync(reviewSetPath, JSON.stringify(entries, null, 2), "utf8");
+}
 
 function writeLedger(rootDir, events) {
     const ledgerPath = path.join(rootDir, "templates", "obsidian_proof_ledger", "kanji_n3_fixture.jsonl");
@@ -191,6 +200,7 @@ test("provider parity script parses levels, consumer, json, and unknown args", (
         "--kanji=常,幸",
         "--limit=8",
         "--queue=substantive-rereview",
+        "--row-source=generated",
         "--json",
         "--unexpected",
     ]);
@@ -200,8 +210,56 @@ test("provider parity script parses levels, consumer, json, and unknown args", (
     assert.deepEqual(options.kanji, ["常", "幸"]);
     assert.equal(options.limit, 8);
     assert.equal(options.queue, "substantive-rereview");
+    assert.equal(options.rowSource, "generated");
     assert.equal(options.json, true);
     assert.deepEqual(options.unknownArgs, ["--unexpected"]);
+});
+
+test("provider parity defaults to CI-safe tracked review-set rows", () => {
+    const options = parseArgs([]);
+
+    assert.equal(options.rowSource, ROW_SOURCES.TRACKED_REVIEW_SET);
+});
+
+test("tracked review-set rows preserve card identity without local generated data", () => {
+    const rows = buildTrackedReviewSetRows([buildEntry()], 3);
+
+    assert.equal(rows.length, 1);
+    assert.deepEqual(rows[0], {
+        kanji: "常",
+        levelLabel: "N3",
+        displayWord: "常",
+        meaningJP: "normal / usual",
+        primaryReading: "じょう",
+        kanjiMeanings: "normal / usual / regular",
+        studyWordKanji: "",
+        onReading: "On: じょう",
+        kunReading: "",
+        strokeOrder: "<img src=\"常-stroke-order.gif\" />",
+        audio: "[sound:常-kanji-reading-常-じょう.wav]",
+        radical: "",
+        notes: "常 ／ 日常",
+        exampleSentence: "日常の生活を大切にしています。",
+    });
+});
+
+test("provider parity report can run from tracked proof inputs without local data files", async () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
+    writeReviewSet(rootDir, [buildEntry()]);
+    writeLedger(rootDir, [buildProofEvent()]);
+
+    const report = await buildObsidianProofProviderParityReport({
+        cwd: rootDir,
+        levels: [3],
+        config: {
+            curatedStudyDataPath: path.join(rootDir, "data", "curated_study_data.json"),
+        },
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.rowSource, ROW_SOURCES.TRACKED_REVIEW_SET);
+    assert.equal(report.scopes[0].inlineProjection.generatedRows, 1);
+    assert.equal(report.scopes[0].ledgerProjection.generatedRows, 1);
 });
 
 test("kanji rereview-status provider parity passes when inline and ledger projections match", () => {

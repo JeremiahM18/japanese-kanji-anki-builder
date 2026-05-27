@@ -37,6 +37,15 @@ const SUPPORTED_CONSUMERS = Object.freeze({
     KANJI_REREVIEW_STATUS: "kanji-rereview-status",
 });
 
+const ROW_SOURCES = Object.freeze({
+    GENERATED: "generated",
+    TRACKED_REVIEW_SET: "tracked-review-set",
+});
+
+function normalizeText(value) {
+    return String(value ?? "").trim();
+}
+
 function stableJson(value) {
     if (Array.isArray(value)) {
         return `[${value.map(stableJson).join(",")}]`;
@@ -57,6 +66,7 @@ function parseArgs(argv) {
         levels: [3],
         limit: 12,
         queue: KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
+        rowSource: ROW_SOURCES.TRACKED_REVIEW_SET,
         unknownArgs: [],
     };
 
@@ -75,6 +85,8 @@ function parseArgs(argv) {
             options.limit = parseNumericOption(arg, "limit");
         } else if (arg.startsWith("--queue=")) {
             options.queue = normalizeQueueMode(parseStringOption(arg, "queue"));
+        } else if (arg.startsWith("--row-source=")) {
+            options.rowSource = normalizeRowSource(parseStringOption(arg, "row-source"));
         } else {
             collectUnknownArg(options, arg);
         }
@@ -87,6 +99,72 @@ function assertSupportedConsumer(consumer) {
     if (!Object.values(SUPPORTED_CONSUMERS).includes(consumer)) {
         throw new Error(`Unsupported Obsidian proof provider parity consumer: ${consumer}.`);
     }
+}
+
+function normalizeRowSource(rowSource = ROW_SOURCES.TRACKED_REVIEW_SET) {
+    const normalized = normalizeText(rowSource);
+    if (Object.values(ROW_SOURCES).includes(normalized)) {
+        return normalized;
+    }
+    throw new Error(`Unsupported Obsidian proof provider parity row source: ${rowSource}.`);
+}
+
+function firstString(values = []) {
+    return (Array.isArray(values) ? values : [])
+        .map(normalizeText)
+        .find(Boolean) || "";
+}
+
+function joinStrings(values = [], separator = " / ") {
+    return (Array.isArray(values) ? values : [])
+        .map(normalizeText)
+        .filter(Boolean)
+        .join(separator);
+}
+
+function buildTrackedReviewSetRow(entry = {}, level = 3) {
+    const kanji = normalizeText(entry.kanji);
+    const primaryReading = firstString(entry.readingIncludes);
+    return {
+        kanji,
+        levelLabel: Number.isInteger(level) ? `N${level}` : "",
+        displayWord: kanji,
+        meaningJP: joinStrings(entry.meaningIncludes),
+        primaryReading,
+        kanjiMeanings: joinStrings(entry.kanjiMeaningsIncludes),
+        studyWordKanji: "",
+        onReading: primaryReading ? `On: ${primaryReading}` : "",
+        kunReading: "",
+        strokeOrder: kanji ? `<img src="${kanji}-stroke-order.gif" />` : "",
+        audio: kanji && primaryReading ? `[sound:${kanji}-kanji-reading-${kanji}-${primaryReading}.wav]` : "",
+        radical: "",
+        notes: joinStrings(entry.notesIncludes, " ／ "),
+        exampleSentence: joinStrings(entry.exampleIncludes, " ／ "),
+    };
+}
+
+function buildTrackedReviewSetRows(entries = [], level = 3) {
+    const rows = [];
+    const seen = new Set();
+
+    for (const entry of Array.isArray(entries) ? entries : []) {
+        const kanji = normalizeText(entry.kanji);
+        if (!kanji || seen.has(kanji)) {
+            continue;
+        }
+        seen.add(kanji);
+        rows.push(buildTrackedReviewSetRow(entry, level));
+    }
+
+    return rows;
+}
+
+async function buildRowsForParity({ level, rowSource, rawEntries, config } = {}) {
+    const normalizedRowSource = normalizeRowSource(rowSource);
+    if (normalizedRowSource === ROW_SOURCES.GENERATED) {
+        return buildKanjiRowsForLevel({ level, config });
+    }
+    return buildTrackedReviewSetRows(rawEntries, level);
 }
 
 function sampleKanji(cards = [], predicate, limit = 24) {
@@ -294,9 +372,11 @@ async function buildObsidianProofProviderParityReport({
     kanji = [],
     limit = 12,
     queue = KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
+    rowSource = ROW_SOURCES.TRACKED_REVIEW_SET,
     config = loadConfig(),
 } = {}) {
     assertSupportedConsumer(consumer);
+    const normalizedRowSource = normalizeRowSource(rowSource);
     const scopes = [];
     const curatedStudyData = consumer === SUPPORTED_CONSUMERS.KANJI_BATCH_REPORT
         ? loadCuratedStudyData(config.curatedStudyDataPath)
@@ -309,7 +389,12 @@ async function buildObsidianProofProviderParityReport({
             level,
             proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.INLINE,
         });
-        const rows = await buildKanjiRowsForLevel({ level, config });
+        const rows = await buildRowsForParity({
+            level,
+            rowSource: normalizedRowSource,
+            rawEntries: rawReviewSet.entries,
+            config,
+        });
         if (consumer === SUPPORTED_CONSUMERS.KANJI_BATCH_REPORT) {
             scopes.push(buildKanjiBatchReportProviderParityForLevel({
                 rows,
@@ -337,6 +422,7 @@ async function buildObsidianProofProviderParityReport({
         passed: scopes.every((scope) => scope.passed),
         consumer,
         levels,
+        rowSource: normalizedRowSource,
         scopes,
     };
 }
@@ -347,11 +433,13 @@ function formatObsidianProofProviderParityReport(report = {}) {
         "",
         `Consumer: ${report.consumer || SUPPORTED_CONSUMERS.KANJI_REREVIEW_STATUS}`,
         `Levels: ${(report.levels || []).map((level) => `N${level}`).join(", ") || "(none)"}`,
+        `Row source: ${report.rowSource || ROW_SOURCES.TRACKED_REVIEW_SET}`,
         `Result: ${report.passed ? "passing" : "failing"}`,
         "",
         "Parity contract:",
         "- Inline rereviewProvenance and canonical JSONL-derived rereviewProvenance must produce identical consumer counts.",
         "- Queue samples, selected cards, classifications, and card-level Obsidian statuses must match before a consumer is switched.",
+        "- tracked-review-set row source is CI-safe proof-provider parity; generated row source is local live-row parity and may require ignored data/* inputs.",
         "- This command does not certify cards, repair proof, read generated TSV/APKG output, or claim release readiness.",
     ];
 
@@ -389,6 +477,7 @@ async function main() {
         kanji: options.kanji,
         limit: options.limit,
         queue: options.queue,
+        rowSource: options.rowSource,
     });
 
     if (options.json) {
@@ -410,12 +499,15 @@ if (require.main === module) {
 }
 
 module.exports = {
+    ROW_SOURCES,
     SUPPORTED_CONSUMERS,
     buildKanjiBatchReportProviderParityForLevel,
     buildKanjiRereviewStatusProviderParityForLevel,
     buildObsidianProofProviderParityReport,
+    buildTrackedReviewSetRows,
     formatObsidianProofProviderParityReport,
     main,
+    normalizeRowSource,
     parseArgs,
     projectKanjiBatchReport,
     projectKanjiRereviewStatusReport,

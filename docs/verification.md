@@ -149,8 +149,8 @@ Shin Kanzen Master, Nihongo Sou Matome, TRY!, and ASK Hajimete JLPT Kanji remain
 
 `release:gate` validates deterministic smoke-fixture artifacts and packaging contracts. It does not certify public product deck readiness. Add level-specific readiness, Gold regression, accessibility, provenance, and manual QA commands for the surface being changed.
 
-Clean CI runs `data:audit:jlpt -- --strict --tracked-only`, `data:audit:jlpt:sources -- --governance-strict --limit=25`, `data:audit:jlpt:words`, and `deck:words:platinum:source-posture -- --levels=5,4` from tracked inputs.
+Clean CI runs `data:obsidian:proof:validate`, `data:obsidian:proof:reconcile -- --levels=3`, `data:obsidian:proof:provider-parity -- --levels=3 --row-source=tracked-review-set`, `data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=3 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set`, `data:audit:jlpt -- --strict --tracked-only`, `data:audit:jlpt:sources -- --governance-strict --limit=25`, `data:audit:jlpt:words`, and `deck:words:platinum:source-posture -- --levels=5,4` from tracked inputs.
 
-Full `data:audit:jlpt` and `deck:platinum:governance-gate` remain local-data gates because they validate ignored runtime/generated-row inputs under `data/`. Their absence from clean CI is a release-scope limitation, not proof that real generated rows were validated.
+Full `data:audit:jlpt`, `deck:platinum:governance-gate`, and generated-row Obsidian proof-provider parity remain local-data gates because they validate ignored runtime/generated-row inputs under `data/`. Their absence from clean CI is a release-scope limitation, not proof that real generated rows were validated.
 
 The CI source-boundary guard rejects tracked tests that read ignored root `data/*` paths. Local-data gates can still validate live generated rows in a prepared workstation, but they must stay explicit release QA rather than becoming hidden CI truth.

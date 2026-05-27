@@ -279,9 +279,9 @@ npm run supply-chain:audit
 npm run release:gate
 ```
 
-Clean CI runs `data:obsidian:proof:validate`, `data:obsidian:proof:reconcile -- --levels=3`, `data:audit:jlpt -- --strict --tracked-only`, `data:audit:jlpt:sources -- --governance-strict --limit=25`, `data:audit:jlpt:words`, and `deck:words:platinum:source-posture -- --levels=5,4` from tracked inputs.
+Clean CI runs `data:obsidian:proof:validate`, `data:obsidian:proof:reconcile -- --levels=3`, `data:obsidian:proof:provider-parity -- --levels=3 --row-source=tracked-review-set`, `data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=3 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set`, `data:audit:jlpt -- --strict --tracked-only`, `data:audit:jlpt:sources -- --governance-strict --limit=25`, `data:audit:jlpt:words`, and `deck:words:platinum:source-posture -- --levels=5,4` from tracked inputs.
 
-Clean CI does not run `deck:platinum:governance-gate` because that command exercises ignored local `data/*` real generated-row inputs. Run it in a local-data workspace before release claims that depend on current generated N5/N4 rows.
+Clean CI does not run `deck:platinum:governance-gate` or generated-row Obsidian proof-provider parity because those commands exercise ignored local `data/*` real generated-row inputs. Run them in a local-data workspace before release claims that depend on current generated kanji rows.
 
 Tracked CI tests must not read ignored root `data/*` inputs. Use tracked contracts, tracked fixtures, or explicit temp fixtures in CI. The tracked KANJIDIC2 reading contract is a `kanji-reading-reference` lane only; exact kanji primary-reading checks against generated `OnReading`/`KunReading` remain in the local generated-row Platinum gates. The tracked N5/N4 kanji card-field source contracts are a `kanji-field-verification` lane extracted from current-standard Platinum `japanese-source` evidence; they are not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness by themselves.
 

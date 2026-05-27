@@ -15,6 +15,7 @@ const {
     REQUIRED_KANJI_SOURCE_EVIDENCE_TYPES,
 } = require("../src/services/platinumKanjiReviewService");
 const {
+    buildKanjiBatchReportProviderParityForLevel,
     buildKanjiRereviewStatusProviderParityForLevel,
     formatObsidianProofProviderParityReport,
     parseArgs,
@@ -186,13 +187,19 @@ function buildProofEvent(overrides = {}) {
 test("provider parity script parses levels, consumer, json, and unknown args", () => {
     const options = parseArgs([
         "--levels=3",
-        "--consumer=kanji-rereview-status",
+        "--consumer=kanji-batch-report",
+        "--kanji=常,幸",
+        "--limit=8",
+        "--queue=substantive-rereview",
         "--json",
         "--unexpected",
     ]);
 
     assert.deepEqual(options.levels, [3]);
-    assert.equal(options.consumer, "kanji-rereview-status");
+    assert.equal(options.consumer, "kanji-batch-report");
+    assert.deepEqual(options.kanji, ["常", "幸"]);
+    assert.equal(options.limit, 8);
+    assert.equal(options.queue, "substantive-rereview");
     assert.equal(options.json, true);
     assert.deepEqual(options.unknownArgs, ["--unexpected"]);
 });
@@ -239,4 +246,52 @@ test("kanji rereview-status provider parity fails when ledger misses inline proo
     assert.equal(scope.ledgerProjection.counts.needs_substantive_rereview, 1);
     assert.match(formatted, /Inline counts/);
     assert.match(formatted, /Ledger queue samples/);
+});
+
+test("kanji batch-report provider parity passes when inline and ledger projections match", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
+    writeLedger(rootDir, [buildProofEvent()]);
+
+    const scope = buildKanjiBatchReportProviderParityForLevel({
+        rows: [buildRow()],
+        rawEntries: [buildEntry()],
+        cwd: rootDir,
+        level: 3,
+        sourceReviewSetPath: "templates/platinum_n3_review_set.json",
+        limit: 1,
+    });
+
+    assert.equal(scope.passed, true);
+    assert.equal(scope.inlineProjection.summary.substantiveRereviewProven, 1);
+    assert.equal(scope.ledgerProjection.summary.substantiveRereviewProven, 1);
+    assert.deepEqual(scope.inlineProjection.cards.map((card) => card.kanji), []);
+    assert.deepEqual(scope.ledgerProjection.cards.map((card) => card.kanji), []);
+});
+
+test("kanji batch-report provider parity fails when ledger changes queue selection", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
+    writeLedger(rootDir, []);
+
+    const scope = buildKanjiBatchReportProviderParityForLevel({
+        rows: [buildRow()],
+        rawEntries: [buildEntry()],
+        cwd: rootDir,
+        level: 3,
+        sourceReviewSetPath: "templates/platinum_n3_review_set.json",
+        limit: 1,
+    });
+    const formatted = formatObsidianProofProviderParityReport({
+        passed: false,
+        consumer: "kanji-batch-report",
+        levels: [3],
+        scopes: [scope],
+    });
+
+    assert.equal(scope.passed, false);
+    assert.equal(scope.inlineProjection.summary.selectedCards, 0);
+    assert.equal(scope.ledgerProjection.summary.selectedCards, 1);
+    assert.deepEqual(scope.mismatch.inlineSelectedKanji, []);
+    assert.deepEqual(scope.mismatch.ledgerSelectedKanji, ["常"]);
+    assert.match(formatted, /Inline selected kanji/);
+    assert.match(formatted, /Ledger selected kanji/);
 });

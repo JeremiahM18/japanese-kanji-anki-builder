@@ -2,8 +2,16 @@ const {
     loadConfig,
 } = require("../src/config");
 const {
+    loadCuratedStudyData,
+} = require("../src/datasets/curatedStudyData");
+const {
     parseLevelsArgument,
 } = require("../src/services/buildPipeline");
+const {
+    KANJI_BATCH_QUEUE_MODES,
+    buildPlatinumKanjiBatchReport,
+    normalizeQueueMode,
+} = require("../src/services/platinumKanjiBatchReportService");
 const {
     buildPlatinumKanjiRereviewStatusReport,
 } = require("../src/services/platinumKanjiRereviewStatusService");
@@ -15,6 +23,8 @@ const {
 const {
     assertNoUnknownArgs,
     collectUnknownArg,
+    parseCsvOption,
+    parseNumericOption,
     invokeCliMain,
     parseStringOption,
 } = require("../src/utils/cliArgs");
@@ -23,6 +33,7 @@ const {
 } = require("./reviewPlatinumKanjiLevel");
 
 const SUPPORTED_CONSUMERS = Object.freeze({
+    KANJI_BATCH_REPORT: "kanji-batch-report",
     KANJI_REREVIEW_STATUS: "kanji-rereview-status",
 });
 
@@ -42,7 +53,10 @@ function parseArgs(argv) {
     const options = {
         consumer: SUPPORTED_CONSUMERS.KANJI_REREVIEW_STATUS,
         json: false,
+        kanji: [],
         levels: [3],
+        limit: 12,
+        queue: KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
         unknownArgs: [],
     };
 
@@ -51,10 +65,16 @@ function parseArgs(argv) {
             options.json = true;
         } else if (arg.startsWith("--consumer=")) {
             options.consumer = parseStringOption(arg, "consumer");
+        } else if (arg.startsWith("--kanji=")) {
+            options.kanji = parseCsvOption(arg, "kanji");
         } else if (arg.startsWith("--level=")) {
             options.levels = parseLevelsArgument(parseStringOption(arg, "level"));
         } else if (arg.startsWith("--levels=")) {
             options.levels = parseLevelsArgument(parseStringOption(arg, "levels"));
+        } else if (arg.startsWith("--limit=")) {
+            options.limit = parseNumericOption(arg, "limit");
+        } else if (arg.startsWith("--queue=")) {
+            options.queue = normalizeQueueMode(parseStringOption(arg, "queue"));
         } else {
             collectUnknownArg(options, arg);
         }
@@ -75,6 +95,37 @@ function sampleKanji(cards = [], predicate, limit = 24) {
         .map((card) => card.kanji)
         .filter(Boolean)
         .slice(0, limit);
+}
+
+function sampleValues(values = [], limit = 24) {
+    return (Array.isArray(values) ? values : [])
+        .filter(Boolean)
+        .slice(0, limit);
+}
+
+function projectKanjiBatchReport(report = {}) {
+    const cards = Array.isArray(report.cards) ? report.cards : [];
+    return {
+        level: report.level,
+        scope: report.scope,
+        queue: report.queue,
+        summary: report.summary,
+        reviewRubricSummary: report.reviewRubricSummary,
+        queueSamples: {
+            nextMissingKanji: sampleValues(report.nextMissingKanji),
+            nextSubstantiveRereviewKanji: sampleValues(report.nextSubstantiveRereviewKanji),
+        },
+        cards: cards.map((card) => ({
+            kanji: card.kanji,
+            reviewStatus: card.reviewStatus,
+            existingStatuses: card.existingStatuses,
+            hardChecksPassed: card.hardChecksPassed,
+            generatedFailures: card.generatedFailures,
+            riskFlags: card.riskFlags,
+            reviewRubricResult: card.reviewRubric?.result,
+            reviewRubricItemStatusCounts: card.reviewRubric?.itemStatusCounts,
+        })),
+    };
 }
 
 function projectKanjiRereviewStatusReport(report = {}) {
@@ -101,6 +152,78 @@ function projectKanjiRereviewStatusReport(report = {}) {
             blockedOrFailing: card.blockedOrFailing,
             reasons: card.reasons,
         })),
+    };
+}
+
+function buildKanjiBatchReportProviderParityForLevel({
+    rows = [],
+    rawEntries = [],
+    cwd = process.cwd(),
+    ledgerDir,
+    level = 3,
+    sourceReviewSetPath,
+    curatedStudyData = {},
+    kanji = [],
+    limit = 12,
+    queue = KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
+} = {}) {
+    const queueMode = normalizeQueueMode(queue);
+    const inlineProvider = applyObsidianProofProvider({
+        entries: rawEntries,
+        cwd,
+        ledgerDir,
+        deckKind: "kanji",
+        level,
+        sourceReviewSetPath,
+        proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.INLINE,
+    });
+    const ledgerProvider = applyObsidianProofProvider({
+        entries: rawEntries,
+        cwd,
+        ledgerDir,
+        deckKind: "kanji",
+        level,
+        sourceReviewSetPath,
+        proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER,
+    });
+    const inlineReport = buildPlatinumKanjiBatchReport({
+        rows,
+        entries: inlineProvider.entries,
+        level,
+        kanji,
+        limit,
+        queue: queueMode,
+        curatedStudyData,
+    });
+    const ledgerReport = buildPlatinumKanjiBatchReport({
+        rows,
+        entries: ledgerProvider.entries,
+        level,
+        kanji,
+        limit,
+        queue: queueMode,
+        curatedStudyData,
+    });
+    const inlineProjection = projectKanjiBatchReport(inlineReport);
+    const ledgerProjection = projectKanjiBatchReport(ledgerReport);
+    const passed = stableJson(inlineProjection) === stableJson(ledgerProjection);
+
+    return {
+        level,
+        consumer: SUPPORTED_CONSUMERS.KANJI_BATCH_REPORT,
+        passed,
+        inlineProvider: inlineProvider.summary,
+        ledgerProvider: ledgerProvider.summary,
+        inlineProjection,
+        ledgerProjection,
+        mismatch: passed ? null : {
+            inlineSummary: inlineProjection.summary,
+            ledgerSummary: ledgerProjection.summary,
+            inlineQueueSamples: inlineProjection.queueSamples,
+            ledgerQueueSamples: ledgerProjection.queueSamples,
+            inlineSelectedKanji: inlineProjection.cards.map((card) => card.kanji),
+            ledgerSelectedKanji: ledgerProjection.cards.map((card) => card.kanji),
+        },
     };
 }
 
@@ -168,10 +291,16 @@ async function buildObsidianProofProviderParityReport({
     cwd = process.cwd(),
     levels = [3],
     consumer = SUPPORTED_CONSUMERS.KANJI_REREVIEW_STATUS,
+    kanji = [],
+    limit = 12,
+    queue = KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
     config = loadConfig(),
 } = {}) {
     assertSupportedConsumer(consumer);
     const scopes = [];
+    const curatedStudyData = consumer === SUPPORTED_CONSUMERS.KANJI_BATCH_REPORT
+        ? loadCuratedStudyData(config.curatedStudyDataPath)
+        : {};
 
     for (const level of levels) {
         const rawReviewSet = loadReviewSetWithObsidianProof({
@@ -181,13 +310,27 @@ async function buildObsidianProofProviderParityReport({
             proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.INLINE,
         });
         const rows = await buildKanjiRowsForLevel({ level, config });
-        scopes.push(buildKanjiRereviewStatusProviderParityForLevel({
-            rows,
-            rawEntries: rawReviewSet.entries,
-            cwd,
-            level,
-            sourceReviewSetPath: rawReviewSet.summary.sourceReviewSetPath,
-        }));
+        if (consumer === SUPPORTED_CONSUMERS.KANJI_BATCH_REPORT) {
+            scopes.push(buildKanjiBatchReportProviderParityForLevel({
+                rows,
+                rawEntries: rawReviewSet.entries,
+                cwd,
+                level,
+                sourceReviewSetPath: rawReviewSet.summary.sourceReviewSetPath,
+                curatedStudyData,
+                kanji,
+                limit,
+                queue,
+            }));
+        } else {
+            scopes.push(buildKanjiRereviewStatusProviderParityForLevel({
+                rows,
+                rawEntries: rawReviewSet.entries,
+                cwd,
+                level,
+                sourceReviewSetPath: rawReviewSet.summary.sourceReviewSetPath,
+            }));
+        }
     }
 
     return {
@@ -208,7 +351,7 @@ function formatObsidianProofProviderParityReport(report = {}) {
         "",
         "Parity contract:",
         "- Inline rereviewProvenance and canonical JSONL-derived rereviewProvenance must produce identical consumer counts.",
-        "- Queue samples, blocked/failing classifications, and card-level Obsidian statuses must match before a consumer is switched.",
+        "- Queue samples, selected cards, classifications, and card-level Obsidian statuses must match before a consumer is switched.",
         "- This command does not certify cards, repair proof, read generated TSV/APKG output, or claim release readiness.",
     ];
 
@@ -224,10 +367,12 @@ function formatObsidianProofProviderParityReport(report = {}) {
         );
         if (!scope.passed && scope.mismatch) {
             lines.push(
-                `- Inline counts: ${JSON.stringify(scope.mismatch.inlineCounts)}`,
-                `- Ledger counts: ${JSON.stringify(scope.mismatch.ledgerCounts)}`,
+                `- Inline counts: ${JSON.stringify(scope.mismatch.inlineCounts || scope.mismatch.inlineSummary)}`,
+                `- Ledger counts: ${JSON.stringify(scope.mismatch.ledgerCounts || scope.mismatch.ledgerSummary)}`,
                 `- Inline queue samples: ${JSON.stringify(scope.mismatch.inlineQueueSamples)}`,
-                `- Ledger queue samples: ${JSON.stringify(scope.mismatch.ledgerQueueSamples)}`
+                `- Ledger queue samples: ${JSON.stringify(scope.mismatch.ledgerQueueSamples)}`,
+                `- Inline selected kanji: ${JSON.stringify(scope.mismatch.inlineSelectedKanji || [])}`,
+                `- Ledger selected kanji: ${JSON.stringify(scope.mismatch.ledgerSelectedKanji || [])}`
             );
         }
     }
@@ -241,6 +386,9 @@ async function main() {
     const report = await buildObsidianProofProviderParityReport({
         levels: options.levels,
         consumer: options.consumer,
+        kanji: options.kanji,
+        limit: options.limit,
+        queue: options.queue,
     });
 
     if (options.json) {
@@ -263,10 +411,12 @@ if (require.main === module) {
 
 module.exports = {
     SUPPORTED_CONSUMERS,
+    buildKanjiBatchReportProviderParityForLevel,
     buildKanjiRereviewStatusProviderParityForLevel,
     buildObsidianProofProviderParityReport,
     formatObsidianProofProviderParityReport,
     main,
     parseArgs,
+    projectKanjiBatchReport,
     projectKanjiRereviewStatusReport,
 };

@@ -63,6 +63,9 @@ jobs:
       - name: Verify Obsidian proof provider parity
         run: npm run data:obsidian:proof:provider-parity -- --levels=3
 
+      - name: Verify Obsidian proof provider parity for batch selector
+        run: npm run data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=3 --queue=substantive-rereview --limit=8
+
       - name: Run tracked JLPT kanji source governance audit
         run: npm run data:audit:jlpt:sources -- --governance-strict --limit=25
 

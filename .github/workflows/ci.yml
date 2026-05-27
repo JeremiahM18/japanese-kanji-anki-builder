@@ -60,8 +60,11 @@ jobs:
       - name: Validate Obsidian proof ledger
         run: npm run data:obsidian:proof:validate
 
-      - name: Reconcile Obsidian proof ledger parity
+      - name: Reconcile kanji Obsidian proof ledger parity
         run: npm run data:obsidian:proof:reconcile -- --levels=5,4,3
+
+      - name: Reconcile word Obsidian proof ledger parity
+        run: npm run data:obsidian:proof:reconcile -- --deck-kind=word --levels=5,4
 
       - name: Verify Obsidian proof provider parity
         run: npm run data:obsidian:proof:provider-parity -- --levels=5,4,3 --row-source=tracked-review-set

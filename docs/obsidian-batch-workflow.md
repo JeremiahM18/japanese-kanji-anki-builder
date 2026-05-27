@@ -229,6 +229,7 @@ Required parity gates before any consumer switch:
 git status --short --untracked-files=all
 npm run data:obsidian:proof:validate
 npm run data:obsidian:proof:reconcile -- --levels=5,4,3
+npm run data:obsidian:proof:reconcile -- --deck-kind=word --levels=5,4
 npm run data:obsidian:proof:provider-parity -- --levels=5,4,3 --row-source=tracked-review-set
 npm run data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=5,4,3 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set
 npm run data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=5,4,3 --row-source=tracked-review-set

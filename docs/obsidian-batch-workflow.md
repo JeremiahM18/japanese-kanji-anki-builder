@@ -214,12 +214,12 @@ If this fails during an in-progress level, treat the failure as the remaining qu
 
 ## Proof Ledger ETL And Consumer Switch
 
-Canonical Obsidian proof is tracked JSONL under `templates/obsidian_proof_ledger/*.jsonl`. During the transition, current consumers still read `rereviewProvenance` from the tracked review-set JSON. The generated compatibility view under `out/obsidian-proof/compatibility/` bridges those shapes; the SQLite database under `out/obsidian-proof/sqlite/` is a local query mirror only.
+Canonical Obsidian proof is tracked JSONL under `templates/obsidian_proof_ledger/*.jsonl`. During the transition, tracked review-set JSON still carries legacy inline `rereviewProvenance` for reconciliation and not-yet-migrated levels. Switched consumers read through the scoped proof-provider path. The generated compatibility view under `out/obsidian-proof/compatibility/` bridges those shapes; the SQLite database under `out/obsidian-proof/sqlite/` is a local query mirror only.
 
 Keep these lanes separate:
 
 - Canonical proof ledger: `templates/obsidian_proof_ledger/*.jsonl`.
-- Legacy compatibility source while consumers are being switched: `templates/platinum_n3_review_set.json`.
+- Legacy compatibility source during the dual-tracked transition: `templates/platinum_n3_review_set.json`.
 - Generated compatibility view: `out/obsidian-proof/compatibility/templates/platinum_n3_review_set.json`.
 - Generated local query mirror: `out/obsidian-proof/sqlite/obsidian-proof-ledger.sqlite`.
 
@@ -262,7 +262,7 @@ Switch consumers in small stages:
 
 Current transition state:
 
-- `deck:kanji:obsidian:rereview-status`, `deck:kanji:obsidian:certify-status`, `deck:platinum:batch`, `deck:platinum:n<level>`, `data:build:kanji-field-source-contract`, and `deck:platinum:governance-gate` are switched consumers. They use the scoped proof-provider path so N3 kanji proof comes from canonical JSONL when a scoped ledger exists, while levels without migrated ledgers remain on legacy inline proof until their own parity gates are added. `deck:platinum:governance-gate` still requires a local-data workspace for the real generated-row gate itself; its clean-CI provider parity is a tracked-row kanji proof-provider projection, not a replacement for local release QA.
+- `deck:kanji:obsidian:rereview-status`, `deck:kanji:obsidian:certify-status`, `deck:platinum:batch`, `deck:platinum:n<level>`, `data:build:kanji-field-source-contract`, and `deck:platinum:governance-gate` are switched consumers. They use the scoped proof-provider path so N3 kanji proof comes from canonical JSONL when a scoped ledger exists, while levels without migrated ledgers remain on legacy inline proof until their own proof ledgers are migrated and parity-gated. `deck:platinum:governance-gate` still requires a local-data workspace for the real generated-row gate itself; its clean-CI provider parity is a tracked-row kanji proof-provider projection, not a replacement for local release QA. Switched consumers do not make it safe to remove inline proof yet; inline-removal remains its own explicit representation cleanup after the compatibility and not-yet-migrated-level posture is deliberately retired.
 
 Do not switch word Obsidian consumers from this N3 kanji ledger work. Word proof has separate identity binding, evidence checklist, and sentence-quality requirements.
 

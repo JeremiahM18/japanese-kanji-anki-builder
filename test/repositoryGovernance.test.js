@@ -263,6 +263,39 @@ test("README presents the review tier model before status snapshots", () => {
     assert.match(tierSection, /Kanji and word decks run them separately/);
 });
 
+test("documentation standard defines enterprise doc schemas and README routing", () => {
+    const readme = readRepoFile("README.md");
+    const standard = readRepoFile(path.join("docs", "documentation-standard.md"));
+    const documentationMap = extractReadmeSection(readme, "Documentation Map");
+
+    assert.match(documentationMap, /\[docs\/documentation-standard\.md\]\(docs\/documentation-standard\.md\)/);
+    assert.match(standard, /# Documentation Standard/);
+    assert.match(standard, /## Research Basis/);
+    assert.match(standard, /https:\/\/developers\.google\.com\/style/);
+    assert.match(standard, /https:\/\/google\.github\.io\/styleguide\/docguide\/READMEs\.html/);
+    assert.match(standard, /https:\/\/learn\.microsoft\.com\/en-us\/style-guide\/welcome\//);
+    assert.match(standard, /https:\/\/support\.apple\.com\/guide\/applestyleguide\/welcome\/web/);
+    assert.match(standard, /https:\/\/docs\.oracle\.com\/en\/database\/oracle\/oracle-database\/19\/rnrdm\/database-release-notes\.pdf/);
+
+    for (const heading of [
+        "## Universal Schema",
+        "## README Schema",
+        "## Workflow Document Schema",
+        "## Command And Reference Schema",
+        "## Status And Count Claim Rule",
+        "## Security And Release Schema",
+        "## Legal And Provenance Schema",
+        "## Update Protocol",
+        "## No-Go Rules",
+        "## Review Checklist",
+    ]) {
+        assert.equal(standard.includes(heading), true, `Documentation standard missing heading: ${heading}`);
+    }
+
+    assert.match(standard, /Do not use generated TSV, APKG output, SQLite mirrors, or local ignored files as tracked source truth/);
+    assert.doesNotMatch(readme, /staged consumer switch/);
+});
+
 test("README source-evidence lane table matches the governed source manifest", () => {
     const readme = readRepoFile("README.md");
     const evidence = JSON.parse(readRepoFile(path.join("templates", "jlpt_kanji_source_evidence.json")));

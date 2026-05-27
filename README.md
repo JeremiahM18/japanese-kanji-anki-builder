@@ -92,7 +92,7 @@ Kanji Platinum uses `kanji-platinum-v3-evidence-lanes`. Only current-standard `p
 
 `deck:kanji:obsidian:rereview-status -- --levels=3` currently reports N3 kanji as `341/341` Platinum, `120/341` Obsidian, `221` Platinum entries needing Obsidian, and `0` blocked/failing rows. `deck:kanji:obsidian:certify-status -- --levels=3` intentionally fails until the substantive-proof gap is closed.
 
-For N3 kanji, `deck:kanji:obsidian:rereview-status` and `deck:kanji:obsidian:certify-status` read scoped canonical JSONL Obsidian proof when the N3 proof ledger is present. Levels without migrated proof ledgers still use legacy inline proof during the staged consumer switch.
+For N3 kanji, switched kanji proof consumers read scoped canonical JSONL Obsidian proof when the N3 proof ledger is present. Levels without migrated proof ledgers still fall back to legacy inline proof through the same provider path until their own proof ledgers are migrated and parity-gated.
 
 ### Word Product
 
@@ -353,6 +353,7 @@ Full operating rules live in [docs/nlp-model-governance.md](docs/nlp-model-gover
 
 | Need | Read |
 | --- | --- |
+| Documentation governance and schema | [docs/documentation-standard.md](docs/documentation-standard.md) |
 | Card field contracts and examples | [docs/deck-model.md](docs/deck-model.md) |
 | Card curation style | [docs/content-style-guide.md](docs/content-style-guide.md) |
 | Common local workflows | [docs/workflows.md](docs/workflows.md) |

@@ -189,7 +189,7 @@ npm run deck:kanji:additional:ready
 
 The generated package also includes `media-integrity.json`, a local sidecar used to bind packaged media filenames to managed-media SHA-256 identities during deterministic APKG creation. It is not source evidence, Obsidian proof, or release QA.
 
-Native `.apkg` creation may reuse a SHA-verified, content-addressed generated cache under `out/.apkg-cache` when exports, note schema, media integrity, and the APKG builder script are unchanged. A cache miss rebuilds the package normally; a corrupt cache entry is ignored and rebuilt.
+Native `.apkg` creation may reuse a SHA-verified, content-addressed generated cache under `out/.apkg-cache` when exports, note schema, media integrity, and the APKG builder script are unchanged. Cache entries include a generated metadata manifest binding the cache key, artifact byte size, and APKG SHA-256. A cache miss rebuilds the package normally; a corrupt cache entry is ignored and rebuilt.
 
 Exported card media completeness is the release-critical signal for kanji deck media readiness. Use `--allow-export-fallbacks` only for an explicitly degraded local artifact.
 

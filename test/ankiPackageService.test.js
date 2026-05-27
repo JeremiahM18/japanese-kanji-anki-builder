@@ -88,6 +88,8 @@ test("buildAnkiPackage reuses a sha-verified content-addressed APKG cache", {
         assert.equal(second.skipped, false);
         assert.equal(second.cacheHit, true);
         assert.equal(second.pythonTimingsMs, null);
+        assert.equal("describePythonTool" in second.timingsMs, false);
+        assert.equal("runPythonApkgBuilder" in second.timingsMs, false);
         assert.equal(sha256File(second.filePath), firstSha256);
     } finally {
         fs.rmSync(rootDir, { recursive: true, force: true });

@@ -1,4 +1,5 @@
 const fs = require("node:fs");
+const fsp = require("node:fs/promises");
 const path = require("node:path");
 const crypto = require("node:crypto");
 const { spawnSync } = require("node:child_process");
@@ -57,8 +58,15 @@ function updateDigestWithFile(digest, filePath, label) {
     digest.update("\0");
 }
 
-function computeFileSha256(filePath) {
-    return crypto.createHash("sha256").update(fs.readFileSync(filePath)).digest("hex");
+async function computeFileSha256(filePath) {
+    const hash = crypto.createHash("sha256");
+    await new Promise((resolve, reject) => {
+        const stream = fs.createReadStream(filePath);
+        stream.on("data", (chunk) => hash.update(chunk));
+        stream.on("error", reject);
+        stream.on("end", resolve);
+    });
+    return hash.digest("hex");
 }
 
 function computeApkgCacheKey({ packageRootDir, exports, levels, deckKind }) {
@@ -100,42 +108,66 @@ function resolveApkgCachePaths(cacheKey) {
     assertSafeGeneratedPath(cacheDir, { label: "APKG cache directory" });
     const apkgPath = path.join(cacheDir, `${cacheKey}.apkg`);
     return {
+        cacheKey,
         cacheDir,
         apkgPath,
+        metadataPath: `${apkgPath}.json`,
         sha256Path: `${apkgPath}.sha256`,
     };
 }
 
-function readCachedApkg({ cachePaths, destinationPath }) {
+async function readCachedApkg({ cachePaths, destinationPath }) {
     try {
-        if (!cachePaths || !fs.existsSync(cachePaths.apkgPath) || !fs.existsSync(cachePaths.sha256Path)) {
+        if (!cachePaths || !fs.existsSync(cachePaths.apkgPath) || !fs.existsSync(cachePaths.metadataPath)) {
             return false;
         }
 
-        const expectedSha256 = String(fs.readFileSync(cachePaths.sha256Path, "utf-8")).trim().toLowerCase();
+        const metadata = JSON.parse(await fsp.readFile(cachePaths.metadataPath, "utf-8"));
+        if (metadata?.version !== 1 || metadata?.cacheKey !== cachePaths.cacheKey) {
+            return false;
+        }
+
+        const expectedSha256 = String(metadata.apkgSha256 || "").trim().toLowerCase();
         if (!/^[a-f0-9]{64}$/.test(expectedSha256)) {
             return false;
         }
-        if (computeFileSha256(cachePaths.apkgPath) !== expectedSha256) {
+        const stat = await fsp.stat(cachePaths.apkgPath);
+        if (Number.isFinite(metadata.byteSize) && metadata.byteSize !== stat.size) {
             return false;
         }
 
-        fs.copyFileSync(cachePaths.apkgPath, destinationPath);
+        if (await computeFileSha256(cachePaths.apkgPath) !== expectedSha256) {
+            return false;
+        }
+
+        await fsp.copyFile(cachePaths.apkgPath, destinationPath);
         return true;
     } catch {
         return false;
     }
 }
 
-function writeCachedApkg({ cachePaths, sourcePath }) {
+async function writeCachedApkg({ cachePaths, sourcePath }) {
     try {
         if (!cachePaths || !sourcePath || !fs.existsSync(sourcePath)) {
             return false;
         }
 
         ensureDir(cachePaths.cacheDir);
-        fs.copyFileSync(sourcePath, cachePaths.apkgPath);
-        fs.writeFileSync(cachePaths.sha256Path, `${computeFileSha256(cachePaths.apkgPath)}\n`, "utf-8");
+        await fsp.copyFile(sourcePath, cachePaths.apkgPath);
+        const stat = await fsp.stat(cachePaths.apkgPath);
+        const apkgSha256 = await computeFileSha256(cachePaths.apkgPath);
+        const metadata = {
+            version: 1,
+            generatedArtifact: true,
+            source: "apkg-runtime-cache",
+            cacheKey: cachePaths.cacheKey,
+            apkgSha256,
+            byteSize: stat.size,
+            createdAt: new Date().toISOString(),
+        };
+        await fsp.writeFile(cachePaths.metadataPath, `${JSON.stringify(metadata, null, 2)}\n`, "utf-8");
+        await fsp.writeFile(cachePaths.sha256Path, `${apkgSha256}\n`, "utf-8");
         return true;
     } catch {
         return false;
@@ -239,14 +271,6 @@ async function buildAnkiPackage({
     const totalStartedAt = performance.now();
     const timingsMs = {};
 
-    const describeStartedAt = performance.now();
-    const pythonTool = describePythonTool();
-    captureTiming(timingsMs, "describePythonTool", describeStartedAt);
-
-    const resolveStartedAt = performance.now();
-    const python = resolvePythonCommandFromTool(pythonTool);
-    captureTiming(timingsMs, "resolvePythonCommand", resolveStartedAt);
-
     const listMediaStartedAt = performance.now();
     const mediaIntegrityFileCount = readMediaIntegrityFileCount(packageRootDir);
     const mediaFiles = mediaIntegrityFileCount === null ? listMediaFiles(mediaDir) : null;
@@ -260,7 +284,7 @@ async function buildAnkiPackage({
     captureTiming(timingsMs, "computeCacheKey", cacheKeyStartedAt);
 
     const cacheLookupStartedAt = performance.now();
-    const cacheHit = readCachedApkg({ cachePaths, destinationPath: apkgPath });
+    const cacheHit = await readCachedApkg({ cachePaths, destinationPath: apkgPath });
     captureTiming(timingsMs, "cacheLookup", cacheLookupStartedAt);
 
     if (cacheHit) {
@@ -277,6 +301,14 @@ async function buildAnkiPackage({
             cacheHit: true,
         };
     }
+
+    const describeStartedAt = performance.now();
+    const pythonTool = describePythonTool();
+    captureTiming(timingsMs, "describePythonTool", describeStartedAt);
+
+    const resolveStartedAt = performance.now();
+    const python = resolvePythonCommandFromTool(pythonTool);
+    captureTiming(timingsMs, "resolvePythonCommand", resolveStartedAt);
 
     if (!python) {
         timingsMs.total = Number((performance.now() - totalStartedAt).toFixed(2));
@@ -303,7 +335,7 @@ async function buildAnkiPackage({
         });
         captureTiming(timingsMs, "runPythonApkgBuilder", pythonStartedAt);
         const cacheStoreStartedAt = performance.now();
-        writeCachedApkg({ cachePaths, sourcePath: result.filePath });
+        await writeCachedApkg({ cachePaths, sourcePath: result.filePath });
         captureTiming(timingsMs, "cacheStore", cacheStoreStartedAt);
         timingsMs.total = Number((performance.now() - totalStartedAt).toFixed(2));
 

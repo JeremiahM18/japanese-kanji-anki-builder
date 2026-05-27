@@ -20,12 +20,18 @@ function sha256File(filePath) {
     return crypto.createHash("sha256").update(fs.readFileSync(filePath)).digest("hex");
 }
 
+function makeWorkspaceOutTempDir(prefix) {
+    const outDir = path.join(process.cwd(), "out");
+    fs.mkdirSync(outDir, { recursive: true });
+    return fs.mkdtempSync(path.join(outDir, prefix));
+}
+
 const python = resolvePythonCommand();
 
 test("buildAnkiPackage reuses a sha-verified content-addressed APKG cache", {
     skip: !python,
 }, async () => {
-    const rootDir = fs.mkdtempSync(path.join(process.cwd(), "out", "anki-package-cache-test-"));
+    const rootDir = makeWorkspaceOutTempDir("anki-package-cache-test-");
 
     try {
         const packageRootDir = path.join(rootDir, "package");

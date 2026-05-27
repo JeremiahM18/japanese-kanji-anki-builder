@@ -25,6 +25,12 @@ function toPortableRelativePath(filePath) {
     return path.relative(process.cwd(), filePath).split(path.sep).join("/");
 }
 
+function makeWorkspaceOutTempDir(prefix) {
+    const outDir = path.join(process.cwd(), "out");
+    fs.mkdirSync(outDir, { recursive: true });
+    return fs.mkdtempSync(path.join(outDir, prefix));
+}
+
 function runBuildApkg(python, outDir, { deckKind = "kanji" } = {}) {
     const result = runBuildApkgRaw(python, outDir, { deckKind });
     assert.equal(result.status, 0, result.stderr || result.stdout || "buildApkg.py failed");
@@ -144,7 +150,7 @@ test("buildApkg.py produces byte-stable APKG output for unchanged package inputs
 test("buildApkg.py fails closed when source-backed media does not match media-integrity", {
     skip: python ? false : "Python is unavailable",
 }, () => {
-    const tempRoot = fs.mkdtempSync(path.join(process.cwd(), "out", "kanji-apkg-integrity-"));
+    const tempRoot = makeWorkspaceOutTempDir("kanji-apkg-integrity-");
 
     try {
         const outDir = path.join(tempRoot, "build");

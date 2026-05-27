@@ -72,7 +72,7 @@ test("obsidian word proof status parseArgs accepts scoped read-only status optio
     assert.deepEqual(options, {
         json: true,
         levels: [5, 4],
-        proofProvider: undefined,
+        proofProvider: "ledger-if-available",
         unknownArgs: ["--oops"],
     });
 });
@@ -81,6 +81,14 @@ test("obsidian word proof status parseArgs accepts explicit proof provider audit
     const options = parseRereviewStatusArgs(["--levels=5,4", "--proof-provider=ledger"]);
 
     assert.equal(options.proofProvider, "ledger");
+});
+
+test("obsidian word proof status parseArgs accepts scoped default provider overrides", () => {
+    const options = parseRereviewStatusArgs([], {
+        defaultProofProvider: "inline",
+    });
+
+    assert.equal(options.proofProvider, "inline");
 });
 
 test("obsidian word certification status parseArgs accepts scoped fail-closed status options", () => {

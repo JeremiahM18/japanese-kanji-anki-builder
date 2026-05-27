@@ -18,11 +18,13 @@ const {
     normalizeObsidianProofProviderMode,
 } = require("../src/services/obsidianProofProviderService");
 
-function parseArgs(argv) {
+function parseArgs(argv, {
+    defaultProofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
+} = {}) {
     const options = {
         json: false,
         levels: [5, 4],
-        proofProvider: undefined,
+        proofProvider: normalizeObsidianProofProviderMode(defaultProofProvider),
         unknownArgs: [],
     };
 
@@ -44,7 +46,7 @@ function parseArgs(argv) {
 }
 
 function readReviewSet(level, {
-    proofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.INLINE,
+    proofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
 } = {}) {
     const reviewSetPath = path.join(process.cwd(), "templates", `platinum_n${level}_word_review_set.json`);
     if (!fs.existsSync(reviewSetPath)) {
@@ -60,11 +62,11 @@ function readReviewSet(level, {
 
 async function main({
     commandName = "deck:words:platinum:rereview-status",
-    defaultProofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.INLINE,
+    defaultProofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
 } = {}) {
-    const options = parseArgs(process.argv.slice(2));
+    const options = parseArgs(process.argv.slice(2), { defaultProofProvider });
     assertNoUnknownArgs(commandName, options.unknownArgs);
-    const proofProvider = options.proofProvider || defaultProofProvider;
+    const proofProvider = options.proofProvider;
 
     const config = loadConfig();
     const wordPitchAccentData = loadWordPitchAccentData(path.join(process.cwd(), "templates", "word_pitch_accent_data.json"));

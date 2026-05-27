@@ -274,6 +274,8 @@ Current transition state:
 
 Do not treat the word proof-ledger migration as new Obsidian review. It is a representation migration for already-certified N5/N4 word proof. Word proof has separate exact written-reading identity binding, evidence checklist, and release-quality sentence review requirements.
 
+For future or unmigrated word Obsidian lanes, including N3/N2/N1 word, do not add inline `rereviewProvenance` first and migrate it later. New substantive word Obsidian proof should be created directly as canonical JSONL ledger events during the real card-level review, after the live generated word card, tracked review entry, source evidence, media identity, pitch evidence, limitations, and release-quality sentence review have been inspected. Reconciliation must then bind those new ledger events back to the tracked review-set identities before any consumer status or certification claim is trusted.
+
 ## What Not To Claim
 
 - A clean NLP packet is not Obsidian.

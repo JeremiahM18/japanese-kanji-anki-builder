@@ -277,7 +277,7 @@ npm run supply-chain:audit
 npm run release:gate
 ```
 
-Clean CI runs `data:audit:jlpt -- --strict --tracked-only`, `data:audit:jlpt:sources -- --governance-strict --limit=25`, `data:audit:jlpt:words`, and `deck:words:platinum:source-posture -- --levels=5,4` from tracked inputs.
+Clean CI runs `data:obsidian:proof:validate`, `data:obsidian:proof:reconcile -- --levels=3`, `data:audit:jlpt -- --strict --tracked-only`, `data:audit:jlpt:sources -- --governance-strict --limit=25`, `data:audit:jlpt:words`, and `deck:words:platinum:source-posture -- --levels=5,4` from tracked inputs.
 
 Clean CI does not run `deck:platinum:governance-gate` because that command exercises ignored local `data/*` real generated-row inputs. Run it in a local-data workspace before release claims that depend on current generated N5/N4 rows.
 

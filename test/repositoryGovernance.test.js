@@ -171,12 +171,15 @@ test("CI workflow uses tracked-input governance checks and documents local-data 
     const readme = readRepoFile("README.md");
 
     assert.equal(workflow.includes("npm run data:audit:jlpt:sources -- --governance-strict --limit=25"), true);
+    assert.equal(workflow.includes("npm run data:obsidian:proof:validate"), true);
+    assert.equal(workflow.includes("npm run data:obsidian:proof:reconcile -- --levels=3"), true);
     assert.equal(workflow.includes("npm run data:audit:jlpt -- --strict --tracked-only"), true);
     assert.equal(workflow.includes("npm run data:audit:jlpt:words"), true);
     assert.equal(workflow.includes("npm run deck:words:platinum:source-posture -- --levels=5,4"), true);
     assert.equal(workflow.includes("npm run deck:platinum:governance-gate"), false);
     assert.equal(workflow.includes("hashFiles('data/"), false);
     assert.match(workflow, /deck:platinum:governance-gate is intentionally local-data release QA/);
+    assert.match(readme, /Clean CI runs `data:obsidian:proof:validate`, `data:obsidian:proof:reconcile -- --levels=3`/);
     assert.match(readme, /Clean CI does not run `deck:platinum:governance-gate`/);
     assert.match(readme, /data:audit:jlpt -- --strict --tracked-only/);
 });

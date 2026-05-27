@@ -54,6 +54,12 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Validate Obsidian proof ledger
+        run: npm run data:obsidian:proof:validate
+
+      - name: Reconcile Obsidian proof ledger parity
+        run: npm run data:obsidian:proof:reconcile -- --levels=3
+
       - name: Run tracked JLPT kanji source governance audit
         run: npm run data:audit:jlpt:sources -- --governance-strict --limit=25
 

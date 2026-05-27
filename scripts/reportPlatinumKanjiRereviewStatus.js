@@ -13,7 +13,7 @@ const {
     normalizeObsidianProofProviderMode,
 } = require("../src/services/obsidianProofProviderService");
 
-function parseArgs(argv, { defaultProofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.INLINE } = {}) {
+function parseArgs(argv, { defaultProofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE } = {}) {
     const options = {
         json: false,
         levels: [5, 4],
@@ -40,7 +40,7 @@ function parseArgs(argv, { defaultProofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.
 
 function readReviewSet(level, {
     cwd = process.cwd(),
-    proofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.INLINE,
+    proofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
 } = {}) {
     return loadReviewSetWithObsidianProof({
         cwd,
@@ -52,7 +52,7 @@ function readReviewSet(level, {
 
 async function main({
     commandName = "deck:platinum:rereview-status",
-    defaultProofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.INLINE,
+    defaultProofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
 } = {}) {
     const options = parseArgs(process.argv.slice(2), { defaultProofProvider });
     assertNoUnknownArgs(commandName, options.unknownArgs);

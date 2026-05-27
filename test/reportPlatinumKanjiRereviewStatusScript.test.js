@@ -22,11 +22,11 @@ test("kanji rereview status script parses proof provider without hiding unknown 
     assert.deepEqual(options.unknownArgs, ["--unexpected"]);
 });
 
-test("kanji rereview status script keeps inline proof provider as base default", () => {
+test("kanji rereview status script uses scoped proof provider as base default", () => {
     const options = parseArgs([]);
 
     assert.deepEqual(options.levels, [5, 4]);
-    assert.equal(options.proofProvider, OBSIDIAN_PROOF_PROVIDER_MODES.INLINE);
+    assert.equal(options.proofProvider, OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE);
 });
 
 test("kanji rereview status script accepts a scoped default provider from wrappers", () => {

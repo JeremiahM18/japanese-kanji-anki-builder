@@ -32,6 +32,7 @@ const {
     buildTrackedWordReviewSetRows,
     buildWordBatchReportProviderParityForLevel,
     buildWordCertificationStatusProviderParityForLevel,
+    buildWordGovernanceInputsProviderParityForLevel,
     buildWordPlatinumLevelProviderParityForLevel,
     buildWordRereviewStatusProviderParityForLevel,
     formatObsidianProofProviderParityReport,
@@ -482,6 +483,20 @@ test("provider parity script parses word platinum-level consumer and deck kind",
     assert.equal(options.allowEmpty, true);
 });
 
+test("provider parity script parses word governance inputs consumer and deck kind", () => {
+    const options = parseArgs([
+        "--levels=5,4",
+        "--consumer=word-governance-inputs",
+        "--deck-kind=word",
+        "--row-source=tracked-review-set",
+    ]);
+
+    assert.equal(options.consumer, "word-governance-inputs");
+    assert.equal(options.deckKind, "word");
+    assert.deepEqual(options.levels, [5, 4]);
+    assert.equal(options.rowSource, ROW_SOURCES.TRACKED_REVIEW_SET);
+});
+
 test("provider parity script parses word batch-report consumer and word targets", () => {
     const options = parseArgs([
         "--levels=5",
@@ -859,6 +874,87 @@ test("word platinum-level provider parity keeps structural gate stable when ledg
     assert.equal(scope.inlineProjection.passed, true);
     assert.equal(scope.ledgerProjection.passed, true);
     assert.equal(scope.ledgerProvider.inlineProofsOmitted, 1);
+});
+
+test("word governance inputs provider parity passes when gate projections match", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
+    writeLedger(rootDir, [buildWordProofEvent()]);
+
+    const scope = buildWordGovernanceInputsProviderParityForLevel({
+        rows: [buildWordRow()],
+        rawEntries: [buildWordEntry()],
+        cwd: rootDir,
+        level: 5,
+        sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
+        wordPitchAccentData: {
+            sources: {
+                "kanjium-cc-by-sa-4.0": {
+                    name: "Kanjium pitch accent database",
+                    license: "CC BY-SA 4.0",
+                },
+            },
+            entries: {
+                "本|ほん": {
+                    pattern: "1 [atamadaka]",
+                    sourceId: "kanjium-cc-by-sa-4.0",
+                    sourceWord: "本",
+                    sourceReading: "ほん",
+                    sourceAccent: "1",
+                },
+            },
+        },
+        kanjiLevelData: null,
+    });
+
+    assert.equal(scope.passed, true);
+    assert.equal(scope.inlineProjection.passed, true);
+    assert.equal(scope.ledgerProjection.passed, true);
+    assert.equal(scope.inlineProjection.wordRereviewReports[0].counts.substantive_current_standard_review_proven, 1);
+    assert.equal(scope.ledgerProjection.wordRereviewReports[0].counts.substantive_current_standard_review_proven, 1);
+});
+
+test("word governance inputs provider parity fails when word proof warning posture drifts", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
+    writeLedger(rootDir, []);
+
+    const scope = buildWordGovernanceInputsProviderParityForLevel({
+        rows: [buildWordRow()],
+        rawEntries: [buildWordEntry()],
+        cwd: rootDir,
+        level: 5,
+        sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
+        wordPitchAccentData: {
+            sources: {
+                "kanjium-cc-by-sa-4.0": {
+                    name: "Kanjium pitch accent database",
+                    license: "CC BY-SA 4.0",
+                },
+            },
+            entries: {
+                "本|ほん": {
+                    pattern: "1 [atamadaka]",
+                    sourceId: "kanjium-cc-by-sa-4.0",
+                    sourceWord: "本",
+                    sourceReading: "ほん",
+                    sourceAccent: "1",
+                },
+            },
+        },
+        kanjiLevelData: null,
+    });
+    const formatted = formatObsidianProofProviderParityReport({
+        passed: false,
+        consumer: "word-governance-inputs",
+        deckKind: "word",
+        levels: [5],
+        scopes: [scope],
+    });
+
+    assert.equal(scope.passed, false);
+    assert.equal(scope.inlineProjection.wordRereviewReports[0].counts.needs_substantive_rereview, 0);
+    assert.equal(scope.ledgerProjection.wordRereviewReports[0].counts.needs_substantive_rereview, 1);
+    assert.match(formatted, /Inline governance gate/);
+    assert.match(formatted, /Inline coverage/);
 });
 
 test("kanji rereview-status provider parity passes when inline and ledger projections match", () => {

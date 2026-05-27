@@ -65,7 +65,7 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run deck:review:coverage` | Audit Gold regression coverage |
 | `npm run deck:review:accessibility` | Report automated accessibility checklist status for kanji or word decks |
 | `npm run deck:platinum:rereview-status -- --levels=5,4,3` | Compatibility kanji rereview-status alias; proof-provider input now defaults to ledger-if-available, but new workflows should use `deck:kanji:obsidian:rereview-status` |
-| `npm run deck:platinum:governance-gate` | Run the local-data Platinum governance gate against real generated N5/N4 rows before release claims that depend on those rows; kanji Obsidian proof input defaults to ledger-if-available while word proof remains on its separate word lane |
+| `npm run deck:platinum:governance-gate` | Run the local-data Platinum governance gate against real generated N5/N4 rows before release claims that depend on those rows; migrated kanji and word Obsidian proof inputs default to ledger-if-available |
 | `npm run deck:platinum:n5` | Run the N5 kanji Platinum gate; migrated proof-provider input defaults to canonical JSONL |
 | `npm run deck:platinum:n4` | Run the N4 kanji Platinum gate; migrated proof-provider input defaults to canonical JSONL |
 | `npm run deck:platinum:n3` | Run the N3 kanji Platinum gate; migrated proof-provider input defaults to canonical JSONL |

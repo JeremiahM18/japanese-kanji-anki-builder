@@ -65,16 +65,12 @@ function readReviewSet({ kind, level, proofProvider = OBSIDIAN_PROOF_PROVIDER_MO
         throw new Error(`Missing platinum ${kind} review set at ${reviewSetPath}`);
     }
 
-    if (kind === "kanji") {
-        return loadReviewSetWithObsidianProof({
-            deckKind: "kanji",
-            level,
-            sourceReviewSetPath,
-            proofProvider,
-        }).entries;
-    }
-
-    return JSON.parse(fs.readFileSync(reviewSetPath, "utf-8"));
+    return loadReviewSetWithObsidianProof({
+        deckKind: kind,
+        level,
+        sourceReviewSetPath,
+        proofProvider,
+    }).entries;
 }
 
 async function buildGateReport({ options, config }) {
@@ -105,7 +101,11 @@ async function buildGateReport({ options, config }) {
     }
 
     for (const level of options.wordLevels) {
-        const entries = readReviewSet({ kind: "word", level });
+        const entries = readReviewSet({
+            kind: "word",
+            level,
+            proofProvider: options.proofProvider || OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
+        });
         const rows = await buildWordRowsForLevel({ level, config });
         wordRereviewReports.push(buildPlatinumWordRereviewStatusReport({
             rows,

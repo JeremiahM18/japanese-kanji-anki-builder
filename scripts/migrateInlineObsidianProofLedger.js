@@ -29,6 +29,12 @@ const {
     ensureDir,
     isPathInside,
 } = require("../src/utils/fs");
+const {
+    loadConfig,
+} = require("../src/config");
+const {
+    buildWordRowsForLevel,
+} = require("./reviewPlatinumWordLevel");
 
 const DEFAULT_RECORDED_BY = "codex-inline-proof-migration";
 const DEFAULT_OBSIDIAN_PROOF_LEDGER_DIR = path.join("templates", "obsidian_proof_ledger");
@@ -124,10 +130,59 @@ function parseCardReviewed(value) {
     };
 }
 
+function normalizeText(value) {
+    return String(value ?? "").trim();
+}
+
+function normalizeStringArray(value) {
+    return (Array.isArray(value) ? value : [])
+        .map((entry) => normalizeText(entry))
+        .filter(Boolean);
+}
+
+function deriveWordCardReviewed(entry = {}) {
+    const word = normalizeText(entry.word || entry.written || entry.displayWord);
+    const readings = normalizeStringArray(entry.readingIncludes);
+    if (!word || readings.length !== 1) {
+        throw new Error(`Cannot derive exact word proof target for ${word || "(missing word)"}.`);
+    }
+    return `${word}|${readings[0]}`;
+}
+
+function normalizeWordProvenanceCardReviewed(provenance = {}) {
+    const value = provenance.cardReviewed;
+    if (typeof value === "string") {
+        return normalizeText(value);
+    }
+    if (value && typeof value === "object" && !Array.isArray(value)) {
+        const word = normalizeText(value.word || value.written);
+        const reading = normalizeText(value.reading);
+        return word && reading ? `${word}|${reading}` : "";
+    }
+    return "";
+}
+
+function buildWordRowMap(rows = []) {
+    return new Map((Array.isArray(rows) ? rows : [])
+        .filter((row) => normalizeText(row.word) && normalizeText(row.reading))
+        .map((row) => [`${normalizeText(row.word)}|${normalizeText(row.reading)}`, row]));
+}
+
 function buildProofFromProvenance(provenance = {}) {
-    const proof = { ...provenance };
-    delete proof.batchId;
-    return proof;
+    return {
+        type: provenance.type,
+        reviewStandard: provenance.reviewStandard,
+        reviewedAt: provenance.reviewedAt,
+        reviewer: provenance.reviewer,
+        reviewedAfterStandard: provenance.reviewedAfterStandard,
+        mechanicalMigration: provenance.mechanicalMigration,
+        result: provenance.result,
+        scope: provenance.scope,
+        cardReviewed: provenance.cardReviewed,
+        evidenceChecked: provenance.evidenceChecked,
+        limitationDecision: provenance.limitationDecision,
+        sentenceQualityReview: provenance.sentenceQualityReview,
+    };
 }
 
 function batchSequenceFromId(batchId) {
@@ -184,6 +239,7 @@ function buildMigrationForReviewSet({
     recordedAt,
     recordedBy,
     sourceCommit,
+    rows = [],
 }) {
     const sourceReviewSetPath = getReviewSetRelativePath({ deckKind, level });
     const resolvedSourceReviewSetPath = path.resolve(cwd, sourceReviewSetPath);
@@ -192,6 +248,12 @@ function buildMigrationForReviewSet({
     const draftEvents = [];
     let normalizedSentenceQualityReviews = 0;
     let sanitizedSentenceQualityReviews = 0;
+    let normalizedCardReviewed = 0;
+    let normalizedLimitationDecisions = 0;
+    let normalizedResults = 0;
+    const targetKeys = new Set();
+    const duplicateTargets = new Set();
+    const rowMap = deckKind === "word" ? buildWordRowMap(rows) : new Map();
 
     for (const entry of entries) {
         if (!entry.rereviewProvenance) {
@@ -199,24 +261,62 @@ function buildMigrationForReviewSet({
             continue;
         }
 
+        const cardReviewed = (deckKind === "word"
+            ? normalizeWordProvenanceCardReviewed(entry.rereviewProvenance)
+            : normalizeText(entry.rereviewProvenance.cardReviewed))
+            || (deckKind === "word" ? deriveWordCardReviewed(entry) : "");
         const target = {
             deckKind,
             level,
-            ...parseCardReviewed(entry.rereviewProvenance.cardReviewed),
+            ...parseCardReviewed(cardReviewed),
         };
         if (deckKind === "kanji" && entry.kanji !== target.written) {
             throw new Error(`Kanji entry ${entry.kanji} does not match proof target ${target.written}.`);
         }
+        if (deckKind === "word") {
+            if (entry.word !== target.written) {
+                throw new Error(`Word entry ${entry.word} does not match proof target ${target.written}.`);
+            }
+            if (!normalizeStringArray(entry.readingIncludes).includes(target.reading)) {
+                throw new Error(`Word entry ${entry.word}|${normalizeStringArray(entry.readingIncludes).join(" / ")} does not match proof target ${target.cardReviewed}.`);
+            }
+        }
 
-        const normalizationStats = getInlineProvenanceNormalizationStats(entry.rereviewProvenance);
-        const provenance = normalizeInlineProvenance(entry.rereviewProvenance, {
+        const targetKey = `${target.deckKind}:n${target.level}:${target.cardReviewed}`;
+        if (targetKeys.has(targetKey)) {
+            duplicateTargets.add(targetKey);
+        }
+        targetKeys.add(targetKey);
+
+        const row = rowMap.get(target.cardReviewed);
+        if (deckKind === "word" && !row && !entry.rereviewProvenance.sentenceQualityReview) {
+            throw new Error(`Missing live generated row needed to derive word sentence-quality proof for ${target.cardReviewed}.`);
+        }
+        const context = {
             cardReviewed: target.cardReviewed,
+            deckKind,
+            entry,
             level,
+            row,
+        };
+        const normalizationStats = getInlineProvenanceNormalizationStats(entry.rereviewProvenance, context);
+        const provenance = normalizeInlineProvenance(entry.rereviewProvenance, {
+            ...context,
         });
+        target.cardReviewed = provenance.cardReviewed;
         if (normalizationStats.normalizedSentenceQualityReview) {
             normalizedSentenceQualityReviews += 1;
         } else if (normalizationStats.sanitizedSentenceQualityReview) {
             sanitizedSentenceQualityReviews += 1;
+        }
+        if (normalizationStats.normalizedCardReviewed) {
+            normalizedCardReviewed += 1;
+        }
+        if (normalizationStats.normalizedLimitationDecision) {
+            normalizedLimitationDecisions += 1;
+        }
+        if (normalizationStats.normalizedResult) {
+            normalizedResults += 1;
         }
 
         const draftEvent = {
@@ -246,6 +346,9 @@ function buildMigrationForReviewSet({
             rereviewProvenance: provenance,
         });
     }
+    if (duplicateTargets.size > 0) {
+        throw new Error(`Duplicate Obsidian proof migration targets for ${deckKind}:N${level}: ${[...duplicateTargets].sort().join(", ")}`);
+    }
 
     const events = assignProofIds(draftEvents).map((event) => parseObsidianProofLedgerEvent(event));
     const outputRelativePath = path.join(ledgerDir, `${deckKind}_n${level}.jsonl`);
@@ -265,8 +368,14 @@ function buildMigrationForReviewSet({
         sourceEntries,
         events,
         inlineProofs: events.length,
+        missingCardIdentityBindings: 0,
+        missingReleaseQualitySentenceReviews: 0,
+        duplicateTargets: [],
         normalizedSentenceQualityReviews,
         sanitizedSentenceQualityReviews,
+        normalizedCardReviewed,
+        normalizedLimitationDecisions,
+        normalizedResults,
         batches: events.reduce((acc, event) => {
             acc[event.batch.id] = (acc[event.batch.id] || 0) + 1;
             return acc;
@@ -274,7 +383,25 @@ function buildMigrationForReviewSet({
     };
 }
 
-function buildInlineObsidianProofLedgerMigration(options = {}) {
+async function buildRowsForMigration({
+    deckKind,
+    level,
+    config,
+    wordRowsByLevel = {},
+} = {}) {
+    if (deckKind !== "word") {
+        return [];
+    }
+    if (wordRowsByLevel instanceof Map && wordRowsByLevel.has(level)) {
+        return wordRowsByLevel.get(level);
+    }
+    if (Object.prototype.hasOwnProperty.call(wordRowsByLevel, level)) {
+        return wordRowsByLevel[level];
+    }
+    return buildWordRowsForLevel({ level, config });
+}
+
+async function buildInlineObsidianProofLedgerMigration(options = {}) {
     const cwd = path.resolve(options.cwd || process.cwd());
     const deckKind = options.deckKind || "kanji";
     const levels = Array.isArray(options.levels) && options.levels.length > 0 ? options.levels : [3];
@@ -282,22 +409,33 @@ function buildInlineObsidianProofLedgerMigration(options = {}) {
     const recordedAt = normalizeRecordDate(options.recordedAt || new Date().toISOString().slice(0, 10));
     const recordedBy = String(options.recordedBy || DEFAULT_RECORDED_BY).trim();
     const sourceCommit = normalizeSourceCommit(options.sourceCommit || "0000000");
-    if (deckKind !== "kanji") {
-        throw new Error(`Inline Obsidian proof migration currently supports kanji review sets only: ${deckKind}`);
+    if (!["kanji", "word"].includes(deckKind)) {
+        throw new Error(`Unsupported inline Obsidian proof migration deck kind: ${deckKind}`);
     }
     if (!recordedBy) {
         throw new Error("--recorded-by must be non-empty.");
     }
 
-    const migrations = levels.map((level) => buildMigrationForReviewSet({
-        cwd,
-        deckKind,
-        level,
-        ledgerDir,
-        recordedAt,
-        recordedBy,
-        sourceCommit,
-    }));
+    const config = options.config || loadConfig();
+    const migrations = [];
+    for (const level of levels) {
+        const rows = await buildRowsForMigration({
+            deckKind,
+            level,
+            config,
+            wordRowsByLevel: options.wordRowsByLevel,
+        });
+        migrations.push(buildMigrationForReviewSet({
+            cwd,
+            deckKind,
+            level,
+            ledgerDir,
+            recordedAt,
+            recordedBy,
+            sourceCommit,
+            rows,
+        }));
+    }
 
     return {
         passed: true,
@@ -314,6 +452,12 @@ function buildInlineObsidianProofLedgerMigration(options = {}) {
             sourceReviewSetPath: migration.sourceReviewSetPath,
             ledgerOutputPath: migration.outputRelativePath,
             inlineProofs: migration.inlineProofs,
+            missingCardIdentityBindings: migration.missingCardIdentityBindings,
+            missingReleaseQualitySentenceReviews: migration.missingReleaseQualitySentenceReviews,
+            duplicateTargets: migration.duplicateTargets.length,
+            normalizedCardReviewed: migration.normalizedCardReviewed,
+            normalizedLimitationDecisions: migration.normalizedLimitationDecisions,
+            normalizedResults: migration.normalizedResults,
             normalizedSentenceQualityReviews: migration.normalizedSentenceQualityReviews,
             sanitizedSentenceQualityReviews: migration.sanitizedSentenceQualityReviews,
             batches: migration.batches,
@@ -333,8 +477,8 @@ function writeInlineObsidianProofLedgerMigration(report = {}) {
     }
 }
 
-function runInlineObsidianProofLedgerMigration(options = {}) {
-    const report = buildInlineObsidianProofLedgerMigration(options);
+async function runInlineObsidianProofLedgerMigration(options = {}) {
+    const report = await buildInlineObsidianProofLedgerMigration(options);
     if (options.write) {
         writeInlineObsidianProofLedgerMigration(report);
         const reconciliation = buildObsidianProofReconciliationReport({
@@ -380,6 +524,12 @@ function formatMigrationReport(report = {}) {
             `- Source review set: ${reviewSet.sourceReviewSetPath}`,
             `- Ledger output: ${reviewSet.ledgerOutputPath}`,
             `- Inline proofs migrated: ${reviewSet.inlineProofs}`,
+            `- Missing card identity bindings: ${reviewSet.missingCardIdentityBindings}`,
+            `- Missing release-quality sentence reviews: ${reviewSet.missingReleaseQualitySentenceReviews}`,
+            `- Duplicate targets: ${reviewSet.duplicateTargets}`,
+            `- Card identity objects normalized from tracked word identity: ${reviewSet.normalizedCardReviewed}`,
+            `- Limitation decisions normalized from tracked evidence: ${reviewSet.normalizedLimitationDecisions}`,
+            `- Result fields normalized from active Platinum status: ${reviewSet.normalizedResults}`,
             `- Sentence-quality objects normalized from existing evidence lines: ${reviewSet.normalizedSentenceQualityReviews}`,
             `- Sentence-quality objects sanitized to canonical schema: ${reviewSet.sanitizedSentenceQualityReviews}`,
             "- Batches:",
@@ -410,13 +560,13 @@ function formatMigrationReport(report = {}) {
     return `${lines.join("\n")}\n`;
 }
 
-function main(argv = process.argv.slice(2)) {
+async function main(argv = process.argv.slice(2)) {
     const options = parseArgs(argv);
     assertNoUnknownArgs("data:obsidian:proof:migrate-inline", options.unknownArgs);
     if (options.write && !options.sourceCommit) {
         throw new Error("--source-commit is required when --write is set.");
     }
-    const report = runInlineObsidianProofLedgerMigration(options);
+    const report = await runInlineObsidianProofLedgerMigration(options);
 
     if (options.json) {
         process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);

@@ -64,6 +64,7 @@ async function main() {
         ledgerDir: options.ledgerDir,
         levels: options.levels,
         deckKinds: options.deckKinds,
+        allowIncomplete: options.allowIncomplete,
     });
 
     if (options.json) {

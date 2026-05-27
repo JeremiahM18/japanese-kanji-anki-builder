@@ -89,9 +89,13 @@ function loadInlineProofsForReviewSet({
         }
         const cardReviewed = normalizeText(entry.rereviewProvenance.cardReviewed)
             || targetKey.split(":").slice(2).join(":");
-        const normalizationStats = getInlineProvenanceNormalizationStats(entry.rereviewProvenance);
+        const normalizationStats = getInlineProvenanceNormalizationStats(entry.rereviewProvenance, {
+            deckKind,
+        });
         const provenance = normalizeInlineProvenance(entry.rereviewProvenance, {
             cardReviewed,
+            deckKind,
+            entry,
             level,
         });
         if (normalizationStats.normalizedSentenceQualityReview) {
@@ -193,22 +197,38 @@ function buildObsidianProofReconciliation({
     ledgerDir,
     deckKinds = ["kanji"],
     levels = [3],
+    allowIncomplete = false,
 } = {}) {
     const resolvedCwd = path.resolve(cwd);
     const ledger = loadObsidianProofLedger({ cwd: resolvedCwd, ledgerDir });
     const ledgerProofs = buildLedgerProofRecords(ledger.events);
     const scopeReports = [];
+    const skippedScopes = [];
 
     for (const deckKind of deckKinds) {
         for (const level of levels) {
+            const sourceReviewSetPath = getReviewSetRelativePath({ deckKind, level });
+            const sourceScopedLedgerProofs = ledgerProofs.filter((proof) => (
+                proof.sourceReviewSetPath === sourceReviewSetPath
+            ));
+            const reviewSetPath = path.join(resolvedCwd, sourceReviewSetPath);
+            if (!fs.existsSync(reviewSetPath)) {
+                if (allowIncomplete && sourceScopedLedgerProofs.length === 0) {
+                    skippedScopes.push({
+                        deckKind,
+                        level,
+                        sourceReviewSetPath,
+                        reason: "missing review set and no scoped ledger proof",
+                    });
+                    continue;
+                }
+                throw new Error(`Missing review set for Obsidian proof reconciliation: ${reviewSetPath}`);
+            }
             const reviewSet = loadInlineProofsForReviewSet({
                 cwd: resolvedCwd,
                 deckKind,
                 level,
             });
-            const sourceScopedLedgerProofs = ledgerProofs.filter((proof) => (
-                proof.sourceReviewSetPath === reviewSet.sourceReviewSetPath
-            ));
             scopeReports.push({
                 ...summarizeScope({
                     deckKind,
@@ -260,6 +280,7 @@ function buildObsidianProofReconciliation({
         ledgerFiles: ledger.files,
         totals,
         scopes: scopeReports,
+        skippedScopes,
     };
 }
 
@@ -285,6 +306,7 @@ function buildObsidianProofReconciliationReport(options = {}) {
                 duplicateInlineTargets: 0,
             },
             scopes: [],
+            skippedScopes: [],
             failures: [error.message],
         };
     }
@@ -340,6 +362,13 @@ function formatObsidianProofReconciliationReport(report = {}) {
             `- Inline sentence-quality sanitized: ${scope.sanitizedSentenceQualityReviews}`,
             `- Duplicate inline targets: ${scope.duplicateInlineTargets.length}; sample: ${formatTargetSample(scope.duplicateInlineTargets)}`
         );
+    }
+
+    if (Array.isArray(report.skippedScopes) && report.skippedScopes.length > 0) {
+        lines.push("", "Skipped incomplete scopes:");
+        for (const scope of report.skippedScopes) {
+            lines.push(`- ${scope.deckKind}:N${scope.level}; source=${scope.sourceReviewSetPath}; reason=${scope.reason}`);
+        }
     }
 
     if (!report.passed && Array.isArray(report.failures)) {

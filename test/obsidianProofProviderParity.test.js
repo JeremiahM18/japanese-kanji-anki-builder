@@ -16,6 +16,7 @@ const {
 } = require("../src/services/platinumKanjiReviewService");
 const {
     buildKanjiBatchReportProviderParityForLevel,
+    buildKanjiFieldSourceContractProviderParityForLevel,
     buildKanjiPlatinumLevelProviderParityForLevel,
     buildKanjiRereviewStatusProviderParityForLevel,
     buildObsidianProofProviderParityReport,
@@ -194,6 +195,32 @@ function buildProofEvent(overrides = {}) {
     };
 }
 
+function buildFieldSourceInputs() {
+    return {
+        jlptLevelContract: {
+            kanjiLevels: {
+                "常": 3,
+            },
+        },
+        platinumCardSourceManifest: {
+            sources: {
+                kanjipedia_manual: {
+                    status: "active",
+                    allowedUse: ["kanji-field-verification"],
+                    licenseUse: { status: "restricted" },
+                    sourceFamily: "kanjipedia",
+                    independenceGroup: "kanjipedia",
+                    matchers: ["Kanjipedia", "kanjipedia.jp"],
+                },
+            },
+        },
+        sourceOriginEvidence: {
+            sources: {},
+            assignments: {},
+        },
+    };
+}
+
 test("provider parity script parses levels, consumer, json, and unknown args", () => {
     const options = parseArgs([
         "--levels=3",
@@ -228,6 +255,15 @@ test("provider parity script parses platinum-level consumer options", () => {
     assert.equal(options.requireCurrentReviewStandard, false);
     assert.equal(options.allowEmpty, true);
     assert.equal(options.requireAllRows, true);
+});
+
+test("provider parity script parses kanji field-source contract consumer", () => {
+    const options = parseArgs([
+        "--levels=3",
+        "--consumer=kanji-field-source-contract",
+    ]);
+
+    assert.equal(options.consumer, "kanji-field-source-contract");
 });
 
 test("provider parity defaults to CI-safe tracked review-set rows", () => {
@@ -330,6 +366,49 @@ test("kanji platinum-level provider parity keeps structural gate stable when led
     assert.equal(scope.inlineProjection.passed, true);
     assert.equal(scope.ledgerProjection.passed, true);
     assert.equal(scope.ledgerProvider.inlineProofsOmitted, 1);
+});
+
+test("kanji field-source contract provider parity passes when contract projections match", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
+    writeLedger(rootDir, [buildProofEvent()]);
+
+    const scope = buildKanjiFieldSourceContractProviderParityForLevel({
+        rawEntries: [buildEntry()],
+        cwd: rootDir,
+        level: 3,
+        sourceReviewSetPath: "templates/platinum_n3_review_set.json",
+        fieldSourceInputs: buildFieldSourceInputs(),
+    });
+
+    assert.equal(scope.passed, true);
+    assert.equal(scope.inlineProjection.coverage.entryCount, 1);
+    assert.equal(scope.ledgerProjection.coverage.entryCount, 1);
+    assert.equal(scope.inlineProjection.entries["常"].reviewBinding.rereviewReviewedAt, "2026-05-26");
+    assert.equal(scope.ledgerProjection.entries["常"].reviewBinding.rereviewReviewedAt, "2026-05-26");
+});
+
+test("kanji field-source contract provider parity fails when rereview binding would drift", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
+    writeLedger(rootDir, []);
+
+    const scope = buildKanjiFieldSourceContractProviderParityForLevel({
+        rawEntries: [buildEntry()],
+        cwd: rootDir,
+        level: 3,
+        sourceReviewSetPath: "templates/platinum_n3_review_set.json",
+        fieldSourceInputs: buildFieldSourceInputs(),
+    });
+    const formatted = formatObsidianProofProviderParityReport({
+        passed: false,
+        consumer: "kanji-field-source-contract",
+        levels: [3],
+        scopes: [scope],
+    });
+
+    assert.equal(scope.passed, false);
+    assert.equal(scope.inlineProjection.entries["常"].reviewBinding.rereviewReviewedAt, "2026-05-26");
+    assert.equal(scope.ledgerProjection.entries["常"].reviewBinding.rereviewReviewedAt, "");
+    assert.match(formatted, /Inline coverage/);
 });
 
 test("kanji rereview-status provider parity fails when ledger misses inline proof", () => {

@@ -15,12 +15,18 @@ const {
     buildKanjiCardFieldSourceContract,
 } = require("../src/services/kanjiCardFieldSourceContractService");
 const {
+    OBSIDIAN_PROOF_PROVIDER_MODES,
+    loadReviewSetWithObsidianProof,
+    normalizeObsidianProofProviderMode,
+} = require("../src/services/obsidianProofProviderService");
+const {
     loadKanjiSourceOriginEvidence,
     resolveKanjiSourceOriginIdsForEntry,
 } = require("../src/services/platinumKanjiSourceOriginService");
 const {
     assertNoUnknownArgs,
     collectUnknownArg,
+    parseStringOption,
 } = require("../src/utils/cliArgs");
 
 const DEFAULT_OUT = defaultKanjiCardFieldSourceContractPathForLevel(DEFAULT_LEVEL);
@@ -43,6 +49,7 @@ function parseArgs(argv) {
         sourceEvidence: DEFAULT_SOURCE_EVIDENCE,
         readingReference: DEFAULT_READING_REFERENCE,
         checkedAt: DEFAULT_CHECKED_AT,
+        proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
         json: false,
         unknownArgs: [],
     };
@@ -67,6 +74,8 @@ function parseArgs(argv) {
             options.readingReference = arg.slice("--reading-reference=".length);
         } else if (arg.startsWith("--checked-at=")) {
             options.checkedAt = arg.slice("--checked-at=".length);
+        } else if (arg.startsWith("--proof-provider=")) {
+            options.proofProvider = normalizeObsidianProofProviderMode(parseStringOption(arg, "proof-provider"));
         } else {
             collectUnknownArg(options, arg);
         }
@@ -114,7 +123,14 @@ function run(options = {}) {
     const platinumCardSourceManifest = loadPlatinumCardSourceManifest(sourceManifestPath);
     const sourceOriginEvidence = loadKanjiSourceOriginEvidence(sourceEvidencePath);
     const readingReferenceContract = loadKanjiReadingReferenceContract(readingReferencePath);
-    const platinumEntries = JSON.parse(fs.readFileSync(reviewSetPath, "utf8"));
+    const reviewSet = loadReviewSetWithObsidianProof({
+        cwd,
+        deckKind: "kanji",
+        level,
+        sourceReviewSetPath: path.relative(cwd, reviewSetPath),
+        proofProvider: options.proofProvider || OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
+    });
+    const platinumEntries = reviewSet.entries;
 
     const contract = buildKanjiCardFieldSourceContract({
         jlptLevelContract,

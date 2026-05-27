@@ -1,3 +1,5 @@
+const path = require("node:path");
+
 const {
     loadConfig,
 } = require("../src/config");
@@ -19,6 +21,20 @@ const {
     evaluatePlatinumKanjiReviewSet,
 } = require("../src/services/platinumKanjiReviewService");
 const {
+    loadJlptLevelContract,
+} = require("../src/datasets/jlptLevelContract");
+const {
+    loadPlatinumCardSourceManifest,
+} = require("../src/datasets/platinumCardSourceManifest");
+const {
+    DEFAULT_CHECKED_AT,
+    buildKanjiCardFieldSourceContract,
+} = require("../src/services/kanjiCardFieldSourceContractService");
+const {
+    loadKanjiSourceOriginEvidence,
+    resolveKanjiSourceOriginIdsForEntry,
+} = require("../src/services/platinumKanjiSourceOriginService");
+const {
     OBSIDIAN_PROOF_PROVIDER_MODES,
     applyObsidianProofProvider,
     loadReviewSetWithObsidianProof,
@@ -37,6 +53,7 @@ const {
 
 const SUPPORTED_CONSUMERS = Object.freeze({
     KANJI_BATCH_REPORT: "kanji-batch-report",
+    KANJI_FIELD_SOURCE_CONTRACT: "kanji-field-source-contract",
     KANJI_PLATINUM_LEVEL: "kanji-platinum-level",
     KANJI_REREVIEW_STATUS: "kanji-rereview-status",
 });
@@ -354,6 +371,138 @@ function buildKanjiPlatinumLevelProviderParityForLevel({
     };
 }
 
+function projectKanjiFieldSourceContract(contract = {}) {
+    return {
+        version: contract.version,
+        contractType: contract.contractType,
+        standard: contract.standard,
+        checkedAt: contract.checkedAt,
+        scope: contract.scope,
+        sourceUse: contract.sourceUse,
+        sourceFiles: contract.sourceFiles,
+        provenancePolicy: contract.provenancePolicy,
+        coverage: contract.coverage,
+        entries: Object.fromEntries(Object.entries(contract.entries || {}).map(([kanji, entry]) => [
+            kanji,
+            {
+                kanji: entry.kanji,
+                level: entry.level,
+                cardKey: entry.cardKey,
+                fieldValues: entry.fieldValues,
+                sourceOriginIds: entry.sourceOriginIds,
+                fieldEvidence: entry.fieldEvidence,
+                reviewBinding: entry.reviewBinding,
+            },
+        ])),
+    };
+}
+
+function loadKanjiFieldSourceContractInputs({ cwd = process.cwd() } = {}) {
+    return {
+        jlptLevelContract: loadJlptLevelContract(path.join(cwd, "templates", "jlpt_level_contract.json")),
+        platinumCardSourceManifest: loadPlatinumCardSourceManifest(path.join(cwd, "templates", "platinum_card_source_manifest.json")),
+        sourceOriginEvidence: loadKanjiSourceOriginEvidence(path.join(cwd, "templates", "jlpt_kanji_source_evidence.json")),
+    };
+}
+
+function buildSourceOriginIdsByKanji({ entries = [], sourceOriginEvidence = {} } = {}) {
+    return Object.fromEntries((Array.isArray(entries) ? entries : []).map((entry) => [
+        entry.kanji,
+        resolveKanjiSourceOriginIdsForEntry({
+            evidence: sourceOriginEvidence,
+            entry,
+        }),
+    ]));
+}
+
+function buildKanjiFieldSourceContractFromEntries({
+    entries = [],
+    level = 3,
+    sourceReviewSetPath = "",
+    fieldSourceInputs = {},
+} = {}) {
+    return buildKanjiCardFieldSourceContract({
+        jlptLevelContract: fieldSourceInputs.jlptLevelContract,
+        platinumEntries: entries,
+        platinumCardSourceManifest: fieldSourceInputs.platinumCardSourceManifest,
+        sourceOriginIdsByKanji: buildSourceOriginIdsByKanji({
+            entries,
+            sourceOriginEvidence: fieldSourceInputs.sourceOriginEvidence,
+        }),
+        level,
+        checkedAt: DEFAULT_CHECKED_AT,
+        reviewSetPath: sourceReviewSetPath,
+        jlptLevelContractPath: "templates/jlpt_level_contract.json",
+        sourceManifestPath: "templates/platinum_card_source_manifest.json",
+        sourceOriginEvidencePath: "templates/jlpt_kanji_source_evidence.json",
+    });
+}
+
+function buildKanjiFieldSourceContractProviderParityForLevel({
+    rawEntries = [],
+    cwd = process.cwd(),
+    ledgerDir,
+    level = 3,
+    sourceReviewSetPath,
+    fieldSourceInputs = loadKanjiFieldSourceContractInputs({ cwd }),
+} = {}) {
+    const inlineProvider = applyObsidianProofProvider({
+        entries: rawEntries,
+        cwd,
+        ledgerDir,
+        deckKind: "kanji",
+        level,
+        sourceReviewSetPath,
+        proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.INLINE,
+    });
+    const ledgerProvider = applyObsidianProofProvider({
+        entries: rawEntries,
+        cwd,
+        ledgerDir,
+        deckKind: "kanji",
+        level,
+        sourceReviewSetPath,
+        proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER,
+    });
+    const inlineContract = buildKanjiFieldSourceContractFromEntries({
+        entries: inlineProvider.entries,
+        level,
+        sourceReviewSetPath: inlineProvider.summary.sourceReviewSetPath,
+        fieldSourceInputs,
+    });
+    const ledgerContract = buildKanjiFieldSourceContractFromEntries({
+        entries: ledgerProvider.entries,
+        level,
+        sourceReviewSetPath: ledgerProvider.summary.sourceReviewSetPath,
+        fieldSourceInputs,
+    });
+    const inlineProjection = projectKanjiFieldSourceContract(inlineContract);
+    const ledgerProjection = projectKanjiFieldSourceContract(ledgerContract);
+    const passed = stableJson(inlineProjection) === stableJson(ledgerProjection);
+
+    return {
+        level,
+        consumer: SUPPORTED_CONSUMERS.KANJI_FIELD_SOURCE_CONTRACT,
+        passed,
+        inlineProvider: inlineProvider.summary,
+        ledgerProvider: ledgerProvider.summary,
+        inlineProjection,
+        ledgerProjection,
+        mismatch: passed ? null : {
+            inlineCoverage: inlineProjection.coverage,
+            ledgerCoverage: ledgerProjection.coverage,
+            inlineRereviewBindings: Object.fromEntries(Object.entries(inlineProjection.entries || {}).map(([kanji, entry]) => [
+                kanji,
+                entry.reviewBinding,
+            ])),
+            ledgerRereviewBindings: Object.fromEntries(Object.entries(ledgerProjection.entries || {}).map(([kanji, entry]) => [
+                kanji,
+                entry.reviewBinding,
+            ])),
+        },
+    };
+}
+
 function buildKanjiBatchReportProviderParityForLevel({
     rows = [],
     rawEntries = [],
@@ -505,6 +654,9 @@ async function buildObsidianProofProviderParityReport({
     const curatedStudyData = consumer === SUPPORTED_CONSUMERS.KANJI_BATCH_REPORT
         ? loadCuratedStudyData(config.curatedStudyDataPath)
         : {};
+    const fieldSourceInputs = consumer === SUPPORTED_CONSUMERS.KANJI_FIELD_SOURCE_CONTRACT
+        ? loadKanjiFieldSourceContractInputs({ cwd })
+        : {};
 
     for (const level of levels) {
         const rawReviewSet = loadReviewSetWithObsidianProof({
@@ -530,6 +682,14 @@ async function buildObsidianProofProviderParityReport({
                 kanji,
                 limit,
                 queue,
+            }));
+        } else if (consumer === SUPPORTED_CONSUMERS.KANJI_FIELD_SOURCE_CONTRACT) {
+            scopes.push(buildKanjiFieldSourceContractProviderParityForLevel({
+                rawEntries: rawReviewSet.entries,
+                cwd,
+                level,
+                sourceReviewSetPath: rawReviewSet.summary.sourceReviewSetPath,
+                fieldSourceInputs,
             }));
         } else if (consumer === SUPPORTED_CONSUMERS.KANJI_PLATINUM_LEVEL) {
             scopes.push(buildKanjiPlatinumLevelProviderParityForLevel({
@@ -575,6 +735,7 @@ function formatObsidianProofProviderParityReport(report = {}) {
         "- Inline rereviewProvenance and canonical JSONL-derived rereviewProvenance must produce identical consumer counts.",
         "- Queue samples, selected cards, classifications, and card-level Obsidian statuses must match before a consumer is switched.",
         "- Structural Platinum gate projections must match before deck:platinum:n<level> reads the proof provider by default.",
+        "- Kanji card-field source contract projections must match before data:build:kanji-field-source-contract reads the proof provider by default.",
         "- tracked-review-set row source is CI-safe proof-provider parity; generated row source is local live-row parity and may require ignored data/* inputs.",
         "- This command does not certify cards, repair proof, read generated TSV/APKG output, or claim release readiness.",
     ];
@@ -600,7 +761,9 @@ function formatObsidianProofProviderParityReport(report = {}) {
                 `- Inline selected kanji: ${JSON.stringify(scope.mismatch.inlineSelectedKanji || [])}`,
                 `- Ledger selected kanji: ${JSON.stringify(scope.mismatch.ledgerSelectedKanji || [])}`,
                 `- Inline failed kanji: ${JSON.stringify(scope.mismatch.inlineFailedKanji || [])}`,
-                `- Ledger failed kanji: ${JSON.stringify(scope.mismatch.ledgerFailedKanji || [])}`
+                `- Ledger failed kanji: ${JSON.stringify(scope.mismatch.ledgerFailedKanji || [])}`,
+                `- Inline coverage: ${JSON.stringify(scope.mismatch.inlineCoverage || {})}`,
+                `- Ledger coverage: ${JSON.stringify(scope.mismatch.ledgerCoverage || {})}`
             );
         }
     }
@@ -645,6 +808,7 @@ module.exports = {
     ROW_SOURCES,
     SUPPORTED_CONSUMERS,
     buildKanjiBatchReportProviderParityForLevel,
+    buildKanjiFieldSourceContractProviderParityForLevel,
     buildKanjiPlatinumLevelProviderParityForLevel,
     buildKanjiRereviewStatusProviderParityForLevel,
     buildObsidianProofProviderParityReport,
@@ -653,6 +817,7 @@ module.exports = {
     main,
     normalizeRowSource,
     parseArgs,
+    projectKanjiFieldSourceContract,
     projectKanjiBatchReport,
     projectKanjiPlatinumLevelReport,
     projectKanjiRereviewStatusReport,

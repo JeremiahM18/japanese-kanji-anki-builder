@@ -262,8 +262,8 @@ Switch consumers in small stages:
 
 Current transition state:
 
-- `deck:kanji:obsidian:rereview-status`, `deck:kanji:obsidian:certify-status`, `deck:platinum:batch`, and `deck:platinum:n<level>` are switched consumers. They use the scoped proof-provider path so N3 kanji proof comes from canonical JSONL when a scoped ledger exists, while levels without migrated ledgers remain on legacy inline proof until their own parity gates are added.
-- `deck:platinum:governance-gate` and `data:build:kanji-field-source-contract` are still legacy inline consumers until they receive their own dual-read parity switch.
+- `deck:kanji:obsidian:rereview-status`, `deck:kanji:obsidian:certify-status`, `deck:platinum:batch`, `deck:platinum:n<level>`, and `data:build:kanji-field-source-contract` are switched consumers. They use the scoped proof-provider path so N3 kanji proof comes from canonical JSONL when a scoped ledger exists, while levels without migrated ledgers remain on legacy inline proof until their own parity gates are added.
+- `deck:platinum:governance-gate` is still a legacy inline consumer until it receives its own dual-read parity switch.
 
 Do not switch word Obsidian consumers from this N3 kanji ledger work. Word proof has separate identity binding, evidence checklist, and sentence-quality requirements.
 

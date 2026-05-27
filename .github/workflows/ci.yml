@@ -69,6 +69,9 @@ jobs:
       - name: Verify Obsidian proof provider parity for platinum level gate
         run: npm run data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=3 --row-source=tracked-review-set
 
+      - name: Verify Obsidian proof provider parity for kanji field-source contract
+        run: npm run data:obsidian:proof:provider-parity -- --consumer=kanji-field-source-contract --levels=3 --row-source=tracked-review-set
+
       - name: Run tracked JLPT kanji source governance audit
         run: npm run data:audit:jlpt:sources -- --governance-strict --limit=25
 

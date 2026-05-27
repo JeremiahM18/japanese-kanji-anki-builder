@@ -13,6 +13,7 @@ const { loadJlptLevelContract } = require("../src/datasets/jlptLevelContract");
 const { loadPlatinumCardSourceManifest } = require("../src/datasets/platinumCardSourceManifest");
 const { buildKanjiCardFieldSourceContract } = require("../src/services/kanjiCardFieldSourceContractService");
 const { resolveKanjiSourceOriginIdsForEntry } = require("../src/services/platinumKanjiSourceOriginService");
+const { parseArgs } = require("../scripts/buildKanjiCardFieldSourceContract");
 
 function loadAuditInputs(level = 5) {
     return {
@@ -30,6 +31,15 @@ function reviewSetPathForLevel(level = 5) {
 function clone(value) {
     return JSON.parse(JSON.stringify(value));
 }
+
+test("builder CLI defaults to ledger-if-available proof provider", () => {
+    const options = parseArgs(["--level=3", "--proof-provider=inline"]);
+    const defaults = parseArgs(["--level=3"]);
+
+    assert.equal(defaults.proofProvider, "ledger-if-available");
+    assert.equal(options.proofProvider, "inline");
+    assert.equal(options.reviewSet, "templates/platinum_n3_review_set.json");
+});
 
 test("tracked kanji card field source contracts pass governed coverage audit", () => {
     for (const { level, expectedKanji } of [

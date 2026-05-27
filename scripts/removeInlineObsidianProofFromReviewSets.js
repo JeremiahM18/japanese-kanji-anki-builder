@@ -93,8 +93,8 @@ function buildInlineObsidianProofRemovalForReviewSet({
     level,
     ledgerDir,
 }) {
-    if (deckKind !== "kanji") {
-        throw new Error(`Inline Obsidian proof removal currently supports kanji review sets only: ${deckKind}`);
+    if (!["kanji", "word"].includes(deckKind)) {
+        throw new Error(`Unsupported Obsidian proof deck kind for inline removal: ${deckKind}`);
     }
 
     const sourceReviewSetPath = getReviewSetRelativePath({ deckKind, level });
@@ -208,7 +208,7 @@ function formatRemovalReport(report = {}) {
         "",
         "Authority boundary:",
         "- This removes legacy inline Obsidian proof only after canonical JSONL ledger events are present and bound to the tracked review set.",
-        "- It does not certify cards, migrate word proof, change Japanese-source evidence, generate deck output, or claim release readiness.",
+        "- It does not certify cards, migrate proof, change Japanese-source evidence, generate deck output, or claim release readiness.",
     ];
 
     for (const reviewSet of report.reviewSets || []) {

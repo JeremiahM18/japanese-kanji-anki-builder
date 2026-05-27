@@ -11,6 +11,9 @@ const {
     CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
 } = require("../src/services/platinumKanjiReviewService");
 const {
+    CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
+} = require("../src/services/platinumReviewService");
+const {
     buildObsidianProofReconciliationReport,
 } = require("../src/services/obsidianProofReconciliationService");
 const {
@@ -27,8 +30,18 @@ function writeReviewSet(rootDir, entries) {
     writeJson(path.join(rootDir, "templates", "platinum_n3_review_set.json"), entries);
 }
 
+function writeWordReviewSet(rootDir, entries) {
+    writeJson(path.join(rootDir, "templates", "platinum_n5_word_review_set.json"), entries);
+}
+
 function writeLedger(rootDir, events) {
     const ledgerPath = path.join(rootDir, "templates", "obsidian_proof_ledger", "kanji_n3_fixture.jsonl");
+    fs.mkdirSync(path.dirname(ledgerPath), { recursive: true });
+    fs.writeFileSync(ledgerPath, `${events.map((event) => JSON.stringify(event)).join("\n")}\n`, "utf8");
+}
+
+function writeWordLedger(rootDir, events) {
+    const ledgerPath = path.join(rootDir, "templates", "obsidian_proof_ledger", "word_n5_fixture.jsonl");
     fs.mkdirSync(path.dirname(ledgerPath), { recursive: true });
     fs.writeFileSync(ledgerPath, `${events.map((event) => JSON.stringify(event)).join("\n")}\n`, "utf8");
 }
@@ -123,6 +136,96 @@ function buildProofEvent(overrides = {}) {
     };
 }
 
+function buildWordProvenance(overrides = {}) {
+    return {
+        type: "substantive current standard rereview",
+        reviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
+        batchId: "n5-word-obsidian-fixture-batch",
+        reviewedAt: "2026-05-26",
+        reviewer: "fixture-reviewer",
+        reviewedAfterStandard: true,
+        mechanicalMigration: false,
+        result: "approved_for_current_standard_platinum",
+        scope: "full word card rereview from square zero",
+        cardReviewed: "本|ほん",
+        evidenceChecked: [
+            "live generated word card surface checked for 本|ほん",
+            "exact written form and reading identity checked for 本|ほん",
+            "governed japanese-source evidence checked for 本|ほん",
+            "meaning and sense fit checked against the learner-facing card",
+            "example sentence, reading, and translation checked for release quality",
+            "notes and support labels checked for learner usefulness",
+            "exact word-reading audio identity checked for 本|ほん",
+            "pitch accent source/render identity checked for 本|ほん",
+        ],
+        limitationDecision: "no active limitation remains",
+        sentenceQualityReview: {
+            example: "机の上に本があります。",
+            reading: "つくえのうえにほんがあります。",
+            translation: "There is a book on the desk.",
+            naturalJapanese: true,
+            learnerUseful: true,
+            levelAppropriate: true,
+            releaseQuality: true,
+            reviewerJudgment: "Fixture sentence review is natural, useful, level fit, release quality, and checked.",
+        },
+        ...overrides,
+    };
+}
+
+function buildWordEntry(overrides = {}) {
+    return {
+        word: "本",
+        reading: "ほん",
+        status: "platinum",
+        rereviewProvenance: buildWordProvenance(),
+        ...overrides,
+    };
+}
+
+function buildWordProofEvent(overrides = {}) {
+    const provenance = buildWordProvenance();
+    return {
+        schemaVersion: 1,
+        recordType: "obsidian-proof-event",
+        proofId: "word-n5-obsidian-fixture-01",
+        target: {
+            deckKind: "word",
+            level: 5,
+            written: "本",
+            reading: "ほん",
+            cardReviewed: "本|ほん",
+        },
+        batch: {
+            id: provenance.batchId,
+            sequence: 99,
+        },
+        proof: {
+            type: provenance.type,
+            reviewStandard: provenance.reviewStandard,
+            reviewedAt: provenance.reviewedAt,
+            reviewer: provenance.reviewer,
+            reviewedAfterStandard: provenance.reviewedAfterStandard,
+            mechanicalMigration: provenance.mechanicalMigration,
+            result: provenance.result,
+            scope: provenance.scope,
+            cardReviewed: provenance.cardReviewed,
+            evidenceChecked: provenance.evidenceChecked,
+            limitationDecision: provenance.limitationDecision,
+            sentenceQualityReview: provenance.sentenceQualityReview,
+        },
+        authority: OBSIDIAN_PROOF_LEDGER_AUTHORITY,
+        ledger: {
+            recordedAt: "2026-05-26",
+            recordedBy: "fixture-writer",
+            sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
+            sourceCommit: "abcdef1",
+            representationMigration: true,
+        },
+        ...overrides,
+    };
+}
+
 test("inline proof removal parses governed CLI options", () => {
     const options = parseArgs([
         "--write",
@@ -139,6 +242,16 @@ test("inline proof removal parses governed CLI options", () => {
     assert.equal(options.ledgerDir, "templates/obsidian_proof_ledger");
     assert.equal(options.json, true);
     assert.deepEqual(options.unknownArgs, ["--unexpected"]);
+});
+
+test("inline proof removal parses word deck kind", () => {
+    const options = parseArgs([
+        "--deck-kind=word",
+        "--levels=5,4",
+    ]);
+
+    assert.equal(options.deckKind, "word");
+    assert.deepEqual(options.levels, [5, 4]);
 });
 
 test("inline proof removal writes canonical-only review set and keeps reconciliation passing", () => {
@@ -167,6 +280,38 @@ test("inline proof removal writes canonical-only review set and keeps reconcilia
     const reconciliation = buildObsidianProofReconciliationReport({
         cwd: rootDir,
         levels: [3],
+    });
+    assert.equal(reconciliation.passed, true);
+});
+
+test("inline proof removal writes canonical-only word review set and keeps reconciliation passing", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-inline-removal-"));
+    writeWordReviewSet(rootDir, [buildWordEntry()]);
+    writeWordLedger(rootDir, [buildWordProofEvent()]);
+
+    const report = runInlineObsidianProofRemoval({
+        cwd: rootDir,
+        deckKind: "word",
+        levels: [5],
+        write: true,
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.reviewSets[0].inlineProofsRemoved, 1);
+    assert.equal(report.reconciliation.passed, true);
+    assert.equal(report.reconciliation.totals.inlineProofs, 0);
+    assert.equal(report.reconciliation.totals.canonicalLedgerProofs, 1);
+
+    const sourceEntries = JSON.parse(fs.readFileSync(
+        path.join(rootDir, "templates", "platinum_n5_word_review_set.json"),
+        "utf8"
+    ));
+    assert.equal(sourceEntries[0].rereviewProvenance, undefined);
+
+    const reconciliation = buildObsidianProofReconciliationReport({
+        cwd: rootDir,
+        deckKinds: ["word"],
+        levels: [5],
     });
     assert.equal(reconciliation.passed, true);
 });

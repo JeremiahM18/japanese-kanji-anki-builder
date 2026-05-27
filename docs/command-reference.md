@@ -76,8 +76,8 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run deck:words:platinum:batch -- --level=5 --limit=8` | Build a read-only word review packet for the selected queue; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider |
 | `npm run deck:words:review:n5` | Run the N5 word Gold regression benchmark |
 | `npm run deck:words:review:n4` | Run the N4 word Gold regression benchmark |
-| `npm run deck:words:platinum:n5` | Run the N5 word Platinum gate |
-| `npm run deck:words:platinum:n4` | Run the N4 word Platinum gate |
+| `npm run deck:words:platinum:n5` | Run the N5 word Platinum gate; migrated proof-provider input defaults to canonical JSONL |
+| `npm run deck:words:platinum:n4` | Run the N4 word Platinum gate; migrated proof-provider input defaults to canonical JSONL |
 | `npm run deck:words:obsidian:rereview-status -- --levels=5,4` | Classify word Platinum pass versus Obsidian proof; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider |
 | `npm run deck:words:obsidian:certify-status -- --levels=5,4` | Fail-closed word Obsidian certification status; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider |
 | `npm run deck:words:platinum:source-posture -- --levels=5,4` | Classify active word Platinum source-family independence posture |

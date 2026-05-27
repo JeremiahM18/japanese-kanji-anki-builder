@@ -1,6 +1,11 @@
 const fs = require("node:fs");
 const path = require("node:path");
-const { invokeCliMain } = require("../src/utils/cliArgs");
+const {
+    assertNoUnknownArgs,
+    collectUnknownArg,
+    invokeCliMain,
+    parseStringOption,
+} = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
 const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
@@ -16,14 +21,21 @@ const {
     evaluatePlatinumWordReviewSet,
     formatPlatinumWordReviewReport,
 } = require("../src/services/platinumReviewService");
+const {
+    OBSIDIAN_PROOF_PROVIDER_MODES,
+    loadReviewSetWithObsidianProof,
+    normalizeObsidianProofProviderMode,
+} = require("../src/services/obsidianProofProviderService");
 
 function parseArgs(argv) {
     const args = {
         allowEmpty: false,
         json: false,
         level: null,
+        proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
         requireCurrentReviewStandard: true,
         requireAllRows: false,
+        unknownArgs: [],
     };
 
     for (const arg of argv) {
@@ -37,6 +49,10 @@ function parseArgs(argv) {
             args.requireAllRows = true;
         } else if (arg.startsWith("--level=")) {
             args.level = Number(arg.split("=")[1]);
+        } else if (arg.startsWith("--proof-provider=")) {
+            args.proofProvider = normalizeObsidianProofProviderMode(parseStringOption(arg, "proof-provider"));
+        } else {
+            collectUnknownArg(args, arg);
         }
     }
 
@@ -129,6 +145,7 @@ async function buildWordRowsForLevel({ level, config }) {
 
 async function main() {
     const options = parseArgs(process.argv.slice(2));
+    assertNoUnknownArgs("deck:words:platinum:n<level>", options.unknownArgs);
     const level = options.level;
 
     if (!Number.isInteger(level) || level < 1 || level > 5) {
@@ -136,16 +153,17 @@ async function main() {
     }
 
     const config = loadConfig();
-    const reviewSetPath = path.join(process.cwd(), "templates", "platinum_n" + level + "_word_review_set.json");
 
     if (!fs.existsSync(config.jlptJsonPath)) {
         throw new Error("Missing JLPT JSON file at " + config.jlptJsonPath);
     }
-    if (!fs.existsSync(reviewSetPath)) {
-        throw new Error("Missing platinum word review set at " + reviewSetPath);
-    }
 
-    const entries = JSON.parse(fs.readFileSync(reviewSetPath, "utf-8"));
+    const reviewSet = loadReviewSetWithObsidianProof({
+        deckKind: "word",
+        level,
+        proofProvider: options.proofProvider,
+    });
+    const entries = reviewSet.entries;
     const wordPitchAccentData = loadWordPitchAccentData(path.join(process.cwd(), "templates", "word_pitch_accent_data.json"));
     const kanjiLevelData = loadJlptOnlyJson(config.jlptJsonPath);
     const rows = await buildWordRowsForLevel({ level, config });

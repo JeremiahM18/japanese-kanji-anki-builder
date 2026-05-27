@@ -32,6 +32,7 @@ const {
     buildTrackedWordReviewSetRows,
     buildWordBatchReportProviderParityForLevel,
     buildWordCertificationStatusProviderParityForLevel,
+    buildWordPlatinumLevelProviderParityForLevel,
     buildWordRereviewStatusProviderParityForLevel,
     formatObsidianProofProviderParityReport,
     parseArgs,
@@ -463,6 +464,24 @@ test("provider parity script parses word rereview-status consumer and deck kind"
     assert.equal(options.rowSource, ROW_SOURCES.TRACKED_REVIEW_SET);
 });
 
+test("provider parity script parses word platinum-level consumer and deck kind", () => {
+    const options = parseArgs([
+        "--levels=5,4",
+        "--consumer=word-platinum-level",
+        "--deck-kind=word",
+        "--row-source=tracked-review-set",
+        "--allow-legacy-standard",
+        "--allow-empty",
+    ]);
+
+    assert.equal(options.consumer, "word-platinum-level");
+    assert.equal(options.deckKind, "word");
+    assert.deepEqual(options.levels, [5, 4]);
+    assert.equal(options.rowSource, ROW_SOURCES.TRACKED_REVIEW_SET);
+    assert.equal(options.requireCurrentReviewStandard, false);
+    assert.equal(options.allowEmpty, true);
+});
+
 test("provider parity script parses word batch-report consumer and word targets", () => {
     const options = parseArgs([
         "--levels=5",
@@ -767,6 +786,79 @@ test("word certify-status provider parity fails when ledger misses inline proof"
     assert.equal(scope.ledgerProjection.failureCount, 1);
     assert.match(formatted, /Inline gate/);
     assert.match(formatted, /Ledger gate/);
+});
+
+test("word platinum-level provider parity passes when structural projections match", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
+    writeLedger(rootDir, [buildWordProofEvent()]);
+
+    const scope = buildWordPlatinumLevelProviderParityForLevel({
+        rows: [buildWordRow()],
+        rawEntries: [buildWordEntry()],
+        cwd: rootDir,
+        level: 5,
+        sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
+        wordPitchAccentData: {
+            sources: {
+                "kanjium-cc-by-sa-4.0": {
+                    name: "Kanjium pitch accent database",
+                    license: "CC BY-SA 4.0",
+                },
+            },
+            entries: {
+                "本|ほん": {
+                    pattern: "1 [atamadaka]",
+                    sourceId: "kanjium-cc-by-sa-4.0",
+                    sourceWord: "本",
+                    sourceReading: "ほん",
+                    sourceAccent: "1",
+                },
+            },
+        },
+        kanjiLevelData: null,
+    });
+
+    assert.equal(scope.passed, true);
+    assert.equal(scope.inlineProjection.passed, true);
+    assert.equal(scope.ledgerProjection.passed, true);
+    assert.equal(scope.inlineProjection.currentStandardPlatinumCount, 1);
+    assert.equal(scope.ledgerProjection.currentStandardPlatinumCount, 1);
+});
+
+test("word platinum-level provider parity keeps structural gate stable when ledger proof is absent", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
+    writeLedger(rootDir, []);
+
+    const scope = buildWordPlatinumLevelProviderParityForLevel({
+        rows: [buildWordRow()],
+        rawEntries: [buildWordEntry()],
+        cwd: rootDir,
+        level: 5,
+        sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
+        wordPitchAccentData: {
+            sources: {
+                "kanjium-cc-by-sa-4.0": {
+                    name: "Kanjium pitch accent database",
+                    license: "CC BY-SA 4.0",
+                },
+            },
+            entries: {
+                "本|ほん": {
+                    pattern: "1 [atamadaka]",
+                    sourceId: "kanjium-cc-by-sa-4.0",
+                    sourceWord: "本",
+                    sourceReading: "ほん",
+                    sourceAccent: "1",
+                },
+            },
+        },
+        kanjiLevelData: null,
+    });
+
+    assert.equal(scope.passed, true);
+    assert.equal(scope.inlineProjection.passed, true);
+    assert.equal(scope.ledgerProjection.passed, true);
+    assert.equal(scope.ledgerProvider.inlineProofsOmitted, 1);
 });
 
 test("kanji rereview-status provider parity passes when inline and ledger projections match", () => {

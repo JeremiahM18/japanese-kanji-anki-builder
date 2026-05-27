@@ -324,6 +324,8 @@ Each kanji Platinum command requires every generated card for that level and sur
 
 Each word Platinum command requires every generated word card for that level and surface to have an active current-standard structural entry by default. Use `--allow-legacy-standard` only to inspect historical field-bound entries while planning revalidation; it must not be used as version 1 release evidence.
 
+Migrated N5/N4 word Platinum level gates read tracked review entries through the scoped Obsidian proof-provider path by default. This keeps structural Platinum evaluation compatible with canonical JSONL proof while preserving the boundary: a passing Platinum gate is not new Obsidian certification and not release readiness. Use `--proof-provider=inline`, `--proof-provider=ledger`, or `--proof-provider=ledger-if-available` only for explicit transition audits.
+
 Additional Platinum commands apply only to the optional `additional_unverified_Nx` surface. They do not move the core JLPT kanji contract, certify source-evidence confidence, or satisfy core kanji Platinum coverage. The npm aliases pass `--allow-empty` because the governed default currently suppresses all already-core source claims from the physical additional decks, leaving `0` selected additional cards. An empty generated additional surface is valid only when `deck:kanji:additional:ready` and `deck:kanji:review-status` prove the source claims were suppressed rather than silently skipped.
 
 Core kanji and word Platinum commands intentionally fail for an empty manifest. Do not use Gold regression coverage as a substitute for Platinum, and do not use Platinum coverage as a substitute for Obsidian certification.

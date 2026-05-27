@@ -87,6 +87,9 @@ jobs:
       - name: Verify Obsidian proof provider parity for word batch selector
         run: npm run data:obsidian:proof:provider-parity -- --consumer=word-batch-report --deck-kind=word --levels=5,4 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set
 
+      - name: Verify Obsidian proof provider parity for word platinum level gate
+        run: npm run data:obsidian:proof:provider-parity -- --consumer=word-platinum-level --deck-kind=word --levels=5,4 --row-source=tracked-review-set
+
       - name: Run tracked JLPT kanji source governance audit
         run: npm run data:audit:jlpt:sources -- --governance-strict --limit=25
 

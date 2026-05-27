@@ -15,8 +15,10 @@ test("parseArgs accepts platinum word review options", () => {
         allowEmpty: true,
         json: true,
         level: 5,
+        proofProvider: "ledger-if-available",
         requireCurrentReviewStandard: true,
         requireAllRows: true,
+        unknownArgs: [],
     });
 });
 
@@ -24,6 +26,13 @@ test("parseArgs can opt into legacy word platinum inspection", () => {
     const options = parseArgs(["--level=5", "--allow-legacy-standard"]);
 
     assert.equal(options.requireCurrentReviewStandard, false);
+});
+
+test("parseArgs accepts explicit word platinum proof provider audits", () => {
+    const options = parseArgs(["--level=5", "--proof-provider=inline", "--oops"]);
+
+    assert.equal(options.proofProvider, "inline");
+    assert.deepEqual(options.unknownArgs, ["--oops"]);
 });
 
 test("platinumWordBatchReport parseArgs accepts scoped read-only batch options", () => {

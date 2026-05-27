@@ -236,8 +236,11 @@ test("README scopes benchmark budget commands as manual local guardrails unless 
     assert.equal(releaseWorkflow.includes("data:benchmark:jlpt:sources:gate"), false);
     assert.match(readme, /Benchmark budget commands are manual\/local performance guardrails, not GitHub Actions CI gates/);
     assert.match(readme, /`data:benchmark:jlpt:sources:gate`, `bench:obsidian-proof-etl:gate`, `bench:build:gate`, and `bench:build:cold-apkg:gate` are manual\/local performance guardrails/);
-    assert.match(readme, /`bench:build:gate` and `bench:build:cold-apkg:gate` require a ready local workspace and write benchmark output/);
+    assert.match(readme, /`bench:build:gate` runs a warmup before the measured hot-cache build/);
+    assert.match(readme, /Both build gates require a ready local workspace and write benchmark output/);
+    assert.match(readme, /Before changing timing budgets or claiming a close run is stable, run the benchmark standalone, append `-- --repeat=3`/);
     assert.match(readme, /`perf:memory:matrix` is a CI-safe metadata audit, not a timing budget gate/);
+    assert.match(readme, /memory thresholds remain trend-only until repeated samples justify a hard limit/);
 });
 
 test("pull request template calls out release-gate and code-owner expectations", () => {

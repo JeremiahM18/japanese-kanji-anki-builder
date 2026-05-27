@@ -205,8 +205,8 @@
     "deck:platinum:n2": "node scripts/reviewPlatinumKanjiLevel.js --level=2 --require-all",
     "deck:platinum:n1": "node scripts/reviewPlatinumKanjiLevel.js --level=1 --require-all",
     "bench:build": "node scripts/benchmarkBuild.js",
-    "bench:build:gate": "node scripts/benchmarkBuild.js --levels=5,4,3 --no-warmup --budget=default",
-    "bench:build:cold-apkg:gate": "node scripts/benchmarkBuild.js --levels=5,4,3 --no-warmup --cold-apkg-cache --budget=cold-apkg",
+    "bench:build:gate": "node --expose-gc scripts/benchmarkBuild.js --levels=5,4,3 --budget=default",
+    "bench:build:cold-apkg:gate": "node --expose-gc scripts/benchmarkBuild.js --levels=5,4,3 --no-warmup --cold-apkg-cache --budget=cold-apkg",
     "perf:memory:matrix": "node scripts/reportPerformanceMemoryAuditMatrix.js",
     "deck:review:n2": "node scripts/reviewGoldenLevel.js --level=2"
   },

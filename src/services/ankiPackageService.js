@@ -140,7 +140,7 @@ async function readCachedApkg({ cachePaths, destinationPath }) {
             return false;
         }
 
-        await fsp.copyFile(cachePaths.apkgPath, destinationPath);
+        await fsp.copyFile(cachePaths.apkgPath, destinationPath, fs.constants.COPYFILE_FICLONE);
         return true;
     } catch {
         return false;
@@ -154,7 +154,7 @@ async function writeCachedApkg({ cachePaths, sourcePath }) {
         }
 
         ensureDir(cachePaths.cacheDir);
-        await fsp.copyFile(sourcePath, cachePaths.apkgPath);
+        await fsp.copyFile(sourcePath, cachePaths.apkgPath, fs.constants.COPYFILE_FICLONE);
         const stat = await fsp.stat(cachePaths.apkgPath);
         const apkgSha256 = await computeFileSha256(cachePaths.apkgPath);
         const metadata = {

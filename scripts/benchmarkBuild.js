@@ -45,6 +45,7 @@ function parseArgs(argv) {
         warmup: true,
         coldApkgCache: false,
         json: false,
+        repeat: 1,
         budget: null,
         budgetTotalMs: null,
         budgetExportMs: null,
@@ -72,6 +73,8 @@ function parseArgs(argv) {
             options.outDirBase = parseStringOption(arg, "out-dir-base");
         } else if (arg.startsWith("--budget=")) {
             options.budget = parseStringOption(arg, "budget");
+        } else if (arg.startsWith("--repeat=")) {
+            options.repeat = parseNumericOption(arg, "repeat");
         } else if (arg.startsWith("--budget-total-ms=")) {
             options.budgetTotalMs = parseNumericOption(arg, "budget-total-ms");
         } else if (arg.startsWith("--budget-export-ms=")) {
@@ -86,6 +89,22 @@ function parseArgs(argv) {
     }
 
     return options;
+}
+
+function resolveRepeatCount(value) {
+    const repeat = Number.isFinite(value) ? Math.floor(value) : 1;
+    if (repeat < 1) {
+        throw new Error("--repeat must be at least 1.");
+    }
+    return repeat;
+}
+
+function runGarbageCollection() {
+    if (typeof global.gc !== "function") {
+        return false;
+    }
+    global.gc();
+    return true;
 }
 
 function resolveBenchmarkOutDirBase(config, outDirBase) {
@@ -177,6 +196,30 @@ function evaluateBudget(run, budget) {
     };
 }
 
+function evaluateRepeatedBudget(runs = [], budget) {
+    if (!budget) {
+        return null;
+    }
+
+    const runResults = runs.map((run, index) => ({
+        runIndex: index + 1,
+        ...evaluateBudget(run, budget),
+    }));
+    const failures = runResults.flatMap((result) => (
+        result.failures.map((failure) => ({
+            ...failure,
+            runIndex: result.runIndex,
+        }))
+    ));
+
+    return {
+        budget,
+        passed: failures.length === 0,
+        failures,
+        runs: runResults,
+    };
+}
+
 function formatBudgetResult(budgetResult) {
     if (!budgetResult) {
         return "No build benchmark budget configured.";
@@ -192,7 +235,8 @@ function formatBudgetResult(budgetResult) {
     }
 
     for (const failure of budgetResult.failures) {
-        lines.push(`- ${failure.label}: ${failure.actual}ms exceeded ${failure.limit}ms by ${failure.overByMs}ms`);
+        const runPrefix = Number.isInteger(failure.runIndex) ? `run ${failure.runIndex} ` : "";
+        lines.push(`- ${runPrefix}${failure.label}: ${failure.actual}ms exceeded ${failure.limit}ms by ${failure.overByMs}ms`);
     }
 
     return lines.join("\n");
@@ -242,6 +286,7 @@ async function runBuildBenchmarkPass({ config, levels, limit, concurrency, outDi
             level: entry.level,
             rows: entry.rows,
         })),
+        exportProfiles: summary.exportProfiles || [],
         package: {
             mediaAssetCount: summary.package.mediaAssetCount,
             exportCount: summary.package.exportCount,
@@ -296,6 +341,7 @@ async function main() {
     const concurrency = Number.isFinite(options.concurrency) ? options.concurrency : config.exportConcurrency;
     const outDirBase = resolveBenchmarkOutDirBase(config, options.outDirBase);
     const budget = resolveBudget(options);
+    const repeat = resolveRepeatCount(options.repeat);
 
     const configuration = {
         levels,
@@ -304,6 +350,7 @@ async function main() {
         outDirBase,
         warmup: options.warmup,
         coldApkgCache: options.coldApkgCache,
+        repeat,
         doctorDurationMs,
         buildOutDir: config.buildOutDir,
         budget,
@@ -313,6 +360,10 @@ async function main() {
         configuration,
         warmup: null,
         measured: null,
+        measuredRuns: [],
+        garbageCollection: {
+            beforeMeasuredRuns: false,
+        },
         budget: null,
     };
 
@@ -328,16 +379,24 @@ async function main() {
         });
     }
 
-    result.measured = await runBuildBenchmarkPass({
-        config,
-        levels,
-        limit: configuration.limit,
-        concurrency,
-        outDir: path.join(outDirBase, "measured"),
-        doctorReport,
-        coldApkgCache: options.coldApkgCache,
-    });
-    result.budget = evaluateBudget(result.measured, budget);
+    for (let runIndex = 0; runIndex < repeat; runIndex += 1) {
+        result.garbageCollection.beforeMeasuredRuns = runGarbageCollection()
+            || result.garbageCollection.beforeMeasuredRuns;
+        result.measuredRuns.push(await runBuildBenchmarkPass({
+            config,
+            levels,
+            limit: configuration.limit,
+            concurrency,
+            outDir: path.join(
+                outDirBase,
+                repeat === 1 ? "measured" : `measured-${String(runIndex + 1).padStart(2, "0")}`
+            ),
+            doctorReport,
+            coldApkgCache: options.coldApkgCache,
+        }));
+    }
+    result.measured = result.measuredRuns[result.measuredRuns.length - 1];
+    result.budget = evaluateRepeatedBudget(result.measuredRuns, budget);
 
     if (options.json) {
         console.log(JSON.stringify(result, null, 2));
@@ -354,7 +413,10 @@ async function main() {
         console.log(formatRun("Warmup", result.warmup));
     }
 
-    console.log(formatRun("Measured", result.measured));
+    for (const [index, measuredRun] of result.measuredRuns.entries()) {
+        const label = result.measuredRuns.length === 1 ? "Measured" : `Measured ${index + 1}`;
+        console.log(formatRun(label, measuredRun));
+    }
 
     if (result.budget) {
         console.log(formatBudgetResult(result.budget));
@@ -375,6 +437,7 @@ module.exports = {
     COLD_APKG_BUILD_BUDGET,
     DEFAULT_BUILD_BUDGET,
     evaluateBudget,
+    evaluateRepeatedBudget,
     formatBudgetResult,
     formatRunMemory,
     cleanApkgCacheDir,
@@ -383,5 +446,6 @@ module.exports = {
     parseArgs,
     resolveBenchmarkOutDirBase,
     resolveBudget,
+    resolveRepeatCount,
     runBuildBenchmarkPass,
 };

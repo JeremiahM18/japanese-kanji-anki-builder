@@ -60,6 +60,21 @@ const auditLaneSchema = z.object({
     nextReviewTrigger: z.array(z.string().min(1)).min(1),
 }).strict();
 
+const riskControlsSchema = z.object({
+    budgetValueAuthority: z.string().min(1),
+    minimumRepeatRunsBeforeBudgetChange: z.number().int().min(2),
+    repeatCommandPattern: z.string().min(1),
+    memoryThresholdPolicy: z.object({
+        status: z.enum([
+            "trend-only",
+            "hard-limit-active",
+        ]),
+        hardLimitsActive: z.boolean(),
+        promotionCriteria: z.array(z.string().min(1)).min(1),
+    }).strict(),
+    unresolvedQuestions: z.array(z.string()),
+}).strict();
+
 const performanceMemoryAuditMatrixSchema = z.object({
     version: z.literal(1),
     authority: z.object({
@@ -67,6 +82,7 @@ const performanceMemoryAuditMatrixSchema = z.object({
         generatedArtifact: z.literal(false),
         boundary: z.array(z.string().min(1)).min(1),
     }).strict(),
+    riskControls: riskControlsSchema,
     lanes: z.array(auditLaneSchema).min(1),
 }).strict();
 
@@ -90,4 +106,5 @@ module.exports = {
     buildDefaultPerformanceMemoryAuditMatrixPath,
     loadPerformanceMemoryAuditMatrix,
     performanceMemoryAuditMatrixSchema,
+    riskControlsSchema,
 };

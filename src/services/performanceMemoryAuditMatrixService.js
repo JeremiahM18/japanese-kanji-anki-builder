@@ -86,20 +86,35 @@ function buildPerformanceMemoryAuditMatrixReport({ cwd = process.cwd(), matrixPa
         };
     });
     const failures = lanes.flatMap((lane) => lane.failures.map((failure) => `${lane.id}: ${failure}`));
+    const riskControlFailures = [];
+    if (matrix.riskControls.memoryThresholdPolicy.status === "hard-limit-active"
+        && matrix.riskControls.memoryThresholdPolicy.hardLimitsActive !== true) {
+        riskControlFailures.push("memoryThresholdPolicy hard-limit-active requires hardLimitsActive true");
+    }
+    if (matrix.riskControls.memoryThresholdPolicy.status === "trend-only"
+        && matrix.riskControls.memoryThresholdPolicy.hardLimitsActive !== false) {
+        riskControlFailures.push("memoryThresholdPolicy trend-only requires hardLimitsActive false");
+    }
+    const allFailures = [
+        ...failures,
+        ...riskControlFailures.map((failure) => `riskControls: ${failure}`),
+    ];
 
     return {
-        passed: failures.length === 0,
+        passed: allFailures.length === 0,
         matrixPath: matrix.matrixPath,
         authority: matrix.authority,
+        riskControls: matrix.riskControls,
         counts: {
             lanes: lanes.length,
             timingBudgetsPresent: lanes.filter((lane) => lane.timingBudget.status === "present").length,
             memorySamplingPresent: lanes.filter((lane) => lane.memorySampling.status === "present").length,
             manualLocal: lanes.filter((lane) => lane.ciPolicy === "manual-local").length,
             ciBacked: lanes.filter((lane) => lane.ciPolicy !== "manual-local").length,
+            unresolvedQuestions: matrix.riskControls.unresolvedQuestions.length,
         },
         lanes,
-        failures,
+        failures: allFailures,
     };
 }
 
@@ -126,6 +141,13 @@ function formatPerformanceMemoryAuditMatrixReport(report = {}) {
         "",
         "Authority boundary:",
         ...(report.authority?.boundary || []).map((entry) => `- ${entry}`),
+        "",
+        "Risk controls:",
+        `- Budget value authority: ${report.riskControls?.budgetValueAuthority || "(unknown)"}`,
+        `- Repeat evidence before budget changes: ${report.riskControls?.minimumRepeatRunsBeforeBudgetChange || 0} runs via ${report.riskControls?.repeatCommandPattern || "(unknown)"}`,
+        `- Memory threshold policy: ${report.riskControls?.memoryThresholdPolicy?.status || "(unknown)"}; hard limits active ${Boolean(report.riskControls?.memoryThresholdPolicy?.hardLimitsActive)}`,
+        `- Unresolved risk questions: ${report.counts?.unresolvedQuestions || 0}`,
+        ...(report.riskControls?.memoryThresholdPolicy?.promotionCriteria || []).map((entry) => `  - ${entry}`),
         "",
         "Lanes:",
         ...(report.lanes || []).map(formatLaneSummary),

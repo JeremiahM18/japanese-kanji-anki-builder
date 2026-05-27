@@ -16,6 +16,10 @@ test("tracked performance and memory audit matrix validates command and CI bound
     assert.equal(report.counts.lanes, 7);
     assert.equal(report.counts.timingBudgetsPresent, 4);
     assert.equal(report.counts.memorySamplingPresent, 4);
+    assert.equal(report.counts.unresolvedQuestions, 0);
+    assert.equal(report.riskControls.minimumRepeatRunsBeforeBudgetChange, 3);
+    assert.equal(report.riskControls.memoryThresholdPolicy.status, "trend-only");
+    assert.equal(report.riskControls.memoryThresholdPolicy.hardLimitsActive, false);
     assert.deepEqual(report.failures, []);
 });
 

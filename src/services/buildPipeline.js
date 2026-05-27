@@ -1,5 +1,6 @@
 const fs = require("node:fs");
 const path = require("node:path");
+const { performance } = require("node:perf_hooks");
 
 const { createKanjiApiClient } = require("../clients/kanjiApiClient");
 const { buildCuratedStudySummary } = require("../datasets/curatedStudyCoverage");
@@ -11,7 +12,7 @@ const { buildCoverageSummary } = require("../datasets/sentenceCorpusCoverage");
 const { loadSentenceCorpus, normalizeSentenceCorpus } = require("../datasets/sentenceCorpus");
 const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { buildDeckPackage } = require("./deckPackageService");
-const { createExportService } = require("./exportService");
+const { createEmptyExportProfile, createExportService } = require("./exportService");
 const { assertKanjiDeckContract, buildKanjiDeckContractReport } = require("./kanjiDeckContractService");
 const { ensureMediaRoot } = require("./mediaStore");
 const { createMediaServices } = require("./mediaServiceFactory");
@@ -70,7 +71,7 @@ function writeTextFile(filePath, value) {
 }
 
 function capturePhaseTiming(timings, phaseName, startedAt) {
-    timings[phaseName] = Date.now() - startedAt;
+    timings[phaseName] = Number((performance.now() - startedAt).toFixed(2));
 }
 
 function buildNormalizationSummary({ name, inputPath, outputPath, rawValue, normalizedValue, mode, missingInput }) {
@@ -232,7 +233,7 @@ async function runBuildPipeline({
     selectKanjiForSyncFn = selectKanjiForSync,
     buildDeckPackageFn = buildDeckPackage,
 }) {
-    const totalStartedAt = Date.now();
+    const totalStartedAt = performance.now();
     const timingsMs = {};
 
     if (!fs.existsSync(config.jlptJsonPath)) {
@@ -249,7 +250,7 @@ async function runBuildPipeline({
     const buildPaths = buildBuildPaths(outDir || config.buildOutDir);
     const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
 
-    const normalizationStartedAt = Date.now();
+    const normalizationStartedAt = performance.now();
     const sentenceNormalization = normalizeOptionalFile({
         name: "sentenceCorpus",
         inputPath: config.sentenceCorpusPath,
@@ -269,7 +270,7 @@ async function runBuildPipeline({
     persistNormalization(curatedNormalization);
     capturePhaseTiming(timingsMs, "normalization", normalizationStartedAt);
 
-    const datasetLoadStartedAt = Date.now();
+    const datasetLoadStartedAt = performance.now();
     const sentenceCorpus = loadSentenceCorpusFn(config.sentenceCorpusPath);
     const curatedStudyData = loadCuratedStudyDataFn(config.curatedStudyDataPath);
     const kradMap = loadKradMapFn === loadGovernedComponentMap
@@ -282,7 +283,7 @@ async function runBuildPipeline({
 
     ensureMediaRootFn(config.mediaRootDir);
 
-    const serviceSetupStartedAt = Date.now();
+    const serviceSetupStartedAt = performance.now();
     const kanjiApiClient = createKanjiApiClientFn({
         baseUrl: config.kanjiApiBaseUrl,
         cacheDir: config.cacheDir,
@@ -294,7 +295,7 @@ async function runBuildPipeline({
     const effectiveConcurrency = concurrency || config.exportConcurrency;
     capturePhaseTiming(timingsMs, "serviceSetup", serviceSetupStartedAt);
 
-    const coverageStartedAt = Date.now();
+    const coverageStartedAt = performance.now();
     const sentenceCoverage = buildCoverageSummaryFn({
         jlptOnlyJson,
         sentenceCorpus,
@@ -314,7 +315,7 @@ async function runBuildPipeline({
     });
     const syncKanjiList = [...new Set(Object.values(selectedKanjiByLevel).flatMap((kanjiList) => kanjiList))];
 
-    const mediaSyncStartedAt = Date.now();
+    const mediaSyncStartedAt = performance.now();
     const mediaSync = skipMediaSync
         ? {
             skipped: true,
@@ -356,10 +357,12 @@ async function runBuildPipeline({
         })();
     capturePhaseTiming(timingsMs, "mediaSync", mediaSyncStartedAt);
 
-    const exportStartedAt = Date.now();
+    const exportStartedAt = performance.now();
     const exports = [];
+    const exportProfiles = [];
     const exportIssues = [];
     for (const level of levels) {
+        const exportProfile = createEmptyExportProfile();
         const tsv = await exportService.buildTsvForJlptLevel({
             levelNumber: level,
             jlptOnlyJson,
@@ -370,6 +373,7 @@ async function runBuildPipeline({
             audioService,
             limit,
             concurrency: effectiveConcurrency,
+            exportProfile,
             exportIssues,
         });
         const contractReport = buildKanjiDeckContractReport({ tsv, level });
@@ -381,10 +385,18 @@ async function runBuildPipeline({
             filePath,
             rows: contractReport.rowCount,
         });
+        exportProfiles.push({
+            level,
+            ...exportProfile,
+            timingsMs: Object.fromEntries(
+                Object.entries(exportProfile.timingsMs)
+                    .map(([key, value]) => [key, Number(value.toFixed(3))])
+            ),
+        });
     }
     capturePhaseTiming(timingsMs, "export", exportStartedAt);
 
-    const packagingStartedAt = Date.now();
+    const packagingStartedAt = performance.now();
     const packagingMemoryBefore = snapshotMemoryUsage();
     const deckPackage = await buildDeckPackageFn({
         outDir: buildPaths.root,
@@ -398,14 +410,14 @@ async function runBuildPipeline({
     const packagingMemory = buildMemorySample(packagingMemoryBefore, packagingMemoryAfter);
     capturePhaseTiming(timingsMs, "packaging", packagingStartedAt);
 
-    const mediaCoverageStartedAt = Date.now();
+    const mediaCoverageStartedAt = performance.now();
     const mediaCoverage = await buildMediaCoverageSummaryFn({
         jlptOnlyJson: filterJlptOnlyJsonByLevels(jlptOnlyJson, levels),
         mediaRootDir: config.mediaRootDir,
     });
     capturePhaseTiming(timingsMs, "postBuildCoverage", mediaCoverageStartedAt);
 
-    const reportWriteStartedAt = Date.now();
+    const reportWriteStartedAt = performance.now();
     const reportPaths = {
         sentenceCoveragePath: path.join(buildPaths.reportsDir, "sentence-corpus-coverage.json"),
         curatedCoveragePath: path.join(buildPaths.reportsDir, "curated-study-coverage.json"),
@@ -438,6 +450,7 @@ async function runBuildPipeline({
         limit,
         concurrency: effectiveConcurrency,
         exports,
+        exportProfiles,
         package: {
             rootDir: deckPackage.rootDir,
             exportsDir: deckPackage.exportsDir,
@@ -491,7 +504,7 @@ async function runBuildPipeline({
         exportIssues: exportIssueSummary,
         timingsMs: {
             ...timingsMs,
-            total: Date.now() - totalStartedAt,
+            total: Number((performance.now() - totalStartedAt).toFixed(2)),
         },
     };
 

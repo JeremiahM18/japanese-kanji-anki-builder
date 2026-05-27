@@ -9,6 +9,21 @@
       "Timing budget gates remain manual/local unless a row explicitly says ci-required, smoke-ci, or release-ci."
     ]
   },
+  "riskControls": {
+    "budgetValueAuthority": "Budget pass/fail truth comes from the runtime benchmark command output; perf:memory:matrix validates the tracked governance map, command wiring, and declared boundaries only.",
+    "minimumRepeatRunsBeforeBudgetChange": 3,
+    "repeatCommandPattern": "Run the lane gate command standalone and append --repeat=3 before raising, lowering, or claiming stability of a timing budget.",
+    "memoryThresholdPolicy": {
+      "status": "trend-only",
+      "hardLimitsActive": false,
+      "promotionCriteria": [
+        "Collect repeated memory samples for the same lane, machine, runtime, and cache mode.",
+        "Identify a stable regression-sensitive metric instead of relying on one noisy garbage-collection snapshot.",
+        "Add a lane-specific hard memory budget only with a documented failure mode and rollback path."
+      ]
+    },
+    "unresolvedQuestions": []
+  },
   "lanes": [
     {
       "id": "build-hot-cache",
@@ -27,7 +42,7 @@
         "generated benchmark output under out/bench-build",
         "generated APKG cache under out/.apkg-cache"
       ],
-      "cacheMode": "hot APKG cache allowed",
+      "cacheMode": "warmup run before measured hot-cache build; APKG cache allowed",
       "timingBudget": {
         "status": "present",
         "profile": "default",

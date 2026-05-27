@@ -119,14 +119,16 @@ npm run bench:build:gate
 npm run bench:build:cold-apkg:gate
 ```
 
+Before changing a timing budget, raising a performance claim, or calling a close run stable, run the benchmark gate standalone, append `--repeat=3` to the relevant command, and keep the same machine, runtime, cache mode, and input boundary. The matrix records this as the minimum repeat-evidence rule; a single passing run is enough for the gate result, but not enough to change the budget standard. Do not run timing-budget commands in parallel with tests, audits, builds, or other IO-heavy work.
+
 Current memory-sampled benchmark lanes report process snapshots for trend analysis only:
 
 - `data:benchmark:jlpt:sources:gate` samples source-governance stages and the whole source-evidence cost report.
 - `bench:obsidian-proof-etl:gate` samples ledger validation, compatibility-view generation, SQLite mirror generation, and the whole ETL run.
-- `bench:build:gate` samples the whole measured build and the package stage.
+- `bench:build:gate` runs a warmup first, then samples the whole measured hot-cache build and the package stage.
 - `bench:build:cold-apkg:gate` samples the same build/package surfaces while clearing the generated APKG cache before the measured run, and its budget gate is scoped to the package phase so export/media-sync jitter does not mask the cold native APKG path.
 
-Process memory snapshots are not allocation-profiler output and can be noisy under garbage collection. Use repeated local runs for trend evidence before changing budgets.
+Process memory snapshots are not allocation-profiler output and can be noisy under garbage collection. The current matrix policy keeps memory thresholds as trend-only until repeated samples identify a stable regression-sensitive metric, a concrete failure mode, and a rollback path.
 
 ## Source packet and import gates
 

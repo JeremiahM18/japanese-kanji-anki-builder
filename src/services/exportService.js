@@ -591,10 +591,16 @@ async function resolveManagedMediaFields({ kanji, strokeOrderService, audioServi
     const hasAudioManifest = typeof audioService?.getManifest === "function";
 
     if (hasStrokeOrderManifest || hasAudioManifest) {
-        const [strokeOrderManifest, audioManifest] = await Promise.all([
-            hasStrokeOrderManifest ? strokeOrderService.getManifest(kanji) : Promise.resolve(null),
-            hasAudioManifest ? audioService.getManifest(kanji) : Promise.resolve(null),
-        ]);
+        const strokeOrderManifest = hasStrokeOrderManifest
+            ? await strokeOrderService.getManifest(kanji)
+            : null;
+        const strokeAudioPath = selectExactKanjiAudioAsset(strokeOrderManifest?.assets?.audio || [], {
+            kanji,
+            reading: audioReading,
+        })?.path || "";
+        const audioManifest = ((!strokeOrderManifest || !strokeAudioPath) && hasAudioManifest)
+            ? await audioService.getManifest(kanji)
+            : null;
         const imagePath = strokeOrderManifest?.assets?.strokeOrderImage?.path
             || audioManifest?.assets?.strokeOrderImage?.path
             || "";
@@ -602,11 +608,7 @@ async function resolveManagedMediaFields({ kanji, strokeOrderService, audioServi
             || audioManifest?.assets?.strokeOrderAnimation?.path
             || "";
         const bestPath = animationPath || imagePath || "";
-        const audioAssets = [
-            ...(audioManifest?.assets?.audio || []),
-            ...(strokeOrderManifest?.assets?.audio || []),
-        ];
-        const audioPath = selectExactKanjiAudioAsset(audioAssets, {
+        const audioPath = strokeAudioPath || selectExactKanjiAudioAsset(audioManifest?.assets?.audio || [], {
             kanji,
             reading: audioReading,
         })?.path || "";

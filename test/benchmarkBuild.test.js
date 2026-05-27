@@ -7,10 +7,12 @@ const {
     DEFAULT_BUILD_BUDGET,
     cleanOutDir,
     evaluateBudget,
+    evaluateRepeatedBudget,
     formatRunMemory,
     parseArgs,
     resolveBenchmarkOutDirBase,
     resolveBudget,
+    resolveRepeatCount,
 } = require("../scripts/benchmarkBuild");
 
 test("benchmarkBuild parseArgs supports warmup json and build options", () => {
@@ -22,6 +24,7 @@ test("benchmarkBuild parseArgs supports warmup json and build options", () => {
         "--json",
         "--no-warmup",
         "--cold-apkg-cache",
+        "--repeat=3",
         "--budget=default",
         "--budget-total-ms=4200",
         "--budget-export-ms=2100",
@@ -37,6 +40,7 @@ test("benchmarkBuild parseArgs supports warmup json and build options", () => {
         warmup: false,
         coldApkgCache: true,
         json: true,
+        repeat: 3,
         budget: "default",
         budgetTotalMs: 4200,
         budgetExportMs: 2100,
@@ -44,6 +48,12 @@ test("benchmarkBuild parseArgs supports warmup json and build options", () => {
         budgetPackagingMs: 500,
         unknownArgs: [],
     });
+});
+
+test("resolveRepeatCount floors positive values and rejects zero", () => {
+    assert.equal(resolveRepeatCount(3.8), 3);
+    assert.equal(resolveRepeatCount(null), 1);
+    assert.throws(() => resolveRepeatCount(0), /repeat must be at least 1/);
 });
 
 test("benchmarkBuild parseArgs tracks unknown flags", () => {
@@ -138,6 +148,33 @@ test("evaluateBudget reports pass and fail cases clearly", () => {
         "exportMs",
         "mediaSyncMs",
         "packagingMs",
+    ]);
+});
+
+test("evaluateRepeatedBudget fails when any measured run exceeds a threshold", () => {
+    const result = evaluateRepeatedBudget([
+        {
+            durationMs: 3400,
+            timingsMs: {
+                export: 1700,
+                mediaSync: 900,
+                packaging: 350,
+            },
+        },
+        {
+            durationMs: 5300,
+            timingsMs: {
+                export: 1700,
+                mediaSync: 900,
+                packaging: 350,
+            },
+        },
+    ], DEFAULT_BUILD_BUDGET);
+
+    assert.equal(result.passed, false);
+    assert.equal(result.runs.length, 2);
+    assert.deepEqual(result.failures.map((entry) => [entry.runIndex, entry.key]), [
+        [2, "totalMs"],
     ]);
 });
 
